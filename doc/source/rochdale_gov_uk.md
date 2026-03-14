@@ -9,17 +9,13 @@ waste_collection_schedule:
     sources:
     - name: rochdale_gov_uk
       args:
-        postcode: POSTCODE
         uprn: "UPRN"
-        
+
 ```
 
 ### Configuration Variables
 
-**postcode**  
-*(String) (required)*
-
-**uprn**  
+**uprn**
 *(String | Integer) (required)*
 
 ## Example
@@ -29,12 +25,11 @@ waste_collection_schedule:
     sources:
     - name: rochdale_gov_uk
       args:
-        postcode: OL104TJ
         uprn: "10094359340"
 ```
 
 ## How to get the source argument
 
-Use your postcode as the `postcode` argument and your Unique Property Reference Number (UPRN) as the `uprn` argument.
+Use your Unique Property Reference Number (UPRN) as the `uprn` argument.
 
 An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.

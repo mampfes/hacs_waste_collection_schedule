@@ -891,6 +891,12 @@
       "id": "mundaring_wa_gov_au"
     },
     {
+      "title": "Shire of Murray",
+      "module": "murray_wa_gov_au",
+      "default_params": {},
+      "id": "murray_wa_gov_au"
+    },
+    {
       "title": "Shire of Serpentine Jarrahdale",
       "module": "sjshire_wa_gov_au",
       "default_params": {},
@@ -4283,6 +4289,12 @@
       "id": "ics_svoz_litovle_cz"
     },
     {
+      "title": "L\u00e1zn\u011b Bohdane\u010d",
+      "module": "laznebohdanec_cz",
+      "default_params": {},
+      "id": "laznebohdanec_cz"
+    },
+    {
       "title": "Praha",
       "module": "api_golemio_cz",
       "default_params": {},
@@ -4427,6 +4439,12 @@
       "module": "kiertokapula_fi",
       "default_params": {},
       "id": "kiertokapula_fi"
+    },
+    {
+      "title": "Mustankorkea",
+      "module": "mustankorkea_fi",
+      "default_params": {},
+      "id": "mustankorkea_fi"
     },
     {
       "title": "RosknRoll Finland",
@@ -16517,6 +16535,12 @@
       "module": "stalbans_gov_uk",
       "default_params": {},
       "id": "stalbans_gov_uk"
+    },
+    {
+      "title": "St Helens Council",
+      "module": "st_helens_gov_uk",
+      "default_params": {},
+      "id": "st_helens_gov_uk"
     },
     {
       "title": "Stafford Borough Council",

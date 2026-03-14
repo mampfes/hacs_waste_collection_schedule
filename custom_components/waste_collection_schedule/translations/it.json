@@ -1603,6 +1603,26 @@
         },
         "data_description": {}
       },
+      "args_murray_wa_gov_au": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_murray_wa_gov_au": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {}
+      },
       "args_sjshire_wa_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -3334,6 +3354,28 @@
         },
         "data_description": {}
       },
+      "args_laznebohdanec_cz": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "url": "Url"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_laznebohdanec_cz": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "url": "Url"
+        },
+        "data_description": {}
+      },
       "args_api_golemio_cz": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -3643,6 +3685,30 @@
           "calendar_title": "Nome Calendario",
           "bill_number": "Numero della bolletta",
           "password": "Password"
+        },
+        "data_description": {}
+      },
+      "args_mustankorkea_fi": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "contract_id": "Contract Id",
+          "password": "Password",
+          "username": "Username"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_mustankorkea_fi": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "contract_id": "Contract Id",
+          "password": "Password",
+          "username": "Username"
         },
         "data_description": {}
       },
@@ -18306,7 +18372,6 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "postcode": "Codice Postale CAP",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -18319,7 +18384,6 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "postcode": "Codice Postale CAP",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -18854,6 +18918,31 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+        }
+      },
+      "args_st_helens_gov_uk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "postcode": "Codice Postale CAP",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+        }
+      },
+      "reconfigure_st_helens_gov_uk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "postcode": "Codice Postale CAP",
           "uprn": "UPRN"
         },
         "data_description": {

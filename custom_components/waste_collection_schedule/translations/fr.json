@@ -1603,6 +1603,26 @@
         },
         "data_description": {}
       },
+      "args_murray_wa_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_murray_wa_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
       "args_sjshire_wa_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -3339,6 +3359,28 @@
         },
         "data_description": {}
       },
+      "args_laznebohdanec_cz": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "url": "Url"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_laznebohdanec_cz": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "file": "File",
+          "url": "Url"
+        },
+        "data_description": {}
+      },
       "args_api_golemio_cz": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -3648,6 +3690,30 @@
           "calendar_title": "Titre du Calendrier",
           "bill_number": "Bill Number",
           "password": "Password"
+        },
+        "data_description": {}
+      },
+      "args_mustankorkea_fi": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "contract_id": "Contract Id",
+          "password": "Password",
+          "username": "Username"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_mustankorkea_fi": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "contract_id": "Contract Id",
+          "password": "Password",
+          "username": "Username"
         },
         "data_description": {}
       },
@@ -18297,7 +18363,6 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "postcode": "Code Postal",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -18310,7 +18375,6 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "postcode": "Code Postal",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -18845,6 +18909,31 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+        }
+      },
+      "args_st_helens_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "postcode": "Code Postal",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+        }
+      },
+      "reconfigure_st_helens_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "postcode": "Code Postal",
           "uprn": "UPRN"
         },
         "data_description": {

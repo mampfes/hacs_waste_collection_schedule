@@ -168,6 +168,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Scenic Rim Regional Council](/doc/source/scenicrim_qld_gov_au.md) / scenicrim.qld.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
 - [Shire of Mundaring](/doc/source/mundaring_wa_gov_au.md) / mundaring.wa.gov.au
+- [Shire of Murray](/doc/source/murray_wa_gov_au.md) / murray.wa.gov.au
 - [Shire of Serpentine Jarrahdale](/doc/source/sjshire_wa_gov_au.md) / sjshire.wa.gov.au
 - [Shoalhaven City Council](/doc/source/shoalhaven_nsw_gov_au.md) / shoalhaven.nsw.gov.au
 - [Snowy Valleys Council](/doc/source/impactapps_com_au.md) / snowyvalleys.nsw.gov.au
@@ -734,6 +735,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Czech Republic</summary>
 
 - [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
+- [Lázně Bohdaneč](/doc/source/laznebohdanec_cz.md) / lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
 - [Technické služby Český Brod](/doc/source/tsceskybrod_cz.md) / tsceskybrod.cz
@@ -765,6 +767,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Finland</summary>
 
 - [Kiertokapula Finland](/doc/source/kiertokapula_fi.md) / kiertokapula.fi
+- [Mustankorkea](/doc/source/mustankorkea_fi.md) / mustankorkea.fi
 - [RosknRoll Finland](/doc/source/rosknroll_fi.md) / rosknroll.fi
 </details>
 
@@ -2567,6 +2570,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [South Tyneside Council](/doc/source/southtyneside_gov_uk.md) / southtyneside.gov.uk
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
 - [St Albans City & District Council](/doc/source/stalbans_gov_uk.md) / stalbans.gov.uk
+- [St Helens Council](/doc/source/st_helens_gov_uk.md) / sthelens.gov.uk
 - [Stafford Borough Council](/doc/source/staffordbc_gov_uk.md) / staffordbc.gov.uk
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
 - [Stirling.gov.uk](/doc/source/stirling_uk.md) / stirling.gov.uk

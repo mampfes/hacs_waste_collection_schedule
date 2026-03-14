@@ -1603,6 +1603,26 @@
         },
         "data_description": {}
       },
+      "args_murray_wa_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_murray_wa_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Addresse"
+        },
+        "data_description": {}
+      },
       "args_sjshire_wa_gov_au": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -3369,6 +3389,28 @@
         },
         "data_description": {}
       },
+      "args_laznebohdanec_cz": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "File",
+          "url": "URL"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_laznebohdanec_cz": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "File",
+          "url": "URL"
+        },
+        "data_description": {}
+      },
       "args_api_golemio_cz": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -3678,6 +3720,30 @@
           "calendar_title": "Kalender Titel",
           "bill_number": "Rechnungsnummer",
           "password": "Passwort"
+        },
+        "data_description": {}
+      },
+      "args_mustankorkea_fi": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "contract_id": "Contract Id",
+          "password": "Passwort",
+          "username": "Benutzername"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_mustankorkea_fi": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "contract_id": "Contract Id",
+          "password": "Passwort",
+          "username": "Benutzername"
         },
         "data_description": {}
       },
@@ -18373,7 +18439,6 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -18386,7 +18451,6 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -18921,6 +18985,31 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "args_st_helens_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "postcode": "PLZ",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+        }
+      },
+      "reconfigure_st_helens_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "postcode": "PLZ",
           "uprn": "UPRN"
         },
         "data_description": {

@@ -31,7 +31,7 @@ waste_collection_schedule:
 #### How to find your `UPRN`
 Your uprn is the collection of numbers at the end of the url when downloading a collection calendar for your collection schedule on the Redbridge web site.
 
-For example:  _https://my.redbridge.gov.uk/RecycleRefuse/GetFile?uprn=`10034922090`_
+For example:  _https://my.redbridge.gov.uk/RecycleRefuse/GetFile?uprn=10034922090_
 
 Alternatively, you can discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
 

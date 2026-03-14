@@ -1640,6 +1640,29 @@
           "parcel_number": "An easy way to discover your parcel_number is by going to {url_geohub_mundaring_hub_arcgis_com} and use the Property Map to search for your address ensuring both Lot Numbers and House Number checkboxes are ticked. The pop-up that appears contains an entry that shows your parcel number."
         }
       },
+      "args_murray_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your street address as shown on the Shire of Murray bins page (e.g. '41 Wilson Road')."
+        }
+      },
+      "reconfigure_murray_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Your street address as shown on the Shire of Murray bins page (e.g. '41 Wilson Road')."
+        }
+      },
       "args_sjshire_wa_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -3420,6 +3443,33 @@
         },
         "data_description": {}
       },
+      "args_laznebohdanec_cz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "Local XLSX file",
+          "url": "Direct XLSX URL"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "file": "Path to a local XLSX file with dates (needs to be uploaded manually into HA)",
+          "url": "Direct URL to the XLSX file with dates"
+        }
+      },
+      "reconfigure_laznebohdanec_cz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "Local XLSX file",
+          "url": "Direct XLSX URL"
+        },
+        "data_description": {
+          "file": "Path to a local XLSX file with dates (needs to be uploaded manually into HA)",
+          "url": "Direct URL to the XLSX file with dates"
+        }
+      },
       "args_api_golemio_cz": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -3734,6 +3784,37 @@
           "password": "Password"
         },
         "data_description": {}
+      },
+      "args_mustankorkea_fi": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "contract_id": "e.g. 30-00012345-00",
+          "password": "",
+          "username": ""
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "contract_id": "Waste collection contract ID, only required if you have multiple contracts",
+          "password": "Password for oma.mustankorkea.fi account",
+          "username": "Username for oma.mustankorkea.fi account"
+        }
+      },
+      "reconfigure_mustankorkea_fi": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "contract_id": "e.g. 30-00012345-00",
+          "password": "",
+          "username": ""
+        },
+        "data_description": {
+          "contract_id": "Waste collection contract ID, only required if you have multiple contracts",
+          "password": "Password for oma.mustankorkea.fi account",
+          "username": "Username for oma.mustankorkea.fi account"
+        }
       },
       "args_rosknroll_fi": {
         "title": "Configure Source",
@@ -18524,7 +18605,6 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -18537,7 +18617,6 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -19086,6 +19165,31 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+        }
+      },
+      "args_st_helens_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+        }
+      },
+      "reconfigure_st_helens_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
