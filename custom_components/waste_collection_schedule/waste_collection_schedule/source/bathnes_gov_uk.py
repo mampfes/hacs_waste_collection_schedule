@@ -35,6 +35,7 @@ API_COLLECTION_SUMMARY_URL = API_BASE_URL.format(
 API_ADDRESSES_SEARCH_URL = API_BASE_URL.format(
     "AddressesAPI/v2/search/{postcode}/150/true"
 )
+REQUEST_TIMEOUT = 10
 
 
 class Source:
@@ -106,7 +107,7 @@ class Source:
         return f"|{self._housenameornumber.upper()}|" in address["payment_Address"]
 
     def _call_api(self, url: str):
-        r = requests.get(url)
+        r = requests.get(url, timeout=REQUEST_TIMEOUT)
         r.raise_for_status()
         if r.text.strip() == "":
             raise Exception(f"Empty response from API for url: {url}")
