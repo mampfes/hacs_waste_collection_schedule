@@ -1,7 +1,5 @@
 from datetime import datetime
-
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Eastleigh Borough Council"
@@ -10,6 +8,8 @@ URL = "https://eastleigh.gov.uk"
 TEST_CASES = {
     "100060319000": {"uprn": 100060319000},
     "100060300958": {"uprn": "100060300958"},
+    "100060306006": {"uprn": "100060306006"},
+    "10009587286": {"uprn": "10009587286"}
 }
 
 
@@ -23,42 +23,37 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://eastleigh.gov.uk/waste-bins-and-recycling/collection-dates/your-waste-bin-and-recycling-collections"
-
+API_URL = "https://whichb.in/next/"
+# API by Will Murphy | https://willmurphy.co.uk/
 
 class Source:
     def __init__(self, uprn: str | int):
-        self._uprn: str | int = uprn
+        self._uprn = uprn
 
     def fetch(self):
-        args = {"uprn": self._uprn}
+        apiurl = f"{API_URL}{self._uprn}"
 
-        # get json file
-        r = requests.get(API_URL, params=args)
+        # Make the API call
+        r = requests.get(apiurl)
         r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        dls = soup.find_all("dl")
-
+        data = r.json()
+        
         entries = []
 
-        for dl in dls:
-            dts = dl.findAll("dt")
-            for dt in dts:
-                dd = dt.find_next_sibling("dd")
-                if not dd:
-                    continue
+        for bin_item in data:
+            try:
+                date = datetime.strptime(bin_item["date"], "%d %b %Y").date()
+            except ValueError as e:
+                print("Date parsing error:", bin_item["date"], e)
+                continue
 
-                try:
-                    # Mon, 29 Apr 2024
-                    date = datetime.strptime(dd.text, "%a, %d %b %Y").date()
-                except ValueError:
-                    continue
+            name = bin_item["name"]
+            icon = next(
+                (icon for key, icon in ICON_MAP.items() if key.lower() in name.lower()),
+                None,
+            )
 
-                icon = ICON_MAP.get(
-                    dt.text.strip().split(" ")[0].lower()
-                )  # Collection icon
-                type = dt.text
-                entries.append(Collection(date=date, t=type, icon=icon))
+            entries.append(Collection(date=date, t=name, icon=icon))
 
         return entries
