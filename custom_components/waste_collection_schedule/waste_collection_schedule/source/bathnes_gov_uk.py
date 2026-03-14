@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Any, List, Mapping, Optional
 
 import requests
 
@@ -64,7 +64,10 @@ class Source:
         return uprn
 
     def _sanitise_search_val(self, val: Optional[str]) -> Optional[str]:
-        return str(val).strip() or None if val is not None else None
+        if val is None:
+            return None
+        stripped = str(val).strip()
+        return stripped or None
 
     def _check_required_args(self, message, *args):
         if missing := [name for name, val in args if not val]:
@@ -103,7 +106,7 @@ class Source:
             )
         return int(address["uprn"])
 
-    def _filter_addresses(self, address: str) -> bool:
+    def _filter_addresses(self, address: Mapping[str, Any]) -> bool:
         return f"|{self._housenameornumber.upper()}|" in address["payment_Address"]
 
     def _call_api(self, url: str):
