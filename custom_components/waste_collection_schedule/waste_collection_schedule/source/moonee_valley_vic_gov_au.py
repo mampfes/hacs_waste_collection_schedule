@@ -81,7 +81,6 @@ class Source:
         collection_day = attributes.get("collectday", "")
         
         # Convert ArcGIS timestamps (milliseconds since epoch) to dates
-        general_waste_timestamp = attributes.get("land_fill")
         recycling_timestamp = attributes.get("recy_stdat")
         fogo_timestamp = attributes.get("green_st_d")
         
