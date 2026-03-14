@@ -63,7 +63,7 @@ class Source:
             raise SourceArgumentException("uprn", message)
         return uprn
 
-    def _sanitise_search_val(self, val: Optional[str]) -> Optional[str]:
+    def _sanitise_search_val(self, val: Optional[str | int]) -> Optional[str]:
         if val is None:
             return None
         stripped = str(val).strip()
