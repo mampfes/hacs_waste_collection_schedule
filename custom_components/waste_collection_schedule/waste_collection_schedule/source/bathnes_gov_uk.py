@@ -1,10 +1,13 @@
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 import requests
 
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 
@@ -25,17 +28,49 @@ TYPES = {
     "Garden": {"icon": "mdi:leaf", "alias": "Garden Waste"},
 }
 
-API_COLLECTION_SUMMARY_URL = "https://api.bathnes.gov.uk/webapi/api/BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/{uprn}"
-API_ADDRESSES_SEARCH_URL = "https://api.bathnes.gov.uk/webapi/api/AddressesAPI/v2/search/{postcode}/150/true"
+API_BASE_URL = "https://api.bathnes.gov.uk/webapi/api/{}"
+API_COLLECTION_SUMMARY_URL = API_BASE_URL.format(
+    "BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/{uprn}"
+)
+API_ADDRESSES_SEARCH_URL = API_BASE_URL.format(
+    "AddressesAPI/v2/search/{postcode}/150/true"
+)
+
 
 class Source:
     def __init__(self, uprn=None, postcode=None, housenameornumber=None):
-        self._postcode = postcode
-        self._housenameornumber = str(housenameornumber)
-        self._uprn = uprn
+        self._uprn = self._sanitise_uprn_val(uprn)
+        self._postcode = self._sanitise_search_val(postcode)
+        self._housenameornumber = self._sanitise_search_val(housenameornumber)
+
+        if self._uprn is None:
+            self._check_required_args(
+                "Postcode and house name or number are required if UPRN is not provided",
+                ("postcode", self._postcode),
+                ("housenameornumber", self._housenameornumber),
+            )
+
+    def _sanitise_uprn_val(self, val: Optional[int | str]) -> Optional[int]:
+        if val is None:
+            return None
+        message = "UPRN must be a positive integer if provided"
+        try:
+            uprn = int(val)
+        except ValueError:
+            raise SourceArgumentException("uprn", message)
+        if uprn <= 0:
+            raise SourceArgumentException("uprn", message)
+        return uprn
+
+    def _sanitise_search_val(self, val: Optional[str]) -> Optional[str]:
+        return str(val).strip() or None if val is not None else None
+
+    def _check_required_args(self, message, *args):
+        if missing := [name for name, val in args if not val]:
+            raise SourceArgumentExceptionMultiple(missing, message)
 
     def fetch(self) -> List[Collection]:
-        if self._uprn is None:  
+        if self._uprn is None:
             self._uprn = self._get_uprn()
 
         entries = self._call_api(API_COLLECTION_SUMMARY_URL.format(uprn=self._uprn))
@@ -51,8 +86,12 @@ class Source:
             if (isodate := entry.get(f"{date_type}CollectionDate"))
         ]
 
-    def _get_uprn(self) -> str:
-        addresses = self._call_api(API_ADDRESSES_SEARCH_URL.format(postcode=self._postcode))
+    def _get_uprn(self) -> int:
+        addresses = self._call_api(
+            API_ADDRESSES_SEARCH_URL.format(postcode=self._postcode)
+        )
+        if not addresses:
+            raise SourceArgumentNotFound("postcode", self._postcode)
 
         address = next(filter(self._filter_addresses, addresses), None)
         if address is None:
@@ -63,7 +102,7 @@ class Source:
             )
         return int(address["uprn"])
 
-    def _filter_addresses(self, address) -> bool:
+    def _filter_addresses(self, address: str) -> bool:
         return f"|{self._housenameornumber.upper()}|" in address["payment_Address"]
 
     def _call_api(self, url: str):
