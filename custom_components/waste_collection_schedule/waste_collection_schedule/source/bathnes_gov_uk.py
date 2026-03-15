@@ -97,17 +97,26 @@ class Source:
         if not addresses:
             raise SourceArgumentNotFound("postcode", self._postcode)
 
-        address = next(filter(self._filter_addresses, addresses), None)
+        address = next(filter(self._filter_address, addresses), None)
         if address is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "housenameornumber",
                 self._housenameornumber,
-                [a["payment_Address"].split("|")[1] for a in addresses],
+                filter(None, [self._address_housenameornumber(a) for a in addresses]),
             )
         return int(address["uprn"])
 
-    def _filter_addresses(self, address: Mapping[str, Any]) -> bool:
-        return f"|{self._housenameornumber.upper()}|" in address["payment_Address"]
+    def _filter_address(self, address: Mapping[str, Any]) -> bool:
+        return (
+            self._address_housenameornumber(address).casefold()
+            == self._housenameornumber.casefold()
+        )
+
+    def _address_housenameornumber(self, address: Mapping[str, Any]) -> str:
+        parts = str(address.get("payment_Address", "")).split("|")
+        if len(parts) < 2:
+            return None
+        return parts[1].strip()
 
     def _call_api(self, url: str):
         r = requests.get(url, timeout=REQUEST_TIMEOUT)
