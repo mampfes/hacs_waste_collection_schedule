@@ -107,12 +107,13 @@ class Source:
         return int(address["uprn"])
 
     def _filter_address(self, address: Mapping[str, Any]) -> bool:
+        housenameornumber = self._address_housenameornumber(address)
         return (
-            self._address_housenameornumber(address).casefold()
-            == self._housenameornumber.casefold()
+            housenameornumber is not None
+            and housenameornumber.casefold() == self._housenameornumber.casefold()
         )
 
-    def _address_housenameornumber(self, address: Mapping[str, Any]) -> str:
+    def _address_housenameornumber(self, address: Mapping[str, Any]) -> Optional[str]:
         parts = str(address.get("payment_Address", "")).split("|")
         if len(parts) < 2:
             return None
