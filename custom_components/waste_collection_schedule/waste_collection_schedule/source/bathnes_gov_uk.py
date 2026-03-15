@@ -57,7 +57,7 @@ class Source:
         message = "UPRN must be a positive integer if provided"
         try:
             uprn = int(val)
-        except ValueError:
+        except (ValueError, TypeError):
             raise SourceArgumentException("uprn", message)
         if uprn <= 0:
             raise SourceArgumentException("uprn", message)
