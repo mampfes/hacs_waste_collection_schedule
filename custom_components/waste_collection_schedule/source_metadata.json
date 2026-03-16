@@ -1550,6 +1550,11 @@
     "howto": {},
     "urls": {}
   },
+  "western_bay_of_plenty_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/western_bay_of_plenty_nz.md",
+    "howto": {},
+    "urls": {}
+  },
   "waipa_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/waipa_nz.md",
     "howto": {},
