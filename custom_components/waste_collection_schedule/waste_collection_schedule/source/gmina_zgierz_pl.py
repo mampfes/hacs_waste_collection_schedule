@@ -10,7 +10,7 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 
 TITLE = "Gmina Zgierz"
 DESCRIPTION = "Source for Gmina Zgierz garbage collection"
-URL = "https://bip.gminazgierz.pl"
+URL = "https://gminazgierz.pl"
 TEST_CASES = {
     "Grotniki": {"location_name": "Grotniki"},
     "Biała": {"location_name": "Biała"},
@@ -20,7 +20,7 @@ TEST_CASES = {
 
 _LOGGER = logging.getLogger(__name__)
 
-API_URL = "https://bip.gminazgierz.pl/api/articles/58674"
+API_URL = "https://bip.gminazgierz.pl/api/articles/59717"
 
 ICON_MAP = {
     "Segregowane i zmieszane": "mdi:trash-can",

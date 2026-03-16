@@ -47,9 +47,10 @@ API_URLS = {
 }
 
 HEADERS = {
-    "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0",
-    "accept": "application/json, text/javascript, */*; q=0.01",
-    "Referer": "https://www.blacktown.nsw.gov.au/My-Neighbourhood",
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+    "Accept": "text/plain, */*; q=0.01",
+    "Referer": "https://www.blacktown.nsw.gov.au/Services/Waste-services-and-collection/Bin-collection-and-new-service-delivery-days",
+    "X-Requested-With": "XMLHttpRequest",
 }
 
 

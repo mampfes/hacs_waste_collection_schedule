@@ -11,6 +11,7 @@ TEST_CASES = {
     "GU14": {"uprn": "100060551749"},
 }
 
+HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -27,7 +28,7 @@ class Source:
 
     def fetch(self):
         params = {"selectedAddress": self._uprn, "weeks": "16"}
-        r = requests.get(API_URL, params=params)
+        r = requests.get(API_URL, params=params, headers=HEADERS)
         r.raise_for_status()
         data = r.json()
 

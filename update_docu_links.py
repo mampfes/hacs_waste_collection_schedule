@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import hashlib
 import importlib
 import inspect
 import json
@@ -70,6 +71,52 @@ def sort_lang_param_dict(d: dict[str, dict[str, T]]) -> dict[str, dict[str, T]]:
     return d
 
 
+def extract_urls_from_text(text: str) -> Tuple[str, dict[str, str]]:
+    """Extract URLs from text and return cleaned text with placeholder.
+
+    Removes both plain URLs (http://.../https://...) and Markdown links ([text](url)).
+
+    Returns:
+        Tuple[str, list[str]]: cleaned text with placeholders, list of extracted URLs
+    """
+    urls: dict[str, str] = {}
+    cleaned_text = text
+
+    def url_to_placeholder(url: str) -> str:
+        url = url.split("://", 1)[-1].casefold()
+        url = re.sub(r"[^a-z0-9]", "_", url).strip(
+            "_"
+        )  # replace non alphanumeric characters with underscore
+        if len(url) > 100:  # for long urls, we hash to avoid too long placeholders
+            url = hashlib.sha1(url.encode()).hexdigest()[:10]
+        return f"url_{url}"
+
+    # Extract markdown links [text](url)
+    def extract_markdown_link(match: re.Match) -> str:
+        url = match.group(2)
+        url_placeholder = url_to_placeholder(url)
+        urls[url_placeholder] = url
+        # Keep the link text but remove the URL part
+        return match.group(1) + " (" + url_placeholder + ")"
+
+    for match in re.finditer(r"\[([^\]]+)\]\(([^\)]+)\)", cleaned_text):
+        replace = extract_markdown_link(match)
+        cleaned_text = cleaned_text.replace(match.group(0), f"{{{replace}}}")
+
+    # Extract plain URLs (http://... or https://...)
+    def extract_plain_url(match: re.Match) -> str:
+        url = match.group(0)
+        url_placeholder = url_to_placeholder(url)
+        urls[url_placeholder] = url
+        return url_placeholder
+
+    for match in re.finditer(r"https?://[^\s]+", cleaned_text):
+        replace = extract_plain_url(match)
+        cleaned_text = cleaned_text.replace(match.group(0), f"{{{replace}}}")
+
+    return cleaned_text.strip(), urls
+
+
 class SourceInfo:
     def __init__(
         self,
@@ -92,8 +139,27 @@ class SourceInfo:
         self._params = sorted(params)
         self._extra_info_default_params = sort_param_dict(extra_info_default_params)
 
+        url_placeholders: dict[str, str] = {}
+
+        def extract_urls_lang(lang_dict: dict[str, str]) -> dict[str, str]:
+            return_val = {}
+            for param, translation in lang_dict.items():
+                cleaned_translation, urls = extract_urls_from_text(translation)
+                return_val[param] = cleaned_translation
+                url_placeholders.update(urls)
+            return return_val
+
+        def extract_urls(
+            lang_dict: dict[str, dict[str, str]],
+        ) -> dict[str, dict[str, str]]:
+            return {
+                param: extract_urls_lang(translations)
+                for param, translations in lang_dict.items()
+            }
+
         self._custom_param_translation = default_translations(params)
         self._custom_param_translation.update(custom_param_translation)
+        self._custom_param_translation = extract_urls(self._custom_param_translation)
 
         # sort alphabetically
         self._custom_param_translation = sort_lang_param_dict(
@@ -102,6 +168,9 @@ class SourceInfo:
 
         self._custom_param_description = default_descriptions(params)
         self._custom_param_description.update(custom_param_description)
+        self._custom_param_description = extract_urls(self._custom_param_description)
+        self._url_placeholders = url_placeholders
+
         self._custom_param_description = sort_lang_param_dict(
             self._custom_param_description
         )
@@ -174,6 +243,10 @@ class SourceInfo:
     @property
     def custom_howto(self):
         return self._custom_howto
+
+    @property
+    def url_placeholders(self):
+        return self._url_placeholders
 
 
 class IcsSourceInfo(SourceInfo):
@@ -256,7 +329,7 @@ def update_edpevent_se(modules: dict[str, ModuleType]):
 
     str = ""
     for provider, data in sorted(services.items()):
-        str += f'- `{provider}`: {data["title"]}\n'
+        str += f"- `{provider}`: {data['title']}\n"
 
     _patch_file("doc/source/edpevent_se.md", "service", str)
 
@@ -373,6 +446,8 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
                 url=e.get("url", url),
                 country=e.get("country", country),
                 params=params,
+                custom_param_translation=param_translations,
+                custom_param_description=param_descriptions,
                 extra_info_default_params=e.get("default_params", {}),
                 custom_howto=howto,
             )
@@ -524,6 +599,8 @@ def beautify_url(url):
 
 def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     output: dict[str, list[dict[str, str | dict[str, Any]]]] = {}
+    source_metadata_by_module: dict[str, dict[str, Any]] = {}
+
     for country in sorted(countries):
         output[country] = []
         for e in sorted(
@@ -543,6 +620,16 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
                     "id": id,
                 }
             )
+
+            # Build metadata for each module (store once per module)
+            if module not in source_metadata_by_module:
+                doc_url = DOC_URL_BASE + e.filename
+                source_metadata_by_module[module] = {
+                    "docs_url": doc_url,
+                    "howto": e.custom_howto,
+                    "urls": e.url_placeholders,
+                }
+
     with open(
         "custom_components/waste_collection_schedule/sources.json",
         "w",
@@ -550,9 +637,14 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     ) as f:
         f.write(json.dumps(output, indent=2))
 
+    # Save metadata separately (for runtime use)
+    metadata_file = "custom_components/waste_collection_schedule/source_metadata.json"
+    with open(metadata_file, "w", encoding="utf-8") as f:
+        json.dump(source_metadata_by_module, f, indent=2, ensure_ascii=False)
+
 
 def get_custom_translations(
-    countries: dict[str, list[SourceInfo]]
+    countries: dict[str, list[SourceInfo]],
 ) -> Tuple[
     dict[str, dict[str, dict[str, str | None]]],
     dict[str, dict[str, dict[str, str | None]]],
@@ -697,9 +789,9 @@ def update_json(
                     languages[lang] = " ".join(
                         [s.capitalize() for s in split_camel_and_snake_case(param)]
                     )
-                translations["config"]["step"][f"args_{module}"]["data"][
-                    param
-                ] = languages[lang]
+                translations["config"]["step"][f"args_{module}"]["data"][param] = (
+                    languages[lang]
+                )
                 translations["config"]["step"][f"reconfigure_{module}"]["data"][
                     param
                 ] = languages[lang]
@@ -707,12 +799,13 @@ def update_json(
             for param, languages in param_descriptions.get(module, {}).items():
                 if languages.get(lang, None) is None:
                     continue
+                description = languages[lang]
                 translations["config"]["step"][f"args_{module}"]["data_description"][
                     param
-                ] = languages[lang]
+                ] = description
                 translations["config"]["step"][f"reconfigure_{module}"][
                     "data_description"
-                ][param] = languages[lang]
+                ][param] = description
 
             module_howto = source_howto.get(module, {})
 
@@ -720,15 +813,11 @@ def update_json(
                 module_howto.get(lang, None) or module_howto.get("en", None) or ""
             )
             howto_str = format_howto(howto_str)
-            translations["config"]["step"][f"args_{module}"][
-                "description"
-            ] = translations["config"]["step"]["args"]["description"].format(
-                howto=howto_str, docs_url=source_doc_url.get(module, "")
+            translations["config"]["step"][f"args_{module}"]["description"] = (
+                translations["config"]["step"]["args"]["description"]
             )
-            translations["config"]["step"][f"reconfigure_{module}"][
-                "description"
-            ] = translations["config"]["step"]["reconfigure"]["description"].format(
-                howto=howto_str, docs_url=source_doc_url.get(module, "")
+            translations["config"]["step"][f"reconfigure_{module}"]["description"] = (
+                translations["config"]["step"]["reconfigure"]["description"]
             )
 
         with open(
@@ -831,7 +920,7 @@ def update_awido_de(modules: dict[str, ModuleType]):
 
     str = ""
     for service in sorted(services, key=lambda s: s["service_id"]):
-        str += f'- `{service["service_id"]}`: {service["title"]}\n'
+        str += f"- `{service['service_id']}`: {service['title']}\n"
 
     _patch_file("doc/source/awido_de.md", "service", str)
 
@@ -847,7 +936,7 @@ def update_ctrace_de(modules: dict[str, ModuleType]):
     for service in sorted(
         services.keys(), key=lambda service: services[service]["title"]
     ):
-        str += f'| {services[service]["title"]} | `{service}` |\n'
+        str += f"| {services[service]['title']} | `{service}` |\n"
 
     _patch_file("doc/source/c_trace_de.md", "service", str)
 
@@ -861,7 +950,7 @@ def update_citiesapps_com(modules: dict[str, ModuleType]):
 
     str = "|City|Website|\n|-|-|\n"
     for service in sorted(services, key=lambda service: service["title"]):
-        str += f'| {service["title"]} | [{beautify_url(service["url"])}]({service["url"]}) |\n'
+        str += f"| {service['title']} | [{beautify_url(service['url'])}]({service['url']}) |\n"
 
     _patch_file("doc/source/citiesapps_com.md", "service", str)
 

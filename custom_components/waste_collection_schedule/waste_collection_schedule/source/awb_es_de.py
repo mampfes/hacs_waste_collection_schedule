@@ -1,3 +1,5 @@
+import ssl
+
 import cloudscraper
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -13,20 +15,22 @@ TEST_CASES = {
     "Kohlberg": {"city": "Kohlberg", "street": "alle Straßen"},
 }
 
+
 class Source:
-    def __init__(self, city, street=None):
+    def __init__(self, city: str, street: str | None = None):
         self._city = city
         self._street = street
         self._ics = ICS()
 
-    def _validate_city(self):
+    def _validate_city(self) -> None:
         data = {
             "search": self._city,
             "parent": "",
             "kind": "removaldate.city",
         }
         r = self._session.post(
-            "https://www.awb-es.de/statics/abfallplus/search.json.php", data=data
+            "https://www.awb-es.de/statics/abfallplus/search.json.php",
+            data=data,
         )
         r.raise_for_status()
         suggestsion = r.json()["suggestions"]
@@ -40,7 +44,7 @@ class Source:
             suggestions=[suggestion["value"] for suggestion in suggestsion],
         )
 
-    def _validate_street(self):
+    def _validate_street(self) -> None:
         data = {
             "search": self._street,
             "parent": self._city,
@@ -52,6 +56,7 @@ class Source:
         r.raise_for_status()
         suggestsion = r.json()["suggestions"]
         for suggestion in suggestsion:
+            assert self._street is not None
             if suggestion["value"].lower() == self._street.lower():
                 return
         raise SourceArgumentNotFoundWithSuggestions(
@@ -60,8 +65,13 @@ class Source:
             suggestions=[suggestion["value"] for suggestion in suggestsion],
         )
 
-    def fetch(self):
-        self._session = cloudscraper.create_scraper()
+    def fetch(self) -> list[Collection]:
+        ssl_context = ssl.create_default_context()
+        ssl_context.set_ciphers("DEFAULT@SECLEVEL=1")
+        ssl_context.check_hostname = False
+        ssl_context.verify_mode = ssl.CERT_NONE
+
+        self._session = cloudscraper.create_scraper(ssl_context=ssl_context)
 
         params = {
             "city": self._city,

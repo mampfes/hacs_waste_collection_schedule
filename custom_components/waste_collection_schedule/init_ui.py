@@ -319,6 +319,28 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
                 if "bezirk" in new_data["args"]:
                     del new_data["args"]["bezirk"]
 
+        if config_entry.version < 2 or (
+            config_entry.version == 2 and config_entry.minor_version < 13
+        ):
+            # Remove deprecated region arg for afvalstoffendienst_nl
+            if new_data.get("name", "") == "afvalstoffendienst_nl":
+                if "region" in new_data["args"]:
+                    _LOGGER.info(
+                        "Migrating afvalstoffendienst_nl source by dropping region argument"
+                    )
+                    del new_data["args"]["region"]
+            # Migrate Cambridge City and South Cambs to Greater Cambridge Waste
+            if new_data.get("name", "") == "alw_wf_de":
+                _LOGGER.info("Migrating alw_wf_de to jumomind_de")
+                new_data["name"] = "jumomind_de"
+
+                new_data["args"]["service_id"] = "wol"
+                # map across old args
+                new_data["args"]["city"] = new_data["args"]["ort"]
+                del new_data["args"]["ort"]
+                new_data["args"]["street"] = new_data["args"]["strasse"]
+                del new_data["args"]["strasse"]
+
         hass.config_entries.async_update_entry(
             config_entry,
             data=new_data,

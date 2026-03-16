@@ -4,7 +4,7 @@ import re
 from typing import Any
 
 import requests
-from dateutil.rrule import MONTHLY, WEEKLY, rrule, weekday
+from dateutil.rrule import WEEKLY, rrule, weekday
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
@@ -211,20 +211,6 @@ class Source:
         else:
             return start_date <= date <= end_date
 
-    def _find_start_date_for_week_parity(
-        self, start: datetime.date, iso_weekday: int, want_even: bool
-    ) -> datetime.date:
-        """Find the first date >= start that matches the weekday and week parity."""
-        current = start
-        # Any 14-day period contains each weekday twice: once odd, once even
-        for _ in range(14):
-            if current.isoweekday() == iso_weekday:
-                is_even = current.isocalendar()[1] % 2 == 0
-                if is_even == want_even:
-                    return current
-            current += datetime.timedelta(days=1)
-        raise ValueError(f"Invalid weekday: {iso_weekday}")
-
     def _parse_days(self, element: str) -> list[int]:
         """Parse a frequency element into a list of weekday numbers (1-7).
 
@@ -232,39 +218,46 @@ class Source:
         """
         return [int(d) for d in element] if element.isdigit() else []
 
-    def _generate_biweekly_dates(
+    def _generate_weekly_dates(
         self,
-        element: str,
-        want_even: bool,
+        elements: list[str],
         today: datetime.date,
         end_date: datetime.date,
     ) -> list[datetime.date]:
-        """Generate dates for specific weekdays on odd or even ISO weeks."""
+        """Generate dates for a 4-week cycle pattern.
+
+        Uses formula: (ISO_week - 1) % 4 == position
+        - 2-element patterns are expanded to 4: [a,b] → [a,b,a,b]
+        - Position 0,2 = odd weeks, Position 1,3 = even weeks
+        """
         dates: list[datetime.date] = []
-        for day in self._parse_days(element):
-            start = self._find_start_date_for_week_parity(today, day, want_even)
-            rule = rrule(
-                WEEKLY,
-                interval=2,
-                dtstart=start,
-                until=end_date,
-                byweekday=weekday(day - 1),
-            )
-            dates.extend(dt.date() for dt in rule if dt.date() >= today)
+        for i, element in enumerate(elements):
+            for day in self._parse_days(element):
+                rule = rrule(
+                    WEEKLY,
+                    dtstart=today,
+                    until=end_date,
+                    byweekday=weekday(day - 1),
+                )
+                dates.extend(
+                    dt.date() for dt in rule if (dt.isocalendar()[1] - 1) % 4 == i
+                )
         return dates
 
     def _generate_collection_dates(
         self, frequency: str, frequency_season: str | None
     ) -> list[datetime.date]:
         """
-        Generate collection dates directly from OLO frequency string using rrule.
+        Generate collection dates from OLO frequency string using a 4-week cycle.
+
+        All patterns use formula: (ISO_week - 1) % 4 == position
 
         Frequency formats:
         - "[4,4]" - every week on Thursday (day 4)
         - "[-,4]" - even ISO weeks only on Thursday
         - "[4,-]" - odd ISO weeks only on Thursday
         - "[25,25]" - Tuesday (2) and Friday (5) every week
-        - "[-,-,2,-]" - monthly: 3rd Tuesday of each month
+        - "[-,-,2,-]" - 4-week cycle: Tuesday in weeks where (week-1)%4 == 2
         - "[4,4];[5,5]" - seasonal patterns separated by semicolon
 
         Season format: "01/04-31/10, 01/11-31/03" (day/month ranges)
@@ -300,25 +293,15 @@ class Source:
             elements = [e.strip() for e in content.split(",")]
             pattern_dates: list[datetime.date] = []
 
-            if len(elements) == 4:
-                # Monthly pattern: [-,-,2,-] means Tuesday on 3rd week of month
-                for i, e in enumerate(elements):
-                    if e.isdigit():
-                        rule = rrule(
-                            MONTHLY,
-                            dtstart=today,
-                            until=end_date,
-                            byweekday=weekday(int(e) - 1),
-                            bysetpos=i + 1,
-                        )
-                        pattern_dates.extend(dt.date() for dt in rule)
+            # Normalize 2-element to 4-element: [a,b] → [a,b,a,b]
+            if len(elements) == 2:
+                elements = elements * 2
 
-            elif len(elements) == 2:
+            if len(elements) == 4:
+                # 4-week cycle: position = (ISO_week - 1) % 4
+                # For 2-element patterns expanded to 4: positions 0,2 = odd weeks, 1,3 = even
                 pattern_dates.extend(
-                    self._generate_biweekly_dates(elements[0], False, today, end_date)
-                )
-                pattern_dates.extend(
-                    self._generate_biweekly_dates(elements[1], True, today, end_date)
+                    self._generate_weekly_dates(elements, today, end_date)
                 )
 
             # Apply season filter if this pattern has a corresponding season

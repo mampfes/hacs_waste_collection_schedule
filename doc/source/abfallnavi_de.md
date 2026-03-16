@@ -78,6 +78,7 @@ Your serviceID can be found in the list below. `ort`, `strasse` and `hausnummer`
 | Stadt Cuxhaven | cux |
 | Stadt Frankenthal | frankenthal |
 | Abfallwirtschaftsverband Lippe | awvlippe |
+| Gemeinde Kranenburg | kranenburg |
 <!--End of service section-->
 
 

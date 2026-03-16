@@ -100,6 +100,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "zone": "Zone",
     },
     "it": {
+        "address": "Indirizzo",
         "addressNo": "Indirizzo Numero",
         "api_key": "Chiave API",
         "bill_number": "Numero della bolletta",
@@ -206,6 +207,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "abf_hausnr": "Numéro civique",
         "abf_strasse": "Rue",
         "abf_suche": "Recherche",
+        "address": "Adresse",
         "address_name_number": "Numéro et nom de rue",
         "bezirk": "District",
         "gemeinde": "Municipalité",

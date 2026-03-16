@@ -4,13 +4,13 @@ url: https://seon.ch
 country: ch
 howto:
   en: |
-    - Go to <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370>
-    - Click on `Entsorgungskalender Google` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.
-    - Use this link as the `url` parameter.
+    - Currently <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370> provides only a PDF version of the waste schedule
+    - Because of this use the RAW link to the ics file within repository <https://github.com/starwarsfan/entsorgungskalender>
+    - Use <https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics> as the `url` parameter.
   de: |
-    - Gehe zu <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370>
-    - Klicke auf `Entsorgungskalender Google`, um den Link zum Entsorgungskalender zu erhalten. Ggf. `URL in die Zwischenablage kopieren` verwenden.
-    - `url`im der Beispielkonfiguration mit der kopierten URL ersetzen.
+    - Aktuell stellt <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370> leider nur die PDF-Version zur Verfügung
+    - Daher bitte den RAW-Link zum ics-File im Repository <https://github.com/starwarsfan/entsorgungskalender> verwenden
+    - `url` in der Beispielkonfiguration mit <https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics> ersetzen.
 test_cases:
   Oberdorfstrasse 11, 5703 Seon:
-    url: https://www.seon.ch/public/upload/assets/7330/Entsorgungskalender_Outlook%202025.ics?fp=1
+    url: https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics

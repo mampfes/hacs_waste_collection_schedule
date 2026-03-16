@@ -1,6 +1,6 @@
 # Afvalstoffendienst.nl
 
-Support for schedules provided by [Afvallstoffendienst.nl](https://www.afvalstoffendienst.nl/), serving 's Hertogenbosch, Heusden, Vught, Oisterwijk, Altena, Bernheze. Netherlands.
+Support for schedules provided by [Afvallstoffendienst.nl](https://www.afvalstoffendienst.nl/), serving 's Hertogenbosch, Heusden, Vught, Oisterwijk, Altena, Bernheze. Netherlands. The source now talks directly to the afvalstoffendienst API using postcode and house number (with optional addition); the `region` parameter is no longer used.
 
 ## Configuration via configuration.yaml
 
@@ -9,21 +9,17 @@ waste_collection_schedule:
     sources:
     - name: afvalstoffendienst_nl
       args:
-        region: REGION
         postcode: POSTCODE
-        house_number: "HOUSSE NUMBER (huisnummer)"
-        addition: ADDITION (toevoeging)
+        house_number: "HOUSE NUMBER (huisnummer)"
+        addition: "ADDITION (toevoeging/huisletter)"
 ```
 
 ### Configuration Variables
 
-**region**
-*(String) (required)* should be one of `heusden`, `vught`, `oisterwijk`, `altena`, `bernheze`, `s-hertogenbosch`
-
-**postcode**  
+**postcode**
 *(String) (required)*
 
-**house_number**  
+**house_number**
 *(String | Integer) (required)*
 
 **addition**  
@@ -36,7 +32,6 @@ waste_collection_schedule:
     sources:
     - name: afvalstoffendienst_nl
       args:
-        region: s-hertogenbosch
         postcode: 5151MS
         house_number: "37"
 ```
@@ -46,9 +41,8 @@ waste_collection_schedule:
     sources:
     - name: afvalstoffendienst_nl
       args:
-        region: heusden
         postcode: 5256EJ
-        house_number: 44 
+        house_number: 44
         addition: "C"
 ```
 

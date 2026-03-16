@@ -1,6 +1,7 @@
+import re
 from datetime import datetime
 
-import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
@@ -26,20 +27,23 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        session = requests.Session()
+        session = cloudscraper.create_scraper()
         # Start a session
         r = session.get("https://www.chichester.gov.uk/checkyourbinday")
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
 
         # Extract form submission url
-        form = soup.find("form", attrs={"id": "WASTECOLLECTIONCALENDARV5_FORM"})
+        form = soup.find(
+            "form", attrs={"id": re.compile(r"WASTECOLLECTIONCALENDARV\d+_FORM")}
+        )
+        ID = form["id"].split("_")[0]
         form_url = form["action"]
 
         # Submit form
         form_data = {
-            "WASTECOLLECTIONCALENDARV5_FORMACTION_NEXT": "Submit",
-            "WASTECOLLECTIONCALENDARV5_CALENDAR_UPRN": self._uprn,
+            f"{ID}_FORMACTION_NEXT": "Submit",
+            f"{ID}_CALENDAR_UPRN": self._uprn,
         }
         r = session.post(form_url, data=form_data)
         r.raise_for_status()
@@ -47,24 +51,22 @@ class Source:
         # Extract collection dates
         soup = BeautifulSoup(r.text, features="html.parser")
         entries = []
-        tables = soup.find_all("table", attrs={"class": "bin-collection-dates"})
-        # Data is presented in two tables side-by-side
-        for table in tables:
+        bin_divs = soup.find_all("div", class_=re.compile(r"binType-"))
+        for bin_div in bin_divs:
             # Each collection is a table row
-            data = table.find_all("tr")
-            for bin in data:
-                cells = bin.find_all("td")
-                # Ignore the header row
-                if len(cells) == 2:
-                    date = datetime.strptime(cells[0].text, "%d %B %Y").date()
-                    # Maintain backwards compatibility - it used to be General Waste and now it is General waste
-                    type = cells[1].text.title()
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=type,
-                            icon=ICON_MAP.get(type),
-                        )
-                    )
+            bin_type = bin_div.text.strip().title()
+            date_div = bin_div.find_next_sibling("div")
+            if not date_div:
+                continue
+
+            # date format "Friday 27 February 2026"
+            date = datetime.strptime(date_div.text.strip(), "%A %d %B %Y").date()
+            entries.append(
+                Collection(
+                    date=date,
+                    t=bin_type,
+                    icon=ICON_MAP.get(bin_type),
+                )
+            )
 
         return entries

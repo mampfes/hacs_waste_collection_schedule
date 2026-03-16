@@ -1,5 +1,6 @@
 import datetime
 import json
+import html
 import re
 from urllib.parse import urlparse, parse_qsl
 
@@ -67,7 +68,7 @@ class Source:
         match = self._calendar_url_pattern.search(message)
         if not match:
             raise Exception(f"Error: a message {message} does not contain a valid calendar url!")
-        calendar_url = match.group(1)
+        calendar_url = html.unescape(match.group(1))
         parsed_url = urlparse(calendar_url)
         params_list = parse_qsl(parsed_url.query)
         return {k: v for (k, v) in params_list}

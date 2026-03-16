@@ -39,6 +39,7 @@ ICON_MAP = {
     "blaue tonne": "mdi:recycle",
     "papier": "mdi:recycle",
     "bio": "mdi:leaf",
+    "glas": "mdi:glass-fragile",
     "schadstoffmobil": "mdi:car-battery",
 }
 
@@ -81,7 +82,7 @@ class Source:
         for d in dates:
             name = d[1]
             name = name.replace("Abfuhr: ", "")
-            entries.append(Collection(d[0], name, ICON_MAP.get(name.lower())))
+            entries.append(Collection(d[0], name, ICON_MAP.get(name.lower(), "mdi:trash-can")))
 
         return entries
 
@@ -115,20 +116,25 @@ class Source:
         return dates
 
     def get_calendar_from_site(self, year: int) -> str:
-        r = self._session.get(
+        payload = {
+            "orteId": self.city_code,
+            "strassenId": self.street_number,
+            "hausNr": f"'{self.house_number}'",
+            "dateiName": f"'Abfallkalender{year}.ics'",
+            "unixZeitOption": "-25200",
+            "fixedYear": str(year),
+        }
+
+        r = self._session.post(
             API_URL,
-            params={
-                "orteId": self.city_code,
-                "strassenId": self.street_number,
-                "fixedYear": str(year),
-                "hausNr": f"'{self.house_number}'",
-                "unixZeitOption": "0",
-                "dateiName": f"'Abfallkalender{str(year)}.ics'",
-            },
+            params=payload,
+            data=payload,
             headers={
                 "Accept": "application/json, text/plain;q=0.5, text/calendar",
-                "Accept-Encoding": "gzip, deflate, br",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "User-Agent": "Mozilla/5.0 (HomeAssistant)",
             },
+            timeout=30,
         )
 
         r.raise_for_status()
@@ -137,4 +143,4 @@ class Source:
             r.json()["d"]["ZeigeAbfallkalender"]["FileContents"]
         ).decode(
             "utf-8"
-        )  # r.text
+        )

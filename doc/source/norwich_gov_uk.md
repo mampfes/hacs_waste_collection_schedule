@@ -1,8 +1,6 @@
-# North Norfolk District Council
+# Norwich City Council
 
-Support for the next collection day provided by [Norwich City Council](https://maps.norwich.gov.uk/mynorwich/), serving Norwich, UK.
-
-Note that Norwich City Council does not provide a schedule, only the next collection day.
+Support for the next collection day provided by [Norwich City Council](https://www.norwich.gov.uk/bins-and-recycling), serving Norwich, UK.
 
 ## Configuration via configuration.yaml
 
@@ -11,12 +9,20 @@ waste_collection_schedule:
     sources:
     - name: norwich_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        property_name_or_number: PROPERTY_NAME_OR_NUMBER
+        street_name: STREET_NAME
+        postcode: POSTCODE
 ```
 
 ### Configuration Variables
 
-**uprn**  
+**property_name_or_number**  
+*(string) (required)*
+
+**street_name**  
+*(string) (required)*
+
+**postcode**  
 *(string) (required)*
 
 ## Example
@@ -26,9 +32,7 @@ waste_collection_schedule:
     sources:
     - name: norwich_gov_uk
       args:
-        uprn: "100090924499"
+        property_name_or_number": "33"
+        street_name": "Carrow Road"
+        postcode": "NR1 1HS"
 ```
-
-## How to find your `UPRN`
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
