@@ -123,6 +123,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Inner West Council (NSW)](/doc/source/innerwest_nsw_gov_au.md) / innerwest.nsw.gov.au
 - [Ipswich City Council](/doc/source/ipswich_qld_gov_au.md) / ipswich.qld.gov.au
 - [Kangaroo Island Council](/doc/source/frwa_com_au.md) / kangarooisland.sa.gov.au
+- [Kempsey Shire Council](/doc/source/kempsey_nsw_gov_au.md) / kempsey.nsw.gov.au
 - [Kiama City Council](/doc/source/kiama_nsw_gov_au.md) / kiama.nsw.gov.au
 - [Knox City Council](/doc/source/knox_vic_gov_au.md) / knox.vic.gov.au
 - [Ku-ring-gai Council](/doc/source/impactapps_com_au.md) / krg.nsw.gov.au

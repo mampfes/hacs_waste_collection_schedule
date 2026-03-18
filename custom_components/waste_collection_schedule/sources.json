@@ -599,6 +599,12 @@
       "id": "frwa_com_au"
     },
     {
+      "title": "Kempsey Shire Council",
+      "module": "kempsey_nsw_gov_au",
+      "default_params": {},
+      "id": "kempsey_nsw_gov_au"
+    },
+    {
       "title": "Kiama City Council",
       "module": "kiama_nsw_gov_au",
       "default_params": {},
