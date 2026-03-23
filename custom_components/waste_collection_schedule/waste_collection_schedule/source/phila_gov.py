@@ -57,14 +57,18 @@ class Source:
         return dts
 
     def check_holidays(self, hols: list[date], dt: date) -> date:
-        # collections shifted by 1 day if they fall on a holiday
-        # if adjusted day is also a holiday, it shifts again
-        if dt in hols:
-            x = dt + timedelta(days=1)
-            x = self.check_holidays(hols, x)
-        else:
-            x = dt
-        return x
+        # In Philadelphia, when a holiday falls on a weekday, all collections
+        # on or after that day in the same week (Mon-Fri) are shifted by 1 day.
+        # Find the Monday of the collection week.
+        week_start = dt - timedelta(days=dt.weekday())
+        week_end = week_start + timedelta(days=4)  # Friday
+        # Count holidays in this week that fall on or before the collection day
+        shift = sum(1 for h in hols if week_start <= h <= min(dt, week_end))
+        adjusted = dt + timedelta(days=shift)
+        # If the adjusted date itself lands on a holiday, shift again
+        while adjusted in hols:
+            adjusted += timedelta(days=1)
+        return adjusted
 
     def fetch(self) -> list[Collection]:
         s = requests.Session()
