@@ -57,6 +57,7 @@ PARAM_TRANSLATIONS = {
 
 # ### End of arguments affecting the configuration GUI ####
 
+
 class Source:
     def __init__(self, email: str, password: str, uprn: str | int | None = None):
         if not email:
@@ -81,7 +82,8 @@ class Source:
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, "html.parser")
-        token_input = soup.find("input", {"name": "__RequestVerificationToken"})
+        token_input = soup.find(
+            "input", {"name": "__RequestVerificationToken"})
 
         if not token_input:
             raise Exception("Unable to find anti-forgery token on login page")
@@ -98,7 +100,8 @@ class Source:
             "Input.RememberMe": "false",
         }
 
-        response = session.post(LOGIN_URL, data=login_data, allow_redirects=True)
+        response = session.post(
+            LOGIN_URL, data=login_data, allow_redirects=True)
         response.raise_for_status()
 
         # Check if login was successful
@@ -175,7 +178,7 @@ class Source:
                 Collection(
                     date=collection_date,
                     t=bin_type,
-                    icon=ICON_MAP.get(bin_type),
+                    icon=ICON_MAP.get(bin_type, "mdi:trash-can"),
                 )
             )
 
