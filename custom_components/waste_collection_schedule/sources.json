@@ -4360,7 +4360,9 @@
     {
       "title": "D\u011btmarovice (part Glembovec)",
       "module": "ics",
-      "default_params": {},
+      "default_params": {
+        "url": "https://raw.githubusercontent.com/aleswita/home-assistant/refs/heads/master/waste/detmarovice_glembovec.ics"
+      },
       "id": "ics_detmarovice_glembovec_cz"
     },
     {
