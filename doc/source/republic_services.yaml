@@ -1,0 +1,13 @@
+title: Republic Services
+url: https://www.republicservices.com
+country: US
+howto:
+  en: |
+    - Go to https://www.republicservices.com/schedule
+    - Enter your street address and ZIP code
+    - View your schedule
+    - Use the same street and ZIP in Home Assistant
+test_cases:
+  ParmaHeights:
+    street: "Mandalay Dr"
+    zip: "44130"
