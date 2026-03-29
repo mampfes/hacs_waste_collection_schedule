@@ -55,9 +55,9 @@ class Source:
         entries = []
         for job in r1.json()["jobsField"]:
             # "Empty Domestic Refuse 240L" -> "Domestic Refuse"
-            jobName = (
-                re.search(REGEX_JOB_NAME, job["jobField"]["nameField"]).group(1).strip()
-            )
+            raw_name = job["jobField"]["nameField"]
+            m = re.search(REGEX_JOB_NAME, raw_name)
+            jobName = m.group(1).strip() if m else raw_name
             entries.append(
                 Collection(
                     date=datetime.strptime(
