@@ -99,6 +99,7 @@ class Source:
         resp = self._session.post(
             ADDRESS_INFO_URL,
             data={"term": valuation_id},
+            timeout=REQUEST_TIMEOUT,
         )
         resp.raise_for_status()
 
