@@ -170,8 +170,10 @@ class Source:
         }
 
         r = self._session.get(api_url, params=params, headers=headers)
-        if r.status_code != 200:
-            raise Exception(f"Search API Error: {r.text}")
+        try:
+            r.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            raise Exception(f"Search API Error ({r.status_code}): {r.text}") from e
 
         result = r.json()
         if len(result) == 0:
