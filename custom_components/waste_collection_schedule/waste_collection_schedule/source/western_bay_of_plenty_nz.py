@@ -5,14 +5,7 @@ from xml.etree import ElementTree
 
 import requests
 
-try:
-    from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-except ModuleNotFoundError:
-    import sys
-    from pathlib import Path
-
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-    from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Western Bay of Plenty District Council"
 DESCRIPTION = "Source script for Western Bay of Plenty District Council kerbside collections via kerbsidecollective.co.nz"
@@ -23,6 +16,7 @@ TEST_CASES = {
 }
 
 API_URL = "https://kerbsidecollective.co.nz/wp-json/wbop/v1"
+REQUEST_TIMEOUT = 10
 ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Mixed Recycling": "mdi:recycle",
@@ -76,6 +70,7 @@ class Source:
         resp = self._session.post(
             ADDRESS_SEARCH_URL,
             data={"term": self._address},
+            timeout=REQUEST_TIMEOUT,
         )
         resp.raise_for_status()
 

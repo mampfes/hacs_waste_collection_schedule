@@ -11982,19 +11982,19 @@
       },
       "reconfigure_rotorua_lakes_council_nz": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr Details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Addresse"
+          "address": "Adresse"
         },
         "data_description": {}
       },
       "args_tauranga_govt_nz": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr Details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Addresse"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -12002,19 +12002,19 @@
       },
       "reconfigure_tauranga_govt_nz": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr Details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Addresse"
+          "address": "Adresse"
         },
         "data_description": {}
       },
       "args_western_bay_of_plenty_nz": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr Details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Addresse"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -12022,19 +12022,19 @@
       },
       "reconfigure_western_bay_of_plenty_nz": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr Details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Addresse"
+          "address": "Adresse"
         },
         "data_description": {}
       },
       "args_waipa_nz": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr Details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Addresse"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -12042,10 +12042,10 @@
       },
       "reconfigure_waipa_nz": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr Details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Addresse"
+          "address": "Adresse"
         },
         "data_description": {}
       },
