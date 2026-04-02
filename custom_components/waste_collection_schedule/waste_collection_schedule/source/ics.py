@@ -144,7 +144,7 @@ class Source:
         title_template: str = "{{date.summary}}",
         split_at: str | None = None,
         version: int | None = None,
-        verify_ssl: bool = True,
+        verify_ssl: bool = False,
         headers: dict = {},
     ):
         self._url = re.sub("^webcal", "https", url) if url else None

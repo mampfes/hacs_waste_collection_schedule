@@ -22,6 +22,7 @@ class Source:
 
     def fetch(self):
         s = requests.Session()
+        s.verify = False
         r = s.get(f"https://bincollection.newham.gov.uk/Details/Index/{self._property}")
 
         # Make a BS4 object
@@ -56,7 +57,7 @@ class Source:
                 .find_next("mark")
                 .next_sibling.strip()
             )
-            next_collection = datetime.strptime(date_string, "%d/%m/%Y").date()
+            next_collection = datetime.strptime(date_string, "%m/%d/%Y").date()
 
             entries.append(
                 Collection(
