@@ -48,30 +48,36 @@ def generate_source_py(
         param_init += f", {p}: str"
         param_store += f"        self._{p} = {p}\n"
 
+    if not param_store:
+        param_store = "        pass\n"
+
     test_case_params = ", ".join(f'"{p}": ""' for p in params)
 
-    return textwrap.dedent(f'''\
-        import requests
-        from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-        TITLE = "{title}"
-        DESCRIPTION = "Source for {title}."
-        URL = "{url}"
-        COUNTRY = "{country}"
-        TEST_CASES = {{
-            "Test_001": {{{test_case_params}}},
-        }}
-
-
-        class Source:
-            def __init__(self{param_init}):
-        {param_store if param_store else "        pass\\n"}
-            def fetch(self) -> list[Collection]:
-                # TODO: Implement data fetching
-                # The framework auto-detects icons from waste type names.
-                # To override an icon, pass icon="mdi:icon-name" to Collection().
-                raise NotImplementedError("Source not yet implemented")
-    ''')
+    lines = [
+        "import requests",
+        "from waste_collection_schedule import Collection  # type: ignore[attr-defined]",
+        "",
+        f'TITLE = "{title}"',
+        f'DESCRIPTION = "Source for {title}."',
+        f'URL = "{url}"',
+        f'COUNTRY = "{country}"',
+        "TEST_CASES = {",
+        f'    "Test_001": {{{test_case_params}}},',
+        "}",
+        "",
+        "",
+        "class Source:",
+        f"    def __init__(self{param_init}):",
+        param_store.rstrip("\n"),
+        "",
+        "    def fetch(self) -> list[Collection]:",
+        "        # TODO: Implement data fetching",
+        "        # The framework auto-detects icons from waste type names.",
+        '        # To override an icon, pass icon="mdi:icon-name" to Collection().',
+        '        raise NotImplementedError("Source not yet implemented")',
+        "",
+    ]
+    return "\n".join(lines) + "\n"
 
 
 def generate_source_md(title: str, url: str) -> str:
@@ -144,17 +150,17 @@ def main():
         f.write(doc_content)
     print(f"Created: {doc_path}")
 
-    print(f"\nNext steps:")
+    print("\nNext steps:")
     print(f"  1. Implement the fetch() method in {source_path}")
-    print(f"  2. Fill in test cases with real data")
+    print("  2. Fill in test cases with real data")
     print(f"  3. Update the documentation in {doc_path}")
-    print(f"  4. Run: python update_docu_links.py")
-    print(f"  5. Run: python -m pytest tests/")
-    print(f"\nNotes:")
-    print(f"  - ICON_MAP is NOT needed (framework auto-detects icons)")
-    print(f"  - PARAM_TRANSLATIONS is NOT needed for common params")
-    print(f"    (street, address, uprn, postcode, city, house_number, etc.)")
-    print(f"  - Only add PARAM_TRANSLATIONS for source-specific parameter names")
+    print("  4. Run: python update_docu_links.py")
+    print("  5. Run: python -m pytest tests/")
+    print("\nNotes:")
+    print("  - ICON_MAP is NOT needed (framework auto-detects icons)")
+    print("  - PARAM_TRANSLATIONS is NOT needed for common params")
+    print("    (street, address, uprn, postcode, city, house_number, etc.)")
+    print("  - Only add PARAM_TRANSLATIONS for source-specific parameter names")
 
 
 if __name__ == "__main__":
