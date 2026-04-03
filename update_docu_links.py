@@ -167,6 +167,20 @@ class SourceInfo:
         )
 
         self._custom_param_description = default_descriptions(params)
+
+        # If a parameter has any custom description, do not keep default descriptions
+        # for other languages. Mixing default + custom across locales can produce
+        # placeholder-set mismatches during Home Assistant translation validation.
+        custom_description_params = {
+            param
+            for lang_descriptions in custom_param_description.values()
+            for param in lang_descriptions
+        }
+        if custom_description_params:
+            for lang_descriptions in self._custom_param_description.values():
+                for param in custom_description_params:
+                    lang_descriptions.pop(param, None)
+
         self._custom_param_description.update(custom_param_description)
         self._custom_param_description = extract_urls(self._custom_param_description)
         self._url_placeholders = url_placeholders
