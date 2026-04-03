@@ -4848,6 +4848,12 @@
       "id": "ics_abfall_io_ics"
     },
     {
+      "title": "Abfall Lippe",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfall_lippe_de"
+    },
+    {
       "title": "Abfall Stuttgart",
       "module": "stuttgart_de",
       "default_params": {},

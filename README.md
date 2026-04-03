@@ -829,6 +829,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
+- [Abfall Lippe](/doc/ics/abfall_lippe_de.md) / abfall-lippe.de
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
 - [Abfall-Wirtschafts-Verband Nordschwaben](/doc/source/awido_de.md) / awv-nordschwaben.de
 - [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de

@@ -181,6 +181,7 @@ This source has been successfully tested with the following service providers:
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
+- [Abfall Lippe](/doc/ics/abfall_lippe_de.md) / abfall-lippe.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
 - [Abfallkalender Delmenhorst](/doc/ics/delmenhorst_de.md) / delmenhorst.de
 - [Abfallkalender Würzburg (ICS)](/doc/ics/wuerzburg_de.md) / wuerzburg.de
