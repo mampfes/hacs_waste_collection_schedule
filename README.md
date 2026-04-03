@@ -591,6 +591,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
 - [Stadtservice Korneuburg](/doc/source/korneuburg_stadtservice_at.md) / korneuburg.gv.at
 - [Stall](/doc/ics/muellapp_com.md) / muellapp.com
+- [Stallhofen](/doc/ics/stallhofen_gv_at.md) / stallhofen.gv.at
 - [Statzendorf](/doc/source/citiesapps_com.md) / statzendorf.at
 - [Stegersbach](/doc/source/citiesapps_com.md) / gemeinde.stegersbach.at
 - [Steinbrunn](/doc/source/citiesapps_com.md) / steinbrunn.at

@@ -1,0 +1,11 @@
+---
+title: Stallhofen
+url: https://www.stallhofen.gv.at
+country: at
+howto:
+  en: |
+    - The ICS calendar is available at <https://www.stallhofen.gv.at/veranstaltungen/kategorie/muellkalender/>.
+    - Use the URL `https://www.stallhofen.gv.at/veranstaltungen/kategorie/muellkalender/?ical=1&tribe_display=month` as the `url` parameter.
+test_cases:
+  Stallhofen:
+    url: "https://www.stallhofen.gv.at/veranstaltungen/kategorie/muellkalender/?ical=1&tribe_display=month"

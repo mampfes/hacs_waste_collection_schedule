@@ -115,6 +115,7 @@ This source has been successfully tested with the following service providers:
 - [St. Symvaro](/doc/ics/muellapp_com.md) / muellapp.com
 - [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
 - [Stall](/doc/ics/muellapp_com.md) / muellapp.com
+- [Stallhofen](/doc/ics/stallhofen_gv_at.md) / stallhofen.gv.at
 - [Steinfeld](/doc/ics/muellapp_com.md) / muellapp.com
 - [Stockenboi](/doc/ics/muellapp_com.md) / muellapp.com
 - [Strass im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
