@@ -9987,6 +9987,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "VUE Waltrop",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_vue_waltrop_de"
+    },
+    {
       "title": "V\u00f6hl",
       "module": "lobbe_app",
       "default_params": {

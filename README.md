@@ -1520,6 +1520,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Vettweiß](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Volkmarsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [VUE Waltrop](/doc/ics/vue_waltrop_de.md) / vue-waltrop.de
 - [Vöhl](/doc/source/lobbe_app.md) / lobbe.app
 - [Vöhringen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
