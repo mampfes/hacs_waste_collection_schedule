@@ -12887,6 +12887,12 @@
       "id": "hvcgroep_nl"
     },
     {
+      "title": "Gemeente Borsele",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_afvalkalender_borsele_nl"
+    },
+    {
       "title": "Gemeente Cranendonck",
       "module": "hvcgroep_nl",
       "default_params": {

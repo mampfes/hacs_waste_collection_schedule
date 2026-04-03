@@ -2000,6 +2000,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GAD](/doc/source/hvcgroep_nl.md) / gad.nl
 - [Gemeente Almere](/doc/source/ximmio_nl.md) / almere.nl
 - [Gemeente Berkelland](/doc/source/hvcgroep_nl.md) / gemeenteberkelland.nl
+- [Gemeente Borsele](/doc/ics/afvalkalender_borsele_nl.md) / borsele.nl
 - [Gemeente Cranendonck](/doc/source/hvcgroep_nl.md) / cranendonck.nl
 - [Gemeente Hellendoorn](/doc/source/ximmio_nl.md) / hellendoorn.nl
 - [Gemeente Lingewaard](/doc/source/hvcgroep_nl.md) / lingewaard.nl
