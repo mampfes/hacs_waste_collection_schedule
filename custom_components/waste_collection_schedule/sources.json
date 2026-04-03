@@ -9660,6 +9660,12 @@
       "id": "stadtservice_bruehl_de"
     },
     {
+      "title": "Stadtwerke Bergheim",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_swbm_de"
+    },
+    {
       "title": "Stadtwerke Erfurt, SWE",
       "module": "hausmuell_info",
       "default_params": {
