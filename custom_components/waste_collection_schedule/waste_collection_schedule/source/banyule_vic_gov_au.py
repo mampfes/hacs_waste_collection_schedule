@@ -139,7 +139,7 @@ class Source:
             waste_date = datetime.strptime(waste_date_match[1], "%d/%m/%Y").date()
 
             # Base icon on type
-            waste_icon = ICON_MAP.get(waste_type.lower())
+            waste_icon = None
 
             pickup_entries.append(Collection(waste_date, waste_type, waste_icon))
             _LOGGER.info(

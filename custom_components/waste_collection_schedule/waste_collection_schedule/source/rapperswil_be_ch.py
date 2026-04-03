@@ -44,6 +44,6 @@ class Source:
         dates = self._ics.convert(r.text.replace("X-WR-TIMEZONE','EUROPE/BERLIN:", ""))
         entries = []
         for d in dates:
-            entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1])))
+            entries.append(Collection(d[0], d[1], None))
 
         return entries

@@ -136,7 +136,7 @@ class Source:
             except ValueError:
                 continue
 
-            icon = ICON_MAP.get(bin_type.split("(")[0].strip().lower())
+            icon = None
             entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries

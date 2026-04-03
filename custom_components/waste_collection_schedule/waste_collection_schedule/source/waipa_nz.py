@@ -38,7 +38,7 @@ class Source:
         first_date = parts[1].split(",")[0]  # Extract "DD-MMM-YYYY"
         second_date = parts[2]  # Extract "DD-MMM-YYYY"
 
-        icon = ICON_MAP.get(collection_type)
+        icon = None
 
         return [
             Collection(

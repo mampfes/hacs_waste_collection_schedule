@@ -112,7 +112,7 @@ class Source:
         for child in div.find_all("div"):
             rubbish_type = child.find("h3").get_text()
             when = child.find("p").get_text()
-            if rubbish_type in ICON_MAP:
+            if True:
                 date = datetime.strptime(when, "%A %d %B %Y").date()
                 entries.append(
                     Collection(date=date, t=rubbish_type)

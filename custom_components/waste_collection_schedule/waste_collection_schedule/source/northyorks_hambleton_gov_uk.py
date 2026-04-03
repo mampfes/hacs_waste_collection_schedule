@@ -83,7 +83,7 @@ class Source:
             bin_type = item["Collection_Type"]
             date_str = item["Collection_Date"]
             date = datetime.strptime(date_str, "%Y-%m-%d").date()
-            icon = ICON_MAP.get(bin_type.upper().replace("COLLECTION", ""))
+            icon = None
             entries.append(
                 Collection(t=bin_type, date=date, icon=icon),
             )

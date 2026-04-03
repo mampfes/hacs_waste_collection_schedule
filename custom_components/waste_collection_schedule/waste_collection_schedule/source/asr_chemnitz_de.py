@@ -112,6 +112,6 @@ class Source:
         for d in dates:
             bin_type = d[1].replace("Entsorgung:", "").strip()
 
-            entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
+            entries.append(Collection(d[0], bin_type, None))
 
         return entries

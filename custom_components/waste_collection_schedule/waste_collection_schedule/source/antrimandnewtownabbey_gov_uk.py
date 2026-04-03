@@ -125,7 +125,7 @@ class Source:
             if not bin_type_tag:
                 continue
             bin_type = bin_type_tag.text.strip()
-            icon = ICON_MAP.get(bin_type)
+            icon = None
 
             frequency_p = div.select_one("p")
             frequency_days: int | None = None
@@ -194,6 +194,6 @@ class Source:
                 if not bin.text.strip():
                     continue
                 bin_type = bin.text.strip()
-                icon = ICON_MAP.get(bin_type)
+                icon = None
                 entries.append(Collection(date=date_, t=bin_type, icon=icon))
         return entries

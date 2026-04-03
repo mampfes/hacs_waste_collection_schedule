@@ -63,7 +63,7 @@ class Source:
         for bin in bin_data:
             bin_type = bin.get("wasteContainerUsageTypeDescription", "Unknown")
             date_list = bin.get("scheduleDateRange", [])
-            icon = ICON_MAP.get(bin_type, "mdi:delete-empty")
+            icon = None
 
             for date_str in date_list:
                 try:

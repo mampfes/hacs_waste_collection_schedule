@@ -38,7 +38,7 @@ class Source:
         for item in data:
             date = datetime.strptime(item["start"], "%Y-%m-%d").date()
             typ = item["title"]
-            icon = ICON_MAP.get(typ)
+            icon = None
             entries.append(Collection(date, typ, icon))
 
         return entries

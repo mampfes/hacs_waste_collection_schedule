@@ -37,7 +37,7 @@ class Source:
             bin_type = bin_type_tag.text
             # "Household Waste", "Mixed Recycling" & "Garden Waste"
             # bin_type = bin_type_tag.text.split(" - ")[0]
-            icon = ICON_MAP.get(bin_type.lower())
+            icon = None
 
             siblings = card.find_next_siblings("div", class_="mt-1")
             for sibling in siblings:

@@ -73,7 +73,7 @@ class Source:
                     Collection(
                         datetime.datetime.strptime(d, "%d.%m.%Y").date(),
                         waste_type,
-                        ICON_MAP.get(waste_type),
+                        None,
                     )
                 )
 

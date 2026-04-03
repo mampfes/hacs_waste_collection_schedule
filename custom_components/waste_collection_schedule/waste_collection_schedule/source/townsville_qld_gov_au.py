@@ -32,7 +32,7 @@ class Source:
             bin_type = d["title"]
             # date format like: 2024-01-03T00:00:00+00:00
             date = datetime.strptime(d["start"], "%Y-%m-%dT%H:%M:%S%z").date()
-            icon = ICON_MAP.get(bin_type)  # Collection icon
+            icon = None  # Collection icon
             entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries

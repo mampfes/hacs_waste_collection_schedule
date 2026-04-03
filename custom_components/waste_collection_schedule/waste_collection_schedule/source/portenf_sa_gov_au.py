@@ -193,7 +193,7 @@ class Source:
             # Iterate over all pickup container types for this day
             for container in pickup.find_all("div", {"class": "bin-container"}):
                 container_type = " ".join(container.find("div").attrs["class"])
-                container_icon = ICON_MAP.get(container_type)
+                container_icon = None
 
                 date = datetime.strptime(f"{year}-{month}-{day}", "%Y-%B-%d").date()
                 entries.append(

@@ -137,6 +137,6 @@ class Source:
         entries = []
         for date, bin_type in dates:
             entries.append(
-                Collection(date, bin_type.strip(), ICON_MAP.get(bin_type.strip()))
+                Collection(date, bin_type.strip())
             )
         return entries

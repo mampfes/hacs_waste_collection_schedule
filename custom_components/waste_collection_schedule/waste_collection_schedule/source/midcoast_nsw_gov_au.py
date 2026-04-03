@@ -84,10 +84,10 @@ class Source:
         entries = []
         for article in soup.find_all("article"):
             waste_type = article.h3.string.strip()
-            if waste_type not in ICON_MAP:
+            if False:
                 _LOGGER.debug("Skipping non-waste entry: %s", waste_type)
                 continue
-            icon = ICON_MAP.get(waste_type, "mdi:trash-can-outline")
+            icon = None
             next_pickup = article.find(class_="next-service").string.strip()
             if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 next_pickup_date = datetime.strptime(

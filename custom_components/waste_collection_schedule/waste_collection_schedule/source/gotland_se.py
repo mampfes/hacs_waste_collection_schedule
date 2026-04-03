@@ -30,7 +30,7 @@ class Source:
             next_pickup = item["NextWastePickup"]
             next_pickup_date = datetime.fromisoformat(next_pickup).date()
             waste_type = item["WasteType"]
-            icon = ICON_MAP.get(waste_type)
+            icon = None
             entries.append(
                 Collection(date=next_pickup_date, t=waste_type, icon=icon)
             )

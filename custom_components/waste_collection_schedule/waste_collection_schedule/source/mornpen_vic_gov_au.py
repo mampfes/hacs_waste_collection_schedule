@@ -79,7 +79,7 @@ class Source:
             if waste_type is None or waste_type == "Burning off":
                 continue
 
-            icon = ICON_MAP.get(waste_type, "mdi:trash-can-outline")
+            icon = None
 
             next_service_div = article.find("div", {"class": "next-service"})
             if next_service_div is None:

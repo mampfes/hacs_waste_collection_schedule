@@ -110,7 +110,7 @@ class Source:
 
         entries = []
         for date, bin_type in self._ics.convert(r.text):
-            icon = ICON_MAP.get(bin_type)  # Collection icon
+            icon = None  # Collection icon
             entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries

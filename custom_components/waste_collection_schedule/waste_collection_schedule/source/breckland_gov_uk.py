@@ -82,7 +82,7 @@ class Source:
                         data["nextcollection"], "%d/%m/%Y %H:%M:%S"
                     ).date(),
                     data["collectiontype"],
-                    ICON_MAP.get(data["collectiontype"]),
+                    None,
                 )
             )
 

@@ -46,6 +46,6 @@ class Source:
             date = datetime.strptime(date_str, "%d %B %Y").date()
             collection_types = collection_str.split(" and ")
             for col_type in collection_types:
-                icon = ICON_MAP.get(col_type.lower())
+                icon = None
                 entries.append(Collection(date=date, t=col_type, icon=icon))
         return entries

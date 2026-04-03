@@ -91,9 +91,9 @@ class Source:
         dates = self._ics.convert(response.text)
         entries = []
         for d in dates:
-            icon = ICON_MAP.get(d[1].split(" ")[0])
+            icon = None
             if icon is None:
-                icon = ICON_MAP.get(d[1])
+                icon = None
             entries.append(Collection(d[0], d[1], icon=icon))
 
         return entries

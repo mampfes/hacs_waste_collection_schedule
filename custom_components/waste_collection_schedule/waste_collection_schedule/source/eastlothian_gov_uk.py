@@ -127,7 +127,7 @@ class Source:
 
             for type in types:
                 type = type.replace(" is:", "").strip()
-                icon = ICON_MAP.get(type.lower())
+                icon = None
                 entries.append(Collection(date=d, t=type, icon=icon))
 
         if len(entries) == 0:

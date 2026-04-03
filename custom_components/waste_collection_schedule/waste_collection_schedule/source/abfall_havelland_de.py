@@ -38,7 +38,7 @@ class Source:
         for d in dates:
             bin_type = d[1].replace(" - Abholtermin", "")
             entries.append(
-                Collection(d[0], bin_type, ICON_MAP.get(bin_type.split()[0].lower()))
+                Collection(d[0], bin_type, None)
             )
 
         return entries

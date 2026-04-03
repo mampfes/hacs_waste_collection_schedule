@@ -62,7 +62,7 @@ class Source:
         entries = []
         for article in soup.find_all("article"):
             waste_type = article.h3.string
-            icon = ICON_MAP.get(waste_type)
+            icon = None
             next_pickup = article.find(class_="next-service").string
             if next_pickup is None:
                 continue

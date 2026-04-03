@@ -98,7 +98,7 @@ class Source:
             month = GERMAN_MONTHS[date_parts[1].strip()]
             year = int(date_parts[2].strip())
             d = date(year=year, month=month, day=day)
-            icon = ICON_MAP.get(bin_type.lower())  # Collection icon
+            icon = None  # Collection icon
             entries.append(Collection(date=d, t=bin_type, icon=icon))
 
         return entries

@@ -74,7 +74,7 @@ class Source:
         date_list = [basedate + dt.timedelta(days=x) for x in range(0, days, frequency)]
         name = bin_prefix.replace("bin", "").title()
         for dateStr in date_list:
-            entries.append(Collection(dateStr.date(), name, ICON_MAP.get(name.upper())))
+            entries.append(Collection(dateStr.date(), name))
         return entries
 
     def fetch(self):

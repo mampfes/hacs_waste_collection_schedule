@@ -39,6 +39,6 @@ class Source:
                         r"\d{1,2}\.\d{2} - \d{1,2}\.\d{2} Uhr", "", bin_type
                     ).strip()
 
-                icon = ICON_MAP.get(bin_type)
+                icon = None
                 collections.append(Collection(date_, bin_type, icon))
         return collections

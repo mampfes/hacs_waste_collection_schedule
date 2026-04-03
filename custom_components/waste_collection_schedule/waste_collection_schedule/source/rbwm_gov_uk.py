@@ -59,7 +59,7 @@ class Source:
             bi_type = tds[0].text.split("Collection Service")[0].strip()
             date_string = tds[1].text.strip()
             date = parse(date_string).date()
-            icon = ICON_MAP.get(bi_type.lower())  # Collection icon
+            icon = None  # Collection icon
             entries.append(Collection(date=date, t=bi_type, icon=icon))
 
         return entries

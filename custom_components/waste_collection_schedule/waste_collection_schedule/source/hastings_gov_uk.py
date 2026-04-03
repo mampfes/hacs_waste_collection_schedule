@@ -64,7 +64,7 @@ class Source:
             waste_type: str = (
                 service["Service"].removesuffix("collection service").strip()
             )
-            icon = ICON_MAP.get(waste_type)
+            icon = None
             date_str: str
 
             for date_str in service["Dates"]:

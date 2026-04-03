@@ -279,7 +279,7 @@ class Source:
             bin_type, rythm_description = field["value"]["value"].split("-", 1)
             rythm_description = rythm_description.strip()
             bin_type = bin_type.strip()
-            icon = ICON_MAP.get(bin_type)  # Collection icon
+            icon = None  # Collection icon
 
             try:
                 dates = _parse_rythm_description(rythm_description)

@@ -79,7 +79,7 @@ class Source:
             imgs = li.select("img")
             for img in imgs:
                 type = img["alt"]
-                icon = ICON_MAP.get(type)
+                icon = None
                 entries.append(Collection(date=date, t=type, icon=icon))
 
         return entries

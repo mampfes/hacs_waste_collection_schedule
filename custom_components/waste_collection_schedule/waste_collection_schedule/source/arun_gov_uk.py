@@ -101,7 +101,7 @@ class Source:
             entries: dict[str, list[Collection]] = {}
             for bin_by_type in bin_days_by_type:
                 bin_type = bin_by_type.find("th").text.split(" ")[0]
-                icon = ICON_MAP.get(bin_type)
+                icon = None
                 html_bin_date = bin_by_type.find_all("td")[0].get_text()  # DD/MM/YYYY
                 bin_date = datetime.strptime(html_bin_date, "%d/%m/%Y").date()
                 entries.setdefault(bin_date.strftime("%Y-%m-%d"), []).append(
