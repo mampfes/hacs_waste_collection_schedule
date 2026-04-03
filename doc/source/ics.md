@@ -164,6 +164,7 @@ This source has been successfully tested with the following service providers:
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
+- [Rivière-Beaudette](/doc/ics/riviere_beaudette_com.md) / riviere-beaudette.com
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca

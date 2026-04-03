@@ -4257,6 +4257,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Rivi\u00e8re-Beaudette",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_riviere_beaudette_com"
+    },
+    {
       "title": "RM of Morris, MB",
       "module": "ics",
       "default_params": {
