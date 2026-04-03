@@ -6778,6 +6778,12 @@
       "id": "gfa_lueneburg_de"
     },
     {
+      "title": "Ginsheim-Gustavsburg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gigu_de"
+    },
+    {
       "title": "Gipsprojekt",
       "module": "ics",
       "default_params": {},

@@ -1094,6 +1094,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
 - [GFA Lüneburg](/doc/source/gfa_lueneburg_de.md) / gfa-lueneburg.de
+- [Ginsheim-Gustavsburg](/doc/ics/gigu_de.md) / gigu.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Glonn](/doc/source/awido_de.md) / lra-ebe.de
 - [Grafing](/doc/source/awido_de.md) / lra-ebe.de
