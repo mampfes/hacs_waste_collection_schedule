@@ -78,6 +78,12 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     if const.DOMAIN not in config:
         return True
 
+    _LOGGER.warning(
+        "YAML configuration of waste_collection_schedule is deprecated and will be "
+        "removed in a future version. Please configure the integration through the "
+        "UI instead"
+    )
+
     # create empty api object as singleton
     api = WasteCollectionApi(
         hass,

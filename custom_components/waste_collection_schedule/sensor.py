@@ -120,6 +120,12 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
 
 # YAML setup
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
+    _LOGGER.warning(
+        "Configuration of waste_collection_schedule sensors via the sensor platform "
+        "is deprecated and will be removed in a future version. Please configure "
+        "sensors through the UI integration instead"
+    )
+
     value_template = config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
         value_template.hass = hass
