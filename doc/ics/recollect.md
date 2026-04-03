@@ -203,3 +203,13 @@ waste_collection_schedule:
         split_at: '\, (?:and )?|(?: and )'
         url: webcal://recollect-us.global.ssl.fastly.net/api/places/F8DA6588-B076-11E8-BA4B-30AA635824F2/services/265/events.en-US.ics?client_id=79B7D646-3A76-11F0-91E0-BB51B3DF21C3
 ```
+### Denver, CO, USA
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect-us.global.ssl.fastly.net/api/places/464342A6-3CBF-11E5-9D27-D51A47A8A7C0/services/248/events.en-US.ics
+```
