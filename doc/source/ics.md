@@ -368,9 +368,11 @@ This source has been successfully tested with the following service providers:
 ### Switzerland
 
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
+- [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
 - [Seon](/doc/ics/seon_ch.md) / seon.ch
 - [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
+- [Wiedlisbach](/doc/ics/mopage_ch.md) / wiedlisbach.mopage.ch
 
 ### United Kingdom
 

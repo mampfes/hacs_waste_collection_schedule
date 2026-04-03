@@ -14874,6 +14874,12 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "mopage.ch",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mopage_ch"
+    },
+    {
       "title": "Muolen",
       "module": "a_region_ch",
       "default_params": {
@@ -15130,6 +15136,12 @@
         "municipality": "Waldstatt"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Wiedlisbach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mopage_ch"
     },
     {
       "title": "Winterthur",
