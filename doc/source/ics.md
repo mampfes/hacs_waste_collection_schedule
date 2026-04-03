@@ -184,6 +184,7 @@ This source has been successfully tested with the following service providers:
 
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
+- [Abfall Export (vCal)](/doc/ics/abfall_export_vcal.md) / example.com
 - [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
 - [Abfall Lippe](/doc/ics/abfall_lippe_de.md) / abfall-lippe.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
@@ -267,6 +268,7 @@ This source has been successfully tested with the following service providers:
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
+- [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
 - [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
 - [Kreis Steinburg](/doc/ics/steinburg_de.md) / steinburg.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
@@ -320,6 +322,7 @@ This source has been successfully tested with the following service providers:
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Enger](/doc/ics/enger_de.md) / enger.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
+- [Stadt Löhne](/doc/ics/abfall_export_vcal.md) / loehne.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
 - [Stadt Saarlouis](/doc/ics/mein_abfallkalender_online.md) / saarlouis.de

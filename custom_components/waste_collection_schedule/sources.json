@@ -4866,6 +4866,12 @@
       "id": "ics_abfall_app_net"
     },
     {
+      "title": "Abfall Export (vCal)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfall_export_vcal"
+    },
+    {
       "title": "Abfall IO ICS Version",
       "module": "ics",
       "default_params": {},
@@ -7166,6 +7172,12 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Kirchhain",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfall_export_vcal"
     },
     {
       "title": "Kirchseeon",
@@ -9556,6 +9568,12 @@
         "key": "bd0c2d0177a0849a905cded5cb734a6f"
       },
       "id": "abfall_io"
+    },
+    {
+      "title": "Stadt L\u00f6hne",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfall_export_vcal"
     },
     {
       "title": "Stadt Mainhausen",

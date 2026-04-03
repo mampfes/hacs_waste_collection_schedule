@@ -832,6 +832,7 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
+- [Abfall Export (vCal)](/doc/ics/abfall_export_vcal.md) / example.com
 - [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
 - [Abfall Lippe](/doc/ics/abfall_lippe_de.md) / abfall-lippe.de
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
@@ -1147,6 +1148,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
 - [Kierspe](/doc/source/lobbe_app.md) / lobbe.app
 - [Kirchdorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
 - [Kirchseeon](/doc/source/awido_de.md) / lra-ebe.de
 - [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
 - [Kommunalservice Landkreis Börde AöR](/doc/source/ks_boerde_de.md) / ks-boerde.de
@@ -1461,6 +1463,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Königstein im Taunus](/doc/source/awido_de.md) / koenigstein.de
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
+- [Stadt Löhne](/doc/ics/abfall_export_vcal.md) / loehne.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Maintal](/doc/source/muellmax_de.md) / maintal.de
 - [Stadt Memmingen](/doc/source/awido_de.md) / umwelt.memmingen.de
