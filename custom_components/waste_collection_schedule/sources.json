@@ -7123,6 +7123,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Knittel Entsorgung",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_knittel_entsorgung_com"
+    },
+    {
       "title": "Kommunalservice Landkreis B\u00f6rde A\u00f6R",
       "module": "ks_boerde_de",
       "default_params": {},
