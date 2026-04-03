@@ -6351,6 +6351,12 @@
       "id": "ics_eaw_rheingau_taunus_de"
     },
     {
+      "title": "EAW Sangerhausen (Gemos)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_eaw_wastebox_gemos_de"
+    },
+    {
       "title": "Ebersberg",
       "module": "awido_de",
       "default_params": {
