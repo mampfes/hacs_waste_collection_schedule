@@ -6,6 +6,7 @@ from pathlib import Path
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
+from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.discovery import async_load_platform
 
@@ -29,6 +30,23 @@ CUSTOMIZE_CONFIG = vol.Schema(
         vol.Optional(const.CONF_PICTURE): cv.string,
         vol.Optional(const.CONF_USE_DEDICATED_CALENDAR): cv.boolean,
         vol.Optional(const.CONF_DEDICATED_CALENDAR_TITLE): cv.string,
+    }
+)
+
+SENSOR_CONFIG = vol.Schema(
+    {
+        vol.Required(CONF_NAME): cv.string,
+        vol.Optional(const.CONF_SOURCE_INDEX, default=0): vol.Any(
+            cv.positive_int, vol.All(cv.ensure_list, [cv.positive_int])
+        ),
+        vol.Optional(const.CONF_DETAILS_FORMAT, default="upcoming"): cv.string,
+        vol.Optional(const.CONF_COUNT): cv.positive_int,
+        vol.Optional(const.CONF_LEADTIME): cv.positive_int,
+        vol.Optional(const.CONF_COLLECTION_TYPES): cv.ensure_list,
+        vol.Optional(CONF_VALUE_TEMPLATE): cv.template,
+        vol.Optional(const.CONF_DATE_TEMPLATE): cv.template,
+        vol.Optional(const.CONF_ADD_DAYS_TO, default=False): cv.boolean,
+        vol.Optional(const.CONF_EVENT_INDEX, default=0): cv.positive_int,
     }
 )
 
@@ -65,6 +83,9 @@ CONFIG_SCHEMA = vol.Schema(
                     const.CONF_DAY_SWITCH_TIME,
                     default=const.CONF_DAY_SWITCH_TIME_DEFAULT,
                 ): cv.time,
+                vol.Optional(const.CONF_SENSORS, default=[]): vol.All(
+                    cv.ensure_list, [SENSOR_CONFIG]
+                ),
             }
         )
     },
@@ -120,6 +141,16 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 
     # load calendar platform
     await async_load_platform(hass, "calendar", const.DOMAIN, {"api": api}, config)
+
+    # load sensor platform for each sensor defined in the config
+    for sensor_config in config[const.DOMAIN].get(const.CONF_SENSORS, []):
+        await async_load_platform(
+            hass,
+            "sensor",
+            const.DOMAIN,
+            {"api": api, "sensor_config": sensor_config},
+            config,
+        )
 
     # initial fetch of all data
     hass.add_job(api._fetch)
