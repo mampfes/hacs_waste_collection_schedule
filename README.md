@@ -701,6 +701,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [City of Regina](/doc/ics/recollect.md) / regina.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
+- [City of Windsor](/doc/ics/citywindsor_ca.md) / citywindsor.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [Delta (BC)](/doc/source/recyclecoach_com.md) / delta.ca

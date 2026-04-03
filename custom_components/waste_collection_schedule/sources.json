@@ -4078,6 +4078,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Windsor",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_citywindsor_ca"
+    },
+    {
       "title": "County of Simcoe, ON",
       "module": "ics",
       "default_params": {
