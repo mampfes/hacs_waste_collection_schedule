@@ -6339,6 +6339,12 @@
       "id": "ead_darmstadt_de"
     },
     {
+      "title": "EAW Rheingau-Taunus-Kreis",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_eaw_rheingau_taunus_de"
+    },
+    {
       "title": "Ebersberg",
       "module": "awido_de",
       "default_params": {
