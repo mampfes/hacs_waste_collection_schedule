@@ -5466,6 +5466,12 @@
       "id": "ics_kreis_alzey_worms_de"
     },
     {
+      "title": "AMBnet",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_ambnet_biz"
+    },
+    {
       "title": "Anzing",
       "module": "awido_de",
       "default_params": {
