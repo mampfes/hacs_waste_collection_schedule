@@ -8797,6 +8797,12 @@
       "id": "neu_ulm_de"
     },
     {
+      "title": "Neuenrade",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_neuenrade_de"
+    },
+    {
       "title": "Neum\u00fcnster (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {

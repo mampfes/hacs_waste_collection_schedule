@@ -291,6 +291,7 @@ This source has been successfully tested with the following service providers:
 - [Merzig](/doc/ics/mein_abfallkalender_online.md) / merzig.de
 - [Mörfelden-Walldorf](/doc/ics/moerfelden_walldorf_de.md) / moerfelden-walldorf.de
 - [Neu-Anspach](/doc/ics/mein_abfallkalender_online.md) / neu-anspach.de
+- [Neuenrade](/doc/ics/neuenrade_de.md) / neuenrade.de
 - [Nidderau](/doc/ics/mein_abfallkalender_online.md) / nidderau.de
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Obertshausen](/doc/ics/mein_abfallkalender_online.md) / obertshausen.de
