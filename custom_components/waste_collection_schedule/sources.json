@@ -1723,6 +1723,12 @@
       "id": "ics_gda_gv_at"
     },
     {
+      "title": "gem2go (Abfallverband)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gem2go_dev"
+    },
+    {
       "title": "Gemeinde Sulz",
       "module": "citiesapps_com",
       "default_params": {},

@@ -308,6 +308,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GAUL Laa an der Thaya](/doc/source/umweltverbaende_at.md) / laa.umweltverbaende.at
 - [GAUM Mistelbach](/doc/source/umweltverbaende_at.md) / mistelbach.umweltverbaende.at
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
+- [gem2go (Abfallverband)](/doc/ics/gem2go_dev.md) / gem2go.dev
 - [Gemeinde Sulz](/doc/source/citiesapps_com.md) / gemeinde-sulz.at
 - [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
 - [Gersdorf an der Feistritz](/doc/source/citiesapps_com.md) / gersdorf.gv.at

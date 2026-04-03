@@ -37,6 +37,7 @@ This source has been successfully tested with the following service providers:
 - [Finkenstein am Faaker See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Frauenstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
+- [gem2go (Abfallverband)](/doc/ics/gem2go_dev.md) / gem2go.dev
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gmünd in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
