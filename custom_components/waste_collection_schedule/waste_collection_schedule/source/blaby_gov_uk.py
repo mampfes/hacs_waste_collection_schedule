@@ -1,8 +1,8 @@
 import re
 from datetime import datetime
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Blaby District Council"
@@ -44,20 +44,17 @@ class Source:
         self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
-        session = requests.Session()
-        session.headers.update({"User-Agent": "Mozilla/5.0"})
+        session = requests.Session(impersonate="chrome124")
 
         r = session.get(
             "https://my.blaby.gov.uk/set-location.php",
             params={"ref": self._uprn, "redirect": "collections"},
-            verify=False,
             timeout=30,
         )
         r.raise_for_status()
 
         r = session.get(
             "https://my.blaby.gov.uk/collections",
-            verify=False,
             timeout=30,
         )
         r.raise_for_status()
