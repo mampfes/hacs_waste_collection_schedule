@@ -3,7 +3,6 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
@@ -44,18 +43,6 @@ PARAM_TRANSLATIONS = {
         "address": "Full Street Address",
     },
 }
-
-HOLIDAY_NOTE = " (Public holidays may affect this date)"
-CHRISTMAS_NOTE = " (⚠️ Christmas period — check council website for altered collection schedule)"
-
-
-def is_christmas_period(date: datetime.date) -> bool:
-    """Returns True if date falls in the Christmas/New Year altered collection window (Dec 22 - Jan 2)."""
-    if date.month == 12 and date.day >= 22:
-        return True
-    if date.month == 1 and date.day <= 2:
-        return True
-    return False
 
 
 class Source:
@@ -127,7 +114,9 @@ class Source:
             date_matches = re.findall(r"\d{1,2}/\d{1,2}/\d{4}", date_text)
 
             if date_matches:
-                first_date = datetime.datetime.strptime(date_matches[0], "%d/%m/%Y").date()
+                first_date = datetime.datetime.strptime(
+                    date_matches[0], "%d/%m/%Y"
+                ).date()
                 if waste_type == "General Waste":
                     general_waste_date = first_date
                 elif waste_type == "Recycling":
@@ -148,26 +137,29 @@ class Source:
         for week in range(SCHEDULE_WEEKS):
             collection_date = anchor_date + datetime.timedelta(weeks=week)
 
-            # Use Christmas note during altered collection period, otherwise standard note
-            note = CHRISTMAS_NOTE if is_christmas_period(collection_date) else HOLIDAY_NOTE
-
-            entries.append(Collection(
-                date=collection_date,
-                t="Green Organics Bin" + note,
-                icon=ICON_MAP["Green Organics Bin"],
-            ))
+            entries.append(
+                Collection(
+                    date=collection_date,
+                    t="Green Organics Bin",
+                    icon=ICON_MAP["Green Organics Bin"],
+                )
+            )
 
             if week % 2 == 0:
-                entries.append(Collection(
-                    date=collection_date,
-                    t="Red Rubbish Bin" + note,
-                    icon=ICON_MAP["Red Rubbish Bin"],
-                ))
+                entries.append(
+                    Collection(
+                        date=collection_date,
+                        t="Red Rubbish Bin",
+                        icon=ICON_MAP["Red Rubbish Bin"],
+                    )
+                )
             else:
-                entries.append(Collection(
-                    date=collection_date,
-                    t="Yellow Recycling Bin" + note,
-                    icon=ICON_MAP["Yellow Recycling Bin"],
-                ))
+                entries.append(
+                    Collection(
+                        date=collection_date,
+                        t="Yellow Recycling Bin",
+                        icon=ICON_MAP["Yellow Recycling Bin"],
+                    )
+                )
 
         return entries
