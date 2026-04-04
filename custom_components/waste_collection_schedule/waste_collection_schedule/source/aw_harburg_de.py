@@ -137,7 +137,9 @@ class Source:
                 option_text = option.text
                 option_value = option.get("value")
                 level_ids[option_text] = option_value
-                level_ids_normalized[normalize_district_name(option_text)] = option_value
+                level_ids_normalized[normalize_district_name(option_text)] = (
+                    option_value
+                )
 
         if level_ids == {}:
             raise Exception(f"Error: Level {level} Dictionary empty")
