@@ -556,6 +556,11 @@
     "howto": {},
     "urls": {}
   },
+  "obdach_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/obdach_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "korneuburg_stadtservice_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/korneuburg_stadtservice_at.md",
     "howto": {},

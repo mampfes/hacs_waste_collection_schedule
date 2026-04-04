@@ -27,7 +27,8 @@ class Source:
 
         soup = BeautifulSoup(r.text, "html.parser")
         div = soup.find(
-            id="ctl00_ctl00_ctl00_cph_col_a_cph_content_cph_content_list_style")
+            id="ctl00_ctl00_ctl00_cph_col_a_cph_content_cph_content_list_style"
+        )
 
         dts = div.find_all("h2")
         wst = div.find_all("span")
