@@ -43,69 +43,69 @@ TEST_CASES = {
         "instance_id": 65,
     },
     # "Saumur Val de Loire, Allones": {
-        # "address": "5 rue du Bellay",
-        # "insee_code": "49002",
-        # "instance_id": 159,
+    # "address": "5 rue du Bellay",
+    # "insee_code": "49002",
+    # "instance_id": 159,
     # },
     # "Châteauroux Métropole, Ardentes": {
-        # "address": "1 rue du 8 mai 1945",
-        # "insee_code": "36005",
-        # "instance_id": 897,
+    # "address": "1 rue du 8 mai 1945",
+    # "insee_code": "36005",
+    # "instance_id": 897,
     # },
     # "Saint Quentin en Yvelines, Coignières": {
-        # "address": "1 rue du four à chaux",
-        # "insee_code": "78168",
-        # "instance_id": 701,
+    # "address": "1 rue du four à chaux",
+    # "insee_code": "78168",
+    # "instance_id": 701,
     # },
     # "Versailles Grand Parc, Bailly": {
-        # "address": "1 rue de Maule",
-        # "insee_code": "78043",
-        # "instance_id": 251,
+    # "address": "1 rue de Maule",
+    # "insee_code": "78043",
+    # "instance_id": 251,
     # },
     # "GPSO, Boulogne Billancourt": {
-        # "address": "1 rue Gallieni",
-        # "insee_code": "92012",
-        # "instance_id": 101,
+    # "address": "1 rue Gallieni",
+    # "insee_code": "92012",
+    # "instance_id": 101,
     # },
     # "ValEco, Bracieux": {
-        # "address": "1 rue de Candy",
-        # "insee_code": "41025",
-        # "instance_id": 750,
+    # "address": "1 rue de Candy",
+    # "insee_code": "41025",
+    # "instance_id": 750,
     # },
     # "ValDem, Areines": {
-        # "address": "1 rue de l’Ecole",
-        # "insee_code": "41003",
-        # "instance_id": 751,
+    # "address": "1 rue de l’Ecole",
+    # "insee_code": "41003",
+    # "instance_id": 751,
     # },
     # "Dreux Agglomération, Ardelles": {
-        # "address": "1 rue du Bourg Aubert",
-        # "insee_code": "28008",
-        # "instance_id": 725,
+    # "address": "1 rue du Bourg Aubert",
+    # "insee_code": "28008",
+    # "instance_id": 725,
     # },
     # "Ardenne Métropole, Arreux": {
-        # "address": "1 rue de la Vierge",
-        # "insee_code": "08022",
-        # "instance_id": 670,
+    # "address": "1 rue de la Vierge",
+    # "insee_code": "08022",
+    # "instance_id": 670,
     # },
     # "Dunkerque Grand Littoral, Bray-Dunes": {
-        # "address": "1 rue Charles Pichon",
-        # "insee_code": "59107",
-        # "instance_id": 673,
+    # "address": "1 rue Charles Pichon",
+    # "insee_code": "59107",
+    # "instance_id": 673,
     # },
     # "Grand Calais Terres et Mers, Calais": {
-        # "address": "1 rue Martyn",
-        # "insee_code": "62193",
-        # "instance_id": 679,
+    # "address": "1 rue Martyn",
+    # "insee_code": "62193",
+    # "instance_id": 679,
     # },
     # "Métropole Européenne de Lille, Lille": {
-        # "address": "34 Place Augustin Laurent",
-        # "insee_code": "59350",
-        # "instance_id": 876,
+    # "address": "34 Place Augustin Laurent",
+    # "insee_code": "59350",
+    # "instance_id": 876,
     # },
     # "Valcobreizh, Irodouër": {
-        # "address": "1 rue de Rennes",
-        # "insee_code": "35135",
-        # "instance_id": "1003",
+    # "address": "1 rue de Rennes",
+    # "insee_code": "35135",
+    # "instance_id": "1003",
     # },
 }
 
@@ -245,7 +245,7 @@ EXTRA_INFO = [
     {
         "title": "Métropole Européenne de Lille",
         "url": "https://www.lillemetropole.fr/",
-        "default_params": {"instance_id": 876}
+        "default_params": {"instance_id": 876},
     },
     {
         "title": "Valcobreizh",
@@ -497,8 +497,10 @@ class Source:
 
     def _has_date_range(self, input_string):
         # Match both "2024 Jan 01-2024 May 12" and "Jan 01-Mar 14" formats
-        return bool(re.search(r"^(\d{4} \w+ \d{1,2})-(\d{4} \w+ \d{1,2})", input_string) or
-                   re.search(r"^(\w+ \d{1,2})-(\w+ \d{1,2})", input_string))
+        return bool(
+            re.search(r"^(\d{4} \w+ \d{1,2})-(\d{4} \w+ \d{1,2})", input_string)
+            or re.search(r"^(\w+ \d{1,2})-(\w+ \d{1,2})", input_string)
+        )
 
     def _extract_date_range(self, input_string):
         """Split a string containing a date range such as "2024 Jan 01-2024 May 12" or "Jan 01-Mar 14" and return:
@@ -524,17 +526,24 @@ class Source:
             input_string: The date range string to parse
             default_year: Year to use for date ranges without explicit year (e.g., "Jan 01-Mar 14")
         """
-        parts = input_string.split('-')
+        parts = input_string.split("-")
 
         # Check if the first part starts with a year
-        if parts[0].strip().split()[0].isdigit() and len(parts[0].strip().split()[0]) == 4:
+        if (
+            parts[0].strip().split()[0].isdigit()
+            and len(parts[0].strip().split()[0]) == 4
+        ):
             # Format: "2024 Jan 01-2024 May 12"
             start_date = datetime.strptime(parts[0] + " +0000", "%Y %b %d %z")
             end_date = datetime.strptime(parts[1] + " +0000", "%Y %b %d %z")
         else:
             # Format: "Jan 01-Mar 14" - use default_year or current year
-            start_date = datetime.strptime(f"{default_year} {parts[0]} +0000", "%Y %b %d %z")
-            end_date = datetime.strptime(f"{default_year} {parts[1]} +0000", "%Y %b %d %z")
+            start_date = datetime.strptime(
+                f"{default_year} {parts[0]} +0000", "%Y %b %d %z"
+            )
+            end_date = datetime.strptime(
+                f"{default_year} {parts[1]} +0000", "%Y %b %d %z"
+            )
 
         return {"dtstart": start_date, "until": end_date}
 
@@ -599,7 +608,9 @@ class Source:
             else None
         )
 
-        if schedule["end_at"] and schedule["schedule_type"] != "regular": # publidata seems to somehow disregard this field
+        if (
+            schedule["end_at"] and schedule["schedule_type"] != "regular"
+        ):  # publidata seems to somehow disregard this field
             end_date = datetime.strptime(schedule["end_at"], "%Y-%m-%dT%H:%M:%S.%f%z")
         else:
             end_date = datetime.now(timezone.utc) + timedelta(days=365)
@@ -614,7 +625,9 @@ class Source:
 
         if self._has_date_range(opening_hours):
             date_range, opening_hours = self._extract_date_range(opening_hours)
-            default_year = start_date.year if start_date else datetime.now(timezone.utc).year
+            default_year = (
+                start_date.year if start_date else datetime.now(timezone.utc).year
+            )
             kwargs.update(self._parse_date_range(date_range, default_year))
 
         parts = opening_hours.split()
@@ -623,7 +636,9 @@ class Source:
             if part == "week":
                 kwargs["freq"] = WEEKLY
                 kwargs.update(self._parse_week_no(parts.pop(0)))
-            elif part.startswith("off") or part.startswith('"'): # schedule should be of type "closed" or "closing_exception", or part should be a comment
+            elif part.startswith("off") or part.startswith(
+                '"'
+            ):  # schedule should be of type "closed" or "closing_exception", or part should be a comment
                 continue
             else:
                 kwargs.update(self._parse_part(part))
