@@ -31,10 +31,9 @@ ICON_MAP = {
 }
 
 API_URL = "https://www.wanneroo.wa.gov.au/bincollections"
-MAP_SESSION_URL = [
-    "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Configuration/PublicLite/Config/{liteConfigId}",
-    "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Projects/",
-]
+MAP_SESSION_URL = (
+    "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Projects/"
+)
 MAP_INITIALIZE_URL = (
     "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Modules/"
 )
@@ -61,23 +60,29 @@ WEEKDAYS = [
 def _parse_rythm_description(rythm_description: str, bin_type: str) -> list[date]:
     rythm_description_lower = rythm_description.strip().lower()
 
-    match = re.search(r'(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+(this|next)\s+week', rythm_description_lower)
+    match = re.search(
+        r"(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+(this|next)\s+week",
+        rythm_description_lower,
+    )
     if match:
         weekday_str = match.group(1)
         week_str = match.group(2)
-        
+
         interval = 1 if "general" in bin_type.lower() else 2
-        
+
         today = datetime.now().date()
         current_week_start = today - timedelta(days=today.weekday())
         target_weekday_idx = WEEKDAYS.index(weekday_str)
         target_date = current_week_start + timedelta(days=target_weekday_idx)
-        
+
         if week_str == "next":
             target_date += timedelta(days=7)
-            
+
         target_datetime = datetime.combine(target_date, datetime.min.time())
-        return [d.date() for d in rrule(WEEKLY, interval=interval, dtstart=target_datetime, count=10)]
+        return [
+            d.date()
+            for d in rrule(WEEKLY, interval=interval, dtstart=target_datetime, count=10)
+        ]
 
     if rythm_description_lower in WEEKDAYS:
         return [
@@ -105,9 +110,11 @@ class Source:
         self._dbkey: str | None = None
         self._mapkey: str | None = None
         self._session = requests.Session()
-        self._session.headers.update({
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
-        })
+        self._session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+            }
+        )
 
     def _match_address(self, address: str) -> bool:
         return self._address.lower().replace(" ", "").replace(
@@ -120,7 +127,9 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
         script = soup.find("script", {"src": lambda x: x and "widget.js" in x})
         if not isinstance(script, Tag):
-            raise Exception("Failed to find address values - the City may have changed their website layout")
+            raise Exception(
+                "Failed to find address values - the City may have changed their website layout"
+            )
 
         script_url = script["src"]
         if isinstance(script_url, list):
@@ -204,11 +213,13 @@ class Source:
             "project": project_id,
             "datasetCode": "",
         }
-        
+
         # Go straight to the Projects API to grab the required session headers
-        r = self._session.get(MAP_SESSION_URL[1], params=params)
+        r = self._session.get(MAP_SESSION_URL, params=params)
         if r.status_code != 200:
-            raise Exception(f"Projects API failed! Status: {r.status_code} | Server Says: {r.text}")
+            raise Exception(
+                f"Projects API failed! Status: {r.status_code} | Server Says: {r.text}"
+            )
 
         session = r.headers.get("x-intramaps-session")
         if not session:
@@ -229,15 +240,19 @@ class Source:
         headers = {
             "Content-Type": "application/json",
         }
-        r = self._session.post(MAP_INITIALIZE_URL, json=data, params=params, headers=headers)
+        r = self._session.post(
+            MAP_INITIALIZE_URL, json=data, params=params, headers=headers
+        )
         if r.status_code != 200:
             raise Exception(f"Initialize Map API failed! Server Says: {r.text}")
 
     def fetch(self) -> list[Collection]:
         self._session = requests.Session()
-        self._session.headers.update({
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
-        })
+        self._session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+            }
+        )
         map_session_id = self._fetch_address_values()
         return self._get_collections(map_session_id)
 
@@ -289,14 +304,14 @@ class Source:
                 continue
             if "value" not in field["value"]:
                 continue
-            
+
             if "-" not in field["value"]["value"]:
                 continue
 
             bin_type_raw, rythm_description = field["value"]["value"].split("-", 1)
             rythm_description = rythm_description.strip()
             bin_type_raw = bin_type_raw.strip()
-            
+
             if "general" in bin_type_raw.lower():
                 bin_type = "General Waste"
                 icon = "mdi:trash-can"
