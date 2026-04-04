@@ -13116,12 +13116,6 @@
       "id": "tauranga_govt_nz"
     },
     {
-      "title": "Western Bay of Plenty District Council",
-      "module": "western_bay_of_plenty_nz",
-      "default_params": {},
-      "id": "western_bay_of_plenty_nz"
-    },
-    {
       "title": "Waipa District Council",
       "module": "waipa_nz",
       "default_params": {},
@@ -13132,6 +13126,12 @@
       "module": "wellington_govt_nz",
       "default_params": {},
       "id": "wellington_govt_nz"
+    },
+    {
+      "title": "Western Bay of Plenty District Council",
+      "module": "western_bay_of_plenty_nz",
+      "default_params": {},
+      "id": "western_bay_of_plenty_nz"
     }
   ],
   "Norway": [

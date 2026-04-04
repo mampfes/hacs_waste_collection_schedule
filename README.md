@@ -2035,9 +2035,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Porirua City](/doc/source/poriruacity_govt_nz.md) / poriruacity.govt.nz
 - [Rotorua Lakes Council](/doc/source/rotorua_lakes_council_nz.md) / rotorualakescouncil.nz
 - [Tauranga City Council](/doc/source/tauranga_govt_nz.md) / tauranga.govt.nz
-- [Western Bay of Plenty District Council](/doc/source/western_bay_of_plenty_nz.md) / kerbsidecollective.co.nz
 - [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
 - [Wellington City Council](/doc/source/wellington_govt_nz.md) / wellington.govt.nz
+- [Western Bay of Plenty District Council](/doc/source/western_bay_of_plenty_nz.md) / kerbsidecollective.co.nz
 </details>
 
 <details>
