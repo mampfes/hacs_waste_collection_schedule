@@ -1799,6 +1799,13 @@
     },
     "urls": {}
   },
+  "pup_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pup_si.md",
+    "howto": {
+      "en": "Find your place_id (Odjemno mesto number) on your monthly PUP bill, or visit https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov"
+    },
+    "urls": {}
+  },
   "simbio_si": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md",
     "howto": {},

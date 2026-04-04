@@ -1,6 +1,7 @@
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "PUP Saubermacher"
@@ -22,6 +23,15 @@ ICON_MAP = {
     "E": "mdi:recycle",
 }
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Find your place_id (Odjemno mesto number) on your monthly PUP bill, or visit https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov",
+}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "place_id": "Place ID (Odjemno mesto)",
+    }
+}
+
 BASE_URL = "https://www.pup-saubermacher.si/php/dobi_tabelo.php"
 
 
@@ -34,7 +44,7 @@ class Source:
             "q": self._place_id,
         }
         response = requests.get(BASE_URL, params=args)
-        response.encoding = 'utf-8'
+        response.encoding = "utf-8"
         response.raise_for_status()
 
         content = BeautifulSoup(response.text, "html.parser")
@@ -52,21 +62,27 @@ class Source:
                 date = self.get_date(date_info)
 
                 if date is not None:
-                    entries.append(Collection(date, BIN_TYPES[type_char], ICON_MAP[type_char]))
+                    entries.append(
+                        Collection(date, BIN_TYPES[type_char], ICON_MAP[type_char])
+                    )
 
         return entries
 
     def parse_to_obj(self, content):
         # Find all <b> tags and their following <ul> tags
-        b_tags = content.find_all('b')[2:]  # Skip the first two <b> tags
+        b_tags = content.find_all("b")[2:]  # Skip the first two <b> tags
         data = []
 
         for b_tag in b_tags:
             title = b_tag.get_text()
-            ul_tag = b_tag.find_next_sibling('ul')
+            ul_tag = b_tag.find_next_sibling("ul")
 
             if ul_tag:
-                dates = [line.strip() for line in ul_tag.decode_contents().split('<br>') if line.strip()]
+                dates = [
+                    line.strip()
+                    for line in ul_tag.decode_contents().split("<br>")
+                    if line.strip()
+                ]
                 data.append({"title": title, "dates": dates[0].split("<br/>")})
 
         return data
