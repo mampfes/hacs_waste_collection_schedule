@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
@@ -44,15 +42,15 @@ class Source:
     def __init__(
         self,
         uprn: str | int | None = None,
-        postcode: Optional[str] = None,
-        address: Optional[str] = None,
+        postcode: str | None = None,
+        address: str | None = None,
     ):
         self._client = Cloud9Client("arun", icon_keywords=ICON_MAP)
         self._uprn = str(uprn) if uprn else None
         self._postcode = postcode
         self._address = address
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         if self._uprn:
             return self._client.fetch_by_uprn(self._uprn)
         if not self._postcode:

@@ -1,9 +1,8 @@
 import re
 from datetime import date, datetime
-from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, cast
+from typing import Any, Optional, Sequence, cast
 
 import requests
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -42,8 +41,8 @@ ADDRESS_FIELDS = (
     "postcode",
 )
 
-Address = Dict[str, Any]
-JSONDict = Dict[str, Any]
+Address = dict[str, Any]
+JSONDict = dict[str, Any]
 
 
 def normalise_postcode(text: Optional[str]) -> Optional[str]:
@@ -106,8 +105,8 @@ def _parse_date_string(value: Any) -> Optional[date]:
     return None
 
 
-def _extract_dates(details: Dict[str, Any]) -> List[date]:
-    values: List[Any] = [
+def _extract_dates(details: dict[str, Any]) -> list[date]:
+    values: list[Any] = [
         details.get(key)
         for key in ("collectionDate", "nextCollectionDate", "nextCollection")
     ]
@@ -124,7 +123,7 @@ def _extract_dates(details: Dict[str, Any]) -> List[date]:
         )
         for entry in details.get("futureCollections") or []
     )
-    next_collection = cast(Dict[str, Any], details.get("nextCollection") or {})
+    next_collection = cast(dict[str, Any], details.get("nextCollection") or {})
     values.append(
         next_collection.get("collectionDate")
         or next_collection.get("nextCollectionDate")
@@ -138,22 +137,22 @@ def _extract_dates(details: Dict[str, Any]) -> List[date]:
 
 def _collection_items(
     collection_data: JSONDict,
-) -> List[Tuple[str, Dict[str, Any]]]:
+) -> list[tuple[str, dict[str, Any]]]:
     collections_section = cast(
-        Optional[Dict[str, Dict[str, Any]]], collection_data.get("collections")
+        Optional[dict[str, dict[str, Any]]], collection_data.get("collections")
     )
     if collections_section:
         return list(collections_section.items())
-    items: List[Tuple[str, Dict[str, Any]]] = []
+    items: list[tuple[str, dict[str, Any]]] = []
     for key, value in collection_data.items():
         if not key.lower().endswith("collectiondetails"):
             continue
         if isinstance(value, list):
             for idx, entry in enumerate(value, start=1):
                 if entry:
-                    items.append((f"{key}_{idx}", cast(Dict[str, Any], entry)))
+                    items.append((f"{key}_{idx}", cast(dict[str, Any], entry)))
         elif value:
-            items.append((key, cast(Dict[str, Any], value)))
+            items.append((key, cast(dict[str, Any], value)))
     return items
 
 
@@ -161,10 +160,10 @@ class Cloud9Client:
     def __init__(
         self,
         authority: str,
-        icon_keywords: Optional[Dict[str, str]] = None,
+        icon_keywords: Optional[dict[str, str]] = None,
     ):
         self._authority = authority
-        self._icon_keywords: Dict[str, str] = icon_keywords or {}
+        self._icon_keywords: dict[str, str] = icon_keywords or {}
         self._base_url = f"{API_DOMAIN}/{authority}{API_BASE}"
 
     def _resolve_icon(self, label: str) -> Optional[str]:
@@ -174,7 +173,7 @@ class Cloud9Client:
                 return icon
         return None
 
-    def _build_collections(self, payload: JSONDict) -> List[Collection]:
+    def _build_collections(self, payload: JSONDict) -> list[Collection]:
         collection_data = cast(
             JSONDict,
             payload.get("wasteCollectionDates")
@@ -182,8 +181,8 @@ class Cloud9Client:
             or payload,
         )
 
-        entries: List[Collection] = []
-        seen: Set[Tuple[date, str]] = set()
+        entries: list[Collection] = []
+        seen: set[tuple[date, str]] = set()
 
         for key, details in _collection_items(collection_data):
             if not details:
@@ -213,7 +212,7 @@ class Cloud9Client:
         response.raise_for_status()
         return cast(JSONDict, response.json())
 
-    def fetch_by_uprn(self, uprn: str) -> List[Collection]:
+    def fetch_by_uprn(self, uprn: str) -> list[Collection]:
         session = requests.Session()
         payload = self._fetch_waste_json(session, uprn)
         entries = self._build_collections(payload)
@@ -228,7 +227,7 @@ class Cloud9Client:
         address_street: Optional[str] = None,
         street_town: Optional[str] = None,
         argument_name: str = "address_postcode",
-    ) -> List[Collection]:
+    ) -> list[Collection]:
         session = requests.Session()
         headers = dict(BASE_HEADERS)
         normalised = normalise_postcode(postcode)
@@ -263,13 +262,13 @@ class Cloud9Client:
     def _lookup_addresses(
         self,
         session: requests.Session,
-        headers: Dict[str, str],
+        headers: dict[str, str],
         postcode: Optional[str],
         normalised_postcode: Optional[str],
         address_name_number: Optional[str],
         address_street: Optional[str],
         address_string: str,
-    ) -> List[Address]:
+    ) -> list[Address]:
         url = f"{self._base_url}{ADDRESSES_PATH}"
 
         address_line = " ".join(
@@ -278,8 +277,8 @@ class Cloud9Client:
             if isinstance(part, str) and part.strip()
         )
 
-        seen: Set[Tuple[str, str]] = set()
-        attempts: List[Tuple[str, Optional[str]]] = [
+        seen: set[tuple[str, str]] = set()
+        attempts: list[tuple[str, Optional[str]]] = [
             ("postcode", normalised_postcode),
             ("postcode", postcode),
             ("address", address_string),
@@ -305,7 +304,7 @@ class Cloud9Client:
             response.raise_for_status()
             payload_json = cast(JSONDict, response.json())
             addresses_data = cast(
-                Optional[List[Address]], payload_json.get("addresses")
+                Optional[list[Address]], payload_json.get("addresses")
             )
             if addresses_data:
                 return [cast(Address, a) for a in addresses_data]
@@ -328,7 +327,7 @@ class Cloud9Client:
         query_lower = address_string.lower() if address_string else ""
         postcode_lower = normalised_postcode.lower() if normalised_postcode else None
 
-        scored: List[Tuple[int, Address]] = []
+        scored: list[tuple[int, Address]] = []
         for address in addresses:
             full = _address_to_string(address)
             lowered = full.lower()

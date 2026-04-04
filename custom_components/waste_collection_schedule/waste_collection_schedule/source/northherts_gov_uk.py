@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
 
@@ -38,10 +36,10 @@ ICON_MAP = {
 class Source:
     def __init__(
         self,
-        address_name_numer: Optional[str] = None,
-        address_street: Optional[str] = None,
-        street_town: Optional[str] = None,
-        address_postcode: Optional[str] = None,
+        address_name_numer: str | None = None,
+        address_street: str | None = None,
+        street_town: str | None = None,
+        address_postcode: str | None = None,
     ):
         self._client = Cloud9Client("northherts", icon_keywords=ICON_MAP)
         self._address_name_numer = address_name_numer
@@ -49,7 +47,7 @@ class Source:
         self._street_town = street_town
         self._address_postcode = address_postcode
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         search_query = " ".join(
             part.strip()
             for part in (
