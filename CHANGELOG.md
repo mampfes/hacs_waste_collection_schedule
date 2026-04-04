@@ -4,6 +4,58 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.14.0] - 2026-04-04
+
+### Core Changes
+
+- Add sensor discovery support and deprecate legacy sensor platform (#5746)
+- Fix generated translation placeholder mismatches across locales (#5751)
+
+### Added Sources
+
+- added Northern Beaches Council, NSW, AU (thanks @CRZTFR) (#5708)
+- added Kempsey Shire Council, NSW, AU (thanks @MtnDrew94) (#5622)
+- added Western Bay of Plenty District Council, NZ (thanks @samwalshnz) (#5612)
+- added OZO Ostrava, CZ (thanks @viki-vavrik) (#5220)
+- added Obdach, Styria, AT (thanks @DaHofa02) (#4706)
+- added Wolverhampton City Council, UK (thanks @ed-tt) (#3907)
+
+### Fixed Sources
+
+- fixed Wanneroo, WA, AU: updated URLs, session handling, and parsing for API changes (thanks @BrunoCQ) (#5611)
+- fixed aw_harburg_de, DE: normalize "Gelber Sack" to "Gelbe Tonne" and harden district matching (thanks @strausmann) (#5569)
+- fixed Arun District Council, UK: migrated to shared Cloud9 API service (thanks @whi-tw) (#5548)
+- fixed Philadelphia, US: cancel secondary pickup in holiday week (thanks @mseltzer94) (#5511)
+- fixed Blaby District Council, UK: updated to new endpoint, switched to curl_cffi (thanks @textbookcal) (#5424)
+- fixed Ards and North Down, UK: switched to SVG fill color parsing (thanks @dansollok) (#4605)
+- fixed Bisamberg calendar example in umweltverbaende_at docs (#5755)
+
+### New ICS Sources
+
+- added Gemeente Venray, NL
+- added VUE Waltrop, DE
+- added abfall_export.php (vCal) municipalities, DE
+- added EAW Sangerhausen (Gemos), DE
+- added gem2go (Abfallverband), AT
+- added EAW Rheingau-Taunus-Kreis, DE
+- added Ginsheim-Gustavsburg (gigu.de), DE
+- added mopage.ch (Wiedlisbach), CH
+- added Ranstadt (AMBnet), DE
+- added Rivière-Beaudette, CA
+- added City of Windsor, CA
+- added Gemeente Borsele, NL
+- added Neuenrade, DE
+- added Stallhofen, AT
+- added Stadtwerke Bergheim, DE
+- added Abfall Lippe, DE
+- added Knittel Entsorgung Nersingen, DE
+- added Landkreis Holzminden (Abfall App), DE
+- added Bruchsal (Schlaue Blaue Tonne), DE
+- added Denver (ReCollect), US
+- added Saint-Nicolas (Ville de Lévis), CA
+- added EVA Abfallentsorgung (Hohenpeissenberg, Peissenberg), DE
+- added Burnaby, BC, CA (RecycleCoach)
+
 ## [2.13.0] - 2026-04-03
 
 ## Core Changes
