@@ -6,7 +6,9 @@ import requests
 from waste_collection_schedule import Collection
 
 TITLE = "City of Oklahoma City"
-DESCRIPTION = "Source for data.okc.gov and okc.schizo.dev services for City of Oklahoma City"
+DESCRIPTION = (
+    "Source for data.okc.gov and okc.schizo.dev services for City of Oklahoma City"
+)
 URL = "https://data.okc.gov"
 COUNTRY = "us"
 TEST_CASES = {
@@ -228,7 +230,9 @@ class Source:
         try:
             json_data = response.json()
         except Exception as e:
-            raise Exception(f"Invalid response returned from source: {UNOFFICIAL_URL}") from e
+            raise Exception(
+                f"Invalid response returned from source: {UNOFFICIAL_URL}"
+            ) from e
 
         # Current unofficial endpoint returns nested objects with explicit pickup dates.
         if isinstance(json_data, dict) and any(
@@ -239,7 +243,9 @@ class Source:
 
             def _first_upcoming_pickup_date(pickups):
                 for pickup in pickups or []:
-                    pickup_date = pickup.get("date") if isinstance(pickup, dict) else None
+                    pickup_date = (
+                        pickup.get("date") if isinstance(pickup, dict) else None
+                    )
                     if not pickup_date:
                         continue
                     try:
@@ -263,7 +269,9 @@ class Source:
                     except ValueError:
                         trash_date = None
                 if trash_date is None and trash_data.get("day"):
-                    trash_date = self._resolve_pickup_date(str(trash_data["day"]), today)
+                    trash_date = self._resolve_pickup_date(
+                        str(trash_data["day"]), today
+                    )
 
             if trash_date is not None:
                 entries.append(
@@ -273,7 +281,9 @@ class Source:
             recycling_data = json_data.get("recycling", {})
             recycle_date = None
             if isinstance(recycling_data, dict):
-                recycle_date = _first_upcoming_pickup_date(recycling_data.get("pickups"))
+                recycle_date = _first_upcoming_pickup_date(
+                    recycling_data.get("pickups")
+                )
                 if recycle_date is None and recycling_data.get("day"):
                     recycle_date = self._resolve_pickup_date(
                         str(recycling_data["day"]), today
@@ -353,7 +363,9 @@ class Source:
         entries = []
 
         for waste_type, dataset_name in DATASET_BY_TYPE.items():
-            field_values = self._fetch_record(dataset_name, self._record_ids[waste_type])
+            field_values = self._fetch_record(
+                dataset_name, self._record_ids[waste_type]
+            )
             pickup_rule = field_values.get("Pickup_Day", "")
 
             if not isinstance(pickup_rule, str) or pickup_rule.strip() == "":
