@@ -1,5 +1,6 @@
 import re
 from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -22,6 +23,21 @@ ICON_MAP = {
     "Garden": "mdi:leaf",
     "Food Waste": "mdi:food-apple",
 }
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
+}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
+    }
+}
+
 
 class Source:
     def __init__(self, uprn: str | int):
