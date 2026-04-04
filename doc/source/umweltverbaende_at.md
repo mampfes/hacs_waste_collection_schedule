@@ -165,7 +165,7 @@ waste_collection_schedule:
       args:
         district: "korneuburg" # Korneuburg
         municipal: "Bisamberg" # Municipal
-        calendar: "Zone B" # Rayon
+        calendar: "Bisamberg B" # Rayon
         calendar_title_separator: ","
         calendar_splitter: ":"
 ```
