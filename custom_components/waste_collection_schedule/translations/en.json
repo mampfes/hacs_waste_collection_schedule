@@ -1523,6 +1523,29 @@
         },
         "data_description": {}
       },
+      "args_northernbeaches_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your street address including suburb in uppercase, e.g. '25 Pittwater Road MANLY'."
+        }
+      },
+      "reconfigure_northernbeaches_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Your street address including suburb in uppercase, e.g. '25 Pittwater Road MANLY'."
+        }
+      },
       "args_portenf_sa_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

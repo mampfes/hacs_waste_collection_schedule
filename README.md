@@ -153,6 +153,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
 - [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
 - [Northern Areas Council](/doc/source/app_my_local_services_au.md) / nacouncil.sa.gov.au/page.aspx
+- [Northern Beaches Council (NSW)](/doc/source/northernbeaches_nsw_gov_au.md) / northernbeaches.nsw.gov.au
 - [Penrith City Council](/doc/source/impactapps_com_au.md) / penrithcity.nsw.gov.au
 - [Port Adelaide Enfield, South Australia](/doc/source/portenf_sa_gov_au.md) / ecouncil.portenf.sa.gov.au
 - [Port Augusta City Council](/doc/source/app_my_local_services_au.md) / portaugusta.sa.gov.au

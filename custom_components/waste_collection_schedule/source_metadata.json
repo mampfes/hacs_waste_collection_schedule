@@ -338,6 +338,13 @@
     "howto": {},
     "urls": {}
   },
+  "northernbeaches_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northernbeaches_nsw_gov_au.md",
+    "howto": {
+      "en": "Enter your address as shown on the Northern Beaches Council website, e.g. '25 Pittwater Road MANLY'."
+    },
+    "urls": {}
+  },
   "portenf_sa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/portenf_sa_gov_au.md",
     "howto": {},

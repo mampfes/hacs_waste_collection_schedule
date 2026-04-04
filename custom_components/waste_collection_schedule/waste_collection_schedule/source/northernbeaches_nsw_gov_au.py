@@ -1,9 +1,7 @@
-import logging
 import re
 from datetime import date, timedelta
 
 import requests
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -60,8 +58,6 @@ MONTH_MAP = {
     "december": 12,
 }
 
-_LOGGER = logging.getLogger(__name__)
-
 
 class Source:
     def __init__(self, address: str):
@@ -94,7 +90,7 @@ class Source:
                 property_id = results[0]["id"]
             else:
                 # Multiple matches, none exact - provide suggestions
-                suggestions = [r["value"] for r in results]
+                suggestions = [entry["value"] for entry in results]
                 raise SourceArgAmbiguousWithSuggestions(
                     "address", self._address, suggestions
                 )
@@ -116,9 +112,7 @@ class Source:
 
         # Step 3: Parse next collection date from HTML
         # Format: <strong>Wednesday, 8 April</strong>
-        date_match = re.search(
-            r"<strong>\w+day,?\s+(\d{1,2})\s+(\w+)</strong>", html
-        )
+        date_match = re.search(r"<strong>\w+day,?\s+(\d{1,2})\s+(\w+)</strong>", html)
         if not date_match:
             raise Exception("Could not parse collection date from response")
 
