@@ -639,6 +639,14 @@
     "howto": {},
     "urls": {}
   },
+  "ville_quebec_qc_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md",
+    "howto": {
+      "en": "You need to provide your street number and name in Quebec City.",
+      "fr": "Vous devez fournir votre numéro et nom de rue dans la ville de Québec."
+    },
+    "urls": {}
+  },
   "toronto_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md",
     "howto": {},
