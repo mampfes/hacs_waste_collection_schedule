@@ -67,7 +67,30 @@ waste_collection_schedule:
         app: eco-przyszlosc
 ```
 
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ecoharmonogram_pl
+      args:
+        town: Rzeszów
+        community: "60"
+        street: Krakowska
+        house_number: "16"
+        g1: Klienci indywidualni
+        additional_sides_matcher: Klienci indywidualni
+```
+
 Worth to mention that district, street, house_number and additional_sides_matcher are optional parameters if your city doesn't require one.
+
+## Towns requiring `community` argument
+
+Some towns are not available via the default town search and require a `community` ID.
+The `community` argument is a numeric ID that can be found in the plugin URL of the city's website.
+
+| Community ID | Town |
+| ------------ | ---- |
+| 108 | Gdańsk |
+| 60 | Rzeszów |
 
 ## Keep in mind
 
