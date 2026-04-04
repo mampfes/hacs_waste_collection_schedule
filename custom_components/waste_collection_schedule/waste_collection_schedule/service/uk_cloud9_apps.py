@@ -165,6 +165,8 @@ class Cloud9Client:
         self._authority = authority
         self._icon_keywords: dict[str, str] = icon_keywords or {}
         self._base_url = f"{API_DOMAIN}/{authority}{API_BASE}"
+        self._session = requests.Session()
+        self._session.headers.update(BASE_HEADERS)
 
     def _resolve_icon(self, label: str) -> Optional[str]:
         lowered = label.lower()
@@ -206,15 +208,14 @@ class Cloud9Client:
 
         return entries
 
-    def _fetch_waste_json(self, session: requests.Session, uprn: str) -> JSONDict:
+    def _fetch_waste_json(self, uprn: str) -> JSONDict:
         url = f"{self._base_url}{WASTE_PATH}/{uprn}"
-        response = session.get(url, headers=dict(BASE_HEADERS), timeout=REQUEST_TIMEOUT)
+        response = self._session.get(url, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         return cast(JSONDict, response.json())
 
     def fetch_by_uprn(self, uprn: str) -> list[Collection]:
-        session = requests.Session()
-        payload = self._fetch_waste_json(session, uprn)
+        payload = self._fetch_waste_json(uprn)
         entries = self._build_collections(payload)
         entries.sort(key=lambda item: item.date)
         return entries
@@ -228,13 +229,9 @@ class Cloud9Client:
         street_town: Optional[str] = None,
         argument_name: str = "address_postcode",
     ) -> list[Collection]:
-        session = requests.Session()
-        headers = dict(BASE_HEADERS)
         normalised = normalise_postcode(postcode)
 
         addresses = self._lookup_addresses(
-            session,
-            headers,
             postcode=postcode,
             normalised_postcode=normalised,
             address_name_number=address_name_number,
@@ -261,8 +258,6 @@ class Cloud9Client:
 
     def _lookup_addresses(
         self,
-        session: requests.Session,
-        headers: dict[str, str],
         postcode: Optional[str],
         normalised_postcode: Optional[str],
         address_name_number: Optional[str],
@@ -295,9 +290,8 @@ class Cloud9Client:
             if key in seen:
                 continue
             seen.add(key)
-            response = session.get(
+            response = self._session.get(
                 url,
-                headers=headers,
                 params={param: cleaned},
                 timeout=REQUEST_TIMEOUT,
             )
