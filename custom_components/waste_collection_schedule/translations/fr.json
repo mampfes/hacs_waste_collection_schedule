@@ -21286,8 +21286,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "bulkyObjectID": "Bulky Object Id",
           "objectID": "Object Id",
-          "try_offical": "Try Offical"
+          "recycleObjectID": "Recycle Object Id",
+          "trashObjectID": "Trash Object Id",
+          "try_official": "Try Official"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -21298,8 +21301,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "bulkyObjectID": "Bulky Object Id",
           "objectID": "Object Id",
-          "try_offical": "Try Offical"
+          "recycleObjectID": "Recycle Object Id",
+          "trashObjectID": "Trash Object Id",
+          "try_official": "Try Official"
         },
         "data_description": {}
       },

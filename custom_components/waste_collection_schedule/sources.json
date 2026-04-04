@@ -17233,7 +17233,7 @@
       "id": "ics_recollect"
     },
     {
-      "title": "City of Oklahoma City (unofficial)",
+      "title": "City of Oklahoma City",
       "module": "okc_gov",
       "default_params": {},
       "id": "okc_gov"

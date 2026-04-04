@@ -21671,12 +21671,19 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "bulkyObjectID": "Bulky Object Id",
           "objectID": "Object Id",
-          "try_offical": "Try Offical"
+          "recycleObjectID": "Recycle Object Id",
+          "trashObjectID": "Trash Object Id",
+          "try_official": "Try Official"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "try_offical": "If checked, will attempt to use the official source at data.okc.gov. This probably fails as they now use scraping protection."
+          "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
+          "objectID": "Object ID for unofficial source (okc.schizo.dev).",
+          "recycleObjectID": "Object ID from 'Recycle Zones'.",
+          "trashObjectID": "Object ID from 'Trash Zones'.",
+          "try_official": "If checked, use official data.okc.gov zone datasets and the three Object IDs below."
         }
       },
       "reconfigure_okc_gov": {
@@ -21684,11 +21691,18 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "bulkyObjectID": "Bulky Object Id",
           "objectID": "Object Id",
-          "try_offical": "Try Offical"
+          "recycleObjectID": "Recycle Object Id",
+          "trashObjectID": "Trash Object Id",
+          "try_official": "Try Official"
         },
         "data_description": {
-          "try_offical": "If checked, will attempt to use the official source at data.okc.gov. This probably fails as they now use scraping protection."
+          "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
+          "objectID": "Object ID for unofficial source (okc.schizo.dev).",
+          "recycleObjectID": "Object ID from 'Recycle Zones'.",
+          "trashObjectID": "Object ID from 'Trash Zones'.",
+          "try_official": "If checked, use official data.okc.gov zone datasets and the three Object IDs below."
         }
       },
       "args_phila_gov": {

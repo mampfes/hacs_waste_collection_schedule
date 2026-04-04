@@ -2685,7 +2685,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
 - [City of Los Angeles, CA](/doc/source/lacity_gov.md) / lacitysan.org
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
-- [City of Oklahoma City (unofficial)](/doc/source/okc_gov.md) / okc.gov
+- [City of Oklahoma City](/doc/source/okc_gov.md) / data.okc.gov
 - [City of Philadelphia, PA](/doc/source/phila_gov.md) / phila.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [City of Plano](/doc/source/plano_gov.md) / plano.gov/630/Residential-Collection-Schedules
