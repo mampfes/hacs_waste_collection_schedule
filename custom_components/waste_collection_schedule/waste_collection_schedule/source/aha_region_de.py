@@ -151,7 +151,7 @@ class Source:
             raise Exception("got invalid ics file") from e
         entries = []
         for d in dates:
-            bin_type = d[1].replace("Abfuhr", "").strip()
+            bin_type = d[1].replace("Abfuhr", "").strip().replace(' *', '')
             entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
 
         return entries

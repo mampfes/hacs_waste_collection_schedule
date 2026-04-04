@@ -46,3 +46,23 @@ waste_collection_schedule:
       args:
         url: https://www.eva-abfallentsorgung.de/genics?ort=Eglfing&strasse=10465&strassenname=Eglfing&erinnerung=0&alarm=0&r=1&b=1&g=1&p=1&s=1&z=1
 ```
+### Hohenpeissenberg
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.eva-abfallentsorgung.de/genics?ort=Hohenpeissenberg&strasse=11166&strassenname=Hohenpeissenberg&erinnerung=0&alarm=0&r=1&b=1&g=1&p=1&s=0&z=0
+        year_field: year
+```
+### Peissenberg
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.eva-abfallentsorgung.de/genics?ort=Peissenberg&strasse=10997&strassenname=Peissenberg&erinnerung=0&alarm=0&r=1&b=1&g=1&p=1&s=0&z=0
+        year_field: year
+```

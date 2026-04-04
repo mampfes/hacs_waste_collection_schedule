@@ -16,7 +16,7 @@ TEST_CASES = {
     "21 Wells Avenue": {"address": " 21 Wells Avenue"},
 }
 
-API_URL = "https://www.tauranga.govt.nz/living/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
+API_URL = "https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
 ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -32,7 +32,7 @@ class Source:
         self._session: requests.Session = requests.Session()
 
     ADDRESS_URL = "https://www.tauranga.govt.nz/Services/SearchService.asmx/DoRIDStreetPredictiveSearch"
-    WASTE_URL = "https://www.tauranga.govt.nz/living/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
+    WASTE_URL = "https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
 
     def fetch(self):
         addr_1, addr_2 = self.get_address_detail()
@@ -69,7 +69,7 @@ class Source:
 
         return pickup_date_response
 
-    def generate_form_data(self, addr_1: str, addr_2: str) -> str:
+    def generate_form_data(self, addr_1: str, addr_2: str) -> Dict[str, str]:
         state_response = self._session.get(self.WASTE_URL)
         soup = BeautifulSoup(state_response.content, "html.parser")
         view_state = soup.find("input", attrs={"id": "__VIEWSTATE"})["value"]
@@ -84,9 +84,32 @@ class Source:
             "value"
         ]
 
+        # Discover the DNN form field names dynamically so the source
+        # keeps working when the ctr module ID changes on the server.
+        addr_input = soup.find(
+            "input",
+            attrs={
+                "id": lambda x: x
+                and "CollectionDaysSAP" in str(x)
+                and "Address" in str(x)
+            },
+        )
+        hdn_input = soup.find(
+            "input",
+            attrs={
+                "id": lambda x: x
+                and "CollectionDaysSAP" in str(x)
+                and "hdnValue" in str(x)
+            },
+        )
+        if not addr_input or not hdn_input:
+            raise Exception(
+                "Could not find CollectionDaysSAP form fields on the page"
+            )
+
         form_data = {
-            "dnn$ctr2863$MasterView$CollectionDaysSAP$Address": addr_1,
-            "dnn$ctr2863$MasterView$CollectionDaysSAP$hdnValue": f"{addr_1}||{addr_2}",
+            addr_input["name"]: addr_1,
+            hdn_input["name"]: f"{addr_1}||{addr_2}",
             "__VIEWSTATE": view_state,
             "__VIEWSTATEGENERATOR": view_state_generator,
             "__EVENTVALIDATION": event_validation,

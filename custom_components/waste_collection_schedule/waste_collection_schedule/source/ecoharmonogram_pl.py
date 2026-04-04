@@ -10,6 +10,7 @@ from ..exceptions import (
 )
 from ..service.EcoHarmonogramPL import (
     SUPPORTED_APPS_LITERAL,
+    SUPPORTED_LANGUAGES_LITERAL,
     Ecoharmonogram,
     Schedule,
     ScheduleDescription,
@@ -33,6 +34,7 @@ PARAM_TRANSLATIONS = {
         "street": "Street",
         "house_number": "House number",
         "district": "District",
+        "language": "Language",
         "additional_sides_matcher": "Additional Sides Matcher",
         "community": "Community",
         "g1": "Group 1",
@@ -61,6 +63,7 @@ PARAM_DESCRIPTIONS = {
         "street": "Street",
         "house_number": "House number",
         "district": "District",
+        "language": "Language for waste type names (pl, en, uk, ru)",
         "additional_sides_matcher": "Additional matcher for collection sides",
         "community": "Community",
         "g1": GROUP_DESCRIPTION_EN,
@@ -169,6 +172,13 @@ TEST_CASES = {
         "app": "eco-przyszlosc",
         "additional_sides_matcher": "Zabudowa wielolokalowa i niezamieszkała o zwiększonej częstotliwości",
     },
+    "Ukrainian language": {
+        "town": "Krzeszowice",
+        "street": "Wyki",
+        "house_number": "1",
+        "additional_sides_matcher": "Заміська забудова",
+        "language": "uk",
+    },
 }
 
 
@@ -181,6 +191,7 @@ class Source:
         self,
         town,
         app: SUPPORTED_APPS_LITERAL = None,
+        language: SUPPORTED_LANGUAGES_LITERAL = "pl",
         district="",
         street="",
         house_number="",
@@ -219,10 +230,7 @@ class Source:
             "g5": self._g5,
         }
 
-        if app:
-            self._ecoharmonogram_pl = Ecoharmonogram(app)
-        else:
-            self._ecoharmonogram_pl = Ecoharmonogram()
+        self._ecoharmonogram_pl = Ecoharmonogram(app=app, language=language)
 
     def fetch(self):
         if self.community_input == "":

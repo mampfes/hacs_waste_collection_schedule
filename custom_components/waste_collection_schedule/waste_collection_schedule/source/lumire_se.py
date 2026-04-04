@@ -1,7 +1,6 @@
 from datetime import datetime
 
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Luleå"
@@ -28,44 +27,43 @@ ICON_MAP = {
     "Småbatterier": "mdi:battery",
 }
 
-
-API_URL = "https://lumire.se/wp/wp-admin/admin-ajax.php"
-
+API_URL = "https://lumire.se/api/waste-pickup"
 HEADERS = {"User-Agent": "Mozilla/5.0"}
-
 
 class Source:
     def __init__(self, address: str):
         self._address: str = address
 
     def fetch(self) -> list[Collection]:
-        data = {"search_address": self._address, "action": "waste_pickup_form"}
-
-        r = requests.post(API_URL, data=data, headers=HEADERS)
+        # Först ber man snällt om ens buildingId hos våra vänner på Lumire
+        r = requests.get(API_URL, params={"q": self._address}, headers=HEADERS)
         r.raise_for_status()
-        if "Den adress du har angivit finns inte" in r.text:
-            raise ValueError("Address not found")
+        search_results = r.json().get("addresses", [])
 
-        clean_html = (
-            r.text.encode().decode("unicode_escape").replace(r"\/", "/").strip('"')
-        )
+        if not search_results:
+            raise ValueError(f"Address '{self._address}' not found")
 
-        soup = BeautifulSoup(clean_html, "html.parser")
-        results = soup.find("div", {"class": "waste-result-list"})
-        collections = results.find_all("div")
+        building_id = search_results[0].get("buildingId")
+        
+        # mha buildingId får man sitt faktiska schema
+        r = requests.get(f"{API_URL}/{building_id}", headers=HEADERS)
+        r.raise_for_status()
+        pickup_data = r.json().get("data", [])
 
         entries = []
-        for c in collections:
-            parts = c.text.split(":")
-            try:
-                date_ = datetime.strptime(parts[0].strip(), "%Y-%m-%d").date()
-            except ValueError:
-                # There is a bug in the API that makes the date return as thee string "Array", so we simply ignore this failure.
-                continue
+        for item in pickup_data:
+            date_str = item.get("nextPickup")
+            waste_type = item.get("fee", {}).get("waste_type") or item.get("description", "")
+            
+            if date_str:
+                date_ = datetime.strptime(date_str, "%Y-%m-%d").date()
 
-            bin_type = parts[1].strip()
-            icon = ICON_MAP.get(bin_type.split(",")[0])
-
-            entries.append(Collection(date_, bin_type, icon))
+                icon = None
+                for key, val in ICON_MAP.items():
+                    if key.lower() in waste_type.lower():
+                        icon = val
+                        break
+                
+                entries.append(Collection(date_, waste_type, icon))
 
         return entries

@@ -72,7 +72,7 @@ class Source:
         entries = []
 
         for entry in schedule:
-            date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
+            date_format = "%Y-%m-%dT%H:%M:%S.%f"
 
             current_date = datetime.now()
             commodity = entry["commodity"]

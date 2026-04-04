@@ -158,11 +158,11 @@ class Source:
             if len(row_dates) < 2:
                 continue
 
-            from_date = parser.parse(row_dates[0].text).date()
+            from_date = parser.parse(row_dates[0].text, fuzzy=True).date()
             to_date = (
                 from_date
-                if row_dates[1].text == "Collection as usual"
-                else parser.parse(row_dates[1].text).date()
+                if row_dates[1].text == "Collections as normal"
+                else parser.parse(row_dates[1].text, fuzzy=True).date()
             )
 
             result[from_date] = to_date

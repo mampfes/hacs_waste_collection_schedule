@@ -30,6 +30,7 @@ Use one of the following codes as company code:
 - hellendoorn
 - meerlanden
 - meppel
+- mijnblink
 - rad
 - reinis
 - twentemilieu

@@ -20,6 +20,7 @@ ICON_MAP = {
     "BLACK BIN": "mdi:trash-can",
     "ORANGE BIN": "mdi:recycle",
     "GREEN BIN": "mdi:leaf",
+    "CADDY BIN": "mdi:food",
 }
 
 

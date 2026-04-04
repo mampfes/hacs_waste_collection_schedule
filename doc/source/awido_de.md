@@ -42,6 +42,19 @@ waste_collection_schedule:
         housenumber: 14
 ```
 
+## Additional Attributes
+
+For special waste collection events such as the **Schadstoffmobil** (hazardous waste mobile), the following extra attributes are provided on the sensor entity when available:
+
+| Attribute | Description |
+|-----------|-------------|
+| `location` | The specific address/location for this collection event |
+| `description` | Additional information about the event |
+| `start_time` | Start time of the event (e.g. `"09:00"`) – only for timed events |
+| `end_time` | End time of the event (e.g. `"11:00"`) – only for timed events |
+
+These attributes allow differentiating between multiple Schadstoffmobil stops on the same day at different locations and times.
+
 ## How to get the source arguments
 
 ### customer

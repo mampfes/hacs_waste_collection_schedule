@@ -2,6 +2,8 @@
 
 Support for schedules provided by [RegioEntsorgung](https://regioentsorgung.de/) located near Aachen, Germany.
 
+This source only supports municipalities offered in the RegioEntsorgung address picker. Stadt Aachen itself is not part of that picker. For Stadt Aachen, use [abfallnavi_de](./abfallnavi_de.md) with `service: aachen`.
+
 ## Configuration via configuration.yaml
 
 ```yaml

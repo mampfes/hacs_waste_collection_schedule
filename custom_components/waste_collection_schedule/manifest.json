@@ -8,14 +8,14 @@
   "integration_type": "hub",
   "iot_class": "cloud_polling",
   "requirements": [
+    "pdfminer.six",
     "icalendar",
     "icalevents>=0.1.26,!=0.1.28",
     "beautifulsoup4",
     "lxml",
     "pycryptodome",
     "pypdf",
-    "cloudscraper",
-    "PyMuPDF"
+    "curl_cffi>=0.7.0"
   ],
-  "version": "2.11.0"
+  "version": "2.13.0"
 }

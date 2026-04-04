@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 
-import cloudscraper
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule import exceptions as exc
 
@@ -71,7 +71,7 @@ class Source:
 
     @contextmanager
     def get_session(self):
-        ses = cloudscraper.session()
+        ses = requests.Session(impersonate="chrome124")
         try:
             if not self._token or (
                 self._token_expires

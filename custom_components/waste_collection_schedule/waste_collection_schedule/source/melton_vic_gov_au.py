@@ -78,7 +78,15 @@ class Source:
         for article in soup.find_all("article"):
             waste_type = article.h3.string
             icon = ICON_MAP.get(waste_type)
-            next_pickup = article.find(class_="next-service").string.strip()
+            next_pickup = article.find(class_="next-service").getText().strip()
+            
+            if not re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
+                pattern = r"\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[0-2])/\d{4}\b"
+                date_match = re.search(pattern, next_pickup, re.IGNORECASE)
+        
+                if date_match:
+                    next_pickup = date_match.group(0) if date_match else None
+                
             if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 next_pickup_date = datetime.strptime(
                     next_pickup.split(sep=" ")[1], "%d/%m/%Y"

@@ -1,6 +1,4 @@
-import ssl
-
-import cloudscraper
+from curl_cffi import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -66,12 +64,7 @@ class Source:
         )
 
     def fetch(self) -> list[Collection]:
-        ssl_context = ssl.create_default_context()
-        ssl_context.set_ciphers("DEFAULT@SECLEVEL=1")
-        ssl_context.check_hostname = False
-        ssl_context.verify_mode = ssl.CERT_NONE
-
-        self._session = cloudscraper.create_scraper(ssl_context=ssl_context)
+        self._session = requests.Session(impersonate="chrome124", verify=False)
 
         params = {
             "city": self._city,

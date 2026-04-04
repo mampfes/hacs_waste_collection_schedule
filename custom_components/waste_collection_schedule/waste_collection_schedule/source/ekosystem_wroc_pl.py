@@ -2,9 +2,8 @@ import datetime
 import json
 import html
 import re
-from urllib.parse import urlparse, parse_qsl
-
-import requests
+from urllib.parse import parse_qsl, urlencode, urlparse
+from urllib.request import Request, urlopen
 from waste_collection_schedule import Collection
 
 TITLE = "Wrocław"
@@ -38,9 +37,20 @@ class Source:
             "<a href=\"(https://ekosystem\\.wroc\\.pl/download/\\?action=pdf[^\"]*)\"")
 
     def fetch(self):
-
-        r = requests.post(API_URL, data=dict(action="waste_disposal_form_get_schedule", id_numeru=self._location_id))
-        data = json.loads(r.text)
+        payload = urlencode(
+            {
+                "action": "waste_disposal_form_get_schedule",
+                "id_numeru": self._location_id,
+            }
+        ).encode()
+        request = Request(
+            API_URL,
+            data=payload,
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            method="POST",
+        )
+        with urlopen(request, timeout=30) as response:
+            data = json.loads(response.read().decode("utf-8"))
 
         calendar_data = self.extract_calendar_data(data)
         entries = []
@@ -53,7 +63,7 @@ class Source:
             type_str = calendar_data[WASTE_TYPE_PARAM_FORMAT.format(i)]
             entries.append(
                 Collection(
-                    date=datetime.datetime.strptime(date_str, "%Y-%m-%d").date(),
+                    date=datetime.date.fromisoformat(date_str),
                     t=type_str.capitalize(),
                     icon=ICON_MAP.get(type_str)
                 )

@@ -43,7 +43,6 @@ Use one of the following codes as service code:
 - hvcgroep
 - lingewaard
 - middelburgvlissingen
-- mijnblink
 - peelenmaas
 - prezero
 - purmerend

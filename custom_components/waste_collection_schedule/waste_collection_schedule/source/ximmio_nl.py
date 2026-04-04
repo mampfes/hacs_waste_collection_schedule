@@ -89,6 +89,12 @@ SERVICE_MAP = [
         "company": "meppel",
     },
     {
+        "title": "Mijn Blink",
+        "url": "https://mijnblink.nl/",
+        "uuid": "252d30d0-2e74-469c-8f1e-c0e2e434eb58",
+        "company": "mijnblink",
+    },
+    {
         "title": "RAD BV",
         "url": "https://www.radbv.nl",
         "uuid": "13a2cad9-36d0-4b01-b877-efcb421a864d",

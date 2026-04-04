@@ -292,6 +292,7 @@ TEST_CASES = {
         "municipal": "Weitra",
     },  # old version (as of 29.12.2024)
     "Gänserndorf": {"district": "gaenserndorf", "municipal": "Auersthal"},
+    "Gänserndorf-New": {"district": "gaenserndorf", "municipal": "Deutsch-Wagram", "street": "Johann Nestroy-Gasse", "hnr": "63"},
     "Hollabrunn": {
         "district": "hollabrunn",
         "municipal": "Retz",
@@ -388,6 +389,14 @@ POSSIBLE_COLLECTION_PATHS = (
     "entsorgung-und-termine/abholtermine/",  # Scheibbs
     f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year + 1}/", # Zwettl
     f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year}/", # Zwettl
+)
+
+LOCATION_FILTER_KEYS = (
+    "search[ort]",
+    "search[postleitzahl]",
+    "search[strasse]",
+    "search[hausnummer]",
+    "search[zusatz]",
 )
 
 
@@ -598,7 +607,7 @@ class Source:
             options = soup.select("option")
             if len(options) == 1:
                 data[f"search[{element_name}]"] = options[0]["value"]
-                return self.get_hnr(s, data)
+                return newxt_stage(s, data)
             value: str | None = None
             for option in options:
                 if arg_value and self.compare(arg_value, option.text):
@@ -786,8 +795,9 @@ class Source:
                     "jahr": str(year),
                 },
             )
-            # Add additional parameters if they exist
-            for key in ["search[ort]", "search[postleitzahl]", "search[strasse]"]:
+            # Keep all location filters from the dropdown chain so the API can
+            # return the household-specific schedule instead of broad defaults.
+            for key in LOCATION_FILTER_KEYS:
                 if key in ort_data:
                     data[key] = ort_data[key]
         except Exception:
@@ -819,7 +829,7 @@ class Source:
                 "search[gemeinde]": mun_value,
             }
             # Add location data if we have it
-            for key in ["search[ort]", "search[postleitzahl]", "search[strasse]"]:
+            for key in LOCATION_FILTER_KEYS:
                 if key in data:
                     fraktionen_data[key] = data[key]
 
@@ -851,11 +861,7 @@ class Source:
                         ("search[gemeinde]", mun_value),
                     ]
                     # Add location data if we have it
-                    for key in [
-                        "search[ort]",
-                        "search[postleitzahl]",
-                        "search[strasse]",
-                    ]:
+                    for key in LOCATION_FILTER_KEYS:
                         if key in data:
                             post_data.append((key, data[key]))
                     # Add all fraktionen

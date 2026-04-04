@@ -37,6 +37,7 @@ This source has been successfully tested with the following service providers:
 - [Finkenstein am Faaker See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Frauenstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
+- [gem2go (Abfallverband)](/doc/ics/gem2go_dev.md) / gem2go.dev
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gmünd in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
@@ -115,6 +116,7 @@ This source has been successfully tested with the following service providers:
 - [St. Symvaro](/doc/ics/muellapp_com.md) / muellapp.com
 - [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
 - [Stall](/doc/ics/muellapp_com.md) / muellapp.com
+- [Stallhofen](/doc/ics/stallhofen_gv_at.md) / stallhofen.gv.at
 - [Steinfeld](/doc/ics/muellapp_com.md) / muellapp.com
 - [Stockenboi](/doc/ics/muellapp_com.md) / muellapp.com
 - [Strass im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
@@ -150,6 +152,7 @@ This source has been successfully tested with the following service providers:
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
 - [City of Regina](/doc/ics/recollect.md) / regina.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
+- [City of Windsor](/doc/ics/citywindsor_ca.md) / citywindsor.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
@@ -162,6 +165,7 @@ This source has been successfully tested with the following service providers:
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
+- [Rivière-Beaudette](/doc/ics/riviere_beaudette_com.md) / riviere-beaudette.com
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
@@ -180,7 +184,9 @@ This source has been successfully tested with the following service providers:
 
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
+- [Abfall Export (vCal)](/doc/ics/abfall_export_vcal.md) / example.com
 - [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
+- [Abfall Lippe](/doc/ics/abfall_lippe_de.md) / abfall-lippe.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
 - [Abfallkalender Delmenhorst](/doc/ics/delmenhorst_de.md) / delmenhorst.de
 - [Abfallkalender Würzburg (ICS)](/doc/ics/wuerzburg_de.md) / wuerzburg.de
@@ -206,6 +212,7 @@ This source has been successfully tested with the following service providers:
 - [Allensbach am Bodensee](/doc/ics/gemeinde_allensbach_de.md) / gemeinde-allensbach.de
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
+- [AMBnet](/doc/ics/ambnet_biz.md) / ambnet.biz
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
 - [ASTO (Abfall- Sammel- und Transportverband Oberberg)](/doc/ics/asto_de.md) / asto.de
 - [Attendorn](/doc/ics/abfuhrtermine_info.md) / attendorn.de
@@ -226,6 +233,8 @@ This source has been successfully tested with the following service providers:
 - [Dienstleistungsbetrieb Dreieich und Neu-Isenburg AöR](/doc/ics/mein_abfallkalender_online.md) / dlb-aoer.de
 - [Dormagen](/doc/ics/mein_abfallkalender_online.md) / dormagen.de
 - [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de
+- [EAW Rheingau-Taunus-Kreis](/doc/ics/eaw_rheingau_taunus_de.md) / eaw-rheingau-taunus.de
+- [EAW Sangerhausen (Gemos)](/doc/ics/eaw_wastebox_gemos_de.md) / eaw.wastebox.gemos-management.de
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [Egelsbach](/doc/ics/mein_abfallkalender_online.md) / egelsbach.de
@@ -249,6 +258,7 @@ This source has been successfully tested with the following service providers:
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelnhausen](/doc/ics/mein_abfallkalender_online.md) / gelnhausen.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
+- [Ginsheim-Gustavsburg](/doc/ics/gigu_de.md) / gigu.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Gräfelfing](/doc/ics/mein_abfallkalender_online.md) / graefelfing.de
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
@@ -258,6 +268,8 @@ This source has been successfully tested with the following service providers:
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
+- [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
+- [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
 - [Kreis Steinburg](/doc/ics/steinburg_de.md) / steinburg.de
 - [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
 - [Kreuztal](/doc/ics/abfuhrtermine_info.md) / kreuztal.de
@@ -266,6 +278,7 @@ This source has been successfully tested with the following service providers:
 - [Landkreis Böblingen](/doc/ics/abfall_app_net.md) / lrabb.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
+- [Landkreis Holzminden](/doc/ics/abfall_app_net.md) / landkreis-holzminden.de
 - [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -287,6 +300,7 @@ This source has been successfully tested with the following service providers:
 - [Merzig](/doc/ics/mein_abfallkalender_online.md) / merzig.de
 - [Mörfelden-Walldorf](/doc/ics/moerfelden_walldorf_de.md) / moerfelden-walldorf.de
 - [Neu-Anspach](/doc/ics/mein_abfallkalender_online.md) / neu-anspach.de
+- [Neuenrade](/doc/ics/neuenrade_de.md) / neuenrade.de
 - [Nidderau](/doc/ics/mein_abfallkalender_online.md) / nidderau.de
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Obertshausen](/doc/ics/mein_abfallkalender_online.md) / obertshausen.de
@@ -308,6 +322,7 @@ This source has been successfully tested with the following service providers:
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Enger](/doc/ics/enger_de.md) / enger.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
+- [Stadt Löhne](/doc/ics/abfall_export_vcal.md) / loehne.de
 - [Stadt Mainhausen](/doc/ics/stadt_mainhausen_de.md) / mainhausen.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
 - [Stadt Saarlouis](/doc/ics/mein_abfallkalender_online.md) / saarlouis.de
@@ -316,6 +331,7 @@ This source has been successfully tested with the following service providers:
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
+- [Stadtwerke Bergheim](/doc/ics/swbm_de.md) / swbm.de
 - [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
 - [Stadtwerke Speyer](/doc/ics/gipsprojekt_de.md) / stadtwerke-speyer.de/muellkalender
 - [Sulzbach](/doc/ics/mein_abfallkalender_online.md) / sulzbach-taunus.de
@@ -323,6 +339,7 @@ This source has been successfully tested with the following service providers:
 - [Südbrandenburgischer Abfallzweckverband](/doc/ics/sbazv_de.md) / sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
+- [VUE Waltrop](/doc/ics/vue_waltrop_de.md) / vue-waltrop.de
 - [Wasserburg](/doc/ics/mein_abfallkalender_online.md) / wasserburg.de
 - [Weilrod](/doc/ics/mein_abfallkalender_online.md) / weilrod.de
 - [Wenden](/doc/ics/abfuhrtermine_info.md) / gemeinde-wenden.de
@@ -348,6 +365,8 @@ This source has been successfully tested with the following service providers:
 ### Netherlands
 
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
+- [Gemeente Borsele](/doc/ics/afvalkalender_borsele_nl.md) / borsele.nl
+- [Gemeente Venray](/doc/ics/afvalkalender_venray_nl.md) / venray.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [Ôffalkalinder van Noardeast-Fryslân & Dantumadiel](/doc/ics/offalkalinder_nl.md) / offalkalinder.nl
 
@@ -358,9 +377,11 @@ This source has been successfully tested with the following service providers:
 ### Switzerland
 
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
+- [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
 - [Seon](/doc/ics/seon_ch.md) / seon.ch
 - [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
+- [Wiedlisbach](/doc/ics/mopage_ch.md) / wiedlisbach.mopage.ch
 
 ### United Kingdom
 
@@ -383,6 +404,7 @@ This source has been successfully tested with the following service providers:
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
 - [City of Chicago, IL](/doc/ics/recyclebycity_com.md) / recyclebycity.com
+- [City of Denver, CO](/doc/ics/recollect.md) / denvergov.org
 - [City of Flagstaff, AZ](/doc/ics/recyclebycity_com.md) / flagstaff.az.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard

@@ -1,7 +1,7 @@
 from urllib.parse import parse_qs, urlparse
 
-import cloudscraper
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from dateutil import parser
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -33,9 +33,7 @@ class Source:
 
     def fetch(self):
         # Cloudflare-aware session
-        session = cloudscraper.create_scraper(
-            browser={"browser": "chrome", "platform": "windows", "mobile": False}
-        )
+        session = requests.Session(impersonate="chrome124")
         session.headers.update(
             {
                 "User-Agent": (

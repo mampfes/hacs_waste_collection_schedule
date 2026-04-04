@@ -15,6 +15,7 @@ howto:
     - Altmarkkreis Salzwedel: <https://altmarkkreis-salzwedel.abfall-app.net>
     - Landkreis Lüchow-Dannenberg: <https://luechow-dannenberg.abfall-app.net>
     - Rhein-Pfalz-Kreis: <https://rhein-pfalz-kreis.abfall-app.net>
+    - Landkreis Holzminden: <https://landkreis-holzminden.abfall-app.net>
 extra_info:
   - title: Landkreis Stendal
     url: https://www.landkreis-stendal.de/
@@ -33,6 +34,9 @@ extra_info:
     country: de
   - title: Rhein-Pfalz-Kreis
     url: https://www.rhein-pfalz-kreis.de/
+    country: de
+  - title: Landkreis Holzminden
+    url: https://www.landkreis-holzminden.de/
     country: de
 test_cases:
   Stendal Belkau:

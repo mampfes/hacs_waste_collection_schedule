@@ -138,6 +138,11 @@
     },
     "urls": {}
   },
+  "kalamunda_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kalamunda_wa_gov_au.md",
+    "howto": {},
+    "urls": {}
+  },
   "kingston_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kingston_vic_gov_au.md",
     "howto": {},
@@ -148,6 +153,11 @@
     "howto": {
       "en": "Visit the [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) \"When we collect your bins\" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result."
     },
+    "urls": {}
+  },
+  "moonee_valley_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moonee_valley_vic_gov_au.md",
+    "howto": {},
     "urls": {}
   },
   "onkaparingacity_com": {
@@ -736,6 +746,14 @@
     "howto": {},
     "urls": {}
   },
+  "memotri_agglo_pau_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/memotri_agglo_pau_fr.md",
+    "howto": {
+      "en": "Enter your full address as you would on the memotri.agglo-pau.fr website, including street number, street name, postal code, and city.",
+      "fr": "Saisissez votre adresse complète comme sur le site memotri.agglo-pau.fr, avec numéro de rue, nom de rue, code postal et ville."
+    },
+    "urls": {}
+  },
   "sivom_rivedroite_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
     "howto": {},
@@ -925,6 +943,11 @@
   },
   "abfallwirtschaft_vechta_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallwirtschaft_vechta_de.md",
+    "howto": {},
+    "urls": {}
+  },
+  "awb_ammerland_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_ammerland_de.md",
     "howto": {},
     "urls": {}
   },
@@ -1317,6 +1340,13 @@
   "fkf_bo_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md",
     "howto": {},
+    "urls": {}
+  },
+  "gyhg_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gyhg_hu.md",
+    "howto": {
+      "en": "Select the desired address on the https://www.gyhg.hu/hulladeknaptar#/ website. The town, street name, and house number must be entered in this integration in the exact same format as they appear there."
+    },
     "urls": {}
   },
   "mohu_bp_hu": {
@@ -2033,7 +2063,9 @@
   "ashfield_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ashfield_gov_uk.md",
     "howto": {},
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "ashford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ashford_gov_uk.md",
@@ -2508,9 +2540,7 @@
     "howto": {
       "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "eastherts_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastherts_gov_uk.md",
@@ -2573,9 +2603,7 @@
     "howto": {
       "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "exeter_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/exeter_gov_uk.md",
@@ -2897,9 +2925,7 @@
     "howto": {
       "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "midandeastantrim_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midandeastantrim_gov_uk.md",
@@ -2922,6 +2948,13 @@
     },
     "urls": {}
   },
+  "midlothian_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midlothian_gov_uk.md",
+    "howto": {
+      "en": "Find your UPRN and postcode from your council documents or invoices."
+    },
+    "urls": {}
+  },
   "milton_keynes_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/milton_keynes_gov_uk.md",
     "howto": {},
@@ -2934,9 +2967,7 @@
     "howto": {
       "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering in your address details."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "moray_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moray_gov_uk.md",
@@ -2949,8 +2980,7 @@
       "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
     },
     "urls": {
-      "url_uprn_uk": "https://uprn.uk/",
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+      "url_uprn_uk": "https://uprn.uk/"
     }
   },
   "newark_sherwooddc_gov_uk": {
@@ -3024,9 +3054,7 @@
     "howto": {
       "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "northnorthants_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northnorthants_gov_uk.md",
@@ -3108,9 +3136,7 @@
     "howto": {
       "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "oxford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oxford_gov_uk.md",
@@ -3124,9 +3150,7 @@
     "howto": {
       "en": "To get your UPRN go to https://www.findmyaddress.co.uk and search for your address."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "peterborough_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md",
@@ -3337,9 +3361,7 @@
     "howto": {
       "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "southtyneside_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southtyneside_gov_uk.md",
@@ -3438,9 +3460,7 @@
     "howto": {
       "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "swansea_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swansea_gov_uk.md",
@@ -3480,9 +3500,7 @@
     "howto": {
       "en": "Enter either your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/))OR Enter your postcode and the first line of your address for street address e.g. '2 London Road' (anything before the first comma)UPRNs should work all of the time, Postcodes and Street Addresses will work if a match can be found."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "thurrock_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/thurrock_gov_uk.md",
@@ -3530,9 +3548,7 @@
     "howto": {
       "en": "Enter your UPRN (available from [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)).Alternatively: you can also see it in the URL/location bar of your browser when you search the Wakefield site manually, look for 'uprn=' in the url and take the numbers immediately after. "
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "walsall_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/walsall_gov_uk.md",
@@ -3553,9 +3569,7 @@
     "howto": {
       "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "warrington_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrington_gov_uk.md",
@@ -3566,6 +3580,13 @@
   },
   "warwickdc_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warwickdc_gov_uk.md",
+    "howto": {},
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
+  },
+  "watford_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/watford_gov_uk.md",
     "howto": {},
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"

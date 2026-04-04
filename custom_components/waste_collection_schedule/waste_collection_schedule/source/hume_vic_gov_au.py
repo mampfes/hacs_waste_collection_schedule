@@ -2,8 +2,8 @@ import json
 import re
 from datetime import datetime, timedelta
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 
 TITLE = "Hume City Council"
@@ -61,9 +61,10 @@ class Source:
         return dates
 
     def fetch(self):
+        session = requests.Session(impersonate="chrome124")
         locationId = 0
         # Retrieve suburbs
-        r = requests.get(
+        r = session.get(
             API_URLS["address_search"],
             params={"keywords": self.address},
             headers=HEADERS,
@@ -80,7 +81,7 @@ class Source:
             raise Exception(f"Could not find address: {self.address}")
 
         # Retrieve the upcoming collections for our property
-        r = requests.get(
+        r = session.get(
             API_URLS["collection"],
             params={"geolocationid": locationId, "ocsvclang": "en-AU"},
             headers=HEADERS,

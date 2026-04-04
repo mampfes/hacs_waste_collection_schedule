@@ -4,8 +4,8 @@ import json
 import re
 from datetime import datetime
 
-import cloudscraper
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Gateshead Council"
@@ -30,7 +30,7 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        session = cloudscraper.create_scraper()
+        session = requests.Session(impersonate="chrome124")
 
         r = session.get(
             "https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker",

@@ -21,3 +21,12 @@ waste_collection_schedule:
       args:
         url: https://www.blauetonne-schlauetonne.de/abfuhrkalender/{%Y}/altlussheim-altlussheim-1668.ics
 ```
+### Bruchsal Untergrombach
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.blauetonne-schlauetonne.de/abfuhrkalender/{%Y}/bruchsal-untergrombach-244.ics
+```

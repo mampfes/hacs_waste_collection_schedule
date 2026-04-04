@@ -1,0 +1,14 @@
+---
+title: EAW Rheingau-Taunus-Kreis
+url: https://www.eaw-rheingau-taunus.de
+country: de
+howto:
+  en: |
+    - Go to <https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/>.
+    - Search for your street.
+    - Find the ICS/iCal download link.
+    - The URL follows the pattern: `https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/ics/{street-id}/feed.ics`
+    - Use this URL as the `url` parameter.
+test_cases:
+  Hessenstrasse:
+    url: "https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/ics/hessenstrasse-382/feed.ics"

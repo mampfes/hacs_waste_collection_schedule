@@ -40,4 +40,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Maribyrnong Council (VIC)](https://www.maribyrnong.vic.gov.au/Residents/Bins-and-recycling) page and search for your address.  The arguments should exactly match the results shown for Suburb and Street and the number portion of the Property.
+Visit https://maribyrnong.waste-info.com.au/api/v1/streets.json and search for your street name. The arguments should exactly match the results shown for the Suburb ("locality"), Street ("name") and the number portion of the Property.

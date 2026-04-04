@@ -46,11 +46,6 @@ TEST_CASES = {
         "house_number": "1",
         "service": "hvcgroep",
     },
-    "Mijnblink": {
-        "postal_code": "5741BV",
-        "house_number": "76",
-        "service": "mijnblink",
-    },
     "ZRD": {
         "postal_code": "4691DH", 
         "house_number": "4", 
@@ -159,16 +154,6 @@ SERVICE_MAP = [
             "kliko-grijs-rest": "mdi:trash-can",
             "kliko-groen-gft": "mdi:leaf",
             "kliko-grijs-oranje-pmd": "mdi:recycle",
-            "doos-karton-papier": "mdi:archive",
-        },
-    },
-    {
-        "title": "Mijn Blink",
-        "api_url": "https://mijnblink.nl",
-        "icons": {
-            "zak-grijs-rest": "mdi:trash-can",
-            "appel-gft": "mdi:leaf",
-            "blik-metaal-melkpak-drankpak-zak-oranje-plastic": "mdi:recycle",
             "doos-karton-papier": "mdi:archive",
         },
     },

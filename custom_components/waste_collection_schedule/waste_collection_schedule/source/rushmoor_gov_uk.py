@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 
 import requests
@@ -11,7 +10,9 @@ TEST_CASES = {
     "GU14": {"uprn": "100060551749"},
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
+HEADERS = {
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",

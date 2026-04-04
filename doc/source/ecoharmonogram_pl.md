@@ -34,6 +34,7 @@ waste_collection_schedule:
         house_number: house_number
         additional_sides_matcher: additional matching parameter
         app: app
+        language: pl
         g1: G1
         g2: G2
         g3: G3

@@ -107,12 +107,13 @@ class Source:
         mm_ses = InputTextParser(name="mm_ses")
 
         url = f"https://www.muellmax.de/abfallkalender/{self._service.lower()}/res/{self._service}Start.php"
-        r = requests.get(url, headers=HEADERS)
+        session = requests.Session()
+        r = session.get(url, headers=HEADERS)
         mm_ses.feed(r.text)
 
         # select "Abfuhrtermine", returns ort or an empty street search field
-        args = {"mm_ses": mm_ses.value, "mm_aus_ort.x": 0, "mm_aus_ort.x": 0}
-        r = requests.post(url, data=args, headers=HEADERS)
+        args = {"mm_ses": mm_ses.value, "mm_aus_ort.x": 0, "mm_aus_ort.y": 0}
+        r = session.post(url, data=args, headers=HEADERS)
         mm_ses.feed(r.text)
 
         if self._mm_frm_ort_sel is not None:
@@ -123,18 +124,28 @@ class Source:
                 "mm_frm_ort_sel": self._mm_frm_ort_sel,
                 "mm_aus_ort_submit": "weiter",
             }
-            r = requests.post(url, data=args, headers=HEADERS)
+            r = session.post(url, data=args, headers=HEADERS)
             mm_ses.feed(r.text)
 
         if self._mm_frm_str_sel is not None:
+            # show street selection page
+            args = {
+                "mm_ses": mm_ses.value,
+                "xxx": 1,
+                "mm_frm_str_name": self._mm_frm_str_sel,
+                "mm_aus_str_txt_submit": "suchen",
+            }
+            r = session.post(url, data=args, headers=HEADERS)
+            mm_ses.feed(r.text)
+
             # select street
             args = {
                 "mm_ses": mm_ses.value,
                 "xxx": 1,
                 "mm_frm_str_sel": self._mm_frm_str_sel,
-                "mm_aus_str_sel_submit": "suchen",
+                "mm_aus_str_sel_submit": "weiter",
             }
-            r = requests.post(url, data=args, headers=HEADERS)
+            r = session.post(url, data=args, headers=HEADERS)
             mm_ses.feed(r.text)
 
         if self._mm_frm_hnr_sel is not None:
@@ -145,12 +156,12 @@ class Source:
                 "mm_frm_hnr_sel": self._mm_frm_hnr_sel,
                 "mm_aus_hnr_sel_submit": "weiter",
             }
-            r = requests.post(url, data=args, headers=HEADERS)
+            r = session.post(url, data=args, headers=HEADERS)
             mm_ses.feed(r.text)
 
         # select to get ical
         args = {"mm_ses": mm_ses.value, "xxx": 1, "mm_ica_auswahl": "iCalendar-Datei"}
-        r = requests.post(url, data=args, headers=HEADERS)
+        r = session.post(url, data=args, headers=HEADERS)
         mm_ses.feed(r.text)
 
         mm_frm_fra = InputCheckboxParser(startswith="mm_frm_fra")
@@ -160,7 +171,7 @@ class Source:
         args = {"mm_ses": mm_ses.value, "xxx": 1, "mm_frm_type": "termine"}
         args.update(mm_frm_fra.value)
         args.update({"mm_ica_gen": "iCalendar-Datei laden"})
-        r = requests.post(url, data=args, headers=HEADERS)
+        r = session.post(url, data=args, headers=HEADERS)
         mm_ses.feed(r.text)
 
         entries = []
