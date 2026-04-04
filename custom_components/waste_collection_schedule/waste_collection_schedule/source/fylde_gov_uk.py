@@ -82,8 +82,7 @@ class Source:
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, "html.parser")
-        token_input = soup.find(
-            "input", {"name": "__RequestVerificationToken"})
+        token_input = soup.find("input", {"name": "__RequestVerificationToken"})
 
         if not token_input:
             raise Exception("Unable to find anti-forgery token on login page")
@@ -100,12 +99,14 @@ class Source:
             "Input.RememberMe": "false",
         }
 
-        response = session.post(
-            LOGIN_URL, data=login_data, allow_redirects=True)
+        response = session.post(LOGIN_URL, data=login_data, allow_redirects=True)
         response.raise_for_status()
 
         # Check if login was successful
-        if "validation-summary-errors" in response.text or "/Identity/Account/Login" in response.url:
+        if (
+            "validation-summary-errors" in response.text
+            or "/Identity/Account/Login" in response.url
+        ):
             raise Exception(
                 "Login failed. Please check your email and password credentials."
             )
@@ -128,7 +129,7 @@ class Source:
             events = json.loads(json_data)
             return events
         except json.JSONDecodeError as e:
-            raise Exception(f"Failed to parse collection schedule data: {e}")
+            raise Exception(f"Failed to parse collection schedule data: {e}") from e
 
     def fetch(self) -> list[Collection]:
         """Fetch waste collection schedule from the Fylde waste portal."""

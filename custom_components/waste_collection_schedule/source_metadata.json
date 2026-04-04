@@ -2695,9 +2695,7 @@
     "howto": {
       "en": "Register at https://waste.fylde.gov.uk/ and add your property to your account using your UPRN."
     },
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "urls": {}
   },
   "gateshead_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gateshead_gov_uk.md",
