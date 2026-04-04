@@ -1,18 +1,15 @@
+import logging
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "Wolverhampton City Council"
 DESCRIPTION = "Source for Wolverhampton City Council waste collection."
 URL = "https://www.wolverhampton.gov.uk"
-EXTRA_INFO = [
-    {
-        "title": "Find My Nearest",
-        "description": "Find your waste collection schedule",
-        "url": "https://www.wolverhampton.gov.uk/find-my-nearest",
-    }
-]
 
 TEST_CASES = {
     "Test Case": {"postcode": "WV1 1RD", "uprn": "10094887108"},
@@ -32,6 +29,7 @@ HEADERS = {
     "Upgrade-Insecure-Requests": "1",
 }
 
+
 class Source:
     def __init__(self, postcode: str, uprn: str):
         self._postcode = postcode.replace(" ", "").upper()
@@ -41,10 +39,10 @@ class Source:
         # First request to get session cookies
         session = requests.Session()
         session.headers.update(HEADERS)
-        
+
         # Make the actual request for bin collection data
         url = f"https://www.wolverhampton.gov.uk/find-my-nearest/{self._postcode}/{self._uprn}"
-        
+
         try:
             r = session.get(url, allow_redirects=True, timeout=30)
             r.raise_for_status()
@@ -55,25 +53,25 @@ class Source:
         entries = []
 
         # Find all waste containers
-        waste_containers = soup.find_all('div', class_='col-md-4')
-        
+        waste_containers = soup.find_all("div", class_="col-md-4")
+
         for container in waste_containers:
-            waste_type_tag = container.find('h3')
-            day_tag = container.find('h4')
-            next_date_tag = day_tag.find_next_sibling('h4') if day_tag else None
-            
+            waste_type_tag = container.find("h3")
+            day_tag = container.find("h4")
+            next_date_tag = day_tag.find_next_sibling("h4") if day_tag else None
+
             if waste_type_tag and day_tag and next_date_tag:
                 # Extract waste type and format it
                 waste_type_raw = waste_type_tag.text.strip()
-                waste_type_key = waste_type_raw.replace(' ', '_').lower()
-                
+                waste_type_key = waste_type_raw.replace(" ", "_").lower()
+
                 # Extract next collection date
-                next_date_text = next_date_tag.text.replace('Next date: ', '').strip()
-                
+                next_date_text = next_date_tag.text.replace("Next date: ", "").strip()
+
                 try:
                     # Parse the date (format: "Month Day, Year")
-                    date_obj = datetime.strptime(next_date_text, '%B %d, %Y').date()
-                    
+                    date_obj = datetime.strptime(next_date_text, "%B %d, %Y").date()
+
                     # Map the waste type to our standard types for icons
                     if "general" in waste_type_key or "refuse" in waste_type_key:
                         icon_key = "general_waste"
@@ -83,16 +81,16 @@ class Source:
                         icon_key = "garden_waste"
                     else:
                         icon_key = waste_type_key
-                    
+
                     entries.append(
                         Collection(
                             date=date_obj,
                             t=waste_type_raw,  # Use the original waste type name
-                            icon=ICON_MAP.get(icon_key, "mdi:trash-can")
+                            icon=ICON_MAP.get(icon_key, "mdi:trash-can"),
                         )
                     )
                 except ValueError:
-                    # If date parsing fails, try to log it but continue
+                    _LOGGER.warning(f'parsing of date "{next_date_text}" failed')
                     continue
 
         return entries

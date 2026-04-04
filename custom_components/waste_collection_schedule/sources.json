@@ -15902,12 +15902,6 @@
       "id": "fife_gov_uk"
     },
     {
-      "title": "Find My Nearest",
-      "module": "wolverhampton_gov_uk",
-      "default_params": {},
-      "id": "wolverhampton_gov_uk"
-    },
-    {
       "title": "Flintshire",
       "module": "flintshire_gov_uk",
       "default_params": {},
