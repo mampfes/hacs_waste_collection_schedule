@@ -940,12 +940,15 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if len(errors) == 0:
                 data = {**config_entry.data}
                 data.update({CONF_SOURCE_NAME: source, CONF_SOURCE_ARGS: args_input})
+                # Preserve existing options (sensors, customizations, etc.)
+                # and only update the fields returned by validation
+                merged_options = {**config_entry.options, **options}
                 return self.async_update_reload_and_abort(
                     config_entry,
                     title=title,
                     unique_id=config_entry.unique_id,
                     data=data,
-                    options=options,
+                    options=merged_options,
                     reason="reconfigure_successful",
                 )
         return self.async_show_form(
