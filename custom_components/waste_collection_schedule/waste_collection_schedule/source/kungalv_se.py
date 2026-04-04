@@ -1,16 +1,15 @@
+import re
 from datetime import datetime
 
 import requests
-
-import re
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Kungälvs kommun Avfallshantering"
 DESCRIPTION = "Source script for kungalv.se"
 URL = "https://www.kungalv.se/Bygga--bo--miljo/avfall-och-atervinning/avfall-fran-hushall/"
 TEST_CASES = {
-    "Komministergatan": {"street_address": "Komministergatan 4, Kungälv"}, 
+    "Komministergatan": {"street_address": "Komministergatan 4, Kungälv"},
     "Violgatan": {"street_address": "Violgatan 8, Ytterby"},
 }
 
@@ -51,13 +50,13 @@ class Source:
 
         address_data = response.json()
         if not address_data.get("Succeeded") or not address_data.get("Buildings"):
-            raise SourceArgumentException("Failed to get schedule for ", self._street_address)
+            raise SourceArgumentNotFound("street_address", self._street_address)
 
         # Extract building ID from first result (format: "Address, CITY (ID)")
         building = address_data["Buildings"][0]
         match = re.search(r"\((\d+)\)", building)
         if not match:
-            raise SourceArgumentException("Could not extract building ID from result.", self._street_address)
+            raise SourceArgumentNotFound("street_address", self._street_address)
 
         building_id = match.group(1)
 

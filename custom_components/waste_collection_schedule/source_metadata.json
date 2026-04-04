@@ -1870,6 +1870,11 @@
     "howto": {},
     "urls": {}
   },
+  "kungalv_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kungalv_se.md",
+    "howto": {},
+    "urls": {}
+  },
   "lsr_nu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lsr_nu.md",
     "howto": {},
