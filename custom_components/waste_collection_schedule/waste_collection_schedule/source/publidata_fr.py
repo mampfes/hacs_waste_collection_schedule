@@ -1,4 +1,5 @@
 import calendar
+import logging
 import re
 from datetime import datetime, timedelta, timezone
 
@@ -264,6 +265,8 @@ _CALENDAR_DAY_VERY_ABBR = {
 }
 
 _CALENDAR_MONTHS_ABBR = [m for m in calendar.month_abbr if m]
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class Source:
@@ -535,6 +538,29 @@ class Source:
 
         return {"dtstart": start_date, "until": end_date}
 
+    def _parse_explicit_multi_dates(self, opening_hours):
+        """
+        Handle malformed Publidata format such as:
+        "2025 Jan 17,2026 Jan 16,2027 Jan 15 06:00-23:59"
+        and return a list of explicit UTC datetimes.
+        """
+        if not opening_hours:
+            return []
+
+        pattern = (
+            r"^(?:\d{4} [A-Za-z]{3} \d{1,2})"
+            r"(?:,\d{4} [A-Za-z]{3} \d{1,2})+"
+            r"(?: \d{2}:\d{2}-\d{2}:\d{2})?$"
+        )
+        if not re.match(pattern, opening_hours.strip()):
+            return []
+
+        explicit_dates = []
+        for token in re.findall(r"\d{4} [A-Za-z]{3} \d{1,2}", opening_hours):
+            explicit_dates.append(datetime.strptime(token + " +0000", "%Y %b %d %z"))
+
+        return explicit_dates
+
     def _parse_schedule(self, schedule):
         """
         Parse a schedule and return a rrule object.
@@ -616,10 +642,35 @@ class Source:
         for waste_type, waste_data in sanitized_response.items():
             my_rruleset = rruleset()
             for schedule in waste_data["schedules"]:
-                if schedule["schedule_type"] in ("regular", "exception"):
-                    my_rruleset.rrule(self._parse_schedule(schedule))
-                elif schedule["schedule_type"] in ("closed", "closing_exception"):
-                    my_rruleset.exrule(self._parse_schedule(schedule))
+                schedule_type = schedule.get("schedule_type")
+
+                try:
+                    parsed_schedule = self._parse_schedule(schedule)
+                    if schedule_type in ("regular", "exception"):
+                        my_rruleset.rrule(parsed_schedule)
+                    elif schedule_type in ("closed", "closing_exception"):
+                        my_rruleset.exrule(parsed_schedule)
+                    continue
+                except Exception as err:
+                    explicit_dates = self._parse_explicit_multi_dates(
+                        schedule.get("opening_hours", "")
+                    )
+                    if explicit_dates:
+                        if schedule_type in ("regular", "exception"):
+                            for explicit_date in explicit_dates:
+                                my_rruleset.rdate(explicit_date)
+                        elif schedule_type in ("closed", "closing_exception"):
+                            for explicit_date in explicit_dates:
+                                my_rruleset.exdate(explicit_date)
+                        continue
+
+                    _LOGGER.warning(
+                        "Skipping invalid Publidata schedule id=%s opening_hours=%r: %s",
+                        schedule.get("id"),
+                        schedule.get("opening_hours"),
+                        err,
+                    )
+                    continue
             for entry in my_rruleset:
                 entries.append(
                     Collection(
