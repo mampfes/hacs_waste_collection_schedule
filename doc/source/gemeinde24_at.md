@@ -13,7 +13,7 @@ waste_collection_schedule:
         strasse: Edelschrott-Ort
 ```
 
-## Configuration Variables
+### Configuration Variables
 
 **gemeinde**
 _(string) (optional)_
