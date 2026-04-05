@@ -2589,9 +2589,9 @@
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "gemeinde": "Municipality name as shown in Gemeinde24.",
-          "gemeinde_id": "Numeric GemeindeID from Gemeinde24 (optional alternative to 'gemeinde').",
+          "gemeinde_id": "Numeric GemeindeID from Gemeinde24 (optional alternative to the municipality field).",
           "strasse": "Street/local area name as shown in Gemeinde24.",
-          "street_id": "Numeric streetID from Gemeinde24 (optional alternative to 'strasse')."
+          "street_id": "Numeric streetID from Gemeinde24 (optional alternative to the street field)."
         }
       },
       "reconfigure_gemeinde24_at": {
@@ -2606,9 +2606,9 @@
         },
         "data_description": {
           "gemeinde": "Municipality name as shown in Gemeinde24.",
-          "gemeinde_id": "Numeric GemeindeID from Gemeinde24 (optional alternative to 'gemeinde').",
+          "gemeinde_id": "Numeric GemeindeID from Gemeinde24 (optional alternative to the municipality field).",
           "strasse": "Street/local area name as shown in Gemeinde24.",
-          "street_id": "Numeric streetID from Gemeinde24 (optional alternative to 'strasse')."
+          "street_id": "Numeric streetID from Gemeinde24 (optional alternative to the street field)."
         }
       },
       "args_gojer_at": {

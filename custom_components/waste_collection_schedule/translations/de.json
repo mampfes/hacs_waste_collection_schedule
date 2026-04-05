@@ -2540,9 +2540,9 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "gemeinde": "Gemeindename wie in Gemeinde24 angezeigt.",
-          "gemeinde_id": "Numerische GemeindeID aus Gemeinde24 (optional statt 'gemeinde').",
+          "gemeinde_id": "Numerische GemeindeID aus Gemeinde24 (optional statt des Gemeinde-Feldes).",
           "strasse": "Strassen-/Ortsteilname wie in Gemeinde24 angezeigt.",
-          "street_id": "Numerische streetID aus Gemeinde24 (optional statt 'strasse')."
+          "street_id": "Numerische streetID aus Gemeinde24 (optional statt des Straßen-Feldes)."
         }
       },
       "reconfigure_gemeinde24_at": {
@@ -2557,9 +2557,9 @@
         },
         "data_description": {
           "gemeinde": "Gemeindename wie in Gemeinde24 angezeigt.",
-          "gemeinde_id": "Numerische GemeindeID aus Gemeinde24 (optional statt 'gemeinde').",
+          "gemeinde_id": "Numerische GemeindeID aus Gemeinde24 (optional statt des Gemeinde-Feldes).",
           "strasse": "Strassen-/Ortsteilname wie in Gemeinde24 angezeigt.",
-          "street_id": "Numerische streetID aus Gemeinde24 (optional statt 'strasse')."
+          "street_id": "Numerische streetID aus Gemeinde24 (optional statt des Straßen-Feldes)."
         }
       },
       "args_gojer_at": {
