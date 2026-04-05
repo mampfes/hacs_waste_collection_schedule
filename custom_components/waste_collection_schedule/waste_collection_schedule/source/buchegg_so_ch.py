@@ -132,15 +132,16 @@ class Source:
         soup = BeautifulSoup(response.text, "html.parser")
         table = soup.find("table", id="icmsTable-abfallsammlung")
 
+        
         if not table:
-            raise Exception(
+            raise ValueError(
                 "Table 'icmsTable-abfallsammlung' not found on page. "
                 "The website structure may have changed."
             )
 
         entities_attr = table.get("data-entities", "")
         if not entities_attr:
-            raise Exception(
+            raise ValueError(
                 "No 'data-entities' attribute found on table. "
                 "The website structure may have changed."
             )
@@ -149,7 +150,7 @@ class Source:
         raw_data = entities.get("data", [])
 
         if not raw_data:
-            raise Exception("No entries found in table data.")
+            raise ValueError("No entries found in table data.")
 
         collections: list[Collection] = []
 
