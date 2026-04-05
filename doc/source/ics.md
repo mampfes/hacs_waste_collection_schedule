@@ -349,6 +349,7 @@ This source has been successfully tested with the following service providers:
 - [Südbrandenburgischer Abfallzweckverband](/doc/ics/sbazv_de.md) / sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
+- [Vlotho](/doc/ics/vlotho_de.md) / vlotho.de
 - [VUE Waltrop](/doc/ics/vue_waltrop_de.md) / vue-waltrop.de
 - [Wasserburg](/doc/ics/mein_abfallkalender_online.md) / wasserburg.de
 - [Weilrod](/doc/ics/mein_abfallkalender_online.md) / weilrod.de

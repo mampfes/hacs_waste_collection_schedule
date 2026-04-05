@@ -10227,6 +10227,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "Vlotho",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_vlotho_de"
+    },
+    {
       "title": "Volkmarsen (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
