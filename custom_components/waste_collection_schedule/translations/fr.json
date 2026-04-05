@@ -2263,6 +2263,32 @@
         },
         "data_description": {}
       },
+      "args_lipizzanerheimat_at": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "garbage_calendar_id": "Garbage Calendar Id",
+          "map_name": "Map Name",
+          "street": "Street",
+          "town": "Town"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_lipizzanerheimat_at": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "garbage_calendar_id": "Garbage Calendar Id",
+          "map_name": "Map Name",
+          "street": "Street",
+          "town": "Town"
+        },
+        "data_description": {}
+      },
       "args_badaussee_at": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

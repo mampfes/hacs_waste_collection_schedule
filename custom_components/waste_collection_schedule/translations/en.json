@@ -2340,6 +2340,41 @@
         },
         "data_description": {}
       },
+      "args_lipizzanerheimat_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "garbage_calendar_id": "Garbage Calendar ID",
+          "map_name": "Calendar Map Name",
+          "street": "Street Name",
+          "town": "Town"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
+          "map_name": "The name of the calendar map displayed in the app.",
+          "street": "The street name to get garbage collection dates for.",
+          "town": "The town corresponding to the selected street."
+        }
+      },
+      "reconfigure_lipizzanerheimat_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "garbage_calendar_id": "Garbage Calendar ID",
+          "map_name": "Calendar Map Name",
+          "street": "Street Name",
+          "town": "Town"
+        },
+        "data_description": {
+          "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
+          "map_name": "The name of the calendar map displayed in the app.",
+          "street": "The street name to get garbage collection dates for.",
+          "town": "The town corresponding to the selected street."
+        }
+      },
       "args_badaussee_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

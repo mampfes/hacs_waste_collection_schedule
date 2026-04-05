@@ -511,6 +511,15 @@
     "howto": {},
     "urls": {}
   },
+  "lipizzanerheimat_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lipizzanerheimat_at.md",
+    "howto": {
+      "de": "Öffnen Sie die Lipizzanerheimat-App, melden Sie sich an oder nutzen Sie den Gastmodus, wählen Sie Ihre Stadt aus, gehen Sie zur Ansicht des Müllkalenders und wählen Sie die Straße aus, für die Sie die Müllabfuhrtermine erhalten möchten. Sie können entweder den Kalendernamen in der unteren Mitte, den Straßennamen und die Stadt, wie sie im Dropdown-Menü geschrieben sind, oder direkt die garbage_calendar_id angeben.",
+      "en": "Open the Lipizzanerheimat app, login or use guest mode, select your town, go to the garbage calendar view and select the street you want to get the garbage collection dates for. You can either provide the calendar name in the lower center, the street name and town as written in the dropdown or provide the garbage_calendar_id directly.",
+      "it": "Apri l'app Lipizzanerheimat, accedi o usa la modalità ospite, seleziona la tua città, vai alla vista del calendario dei rifiuti e seleziona la strada per cui desideri ottenere le date di raccolta dei rifiuti. Puoi fornire il nome del calendario nella parte inferiore centrale, il nome della strada e la città come scritto nel menu a discesa oppure fornire direttamente l'ID garbage_calendar_id."
+    },
+    "urls": {}
+  },
   "badaussee_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/badaussee_at.md",
     "howto": {},

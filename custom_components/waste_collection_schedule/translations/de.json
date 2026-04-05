@@ -2291,6 +2291,41 @@
         },
         "data_description": {}
       },
+      "args_lipizzanerheimat_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "garbage_calendar_id": "Müllkalender-ID",
+          "map_name": "Kalenderkartenname",
+          "street": "Straßenname",
+          "town": "Stadt"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "garbage_calendar_id": "Die ID des Müllkalenders, für den Daten abgerufen werden sollen.",
+          "map_name": "Der Name der Kalenderkarte, die in der App angezeigt wird.",
+          "street": "Der Straßenname, für den die Müllabfuhrtermine abgerufen werden sollen.",
+          "town": "Die Stadt, die zur ausgewählten Straße gehört."
+        }
+      },
+      "reconfigure_lipizzanerheimat_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "garbage_calendar_id": "Müllkalender-ID",
+          "map_name": "Kalenderkartenname",
+          "street": "Straßenname",
+          "town": "Stadt"
+        },
+        "data_description": {
+          "garbage_calendar_id": "Die ID des Müllkalenders, für den Daten abgerufen werden sollen.",
+          "map_name": "Der Name der Kalenderkarte, die in der App angezeigt wird.",
+          "street": "Der Straßenname, für den die Müllabfuhrtermine abgerufen werden sollen.",
+          "town": "Die Stadt, die zur ausgewählten Straße gehört."
+        }
+      },
       "args_badaussee_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
