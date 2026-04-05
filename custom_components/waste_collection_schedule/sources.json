@@ -4081,6 +4081,12 @@
       "id": "bep_environnement_be"
     },
     {
+      "title": "Eupen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_eupen_be"
+    },
+    {
       "title": "Hygea",
       "module": "hygea_be",
       "default_params": {},

@@ -140,6 +140,7 @@ This source has been successfully tested with the following service providers:
 
 ### Belgium
 
+- [Eupen](/doc/ics/eupen_be.md) / eupen.be
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
 
 ### Canada
