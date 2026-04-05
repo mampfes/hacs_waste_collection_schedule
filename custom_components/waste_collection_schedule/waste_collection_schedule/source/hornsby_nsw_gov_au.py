@@ -13,7 +13,6 @@ from typing import Any
 
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import (
-    LTAnno,
     LTChar,
     LTLayoutContainer,
     LTRect,
@@ -56,9 +55,24 @@ MONTH_NUM_MAP = {
     "DECEMBER": 12,
 }
 
+WEEKDAY_MAP = {
+    "monday": 0,
+    "tuesday": 1,
+    "wednesday": 2,
+    "thursday": 3,
+    "friday": 4,
+    "saturday": 5,
+    "sunday": 6,
+}
+
 BASE_URL = "https://www.hornsby.nsw.gov.au/"
 
 _LOGGER = logging.getLogger(__name__)
+
+# Number of fortnightly occurrences to generate from an anchor date
+_FORTNIGHTLY_COUNT = 26
+# Number of weekly occurrences to generate from today
+_WEEKLY_COUNT = 26
 
 
 def _http_get(url: str, timeout_s: float = 25.0) -> bytes:
@@ -66,9 +80,12 @@ def _http_get(url: str, timeout_s: float = 25.0) -> bytes:
     req = urllib.request.Request(
         url,
         headers={
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            "Accept": "*/*",
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+            ),
+            "Accept": "application/json, */*",
             "Referer": "https://www.hornsby.nsw.gov.au/",
+            "X-Requested-With": "XMLHttpRequest",
         },
         method="GET",
     )
@@ -87,25 +104,180 @@ def _parse_geolocation_id(response_bytes: bytes) -> str:
     if not items:
         raise ValueError("No address results returned.")
 
-    # Sort by score (highest first) and return the best match
     items.sort(key=lambda r: r.get("Score", 0), reverse=True)
     return items[0]["Id"]
 
 
-class _HrefExtractor(HTMLParser):
-    """Simple HTML parser to extract href attributes from anchor tags."""
+# ---------------------------------------------------------------------------
+# HTML parsing of the waste-services widget
+# ---------------------------------------------------------------------------
+
+_DATE_DMY = re.compile(r"(\d{1,2})/(\d{1,2})/(\d{4})")
+_DATE_WDMY = re.compile(
+    r"(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(\d{1,2})/(\d{1,2})/(\d{4})"
+)
+_WEEKDAY_RE = re.compile(
+    r"\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b",
+    re.IGNORECASE,
+)
+
+
+def _parse_date_text(text: str) -> datetime.date | None:
+    """Try to parse a date from a next-service text like 'Wed 8/4/2026' or '26/01/2026'."""
+    m = _DATE_WDMY.search(text)
+    if not m:
+        m = _DATE_DMY.search(text)
+    if not m:
+        return None
+    try:
+        return datetime.date(int(m.group(3)), int(m.group(2)), int(m.group(1)))
+    except ValueError:
+        return None
+
+
+def _parse_weekday(text: str) -> int | None:
+    """Extract a weekday index (0=Mon) from text like 'Wednesday' or 'Monday/Thursday'."""
+    m = _WEEKDAY_RE.search(text)
+    if m:
+        return WEEKDAY_MAP.get(m.group(1).lower())
+    return None
+
+
+def _next_weekday(weekday: int, from_date: datetime.date) -> datetime.date:
+    """Return the next occurrence of the given weekday on or after from_date."""
+    days_ahead = (weekday - from_date.weekday()) % 7
+    return from_date + datetime.timedelta(days=days_ahead)
+
+
+def _generate_weekly(weekday: int, count: int = _WEEKLY_COUNT) -> list[datetime.date]:
+    """Generate weekly dates starting from the next occurrence of weekday."""
+    start = _next_weekday(weekday, datetime.date.today())
+    return [start + datetime.timedelta(weeks=i) for i in range(count)]
+
+
+def _generate_fortnightly(
+    anchor: datetime.date, count: int = _FORTNIGHTLY_COUNT
+) -> list[datetime.date]:
+    """Generate fortnightly dates starting from anchor."""
+    return [anchor + datetime.timedelta(weeks=2 * i) for i in range(count)]
+
+
+class _WasteServiceParser(HTMLParser):
+    """Parse the waste-services HTML widget to extract service info."""
 
     def __init__(self) -> None:
         super().__init__()
+        self.services: list[dict[str, str]] = []
         self.hrefs: list[str] = []
+        self._in_result = False
+        self._current: dict[str, str] = {}
+        self._capture_field: str | None = None
+        self._depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        if tag.lower() != "a":
-            return
-        d = {k.lower(): v for k, v in attrs}
-        href = d.get("href")
-        if href:
-            self.hrefs.append(href)
+        attr_dict = {k.lower(): v or "" for k, v in attrs}
+        cls = attr_dict.get("class", "")
+
+        if tag == "a" and attr_dict.get("href"):
+            self.hrefs.append(attr_dict["href"])
+
+        if tag == "div" and "waste-services-result" in cls:
+            self._in_result = True
+            self._current = {"classes": cls}
+            self._depth = 0
+
+        if self._in_result:
+            if tag == "div":
+                self._depth += 1
+            if tag == "h3":
+                self._capture_field = "type"
+            elif tag == "div" and "next-service" in cls:
+                self._capture_field = "next_service"
+            elif tag == "div" and "note" in cls:
+                self._capture_field = "note"
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in ("h3", "div") and self._capture_field:
+            self._capture_field = None
+        if self._in_result and tag == "div":
+            self._depth -= 1
+            if self._depth <= 0:
+                self._in_result = False
+                if self._current.get("type"):
+                    self.services.append(self._current)
+                self._current = {}
+
+    def handle_data(self, data: str) -> None:
+        if self._capture_field and self._in_result:
+            self._current[self._capture_field] = (
+                self._current.get(self._capture_field, "") + data
+            )
+
+
+def _extract_entries_from_html(html: str) -> list[Collection]:
+    """Extract collection entries from the waste-services HTML widget."""
+    parser = _WasteServiceParser()
+    parser.feed(html)
+
+    entries: list[Collection] = []
+    seen: set[tuple[datetime.date, str]] = set()
+    today = datetime.date.today()
+
+    for svc in parser.services:
+        raw_type = svc.get("type", "").strip()
+        next_text = svc.get("next_service", "").strip()
+        note = svc.get("note", "").strip().lower()
+
+        # Skip calendar-link and non-service entries
+        if "calendar" in raw_type.lower() or not next_text:
+            continue
+
+        # Determine waste type
+        waste_type = raw_type
+        if "garbage" in raw_type.lower() or "general" in raw_type.lower():
+            waste_type = "General Waste"
+        elif "recycling" in raw_type.lower():
+            waste_type = "Recycling"
+        elif "green" in raw_type.lower():
+            waste_type = "Green Waste"
+        elif "bulky" in raw_type.lower():
+            waste_type = "Bulky Waste"
+
+        # Try to parse a specific date
+        specific_date = _parse_date_text(next_text)
+
+        if specific_date:
+            if "fortnightly" in note or "fortnight" in note:
+                dates = _generate_fortnightly(specific_date)
+            else:
+                dates = [specific_date]
+        else:
+            # No specific date — try weekday
+            weekday = _parse_weekday(next_text)
+            if weekday is not None:
+                if "fortnightly" in note or "fortnight" in note:
+                    anchor = _next_weekday(weekday, today)
+                    dates = _generate_fortnightly(anchor)
+                else:
+                    dates = _generate_weekly(weekday)
+            else:
+                continue
+
+        for dt in dates:
+            if dt < today:
+                continue
+            if (dt, waste_type) not in seen:
+                seen.add((dt, waste_type))
+                entries.append(
+                    Collection(date=dt, t=waste_type, icon=ICON_MAP.get(waste_type))
+                )
+
+    return entries
+
+
+# ---------------------------------------------------------------------------
+# PDF URL selection
+# ---------------------------------------------------------------------------
 
 
 def _select_weekly_waste_calendar_pdf_href(hrefs: list[str]) -> str | None:
@@ -114,23 +286,14 @@ def _select_weekly_waste_calendar_pdf_href(hrefs: list[str]) -> str | None:
     if not pdfs:
         return None
 
-    # Strong signal: weekly waste calendar under 'suds-waste-and-recycling'
-    cand = [
-        h
-        for h in pdfs
-        if "collection-calendars" in h and "suds-waste-and-recycling" in h
-    ]
-    if cand:
-        return cand[0]
+    # Weekly waste calendar under 'suds-waste-and-recycling' or 'muds-'
+    for pattern in ("suds-waste-and-recycling", "muds-green-waste"):
+        cand = [h for h in pdfs if "collection-calendars" in h and pattern in h]
+        if cand:
+            return cand[0]
 
     # Fallback: any collection-calendars PDF that doesn't look like bulky-waste
-    cand = [
-        h
-        for h in pdfs
-        if "collection-calendars" in h
-        and "bulky" not in h.lower()
-        and "suds-bulky-waste" not in h.lower()
-    ]
+    cand = [h for h in pdfs if "collection-calendars" in h and "bulky" not in h.lower()]
     if cand:
         return cand[0]
 
@@ -147,6 +310,7 @@ def _select_bulky_waste_calendar_pdf_href(hrefs: list[str]) -> str | None:
         h
         for h in pdfs
         if ("suds-bulky-waste" in h.lower())
+        or ("muds-bulky-waste" in h.lower())
         or ("bulkywasteflyer" in h.lower())
         or ("bulkywaste" in h.lower())
     ]
@@ -160,10 +324,8 @@ def _select_bulky_waste_calendar_pdf_href(hrefs: list[str]) -> str | None:
     return None
 
 
-def _resolve_pdf_urls_for_address(
-    address: str, language: str = "en-AU"
-) -> dict[str, str | None]:
-    """Resolve the PDF URLs for a given address via Hornsby Council API."""
+def _fetch_waste_services_html(address: str, language: str = "en-AU") -> str:
+    """Fetch the waste-services HTML widget for a given address."""
     keywords = urllib.parse.quote(address, safe="")
     search_url = f"{BASE_URL}api/v1/myarea/search?keywords={keywords}"
 
@@ -182,31 +344,20 @@ def _resolve_pdf_urls_for_address(
     if not ws_json.get("success", False):
         raise ValueError("wasteservices call returned success=false.")
 
-    html = ws_json.get("responseContent") or ""
-    if not html.strip():
-        # No waste services content - address may not have collection services
-        return {"weekly": None, "bulky": None}
+    return ws_json.get("responseContent") or ""
 
-    parser = _HrefExtractor()
-    parser.feed(html)
 
-    weekly_href = _select_weekly_waste_calendar_pdf_href(parser.hrefs)
-    bulky_href = _select_bulky_waste_calendar_pdf_href(parser.hrefs)
-
-    weekly_url = urllib.parse.urljoin(BASE_URL, weekly_href) if weekly_href else None
-    bulky_url = urllib.parse.urljoin(BASE_URL, bulky_href) if bulky_href else None
-
-    return {"weekly": weekly_url, "bulky": bulky_url}
+# ---------------------------------------------------------------------------
+# PDF extraction (kept as fallback for weekly calendar)
+# ---------------------------------------------------------------------------
 
 
 def _is_near_white(rgb: tuple[float, float, float]) -> bool:
-    """Check if an RGB color is near white."""
     r, g, b = rgb
     return r > 0.95 and g > 0.95 and b > 0.95
 
 
 def _classify_fill(rgb: tuple[float, float, float]) -> str:
-    """Classify fill color into 'green' or 'yellow'."""
     r, g, b = rgb
     if g > 0.45 and r < 0.45 and b < 0.45:
         return "green"
@@ -218,40 +369,31 @@ def _classify_fill(rgb: tuple[float, float, float]) -> str:
 def _normalize_color_to_rgb(
     color: Any,
 ) -> tuple[float, float, float] | None:
-    """Normalize a pdfminer color value to an (r, g, b) tuple with values 0–1."""
     if color is None:
         return None
     if isinstance(color, (list, tuple)):
         if len(color) == 3:
-            # DeviceRGB
             return (float(color[0]), float(color[1]), float(color[2]))
         if len(color) == 4:
-            # DeviceCMYK → convert to RGB
             c, m, y, k = (float(v) for v in color)
             return ((1 - c) * (1 - k), (1 - m) * (1 - k), (1 - y) * (1 - k))
         if len(color) == 1:
-            # Grayscale
             g = float(color[0])
             return (g, g, g)
     if isinstance(color, (int, float)):
-        # Grayscale scalar
         g = float(color)
         return (g, g, g)
     return None
 
 
 def _iter_layout_elements(container: Any) -> Any:
-    """Recursively yield all layout elements from a pdfminer container."""
     for element in container:
         yield element
         if isinstance(element, LTLayoutContainer):
             yield from _iter_layout_elements(element)
 
 
-def _flush_word(
-    word_chars: list[LTChar], page_height: float
-) -> dict[str, Any]:
-    """Build a word dict from a list of LTChar objects using top-origin coordinates."""
+def _flush_word(word_chars: list[LTChar], page_height: float) -> dict[str, Any]:
     word_text = "".join(c.get_text() for c in word_chars)
     bx0 = min(c.bbox[0] for c in word_chars)
     by0 = min(c.bbox[1] for c in word_chars)
@@ -261,7 +403,6 @@ def _flush_word(
         "text": word_text,
         "x0": bx0,
         "x1": bx1,
-        # Convert bottom-origin → top-origin
         "top": page_height - by1,
         "bottom": page_height - by0,
     }
@@ -270,7 +411,6 @@ def _flush_word(
 def _extract_words_from_page(
     page_layout: Any, page_height: float
 ) -> list[dict[str, Any]]:
-    """Extract words with top-origin bounding boxes from a pdfminer page layout."""
     words: list[dict[str, Any]] = []
     for element in _iter_layout_elements(page_layout):
         if not isinstance(element, LTTextLine):
@@ -291,7 +431,6 @@ def _extract_words_from_page(
 def _group_words_into_lines(
     words: list[dict[str, Any]], y_tolerance: float = 5.0
 ) -> list[list[dict[str, Any]]]:
-    """Group word dicts into text lines by proximity of their 'top' coordinate."""
     if not words:
         return []
     sorted_words = sorted(words, key=lambda w: float(w["top"]))
@@ -317,17 +456,48 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
     if not pages:
         raise ValueError("Weekly calendar PDF contains no pages")
 
-    page = pages[0]
-    page_height = float(page.height)
-
-    # Extract month headers
     rx = re.compile(
         r"^(JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|"
-        r"OCTOBER|NOVEMBER|DECEMBER)\s+(\d{4})$"
+        r"OCTOBER|NOVEMBER|DECEMBER)\s+(\d{4})$",
+        re.IGNORECASE,
     )
 
-    words = _extract_words_from_page(page, page_height)
-    text_lines = _group_words_into_lines(words)
+    all_words: list[dict[str, Any]] = []
+    all_rects: list[tuple[str, dict[str, Any]]] = []
+
+    for page in pages:
+        page_height = float(page.height)
+        words = _extract_words_from_page(page, page_height)
+        all_words.extend(words)
+
+        for element in _iter_layout_elements(page):
+            if not isinstance(element, LTRect):
+                continue
+            rgb = _normalize_color_to_rgb(element.non_stroking_color)
+            if rgb is None or _is_near_white(rgb):
+                continue
+            bx0, by0, bx1, by1 = element.bbox
+            top_coord = page_height - by1
+            bottom_coord = page_height - by0
+            rect_w = bx1 - bx0
+            rect_h = by1 - by0
+            if not (10.0 < rect_w < 25.0 and 10.0 < rect_h < 25.0):
+                continue
+            label = _classify_fill(rgb)
+            if label != "unknown":
+                all_rects.append(
+                    (
+                        label,
+                        {
+                            "x0": bx0,
+                            "x1": bx1,
+                            "top": top_coord,
+                            "bottom": bottom_coord,
+                        },
+                    )
+                )
+
+    text_lines = _group_words_into_lines(all_words)
     headers: list[dict[str, Any]] = []
 
     for line_words in text_lines:
@@ -344,7 +514,7 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
         cy = (top + bottom) / 2.0
         headers.append(
             {
-                "month": m.group(1),
+                "month": m.group(1).upper(),
                 "year": int(m.group(2)),
                 "center": (cx, cy),
                 "col": None,
@@ -359,16 +529,13 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
     xs = [h["center"][0] for h in headers]
     xs_sorted = sorted(xs)
     n = len(xs_sorted)
-    # Initial seeds at evenly-spaced quantiles
     centers = [
         xs_sorted[min(int(q * (n - 1) + 0.5), n - 1)]
         for q in (0.1 + i * 0.8 / (ncols - 1) for i in range(ncols))
     ]
 
     for _ in range(10):
-        assignments = [
-            min(range(ncols), key=lambda c: abs(x - centers[c])) for x in xs
-        ]
+        assignments = [min(range(ncols), key=lambda c: abs(x - centers[c])) for x in xs]
         new_centers = list(centers)
         for c in range(ncols):
             members = [xs[i] for i in range(len(xs)) if assignments[i] == c]
@@ -387,42 +554,14 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
             key=lambda i: abs(h["center"][0] - col_centers[i]),
         )
 
-    # Extract digit words (day numbers) with their bounding boxes
     digit_words: list[tuple[int, dict[str, Any]]] = [
-        (int(w["text"]), w)
-        for w in words
-        if re.fullmatch(r"\d{1,2}", w["text"])
+        (int(w["text"]), w) for w in all_words if re.fullmatch(r"\d{1,2}", w["text"])
     ]
 
-    # Extract marker shapes (coloured squares that indicate collection type)
-    # pdfminer.six exposes LTRect with non_stroking_color for the fill colour
     by_fill: dict[str, list[dict[str, Any]]] = {}
-    for element in _iter_layout_elements(page):
-        if not isinstance(element, LTRect):
-            continue
-        rgb = _normalize_color_to_rgb(element.non_stroking_color)
-        if rgb is None or _is_near_white(rgb):
-            continue
-        bx0, by0, bx1, by1 = element.bbox
-        # Convert bottom-origin → top-origin
-        top_coord = page_height - by1
-        bottom_coord = page_height - by0
-        rect_w = bx1 - bx0
-        rect_h = by1 - by0
-        if not (10.0 < rect_w < 25.0 and 10.0 < rect_h < 25.0):
-            continue
-        label = _classify_fill(rgb)
-        if label != "unknown":
-            by_fill.setdefault(label, []).append(
-                {
-                    "x0": bx0,
-                    "x1": bx1,
-                    "top": top_coord,
-                    "bottom": bottom_coord,
-                }
-            )
+    for label, rect in all_rects:
+        by_fill.setdefault(label, []).append(rect)
 
-    # Filter markers to consistent sizes using median
     marker_sets: dict[str, list[dict[str, Any]]] = {}
     for label, items in by_fill.items():
         item_widths = [float(it["x1"]) - float(it["x0"]) for it in items]
@@ -457,7 +596,6 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
             cx = (m_x0 + m_x1) / 2.0
             cy = (m_top + m_bottom) / 2.0
 
-            # Find the day number — first try containment, then overlap
             day = None
             for digit, wrect in digit_words:
                 w_x0 = float(wrect["x0"])
@@ -474,7 +612,6 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
                     w_top = float(wrect["top"])
                     w_x1 = float(wrect["x1"])
                     w_bottom = float(wrect["bottom"])
-                    # Compute intersection area
                     ix0 = max(m_x0, w_x0)
                     iy0 = max(m_top, w_top)
                     ix1 = min(m_x1, w_x1)
@@ -487,7 +624,6 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
             if day is None:
                 continue
 
-            # Find the month header for this marker
             col = min(
                 range(len(col_centers)),
                 key=lambda i: abs(cx - col_centers[i]),
@@ -513,7 +649,6 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
                     Collection(date=dt, t=waste_type, icon=ICON_MAP.get(waste_type))
                 )
 
-            # General Waste is collected on both green and recycling weeks
             if (dt, "General Waste") not in seen:
                 seen.add((dt, "General Waste"))
                 entries.append(
@@ -566,22 +701,44 @@ class Source:
         self._address = address
 
     def fetch(self) -> list[Collection]:
-        urls = _resolve_pdf_urls_for_address(self._address)
-        entries: list[Collection] = []
+        html = _fetch_waste_services_html(self._address)
+        if not html.strip():
+            return []
 
-        if urls["weekly"]:
-            try:
-                weekly_bytes = _http_get(urls["weekly"])
-                entries.extend(_extract_events_from_weekly_pdf(weekly_bytes))
-            except Exception as e:
-                _LOGGER.warning("Failed to extract weekly calendar: %s", e)
+        # Primary: parse dates from the HTML widget
+        entries = _extract_entries_from_html(html)
 
-        if urls["bulky"]:
-            try:
-                bulky_bytes = _http_get(urls["bulky"])
-                entries.extend(_extract_bulky_events_from_pdf(bulky_bytes))
-            except Exception as e:
-                _LOGGER.warning("Failed to extract bulky waste calendar: %s", e)
+        # Extract PDF hrefs from the HTML for fallback/supplement
+        parser = _WasteServiceParser()
+        parser.feed(html)
+
+        # If HTML didn't yield green waste or recycling, try the weekly PDF
+        html_types = {e.type for e in entries}
+        if not {"Green Waste", "Recycling"}.issubset(html_types):
+            weekly_href = _select_weekly_waste_calendar_pdf_href(parser.hrefs)
+            if weekly_href:
+                weekly_url = urllib.parse.urljoin(BASE_URL, weekly_href)
+                try:
+                    weekly_bytes = _http_get(weekly_url)
+                    pdf_entries = _extract_events_from_weekly_pdf(weekly_bytes)
+                    for e in pdf_entries:
+                        if e.type not in html_types:
+                            entries.append(e)
+                except Exception as exc:
+                    _LOGGER.warning("Failed to extract weekly calendar PDF: %s", exc)
+
+        # If HTML didn't yield bulky waste, try the bulky PDF
+        if "Bulky Waste" not in html_types:
+            bulky_href = _select_bulky_waste_calendar_pdf_href(parser.hrefs)
+            if bulky_href:
+                bulky_url = urllib.parse.urljoin(BASE_URL, bulky_href)
+                try:
+                    bulky_bytes = _http_get(bulky_url)
+                    entries.extend(_extract_bulky_events_from_pdf(bulky_bytes))
+                except Exception as exc:
+                    _LOGGER.warning(
+                        "Failed to extract bulky waste calendar PDF: %s", exc
+                    )
 
         entries.sort(key=lambda e: e.date)
         return entries
