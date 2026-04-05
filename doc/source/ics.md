@@ -380,6 +380,14 @@ This source has been successfully tested with the following service providers:
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
 
+### Slovenia
+
+- [Kamnik](/doc/ics/publicus_si.md) / kamnik.si
+- [Komenda](/doc/ics/publicus_si.md) / komenda.si
+- [Pivka](/doc/ics/publicus_si.md) / pivka.si
+- [Postojna](/doc/ics/publicus_si.md) / postojna.si
+- [Publicus d.o.o.](/doc/ics/publicus_si.md) / beta.smetar.si
+
 ### Switzerland
 
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch

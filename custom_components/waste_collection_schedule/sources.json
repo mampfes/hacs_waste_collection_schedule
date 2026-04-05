@@ -14557,6 +14557,18 @@
   ],
   "Slovenia": [
     {
+      "title": "Kamnik",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
+    },
+    {
+      "title": "Komenda",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
+    },
+    {
       "title": "Komunala Kranj",
       "module": "komunala_kranj_si",
       "default_params": {},
@@ -14569,10 +14581,28 @@
       "id": "mojiodpadki_si"
     },
     {
+      "title": "Pivka",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
+    },
+    {
+      "title": "Postojna",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
+    },
+    {
       "title": "Prodnik",
       "module": "prodnik_si",
       "default_params": {},
       "id": "prodnik_si"
+    },
+    {
+      "title": "Publicus d.o.o.",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
     },
     {
       "title": "PUP Saubermacher",

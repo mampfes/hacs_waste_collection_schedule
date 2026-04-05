@@ -2255,9 +2255,14 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Slovenia</summary>
 
+- [Kamnik](/doc/ics/publicus_si.md) / kamnik.si
+- [Komenda](/doc/ics/publicus_si.md) / komenda.si
 - [Komunala Kranj](/doc/source/komunala_kranj_si.md) / komunala-kranj.si
 - [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si
+- [Pivka](/doc/ics/publicus_si.md) / pivka.si
+- [Postojna](/doc/ics/publicus_si.md) / postojna.si
 - [Prodnik](/doc/source/prodnik_si.md) / prodnik.si
+- [Publicus d.o.o.](/doc/ics/publicus_si.md) / beta.smetar.si
 - [PUP Saubermacher](/doc/source/pup_si.md) / pup-saubermacher.si
 - [Simbio](/doc/source/simbio_si.md) / simbio.si
 - [Snaga Maribor](/doc/source/snaga_mb_si.md) / snaga-mb.si
