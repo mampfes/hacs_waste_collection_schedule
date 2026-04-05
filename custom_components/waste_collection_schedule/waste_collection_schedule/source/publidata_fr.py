@@ -27,6 +27,11 @@ URL = "https://www.publidata.io/fr/"
 COUNTRY = "fr"
 
 TEST_CASES = {
+    "CASGBS, Le Pecq": {
+        "address": "1 rue de Paris",
+        "insee_code": "78481",
+        "instance_id": 1420,
+    },
     "GPSEO, Mantes la Ville": {
         "address": "11 rue Jean Moulin",
         "insee_code": "78362",
@@ -172,6 +177,11 @@ PARAM_TRANSLATIONS = {
 }
 
 EXTRA_INFO = [
+    {
+        "title": "CA Saint Germain Boucles de Seine",
+        "url": "https://www.saintgermainbouclesdeseine.fr/",
+        "default_params": {"instance_id": 1420},
+    },
     {
         "title": "Grand Paris Seine et Oise",
         "url": "https://infos-dechets.gpseo.fr/",

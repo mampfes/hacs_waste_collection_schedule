@@ -4794,6 +4794,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "CA Saint Germain Boucles de Seine",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1420
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Ch\u00e2teauroux M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
