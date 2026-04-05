@@ -2334,6 +2334,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Gemeinde Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
 - [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch

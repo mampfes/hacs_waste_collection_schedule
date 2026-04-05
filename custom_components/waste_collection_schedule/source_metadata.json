@@ -2041,6 +2041,16 @@
     "howto": {},
     "urls": {}
   },
+  "buchegg_so_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buchegg_so_ch.md",
+    "howto": {
+      "de": "Wählen Sie Ihre Ortschaft aus der Liste.",
+      "en": "Select your locality (Ortschaft) from the list.",
+      "fr": "Sélectionnez votre localité dans la liste.",
+      "it": "Selezionate la vostra località dalla lista."
+    },
+    "urls": {}
+  },
   "grosswangen_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grosswangen_ch.md",
     "howto": {},
