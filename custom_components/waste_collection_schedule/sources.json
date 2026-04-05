@@ -2607,6 +2607,12 @@
       "id": "edlitz_at"
     },
     {
+      "title": "Marktgemeinde G\u00f6ssendorf",
+      "module": "goessendorf_at",
+      "default_params": {},
+      "id": "goessendorf_at"
+    },
+    {
       "title": "Marktgemeinde Obdach",
       "module": "obdach_at",
       "default_params": {},

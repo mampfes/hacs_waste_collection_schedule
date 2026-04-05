@@ -561,6 +561,11 @@
     "howto": {},
     "urls": {}
   },
+  "goessendorf_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/goessendorf_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "obdach_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/obdach_at.md",
     "howto": {},
