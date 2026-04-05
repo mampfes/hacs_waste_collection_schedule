@@ -5,6 +5,10 @@ import json
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "City of Canterbury-Bankstown (NSW)"
 DESCRIPTION = "City of Canterbury-Bankstown bin day finder"
@@ -18,8 +22,7 @@ BIN_COLORS = {
 }
 
 ICON_MAP = {
-    f"{emoji} {color.title()} Bin": BIN_ICON
-    for color, emoji in BIN_COLORS.items()
+    f"{emoji} {color.title()} Bin": BIN_ICON for color, emoji in BIN_COLORS.items()
 }
 
 CACHE_DURATION = 30 * 24 * 60 * 60  # 30 days
@@ -92,140 +95,147 @@ def _tab(tab_id: str):
     def decorator(func):
         _TAB_REGISTRY[tab_id] = func
         return func
+
     return decorator
 
 
 def _rule(func):
-    rule_type = func.__name__.removeprefix('_')
+    rule_type = func.__name__.removeprefix("_")
     _RULE_REGISTRY[rule_type] = func
     return func
 
 
 def _rule_weekly(day: str | None, color: str) -> tuple | None:
-    return ('weekly', day, color) if day else None
+    return ("weekly", day, color) if day else None
 
 
-def _rule_alternating(day: str | None, zone_a_even: str, zone_a_odd: str) -> tuple | None:
-    return ('alternating', day, zone_a_even, zone_a_odd) if day else None
+def _rule_alternating(
+    day: str | None, zone_a_even: str, zone_a_odd: str
+) -> tuple | None:
+    return ("alternating", day, zone_a_even, zone_a_odd) if day else None
 
 
 def _rule_even_only(day: str | None, color: str) -> tuple | None:
-    return ('even_only', day, color) if day else None
+    return ("even_only", day, color) if day else None
 
 
 def _rule_odd_only(day: str | None, color: str) -> tuple | None:
-    return ('odd_only', day, color) if day else None
+    return ("odd_only", day, color) if day else None
 
 
 @_tab(STANDARD_RESIDENTIAL)
 def _standard_residential(entry: dict) -> list[tuple]:
     return [
-        _rule_weekly(entry.get("redServiceDay"), 'red'),
-        _rule_alternating(entry.get("yellowServiceDay"), 'yellow', 'green'),
+        _rule_weekly(entry.get("redServiceDay"), "red"),
+        _rule_alternating(entry.get("yellowServiceDay"), "yellow", "green"),
     ]
 
 
 @_tab(DUAL_COLLECTION)
 def _dual_collection(entry: dict) -> list[tuple]:
     return [
-        _rule_weekly(entry.get("redServiceDay"), 'red'),
-        _rule_weekly(entry.get("yellowServiceDay"), 'yellow'),
-        _rule_weekly(entry.get("greenServiceDay"), 'green'),
+        _rule_weekly(entry.get("redServiceDay"), "red"),
+        _rule_weekly(entry.get("yellowServiceDay"), "yellow"),
+        _rule_weekly(entry.get("greenServiceDay"), "green"),
     ]
 
 
 @_tab(DUAL_COLLECTION_ALT)
 def _dual_collection_alt(entry: dict) -> list[tuple]:
     return [
-        _rule_weekly(entry.get("redServiceDay"), 'red'),
-        _rule_weekly(entry.get("redServiceDay2"), 'red'),
-        _rule_alternating(entry.get("yellowServiceDay"), 'yellow', 'green'),
-        _rule_alternating(entry.get("greenServiceDay"), 'green', 'yellow'),
+        _rule_weekly(entry.get("redServiceDay"), "red"),
+        _rule_weekly(entry.get("redServiceDay2"), "red"),
+        _rule_alternating(entry.get("yellowServiceDay"), "yellow", "green"),
+        _rule_alternating(entry.get("greenServiceDay"), "green", "yellow"),
     ]
 
 
 @_tab(INDEPENDENT_YELLOW_ZONE)
 def _independent_yellow_zone(entry: dict) -> list[tuple]:
     return [
-        _rule_weekly(entry.get("redServiceDay"), 'red'),
-        _rule_weekly(entry.get("redServiceDay2"), 'red'),
-        _rule_weekly(entry.get("yellowServiceDay"), 'yellow'),
-        _rule_even_only(entry.get("greenServiceDay"), 'green'),
-        _rule_odd_only(entry.get("greenServiceDay"), 'green'),
+        _rule_weekly(entry.get("redServiceDay"), "red"),
+        _rule_weekly(entry.get("redServiceDay2"), "red"),
+        _rule_weekly(entry.get("yellowServiceDay"), "yellow"),
+        _rule_even_only(entry.get("greenServiceDay"), "green"),
+        _rule_odd_only(entry.get("greenServiceDay"), "green"),
     ]
 
 
 @_tab(COMBINED_RED_YELLOW)
 def _combined_red_yellow(entry: dict) -> list[tuple]:
     return [
-        _rule_weekly(entry.get("redServiceDay"), 'red'),
-        _rule_weekly(entry.get("yellowServiceDay"), 'yellow'),
+        _rule_weekly(entry.get("redServiceDay"), "red"),
+        _rule_weekly(entry.get("yellowServiceDay"), "yellow"),
     ]
 
 
 @_tab(DUAL_COLLECTION_VARIANT)
 def _dual_collection_variant(entry: dict) -> list[tuple]:
     return [
-        _rule_weekly(entry.get("redServiceDay"), 'red'),
-        _rule_weekly(entry.get("redServiceDay2"), 'red'),
-        _rule_alternating(entry.get("yellowServiceDay"), 'yellow', 'green'),
-        _rule_weekly(entry.get("greenServiceDay"), 'green'),
+        _rule_weekly(entry.get("redServiceDay"), "red"),
+        _rule_weekly(entry.get("redServiceDay2"), "red"),
+        _rule_alternating(entry.get("yellowServiceDay"), "yellow", "green"),
+        _rule_weekly(entry.get("greenServiceDay"), "green"),
     ]
 
 
 @_tab(MULTI_UNIT_BUILDING)
 def _multi_unit_building(entry: dict) -> list[tuple]:
     return [
-        _rule_weekly(entry.get("redServiceDay"), 'red'),
-        _rule_weekly(entry.get("redServiceDay2"), 'red'),
-        _rule_weekly(entry.get("redServiceDay3"), 'red'),
-        _rule_weekly(entry.get("yellowServiceDay"), 'yellow'),
-        _rule_weekly(entry.get("greenServiceDay"), 'green'),
+        _rule_weekly(entry.get("redServiceDay"), "red"),
+        _rule_weekly(entry.get("redServiceDay2"), "red"),
+        _rule_weekly(entry.get("redServiceDay3"), "red"),
+        _rule_weekly(entry.get("yellowServiceDay"), "yellow"),
+        _rule_weekly(entry.get("greenServiceDay"), "green"),
     ]
 
 
 @_tab(LARGE_COMPLEX)
 def _large_complex(entry: dict) -> list[tuple]:
     return [
-        _rule_weekly(entry.get("redServiceDay"), 'red'),
-        _rule_weekly(entry.get("redServiceDay2"), 'red'),
-        _rule_weekly(entry.get("redServiceDay3"), 'red'),
-        _rule_weekly(entry.get("redServiceDay4"), 'red'),
-        _rule_weekly(entry.get("yellowServiceDay"), 'yellow'),
-        _rule_weekly(entry.get("greenServiceDay"), 'green'),
+        _rule_weekly(entry.get("redServiceDay"), "red"),
+        _rule_weekly(entry.get("redServiceDay2"), "red"),
+        _rule_weekly(entry.get("redServiceDay3"), "red"),
+        _rule_weekly(entry.get("redServiceDay4"), "red"),
+        _rule_weekly(entry.get("yellowServiceDay"), "yellow"),
+        _rule_weekly(entry.get("greenServiceDay"), "green"),
     ]
 
 
 @_rule
 def _weekly(pattern: dict, day: str, color: str, is_zone_a: bool) -> None:
-    pattern['even_week'].append((day, color))
-    pattern['odd_week'].append((day, color))
+    pattern["even_week"].append((day, color))
+    pattern["odd_week"].append((day, color))
 
 
 @_rule
-def _alternating(pattern: dict, day: str, zone_a_even: str, zone_a_odd: str, is_zone_a: bool) -> None:
+def _alternating(
+    pattern: dict, day: str, zone_a_even: str, zone_a_odd: str, is_zone_a: bool
+) -> None:
     if is_zone_a:
-        pattern['even_week'].append((day, zone_a_even))
-        pattern['odd_week'].append((day, zone_a_odd))
+        pattern["even_week"].append((day, zone_a_even))
+        pattern["odd_week"].append((day, zone_a_odd))
     else:
-        pattern['even_week'].append((day, zone_a_odd))
-        pattern['odd_week'].append((day, zone_a_even))
+        pattern["even_week"].append((day, zone_a_odd))
+        pattern["odd_week"].append((day, zone_a_even))
 
 
 @_rule
 def _even_only(pattern: dict, day: str, color: str, is_zone_a: bool) -> None:
     if is_zone_a:
-        pattern['even_week'].append((day, color))
+        pattern["even_week"].append((day, color))
 
 
 @_rule
 def _odd_only(pattern: dict, day: str, color: str, is_zone_a: bool) -> None:
     if not is_zone_a:
-        pattern['odd_week'].append((day, color))
+        pattern["odd_week"].append((day, color))
 
 
-def _build_pattern(is_zone_a: bool, rules: list[tuple | None]) -> dict[str, list[tuple]]:
-    pattern = {'even_week': [], 'odd_week': []}
+def _build_pattern(
+    is_zone_a: bool, rules: list[tuple | None]
+) -> dict[str, list[tuple]]:
+    pattern = {"even_week": [], "odd_week": []}
 
     for rule in rules:
         if not rule:
@@ -246,7 +256,7 @@ def _get_base_pattern(entry: dict) -> dict[str, list[tuple]]:
 
     rule_factory = _TAB_REGISTRY.get(tab)
     if not rule_factory:
-        return {'even_week': [], 'odd_week': []}
+        return {"even_week": [], "odd_week": []}
 
     rules = rule_factory(entry)
     return _build_pattern(is_zone_a, rules)
@@ -262,7 +272,7 @@ def _repeat_pattern_until_eoy(pattern: dict[str, list[tuple]]) -> list[Collectio
     while current_week_start <= end_of_year:
         weeks_since_anchor = (current_week_start - ANCHOR_DATE).days // 7
         is_even_week = weeks_since_anchor % 2 == 0
-        week_pattern = pattern['even_week'] if is_even_week else pattern['odd_week']
+        week_pattern = pattern["even_week"] if is_even_week else pattern["odd_week"]
 
         for weekday_name, bin_color in week_pattern:
             weekday_num = WEEKDAY_MAP.get(weekday_name)
@@ -274,11 +284,11 @@ def _repeat_pattern_until_eoy(pattern: dict[str, list[tuple]]) -> list[Collectio
             if today <= collection_date <= end_of_year:
                 emoji = BIN_COLORS.get(bin_color, "")
                 bin_name = f"{emoji} {bin_color.title()} Bin"
-                collections.append(Collection(
-                    date=collection_date,
-                    t=bin_name,
-                    icon=ICON_MAP.get(bin_name)
-                ))
+                collections.append(
+                    Collection(
+                        date=collection_date, t=bin_name, icon=ICON_MAP.get(bin_name)
+                    )
+                )
 
         current_week_start += datetime.timedelta(days=7)
 
@@ -348,18 +358,24 @@ class Source:
         except Exception as e:
             if cls._cached_data:
                 return cls._cached_data
-            raise ValueError(
-                f"Failed to fetch street data from {DATA_URL}: {e}"
-            ) from e
+            raise ValueError(f"Failed to fetch street data from {DATA_URL}: {e}") from e
 
     def _find_entry(self, data: list[dict]) -> dict:
         for row in data:
             if row.get("fullAddress", "").lower() == self._address:
                 return row
-        for row in data:
-            if self._address in row.get("fullAddress", "").lower():
-                return row
-        raise ValueError(f"Address not found in Canterbury-Bankstown dataset: {self._address}")
+        # Try partial match
+        partial = [
+            row for row in data if self._address in row.get("fullAddress", "").lower()
+        ]
+        if len(partial) == 1:
+            return partial[0]
+        if partial:
+            suggestions = [row["fullAddress"] for row in partial[:10]]
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._address, suggestions
+            )
+        raise SourceArgumentNotFound("address", self._address)
 
     def fetch(self) -> list[Collection]:
         dataset = self._load_streets()

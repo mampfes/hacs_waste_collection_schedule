@@ -469,7 +469,7 @@
       },
       "args_cbcity_nsw_gov_au": {
         "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cbcity_nsw_gov_au.md",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Addresse"
@@ -480,7 +480,7 @@
       },
       "reconfigure_cbcity_nsw_gov_au": {
         "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cbcity_nsw_gov_au.md",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Addresse"

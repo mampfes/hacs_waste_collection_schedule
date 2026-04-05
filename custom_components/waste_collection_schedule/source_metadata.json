@@ -83,6 +83,11 @@
     },
     "urls": {}
   },
+  "cbcity_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cbcity_nsw_gov_au.md",
+    "howto": {},
+    "urls": {}
+  },
   "casey_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/casey_vic_gov_au.md",
     "howto": {
