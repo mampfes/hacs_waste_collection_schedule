@@ -310,6 +310,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Wolfsberg | [wolfsberg.at](https://www.wolfsberg.at) |
 | Wolkersdorf im Weinviertel | [wolkersdorf.at](http://www.wolkersdorf.at) |
 | Wulkaprodersdorf | [wulkaprodersdorf.at](https://www.wulkaprodersdorf.at) |
+| Wöllersdorf-Steinabrückl | [woellersdorf-steinabrueckl.gv.at](https://www.woellersdorf-steinabrueckl.gv.at) |
 | Wörterberg | [woerterberg.at](http://www.woerterberg.at) |
 | Zagersdorf | [zagersdorf.at](http://www.zagersdorf.at) |
 | Zelking-Matzleinsdorf | [zelking-matzleinsdorf.gv.at](http://www.zelking-matzleinsdorf.gv.at) |

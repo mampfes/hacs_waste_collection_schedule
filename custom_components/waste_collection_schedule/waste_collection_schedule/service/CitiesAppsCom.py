@@ -1532,6 +1532,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Wöllersdorf-Steinabrückl",
+        "url": "https://www.woellersdorf-steinabrueckl.gv.at",
+        "country": "at",
+    },
+    {
         "title": "Wörterberg",
         "url": "http://www.woerterberg.at",
         "country": "at",

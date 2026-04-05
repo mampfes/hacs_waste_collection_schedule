@@ -686,6 +686,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wolkersdorf im Weinviertel](/doc/source/citiesapps_com.md) / wolkersdorf.at
 - [WSZ Moosburg](/doc/source/wsz_moosburg_at.md) / wsz-moosburg.at
 - [Wulkaprodersdorf](/doc/source/citiesapps_com.md) / wulkaprodersdorf.at
+- [Wöllersdorf-Steinabrückl](/doc/source/citiesapps_com.md) / woellersdorf-steinabrueckl.gv.at
 - [Wörterberg](/doc/source/citiesapps_com.md) / woerterberg.at
 - [Zagersdorf](/doc/source/citiesapps_com.md) / zagersdorf.at
 - [Zelking-Matzleinsdorf](/doc/source/citiesapps_com.md) / zelking-matzleinsdorf.gv.at
