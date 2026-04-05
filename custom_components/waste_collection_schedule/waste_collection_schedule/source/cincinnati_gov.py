@@ -1,13 +1,16 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Cincinnati, OH"
 DESCRIPTION = "City of Cincinnati, OH, USA"
 URL = "https://www.cincinnati.gov/"
 COUNTRY = "us"
-TEST_CASES = {}
+TEST_CASES = {
+    "Grand Ave": {"addressid": "00010GRAND0703640000"},
+}
 HEADERS = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
     "Trash": "mdi:trash-can",
@@ -18,7 +21,7 @@ ICON_MAP = {
 # ### Arguments affecting the configuration GUI ####
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Find your address ID by searching for your address on Cincinnati's service website. The address ID is needed to retrieve collection schedules.",
+    "en": "Go to https://cagismaps.hamilton-co.org/caborc/cinciservices/ and search for your address. The address ID can be found in the URL after selecting your address.",
 }
 
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
@@ -51,9 +54,8 @@ class Source:
 
         entries = []
 
-        # Check if the response has the expected structure
         if "Services" not in data:
-            return entries
+            raise SourceArgumentNotFound("addressid", self._addressid)
 
         # Process each service
         for service in data["Services"]:
@@ -74,8 +76,6 @@ class Source:
                 # Parse the date string (format: "Wednesday, September 17, 2025")
                 try:
                     date_obj = datetime.strptime(start_date_str, "%A, %B %d, %Y").date()
-                    # Subtract one day from the collection date
-                    date_obj = date_obj - timedelta(days=1)
 
                     # Map service types to collection names and icons
                     collection_type = service_date.get("serviceType", service_type)

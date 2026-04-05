@@ -21721,6 +21721,29 @@
         },
         "data_description": {}
       },
+      "args_cincinnati_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addressid": "Address ID (e.g., 00010GRAND0703640000)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "addressid": "Address ID from Cincinnati's system (e.g., 00010GRAND0703640000)"
+        }
+      },
+      "reconfigure_cincinnati_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addressid": "Address ID (e.g., 00010GRAND0703640000)"
+        },
+        "data_description": {
+          "addressid": "Address ID from Cincinnati's system (e.g., 00010GRAND0703640000)"
+        }
+      },
       "args_lacity_gov": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

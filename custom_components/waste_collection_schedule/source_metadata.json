@@ -3787,6 +3787,13 @@
     "howto": {},
     "urls": {}
   },
+  "cincinnati_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cincinnati_gov.md",
+    "howto": {
+      "en": "Go to https://cagismaps.hamilton-co.org/caborc/cinciservices/ and search for your address. The address ID can be found in the URL after selecting your address."
+    },
+    "urls": {}
+  },
   "lacity_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md",
     "howto": {

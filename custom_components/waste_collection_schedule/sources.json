@@ -17207,6 +17207,12 @@
       "id": "ics_recyclebycity_com"
     },
     {
+      "title": "City of Cincinnati, OH",
+      "module": "cincinnati_gov",
+      "default_params": {},
+      "id": "cincinnati_gov"
+    },
+    {
       "title": "City of Denver, CO",
       "module": "ics",
       "default_params": {

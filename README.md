@@ -2682,6 +2682,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
 - [City of Chicago, IL](/doc/ics/recyclebycity_com.md) / recyclebycity.com
+- [City of Cincinnati, OH](/doc/source/cincinnati_gov.md) / cincinnati.gov
 - [City of Denver, CO](/doc/ics/recollect.md) / denvergov.org
 - [City of Flagstaff, AZ](/doc/ics/recyclebycity_com.md) / flagstaff.az.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
