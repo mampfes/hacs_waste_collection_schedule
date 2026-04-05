@@ -65,18 +65,18 @@ HEADERS = {
 # ============================================================
 
 KEHRICHT_ZONE_MAP = {
-    "Aetingen":            ["aetingen", "brittern", "küttigkofen", "lüterswil"],
-    "Brittern":            ["aetingen", "brittern", "küttigkofen", "lüterswil"],
-    "Küttigkofen":         ["aetingen", "brittern", "küttigkofen", "lüterswil"],
+    "Aetingen": ["aetingen", "brittern", "küttigkofen", "lüterswil"],
+    "Brittern": ["aetingen", "brittern", "küttigkofen", "lüterswil"],
+    "Küttigkofen": ["aetingen", "brittern", "küttigkofen", "lüterswil"],
     "Lüterswil-Gächliwil": ["aetingen", "brittern", "küttigkofen", "lüterswil"],
-    "Bibern":              ["bibern", "gossliwil", "hessigkofen", "tscheppach"],
-    "Gossliwil":           ["bibern", "gossliwil", "hessigkofen", "tscheppach"],
-    "Hessigkofen":         ["bibern", "gossliwil", "hessigkofen", "tscheppach"],
-    "Tscheppach":          ["bibern", "gossliwil", "hessigkofen", "tscheppach"],
-    "Aetigkofen":          ["aetigkofen", "brügglen", "kyburg", "mühledorf"],
-    "Brügglen":            ["aetigkofen", "brügglen", "kyburg", "mühledorf"],
-    "Kyburg-Buchegg":      ["aetigkofen", "brügglen", "kyburg", "mühledorf"],
-    "Mühledorf":           ["aetigkofen", "brügglen", "kyburg", "mühledorf"],
+    "Bibern": ["bibern", "gossliwil", "hessigkofen", "tscheppach"],
+    "Gossliwil": ["bibern", "gossliwil", "hessigkofen", "tscheppach"],
+    "Hessigkofen": ["bibern", "gossliwil", "hessigkofen", "tscheppach"],
+    "Tscheppach": ["bibern", "gossliwil", "hessigkofen", "tscheppach"],
+    "Aetigkofen": ["aetigkofen", "brügglen", "kyburg", "mühledorf"],
+    "Brügglen": ["aetigkofen", "brügglen", "kyburg", "mühledorf"],
+    "Kyburg-Buchegg": ["aetigkofen", "brügglen", "kyburg", "mühledorf"],
+    "Mühledorf": ["aetigkofen", "brügglen", "kyburg", "mühledorf"],
 }
 
 GRUENGUT_GROUP_MAP = {
