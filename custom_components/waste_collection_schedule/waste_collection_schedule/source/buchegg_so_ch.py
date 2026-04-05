@@ -146,8 +146,16 @@ class Source:
                 "The website structure may have changed."
             )
 
-        entities = json.loads(html.unescape(entities_attr))
-        raw_data = entities.get("data", [])
+        try:
+            entities = json.loads(html.unescape(entities_attr))
+            if not isinstance(entities, dict):
+                raise ValueError("Parsed 'data-entities' is not a JSON object.")
+            raw_data = entities.get("data", [])
+        except (json.JSONDecodeError, AttributeError, TypeError, ValueError) as err:
+            raise ValueError(
+                "Unable to parse table 'data-entities'. "
+                "The website structure may have changed."
+            ) from err
 
         if not raw_data:
             raise ValueError("No entries found in table data.")
