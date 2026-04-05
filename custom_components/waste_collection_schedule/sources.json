@@ -1777,6 +1777,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Gemeinde24",
+      "module": "gemeinde24_at",
+      "default_params": {},
+      "id": "gemeinde24_at"
+    },
+    {
       "title": "Gemeindeverband Horn",
       "module": "umweltverbaende_at",
       "default_params": {

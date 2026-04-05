@@ -2576,6 +2576,41 @@
         },
         "data_description": {}
       },
+      "args_gemeinde24_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gemeinde": "Municipality",
+          "gemeinde_id": "Municipality ID",
+          "strasse": "Street",
+          "street_id": "Street ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "gemeinde": "Municipality name as shown in Gemeinde24.",
+          "gemeinde_id": "Numeric GemeindeID from Gemeinde24 (optional alternative to 'gemeinde').",
+          "strasse": "Street/local area name as shown in Gemeinde24.",
+          "street_id": "Numeric streetID from Gemeinde24 (optional alternative to 'strasse')."
+        }
+      },
+      "reconfigure_gemeinde24_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gemeinde": "Municipality",
+          "gemeinde_id": "Municipality ID",
+          "strasse": "Street",
+          "street_id": "Street ID"
+        },
+        "data_description": {
+          "gemeinde": "Municipality name as shown in Gemeinde24.",
+          "gemeinde_id": "Numeric GemeindeID from Gemeinde24 (optional alternative to 'gemeinde').",
+          "strasse": "Street/local area name as shown in Gemeinde24.",
+          "street_id": "Numeric streetID from Gemeinde24 (optional alternative to 'strasse')."
+        }
+      },
       "args_gojer_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

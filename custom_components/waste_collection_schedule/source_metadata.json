@@ -535,6 +535,14 @@
     "howto": {},
     "urls": {}
   },
+  "gemeinde24_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gemeinde24_at.md",
+    "howto": {
+      "de": "Nutzen Sie den Gemeinde24-Ablauf: zuerst Gemeinde wählen, dann Straße. Sie können entweder Namen oder die numerischen IDs eintragen.",
+      "en": "Use the Gemeinde24 app flow: choose municipality, then choose street. You can configure either municipality/street names or the numeric IDs."
+    },
+    "urls": {}
+  },
   "gojer_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gojer_at.md",
     "howto": {},
