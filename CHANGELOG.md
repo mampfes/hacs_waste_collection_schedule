@@ -4,6 +4,49 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.15.0] - 2026-04-05
+
+### Core Changes
+
+- Fix reconfigure wiping existing sensor and customization options (#5772)
+- Fix ICS recurrence exceptions showing "None" as waste type (#5783)
+
+### Added Sources
+
+- added Kolding Kommune, DK (thanks @kongsted) (#5763)
+- added Canterbury-Bankstown Council, NSW, AU (thanks @mmarquar) (#4974)
+- added Québec city, QC, CA (thanks @louim) (#4038)
+- added Kungälvs kommun, SE (thanks @MattiasC) (#5291)
+- added Roslagsvatten (Österåker, Vaxholm, Ekerö), SE (thanks @taxx) (#5323)
+- added Lipizzanerheimat App (15 Styrian municipalities), AT (thanks @wehrmannit) (#3411)
+- added Gössendorf, Styria, AT (thanks @DaHofa02) (#4707)
+- added Värmdo kommun, SE (thanks @fatuuse) (#4369)
+
+### Fixed Sources
+
+- fixed Oklahoma City: major rewrite supporting official and unofficial APIs (thanks @totallydifferent) (#5507)
+- fixed Fylde, UK: migrated to new authenticated waste portal (thanks @j-webb) (#5300)
+- fixed publidata_fr: handle malformed multi-date opening_hours (thanks @icarius) (#5758)
+- fixed ecoharmonogram_pl: add Rzeszów support, improve house number matching (thanks @wszybisty) (#5757)
+- fixed Hornsby Shire Council, AU: parse dates from HTML, update PDF URL patterns (#5779)
+- fixed South Staffordshire Council, UK: website redesign (#5773)
+
+### New ICS Sources
+
+- added Dětmarovice (part Glembovec), CZ (thanks @aleswita) (#5231)
+- added Abfallwirtschaft Ortenaukreis, DE (#5786)
+- added Publicus d.o.o. (Kamnik, Komenda, Pivka, Postojna), SI (#5789)
+- added Sacramento County, CA to ReCollect (#5780)
+- added Markham, ON; Muskoka District, ON; St Clair Township, ON; Castlegar, BC to ReCollect (#5788)
+- added Durham Region, ON; City of Kingston, ON; City of Guelph, ON to ReCollect (#5790)
+
+### Documentation
+
+- fixed Valorlux docs: parameter is `commune`, not `city` (#5785)
+- fixed Müllmax docs: clarify street name only, no house numbers (#5784)
+- documented Hume City Council waste type name changes (#5781)
+- updated AWP Pfaffenhofen URL (#5787)
+
 ## [2.14.0] - 2026-04-04
 
 ### Core Changes
