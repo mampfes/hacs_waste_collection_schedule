@@ -114,6 +114,27 @@ extra_info:
   - title: Sacramento County, CA
     url: https://wmr.saccounty.gov
     country: us
+  - title: Markham, ON
+    url: https://www.markham.ca
+    country: ca
+  - title: Muskoka District (Huntsville, ON)
+    url: https://www.muskoka.on.ca
+    country: ca
+  - title: St Clair Township, ON
+    url: https://www.stclairtownship.ca
+    country: ca
+  - title: Castlegar, BC
+    url: https://www.castlegar.ca
+    country: ca
+  - title: Durham Region, ON
+    url: https://www.durham.ca
+    country: ca
+  - title: City of Kingston, ON
+    url: https://www.cityofkingston.ca
+    country: ca
+  - title: City of Guelph, ON
+    url: https://www.guelph.ca
+    country: ca
 
 howto:
   en: |

@@ -145,8 +145,11 @@ This source has been successfully tested with the following service providers:
 ### Canada
 
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
+- [Castlegar, BC](/doc/ics/recollect.md) / castlegar.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [City of Guelph, ON](/doc/ics/recollect.md) / guelph.ca
+- [City of Kingston, ON](/doc/ics/recollect.md) / cityofkingston.ca
 - [City of Lethbridge](/doc/ics/recollect.md) / lethbridge.ca
 - [City of Nanaimo](/doc/ics/recollect.md) / nanaimo.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
@@ -156,10 +159,13 @@ This source has been successfully tested with the following service providers:
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
+- [Durham Region, ON](/doc/ics/recollect.md) / durham.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Longueuil (QC)](/doc/ics/longueuil_quebec.md) / longueuil.quebec
 - [Lévis / Québec](/doc/ics/ville_levis_qc_ca.md) / ville.levis.qc.ca
+- [Markham, ON](/doc/ics/recollect.md) / markham.ca
+- [Muskoka District (Huntsville, ON)](/doc/ics/recollect.md) / muskoka.on.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
@@ -168,6 +174,7 @@ This source has been successfully tested with the following service providers:
 - [Rivière-Beaudette](/doc/ics/riviere_beaudette_com.md) / riviere-beaudette.com
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
 - [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
+- [St Clair Township, ON](/doc/ics/recollect.md) / stclairtownship.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
@@ -375,6 +382,14 @@ This source has been successfully tested with the following service providers:
 ### Norway
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
+
+### Slovenia
+
+- [Kamnik](/doc/ics/publicus_si.md) / kamnik.si
+- [Komenda](/doc/ics/publicus_si.md) / komenda.si
+- [Pivka](/doc/ics/publicus_si.md) / pivka.si
+- [Postojna](/doc/ics/publicus_si.md) / postojna.si
+- [Publicus d.o.o.](/doc/ics/publicus_si.md) / beta.smetar.si
 
 ### Switzerland
 

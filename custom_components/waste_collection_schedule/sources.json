@@ -4139,6 +4139,14 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Castlegar, BC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Chatham-Kent (ON)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -4164,10 +4172,26 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Guelph, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of Hamilton (ON)",
       "module": "recyclecoach_com",
       "default_params": {},
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "City of Kingston, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "City of Lethbridge",
@@ -4249,6 +4273,14 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Durham Region, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Halifax, NS",
       "module": "ics",
       "default_params": {
@@ -4295,6 +4327,14 @@
       "id": "ics_ville_levis_qc_ca"
     },
     {
+      "title": "Markham, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Montreal (QC)",
       "module": "montreal_ca",
       "default_params": {},
@@ -4311,6 +4351,14 @@
       "module": "publidata_ca",
       "default_params": {},
       "id": "publidata_ca"
+    },
+    {
+      "title": "Muskoka District (Huntsville, ON)",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Niagara Region",
@@ -4413,6 +4461,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_vsj_ca"
+    },
+    {
+      "title": "St Clair Township, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Strathcona County, ON",
@@ -14525,6 +14581,18 @@
   ],
   "Slovenia": [
     {
+      "title": "Kamnik",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
+    },
+    {
+      "title": "Komenda",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
+    },
+    {
       "title": "Komunala Kranj",
       "module": "komunala_kranj_si",
       "default_params": {},
@@ -14537,10 +14605,28 @@
       "id": "mojiodpadki_si"
     },
     {
+      "title": "Pivka",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
+    },
+    {
+      "title": "Postojna",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
+    },
+    {
       "title": "Prodnik",
       "module": "prodnik_si",
       "default_params": {},
       "id": "prodnik_si"
+    },
+    {
+      "title": "Publicus d.o.o.",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_publicus_si"
     },
     {
       "title": "PUP Saubermacher",
