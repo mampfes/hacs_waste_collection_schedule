@@ -49,6 +49,19 @@ class ICS:
             start=start_date, end=end_date, string_content=ics_data.encode()
         )
 
+        # Inherit summary for recurrence exceptions that lack one.
+        # Some ICS generators omit SUMMARY on replacement VEVENTs
+        # (those with RECURRENCE-ID), expecting clients to inherit
+        # from the parent recurring event.
+        uid_summaries: dict = {}
+        for e in events:
+            if e.summary and e.recurring:
+                uid_summaries[e.uid] = e.summary
+        for e in events:
+            if not e.summary and hasattr(e, "recurrence_id") and e.recurrence_id:
+                if e.uid in uid_summaries:
+                    e.summary = uid_summaries[e.uid]
+
         entries: List[Tuple[datetime.date, str]] = []
 
         for e in events:
