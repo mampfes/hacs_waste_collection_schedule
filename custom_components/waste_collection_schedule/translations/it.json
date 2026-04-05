@@ -4315,13 +4315,15 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
           "insee_code": "Codice INSEE",
-          "instance_id": "ID Istanza"
+          "instance_id": "ID Istanza",
+          "public_type": "Tipo Abitazione"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
           "address": "Il tuo indirizzo completo",
           "insee_code": "Il codice INSEE a 5 cifre del tuo comune",
-          "instance_id": "Un identificatore del tuo servizio di raccolta rifiuti. Ad esempio, quello di GPSEO è 1292 e si trova ispezionando le chiamate di rete su {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002}"
+          "instance_id": "Un identificatore del tuo servizio di raccolta rifiuti. Ad esempio, quello di GPSEO è 1292 e si trova ispezionando le chiamate di rete su {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002}",
+          "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione."
         }
       },
       "reconfigure_publidata_fr": {
@@ -4331,12 +4333,14 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
           "insee_code": "Codice INSEE",
-          "instance_id": "ID Istanza"
+          "instance_id": "ID Istanza",
+          "public_type": "Tipo Abitazione"
         },
         "data_description": {
           "address": "Il tuo indirizzo completo",
           "insee_code": "Il codice INSEE a 5 cifre del tuo comune",
-          "instance_id": "Un identificatore del tuo servizio di raccolta rifiuti. Ad esempio, quello di GPSEO è 1292 e si trova ispezionando le chiamate di rete su {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002}"
+          "instance_id": "Un identificatore del tuo servizio di raccolta rifiuti. Ad esempio, quello di GPSEO è 1292 e si trova ispezionando le chiamate di rete su {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002}",
+          "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione."
         }
       },
       "args_cc-montesquieu_fr": {

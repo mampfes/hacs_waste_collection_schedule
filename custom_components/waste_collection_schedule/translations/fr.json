@@ -4316,7 +4316,8 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
           "insee_code": "Insee Code",
-          "instance_id": "Instance Id"
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -4329,7 +4330,8 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
           "insee_code": "Insee Code",
-          "instance_id": "Instance Id"
+          "instance_id": "Instance Id",
+          "public_type": "Public Type"
         },
         "data_description": {}
       },

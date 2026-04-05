@@ -145,16 +145,19 @@ PARAM_DESCRIPTIONS = {
         "address": "Your full address",
         "insee_code": "The 5-digit INSEE code of your commune",
         "instance_id": "An identifier of your waste collection service. For example GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002",
+        "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type.",
     },
     "de": {
         "address": "Ihre vollständige Adresse",
         "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde",
         "instance_id": "Eine Kennung Ihres Abfallsammeldienstes. Zum Beispiel ist die von GPSEO 1292 und kann durch Inspektion der Netzwerkaufrufe auf https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002 gefunden werden",
+        "public_type": "Wohnungstyp-Filter (optional). Verwenden Sie 'individual_housing' für Häuser oder 'collective_housing' für Wohnungen, wenn Ihr Gebiet unterschiedliche Abholpläne je Wohnungstyp hat.",
     },
     "it": {
         "address": "Il tuo indirizzo completo",
         "insee_code": "Il codice INSEE a 5 cifre del tuo comune",
         "instance_id": "Un identificatore del tuo servizio di raccolta rifiuti. Ad esempio, quello di GPSEO è 1292 e si trova ispezionando le chiamate di rete su https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002",
+        "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione.",
     },
 }
 
@@ -163,16 +166,19 @@ PARAM_TRANSLATIONS = {
         "address": "Address",
         "insee_code": "INSEE Code",
         "instance_id": "Instance ID",
+        "public_type": "Housing Type",
     },
     "de": {
         "address": "Adresse",
         "insee_code": "INSEE-Code",
         "instance_id": "Instanz-ID",
+        "public_type": "Wohnungstyp",
     },
     "it": {
         "address": "Indirizzo",
         "insee_code": "Codice INSEE",
         "instance_id": "ID Istanza",
+        "public_type": "Tipo Abitazione",
     },
 }
 
@@ -282,10 +288,11 @@ _LOGGER = logging.getLogger(__name__)
 class Source:
     geocoder_url = "https://api.publidata.io/v2/geocoder"
 
-    def __init__(self, address, insee_code, instance_id):
+    def __init__(self, address, insee_code, instance_id, public_type: str | None = None):
         self.address = address
         self.insee_code = insee_code
         self.instance_id = instance_id
+        self._public_type = public_type
 
     def _get_address_params(self, address, insee_code):
         params = {
@@ -321,6 +328,9 @@ class Source:
             "instances[]": self.instance_id,
             **self.address_params,
         }
+        if self._public_type:
+            params["publics[]"] = "resident"
+            params["public_types[]"] = self._public_type
 
         response = requests.get(api_url, params=params)
 
