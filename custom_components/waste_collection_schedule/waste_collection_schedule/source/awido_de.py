@@ -103,6 +103,11 @@ SERVICE_MAP = [
         "service_id": "kulmbach",
     },
     {
+        "title": "Landkreis Lichtenfels",
+        "url": "https://www.lkr-lif.de/",
+        "service_id": "lichtenfels",
+    },
+    {
         "title": "Landkreis Erding",
         "url": "https://www.landkreis-erding.de/",
         "service_id": "erding",

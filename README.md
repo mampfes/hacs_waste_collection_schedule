@@ -1302,6 +1302,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Kusel](/doc/source/landkreis_kusel_de.md) / landkreis-kusel.de
 - [Landkreis Leer (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Leipzig](/doc/source/app_abfallplus_de.md) / Abfall+ App: leipziglk
+- [Landkreis Lichtenfels](/doc/source/awido_de.md) / lkr-lif.de
 - [Landkreis Limburg-Weilburg](/doc/source/abfall_io.md) / awb-lm.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Main-Spessart](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallmsp

@@ -8336,6 +8336,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Landkreis Lichtenfels",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "lichtenfels"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "Landkreis Limburg-Weilburg",
       "module": "abfall_io",
       "default_params": {
