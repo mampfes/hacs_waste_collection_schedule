@@ -4139,6 +4139,14 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Castlegar, BC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Chatham-Kent (ON)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -4295,6 +4303,14 @@
       "id": "ics_ville_levis_qc_ca"
     },
     {
+      "title": "Markham, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Montreal (QC)",
       "module": "montreal_ca",
       "default_params": {},
@@ -4311,6 +4327,14 @@
       "module": "publidata_ca",
       "default_params": {},
       "id": "publidata_ca"
+    },
+    {
+      "title": "Muskoka District (Huntsville, ON)",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Niagara Region",
@@ -4413,6 +4437,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_vsj_ca"
+    },
+    {
+      "title": "St Clair Township, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Strathcona County, ON",
