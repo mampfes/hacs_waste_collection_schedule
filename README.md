@@ -2340,13 +2340,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
+- [Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
 - [Bühler](/doc/source/a_region_ch.md) / a-region.ch
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
-- [Gemeinde Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
 - [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch

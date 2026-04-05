@@ -1,4 +1,4 @@
-# Gemeinde Buchegg
+# Buchegg
 
 Support for schedules provided by [Gemeinde Buchegg](https://www.buchegg-so.ch), Switzerland.
 

@@ -14991,6 +14991,29 @@
         },
         "data_description": {}
       },
+      "args_buchegg_so_ch": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "ortschaft": "Ortschaft"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ortschaft": "Locality (Ortschaft)"
+        }
+      },
+      "reconfigure_buchegg_so_ch": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "ortschaft": "Ortschaft"
+        },
+        "data_description": {
+          "ortschaft": "Locality (Ortschaft)"
+        }
+      },
       "args_ics_openerz_metaodi_ch": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -15054,29 +15077,6 @@
           "municipality": "Municipality"
         },
         "data_description": {}
-      },
-      "args_buchegg_so_ch": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "ortschaft": "Ortschaft"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "ortschaft": "Locality (Ortschaft)"
-        }
-      },
-      "reconfigure_buchegg_so_ch": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "ortschaft": "Ortschaft"
-        },
-        "data_description": {
-          "ortschaft": "Locality (Ortschaft)"
-        }
       },
       "args_grosswangen_ch": {
         "title": "Configure Source",

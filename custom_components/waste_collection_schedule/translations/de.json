@@ -14829,6 +14829,29 @@
         },
         "data_description": {}
       },
+      "args_buchegg_so_ch": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "ortschaft": "Ortschaft"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "ortschaft": "Ortschaft"
+        }
+      },
+      "reconfigure_buchegg_so_ch": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "ortschaft": "Ortschaft"
+        },
+        "data_description": {
+          "ortschaft": "Ortschaft"
+        }
+      },
       "args_ics_openerz_metaodi_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -14892,29 +14915,6 @@
           "municipality": "Gemeinde"
         },
         "data_description": {}
-      },
-      "args_buchegg_so_ch": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "ortschaft": "Ortschaft"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "ortschaft": "Ortschaft"
-        }
-      },
-      "reconfigure_buchegg_so_ch": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "ortschaft": "Ortschaft"
-        },
-        "data_description": {
-          "ortschaft": "Ortschaft"
-        }
       },
       "args_grosswangen_ch": {
         "title": "Quelle konfigurieren",

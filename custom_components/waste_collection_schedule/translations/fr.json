@@ -14747,6 +14747,29 @@
         },
         "data_description": {}
       },
+      "args_buchegg_so_ch": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "ortschaft": "Ortschaft"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "ortschaft": "Localité"
+        }
+      },
+      "reconfigure_buchegg_so_ch": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "ortschaft": "Ortschaft"
+        },
+        "data_description": {
+          "ortschaft": "Localité"
+        }
+      },
       "args_ics_openerz_metaodi_ch": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -14810,29 +14833,6 @@
           "municipality": "Municipality"
         },
         "data_description": {}
-      },
-      "args_buchegg_so_ch": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "ortschaft": "Ortschaft"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "ortschaft": "Localité"
-        }
-      },
-      "reconfigure_buchegg_so_ch": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "ortschaft": "Ortschaft"
-        },
-        "data_description": {
-          "ortschaft": "Localité"
-        }
       },
       "args_grosswangen_ch": {
         "title": "Configurer la Source",

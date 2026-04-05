@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
-TITLE = "Gemeinde Buchegg"
+TITLE = "Buchegg"
 DESCRIPTION = "Source for waste collection schedule of Gemeinde Buchegg (SO), Switzerland."
 URL = "https://www.buchegg-so.ch"
 COUNTRY = "ch"
