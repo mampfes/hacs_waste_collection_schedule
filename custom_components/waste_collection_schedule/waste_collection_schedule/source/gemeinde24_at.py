@@ -14,13 +14,13 @@ DESCRIPTION = "Source for Gemeinde24 municipal app waste collection data"
 COUNTRY = "at"
 URL = "https://www.gemeinde24.at"
 TEST_CASES = {
-    "Edelschrott by IDs": {
-        "gemeinde_id": "77",
-        "street_id": "3753",
+    "Gaal by IDs": {
+        "gemeinde_id": "114",
+        "street_id": "4321",
     },
-    "Edelschrott by names": {
-        "gemeinde": "Edelschrott",
-        "strasse": "Edelschrott-Ort",
+    "Gaal by names": {
+        "gemeinde": "Gaal",
+        "strasse": "Gaal",
     },
 }
 
