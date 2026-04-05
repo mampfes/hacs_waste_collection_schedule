@@ -17388,6 +17388,14 @@
       "id": "roundrocktexas_gov"
     },
     {
+      "title": "Sacramento County, CA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Seattle Public Utilities",
       "module": "seattle_gov",
       "default_params": {},
