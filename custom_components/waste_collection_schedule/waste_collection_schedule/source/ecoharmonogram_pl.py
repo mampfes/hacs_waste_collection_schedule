@@ -1,4 +1,5 @@
 import datetime
+import re
 from typing import cast
 
 from ..collection import Collection
@@ -397,13 +398,10 @@ class Source:
     @staticmethod
     def _extract_number(value: str) -> int | None:
         """Return the leading integer from a house-number string, e.g. '317E' → 317."""
-        import re
         m = re.match(r"(\d+)", value.strip())
         return int(m.group(1)) if m else None
 
-    def _filter_streets_by_house_number(
-        self, streets: list[Street]
-    ) -> list[Street]:
+    def _filter_streets_by_house_number(self, streets: list[Street]) -> list[Street]:
         """Narrow down streets to those matching the configured house number.
 
         The API returns all streets in a group regardless of the searched house
