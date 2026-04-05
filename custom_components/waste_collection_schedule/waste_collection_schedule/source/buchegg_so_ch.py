@@ -22,7 +22,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "ortschaft": "Locality (Ortschaft)",
+        "ortschaft": "Locality",
     },
     "de": {
         "ortschaft": "Ortschaft",
