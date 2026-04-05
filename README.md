@@ -2345,6 +2345,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Alchenstorf](/doc/source/alchenstorf_ch.md) / alchenstorf.ch
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
+- [Basel-Stadt](/doc/source/data_bs_ch.md) / data.bs.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
 - [Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
 - [Bühler](/doc/source/a_region_ch.md) / a-region.ch

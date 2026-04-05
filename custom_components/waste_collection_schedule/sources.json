@@ -15103,6 +15103,12 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Basel-Stadt",
+      "module": "data_bs_ch",
+      "default_params": {},
+      "id": "data_bs_ch"
+    },
+    {
       "title": "Berg",
       "module": "a_region_ch",
       "default_params": {

@@ -14906,6 +14906,29 @@
         },
         "data_description": {}
       },
+      "args_data_bs_ch": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "zone": "Ihre Abfuhrzone (A-H oder GUF)."
+        }
+      },
+      "reconfigure_data_bs_ch": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "zone": "Ihre Abfuhrzone (A-H oder GUF)."
+        }
+      },
       "args_buchegg_so_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

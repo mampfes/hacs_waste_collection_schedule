@@ -2044,6 +2044,14 @@
     "howto": {},
     "urls": {}
   },
+  "data_bs_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_bs_ch.md",
+    "howto": {
+      "de": "Finden Sie Ihre Zone auf der Basel-Stadt Zonenkarte unter https://map.geo.bs.ch (suchen Sie nach 'Abfuhrzonen').",
+      "en": "Find your zone on the Basel-Stadt zone map at https://map.geo.bs.ch (search for 'Abfuhrzonen')."
+    },
+    "urls": {}
+  },
   "buchegg_so_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buchegg_so_ch.md",
     "howto": {
