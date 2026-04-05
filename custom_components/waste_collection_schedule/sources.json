@@ -13089,14 +13089,6 @@
       "id": "ximmio_nl"
     },
     {
-      "title": "Assen",
-      "module": "burgerportaal_nl",
-      "default_params": {
-        "organization": "assen"
-      },
-      "id": "burgerportaal_nl"
-    },
-    {
       "title": "Avalex",
       "module": "ximmio_nl",
       "default_params": {
@@ -13119,6 +13111,14 @@
         "company": "bar"
       },
       "id": "ximmio_nl"
+    },
+    {
+      "title": "BAT Tilburg",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "bat"
+      },
+      "id": "burgerportaal_nl"
     },
     {
       "title": "BurgerPortaal",
@@ -13179,6 +13179,14 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Gemeente Assen",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "assen"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "Gemeente Berkelland",
       "module": "hvcgroep_nl",
       "default_params": {
@@ -13199,6 +13207,14 @@
         "service": "cranendonck"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Gemeente Groningen",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "groningen"
+      },
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Gemeente Hellendoorn",
@@ -13255,6 +13271,14 @@
         "service": "sudwestfryslan"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Gemeente Utrecht",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "utrecht"
+      },
+      "id": "burgerportaal_nl"
     },
     {
       "title": "Gemeente Venlo",
