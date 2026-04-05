@@ -3187,6 +3187,15 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "northyorks_craven_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_craven_gov_uk.md",
+    "howto": {
+      "en": "You can find your Unique Property Reference Number (UPRN) by visiting the [North Yorkshire Council - Craven](https://www.northyorks.gov.uk/bin-calendar/lookup) website and entering your address details. You should now see your collection dates. Your UPRN will be in the URL of the page. For example, if the URL is `https://www.northyorks.gov.uk/bin-calendar/Craven/results/10095432934`, then your UPRN is `10095432934`."
+    },
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
+  },
   "northyorks_hambleton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northyorks_hambleton_gov_uk.md",
     "howto": {},
