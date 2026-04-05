@@ -10,3 +10,20 @@ waste_collection_schedule:
     - name: buchegg_so_ch
       args:
         ortschaft: ORTSCHAFT
+```
+
+### Configuration Variables
+
+**ortschaft** *(string) (required)*: The name of your locality (Ortschaft) within Gemeinde Buchegg.
+
+Available values: `Aetigkofen`, `Aetingen`, `Bibern`, `Brittern`, `Brügglen`, `Gossliwil`, `Hessigkofen`, `Küttigkofen`, `Kyburg-Buchegg`, `Lüterswil-Gächliwil`, `Mühledorf`, `Tscheppach`
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: buchegg_so_ch
+      args:
+        ortschaft: "Aetingen"
+```
