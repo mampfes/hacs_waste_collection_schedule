@@ -36,6 +36,18 @@ waste_collection_schedule:
 
 Visit the [Hume City Council - Know my bin day](https://www.hume.vic.gov.au/Residents/Waste/Know-my-bin-day) page, and search for your address. The street address used to configure hacs_waste_collection_schedule should exactly match the street address shown in the autocomplete result.
 
+## Collection types
+
+The following waste types are returned by this source:
+
+| Type | Icon |
+|------|------|
+| Garbage | mdi:trash-can |
+| Recycling | mdi:recycle |
+| Food and garden | mdi:leaf |
+
+**Note:** These names changed in 2026. If you previously configured sensors filtering by `Rubbish` or `Green Waste`, update them to `Garbage` and `Food and garden` respectively.
+
 ## Prediction of future collections
 
 Extrapolation of future collections can be returned using the PREDICT boolean. If enabled, 4 weeks worth of collections will be returned based on the known schedule. Only the first value of each is returned from the Council website, the rest are predicted. Non collection days or holidays are not taken into account.
