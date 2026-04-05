@@ -12,6 +12,7 @@ _LOGGER = logging.getLogger(__name__)
 TITLE = "Entsorgungsverband Völklingen (EVV)"
 DESCRIPTION = "Source for Entsorgungsverband Völklingen waste collection schedules."
 URL = "https://www.evv-voelklingen.de"
+COUNTRY = "de"
 TEST_CASES = {
     "Fürstenhausen, Kaiserstraße 2": {
         "ortsteil": "Fürstenhausen",
@@ -53,6 +54,7 @@ ICON_MAP = {
     "Papier": "mdi:package-variant",
     "Gelbe Tonne": "mdi:recycle",
     "Gelber Sack": "mdi:recycle",
+    "LVP": "mdi:recycle",
     "Sperrmüll": "mdi:delete-circle",
     "Schadstoffmobil": "mdi:biohazard",
 }
@@ -73,11 +75,6 @@ def _parse_odata_date(value: str) -> date | None:
         return None
     ms = int(m.group(1))
     return datetime.fromtimestamp(ms / 1000, tz=timezone.utc).date()
-
-
-def _q(value: str) -> str:
-    """Wrap a value in SQL-style single quotes for EVV API parameters."""
-    return urllib.parse.quote(f"'{value}'", safe="")
 
 
 class Source:
@@ -188,7 +185,7 @@ class Source:
         r = requests.get(
             url,
             headers=_JSON_HEADERS,
-            timeout=60,
+            timeout=30,
         )
         r.raise_for_status()
         items: list = r.json()["d"]
