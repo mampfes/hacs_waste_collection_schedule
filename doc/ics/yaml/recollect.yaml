@@ -126,6 +126,15 @@ extra_info:
   - title: Castlegar, BC
     url: https://www.castlegar.ca
     country: ca
+  - title: Durham Region, ON
+    url: https://www.durham.ca
+    country: ca
+  - title: City of Kingston, ON
+    url: https://www.cityofkingston.ca
+    country: ca
+  - title: City of Guelph, ON
+    url: https://www.guelph.ca
+    country: ca
 
 howto:
   en: |

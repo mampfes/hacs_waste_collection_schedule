@@ -148,6 +148,8 @@ This source has been successfully tested with the following service providers:
 - [Castlegar, BC](/doc/ics/recollect.md) / castlegar.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
+- [City of Guelph, ON](/doc/ics/recollect.md) / guelph.ca
+- [City of Kingston, ON](/doc/ics/recollect.md) / cityofkingston.ca
 - [City of Lethbridge](/doc/ics/recollect.md) / lethbridge.ca
 - [City of Nanaimo](/doc/ics/recollect.md) / nanaimo.ca
 - [City of Peterborough, ON](/doc/ics/recollect.md) / peterborough.ca
@@ -157,6 +159,7 @@ This source has been successfully tested with the following service providers:
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
+- [Durham Region, ON](/doc/ics/recollect.md) / durham.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Longueuil (QC)](/doc/ics/longueuil_quebec.md) / longueuil.quebec

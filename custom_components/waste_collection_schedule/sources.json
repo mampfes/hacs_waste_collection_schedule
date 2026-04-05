@@ -4172,10 +4172,26 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Guelph, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of Hamilton (ON)",
       "module": "recyclecoach_com",
       "default_params": {},
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "City of Kingston, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "City of Lethbridge",
@@ -4250,6 +4266,14 @@
     },
     {
       "title": "District of Saanich, BC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Durham Region, ON",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"
