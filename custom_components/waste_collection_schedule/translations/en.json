@@ -8217,6 +8217,37 @@
         },
         "data_description": {}
       },
+      "args_evv_voelklingen_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "ortsteil": "District",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number (optional, required for some streets)",
+          "ortsteil": "District / city part as shown in the EVV portal (e.g. 'Fürstenhausen', 'Völklingen')",
+          "strasse": "Street name as shown in the EVV portal (e.g. 'Kaiserstraße')"
+        }
+      },
+      "reconfigure_evv_voelklingen_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "ortsteil": "District",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number (optional, required for some streets)",
+          "ortsteil": "District / city part as shown in the EVV portal (e.g. 'Fürstenhausen', 'Völklingen')",
+          "strasse": "Street name as shown in the EVV portal (e.g. 'Kaiserstraße')"
+        }
+      },
       "args_ics_abfallkalender_erftstadt_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

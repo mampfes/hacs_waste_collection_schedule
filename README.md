@@ -1098,6 +1098,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
 - [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
 - [Entsorgungstermine Jena](/doc/ics/entsorgungstermine_jena_de.md) / entsorgungstermine.jena.de
+- [Entsorgungsverband Völklingen (EVV)](/doc/source/evv_voelklingen_de.md) / evv-voelklingen.de
 - [Eppstein](/doc/ics/mein_abfallkalender_online.md) / eppstein.de
 - [Erbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Erftstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de

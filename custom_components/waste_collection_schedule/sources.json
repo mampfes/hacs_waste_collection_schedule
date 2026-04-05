@@ -6767,6 +6767,12 @@
       "id": "ics_entsorgungstermine_jena_de"
     },
     {
+      "title": "Entsorgungsverband V\u00f6lklingen (EVV)",
+      "module": "evv_voelklingen_de",
+      "default_params": {},
+      "id": "evv_voelklingen_de"
+    },
+    {
       "title": "Eppstein",
       "module": "ics",
       "default_params": {},

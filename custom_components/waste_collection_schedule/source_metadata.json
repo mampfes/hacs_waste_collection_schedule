@@ -1155,6 +1155,11 @@
     "howto": {},
     "urls": {}
   },
+  "evv_voelklingen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/evv_voelklingen_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "gfa_lueneburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gfa_lueneburg_de.md",
     "howto": {

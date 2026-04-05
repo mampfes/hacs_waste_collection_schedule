@@ -8072,6 +8072,30 @@
         },
         "data_description": {}
       },
+      "args_evv_voelklingen_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "ortsteil": "District",
+          "strasse": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_evv_voelklingen_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "ortsteil": "District",
+          "strasse": "Rue"
+        },
+        "data_description": {}
+      },
       "args_ics_abfallkalender_erftstadt_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
