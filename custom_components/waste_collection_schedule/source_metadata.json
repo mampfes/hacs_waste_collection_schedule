@@ -1743,6 +1743,14 @@
     },
     "urls": {}
   },
+  "smiecioplan_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/smiecioplan_pl.md",
+    "howto": {
+      "de": "Gehen Sie auf https://smiecioplan.pl und suchen Sie nach Ihrer Adresse. Verwenden Sie die Stadt, den Straßennamen (Großbuchstaben) und die Hausnummer.",
+      "en": "Go to https://smiecioplan.pl and search for your address. Use the city, street name (uppercase), and house number."
+    },
+    "urls": {}
+  },
   "gmina_miekinia_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_miekinia_pl.md",
     "howto": {},

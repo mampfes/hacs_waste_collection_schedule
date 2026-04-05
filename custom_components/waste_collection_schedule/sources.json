@@ -13673,6 +13673,22 @@
       "id": "ecoharmonogram_pl"
     },
     {
+      "title": "Gda\u0144sk",
+      "module": "smiecioplan_pl",
+      "default_params": {
+        "city": "gdansk"
+      },
+      "id": "smiecioplan_pl"
+    },
+    {
+      "title": "Gdynia",
+      "module": "smiecioplan_pl",
+      "default_params": {
+        "city": "gdynia"
+      },
+      "id": "smiecioplan_pl"
+    },
+    {
       "title": "Gmina Bardo",
       "module": "sims_pl",
       "default_params": {
@@ -14595,12 +14611,34 @@
       "id": "sims_pl"
     },
     {
+      "title": "SmiecioPlan",
+      "module": "smiecioplan_pl",
+      "default_params": {},
+      "id": "smiecioplan_pl"
+    },
+    {
+      "title": "Sopot",
+      "module": "smiecioplan_pl",
+      "default_params": {
+        "city": "sopot"
+      },
+      "id": "smiecioplan_pl"
+    },
+    {
       "title": "Strzelce Kraje\u0144skie",
       "module": "sims_pl",
       "default_params": {
         "owner": "Strzelce Kraje\u0144skie"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Szczecin",
+      "module": "smiecioplan_pl",
+      "default_params": {
+        "city": "szczecin"
+      },
+      "id": "smiecioplan_pl"
     },
     {
       "title": "Warsaw",

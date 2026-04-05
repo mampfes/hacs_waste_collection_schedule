@@ -2132,6 +2132,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
 - [Czerwonak, Murowana Goślina, Oborniki](/doc/source/eko_tom_pl.md) / eko-tom.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
+- [Gdańsk](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
+- [Gdynia](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Gmina Bardo](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Bartniczka](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Brzeg Dolny](/doc/source/sims_pl.md) / sisms.pl
@@ -2250,7 +2252,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
 - [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
 - [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl
+- [SmiecioPlan](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
+- [Sopot](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Strzelce Krajeńskie](/doc/source/sims_pl.md) / sisms.pl
+- [Szczecin](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
 - [ZGPD-7](/doc/source/sims_pl.md) / sisms.pl

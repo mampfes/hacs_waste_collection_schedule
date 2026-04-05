@@ -13816,6 +13816,37 @@
           "town": "Town"
         }
       },
+      "args_smiecioplan_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "City name (szczecin, gdansk, gdynia, or sopot).",
+          "house": "House number.",
+          "street": "Street name in uppercase as shown on SmiecioPlan."
+        }
+      },
+      "reconfigure_smiecioplan_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "City name (szczecin, gdansk, gdynia, or sopot).",
+          "house": "House number.",
+          "street": "Street name in uppercase as shown on SmiecioPlan."
+        }
+      },
       "args_gmina_miekinia_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
