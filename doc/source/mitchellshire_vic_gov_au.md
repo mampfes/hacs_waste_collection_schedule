@@ -7,11 +7,10 @@ Support for schedules provided by [Mitchell Shire Council](https://www.mitchells
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: Mitchell Shire Council
-      source: mitchellshire_vic_gov_au
+    - name: mitchellshire_vic_gov_au
       args:
         lat: LATITUDE
-        lng: LONGITUDE
+        lon: LONGITUDE
 ```
 
 ### Configuration Variables
@@ -31,11 +30,10 @@ Your longitude.
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: Mitchell Shire Council
-      source: mitchellshire_vic_gov_au
+    - name: mitchellshire_vic_gov_au
       args:
         lat: -37.41290975665613
-        lng: 144.97998167557827
+        lon: 144.97998167557827
 ```
 
 ## Obtaining Latitude/Longitude
