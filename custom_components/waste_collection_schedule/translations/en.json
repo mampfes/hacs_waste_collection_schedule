@@ -8226,7 +8226,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "behaelter": "Containers",
+          "behaelter": "Container size",
           "hausnummer": "House Number",
           "ortsteil": "District",
           "strasse": "Street"
@@ -8244,7 +8244,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "behaelter": "Behaelter",
+          "behaelter": "Container size",
           "hausnummer": "House Number",
           "ortsteil": "District",
           "strasse": "Street"

@@ -1,9 +1,8 @@
 import logging
 import re
+import requests
 import urllib.parse
 from datetime import date, datetime, timezone
-
-import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
@@ -29,13 +28,13 @@ TEST_CASES = {
         "ortsteil": "Fürstenhausen",
         "strasse": "Kaiserstraße",
         "hausnummer": "2",
-        "behaelter": {"Restmüll": "240", "Papier": "240", "PVL":"1100"},
+        "behaelter": {"Restmüll": "240", "Papier": "240", "PVL": "1100"},
     },
     "Fürstenhausen, Kaiserstraße 2, Behälterfilter alle Papier gross": {
         "ortsteil": "Fürstenhausen",
         "strasse": "Kaiserstraße",
         "hausnummer": "2",
-        "behaelter": {"Restmüll": "240", "Papier": "1100", "PVL":"1100"},
+        "behaelter": {"Restmüll": "240", "Papier": "1100", "PVL": "1100"},
     },
     "Fürstenhausen, Zechenstraße": {
         "ortsteil": "Fürstenhausen",
@@ -49,6 +48,24 @@ PARAM_TRANSLATIONS = {
         "strasse": "Straße",
         "hausnummer": "Hausnummer",
         "behaelter": "Behältergröße (Liter)",
+    },
+    "en": {
+        "behaelter": "Container size",
+        "hausnummer": "House Number",
+        "ortsteil": "District",
+        "strasse": "Street"
+    },
+    "fr": {
+        "behaelter": "Poubelle",
+        "hausnummer": "Numéro civique",
+        "ortsteil": "District",
+        "strasse": "Rue"
+    },
+    "it": {
+        "behaelter": "Contenitori",
+        "hausnummer": "numero civico",
+        "ortsteil": "frazione",
+        "strasse": "Strada"
     }
 }
 
@@ -100,11 +117,11 @@ def _parse_odata_date(value: str) -> date | None:
 
 class Source:
     def __init__(
-        self,
-        ortsteil: str,
-        strasse: str,
-        hausnummer: str | int | None = None,
-        behaelter: dict[str, str | int] | None = None,
+            self,
+            ortsteil: str,
+            strasse: str,
+            hausnummer: str | int | None = None,
+            behaelter: dict[str, str | int] | None = None,
     ):
         self._ortsteil = ortsteil
         self._strasse = strasse
@@ -185,6 +202,7 @@ class Source:
         keep OData $ parameters un-encoded (as the server expects them).
         Single-quoted string values are encoded once with urllib.parse.quote.
         """
+
         def qv(value: str) -> str:
             """Single-quote and percent-encode a string value."""
             return urllib.parse.quote(f"'{value}'")
