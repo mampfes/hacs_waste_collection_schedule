@@ -10151,6 +10151,29 @@
         },
         "data_description": {}
       },
+      "args_mzvhegau_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or municipality name, e.g. Engen."
+        }
+      },
+      "reconfigure_mzvhegau_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City"
+        },
+        "data_description": {
+          "city": "Your city or municipality name, e.g. Engen."
+        }
+      },
       "args_mzv_rotenburg_bebra_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

@@ -9051,6 +9051,12 @@
       "id": "buergerportal_de"
     },
     {
+      "title": "MZV Hegau",
+      "module": "mzvhegau_de",
+      "default_params": {},
+      "id": "mzvhegau_de"
+    },
+    {
       "title": "MZV Rotenburg",
       "module": "mzv_rotenburg_bebra_de",
       "default_params": {},
