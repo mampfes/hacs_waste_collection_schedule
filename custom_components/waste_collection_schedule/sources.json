@@ -8463,6 +8463,14 @@
       "id": "ics_nerdbridge_de"
     },
     {
+      "title": "Landkreis Oldenburg",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "27708a019a2e35de7eb4bbe7c851609f"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Landkreis Ostallg\u00e4u",
       "module": "abfall_io",
       "default_params": {

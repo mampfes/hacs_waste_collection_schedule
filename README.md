@@ -1318,6 +1318,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Neumarkt](/doc/source/abfuhrplan_landkreis_neumarkt_de.md) / abfuhrplan-landkreis-neumarkt.de
 - [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
 - [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Landkreis Oldenburg](/doc/source/abfall_io.md) / oldenburg-kreis.de
 - [Landkreis Ostallgäu](/doc/source/abfall_io.md) / buerger-ostallgaeu.de
 - [Landkreis Paderborn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
