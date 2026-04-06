@@ -14944,11 +14944,12 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "ortschaft": "Località"
+          "locality": "Località"
         }
       },
       "reconfigure_buchegg_so_ch": {
@@ -14956,10 +14957,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
         "data_description": {
-          "ortschaft": "Località"
+          "locality": "Località"
         }
       },
       "args_ics_openerz_metaodi_ch": {

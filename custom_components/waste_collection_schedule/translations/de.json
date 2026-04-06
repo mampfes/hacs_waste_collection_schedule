@@ -15035,11 +15035,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "ortschaft": "Ortschaft"
+          "locality": "Ortschaft"
         }
       },
       "reconfigure_buchegg_so_ch": {
@@ -15047,10 +15048,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
         "data_description": {
-          "ortschaft": "Ortschaft"
+          "locality": "Ortschaft"
         }
       },
       "args_ics_openerz_metaodi_ch": {

@@ -15204,11 +15204,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "ortschaft": "Locality"
+          "locality": "Village"
         }
       },
       "reconfigure_buchegg_so_ch": {
@@ -15216,10 +15217,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
         "data_description": {
-          "ortschaft": "Locality"
+          "locality": "Village"
         }
       },
       "args_ics_openerz_metaodi_ch": {

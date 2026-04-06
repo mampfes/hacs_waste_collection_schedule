@@ -2069,7 +2069,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buchegg_so_ch.md",
     "howto": {
       "de": "Wählen Sie Ihre Ortschaft aus der Liste.",
-      "en": "Select your locality (Ortschaft) from the list.",
+      "en": "Select your village from the list.",
       "fr": "Sélectionnez votre localité dans la liste.",
       "it": "Selezionate la vostra località dalla lista."
     },

@@ -1,5 +1,6 @@
 import html
 import json
+import logging
 import re
 from datetime import date, datetime
 
@@ -10,13 +11,15 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 
+_LOGGER = logging.getLogger(__name__)
+
 TITLE = "Buchegg"
 DESCRIPTION = "Source for waste collection schedule of Gemeinde Buchegg (SO), Switzerland."
 URL = "https://www.buchegg-so.ch"
 COUNTRY = "ch"
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Select your locality (Ortschaft) from the list.",
+    "en": "Select your village from the list.",
     "de": "Wählen Sie Ihre Ortschaft aus der Liste.",
     "fr": "Sélectionnez votre localité dans la liste.",
     "it": "Selezionate la vostra località dalla lista.",
@@ -24,27 +27,28 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "ortschaft": "Locality",
+        "locality": "Village",
     },
     "de": {
-        "ortschaft": "Ortschaft",
+        "locality": "Ortschaft",
     },
     "fr": {
-        "ortschaft": "Localité",
+        "locality": "Localité",
     },
     "it": {
-        "ortschaft": "Località",
+        "locality": "Località",
     },
 }
 
 TEST_CASES = {
-    "Aetingen": {"ortschaft": "Aetingen"},
-    "Bibern": {"ortschaft": "Bibern"},
-    "Aetigkofen": {"ortschaft": "Aetigkofen"},
-    "Mühledorf": {"ortschaft": "Mühledorf"},
-    "Kyburg-Buchegg": {"ortschaft": "Kyburg-Buchegg"},
-    "Lüterswil-Gächliwil": {"ortschaft": "Lüterswil-Gächliwil"},
-    "Gossliwil": {"ortschaft": "Gossliwil"},
+    "Aetingen": {"locality": "Aetingen"},
+    "Bibern": {"locality": "Bibern"},
+    "Aetigkofen": {"locality": "Aetigkofen"},
+    "Mühledorf": {"locality": "Mühledorf"},
+    "Kyburg-Buchegg": {"locality": "Kyburg-Buchegg"},
+    "Lüterswil-Gächliwil": {"locality": "Lüterswil-Gächliwil"},
+    "Gossliwil": {"locality": "Gossliwil"},
+    "Deprecated param": {"ortschaft": "Tscheppach"},
 }
 
 ICON_MAP = {
@@ -66,7 +70,26 @@ HEADERS = {
 }
 
 # ============================================================
-# Kehricht zone mapping
+# All villages within Gemeinde Buchegg
+# ============================================================
+
+VILLAGES = [
+    "Aetigkofen",
+    "Aetingen",
+    "Bibern",
+    "Brittern",
+    "Brügglen",
+    "Gossliwil",
+    "Hessigkofen",
+    "Küttigkofen",
+    "Kyburg-Buchegg",
+    "Lüterswil-Gächliwil",
+    "Mühledorf",
+    "Tscheppach",
+]
+
+# ============================================================
+# Kehricht: each village maps to a set of zone-matching keywords
 # ============================================================
 
 KEHRICHT_ZONE_MAP = {
@@ -85,7 +108,7 @@ KEHRICHT_ZONE_MAP = {
 }
 
 # ============================================================
-# Grüngut group mapping
+# Grüngut: each village belongs to one of two collection groups
 # ============================================================
 
 GRUENGUT_GROUP_MAP = {
@@ -115,11 +138,11 @@ GRUENGUT_GROUP_KEYWORDS = {
 }
 
 # ============================================================
-# Altpapier: Ortschaft to LocalCities display name mapping.
+# Altpapier: village name to LocalCities display name mapping.
 # LocalCities uses "SO" suffixes for cantonal disambiguation.
 # ============================================================
 
-ORTSCHAFT_TO_LOCALCITIES = {
+VILLAGE_TO_LOCALCITIES = {
     "Aetigkofen": "Aetigkofen",
     "Aetingen": "Aetingen",
     "Bibern": "Bibern SO",
@@ -138,19 +161,47 @@ ORTSCHAFT_TO_LOCALCITIES = {
 class Source:
     """Waste collection schedule for Gemeinde Buchegg (SO)."""
 
-    def __init__(self, ortschaft: str):
-        ortschaft = ortschaft.strip()
+    def __init__(
+        self,
+        locality: str | None = None,
+        ortschaft: str | None = None,
+    ):
+        """Initialize with village name.
 
-        if ortschaft not in KEHRICHT_ZONE_MAP:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "ortschaft",
-                ortschaft,
-                suggestions=sorted(KEHRICHT_ZONE_MAP.keys()),
+        Accepts 'locality' (preferred) or the deprecated 'ortschaft'
+        parameter for backward compatibility.
+        """
+        if locality and ortschaft:
+            raise ValueError(
+                "Both 'locality' and 'ortschaft' are set. "
+                "Please use only 'locality'."
             )
 
-        self._ortschaft = ortschaft
-        self._kehricht_keywords = KEHRICHT_ZONE_MAP[ortschaft]
-        self._gruengut_group = GRUENGUT_GROUP_MAP[ortschaft]
+        if ortschaft:
+            _LOGGER.warning(
+                "Parameter 'ortschaft' is deprecated and will be removed "
+                "in a future version. Please use 'locality' instead."
+            )
+            village = ortschaft.strip()
+        elif locality:
+            village = locality.strip()
+        else:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "locality",
+                "",
+                suggestions=VILLAGES,
+            )
+
+        if village not in VILLAGES:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "locality",
+                village,
+                suggestions=VILLAGES,
+            )
+
+        self._village = village
+        self._kehricht_keywords = KEHRICHT_ZONE_MAP[village]
+        self._gruengut_group = GRUENGUT_GROUP_MAP[village]
 
     def fetch(self) -> list[Collection]:
         """Fetch waste collection dates from all configured providers."""
@@ -247,13 +298,13 @@ class Source:
         """Fetch Altpapier (waste paper) dates from localcities.ch.
 
         Paginates through all available pages and extracts entries
-        matching the configured Ortschaft.
+        matching the configured village.
 
         Network errors are caught gracefully so that data from other
         providers is still returned. Parsing errors are not suppressed.
         """
         collections: list[Collection] = []
-        localcities_name = ORTSCHAFT_TO_LOCALCITIES.get(self._ortschaft)
+        localcities_name = VILLAGE_TO_LOCALCITIES.get(self._village)
 
         if localcities_name is None:
             return collections

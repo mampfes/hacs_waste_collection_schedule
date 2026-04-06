@@ -14932,11 +14932,12 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "ortschaft": "Localité"
+          "locality": "Localité"
         }
       },
       "reconfigure_buchegg_so_ch": {
@@ -14944,10 +14945,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
         "data_description": {
-          "ortschaft": "Localité"
+          "locality": "Localité"
         }
       },
       "args_ics_openerz_metaodi_ch": {
