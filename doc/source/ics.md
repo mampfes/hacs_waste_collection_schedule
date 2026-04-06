@@ -397,6 +397,7 @@ This source has been successfully tested with the following service providers:
 ### Switzerland
 
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
+- [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
 - [Seon](/doc/ics/seon_ch.md) / seon.ch

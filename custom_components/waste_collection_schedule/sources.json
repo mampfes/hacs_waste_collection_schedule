@@ -15285,6 +15285,12 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Gossau ZH",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gossau_zh_ch"
+    },
+    {
       "title": "Grosswangen",
       "module": "grosswangen_ch",
       "default_params": {},
