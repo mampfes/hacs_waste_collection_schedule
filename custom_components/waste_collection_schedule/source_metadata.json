@@ -2502,6 +2502,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "chorley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chorley_gov_uk.md",
+    "howto": {
+      "en": "Go to https://www.chorley.gov.uk/bincollectiondays and enter your postcode. Use browser dev tools to find the UPRN (the option value in the address dropdown)."
+    },
+    "urls": {}
+  },
   "doncaster_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/doncaster_gov_uk.md",
     "howto": {},

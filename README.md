@@ -2486,6 +2486,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Cheshire West and Chester Council](/doc/source/cheshire_west_and_chester_gov_uk.md) / cheshirewestandchester.gov.uk
 - [Chesterfield Borough Council](/doc/source/chesterfield_gov_uk.md) / chesterfield.gov.uk
 - [Chichester District Council](/doc/source/chichester_gov_uk.md) / chichester.gov.uk
+- [Chorley Council](/doc/source/chorley_gov_uk.md) / chorley.gov.uk
 - [City of Doncaster Council](/doc/source/doncaster_gov_uk.md) / doncaster.gov.uk
 - [City Of Lincoln Council](/doc/source/lincoln_gov_uk.md) / lincoln.gov.uk
 - [City of York Council](/doc/source/york_gov_uk.md) / york.gov.uk
