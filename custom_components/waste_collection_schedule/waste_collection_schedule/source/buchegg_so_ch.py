@@ -48,7 +48,7 @@ TEST_CASES = {
     "Kyburg-Buchegg": {"locality": "Kyburg-Buchegg"},
     "Lüterswil-Gächliwil": {"locality": "Lüterswil-Gächliwil"},
     "Gossliwil": {"locality": "Gossliwil"},
-    "Deprecated param": {"ortschaft": "Tscheppach"},
+    "Tscheppach (deprecated ortschaft param)": {"ortschaft": "Tscheppach"},
 }
 
 ICON_MAP = {
@@ -89,10 +89,11 @@ VILLAGES = [
 ]
 
 # ============================================================
-# Kehricht: each village maps to a set of zone-matching keywords
+# Household waste: each village maps to a set of zone-matching
+# keywords used to identify the correct schedule entry.
 # ============================================================
 
-KEHRICHT_ZONE_MAP = {
+HOUSEHOLD_WASTE_ZONE_MAP = {
     "Aetingen": ["aetingen", "brittern", "küttigkofen", "lüterswil"],
     "Brittern": ["aetingen", "brittern", "küttigkofen", "lüterswil"],
     "Küttigkofen": ["aetingen", "brittern", "küttigkofen", "lüterswil"],
@@ -108,37 +109,40 @@ KEHRICHT_ZONE_MAP = {
 }
 
 # ============================================================
-# Grüngut: each village belongs to one of two collection groups
+# Green waste: each village belongs to one of two collection
+# groups. "default" covers 9 villages, "reduced" covers
+# Hessigkofen, Mühledorf and Tscheppach which have a separate
+# schedule with fewer collection dates.
 # ============================================================
 
-GRUENGUT_GROUP_MAP = {
-    "Aetigkofen": "gross",
-    "Aetingen": "gross",
-    "Bibern": "gross",
-    "Brittern": "gross",
-    "Brügglen": "gross",
-    "Gossliwil": "gross",
-    "Kyburg-Buchegg": "gross",
-    "Küttigkofen": "gross",
-    "Lüterswil-Gächliwil": "gross",
-    "Hessigkofen": "hmt",
-    "Mühledorf": "hmt",
-    "Tscheppach": "hmt",
+GREEN_WASTE_GROUP_MAP = {
+    "Aetigkofen": "default",
+    "Aetingen": "default",
+    "Bibern": "default",
+    "Brittern": "default",
+    "Brügglen": "default",
+    "Gossliwil": "default",
+    "Kyburg-Buchegg": "default",
+    "Küttigkofen": "default",
+    "Lüterswil-Gächliwil": "default",
+    "Hessigkofen": "reduced",
+    "Mühledorf": "reduced",
+    "Tscheppach": "reduced",
 }
 
-GRUENGUT_GROUP_KEYWORDS = {
-    "gross": {
+GREEN_WASTE_GROUP_KEYWORDS = {
+    "default": {
         "keywords": ["aetigkofen", "aetingen", "bibern", "brittern", "brügglen"],
         "max_commas": None,
     },
-    "hmt": {
+    "reduced": {
         "keywords": ["hessigkofen", "mühledorf", "tscheppach"],
         "max_commas": 3,
     },
 }
 
 # ============================================================
-# Altpapier: village name to LocalCities display name mapping.
+# Waste paper: village name to LocalCities display name mapping.
 # LocalCities uses "SO" suffixes for cantonal disambiguation.
 # ============================================================
 
@@ -200,18 +204,18 @@ class Source:
             )
 
         self._village = village
-        self._kehricht_keywords = KEHRICHT_ZONE_MAP[village]
-        self._gruengut_group = GRUENGUT_GROUP_MAP[village]
+        self._waste_zone_keywords = HOUSEHOLD_WASTE_ZONE_MAP[village]
+        self._green_waste_group = GREEN_WASTE_GROUP_MAP[village]
 
     def fetch(self) -> list[Collection]:
         """Fetch waste collection dates from all configured providers."""
         collections: list[Collection] = []
-        collections.extend(self._fetch_kehricht_gruengut())
-        collections.extend(self._fetch_altpapier())
+        collections.extend(self._fetch_household_and_green_waste())
+        collections.extend(self._fetch_waste_paper())
         return collections
 
-    def _fetch_kehricht_gruengut(self) -> list[Collection]:
-        """Fetch Kehricht and Grüngut dates from buchegg-so.ch."""
+    def _fetch_household_and_green_waste(self) -> list[Collection]:
+        """Fetch household waste and green waste dates from buchegg-so.ch."""
         response = requests.get(BUCHEGG_URL, headers=HEADERS, timeout=30)
         response.raise_for_status()
 
@@ -267,7 +271,7 @@ class Source:
             )
 
             if "kehricht" in name_lower:
-                if all(kw in name_lower for kw in self._kehricht_keywords):
+                if all(kw in name_lower for kw in self._waste_zone_keywords):
                     collections.append(
                         Collection(
                             date=entry_date,
@@ -277,7 +281,7 @@ class Source:
                     )
 
             elif "grüngut" in name_lower or "grünabfuhr" in name_lower:
-                group = GRUENGUT_GROUP_KEYWORDS[self._gruengut_group]
+                group = GREEN_WASTE_GROUP_KEYWORDS[self._green_waste_group]
 
                 if all(kw in name_lower for kw in group["keywords"]):
                     max_commas = group.get("max_commas")
@@ -294,8 +298,8 @@ class Source:
 
         return collections
 
-    def _fetch_altpapier(self) -> list[Collection]:
-        """Fetch Altpapier (waste paper) dates from localcities.ch.
+    def _fetch_waste_paper(self) -> list[Collection]:
+        """Fetch waste paper (Altpapier) dates from localcities.ch.
 
         Paginates through all available pages and extracts entries
         matching the configured village.
