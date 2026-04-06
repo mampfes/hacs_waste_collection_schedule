@@ -21701,8 +21701,8 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Straße",
-          "suburb": "Suburb"
+          "address_value": "Address Value",
+          "postcode": "PLZ"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -21713,8 +21713,8 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Straße",
-          "suburb": "Suburb"
+          "address_value": "Address Value",
+          "postcode": "PLZ"
         },
         "data_description": {}
       },

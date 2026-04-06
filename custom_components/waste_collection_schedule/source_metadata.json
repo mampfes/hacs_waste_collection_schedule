@@ -3839,7 +3839,9 @@
   },
   "wirral_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wirral_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Go to https://www.wirral.gov.uk/bincal_dev/ and enter your postcode. Right-click on your address in the dropdown and select 'Inspect' to find the 12-digit option value. Use that as the address_value parameter."
+    },
     "urls": {}
   },
   "wokingham_gov_uk": {

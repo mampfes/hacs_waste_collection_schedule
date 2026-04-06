@@ -22029,11 +22029,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street": "Street",
-          "suburb": "Suburb"
+          "address_value": "Address Value",
+          "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address_value": "The 12-digit address value from the dropdown on the Wirral bin calendar page.",
+          "postcode": "Your postcode, e.g. CH49 4NP."
         }
       },
       "reconfigure_wirral_gov_uk": {
@@ -22041,10 +22043,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street": "Street",
-          "suburb": "Suburb"
+          "address_value": "Address Value",
+          "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "address_value": "The 12-digit address value from the dropdown on the Wirral bin calendar page.",
+          "postcode": "Your postcode, e.g. CH49 4NP."
+        }
       },
       "args_wokingham_gov_uk": {
         "title": "Configure Source",
