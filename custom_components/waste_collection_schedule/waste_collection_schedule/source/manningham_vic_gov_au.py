@@ -4,13 +4,25 @@ from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFound,
+)
 
 TITLE = "City of Manningham"
 DESCRIPTION = "Source for City of Manningham, Victoria, Australia waste collection."
 URL = "https://www.manningham.vic.gov.au"
 TEST_CASES = {
     "10 Harold Street Bulleen": {"street_address": "10 Harold Street"},
-    "Manningham Council Offices": {"street_address": "699 Doncaster Road"},
+    "Lower Templestowe Pre-School": {"street_address": "96-106 Swanston Street"},
+    "9/114-116 James Street Templestowe": {"street_address": "9/114-116 James Street"},
+    "488 Park Road Park Orchards": {"street_address": "488 Park Road"},
+}
+
+ICON_MAP = {
+    "Rubbish": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
+    "Garden Waste": "mdi:leaf",
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,10 +31,6 @@ SEARCH_URL = "https://mapping.manningham.vic.gov.au/weave/services/v1/index/sear
 FEATURES_URL = "https://mapping.manningham.vic.gov.au/weave/services/v1/feature/getFeaturesByIds"
 
 DATE_FORMAT = "%d %b %Y"
-
-ICON_RUBBISH = "mdi:trash-can"
-ICON_RECYCLING = "mdi:recycle"
-ICON_GARDEN = "mdi:leaf"
 
 WEEKDAY_MAP = {
     "Monday": 0,
@@ -63,17 +71,13 @@ class Source:
 
         total = search_result.get("total", 0)
         if total == 0:
-            raise ValueError(
-                f"Address '{self._street_address}' not found. "
-                "Check your address at https://mapping.manningham.vic.gov.au"
-            )
+            raise SourceArgumentNotFound("street_address", self._street_address)
         if total > 1:
             suggestions = [
                 _strip_html(r["display1"]) for r in search_result["results"]
             ]
-            raise ValueError(
-                f"Address '{self._street_address}' is ambiguous. "
-                f"Matching addresses: {', '.join(suggestions)}"
+            raise SourceArgAmbiguousWithSuggestions(
+                "street_address", self._street_address, suggestions
             )
 
         property_id = search_result["results"][0]["id"]
@@ -95,17 +99,13 @@ class Source:
 
         features = feature_data.get("features", [])
         if not features:
-            raise ValueError(
-                f"No waste collection data found for '{self._street_address}'."
-            )
+            raise SourceArgumentNotFound("street_address", self._street_address)
 
         waste_collection = features[0]["properties"].get(
             "dd_ManCC_Property_WasteCollection", []
         )
         if not waste_collection:
-            raise ValueError(
-                f"No waste collection data found for '{self._street_address}'."
-            )
+            raise SourceArgumentNotFound("street_address", self._street_address)
 
         data = waste_collection[0]
         today = datetime.now().date()
@@ -117,8 +117,9 @@ class Source:
         if rubbish_date_str:
             date = datetime.strptime(rubbish_date_str, DATE_FORMAT).date()
             while date <= end_date:
-                if date >= today:
-                    entries.append(Collection(date=date, t="Rubbish", icon=ICON_RUBBISH))
+                entries.append(
+                    Collection(date=date, t="Rubbish", icon=ICON_MAP["Rubbish"])
+                )
                 date += timedelta(days=14)
 
         # Recycling (yellow lid) — fortnightly; API returns next collection date
@@ -126,10 +127,9 @@ class Source:
         if recycling_date_str:
             date = datetime.strptime(recycling_date_str, DATE_FORMAT).date()
             while date <= end_date:
-                if date >= today:
-                    entries.append(
-                        Collection(date=date, t="Recycling", icon=ICON_RECYCLING)
-                    )
+                entries.append(
+                    Collection(date=date, t="Recycling", icon=ICON_MAP["Recycling"])
+                )
                 date += timedelta(days=14)
 
         # Garden/FOGO (green lid) — weekly; API returns day-of-week name
@@ -143,7 +143,7 @@ class Source:
                 date = today + timedelta(days=days_ahead)
                 while date <= end_date:
                     entries.append(
-                        Collection(date=date, t="Garden Waste", icon=ICON_GARDEN)
+                        Collection(date=date, t="Garden Waste", icon=ICON_MAP["Garden Waste"])
                     )
                     date += timedelta(days=7)
 
