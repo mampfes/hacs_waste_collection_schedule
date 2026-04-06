@@ -1,18 +1,24 @@
-import re
 import json
-from datetime import datetime
-from urllib.parse import urljoin
+import re
+from datetime import date as dt_date, datetime
+from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 TITLE = "Lismore City Council"
 DESCRIPTION = "Source for Lismore City Council, NSW, Australia."
 URL = "https://www.lismore.nsw.gov.au/Households/Waste-and-recycling/Whats-My-Bin-Day1"
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lismore_city_nsw_gov_au.md."
+    "en": (
+        "Enter the full service address used by Lismore City Council, for example "
+        "'1 Rosella Chase, Goonellabah NSW 2480'."
+    )
 }
 TEST_CASES = {
     "1 Rosella Chase, Goonellabah NSW 2480": {
@@ -90,7 +96,7 @@ class Source:
                             ),
                             "postal_code": parsed_address["postal_code"],
                             "part": "",
-                            "subpremise": "",
+                            "subpremise": parsed_address["subpremise"],
                             "formatted_address": parsed_address["formatted_address"],
                         },
                         "geometry": {"location": {"lat": 0, "lng": 0}},
@@ -123,21 +129,34 @@ class Source:
             return api_key
 
         soup = BeautifulSoup(page_html, "html.parser")
+        base_origin = urlparse(URL).netloc.lower()
         for script in soup.select("script[src]"):
             src = script.get("src", "").strip()
             if not src:
                 continue
-            if "whatbinday" not in src.lower() and src.lower().endswith(".js") is False:
+
+            script_url = urljoin(URL, src)
+            parsed_script_url = urlparse(script_url)
+            if parsed_script_url.netloc.lower() != base_origin:
                 continue
 
-            script_response = self._session.get(urljoin(URL, src), timeout=30)
+            script_path = parsed_script_url.path.lower()
+            if not script_path.endswith(".js"):
+                continue
+            if "whatbinday" not in script_url.lower():
+                continue
+
+            script_response = self._session.get(script_url, timeout=30)
             if not script_response.ok:
                 continue
             api_key = self._extract_api_key(script_response.text)
             if api_key:
                 return api_key
 
-        raise SourceArgumentNotFound("apiKey", "public widget configuration")
+        raise SourceArgumentException(
+            "address",
+            "Unable to load the Lismore City Council widget configuration needed to look up collection dates.",
+        )
 
     def _get_page_html(self) -> str:
         if self._page_html is None:
@@ -165,7 +184,7 @@ class Source:
             return []
 
         entries: list[Collection] = []
-        seen: set[tuple[datetime.date, str]] = set()
+        seen: set[tuple[dt_date, str]] = set()
 
         for item in items:
             date_el = item.select_one(".WBD-event-date")
@@ -174,7 +193,7 @@ class Source:
 
             date_text = " ".join(date_el.get_text(" ", strip=True).split())
             try:
-                date = datetime.strptime(date_text, "%A %d %b %Y").date()
+                collection_date = datetime.strptime(date_text, "%A %d %b %Y").date()
             except ValueError:
                 continue
 
@@ -192,14 +211,14 @@ class Source:
                 if image_el is not None:
                     src = image_el.get("src", "").strip()
                     if src:
-                        picture = src
-                key = (date, waste_type)
+                        picture = urljoin(URL, src)
+                key = (collection_date, waste_type)
                 if key in seen:
                     continue
                 seen.add(key)
 
                 entry = Collection(
-                    date=date,
+                    date=collection_date,
                     t=waste_type,
                     icon=self._guess_icon(waste_type),
                 )
@@ -229,7 +248,8 @@ class Source:
     def _split_address(self, address: str) -> dict[str, str]:
         normalized = " ".join(address.replace(",", " , ").split())
         match = re.match(
-            r"^(?P<street_number>\d+[A-Za-z]?)\s+"
+            r"^(?:(?P<subpremise>(?:[A-Za-z]+\s+)?\d+[A-Za-z]?)\/)?"
+            r"(?P<street_number>\d+[A-Za-z]?(?:-\d+[A-Za-z]?)?)\s+"
             r"(?P<route>.+?)\s*,?\s+"
             r"(?P<locality>[A-Za-z ]+?)\s+"
             r"(?P<state>NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\s+"
@@ -240,14 +260,19 @@ class Source:
         if not match:
             raise SourceArgumentNotFound("address", address)
 
+        subpremise = (match.group("subpremise") or "").strip()
         street_number = match.group("street_number").strip()
         route = match.group("route").replace(" , ", " ").strip()
         locality = match.group("locality").strip().upper()
         state = match.group("state").strip().upper()
         postal_code = match.group("postal_code").strip()
-        formatted_address = f"{street_number} {route}, {locality} {state} {postal_code}"
+        address_prefix = (
+            f"{subpremise}/{street_number}" if subpremise else street_number
+        )
+        formatted_address = f"{address_prefix} {route}, {locality} {state} {postal_code}"
 
         return {
+            "subpremise": subpremise,
             "street_number": street_number,
             "route": route,
             "locality": locality,

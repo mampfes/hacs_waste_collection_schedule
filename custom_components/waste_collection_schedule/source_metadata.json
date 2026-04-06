@@ -262,7 +262,7 @@
   "lismore_city_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lismore_city_nsw_gov_au.md",
     "howto": {
-      "en": "Visit the Lismore City Council bin-day page, search for your property, and use the full address exactly as it appears in the search result. Example: 1 Rosella Chase, Goonellabah NSW 2480"
+      "en": "Enter the full service address used by Lismore City Council, for example '1 Rosella Chase, Goonellabah NSW 2480'."
     },
     "urls": {}
   },
