@@ -19,6 +19,12 @@ TEST_CASES = {
         "strasse": "Kaiserstraße",
         "hausnummer": "2",
     },
+    "Fürstenhausen, Kaiserstraße 2, 240L": {
+        "ortsteil": "Fürstenhausen",
+        "strasse": "Kaiserstraße",
+        "hausnummer": "2",
+        "behaelter": "240",
+    },
     "Fürstenhausen, Zechenstraße": {
         "ortsteil": "Fürstenhausen",
         "strasse": "Zechenstraße",
@@ -30,6 +36,7 @@ PARAM_TRANSLATIONS = {
         "ortsteil": "Ortsteil",
         "strasse": "Straße",
         "hausnummer": "Hausnummer",
+        "behaelter": "Behältergröße (Liter)",
     }
 }
 
@@ -38,11 +45,13 @@ PARAM_DESCRIPTIONS = {
         "ortsteil": "District / city part as shown in the EVV portal (e.g. 'Fürstenhausen', 'Völklingen')",
         "strasse": "Street name as shown in the EVV portal (e.g. 'Kaiserstraße')",
         "hausnummer": "House number (optional, required for some streets)",
+        "behaelter": "Container size (paper) in litres to filter by (e.g. '120', '240', '1100'). If omitted all container sizes are shown.",
     },
     "de": {
         "ortsteil": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
         "strasse": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')",
         "hausnummer": "Hausnummer (optional, für manche Straßen erforderlich)",
+        "behaelter": "Behältergröße (Papier) in Litern zum Filtern (z. B. '120', '240', '1100'). Ohne Angabe werden alle Behältergrößen angezeigt.",
     },
 }
 
@@ -83,10 +92,15 @@ class Source:
         ortsteil: str,
         strasse: str,
         hausnummer: str | int | None = None,
+        behaelter: str | int | None = None,
     ):
         self._ortsteil = ortsteil
         self._strasse = strasse
         self._hausnummer = str(hausnummer) if hausnummer is not None else None
+        # Normalize: strip trailing "L"/"l" and whitespace → "240L" → "240"
+        self._behaelter = (
+            str(behaelter).strip().rstrip("lL") if behaelter is not None else None
+        )
 
         self._orte_id: int | None = None
         self._strassen_id: int | None = None
@@ -206,7 +220,15 @@ class Source:
             if not waste_type:
                 continue
 
-            # Deduplicate: different bin sizes produce duplicate (date, type) entries
+            # Filter by container size if specified
+            if self._behaelter is not None:
+                volumen_obj = gefaess.get("VolumenObj") or {}
+                volumen_wert = str(volumen_obj.get("VolumenWert") or "").strip()
+                if volumen_wert != self._behaelter:
+                    continue
+
+            # Deduplicate: without behaelter filter, different bin sizes can produce
+            # duplicate (date, type) entries — keep only the first occurrence
             key = (date_val, waste_type)
             if key in seen:
                 continue
