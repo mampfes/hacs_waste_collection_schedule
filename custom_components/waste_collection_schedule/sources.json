@@ -7050,7 +7050,25 @@
     {
       "title": "Ginsheim-Gustavsburg",
       "module": "ics",
-      "default_params": {},
+      "default_params": {
+        "method": "POST",
+        "params": {
+          "dateFrom": "2026-01-01",
+          "dateTo": "2026-12-31",
+          "category": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        },
+        "url": "https://abfallkalender.gigu.de/export"
+      },
       "id": "ics_gigu_de"
     },
     {
@@ -8282,6 +8300,7 @@
           "papier": "1",
           "papiertonne": "1"
         },
+        "split_at": "\\+",
         "url": "https://mobil.abfallwirtschaft-heidenheim.de/icalendar/download.php",
         "year_field": "jahr"
       },
