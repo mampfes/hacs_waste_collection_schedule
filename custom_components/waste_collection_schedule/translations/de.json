@@ -8140,12 +8140,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "behaelter": "Behältergröße (Liter)",
           "hausnummer": "Hausnummer",
           "ortsteil": "Ortsteil",
           "strasse": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "behaelter": "Behältergröße (Papier) in Litern zum Filtern (z. B. '120', '240', '1100'). Ohne Angabe werden alle Behältergrößen angezeigt.",
           "hausnummer": "Hausnummer (optional, für manche Straßen erforderlich)",
           "ortsteil": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
           "strasse": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')"
@@ -8156,11 +8158,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "behaelter": "Behältergröße (Liter)",
           "hausnummer": "Hausnummer",
           "ortsteil": "Ortsteil",
           "strasse": "Straße"
         },
         "data_description": {
+          "behaelter": "Behältergröße (Papier) in Litern zum Filtern (z. B. '120', '240', '1100'). Ohne Angabe werden alle Behältergrößen angezeigt.",
           "hausnummer": "Hausnummer (optional, für manche Straßen erforderlich)",
           "ortsteil": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
           "strasse": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')"
