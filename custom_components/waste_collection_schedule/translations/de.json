@@ -1367,7 +1367,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "lat": "Breitengrad",
-          "lng": "Lng"
+          "lon": "Längengrad"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -1379,7 +1379,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "lat": "Breitengrad",
-          "lng": "Lng"
+          "lon": "Längengrad"
         },
         "data_description": {}
       },

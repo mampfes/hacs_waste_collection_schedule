@@ -40,4 +40,4 @@ waste_collection_schedule:
 
 ## Obtaining Latitude/Longitude
 
-Find the latitude and longitude of your address using [Google Maps](https://www.google.com/maps) or any other maps service. It should be as accurate as possible(many decimal places) to get the correct schedule.
+Find the latitude and longitude of your address using [Google Maps](https://www.google.com/maps) or any other maps service. It should be as accurate as possible (many decimal places) to get the correct schedule.

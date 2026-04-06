@@ -1401,7 +1401,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "lat": "Latitude",
-          "lng": "Lng"
+          "lon": "Longitude"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -1413,7 +1413,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "lat": "Latitude",
-          "lng": "Lng"
+          "lon": "Longitude"
         },
         "data_description": {}
       },

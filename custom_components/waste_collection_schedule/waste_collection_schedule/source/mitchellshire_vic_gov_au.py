@@ -10,19 +10,19 @@ URL = "https://www.mitchellshire.vic.gov.au"
 DESCRIPTION = "Source for Mitchell Shire Council, Victoria, Australia."
 
 # Coordinates can be found by right-clicking your address in Google Maps and
-# selecting "What's here?" — copy the lat/lng values shown.
+# selecting "What's here?" — copy the lat/lon values shown.
 TEST_CASES = {
     "Wallan": {
         "lat": -37.4195459,
-        "lng": 144.9592853,
+        "lon": 144.9592853,
     },
     "Beveridge": {
         "lat": -37.48012709087705,
-        "lng": 144.94518706976186,
+        "lon": 144.94518706976186,
     },
     "McDonalds Wallan": {
         "lat": -37.41290975665613,
-        "lng": 144.97998167557827
+        "lon": 144.97998167557827
     }
 }
 
@@ -41,14 +41,14 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, lat: float, lng: float):
+    def __init__(self, lat: float, lon: float):
         self._lat = lat
-        self._lng = lng
+        self._lon = lon
 
     def fetch(self) -> list[Collection]:
         r = requests.get(
             API_URL,
-            params={"lat": self._lat, "lng": self._lng},
+            params={"lat": self._lat, "lng": self._lon},
             timeout=30,
         )
         r.raise_for_status()
