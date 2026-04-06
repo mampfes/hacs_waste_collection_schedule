@@ -2290,6 +2290,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "bolsover_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolsover_gov_uk.md",
+    "howto": {
+      "en": "Check your bin calendar letter (A or B) and collection day (Tuesday–Friday) on the Bolsover website at https://www.bolsover.gov.uk/services/b/bins-and-recycling/."
+    },
+    "urls": {}
+  },
   "bolton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolton_gov_uk.md",
     "howto": {},

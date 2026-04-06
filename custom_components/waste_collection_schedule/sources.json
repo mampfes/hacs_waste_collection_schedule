@@ -15830,6 +15830,12 @@
       "id": "iapp_itouchvision_com"
     },
     {
+      "title": "Bolsover District Council",
+      "module": "bolsover_gov_uk",
+      "default_params": {},
+      "id": "bolsover_gov_uk"
+    },
+    {
       "title": "Bolton Council",
       "module": "bolton_gov_uk",
       "default_params": {},

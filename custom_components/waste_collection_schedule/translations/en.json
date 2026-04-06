@@ -16258,6 +16258,33 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
         }
       },
+      "args_bolsover_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar": "Calendar",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "calendar": "Your bin calendar letter: 'a' or 'b'.",
+          "collection_day": "Your collection day: tuesday, wednesday, thursday, or friday."
+        }
+      },
+      "reconfigure_bolsover_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar": "Calendar",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {
+          "calendar": "Your bin calendar letter: 'a' or 'b'.",
+          "collection_day": "Your collection day: tuesday, wednesday, thursday, or friday."
+        }
+      },
       "args_bolton_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
