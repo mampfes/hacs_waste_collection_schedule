@@ -1,0 +1,16 @@
+---
+title: ENNI Energie & Umwelt Niederrhein (Moers)
+url: https://abfallkalender.enni.de
+howto:
+  en: |
+    - Go to <https://abfallkalender.enni.de> and find your street name.
+    - The URL is `https://abfallkalender.enni.de/ics-kalender/{street}` where `{street}` is your street name in lowercase without umlauts (e.g. `ae` instead of `ä`, `ss` instead of `ß`).
+  de: |
+    - Gehen Sie zu <https://abfallkalender.enni.de> und finden Sie Ihren Straßennamen.
+    - Die URL lautet `https://abfallkalender.enni.de/ics-kalender/{strasse}`, wobei `{strasse}` Ihr Straßenname in Kleinbuchstaben ohne Umlaute ist (z.B. `ae` statt `ä`, `ss` statt `ß`).
+
+test_cases:
+  Hedwigstraße:
+    url: https://abfallkalender.enni.de/ics-kalender/hedwigstrasse
+  Bahnhofstraße:
+    url: https://abfallkalender.enni.de/ics-kalender/bahnhofstrasse

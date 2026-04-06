@@ -6723,6 +6723,12 @@
       "id": "awido_de"
     },
     {
+      "title": "ENNI Energie & Umwelt Niederrhein (Moers)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallkalender_enni_de"
+    },
+    {
       "title": "Entsorgung Dortmund GmbH (EDG)",
       "module": "app_abfallplus_de",
       "default_params": {
