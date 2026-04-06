@@ -52,7 +52,11 @@ class Source:
         collection_response = session.post(API_URL, data=form_data, headers=HEADERS)
 
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
-        for paragraph in collection_soup.find("div", class_="editor").find_all("p"):
+        for paragraph in (
+            collection_soup.find("div", class_="form__instructions")
+            .find("div", class_="editor")
+            .find_all("p")
+        ):
             matches = re.match(
                 r"^Your next (\w+) collections: (.*), (.*)", paragraph.text
             )
