@@ -643,6 +643,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Lismore City Council",
+      "module": "lismore_city_nsw_gov_au",
+      "default_params": {},
+      "id": "lismore_city_nsw_gov_au"
+    },
+    {
       "title": "Lithgow City Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -6723,6 +6729,12 @@
       "id": "awido_de"
     },
     {
+      "title": "ENNI Energie & Umwelt Niederrhein (Moers)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallkalender_enni_de"
+    },
+    {
       "title": "Entsorgung Dortmund GmbH (EDG)",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -8457,6 +8469,14 @@
       "id": "ics_nerdbridge_de"
     },
     {
+      "title": "Landkreis Oldenburg",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "27708a019a2e35de7eb4bbe7c851609f"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Landkreis Ostallg\u00e4u",
       "module": "abfall_io",
       "default_params": {
@@ -9043,6 +9063,12 @@
         "operator": "biedenkopf"
       },
       "id": "buergerportal_de"
+    },
+    {
+      "title": "MZV Hegau",
+      "module": "mzvhegau_de",
+      "default_params": {},
+      "id": "mzvhegau_de"
     },
     {
       "title": "MZV Rotenburg",
@@ -13076,6 +13102,12 @@
       "id": "esch_lu"
     },
     {
+      "title": "Luxembourg",
+      "module": "luxembourg_lu",
+      "default_params": {},
+      "id": "luxembourg_lu"
+    },
+    {
       "title": "SICA",
       "module": "sica_lu",
       "default_params": {},
@@ -15273,6 +15305,12 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Gossau ZH",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gossau_zh_ch"
+    },
+    {
       "title": "Grosswangen",
       "module": "grosswangen_ch",
       "default_params": {},
@@ -16055,6 +16093,12 @@
       "module": "chichester_gov_uk",
       "default_params": {},
       "id": "chichester_gov_uk"
+    },
+    {
+      "title": "Chorley Council",
+      "module": "chorley_gov_uk",
+      "default_params": {},
+      "id": "chorley_gov_uk"
     },
     {
       "title": "City of Doncaster Council",

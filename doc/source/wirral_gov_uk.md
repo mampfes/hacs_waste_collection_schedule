@@ -9,19 +9,21 @@ waste_collection_schedule:
   sources:
     - name: wirral_gov_uk
       args:
-        street: STREET
-        suburb: SUBURB
+        postcode: POSTCODE
+        address_value: ADDRESS_VALUE
 ```
 
 ### Configuration Variables
 
-**street**  
+**postcode**  
 *(string) (required)*
 
-**suburb**  
+Your postcode, e.g. `CH49 4NP`.
+
+**address_value**  
 *(string) (required)*
 
-Both the street and suburb are should be supplied in the arguments, as they appear on the web site when viewing your schedule.
+The 12-digit address value from the dropdown on the Wirral bin calendar page. To find this, go to https://www.wirral.gov.uk/bincal_dev/, enter your postcode, right-click your address in the dropdown and select "Inspect" to find the `<option value="...">` value.
 
 ## Examples
 
@@ -30,6 +32,6 @@ waste_collection_schedule:
   sources:
     - name: wirral_gov_uk
       args:
-        street: "Beckenham Road"
-        suburb: "New Brighton"
+        postcode: "CH49 4NP"
+        address_value: "000042037487"
 ```

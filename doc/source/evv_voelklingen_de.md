@@ -12,6 +12,8 @@ waste_collection_schedule:
         ortsteil: ORTSTEIL
         strasse: STRASSE
         hausnummer: HAUSNUMMER  # optional
+        behaelter:             # optional
+          ABFALLART: LITER
 ```
 
 ### Configuration Variables
@@ -24,12 +26,17 @@ District / city part as shown in the EVV portal second dropdown (e.g. `Völkling
 **strasse**
 *(String) (required)*
 
-Street name as shown in the EVV portal (e.g. `Hauptstraße`, `Poststraße`). Umlauts must match exactly.
+Street name as shown in the EVV portal (e.g. `Kaiserstraße`, `Poststraße`). Umlauts must match exactly.
 
 **hausnummer**
 *(String | Integer) (optional)*
 
 House number. Required for some streets that have different schedules per house number range.
+
+**behaelter**
+*(Dictionary) (optional)*
+
+Mapping of waste type name to container size in litres. Only the listed waste types are filtered to the given size; all other waste types are shown for all container sizes. If omitted entirely, all container sizes are shown (deduplicated by date and waste type).
 
 ## Example
 
@@ -39,8 +46,11 @@ waste_collection_schedule:
     - name: evv_voelklingen_de
       args:
         ortsteil: Fürstenhausen
-        strasse: Hauptstraße
+        strasse: Kaiserstraße
         hausnummer: "2"
+        behaelter:
+          Restmüll: "240"
+          Papier: "1100"
 ```
 
 ## How to find your parameters

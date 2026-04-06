@@ -83,6 +83,11 @@ SERVICE_MAP = [
         "service_id": "3ca331fb42d25e25f95014693ebcf855",
     },
     {
+        "title": "Landkreis Oldenburg",
+        "url": "https://www.oldenburg-kreis.de/",
+        "service_id": "27708a019a2e35de7eb4bbe7c851609f",
+    },
+    {
         "title": "Landkreis Ostallgäu",
         "url": "https://www.buerger-ostallgaeu.de/",
         "service_id": "342cedd68ca114560ed4ca4b7c4e5ab6",
