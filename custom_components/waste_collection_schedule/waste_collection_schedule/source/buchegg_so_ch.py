@@ -1,12 +1,14 @@
 import html
 import json
 import re
-from datetime import date
+from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Buchegg"
 DESCRIPTION = "Source for waste collection schedule of Gemeinde Buchegg (SO), Switzerland."
@@ -42,14 +44,17 @@ TEST_CASES = {
     "Mühledorf": {"ortschaft": "Mühledorf"},
     "Kyburg-Buchegg": {"ortschaft": "Kyburg-Buchegg"},
     "Lüterswil-Gächliwil": {"ortschaft": "Lüterswil-Gächliwil"},
+    "Gossliwil": {"ortschaft": "Gossliwil"},
 }
 
 ICON_MAP = {
     "Kehrichtabfuhr": "mdi:trash-can",
     "Grüngutabfuhr": "mdi:leaf",
+    "Altpapier": "mdi:newspaper-variant-outline",
 }
 
-SCRAPE_URL = "https://www.buchegg-so.ch/abfalldaten"
+BUCHEGG_URL = "https://www.buchegg-so.ch/abfalldaten"
+LOCALCITIES_URL = "https://www.localcities.ch/de/entsorgung/buchegg/3385"
 
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -61,7 +66,7 @@ HEADERS = {
 }
 
 # ============================================================
-# Internal zone mapping
+# Kehricht zone mapping
 # ============================================================
 
 KEHRICHT_ZONE_MAP = {
@@ -79,19 +84,23 @@ KEHRICHT_ZONE_MAP = {
     "Mühledorf": ["aetigkofen", "brügglen", "kyburg", "mühledorf"],
 }
 
+# ============================================================
+# Grüngut group mapping
+# ============================================================
+
 GRUENGUT_GROUP_MAP = {
-    "Aetigkofen":          "gross",
-    "Aetingen":            "gross",
-    "Bibern":              "gross",
-    "Brittern":            "gross",
-    "Brügglen":            "gross",
-    "Gossliwil":           "gross",
-    "Kyburg-Buchegg":      "gross",
-    "Küttigkofen":         "gross",
+    "Aetigkofen": "gross",
+    "Aetingen": "gross",
+    "Bibern": "gross",
+    "Brittern": "gross",
+    "Brügglen": "gross",
+    "Gossliwil": "gross",
+    "Kyburg-Buchegg": "gross",
+    "Küttigkofen": "gross",
     "Lüterswil-Gächliwil": "gross",
-    "Hessigkofen":         "hmt",
-    "Mühledorf":           "hmt",
-    "Tscheppach":          "hmt",
+    "Hessigkofen": "hmt",
+    "Mühledorf": "hmt",
+    "Tscheppach": "hmt",
 }
 
 GRUENGUT_GROUP_KEYWORDS = {
@@ -103,6 +112,26 @@ GRUENGUT_GROUP_KEYWORDS = {
         "keywords": ["hessigkofen", "mühledorf", "tscheppach"],
         "max_commas": 3,
     },
+}
+
+# ============================================================
+# Altpapier: Ortschaft to LocalCities display name mapping.
+# LocalCities uses "SO" suffixes for cantonal disambiguation.
+# ============================================================
+
+ORTSCHAFT_TO_LOCALCITIES = {
+    "Aetigkofen": "Aetigkofen",
+    "Aetingen": "Aetingen",
+    "Bibern": "Bibern SO",
+    "Brittern": "Brittern",
+    "Brügglen": "Brügglen",
+    "Gossliwil": "Gossliwil",
+    "Hessigkofen": "Hessigkofen",
+    "Küttigkofen": "Küttigkofen",
+    "Kyburg-Buchegg": "Kyburg-Buchegg",
+    "Lüterswil-Gächliwil": "Lüterswil",
+    "Mühledorf": "Mühledorf SO",
+    "Tscheppach": "Tscheppach",
 }
 
 
@@ -124,15 +153,20 @@ class Source:
         self._gruengut_group = GRUENGUT_GROUP_MAP[ortschaft]
 
     def fetch(self) -> list[Collection]:
-        """Fetch waste collection dates from the Buchegg website."""
+        """Fetch waste collection dates from all configured providers."""
+        collections: list[Collection] = []
+        collections.extend(self._fetch_kehricht_gruengut())
+        collections.extend(self._fetch_altpapier())
+        return collections
 
-        response = requests.get(SCRAPE_URL, headers=HEADERS, timeout=30)
+    def _fetch_kehricht_gruengut(self) -> list[Collection]:
+        """Fetch Kehricht and Grüngut dates from buchegg-so.ch."""
+        response = requests.get(BUCHEGG_URL, headers=HEADERS, timeout=30)
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, "html.parser")
         table = soup.find("table", id="icmsTable-abfallsammlung")
 
-        
         if not table:
             raise ValueError(
                 "Table 'icmsTable-abfallsammlung' not found on page. "
@@ -166,7 +200,9 @@ class Source:
             name_html = row.get("name", "")
             date_html = row.get("_anlassDate", "")
 
-            name_clean = BeautifulSoup(name_html, "html.parser").get_text(strip=True)
+            name_clean = BeautifulSoup(name_html, "html.parser").get_text(
+                strip=True
+            )
             name_lower = name_clean.lower()
 
             date_match = re.search(r"(\d{2})\.(\d{2})\.(\d{4})", date_html)
@@ -179,7 +215,6 @@ class Source:
                 int(date_match.group(1)),
             )
 
-            # --- Kehricht matching ---
             if "kehricht" in name_lower:
                 if all(kw in name_lower for kw in self._kehricht_keywords):
                     collections.append(
@@ -190,7 +225,6 @@ class Source:
                         )
                     )
 
-            # --- Grüngut matching ---
             elif "grüngut" in name_lower or "grünabfuhr" in name_lower:
                 group = GRUENGUT_GROUP_KEYWORDS[self._gruengut_group]
 
@@ -208,3 +242,146 @@ class Source:
                     )
 
         return collections
+
+    def _fetch_altpapier(self) -> list[Collection]:
+        """Fetch Altpapier (waste paper) dates from localcities.ch.
+
+        Paginates through all available pages and extracts entries
+        matching the configured Ortschaft.
+
+        Network errors are caught gracefully so that data from other
+        providers is still returned. Parsing errors are not suppressed.
+        """
+        collections: list[Collection] = []
+        localcities_name = ORTSCHAFT_TO_LOCALCITIES.get(self._ortschaft)
+
+        if localcities_name is None:
+            return collections
+
+        page = 1
+        while True:
+            url = LOCALCITIES_URL
+            if page > 1:
+                url = f"{LOCALCITIES_URL}?page={page}"
+
+            try:
+                response = requests.get(
+                    url,
+                    headers=HEADERS,
+                    timeout=30,
+                )
+                response.raise_for_status()
+            except requests.RequestException:
+                # Network/HTTP error – return what we have so far
+                break
+
+            soup = BeautifulSoup(response.text, "html.parser")
+            result_list = soup.find(
+                "div", attrs={"data-js-result-list": True}
+            )
+            if result_list is None:
+                break
+
+            date_rows = result_list.find_all(
+                "div", class_="row", recursive=False
+            )
+            if not date_rows:
+                break
+
+            for row in date_rows:
+                date_col = row.find(
+                    "div", class_="waste-calender-list__date"
+                )
+                if date_col is None:
+                    continue
+                date_heading = date_col.find(["h2", "h3"])
+                if date_heading is None:
+                    continue
+
+                date_text = date_heading.get_text(strip=True)
+                year = self._find_year_for_date(result_list, row)
+
+                try:
+                    entry_date = datetime.strptime(
+                        f"{date_text}.{year}", "%d.%m.%Y"
+                    ).date()
+                except ValueError:
+                    continue
+
+                waste_items = row.find_all(
+                    "div",
+                    class_=re.compile(r"waste-calendar-list-item-small"),
+                )
+
+                for waste_item in waste_items:
+                    css_classes = " ".join(waste_item.get("class", []))
+                    if "waste-paper" not in css_classes:
+                        continue
+
+                    # Extract locality text (strip img alt-text prefix)
+                    item_text = waste_item.get_text(strip=True)
+                    for prefix in ["Altpapier", "Papier", "Paper"]:
+                        if item_text.startswith(prefix):
+                            item_text = item_text[len(prefix):].strip()
+                            break
+
+                    if item_text == localcities_name:
+                        collections.append(
+                            Collection(
+                                date=entry_date,
+                                t="Altpapier",
+                                icon=ICON_MAP.get("Altpapier"),
+                            )
+                        )
+
+            # Check for pagination button
+            load_more = soup.find(
+                "input",
+                attrs={"data-js-results-load-more-next-page": True},
+            )
+            if load_more is None:
+                break
+
+            next_page_str = load_more.get(
+                "data-js-results-load-more-next-page", ""
+            )
+            try:
+                next_page = int(next_page_str)
+            except ValueError:
+                break
+
+            if next_page <= page:
+                break
+
+            page = next_page
+
+        return collections
+
+    @staticmethod
+    def _find_year_for_date(result_list, current_row) -> int:
+        """Extract the year from the nearest preceding month/year heading.
+
+        LocalCities displays dates as DD.MM with separate month headings
+        like 'April <span>2026</span>' above each group of date rows.
+        """
+        children = list(result_list.children)
+        current_year = datetime.now().year
+        last_year = current_year
+
+        for child in children:
+            if child == current_row:
+                return last_year
+
+            if hasattr(child, "name") and child.name == "h1":
+                headline_class = child.get("class", [])
+                if any(
+                    "calendar-list__headline" in c for c in headline_class
+                ):
+                    span = child.find("span")
+                    if span:
+                        try:
+                            last_year = int(span.get_text(strip=True))
+                        except ValueError:
+                            pass
+
+        return last_year

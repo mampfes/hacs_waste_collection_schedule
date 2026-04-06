@@ -2,6 +2,18 @@
 
 Support for schedules provided by [Gemeinde Buchegg](https://www.buchegg-so.ch), Switzerland.
 
+## How it works
+
+This source fetches waste collection data from two providers:
+
+| Waste type | Provider |
+|------------|----------|
+| Kehrichtabfuhr (household waste) | [buchegg-so.ch](https://www.buchegg-so.ch/abfalldaten) |
+| Grüngutabfuhr (green waste) | [buchegg-so.ch](https://www.buchegg-so.ch/abfalldaten) |
+| Altpapier (waste paper) | [localcities.ch](https://www.localcities.ch/de/entsorgung/buchegg/3385) |
+
+Not all localities have Altpapier collection dates on localcities.ch. If unavailable, only Kehrichtabfuhr and Grüngutabfuhr are returned.
+
 ## Configuration via configuration.yaml
 
 ```yaml
