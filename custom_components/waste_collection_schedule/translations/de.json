@@ -8147,7 +8147,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "behaelter": "Behältergröße (Papier) in Litern zum Filtern (z. B. '120', '240', '1100'). Ohne Angabe werden alle Behältergrößen angezeigt.",
+          "behaelter": "Zuordnung von Abfallart zu Behältergröße in Litern (z. B. Restmüll: '240', Papier: '1100'). Nur angegebene Abfallarten werden gefiltert; andere werden für alle Behältergrößen angezeigt. Ohne Angabe werden alle Behältergrößen angezeigt.",
           "hausnummer": "Hausnummer (optional, für manche Straßen erforderlich)",
           "ortsteil": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
           "strasse": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')"
@@ -8164,7 +8164,7 @@
           "strasse": "Straße"
         },
         "data_description": {
-          "behaelter": "Behältergröße (Papier) in Litern zum Filtern (z. B. '120', '240', '1100'). Ohne Angabe werden alle Behältergrößen angezeigt.",
+          "behaelter": "Zuordnung von Abfallart zu Behältergröße in Litern (z. B. Restmüll: '240', Papier: '1100'). Nur angegebene Abfallarten werden gefiltert; andere werden für alle Behältergrößen angezeigt. Ohne Angabe werden alle Behältergrößen angezeigt.",
           "hausnummer": "Hausnummer (optional, für manche Straßen erforderlich)",
           "ortsteil": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
           "strasse": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')"

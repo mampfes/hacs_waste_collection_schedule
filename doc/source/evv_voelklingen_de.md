@@ -12,7 +12,8 @@ waste_collection_schedule:
         ortsteil: ORTSTEIL
         strasse: STRASSE
         hausnummer: HAUSNUMMER  # optional
-        behaelter: BEHAELTER   # optional
+        behaelter:             # optional
+          ABFALLART: LITER
 ```
 
 ### Configuration Variables
@@ -33,9 +34,9 @@ Street name as shown in the EVV portal (e.g. `Kaiserstraße`, `Poststraße`). Um
 House number. Required for some streets that have different schedules per house number range.
 
 **behaelter**
-*(String | Integer) (optional)*
+*(Dictionary) (optional)*
 
-Container size in litres to filter by (e.g. `120`, `240`, `1100`). Useful when a street has multiple container sizes for the same waste type collected on different dates. Required to prevent duplicates of paper entries. If omitted, all container sizes are shown (deduplicated by date and waste type).
+Mapping of waste type name to container size in litres. Only the listed waste types are filtered to the given size; all other waste types are shown for all container sizes. If omitted entirely, all container sizes are shown (deduplicated by date and waste type).
 
 ## Example
 
@@ -47,7 +48,9 @@ waste_collection_schedule:
         ortsteil: Fürstenhausen
         strasse: Kaiserstraße
         hausnummer: "2"
-        behaelter: "240"
+        behaelter:
+          Restmüll: "240"
+          Papier: "1100"
 ```
 
 ## How to find your parameters

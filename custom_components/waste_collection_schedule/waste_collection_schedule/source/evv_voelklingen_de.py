@@ -19,11 +19,23 @@ TEST_CASES = {
         "strasse": "Kaiserstraße",
         "hausnummer": "2",
     },
-    "Fürstenhausen, Kaiserstraße 2, 240L": {
+    "Fürstenhausen, Kaiserstraße 2, Behälterfilter": {
         "ortsteil": "Fürstenhausen",
         "strasse": "Kaiserstraße",
         "hausnummer": "2",
-        "behaelter": "240",
+        "behaelter": {"Restmüll": "240", "Papier": "240"},
+    },
+    "Fürstenhausen, Kaiserstraße 2, Behälterfilter alle": {
+        "ortsteil": "Fürstenhausen",
+        "strasse": "Kaiserstraße",
+        "hausnummer": "2",
+        "behaelter": {"Restmüll": "240", "Papier": "240", "PVL":"1100"},
+    },
+    "Fürstenhausen, Kaiserstraße 2, Behälterfilter alle Papier gross": {
+        "ortsteil": "Fürstenhausen",
+        "strasse": "Kaiserstraße",
+        "hausnummer": "2",
+        "behaelter": {"Restmüll": "240", "Papier": "1100", "PVL":"1100"},
     },
     "Fürstenhausen, Zechenstraße": {
         "ortsteil": "Fürstenhausen",
@@ -45,13 +57,13 @@ PARAM_DESCRIPTIONS = {
         "ortsteil": "District / city part as shown in the EVV portal (e.g. 'Fürstenhausen', 'Völklingen')",
         "strasse": "Street name as shown in the EVV portal (e.g. 'Kaiserstraße')",
         "hausnummer": "House number (optional, required for some streets)",
-        "behaelter": "Container size (paper) in litres to filter by (e.g. '120', '240', '1100'). If omitted all container sizes are shown.",
+        "behaelter": "Mapping of waste type name to container size in litres (e.g. Restmüll: '240', Papier: '1100'). Only specified waste types are filtered; others are shown for all container sizes. If omitted all container sizes are shown.",
     },
     "de": {
         "ortsteil": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
         "strasse": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')",
         "hausnummer": "Hausnummer (optional, für manche Straßen erforderlich)",
-        "behaelter": "Behältergröße (Papier) in Litern zum Filtern (z. B. '120', '240', '1100'). Ohne Angabe werden alle Behältergrößen angezeigt.",
+        "behaelter": "Zuordnung von Abfallart zu Behältergröße in Litern (z. B. Restmüll: '240', Papier: '1100'). Nur angegebene Abfallarten werden gefiltert; andere werden für alle Behältergrößen angezeigt. Ohne Angabe werden alle Behältergrößen angezeigt.",
     },
 }
 
@@ -92,14 +104,16 @@ class Source:
         ortsteil: str,
         strasse: str,
         hausnummer: str | int | None = None,
-        behaelter: str | int | None = None,
+        behaelter: dict[str, str | int] | None = None,
     ):
         self._ortsteil = ortsteil
         self._strasse = strasse
         self._hausnummer = str(hausnummer) if hausnummer is not None else None
-        # Normalize: strip trailing "L"/"l" and whitespace → "240L" → "240"
-        self._behaelter = (
-            str(behaelter).strip().rstrip("lL") if behaelter is not None else None
+        # Normalize values: strip trailing "L"/"l" → {"Restmüll": "240L"} → {"Restmüll": "240"}
+        self._behaelter: dict[str, str] | None = (
+            {k: str(v).strip().rstrip("lL") for k, v in behaelter.items()}
+            if behaelter is not None
+            else None
         )
 
         self._orte_id: int | None = None
@@ -220,11 +234,11 @@ class Source:
             if not waste_type:
                 continue
 
-            # Filter by container size if specified
-            if self._behaelter is not None:
+            # Filter by container size per waste type if specified
+            if self._behaelter is not None and waste_type in self._behaelter:
                 volumen_obj = gefaess.get("VolumenObj") or {}
                 volumen_wert = str(volumen_obj.get("VolumenWert") or "").strip()
-                if volumen_wert != self._behaelter:
+                if volumen_wert != self._behaelter[waste_type]:
                     continue
 
             # Deduplicate: without behaelter filter, different bin sizes can produce

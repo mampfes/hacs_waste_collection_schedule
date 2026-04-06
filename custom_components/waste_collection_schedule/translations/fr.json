@@ -8079,7 +8079,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "behaelter": "Behaelter",
+          "behaelter": "Poubelle",
           "hausnummer": "Numéro civique",
           "ortsteil": "District",
           "strasse": "Rue"
@@ -8093,7 +8093,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "behaelter": "Behaelter",
+          "behaelter": "Poubelle",
           "hausnummer": "Numéro civique",
           "ortsteil": "District",
           "strasse": "Rue"
