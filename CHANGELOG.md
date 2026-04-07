@@ -4,6 +4,40 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.18.0] - 2026-04-08
+
+### Added Sources
+
+- added Grenchen (CH) via localcities.ch (#5868)
+- added Teignbridge District Council, UK (thanks @mediastreet for API investigation) (#5865)
+- added Greater Dandenong City Council, VIC, AU (#5864)
+- added Telge Återvinning (telge.se), SE (#5866)
+- added Medway Council, UK (thanks @TecharyJames) (#5829)
+- added Manningham City Council, VIC, AU (thanks @paul256) (#5823)
+- added Mitchell Shire Council, VIC, AU (#5828)
+
+### Fixed Sources
+
+- fixed Dudley Council, UK: rewrite for new Granicus/AchieveForms platform (thanks @ribz for finding the API) (#5859)
+- fixed Victoria Park, WA, AU: rewrite for new FOGO calendar system (#5860)
+- fixed West Berkshire Council, UK: date parsing bug when SubText non-empty (#5856)
+- fixed Sutton Council, UK: switch to curl_cffi to bypass bot protection (#5855)
+- fixed Newham, UK: disable SSL verification for broken certificate chain (#5854)
+- fixed AppAbfallplusDe: fall back to "Alle Hausnummern" when house number not found (#5858)
+- fixed Blackpool Council, UK: add Food Caddy support for new collection type (#5863)
+- fixed Landkreis Rostock: add Güstrow street support (#5867)
+- fixed calendar: compare dates instead of datetimes so today's all-day events are not dropped (#5853)
+
+### Expanded Existing Sources
+
+- added Orillia (ON) to Recycle Coach, replacing old orillia_ca source (#5857)
+- added Faaborg (FFV) to Affaldonline (thanks @nicolaibvm) (#5862)
+- added Buchegg (SO) waste paper (Altpapier) collection (#5830)
+
+### Documentation
+
+- fixed regex in Landkreis Amberg-Sulzbach ICS doc examples (#5861)
+
 ## [2.17.0] - 2026-04-07
 
 ### Added Sources
