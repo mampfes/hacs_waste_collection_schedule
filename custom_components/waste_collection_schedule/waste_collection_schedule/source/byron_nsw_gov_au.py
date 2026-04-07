@@ -171,6 +171,19 @@ class Source:
                 if zone_id:
                     return zone_id
 
+            for key in ("zone_id", "zoneId", "zone", "id"):
+                value = payload.get(key)
+                zone_id = self._extract_zone_id(value)
+                if zone_id:
+                    return zone_id
+
+            for value in payload.values():
+                zone_id = self._extract_zone_id(value)
+                if zone_id:
+                    return zone_id
+
+            return None
+
         if isinstance(payload, str):
             match = ZONE_ID_PATTERN.search(payload)
             if not match:
@@ -184,18 +197,6 @@ class Source:
                 if zone_id:
                     return zone_id
             return None
-
-        if isinstance(payload, dict):
-            for key in ("zone_id", "zoneId", "zone", "id"):
-                value = payload.get(key)
-                zone_id = self._extract_zone_id(value)
-                if zone_id:
-                    return zone_id
-
-            for value in payload.values():
-                zone_id = self._extract_zone_id(value)
-                if zone_id:
-                    return zone_id
 
         return None
 
