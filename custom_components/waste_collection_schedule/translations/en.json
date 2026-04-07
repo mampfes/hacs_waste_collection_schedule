@@ -224,6 +224,46 @@
         },
         "data_description": {}
       },
+      "args_ballina_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Enter your address to configure the source. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ballina_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Enter your address to reconfigure the source. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
+      "args_byron_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Enter your address to configure the source. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_byron_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Enter your address to reconfigure the source. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_banyule_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

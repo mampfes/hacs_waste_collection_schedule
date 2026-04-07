@@ -49,6 +49,12 @@
       "id": "act_gov_au"
     },
     {
+      "title": "Ballina Shire Council",
+      "module": "ballina_nsw_gov_au",
+      "default_params": {},
+      "id": "ballina_nsw_gov_au"
+    },
+    {
       "title": "Banyule City Council",
       "module": "banyule_vic_gov_au",
       "default_params": {},
@@ -139,6 +145,12 @@
         "service": "Burwood City Council"
       },
       "id": "impactapps_com_au"
+    },
+    {
+      "title": "Byron Shire Council",
+      "module": "byron_nsw_gov_au",
+      "default_params": {},
+      "id": "byron_nsw_gov_au"
     },
     {
       "title": "Campbelltown City Council",

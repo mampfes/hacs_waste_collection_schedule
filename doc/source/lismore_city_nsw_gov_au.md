@@ -19,6 +19,8 @@ waste_collection_schedule:
 
 Your full street address exactly as it appears in the Lismore City Council bin-day search.
 
+This source is intended for addresses serviced by Lismore City Council, including localities such as Lismore, Goonellabah, East Lismore, Lismore Heights, Nimbin, Clunes, Dunoon, The Channon, and nearby areas within the council area.
+
 ## Example
 
 ```yaml
@@ -34,6 +36,8 @@ waste_collection_schedule:
 1. Visit the [Lismore City Council bin-day page](https://www.lismore.nsw.gov.au/Households/Waste-and-recycling/Whats-My-Bin-Day1).
 2. Search for your property address.
 3. Use the full address exactly as shown in the search result.
+
+Example towns/localities were taken from the [City of Lismore Wikipedia page](https://en.wikipedia.org/wiki/City_of_Lismore) as documentation aids only. Actual service coverage is determined by the council lookup.
 
 ## Notes
 
