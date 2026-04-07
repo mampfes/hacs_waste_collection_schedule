@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 import requests
@@ -85,7 +86,13 @@ class Source:
         for item in data:
             waste_type = item.get("typeOfWaste", "").strip()
             waste_description = item.get("typeOfWasteDescription", waste_type).strip()
+            container_type = item.get("containerType", "").strip()
             dt = datetime.fromisoformat(item["date"])
+
+            # Distinguish bins: K370L1 → "(kärl 1)", K140L → no suffix
+            m = re.search(r"L(\d+)$", container_type)
+            if m:
+                waste_description += f" (kärl {m.group(1)})"
 
             entries.append(
                 Collection(
