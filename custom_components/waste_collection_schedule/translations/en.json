@@ -1997,11 +1997,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address",
-          "predict": "Predict"
+          "day": "Collection Day",
+          "group": "Collection Group"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "day": "Collection day (Monday to Friday)",
+          "group": "Collection group (1 or 2) — check the calendar on the council website"
         }
       },
       "reconfigure_victoriapark_wa_gov_au": {
@@ -2009,10 +2011,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Address",
-          "predict": "Predict"
+          "day": "Collection Day",
+          "group": "Collection Group"
         },
-        "data_description": {}
+        "data_description": {
+          "day": "Collection day (Monday to Friday)",
+          "group": "Collection group (1 or 2) — check the calendar on the council website"
+        }
       },
       "args_townsville_qld_gov_au": {
         "title": "Configure Source",

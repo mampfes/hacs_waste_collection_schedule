@@ -459,7 +459,9 @@
   },
   "victoriapark_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/victoriapark_wa_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Visit the <a href='https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx'>Bins and Collections</a> page to find your collection group (1 or 2) and day."
+    },
     "urls": {}
   },
   "townsville_qld_gov_au": {
