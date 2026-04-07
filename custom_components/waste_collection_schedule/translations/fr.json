@@ -9605,7 +9605,8 @@
           "black_seasonal": "Black Seasonal",
           "green_rhythm": "Green Rhythm",
           "green_seasonal": "Green Seasonal",
-          "municipality": "Municipality"
+          "municipality": "Municipality",
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -9620,7 +9621,8 @@
           "black_seasonal": "Black Seasonal",
           "green_rhythm": "Green Rhythm",
           "green_seasonal": "Green Seasonal",
-          "municipality": "Municipality"
+          "municipality": "Municipality",
+          "street": "Street"
         },
         "data_description": {}
       },

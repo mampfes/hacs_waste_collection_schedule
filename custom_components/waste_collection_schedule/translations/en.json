@@ -9783,7 +9783,8 @@
           "black_seasonal": "Black Seasonal",
           "green_rhythm": "Green Rhythm",
           "green_seasonal": "Green Seasonal",
-          "municipality": "Municipality"
+          "municipality": "Municipality",
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -9791,7 +9792,8 @@
           "black_seasonal": "Check if the black bins are only collected seasonally",
           "green_rhythm": "Rhythm of the green bin collection",
           "green_seasonal": "Check if the green bins are only collected seasonally",
-          "municipality": "Name of the municipality, should match the name shown {url_www_abfall_lro_de_de_abfuhrtermine} (including sub region in bracktes)"
+          "municipality": "Name of the municipality, should match the name shown {url_www_abfall_lro_de_de_abfuhrtermine} (including sub region in bracktes). Use 'Güstrow' for Güstrow city streets.",
+          "street": "Street name (only required for Güstrow)"
         }
       },
       "reconfigure_abfall_lro_de": {
@@ -9803,14 +9805,16 @@
           "black_seasonal": "Black Seasonal",
           "green_rhythm": "Green Rhythm",
           "green_seasonal": "Green Seasonal",
-          "municipality": "Municipality"
+          "municipality": "Municipality",
+          "street": "Street"
         },
         "data_description": {
           "black_rhythm": "Rhythm of the black bin collection",
           "black_seasonal": "Check if the black bins are only collected seasonally",
           "green_rhythm": "Rhythm of the green bin collection",
           "green_seasonal": "Check if the green bins are only collected seasonally",
-          "municipality": "Name of the municipality, should match the name shown {url_www_abfall_lro_de_de_abfuhrtermine} (including sub region in bracktes)"
+          "municipality": "Name of the municipality, should match the name shown {url_www_abfall_lro_de_de_abfuhrtermine} (including sub region in bracktes). Use 'Güstrow' for Güstrow city streets.",
+          "street": "Street name (only required for Güstrow)"
         }
       },
       "args_lrasha_de": {

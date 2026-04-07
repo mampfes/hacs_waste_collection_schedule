@@ -9610,7 +9610,8 @@
           "black_seasonal": "Black Seasonal",
           "green_rhythm": "Green Rhythm",
           "green_seasonal": "Green Seasonal",
-          "municipality": "Municipality"
+          "municipality": "Municipality",
+          "street": "Strada"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -9625,7 +9626,8 @@
           "black_seasonal": "Black Seasonal",
           "green_rhythm": "Green Rhythm",
           "green_seasonal": "Green Seasonal",
-          "municipality": "Municipality"
+          "municipality": "Municipality",
+          "street": "Strada"
         },
         "data_description": {}
       },

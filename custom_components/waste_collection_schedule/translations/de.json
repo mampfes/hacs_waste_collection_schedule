@@ -9689,7 +9689,8 @@
           "black_seasonal": "Schwarze Tonne Saisonal",
           "green_rhythm": "Gelbe Tonne Rythmus",
           "green_seasonal": "Gelbe Tonne Saisonal",
-          "municipality": "Gemeinde"
+          "municipality": "Gemeinde",
+          "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
@@ -9697,7 +9698,8 @@
           "black_seasonal": "Ankreuzen, wenn die schwarzen Tonnen nur saisonal geleert werden",
           "green_rhythm": "Leerungsrythmus der grünen Tonne",
           "green_seasonal": "Ankreuzen, wenn die Grünen Tonnen nur saisonal geleert werden",
-          "municipality": "Name der Gemeinde, sollte mit dem Namen auf {url_www_abfall_lro_de_de_abfuhrtermine} übereinstimmen (einschließlich Unterregion in Klammern)"
+          "municipality": "Name der Gemeinde, sollte mit dem Namen auf {url_www_abfall_lro_de_de_abfuhrtermine} übereinstimmen (einschließlich Unterregion in Klammern). Für Güstrower Straßen 'Güstrow' verwenden.",
+          "street": "Straßenname (nur für Güstrow erforderlich)"
         }
       },
       "reconfigure_abfall_lro_de": {
@@ -9709,14 +9711,16 @@
           "black_seasonal": "Schwarze Tonne Saisonal",
           "green_rhythm": "Gelbe Tonne Rythmus",
           "green_seasonal": "Gelbe Tonne Saisonal",
-          "municipality": "Gemeinde"
+          "municipality": "Gemeinde",
+          "street": "Straße"
         },
         "data_description": {
           "black_rhythm": "Leerungsrythmus der schwarzen Tonne",
           "black_seasonal": "Ankreuzen, wenn die schwarzen Tonnen nur saisonal geleert werden",
           "green_rhythm": "Leerungsrythmus der grünen Tonne",
           "green_seasonal": "Ankreuzen, wenn die Grünen Tonnen nur saisonal geleert werden",
-          "municipality": "Name der Gemeinde, sollte mit dem Namen auf {url_www_abfall_lro_de_de_abfuhrtermine} übereinstimmen (einschließlich Unterregion in Klammern)"
+          "municipality": "Name der Gemeinde, sollte mit dem Namen auf {url_www_abfall_lro_de_de_abfuhrtermine} übereinstimmen (einschließlich Unterregion in Klammern). Für Güstrower Straßen 'Güstrow' verwenden.",
+          "street": "Straßenname (nur für Güstrow erforderlich)"
         }
       },
       "args_lrasha_de": {
