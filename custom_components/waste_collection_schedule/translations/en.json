@@ -19334,7 +19334,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "housenameornumber": "Your house name or number",
+          "housenameornumber": "Your house name or number exactly as shown on the Medway website (e.g. '194-198')",
           "postcode": "Your postcode (e.g. ME4 4AY)",
           "uprn": "Unique Property Reference Number"
         }
@@ -19349,7 +19349,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "housenameornumber": "Your house name or number",
+          "housenameornumber": "Your house name or number exactly as shown on the Medway website (e.g. '194-198')",
           "postcode": "Your postcode (e.g. ME4 4AY)",
           "uprn": "Unique Property Reference Number"
         }
