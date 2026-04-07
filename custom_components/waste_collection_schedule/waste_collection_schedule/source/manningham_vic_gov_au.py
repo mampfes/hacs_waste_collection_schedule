@@ -51,7 +51,7 @@ class Source:
     def __init__(self, street_address: str):
         self._street_address = street_address
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         session = requests.Session()
 
         # Step 1: Resolve address to property ID
@@ -65,6 +65,7 @@ class Source:
                 "crs": "EPSG:28355",
                 "query": self._street_address,
             },
+            timeout=30,
         )
         response.raise_for_status()
         search_result = response.json()
@@ -93,6 +94,7 @@ class Source:
                 ("entityId", "ManCC_prop_layer"),
                 ("ids", property_id),
             ],
+            timeout=30,
         )
         response.raise_for_status()
         feature_data = response.json()
@@ -138,8 +140,6 @@ class Source:
             target_weekday = WEEKDAY_MAP.get(garden_day_str)
             if target_weekday is not None:
                 days_ahead = (target_weekday - today.weekday()) % 7
-                if days_ahead == 0:
-                    days_ahead = 7
                 date = today + timedelta(days=days_ahead)
                 while date <= end_date:
                     entries.append(
