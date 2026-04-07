@@ -264,6 +264,13 @@
     "howto": {},
     "urls": {}
   },
+  "lismore_city_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lismore_city_nsw_gov_au.md",
+    "howto": {
+      "en": "Enter the full service address used by Lismore City Council, for example '1 Rosella Chase, Goonellabah NSW 2480'."
+    },
+    "urls": {}
+  },
   "liverpool_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/liverpool_nsw_gov_au.md",
     "howto": {},
@@ -306,6 +313,11 @@
   },
   "midcoast_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midcoast_nsw_gov_au.md",
+    "howto": {},
+    "urls": {}
+  },
+  "mitchellshire_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mitchellshire_vic_gov_au.md",
     "howto": {},
     "urls": {}
   },
@@ -1286,6 +1298,14 @@
     "howto": {},
     "urls": {}
   },
+  "mzvhegau_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzvhegau_de.md",
+    "howto": {
+      "de": "Stadt/Gemeinde im MZV Hegau Verbandsgebiet eingeben.",
+      "en": "Enter your city/municipality in the MZV Hegau service area."
+    },
+    "urls": {}
+  },
   "mzv_rotenburg_bebra_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzv_rotenburg_bebra_de.md",
     "howto": {},
@@ -1531,6 +1551,11 @@
   },
   "esch_lu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/esch_lu.md",
+    "howto": {},
+    "urls": {}
+  },
+  "luxembourg_lu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/luxembourg_lu.md",
     "howto": {},
     "urls": {}
   },
@@ -2494,6 +2519,13 @@
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
+  },
+  "chorley_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chorley_gov_uk.md",
+    "howto": {
+      "en": "Go to https://www.chorley.gov.uk/bincollectiondays and enter your postcode. Use browser dev tools to find the UPRN (the option value in the address dropdown)."
+    },
+    "urls": {}
   },
   "doncaster_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/doncaster_gov_uk.md",
@@ -3832,7 +3864,9 @@
   },
   "wirral_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wirral_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Go to https://www.wirral.gov.uk/bincal_dev/ and enter your postcode. Right-click on your address in the dropdown and select 'Inspect' to find the 12-digit option value. Use that as the address_value parameter."
+    },
     "urls": {}
   },
   "wokingham_gov_uk": {

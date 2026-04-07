@@ -4,6 +4,41 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.17.0] - 2026-04-07
+
+### Added Sources
+
+- added Chorley Council, UK (thanks @jordanbruce1991-afk for investigation) (#5846)
+- added MZV Hegau, DE (#5847)
+- added Lismore City Council, NSW, AU (thanks @thazza) (#5827)
+- added Luxembourg / Mäin Offall (thanks @fuatakgun) (#5826)
+- added Bolsover District Council, UK (#5818)
+
+### Fixed Sources
+
+- fixed Wirral Council, UK: rewrite for new website (thanks @SolutechUK for investigation) (#5843)
+- fixed Müllmax: auto-detect and match house number selection (thanks @SheepHead1988 for repro details) (#5838)
+- fixed AbfallNavi: use shared domain for services with dead per-service subdomains (#5841)
+- fixed Blackpool Council, UK: crash on unrecognised job names (#5844)
+- fixed publidata_fr: instance_id type handling in config flow (#5845)
+- fixed Oxford City Council: broken by seasonal banner (thanks @rbrunt) (#5837)
+- fixed Torridge: handle parenthetical annotations in date strings (#5816)
+- fixed Blackpool: regex fails on 'Paper & Card' job names (#5817)
+- fixed EVV Völklingen: duplicated paper collection dates (thanks @Synthenses) (#5831)
+
+### New ICS Sources
+
+- added ENNI Energie & Umwelt Niederrhein (Moers), DE (thanks @nszkl29 for finding ICS endpoint) (#5842)
+- added Gossau ZH, CH (#5848)
+
+### Expanded Existing Sources
+
+- added Landkreis Oldenburg to Abfall.IO source (#5849)
+
+### Other
+
+- improved ICS source GUI defaults and howto text (#5819)
+
 ## [2.16.0] - 2026-04-06
 
 ### Added Sources

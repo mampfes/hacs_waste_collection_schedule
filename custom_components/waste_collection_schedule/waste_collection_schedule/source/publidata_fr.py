@@ -288,10 +288,16 @@ _LOGGER = logging.getLogger(__name__)
 class Source:
     geocoder_url = "https://api.publidata.io/v2/geocoder"
 
-    def __init__(self, address, insee_code, instance_id, public_type: str | None = None):
+    def __init__(
+        self,
+        address: str,
+        insee_code: str,
+        instance_id: int | str,
+        public_type: str | None = None,
+    ):
         self.address = address
         self.insee_code = insee_code
-        self.instance_id = instance_id
+        self.instance_id = int(instance_id)
         self._public_type = public_type
 
     def _get_address_params(self, address, insee_code):
