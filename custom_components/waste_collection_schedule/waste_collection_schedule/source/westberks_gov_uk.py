@@ -22,7 +22,7 @@ TEST_CASES = {
 ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
-    "FOODWASTE": "mdi:food-apple"
+    "FOODWASTE": "mdi:food-apple",
 }
 
 SEARCH_URLS = {
@@ -107,80 +107,41 @@ class Source:
             r = session.post(SEARCH_URLS["collection_search"], json=food_args)
             food_data = json.loads(r.content)
 
-            # if subtext is empty, use datetext
-            # if both have values, use subtext
-
-            # Extract dates from json
-            waste_type = "Rubbish"
-            if "nextRubbishDateSubText" in rubbish_data["result"]:
-                if not rubbish_data["result"]["nextRubbishDateSubText"]:
-                    dt_str = (
-                        rubbish_data["result"]["nextRubbishDateText"]
-                        + " "
-                        + str(date.today().year)
-                    )
-                else:
-                    if len(rubbish_data["result"]["nextRubbishDateText"]) < 12:
-                        dt_str = (
-                            rubbish_data["result"]["nextRubbishDateSubText"]
-                            + " "
-                            + str(date.today().year)
-                        )
-                dt_zulu = datetime.strptime(dt_str, "%A %d %B %Y")
-                dt_local = dt_zulu.astimezone(None)
-                entries.append(
-                    Collection(
-                        date=fix_date(dt_local.date()),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type.upper()),
-                    )
+            for waste_type, data, text_key, sub_key in [
+                (
+                    "Rubbish",
+                    rubbish_data,
+                    "nextRubbishDateText",
+                    "nextRubbishDateSubText",
+                ),
+                (
+                    "Recycling",
+                    recycling_data,
+                    "nextRecyclingDateText",
+                    "nextRecyclingDateSubText",
+                ),
+                (
+                    "FoodWaste",
+                    food_data,
+                    "nextFoodWasteDateText",
+                    "nextFoodWasteDateSubText",
+                ),
+            ]:
+                result = data.get("result", {})
+                # prefer subtext if non-empty, otherwise use datetext
+                dt_str = (
+                    result.get(sub_key, "").strip() or result.get(text_key, "").strip()
                 )
-
-            waste_type = "Recycling"
-            if "nextRecyclingDateSubText" in recycling_data["result"]:
-                if not recycling_data["result"]["nextRecyclingDateSubText"]:
-                    dt_str = (
-                        recycling_data["result"]["nextRecyclingDateText"]
-                        + " "
-                        + str(date.today().year)
-                    )
-                else:
-                    if len(recycling_data["result"]["nextRecyclingDateText"]) < 12:
-                        dt_str = (
-                            recycling_data["result"]["nextRecyclingDateSubText"]
-                            + " "
-                            + str(date.today().year)
-                        )
-                dt_zulu = datetime.strptime(dt_str, "%A %d %B %Y")
-                dt_local = dt_zulu.astimezone(None)
+                if not dt_str:
+                    continue
+                dt_str += " " + str(date.today().year)
+                try:
+                    dt = datetime.strptime(dt_str, "%A %d %B %Y")
+                except ValueError:
+                    continue
                 entries.append(
                     Collection(
-                        date=fix_date(dt_local.date()),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type.upper()),
-                    )
-                )
-
-            waste_type = "FoodWaste"
-            if "nextFoodWasteDateSubText" in food_data["result"]:
-                if not food_data["result"]["nextFoodWasteDateSubText"]:
-                    dt_str = (
-                        food_data["result"]["nextFoodWasteDateText"]
-                        + " "
-                        + str(date.today().year)
-                    )
-                else:
-                    if len(food_data["result"]["nextFoodWasteDateText"]) < 12:
-                        dt_str = (
-                            food_data["result"]["nextFoodWasteDateSubText"]
-                            + " "
-                            + str(date.today().year)
-                        )
-                dt_zulu = datetime.strptime(dt_str, "%A %d %B %Y")
-                dt_local = dt_zulu.astimezone(None)
-                entries.append(
-                    Collection(
-                        date=fix_date(dt_local.date()),
+                        date=fix_date(dt.date()),
                         t=waste_type,
                         icon=ICON_MAP.get(waste_type.upper()),
                     )
