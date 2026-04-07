@@ -2690,6 +2690,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Swansea Council](/doc/source/swansea_gov_uk.md) / swansea.gov.uk
 - [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
 - [Tameside Metropolitan Borough Council](/doc/source/tameside_gov_uk.md) / tameside.gov.uk
+- [Teignbridge District Council](/doc/source/teignbridge_gov_uk.md) / teignbridge.gov.uk
 - [Telford and Wrekin Council](/doc/source/telford_gov_uk.md) / telford.gov.uk
 - [Test Valley Borough Council](/doc/source/iapp_itouchvision_com.md) / testvalley.gov.uk
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
