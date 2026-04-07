@@ -215,6 +215,13 @@
     "howto": {},
     "urls": {}
   },
+  "greaterdandenong_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greaterdandenong_vic_gov_au.md",
+    "howto": {
+      "en": "Enter your address as it appears on the <a href='https://www.greaterdandenong.vic.gov.au/find-my-bin-day'>Find My Bin Day</a> page."
+    },
+    "urls": {}
+  },
   "hobsonsbay_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hobsonsbay_vic_gov_au.md",
     "howto": {},

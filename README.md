@@ -115,6 +115,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Forbes Shire Council](/doc/source/impactapps_com_au.md) / forbes.nsw.gov.au
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
+- [Greater Dandenong City Council](/doc/source/greaterdandenong_vic_gov_au.md) / greaterdandenong.vic.gov.au
 - [Gwydir Shire Council](/doc/source/impactapps_com_au.md) / gwydir.nsw.gov.au
 - [Gympie Regional Council](/doc/source/impactapps_com_au.md) / gympie.qld.gov.au
 - [Hobsons Bay City Council](/doc/source/hobsonsbay_vic_gov_au.md) / hobsonsbay.vic.gov.au

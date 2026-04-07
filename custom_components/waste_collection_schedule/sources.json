@@ -545,6 +545,12 @@
       "id": "goldcoast_qld_gov_au"
     },
     {
+      "title": "Greater Dandenong City Council",
+      "module": "greaterdandenong_vic_gov_au",
+      "default_params": {},
+      "id": "greaterdandenong_vic_gov_au"
+    },
+    {
       "title": "Gwydir Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
