@@ -305,7 +305,8 @@ class Source:
         matching the configured village.
 
         Network errors are caught gracefully so that data from other
-        providers is still returned. Parsing errors are not suppressed.
+        providers is still returned. Entries with unexpected or invalid
+        date formats may be skipped during parsing.
         """
         collections: list[Collection] = []
         localcities_name = VILLAGE_TO_LOCALCITIES.get(self._village)
