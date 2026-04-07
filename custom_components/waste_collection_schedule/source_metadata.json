@@ -2042,6 +2042,13 @@
     "howto": {},
     "urls": {}
   },
+  "telge_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/telge_se.md",
+    "howto": {
+      "en": "Find your address at https://www.telge.se by searching for your street name in the waste collection schedule (Sopbilsschema). Use the exact address string shown in the autocomplete dropdown, e.g. 'BERGSGATAN 22, SÖDERTÄLJE'."
+    },
+    "urls": {}
+  },
   "uppsalavatten_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/uppsalavatten_se.md",
     "howto": {},

@@ -2342,6 +2342,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stenungsunds kommun](/doc/source/edpevent_se.md) / stenungsund.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
 - [Söderköping](/doc/source/avfallsapp_se.md) / soderkoping.se
+- [Telge Återvinning](/doc/source/telge_se.md) / telge.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
