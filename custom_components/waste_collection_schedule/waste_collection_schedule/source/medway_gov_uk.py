@@ -15,7 +15,7 @@ URL = "https://www.medway.gov.uk"
 TEST_CASES = {
     "known_uprn": {"uprn": "100062390963"},
     "known_uprn_as_number": {"uprn": 100062390963},
-    "by_postcode": {"postcode": "ME4 4AY", "housenameornumber": "194"},
+    "by_postcode": {"postcode": "ME4 4AY", "housenameornumber": "194-198"},
 }
 
 ICON_MAP = {
@@ -30,7 +30,7 @@ PARAM_DESCRIPTIONS = {
     "en": {
         "uprn": "Unique Property Reference Number",
         "postcode": "Your postcode (e.g. ME4 4AY)",
-        "housenameornumber": "Your house name or number",
+        "housenameornumber": "Your house name or number exactly as shown on the Medway website (e.g. '194-198')",
     },
 }
 
@@ -47,21 +47,22 @@ HEADERS = {
     "Origin": "https://www.medway.gov.uk",
     "Referer": "https://www.medway.gov.uk/",
 }
+TIMEOUT = 30
 
 
 class Source:
     def __init__(self, uprn=None, postcode=None, housenameornumber=None):
-        self._uprn = str(uprn) if uprn is not None else None
-        self._postcode = postcode
+        self._uprn = str(uprn).strip() if uprn is not None else None
+        self._postcode = str(postcode).strip() if postcode is not None else None
         self._housenameornumber = (
-            str(housenameornumber) if housenameornumber is not None else None
+            str(housenameornumber).strip() if housenameornumber is not None else None
         )
 
-        if not any((uprn, postcode and housenameornumber)):
+        if not any((self._uprn, self._postcode and self._housenameornumber)):
             errors = []
-            if postcode:
+            if self._postcode:
                 errors.append("housenameornumber")
-            elif housenameornumber:
+            elif self._housenameornumber:
                 errors.append("postcode")
             else:
                 errors = ["uprn", "postcode", "housenameornumber"]
@@ -77,6 +78,7 @@ class Source:
         resp = requests.get(
             f"{API_BASE}/waste/getwasteday/{self._uprn}",
             headers=HEADERS,
+            timeout=TIMEOUT,
         )
         resp.raise_for_status()
         data = resp.json()
@@ -96,6 +98,7 @@ class Source:
         resp = requests.get(
             f"{API_BASE}/addressing/getaddresses/{postcode}",
             headers=HEADERS,
+            timeout=TIMEOUT,
         )
         resp.raise_for_status()
         addresses = resp.json()
@@ -104,14 +107,10 @@ class Source:
             raise SourceArgumentNotFound("postcode", self._postcode)
 
         for addr in addresses:
-            addr_text = addr.get("addressText", "")
-            paon = addr.get("paon", "")
-            saon = addr.get("saon", "")
-            if (
-                self._housenameornumber.lower() == paon.lower()
-                or self._housenameornumber.lower() == saon.lower()
-                or self._housenameornumber.lower() in addr_text.lower()
-            ):
+            paon = addr.get("paon", "").lower()
+            saon = addr.get("saon", "").lower()
+            search = self._housenameornumber.lower()
+            if search == paon or search == saon:
                 return str(addr["uprn"])
 
         raise SourceArgumentNotFoundWithSuggestions(
