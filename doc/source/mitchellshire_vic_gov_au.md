@@ -20,7 +20,7 @@ waste_collection_schedule:
 
 Your latitude.
 
-**lng**<br>
+**lon**<br>
 *(float) (required)*
 
 Your longitude. 
