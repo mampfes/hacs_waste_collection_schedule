@@ -15332,6 +15332,12 @@
       "id": "ics_gossau_zh_ch"
     },
     {
+      "title": "Grenchen (CH)",
+      "module": "grenchen_ch",
+      "default_params": {},
+      "id": "grenchen_ch"
+    },
+    {
       "title": "Grosswangen",
       "module": "grosswangen_ch",
       "default_params": {},

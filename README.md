@@ -2374,6 +2374,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
 - [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
+- [Grenchen (CH)](/doc/source/grenchen_ch.md) / grenchen.ch
 - [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch
 - [Heiden](/doc/source/a_region_ch.md) / a-region.ch
