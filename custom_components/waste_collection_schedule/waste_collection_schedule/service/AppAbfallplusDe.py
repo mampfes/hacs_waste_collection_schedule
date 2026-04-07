@@ -842,6 +842,13 @@ class AppAbfallplusDe:
                 if hnr["f_id_strasse"] is not None:
                     self._f_id_strasse = hnr["f_id_strasse"]
                 return
+        # fall back to "Alle Hausnummern" if the specific house number is not found
+        for hnr in hnrs:
+            if compare(hnr["name"], "Alle Hausnummern", remove_space=True):
+                self._hnr = hnr["id"]
+                if hnr["f_id_strasse"] is not None:
+                    self._f_id_strasse = hnr["f_id_strasse"]
+                return
         raise SourceArgumentNotFoundWithSuggestions(
             "hnr", self._hnr_search, [hnr["name"] for hnr in hnrs]
         )
