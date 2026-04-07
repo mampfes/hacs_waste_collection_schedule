@@ -41,7 +41,7 @@ waste_collection_schedule:
     - name: medway_gov_uk
       args:
         postcode: "ME4 4AY"
-        housenameornumber: "194"
+        housenameornumber: "194-198"
 ```
 
 ## How to find your UPRN
