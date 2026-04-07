@@ -25,7 +25,7 @@ The address in uppercase format as used by Telge's system, e.g.
 ### How to find your `address`
 
 1. Visit the Telge waste collection schedule page:
-   https://www.telge.se/privat/avfall-och-atervinning/sopbilsschema
+   https://www.telge.se/atervinning/kundservice/nar-kommer-sopbilen/
 
 2. Enter your address in the search field.
 
