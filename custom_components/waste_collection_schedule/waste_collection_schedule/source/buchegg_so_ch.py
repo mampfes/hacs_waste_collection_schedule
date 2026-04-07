@@ -327,7 +327,12 @@ class Source:
                     timeout=30,
                 )
                 response.raise_for_status()
-            except requests.RequestException:
+            except requests.RequestException as exc:
+                _LOGGER.warning(
+                    "Failed to fetch LocalCities waste paper data from %s: %s",
+                    url,
+                    exc,
+                )
                 # Network/HTTP error – return what we have so far
                 break
 
