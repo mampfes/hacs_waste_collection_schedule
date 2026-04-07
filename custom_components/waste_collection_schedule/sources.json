@@ -4411,10 +4411,13 @@
       "id": "recyclecoach_com"
     },
     {
-      "title": "Orillia, Ontario",
-      "module": "orillia_ca",
-      "default_params": {},
-      "id": "orillia_ca"
+      "title": "Orillia (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Orillia",
+        "state": "Ontario"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "Ottawa, Canada",

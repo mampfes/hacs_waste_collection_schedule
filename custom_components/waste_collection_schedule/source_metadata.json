@@ -673,11 +673,6 @@
     "howto": {},
     "urls": {}
   },
-  "orillia_ca": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orillia_ca.md",
-    "howto": {},
-    "urls": {}
-  },
   "ville_quebec_qc_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md",
     "howto": {

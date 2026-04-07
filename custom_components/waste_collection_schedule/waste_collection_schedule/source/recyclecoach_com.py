@@ -167,6 +167,12 @@ EXTRA_INFO = [
         "country": "ca",
         "default_params": {"city": "Burnaby", "state": "British Columbia"},
     },
+    {
+        "title": "Orillia (ON)",
+        "url": "https://www.orillia.ca/",
+        "country": "ca",
+        "default_params": {"city": "Orillia", "state": "Ontario"},
+    },
 ]
 
 TEST_CASES = {
@@ -383,7 +389,6 @@ class Source:
 
         if not self.zone_id:
             self._lookup_zones()
-
 
         collection_def_url = f"https://us-api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
 
