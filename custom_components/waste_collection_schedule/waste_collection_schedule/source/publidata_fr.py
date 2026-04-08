@@ -312,7 +312,14 @@ class Source:
         if response.status_code != 200:
             raise SourceArgumentException("address", "Error response from geocoder")
 
-        data = response.json()[0]["data"]["features"]
+        results = response.json()
+        if not results:
+            raise SourceArgumentException(
+                "address",
+                "No results found for the given address and INSEE code",
+            )
+
+        data = results[0].get("data", {}).get("features", [])
         if not data:
             raise SourceArgumentException(
                 "address", "No results found for the given address and INSEE code"
