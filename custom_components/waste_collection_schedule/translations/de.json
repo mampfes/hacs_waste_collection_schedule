@@ -4464,9 +4464,9 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "address": "Ihre vollständige Adresse",
-          "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde",
-          "instance_id": "Eine Kennung Ihres Abfallsammeldienstes. Zum Beispiel ist die von GPSEO 1292 und kann durch Inspektion der Netzwerkaufrufe auf {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002} gefunden werden",
+          "address": "Nur Straßenadresse (z.B. '4 rue de Paris'). Keine Stadt oder Postleitzahl angeben.",
+          "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde. Prüfen Sie {url_www_insee_fr} ob Ihre Gemeinde fusioniert wurde (neuer Code).",
+          "instance_id": "Wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister wählen. Nur für nicht gelistete Anbieter nötig.",
           "public_type": "Wohnungstyp-Filter (optional). Verwenden Sie 'individual_housing' für Häuser oder 'collective_housing' für Wohnungen, wenn Ihr Gebiet unterschiedliche Abholpläne je Wohnungstyp hat."
         }
       },
@@ -4481,9 +4481,9 @@
           "public_type": "Wohnungstyp"
         },
         "data_description": {
-          "address": "Ihre vollständige Adresse",
-          "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde",
-          "instance_id": "Eine Kennung Ihres Abfallsammeldienstes. Zum Beispiel ist die von GPSEO 1292 und kann durch Inspektion der Netzwerkaufrufe auf {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002} gefunden werden",
+          "address": "Nur Straßenadresse (z.B. '4 rue de Paris'). Keine Stadt oder Postleitzahl angeben.",
+          "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde. Prüfen Sie {url_www_insee_fr} ob Ihre Gemeinde fusioniert wurde (neuer Code).",
+          "instance_id": "Wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister wählen. Nur für nicht gelistete Anbieter nötig.",
           "public_type": "Wohnungstyp-Filter (optional). Verwenden Sie 'individual_housing' für Häuser oder 'collective_housing' für Wohnungen, wenn Ihr Gebiet unterschiedliche Abholpläne je Wohnungstyp hat."
         }
       },

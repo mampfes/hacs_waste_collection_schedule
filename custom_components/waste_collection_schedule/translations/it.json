@@ -4420,9 +4420,9 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "address": "Il tuo indirizzo completo",
-          "insee_code": "Il codice INSEE a 5 cifre del tuo comune",
-          "instance_id": "Un identificatore del tuo servizio di raccolta rifiuti. Ad esempio, quello di GPSEO è 1292 e si trova ispezionando le chiamate di rete su {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002}",
+          "address": "Solo indirizzo stradale (es. '4 rue de Paris'). Non includere città o codice postale.",
+          "insee_code": "Il codice INSEE a 5 cifre del tuo comune. Verifica su {url_www_insee_fr} se il tuo comune è stato unito (nuovo codice).",
+          "instance_id": "Precompilato quando selezioni un fornitore noto. Necessario solo per fornitori non elencati (trovato tramite ispettore di rete sul widget rifiuti del fornitore).",
           "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione."
         }
       },
@@ -4437,9 +4437,9 @@
           "public_type": "Tipo Abitazione"
         },
         "data_description": {
-          "address": "Il tuo indirizzo completo",
-          "insee_code": "Il codice INSEE a 5 cifre del tuo comune",
-          "instance_id": "Un identificatore del tuo servizio di raccolta rifiuti. Ad esempio, quello di GPSEO è 1292 e si trova ispezionando le chiamate di rete su {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002}",
+          "address": "Solo indirizzo stradale (es. '4 rue de Paris'). Non includere città o codice postale.",
+          "insee_code": "Il codice INSEE a 5 cifre del tuo comune. Verifica su {url_www_insee_fr} se il tuo comune è stato unito (nuovo codice).",
+          "instance_id": "Precompilato quando selezioni un fornitore noto. Necessario solo per fornitori non elencati (trovato tramite ispettore di rete sul widget rifiuti del fornitore).",
           "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione."
         }
       },

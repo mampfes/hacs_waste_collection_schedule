@@ -829,12 +829,12 @@
   "publidata_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md",
     "howto": {
-      "de": "Der INSEE-Code Ihrer Gemeinde kann leicht über Google gefunden werden. Die instance_id kann durch einen Netzwerk-Inspektor vom offiziellen Widget ermittelt werden",
-      "en": "The INSEE code of your commune is easily found on google. instance_id can be found through a network inspecter from the official widget",
-      "it": "Il codice INSEE del tuo comune si trova facilmente su Google. L'instance_id può essere trovato attraverso un ispettore di rete dal widget ufficiale"
+      "de": "Geben Sie Ihre Straßenadresse ein (nur Hausnummer und Straßenname, ohne Stadt oder Postleitzahl). Den aktuellen INSEE-Code Ihrer Gemeinde finden Sie unter https://www.insee.fr/fr/recherche/recherche-geographique — fusionierte Gemeinden (communes nouvelles) haben einen neuen Code. Die instance_id wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister auswählen.",
+      "en": "Enter your street address (number and street name only, without city or postcode). Find your commune's current INSEE code at https://www.insee.fr/fr/recherche/recherche-geographique — note that merged communes (communes nouvelles) have a new code. The instance_id is pre-filled when you select a known service provider.",
+      "it": "Inserisci il tuo indirizzo (solo numero civico e nome della via, senza città o codice postale). Trova il codice INSEE aggiornato del tuo comune su https://www.insee.fr/fr/recherche/recherche-geographique — i comuni uniti (communes nouvelles) hanno un nuovo codice. L'instance_id viene precompilato quando selezioni un fornitore noto."
     },
     "urls": {
-      "url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002": "https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002"
+      "url_www_insee_fr": "https://www.insee.fr"
     }
   },
   "cc-montesquieu_fr": {

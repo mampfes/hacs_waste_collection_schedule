@@ -4552,9 +4552,9 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your full address",
-          "insee_code": "The 5-digit INSEE code of your commune",
-          "instance_id": "An identifier of your waste collection service. For example GPSEO's is 1292 and found by inspecting the network calls on {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002}",
+          "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
+          "insee_code": "The 5-digit INSEE code of your commune. Check {url_www_insee_fr} if your commune has merged (communes nouvelles have a new code).",
+          "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
           "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type."
         }
       },
@@ -4569,9 +4569,9 @@
           "public_type": "Housing Type"
         },
         "data_description": {
-          "address": "Your full address",
-          "insee_code": "The 5-digit INSEE code of your commune",
-          "instance_id": "An identifier of your waste collection service. For example GPSEO's is 1292 and found by inspecting the network calls on {url_infos_dechets_gpseo_fr_4e79ytzv7m_list__addressid_78005_0073_00002}",
+          "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
+          "insee_code": "The 5-digit INSEE code of your commune. Check {url_www_insee_fr} if your commune has merged (communes nouvelles have a new code).",
+          "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
           "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type."
         }
       },
