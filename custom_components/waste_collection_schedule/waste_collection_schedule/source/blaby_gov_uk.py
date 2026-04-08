@@ -21,7 +21,7 @@ ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Garden": "mdi:leaf",
-    "Food Waste": "mdi:food-apple",
+    "Food waste": "mdi:food-apple",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
