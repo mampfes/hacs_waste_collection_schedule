@@ -16772,6 +16772,12 @@
       "id": "milton_keynes_gov_uk"
     },
     {
+      "title": "Mole Valley District Council",
+      "module": "mole_valley_gov_uk",
+      "default_params": {},
+      "id": "mole_valley_gov_uk"
+    },
+    {
       "title": "Monmouthshire Council",
       "module": "monmouthshire_gov_uk",
       "default_params": {},

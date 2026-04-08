@@ -19562,6 +19562,33 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
         }
       },
+      "args_mole_valley_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number or Name",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Your house number or name, e.g. 17 or Rose Cottage",
+          "postcode": "Your property's postcode, e.g. KT22 9BG"
+        }
+      },
+      "reconfigure_mole_valley_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number or Name",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "house_number": "Your house number or name, e.g. 17 or Rose Cottage",
+          "postcode": "Your property's postcode, e.g. KT22 9BG"
+        }
+      },
       "args_monmouthshire_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
