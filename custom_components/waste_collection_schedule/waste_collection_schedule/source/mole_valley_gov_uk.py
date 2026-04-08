@@ -19,9 +19,9 @@ TEST_CASES = {
         "postcode": "RH4 1BT",
         "house_number": "44",
     },
-    "1 Chapel Court Dorking": {
-        "postcode": "RH4 1BT",
-        "house_number": "1",
+    "79 Ashcombe Road Dorking": {
+        "postcode": "RH4 1LX",
+        "house_number": "79",
     },
     "21 Rookery Close Fetcham": {
         "postcode": "KT22 9BG",
