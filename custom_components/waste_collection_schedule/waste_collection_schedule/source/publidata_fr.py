@@ -135,28 +135,28 @@ LABEL_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "The INSEE code of your commune is easily found on google. instance_id can be found through a network inspecter from the official widget",
-    "de": "Der INSEE-Code Ihrer Gemeinde kann leicht über Google gefunden werden. Die instance_id kann durch einen Netzwerk-Inspektor vom offiziellen Widget ermittelt werden",
-    "it": "Il codice INSEE del tuo comune si trova facilmente su Google. L'instance_id può essere trovato attraverso un ispettore di rete dal widget ufficiale",
+    "en": "Enter your street address (number and street name only, without city or postcode). Find your commune's current INSEE code at https://www.insee.fr/fr/recherche/recherche-geographique — note that merged communes (communes nouvelles) have a new code. The instance_id is pre-filled when you select a known service provider.",
+    "de": "Geben Sie Ihre Straßenadresse ein (nur Hausnummer und Straßenname, ohne Stadt oder Postleitzahl). Den aktuellen INSEE-Code Ihrer Gemeinde finden Sie unter https://www.insee.fr/fr/recherche/recherche-geographique — fusionierte Gemeinden (communes nouvelles) haben einen neuen Code. Die instance_id wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister auswählen.",
+    "it": "Inserisci il tuo indirizzo (solo numero civico e nome della via, senza città o codice postale). Trova il codice INSEE aggiornato del tuo comune su https://www.insee.fr/fr/recherche/recherche-geographique — i comuni uniti (communes nouvelles) hanno un nuovo codice. L'instance_id viene precompilato quando selezioni un fornitore noto.",
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "address": "Your full address",
-        "insee_code": "The 5-digit INSEE code of your commune",
-        "instance_id": "An identifier of your waste collection service. For example GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002",
+        "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
+        "insee_code": "The 5-digit INSEE code of your commune. Check https://www.insee.fr if your commune has merged (communes nouvelles have a new code).",
+        "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
         "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type.",
     },
     "de": {
-        "address": "Ihre vollständige Adresse",
-        "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde",
-        "instance_id": "Eine Kennung Ihres Abfallsammeldienstes. Zum Beispiel ist die von GPSEO 1292 und kann durch Inspektion der Netzwerkaufrufe auf https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002 gefunden werden",
+        "address": "Nur Straßenadresse (z.B. '4 rue de Paris'). Keine Stadt oder Postleitzahl angeben.",
+        "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde. Prüfen Sie https://www.insee.fr, ob Ihre Gemeinde fusioniert wurde (neuer Code).",
+        "instance_id": "Wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister wählen. Nur für nicht gelistete Anbieter nötig.",
         "public_type": "Wohnungstyp-Filter (optional). Verwenden Sie 'individual_housing' für Häuser oder 'collective_housing' für Wohnungen, wenn Ihr Gebiet unterschiedliche Abholpläne je Wohnungstyp hat.",
     },
     "it": {
-        "address": "Il tuo indirizzo completo",
-        "insee_code": "Il codice INSEE a 5 cifre del tuo comune",
-        "instance_id": "Un identificatore del tuo servizio di raccolta rifiuti. Ad esempio, quello di GPSEO è 1292 e si trova ispezionando le chiamate di rete su https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002",
+        "address": "Solo indirizzo stradale (es. '4 rue de Paris'). Non includere città o codice postale.",
+        "insee_code": "Il codice INSEE a 5 cifre del tuo comune. Verifica su https://www.insee.fr se il tuo comune è stato unito (nuovo codice).",
+        "instance_id": "Precompilato quando selezioni un fornitore noto. Necessario solo per fornitori non elencati (trovato tramite ispettore di rete sul widget rifiuti del fornitore).",
         "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione.",
     },
 }
