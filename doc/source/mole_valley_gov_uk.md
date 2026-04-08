@@ -6,7 +6,7 @@ Support for schedules provided by [Mole Valley District Council](https://www.mol
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: mole_valley_gov_uk
       args:
         postcode: POSTCODE
@@ -29,11 +29,11 @@ Your house number or name, e.g. `17` or `Rose Cottage`.
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: mole_valley_gov_uk
       args:
         postcode: "KT22 9BG"
-        house_number: "17"
+        house_number: "21"
 ```
 
 ## Notes

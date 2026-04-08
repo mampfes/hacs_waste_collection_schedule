@@ -1,10 +1,15 @@
 import re
 from datetime import datetime
 
+import urllib3
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions  # type: ignore[attr-defined]
+
+# The server does not send its intermediate CA certificate, causing SSL
+# verification to fail. suppress the resulting warnings.
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 TITLE = "Mole Valley District Council"
 DESCRIPTION = "Source for molevalley.gov.uk services for Mole Valley District Council, UK."
@@ -92,8 +97,11 @@ class Source:
             for f in features:
                 address = f["properties"]["address_string"]
                 suggestions.append(address)
-                # Match house number/name against the start of the address string
-                if address.lower().startswith(self._house_number):
+                # Match on full word/token boundary so "1" doesn't match "10", "11", etc.
+                if re.match(
+                    r"^" + re.escape(self._house_number) + r"[\s,]",
+                    address.lower(),
+                ):
                     return self._parse_collections(
                         f["properties"]["three_column_layout_html"]
                     )
