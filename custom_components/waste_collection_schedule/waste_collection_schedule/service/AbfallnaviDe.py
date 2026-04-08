@@ -65,11 +65,6 @@ SERVICE_DOMAINS = [
         "service_id": "wml2",
     },
     {
-        "title": "Gütersloh (Stadt)",
-        "url": "https://www.guetersloh.de/",
-        "service_id": "gt2",
-    },
-    {
         "title": "Kreis Gütersloh GEG",
         "url": "https://www.geg-gt.de/",
         "service_id": "krwaf",

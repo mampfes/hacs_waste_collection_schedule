@@ -7191,14 +7191,6 @@
       "id": "abfall_io"
     },
     {
-      "title": "G\u00fctersloh (Stadt)",
-      "module": "abfallnavi_de",
-      "default_params": {
-        "service": "gt2"
-      },
-      "id": "abfallnavi_de"
-    },
-    {
       "title": "Hagen",
       "module": "app_abfallplus_de",
       "default_params": {
