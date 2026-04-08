@@ -32,8 +32,8 @@ waste_collection_schedule:
   sources:
     - name: mole_valley_gov_uk
       args:
-        postcode: "KT22 9BG"
-        house_number: "21"
+        postcode: "RH4 1LX"
+        house_number: "79"
 ```
 
 ## Notes
