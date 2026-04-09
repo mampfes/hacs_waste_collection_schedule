@@ -29,7 +29,7 @@ class ICS:
 
         self._title_template = title_template
 
-    def convert(self, ics_data: str) -> List[Tuple[datetime.date, str]]:
+    def convert(self, ics_data: str) -> List[Tuple[datetime.date, str, Optional[str]]]:
         # calculate start- and end-date for recurring events
         start_date = datetime.datetime.now().replace(
             hour=0, minute=0, second=0, microsecond=0
@@ -70,7 +70,7 @@ class ICS:
                 if e.uid in uid_summaries:
                     e.summary = uid_summaries[e.uid]
 
-        entries: List[Tuple[datetime.date, str]] = []
+        entries: List[Tuple[datetime.date, str, Optional[str]]] = []
 
         for e in events:
             # calculate date
@@ -95,12 +95,20 @@ class ICS:
                     if match:
                         entry_title = match.group(1)
 
+                entry_location = (
+                    e.location.strip()
+                    if isinstance(getattr(e, "location", None), str)
+                    and e.location.strip()
+                    else None
+                )
+
                 if self._split_at is not None:
                     entry_title_list = re.split(self._split_at, entry_title)
                     entries.extend(
-                        (dtstart, t.strip().title()) for t in entry_title_list
+                        (dtstart, t.strip().title(), entry_location)
+                        for t in entry_title_list
                     )
                 else:
-                    entries.append((dtstart, entry_title))
+                    entries.append((dtstart, entry_title, entry_location))
 
         return entries

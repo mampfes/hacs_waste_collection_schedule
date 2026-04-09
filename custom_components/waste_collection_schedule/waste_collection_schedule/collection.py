@@ -8,8 +8,11 @@ class CollectionBase(dict):  # inherit from dict to enable JSON serialization
         date: datetime.date,
         icon: Optional[str] = None,
         picture: Optional[str] = None,
+        location: Optional[str] = None,
     ):
-        dict.__init__(self, date=date.isoformat(), icon=icon, picture=picture)
+        dict.__init__(
+            self, date=date.isoformat(), icon=icon, picture=picture, location=location
+        )
         self._date = date  # store date also as python date object
 
     @property
@@ -34,6 +37,13 @@ class CollectionBase(dict):  # inherit from dict to enable JSON serialization
     def set_picture(self, picture: str):
         self["picture"] = picture
 
+    @property
+    def location(self):
+        return self["location"]
+
+    def set_location(self, location: Optional[str]):
+        self["location"] = location
+
     def set_date(self, date: datetime.date):
         self._date = date
         self["date"] = date.isoformat()
@@ -46,8 +56,11 @@ class Collection(CollectionBase):
         t: str,
         icon: Optional[str] = None,
         picture: Optional[str] = None,
+        location: Optional[str] = None,
     ):
-        CollectionBase.__init__(self, date=date, icon=icon, picture=picture)
+        CollectionBase.__init__(
+            self, date=date, icon=icon, picture=picture, location=location
+        )
         self["type"] = t
 
     @property
@@ -58,17 +71,26 @@ class Collection(CollectionBase):
         self["type"] = t
 
     def __repr__(self):
-        return f"Collection{{date={self.date}, type={self.type}}}"
+        return (
+            f"Collection{{date={self.date}, type={self.type}, "
+            f"location={self.location}}}"
+        )
 
 
 class CollectionGroup(CollectionBase):
-    def __init__(self, date: datetime.date):
+    def __init__(self, date: datetime.date, location: Optional[str] = None):
         CollectionBase.__init__(self, date=date)
+        self.set_location(location)
 
     @staticmethod
     def create(group: list[Collection]):
         """Create from list of Collection's."""
         x = CollectionGroup(group[0].date)
+        locations = sorted(
+            {it.location.strip() for it in group if isinstance(it.location, str) and it.location.strip()}
+        )
+        if locations:
+            x.set_location(", ".join(locations))
         if len(group) == 1:
             x.set_icon(group[0].icon)
             x.set_picture(group[0].picture)
@@ -82,4 +104,7 @@ class CollectionGroup(CollectionBase):
         return self["types"]
 
     def __repr__(self):
-        return f"CollectionGroup{{date={self.date}, types={self.types}}}"
+        return (
+            f"CollectionGroup{{date={self.date}, types={self.types}, "
+            f"location={self.location}}}"
+        )

@@ -610,6 +610,19 @@ See also [example](#custom-headers) below.
 *(str) (optional, default: `{{date.summary}}`)*
 
 template for the event title. `date` is the event object depending on the selected ICS file parser version.
+You can also use `{{date.location}}` if the VEVENT has a `LOCATION` field.
+
+**LOCATION support**
+
+If the ICS event contains `LOCATION`, the value is stored as optional `location` in collection entries:
+
+- In sensor `value_template`, `value.location` is available.
+- In `details_format: generic`, entries in `upcoming` include `location`.
+
+Fallback behavior is unchanged:
+
+- If no `LOCATION` exists, `location` is `None` and existing templates keep working.
+- If multiple events are grouped on the same day, their non-empty locations are combined into a comma-separated string.
 
 ## Examples and Notes
 
