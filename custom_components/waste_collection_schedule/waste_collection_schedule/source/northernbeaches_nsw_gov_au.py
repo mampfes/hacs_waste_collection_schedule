@@ -134,13 +134,19 @@ class Source:
         if next_date < today - timedelta(days=30):
             next_date = date(today.year + 1, month_num, day_num)
 
-        # Step 4: Generate collection entries for ~6 months.
+        # Step 4: Detect A/B zone from the PDF calendar link.
+        # The API response contains a link like ".../ThursdayB.pdf" which
+        # encodes the collection zone. B zones have the opposite fortnightly
+        # alternation from A zones.
+        zone_match = re.search(r"bin-collection-days/\w+([AB])\.pdf", html)
+        is_b_zone = zone_match and zone_match.group(1) == "B"
+
+        # Step 5: Generate collection entries for ~6 months.
         # Northern Beaches pattern:
         #   - General Waste: weekly
         #   - Recycling & Garden Organics: fortnightly, alternating weeks
-        # The exact A/B phase is encoded in the PDF calendar (image-based,
-        # not machine-readable), so the alternation may be offset by one week
-        # for some addresses.
+        # A zones: even weeks = Recycling, odd weeks = Garden Organics
+        # B zones: even weeks = Garden Organics, odd weeks = Recycling
         entries: list[Collection] = []
 
         for week in range(26):
@@ -154,7 +160,9 @@ class Source:
                 )
             )
 
-            if week % 2 == 0:
+            recycling_week = week % 2 == (1 if is_b_zone else 0)
+
+            if recycling_week:
                 entries.append(
                     Collection(
                         date=d,
