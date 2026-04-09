@@ -569,6 +569,12 @@
       "id": "frankston_vic_gov_au"
     },
     {
+      "title": "Fraser Coast Regional Council",
+      "module": "frasercoast_qld_gov_au",
+      "default_params": {},
+      "id": "frasercoast_qld_gov_au"
+    },
+    {
       "title": "Gold Coast City Council",
       "module": "goldcoast_qld_gov_au",
       "default_params": {},

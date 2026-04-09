@@ -245,6 +245,13 @@
     "howto": {},
     "urls": {}
   },
+  "frasercoast_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frasercoast_qld_gov_au.md",
+    "howto": {
+      "en": "Enter your street address including suburb (e.g. '57 Arbornine Road Glenwood'). Search at https://www.frasercoast.qld.gov.au/Services/Online-Services/Check-your-bin-day"
+    },
+    "urls": {}
+  },
   "goldcoast_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/goldcoast_qld_gov_au.md",
     "howto": {},

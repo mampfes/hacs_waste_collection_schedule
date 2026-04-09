@@ -13,7 +13,6 @@ Typical workflow:
 
 from __future__ import annotations
 
-import json
 import logging
 from dataclasses import dataclass
 from typing import Any
@@ -70,6 +69,15 @@ class MapsClientConfig:
     app_type: str = "MapBuilder"
     dataset_code: str = ""
     include_disabled_modules: bool = True
+
+    # Lite config support (required by some SaaS-hosted instances)
+    lite_config_id: str = ""
+
+    # Override to select a specific module instead of auto-discovering
+    module_id: str = ""
+
+    # Selection layer filter for search queries
+    selection_layer_filter: str = ""
 
     # Defaults for selection logic
     default_selection_layer: str = "9f256a90-46da-4519-9d0e-d3d1b4e8c462"
@@ -165,6 +173,8 @@ class MapsClient:
             "datasetCode": self.cfg.dataset_code,
             "includeDisabledModules": str(self.cfg.include_disabled_modules).lower(),
         }
+        if self.cfg.lite_config_id:
+            params["liteConfigId"] = self.cfg.lite_config_id
 
         try:
             r = self._session.post(
@@ -183,19 +193,22 @@ class MapsClient:
 
             self.intramaps_session = ims.strip()
 
-            # Extract the first available module to act as our operational context
-            data = r.json()
-            modules = data.get("moduleList") or data.get("modules") or []
-            if not modules or not isinstance(modules, list):
-                raise IntraMapsSessionError(
-                    "No modules found in project configuration."
-                )
+            # Use configured module_id if provided, otherwise discover from project
+            if self.cfg.module_id:
+                self._module_id = self.cfg.module_id
+            else:
+                data = r.json()
+                modules = data.get("moduleList") or data.get("modules") or []
+                if not modules or not isinstance(modules, list):
+                    raise IntraMapsSessionError(
+                        "No modules found in project configuration."
+                    )
 
-            self._module_id = modules[0].get("id")
-            if not self._module_id:
-                raise IntraMapsSessionError(
-                    "Module list found but first module has no ID."
-                )
+                self._module_id = modules[0].get("id")
+                if not self._module_id:
+                    raise IntraMapsSessionError(
+                        "Module list found but first module has no ID."
+                    )
 
             return self.intramaps_session
 
@@ -273,6 +286,8 @@ class MapsClient:
             "resubmit": "false",
             "IntraMapsSession": self.intramaps_session,
         }
+        if self.cfg.selection_layer_filter:
+            params["selectionLayersFilter"] = self.cfg.selection_layer_filter
 
         self.log.info(f"Searching address: {address}")
         r = self._session.post(
@@ -365,26 +380,26 @@ class MapsClient:
         self._session.close()
 
 
-# --- Execution Example ---
+def extract_panel_fields(
+    response: dict[str, Any], panel_key: str = "info1"
+) -> dict[str, str]:
+    """Extract a name→value dict from an IntraMaps infoPanels response.
 
-if __name__ == "__main__":
-    # Configure logging for console output
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
-
-    # Initialize config for Rockingham WA instance
-    config = MapsClientConfig(
-        base_url="https://maps.rockingham.wa.gov.au",
-        project="1917ad36-6a1d-4145-9eeb-736f8fa9646d",
+    Handles the nested structure: infoPanels > panel_key > feature > fields,
+    where each field has a name/caption and a value dict with a 'value' key.
+    """
+    fields = (
+        response.get("infoPanels", {})
+        .get(panel_key, {})
+        .get("feature", {})
+        .get("fields", [])
     )
-
-    try:
-        # Use context manager to ensure the network session is closed properly
-        with MapsClient(config) as client:
-            res = client.select_address("13 Settlers Avenue BALDIVIS")
-            print("\nFinal API Selection Response:")
-            print(json.dumps(res, indent=2))
-
-    except IntraMapsError as e:
-        logging.error(f"IntraMaps Operation Failed: {e}")
-    except Exception as e:
-        logging.error(f"Unexpected System Error: {e}")
+    result: dict[str, str] = {}
+    for field in fields:
+        name = field.get("name") or field.get("caption", "")
+        value = field.get("value", {})
+        if isinstance(value, dict):
+            result[name] = value.get("value", "")
+        elif isinstance(value, str):
+            result[name] = value
+    return result
