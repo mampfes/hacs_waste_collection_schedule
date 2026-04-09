@@ -267,6 +267,11 @@ EXTRA_INFO = [
         "url": "https://dechets.valcobreizh.fr",
         "default_params": {"instance_id": 1003},
     },
+    {
+        "title": "SIVOM Rive Droite",
+        "url": "https://www.sivom-rivedroite.fr/",
+        "default_params": {"instance_id": 1027},
+    },
 ]
 
 _CALENDAR_DAY_VERY_ABBR = {
