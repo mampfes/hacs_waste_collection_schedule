@@ -285,6 +285,13 @@
     "howto": {},
     "urls": {}
   },
+  "lanecove_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lanecove_nsw_gov_au.md",
+    "howto": {
+      "en": "Visit the Lane Cove Council website and search for your address. Use the exact address shown in the autocomplete result."
+    },
+    "urls": {}
+  },
   "lismore_city_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lismore_city_nsw_gov_au.md",
     "howto": {

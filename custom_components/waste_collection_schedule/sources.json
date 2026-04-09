@@ -661,6 +661,12 @@
       "id": "lakemac_nsw_gov_au"
     },
     {
+      "title": "Lane Cove Council",
+      "module": "lanecove_nsw_gov_au",
+      "default_params": {},
+      "id": "lanecove_nsw_gov_au"
+    },
+    {
       "title": "Light Regional Council",
       "module": "app_my_local_services_au",
       "default_params": {},
