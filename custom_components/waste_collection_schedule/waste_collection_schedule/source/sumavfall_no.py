@@ -9,13 +9,12 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 
 _LOGGER = logging.getLogger(__name__)
 
-TITLE = "SUM Avfall (Sunnfjord Miljøverk)"
+TITLE = "SUM Avfall (Sunnfjord og Ytre Sogn Miljøverk IKS)"
 DESCRIPTION = "Source script for sumavfall.no - Sunnfjord og Ytre Sogn Miljøverk IKS"
 URL = "https://www.sumavfall.no"
 
 TEST_CASES = {
     "Blåbærlia 16": {"address": "blåbærlia-16"},
-    "Blåbærlia 16 (URL-encoded)": {"address": "bl%C3%A5b%C3%A6rlia-16"},
 }
 
 ICON_MAP = {
@@ -55,17 +54,11 @@ PARAM_DESCRIPTIONS = {
     "en": {
         "address": "Address slug as it appears in the URL, e.g. 'blåbærlia-16' or 'storgata-1'",
     },
-    "nb": {
-        "address": "Adresseslug slik den vises i URL-en, f.eks. 'blåbærlia-16' eller 'storgata-1'",
-    },
 }
 
 PARAM_TRANSLATIONS = {
     "en": {
         "address": "Address",
-    },
-    "nb": {
-        "address": "Adresse",
     },
 }
 
@@ -75,7 +68,8 @@ class Source:
         self._address = address
 
     def fetch(self) -> list[Collection]:
-        encoded_address = urllib.parse.quote(self._address, safe="-")
+        normalized_address = urllib.parse.unquote(self._address)
+        encoded_address = urllib.parse.quote(normalized_address, safe="-")
         url = f"https://www.sumavfall.no/tommekalender?adresse={encoded_address}"
 
         headers = {
@@ -116,7 +110,6 @@ class Source:
                 # Format: "april 2026"
                 parts = decoded_id.strip().split()
                 if len(parts) == 2:
-                    month_name = parts[0].lower()
                     year = int(parts[1])
             except (ValueError, IndexError):
                 pass
@@ -134,14 +127,8 @@ class Source:
                 _LOGGER.warning("Could not determine year for month: %s", month_text)
                 continue
 
-            # Find the month number
-            month_num = None
-            for name, num in NORWEGIAN_MONTHS.items():
-                if name in month_text:
-                    month_num = num
-                    break
-
-            if month_num is None:
+            # Validate that the summary contains a known month name
+            if not any(name in month_text for name in NORWEGIAN_MONTHS):
                 _LOGGER.warning("Could not parse month name from: %s", month_text)
                 continue
 
@@ -181,7 +168,11 @@ class Source:
                 waste_spans = li.find_all(
                     "span", class_=lambda c: c and "text-lg" in c and "md:text-2xl" in c
                 )
-                waste_types = [s.get_text(strip=True) for s in waste_spans if s.get_text(strip=True)]
+                waste_types = [
+                    s.get_text(strip=True)
+                    for s in waste_spans
+                    if s.get_text(strip=True)
+                ]
 
                 if not waste_types:
                     # Fallback: look for any meaningful text in the second div

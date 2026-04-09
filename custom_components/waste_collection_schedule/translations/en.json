@@ -13972,6 +13972,29 @@
         },
         "data_description": {}
       },
+      "args_sumavfall_no": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Address slug as it appears in the URL, e.g. 'blåbærlia-16' or 'storgata-1'"
+        }
+      },
+      "reconfigure_sumavfall_no": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Address slug as it appears in the URL, e.g. 'blåbærlia-16' or 'storgata-1'"
+        }
+      },
       "args_ics_trv_no": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

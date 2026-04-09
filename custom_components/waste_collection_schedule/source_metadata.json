@@ -1785,6 +1785,11 @@
     "howto": {},
     "urls": {}
   },
+  "sumavfall_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sumavfall_no.md",
+    "howto": {},
+    "urls": {}
+  },
   "sims_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sims_pl.md",
     "howto": {},

@@ -17,7 +17,7 @@ waste_collection_schedule:
 **address**
 *(String) (required)*
 
-The address slug as it appears in the URL on sumavfall.no, e.g. `blåbærlia-16` or `storgata-1`. Both UTF-8 and URL-encoded formats are accepted.
+The address slug as it appears in the URL on sumavfall.no, e.g. `blåbærlia-16` or `storgata-1`.
 
 ## Example
 

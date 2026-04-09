@@ -13740,6 +13740,12 @@
       "id": "stavanger_no"
     },
     {
+      "title": "SUM Avfall (Sunnfjord og Ytre Sogn Milj\u00f8verk IKS)",
+      "module": "sumavfall_no",
+      "default_params": {},
+      "id": "sumavfall_no"
+    },
+    {
       "title": "Trondheim",
       "module": "ics",
       "default_params": {},

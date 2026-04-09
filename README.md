@@ -2135,6 +2135,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [ReMidt Orkland muni](/doc/source/remidt_no.md) / remidt.no
 - [Sandnes Kommune](/doc/source/sandnes_no.md) / sandnes.kommune.no
 - [Stavanger Kommune](/doc/source/stavanger_no.md) / stavanger.kommune.no
+- [SUM Avfall (Sunnfjord og Ytre Sogn Miljøverk IKS)](/doc/source/sumavfall_no.md) / sumavfall.no
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
 </details>
 
