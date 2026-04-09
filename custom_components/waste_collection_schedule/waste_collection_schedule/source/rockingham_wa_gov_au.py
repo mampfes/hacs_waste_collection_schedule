@@ -7,7 +7,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
 )
-from waste_collection_schedule.service.RockinghamCityMaps import (
+from waste_collection_schedule.service.IntraMaps import (
     IntraMapsError,
     IntraMapsSearchError,
     MapsClient,

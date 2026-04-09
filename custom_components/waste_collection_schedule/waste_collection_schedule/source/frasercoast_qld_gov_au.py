@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.service.RockinghamCityMaps import (
+from waste_collection_schedule.service.IntraMaps import (
     IntraMapsError,
     IntraMapsSearchError,
     MapsClient,

@@ -7,7 +7,12 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
 )
-from waste_collection_schedule.service import IntraMapsSaaSAPI
+from waste_collection_schedule.service.IntraMaps import (
+    IntraMapsError,
+    IntraMapsSearchError,
+    MapsClient,
+    MapsClientConfig,
+)
 
 TITLE = "City of Kalamunda"
 DESCRIPTION = "Source for the City of Kalamunda rubbish collection."
@@ -114,8 +119,7 @@ class Source:
 
     def fetch(self):
 
-        # Initialize config for Kalamunda council (intramaps SaaS)
-        config = IntraMapsSaaSAPI.MapsClientConfig(
+        config = MapsClientConfig(
             base_url="https://kalamunda.spatial.t1cloud.com",
             instance="spatial/intramaps",
             config_id="38999f30-1676-4524-b501-0130581a2ba2",
@@ -145,12 +149,12 @@ class Source:
         entries = []
 
         try:
-            with IntraMapsSaaSAPI.MapsClientSaaS(config) as client:
+            with MapsClient(config) as client:
                 data_dict = client.select_address(address, self.suburb)
                 infoPanel = data_dict["response"]
 
                 if not isinstance(infoPanel, dict):
-                    raise IntraMapsSaaSAPI.IntraMapsSearchError(
+                    raise IntraMapsSearchError(
                         f"Expected dict type in response field from address search but got {type(infoPanel)}"
                     )
 
@@ -216,9 +220,9 @@ class Source:
                                 )
                             )
 
-        except IntraMapsSaaSAPI.IntraMapsSearchError as e:
+        except IntraMapsSearchError as e:
             raise Exception(f"No results found for address: {address}") from e
-        except IntraMapsSaaSAPI.IntraMapsError as e:
+        except IntraMapsError as e:
             raise Exception(f"IntraMaps Operation Failed: {e}") from e
         except Exception as e:
             raise Exception(f"Unexpected System Error: {e}") from e

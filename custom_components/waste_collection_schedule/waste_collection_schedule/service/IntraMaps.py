@@ -48,7 +48,7 @@ class IntraMapsSearchError(IntraMapsError):
 @dataclass(frozen=True)
 class MapsClientConfig:
     """
-    Configuration schema for the RockinghamCityMaps Client.
+    Configuration schema for the IntraMaps Client.
 
     Attributes:
         base_url: The root URL of the IntraMaps server (e.g., https://maps.example.gov).
@@ -267,12 +267,14 @@ class MapsClient:
         self._address_form_template_id = match["templateId"]
         return self._address_form_template_id
 
-    def search_address(self, address: str) -> dict[str, Any]:
+    def search_address(self, address: str, suburb: str | None = None) -> dict[str, Any]:
         """
         Perform a full-text search for an address string.
 
         Args:
             address: The address string to look up (e.g., '20 Settlers Ave').
+            suburb: Optional suburb name to prefer in results when multiple
+                    matches are returned (case-insensitive).
 
         Returns:
             The dictionary representing the first match found by the server.
@@ -302,9 +304,17 @@ class MapsClient:
         if not results:
             raise IntraMapsSearchError(f"No results found for address: {address}")
 
+        # If a suburb is provided, prefer results that mention it
+        if suburb and suburb.strip():
+            suburb_lower = suburb.strip().casefold()
+            for result in results:
+                display = str(result.get("displayValue", "")).casefold()
+                if suburb_lower in display:
+                    return result
+
         return results[0]
 
-    def select_address(self, address: str) -> dict[str, Any]:
+    def select_address(self, address: str, suburb: str | None = None) -> dict[str, Any]:
         """
         Orchestrates the full search-and-select workflow.
 
@@ -317,7 +327,7 @@ class MapsClient:
         Returns:
             A result dictionary containing success status and the final API response.
         """
-        result = self.search_address(address)
+        result = self.search_address(address, suburb)
 
         # Extract required keys. GIS APIs often use inconsistent casing (dbkey vs dbKey).
         db_key = self._get_case_insensitive(result, "dbKey")
