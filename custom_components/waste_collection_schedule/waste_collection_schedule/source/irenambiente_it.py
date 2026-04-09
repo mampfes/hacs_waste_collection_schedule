@@ -214,10 +214,17 @@ class Source:
     def construct_holiday_map(holidays: list[Holiday]) -> dict[date, date]:
         holiday_map = {}
         for holiday in holidays:
-            if holiday["DataFestivita"] and holiday["DataConferimento"]:
-                holiday_map[
-                    datetime.strptime(holiday["DataFestivita"], "%Y-%m-%d").date()
-                ] = datetime.strptime(holiday["DataConferimento"], "%Y-%m-%d").date()
+            if holiday["DataFestivita"]:
+                festivity = datetime.strptime(
+                    holiday["DataFestivita"], "%Y-%m-%d"
+                ).date()
+                if holiday["DataConferimento"]:
+                    holiday_map[festivity] = datetime.strptime(
+                        holiday["DataConferimento"], "%Y-%m-%d"
+                    ).date()
+                else:
+                    # Empty replacement means skip this date entirely
+                    holiday_map[festivity] = festivity
         return holiday_map
 
     @staticmethod
