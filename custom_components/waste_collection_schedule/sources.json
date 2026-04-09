@@ -3267,6 +3267,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Rohrbach an der Lafnitz",
+      "module": "rohrbach_lafnitz_at",
+      "default_params": {},
+      "id": "rohrbach_lafnitz_at"
+    },
+    {
       "title": "Rosental a.d Kainach",
       "module": "lipizzanerheimat_at",
       "default_params": {},

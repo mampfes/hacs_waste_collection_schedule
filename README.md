@@ -561,6 +561,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rettenegg](/doc/source/citiesapps_com.md) / rettenegg.at
 - [Rohr bei Hartberg](/doc/source/citiesapps_com.md) / rohr-bei-hartberg.at
 - [Rohr im Burgenland](/doc/source/citiesapps_com.md) / rohr-bgld.at
+- [Rohrbach an der Lafnitz](/doc/source/rohrbach_lafnitz_at.md) / rohrbach-lafnitz.at
 - [Rosental a.d Kainach](/doc/source/lipizzanerheimat_at.md) / rosental-kainach.at
 - [Rottenbach](/doc/source/citiesapps_com.md) / rottenbach.gv.at
 - [Rudersdorf](/doc/source/citiesapps_com.md) / rudersdorf.at
