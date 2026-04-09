@@ -4,6 +4,10 @@ from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Cardinia Shire Council"
 DESCRIPTION = "Source script for cardinia.vic.gov.au"
@@ -53,7 +57,11 @@ class Source:
         r = requests.get(url)
         r.raise_for_status()
 
-        magicKey = r.json()["suggestions"][0]["magicKey"]
+        suggestions = r.json().get("suggestions", [])
+        if not suggestions:
+            raise SourceArgumentNotFound("address", self._address)
+
+        magicKey = suggestions[0]["magicKey"]
 
         # Get latitude & longitude of address
         url = (
@@ -65,7 +73,14 @@ class Source:
         r = requests.get(url)
         r.raise_for_status()
 
-        lat_long = r.json()["candidates"][0]["location"]
+        candidates = r.json().get("candidates", [])
+        if not candidates:
+            suggestion_texts = [s.get("text", "") for s in suggestions]
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._address, suggestion_texts
+            )
+
+        lat_long = candidates[0]["location"]
 
         # Get waste collection zone by longitude and latitude
         url = "https://services3.arcgis.com/TJxZpUnYIJOvcYwE/arcgis/rest/services/Waste_Collection_Zones/FeatureServer/0/query"
@@ -83,7 +98,11 @@ class Source:
         r = requests.get(url, params=params)
         r.raise_for_status()
 
-        waste_schedule = r.json()["features"][0]["properties"]
+        features = r.json().get("features", [])
+        if not features:
+            raise SourceArgumentNotFound("address", self._address)
+
+        waste_schedule = features[0]["properties"]
 
         entries = []
 
