@@ -2378,6 +2378,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
 - [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
+- [Grenchen](/doc/source/localcities_ch.md) / grenchen.ch
 - [Grenchen (CH)](/doc/source/grenchen_ch.md) / grenchen.ch
 - [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch
@@ -2390,6 +2391,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Liebefeld](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Lindau](/doc/source/lindau_ch.md) / lindau.ch
+- [localcities.ch](/doc/source/localcities_ch.md) / localcities.ch
 - [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
 - [Mittelhäusern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
@@ -2423,6 +2425,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Tübach](/doc/source/a_region_ch.md) / a-region.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
 - [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
+- [Volketswil](/doc/source/localcities_ch.md) / volketswil.ch
 - [Wabern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Wald](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch

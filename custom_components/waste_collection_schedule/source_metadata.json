@@ -2143,11 +2143,19 @@
     "howto": {},
     "urls": {}
   },
+  "localcities_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/localcities_ch.md",
+    "howto": {
+      "de": "Besuchen Sie die Seite Ihrer Gemeinde auf localcities.ch. Der Gemeindename und die ID sind in der URL (z.B. /de/entsorgung/volketswil/529). Die Zone wird neben jedem Entsorgungstermin angezeigt.",
+      "en": "Visit your municipality's page on localcities.ch. The municipality name and ID are in the URL (e.g. /de/entsorgung/volketswil/529). The zone is shown next to each waste collection entry on the calendar."
+    },
+    "urls": {}
+  },
   "grenchen_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grenchen_ch.md",
     "howto": {
-      "de": "Wählen Sie Ihre Zone (Zone Ost oder Zone West). Auf <a href='https://www.localcities.ch/de/entsorgung/grenchen/3533'>localcities.ch</a> finden Sie Ihre Zone.",
-      "en": "Select your zone (Zone Ost or Zone West). Check <a href='https://www.localcities.ch/de/entsorgung/grenchen/3533'>localcities.ch</a> to find your zone."
+      "de": "Diese Quelle ist veraltet. Bitte verwenden Sie 'localcities.ch' mit municipality='grenchen' und municipality_id='3533'.",
+      "en": "This source is deprecated. Please use 'localcities.ch' instead with municipality='grenchen' and municipality_id='3533'."
     },
     "urls": {}
   },

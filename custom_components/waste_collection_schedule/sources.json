@@ -15355,6 +15355,15 @@
       "id": "ics_gossau_zh_ch"
     },
     {
+      "title": "Grenchen",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "grenchen",
+        "municipality_id": "3533"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Grenchen (CH)",
       "module": "grenchen_ch",
       "default_params": {},
@@ -15441,6 +15450,12 @@
       "module": "lindau_ch",
       "default_params": {},
       "id": "lindau_ch"
+    },
+    {
+      "title": "localcities.ch",
+      "module": "localcities_ch",
+      "default_params": {},
+      "id": "localcities_ch"
     },
     {
       "title": "Lutzenberg",
@@ -15689,6 +15704,15 @@
         "municipality": "Urn\u00e4sch"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Volketswil",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "volketswil",
+        "municipality_id": "529"
+      },
+      "id": "localcities_ch"
     },
     {
       "title": "Wabern",

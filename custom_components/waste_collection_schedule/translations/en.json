@@ -15665,6 +15665,37 @@
         },
         "data_description": {}
       },
+      "args_localcities_ch": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "municipality_id": "Municipality ID",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Municipality URL slug (from the localcities.ch URL)",
+          "municipality_id": "Municipality ID number (from the localcities.ch URL)",
+          "zone": "Collection zone or locality name"
+        }
+      },
+      "reconfigure_localcities_ch": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "municipality_id": "Municipality ID",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "municipality": "Municipality URL slug (from the localcities.ch URL)",
+          "municipality_id": "Municipality ID number (from the localcities.ch URL)",
+          "zone": "Collection zone or locality name"
+        }
+      },
       "args_grenchen_ch": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

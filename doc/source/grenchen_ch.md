@@ -1,5 +1,7 @@
 # Grenchen (CH)
 
+> **Deprecated:** This source is deprecated. Please use [localcities.ch](/doc/source/localcities_ch.md) instead with `municipality: grenchen` and `municipality_id: 3533`.
+
 Support for waste collection schedules in Grenchen, Switzerland, via [localcities.ch](https://www.localcities.ch/de/entsorgung/grenchen/3533).
 
 ## Configuration via configuration.yaml
