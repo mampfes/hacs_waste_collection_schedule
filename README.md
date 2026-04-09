@@ -2332,6 +2332,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Nodra](/doc/source/edpevent_se.md) / nodra.se
 - [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
+- [NSR - Nordvästra Skånes Renhållnings AB](/doc/source/nsr_se.md) / nsr.se
+- [NSR Tömningskalender](/doc/source/nsr_se.md) / nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender
 - [Nårab - Norra Åsbo Renhållnings AB](/doc/source/narab_se.md) / narab.se
 - [Orust kommun](/doc/source/edpevent_se.md) / orust.se
 - [Pireva](/doc/source/pireva_se.md) / pireva.se

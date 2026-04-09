@@ -15062,6 +15062,18 @@
       "id": "rambo_se"
     },
     {
+      "title": "NSR - Nordv\u00e4stra Sk\u00e5nes Renh\u00e5llnings AB",
+      "module": "nsr_se",
+      "default_params": {},
+      "id": "nsr_se"
+    },
+    {
+      "title": "NSR T\u00f6mningskalender",
+      "module": "nsr_se",
+      "default_params": {},
+      "id": "nsr_se"
+    },
+    {
       "title": "N\u00e5rab - Norra \u00c5sbo Renh\u00e5llnings AB",
       "module": "narab_se",
       "default_params": {},
