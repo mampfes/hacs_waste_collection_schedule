@@ -61,17 +61,6 @@ class Source:
         return sorted(all_pickups, key=lambda x: x["date"])
 
     def check_holidays(self, hols: list[date], dt: date, pickup_number: int) -> date:
-        if pickup_number > 1:
-            # Secondary pickups: if any observed holiday falls in the same Monday–Friday
-            # week as `dt`, cancel secondary pickup
-            week_monday = dt - timedelta(days=dt.weekday())  # Monday of this week
-            week_friday = week_monday + timedelta(days=4)
-            holiday_in_week = any(week_monday <= h <= week_friday for h in hols)
-            if holiday_in_week:
-                return None
-            return dt
-
-    def check_holidays(self, hols: list[date], dt: date, pickup_number: int) -> date:
         """
         Shift a collection date forward for holidays in the same week.
 

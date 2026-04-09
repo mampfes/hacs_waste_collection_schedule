@@ -119,9 +119,7 @@ class Source:
             key = (
                 "start"
                 if "start" in item
-                else "start_date"
-                if "start_date" in item
-                else ""
+                else "start_date" if "start_date" in item else ""
             )
             collection_date = date.fromisoformat(item[key])
             if (collection_date - today).days >= 0:

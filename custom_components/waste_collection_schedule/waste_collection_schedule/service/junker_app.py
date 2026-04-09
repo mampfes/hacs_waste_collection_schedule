@@ -38,8 +38,7 @@ class AreaNotFound(Exception):
         super().__init__("Area not found")
 
 
-class AreaRequired(AreaNotFound):
-    ...
+class AreaRequired(AreaNotFound): ...  # noqa: E701
 
 
 def replace_accents(text: str) -> str:

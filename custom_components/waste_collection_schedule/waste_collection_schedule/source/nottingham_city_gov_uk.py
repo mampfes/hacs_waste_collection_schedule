@@ -49,7 +49,9 @@ class Source:
                 collection["collectionDate"]
             )
 
-            if next_collection_date > datetime.datetime.now() + datetime.timedelta(days=365):
+            if next_collection_date > datetime.datetime.now() + datetime.timedelta(
+                days=365
+            ):
                 continue
 
             entries.append(

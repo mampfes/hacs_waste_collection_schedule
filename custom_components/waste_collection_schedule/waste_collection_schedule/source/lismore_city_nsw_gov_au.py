@@ -1,6 +1,7 @@
 import json
 import re
-from datetime import date as dt_date, datetime
+from datetime import date as dt_date
+from datetime import datetime
 from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
@@ -269,7 +270,9 @@ class Source:
         address_prefix = (
             f"{subpremise}/{street_number}" if subpremise else street_number
         )
-        formatted_address = f"{address_prefix} {route}, {locality} {state} {postal_code}"
+        formatted_address = (
+            f"{address_prefix} {route}, {locality} {state} {postal_code}"
+        )
 
         return {
             "subpremise": subpremise,

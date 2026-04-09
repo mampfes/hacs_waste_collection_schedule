@@ -7,8 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
-from waste_collection_schedule.service.ICS import \
-    ICS  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defined]
 
 TITLE = "Stadtservice Korneuburg"
 DESCRIPTION = "Source for Stadtservice Korneuburg"
@@ -110,8 +109,7 @@ class Source:
         return region
 
     def determine_region(self):
-        """finds the target region for the street and street number"""
-
+        """Find the target region for the street and street number."""
         if 0 < int(self.teilgebiet) <= 4:
             return str(self.teilgebiet)
 
@@ -171,8 +169,7 @@ class Source:
         return str(region)
 
     def get_region_links(self):
-        """traverses the pages for different waste types and collects download links for the iCals"""
-
+        """Traverse the pages for different waste types and collect download links for the iCals."""
         if self._region is None:
             self._region = self.determine_region()
 
@@ -196,8 +193,7 @@ class Source:
         return ical_urls
 
     def process_waste_type(self, url):
-        """downloads one calendar and returns list with entries"""
-
+        """Download one calendar and return list with entries."""
         r = requests.get(url=url, headers=self._headers, cookies=self._cookies)
         r.encoding = r.apparent_encoding
 

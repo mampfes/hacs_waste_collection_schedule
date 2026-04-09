@@ -1,10 +1,10 @@
-#### Mod by SEMATpl - semat.pl - based on sepan_remondis_pl ###
+# Mod by SEMATpl - semat.pl - based on sepan_remondis_pl
 import datetime
 import json
 import logging
-from bs4 import BeautifulSoup
 
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Kleszczewo/Kostrzyn"
@@ -15,20 +15,20 @@ TEST_CASES = {
         "city": "Komorniki",
         "street_name": "Komorniki",
         "street_number": "93/2",
-        "commune_name": "Kleszczewo"
+        "commune_name": "Kleszczewo",
     },
 }
 
 _LOGGER = logging.getLogger(__name__)
-#API_URL = "https://zys-harmonogram.smok.net.pl/kleszczewo/2026" for test
+# API_URL = "https://zys-harmonogram.smok.net.pl/kleszczewo/2026" for test
 API_URL = "https://zys-harmonogram.smok.net.pl/{}/{}"
 
 ICON_MAP = {
-    1: "mdi:trash-can",      # Zmieszane odpady komunalne
-    2: "mdi:recycle",        # Paper
-    3: "mdi:recycle",        # Metale i tworzywa sztuczne
-    4: "mdi:glass-cup",      # Szkło
-    5: "mdi:leaf",           # Bioodpady
+    1: "mdi:trash-can",  # Zmieszane odpady komunalne
+    2: "mdi:recycle",  # Paper
+    3: "mdi:recycle",  # Metale i tworzywa sztuczne
+    4: "mdi:glass-cup",  # Szkło
+    5: "mdi:leaf",  # Bioodpady
 }
 
 MONTHS = {
@@ -56,7 +56,9 @@ class Source:
 
     def fetch(self):
         try:
-            return self.get_data(API_URL.format(self._commune_name,  datetime.datetime.now().year))
+            return self.get_data(
+                API_URL.format(self._commune_name, datetime.datetime.now().year)
+            )
         except Exception:
             _LOGGER.debug(
                 f"fetch failed for source {TITLE}: trying different API_URL ..."
@@ -64,7 +66,7 @@ class Source:
             return self.get_data(API_URL.format("", ""))
 
     def get_data(self, api_url):
-        #GET CITY ID
+        # GET CITY ID
         r = requests.get(f"{api_url}/addresses/cities")
         r.raise_for_status()
         city_id = 0
@@ -75,7 +77,7 @@ class Source:
         if city_id == 0:
             raise Exception("city not found")
 
-        #GET STREET ID
+        # GET STREET ID
         r = requests.get(f"{api_url}/addresses/streets/{city_id}")
         r.raise_for_status()
         street_id = 0
@@ -86,7 +88,7 @@ class Source:
         if street_id == 0:
             raise Exception("street not found")
 
-        #GET HOME ID
+        # GET HOME ID
         r = requests.get(f"{api_url}/addresses/numbers/{city_id}/{street_id}")
         r.raise_for_status()
         number_id = 0
@@ -97,7 +99,7 @@ class Source:
         if number_id == 0:
             raise Exception("number not found")
 
-        #GET REPORTS URL
+        # GET REPORTS URL
         r = requests.get(f"{api_url}/reports", params={"type": "html", "id": number_id})
         r.raise_for_status()
         report = json.loads(r.text)
@@ -106,10 +108,10 @@ class Source:
 
         r = requests.get(report["filePath"])
         r.raise_for_status()
-        r.encoding = 'utf-8'
+        r.encoding = "utf-8"
         soup = BeautifulSoup(r.text, "html.parser")
 
-        #TABLE PARSER
+        # TABLE PARSER
         tables = soup.find_all("table")
         table = None
         for t in tables:
@@ -127,7 +129,9 @@ class Source:
         entries = []
 
         thead_rows = table.find("thead").find_all("tr")
-        NAME_MAP = [th.text.strip() for th in thead_rows[1].find_all("th")][1:]  # pomijamy 'Miesiąc'
+        NAME_MAP = [th.text.strip() for th in thead_rows[1].find_all("th")][
+            1:
+        ]  # pomijamy 'Miesiąc'
 
         rows = tbody.find_all("tr")
         for row in rows:
@@ -141,7 +145,7 @@ class Source:
                 month_name, year = parts
                 try:
                     year = int(year)
-                except:
+                except Exception:
                     year = datetime.date.today().year
             else:
                 month_name = parts[0]

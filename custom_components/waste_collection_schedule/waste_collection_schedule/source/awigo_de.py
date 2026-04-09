@@ -88,7 +88,7 @@ class Source:
                 raise SourceArgumentNotFoundWithSuggestions(
                     "strasse",
                     self._strasse,
-                    [option.text for option in soup.findAll("option")]
+                    [option.text for option in soup.findAll("option")],
                 )
 
             args["calendar[method]"] = "getNumbers"

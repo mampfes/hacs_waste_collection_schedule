@@ -28,7 +28,9 @@ ICON_MAP = {
 _LOGGER = logging.getLogger(__name__)
 
 SEARCH_URL = "https://mapping.manningham.vic.gov.au/weave/services/v1/index/search"
-FEATURES_URL = "https://mapping.manningham.vic.gov.au/weave/services/v1/feature/getFeaturesByIds"
+FEATURES_URL = (
+    "https://mapping.manningham.vic.gov.au/weave/services/v1/feature/getFeaturesByIds"
+)
 
 DATE_FORMAT = "%d %b %Y"
 
@@ -58,8 +60,8 @@ class Source:
         response = session.get(
             SEARCH_URL,
             params={
-                "start": 0,
-                "limit": 10,
+                "start": "0",
+                "limit": "10",
                 "indexes": "index.ManCC_propertylayer",
                 "type": "EXACT",
                 "crs": "EPSG:28355",
@@ -74,9 +76,7 @@ class Source:
         if total == 0:
             raise SourceArgumentNotFound("street_address", self._street_address)
         if total > 1:
-            suggestions = [
-                _strip_html(r["display1"]) for r in search_result["results"]
-            ]
+            suggestions = [_strip_html(r["display1"]) for r in search_result["results"]]
             raise SourceArgAmbiguousWithSuggestions(
                 "street_address", self._street_address, suggestions
             )
@@ -143,7 +143,9 @@ class Source:
                 date = today + timedelta(days=days_ahead)
                 while date <= end_date:
                     entries.append(
-                        Collection(date=date, t="Garden Waste", icon=ICON_MAP["Garden Waste"])
+                        Collection(
+                            date=date, t="Garden Waste", icon=ICON_MAP["Garden Waste"]
+                        )
                     )
                     date += timedelta(days=7)
 

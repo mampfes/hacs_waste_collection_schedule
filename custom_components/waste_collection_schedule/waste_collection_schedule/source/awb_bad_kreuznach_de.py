@@ -204,9 +204,11 @@ class Source:
                     freq=DAILY,
                     interval=cal_entry["frequency"],
                     dtstart=datetime.fromtimestamp(cal_entry["fromDate"] / 1000),
-                    until=datetime.fromtimestamp(cal_entry["toDate"] / 1000)
-                    if cal_entry["toDate"]
-                    else to_time,
+                    until=(
+                        datetime.fromtimestamp(cal_entry["toDate"] / 1000)
+                        if cal_entry["toDate"]
+                        else to_time
+                    ),
                 )
             )
 

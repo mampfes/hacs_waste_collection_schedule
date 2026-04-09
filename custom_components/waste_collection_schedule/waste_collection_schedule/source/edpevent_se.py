@@ -232,7 +232,7 @@ SERVICE_PROVIDERS = {
         "title": "Herrljunga & Vårgårda kommun",
         "url": "https://www.remondisrecycling.se/hushallsavfall/herrljunga-vargarda/",
         "api_url": "https://edpfuture.remondis.se/EDPFutureWeb/SimpleWastePickup",
-    }
+    },
 }
 
 EXTRA_INFO = [

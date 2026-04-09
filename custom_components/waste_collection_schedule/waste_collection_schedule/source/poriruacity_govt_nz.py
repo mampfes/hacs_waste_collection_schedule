@@ -70,7 +70,7 @@ class Source:
             collections_map_reg_result.group(0).replace("collections:", "").strip()
         )
 
-        # repalce glass with "glass"
+        # replace glass with "glass"
         collections_map_str = re.sub(r"(\w+):", r'"\1":', collections_map_str)
         COLLECTIONS_MAP: dict[str, list[str]] = json.loads(collections_map_str)
         return ZONES, COLLECTIONS_MAP

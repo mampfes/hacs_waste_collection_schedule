@@ -46,10 +46,7 @@ TEST_CASES = {
         "house_number": "1",
         "service": "hvcgroep",
     },
-    "ZRD": {
-        "postal_code": "4691DH", 
-        "house_number": "4", 
-        "service": "zrd"},
+    "ZRD": {"postal_code": "4691DH", "house_number": "4", "service": "zrd"},
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -251,10 +248,10 @@ SERVICE_MAP = [
         "title": "ZRD",
         "api_url": "https://www.zrd.nl",
         "icons": {
-            "appel en blad": "mdi:leaf",         # GFT-afval
-            "pet pak blik": "mdi:recycle",       # PMD
-            "zak rest rest": "mdi:trash-can",    # Restafval
-            "karton": "mdi:archive",             # Papier en karton
+            "appel en blad": "mdi:leaf",  # GFT-afval
+            "pet pak blik": "mdi:recycle",  # PMD
+            "zak rest rest": "mdi:trash-can",  # Restafval
+            "karton": "mdi:archive",  # Papier en karton
         },
     },
 ]

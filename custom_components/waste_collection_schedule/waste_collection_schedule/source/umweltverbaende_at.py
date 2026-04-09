@@ -224,7 +224,7 @@ PARAM_TRANSLATIONS = {
         "hnr": "Hausnummer",
         "zusatz": "Zusatz",
         "calendar": "Kalender",
-        "calendar_title_separator": "Kalendertitel Seperator",
+        "calendar_title_separator": "Kalendertitel Separator",
         "calendar_splitter": "Kalendereintrag-Trenner",
     },
     "en": {
@@ -292,7 +292,12 @@ TEST_CASES = {
         "municipal": "Weitra",
     },  # old version (as of 29.12.2024)
     "Gänserndorf": {"district": "gaenserndorf", "municipal": "Auersthal"},
-    "Gänserndorf-New": {"district": "gaenserndorf", "municipal": "Deutsch-Wagram", "street": "Johann Nestroy-Gasse", "hnr": "63"},
+    "Gänserndorf-New": {
+        "district": "gaenserndorf",
+        "municipal": "Deutsch-Wagram",
+        "street": "Johann Nestroy-Gasse",
+        "hnr": "63",
+    },
     "Hollabrunn": {
         "district": "hollabrunn",
         "municipal": "Retz",
@@ -376,19 +381,19 @@ PARAM_TRANSLATIONS = {
         "district": "Gebiet",
         "municipal": "Gemeinde",
         "calendar": "Kalender",
-        "calendar_title_separator": "Kalendertitel Seperator",
+        "calendar_title_separator": "Kalendertitel Separator",
         "calendar_splitter": "Kalendereintrag-Trenner",
     }
 }
 
 POSSIBLE_COLLECTION_PATHS = (
-    "abholtermine-preview/", # Hollabrunn
+    "abholtermine-preview/",  # Hollabrunn
     "fuer-die-bevoelkerung/abholtermine/",
     "abfall-entsorgung/abfuhrtermine/",
     "fuer-die-bevoelkerung/abfuhrterminkalender/",
     "entsorgung-und-termine/abholtermine/",  # Scheibbs
-    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year + 1}/", # Zwettl
-    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year}/", # Zwettl
+    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year + 1}/",  # Zwettl
+    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year}/",  # Zwettl
 )
 
 LOCATION_FILTER_KEYS = (

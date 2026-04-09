@@ -100,7 +100,7 @@ class Source:
             )
 
         streets = json.loads(r.text)
-        if streetName != None:
+        if streetName is not None:
             streetId = [item[0] for item in streets if streetName in item[1]]
         else:
             streetId = [item[0] for item in streets]

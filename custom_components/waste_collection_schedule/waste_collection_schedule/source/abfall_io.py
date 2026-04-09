@@ -82,7 +82,9 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
-HEADERS = {"user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0"}
+HEADERS = {
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0"
+}
 
 
 # Parser for HTML input (hidden) text

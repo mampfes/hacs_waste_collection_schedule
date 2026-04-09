@@ -30,6 +30,7 @@ ICON_MAP = {
 API_URL = "https://lumire.se/api/waste-pickup"
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
+
 class Source:
     def __init__(self, address: str):
         self._address: str = address
@@ -44,7 +45,7 @@ class Source:
             raise ValueError(f"Address '{self._address}' not found")
 
         building_id = search_results[0].get("buildingId")
-        
+
         # mha buildingId får man sitt faktiska schema
         r = requests.get(f"{API_URL}/{building_id}", headers=HEADERS)
         r.raise_for_status()
@@ -53,8 +54,10 @@ class Source:
         entries = []
         for item in pickup_data:
             date_str = item.get("nextPickup")
-            waste_type = item.get("fee", {}).get("waste_type") or item.get("description", "")
-            
+            waste_type = item.get("fee", {}).get("waste_type") or item.get(
+                "description", ""
+            )
+
             if date_str:
                 date_ = datetime.strptime(date_str, "%Y-%m-%d").date()
 
@@ -63,7 +66,7 @@ class Source:
                     if key.lower() in waste_type.lower():
                         icon = val
                         break
-                
+
                 entries.append(Collection(date_, waste_type, icon))
 
         return entries

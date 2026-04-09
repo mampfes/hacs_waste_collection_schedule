@@ -84,7 +84,7 @@ PARAM_TRANSLATIONS = {
 
 
 class Source:
-    def __init__(self, street_number_and_name: str, unique_id: str = None):
+    def __init__(self, street_number_and_name: str, unique_id: str | None = None):
         self._street_number_and_name = street_number_and_name
         self._unique_id = unique_id
 
@@ -102,9 +102,9 @@ class Source:
         soup = BeautifulSoup(response.text, "html.parser")
 
         # Extract required form fields
-        viewstate = soup.find("input", {"id": "__VIEWSTATE"})["value"]
-        eventvalidation = soup.find("input", {"id": "__EVENTVALIDATION"})["value"]
-        viewstategenerator = soup.find("input", {"id": "__VIEWSTATEGENERATOR"})["value"]
+        viewstate = soup.find("input", {"id": "__VIEWSTATE"})["value"]  # type: ignore[index]
+        eventvalidation = soup.find("input", {"id": "__EVENTVALIDATION"})["value"]  # type: ignore[index]
+        viewstategenerator = soup.find("input", {"id": "__VIEWSTATEGENERATOR"})["value"]  # type: ignore[index]
 
         # Step 3: Prepare the form data for address search
         form_data = {
@@ -155,7 +155,7 @@ class Source:
                 },
             )
             if address_select:
-                options = address_select.find_all("option")
+                options = address_select.find_all("option")  # type: ignore[union-attr]
 
                 # Format addresses with their option values
                 formatted_addresses = []
@@ -171,15 +171,19 @@ class Source:
                 if self._unique_id and self._unique_id in option_values:
                     # Submit form with the selected address
                     form_data = {
-                        "__VIEWSTATE": result_soup.find("input", {"id": "__VIEWSTATE"})[
-                            "value"
+                        "__VIEWSTATE": result_soup.find("input", {"id": "__VIEWSTATE"})[  # type: ignore[index]
+                            "value"  # type: ignore[index]
                         ],
                         "__VIEWSTATEGENERATOR": result_soup.find(
                             "input", {"id": "__VIEWSTATEGENERATOR"}
-                        )["value"],
+                        )[
+                            "value"  # type: ignore[index]
+                        ],
                         "__EVENTVALIDATION": result_soup.find(
                             "input", {"id": "__EVENTVALIDATION"}
-                        )["value"],
+                        )[
+                            "value"  # type: ignore[index]
+                        ],
                         "ctl00$ctl00$contenu$texte_page$ucInfoCollecteRechercheAdresse$RechercheAdresse$ddChoix": self._unique_id,
                         "ctl00$ctl00$contenu$texte_page$ucInfoCollecteRechercheAdresse$RechercheAdresse$btnChoix": "Poursuivre",
                     }

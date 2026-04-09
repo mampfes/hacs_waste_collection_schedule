@@ -1,6 +1,6 @@
+import logging
 from datetime import datetime, timedelta
 from time import time_ns
-import logging
 
 import requests
 from waste_collection_schedule import Collection
@@ -27,6 +27,7 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 
+
 class Source:
     def __init__(self, uprn: str | int):
         self._uprn: str | int = uprn
@@ -50,7 +51,13 @@ class Source:
             "formValues": {
                 "Property": {
                     key: {"value": self._uprn}
-                    for key in ["AccountSiteUprn", "UPRNSearch", "calcUPRN", "customerUPRN", "inputUPRN"]
+                    for key in [
+                        "AccountSiteUprn",
+                        "UPRNSearch",
+                        "calcUPRN",
+                        "customerUPRN",
+                        "inputUPRN",
+                    ]
                 }
             }
         }
@@ -84,7 +91,9 @@ class Source:
                 attempts -= 1
 
             if not found:
-                LOGGER.error(f'Failing to find the date - API returned {next_date}, last date attempted was {attempt_date}')
+                LOGGER.error(
+                    f"Failing to find the date - API returned {next_date}, last date attempted was {attempt_date}"
+                )
                 continue
 
             entries.append(

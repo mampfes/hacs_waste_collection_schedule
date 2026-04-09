@@ -396,7 +396,6 @@ SERVICE_MAP = [
         "service_id": "ebe",
         "default_params": {"city": "Zorneding"},
     },
-
 ]
 
 TEST_CASES = {

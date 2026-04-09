@@ -16,13 +16,11 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 }
 TEST_CASES = {"120 Jonson St, Byron Bay": {"address": "120 Jonson St, Byron Bay"}}
 
-PROJECT_ID = 592
+PROJECT_ID = "592"
 DISTRICT_ID = "BYSC"
 ADDRESS_URL = "https://ca-web.apigw.recyclecoach.com/zone-setup/address/single"
 SCHEDULE_URL = "https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules"
-COLLECTION_URL = (
-    "https://ca-web.apigw.recyclecoach.com/zone-setup/zone/collections"
-)
+COLLECTION_URL = "https://ca-web.apigw.recyclecoach.com/zone-setup/zone/collections"
 
 HEADERS = {
     "accept": "application/json, text/plain, */*",
@@ -153,9 +151,7 @@ class Source:
 
                         entries.append(
                             Collection(
-                                date=datetime.strptime(
-                                    event_date, "%Y-%m-%d"
-                                ).date(),
+                                date=datetime.strptime(event_date, "%Y-%m-%d").date(),
                                 t=waste_type,
                                 icon=self._guess_icon(waste_type),
                             )

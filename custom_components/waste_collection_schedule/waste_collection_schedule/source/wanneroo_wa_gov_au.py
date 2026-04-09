@@ -323,7 +323,7 @@ class Source:
                 icon = "mdi:leaf"
             else:
                 bin_type = bin_type_raw
-                icon = ICON_MAP.get(bin_type)
+                icon = ICON_MAP.get(bin_type)  # type: ignore[assignment, no-redef]
 
             try:
                 dates = _parse_rythm_description(rythm_description, bin_type)

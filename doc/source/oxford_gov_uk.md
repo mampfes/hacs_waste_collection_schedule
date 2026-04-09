@@ -35,7 +35,7 @@ waste_collection_schedule:
         postcode: OX4 1RB
 ```
 
-## Returned Collectons
+## Returned Collections
 This source will return the next collection date for each container type.
 If you don't subscribe to a brown garden waste bin, we don't return data for it.
 

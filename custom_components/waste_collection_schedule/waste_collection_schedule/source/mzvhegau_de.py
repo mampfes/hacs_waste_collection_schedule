@@ -34,10 +34,8 @@ PARAM_DESCRIPTIONS = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your city/municipality in the "
-    "MZV Hegau service area.",
-    "de": "Stadt/Gemeinde im MZV Hegau "
-    "Verbandsgebiet eingeben.",
+    "en": "Enter your city/municipality in the " "MZV Hegau service area.",
+    "de": "Stadt/Gemeinde im MZV Hegau " "Verbandsgebiet eingeben.",
 }
 
 API_URL = "https://www.mzvhegau.de/abfallkalender/{city}.ics"

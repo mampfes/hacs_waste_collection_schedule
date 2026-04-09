@@ -7,7 +7,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Marktgemeinde Obdach"
 DESCRIPTION = "Source for Marktgeneinde Obdach, AT"
 URL = "https://www.obdach.gv.at/"
-TEST_CASES = {"TestSource": {}}
+TEST_CASES: dict[str, dict[str, str]] = {"TestSource": {}}
 ICON_MAP = {
     "Biomüll": "mdi:food",
     "Altstoffsammelzentrum": "mdi:newspaper",

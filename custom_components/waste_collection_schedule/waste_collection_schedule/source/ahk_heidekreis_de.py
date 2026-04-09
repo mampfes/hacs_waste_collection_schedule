@@ -37,8 +37,20 @@ _STREET_PLZ_KEYS = ("plz", "PLZ", "Plz", "postalCode", "PostalCode")
 _STREET_PLACE_KEYS = ("ort", "place", "Ort", "Place", "city", "City")
 _STREET_ID_KEYS = ("id", "Id", "streetId", "StreetId", "strassenId")
 _HOUSE_NR_KEYS = ("houseNr", "HouseNr", "hausnummer", "Hausnummer")
-_HOUSE_NR_ADD_KEYS = ("houseNrAdd", "HouseNrAdd", "hausnummerZusatz", "HausnummerZusatz")
-_OBJECT_ID_KEYS = ("idObject", "IdObject", "objektId", "ObjektId", "objectId", "ObjectId")
+_HOUSE_NR_ADD_KEYS = (
+    "houseNrAdd",
+    "HouseNrAdd",
+    "hausnummerZusatz",
+    "HausnummerZusatz",
+)
+_OBJECT_ID_KEYS = (
+    "idObject",
+    "IdObject",
+    "objektId",
+    "ObjektId",
+    "objectId",
+    "ObjectId",
+)
 
 PARAM_TRANSLATIONS = {
     "de": {
@@ -129,9 +141,7 @@ class Source:
 
         # Detect house number API field names and log for debugging
         if data:
-            _LOGGER.debug(
-                "QHouseNrEkal response keys: %s", list(data[0].keys())
-            )
+            _LOGGER.debug("QHouseNrEkal response keys: %s", list(data[0].keys()))
 
         house_number_entry = next(
             (

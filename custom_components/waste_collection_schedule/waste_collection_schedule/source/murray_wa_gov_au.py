@@ -45,7 +45,9 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         # Step 1: Look up the address to get a GUID
-        r = requests.get(ADDRESS_URL, params={"addressQuery": self._address}, timeout=30)
+        r = requests.get(
+            ADDRESS_URL, params={"addressQuery": self._address}, timeout=30
+        )
         r.raise_for_status()
         addresses = r.json()
 

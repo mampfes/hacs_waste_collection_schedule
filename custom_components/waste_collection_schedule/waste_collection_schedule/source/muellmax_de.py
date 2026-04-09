@@ -2,8 +2,7 @@ from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import \
-    SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.service.MuellmaxDe import SERVICE_MAP
 
@@ -203,11 +202,7 @@ class Source:
             if ";" not in str(hnr_value):
                 op = SelectOptionParser("mm_frm_hnr_sel")
                 op.feed(r.text)
-                matches = [
-                    o
-                    for o in op.options
-                    if o.split(";")[2] == str(hnr_value)
-                ]
+                matches = [o for o in op.options if o.split(";")[2] == str(hnr_value)]
                 if len(matches) == 1:
                     hnr_value = matches[0]
                 elif len(matches) == 0:
@@ -254,8 +249,7 @@ class Source:
             dates = self._ics.convert(r.text)
         except ValueError as e:
             raise ValueError(
-                "Got invalid response from the server, "
-                "please recheck your arguments"
+                "Got invalid response from the server, " "please recheck your arguments"
             ) from e
 
         entries = []

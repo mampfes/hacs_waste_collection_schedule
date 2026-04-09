@@ -132,6 +132,8 @@ class Source:
         # Week A (anchor) = General Waste + Green Waste
         # Week B = Recycling + Green Waste
         anchor_date = general_waste_date or recycling_date
+        if anchor_date is None:
+            return []
         entries = []
 
         for week in range(SCHEDULE_WEEKS):

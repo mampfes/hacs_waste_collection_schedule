@@ -123,7 +123,7 @@ class Source:
             params["numrue"] = self._house_number
         r = requests.get(COLLECTION_URL, params=params, timeout=30)
         r.raise_for_status()
-        return ET.fromstring(r.content)
+        return ET.fromstring(r.content)  # nosec B314
 
     def fetch(self) -> list[Collection]:
         cdrue = self._resolve_street_code()

@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Any, List, Mapping, Optional
 
 import requests
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,

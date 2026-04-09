@@ -90,9 +90,7 @@ class IpswichGovAuParser(HTMLParser):
             self._load_bin = False
 
             self._entries.append(
-                Collection(
-                    self._loaded_date, data, icon=ICON_MAP.get(data)
-                )
+                Collection(self._loaded_date, data, icon=ICON_MAP.get(data))
             )
 
 

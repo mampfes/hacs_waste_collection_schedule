@@ -2,7 +2,6 @@ import json
 from datetime import date, datetime, timedelta
 
 import requests
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "London Borough of Hounslow"
@@ -50,7 +49,7 @@ class Source:
 
         params = {
             "sid": session_key,
-            "_": int(datetime.now().timestamp() * 1000),
+            "_": str(int(datetime.now().timestamp() * 1000)),
         }
         r = self._session.get(AUTH_TEST, params=params, timeout=TIMEOUT)
         r.raise_for_status()
@@ -64,7 +63,7 @@ class Source:
             "getOnlyTokens": "undefined",
             "log_id": "",
             "app_name": "AF-Renderer::Self",
-            "_": int(datetime.now().timestamp() * 1000),
+            "_": str(int(datetime.now().timestamp() * 1000)),
             "sid": sid,
         }
         r = self._session.post(

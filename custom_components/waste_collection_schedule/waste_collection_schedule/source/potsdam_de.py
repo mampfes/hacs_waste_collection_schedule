@@ -107,10 +107,10 @@ class Source:
             # get json file
             r = requests.get(API_URL.format(year=year))
             r.raise_for_status()
-        except:
+        except Exception:
             if year == today.year:
                 raise Exception("culd not get data from url exit")
-            return
+            return None
 
         try:
             data = r.json()["result"]["data"]["dbapi"]
@@ -124,6 +124,7 @@ class Source:
                 if strasse["name"].lower().strip() != self._strasse.lower().strip():
                     continue
                 return strasse["eintraege"]
+        return None
 
     # generate dates, typematch and date_is_collection* are nearly 1:1 implementation of teir original crappy js code
     def __generate_dates(self, start, end):
@@ -174,8 +175,8 @@ class Source:
             return False
         termin1 = datetime.fromisoformat(node["termin1"].replace("Z", "+00:00")).date()
         termin2 = datetime.fromisoformat(node["termin2"].replace("Z", "+00:00")).date()
-        day = day.date()
-        return (termin1 == day) or (termin2 == day)
+        day_date = day.date()
+        return (termin1 == day_date) or (termin2 == day_date)
 
     def __date_is_collection_1_to_4(
         self, node, day: datetime, exceptions, check_exception=True

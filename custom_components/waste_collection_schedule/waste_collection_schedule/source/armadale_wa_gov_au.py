@@ -23,7 +23,7 @@ WEEKDAYS = {
 }
 
 
-# this is the current ajax server used by the tool on their website 
+# this is the current ajax server used by the tool on their website
 API_URL = "https://app-corporate-prod-001.azurewebsites.net/system/ajax"
 
 

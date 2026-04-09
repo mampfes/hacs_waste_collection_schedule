@@ -84,7 +84,7 @@ class Source:
             if key.startswith("ahtm_dates_"):
                 if key not in COLLECTION_MAP:
                     _LOGGER.warning(
-                        "Unknow bin type: %s found. Please report back to the creator of this custom_component."
+                        "Unknown bin type: %s found. Please report back to the creator of this custom_component."
                     )
 
                 dates_list = [

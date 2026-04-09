@@ -102,7 +102,11 @@ class Source:
         today = datetime.date.today()
         for bin in bins:
             if bin.get("pick_up_group") in ("Daily", "Not Collected"):
-                _LOGGER.debug("Skipping bin %s with pick_up_group %s", bin["material"], bin.get("pick_up_group"))
+                _LOGGER.debug(
+                    "Skipping bin %s with pick_up_group %s",
+                    bin["material"],
+                    bin.get("pick_up_group"),
+                )
                 continue
 
             _LOGGER.debug("Processing bin %s", bin)

@@ -19,7 +19,7 @@ class Source:
     def fetch(self):
         r = requests.post(
             "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress",
-            {"searchText": self._street_address}
+            {"searchText": self._street_address},
         )
         r.raise_for_status()
 
@@ -35,7 +35,7 @@ class Source:
         params = {"address": address}
         r = requests.get(
             "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
-            params=params
+            params=params,
         )
         r.raise_for_status()
 
@@ -49,8 +49,6 @@ class Source:
                 icon = "mdi:leaf"
             next_pickup = item["NextWastePickup"]
             next_pickup_date = datetime.fromisoformat(next_pickup).date()
-            entries.append(
-                Collection(date=next_pickup_date, t=waste_type, icon=icon)
-            )
+            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
 
         return entries

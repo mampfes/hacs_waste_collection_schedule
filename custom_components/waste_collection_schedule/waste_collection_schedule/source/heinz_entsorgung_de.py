@@ -73,7 +73,7 @@ class Source:
 
             # Get waste type
             waste_type = item.get("fraktion", "Unknown")
-            
+
             # Get additional info if available
             zusatz = item.get("zusatz", "")
             if zusatz:

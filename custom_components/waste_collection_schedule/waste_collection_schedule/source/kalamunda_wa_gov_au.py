@@ -127,8 +127,7 @@ class Source:
         today = date.today()
 
         if suburb_upper not in SUBURBS:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "suburb", self.suburb, SUBURBS)
+            raise SourceArgumentNotFoundWithSuggestions("suburb", self.suburb, SUBURBS)
 
         if self.street_number is None:
             raise SourceArgumentRequired(
@@ -152,7 +151,8 @@ class Source:
 
                 if not isinstance(infoPanel, dict):
                     raise IntraMapsSaaSAPI.IntraMapsSearchError(
-                        f"Expected dict type in response field from address search but got {type(infoPanel)}")
+                        f"Expected dict type in response field from address search but got {type(infoPanel)}"
+                    )
 
                 for waste_name, icon in ICON_MAP.items():
                     # Safely navigate the tree; if any key is missing, it returns an empty list []
@@ -193,8 +193,7 @@ class Source:
                             # Calculate at least (two * interval) past events to ensure the Home Assistant calendar aligns correctly.
                             # This is necessary because the IntraMaps API only returns upcoming collection days, and Home Assistant
                             # may expect to see previous events to properly display recurring schedules and avoid gaps in the calendar.
-                            current_date = start_date - \
-                                timedelta(days=interval * 2)
+                            current_date = start_date - timedelta(days=interval * 2)
                             # End date is 1 year from today
                             end_date = today + timedelta(days=365)
 
@@ -202,8 +201,7 @@ class Source:
                                 entries.append(
                                     Collection(
                                         date=current_date,
-                                        t=self._extract_human_waste_name(
-                                            waste_name),
+                                        t=self._extract_human_waste_name(waste_name),
                                         icon=icon,
                                     )
                                 )
@@ -213,8 +211,7 @@ class Source:
                             entries.append(
                                 Collection(
                                     date=start_date,
-                                    t=self._extract_human_waste_name(
-                                        waste_name),
+                                    t=self._extract_human_waste_name(waste_name),
                                     icon=icon,
                                 )
                             )

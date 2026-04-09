@@ -32,7 +32,7 @@ def _get_next_n_dates(date_obj: date, n: int, delta: timedelta):
         while date_obj < date.today():
             date_obj += delta
         next_dates.append(date_obj)
-        date_obj += delta 
+        date_obj += delta
     return next_dates
 
 
@@ -95,8 +95,8 @@ class Source:
             next_collection_date, 52, timedelta(days=7)
         )
         street_sweeping_dates = _get_next_n_dates(
-            street_sweeping, 1, timedelta(weeks=6))
-
+            street_sweeping, 1, timedelta(weeks=6)
+        )
 
         entries = []
 

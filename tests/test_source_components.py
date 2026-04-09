@@ -91,7 +91,7 @@ def _get_ics_md() -> list[str]:
 
 @cache
 def _load_ics_yaml(source: str) -> Any:
-    with open(os.path.join(ICS_YAML_PATH, f"{source}.yaml")) as file:
+    with open(os.path.join(ICS_YAML_PATH, f"{source}.yaml"), encoding="utf-8") as file:
         return yaml.safe_load(file)
 
 

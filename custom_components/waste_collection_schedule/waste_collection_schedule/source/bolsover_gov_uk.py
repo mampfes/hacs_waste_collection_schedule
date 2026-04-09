@@ -1,8 +1,8 @@
 import re
 from datetime import date
 
-from curl_cffi import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
@@ -32,9 +32,18 @@ ICON_MAP = {
 }
 
 MONTHS = {
-    "January": 1, "February": 2, "March": 3, "April": 4,
-    "May": 5, "June": 6, "July": 7, "August": 8,
-    "September": 9, "October": 10, "November": 11, "December": 12,
+    "January": 1,
+    "February": 2,
+    "March": 3,
+    "April": 4,
+    "May": 5,
+    "June": 6,
+    "July": 7,
+    "August": 8,
+    "September": 9,
+    "October": 10,
+    "November": 11,
+    "December": 12,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

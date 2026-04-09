@@ -99,9 +99,7 @@ class Source:
 
             entries.append(
                 Collection(
-                    date=datetime.strptime(
-                        match.group(1), "%A %d %B %Y"
-                    ).date(),
+                    date=datetime.strptime(match.group(1), "%A %d %B %Y").date(),
                     t=bin_type,
                     icon=ICON_MAP.get(bin_type),
                 )

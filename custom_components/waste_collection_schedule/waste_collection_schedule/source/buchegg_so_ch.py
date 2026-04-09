@@ -14,7 +14,9 @@ from waste_collection_schedule.exceptions import (
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Buchegg"
-DESCRIPTION = "Source for waste collection schedule of Gemeinde Buchegg (SO), Switzerland."
+DESCRIPTION = (
+    "Source for waste collection schedule of Gemeinde Buchegg (SO), Switzerland."
+)
 URL = "https://www.buchegg-so.ch"
 COUNTRY = "ch"
 
@@ -130,7 +132,7 @@ GREEN_WASTE_GROUP_MAP = {
     "Tscheppach": "reduced",
 }
 
-GREEN_WASTE_GROUP_KEYWORDS = {
+GREEN_WASTE_GROUP_KEYWORDS: dict[str, dict[str, list[str] | int | None]] = {
     "default": {
         "keywords": ["aetigkofen", "aetingen", "bibern", "brittern", "brügglen"],
         "max_commas": None,
@@ -255,9 +257,7 @@ class Source:
             name_html = row.get("name", "")
             date_html = row.get("_anlassDate", "")
 
-            name_clean = BeautifulSoup(name_html, "html.parser").get_text(
-                strip=True
-            )
+            name_clean = BeautifulSoup(name_html, "html.parser").get_text(strip=True)
             name_lower = name_clean.lower()
 
             date_match = re.search(r"(\d{2})\.(\d{2})\.(\d{4})", date_html)
@@ -283,7 +283,9 @@ class Source:
             elif "grüngut" in name_lower or "grünabfuhr" in name_lower:
                 group = GREEN_WASTE_GROUP_KEYWORDS[self._green_waste_group]
 
-                if all(kw in name_lower for kw in group["keywords"]):
+                keywords = group["keywords"]
+                assert isinstance(keywords, list)
+                if all(kw in name_lower for kw in keywords):
                     max_commas = group.get("max_commas")
                     if max_commas and name_clean.count(",") >= max_commas:
                         continue
@@ -337,22 +339,16 @@ class Source:
                 break
 
             soup = BeautifulSoup(response.text, "html.parser")
-            result_list = soup.find(
-                "div", attrs={"data-js-result-list": True}
-            )
+            result_list = soup.find("div", attrs={"data-js-result-list": True})
             if result_list is None:
                 break
 
-            date_rows = result_list.find_all(
-                "div", class_="row", recursive=False
-            )
+            date_rows = result_list.find_all("div", class_="row", recursive=False)
             if not date_rows:
                 break
 
             for row in date_rows:
-                date_col = row.find(
-                    "div", class_="waste-calender-list__date"
-                )
+                date_col = row.find("div", class_="waste-calender-list__date")
                 if date_col is None:
                     continue
                 date_heading = date_col.find(["h2", "h3"])
@@ -383,7 +379,7 @@ class Source:
                     item_text = waste_item.get_text(strip=True)
                     for prefix in ["Altpapier", "Papier", "Paper"]:
                         if item_text.startswith(prefix):
-                            item_text = item_text[len(prefix):].strip()
+                            item_text = item_text[len(prefix) :].strip()
                             break
 
                     if item_text == localcities_name:
@@ -403,9 +399,7 @@ class Source:
             if load_more is None:
                 break
 
-            next_page_str = load_more.get(
-                "data-js-results-load-more-next-page", ""
-            )
+            next_page_str = load_more.get("data-js-results-load-more-next-page", "")
             try:
                 next_page = int(next_page_str)
             except ValueError:
@@ -435,9 +429,7 @@ class Source:
 
             if hasattr(child, "name") and child.name == "h1":
                 headline_class = child.get("class", [])
-                if any(
-                    "calendar-list__headline" in c for c in headline_class
-                ):
+                if any("calendar-list__headline" in c for c in headline_class):
                     span = child.find("span")
                     if span:
                         try:

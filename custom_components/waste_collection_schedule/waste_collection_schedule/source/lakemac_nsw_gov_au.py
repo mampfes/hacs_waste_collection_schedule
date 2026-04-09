@@ -60,8 +60,8 @@ class Source:
         for tag in soup.find_all("div", {"class": "next-service"}):
             try:
                 date_object = datetime.strptime(tag.text.strip(), "%a %d/%m/%Y").date()
-            except:
-                continue    
+            except Exception:
+                continue
             waste_date.append(date_object)
 
         waste = list(zip(waste_type, waste_date))

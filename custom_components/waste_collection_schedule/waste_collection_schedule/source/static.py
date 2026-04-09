@@ -130,9 +130,9 @@ class Source:
         until: datetime.date | str | None = None,
         count: int | None = None,
         excludes: list[datetime.date | str] | None = None,
-        weekdays: WEEKDAY_TYPE
-        | dict[WEEKDAY_TYPE | int, int | str | None]
-        | None = None,
+        weekdays: (
+            WEEKDAY_TYPE | dict[WEEKDAY_TYPE | int, int | str | None] | None
+        ) = None,
     ):
         for d in dates or []:
             _LOGGER.debug(f"date: {d}")
@@ -171,9 +171,7 @@ class Source:
         self._start = (
             start
             if isinstance(start, datetime.date)
-            else parser.isoparse(start).date()
-            if start
-            else None
+            else parser.isoparse(start).date() if start else None
         )
         if until:
             self._until: datetime.date | None = (

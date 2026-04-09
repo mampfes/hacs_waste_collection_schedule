@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 from time import time_ns
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from dateutil.parser import parse
 
 TITLE = "Rochdale Borough Council"
 DESCRIPTION = "Source for Rochdale Borough Council, UK."
@@ -18,7 +18,7 @@ ICON_MAP = {
     "General Waste": "mdi:trash-can",
     "Paper and Cardboard": "mdi:recycle",
     "Glass and Bottles": "mdi:glass-fragile",
-    "Food and Garden": "mdi:leaf"
+    "Food and Garden": "mdi:leaf",
 }
 
 
@@ -40,7 +40,10 @@ class Source:
         # 1. Initialize session and get SID
         ts = time_ns() // 1_000_000
         sGet = s.get(
-            f"{self._base_url}/apibroker/domain/rochdale-self.achieveservice.com?_={ts}", headers=headers, timeout=30)
+            f"{self._base_url}/apibroker/domain/rochdale-self.achieveservice.com?_={ts}",
+            headers=headers,
+            timeout=30,
+        )
         sGet.raise_for_status()
 
         auth_url = f"{self._base_url}/authapi/isauthenticated?uri=https%3A%2F%2Frochdale-self.achieveservice.com%2Fservice%2FBins___view_your_waste_collection_calendar&hostname=rochdale-self.achieveservice.com&withCredentials=true"
@@ -56,26 +59,23 @@ class Source:
         # Lookup 6846c784a46b5 returns the server-side {bartecToken}
         payload_token = {
             "formId": "AF-Form-d7812e2d-2876-47c2-9802-8a4a3b1a2264",
-            "formValues": {
-                "Location details": {
-                    "propertyUPRN": {"value": self._uprn}
-                }
-            }
+            "formValues": {"Location details": {"propertyUPRN": {"value": self._uprn}}},
         }
 
         ts = time_ns() // 1_000_000
         token_url = f"{self._base_url}/apibroker/runLookup?id=6846c784a46b5&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={ts}&sid={sid}"
-        r_token = s.post(token_url, headers=headers,
-                         json=payload_token, timeout=30)
+        r_token = s.post(token_url, headers=headers, json=payload_token, timeout=30)
         r_token.raise_for_status()
 
         # Fetch the Bartec Token
         try:
-            bartec_token = r_token.json(
-            )["integration"]["transformed"]["rows_data"]["0"]["bartecToken"]
+            bartec_token = r_token.json()["integration"]["transformed"]["rows_data"][
+                "0"
+            ]["bartecToken"]
         except KeyError:
             raise ValueError(
-                f"Rochdale API: Failed to retrieve bartecToken for UPRN {self._uprn}.")
+                f"Rochdale API: Failed to retrieve bartecToken for UPRN {self._uprn}."
+            )
 
         # 3. STEP 2: Fetch the Calendar
         # Lookup 68b58a1364572 returns the annual calendar using the token and date bounds
@@ -90,26 +90,27 @@ class Source:
                     "propertyUPRN": {"value": self._uprn},
                     "bartecToken": {"value": bartec_token},
                     "dateAnnualMinimum": {"value": min_date},
-                    "dateAnnualMaximum": {"value": max_date}
+                    "dateAnnualMaximum": {"value": max_date},
                 }
             },
         }
 
         ts = time_ns() // 1_000_000
         api_url = f"{self._base_url}/apibroker/runLookup?id=68b58a1364572&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={ts}&sid={sid}"
-        r_data = s.post(api_url, headers=headers,
-                        json=payload_data, timeout=30)
+        r_data = s.post(api_url, headers=headers, json=payload_data, timeout=30)
         r_data.raise_for_status()
         data = r_data.json()
 
         # Fetch the Calendar
-        rows_data = data.get("integration", {}).get(
-            "transformed", {}).get("rows_data", {})
+        rows_data = (
+            data.get("integration", {}).get("transformed", {}).get("rows_data", {})
+        )
         row = rows_data.get("0")
 
         if not row or "bartecAnnualBin1Type" not in row:
             raise ValueError(
-                "Rochdale API: Failed to fetch calendar data or missing required fields.")
+                "Rochdale API: Failed to fetch calendar data or missing required fields."
+            )
 
         entries = []
         for i in range(1, 17):
@@ -128,8 +129,7 @@ class Source:
                         date_obj = date_obj.replace(year=now.year + 1)
 
                     icon = ICON_MAP.get(bin_type, "mdi:trash-can")
-                    entries.append(Collection(
-                        date=date_obj, t=bin_type, icon=icon))
+                    entries.append(Collection(date=date_obj, t=bin_type, icon=icon))
                 except KeyError:
                     continue
 

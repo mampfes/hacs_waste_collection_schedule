@@ -70,7 +70,7 @@ class Source:
     def _get_geolocation_id(self) -> str:
         response = self._session.get(
             SEARCH_URL,
-            params={"keywords": self._address, "maxresults": 1},
+            params={"keywords": self._address, "maxresults": "1"},
             timeout=30,
         )
         response.raise_for_status()

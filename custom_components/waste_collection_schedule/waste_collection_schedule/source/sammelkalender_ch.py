@@ -180,7 +180,7 @@ class Source:
 
     def _fetch_street(self) -> None:
         streets = self._get_streets()
-        
+
         # switch to Sammelgebiete if API either returns no streets or one dummy street
         if (
             not streets

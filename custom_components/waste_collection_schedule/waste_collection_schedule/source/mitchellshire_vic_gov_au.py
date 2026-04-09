@@ -2,7 +2,6 @@ import datetime
 import logging
 
 import requests
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Mitchell Shire Council"
@@ -20,10 +19,7 @@ TEST_CASES = {
         "lat": -37.48012709087705,
         "lon": 144.94518706976186,
     },
-    "McDonalds Wallan": {
-        "lat": -37.41290975665613,
-        "lon": 144.97998167557827
-    }
+    "McDonalds Wallan": {"lat": -37.41290975665613, "lon": 144.97998167557827},
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -64,9 +60,7 @@ class Source:
 
             for item in bin_type.get("collectionDates", []):
                 try:
-                    date = datetime.datetime.strptime(
-                        item["date"], "%Y-%m-%d"
-                    ).date()
+                    date = datetime.datetime.strptime(item["date"], "%Y-%m-%d").date()
                 except (ValueError, KeyError) as e:
                     _LOGGER.warning("Could not parse date %s: %s", item, e)
                     continue

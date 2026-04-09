@@ -1,7 +1,7 @@
 from datetime import datetime
-from waste_collection_schedule import Collection
 
 import requests
+from waste_collection_schedule import Collection
 
 TITLE = "Australian Capital Territory (ACT)"
 DESCRIPTION = "Source script for Australian Capital Territory (ACT)."
@@ -12,7 +12,7 @@ TEST_CASES = {
     "Charnwood Thursday": {"suburb": "CHARNWOOD", "split_suburb": "Thursday"},
     "Charnwood Tuesday": {"suburb": "CHARNWOOD", "split_suburb": "Tuesday"},
     "Dunlop North": {"suburb": "DUNLOP", "split_suburb": "NORTH"},
-    "Dunlop South": {"suburb": "DUNLOP", "split_suburb": "south"}
+    "Dunlop South": {"suburb": "DUNLOP", "split_suburb": "south"},
 }
 
 API_URL = "https://www.data.act.gov.au/resource/jzzy-44un.json"
@@ -24,7 +24,9 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, suburb, split_suburb = ""):  # argX correspond to the args dict in the source configuration
+    def __init__(
+        self, suburb, split_suburb=""
+    ):  # argX correspond to the args dict in the source configuration
         self.suburb = suburb
         self.split_suburb = split_suburb
 
@@ -34,10 +36,12 @@ class Source:
         split_suburb = self.split_suburb.capitalize()
 
         if split_suburb != "":
-            r=requests.get(API_URL, params={"suburb": suburb, "split_suburb": split_suburb})
+            r = requests.get(
+                API_URL, params={"suburb": suburb, "split_suburb": split_suburb}
+            )
         else:
-            r=requests.get(API_URL, params={"suburb": suburb})
-        
+            r = requests.get(API_URL, params={"suburb": suburb})
+
         if len(r.json()) == 0:
             return []
 
@@ -47,25 +51,31 @@ class Source:
 
         entries.append(
             Collection(
-                date = datetime.strptime(data["garbage_pickup_date"], "%d/%m/%Y").date(),  # Collection date
-                t = "Garbage",  # Collection type
-                icon = ICON_MAP["Garbage"],  # Collection icon
+                date=datetime.strptime(
+                    data["garbage_pickup_date"], "%d/%m/%Y"
+                ).date(),  # Collection date
+                t="Garbage",  # Collection type
+                icon=ICON_MAP["Garbage"],  # Collection icon
             )
         )
 
         entries.append(
             Collection(
-                date = datetime.strptime(data["recycling_pickup_date"], "%d/%m/%Y").date(),  # Collection date
-                t = "Recycle",  # Collection type
-                icon = ICON_MAP["Recycle"],  # Collection icon
+                date=datetime.strptime(
+                    data["recycling_pickup_date"], "%d/%m/%Y"
+                ).date(),  # Collection date
+                t="Recycle",  # Collection type
+                icon=ICON_MAP["Recycle"],  # Collection icon
             )
         )
 
         entries.append(
             Collection(
-                date = datetime.strptime(data["next_greenwaste_date"], "%d/%m/%Y").date(),  # Collection date
-                t = "Organic",  # Collection type
-                icon = ICON_MAP["Organic"],  # Collection icon
+                date=datetime.strptime(
+                    data["next_greenwaste_date"], "%d/%m/%Y"
+                ).date(),  # Collection date
+                t="Organic",  # Collection type
+                icon=ICON_MAP["Organic"],  # Collection icon
             )
         )
 

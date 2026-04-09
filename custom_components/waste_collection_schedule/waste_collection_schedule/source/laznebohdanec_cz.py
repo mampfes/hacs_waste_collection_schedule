@@ -2,10 +2,10 @@ import datetime as dt
 import io
 import logging
 import re
+import xml.etree.ElementTree as ET
 import zipfile
 from pathlib import Path
 from urllib.parse import urljoin
-import xml.etree.ElementTree as ET
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -13,15 +13,17 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Lázně Bohdaneč"
-DESCRIPTION = "Source of city waste collection calendar (paper/plastic/mixed) of Lázně Bohdaneč."
+DESCRIPTION = (
+    "Source of city waste collection calendar (paper/plastic/mixed) of Lázně Bohdaneč."
+)
 URL = "https://lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523"
 OFFICIAL_PAGE_URL = URL
-TEST_CASES = {"Lázně Bohdaneč": {}}
+TEST_CASES: dict[str, dict[str, str]] = {"Lázně Bohdaneč": {}}
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "By default no arguments are required. The integration will automatically\n"
         "retrieve the current XLSX link from the official city page (Lázně Bohdaneč\n"
-        "website, sections \"Odpady\" -> \"Svozový kalendář\").\n"
+        'website, sections "Odpady" -> "Svozový kalendář").\n'
         "* If you want to pin the exact URL, open that page, click the XLSX download link,\n"
         "  copy the direct XLSX URL, and use it as `url`.\n"
         "* As a fallback you can download the file and use a local `file` path. Beware you need to manually upload file to HA.\n"
@@ -112,7 +114,7 @@ class Source:
             sheet_xml = zf.read("xl/worksheets/sheet1.xml")
 
         year = _extract_year(strings)
-        sheet = ET.fromstring(sheet_xml)
+        sheet = ET.fromstring(sheet_xml)  # nosec B314
         rows = _collect_rows(sheet, strings)
 
         month_rows = _collect_month_rows(rows)
@@ -180,7 +182,7 @@ def _read_shared_strings(zf: zipfile.ZipFile) -> list[str]:
     except KeyError:
         # Some XLSX files use inline strings only and do not include sharedStrings.xml
         return []
-    sst = ET.fromstring(sst_xml)
+    sst = ET.fromstring(sst_xml)  # nosec B314
     strings: list[str] = []
     for si in sst.findall("s:si", NS):
         parts = []
@@ -305,11 +307,7 @@ def _discover_xlsx_url(page_url: str, session: requests.Session) -> str:
 
     # Fallback: try any href mentioning XLSX, even outside <a> tags
     hrefs = re.findall(r'href=["\']([^"\']+)["\']', html, flags=re.IGNORECASE)
-    candidates = [
-        h
-        for h in hrefs
-        if ".xlsx" in h.lower() or "file.ashx" in h.lower()
-    ]
+    candidates = [h for h in hrefs if ".xlsx" in h.lower() or "file.ashx" in h.lower()]
     if not candidates:
         raise ValueError("No XLSX link found on the page")
 

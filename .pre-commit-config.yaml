@@ -18,7 +18,8 @@ repos:
     hooks:
       - id: codespell
         args:
-          - --ignore-words-list=hass,alot,datas,dof,dur,farenheit,hist,iff,ines,ist,lightsensor,mut,nd,pres,referer,ser,serie,te,technik,ue,uint,visability,wan,wanna,withing,Adresse,termine,adresse,oder,alle,assistent,hart,marz,worthing,linz,celle,vor,leibnitz,januar,februar,juni,juli,oktober,dezember,limite,acpi,aci,meda,nome,nowe,brough,woking,SHS,Poing,carmel
+          - -I
+          - .codespellignore
           - --skip="./.*,*.csv,*.json"
           - --quiet-level=2
         exclude_types: [csv, json]
@@ -60,6 +61,7 @@ repos:
       - id: check-executables-have-shebangs
         stages: [manual]
       - id: check-json
+        exclude: ^(\.(devcontainer|vscode)/)
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.16.0
     hooks:

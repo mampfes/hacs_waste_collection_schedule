@@ -12,7 +12,10 @@ TEST_CASES = {
     "City Hall": {"street_address": "600 4th Ave"},
     "Ballard Builders": {"street_address": "7022 12th Ave NW"},
     "Carmona Court": {"street_address": "1127 17th Ave E"},
-    "2111 E John St": {"street_address":"2111 E John St","prem_code": "DRMGcnGxUEg+gu8pN8vesQ=="}
+    "2111 E John St": {
+        "street_address": "2111 E John St",
+        "prem_code": "DRMGcnGxUEg+gu8pN8vesQ==",
+    },
 }
 
 
@@ -22,7 +25,7 @@ def get_service_icon(service_name):
 
 
 class Source:
-    def __init__(self, street_address, prem_code = None):
+    def __init__(self, street_address, prem_code=None):
         self._street_address = street_address
         self._prem_code = prem_code
 

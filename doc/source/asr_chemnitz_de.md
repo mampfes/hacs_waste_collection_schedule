@@ -26,7 +26,7 @@ waste_collection_schedule:
 **object_number**  
 *(String | Integer) (optional)*
 
-only needed if the selecter asks after entering the house number for an object number
+only needed if the selector asks after entering the house number for an object number
 
 ## Example
 

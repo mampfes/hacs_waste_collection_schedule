@@ -74,9 +74,7 @@ class Source:
 
                 # The website now uses <li> elements for each bin type
                 list_items = result_row[2].find_all("li")
-                collection_items = [
-                    li.get_text(strip=True) for li in list_items
-                ]
+                collection_items = [li.get_text(strip=True) for li in list_items]
                 for collection_type in collection_items:
                     if not collection_type:
                         continue

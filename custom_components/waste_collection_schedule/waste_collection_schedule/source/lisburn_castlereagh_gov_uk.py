@@ -67,7 +67,7 @@ class Source:
             response.raise_for_status()
             try:
                 address_list = response.json().get("html")
-            except:
+            except Exception:
                 raise SourceArgumentNotFound("postcode", self._postcode)
 
             soup = bs4.BeautifulSoup(address_list, features="html.parser")
@@ -106,7 +106,7 @@ class Source:
 
         try:
             next_collections = response.json().get("nextCollections")
-        except:
+        except Exception:
             raise ValueError("No collection data in response")
 
         entries = []  # List that holds collection schedule

@@ -124,7 +124,7 @@ def _rule_odd_only(day: str | None, color: str) -> tuple | None:
 
 
 @_tab(STANDARD_RESIDENTIAL)
-def _standard_residential(entry: dict) -> list[tuple]:
+def _standard_residential(entry: dict) -> list[tuple | None]:
     return [
         _rule_weekly(entry.get("redServiceDay"), "red"),
         _rule_alternating(entry.get("yellowServiceDay"), "yellow", "green"),
@@ -132,7 +132,7 @@ def _standard_residential(entry: dict) -> list[tuple]:
 
 
 @_tab(DUAL_COLLECTION)
-def _dual_collection(entry: dict) -> list[tuple]:
+def _dual_collection(entry: dict) -> list[tuple | None]:
     return [
         _rule_weekly(entry.get("redServiceDay"), "red"),
         _rule_weekly(entry.get("yellowServiceDay"), "yellow"),
@@ -141,7 +141,7 @@ def _dual_collection(entry: dict) -> list[tuple]:
 
 
 @_tab(DUAL_COLLECTION_ALT)
-def _dual_collection_alt(entry: dict) -> list[tuple]:
+def _dual_collection_alt(entry: dict) -> list[tuple | None]:
     return [
         _rule_weekly(entry.get("redServiceDay"), "red"),
         _rule_weekly(entry.get("redServiceDay2"), "red"),
@@ -151,7 +151,7 @@ def _dual_collection_alt(entry: dict) -> list[tuple]:
 
 
 @_tab(INDEPENDENT_YELLOW_ZONE)
-def _independent_yellow_zone(entry: dict) -> list[tuple]:
+def _independent_yellow_zone(entry: dict) -> list[tuple | None]:
     return [
         _rule_weekly(entry.get("redServiceDay"), "red"),
         _rule_weekly(entry.get("redServiceDay2"), "red"),
@@ -162,7 +162,7 @@ def _independent_yellow_zone(entry: dict) -> list[tuple]:
 
 
 @_tab(COMBINED_RED_YELLOW)
-def _combined_red_yellow(entry: dict) -> list[tuple]:
+def _combined_red_yellow(entry: dict) -> list[tuple | None]:
     return [
         _rule_weekly(entry.get("redServiceDay"), "red"),
         _rule_weekly(entry.get("yellowServiceDay"), "yellow"),
@@ -170,7 +170,7 @@ def _combined_red_yellow(entry: dict) -> list[tuple]:
 
 
 @_tab(DUAL_COLLECTION_VARIANT)
-def _dual_collection_variant(entry: dict) -> list[tuple]:
+def _dual_collection_variant(entry: dict) -> list[tuple | None]:
     return [
         _rule_weekly(entry.get("redServiceDay"), "red"),
         _rule_weekly(entry.get("redServiceDay2"), "red"),
@@ -180,7 +180,7 @@ def _dual_collection_variant(entry: dict) -> list[tuple]:
 
 
 @_tab(MULTI_UNIT_BUILDING)
-def _multi_unit_building(entry: dict) -> list[tuple]:
+def _multi_unit_building(entry: dict) -> list[tuple | None]:
     return [
         _rule_weekly(entry.get("redServiceDay"), "red"),
         _rule_weekly(entry.get("redServiceDay2"), "red"),
@@ -191,7 +191,7 @@ def _multi_unit_building(entry: dict) -> list[tuple]:
 
 
 @_tab(LARGE_COMPLEX)
-def _large_complex(entry: dict) -> list[tuple]:
+def _large_complex(entry: dict) -> list[tuple | None]:
     return [
         _rule_weekly(entry.get("redServiceDay"), "red"),
         _rule_weekly(entry.get("redServiceDay2"), "red"),
@@ -235,7 +235,7 @@ def _odd_only(pattern: dict, day: str, color: str, is_zone_a: bool) -> None:
 def _build_pattern(
     is_zone_a: bool, rules: list[tuple | None]
 ) -> dict[str, list[tuple]]:
-    pattern = {"even_week": [], "odd_week": []}
+    pattern: dict[str, list[tuple]] = {"even_week": [], "odd_week": []}
 
     for rule in rules:
         if not rule:

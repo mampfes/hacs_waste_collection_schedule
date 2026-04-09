@@ -48,8 +48,16 @@ ICON_MAP = {
 TEST_CASES = {
     "Beaufort": {"commune": "Beaufort"},
     "Reisdorf": {"commune": "Reisdorf"},
-    "Bech - specific street": {"commune": "Bech", "localite": "Bech", "rue": "Am Biirk"},
-    "Pétange - Rodange": {"commune": "Pétange", "localite": "Rodange", "rue": "Rue Willy Huberty"},
+    "Bech - specific street": {
+        "commune": "Bech",
+        "localite": "Bech",
+        "rue": "Am Biirk",
+    },
+    "Pétange - Rodange": {
+        "commune": "Pétange",
+        "localite": "Rodange",
+        "rue": "Rue Willy Huberty",
+    },
 }
 
 
@@ -77,14 +85,26 @@ class Source:
         rows = _fetch_rows()
 
         # --- Validate commune ---
-        all_communes = sorted({r.get("Commune", "").strip() for r in rows if r.get("Commune", "").strip()})
+        all_communes = sorted(
+            {r.get("Commune", "").strip() for r in rows if r.get("Commune", "").strip()}
+        )
         if self._commune not in all_communes:
-            raise SourceArgumentNotFoundWithSuggestions("commune", self._commune, all_communes)
+            raise SourceArgumentNotFoundWithSuggestions(
+                "commune", self._commune, all_communes
+            )
 
-        commune_rows = [r for r in rows if r.get("Commune", "").strip() == self._commune]
+        commune_rows = [
+            r for r in rows if r.get("Commune", "").strip() == self._commune
+        ]
 
         # --- Validate / resolve localite ---
-        all_localites = sorted({r.get("Localité", "").strip() for r in commune_rows if r.get("Localité", "").strip()})
+        all_localites = sorted(
+            {
+                r.get("Localité", "").strip()
+                for r in commune_rows
+                if r.get("Localité", "").strip()
+            }
+        )
 
         if all_localites:
             # This commune has per-locality rows
@@ -95,11 +115,14 @@ class Source:
                     all_localites,
                 )
             if self._localite not in all_localites:
-                raise SourceArgumentNotFoundWithSuggestions("localite", self._localite, all_localites)
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "localite", self._localite, all_localites
+                )
 
             # Include rows matching the locality AND rows with no locality (commune-wide)
             localite_rows = [
-                r for r in commune_rows
+                r
+                for r in commune_rows
                 if r.get("Localité", "").strip() in (self._localite, "")
             ]
         else:
@@ -107,11 +130,13 @@ class Source:
             localite_rows = commune_rows
 
         # --- Validate / resolve rue ---
-        all_rues = sorted({
-            r.get("Rue", "").strip()
-            for r in localite_rows
-            if r.get("Rue", "").strip() and r.get("Rue", "").strip() != _ALL_STREETS
-        })
+        all_rues = sorted(
+            {
+                r.get("Rue", "").strip()
+                for r in localite_rows
+                if r.get("Rue", "").strip() and r.get("Rue", "").strip() != _ALL_STREETS
+            }
+        )
 
         if all_rues:
             # Has per-street rows (beyond "Toutes les rues")
@@ -125,7 +150,8 @@ class Source:
                 raise SourceArgumentNotFoundWithSuggestions("rue", self._rue, all_rues)
 
             active_rows = [
-                r for r in localite_rows
+                r
+                for r in localite_rows
                 if r.get("Rue", "").strip() in (self._rue, _ALL_STREETS)
             ]
         else:

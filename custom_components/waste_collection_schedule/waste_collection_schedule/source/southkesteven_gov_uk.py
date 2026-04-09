@@ -91,7 +91,11 @@ class Source:
         if not collections and not self._address_id.startswith("U"):
             lookup_resp = session.post(
                 ADDRESS_LOOKUP_URL,
-                data={"query": self._address_id, "searchNlpg": "False", "classification": ""},
+                data={
+                    "query": self._address_id,
+                    "searchNlpg": "False",
+                    "classification": "",
+                },
                 timeout=30,
             )
             lookup_resp.raise_for_status()

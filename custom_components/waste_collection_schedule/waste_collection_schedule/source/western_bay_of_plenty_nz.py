@@ -4,7 +4,6 @@ from typing import List
 from xml.etree import ElementTree
 
 import requests
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Western Bay of Plenty District Council"
@@ -33,9 +32,9 @@ ADDRESS_INFO_URL = f"{API_URL}/addressInfo2"
 
 
 def _extract_json(raw: str) -> dict:
-    """The addressInfo2 endpoint returns SOAP XML followed by a JSON object.
+    """Extract and return the JSON portion from the addressInfo2 endpoint response.
 
-    Extract and return the JSON portion.
+    The endpoint returns SOAP XML followed by a JSON object.
     """
     idx = raw.find("{")
     if idx < 0:
@@ -75,7 +74,9 @@ class Source:
         resp.raise_for_status()
 
         # Response is XML; parse it
-        root = ElementTree.fromstring(resp.text.split("}{")[0] if "}{" in resp.text else resp.text)
+        root = ElementTree.fromstring(  # nosec B314
+            resp.text.split("}{")[0] if "}{" in resp.text else resp.text
+        )
 
         # Handle the SOAP envelope wrapping — filter to only individual
         # result elements (skip the container <AddressSearchResult> wrapper
@@ -105,9 +106,8 @@ class Source:
 
         data = _extract_json(resp.text)
 
-        result = (
-            data.get("GetRefuseInformationByValuationResponse", {})
-            .get("GetRefuseInformationByValuationResult", {})
+        result = data.get("GetRefuseInformationByValuationResponse", {}).get(
+            "GetRefuseInformationByValuationResult", {}
         )
 
         if result.get("ValuationFound") != "true":
@@ -115,9 +115,8 @@ class Source:
                 f"No waste collection data found for ValuationId {valuation_id}"
             )
 
-        connection = (
-            result.get("ServiceConnectionList", {})
-            .get("ServiceConnection", {})
+        connection = result.get("ServiceConnectionList", {}).get(
+            "ServiceConnection", {}
         )
 
         bin_info = connection.get("BinInfo", {})
@@ -165,9 +164,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Fetch Western Bay of Plenty kerbside collection dates"
     )
-    parser.add_argument(
-        "address", nargs="+", help="Address to look up"
-    )
+    parser.add_argument("address", nargs="+", help="Address to look up")
     parser.add_argument(
         "--debug", action="store_true", help="Enable HTTP debug logging"
     )

@@ -1,4 +1,5 @@
 from datetime import datetime
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 

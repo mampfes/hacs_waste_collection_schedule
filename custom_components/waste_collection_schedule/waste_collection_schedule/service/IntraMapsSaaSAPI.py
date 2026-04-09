@@ -83,15 +83,13 @@ class MapsClientSaaS(MapsClient):
 
         results = r.json().get("fullText", [])
         if not results:
-            raise IntraMapsSearchError(
-                f"No results found for address: {address}")
+            raise IntraMapsSearchError(f"No results found for address: {address}")
 
         # If a suburb is provided, attempt to prefer results that mention it (case-insensitive).
         if suburb is not None and suburb.strip():
             suburb_normalized = suburb.strip().casefold()
             for found_address in results:
-                display_value = str(found_address.get(
-                    "displayValue", "")).casefold()
+                display_value = str(found_address.get("displayValue", "")).casefold()
                 if suburb_normalized in display_value:
                     return found_address
                 return found_address
@@ -118,8 +116,7 @@ class MapsClientSaaS(MapsClient):
         # Extract required keys. GIS APIs often use inconsistent casing (dbkey vs dbKey).
         db_key = self._get_case_insensitive(result, "dbKey")
         if not db_key:
-            raise IntraMapsSearchError(
-                "Search result missing critical 'dbKey'.")
+            raise IntraMapsSearchError("Search result missing critical 'dbKey'.")
 
         selection_layer = (
             self._get_case_insensitive(result, "selectionLayer")
@@ -128,8 +125,7 @@ class MapsClientSaaS(MapsClient):
         )
 
         map_key = (
-            self._get_case_insensitive(
-                result, "mapKey") or self.cfg.default_map_key
+            self._get_case_insensitive(result, "mapKey") or self.cfg.default_map_key
         )
 
         payload = {

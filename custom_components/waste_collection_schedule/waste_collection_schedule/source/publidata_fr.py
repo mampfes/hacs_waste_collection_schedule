@@ -5,7 +5,6 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 from dateutil.rrule import (
-    DAILY,
     FR,
     MO,
     MONTHLY,
@@ -536,9 +535,9 @@ class Source:
         )
 
     def _extract_date_range(self, input_string):
-        """Split a string containing a date range such as "2024 Jan 01-2024 May 12" or "Jan 01-Mar 14" and return:
-        - the date range
-        - the remaining string
+        """Split a string containing a date range and return the range and remaining string.
+
+        Handles formats like "2024 Jan 01-2024 May 12" or "Jan 01-Mar 14".
         """
         # Try to match format with year: "2024 Jan 01-2024 May 12"
         match = re.search(r"^(\d{4} \w+ \d{1,2}-\d{4} \w+ \d{1,2})(.*)", input_string)
@@ -581,10 +580,9 @@ class Source:
         return {"dtstart": start_date, "until": end_date}
 
     def _parse_explicit_multi_dates(self, opening_hours):
-        """
-        Handle malformed Publidata format such as:
-        "2025 Jan 17,2026 Jan 16,2027 Jan 15 06:00-23:59"
-        and return a list of explicit UTC datetimes.
+        """Handle malformed Publidata format and return a list of explicit UTC datetimes.
+
+        Parses formats like "2025 Jan 17,2026 Jan 16,2027 Jan 15 06:00-23:59".
         """
         if not opening_hours:
             return []

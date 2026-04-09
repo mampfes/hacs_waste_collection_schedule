@@ -1,18 +1,22 @@
 import re
 from datetime import datetime
 
-import urllib3
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,  # type: ignore[attr-defined]
+)
 
 # The server does not send its intermediate CA certificate, causing SSL
 # verification to fail. suppress the resulting warnings.
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 TITLE = "Mole Valley District Council"
-DESCRIPTION = "Source for molevalley.gov.uk services for Mole Valley District Council, UK."
+DESCRIPTION = (
+    "Source for molevalley.gov.uk services for Mole Valley District Council, UK."
+)
 URL = "https://www.molevalley.gov.uk"
 TEST_CASES = {
     "44 Chapel Court Dorking": {

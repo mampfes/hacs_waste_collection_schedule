@@ -203,8 +203,8 @@ class Source:
         map_name: str | None = None,
     ):
 
-        self.items = []
-        self.icons = {}
+        self.items: list[dict] = []
+        self.icons: dict[int, str] = {}
 
         self.garbage_calendar_id = garbage_calendar_id
         self.street = street
@@ -363,7 +363,7 @@ class Source:
 
         for item in self.items:
             garbageName = self.icons.get(item["garbage_label_id"])
-            icon = ICON_MAP.get(garbageName)
+            icon = ICON_MAP.get(garbageName) if garbageName else None
 
             collections.append(
                 Collection(

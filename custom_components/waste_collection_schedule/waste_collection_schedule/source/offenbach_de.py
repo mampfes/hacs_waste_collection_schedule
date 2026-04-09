@@ -1,7 +1,6 @@
 import logging
 
-from waste_collection_schedule.source.insert_it_de import \
-    Source as InsertItSource
+from waste_collection_schedule.source.insert_it_de import Source as InsertItSource
 
 _LOGGER = logging.getLogger(__name__)
 

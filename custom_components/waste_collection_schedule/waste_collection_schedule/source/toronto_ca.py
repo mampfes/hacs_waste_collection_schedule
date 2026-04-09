@@ -1,5 +1,4 @@
 import csv
-import json
 from datetime import datetime, timedelta
 
 import requests
@@ -88,9 +87,7 @@ class Source:
             timeout=30,
         )
 
-        schedule_cursor = self.get_first_result(
-            schedule_response.json(), "AREACURSOR1"
-        )
+        schedule_cursor = self.get_first_result(schedule_response.json(), "AREACURSOR1")
 
         if not schedule_cursor:
             return entries
@@ -102,8 +99,7 @@ class Source:
 
         # normalize fieldnames (strip whitespace)
         reader.fieldnames = [
-            name.strip() if name else name
-            for name in reader.fieldnames
+            name.strip() if name else name for name in reader.fieldnames
         ]
 
         csv_lines = list(reader)

@@ -1,8 +1,9 @@
 import logging
 import re
-import requests
 import urllib.parse
 from datetime import date, datetime, timezone
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
@@ -53,20 +54,20 @@ PARAM_TRANSLATIONS = {
         "behaelter": "Container size",
         "hausnummer": "House Number",
         "ortsteil": "District",
-        "strasse": "Street"
+        "strasse": "Street",
     },
     "fr": {
         "behaelter": "Poubelle",
         "hausnummer": "Numéro civique",
         "ortsteil": "District",
-        "strasse": "Rue"
+        "strasse": "Rue",
     },
     "it": {
         "behaelter": "Contenitori",
         "hausnummer": "numero civico",
         "ortsteil": "frazione",
-        "strasse": "Strada"
-    }
+        "strasse": "Strada",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
@@ -117,11 +118,11 @@ def _parse_odata_date(value: str) -> date | None:
 
 class Source:
     def __init__(
-            self,
-            ortsteil: str,
-            strasse: str,
-            hausnummer: str | int | None = None,
-            behaelter: dict[str, str | int] | None = None,
+        self,
+        ortsteil: str,
+        strasse: str,
+        hausnummer: str | int | None = None,
+        behaelter: dict[str, str | int] | None = None,
     ):
         self._ortsteil = ortsteil
         self._strasse = strasse
@@ -142,7 +143,6 @@ class Source:
 
     def _resolve_ids(self) -> None:
         """Resolve ortsteil and strasse names to the numeric IDs required by the API."""
-
         # Step 1: OrteMitOrtsteilen → flat list [{OrteId, Ortsname, Ortsteilname}]
         r = requests.get(
             f"{BASE_URL}/OrteMitOrtsteilen",

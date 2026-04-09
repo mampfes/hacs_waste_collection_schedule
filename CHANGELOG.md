@@ -415,7 +415,7 @@ Welcome to the following first-time contributors! :tada:
 - Peterborough, UK probably needs to be reconfigured
 - Königstein, DE: You need to reconfigure to the AWIDO source
 - cambridge_gov_uk and scambs_gov_uk are deprecated GUI configurations will automatically be migrated to the new greater_cambridge_waste_org source YAML configuration should migrate (the old sources still work for now)
-- Lippe, Germany: removed, use `abfallnavi_de` instaed. GUI configurations will be migrated into a broken `abfallnavi_de` configuration and need to reconfigure (3 dots next to source -> reconfigure) and add a street here. Yaml configurations need to manually migrate to abfallnavi_de.
+- Lippe, Germany: removed, use `abfallnavi_de` instead. GUI configurations will be migrated into a broken `abfallnavi_de` configuration and need to reconfigure (3 dots next to source -> reconfigure) and add a street here. Yaml configurations need to manually migrate to abfallnavi_de.
 
 ## Added sources
 
@@ -427,7 +427,7 @@ Welcome to the following first-time contributors! :tada:
 - added Gmina Zgierz (thanks @Krecikkko)
 - added Monash, AU (thanks @spexiono)
 - added AMSA, IT (Thanks @francinze)
-- added Komunala Kranj, Slovenia (thnaks @TKosir)
+- added Komunala Kranj, Slovenia (thanks @TKosir)
 - added Wrexham County Borough Council, UK (thanks @harrymilnes)
 - added ICS documentation for Speyer, Germany (thanks @DerDreschner)
 - added Lille metropole to Publidata, France (thanks @orandin)
@@ -486,8 +486,8 @@ Welcome to the following first-time contributors! :tada:
 - fixed Birmingham City, UK (thanks @jamesonuk)
 - fixed Stirling, AU (thanks @markvp)
 - fixed Helmstedt, Germany (thanks @shaguarger)
-- fixed Peterborough, UK (thnaks @skipishere)
-- fixed gfa_lueneburg_de did not retun dates for 2025 anymore (thanks @CommSter)
+- fixed Peterborough, UK (thanks @skipishere)
+- fixed gfa_lueneburg_de did not return dates for 2025 anymore (thanks @CommSter)
 - fixed Abfall.IO (thanks @TheDuffman85)
 - fixed publidata_ca (thanks @jensenc)
 - fixed Royal Borough Of Greenwich, UK (thanks @timocov)
@@ -509,7 +509,7 @@ Welcome to the following first-time contributors! :tada:
 
 - plano_gov: improved config flow default arguments (thanks @GingerSnap-xx)
 - renoweb_dk improved error logs (thanks @runejuhl)
-- udpate Bodenseekreis, Germany ICS documentation (thanks @snowstoked)
+- update Bodenseekreis, Germany ICS documentation (thanks @snowstoked)
 - Frankenberg, Germany: actually apply street filter (thanks @hnrmrl)
 - minor update to merri_bek_vic_gov_au (thanks @flythecoop10)
 - Werra-Meißner-Kreis, Germany add 2026 support (thanks @Demel75)
@@ -566,7 +566,7 @@ Welcome to the following first-time contributors! :tada:
 - fixed Rushmoor, UK (thanks @JamieBriers)
 - fixed Recyclecoach (thanks @dansollok)
 - fixed Darlington, UK (thanks @dansollok)
-- fixed South Glos, UK (thansk @dt215git)
+- fixed South Glos, UK (thanks @dt215git)
 - fixed Unley SA, AU (thanks @dansollok)
 - fixed iweb_itouchvision_com now migrated to iapp_itouchvision_com (thanks @dt215git)
 - fixed Darebin VIC, AU (thanks @jdndm)
@@ -631,7 +631,7 @@ Welcome to the following first-time contributors! :tada:
 - fixed Lichfield DC, UK (thanks @Troon)
 - fixed royalgreenwich, UK (thanks @timocov)
 - fixed Central Bedfordshire Council, UK (thanks @chrisf4lc0n)
-- fixed Swindon, UK (thansk @joshwillcock)
+- fixed Swindon, UK (thanks @joshwillcock)
 - fixed rbwm_gov_uk (thanks @geozza123)
 - fixed Hull CIty Council, UK (thanks @MattThePandah)
 - fixed Rotherham, UK (thanks @dt215git)
@@ -683,7 +683,7 @@ The Royal Borough of Kingston Council: Source removed you need to move to the IC
 - fixed Montreal, Canada shows wrong collections days (thanks @mfortin)
 - The Royal Borough of Kingston Council: moved to ICS source (thanks @elyobelyob)
 - fixed fkf_bo_hu (@5ila5)
-- fixed North Kesteven, UK (thnaks @dt215git)
+- fixed North Kesteven, UK (thanks @dt215git)
 - fixed North Ayrshire, UK not working for some addresses (thanks @dt215git)
 - fixed Frankston, VIC, AU (thanks @dt215git)
 - fixed Oxford, UK (thanks @rbrunt)
@@ -833,7 +833,7 @@ The Royal Borough of Kingston Council: Source removed you need to move to the IC
 - Added Dartford, UK (thanks @dt215git)
 - Added South Staffordshire, UK (thanks @dt215git)
 - Added dedicated source for Heidelberg, Germany (thanks @DerDreschner)
-- Added ICS Documentaiton for Litovel, Czech Republic (thanks @honza-kasik)
+- Added ICS Documentation for Litovel, Czech Republic (thanks @honza-kasik)
 - Added Bremerhaven, Germany (@5ila5)
 - Added Gmina Środa Śląska, Poland (thanks @ksciana)
 - Added OLO, Bratislava, Slovakia (thanks @mniejo)
@@ -842,7 +842,7 @@ The Royal Borough of Kingston Council: Source removed you need to move to the IC
 ## Fixed Sources
 
 - fixed: AWB Emsland only showed next year's collection if this and next year's collections were available  (thanks @niklasdoerfler)
-- fixed republicservices not working if holliday response is None (thanks @Jinra)
+- fixed republicservices not working if holiday response is None (thanks @Jinra)
 - fixed zva_wmk_de fetching correct ULR for specific yeards (thanks @Demel75)
 - fixed wakefield_gov_uk (@5ila5)
 - fixed carmarthenshire_gov_wales (@5ila5)
@@ -908,7 +908,7 @@ The Royal Borough of Kingston Council: Source removed you need to move to the IC
 - added AWV Ostthüringen, Germany (@5ila5)
 - added MZV Rotenburg Bebra, Germany (@5ila5)
 - added ICS Documentation for Bottrop, Germany (@5ila5)
-- added ICS Documentaiton for Würzburg, Germany (thanks @rikroe)
+- added ICS Documentation for Würzburg, Germany (thanks @rikroe)
 
 ## Fixed Sources
 
@@ -946,7 +946,7 @@ The Royal Borough of Kingston Council: Source removed you need to move to the IC
 ## Added Sources
 
 - Added Gojer, Austria (@5ila5)
-- Added ICS docuementation for Rhein-Lahn Kreis (@5ila5)
+- Added ICS documentation for Rhein-Lahn Kreis (@5ila5)
 - Added City of Schwabach, Germany (@5ila5)
 - Added Eisenkappel-Vellach, Austria (@5ila5)
 - Added Midandeastantrim, UK (thanks @AHARVEY99)
@@ -1087,7 +1087,7 @@ The Royal Borough of Kingston Council: Source removed you need to move to the IC
 
 - a_region_ch some backend changes, bin types might be renamed
 - renfrewshire_gov_uk shows correct dates if multiple waste  types are collected at one day (thanks @JamiePhonic)
-- umweltverbaende_at allows to define multiple calendars in GUI configuraiton (@5ila5)
+- umweltverbaende_at allows to define multiple calendars in GUI configuration (@5ila5)
 
 
 
@@ -1187,7 +1187,7 @@ added by @dan-r,  @mampfes, @5ila5
 - added Ards and North Down Borough Council (@5ila5)
 - added ICS documentation for AWG Bassum / LK Diepholz, Germany (thanks @engels0n)
 - added ICS documentation for Steinburg, Germany (@5ila5)
-- added ICS documentaiton for Noardeast-Fryslân & Dantumadiel, Netherlands (thanks @ HA comunity user: htahta)
+- added ICS documentation for Noardeast-Fryslân & Dantumadiel, Netherlands (thanks @ HA community user: htahta)
 - added Townsville, Australia (@5ila5)
 - added Solihull, UK (@5ila5)
 - added Darlington, UK (@5ila5)
@@ -1195,7 +1195,7 @@ added by @dan-r,  @mampfes, @5ila5
 - added City of Darebin, Australia (thanks @joshuapmorgan)
 - added Vale Of Glamorgan Council, Wales, UK (@5ila5)
 - added Impactapps, Australia (thanks @morganpollock)
-- moved abfall_havelland_de from ICS to a dedicated source as ICS source did not work propperly (@5ila5)
+- moved abfall_havelland_de from ICS to a dedicated source as ICS source did not work properly (@5ila5)
 - added Cockburn, Australia (thanks @jbyway)
 - added  NVAA, Sweden (thanks @williamhogman)
 - added ICS documentation for Kredsløb, Denmark (@5ila5)
@@ -1284,7 +1284,7 @@ added by @dan-r,  @mampfes, @5ila5
 - added Ards and North Down Borough Council (@5ila5)
 - added ICS documentation for AWG Bassum / LK Diepholz, Germany (thanks @engels0n)
 - added ICS documentation for Steinburg, Germany (@5ila5)
-- added ICS documentaiton for Noardeast-Fryslân & Dantumadiel, Netherlands (thanks @ HA comunity user: htahta)
+- added ICS documentation for Noardeast-Fryslân & Dantumadiel, Netherlands (thanks @ HA community user: htahta)
 - added Townsville, Australia (@5ila5)
 - added Solihull, UK (@5ila5)
 - added Darlington, UK (@5ila5)
@@ -1292,7 +1292,7 @@ added by @dan-r,  @mampfes, @5ila5
 - added City of Darebin, Australia (thanks @joshuapmorgan)
 - added Vale Of Glamorgan Council, Wales, UK (@5ila5)
 - added Impactapps, Australia (thanks @morganpollock)
-- moved abfall_havelland_de from ICS to a dedicated source as ICS source did not work propperly (@5ila5)
+- moved abfall_havelland_de from ICS to a dedicated source as ICS source did not work properly (@5ila5)
 - added Cockburn, Australia (thanks @jbyway)
 - added  NVAA, Sweden (thanks @williamhogman)
 - added ICS documentation for Kredsløb, Denmark (@5ila5)
@@ -1352,7 +1352,7 @@ added by @dan-r,  @mampfes, @5ila5
 
 - fixed glasgow_gov_uk (thanks @shinrath)
 - fixed mansfield_vic_gov_au error for some addresses (thanks @tathamoddie)
-- fixed bsr_de retuns collection dates one day later (@5ila5)
+- fixed bsr_de returns collection dates one day later (@5ila5)
 - fixed maidstone_gov_uk (@5ial5)
 - fixed app_abfallplus_de for apps that show a lot of collection types below a Sondermüll Headline
 - fixed ecoharmonogram_pl not working correctly for all streets (thanks @pawelhulek)
@@ -1521,7 +1521,7 @@ added by @dan-r,  @mampfes, @5ila5
 
 # Quick Fix
 
-- remove dependency shaply (numpy) as it conflicted with some inofficial HA installations
+- remove dependency shaply (numpy) as it conflicted with some unofficial HA installations
 
 # Others
 
@@ -1599,7 +1599,7 @@ added by @dan-r,  @mampfes, @5ila5
 - fixed Tonbridge & Malling, UK not showing next year collections (@5ila5)
 - fixed Westberks, not showing next year collections (@5ila5)
 - fixed fix_was_wolfsburg_de (@5ila5)
-- fixed abfallwirtschaft_pforzheim_de propperly collect next years data (@5ila5)
+- fixed abfallwirtschaft_pforzheim_de properly collect next years data (@5ila5)
 - fixed ccc_govt_nz not respecting holiday overwrites (thanks @georgenell)
 - fixed movar_no (thanks @seedzero)
 - fixed awb_bad_kreuznach_de (@5ila5)
@@ -1667,7 +1667,7 @@ added by @dan-r,  @mampfes, @5ila5
 - fixed staedteservice_de (@5ila5)
 - fixed zva_sek_de (thanks @HolliDolli)
 - fixed wokingham_gov_uk (thanks @badguy99)
-- fixed waverley_gov_uk and northherts_gov_uk not propperly checking house number any more (@5ila5)
+- fixed waverley_gov_uk and northherts_gov_uk not properly checking house number any more (@5ila5)
 - fixed portsmouth_gov_uk (@5ila5)
 - fixed cardinia_vic_gov_au (thanks @Zachoz)
 - fixed citiesapps, now requires authentication (@5ila5) 
@@ -1695,13 +1695,13 @@ added by @dan-r,  @mampfes, @5ila5
 - awigo_de Landkreis Osnabrück, Germany (@5ila5)
 - Yorkshire Council - Hambleton, UK (@5ila5)
 - Allerdale, UK (thanks @dt215git)
-- FKF Budaörs, HU (tahnks @TMShader)
+- FKF Budaörs, HU (thanks @TMShader)
 - Wokingham, UK (thankgs @dt215git)
 - West and Chester, UK (thanks @bbrks)
 - GVA Baden, Austria (thanks @dt215git)
 - Enzkreis, Germany ICS documentation (@5ila5)
 - Tameside, UK (thanks @dt215git)
-- FKF Budapest, HU (tahnks @TMShader)
+- FKF Budapest, HU (thanks @TMShader)
 - Lincoln, UK (@5ila5)
 - Mansfield, UK (thanks @dt215git)
 - Mamirolle, France (thanks @AghilasMessara)
@@ -1839,7 +1839,7 @@ ADDED
 Fixes/improvements:
 - fix aberdeenshire_gov_uk (thanks @dt215git)
 - improve thehills_nsw_gov_au argument searching (@5ila5)
-- eastherts_gov_uk Fixing vairable names and add support for garden waste (thanks @WhimsySpoon)
+- eastherts_gov_uk Fixing variable names and add support for garden waste (thanks @WhimsySpoon)
 - south_norfolk_and_broadland_gov_uk.py add better configuration options (@5ila5)
 - awb_bad_kreuznach add support for the new App (@5ila5)
 - fixed northlincs_gov_uk (thanks @dt215git)
@@ -2177,7 +2177,7 @@ Fixes/improvements:
 - fix recycleapp.be (thanks @algra4)
 - add source Rushmoor Borough Council, UK (thanks @SavageCore)
 - add source Manchester City Council, UK (thanks @thinkl33t)
-- remove python 3.10 type hints (to renable python 3.9 support)
+- remove python 3.10 type hints (to re-enable python 3.9 support)
 
 
 
@@ -2463,7 +2463,7 @@ add source for WAS Wolfsburg, Germany
 ## [1.5.0] - 2021-07-04
 
 - add source for hvcgroep, Netherlands
-- add sourc for Lerum, Sweden
+- add source for Lerum, Sweden
 - improve error logging for ICS
 
 

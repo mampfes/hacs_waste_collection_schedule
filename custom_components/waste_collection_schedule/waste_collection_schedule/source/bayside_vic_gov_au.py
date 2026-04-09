@@ -41,7 +41,9 @@ class Source:
         }
 
         # Step 1: Initialize IntraMaps session
-        projects_url = "https://gis.bayside.vic.gov.au/IntraMaps910/ApplicationEngine/Projects/"
+        projects_url = (
+            "https://gis.bayside.vic.gov.au/IntraMaps910/ApplicationEngine/Projects/"
+        )
         params = {
             "configId": CONFIG_ID,
             "appType": "MapBuilder",
@@ -59,12 +61,16 @@ class Source:
         _LOGGER.debug("IntraMaps session ID: %s", sessionid)
 
         # Step 2: Load the Waste module
-        modules_url = "https://gis.bayside.vic.gov.au/IntraMaps910/ApplicationEngine/Modules/"
-        module_payload = json.dumps({
-            "module": "Waste",
-            "includeWktInSelection": True,
-            "includeBasemaps": False,
-        })
+        modules_url = (
+            "https://gis.bayside.vic.gov.au/IntraMaps910/ApplicationEngine/Modules/"
+        )
+        module_payload = json.dumps(
+            {
+                "module": "Waste",
+                "includeWktInSelection": True,
+                "includeBasemaps": False,
+            }
+        )
         params_module = {"IntraMapsSession": sessionid}
 
         response = session.post(
@@ -73,7 +79,9 @@ class Source:
         response.raise_for_status()
 
         # Step 3: Search for the address
-        search_url = "https://gis.bayside.vic.gov.au/IntraMaps910/ApplicationEngine/Search/"
+        search_url = (
+            "https://gis.bayside.vic.gov.au/IntraMaps910/ApplicationEngine/Search/"
+        )
         search_payload = json.dumps({"fields": [self._street_address]})
         search_params = {
             "infoPanelWidth": "350",
@@ -106,14 +114,16 @@ class Source:
 
         # Step 4: Get detailed waste collection information
         refine_url = "https://gis.bayside.vic.gov.au/IntraMaps910/ApplicationEngine/Search/Refine/Set"
-        refine_payload = json.dumps({
-            "selectionLayer": selection_layer,
-            "mapKey": map_key,
-            "dbKey": db_key,
-            "infoPanelWidth": 350,
-            "mode": "Refresh",
-            "zoomType": "current",
-        })
+        refine_payload = json.dumps(
+            {
+                "selectionLayer": selection_layer,
+                "mapKey": map_key,
+                "dbKey": db_key,
+                "infoPanelWidth": 350,
+                "mode": "Refresh",
+                "zoomType": "current",
+            }
+        )
         refine_params = {"IntraMapsSession": sessionid}
 
         response = session.post(
@@ -145,16 +155,23 @@ class Source:
                                 field_value = str(field_value_obj)
 
                             # Parse collection dates
-                            if field_name in ["Recycling", "Domestic Waste", "Food & Green Waste"]:
+                            if field_name in [
+                                "Recycling",
+                                "Domestic Waste",
+                                "Food & Green Waste",
+                            ]:
                                 entries.extend(
-                                    self._parse_collection_field(field_name, field_value)
+                                    self._parse_collection_field(
+                                        field_name, field_value
+                                    )
                                 )
 
         return entries
 
     def _parse_collection_field(self, waste_type, value_text):
-        """
-        Parse collection field text like:
+        """Parse collection field text.
+
+        Handles formats like:
         - "Fortnightly on Wednesday, Next: 11 Feb 2026"
         - "Weekly on Wednesdays"
         """
@@ -187,12 +204,19 @@ class Source:
             # Extract the day of week
             day_match = re.search(r"on\s+(\w+day)", value_text, re.IGNORECASE)
             if day_match:
-                day_name = day_match.group(1).lower().rstrip('s')  # Remove trailing 's' from "Wednesdays"
+                day_name = (
+                    day_match.group(1).lower().rstrip("s")
+                )  # Remove trailing 's' from "Wednesdays"
 
                 # Map day names to weekday numbers (0=Monday, 6=Sunday)
                 weekdays = {
-                    "monday": 0, "tuesday": 1, "wednesday": 2, "thursday": 3,
-                    "friday": 4, "saturday": 5, "sunday": 6
+                    "monday": 0,
+                    "tuesday": 1,
+                    "wednesday": 2,
+                    "thursday": 3,
+                    "friday": 4,
+                    "saturday": 5,
+                    "sunday": 6,
                 }
 
                 if day_name in weekdays:

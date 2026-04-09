@@ -103,17 +103,25 @@ class Source:
         entries = []
 
         # Always include Gelber Sack
-        ics_urls = [self._build_ics_url(ICS_ZONE_MAPPING["gelber_sack"])]
+        gelber_sack_code = ICS_ZONE_MAPPING["gelber_sack"]
+        assert isinstance(gelber_sack_code, str)
+        ics_urls = [self._build_ics_url(gelber_sack_code)]
 
         # Add zone-specific URLs based on configured zones
-        if self._restmuell_zone and self._restmuell_zone in ICS_ZONE_MAPPING["restmuell"]:
-            ics_urls.append(self._build_ics_url(ICS_ZONE_MAPPING["restmuell"][self._restmuell_zone]))
+        restmuell_zones = ICS_ZONE_MAPPING["restmuell"]
+        assert isinstance(restmuell_zones, dict)
+        if self._restmuell_zone and self._restmuell_zone in restmuell_zones:
+            ics_urls.append(self._build_ics_url(restmuell_zones[self._restmuell_zone]))
 
-        if self._biomuell_zone and self._biomuell_zone in ICS_ZONE_MAPPING["biomuell"]:
-            ics_urls.append(self._build_ics_url(ICS_ZONE_MAPPING["biomuell"][self._biomuell_zone]))
+        biomuell_zones = ICS_ZONE_MAPPING["biomuell"]
+        assert isinstance(biomuell_zones, dict)
+        if self._biomuell_zone and self._biomuell_zone in biomuell_zones:
+            ics_urls.append(self._build_ics_url(biomuell_zones[self._biomuell_zone]))
 
-        if self._altpapier_zone and self._altpapier_zone in ICS_ZONE_MAPPING["altpapier"]:
-            ics_urls.append(self._build_ics_url(ICS_ZONE_MAPPING["altpapier"][self._altpapier_zone]))
+        altpapier_zones = ICS_ZONE_MAPPING["altpapier"]
+        assert isinstance(altpapier_zones, dict)
+        if self._altpapier_zone and self._altpapier_zone in altpapier_zones:
+            ics_urls.append(self._build_ics_url(altpapier_zones[self._altpapier_zone]))
 
         # Fetch and parse each ICS feed
         for ics_url in ics_urls:

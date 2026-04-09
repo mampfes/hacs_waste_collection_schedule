@@ -10,8 +10,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Fetchable(Protocol):
-    def fetch(self) -> list[Collection]:
-        ...
+    def fetch(self) -> list[Collection]: ...  # noqa: E704
 
 
 class SourceModule(Protocol):
