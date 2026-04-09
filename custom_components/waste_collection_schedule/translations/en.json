@@ -4640,6 +4640,37 @@
           "commune": "city of Montesquieu's community : Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d’Eyrans, Saint-Morillon, Saint-Selve, Saucats"
         }
       },
+      "args_grandbesancon_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "insee_code": "INSEE Code",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "House number (optional, helps filter results)",
+          "insee_code": "5-digit INSEE code of your commune (e.g. 25014 for Amagney, 25056 for Besançon)",
+          "street": "Street name as shown in the Grand Besançon system"
+        }
+      },
+      "reconfigure_grandbesancon_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "insee_code": "INSEE Code",
+          "street": "Street"
+        },
+        "data_description": {
+          "house_number": "House number (optional, helps filter results)",
+          "insee_code": "5-digit INSEE code of your commune (e.g. 25014 for Amagney, 25056 for Besançon)",
+          "street": "Street name as shown in the Grand Besançon system"
+        }
+      },
       "args_mamirolle_info": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

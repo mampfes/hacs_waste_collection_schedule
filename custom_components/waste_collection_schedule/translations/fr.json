@@ -4497,6 +4497,37 @@
         },
         "data_description": {}
       },
+      "args_grandbesancon_fr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro",
+          "insee_code": "Code INSEE",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Numéro de rue (optionnel, aide à filtrer les résultats)",
+          "insee_code": "Code INSEE à 5 chiffres de votre commune (ex : 25014 pour Amagney, 25056 pour Besançon)",
+          "street": "Nom de la rue tel qu'affiché dans le système Grand Besançon"
+        }
+      },
+      "reconfigure_grandbesancon_fr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro",
+          "insee_code": "Code INSEE",
+          "street": "Rue"
+        },
+        "data_description": {
+          "house_number": "Numéro de rue (optionnel, aide à filtrer les résultats)",
+          "insee_code": "Code INSEE à 5 chiffres de votre commune (ex : 25014 pour Amagney, 25056 pour Besançon)",
+          "street": "Nom de la rue tel qu'affiché dans le système Grand Besançon"
+        }
+      },
       "args_mamirolle_info": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
