@@ -49,10 +49,6 @@ TEST_CASES = {
         "city": "Neustadt",
         "street": "Hauberallee (Kernstadt)",
     },
-    "Goldberg": {
-        "service_id": "zvo",
-        "city": "Goldberg",
-    },
     "Main-Kinzig-Kreis": {
         "service_id": "mkk",
         "city": "Freigericht",
@@ -172,7 +168,6 @@ SERVICE_MAP = {
         ],
     },
     "esn": {"list": ["Neustadt an der Weinstraße"], "url": "https://www.neustadt.eu/"},
-    "zvo": {"list": ["Ostholstein"], "url": "https://www.zvo.com/"},
     "zac": {"list": ["Celle"], "url": "https://www.zacelle.de/"},
     "ben": {
         "list": ["Landkreis Grafschaft"],

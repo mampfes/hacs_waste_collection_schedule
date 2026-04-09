@@ -12066,6 +12066,33 @@
         },
         "data_description": {}
       },
+      "args_zvo_com": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ortsname (z.B. 'Bad Schwartau')",
+          "street": "Straßenname (bei einigen Orten nicht erforderlich)"
+        }
+      },
+      "reconfigure_zvo_com": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort",
+          "street": "Straße"
+        },
+        "data_description": {
+          "city": "Ortsname (z.B. 'Bad Schwartau')",
+          "street": "Straßenname (bei einigen Orten nicht erforderlich)"
+        }
+      },
       "args_zakb_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

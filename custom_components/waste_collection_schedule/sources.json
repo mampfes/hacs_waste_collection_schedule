@@ -9344,14 +9344,6 @@
       "id": "app_abfallplus_de"
     },
     {
-      "title": "Ostholstein",
-      "module": "jumomind_de",
-      "default_params": {
-        "service_id": "zvo"
-      },
-      "id": "jumomind_de"
-    },
-    {
       "title": "Ostprignitz-Ruppin",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -10666,6 +10658,18 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "ZVO Abfuhrkalender",
+      "module": "zvo_com",
+      "default_params": {},
+      "id": "zvo_com"
+    },
+    {
+      "title": "ZVO Entsorgung - Zweckverband Ostholstein",
+      "module": "zvo_com",
+      "default_params": {},
+      "id": "zvo_com"
     },
     {
       "title": "Zweckverband Abfallwirtschaft Kreis Bergstra\u00dfe",

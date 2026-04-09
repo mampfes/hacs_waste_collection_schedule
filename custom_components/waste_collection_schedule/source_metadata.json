@@ -1452,6 +1452,14 @@
     "howto": {},
     "urls": {}
   },
+  "zvo_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zvo_com.md",
+    "howto": {
+      "de": "Finden Sie Ihren Ort und Ihre Straße unter https://www.zvo.com/abfuhrkalender2026. Einige kleinere Orte benötigen keine Straße.",
+      "en": "Find your city and street at https://www.zvo.com/abfuhrkalender2026. Some smaller towns do not require a street."
+    },
+    "urls": {}
+  },
   "zakb_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zakb_de.md",
     "howto": {},

@@ -1437,7 +1437,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Olsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Ortenaukreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappog
 - [Osterode am Harz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
-- [Ostholstein](/doc/source/jumomind_de.md) / zvo.com
 - [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Petershagen](/doc/ics/mein_abfallkalender_online.md) / petershagen.de
 - [Pirmasens](/doc/ics/mein_abfallkalender_online.md) / pirmasens.de
@@ -1615,6 +1614,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Zollernalbkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallzak
 - [Zollernalbkreis](/doc/ics/abfall_io_ics.md) / zollernalbkreis.de
 - [Zorneding](/doc/source/awido_de.md) / lra-ebe.de
+- [ZVO Abfuhrkalender](/doc/source/zvo_com.md) / zvo.com/abfuhrkalender2026
+- [ZVO Entsorgung - Zweckverband Ostholstein](/doc/source/zvo_com.md) / zvo.com
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Hannover](/doc/source/aha_region_de.md) / aha-region.de

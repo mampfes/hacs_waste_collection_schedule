@@ -12170,6 +12170,33 @@
         },
         "data_description": {}
       },
+      "args_zvo_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "City name (e.g. 'Bad Schwartau')",
+          "street": "Street name (optional for some cities)"
+        }
+      },
+      "reconfigure_zvo_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "City name (e.g. 'Bad Schwartau')",
+          "street": "Street name (optional for some cities)"
+        }
+      },
       "args_zakb_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
