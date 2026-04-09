@@ -4335,6 +4335,14 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Georgina (ON)",
+      "module": "ics",
+      "default_params": {
+        "split_at": ", "
+      },
+      "id": "ics_georgina_ca"
+    },
+    {
       "title": "Halifax, NS",
       "module": "ics",
       "default_params": {
@@ -10383,6 +10391,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "WBL L\u00fcnen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_wbl_luenen_de"
     },
     {
       "title": "WBO Wirtschaftsbetriebe Oberhausen",

@@ -741,6 +741,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Delta (BC)](/doc/source/recyclecoach_com.md) / delta.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Durham Region, ON](/doc/ics/recollect.md) / durham.ca
+- [Georgina (ON)](/doc/ics/georgina_ca.md) / georgina.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
@@ -1577,6 +1578,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Warburg](/doc/source/lobbe_app.md) / lobbe.app
 - [Warstein](/doc/source/lobbe_app.md) / lobbe.app
 - [Wasserburg](/doc/ics/mein_abfallkalender_online.md) / wasserburg.de
+- [WBL Lünen](/doc/ics/wbl_luenen_de.md) / wbl.de
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Weilrod](/doc/ics/mein_abfallkalender_online.md) / weilrod.de

@@ -161,6 +161,7 @@ This source has been successfully tested with the following service providers:
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Durham Region, ON](/doc/ics/recollect.md) / durham.ca
+- [Georgina (ON)](/doc/ics/georgina_ca.md) / georgina.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Longueuil (QC)](/doc/ics/longueuil_quebec.md) / longueuil.quebec
@@ -353,6 +354,7 @@ This source has been successfully tested with the following service providers:
 - [Vlotho](/doc/ics/vlotho_de.md) / vlotho.de
 - [VUE Waltrop](/doc/ics/vue_waltrop_de.md) / vue-waltrop.de
 - [Wasserburg](/doc/ics/mein_abfallkalender_online.md) / wasserburg.de
+- [WBL Lünen](/doc/ics/wbl_luenen_de.md) / wbl.de
 - [Weilrod](/doc/ics/mein_abfallkalender_online.md) / weilrod.de
 - [Wenden](/doc/ics/abfuhrtermine_info.md) / gemeinde-wenden.de
 - [Wetter](/doc/ics/mein_abfallkalender_online.md) / stadtbetrieb-wetter.de
