@@ -172,6 +172,13 @@
     "howto": {},
     "urls": {}
   },
+  "melvillecity_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/melvillecity_com_au.md",
+    "howto": {
+      "en": "Enter your street address including suburb (e.g. '43 Williams Road, Melville, WA'). Search at https://www.melvillecity.com.au/waste-and-environment/waste-recycling-fogo/residential-bins"
+    },
+    "urls": {}
+  },
   "monash_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monash_vic_gov_au.md",
     "howto": {
