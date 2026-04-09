@@ -6928,8 +6928,7 @@
       "title": "FES Frankfurter Entsorgungs- und Service GmbH",
       "module": "ics",
       "default_params": {
-        "regex": "(.*)\\s+\\|",
-        "split_at": " / "
+        "regex": "[^:]+:\\s*(.*)"
       },
       "id": "ics_fes_frankfurt_de"
     },
