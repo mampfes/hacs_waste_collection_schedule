@@ -387,6 +387,12 @@
       "id": "subiaco_wa_gov_au"
     },
     {
+      "title": "City of Tea Tree Gully",
+      "module": "teatreegully_sa_gov_au",
+      "default_params": {},
+      "id": "teatreegully_sa_gov_au"
+    },
+    {
       "title": "City of Victor Harbor",
       "module": "frwa_com_au",
       "default_params": {},
