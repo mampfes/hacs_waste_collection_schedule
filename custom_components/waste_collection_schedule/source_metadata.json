@@ -211,6 +211,13 @@
     "howto": {},
     "urls": {}
   },
+  "swan_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swan_wa_gov_au.md",
+    "howto": {
+      "en": "Enter your street address including suburb (e.g. '34 Oldenburg Pass Stratton'). Search at https://www.swan.wa.gov.au/waste-and-sustainability/waste-and-recycling-services/bins/find-my-bin-day"
+    },
+    "urls": {}
+  },
   "teatreegully_sa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/teatreegully_sa_gov_au.md",
     "howto": {

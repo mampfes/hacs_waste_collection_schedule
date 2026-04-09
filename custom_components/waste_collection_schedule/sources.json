@@ -393,6 +393,12 @@
       "id": "subiaco_wa_gov_au"
     },
     {
+      "title": "City of Swan",
+      "module": "swan_wa_gov_au",
+      "default_params": {},
+      "id": "swan_wa_gov_au"
+    },
+    {
       "title": "City of Tea Tree Gully",
       "module": "teatreegully_sa_gov_au",
       "default_params": {},
