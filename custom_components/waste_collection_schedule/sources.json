@@ -17780,6 +17780,14 @@
       "id": "lacity_gov"
     },
     {
+      "title": "City of Lowell, MA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of McKinney, TX",
       "module": "ics",
       "default_params": {

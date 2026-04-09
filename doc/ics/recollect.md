@@ -20,6 +20,7 @@ known to work with:
 |Simcoe County, ON|Canada|[simcoe.ca](https://www.simcoe.ca/dpt/swm/when)|
 |City of Bloomington, IN|USA|[api.recollect.net/r/area/bloomingtonin](https://api.recollect.net/r/area/bloomingtonin)|
 |City of Cambridge, MA|USA|[cambridgema.gov](https://www.cambridgema.gov/services/curbsidecollections)|
+|City of Lowell, MA|USA|[lowellma.gov](https://www.lowellma.gov/195/Solid-Waste-Recycling)|
 |City of Georgetown, TX|USA|[texasdisposal.com](https://www.texasdisposal.com/waste-wizard/)|
 |City of Vancouver|Canada|[vancouver.ca](https://vancouver.ca/home-property-development/garbage-and-recycling-collection-schedules.aspx)|
 |City of Nanaimo|Canada|[nanaimo.ca](https://www.nanaimo.ca/city-services/garbage-recycling/collectionschedule)|
