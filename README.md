@@ -2839,35 +2839,6 @@ If you'd like to help with any of these, please raise an [issue](https://github.
  Not sure if this is relevant for this project.
 -->
 
-# Known Issues
-
-The following waste service providers return errors when running the test_source script:
-
-- `banyule_vic_gov_au`: JSONDecodeError, caused by not supported Captcha wall
-- `awn_de`: all tests return 0 entries
-
-If you can fix any of these, please raise a Pull Request with the updates.
-
----
-
-## Home Assistant Hangs
-
-**Problem:** Home Assistant hangs during restart or configuration check. This occurs typically after Waste Collection Schedule has been added to the configuration.
-
-**Root Cause:** Home Assistant tries to install the required Python packages and fails somehow. This is not an issue of Waste Collection Schedule.
-
-**Solution:** Try to reinstall Waste Collection Schedule (if you are using HACS) or install the required Python packages manually. This list of required packages can be found in [manifest.json](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/manifest.json#L9).
-
-The actual procedure depends on your Home Assistant installation type.
-
-Example:
-
-```bash
-sudo docker exec -it homeassistant /bin/bash
-pip list
-pip install icalevents  # in case icalevents is missing
-```
-
 # License
 
 ![github license](https://img.shields.io/badge/License-MIT-orange)
