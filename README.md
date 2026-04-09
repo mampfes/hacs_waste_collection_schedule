@@ -1474,6 +1474,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rödermark](/doc/ics/mein_abfallkalender_online.md) / roedermark.de
 - [Rüthen](/doc/source/lobbe_app.md) / lobbe.app
 - [Saalekreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
+- [SAB Magdeburg Abfuhrkalender](/doc/source/magdeburg_de.md) / sab.ssl.metageneric.de/app/sab_i_tp/index.php
 - [Salzgitter (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Salzlandkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallslk
 - [Schalksmühle](/doc/source/lobbe_app.md) / lobbe.app
@@ -1545,6 +1546,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Stolberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
+- [Städtischer Abfallwirtschaftsbetrieb Magdeburg](/doc/source/magdeburg_de.md) / magdeburg.de
 - [Sulzbach](/doc/ics/mein_abfallkalender_online.md) / sulzbach-taunus.de
 - [Sundern](/doc/source/lobbe_app.md) / lobbe.app
 - [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de

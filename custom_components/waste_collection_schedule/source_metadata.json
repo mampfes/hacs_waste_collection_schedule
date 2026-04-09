@@ -1372,6 +1372,14 @@
     "howto": {},
     "urls": {}
   },
+  "magdeburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/magdeburg_de.md",
+    "howto": {
+      "de": "Geben Sie Ihren Straßennamen und die Hausnummer ein, wie auf der SAB Magdeburg Webseite angezeigt (z.B. 'Halberstädter Chaussee 66'). Suchen Sie unter https://sab.ssl.metageneric.de/app/sab_i_tp/index.php",
+      "en": "Enter your street name and house number as shown on the SAB Magdeburg website (e.g. 'Halberstädter Chaussee 66'). Search at https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
+    },
+    "urls": {}
+  },
   "abfuhrplan_schwabach_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfuhrplan_schwabach_de.md",
     "howto": {},

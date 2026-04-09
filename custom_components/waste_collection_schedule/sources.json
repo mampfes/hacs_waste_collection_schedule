@@ -9620,6 +9620,12 @@
       "id": "muellabfuhr_de"
     },
     {
+      "title": "SAB Magdeburg Abfuhrkalender",
+      "module": "magdeburg_de",
+      "default_params": {},
+      "id": "magdeburg_de"
+    },
+    {
       "title": "Salzgitter (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -10137,6 +10143,12 @@
       "module": "staedteservice_de",
       "default_params": {},
       "id": "staedteservice_de"
+    },
+    {
+      "title": "St\u00e4dtischer Abfallwirtschaftsbetrieb Magdeburg",
+      "module": "magdeburg_de",
+      "default_params": {},
+      "id": "magdeburg_de"
     },
     {
       "title": "Sulzbach",

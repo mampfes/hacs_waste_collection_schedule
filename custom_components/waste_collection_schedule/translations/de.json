@@ -10577,6 +10577,29 @@
         },
         "data_description": {}
       },
+      "args_magdeburg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße und Hausnummer"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Straßenname und Hausnummer (z.B. 'Halberstädter Chaussee 66')"
+        }
+      },
+      "reconfigure_magdeburg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße und Hausnummer"
+        },
+        "data_description": {
+          "street": "Straßenname und Hausnummer (z.B. 'Halberstädter Chaussee 66')"
+        }
+      },
       "args_ics_asf_online_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
