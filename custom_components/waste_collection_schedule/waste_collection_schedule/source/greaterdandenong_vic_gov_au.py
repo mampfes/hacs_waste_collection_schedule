@@ -1,7 +1,12 @@
 from datetime import datetime, timedelta
 
-import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.service.IntraMaps import (
+    IntegrationClient,
+    IntegrationClientConfig,
+    IntraMapsSearchError,
+)
 
 TITLE = "Greater Dandenong City Council"
 DESCRIPTION = "Source for greaterdandenong.vic.gov.au waste collection."
@@ -20,9 +25,12 @@ ICON_MAP = {
     "Street Sweep": "mdi:broom",
 }
 
-BASE_URL = "https://maps.greaterdandenong.com/IntraMaps21B/ApplicationEngine/Integration/api/search/"
-API_KEY = "05dbdab3-8568-4d7e-83e0-22cc06a09f7f"
-CONFIG_ID = "00000000-0000-0000-0000-000000000000"
+INTRAMAPS_CONFIG = IntegrationClientConfig(
+    base_url="https://maps.greaterdandenong.com",
+    instance="IntraMaps21B",
+    api_key="05dbdab3-8568-4d7e-83e0-22cc06a09f7f",
+)
+
 SEARCH_FORM = "35f43a60-983b-4c11-ac56-8b1d10e8389f"
 DETAILS_FORM = "1ee8052a-e624-45c6-8aee-a2bb990f6a8c"
 
@@ -52,53 +60,27 @@ class Source:
         self._address = address
 
     def fetch(self) -> list[Collection]:
-        headers = {"authorization": f"apikey {API_KEY}"}
+        client = IntegrationClient(INTRAMAPS_CONFIG)
 
-        # Search for address
-        r = requests.get(
-            BASE_URL,
-            params={
-                "ConfigId": CONFIG_ID,
-                "form": SEARCH_FORM,
-                "fields": self._address,
-            },
-            headers=headers,
-        )
-        r.raise_for_status()
-        results = r.json()
+        try:
+            fields = client.search(SEARCH_FORM, self._address)
+        except IntraMapsSearchError as e:
+            raise SourceArgumentNotFound("address", self._address) from e
 
-        if not results:
-            raise Exception(f"Address not found: {self._address}")
-
-        # Use first result
-        fields = {item["name"]: item["value"] for item in results[0]}
         mapkey = fields["mapkey"]
         dbkey = fields["dbkey"]
 
-        # Get collection details
-        r = requests.get(
-            BASE_URL,
-            params={
-                "ConfigId": CONFIG_ID,
-                "form": DETAILS_FORM,
-                "fields": f"{mapkey},{dbkey}",
-            },
-            headers=headers,
-        )
-        r.raise_for_status()
-        details = r.json()
-
-        data = {item["name"]: item["value"] for item in details[0]}
+        data = client.search(DETAILS_FORM, f"{mapkey},{dbkey}")
 
         entries = []
 
-        # Waste day is weekly - generate next 4 weeks
+        # Waste day is weekly
         waste_day = data.get("waste_day", "").strip()
         if waste_day in DAYS:
             today = datetime.today().date()
             days_ahead = (DAYS[waste_day] - today.weekday()) % 7
             next_date = today + timedelta(days=days_ahead)
-            for i in range(4):
+            for i in range(13):
                 entries.append(
                     Collection(
                         date=next_date + timedelta(weeks=i),
@@ -114,7 +96,7 @@ class Source:
                 garden_date = datetime.strptime(
                     garden_str.split(", ", 1)[1], "%d %b %Y"
                 ).date()
-                for i in range(4):
+                for i in range(13):
                     entries.append(
                         Collection(
                             date=garden_date + timedelta(weeks=i * 2),
@@ -132,7 +114,7 @@ class Source:
                 recycle_date = datetime.strptime(
                     recycle_str.split(", ", 1)[1], "%d %b %Y"
                 ).date()
-                for i in range(4):
+                for i in range(13):
                     entries.append(
                         Collection(
                             date=recycle_date + timedelta(weeks=i * 2),

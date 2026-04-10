@@ -8,6 +8,11 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentRequired,
 )
+from waste_collection_schedule.service.IntraMaps import (
+    IntegrationClient,
+    IntegrationClientConfig,
+    IntraMapsSearchError,
+)
 
 TITLE = "City of Melville"
 DESCRIPTION = "Source for City of Melville waste collection."
@@ -43,12 +48,15 @@ PARAM_TRANSLATIONS = {
     },
 }
 
-INTRAMAPS_BASE = "https://melville.spatial.t1cloud.com/spatial/intramaps/applicationengine/Integration/api"
-CONFIG_ID = "3f105b05-d2ee-419c-8265-1ab592559a33"
-PROJECT_ID = "78ad3422-3dd6-4540-b318-782d4d1313a0"
-WASTE_FORM_ID = "0e72c05c-0181-428a-b4e0-e2be69cf69dc"
-API_KEY = "bb6fcd4c-7de3-4ce5-8f6d-dc3335ffb26e"
+INTRAMAPS_CONFIG = IntegrationClientConfig(
+    base_url="https://melville.spatial.t1cloud.com",
+    instance="spatial/intramaps",
+    api_key="bb6fcd4c-7de3-4ce5-8f6d-dc3335ffb26e",
+    config_id="3f105b05-d2ee-419c-8265-1ab592559a33",
+    project="78ad3422-3dd6-4540-b318-782d4d1313a0",
+)
 
+WASTE_FORM_ID = "0e72c05c-0181-428a-b4e0-e2be69cf69dc"
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 
 WEEKDAYS = {
@@ -69,10 +77,7 @@ class Source:
         self._address = address.strip()
 
     def fetch(self) -> list[Collection]:
-        headers = {
-            "Authorization": f"apikey {API_KEY}",
-            "Content-Type": "application/json",
-        }
+        client = IntegrationClient(INTRAMAPS_CONFIG)
 
         # Step 1: Geocode address via Nominatim
         r = requests.get(
@@ -95,42 +100,13 @@ class Source:
         lng = float(results[0]["lon"])
 
         # Step 2: Reproject from EPSG:4326 to EPSG:7850
-        r = requests.get(
-            f"{INTRAMAPS_BASE}/Reproject",
-            params={
-                "configId": CONFIG_ID,
-                "project": PROJECT_ID,
-                "x": str(lng),
-                "y": str(lat),
-                "epsg": "epsg:4326",
-                "epsgout": "epsg:7850",
-            },
-            headers=headers,
-            timeout=30,
-        )
-        r.raise_for_status()
-        proj = r.json()
+        proj = client.reproject(lng, lat, "epsg:4326", "epsg:7850")
 
         # Step 3: Query waste collection zone
-        r = requests.get(
-            f"{INTRAMAPS_BASE}/search/",
-            params={
-                "configId": CONFIG_ID,
-                "project": PROJECT_ID,
-                "form": WASTE_FORM_ID,
-                "fields": f"{proj['x']},{proj['y']}",
-            },
-            headers=headers,
-            timeout=30,
-        )
-        r.raise_for_status()
-        data = r.json()
-
-        if not data or not data[0]:
-            raise SourceArgumentNotFound("address", self._address)
-
-        # Parse response fields
-        fields = {item["name"]: item["value"] for item in data[0]}
+        try:
+            fields = client.search(WASTE_FORM_ID, f"{proj['x']},{proj['y']}")
+        except IntraMapsSearchError as e:
+            raise SourceArgumentNotFound("address", self._address) from e
 
         entries = []
 

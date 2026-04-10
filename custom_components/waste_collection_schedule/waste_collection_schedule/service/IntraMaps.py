@@ -390,6 +390,113 @@ class MapsClient:
         self._session.close()
 
 
+# --- Integration API Client ---
+
+
+@dataclass(frozen=True)
+class IntegrationClientConfig:
+    """Configuration for the IntraMaps Integration (REST/apikey) API."""
+
+    base_url: str
+    instance: str = "IntraMaps23A"
+    api_key: str = ""
+    config_id: str = "00000000-0000-0000-0000-000000000000"
+    project: str = ""
+    timeout_s: int = 25
+
+
+class IntegrationClient:
+    """Client for the IntraMaps Integration API (apikey-authenticated REST)."""
+
+    def __init__(self, config: IntegrationClientConfig):
+        self.cfg = config
+
+    def _url(self, path: str) -> str:
+        base = self.cfg.base_url.rstrip("/")
+        return f"{base}/{self.cfg.instance}/ApplicationEngine/Integration/api{path}"
+
+    def _headers(self) -> dict[str, str]:
+        h: dict[str, str] = {}
+        if self.cfg.api_key:
+            h["Authorization"] = f"apikey {self.cfg.api_key}"
+        return h
+
+    def search(self, form_id: str, fields: str) -> dict[str, str]:
+        """Search using an Integration API form.
+
+        Returns a name→value dict from the first result.
+        """
+        params: dict[str, str] = {
+            "configId": self.cfg.config_id,
+            "form": form_id,
+            "fields": fields,
+        }
+        if self.cfg.project:
+            params["project"] = self.cfg.project
+
+        r = requests.get(
+            self._url("/search/"),
+            params=params,
+            headers=self._headers(),
+            timeout=self.cfg.timeout_s,
+        )
+        r.raise_for_status()
+        results = r.json()
+
+        if not results or not results[0]:
+            raise IntraMapsSearchError(f"No results found for: {fields}")
+
+        return {item["name"]: item["value"] for item in results[0]}
+
+    def search_all(self, form_id: str, fields: str) -> list[dict[str, str]]:
+        """Search returning all results as a list of name→value dicts."""
+        params: dict[str, str] = {
+            "configId": self.cfg.config_id,
+            "form": form_id,
+            "fields": fields,
+        }
+        if self.cfg.project:
+            params["project"] = self.cfg.project
+
+        r = requests.get(
+            self._url("/search/"),
+            params=params,
+            headers=self._headers(),
+            timeout=self.cfg.timeout_s,
+        )
+        r.raise_for_status()
+        results = r.json()
+
+        if not results:
+            raise IntraMapsSearchError(f"No results found for: {fields}")
+
+        return [{item["name"]: item["value"] for item in result} for result in results]
+
+    def reproject(
+        self, x: float, y: float, epsg_in: str, epsg_out: str
+    ) -> dict[str, Any]:
+        """Reproject coordinates between coordinate systems."""
+        params = {
+            "configId": self.cfg.config_id,
+            "project": self.cfg.project,
+            "x": str(x),
+            "y": str(y),
+            "epsg": epsg_in,
+            "epsgout": epsg_out,
+        }
+        r = requests.get(
+            self._url("/Reproject"),
+            params=params,
+            headers=self._headers(),
+            timeout=self.cfg.timeout_s,
+        )
+        r.raise_for_status()
+        return r.json()
+
+
+# --- Helpers ---
+
+
 def extract_panel_fields(
     response: dict[str, Any], panel_key: str = "info1"
 ) -> dict[str, str]:
