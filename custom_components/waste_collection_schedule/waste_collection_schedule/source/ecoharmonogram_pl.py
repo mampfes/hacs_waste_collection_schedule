@@ -192,7 +192,7 @@ TEST_CASES = {
         "town": "Sławków",
         "street": "Jagiellońska",
         "house_number": "32",
-        "additional_sides_matcher": "", # Available sides are "Zabudowa wysoka" and "" (empty string)
+        "additional_sides_matcher": "",  # Available sides are "Zabudowa wysoka" and "" (empty string)
     },
 }
 
@@ -387,6 +387,12 @@ class Source:
                 to_return.append(street)
 
         if len(to_return) == 0:
+            if self.additional_sides_matcher_input == "":
+                raise SourceArgumentRequiredWithSuggestions(
+                    "additional_sides_matcher",
+                    self.additional_sides_matcher_input,
+                    {x["sides"] for x in streets["streets"]},
+                )
             raise SourceArgumentNotFoundWithSuggestions(
                 "additional_sides_matcher",
                 self.additional_sides_matcher_input,
