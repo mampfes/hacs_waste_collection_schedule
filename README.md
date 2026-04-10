@@ -2278,6 +2278,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
 - [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
 - [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
+- [Rybnik](/doc/source/rybnik_pl.md) / rybnik.eu
 - [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl
 - [SmiecioPlan](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Sopot](/doc/source/smiecioplan_pl.md) / smiecioplan.pl

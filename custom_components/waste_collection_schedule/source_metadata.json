@@ -1948,6 +1948,14 @@
     "howto": {},
     "urls": {}
   },
+  "rybnik_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rybnik_pl.md",
+    "howto": {
+      "en": "Download the current schedule PDF for your district from the Rybnik city website: https://www.rybnik.eu/dla-mieszkancow/odpady-komunalne/harmonogramy-odbioru-2026. Open page 2 of the PDF and note your Rejon (sub-district zone) name from the leftmost column of the schedule table.",
+      "pl": "Pobierz aktualny harmonogram odbioru odpadów dla swojej dzielnicy ze strony Urzędu Miasta Rybnik: https://www.rybnik.eu/dla-mieszkancow/odpady-komunalne/harmonogramy-odbioru-2026. Otwórz stronę 2 PDF i sprawdź nazwę swojego Rejonu w lewej kolumnie tabeli harmonogramu."
+    },
+    "urls": {}
+  },
   "warszawa19115_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warszawa19115_pl.md",
     "howto": {},

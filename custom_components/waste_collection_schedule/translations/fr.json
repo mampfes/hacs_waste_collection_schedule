@@ -14407,6 +14407,30 @@
           "street": "Rue"
         }
       },
+      "args_rybnik_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "district": "District",
+          "property_type": "Property Type",
+          "sub_district": "Sub District"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_rybnik_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "district": "District",
+          "property_type": "Property Type",
+          "sub_district": "Sub District"
+        },
+        "data_description": {}
+      },
       "args_warszawa19115_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

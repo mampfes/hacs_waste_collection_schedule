@@ -14790,6 +14790,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Rybnik",
+      "module": "rybnik_pl",
+      "default_params": {},
+      "id": "rybnik_pl"
+    },
+    {
       "title": "SISMS.pl / BLISKO",
       "module": "sims_pl",
       "default_params": {},

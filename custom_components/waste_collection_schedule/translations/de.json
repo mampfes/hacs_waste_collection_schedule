@@ -14509,6 +14509,30 @@
           "street": "Straße"
         }
       },
+      "args_rybnik_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk",
+          "property_type": "Property Type",
+          "sub_district": "Sub District"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_rybnik_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk",
+          "property_type": "Property Type",
+          "sub_district": "Sub District"
+        },
+        "data_description": {}
+      },
       "args_warszawa19115_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
