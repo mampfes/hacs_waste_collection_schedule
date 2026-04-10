@@ -1461,7 +1461,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
 - [Pöring (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
-- [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Reichelsheim](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Remondis Rheinland](/doc/source/app_abfallplus_de.md) / Abfall+ App: rheinland
 - [RESO](/doc/source/reso_gmbh_de.md) / reso-gmbh.de

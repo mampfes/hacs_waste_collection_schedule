@@ -1417,11 +1417,6 @@
     "howto": {},
     "urls": {}
   },
-  "regioentsorgung_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/regioentsorgung_de.md",
-    "howto": {},
-    "urls": {}
-  },
   "rh_entsorgung_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rh_entsorgung_de.md",
     "howto": {},

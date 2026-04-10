@@ -9514,12 +9514,6 @@
       "id": "jumomind_de"
     },
     {
-      "title": "RegioEntsorgung St\u00e4dteregion Aachen",
-      "module": "regioentsorgung_de",
-      "default_params": {},
-      "id": "regioentsorgung_de"
-    },
-    {
       "title": "Reichelsheim",
       "module": "reso_gmbh_de",
       "default_params": {
