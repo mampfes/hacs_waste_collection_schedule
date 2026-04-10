@@ -303,6 +303,12 @@
       "id": "kingston_vic_gov_au"
     },
     {
+      "title": "City of Kwinana",
+      "module": "kwinana_wa_gov_au",
+      "default_params": {},
+      "id": "kwinana_wa_gov_au"
+    },
+    {
       "title": "City of Manningham",
       "module": "manningham_vic_gov_au",
       "default_params": {},
