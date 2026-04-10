@@ -102,12 +102,6 @@ SERVICE_MAP = [
         "company": "rad",
     },
     {
-        "title": "Reinis",
-        "url": "https://www.reinis.nl/",
-        "uuid": "9dc25c8a-175a-4a41-b7a1-83f237a80b77",
-        "company": "reinis",
-    },
-    {
         "title": "Twente Milieu",
         "url": "https://www.twentemilieu.nl/",
         "uuid": "8d97bb56-5afd-4cbc-a651-b4f7314264b4",

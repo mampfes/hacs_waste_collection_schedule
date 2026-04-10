@@ -46,6 +46,7 @@ TEST_CASES = {
         "house_number": "1",
         "service": "hvcgroep",
     },
+    "Reinis": {"postal_code": "3201AA", "house_number": "1", "service": "reinis"},
     "ZRD": {"postal_code": "4691DH", "house_number": "4", "service": "zrd"},
 }
 
@@ -242,6 +243,16 @@ SERVICE_MAP = [
             "plastic_blik_drank": "mdi:recycle",
             "papier": "mdi:archive",
             "rest": "mdi:trash-can",
+        },
+    },
+    {
+        "title": "Reinis",
+        "api_url": "https://reinis.nl",
+        "icons": {
+            "appel-gft": "mdi:leaf",
+            "plastic-pak-blik": "mdi:recycle",
+            "doos-karton-papier": "mdi:archive",
+            "kliko-grijs-zak-grijs-rest": "mdi:trash-can",
         },
     },
     {

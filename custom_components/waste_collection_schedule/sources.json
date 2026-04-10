@@ -13595,11 +13595,11 @@
     },
     {
       "title": "Reinis",
-      "module": "ximmio_nl",
+      "module": "hvcgroep_nl",
       "default_params": {
-        "company": "reinis"
+        "service": "reinis"
       },
-      "id": "ximmio_nl"
+      "id": "hvcgroep_nl"
     },
     {
       "title": "Spaarnelanden",
