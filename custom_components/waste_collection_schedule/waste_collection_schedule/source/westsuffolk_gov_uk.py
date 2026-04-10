@@ -30,6 +30,11 @@ class Source:
 
     def fetch(self):
         session = requests.session()
+        session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
+            }
+        )
         args = {"UniqueId": self._uprn, "action": "SetAddress"}
 
         # get json file

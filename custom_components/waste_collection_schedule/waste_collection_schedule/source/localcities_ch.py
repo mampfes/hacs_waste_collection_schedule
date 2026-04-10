@@ -53,6 +53,15 @@ EXTRA_INFO = [
             "municipality_id": "3533",
         },
     },
+    {
+        "title": "Wangen bei Olten",
+        "url": "https://www.wangen-bei-olten.ch",
+        "country": "ch",
+        "default_params": {
+            "municipality": "wangen-bei-olten",
+            "municipality_id": "3629",
+        },
+    },
 ]
 
 ICON_MAP = {

@@ -15843,6 +15843,15 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Wangen bei Olten",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "wangen-bei-olten",
+        "municipality_id": "3629"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Wiedlisbach",
       "module": "ics",
       "default_params": {},
