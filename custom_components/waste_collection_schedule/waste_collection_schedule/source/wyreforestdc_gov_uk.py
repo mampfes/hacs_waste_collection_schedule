@@ -45,6 +45,11 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def get_date_by_weekday(weekday: str) -> date:
+    if weekday.strip().upper() == "TODAY":
+        return date.today()
+    if weekday.strip().upper() == "TOMORROW":
+        return date.today() + timedelta(days=1)
+
     this_week = re.match("This (.*?)$", weekday, re.IGNORECASE)
     next_week = re.match("Next (.*?)$", weekday, re.IGNORECASE)
     if this_week:
