@@ -1105,6 +1105,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Warrnambool City Council",
+      "module": "warrnambool_vic_gov_au",
+      "default_params": {},
+      "id": "warrnambool_vic_gov_au"
+    },
+    {
       "title": "Wellington Shire Council",
       "module": "impactapps_com_au",
       "default_params": {

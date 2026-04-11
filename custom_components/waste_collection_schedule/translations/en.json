@@ -2293,6 +2293,29 @@
         },
         "data_description": {}
       },
+      "args_warrnambool_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Full street address including suburb and postcode, e.g. '3 Kiama Ave WARRNAMBOOL VIC 3280'"
+        }
+      },
+      "reconfigure_warrnambool_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "street_address": "Full street address including suburb and postcode, e.g. '3 Kiama Ave WARRNAMBOOL VIC 3280'"
+        }
+      },
       "args_whitehorse_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
