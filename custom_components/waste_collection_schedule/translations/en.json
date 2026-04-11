@@ -360,6 +360,33 @@
         },
         "data_description": {}
       },
+      "args_brimbank_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar": "Calendar cycle",
+          "day": "Collection day"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "calendar": "Your calendar cycle (A or B). Check the map on the back of the waste calendar PDF.",
+          "day": "Your collection day (Monday to Friday). Check the map on the back of the waste calendar PDF."
+        }
+      },
+      "reconfigure_brimbank_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar": "Calendar cycle",
+          "day": "Collection day"
+        },
+        "data_description": {
+          "calendar": "Your calendar cycle (A or B). Check the map on the back of the waste calendar PDF.",
+          "day": "Your collection day (Monday to Friday). Check the map on the back of the waste calendar PDF."
+        }
+      },
       "args_brisbane_qld_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
