@@ -709,6 +709,12 @@
       "id": "lanecove_nsw_gov_au"
     },
     {
+      "title": "Launceston City Council",
+      "module": "launceston_tas_gov_au",
+      "default_params": {},
+      "id": "launceston_tas_gov_au"
+    },
+    {
       "title": "Light Regional Council",
       "module": "app_my_local_services_au",
       "default_params": {},

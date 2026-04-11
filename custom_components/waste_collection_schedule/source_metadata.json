@@ -337,6 +337,11 @@
     },
     "urls": {}
   },
+  "launceston_tas_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/launceston_tas_gov_au.md",
+    "howto": {},
+    "urls": {}
+  },
   "lismore_city_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lismore_city_nsw_gov_au.md",
     "howto": {
