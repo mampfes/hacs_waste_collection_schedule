@@ -164,5 +164,5 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(Collection(d[0], d[1], location=d[2]))
+            entries.append(Collection(d[0], d[1]))
         return entries
