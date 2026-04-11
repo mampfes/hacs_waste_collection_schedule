@@ -18007,6 +18007,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Northville Township, MI",
+      "module": "northville_township_mi_us",
+      "default_params": {},
+      "id": "northville_township_mi_us"
+    },
+    {
       "title": "Olympia, Washington, USA",
       "module": "recyclecoach_com",
       "default_params": {

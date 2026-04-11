@@ -4152,6 +4152,11 @@
     "howto": {},
     "urls": {}
   },
+  "northville_township_mi_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northville_township_mi_us.md",
+    "howto": {},
+    "urls": {}
+  },
   "republicservices_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/republicservices_com.md",
     "howto": {},
