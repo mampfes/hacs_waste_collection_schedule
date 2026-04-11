@@ -1081,6 +1081,12 @@
       "id": "thehills_nsw_gov_au"
     },
     {
+      "title": "Town of Bassendean",
+      "module": "bassendean_wa_gov_au",
+      "default_params": {},
+      "id": "bassendean_wa_gov_au"
+    },
+    {
       "title": "Town of Victoria Park",
       "module": "victoriapark_wa_gov_au",
       "default_params": {},
