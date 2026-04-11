@@ -67,6 +67,10 @@ ICON_MAP = {
     "Pop-Up Drop-Off - Fern Creek HS": "mdi:calendar",
     "Pop-Up Drop-Off Doss High": "mdi:calendar",
     "Backyard Composting Class": "mdi:compost",
+    "Grey Household Waste Cart": "mdi:trash-can",
+    "Blue Recycling Cart": "mdi:recycle",
+    "Green Organic Waste Cart": "mdi:leaf",
+    "No Collection Day": "mdi:alert",
 }
 
 EXTRA_INFO = [
@@ -173,6 +177,16 @@ EXTRA_INFO = [
         "country": "ca",
         "default_params": {"city": "Orillia", "state": "Ontario"},
     },
+    {
+        "title": "Medicine Hat (AB)",
+        "url": "https://www.medicinehat.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "500",
+            "district_id": "MEDHAT",
+            "zone_id": "zone-z196",
+        },
+    },
 ]
 
 TEST_CASES = {
@@ -262,6 +276,11 @@ TEST_CASES = {
         "street": "215 Gilmore Ave N",
         "city": "Burnaby",
         "state": "British Columbia",
+    },
+    "City of Medicine Hat, AB, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "MEDHAT",
+        "project_id": 500,
+        "zone_id": "zone-z196",
     },
 }
 

@@ -4469,6 +4469,16 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Medicine Hat (AB)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "MEDHAT",
+        "project_id": "500",
+        "zone_id": "zone-z196"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Montreal (QC)",
       "module": "montreal_ca",
       "default_params": {},
