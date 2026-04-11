@@ -635,10 +635,10 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
                 }
             )
 
-            # Build metadata for each module (store once per module)
-            if module not in source_metadata_by_module:
+            # Build metadata for each source (keyed by id for per-source docs)
+            if id not in source_metadata_by_module:
                 doc_url = DOC_URL_BASE + e.filename
-                source_metadata_by_module[module] = {
+                source_metadata_by_module[id] = {
                     "docs_url": doc_url,
                     "howto": e.custom_howto,
                     "urls": e.url_placeholders,

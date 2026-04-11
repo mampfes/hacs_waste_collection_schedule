@@ -753,7 +753,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
         errors: dict[str, str] = {}
         description_placeholders: dict[str, str] = self._get_description_placeholders(
-            self._source
+            self._id
         )
         # If all args are filled in
         if args_input is not None:
