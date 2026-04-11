@@ -1824,8 +1824,8 @@
   "ics_abfall_eglz_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_eglz_de.md",
     "howto": {
-      "de": "- Gehen Sie zu <https://www.abfall-eglz.de/abfallkalender.html> und wählen Sie Ihre Gemeinde aus.\n- Klicken Sie mit der rechten Maustaste auf `Entsorgungstermine als iCalendar herunterladen` und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n",
-      "en": "- Go to <https://www.abfall-eglz.de/abfallkalender.html> and select your municipality.  \n- Right-click on `Entsorgungstermine als iCalendar herunterladen` and copy link address.\n- Use this link as the `url` parameter.\n"
+      "de": "- Gehen Sie zu <https://www.eglz-abfall.de/service/abfallkalender> und wählen Sie Ihre Gemeinde aus.\n- Klicken Sie mit der rechten Maustaste auf `Entsorgungstermine als iCalendar herunterladen` und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n",
+      "en": "- Go to <https://www.eglz-abfall.de/service/abfallkalender> and select your municipality.\n- Right-click on `Entsorgungstermine als iCalendar herunterladen` and copy link address.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
   },
