@@ -17977,6 +17977,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Hoover, AL",
+      "module": "hoover_al_us",
+      "default_params": {},
+      "id": "hoover_al_us"
+    },
+    {
       "title": "Louisville, Kentucky, USA",
       "module": "recyclecoach_com",
       "default_params": {

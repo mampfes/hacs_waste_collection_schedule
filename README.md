@@ -2796,6 +2796,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Fuquay-Varina, North Carolina](/doc/source/fuquay_varina_nc_us.md) / gis1.fuquay-varina.org
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
+- [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
 - [New York City](/doc/source/nyc_gov.md) / nyc.gov

@@ -4142,6 +4142,11 @@
     "howto": {},
     "urls": {}
   },
+  "hoover_al_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hoover_al_us.md",
+    "howto": {},
+    "urls": {}
+  },
   "apps_ci_minneapolis_mn_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_ci_minneapolis_mn_us.md",
     "howto": {},

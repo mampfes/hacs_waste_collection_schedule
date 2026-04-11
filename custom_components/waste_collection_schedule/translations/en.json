@@ -23345,6 +23345,29 @@
         },
         "data_description": {}
       },
+      "args_hoover_al_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address (e.g. '2255 Tyler Rd, Hoover, AL')"
+        }
+      },
+      "reconfigure_hoover_al_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Street address (e.g. '2255 Tyler Rd, Hoover, AL')"
+        }
+      },
       "args_apps_ci_minneapolis_mn_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
