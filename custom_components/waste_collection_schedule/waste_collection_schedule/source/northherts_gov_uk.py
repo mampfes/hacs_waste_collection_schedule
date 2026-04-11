@@ -20,6 +20,11 @@ TEST_CASES = {
         "address_name_numer": "4",
         "address_street": "Wilbury Road",
     },
+    "Example garden waste": {
+        "address_postcode": "SG8 5BN",
+        "address_name_numer": "37",
+        "address_street": "Heathfield",
+    },
 }
 ICON_MAP = {
     "refuse": "mdi:trash-can",
