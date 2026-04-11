@@ -199,6 +199,7 @@ This source has been successfully tested with the following service providers:
 - [Abfall Lippe](/doc/ics/abfall_lippe_de.md) / abfall-lippe.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
 - [Abfallkalender Delmenhorst](/doc/ics/delmenhorst_de.md) / delmenhorst.de
+- [Abfallkalender Erkelenz](/doc/ics/abfallkalender_erkelenz_de.md) / abfallkalender-erkelenz.de
 - [Abfallkalender Würzburg (ICS)](/doc/ics/wuerzburg_de.md) / wuerzburg.de
 - [abfallverband-rheingau](/doc/ics/mein_abfallkalender_online.md) / abfallverband-rheingau.de
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de

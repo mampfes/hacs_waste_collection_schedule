@@ -5311,6 +5311,12 @@
       "id": "ics_delmenhorst_de"
     },
     {
+      "title": "Abfallkalender Erkelenz",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallkalender_erkelenz_de"
+    },
+    {
       "title": "Abfallkalender Hattingen",
       "module": "insert_it_de",
       "default_params": {},

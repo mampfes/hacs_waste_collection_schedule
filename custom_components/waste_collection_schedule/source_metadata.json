@@ -1218,6 +1218,14 @@
     },
     "urls": {}
   },
+  "ics_abfallkalender_erkelenz_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erkelenz_de.md",
+    "howto": {
+      "de": "- Gehen Sie zu <https://www.abfallkalender-erkelenz.de> und wählen Sie Ihren Bezirk aus.\n- Ermitteln Sie Ihre Bezirksnummer und verwenden Sie diese im `url`-Parameter unten, indem Sie `BEZIRK` durch Ihre Nummer ersetzen.\n",
+      "en": "- Go to <https://www.abfallkalender-erkelenz.de> and select your district (Bezirk).\n- Find your district number and use it in the `url` parameter below, replacing `BEZIRK` with your number.\n"
+    },
+    "urls": {}
+  },
   "insert_it_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/insert_it_de.md",
     "howto": {},
