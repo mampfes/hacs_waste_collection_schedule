@@ -55,8 +55,6 @@ WASTE_TYPE_MAP: dict[str, tuple[str, str]] = {
     "BIODEGRADOWALNE": ("Bio / organic", "mdi:leaf"),
 }
 
-ICON_MAP: dict[str, str] = {name: icon for _, (name, icon) in WASTE_TYPE_MAP.items()}
-
 TEST_CASES = {
     "Paruszowiec-Piaski residential": {
         "district": "Paruszowiec / Kamien",
@@ -76,7 +74,8 @@ TEST_CASES = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "Download the current schedule PDF for your district from the "
-        "Rybnik city website: https://www.rybnik.eu/dla-mieszkancow/odpady-komunalne/harmonogramy-odbioru-2026. "
+        "Rybnik city website: https://www.rybnik.eu/dla-mieszkancow/odpady-komunalne/ "
+        "(navigate to the current year's schedules). "
         "Open page 2 of the PDF and note your Rejon (sub-district zone) name "
         "from the leftmost column of the schedule table."
     ),
@@ -101,16 +100,7 @@ PARAM_DESCRIPTIONS = {
 }
 
 # Matches a waste-type row: keyword followed by exactly 12 month columns of digits/semicolons.
-_ROW_RE = re.compile(
-    r"(ZMIESZANE|SEGREGOWANE|BIODEGRADOWALNE)"
-    r"((?:\s+[\d;]+){12})"
-)
-
-# Matches the repeating table header line.
-_HEADER_RE = re.compile(
-    r"Rejon\s+Typ\s+odpadu(?:\s+\S+){12,14}",
-    re.IGNORECASE,
-)
+_ROW_RE = re.compile(r"(ZMIESZANE|SEGREGOWANE|BIODEGRADOWALNE)" r"((?:\s+[\d;]+){12})")
 
 # Matches a street-name initial like "A.Szewczyka" or "H.Groborza".
 _STREET_INITIAL_RE = re.compile(r"^[A-ZĄĆĘŁŃÓŚŹŻ]\.[A-Za-ząćęłńóśźż]")
@@ -320,23 +310,10 @@ class Source:
         sub_district: str = "",
         property_type: str = "residential",
     ):
-        """
-        Args:
-            district:
-                District name (key from DISTRICT_MAP). Required unless
-                property_type is 'multifamily'.
-            sub_district:
-                Rejon name as printed in the PDF schedule table
-                (e.g. 'Paruszowiec-Piaski', 'Kamień 1').
-                When blank, entries for all Rejony in the district are returned.
-            property_type:
-                'residential' (default), 'commercial', or 'multifamily'.
-        """
         self._property_type = property_type.lower().strip()
         if self._property_type not in PROPERTY_TYPES:
-            raise ValueError(
-                f"property_type must be one of {PROPERTY_TYPES}, "
-                f"got {property_type!r}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "property_type", property_type, list(PROPERTY_TYPES)
             )
 
         self._sub_district = sub_district.strip()
@@ -391,11 +368,17 @@ class Source:
             _LOGGER.debug("Fetching waste schedule PDF: %s", url)
             resp = requests.get(url, timeout=30)
             if resp.status_code == 404:
-                _LOGGER.info(
-                    "PDF for year %d not found (HTTP 404), trying %d.",
-                    attempt_year,
-                    attempt_year - 1,
-                )
+                if attempt_year == year:
+                    _LOGGER.info(
+                        "PDF for year %d not found (HTTP 404), trying %d.",
+                        attempt_year,
+                        attempt_year - 1,
+                    )
+                else:
+                    _LOGGER.info(
+                        "PDF for year %d not found (HTTP 404).",
+                        attempt_year,
+                    )
                 continue
             resp.raise_for_status()
             return resp.content, attempt_year

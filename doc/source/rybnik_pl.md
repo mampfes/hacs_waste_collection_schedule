@@ -16,11 +16,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**`district`** *(string) (required for residential and commercial)*
+**`district`** *(string) (required)*
 
 The district / area group name, which determines which PDF schedule file is downloaded.
 Must be one of the values in the [District Names](#district-names) table below.
-Not required when `property_type` is `multifamily`.
 
 **`sub_district`** *(string) (optional)*
 
@@ -93,7 +92,7 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-1. Go to the [Rybnik waste collection schedules page](https://www.rybnik.eu/dla-mieszkancow/odpady-komunalne/harmonogramy-odbioru-2026).
+1. Go to the [Rybnik waste collection schedules page](https://www.rybnik.eu/dla-mieszkancow/odpady-komunalne/) and navigate to the current year's schedules.
 2. Download the PDF for the district that covers your address.
 3. Open page 2 of the PDF — the schedule table lists Rejon (zone) names in the leftmost column.
 4. Use the district name from the [District Names](#district-names) table and the exact Rejon name from the PDF as your `district` and `sub_district` arguments.
