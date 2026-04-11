@@ -18068,6 +18068,12 @@
       "id": "republicservices_com"
     },
     {
+      "title": "Rochester, NY",
+      "module": "rochester_ny_us",
+      "default_params": {},
+      "id": "rochester_ny_us"
+    },
+    {
       "title": "Round Rock Texas",
       "module": "roundrocktexas_gov",
       "default_params": {},

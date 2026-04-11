@@ -4172,6 +4172,11 @@
     "howto": {},
     "urls": {}
   },
+  "rochester_ny_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rochester_ny_us.md",
+    "howto": {},
+    "urls": {}
+  },
   "roundrocktexas_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roundrocktexas_gov.md",
     "howto": {},
