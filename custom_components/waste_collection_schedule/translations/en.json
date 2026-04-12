@@ -957,6 +957,29 @@
         },
         "data_description": {}
       },
+      "args_newcastle_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address within the City of Newcastle (e.g. '1 King Street, Newcastle NSW 2300')"
+        }
+      },
+      "reconfigure_newcastle_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Street address within the City of Newcastle (e.g. '1 King Street, Newcastle NSW 2300')"
+        }
+      },
       "args_onkaparingacity_com": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

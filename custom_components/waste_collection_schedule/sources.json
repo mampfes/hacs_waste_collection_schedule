@@ -357,6 +357,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of Newcastle",
+      "module": "newcastle_nsw_gov_au",
+      "default_params": {},
+      "id": "newcastle_nsw_gov_au"
+    },
+    {
       "title": "City of Norwood Payneham and St Peters",
       "module": "app_my_local_services_au",
       "default_params": {},
