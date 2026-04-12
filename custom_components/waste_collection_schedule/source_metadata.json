@@ -247,6 +247,11 @@
     },
     "urls": {}
   },
+  "vincent_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vincent_wa_gov_au.md",
+    "howto": {},
+    "urls": {}
+  },
   "wanneroo_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wanneroo_wa_gov_au.md",
     "howto": {},

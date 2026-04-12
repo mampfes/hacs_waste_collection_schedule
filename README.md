@@ -98,6 +98,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Swan](/doc/source/swan_wa_gov_au.md) / swan.wa.gov.au
 - [City of Tea Tree Gully](/doc/source/teatreegully_sa_gov_au.md) / teatreegully.sa.gov.au
 - [City of Victor Harbor](/doc/source/frwa_com_au.md) / victor.sa.gov.au
+- [City of Vincent](/doc/source/vincent_wa_gov_au.md) / vincent.wa.gov.au
 - [City of Wanneroo](/doc/source/wanneroo_wa_gov_au.md) / wanneroo.wa.gov.au
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
