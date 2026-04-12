@@ -2711,7 +2711,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stafford Borough Council](/doc/source/staffordbc_gov_uk.md) / staffordbc.gov.uk
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
 - [Stirling Council, UK](/doc/ics/recollect.md) / stirling.gov.uk
-- [Stirling.gov.uk](/doc/source/stirling_uk.md) / stirling.gov.uk
 - [Stockport Council](/doc/source/stockport_gov_uk.md) / stockport.gov.uk
 - [Stockton-on-Tees Borough Council](/doc/source/stockton_gov_uk.md) / stockton.gov.uk
 - [Stoke-on-Trent](/doc/source/stoke_gov_uk.md) / stoke.gov.uk
