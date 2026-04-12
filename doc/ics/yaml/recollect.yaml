@@ -138,6 +138,9 @@ extra_info:
   - title: City of Guelph, ON
     url: https://www.guelph.ca
     country: ca
+  - title: Stirling Council, UK
+    url: https://www.stirling.gov.uk/
+    country: uk
 
 howto:
   en: |
@@ -177,6 +180,7 @@ howto:
     |Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)|
     |Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)|
     |Recology San Francisco|USA|[recology.com](https://www.recology.com/recology-san-francisco/collection-calendar/)|
+    |Stirling Council|UK|[stirling.gov.uk](https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/)
 
     and probably a lot more.
 
@@ -194,36 +198,29 @@ test_cases:
     url: https://recollect.a.ssl.fastly.net/api/places/9EA385D4-4AF9-11EB-B308-E6A235C11932/services/611/events.en-US.ics
     split_at: '\, (?:and )?|(?: and )'
   Sherwood Park, AB, Canada:
-    url: 
-      webcal://recollect.a.ssl.fastly.net/api/places/F5A5C1D2-3D25-11EE-A377-8D1C706BDDF3/services/238/events.en.ics?client_id=7CCAFDAE-3D25-11EE-8AF8-9D1C706BDDF3
+    url: webcal://recollect.a.ssl.fastly.net/api/places/F5A5C1D2-3D25-11EE-A377-8D1C706BDDF3/services/238/events.en.ics?client_id=7CCAFDAE-3D25-11EE-8AF8-9D1C706BDDF3
   Morris, MB, Canada:
     url: webcal://recollect.a.ssl.fastly.net/api/places/2DC90F42-E8AA-11EB-A726-598C8684B99B/services/397/events.en.ics
     split_at: '\, (?:and )?|(?: and )'
   Peterborough, ON, Canada:
-    url: 
-      webcal://recollect.a.ssl.fastly.net/api/places/C0A33242-3365-11EC-A104-84C872B788E8/services/345/events.en.ics?client_id=F81035CA-7177-11EE-A247-E8E188BA1CF3
+    url: webcal://recollect.a.ssl.fastly.net/api/places/C0A33242-3365-11EC-A104-84C872B788E8/services/345/events.en.ics?client_id=F81035CA-7177-11EE-A247-E8E188BA1CF3
     split_at: '\, (?:and )?|(?: and )'
   166 W 47th Ave, Vancouver:
-    url: 
-      webcal://recollect.a.ssl.fastly.net/api/places/3734BF46-A9A1-11E2-8B00-43B94144C028/services/193/events.en.ics?client_id=8844492C-9457-11EE-90E3-08A383E66757
+    url: webcal://recollect.a.ssl.fastly.net/api/places/3734BF46-A9A1-11E2-8B00-43B94144C028/services/193/events.en.ics?client_id=8844492C-9457-11EE-90E3-08A383E66757
   Cathedral of Junk, Austin, TX:
     url: https://recollect.a.ssl.fastly.net/api/places/2587D9F6-DF59-11E8-96F5-0E2C682931C6/services/323/events.en-US.ics
     split_at: '\, (?:and )?|(?: and )'
   3329 Sorghum Way, McKinney, TX:
-    url: 
-      https://api.recollect.net/w/areas/WC-5183/services/995/pages/widget_subscribe_calendar?back_stack=%5B%5B%22place_calendar%22%2C%7B%22for%22%3A%22WC-5183%22%2C%22tabbed%22%3Atrue%7D%5D%5D#
+    url: https://api.recollect.net/w/areas/WC-5183/services/995/pages/widget_subscribe_calendar?back_stack=%5B%5B%22place_calendar%22%2C%7B%22for%22%3A%22WC-5183%22%2C%22tabbed%22%3Atrue%7D%5D%5D#
     split_at: '\, (?:and )?|(?: and )'
   Halton Region, ON, Canada:
-    url: 
-      https://recollect.a.ssl.fastly.net/api/places/97323326-A43B-11E2-A636-ABBA3CA4474E/services/224/events.en.ics?client_id=61BBBF46-7800-11EF-8692-290A842A7710
+    url: https://recollect.a.ssl.fastly.net/api/places/97323326-A43B-11E2-A636-ABBA3CA4474E/services/224/events.en.ics?client_id=61BBBF46-7800-11EF-8692-290A842A7710
     split_at: '\, (?:and )?|(?: and )'
   District of Saanich, BC, Canada:
-    url: 
-      https://recollect.a.ssl.fastly.net/api/places/46BC2620-B477-11E3-B3D4-47898BE95184/services/214/events.en.ics?client_id=BD5E38F8-741B-11EF-B562-C1575C8ED1CF
+    url: https://recollect.a.ssl.fastly.net/api/places/46BC2620-B477-11E3-B3D4-47898BE95184/services/214/events.en.ics?client_id=BD5E38F8-741B-11EF-B562-C1575C8ED1CF
     split_at: '\, (?:and )?|(?: and )'
   Recology CleanScapes:
-    url: 
-      https://recollect.a.ssl.fastly.net/api/places/6D1AA3AC-D794-11EC-AFDF-27CF02E3D7CF/services/282/events.en-US.ics?client_id=ABC6EE28-8A1E-11EF-844A-7A54B7F06687
+    url: https://recollect.a.ssl.fastly.net/api/places/6D1AA3AC-D794-11EC-AFDF-27CF02E3D7CF/services/282/events.en-US.ics?client_id=ABC6EE28-8A1E-11EF-844A-7A54B7F06687
     split_at: '\, (?:and )?|(?: and )'
   Hardin Sanitation, Idaho, USA:
     url: https://recollect.a.ssl.fastly.net/api/places/0495A9DC-DB0F-11E9-8172-34B19DD5B1B2/services/881/events.en-US.ics?
@@ -238,5 +235,5 @@ test_cases:
     url: webcal://recollect-us.global.ssl.fastly.net/api/places/F8DA6588-B076-11E8-BA4B-30AA635824F2/services/265/events.en-US.ics?client_id=79B7D646-3A76-11F0-91E0-BB51B3DF21C3
     split_at: '\, (?:and )?|(?: and )'
   Denver, CO, USA:
-    url: "https://recollect-us.global.ssl.fastly.net/api/places/464342A6-3CBF-11E5-9D27-D51A47A8A7C0/services/248/events.en-US.ics"
+    url: https://recollect-us.global.ssl.fastly.net/api/places/464342A6-3CBF-11E5-9D27-D51A47A8A7C0/services/248/events.en-US.ics
     split_at: '\, (?:and )?|(?: and )'
