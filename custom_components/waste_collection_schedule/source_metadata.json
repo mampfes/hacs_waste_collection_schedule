@@ -522,7 +522,9 @@
   },
   "stirling_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stirling_wa_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address including suburb (e.g. '100 Cedric Street, Stirling, WA, Australia'), or provide latitude and longitude coordinates."
+    },
     "urls": {}
   },
   "stonnington_vic_gov_au": {

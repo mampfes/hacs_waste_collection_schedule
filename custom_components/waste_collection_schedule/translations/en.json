@@ -2205,11 +2205,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "address": "Street Address",
           "lat": "Latitude",
           "lon": "Longitude"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address with suburb (e.g. '100 Cedric Street, Stirling, WA, Australia')",
+          "lat": "Latitude (optional if address is provided)",
+          "lon": "Longitude (optional if address is provided)"
         }
       },
       "reconfigure_stirling_wa_gov_au": {
@@ -2217,10 +2221,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "address": "Street Address",
           "lat": "Latitude",
           "lon": "Longitude"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Street address with suburb (e.g. '100 Cedric Street, Stirling, WA, Australia')",
+          "lat": "Latitude (optional if address is provided)",
+          "lon": "Longitude (optional if address is provided)"
+        }
       },
       "args_stonnington_vic_gov_au": {
         "title": "Configure Source",
