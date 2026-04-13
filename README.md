@@ -2824,6 +2824,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Tacoma, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-tacoma
 - [Tucson, Arizona, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-az-city-of-tucson
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
+- [Village of Sunbury, Ohio](/doc/source/sunbury_ohio_org.md) / sunburyohio.org
 - [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
 </details>
 
