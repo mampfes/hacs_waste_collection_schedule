@@ -25,6 +25,7 @@ PARAM_DESCRIPTIONS = {
 
 API_URL = "https://myforms.barnet.gov.uk/homepage/11/find-your-bin-collection-day"
 
+
 class Source:
     def __init__(self, uprn):
         self._uprn = str(uprn).zfill(12)
@@ -46,7 +47,6 @@ class Source:
         bins = soup.find_all("h4", class_="bin-collection__heading")
         dates = soup.find_all("p", class_="bin-collection__date")
         for date_tag, bin_tag in zip(dates, bins, strict=True):
-            
             date = parser.parse(date_tag.text).date()
             bin_name = bin_tag.text.strip()
 

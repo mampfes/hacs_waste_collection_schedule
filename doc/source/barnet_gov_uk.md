@@ -1,4 +1,4 @@
-# Barnet Borough Council
+# London Borough of Barnet
 
 Support for schedules provided by the [London Borough of Barnet](https://myforms.barnet.gov.uk/homepage/11/find-your-bin-collection-day), serving Barnet, UK.
 
@@ -29,4 +29,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-An easy wasy of finding your UPRN is by going to [FindMyAddress service](https://www.findmyaddress.co.uk/) and entering in your address details.
+An easy way of finding your UPRN is by going to [FindMyAddress service](https://www.findmyaddress.co.uk/) and entering in your address details.
