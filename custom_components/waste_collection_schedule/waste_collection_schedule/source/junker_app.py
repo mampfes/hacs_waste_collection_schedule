@@ -17,6 +17,7 @@ COUNTRY = "it"
 
 
 SERVICE_PROVIDERS = {
+    "NET SpA - Udine",
     "Unione dei Comuni di Valmalenco",
     "Bubbiano",
     "Econova Srl",
@@ -344,6 +345,7 @@ TEST_CASES = {
     "Unione dei Comuni di Valmalenco, Boroneddu": {"municipality": "Boroneddu"},
     "Mosciano Sant'Angelo": {"municipality": "Mosciano Sant'Angelo"},
     "Lodè": {"municipality": "Lodè", "area": "Utenze non domestiche"},
+    "Udine": {"municipality": "Udine", "area": "Zona 2-4-5-6 - Utenze domestiche"},
 }
 
 
