@@ -44,7 +44,7 @@ Needed only for some municipalities but not all (can be left empty if unneeded)
 
 **abfall**
 *(string) (optional)*
-Needed only to filter waste types (if empty you get all waste types). Separator between waste types is '|'.
+Pipe-separated waste type IDs to filter which types are returned (e.g. `0|1|2|5`). If empty, all waste types are fetched. This is important for providers like Main-Tauber-Kreis where multiple Restabfall frequencies exist (weekly, 14-day, 4-weekly) but all appear as "Restabfall" in the calendar. Use the `abfall` parameter to select only your frequency. Visit your provider's calendar page to see the checkbox list of waste types — the IDs correspond to their order (0 for the first, 1 for the second, etc.).
 
 ## Example
 
@@ -92,6 +92,22 @@ waste_collection_schedule:
       gemeinde: Aurich
       ort: Kirchdorf
 ```
+
+### Main-Tauber-Kreis with 4-weekly Restabfall
+
+```yaml
+waste_collection_schedule:
+  sources:
+  - name: c_trace_de
+    args:
+      ort: Tauberbischofsheim
+      strasse: Hauptstraße
+      hausnummer: 1
+      service: maintauberkreis-abfallkalender
+      abfall: "0|1|2|5"
+```
+
+The waste type IDs for Main-Tauber-Kreis are: 0=Bioabfall, 1=Gelbe Tonne, 2=Papierabfall, 3=Restabfall wöchentlich, 4=Restabfall 14-täglich, 5=Restabfall 4-wöchentlich. Use only the ID for your Restabfall frequency.
 
 ## How to get the source arguments
 

@@ -6370,7 +6370,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "abfall": "Abfall",
+          "abfall": "Waste type IDs",
           "gemeinde": "Municipality",
           "hausnummer": "House number",
           "ort": "District",
@@ -6379,7 +6379,8 @@
           "strasse": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "abfall": "Pipe-separated waste type IDs to fetch (e.g. '0|1|2|5'). Leave empty to fetch all types. Visit your provider's calendar page to see which IDs correspond to which waste types."
         }
       },
       "reconfigure_c_trace_de": {
@@ -6387,7 +6388,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "abfall": "Abfall",
+          "abfall": "Waste type IDs",
           "gemeinde": "Municipality",
           "hausnummer": "House number",
           "ort": "District",
@@ -6395,7 +6396,9 @@
           "service": "Operator",
           "strasse": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "abfall": "Pipe-separated waste type IDs to fetch (e.g. '0|1|2|5'). Leave empty to fetch all types. Visit your provider's calendar page to see which IDs correspond to which waste types."
+        }
       },
       "args_ics_abfallwirtschaft_sonneberg_de": {
         "title": "Configure Source",
