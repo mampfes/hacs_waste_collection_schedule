@@ -145,12 +145,15 @@ class Source:
         # Northern Beaches pattern:
         #   - General Waste: weekly
         #   - Recycling & Garden Organics: fortnightly, alternating weeks
-        # A zones: even weeks = Recycling, odd weeks = Garden Organics
-        # B zones: even weeks = Garden Organics, odd weeks = Recycling
+        # Use ISO week number as a stable anchor for the alternation:
+        #   B zones: even ISO weeks = Recycling, odd = Garden Organics
+        #   A zones: even ISO weeks = Garden Organics, odd = Recycling
         entries: list[Collection] = []
 
         for week in range(26):
             d = next_date + timedelta(weeks=week)
+            iso_week = d.isocalendar()[1]
+            even_week = iso_week % 2 == 0
 
             entries.append(
                 Collection(
@@ -160,7 +163,7 @@ class Source:
                 )
             )
 
-            recycling_week = week % 2 == (1 if is_b_zone else 0)
+            recycling_week = even_week if is_b_zone else not even_week
 
             if recycling_week:
                 entries.append(
