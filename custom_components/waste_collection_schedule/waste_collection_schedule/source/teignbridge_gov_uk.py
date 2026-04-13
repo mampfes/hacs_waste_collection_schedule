@@ -1,6 +1,6 @@
 from datetime import datetime
 
-import requests
+from curl_cffi import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
