@@ -740,6 +740,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [Castlegar, BC](/doc/ics/recollect.md) / castlegar.ca
 - [Chatham-Kent (ON)](/doc/source/recyclecoach_com.md) / chatham-kent.ca
+- [City of Barrie](/doc/source/barrie_ca.md) / barrie.ca/services-payments/garbage-recycling-organics/curbside-collection/collection-schedules
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Guelph, ON](/doc/ics/recollect.md) / guelph.ca

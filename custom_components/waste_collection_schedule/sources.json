@@ -4300,6 +4300,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "City of Barrie",
+      "module": "barrie_ca",
+      "default_params": {},
+      "id": "barrie_ca"
+    },
+    {
       "title": "City of Edmonton, AB",
       "module": "ics",
       "default_params": {

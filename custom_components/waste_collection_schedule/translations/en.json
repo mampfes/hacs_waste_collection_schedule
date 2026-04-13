@@ -3907,6 +3907,33 @@
         },
         "data_description": {}
       },
+      "args_barrie_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street Name",
+          "street_number": "Street Number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Street name with abbreviated suffix (e.g. 'Quance St')",
+          "street_number": "Your house/street number"
+        }
+      },
+      "reconfigure_barrie_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street Name",
+          "street_number": "Street Number"
+        },
+        "data_description": {
+          "street_name": "Street name with abbreviated suffix (e.g. 'Quance St')",
+          "street_number": "Your house/street number"
+        }
+      },
       "args_ics_citywindsor_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
