@@ -28,7 +28,7 @@ class Source:
         self._uprn: str = str(uprn)
 
     def fetch(self):
-        r = requests.post(API_URL.format(uprn=self._uprn))
+        r = requests.post(API_URL.format(uprn=self._uprn), timeout=30)
         r.raise_for_status()
 
         html = None
@@ -60,7 +60,10 @@ class Source:
                 continue
 
             for bin_type in bin_types:
-                icon = ICON_MAP.get(bin_type.split(" ")[0])
+                icon = next(
+                    (v for k, v in ICON_MAP.items() if bin_type.startswith(k)),
+                    None,
+                )
                 entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries
