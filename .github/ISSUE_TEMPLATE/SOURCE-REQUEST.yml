@@ -6,51 +6,83 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this source request!
+        Thanks for requesting a new source!
+
+        **Before submitting**, please check if your provider is already supported:
+        - Search the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) for your municipality name
+        - Check if your provider uses a platform we already support (Recollect, ArcGIS, ICS feeds, Abfall+ app, etc.)
   - type: input
     id: region
     attributes:
       label: Municipality / Region
-      description: Which municipality or region should be supported in the future?
+      description: Which municipality or region should be supported?
       placeholder: ex. Berlin, Germany
     validations:
       required: true
   - type: input
     id: collection-url
     attributes:
-      label: Collection Calendar Webpage 
-      description: Where are information about bin collections listed (preferred ULR)
+      label: Collection Calendar Webpage
+      description: URL where collection schedules can be looked up
       placeholder: https://example.com
     validations:
-      required: false
-  - type: textarea
+      required: true
+  - type: input
     id: example-address
     attributes:
       label: Example Address
-      description: (preferred) An address or other needed parameter for getting your collection info (not your own)
-      placeholder: ex. Gundelfinger Str. 4, 10318 Berlin
+      description: A working example address for testing (not your own). Include any parameters needed (postcode, UPRN, etc.)
+      placeholder: ex. 10 Downing Street, London SW1A 2AA
     validations:
-      required: false
+      required: true
   - type: dropdown
     id: format
     attributes:
-      label: Collection Data Format
-      description: In which format does your service provider provides collection dates.
+      label: Data Format
+      description: How does the provider make collection dates available?
       options:
-        - As ICS/ICAL file
-        - As html on a webpage
-        - Dedicated IOS/Android APP
-        - As PDF Download
-        - As documented API
-        - Something different (add to additional information) 
-      multiple: true
+        - ICS / iCal calendar file
+        - HTML webpage (dates visible on the page)
+        - JSON / REST API
+        - Mobile app only (iOS/Android)
+        - PDF download only
+        - Other (describe in additional information)
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Known Platform (if any)
+      description: Does the provider use a platform we may already support? Check the URL or page footer for clues.
+      options:
+        - Not sure / Unknown
+        - Recollect (recollect.net)
+        - ArcGIS (arcgis.com)
+        - Abfall+ / k4systems app
+        - AbfallIO (abfall.io)
+        - IntraMaps (intramaps.com)
+        - OCAPI (opencityamerica.com)
+        - Publidata (publidata.ca)
+        - C-Trace (c-trace.de)
+        - FCC Environment
+        - Junker App (junkerapp.it)
+        - Other known platform (describe in additional information)
+      multiple: false
     validations:
       required: true
   - type: textarea
     id: additional-information
     attributes:
       label: Additional Information
-      description: (optional) additional information that might be helpful to implement a source for the municipality / region
-      placeholder: Additional information
+      description: Any additional context — how the lookup works, whether an account is needed, API details you've found, etc.
     validations:
       required: false
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) and my provider is not already supported
+          required: true
+        - label: I have provided a working example address (not my own) for testing
+          required: true

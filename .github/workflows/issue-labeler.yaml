@@ -1,0 +1,66 @@
+---
+name: Auto-label Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-label from issue template fields
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+            const labels = [];
+
+            // Data format mapping (from Source Request template)
+            const dataFormats = {
+              'ICS / iCal calendar file': 'data: ICS',
+              'HTML webpage (dates visible on the page)': 'data: HTML',
+              'JSON / REST API': 'data: JSON/API',
+              'Mobile app only (iOS/Android)': 'data: app',
+              'PDF download only': 'data: PDF',
+            };
+
+            // Platform mapping (from Source Request template)
+            const platforms = {
+              'Recollect (recollect.net)': 'platform: Recollect',
+              'ArcGIS (arcgis.com)': 'platform: ArcGIS',
+              'Abfall+ / k4systems app': 'platform: AbfallPlus',
+              'AbfallIO (abfall.io)': 'platform: AbfallIO',
+              'IntraMaps (intramaps.com)': 'platform: IntraMaps',
+              'OCAPI (opencityamerica.com)': 'platform: OCAPI',
+              'Publidata (publidata.ca)': 'platform: Publidata',
+              'C-Trace (c-trace.de)': 'platform: C-Trace',
+              'Junker App (junkerapp.it)': 'platform: Junker',
+            };
+
+            for (const [text, label] of Object.entries(dataFormats)) {
+              if (body.includes(text)) {
+                labels.push(label);
+              }
+            }
+
+            for (const [text, label] of Object.entries(platforms)) {
+              if (body.includes(text)) {
+                labels.push(label);
+              }
+            }
+
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: labels,
+              });
+              console.log(`Added labels: ${labels.join(', ')}`);
+            } else {
+              console.log('No matching labels found in issue body');
+            }

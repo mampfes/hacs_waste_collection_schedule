@@ -1,0 +1,71 @@
+name: Configuration Issue
+description: Sensors showing "unknown", incorrect values, or setup problems
+title: "[Config]: "
+labels: ["configuration issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Having trouble with sensor setup, types not matching, or values showing as "unknown"?
+
+        **Before filing this issue, please check:**
+        1. Open the **Calendar** tab in Home Assistant — do your collection events appear there?
+        2. If yes, the source is working. The issue is in your sensor configuration.
+        3. Make sure your sensor `type` values match the calendar event names **exactly** (case-sensitive).
+
+        **If the calendar is empty or the source itself is erroring, please use the [Source Defect](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new?template=SOURCE-DEFECT.yml) template instead.**
+  - type: dropdown
+    id: problem-type
+    attributes:
+      label: What's the problem?
+      options:
+        - Sensor shows "unknown"
+        - Sensor shows wrong date or value
+        - Cannot set up the integration
+        - Collection types not appearing
+        - Other configuration problem
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the problem
+      description: What did you expect to happen vs what actually happened?
+    validations:
+      required: true
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Full Configuration
+      description: Your complete waste_collection_schedule configuration (source AND sensor). Use example addresses, not your own.
+      render: YAML
+    validations:
+      required: true
+  - type: textarea
+    id: calendar-check
+    attributes:
+      label: Calendar Tab Check
+      description: "Do events appear in the Home Assistant Calendar tab? If yes, what are the exact event names shown?"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs (if any)
+      description: Paste relevant logs from Home Assistant (Settings → System → Logs). Remove any sensitive information.
+      render: Shell
+    validations:
+      required: false
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have checked the Calendar tab to see if events appear
+          required: true
+        - label: I have verified that my sensor `type` values match the calendar event names exactly
+          required: true
+        - label: I have restarted Home Assistant after making configuration changes
+          required: true
+        - label: I have searched past issues (open and closed) for this problem
+          required: true
