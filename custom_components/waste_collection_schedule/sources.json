@@ -16566,6 +16566,12 @@
       "id": "elmbridge_gov_uk"
     },
     {
+      "title": "Enfield Council",
+      "module": "enfield_gov_uk",
+      "default_params": {},
+      "id": "enfield_gov_uk"
+    },
+    {
       "title": "Environment First",
       "module": "environmentfirst_co_uk",
       "default_params": {},
