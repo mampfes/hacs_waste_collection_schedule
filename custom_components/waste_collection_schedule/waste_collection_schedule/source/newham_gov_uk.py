@@ -1,7 +1,6 @@
-from datetime import datetime
-
 import requests
 from bs4 import BeautifulSoup
+from dateutil import parser as dateparser
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "London Borough of Newham"
@@ -59,7 +58,7 @@ class Source:
                 .find_next("mark")
                 .next_sibling.strip()
             )
-            next_collection = datetime.strptime(date_string, "%d/%m/%Y").date()
+            next_collection = dateparser.parse(date_string).date()
 
             entries.append(
                 Collection(
