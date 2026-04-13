@@ -1,6 +1,6 @@
 # Village of Sunbury, Ohio
 
-Support for schedules provided by [Village of Sunbury, Ohio](https://lws-c16afd.webflow.io/service-guidelines/village-of-sunbury).
+Support for schedules provided by [Village of Sunbury, Ohio](https://www.sunburyohio.org), served by Local Waste Services.
 
 ## Configuration via configuration.yaml
 
@@ -13,9 +13,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-*(no args required)*
-
-but use args as shown in example.
+No configuration variables are required. This source covers the entire Village of Sunbury.
 
 ## Example
 
