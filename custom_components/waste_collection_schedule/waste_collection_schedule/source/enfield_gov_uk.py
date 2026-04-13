@@ -40,18 +40,13 @@ PARAM_DESCRIPTIONS = {
     "en": {
         "uprn": "Use your UPRN if you know it.",
         "address": (
-            "Full Enfield address, for example "
-            "'127 Palmerston Rd, London N22 8QX'."
+            "Full Enfield address, for example " "'127 Palmerston Rd, London N22 8QX'."
         ),
     }
 }
 
-LOOKUP_URL = (
-    "https://www.enfield.gov.uk/_design/integrations/ordnance-survey/places-v2"
-)
-SCHEDULE_URL = (
-    "https://www.enfield.gov.uk/_design/integrations/bartec/find-my-collection/rest/schedule"
-)
+LOOKUP_URL = "https://www.enfield.gov.uk/_design/integrations/ordnance-survey/places-v2"
+SCHEDULE_URL = "https://www.enfield.gov.uk/_design/integrations/bartec/find-my-collection/rest/schedule"
 
 HEADERS = {
     "User-Agent": (
@@ -76,9 +71,7 @@ ABBREVIATIONS = {
     " PL ": " PLACE ",
 }
 
-POSTCODE_PATTERN = re.compile(
-    r"\b([A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2})\b", re.IGNORECASE
-)
+POSTCODE_PATTERN = re.compile(r"\b([A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2})\b", re.IGNORECASE)
 HOUSE_NUMBER_PATTERN = re.compile(r"^\s*([0-9]+[A-Z]?(?:-[0-9A-Z]+)?)\b", re.IGNORECASE)
 
 TYPE_KEYWORDS = {
