@@ -2787,6 +2787,12 @@
       "id": "edlitz_at"
     },
     {
+      "title": "Marktgemeinde Eggelsberg",
+      "module": "eggelsberg_at",
+      "default_params": {},
+      "id": "eggelsberg_at"
+    },
+    {
       "title": "Marktgemeinde G\u00f6ssendorf",
       "module": "goessendorf_at",
       "default_params": {},
