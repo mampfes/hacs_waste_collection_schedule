@@ -16818,6 +16818,12 @@
       "id": "lbbd_gov_uk"
     },
     {
+      "title": "London Borough of Barnet",
+      "module": "barnet_gov_uk",
+      "default_params": {},
+      "id": "barnet_gov_uk"
+    },
+    {
       "title": "London Borough of Bexley",
       "module": "bexley_gov_uk",
       "default_params": {},
