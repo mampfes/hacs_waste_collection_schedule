@@ -11700,6 +11700,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Ecolan - Lanciano",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_ecolan_it"
+    },
+    {
       "title": "Econova Srl",
       "module": "junker_app",
       "default_params": {},

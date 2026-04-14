@@ -1794,6 +1794,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Ecoambiente Srl](/doc/source/junker_app.md) / junker.app
 - [EcoInnova Srl](/doc/source/junker_app.md) / junker.app
+- [Ecolan - Lanciano](/doc/ics/ecolan_it.md) / ecolan.it
 - [Econova Srl](/doc/source/junker_app.md) / junker.app
 - [Empoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Enna - Eco Enna Servizi](/doc/source/junker_app.md) / junker.app

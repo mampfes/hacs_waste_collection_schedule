@@ -372,6 +372,7 @@ This source has been successfully tested with the following service providers:
 ### Italy
 
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
+- [Ecolan - Lanciano](/doc/ics/ecolan_it.md) / ecolan.it
 
 ### Luxembourg
 
