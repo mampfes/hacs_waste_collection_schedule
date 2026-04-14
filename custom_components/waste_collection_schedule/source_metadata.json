@@ -777,6 +777,11 @@
     "howto": {},
     "urls": {}
   },
+  "klosterneuburg_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/klosterneuburg_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "ics_traiskirchen_gv_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/traiskirchen_gv_at.md",
     "howto": {

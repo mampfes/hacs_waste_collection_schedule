@@ -3677,6 +3677,12 @@
       "id": "infeo_at"
     },
     {
+      "title": "Stadtgemeinde Klosterneuburg",
+      "module": "klosterneuburg_at",
+      "default_params": {},
+      "id": "klosterneuburg_at"
+    },
+    {
       "title": "Stadtgemeinde Traiskirchen",
       "module": "ics",
       "default_params": {},
