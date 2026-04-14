@@ -471,6 +471,14 @@
       "id": "ccc_tas_gov_au"
     },
     {
+      "title": "Clarence Valley Counci",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Clarence Valley Counci"
+      },
+      "id": "impactapps_com_au"
+    },
+    {
       "title": "Coffs Coast Waste Services",
       "module": "impactapps_com_au",
       "default_params": {
