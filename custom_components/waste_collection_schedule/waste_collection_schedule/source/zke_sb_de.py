@@ -125,5 +125,8 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1].split(" ")[0])))
+            bin_type = d[1].strip()
+            entries.append(
+                Collection(d[0], bin_type, ICON_MAP.get(bin_type.split(" ")[0]))
+            )
         return entries
