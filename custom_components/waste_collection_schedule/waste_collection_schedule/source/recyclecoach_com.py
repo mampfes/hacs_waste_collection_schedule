@@ -187,6 +187,15 @@ EXTRA_INFO = [
             "zone_id": "zone-z196",
         },
     },
+    {
+        "title": "Township of Langley (BC)",
+        "url": "https://www.tol.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "521",
+            "district_id": "LANGL",
+        },
+    },
 ]
 
 TEST_CASES = {

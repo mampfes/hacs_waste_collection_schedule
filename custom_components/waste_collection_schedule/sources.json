@@ -4431,6 +4431,14 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Gatineau, QC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Georgina (ON)",
       "module": "ics",
       "default_params": {
@@ -4634,10 +4642,26 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Saint-Jean-Sur-Richelieu, QC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Saint-J\u00e9rome (QC)",
       "module": "ics",
       "default_params": {},
       "id": "ics_vsj_ca"
+    },
+    {
+      "title": "Saskatoon, SK",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "St Clair Township, ON",
@@ -4662,6 +4686,15 @@
       "id": "toronto_ca"
     },
     {
+      "title": "Township of Langley (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "LANGL",
+        "project_id": "521"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Valleyfield, Qu\u00e9bec",
       "module": "ics",
       "default_params": {},
@@ -4678,6 +4711,14 @@
     },
     {
       "title": "Waste Wise APPS",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Whitby, ON",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"
@@ -17968,6 +18009,14 @@
     },
     {
       "title": "City of Georgetown, TX",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "City of Houston, TX",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"

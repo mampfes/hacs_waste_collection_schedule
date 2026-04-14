@@ -757,6 +757,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Delta (BC)](/doc/source/recyclecoach_com.md) / delta.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Durham Region, ON](/doc/ics/recollect.md) / durham.ca
+- [Gatineau, QC](/doc/ics/recollect.md) / gatineau.ca
 - [Georgina (ON)](/doc/ics/georgina_ca.md) / georgina.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
@@ -785,13 +786,17 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
 - [Rivière-Beaudette](/doc/ics/riviere_beaudette_com.md) / riviere-beaudette.com
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
+- [Saint-Jean-Sur-Richelieu, QC](/doc/ics/recollect.md) / compo.qc.ca
 - [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
+- [Saskatoon, SK](/doc/ics/recollect.md) / saskatoon.ca
 - [St Clair Township, ON](/doc/ics/recollect.md) / stclairtownship.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca
+- [Township of Langley (BC)](/doc/source/recyclecoach_com.md) / tol.ca
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Vaughan (ON)](/doc/source/recyclecoach_com.md) / vaughan.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
+- [Whitby, ON](/doc/ics/recollect.md) / whitby.ca
 - [Winnipeg (MB)](/doc/source/myutility_winnipeg_ca.md) / myutility.winnipeg.ca
 </details>
 
@@ -2796,6 +2801,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Flagstaff, AZ](/doc/ics/recyclebycity_com.md) / flagstaff.az.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
+- [City of Houston, TX](/doc/ics/recollect.md) / houstontx.gov
 - [City of Los Angeles, CA](/doc/source/lacity_gov.md) / lacitysan.org
 - [City of Lowell, MA](/doc/ics/recollect.md) / lowellma.gov
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org

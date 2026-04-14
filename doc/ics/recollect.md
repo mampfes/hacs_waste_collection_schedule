@@ -41,7 +41,12 @@ known to work with:
 |Davenport, Iowa|USA|[davenportiowa.com](https://www.davenportiowa.com/cms/One.aspx?portalId=6481456&pageId=17602135)|
 |Redcar & Cleveland|UK|[redcar-cleveland.gov.uk](https://www.redcar-cleveland.gov.uk/bins-and-waste-services/check-your-bin-collection-day)|
 |Recology San Francisco|USA|[recology.com](https://www.recology.com/recology-san-francisco/collection-calendar/)|
-|Stirling Council|UK|[stirling.gov.uk](https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/)
+|Stirling Council|UK|[stirling.gov.uk](https://www.stirling.gov.uk/bins-and-recycling/bin-collection-dates-search/)|
+|Gatineau, QC|Canada|[gatineau.ca](https://www.gatineau.ca/docs/guichet_municipal/ordures_recyclage_compostage_encombrants/recollect.en-CA.html)|
+|Whitby, ON|Canada|[whitby.ca](https://www.whitby.ca/en/live/waste-calendar.aspx)|
+|Saskatoon, SK|Canada|[saskatoon.ca](https://www.saskatoon.ca/services-residents/waste-recycling/collection-calendar)|
+|Saint-Jean-Sur-Richelieu, QC|Canada|[compo.qc.ca](https://www.compo.qc.ca/collectes/)|
+|City of Houston, TX|USA|[houstontx.gov](https://www.houstontx.gov/solidwaste/)|
 
 and probably a lot more.
 
