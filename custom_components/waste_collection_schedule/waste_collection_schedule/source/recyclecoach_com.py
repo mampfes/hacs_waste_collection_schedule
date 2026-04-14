@@ -196,6 +196,24 @@ EXTRA_INFO = [
             "district_id": "LANGL",
         },
     },
+    {
+        "title": "East Gwillimbury (ON)",
+        "url": "https://www.eastgwillimbury.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "586",
+            "district_id": "EASTG",
+        },
+    },
+    {
+        "title": "Brantford (ON)",
+        "url": "https://www.brantford.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "3195",
+            "district_id": "BRAN",
+        },
+    },
 ]
 
 TEST_CASES = {

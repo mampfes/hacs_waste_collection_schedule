@@ -735,6 +735,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Canada</summary>
 
 - [Aurora (ON)](/doc/source/recyclecoach_com.md) / aurora.ca
+- [Brantford (ON)](/doc/source/recyclecoach_com.md) / brantford.ca
 - [Burnaby (BC)](/doc/source/recyclecoach_com.md) / burnaby.ca
 - [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
@@ -757,6 +758,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Delta (BC)](/doc/source/recyclecoach_com.md) / delta.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Durham Region, ON](/doc/ics/recollect.md) / durham.ca
+- [East Gwillimbury (ON)](/doc/source/recyclecoach_com.md) / eastgwillimbury.ca
+- [Eco360 (Greater Moncton, NB)](/doc/ics/recollect.md) / eco360.ca
 - [Gatineau, QC](/doc/ics/recollect.md) / gatineau.ca
 - [Georgina (ON)](/doc/ics/georgina_ca.md) / georgina.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca

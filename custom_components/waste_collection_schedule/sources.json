@@ -4260,6 +4260,15 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Brantford (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "BRAN",
+        "project_id": "3195"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Burnaby (BC)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -4424,6 +4433,23 @@
     },
     {
       "title": "Durham Region, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "East Gwillimbury (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "EASTG",
+        "project_id": "586"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Eco360 (Greater Moncton, NB)",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"

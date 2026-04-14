@@ -47,6 +47,7 @@ known to work with:
 |Saskatoon, SK|Canada|[saskatoon.ca](https://www.saskatoon.ca/services-residents/waste-recycling/collection-calendar)|
 |Saint-Jean-Sur-Richelieu, QC|Canada|[compo.qc.ca](https://www.compo.qc.ca/collectes/)|
 |City of Houston, TX|USA|[houstontx.gov](https://www.houstontx.gov/solidwaste/)|
+|Eco360 (Greater Moncton, NB)|Canada|[eco360.ca](https://www.eco360.ca/residential-program)|
 
 and probably a lot more.
 

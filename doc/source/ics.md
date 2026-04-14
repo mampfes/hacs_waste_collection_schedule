@@ -161,6 +161,7 @@ This source has been successfully tested with the following service providers:
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Durham Region, ON](/doc/ics/recollect.md) / durham.ca
+- [Eco360 (Greater Moncton, NB)](/doc/ics/recollect.md) / eco360.ca
 - [Gatineau, QC](/doc/ics/recollect.md) / gatineau.ca
 - [Georgina (ON)](/doc/ics/georgina_ca.md) / georgina.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
