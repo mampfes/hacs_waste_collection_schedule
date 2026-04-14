@@ -214,6 +214,15 @@ EXTRA_INFO = [
             "district_id": "BRAN",
         },
     },
+    {
+        "title": "Kelowna (BC)",
+        "url": "https://www.rdco.com/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "502",
+            "district_id": "Kelowna",
+        },
+    },
 ]
 
 TEST_CASES = {

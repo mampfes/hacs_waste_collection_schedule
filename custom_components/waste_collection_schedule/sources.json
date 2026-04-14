@@ -4498,6 +4498,15 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Kelowna (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "Kelowna",
+        "project_id": "502"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "London (ON)",
       "module": "recyclecoach_com",
       "default_params": {
