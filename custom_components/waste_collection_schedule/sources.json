@@ -18190,6 +18190,15 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Plainville (CT)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "PLA",
+        "project_id": "3066"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "ReCollect",
       "module": "ics",
       "default_params": {

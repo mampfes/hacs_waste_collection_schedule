@@ -223,6 +223,15 @@ EXTRA_INFO = [
             "district_id": "Kelowna",
         },
     },
+    {
+        "title": "Plainville (CT)",
+        "url": "https://www.plainvillect.com/",
+        "country": "us",
+        "default_params": {
+            "project_id": "3066",
+            "district_id": "PLA",
+        },
+    },
 ]
 
 TEST_CASES = {
