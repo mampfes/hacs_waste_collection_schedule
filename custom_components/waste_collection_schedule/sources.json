@@ -4507,6 +4507,15 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "LaSalle (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "LAS",
+        "project_id": "583"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "London (ON)",
       "module": "recyclecoach_com",
       "default_params": {

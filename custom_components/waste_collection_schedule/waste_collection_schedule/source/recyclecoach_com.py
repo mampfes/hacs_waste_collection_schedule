@@ -232,6 +232,15 @@ EXTRA_INFO = [
             "district_id": "PLA",
         },
     },
+    {
+        "title": "LaSalle (ON)",
+        "url": "https://www.lasalle.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "583",
+            "district_id": "LAS",
+        },
+    },
 ]
 
 TEST_CASES = {

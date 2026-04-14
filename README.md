@@ -766,6 +766,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
 - [Kelowna (BC)](/doc/source/recyclecoach_com.md) / rdco.com
+- [LaSalle (ON)](/doc/source/recyclecoach_com.md) / lasalle.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
 - [Longueuil (QC)](/doc/ics/longueuil_quebec.md) / longueuil.quebec
 - [Lévis / Québec](/doc/ics/ville_levis_qc_ca.md) / ville.levis.qc.ca
