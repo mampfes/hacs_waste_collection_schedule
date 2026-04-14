@@ -2596,6 +2596,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
 - [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk
+- [Gosport Borough Council](/doc/source/gosport_gov_uk.md) / gosport.gov.uk
 - [Greater Cambridge Waste, UK](/doc/source/greater_cambridge_waste_org.md) / greatercambridgewaste.org
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Gwynedd](/doc/source/gwynedd_gov_uk.md) / gwynedd.gov.uk

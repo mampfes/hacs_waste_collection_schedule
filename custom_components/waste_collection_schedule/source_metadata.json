@@ -4217,6 +4217,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "gosport_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosport_gov_uk.md",
+    "howto": {
+      "en": "Go to https://www.gosport.gov.uk/refuserecyclingdays, enter your postcode, and select your address. The UPRN is the number shown next to your address in the dropdown (also appended at the end of the address text)."
+    },
+    "urls": {}
+  },
   "guildford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/guildford_gov_uk.md",
     "howto": {},
