@@ -30,6 +30,34 @@ ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
 
 ADDRESS_LOOKUP_URL = "https://selfserviceapi.waste2x.dk/api/Customer/Customer/SearchCustomer/"
 
+TEST_DATE = [
+    {
+        "serviceBaseId": "O14wI_D9W_zG0",
+        "customerId": 47458,
+        "locationId": 49406,
+        "location": "Kløvertoften 61, 2740 Skovlunde",
+        "serviceTypeId": 71,
+        "serviceTypePublicName": "Mad/Rest",
+        "serviceTypeCategoryId": 2,
+        "binTypeId": 56,
+        "binTypePublicName": "240 L tokammer",
+        "startTime": "2026-04-15T22:00:00Z",
+        "stopTime": "2026-04-16T22:00:00Z", # Use this for the date of the schedule
+        "originalStartTime": "2026-04-15T22:00:00Z",
+        "originalStopTime": "2026-04-16T22:00:00Z",
+        "coordinate": {
+            "lat": 55.713405,
+            "lon": 12.390497,
+            "z": None,
+            "srid": 4326
+        },
+        "serviceSchemeId": 257318,
+        "schemeTypePublicName": "Enfamilie",
+        "frequencyTypeId": 1,
+        "serviceScheme_ServiceSchemeChangeBin_Mandatory": True
+    }
+]
+
 
 class Source:
     def __init__(self, streetName, number):
@@ -85,7 +113,7 @@ class Source:
         response = requests.get(url, headers=headers, timeout=30)
         _LOGGER.debug(f"Services response status: {response.status_code}")
         _LOGGER.debug(f"Services response: {response.text}")
-        
+
         if response.status_code != 200:
             raise ValueError(f"Failed to fetch services: HTTP {response.status_code}")
         
@@ -99,7 +127,7 @@ class Source:
         for item in data:
             entries.append(
                 Collection(
-                    date=datetime.datetime.fromisoformat(item["startTime"]).date(),
+                    date=datetime.datetime.fromisoformat(item["stopTime"]).date(),
                     t=item["serviceTypePublicName"],
                     icon=ICON_MAP.get(item["serviceTypePublicName"], "mdi:trash-can-outline"),
                 )
