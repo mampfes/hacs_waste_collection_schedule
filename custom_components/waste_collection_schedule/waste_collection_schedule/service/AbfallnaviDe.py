@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import json
 from datetime import datetime
 
 import requests
@@ -160,7 +159,14 @@ SERVICE_DOMAINS = [
         "url": "https://www.abfall-lippe.de/",
         "service_id": "awvlippe",
     },
+    {
+        "title": "Gemeinde Kranenburg",
+        "url": "https://www.kranenburg.de/",
+        "service_id": "kranenburg",
+    },
 ]
+
+DEFAULT_TIMEOUT = 20
 
 
 class AbfallnaviDe:
@@ -170,13 +176,18 @@ class AbfallnaviDe:
         self._service_url_fallback = (
             f"https://abfallapp.regioit.de/abfall-app-{service_domain}/rest"
         )
+        self._session = requests.Session()
 
     def _fetch(self, path, params=None):
         try:
-            r = requests.get(f"{self._service_url}/{path}", params=params)
+            r = self._session.get(
+                f"{self._service_url}/{path}", params=params, timeout=DEFAULT_TIMEOUT
+            )
         except requests.exceptions.ConnectionError:
             self._service_url = self._service_url_fallback
-            r = requests.get(f"{self._service_url}/{path}", params=params)
+            r = self._session.get(
+                f"{self._service_url}/{path}", params=params, timeout=DEFAULT_TIMEOUT
+            )
         r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
         if r.status_code == 404:
             raise SourceArgumentNotFoundWithSuggestions(
@@ -184,18 +195,16 @@ class AbfallnaviDe:
                 self._service_domain,
                 [s["service_id"] for s in SERVICE_DOMAINS],
             )
-        return r.text
+        r.raise_for_status()
+        return r
 
     def _fetch_json(self, path, params=None):
-        return json.loads(self._fetch(path, params=params))
+        return self._fetch(path, params=params).json()
 
     def get_cities(self):
         """Return all cities of service domain."""
         cities = self._fetch_json("orte")
-        result = {}
-        for city in cities:
-            result[city["id"]] = city["name"]
-        return result
+        return {city["id"]: city["name"] for city in cities}
 
     def get_city_id(self, city):
         """Return id for given city string."""
@@ -210,10 +219,7 @@ class AbfallnaviDe:
     def get_streets(self, city_id):
         """Return all streets of a city."""
         streets = self._fetch_json(f"orte/{city_id}/strassen")
-        result = {}
-        for street in streets:
-            result[street["id"]] = street["name"]
-        return result
+        return {street["id"]: street["name"] for street in streets}
 
     def get_street_ids(self, city_id, street):
         """Return ids for given street string.
@@ -256,20 +262,17 @@ class AbfallnaviDe:
                 "house number is required for this street",
                 list(house_numbers.values()),
             )
-        id = self._find_in_inverted_dict(house_numbers, house_number)
-        if id is None:
+        house_number_id = self._find_in_inverted_dict(house_numbers, house_number)
+        if house_number_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "house_number", house_number, list(house_numbers.values())
             )
 
-        return id
+        return house_number_id
 
     def get_waste_types(self):
         waste_types = self._fetch_json("fraktionen")
-        result = {}
-        for waste_type in waste_types:
-            result[waste_type["id"]] = waste_type["name"]
-        return result
+        return {waste_type["id"]: waste_type["name"] for waste_type in waste_types}
 
     def _get_dates(self, target, id, waste_types=None):
         # retrieve collections
@@ -283,12 +286,13 @@ class AbfallnaviDe:
 
         results = self._fetch_json(f"{target}/{id}/termine", params=args)
 
-        entries = []
-        for r in results:
-            date = datetime.strptime(r["datum"], "%Y-%m-%d").date()
-            fraktion = waste_types[r["bezirk"]["fraktionId"]]
-            entries.append([date, fraktion])
-        return entries
+        return [
+            [
+                datetime.strptime(r["datum"], "%Y-%m-%d").date(),
+                waste_types[r["bezirk"]["fraktionId"]],
+            ]
+            for r in results
+        ]
 
     def get_dates_by_street_id(self, street_id):
         return self._get_dates("strassen", street_id, waste_types=None)
