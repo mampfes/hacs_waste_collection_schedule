@@ -351,7 +351,7 @@ SERVICE_MAP = (
             "website": "https://www.murrindindi.vic.gov.au",
         },
         {
-            "name": "Clarence Valley Counci",
+            "name": "Clarence Valley Council",
             "url": "https://clarane.waste-info.com.au",
             "website": "https://www.clarence.nsw.gov.au",
         },

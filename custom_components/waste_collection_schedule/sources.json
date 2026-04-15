@@ -471,10 +471,10 @@
       "id": "ccc_tas_gov_au"
     },
     {
-      "title": "Clarence Valley Counci",
+      "title": "Clarence Valley Council",
       "module": "impactapps_com_au",
       "default_params": {
-        "service": "Clarence Valley Counci"
+        "service": "Clarence Valley Council"
       },
       "id": "impactapps_com_au"
     },
