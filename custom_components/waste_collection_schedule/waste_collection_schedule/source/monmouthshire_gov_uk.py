@@ -60,7 +60,7 @@ class Source:
         self._uprn = str(uprn)
 
         if not self._uprn.isdigit():
-            raise SourceArgumentException(self._uprn, "UPRN must be numeric")
+            raise SourceArgumentException("uprn", "UPRN must be numeric")
 
     def _parse_collection_date(self, collection_date_str: str) -> date | None:
         """Convert a date string without a year into the next valid future date."""
@@ -114,7 +114,7 @@ class Source:
         # Check for Website Errors
         except requests.RequestException as e:
             raise SourceArgumentException(
-                self._uprn, "Monmouthshire Council website unreachable"
+                "uprn", "Monmouthshire Council website unreachable"
             ) from e
 
         soup = BeautifulSoup(r.text, "html.parser")
@@ -124,14 +124,14 @@ class Source:
         # Check to see if UPRN text is on page
         if not uprn_check or not uprn_check.next_sibling:
             raise SourceArgumentException(
-                self._uprn,
+                "uprn",
                 f"UPRN {self._uprn} is invalid or outside the Monmouthshire Council area. Make sure your address returns entries on the council website: {API_URL}",
             )
 
         # Check UPRN provided & UPRN on page match
         if uprn_check.next_sibling.strip() != str(self._uprn):
             raise SourceArgumentException(
-                self._uprn, f"UPRN {self._uprn} does not match UPRN provided."
+                "uprn", f"UPRN {self._uprn} does not match UPRN provided."
             )
 
         entries = []
@@ -175,7 +175,7 @@ class Source:
 
         if not entries:
             raise SourceArgumentException(
-                self._uprn, "No collection dates found in response."
+                "uprn", "No collection dates found in response."
             )
 
         return entries

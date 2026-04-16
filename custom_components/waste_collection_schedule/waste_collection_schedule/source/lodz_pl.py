@@ -7,6 +7,7 @@ import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
+    SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
     SourceArgumentRequired,
 )
@@ -58,14 +59,13 @@ class Source:
     def fetch(self) -> list[Collection]:
         # Validate required arguments
         if not self.street:
-            raise SourceArgumentRequired("street")
+            raise SourceArgumentRequired("street", "A street name is required")
         if not self.house_number:
-            raise SourceArgumentRequired("house_number")
+            raise SourceArgumentRequired("house_number", "A house number is required")
         if str(self.building_type) not in ["1", "2", "3"]:
             raise SourceArgumentException(
                 "building_type",
-                self.building_type,
-                "Must be 1 (single-family), 2 (multi-family), or 3 (summer house).",
+                f"Invalid value '{self.building_type}': Must be 1 (single-family), 2 (multi-family), or 3 (summer house).",
             )
 
         # GET request parameters for the Karta Łodzianina API
@@ -136,9 +136,8 @@ class Source:
                 _LOGGER.warning(f"Ignored invalid date format: {date_str}")
 
         if not entries:
-            raise SourceArgumentException(
-                "street/house_number/building_type",
-                f"{self.street} {self.house_number} ({self.building_type})",
-                "No collection dates found for this address (calendar returned no usable events).",
+            raise SourceArgumentExceptionMultiple(
+                ["street", "house_number", "building_type"],
+                f"No collection dates found for {self.street} {self.house_number} ({self.building_type}) (calendar returned no usable events).",
             )
         return entries

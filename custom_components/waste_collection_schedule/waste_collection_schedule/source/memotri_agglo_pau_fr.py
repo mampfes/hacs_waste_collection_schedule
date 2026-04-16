@@ -84,7 +84,7 @@ class Source:
     def __init__(self, address: str):
         normalized_address = address.strip() if isinstance(address, str) else address
         if not normalized_address:
-            raise SourceArgumentRequired("address")
+            raise SourceArgumentRequired("address", "A non-empty address is required")
         self._address = normalized_address
 
     def _resolve_address(self) -> tuple[str, str]:

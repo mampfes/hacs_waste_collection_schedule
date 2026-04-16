@@ -75,7 +75,7 @@ class Source:
         )
 
         if soup.find("div", attrs={"class": "alert"}) is not None:
-            raise SourceArgumentNotFound("district")
+            raise SourceArgumentNotFound("district", self._district)
 
         available_streets = []
         for opt in soup.find_all("option")[1:]:

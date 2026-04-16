@@ -33,9 +33,9 @@ class Source:
     def __init__(self, postcode: str, uprn: str):
 
         if not postcode:
-            raise SourceArgumentException(postcode, "Postcode is required")
+            raise SourceArgumentException("postcode", "Postcode is required")
         if not uprn.isdigit():
-            raise SourceArgumentException(uprn, "UPRN must be numeric")
+            raise SourceArgumentException("uprn", "UPRN must be numeric")
 
         self._postcode = postcode.strip().upper()
         self._uprn = uprn

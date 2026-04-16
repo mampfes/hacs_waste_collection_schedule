@@ -132,7 +132,7 @@ class Source:
         # If strasse is needed
         if strassen_soup.find("option"):
             if not self._strasse:
-                raise SourceArgumentRequired("strasse")
+                raise SourceArgumentRequired("strasse", "A street (Strasse) must be selected from the available options")
 
             # get strasse id
             strasse_id = strassen_soup.find(

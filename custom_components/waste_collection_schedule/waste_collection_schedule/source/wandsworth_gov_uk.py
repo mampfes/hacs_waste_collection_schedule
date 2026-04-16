@@ -59,7 +59,7 @@ class Source:
         self._uprn = str(uprn)
 
         if not self._uprn.isdigit():
-            raise SourceArgumentException(self._uprn, "UPRN must be numeric")
+            raise SourceArgumentException("uprn", "UPRN must be numeric")
 
     def fetch(self) -> list[Collection]:
 
@@ -77,7 +77,7 @@ class Source:
         # Check for Website Errors
         except requests.RequestException as e:
             raise SourceArgumentException(
-                self._uprn, "Wandsworth Council website unreachable"
+                "uprn", "Wandsworth Council website unreachable"
             ) from e
 
         soup = BeautifulSoup(r.text, "html.parser")
@@ -85,13 +85,13 @@ class Source:
         # Check for unexpected page My Property H1
         if not soup.find("h1", string="My Property"):
             raise SourceArgumentException(
-                self._uprn, "Unexpected page content from Wandsworth Council"
+                "uprn", "Unexpected page content from Wandsworth Council"
             )
 
         # Check if UPRN is correct by if Results Div is returned
         if not soup.find("div", id="result"):
             raise SourceArgumentException(
-                self._uprn,
+                "uprn",
                 f"UPRN {self._uprn} is invalid or outside the Wandsworth Council area. Make sure your address returns entries on the council website: {API_URL}",
             )
 
@@ -107,7 +107,7 @@ class Source:
             # Check to see if source data currently unavailable
             if next_p and "currently unavailable" in next_p.get_text():
                 raise SourceArgumentException(
-                    self._uprn, "Source data currently unavailable."
+                    "uprn", "Source data currently unavailable."
                 )
 
         entries = []

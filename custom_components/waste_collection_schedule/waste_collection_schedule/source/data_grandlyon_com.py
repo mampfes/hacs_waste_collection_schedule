@@ -64,7 +64,7 @@ class Source:
     def __init__(self, address):
         normalized = address.strip() if isinstance(address, str) else address
         if not normalized:
-            raise SourceArgumentRequired("address")
+            raise SourceArgumentRequired("address", "An address is required")
         self._address = normalized
 
     def fetch(self):
