@@ -15301,6 +15301,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Mittsverige Vatten & Avfall",
+      "module": "msva_se",
+      "default_params": {},
+      "id": "msva_se"
+    },
+    {
       "title": "Motala",
       "module": "avfallsapp_se",
       "default_params": {

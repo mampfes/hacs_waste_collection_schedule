@@ -15457,6 +15457,45 @@
         },
         "data_description": {}
       },
+      "args_msva_se": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "additional_information": "Zusatzinformation",
+          "city": "Ort",
+          "house_number": "Hausnummer",
+          "postal_code": "Postleitzahl",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "additional_information": "Hauskennung, z.B. 'A'. Leer lassen, falls nicht zutreffend.",
+          "city": "Ortschaft innerhalb der Gemeinde Sundsvall. Standard: 'Sundsvall'.",
+          "house_number": "Hausnummer, z.B. '18'.",
+          "postal_code": "Fünfstellige schwedische Postleitzahl, z.B. '85461'.",
+          "street": "Straßenname ohne Hausnummer, z.B. 'Västra Radiogatan'."
+        }
+      },
+      "reconfigure_msva_se": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "additional_information": "Zusatzinformation",
+          "city": "Ort",
+          "house_number": "Hausnummer",
+          "postal_code": "Postleitzahl",
+          "street": "Straße"
+        },
+        "data_description": {
+          "additional_information": "Hauskennung, z.B. 'A'. Leer lassen, falls nicht zutreffend.",
+          "city": "Ortschaft innerhalb der Gemeinde Sundsvall. Standard: 'Sundsvall'.",
+          "house_number": "Hausnummer, z.B. '18'.",
+          "postal_code": "Fünfstellige schwedische Postleitzahl, z.B. '85461'.",
+          "street": "Straßenname ohne Hausnummer, z.B. 'Västra Radiogatan'."
+        }
+      },
       "args_molndal_se": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

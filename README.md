@@ -2367,6 +2367,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Lund Waste Collection](/doc/source/lund_se.md) / eservice431601.lund.se
 - [Lycksele Kommun](/doc/source/edpevent_se.md) / lycksele.se
 - [Marks kommun](/doc/source/edpevent_se.md) / mark.se
+- [Mittsverige Vatten & Avfall](/doc/source/msva_se.md) / msva.se
 - [Motala](/doc/source/avfallsapp_se.md) / motala.se
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
 - [Nodra](/doc/source/edpevent_se.md) / nodra.se

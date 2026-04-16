@@ -3253,6 +3253,16 @@
     "howto": {},
     "urls": {}
   },
+  "msva_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/msva_se.md",
+    "howto": {
+      "de": "Geben Sie die vollständige Adresse für ein Grundstück in der Gemeinde Sundsvall ein. Die API unterstützt nur Sundsvall (Gemeindecode 2281) — Adressen in Timrå und Nordanstig werden nicht abgedeckt.",
+      "en": "Enter the full street address for a property in Sundsvall kommun. The API only supports Sundsvall (municipality code 2281) — Timrå and Nordanstig addresses are not covered. Use the same street, house number, postal code and city you would enter on msva.se.",
+      "fr": "Saisissez l'adresse complète d'une propriété dans la commune de Sundsvall. L'API ne prend en charge que Sundsvall (code communal 2281) ; les adresses de Timrå et Nordanstig ne sont pas couvertes.",
+      "it": "Inserire l'indirizzo completo di una proprietà nel comune di Sundsvall. L'API supporta solo Sundsvall (codice comunale 2281); gli indirizzi di Timrå e Nordanstig non sono coperti."
+    },
+    "urls": {}
+  },
   "molndal_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/molndal_se.md",
     "howto": {},

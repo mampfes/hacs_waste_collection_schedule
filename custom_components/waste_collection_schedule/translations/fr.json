@@ -15352,6 +15352,45 @@
         },
         "data_description": {}
       },
+      "args_msva_se": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "additional_information": "Informations complémentaires",
+          "city": "Ville",
+          "house_number": "Numéro",
+          "postal_code": "Code postal",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "additional_information": "Lettre ou identifiant supplémentaire, ex. 'A'. Laisser vide si non applicable.",
+          "city": "Localité dans la commune de Sundsvall. Par défaut : 'Sundsvall'.",
+          "house_number": "Numéro de maison, ex. '18'.",
+          "postal_code": "Code postal suédois à cinq chiffres, ex. '85461'.",
+          "street": "Nom de la rue sans numéro, ex. 'Västra Radiogatan'."
+        }
+      },
+      "reconfigure_msva_se": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "additional_information": "Informations complémentaires",
+          "city": "Ville",
+          "house_number": "Numéro",
+          "postal_code": "Code postal",
+          "street": "Rue"
+        },
+        "data_description": {
+          "additional_information": "Lettre ou identifiant supplémentaire, ex. 'A'. Laisser vide si non applicable.",
+          "city": "Localité dans la commune de Sundsvall. Par défaut : 'Sundsvall'.",
+          "house_number": "Numéro de maison, ex. '18'.",
+          "postal_code": "Code postal suédois à cinq chiffres, ex. '85461'.",
+          "street": "Nom de la rue sans numéro, ex. 'Västra Radiogatan'."
+        }
+      },
       "args_molndal_se": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

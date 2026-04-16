@@ -15351,6 +15351,45 @@
         },
         "data_description": {}
       },
+      "args_msva_se": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "additional_information": "Informazioni aggiuntive",
+          "city": "Città",
+          "house_number": "Numero civico",
+          "postal_code": "Codice postale",
+          "street": "Via"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "additional_information": "Lettera o identificativo aggiuntivo, es. 'A'. Lasciare vuoto se non applicabile.",
+          "city": "Località all'interno del comune di Sundsvall. Predefinito: 'Sundsvall'.",
+          "house_number": "Numero civico, es. '18'.",
+          "postal_code": "Codice postale svedese di cinque cifre, es. '85461'.",
+          "street": "Nome della via senza numero civico, es. 'Västra Radiogatan'."
+        }
+      },
+      "reconfigure_msva_se": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "additional_information": "Informazioni aggiuntive",
+          "city": "Città",
+          "house_number": "Numero civico",
+          "postal_code": "Codice postale",
+          "street": "Via"
+        },
+        "data_description": {
+          "additional_information": "Lettera o identificativo aggiuntivo, es. 'A'. Lasciare vuoto se non applicabile.",
+          "city": "Località all'interno del comune di Sundsvall. Predefinito: 'Sundsvall'.",
+          "house_number": "Numero civico, es. '18'.",
+          "postal_code": "Codice postale svedese di cinque cifre, es. '85461'.",
+          "street": "Nome della via senza numero civico, es. 'Västra Radiogatan'."
+        }
+      },
       "args_molndal_se": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
