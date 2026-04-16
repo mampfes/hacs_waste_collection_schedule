@@ -10,18 +10,29 @@ DESCRIPTION = "Source for Avfall Sør, Kristiansand."
 URL = "https://avfallsor.no/"
 TEST_CASES = {"Auglandslia 1, Kristiansand": {"address": "Auglandslia 1, Kristiansand"}}
 
+# Maps fraksjonId to English waste type names
+# fraksjonId is the stable provider identifier
+FRAKSJON_ID_MAP = {
+    "9011": "Residual",  # Restavfall
+    "1111": "Bio",  # Bioavfall
+    "2499": {
+        # This fraksjonId maps to multiple waste types depending on fraksjon field
+        "Papp og papir": "Paper",
+        "Plastemballasje": "Plastic",
+    },
+    "1322": {
+        # This fraksjonId contains multiple waste types
+        "Glass- og metallemballasje": ["Glass", "Metal"],
+    },
+}
+
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Bioavfall": "mdi:leaf",
-    "Papp og papir": "mdi:package-variant",
-    "Plastemballasje": "mdi:recycle",
-    "Glass- og metallemballasje": "mdi:bottle-soda",
-    "residual": "mdi:trash-can",
-    "bio": "mdi:leaf",
-    "paper": "mdi:package-variant",
-    "plastic": "mdi:recycle",
-    "glass": "mdi:bottle-soda",
-    "metal": "mdi:bottle-soda",
+    "Residual": "mdi:trash-can",
+    "Bio": "mdi:leaf",
+    "Paper": "mdi:package-variant",
+    "Plastic": "mdi:recycle",
+    "Glass": "mdi:bottle-soda",
+    "Metal": "mdi:bottle-soda",
 }
 
 
@@ -87,11 +98,29 @@ class Source:
                 continue
             if date < today:
                 continue
-            waste_types = []
             for item in collection.get("items", []):
-                waste_types.extend(item.get("wasteIcons", []))
-            for waste_type in waste_types:
-                icon = ICON_MAP.get(waste_type)
-                entries.append(Collection(date=date, t=waste_type, icon=icon))
+                fraksjon_id = item.get("fraksjonId")
+                fraksjon = item.get("fraksjon")
+                
+                # Look up English waste type name using fraksjonId
+                mapping = FRAKSJON_ID_MAP.get(fraksjon_id)
+                
+                # Handle nested mappings for fraksjonIds with multiple waste types
+                if isinstance(mapping, dict):
+                    # Lookup by both fraksjonId and fraksjon name
+                    waste_type_value = mapping.get(fraksjon)
+                    if isinstance(waste_type_value, list):
+                        waste_types = waste_type_value
+                    else:
+                        waste_types = [waste_type_value] if waste_type_value else []
+                else:
+                    # Single waste type for this fraksjonId
+                    waste_types = [mapping] if mapping else []
+                
+                # Create collection entries for each waste type
+                for waste_type in waste_types:
+                    if waste_type:
+                        icon = ICON_MAP.get(waste_type)
+                        entries.append(Collection(date=date, t=waste_type, icon=icon))
 
         return entries
