@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Onkaparinga Council"
 DESCRIPTION = "Source for City of Onkaparinga Council, Australia."
@@ -38,7 +39,7 @@ class Source:
         addresses = r.json()
 
         if addresses == 0:
-            raise Exception("address not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         params = {"geolocationid": addresses["Items"][0]["Id"], "ocsvclang": "en-AU"}
 

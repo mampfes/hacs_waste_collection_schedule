@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = None
 DESCRIPTION = "Source for the Dutch HVCGroep waste management."
@@ -320,7 +321,7 @@ class Source:
 
         # Something must be wrong, maybe the address isn't valid? No need to do the extra requests so just return here.
         if len(data) == 0:
-            raise Exception("no data found for this address")
+            raise SourceArgumentNotFound("postal_code", self.postal_code)
 
         bag_id = data[0]["bagid"]
         if len(data) > 1 and (self.house_letter or self.suffix):

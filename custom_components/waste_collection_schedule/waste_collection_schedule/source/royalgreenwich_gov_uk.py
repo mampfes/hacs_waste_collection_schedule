@@ -193,7 +193,7 @@ class Source:
         # e.g. for flats they explicitly mentioned to contact management company instead
         # so in this case address can be found in previous steps, but there is no data for it and this error is returned
         if r.text == "ADDRESS_NOT_FOUND":
-            raise Exception(f"No data found for address '{self._address}'")
+            raise SourceArgumentNotFound("address", self._address)
 
         data = r.json()
 

@@ -2,6 +2,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Simbio"
 DESCRIPTION = "Source for Simbio."
@@ -37,7 +38,7 @@ class Source:
         r = requests.post(BASE_URL, data=data)
         r.raise_for_status()
         if r.text == "null" or not r.json():
-            raise Exception("Invalid address")
+            raise SourceArgumentExceptionMultiple(["street", "house_number"], "Invalid address")
 
         entries = []
         response_data = r.json()

@@ -6,7 +6,7 @@ from typing import Any
 import requests
 from dateutil.rrule import WEEKLY, rrule, weekday
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple, SourceArgumentNotFound
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -324,7 +324,7 @@ class Source:
         pickup_days = self._fetch_pickup_days()
 
         if not pickup_days:
-            raise Exception("No waste data found for the given address")
+            raise SourceArgumentNotFound("street", self._street)
 
         entries: list[Collection] = []
         seen: set[tuple[str, datetime.date]] = set()

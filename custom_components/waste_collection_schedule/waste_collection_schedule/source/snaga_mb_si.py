@@ -2,6 +2,7 @@ from datetime import date, datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Snaga Maribor"
 DESCRIPTION = "Source for Snaga Maribor."
@@ -46,7 +47,7 @@ class Source:
         r = requests.get(ADDRESS_ID_URL, params=args)
         r.raise_for_status()
         if r.text == "null" or not r.json():
-            raise Exception("Invalid address")
+            raise SourceArgumentExceptionMultiple(["street", "house_number"], "Invalid address")
 
         entries = []
         for id in r.json():

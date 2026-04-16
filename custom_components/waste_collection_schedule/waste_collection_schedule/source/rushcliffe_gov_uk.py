@@ -5,6 +5,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Rushcliffe Brough Council"
 DESCRIPTION = "Source for Rushcliffe Brough Council."
@@ -109,7 +110,7 @@ class Source:
         )
 
         if args[POST_POST_UPRN_KEY] is None:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         args[POST_POST_UPRN_KEY + "lbltxt"] = self._address
         args[POST_POST_UPRN_KEY + "FF3518-text"] = self._postcode

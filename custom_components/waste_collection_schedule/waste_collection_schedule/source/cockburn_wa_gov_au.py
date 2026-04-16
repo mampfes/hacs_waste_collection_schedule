@@ -4,6 +4,7 @@ from typing import TypedDict
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Cockburn"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for cockburn.wa.gov.au"  # Describe your source
@@ -118,7 +119,7 @@ class Source:
             data = r.json()[0]
 
             if not data:
-                raise Exception("address not found")
+                raise SourceArgumentNotFound("address", self.address)
 
             # Convert the bin day to a date
             date_rubbish = datetime.today()

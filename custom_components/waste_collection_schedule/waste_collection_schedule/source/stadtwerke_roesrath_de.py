@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Stadtwerke Rösrath"
 DESCRIPTION = " Source for 'Stadtwerke Rösrath'."
@@ -41,7 +42,7 @@ class Source:
         data = r.json()
 
         if len(data) == 0:
-            raise Exception("no address found")
+            raise SourceArgumentNotFound("street", self.street)
 
         entries = []
         for item in data:

@@ -4,6 +4,7 @@ import time
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Hutt City Council"
 DESCRIPTION = "Source for Hutt City Council."
@@ -52,7 +53,7 @@ class Source:
             if res["attributes"]["address"] == self._address
         ]
         if len(filtered) == 0:
-            raise Exception(f"No result found for address {self._address}")
+            raise SourceArgumentNotFound("address", self._address)
         if len(filtered) > 1:
             raise Exception(
                 f"More then one result returned for address {self._address}."

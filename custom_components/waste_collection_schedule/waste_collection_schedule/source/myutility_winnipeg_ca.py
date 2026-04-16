@@ -2,6 +2,7 @@ import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 # Constants for the Winnipeg Utility Billing Service
 TITLE = "Winnipeg (MB)"
@@ -34,7 +35,7 @@ class Source:
 
         # Check if 'Address' key is present in data; return empty list if not
         if "Address" not in data:
-            raise Exception("Address is not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         # Get eligible waste types for the address
         eligible_waste_types = self.get_eligible_waste_types(data)

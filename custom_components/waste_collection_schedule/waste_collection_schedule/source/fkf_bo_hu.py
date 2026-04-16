@@ -4,6 +4,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "FKF Budaörs"
 DESCRIPTION = "Source script for www.fkf.hu"
@@ -48,7 +49,7 @@ class Source:
         )
 
         if soup.find("div", attrs={"class": "alert"}) is not None:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("street", self._street)
 
         entries = []
         communal_divs = soup.find_all("div", attrs={"class": "communal"})

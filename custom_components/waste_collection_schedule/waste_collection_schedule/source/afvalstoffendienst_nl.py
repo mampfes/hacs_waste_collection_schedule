@@ -5,6 +5,7 @@ from datetime import date
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -77,7 +78,7 @@ class Source:
         addresses = response.json()
 
         if len(addresses) == 0:
-            raise Exception("Address is not within service area. Please check.")
+            raise SourceArgumentException("postcode", "Address is not within service area. Please check.")
 
         if self._addition:
             for address in addresses:

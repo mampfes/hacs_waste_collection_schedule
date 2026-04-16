@@ -6,6 +6,7 @@ from urllib.parse import quote, urlencode
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Tauranga City Council"
 DESCRIPTION = "Source script for Tauranga City Council"
@@ -49,7 +50,7 @@ class Source:
         ).json()
 
         if len(address_response.get("d")) == 0:
-            raise Exception("Address not found within TCC records")
+            raise SourceArgumentNotFound("address", self._address)
 
         # Parse address data from initial request
         address_dict = json.loads(address_response.get("d")[0])

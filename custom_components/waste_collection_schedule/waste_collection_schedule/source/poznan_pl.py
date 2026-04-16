@@ -4,6 +4,7 @@ import logging
 import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Poznań"
 DESCRIPTION = "Source for Poznań city garbage collection"
@@ -59,7 +60,7 @@ class Source:
 
         table = soup.find("table", id="schedule_0")
         if not isinstance(table, Tag):
-            raise Exception("Invalid address")
+            raise SourceArgumentExceptionMultiple(["street_name", "street_number"], "Invalid address")
 
         entries = []
         for formatted_date in formatted_dates:

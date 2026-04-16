@@ -2,6 +2,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Avfall & Återvinning Skaraborg"
 DESCRIPTION = "Source for Skaraborg."
@@ -39,7 +40,7 @@ class Source:
 
         search_results = search_request.json()
         if not search_results:
-            raise Exception("No addresses found")
+            raise SourceArgumentNotFound("address", self._address)
 
         data = {"plant_id": self._find_plant_id(search_results)}
         data_request = requests.post(DATA_URL, data, headers=headers)
@@ -66,4 +67,4 @@ class Source:
                 if x["zip_city"] == self._city and x["address"] == self._address
             )
         except StopIteration:
-            raise Exception("Can't find plant id for address")
+            raise SourceArgumentNotFound("address", self._address)

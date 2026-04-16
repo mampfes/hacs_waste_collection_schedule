@@ -4,6 +4,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Allerdale Borough Council"
 DESCRIPTION = "Source for www.allerdale.gov.uk services for Allerdale Borough Council."
@@ -74,7 +75,7 @@ class Source:
         alink = soup.find("div", id="property_list").find("a")
 
         if alink is None:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("address_name_number", self._address_name_number)
 
         nextpageurl = API_URL + alink["href"]
 
@@ -86,7 +87,7 @@ class Source:
         soup = BeautifulSoup(r.text, features="html.parser")
 
         if soup.find("span", id="waste-hint"):
-            raise Exception("No scheduled services at this address")
+            raise SourceArgumentNotFound("address_name_number", self._address_name_number)
 
         u1s = soup.find("section", id="scheduled-collections").find_all("u1")
 
