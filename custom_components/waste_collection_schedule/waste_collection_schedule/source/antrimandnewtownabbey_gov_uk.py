@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup, Tag
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -187,7 +188,7 @@ class Source:
 
         collection_divs = soup.select("div.feature-box.bins")
         if not collection_divs:
-            raise Exception("No collections found")
+            raise SourceArgumentExceptionMultiple(["id", "uprn"], "No collections found")
 
         entries = []
         for collection_div in collection_divs:

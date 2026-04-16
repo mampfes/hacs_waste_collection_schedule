@@ -146,7 +146,7 @@ class Source:
 
         if not entries:
             _LOGGER.error("No collection dates found in response")
-            raise Exception("No collection dates found in response")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         _LOGGER.debug(f"Successfully found {len(entries)} collection entries")
         return entries

@@ -6,6 +6,7 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Kleszczewo/Kostrzyn"
 DESCRIPTION = "Source for Kleszczewo/Kostrzyn commune garbage collection"
@@ -75,7 +76,7 @@ class Source:
             if item["value"] == self._city:
                 city_id = item["id"]
         if city_id == 0:
-            raise Exception("city not found")
+            raise SourceArgumentNotFound("city", self._city)
 
         # GET STREET ID
         r = requests.get(f"{api_url}/addresses/streets/{city_id}")
@@ -86,7 +87,7 @@ class Source:
             if item["value"] == self._street_name:
                 street_id = item["id"]
         if street_id == 0:
-            raise Exception("street not found")
+            raise SourceArgumentNotFound("street_name", self._street_name)
 
         # GET HOME ID
         r = requests.get(f"{api_url}/addresses/numbers/{city_id}/{street_id}")
@@ -97,7 +98,7 @@ class Source:
             if item["value"] == self._street_number:
                 number_id = item["id"]
         if number_id == 0:
-            raise Exception("number not found")
+            raise SourceArgumentNotFound("street_number", self._street_number)
 
         # GET REPORTS URL
         r = requests.get(f"{api_url}/reports", params={"type": "html", "id": number_id})

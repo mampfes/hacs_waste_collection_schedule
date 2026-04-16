@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "London Borough of Merton (Old)"
 DESCRIPTION = "Source for www.merton.gov.uk services for London Borough of Merton, UK"
@@ -47,7 +48,7 @@ class Source:
         # Search for table containing bin schedule info
         collections = soup.find("table", {"class": "collectiondays"})
         if not collections:
-            raise Exception("No collections found for given property id")
+            raise SourceArgumentNotFound("property", self._property)
 
         entries = []
         # iterate through waste types finding pick-up dates

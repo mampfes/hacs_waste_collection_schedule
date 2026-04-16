@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Berlin Recycling"
 DESCRIPTION = "Source for Berlin Recycling waste collection."
@@ -83,7 +84,7 @@ class Source:
 
         entries = []
         if "Object" not in data or "data" not in data["Object"]:
-            raise Exception("No data found", data)
+            raise SourceArgumentExceptionMultiple(["username", "password"], "No data found")
 
         for d in data["Object"]["data"]:
             date = datetime.strptime(d["Task Date"], "%Y-%m-%d").date()

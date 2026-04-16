@@ -4,6 +4,7 @@ from urllib.parse import quote as urlquote
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentRequired
 
 TITLE = "Tewkesbury Borough Council"
 DESCRIPTION = "Home waste collection schedule for Tewkesbury Borough Council"
@@ -42,7 +43,7 @@ class Source:
 
     def get_data(self, uprn, api_url=API_URL):
         if uprn is None:
-            raise Exception("UPRN not set")
+            raise SourceArgumentRequired("uprn", "UPRN is required to fetch collection data")
 
         encoded_uprn = urlquote(uprn)
         request_url = api_url % encoded_uprn

@@ -6,6 +6,7 @@ from typing import Literal
 from dateutil import parser
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, rrule, weekday
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Static Source"
 DESCRIPTION = "Source for static waste collection schedules."
@@ -154,7 +155,7 @@ class Source:
                 self.add_weekday(weekdays, 1)
 
             else:
-                raise Exception(f"Invalid weekdays format: {weekdays}")
+                raise SourceArgumentException("weekdays", f"Invalid weekdays format: {weekdays}")
 
             if self._weekdays == []:
                 self._weekdays = None
@@ -193,7 +194,7 @@ class Source:
             raise ValueError("Internal Error: weekdays not initialized")
 
         if weekday not in WEEKDAY_MAP:
-            raise Exception(f"invalid weekday: {weekday}")
+            raise SourceArgumentException("weekdays", f"invalid weekday: {weekday}")
 
         self._weekdays.append(WEEKDAY_MAP[weekday](count))
 

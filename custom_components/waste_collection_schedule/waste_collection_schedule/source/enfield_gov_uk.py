@@ -132,7 +132,7 @@ class Source:
             )
 
         if not entries:
-            raise Exception("No collection dates found in response.")
+            raise SourceArgumentNotFound("uprn", uprn)
 
         return entries
 

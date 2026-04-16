@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "PUP Saubermacher"
 DESCRIPTION = "Source for PUP Saubermacher."
@@ -50,7 +51,7 @@ class Source:
         content = BeautifulSoup(response.text, "html.parser")
 
         if response.text == "null" or not content.find_all("ul"):
-            raise Exception("Invalid place id")
+            raise SourceArgumentNotFound("place_id", self._place_id)
 
         entries = []
         data = self.parse_to_obj(content)

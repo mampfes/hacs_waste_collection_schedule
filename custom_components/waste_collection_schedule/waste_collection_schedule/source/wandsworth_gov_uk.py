@@ -4,7 +4,7 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -161,6 +161,6 @@ class Source:
                 )
 
         if not entries:
-            raise Exception("No collection dates found in response.")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         return entries

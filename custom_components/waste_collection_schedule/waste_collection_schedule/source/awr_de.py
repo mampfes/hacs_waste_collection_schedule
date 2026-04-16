@@ -62,7 +62,7 @@ class Source:
         }
 
         if self._street not in street_to_id:
-            raise Exception(f"street not found: {self._street}")
+            raise SourceArgumentNotFoundWithSuggestions("street", self._street, street_to_id.keys())
 
         streetId = street_to_id[self._street]
 

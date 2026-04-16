@@ -1,4 +1,5 @@
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.A_region_ch import A_region_ch
 
 TITLE = "Köniz"
@@ -46,7 +47,7 @@ class Source:
         self._municipality = municipality
         self._district = district
         if municipality not in MUNICIPALITIES:
-            raise Exception(f"municipality '{municipality}' not found")
+            raise SourceArgumentNotFoundWithSuggestions("municipality", municipality, MUNICIPALITIES.keys())
         self._municipality_url = MUNICIPALITIES[municipality]
 
         self._ics_sources = []
