@@ -411,6 +411,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of South Perth",
+      "module": "southperth_wa_gov_au",
+      "default_params": {},
+      "id": "southperth_wa_gov_au"
+    },
+    {
       "title": "City of Subiaco",
       "module": "subiaco_wa_gov_au",
       "default_params": {},
