@@ -72,8 +72,11 @@ class Source:
         except IntraMapsSearchError as e:
             raise SourceArgumentNotFound("address", self._address) from e
 
-        fields = extract_panel_fields(result["response"])
+        response = result.get("response")
+        if not isinstance(response, dict):
+            raise SourceArgumentNotFound("address", self._address)
 
+        fields = extract_panel_fields(response)
         entries: list[Collection] = []
         for field_name, waste_type in FIELD_MAP.items():
             value = fields.get(field_name, "")
