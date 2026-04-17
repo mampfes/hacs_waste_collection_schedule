@@ -16765,6 +16765,12 @@
       "id": "eastherts_gov_uk"
     },
     {
+      "title": "East Lindsey District Council",
+      "module": "e_lindsey_gov_uk",
+      "default_params": {},
+      "id": "e_lindsey_gov_uk"
+    },
+    {
       "title": "East Lothian",
       "module": "eastlothian_gov_uk",
       "default_params": {},

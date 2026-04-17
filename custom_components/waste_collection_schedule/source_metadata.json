@@ -4102,6 +4102,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "e_lindsey_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/e_lindsey_gov_uk.md",
+    "howto": {
+      "en": "Find your UPRN using a tool like findmyaddress.co.uk or finders.io."
+    },
+    "urls": {}
+  },
   "eastlothian_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastlothian_gov_uk.md",
     "howto": {},

@@ -2591,6 +2591,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [East Devon District Council](/doc/source/eastdevon_gov_uk.md) / eastdevon.gov.uk
 - [East Dunbartonshire Council](/doc/source/eastdunbarton_gov_uk.md) / eastdunbarton.gov.uk
 - [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
+- [East Lindsey District Council](/doc/source/e_lindsey_gov_uk.md) / e-lindsey.gov.uk
 - [East Lothian](/doc/source/eastlothian_gov_uk.md) / eastlothian.gov.uk
 - [East Northamptonshire and Wellingborough](/doc/source/east_northamptonshire_gov_uk.md) / east-northamptonshire.gov.uk
 - [East Renfrewshire Council](/doc/source/east_renfrewshire_gov_uk.md) / eastrenfrewshire.gov.uk
