@@ -48,6 +48,7 @@ known to work with:
 |Saint-Jean-Sur-Richelieu, QC|Canada|[compo.qc.ca](https://www.compo.qc.ca/collectes/)|
 |City of Houston, TX|USA|[houstontx.gov](https://www.houstontx.gov/solidwaste/)|
 |Eco360 (Greater Moncton, NB)|Canada|[eco360.ca](https://www.eco360.ca/residential-program)|
+|Rogue Disposal & Recycling (Medford, OR)|USA|[roguedisposal.com](https://roguedisposal.com/resources/recycling-schedule)|
 
 and probably a lot more.
 

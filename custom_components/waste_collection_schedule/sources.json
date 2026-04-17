@@ -18294,6 +18294,14 @@
       "id": "rochester_ny_us"
     },
     {
+      "title": "Rogue Disposal & Recycling (Medford, OR)",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Round Rock Texas",
       "module": "roundrocktexas_gov",
       "default_params": {},
