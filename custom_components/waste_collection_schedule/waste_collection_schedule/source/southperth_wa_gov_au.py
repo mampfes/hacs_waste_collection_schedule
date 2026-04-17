@@ -1,3 +1,4 @@
+import logging
 import re
 from datetime import datetime, timedelta
 
@@ -14,42 +15,35 @@ TITLE = "City of South Perth"
 DESCRIPTION = "Source for City of South Perth waste collection."
 URL = "https://southperth.wa.gov.au"
 COUNTRY = "au"
-
 TEST_CASES = {
     "Lansdowne Road": {"address": "156 Lansdowne Road KENSINGTON"},
     "Roebuck Drive": {"address": "13 Roebuck Drive"},
 }
-
 ICON_MAP = {
     "General Waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
 }
-
 PARAM_DESCRIPTIONS = {
     "en": {
         "address": "Street address with suburb (e.g. '156 Lansdowne Road KENSINGTON')",
     },
 }
-
 PARAM_TRANSLATIONS = {
     "en": {
         "address": "Street Address",
     },
 }
-
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://cosp.spatial.t1cloud.com",
     instance="spatial/intramaps",
     config_id="29b80b8c-2c27-4a14-8f10-678c7947f7be",
     project="cf285c38-0d67-406e-93c2-35ae3d066521",
 )
-
 # Map IntraMaps field names to waste types
 FIELD_MAP = {
     "Waste Pickup Day": "General Waste",
     "Next Recycling Pickup": "Recycling",
 }
-
 WEEKDAYS = {
     "monday": 0,
     "tuesday": 1,
@@ -59,6 +53,7 @@ WEEKDAYS = {
     "saturday": 5,
     "sunday": 6,
 }
+LOGGER = logging.getLogger(__name__)
 
 
 class Source:
@@ -84,7 +79,12 @@ class Source:
                 if waste_type == "General Waste":
                     entries.extend(self._parse_schedule(value, waste_type))
                 else:
-                    recycle_date = datetime.strptime(value, "%d %B %Y").date()
+                    try:
+                        recycle_date = datetime.strptime(value, "%d %B %Y").date()
+                    except ValueError:
+                        LOGGER.warning(
+                            f"'{recycle_date}' did not match expected date format."
+                        )
                     entries.append(
                         Collection(
                             date=recycle_date,
@@ -97,10 +97,9 @@ class Source:
 
     @staticmethod
     def _parse_schedule(text: str, waste_type: str) -> list[Collection]:
-        """Parse schedule text like 'Every Friday' or 'Friday - 17 April 2026'."""
+        """Parse schedule text like 'Every Friday'."""
         icon = ICON_MAP.get(waste_type)
         text_lower = text.strip().lower()
-
         # "Every [Day]" — weekly
         match = re.match(r"every\s+(\w+)", text_lower)
         if match:
