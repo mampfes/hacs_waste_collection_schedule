@@ -16,8 +16,8 @@ TEST_CASES = {
     },
     "Västra Radiogatan 22, Sundsvall": {
         "street": "Västra Radiogatan",
-        "house_number": 22,
-        "postal_code": 85461,
+        "house_number": "22",
+        "postal_code": "85461",
         "city": "Sundsvall",
     },
 }
