@@ -906,6 +906,7 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Germany</summary>
 
+- [123abfallkalender](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfall Export (vCal)](/doc/ics/abfall_export_vcal.md) / example.com
@@ -1061,6 +1062,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Battenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bau- und Entsorgungsbetrieb Emden](/doc/ics/bee_emden_de.md) / bee-emden.de
+- [Beltershausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/1-beltershausen
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
 - [Berlin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
@@ -1111,6 +1113,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
 - [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
 - [Dormagen](/doc/ics/mein_abfallkalender_online.md) / dormagen.de
+- [Dreihausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/2-dreihausen
 - [Drekopf](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallplaner
 - [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de
 - [Duisburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwbd
@@ -1118,6 +1121,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [EAW Rheingau-Taunus-Kreis](/doc/ics/eaw_rheingau_taunus_de.md) / eaw-rheingau-taunus.de
 - [EAW Sangerhausen (Gemos)](/doc/ics/eaw_wastebox_gemos_de.md) / eaw.wastebox.gemos-management.de
 - [Ebersberg](/doc/source/awido_de.md) / lra-ebe.de
+- [Ebsdorf](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/3-ebsdorf
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
 - [Edertal](/doc/source/lobbe_app.md) / lobbe.app
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
@@ -1163,6 +1167,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Frankenau](/doc/source/lobbe_app.md) / lobbe.app
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
+- [Frauenberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/4-frauenberg
 - [Frauenneuharting](/doc/source/awido_de.md) / lra-ebe.de
 - [Freiburg im Breisgau](/doc/source/app_abfallplus_de.md) / Abfall+ App: asf
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
@@ -1188,6 +1193,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GSAK APP / Krefeld](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderKrefeld
 - [GWA - Kreis Unna mbH](/doc/source/abfallnavi_de.md) / gwa-online.de
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
+- [Hachborn](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/5-hachborn
 - [Hagen](/doc/source/app_abfallplus_de.md) / Abfall+ App: hebhagen
 - [Hainburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Hallenberg](/doc/source/lobbe_app.md) / lobbe.app
@@ -1206,6 +1212,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hemer](/doc/source/lobbe_app.md) / lobbe.app
 - [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
 - [Herzogenrath](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Heskem](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/6-heskem
 - [Heusenstamm](/doc/ics/mein_abfallkalender_online.md) / heusenstamm.de
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
@@ -1216,6 +1223,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Höchst](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
+- [Ilschhausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/7-ilschhausen
 - [Inden](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Ingelsberg (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
 - [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
@@ -1401,6 +1409,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Langen](/doc/ics/mein_abfallkalender_online.md) / langen.de
 - [Langerwehe](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
+- [Leidenhofen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/8-leidenhofen
 - [Lennestadt](/doc/ics/abfuhrtermine_info.md) / lennestadt.de
 - [Leverkusen](/doc/source/app_abfallplus_de.md) / Abfall+ App: avea
 - [Lichtenau](/doc/source/lobbe_app.md) / lobbe.app
@@ -1438,6 +1447,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
 - [MZV Hegau](/doc/source/mzvhegau_de.md) / mzvhegau.de
 - [MZV Rotenburg](/doc/source/mzv_rotenburg_bebra_de.md) / mzv-rotenburg-bebra.de
+- [Mölln](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/9-molln
 - [Mörfelden-Walldorf](/doc/ics/moerfelden_walldorf_de.md) / moerfelden-walldorf.de
 - [Mühlheim am Main (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Müllabfuhr Deutschland](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
@@ -1483,6 +1493,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
 - [Pöring (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
+- [Rauischholzhausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/10-rauischholzhausen
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Reichelsheim](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
@@ -1502,6 +1513,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rosenthal](/doc/source/lobbe_app.md) / lobbe.app
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
+- [Roßberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/11-rossberg
 - [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
 - [Rödermark](/doc/ics/mein_abfallkalender_online.md) / roedermark.de
 - [Rüthen](/doc/source/lobbe_app.md) / lobbe.app
@@ -1621,6 +1633,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wenden](/doc/ics/abfuhrtermine_info.md) / gemeinde-wenden.de
 - [Werdohl](/doc/source/lobbe_app.md) / lobbe.app
 - [Wermelskirchen (Service Down)](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
+- [Wermertshausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/12-wermertshausen
 - [Westerholt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Westerwaldkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: wabapp
 - [Wetter](/doc/ics/mein_abfallkalender_online.md) / stadtbetrieb-wetter.de
@@ -1631,6 +1644,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Willingen](/doc/source/lobbe_app.md) / lobbe.app
 - [Wilnsdorf](/doc/ics/wilnsdorf_de.md) / wilnsdorf.de
 - [Winterberg](/doc/source/lobbe_app.md) / lobbe.app
+- [Wittelsberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/13-wittelsberg
 - [Witzenhausen](/doc/ics/mein_abfallkalender_online.md) / witzenhausen.eu
 - [Wolfesing (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de

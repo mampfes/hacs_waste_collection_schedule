@@ -5366,6 +5366,12 @@
   ],
   "Germany": [
     {
+      "title": "123abfallkalender",
+      "module": "123abfallkalender_de",
+      "default_params": {},
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Aballwirtschaft Ludwigslust-Parchim A\u00f6R",
       "module": "ics",
       "default_params": {},
@@ -6468,6 +6474,14 @@
       "id": "ics_bee_emden_de"
     },
     {
+      "title": "Beltershausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Beltershausen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Bergischer Abfallwirtschaftverbund",
       "module": "abfallnavi_de",
       "default_params": {
@@ -6847,6 +6861,14 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Dreihausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Dreihausen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Drekopf",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -6894,6 +6916,14 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Ebsdorf",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Ebsdorf"
+      },
+      "id": "123abfallkalender_de"
     },
     {
       "title": "ebwo - Entsorgungs- und Baubetrieb Anstalt des \u00f6ffentlichen Rechts der Stadt Worms",
@@ -7226,6 +7256,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Frauenberg",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Frauenberg"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Frauenneuharting",
       "module": "awido_de",
       "default_params": {
@@ -7429,6 +7467,14 @@
       "id": "abfall_io"
     },
     {
+      "title": "Hachborn",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Hachborn"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Hagen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -7563,6 +7609,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Heskem",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Heskem"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Heusenstamm",
       "module": "ics",
       "default_params": {},
@@ -7634,6 +7688,14 @@
         "app_id": "de.k4systems.abfallappik"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Ilschhausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Ilschhausen"
+      },
+      "id": "123abfallkalender_de"
     },
     {
       "title": "Inden",
@@ -9054,6 +9116,14 @@
       "id": "ics_lebach_de"
     },
     {
+      "title": "Leidenhofen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Leidenhofen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Lennestadt",
       "module": "ics",
       "default_params": {},
@@ -9338,6 +9408,14 @@
       "module": "mzv_rotenburg_bebra_de",
       "default_params": {},
       "id": "mzv_rotenburg_bebra_de"
+    },
+    {
+      "title": "M\u00f6lln",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "M\u00f6lln"
+      },
+      "id": "123abfallkalender_de"
     },
     {
       "title": "M\u00f6rfelden-Walldorf",
@@ -9675,6 +9753,14 @@
       "id": "awido_de"
     },
     {
+      "title": "Rauischholzhausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Rauischholzhausen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Recklinghausen",
       "module": "jumomind_de",
       "default_params": {
@@ -9812,6 +9898,14 @@
         "app_id": "de.k4systems.willkommen"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Ro\u00dfberg",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Ro\u00dfberg"
+      },
+      "id": "123abfallkalender_de"
     },
     {
       "title": "RSAG Rhein-Sieg-Kreis",
@@ -10691,6 +10785,14 @@
       "id": "wermelskirchen_de"
     },
     {
+      "title": "Wermertshausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Wermertshausen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Westerholt (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -10771,6 +10873,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Wittelsberg",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Wittelsberg"
+      },
+      "id": "123abfallkalender_de"
     },
     {
       "title": "Witzenhausen",
