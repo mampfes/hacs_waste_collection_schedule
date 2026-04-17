@@ -2503,6 +2503,14 @@
     "howto": {},
     "urls": {}
   },
+  "tonnenticker_pro_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tonnenticker_pro_de.md",
+    "howto": {
+      "de": "Wählen Sie Ihren Ort und verwenden Sie den genauen Straßennamen aus der Tonnenticker Pro App oder der Website des Anbieters.",
+      "en": "Select your municipality, then use the exact street name shown in the Tonnenticker Pro app or the provider's website."
+    },
+    "urls": {}
+  },
   "ics_ebu_ulm_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ebu_ulm_de.md",
     "howto": {

@@ -1588,6 +1588,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Team Orange (Landkreis Würzburg)](/doc/source/abfall_io.md) / team-orange.info
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen](/doc/source/tonnenleerung_de.md) / tonnenleerung.de
+- [Tonnenticker Pro](/doc/source/tonnenticker_pro_de.md) / regioit.de
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen

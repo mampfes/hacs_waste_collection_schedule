@@ -12240,6 +12240,33 @@
         },
         "data_description": {}
       },
+      "args_tonnenticker_pro_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Municipality name (e.g. 'Steinhagen', 'Warendorf')",
+          "street": "Street name — use exact spelling from the provider's calendar"
+        }
+      },
+      "reconfigure_tonnenticker_pro_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "Municipality name (e.g. 'Steinhagen', 'Warendorf')",
+          "street": "Street name — use exact spelling from the provider's calendar"
+        }
+      },
       "args_ics_ebu_ulm_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

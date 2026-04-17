@@ -10439,6 +10439,12 @@
       "id": "tonnenleerung_de"
     },
     {
+      "title": "Tonnenticker Pro",
+      "module": "tonnenticker_pro_de",
+      "default_params": {},
+      "id": "tonnenticker_pro_de"
+    },
+    {
       "title": "Tuttlingen",
       "module": "app_abfallplus_de",
       "default_params": {
