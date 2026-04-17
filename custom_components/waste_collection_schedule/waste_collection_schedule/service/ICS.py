@@ -44,6 +44,14 @@ class ICS:
             ics_data,
         )
 
+        # Fix truncated DTSTART/DTEND values where the time portion is missing
+        # after the 'T' separator (e.g. "DTSTART;TZID=Europe/Berlin:20260505T").
+        ics_data = re.sub(
+            r"(DT(?:START|END)[^:]*:\d{8})T(\r?\n)",
+            r"\g<1>T000000\g<2>",
+            ics_data,
+        )
+
         # parse ics data
         events: List[Any] = icalevents.events(
             start=start_date, end=end_date, string_content=ics_data.encode()
