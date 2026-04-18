@@ -1,7 +1,9 @@
 import datetime
+
+import requests
+
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-import requests
 
 TITLE = "London Borough of Lambeth"
 DESCRIPTION = "Source for London Borough of Lambeth"
@@ -92,7 +94,7 @@ class Source:
 
         services = data.get("SiteServices")
         if not services:
-            raise SourceArgumentNotFound("uprn")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         entries = []
 

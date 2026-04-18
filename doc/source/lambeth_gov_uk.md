@@ -29,4 +29,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Get your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+Get your Unique Property Reference Number (UPRN) by going to <https://www.findmyaddress.co.uk/> and entering your address details.
