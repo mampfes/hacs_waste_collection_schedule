@@ -17137,6 +17137,12 @@
       "id": "hounslow_gov_uk"
     },
     {
+      "title": "London Borough of Lambeth",
+      "module": "lambeth_gov_uk",
+      "default_params": {},
+      "id": "lambeth_gov_uk"
+    },
+    {
       "title": "London Borough of Lewisham",
       "module": "lewisham_gov_uk",
       "default_params": {},
