@@ -250,8 +250,9 @@ def audit_file(path: Path, registry: dict, languages: Iterable[str]) -> dict:
     """Audit a single source file. Returns a per-file result dict.
 
     On read/parse failure the returned dict has ``unparseable: True``
-    and an ``error`` field carrying the exact cause (OSError message,
-    SyntaxError line + message, or "no Source.__init__ found").
+    and an ``error`` field carrying the exact cause: ``read failed:
+    <exc>`` for OSError, ``SyntaxError: <msg> at line <n>`` for parse
+    failures, or the literal ``no Source.__init__ found``.
     """
     languages = list(languages)
     try:
@@ -314,10 +315,20 @@ def scan_sources(source_dir: Path, registry: dict, languages: Iterable[str]) -> 
         print(
             f"warning: {len(dynamic)} file(s) define PARAM_TRANSLATIONS dynamically "
             f"(e.g. via **merge or a function call) — their coverage cannot be "
-            f"statically determined and they are reported as missing. Sample: "
-            f"{Path(dynamic[0]).name}",
+            f"statically determined and they are reported as missing:",
             file=sys.stderr,
         )
+        if len(dynamic) <= 10:
+            for path in dynamic:
+                print(f"  - {path}", file=sys.stderr)
+        else:
+            for path in dynamic[:10]:
+                print(f"  - {path}", file=sys.stderr)
+            print(
+                f"  ... and {len(dynamic) - 10} more. "
+                f"Run with --json and filter .files[] | select(.dynamic_param_translations).",
+                file=sys.stderr,
+            )
     return results
 
 
@@ -355,6 +366,8 @@ def build_summary(results: list[dict], languages: Iterable[str]) -> dict:
 
 
 def format_default_report(results: list[dict], languages: Iterable[str]) -> str:
+    """Render the terse human report. Includes any unparseable-file errors so
+    the default text output surfaces the errors ``audit_file`` populates."""
     languages = list(languages)
     summary = build_summary(results, languages)
     total = summary["total_sources"]
@@ -362,6 +375,9 @@ def format_default_report(results: list[dict], languages: Iterable[str]) -> str:
     lines.append(f"Translation audit - {total} sources scanned")
     if summary["unparseable"]:
         lines.append(f"  ({summary['unparseable']} unparseable, excluded from details)")
+        for r in results:
+            if r.get("unparseable"):
+                lines.append(f"  - {r['path']}: {r.get('error', 'unknown error')}")
     lines.append("")
     lines.append("Coverage by language:")
     for lang in languages:
@@ -567,6 +583,17 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.strict:
         summary = build_summary(results, languages)
+        if summary["unparseable"]:
+            # Unparseable files are an advertised CI failure mode too; gating
+            # only on missing-translation counts would silently pass a PR that
+            # broke a source file's syntax or removed its Source class.
+            for r in results:
+                if r.get("unparseable"):
+                    print(
+                        f"unparseable: {r['path']}: {r.get('error', 'unknown error')}",
+                        file=sys.stderr,
+                    )
+            return 1
         total_missing = sum(
             m["auto"] + m["new"]
             for m in summary["missing_entry_counts"].values()
@@ -624,6 +651,98 @@ class Source:
     fixture_dynamic = "PARAM_TRANSLATIONS = default_translations(['street'])\n"
     if extract_param_translations(fixture_dynamic) is not None:
         failures.append("expected None for dynamic PARAM_TRANSLATIONS")
+
+    # audit_file must flag dynamic PARAM_TRANSLATIONS distinctly from absent
+    # — this is the whole point of `has_param_translations_name`. A revert
+    # that drops the detection must fail this test.
+    import tempfile
+
+    fixture_dynamic_source = '''
+class Source:
+    def __init__(self, street):
+        pass
+PARAM_TRANSLATIONS = {**SHARED, "de": {"street": "Stra\u00dfe"}}
+'''
+    with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False) as fh:
+        fh.write(fixture_dynamic_source)
+        dyn_path = Path(fh.name)
+    try:
+        dyn_result = audit_file(dyn_path, {"de": {"street": "Stra\u00dfe"}}, ["de"])
+        if not dyn_result.get("dynamic_param_translations"):
+            failures.append(
+                f"audit_file did not flag dynamic_param_translations: {dyn_result}"
+            )
+        if dyn_result.get("has_param_translations"):
+            failures.append("dynamic fixture should not set has_param_translations")
+    finally:
+        dyn_path.unlink(missing_ok=True)
+
+    # audit_file must preserve SyntaxError line + message — the fix commit
+    # specifically worked to replace the generic "no Source.__init__" label.
+    with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False) as fh:
+        fh.write("class Source:\n    def __init__(self, x\n")  # unterminated paren
+        bad_path = Path(fh.name)
+    try:
+        bad_result = audit_file(bad_path, {}, ["de"])
+        err = bad_result.get("error", "")
+        if not bad_result.get("unparseable"):
+            failures.append(f"audit_file failed to mark broken file unparseable: {bad_result}")
+        if "SyntaxError" not in err or "line" not in err:
+            failures.append(f"SyntaxError details missing from error field: {err!r}")
+    finally:
+        bad_path.unlink(missing_ok=True)
+
+    # load_registry must fail loud when DEFAULT_PARAM_TRANSLATIONS is missing.
+    # A silent fallback to {} would misclassify every entry as "needs new
+    # translation", the exact failure mode the fix commit calls out.
+    with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False) as fh:
+        fh.write("OTHER_NAME = {}\n")
+        reg_path = Path(fh.name)
+    try:
+        try:
+            load_registry(reg_path)
+            failures.append("load_registry should have raised for missing attribute")
+        except RuntimeError as exc:
+            if "DEFAULT_PARAM_TRANSLATIONS" not in str(exc):
+                failures.append(f"load_registry error missing attribute name: {exc}")
+    finally:
+        reg_path.unlink(missing_ok=True)
+
+    # format_suggestion must raise SuggestError for the three documented
+    # failure modes — previously it returned a comment masquerading as valid
+    # output, so --suggest on a broken file exited 0 with misleading content.
+    try:
+        format_suggestion(Path("/no/such/file.py"), {}, ["de"])
+        failures.append("format_suggestion should have raised for missing file")
+    except SuggestError as exc:
+        if "cannot read" not in str(exc):
+            failures.append(f"read-failure SuggestError unexpected: {exc}")
+
+    with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False) as fh:
+        fh.write("class Source:\n    def __init__(self,\n")  # broken
+        bad_sugg = Path(fh.name)
+    try:
+        try:
+            format_suggestion(bad_sugg, {}, ["de"])
+            failures.append("format_suggestion should have raised for SyntaxError")
+        except SuggestError as exc:
+            if "SyntaxError" not in str(exc):
+                failures.append(f"SyntaxError SuggestError unexpected: {exc}")
+    finally:
+        bad_sugg.unlink(missing_ok=True)
+
+    with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False) as fh:
+        fh.write("x = 1\n")  # no Source class
+        no_src = Path(fh.name)
+    try:
+        try:
+            format_suggestion(no_src, {}, ["de"])
+            failures.append("format_suggestion should have raised for no Source class")
+        except SuggestError as exc:
+            if "no class Source" not in str(exc):
+                failures.append(f"no-Source SuggestError unexpected: {exc}")
+    finally:
+        no_src.unlink(missing_ok=True)
 
     if failures:
         print("SELF-TEST FAIL:", file=sys.stderr)
