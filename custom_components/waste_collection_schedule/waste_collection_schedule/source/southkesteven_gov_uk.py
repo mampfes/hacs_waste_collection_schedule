@@ -4,6 +4,10 @@ from datetime import datetime
 import bs4
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.FirmstepSelfService import (
+    get_hidden_form_inputs,
+    lookup_addresses,
+)
 
 URL = "https://southkesteven.gov.uk"
 FORM_URL = (
@@ -36,23 +40,17 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
-        form_resp = session.get(FORM_URL, timeout=30)
-        form_resp.raise_for_status()
-        form_soup = bs4.BeautifulSoup(form_resp.text, "html.parser")
-
-        token = form_soup.find("input", attrs={"name": "__RequestVerificationToken"})
-        form_guid = form_soup.find("input", attrs={"name": "FormGuid"})
-        object_template_id = form_soup.find("input", attrs={"name": "ObjectTemplateID"})
-        section_id = form_soup.find("input", attrs={"name": "CurrentSectionID"})
-        if not all([token, form_guid, object_template_id, section_id]):
+        form_inputs = get_hidden_form_inputs(session, FORM_URL)
+        required = {"__RequestVerificationToken", "FormGuid", "ObjectTemplateID", "CurrentSectionID"}
+        if not required.issubset(form_inputs.keys()):
             raise ValueError("Unable to read South Kesteven form metadata")
 
         payload = {
-            "__RequestVerificationToken": token["value"],
-            "FormGuid": form_guid["value"],
-            "ObjectTemplateID": object_template_id["value"],
+            "__RequestVerificationToken": form_inputs["__RequestVerificationToken"],
+            "FormGuid": form_inputs["FormGuid"],
+            "ObjectTemplateID": form_inputs["ObjectTemplateID"],
             "Trigger": "submit",
-            "CurrentSectionID": section_id["value"],
+            "CurrentSectionID": form_inputs["CurrentSectionID"],
             "FF5265": self._address_id,
             "FF5265lbltxt": "Collection Address",
             "FF5265searchnlpg": "False",
@@ -89,20 +87,11 @@ class Source:
 
         # If the new flow does not yield rows, try postcode lookup then resubmit.
         if not collections and not self._address_id.startswith("U"):
-            lookup_resp = session.post(
-                ADDRESS_LOOKUP_URL,
-                data={
-                    "query": self._address_id,
-                    "searchNlpg": "False",
-                    "classification": "",
-                },
-                timeout=30,
+            addresses = lookup_addresses(
+                session, ADDRESS_LOOKUP_URL, self._address_id, search_nlpg="False"
             )
-            lookup_resp.raise_for_status()
-            data = lookup_resp.json()
-            if data:
-                # Prefer first returned address ID from SKDC lookup.
-                self._address_id = next(iter(data.keys()))
+            if addresses:
+                self._address_id = next(iter(addresses.keys()))
                 return self.fetch()
         if not collections:
             _LOGGER.warning(
