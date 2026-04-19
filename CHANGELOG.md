@@ -4,6 +4,67 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.20.0] - 2026-04-19
+
+### Added Sources
+
+- added Epping Forest District Council, Essex, UK (#6058)
+- added Muswellbrook Shire Council, NSW, AU (#6056)
+- added City of South Perth, WA, AU (thanks @dt215git) (#6043)
+- added London Borough of Lambeth, UK (thanks @jimmym101) (#6054)
+- added East Lindsey District Council, UK (#6049)
+- added Tonnenticker Pro (RegioIT) for Kreis Warendorf / Kreis Gütersloh, DE (#6047)
+- added MSVA.se, SE (thanks @Cheezi747) (#6044)
+- added Mijnafvalzaken.nl, NL (thanks @kay1010100) (#6011)
+- added Clarence Valley Council, NSW, AU (thanks @dt215git) (#6029)
+- added London Borough of Southwark, UK (thanks @cunners) (#6027)
+- added Gosport Borough Council, UK (#6028)
+- added Stadtgemeinde Klosterneuburg, AT (#6025)
+- added Ecolan Lanciano (ICS), IT (#6019)
+- added City of Barrie, Ontario, CA (#6015)
+- added Enfield Council, UK (thanks @armaneshaghi) (#6013)
+- added Sunbury, OH, US (thanks @dt215git) (#6012)
+- added Marktgemeinde Eggelsberg, AT (#5984)
+- added London Borough of Barnet, UK (thanks @cunners) (#5981)
+- added 123abfallkalender.de for Ebsdorfergrund, DE (thanks @Erik-Donath) (#6034)
+- added LaSalle, ON to Recycle Coach (#6024)
+- added Plainville, CT to Recycle Coach (#6023)
+- added Kelowna, BC to Recycle Coach (#6022)
+- added NET SpA Udine to Junker APP (#5987)
+- added Rogue Disposal & Recycling, Medford OR to ReCollect (#6048)
+
+### Fixed Sources
+
+- fixed ccc_govt_nz: overrides and loop limit (thanks @camcamnz) (#6045)
+- fixed ICS: handle truncated DTSTART/DTEND with missing time after 'T' (#6046)
+- fixed Sammelkalender, CH: after website update (thanks @JonasArnold) (#5213)
+- fixed avfallsor_no: updated to new collection JSON API (thanks @Wuerger) (#6037)
+- fixed Ressourceindsamling.dk: wrong schedule date (thanks @mbendtsen) (#6038)
+- fixed ZKE Saarbrücken, DE: type filtering broken by trailing whitespace (#6018)
+- fixed Thanet District Council, UK: bypass Cloudflare (#6017)
+- fixed irenambiente_it: fortnightly schedule not being applied (#6016)
+- fixed RegioEntsorgung, DE: street matching for whitespace variants (thanks @taker218) (#6004)
+- fixed hvcgroep, NL: house_letter matching, added Hoorn test case (#5998)
+- fixed North Norfolk, UK: website journey flow change (#5996)
+- fixed Northern Beaches, NSW, AU: fortnightly alternation using ISO week number (#5995)
+- fixed Newham, UK: date parsing after website format change (#5988)
+- fixed Hastings Borough Council, UK: updated API URL (thanks @Demarcation) (#6006)
+- fixed Richmondshire, UK: updated source (thanks @wozza999) (#6003)
+- fixed Teignbridge, UK: switched to curl_cffi to bypass TLS fingerprinting (thanks @davewins) (#6000)
+- fixed Stirling, UK: added address geocoding support (#5982)
+
+### Removed Sources
+
+- removed Linköping - Tekniska Verken, SE: provider removed public access (#6057)
+
+### Improvements
+
+- fixed bare Exception raises to use SourceArgument* exceptions (#6042)
+- removed duplicate collection dates for Wakefield, UK (thanks @aboillat) (#6009)
+- fixed CRLF line endings in update_docu_links.py output on Windows (#6014)
+- enforced LF line endings across all platforms via .gitattributes (#5983)
+- improved issue templates, added auto-labelling workflow (#5991)
+
 ## [2.19.0] - 2026-04-13
 
 ### New Services
