@@ -61,6 +61,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Ballarat](/doc/source/ballarat_vic_gov_au.md) / ballarat.vic.gov.au
 - [City of Ballarat](/doc/source/impactapps_com_au.md) / ballarat.vic.gov.au
 - [City of Bayswater](/doc/source/bayswater_wa_gov_au.md) / bayswater.wa.gov.au
+- [City of Boroondara](/doc/source/boroondara_vic_gov_au.md) / boroondara.vic.gov.au
 - [City of Burnside](/doc/source/app_my_local_services_au.md) / burnside.sa.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
 - [City of Canada Bay Council](/doc/source/impactapps_com_au.md) / canadabay.vic.gov.au

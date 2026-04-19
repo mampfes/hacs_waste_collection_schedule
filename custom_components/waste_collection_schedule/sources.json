@@ -211,6 +211,12 @@
       "id": "bayswater_wa_gov_au"
     },
     {
+      "title": "City of Boroondara",
+      "module": "boroondara_vic_gov_au",
+      "default_params": {},
+      "id": "boroondara_vic_gov_au"
+    },
+    {
       "title": "City of Burnside",
       "module": "app_my_local_services_au",
       "default_params": {},

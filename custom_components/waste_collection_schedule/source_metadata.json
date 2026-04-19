@@ -95,6 +95,11 @@
     "howto": {},
     "urls": {}
   },
+  "boroondara_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/boroondara_vic_gov_au.md",
+    "howto": {},
+    "urls": {}
+  },
   "canadabay_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canadabay_nsw_gov_au.md",
     "howto": {},
