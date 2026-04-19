@@ -89,8 +89,12 @@ def _dict_from_ast(node: ast.AST) -> dict | None:
 def extract_param_translations(source: str) -> dict | None:
     """Extract a module-level ``PARAM_TRANSLATIONS`` dict literal from *source*.
 
-    Returns ``None`` if the name is absent, not at module level, or is
-    not a plain dict literal we can statically resolve.
+    Returns ``None`` if the name is absent or its value isn't a plain
+    dict literal we can statically resolve. Raises ``SyntaxError`` if
+    *source* is not valid Python — callers are expected to handle it.
+
+    Use :func:`has_param_translations_name` to disambiguate "absent" from
+    "present but dynamic".
 
     >>> extract_param_translations('PARAM_TRANSLATIONS = {"de": {"street": "Stra\u00dfe"}}')
     {'de': {'street': 'Stra\u00dfe'}}
@@ -99,10 +103,7 @@ def extract_param_translations(source: str) -> dict | None:
     >>> extract_param_translations('PARAM_TRANSLATIONS = some_call()') is None
     True
     """
-    try:
-        tree = ast.parse(source)
-    except SyntaxError:
-        return None
+    tree = ast.parse(source)
     for node in tree.body:
         if isinstance(node, ast.Assign):
             for target in node.targets:
@@ -119,12 +120,40 @@ def extract_param_translations(source: str) -> dict | None:
     return None
 
 
+def has_param_translations_name(source: str) -> bool:
+    """Return True if *source* defines a module-level ``PARAM_TRANSLATIONS`` name.
+
+    Unlike :func:`extract_param_translations` this says nothing about the
+    value — it only reports whether the name is assigned at module level.
+    Useful for detecting "present but dynamically constructed" cases
+    (e.g. ``PARAM_TRANSLATIONS = {**shared, "de": {...}}``).
+
+    Raises ``SyntaxError`` if *source* is not valid Python.
+
+    >>> has_param_translations_name('PARAM_TRANSLATIONS = some_call()')
+    True
+    >>> has_param_translations_name('x = 1')
+    False
+    """
+    tree = ast.parse(source)
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id == "PARAM_TRANSLATIONS":
+                    return True
+        elif isinstance(node, ast.AnnAssign):
+            target = node.target
+            if isinstance(target, ast.Name) and target.id == "PARAM_TRANSLATIONS":
+                return True
+    return False
+
+
 def extract_source_init_params(source: str) -> list[str] | None:
     """Return the parameter names of ``class Source``'s ``__init__``.
 
-    ``self`` is excluded. Returns ``None`` if the file cannot be parsed
-    or has no ``class Source`` with an ``__init__``. ``*args`` and
-    ``**kwargs`` are skipped.
+    ``self`` is excluded. Returns ``None`` if there is no ``class Source``
+    with an ``__init__``. ``*args`` and ``**kwargs`` are skipped. Raises
+    ``SyntaxError`` if *source* is not valid Python.
 
     >>> extract_source_init_params('''
     ... class Source:
@@ -135,10 +164,7 @@ def extract_source_init_params(source: str) -> list[str] | None:
     >>> extract_source_init_params('class Source:\\n    pass') is None
     True
     """
-    try:
-        tree = ast.parse(source)
-    except SyntaxError:
-        return None
+    tree = ast.parse(source)
     for node in tree.body:
         if isinstance(node, ast.ClassDef) and node.name == "Source":
             for item in node.body:
@@ -199,7 +225,13 @@ def classify_missing(
 
 
 def load_registry(default_translations_path: Path) -> dict:
-    """Import ``DEFAULT_PARAM_TRANSLATIONS`` from the given module file."""
+    """Import ``DEFAULT_PARAM_TRANSLATIONS`` from the given module file.
+
+    Raises ``RuntimeError`` if the file cannot be imported or does not
+    define ``DEFAULT_PARAM_TRANSLATIONS`` — we fail loud rather than
+    silently emitting an empty registry, which would misclassify every
+    missing entry as "needs new translation".
+    """
     spec = importlib.util.spec_from_file_location(
         "_audit_default_translations", str(default_translations_path)
     )
@@ -207,23 +239,46 @@ def load_registry(default_translations_path: Path) -> dict:
         raise RuntimeError(f"Cannot load {default_translations_path}")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    return getattr(module, "DEFAULT_PARAM_TRANSLATIONS", {})
+    if not hasattr(module, "DEFAULT_PARAM_TRANSLATIONS"):
+        raise RuntimeError(
+            f"{default_translations_path.name} does not define DEFAULT_PARAM_TRANSLATIONS"
+        )
+    return module.DEFAULT_PARAM_TRANSLATIONS
 
 
 def audit_file(path: Path, registry: dict, languages: Iterable[str]) -> dict:
-    """Audit a single source file. Returns a per-file result dict."""
+    """Audit a single source file. Returns a per-file result dict.
+
+    On read/parse failure the returned dict has ``unparseable: True``
+    and an ``error`` field carrying the exact cause (OSError message,
+    SyntaxError line + message, or "no Source.__init__ found").
+    """
     languages = list(languages)
     try:
         text = path.read_text(encoding="utf-8")
     except OSError as exc:
-        return {"path": str(path), "unparseable": True, "error": str(exc)}
+        return {"path": str(path), "unparseable": True, "error": f"read failed: {exc}"}
 
-    init_params = extract_source_init_params(text)
+    try:
+        init_params = extract_source_init_params(text)
+        pt = extract_param_translations(text)
+        has_pt_name = has_param_translations_name(text)
+    except SyntaxError as exc:
+        return {
+            "path": str(path),
+            "unparseable": True,
+            "error": f"SyntaxError: {exc.msg} at line {exc.lineno}",
+        }
+
     if init_params is None:
-        return {"path": str(path), "unparseable": True, "error": "no Source.__init__"}
+        return {
+            "path": str(path),
+            "unparseable": True,
+            "error": "no Source.__init__ found",
+        }
 
-    pt = extract_param_translations(text)
     has_pt = pt is not None
+    dynamic_pt = has_pt_name and not has_pt
     existing = pt or {}
 
     languages_present = [lang for lang in languages if existing.get(lang)]
@@ -236,6 +291,7 @@ def audit_file(path: Path, registry: dict, languages: Iterable[str]) -> dict:
     return {
         "path": str(path),
         "has_param_translations": has_pt,
+        "dynamic_param_translations": dynamic_pt,
         "languages_present": languages_present,
         "languages_missing": languages_missing,
         "params_detected": init_params,
@@ -252,6 +308,16 @@ def scan_sources(source_dir: Path, registry: dict, languages: Iterable[str]) -> 
         if path.name.startswith("_"):
             continue
         results.append(audit_file(path, registry, languages))
+
+    dynamic = [r["path"] for r in results if r.get("dynamic_param_translations")]
+    if dynamic:
+        print(
+            f"warning: {len(dynamic)} file(s) define PARAM_TRANSLATIONS dynamically "
+            f"(e.g. via **merge or a function call) — their coverage cannot be "
+            f"statically determined and they are reported as missing. Sample: "
+            f"{Path(dynamic[0]).name}",
+            file=sys.stderr,
+        )
     return results
 
 
@@ -358,18 +424,34 @@ def format_json_report(results: list[dict], languages: Iterable[str]) -> str:
     return json.dumps(envelope, indent=2, ensure_ascii=False)
 
 
+class SuggestError(Exception):
+    """Raised when ``format_suggestion`` cannot produce output for a file."""
+
+
 def format_suggestion(path: Path, registry: dict, languages: Iterable[str]) -> str:
     """Return a copy-pasteable PARAM_TRANSLATIONS block for *path*.
 
     Entries found in the registry are filled in. Missing entries get a
     ``# TODO: translate`` comment with the raw English fallback as
     placeholder so reviewers can see what needs translating.
+
+    Raises :class:`SuggestError` if the file cannot be read, cannot be
+    parsed, or has no ``class Source`` with an ``__init__``. Callers
+    should surface the error to the user rather than emit a bogus block.
     """
     languages = list(languages)
-    text = path.read_text(encoding="utf-8")
-    params = extract_source_init_params(text)
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise SuggestError(f"cannot read {path}: {exc}") from exc
+    try:
+        params = extract_source_init_params(text)
+    except SyntaxError as exc:
+        raise SuggestError(
+            f"SyntaxError in {path}: {exc.msg} at line {exc.lineno}"
+        ) from exc
     if params is None:
-        return f"# Could not parse Source.__init__ from {path}"
+        raise SuggestError(f"no class Source with __init__ found in {path}")
     existing = extract_param_translations(text) or {}
 
     out: list[str] = []
@@ -469,7 +551,11 @@ def main(argv: list[str] | None = None) -> int:
         if not target.exists():
             print(f"error: file not found: {args.suggest}", file=sys.stderr)
             return 2
-        print(format_suggestion(target, registry, languages), end="")
+        try:
+            print(format_suggestion(target, registry, languages), end="")
+        except SuggestError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
         return 0
 
     results = scan_sources(source_dir, registry, languages)
