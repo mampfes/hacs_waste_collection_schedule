@@ -2,7 +2,7 @@ import datetime
 import json
 import time
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
@@ -39,13 +39,24 @@ PICTURE_MAP = {
 class Source:
     def __init__(self, address):
         self._address = address
+        self._session = requests.Session(impersonate="chrome124")
+        self._session.headers.update({"Referer": URL})
 
     def fetch(self):
         ts = round(time.time() * 1000)
-        encoded_address = requests.utils.quote(self._address)
-        url = f"{URL}_designs/integrations/address-finder/addressdata.json?query={encoded_address}&timestamp={ts}"
-        r = requests.get(url)
-        data = json.loads(r.text)
+        self._session.get(URL, timeout=30).raise_for_status()
+        r = self._session.get(
+            f"{URL}_designs/integrations/address-finder/addressdata.json",
+            params={"query": self._address, "timestamp": ts},
+            timeout=30,
+        )
+        r.raise_for_status()
+        try:
+            data = r.json()
+        except json.JSONDecodeError as e:
+            raise ValueError(
+                "Failed to decode address finder response. This may indicate bot protection."
+            ) from e
 
         filtered = [
             res["attributes"]
