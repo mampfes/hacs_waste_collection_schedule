@@ -44,13 +44,18 @@ class Source:
 
     def fetch(self):
         ts = round(time.time() * 1000)
-        self._session.get(URL, timeout=30).raise_for_status()
-        r = self._session.get(
-            f"{URL}_designs/integrations/address-finder/addressdata.json",
-            params={"query": self._address, "timestamp": ts},
-            timeout=30,
-        )
-        r.raise_for_status()
+        try:
+            warmup_response = self._session.get(URL, timeout=30)
+            warmup_response.raise_for_status()
+
+            r = self._session.get(
+                f"{URL}_designs/integrations/address-finder/addressdata.json",
+                params={"query": self._address, "timestamp": ts},
+                timeout=30,
+            )
+            r.raise_for_status()
+        except requests.RequestException as e:
+            raise ValueError("Failed to initialize or use toogoodtowaste API session.") from e
         try:
             data = r.json()
         except json.JSONDecodeError as e:
