@@ -16828,6 +16828,12 @@
       "id": "eastriding_gov_uk"
     },
     {
+      "title": "East Staffordshire Borough Council",
+      "module": "eaststaffsbc_gov_uk",
+      "default_params": {},
+      "id": "eaststaffsbc_gov_uk"
+    },
+    {
       "title": "Eastbourne Borough Council",
       "module": "environmentfirst_co_uk",
       "default_params": {},
