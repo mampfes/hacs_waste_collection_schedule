@@ -3268,11 +3268,6 @@
     "howto": {},
     "urls": {}
   },
-  "tekniskaverken_se": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tekniskaverken_se.md",
-    "howto": {},
-    "urls": {}
-  },
   "lumire_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lumire_se.md",
     "howto": {},
