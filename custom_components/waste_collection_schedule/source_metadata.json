@@ -3424,6 +3424,14 @@
     },
     "urls": {}
   },
+  "localcities_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/localcities_ch.md",
+    "howto": {
+      "de": "Besuchen Sie die Seite Ihrer Gemeinde auf localcities.ch. Der Gemeindename und die ID sind in der URL (z.B. /de/entsorgung/volketswil/529). Die Zone wird neben jedem Entsorgungstermin angezeigt.",
+      "en": "Visit your municipality's page on localcities.ch. The municipality name and ID are in the URL (e.g. /de/entsorgung/volketswil/529). The zone is shown next to each waste collection entry on the calendar."
+    },
+    "urls": {}
+  },
   "ics_openerz_metaodi_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/openerz_metaodi_ch.md",
     "howto": {
@@ -3441,14 +3449,6 @@
     "howto": {
       "de": "Verwenden Sie die untenstehende URL. Alle Gebiete von Gossau ZH sind in einem Kalender enthalten.\nVerwenden Sie den `types`-Filter in Ihrer Sensorkonfiguration, um nur Ihr Gebiet anzuzeigen.\n",
       "en": "Use the URL below. All areas of Gossau ZH are included in a single calendar.\nUse the `types` filter in your sensor configuration to show only your area\n(e.g. \"Kehricht und Sperrgut (Gossau-Dorf, Grüt, Ober-Ottikon, Hellberg)\").\n"
-    },
-    "urls": {}
-  },
-  "localcities_ch": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/localcities_ch.md",
-    "howto": {
-      "de": "Besuchen Sie die Seite Ihrer Gemeinde auf localcities.ch. Der Gemeindename und die ID sind in der URL (z.B. /de/entsorgung/volketswil/529). Die Zone wird neben jedem Entsorgungstermin angezeigt.",
-      "en": "Visit your municipality's page on localcities.ch. The municipality name and ID are in the URL (e.g. /de/entsorgung/volketswil/529). The zone is shown next to each waste collection entry on the calendar."
     },
     "urls": {}
   },

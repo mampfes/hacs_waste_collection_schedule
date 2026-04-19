@@ -16074,6 +16074,37 @@
           "locality": "Ortschaft"
         }
       },
+      "args_localcities_ch": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Gemeinde",
+          "municipality_id": "Gemeinde-ID",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
+          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
+          "zone": "Sammelzone oder Ortsname"
+        }
+      },
+      "reconfigure_localcities_ch": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Gemeinde",
+          "municipality_id": "Gemeinde-ID",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
+          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
+          "zone": "Sammelzone oder Ortsname"
+        }
+      },
       "args_ics_openerz_metaodi_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -16179,37 +16210,6 @@
           "year_field": "Jahresfeld"
         },
         "data_description": {}
-      },
-      "args_localcities_ch": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "municipality": "Gemeinde",
-          "municipality_id": "Gemeinde-ID",
-          "zone": "Zone"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
-          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
-          "zone": "Sammelzone oder Ortsname"
-        }
-      },
-      "reconfigure_localcities_ch": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "municipality": "Gemeinde",
-          "municipality_id": "Gemeinde-ID",
-          "zone": "Zone"
-        },
-        "data_description": {
-          "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
-          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
-          "zone": "Sammelzone oder Ortsname"
-        }
       },
       "args_grenchen_ch": {
         "title": "Quelle konfigurieren",

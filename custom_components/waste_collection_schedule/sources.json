@@ -15715,6 +15715,15 @@
       "id": "a_region_ch"
     },
     {
+      "title": "B\u00fcren an der Aare",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "bueren-an-der-aare",
+        "municipality_id": "849"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Canton of Z\u00fcrich",
       "module": "ics",
       "default_params": {
@@ -15863,6 +15872,15 @@
         "municipality": "Liebefeld"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Liestal",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "liestal",
+        "municipality_id": "3833"
+      },
+      "id": "localcities_ch"
     },
     {
       "title": "Lindau",
@@ -16083,6 +16101,15 @@
         "municipality": "Thal"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Therwil",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "therwil",
+        "municipality_id": "3757"
+      },
+      "id": "localcities_ch"
     },
     {
       "title": "Th\u00f6rishaus",

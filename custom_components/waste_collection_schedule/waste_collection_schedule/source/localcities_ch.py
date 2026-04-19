@@ -32,6 +32,21 @@ TEST_CASES = {
         "municipality_id": "3533",
         "zone": "Zone West",
     },
+    "Büren an der Aare": {
+        "municipality": "bueren-an-der-aare",
+        "municipality_id": "849",
+        "zone": "",
+    },
+    "Liestal - Kreis 1": {
+        "municipality": "liestal",
+        "municipality_id": "3833",
+        "zone": "Kreis 1",
+    },
+    "Therwil": {
+        "municipality": "therwil",
+        "municipality_id": "3757",
+        "zone": "",
+    },
 }
 
 EXTRA_INFO = [
@@ -60,6 +75,33 @@ EXTRA_INFO = [
         "default_params": {
             "municipality": "wangen-bei-olten",
             "municipality_id": "3629",
+        },
+    },
+    {
+        "title": "Büren an der Aare",
+        "url": "https://www.bueren.ch",
+        "country": "ch",
+        "default_params": {
+            "municipality": "bueren-an-der-aare",
+            "municipality_id": "849",
+        },
+    },
+    {
+        "title": "Liestal",
+        "url": "https://www.liestal.ch",
+        "country": "ch",
+        "default_params": {
+            "municipality": "liestal",
+            "municipality_id": "3833",
+        },
+    },
+    {
+        "title": "Therwil",
+        "url": "https://www.therwil.ch",
+        "country": "ch",
+        "default_params": {
+            "municipality": "therwil",
+            "municipality_id": "3757",
         },
     },
 ]
