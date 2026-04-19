@@ -45,6 +45,7 @@ class Source:
     def fetch(self):
         ts = round(time.time() * 1000)
         try:
+            # Warm up the browser session so Cloudflare/session cookies are set before API access.
             warmup_response = self._session.get(URL, timeout=30)
             warmup_response.raise_for_status()
 
