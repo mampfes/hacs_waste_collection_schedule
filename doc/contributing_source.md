@@ -115,6 +115,23 @@ class Source:
         return entries
 ```
 
+### Auditing translation coverage
+
+A helper script, `audit_translations.py` (at the repo root), scans every source file and reports which `PARAM_TRANSLATIONS` entries are missing for each language. For each missing entry it tells you whether the translation already exists in the central `DEFAULT_PARAM_TRANSLATIONS` registry (in `default_translations.py`) and can be copied in with no new translation work, or whether it needs a human translation. It is the recommended first step when fixing or adding translations, so you can focus effort on the entries that actually need it.
+
+```bash
+# Terse summary, grouped by language
+python3 audit_translations.py
+
+# JSON envelope with per-file detail
+python3 audit_translations.py --json
+
+# Print a suggested PARAM_TRANSLATIONS block for one file (read-only; stdout only)
+python3 audit_translations.py --suggest custom_components/waste_collection_schedule/waste_collection_schedule/source/<your_source>.py
+```
+
+The tool never modifies source files. See `python3 audit_translations.py --help` for all options.
+
 Filtering of data for waste types or time periods is a functionality of the framework and should not be done by the source script. Therefore:
 
 - A source script should return all data for all available waste types.
