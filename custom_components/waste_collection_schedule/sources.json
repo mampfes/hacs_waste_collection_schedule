@@ -889,6 +889,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "Muswellbrook Shire Council",
+      "module": "muswellbrook_nsw_gov_au",
+      "default_params": {},
+      "id": "muswellbrook_nsw_gov_au"
+    },
+    {
       "title": "Naracoorte Lucindale Council",
       "module": "app_my_local_services_au",
       "default_params": {},

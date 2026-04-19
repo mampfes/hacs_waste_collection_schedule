@@ -443,6 +443,15 @@
     "howto": {},
     "urls": {}
   },
+  "muswellbrook_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muswellbrook_nsw_gov_au.md",
+    "howto": {
+      "en": "Find your collection zone at https://www.muswellbrook.nsw.gov.au/waste-collection/ and enter it as e.g. '3a' or '5b'."
+    },
+    "urls": {
+      "url_www_muswellbrook_nsw_gov_au_waste_collection": "https://www.muswellbrook.nsw.gov.au/waste-collection/"
+    }
+  },
   "nillumbik_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nillumbik_vic_gov_au.md",
     "howto": {},

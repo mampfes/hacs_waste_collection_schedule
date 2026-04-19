@@ -1902,6 +1902,29 @@
         },
         "data_description": {}
       },
+      "args_muswellbrook_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "zone": "Collection zone, e.g. '3a' or '5b'. Find your zone at {url_www_muswellbrook_nsw_gov_au_waste_collection}"
+        }
+      },
+      "reconfigure_muswellbrook_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "zone": "Collection zone, e.g. '3a' or '5b'. Find your zone at {url_www_muswellbrook_nsw_gov_au_waste_collection}"
+        }
+      },
       "args_nillumbik_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
