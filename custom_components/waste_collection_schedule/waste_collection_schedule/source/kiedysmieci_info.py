@@ -1,7 +1,8 @@
 import datetime
 import json
 import ssl
-import urllib
+import urllib.parse
+import urllib.request
 
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -22,6 +23,12 @@ TEST_CASES = {
         "district": "dębicki",
         "municipality": "Dębica",
         "street": "Kędzierz",
+    },
+    "Parkowa, lubelskie, zamojski, Szczebrzeszyn": {
+        "voivodeship": "lubelskie",
+        "district": "zamojski",
+        "municipality": "Szczebrzeszyn",
+        "street": "Parkowa",
     },
 }
 
@@ -62,25 +69,24 @@ class Source:
                 suggestions=voivodeships_list,
             )
 
-        districts_list = self.get_districts_list()
+        # The v5 municipality list is incomplete; validate district/municipality via
+        # the streets endpoint instead (returns 404 for unknown locations).
+        streets_list = self.get_streets_list()
 
-        if district.lower() not in [c.lower() for c in districts_list]:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "district",
-                district,
-                suggestions=districts_list,
-            )
-
-        municipalities_list = self.get_municipalities_list()
-
-        if municipality.lower() not in [m.lower() for m in municipalities_list]:
+        if streets_list is None:
+            districts_list = self.get_districts_list()
+            if district.lower() not in [c.lower() for c in districts_list]:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "district",
+                    district,
+                    suggestions=districts_list,
+                )
+            municipalities_list = self.get_municipalities_list()
             raise SourceArgumentNotFoundWithSuggestions(
                 "municipality",
                 municipality,
                 suggestions=municipalities_list,
             )
-
-        streets_list = self.get_streets_list()
 
         if street.lower() not in [s.lower() for s in streets_list]:
             raise SourceArgumentNotFoundWithSuggestions(
