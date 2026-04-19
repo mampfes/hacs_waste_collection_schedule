@@ -40,24 +40,21 @@ waste_collection_schedule:
         postcode: "WN8 9QR"
         uprn: "10012340497"
         
-sensor:
-  - platform: waste_collection_schedule
-    name: Refuse Collection
-    details_format: "upcoming"
-    types:
-      - Refuse
+  sensors:
+    - name: Refuse Collection
+      details_format: "upcoming"
+      types:
+        - Refuse
 
-  - platform: waste_collection_schedule
-    name: Recycling Collection
-    details_format: "upcoming"
-    types:
-      - Recycling
+    - name: Recycling Collection
+      details_format: "upcoming"
+      types:
+        - Recycling
 
-  - platform: waste_collection_schedule
-    name: Garden Waste Collection
-    details_format: "upcoming"
-    types:
-      - Garden Waste
+    - name: Garden Waste Collection
+      details_format: "upcoming"
+      types:
+        - Garden Waste
 ```
 
 ## How It Works

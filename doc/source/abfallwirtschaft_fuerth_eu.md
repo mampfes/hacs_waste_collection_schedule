@@ -29,12 +29,13 @@ waste_collection_schedule:
 
 ## Example Sensor
 ```yaml
-  - platform: waste_collection_schedule
-    name: waste_restabfall
-    details_format: "upcoming"
-    value_template: '{{ value.daysTo }}'
-    types:
-      - Restabfall
+waste_collection_schedule:
+  sensors:
+    - name: waste_restabfall
+      details_format: "upcoming"
+      value_template: '{{ value.daysTo }}'
+      types:
+        - Restabfall
 ```	  
 
 ## How to get the source arguments
@@ -46,10 +47,11 @@ waste_collection_schedule:
 
 ## Adding Sensors
 ```yaml
-  - platform: waste_collection_schedule
-    name: waste_restabfall
-    details_format: "upcoming"
-    value_template: '{{ value.daysTo }}'
-    types:
-      - Restabfall
+waste_collection_schedule:
+  sensors:
+    - name: waste_restabfall
+      details_format: "upcoming"
+      value_template: '{{ value.daysTo }}'
+      types:
+        - Restabfall
 ```	  

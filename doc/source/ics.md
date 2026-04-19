@@ -632,17 +632,14 @@ waste_collection_schedule:
 [online calendar view](https://calendar.google.com/calendar/embed?src=gn2i5lqgobo5deb6p7j69l9aq8%40group.calendar.google.com&ctz=America%2FDenver)
 
 ```yaml
-sensor:
-  - platform: waste_collection_schedule
-    name: Trash Recycling # whatever you want the UI to show. Consider adding a similar prefix for both sensors so they get sorted together, "Trash" in this case
-    types:
-      - Recycling # matches alias in waste_collection_schedule below
-  - platform: waste_collection_schedule
-    name: Trash Compost
-    types:
-      - Compost
-
 waste_collection_schedule:
+  sensors:
+    - name: Trash Recycling # whatever you want the UI to show. Consider adding a similar prefix for both sensors so they get sorted together, "Trash" in this case
+      types:
+        - Recycling # matches alias in waste_collection_schedule below
+    - name: Trash Compost
+      types:
+        - Compost
   sources:
     - name: ics
       args:

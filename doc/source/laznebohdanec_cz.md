@@ -33,22 +33,19 @@ waste_collection_schedule:
     - name: laznebohdanec_cz
       args: {}
 
-sensor:
-  - platform: waste_collection_schedule
-    name: "Svoz papíru"
-    types:
-      - "Papír"
-    add_days_to: true
-  - platform: waste_collection_schedule
-    name: "Svoz plastů"
-    types:
-      - "Plast"
-    add_days_to: true
-  - platform: waste_collection_schedule
-    name: "Svoz komunálního odpadu"
-    types:
-      - "Komunální odpad"
-    add_days_to: true
+  sensors:
+    - name: "Svoz papíru"
+      types:
+        - "Papír"
+      add_days_to: true
+    - name: "Svoz plastů"
+      types:
+        - "Plast"
+      add_days_to: true
+    - name: "Svoz komunálního odpadu"
+      types:
+        - "Komunální odpad"
+      add_days_to: true
 ```
 
 ## How to get the configuration arguments
