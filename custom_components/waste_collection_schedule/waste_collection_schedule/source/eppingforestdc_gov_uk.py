@@ -1,9 +1,9 @@
-import time
 from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Epping Forest District Council"
 DESCRIPTION = "Source for Epping Forest District Council, Essex, UK."
@@ -54,38 +54,24 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn).strip()
 
-    def _get_session_id(self) -> str:
-        session = requests.Session()
-        self._session = session
-        r = session.get(SERVICE_URL, timeout=30)
-        r.raise_for_status()
-        params = {
-            "uri": r.url,
-            "hostname": "eppingforestdc-self.achieveservice.com",
-            "withCredentials": "true",
-        }
-        r = session.get(AUTH_URL, params=params, timeout=30)
-        r.raise_for_status()
-        return r.json()["auth-session"]
-
     def fetch(self) -> list[Collection]:
-        sid = self._get_session_id()
-        params = {
-            "id": LOOKUP_COLLECTIONS,
-            "repeat_against": "",
-            "noRetry": "false",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-        payload = {"formValues": {"Address": {"LookupUPRN": {"value": self._uprn}}}}
-        r = self._session.post(API_URL, params=params, json=payload, timeout=30)
-        r.raise_for_status()
+        session = requests.Session()
+        sid = init_session(
+            session,
+            SERVICE_URL,
+            AUTH_URL,
+            "eppingforestdc-self.achieveservice.com",
+        )
+        result = run_lookup(
+            session,
+            API_URL,
+            sid,
+            LOOKUP_COLLECTIONS,
+            {"Address": {"LookupUPRN": {"value": self._uprn}}},
+        )
 
         rows = (
-            r.json().get("integration", {}).get("transformed", {}).get("rows_data", {})
+            result.get("integration", {}).get("transformed", {}).get("rows_data", {})
         )
         row = rows.get("0", {})
 
