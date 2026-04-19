@@ -48,7 +48,10 @@ class Source:
             # Warm up the browser session so Cloudflare/session cookies are set before API access.
             warmup_response = self._session.get(URL, timeout=30)
             warmup_response.raise_for_status()
+        except requests.RequestException as e:
+            raise ValueError("Failed to initialize toogoodtowaste API session.") from e
 
+        try:
             r = self._session.get(
                 f"{URL}_designs/integrations/address-finder/addressdata.json",
                 params={"query": self._address, "timestamp": ts},
@@ -56,7 +59,7 @@ class Source:
             )
             r.raise_for_status()
         except requests.RequestException as e:
-            raise ValueError("Failed to initialize or use toogoodtowaste API session.") from e
+            raise ValueError("Failed to fetch toogoodtowaste address data.") from e
         try:
             data = r.json()
         except json.JSONDecodeError as e:
