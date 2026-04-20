@@ -13379,12 +13379,6 @@
       "id": "junker_app"
     },
     {
-      "title": "Veritas Spa",
-      "module": "junker_app",
-      "default_params": {},
-      "id": "junker_app"
-    },
-    {
       "title": "Vernio",
       "module": "aliaserviziambientali_it",
       "default_params": {

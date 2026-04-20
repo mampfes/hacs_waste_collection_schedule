@@ -2052,7 +2052,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Valle Camonica Servizi Srl](/doc/source/junker_app.md) / junker.app
 - [Valle Umbra Servizi S.p.A.](/doc/source/junker_app.md) / junker.app
 - [Vasto - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
-- [Veritas Spa](/doc/source/junker_app.md) / junker.app
 - [Vernio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vezzano sul Crostolo](/doc/source/junker_app.md) / junker.app
 - [Viagrande](/doc/source/junker_app.md) / junker.app
