@@ -1,7 +1,8 @@
 import re
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
@@ -29,13 +30,14 @@ CARD_TYPES = {
 
 class Source:
     def __init__(self, address: str):
-        self._address = address
+        self._address = re.sub(r"\s+", " ", address).strip()
 
     def fetch(self) -> list[Collection]:
         # Step 1: validate address against autocomplete and get canonical form
         r = requests.get(
             AUTOCOMPLETE_URL,
             params={"q": self._address},
+            timeout=30,
         )
         r.raise_for_status()
         suggestions = r.json()
@@ -62,7 +64,7 @@ class Source:
             )
 
         # Step 2: fetch the schedule page using the canonical address
-        r = requests.get(SCHEDULE_URL, params={"address": canonical})
+        r = requests.get(SCHEDULE_URL, params={"address": canonical}, timeout=30)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
@@ -70,7 +72,7 @@ class Source:
         entries: list[Collection] = []
 
         for css_class, (waste_type, icon) in CARD_TYPES.items():
-            card = soup.find("div", class_=f"card {css_class}")
+            card = soup.select_one(f"div.card.{css_class}")
             if not card:
                 continue
 
