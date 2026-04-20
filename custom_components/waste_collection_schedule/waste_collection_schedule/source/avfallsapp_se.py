@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from uuid import uuid4
 
 import requests
 from waste_collection_schedule import Collection
@@ -12,8 +13,13 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "Avfallsapp.se - Multi Source"
-DESCRIPTION = "Source for all Avfallsapp waste collection sources. This includes multiple municipalities in Sweden."
+DESCRIPTION = (
+    "Source for all Avfallsapp waste collection sources. "
+    "This includes multiple municipalities in Sweden."
+)
 URL = "https://www.avfallsapp.se"
+COUNTRY = "se"
+
 TEST_CASES = {
     "Söderköping - Söderköping Kommun": {
         "api_key": "!secret avfallsapp_se_api_key",
@@ -25,13 +31,40 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "You can enter a search address in the street address field and click continue. "
         "You will see an error at the api_key input field. But you should be able to "
-        "select a generated key from the dropdown and continue. "
-        "For Vänerborg, use the Enhets-ID from the mobile app under 'Om appen'. "
-        "A Bearer token may also be required."
+        "select a generated key from the dropdown and continue."
     ),
 }
 
-COUNTRY = "se"
+PARAM_TRANSLATIONS = {
+    "en": {
+        "service_provider": "Service provider",
+        "api_key": "API key / device ID",
+        "street_address": "Street address",
+        "token": "Bearer token",
+    },
+    "sv": {
+        "service_provider": "Tjänsteleverantör",
+        "api_key": "API-nyckel / enhets-ID",
+        "street_address": "Gatuadress",
+        "token": "Bearer-token",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "service_provider": "Name of the Avfallsapp provider.",
+        "api_key": "API key or device ID used by the mobile app.",
+        "street_address": "Street address used for address lookup and registration.",
+        "token": "Bearer token required by some providers.",
+    },
+    "sv": {
+        "service_provider": "Namn på Avfallsapp-leverantören.",
+        "api_key": "API-nyckel eller enhets-ID från mobilappen.",
+        "street_address": "Gatuadress som används för adressökning och registrering.",
+        "token": "Bearer-token som krävs av vissa leverantörer.",
+    },
+}
+
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
@@ -52,16 +85,23 @@ SERVICE_PROVIDERS = {
         "title": "Söderköping",
         "url": "https://soderkoping.se",
         "api_url": "https://soderkoping.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
     },
     "motala": {
         "title": "Motala",
         "url": "https://www.motala.se/",
         "api_url": "https://motala.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
     },
     "vanersborg": {
         "title": "Vänerborg",
         "url": "https://www.vanersborg.se/",
         "api_url": "https://vanersborg.avfallsapp.se/api/nova/v1/",
+        "supports_registration": False,
+        "requires_token": True,
+        "app_version": "3.0.0.0",
     },
 }
 
@@ -89,35 +129,40 @@ class Source:
                 "You must provide either a street_address or an api_key",
             )
 
-        self._api_key = api_key
-        self._street_address = street_address
-        self._token = token
         self._service_provider = service_provider.lower()
-
-        self._url = SERVICE_PROVIDERS.get(self._service_provider, {}).get("api_url")
-        if self._url is None:
+        cfg = SERVICE_PROVIDERS.get(self._service_provider)
+        if cfg is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "service_provider",
                 service_provider,
                 SERVICE_PROVIDERS.keys(),
             )
 
-        if self._url.endswith("/"):
-            self._url = self._url[:-1]
+        self._api_key = api_key
+        self._street_address = street_address
+        self._token = token
 
-    def _is_vanersborg(self) -> bool:
-        return self._service_provider == "vanersborg"
+        self._url = cfg["api_url"].rstrip("/")
+        self._requires_token = cfg.get("requires_token", False)
+        self._supports_registration = cfg.get("supports_registration", True)
+        self._app_version = cfg.get("app_version")
+
+        if self._requires_token and self._api_key and not self._token:
+            raise SourceArgumentRequired(
+                "token",
+                "This provider requires a token in addition to api_key.",
+            )
 
     def _headers(self) -> dict[str, str]:
         headers = {"Accept": "application/json"}
 
-        if self._is_vanersborg():
-            headers["X-App-Version"] = "3.0.0.0"
+        if self._app_version:
+            headers["X-App-Version"] = self._app_version
 
         if self._api_key:
             headers["X-App-Identifier"] = self._api_key
 
-        if self._is_vanersborg() and self._token:
+        if self._requires_token and self._token:
             headers["Authorization"] = f"Bearer {self._token}"
 
         return headers
@@ -130,24 +175,19 @@ class Source:
             return None
 
     def _register_device(self):
-        """
-        Existing provider flow used by currently supported providers.
-        """
+        if not self._supports_registration:
+            raise SourceArgumentRequired(
+                "api_key",
+                "This provider requires a pre-existing device ID. "
+                "Find it in the mobile app under 'Om appen'.",
+            )
+
         if not self._street_address:
             raise SourceArgumentRequired(
                 "street_address", "Street address required to register device"
             )
 
-        if self._is_vanersborg():
-            raise SourceArgumentRequired(
-                "token",
-                "For vanersborg, use the Enhets-ID from the mobile app under 'Om appen'. "
-                "A Bearer token may also be required.",
-            )
-
-        import uuid
-
-        device_id = uuid.uuid4().hex[:16]
+        device_id = uuid4().hex[:16]
         url = self._url + "/register"
         payload = {
             "identifier": device_id,
@@ -176,15 +216,16 @@ class Source:
         _LOGGER.info("Registered new API key %s", device_id)
 
     def _register_address(self):
+        if not self._supports_registration:
+            raise SourceArgumentRequired(
+                "api_key",
+                "This provider requires a pre-existing device ID. "
+                "Find it in the mobile app under 'Om appen'.",
+            )
+
         if not self._street_address:
             raise SourceArgumentRequired(
                 "street_address", "Street address required to register address"
-            )
-
-        if self._is_vanersborg():
-            raise SourceArgumentRequired(
-                "token",
-                "For vanersborg, provide api_key (Enhets-ID) and token.",
             )
 
         params = {"address": self._street_address}
@@ -200,7 +241,6 @@ class Source:
         address_data = self._safe_json(response)
 
         address = None
-
         if address_data:
             addresses = [
                 item
@@ -281,19 +321,7 @@ class Source:
         return []
 
     def fetch(self):
-        if self._is_vanersborg():
-            if not self._api_key:
-                raise SourceArgumentRequired(
-                    "api_key",
-                    "For vanersborg, use the Enhets-ID from the mobile app under 'Om appen'.",
-                )
-
-            if not self._token:
-                raise SourceArgumentRequired(
-                    "token",
-                    "Vanersborg requires a Bearer token in addition to api_key.",
-                )
-        elif not self._api_key:
+        if not self._api_key:
             self._register_device()
             self._register_address()
             raise SourceArgumentRequiredWithSuggestions(
