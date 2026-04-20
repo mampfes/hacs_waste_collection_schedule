@@ -5471,6 +5471,30 @@
         },
         "data_description": {}
       },
+      "args_abfall_io_graphql": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "idHouseNumber": "Id House Number",
+          "key": "Key",
+          "wasteTypes": "Waste Types"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_abfall_io_graphql": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "idHouseNumber": "Id House Number",
+          "key": "Key",
+          "wasteTypes": "Waste Types"
+        },
+        "data_description": {}
+      },
       "args_abfall_havelland_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

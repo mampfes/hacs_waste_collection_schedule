@@ -5645,6 +5645,30 @@
         },
         "data_description": {}
       },
+      "args_abfall_io_graphql": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "idHouseNumber": "Id House Number",
+          "key": "Key",
+          "wasteTypes": "Waste Types"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_abfall_io_graphql": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "idHouseNumber": "Id House Number",
+          "key": "Key",
+          "wasteTypes": "Waste Types"
+        },
+        "data_description": {}
+      },
       "args_abfall_havelland_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
