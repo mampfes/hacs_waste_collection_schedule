@@ -10314,14 +10314,6 @@
       "id": "ics_osnabrueck_de"
     },
     {
-      "title": "Stadt Overath",
-      "module": "c_trace_de",
-      "default_params": {
-        "service": "overathabfallkalender"
-      },
-      "id": "c_trace_de"
-    },
-    {
       "title": "Stadt Regensburg",
       "module": "awido_de",
       "default_params": {
