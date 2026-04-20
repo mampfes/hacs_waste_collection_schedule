@@ -631,6 +631,12 @@
       "id": "goldcoast_qld_gov_au"
     },
     {
+      "title": "Golden Plains Shire Council",
+      "module": "goldenplains_vic_gov_au",
+      "default_params": {},
+      "id": "goldenplains_vic_gov_au"
+    },
+    {
       "title": "Greater Dandenong City Council",
       "module": "greaterdandenong_vic_gov_au",
       "default_params": {},
