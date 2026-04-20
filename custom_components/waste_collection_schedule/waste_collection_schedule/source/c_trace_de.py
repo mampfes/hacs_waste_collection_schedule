@@ -119,10 +119,6 @@ SERVICE_MAP = {
         "title": "Stadt Arnsberg",
         "url": "https://www.arnsberg.de/",
     },
-    "overathabfallkalender": {
-        "title": "Stadt Overath",
-        "url": "https://www.overath.de/",
-    },
     "landau": {
         "title": "Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz",
         "url": "https://www.ew-landau.de/",
