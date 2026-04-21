@@ -2687,6 +2687,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [London Borough of Merton (Old)](/doc/source/merton_gov_uk.md) / merton.gov.uk
 - [London Borough of Newham](/doc/source/newham_gov_uk.md) / newham.gov.uk
 - [London Borough of Southwark](/doc/source/southwark_gov_uk.md) / southwark.gov.uk
+- [London Borough of Tower Hamlets](/doc/source/tower_hamlets_gov_uk.md) / towerhamlets.gov.uk
 - [Luton](/doc/source/apps_imactivate_com.md) / luton.gov.uk
 - [Maidstone Borough Council](/doc/source/maidstone_gov_uk.md) / maidstone.gov.uk
 - [Maldon District Council](/doc/source/maldon_gov_uk.md) / maldon.gov.uk

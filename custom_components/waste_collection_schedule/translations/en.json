@@ -20517,6 +20517,29 @@
           "uprn": "Unique Property Reference Number (UPRN)"
         }
       },
+      "args_tower_hamlets_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Property UPRN (Unique Property Reference Number)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Find your UPRN at {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "reconfigure_tower_hamlets_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "Property UPRN (Unique Property Reference Number)"
+        },
+        "data_description": {
+          "uprn": "Find your UPRN at {url_www_findmyaddress_co_uk}"
+        }
+      },
       "args_maidstone_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
