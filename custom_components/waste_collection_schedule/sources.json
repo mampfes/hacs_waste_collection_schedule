@@ -4437,6 +4437,22 @@
       "id": "ics_citywindsor_ca"
     },
     {
+      "title": "Colchester, NS",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Community Recycling (Lunenburg, NS)",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "County of Simcoe, ON",
       "module": "ics",
       "default_params": {

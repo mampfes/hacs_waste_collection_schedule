@@ -162,6 +162,12 @@ extra_info:
   - title: Rogue Disposal & Recycling (Medford, OR)
     url: https://roguedisposal.com/
     country: us
+  - title: Community Recycling (Lunenburg, NS)
+    url: https://www.communityrecycling.ca/
+    country: ca
+  - title: Colchester, NS
+    url: https://www.colchester.ca/
+    country: ca
 
 howto:
   en: |
