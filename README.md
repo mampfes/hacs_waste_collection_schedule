@@ -2200,7 +2200,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
 - [Innherred Renovasjon](/doc/source/innherredrenovasjon_no.md) / innherredrenovasjon.no
-- [IRiS](/doc/source/iris_salten_no.md) / iris-salten.no
+- [Iris Salten](/doc/source/iris_salten_no.md) / iris-salten.no
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
 - [Movar IKS](/doc/source/movar_no.md) / movar.no
 - [Oslo Kommune](/doc/source/oslokommune_no.md) / oslo.kommune.no
