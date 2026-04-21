@@ -26,10 +26,12 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Bernstein | [bernstein.gv.at](http://www.bernstein.gv.at) |
 | Bildein | [bildein.at](http://www.bildein.at) |
 | Birkfeld | [birkfeld.at](http://www.birkfeld.at) |
+| Bischofshofen | [bischofshofen.at](https://www.bischofshofen.at) |
 | Blindenmarkt | [blindenmarkt.gv.at](blindenmarkt.gv.at/) |
 | Breitenbrunn am Neusiedler See | [breitenbrunn.at](http://www.breitenbrunn.at) |
 | Breitenstein | [breitenstein.at](https://www.breitenstein.at) |
 | Bromberg | [bromberg.at](http://www.bromberg.at) |
+| Bruck an der Mur | [bruckmur.at](https://www.bruckmur.at) |
 | Bruckneudorf | [bruckneudorf.eu](http://www.bruckneudorf.eu) |
 | Buch - St. Magdalena | [buch-stmagdalena.at](http://www.buch-stmagdalena.at) |
 | Burgau | [burgau.info](https://www.burgau.info) |

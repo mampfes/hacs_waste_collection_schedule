@@ -1481,6 +1481,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Bischofshofen",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Blindenmarkt",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1512,6 +1518,12 @@
     },
     {
       "title": "Bromberg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Bruck an der Mur",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"

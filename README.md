@@ -268,12 +268,14 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bernstein](/doc/source/citiesapps_com.md) / bernstein.gv.at
 - [Bildein](/doc/source/citiesapps_com.md) / bildein.at
 - [Birkfeld](/doc/source/citiesapps_com.md) / birkfeld.at
+- [Bischofshofen](/doc/source/citiesapps_com.md) / bischofshofen.at
 - [Blindenmarkt](/doc/source/citiesapps_com.md) / blindenmarkt.gv.at
 - [Brandenberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Breitenbach am Inn](/doc/ics/muellapp_com.md) / muellapp.com
 - [Breitenbrunn am Neusiedler See](/doc/source/citiesapps_com.md) / breitenbrunn.at
 - [Breitenstein](/doc/source/citiesapps_com.md) / breitenstein.at
 - [Bromberg](/doc/source/citiesapps_com.md) / bromberg.at
+- [Bruck an der Mur](/doc/source/citiesapps_com.md) / bruckmur.at
 - [Bruckneudorf](/doc/source/citiesapps_com.md) / bruckneudorf.eu
 - [Buch - St. Magdalena](/doc/source/citiesapps_com.md) / buch-stmagdalena.at
 - [Burgau](/doc/source/citiesapps_com.md) / burgau.info

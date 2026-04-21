@@ -112,6 +112,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Bischofshofen",
+        "url": "https://www.bischofshofen.at",
+        "country": "at",
+    },
+    {
         "title": "Blindenmarkt",
         "url": "blindenmarkt.gv.at/",
         "country": "at",
@@ -129,6 +134,11 @@ SERVICE_MAP = [
     {
         "title": "Bromberg",
         "url": "http://www.bromberg.at",
+        "country": "at",
+    },
+    {
+        "title": "Bruck an der Mur",
+        "url": "https://www.bruckmur.at",
         "country": "at",
     },
     {
