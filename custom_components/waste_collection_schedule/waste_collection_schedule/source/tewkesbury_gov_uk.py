@@ -60,7 +60,6 @@ class Source:
             "food": "Food",
             "garden": "Garden",
         }
-        
         for waste_key, waste_label in waste_type_map.items():
             if waste_key not in data:
                 continue
