@@ -1,9 +1,10 @@
 import datetime
 import json
 import re
-from waste_collection_schedule import Collection, exceptions
+
 import requests
 from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection, exceptions
 
 TITLE = "Havant Borough Council"
 DESCRIPTION = "Source for Havant Borough Council waste collection."
@@ -20,7 +21,9 @@ ICON_MAP = {
     "Recycling 240L": "mdi:recycle",
 }
 
-EVENTS_REGEX = re.compile(r"eventSettings.*dataSource.*isJson\((\[.*\])\)", re.DOTALL)
+EVENTS_REGEX = re.compile(
+    r"eventSettings.*?dataSource.*?isJson\((\[.*?\])\)", re.DOTALL
+)
 
 
 class Source:
@@ -29,11 +32,11 @@ class Source:
         self._password = password
 
     def fetch(self):
-        if not self._username or not self._password:
-            raise exceptions.SourceArgumentException(
-                argument="username and password",
-                message="Both username and password must be provided.",
-            )
+        if not self._username:
+            raise exceptions.SourceArgumentRequired("username")
+        if not self._password:
+            raise exceptions.SourceArgumentRequired("password")
+
         session = requests.Session()
         login_url = f"{URL}/Identity/Account/Login"
         data_url = URL
@@ -42,7 +45,11 @@ class Source:
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
         token_element = soup.find("input", attrs={"name": "__RequestVerificationToken"})
-        token = token_element["value"]
+        if token_element is None:
+            raise ValueError("Unable to find anti-forgery token")
+        token = token_element.get("value")
+        if not token:
+            raise ValueError("Unable to find anti-forgery token")
 
         # Log in to the website
         login_payload = {
@@ -52,14 +59,16 @@ class Source:
             "Input.RememberMe": "false",
         }
         response = session.post(login_url, data=login_payload)
-        if response.status_code < 200 or response.status_code >= 400:
+        response.raise_for_status()
+        if "/Identity/Account/Login" in response.url:
             raise exceptions.SourceArgumentException(
-                argument="username and password",
+                argument="username",
                 message="Login failed. Please check your username and password.",
             )
 
         # Fetch the collection data
         response = session.get(data_url)
+        response.raise_for_status()
 
         matches = EVENTS_REGEX.search(response.text)
         if not matches:
