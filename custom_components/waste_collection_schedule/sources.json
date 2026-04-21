@@ -1499,6 +1499,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Bregenz",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallv_zerowaste_io"
+    },
+    {
       "title": "Breitenbach am Inn",
       "module": "ics",
       "default_params": {},
@@ -1761,6 +1767,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Feldkirch",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallv_zerowaste_io"
     },
     {
       "title": "Feldkirchen in K\u00e4rnten",
@@ -2311,6 +2323,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Hohenems",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallv_zerowaste_io"
     },
     {
       "title": "Hopfgarten im Brixental",
@@ -4007,6 +4025,12 @@
       "module": "lipizzanerheimat_at",
       "default_params": {},
       "id": "lipizzanerheimat_at"
+    },
+    {
+      "title": "Vorarlberg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallv_zerowaste_io"
     },
     {
       "title": "Vordernberg",
