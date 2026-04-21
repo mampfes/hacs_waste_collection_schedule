@@ -73,8 +73,6 @@ class Source:
                     icon=ICON_MAP.get(waste_label),
                 )
             )
-
         if not entries:
-            raise Exception("No collection data returned for UPRN: " + uprn)
-
+            raise Exception(f"No collection data returned for identifier: {uprn!r}")
         return entries
