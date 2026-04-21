@@ -177,6 +177,7 @@ This source has been successfully tested with the following service providers:
 - [Eco360 (Greater Moncton, NB)](/doc/ics/recollect.md) / eco360.ca
 - [Gatineau, QC](/doc/ics/recollect.md) / gatineau.ca
 - [Georgina (ON)](/doc/ics/georgina_ca.md) / georgina.ca
+- [Grey Highlands, ON](/doc/ics/recollect.md) / greyhighlands.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Longueuil (QC)](/doc/ics/longueuil_quebec.md) / longueuil.quebec
@@ -193,6 +194,7 @@ This source has been successfully tested with the following service providers:
 - [Saint-Jean-Sur-Richelieu, QC](/doc/ics/recollect.md) / compo.qc.ca
 - [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
 - [Saskatoon, SK](/doc/ics/recollect.md) / saskatoon.ca
+- [Spruce Grove, AB](/doc/ics/recollect.md) / sprucegrove.org
 - [St Clair Township, ON](/doc/ics/recollect.md) / stclairtownship.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca

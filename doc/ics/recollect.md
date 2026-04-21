@@ -49,6 +49,8 @@ known to work with:
 |City of Houston, TX|USA|[houstontx.gov](https://www.houstontx.gov/solidwaste/)|
 |Eco360 (Greater Moncton, NB)|Canada|[eco360.ca](https://www.eco360.ca/residential-program)|
 |Rogue Disposal & Recycling (Medford, OR)|USA|[roguedisposal.com](https://roguedisposal.com/resources/recycling-schedule)|
+|Grey Highlands, ON|Canada|[greyhighlands.ca](https://www.greyhighlands.ca/my-home/waste-recycling/collection-schedule/)|
+|Spruce Grove, AB|Canada|[sprucegrove.org](https://www.sprucegrove.org/services/garbage-organics-recycling/sort-with-success/)|
 
 and probably a lot more.
 

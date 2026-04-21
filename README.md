@@ -783,6 +783,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Eco360 (Greater Moncton, NB)](/doc/ics/recollect.md) / eco360.ca
 - [Gatineau, QC](/doc/ics/recollect.md) / gatineau.ca
 - [Georgina (ON)](/doc/ics/georgina_ca.md) / georgina.ca
+- [Grey Highlands, ON](/doc/ics/recollect.md) / greyhighlands.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
@@ -815,6 +816,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Saint-Jean-Sur-Richelieu, QC](/doc/ics/recollect.md) / compo.qc.ca
 - [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
 - [Saskatoon, SK](/doc/ics/recollect.md) / saskatoon.ca
+- [Spruce Grove, AB](/doc/ics/recollect.md) / sprucegrove.org
 - [St Clair Township, ON](/doc/ics/recollect.md) / stclairtownship.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca

@@ -4605,6 +4605,14 @@
       "id": "ics_georgina_ca"
     },
     {
+      "title": "Grey Highlands, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Halifax, NS",
       "module": "ics",
       "default_params": {
@@ -4833,6 +4841,14 @@
     },
     {
       "title": "Saskatoon, SK",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Spruce Grove, AB",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"
