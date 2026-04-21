@@ -15319,7 +15319,8 @@
           "calendar_title": "Kalender Titel",
           "api_key": "Api Key",
           "service_provider": "Service Provider",
-          "street_address": "Street Address"
+          "street_address": "Street Address",
+          "token": "Token"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -15332,7 +15333,8 @@
           "calendar_title": "Kalender Titel",
           "api_key": "Api Key",
           "service_provider": "Service Provider",
-          "street_address": "Street Address"
+          "street_address": "Street Address",
+          "token": "Token"
         },
         "data_description": {}
       },

@@ -147,10 +147,18 @@ class Source:
         self._supports_registration = cfg.get("supports_registration", True)
         self._app_version = cfg.get("app_version")
 
-        if self._requires_token and self._api_key and not self._token:
+        if self._requires_token and not self._api_key:
+            raise SourceArgumentRequired(
+                "api_key",
+                "This provider requires a pre-existing device ID. "
+                "Find it in the mobile app under 'Om appen'.",
+            )
+
+        if self._requires_token and not self._token:
             raise SourceArgumentRequired(
                 "token",
-                "This provider requires a token in addition to api_key.",
+                "This provider requires a bearer token. "
+                "Find it by inspecting the mobile app's network requests.",
             )
 
     def _headers(self) -> dict[str, str]:

@@ -15205,7 +15205,8 @@
           "calendar_title": "Nome Calendario",
           "api_key": "Chiave API",
           "service_provider": "Fornitore di Servizi",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo Strada",
+          "token": "Token"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -15218,7 +15219,8 @@
           "calendar_title": "Nome Calendario",
           "api_key": "Chiave API",
           "service_provider": "Fornitore di Servizi",
-          "street_address": "Indirizzo Strada"
+          "street_address": "Indirizzo Strada",
+          "token": "Token"
         },
         "data_description": {}
       },

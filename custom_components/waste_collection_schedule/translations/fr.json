@@ -15206,7 +15206,8 @@
           "calendar_title": "Titre du Calendrier",
           "api_key": "Clé API",
           "service_provider": "Fournisseur de services",
-          "street_address": "Adresse de rue"
+          "street_address": "Adresse de rue",
+          "token": "Token"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -15219,7 +15220,8 @@
           "calendar_title": "Titre du Calendrier",
           "api_key": "Clé API",
           "service_provider": "Fournisseur de services",
-          "street_address": "Adresse de rue"
+          "street_address": "Adresse de rue",
+          "token": "Token"
         },
         "data_description": {}
       },

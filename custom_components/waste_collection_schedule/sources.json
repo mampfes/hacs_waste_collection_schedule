@@ -15761,6 +15761,14 @@
       "id": "vivab_se"
     },
     {
+      "title": "V\u00e4nerborg",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "vanersborg"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "V\u00e4rmd\u00f6 Soph\u00e4mtning",
       "module": "varmdo_se",
       "default_params": {},
