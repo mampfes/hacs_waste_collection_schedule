@@ -682,6 +682,13 @@
     "howto": {},
     "urls": {}
   },
+  "ics_gem2go_dev": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gem2go_dev.md",
+    "howto": {
+      "en": "- Go to your municipality's gem2go waste calendar page or use the Abfallooe app.\n- Find the iCal/ICS export link.\n- The URL typically follows the pattern `https://uwpio.gem2go.dev/ical/{id1}/{id2}/{id3}`.\n- Copy the full URL and use it as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
   "ics_abfallv_zerowaste_io": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallv_zerowaste_io.md",
     "howto": {
@@ -711,13 +718,6 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gda_gv_at.md",
     "howto": {
       "en": "- Go to <https://gda.gv.at/abholtermine> and select your location.  \n- Copy the link of the `iCal` Button.\n- Use this link as the `url` parameter.\n"
-    },
-    "urls": {}
-  },
-  "ics_gem2go_dev": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gem2go_dev.md",
-    "howto": {
-      "en": "- Go to your municipality's gem2go waste calendar page or use the Abfallooe app.\n- Find the iCal/ICS export link.\n- The URL typically follows the pattern `https://uwpio.gem2go.dev/ical/{id1}/{id2}/{id3}`.\n- Copy the full URL and use it as the `url` parameter.\n"
     },
     "urls": {}
   },

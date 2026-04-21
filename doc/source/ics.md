@@ -24,6 +24,7 @@ This source has been successfully tested with the following service providers:
 - [Berg im Drautal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Berndorf bei Salzburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Brandenberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Braunau am Inn](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Bregenz](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Breitenbach am Inn](/doc/ics/muellapp_com.md) / muellapp.com
 - [City of Krems](/doc/ics/kremsstadt_umweltverbaende_at.md) / kremsstadt.umweltverbaende.at
@@ -68,6 +69,7 @@ This source has been successfully tested with the following service providers:
 - [Köttmannsdorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Lendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leoben](/doc/ics/muellapp_com.md) / muellapp.com
+- [Leonding](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Lesachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Linz AG](/doc/ics/linzag_at.md) / linzag.at
 - [Ludmannsdorf](/doc/ics/muellapp_com.md) / muellapp.com
@@ -93,6 +95,7 @@ This source has been successfully tested with the following service providers:
 - [Obertrum am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ottobrunn](/doc/ics/muellapp_com.md) / muellapp.com
 - [Paternion](/doc/ics/muellapp_com.md) / muellapp.com
+- [Pichl bei Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Poggersdorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Pörtschach am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Radenthein](/doc/ics/muellapp_com.md) / muellapp.com
@@ -104,6 +107,7 @@ This source has been successfully tested with the following service providers:
 - [Reißeck](/doc/ics/muellapp_com.md) / muellapp.com
 - [Rennweg am Katschberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Sachsenburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schalchen](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Schiefling am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schleedorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schwaz](/doc/ics/muellapp_com.md) / muellapp.com
@@ -126,9 +130,11 @@ This source has been successfully tested with the following service providers:
 - [Straßwalchen](/doc/ics/muellapp_com.md) / muellapp.com
 - [Söll](/doc/ics/muellapp_com.md) / muellapp.com
 - [Techelsberg am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Traun](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Trebesing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Treffen am Ossiacher See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Umweltv](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
+- [Upper Austria (Oberösterreich)](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Villach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Vorarlberg](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
@@ -136,6 +142,7 @@ This source has been successfully tested with the following service providers:
 - [Waidhofen an der Ybbs](/doc/ics/waidhofen_at.md) / waidhofen.at
 - [Wattens](/doc/ics/muellapp_com.md) / muellapp.com
 - [Weißensee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Winklern](/doc/ics/muellapp_com.md) / muellapp.com
 - [Wolfsberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zell](/doc/ics/muellapp_com.md) / muellapp.com

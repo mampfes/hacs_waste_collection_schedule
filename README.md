@@ -271,6 +271,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bischofshofen](/doc/source/citiesapps_com.md) / bischofshofen.at
 - [Blindenmarkt](/doc/source/citiesapps_com.md) / blindenmarkt.gv.at
 - [Brandenberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Braunau am Inn](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Bregenz](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Breitenbach am Inn](/doc/ics/muellapp_com.md) / muellapp.com
 - [Breitenbrunn am Neusiedler See](/doc/source/citiesapps_com.md) / breitenbrunn.at
@@ -465,6 +466,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Leithaprodersdorf](/doc/source/citiesapps_com.md) / leithaprodersdorf.at
 - [Lendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leoben](/doc/ics/muellapp_com.md) / muellapp.com
+- [Leonding](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Lesachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leutschach an der Weinstraße](/doc/source/citiesapps_com.md) / leutschach-weinstrasse.gv.at
 - [Lieboch](/doc/source/citiesapps_com.md) / lieboch.gv.at
@@ -547,6 +549,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Pernegg im Waldviertel](/doc/source/citiesapps_com.md) / pernegg.info
 - [Perschling](/doc/source/citiesapps_com.md) / perschling.at
 - [Pfarrwerfen](/doc/source/citiesapps_com.md) / gemeinde.pfarrwerfen.at
+- [Pichl bei Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Pilgersdorf](/doc/source/citiesapps_com.md) / pilgersdorf.at
 - [Pinggau](/doc/source/citiesapps_com.md) / pinggau.gv.at
 - [Pinkafeld](/doc/source/citiesapps_com.md) / pinkafeld.gv.at
@@ -593,6 +596,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Sankt Gilgen](/doc/source/citiesapps_com.md) / gemgilgen.at
 - [Sankt Martin am Wöllmißberg](/doc/source/lipizzanerheimat_at.md) / st-martin-woellmissberg.gv.at
 - [Sankt Oswald bei Plankenwarth](/doc/source/citiesapps_com.md) / sanktoswald.net
+- [Schalchen](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Schiefling am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schleedorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schlins](/doc/source/citiesapps_com.md) / schlins.at
@@ -671,6 +675,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Tieschen](/doc/source/citiesapps_com.md) / tieschen.gv.at
 - [Tobaj](/doc/source/citiesapps_com.md) / tobaj.gv.at
 - [Tragöß - St. Katharein](/doc/source/citiesapps_com.md) / tragoess-st-katharein.gv.at
+- [Traun](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Trebesing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Treffen am Ossiacher See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Trofaiach](/doc/source/citiesapps_com.md) / trofaiach.gv.at
@@ -681,6 +686,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Unterkohlstätten](/doc/source/citiesapps_com.md) / unterkohlstaetten.at
 - [Unterlamm](/doc/source/citiesapps_com.md) / unterlamm.gv.at
 - [Unterwart](/doc/source/citiesapps_com.md) / unterwart.at
+- [Upper Austria (Oberösterreich)](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Vasoldsberg](/doc/source/citiesapps_com.md) / vasoldsberg.gv.at
 - [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Viktorsberg](/doc/source/citiesapps_com.md) / viktorsberg.at
@@ -702,6 +708,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Weiz](/doc/source/citiesapps_com.md) / weiz.at
 - [Weißenkirchen in der Wachau](/doc/source/citiesapps_com.md) / weissenkirchen-wachau.at
 - [Weißensee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Weppersdorf](/doc/source/citiesapps_com.md) / weppersdorf.at
 - [Werfenweng](/doc/source/citiesapps_com.md) / gemeinde-werfenweng.at
 - [Werndorf](/doc/source/citiesapps_com.md) / werndorf.gv.at
