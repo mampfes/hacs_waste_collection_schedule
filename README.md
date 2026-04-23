@@ -74,7 +74,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Glen Eira](/doc/source/gleneira_vic_gov_au.md) / gleneira.vic.gov.a
 - [City of Gosnells](/doc/source/gosnells_wa_gov_au.md) / gosnells.wa.gov.au
 - [City of Greater Bendigo](/doc/source/bendigo_vic_gov_au.md) / bendigo.vic.gov.au
-- [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
+- [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongcity.vic.gov.au
 - [City of Hobart ](/doc/source/hobartcity_com_au.md) / hobartcity.com.au
 - [City of Joondalup](/doc/source/joondalup_wa_gov_au.md) / joondalup.wa.gov.au
 - [City of Kalamunda](/doc/source/kalamunda_wa_gov_au.md) / kalamunda.wa.gov.au/kerbside-3-bin-system/collection-days/bin-day
