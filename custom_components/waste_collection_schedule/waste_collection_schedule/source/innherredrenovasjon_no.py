@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 
 TITLE = "Innherred Renovasjon"
@@ -11,7 +11,7 @@ DESCRIPTION = (
 URL = "https://innherredrenovasjon.no/"
 
 TEST_CASES = {
-    "Test_001": {"address": "Geving%C3%A5sen 206"},
+    "Test_001": {"address": "Gevingåsen 206"},
     "Test_002": {"address": "Bollgardssletta 211 A"},
     "Test_003": {"address": "Nordregata 2"},
 }
@@ -30,8 +30,6 @@ ICON_MAP = {
     "Restavfall mini": "mdi:trash-can",
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
-
 
 class Source:
     def __init__(self, address: str):
@@ -40,7 +38,7 @@ class Source:
     def fetch(self):
         args = {"address": self._address}
 
-        r = requests.get(API_URL, params=args, headers=HEADERS)
+        r = requests.get(API_URL, params=args, impersonate="chrome")
         r.raise_for_status()
 
         data = json.loads(r.content)
