@@ -145,6 +145,12 @@
       "id": "brisbane_qld_gov_au"
     },
     {
+      "title": "Bundaberg Regional Council",
+      "module": "bundaberg_qld_gov_au",
+      "default_params": {},
+      "id": "bundaberg_qld_gov_au"
+    },
+    {
       "title": "Burwood City Council",
       "module": "impactapps_com_au",
       "default_params": {
