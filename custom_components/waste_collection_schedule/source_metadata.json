@@ -1779,6 +1779,13 @@
     },
     "urls": {}
   },
+  "ics_brandenburg_an_der_havel": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/brandenburg_an_der_havel.md",
+    "howto": {
+      "en": "- Go to <https://www.stadt-brandenburg.de/leben/abfall-und-abwasser/entsorgungstermine> and select your street\n- Right-click on the `Kalenderimport` button and copy the url\n- Use this link as the `url` parameter\n"
+    },
+    "urls": {}
+  },
   "beg_logistics_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/beg_logistics_de.md",
     "howto": {},

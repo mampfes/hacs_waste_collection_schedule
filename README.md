@@ -1100,6 +1100,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Borchen](/doc/source/lobbe_app.md) / lobbe.app
 - [Borgentreich](/doc/source/lobbe_app.md) / lobbe.app
 - [Brakel](/doc/source/lobbe_app.md) / lobbe.app
+- [Brandenburg an der Havel](/doc/ics/brandenburg_an_der_havel.md) / stadt-brandenburg.de
 - [Braunschweig](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Breckerfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de

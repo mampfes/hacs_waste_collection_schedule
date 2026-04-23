@@ -261,6 +261,7 @@ This source has been successfully tested with the following service providers:
 - [BEST - Bottrop](/doc/ics/best_bottrop_de.md) / best-bottrop.de
 - [Biebergemünd](/doc/ics/mein_abfallkalender_online.md) / biebergemuend.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
+- [Brandenburg an der Havel](/doc/ics/brandenburg_an_der_havel.md) / stadt-brandenburg.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
 - [Dienstleistungsbetrieb Dreieich und Neu-Isenburg AöR](/doc/ics/mein_abfallkalender_online.md) / dlb-aoer.de
 - [Dormagen](/doc/ics/mein_abfallkalender_online.md) / dormagen.de

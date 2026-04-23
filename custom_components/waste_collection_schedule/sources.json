@@ -6734,6 +6734,12 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Brandenburg an der Havel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_brandenburg_an_der_havel"
+    },
+    {
       "title": "Braunschweig",
       "module": "app_abfallplus_de",
       "default_params": {
