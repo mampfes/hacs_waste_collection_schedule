@@ -20008,7 +20008,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Trouvez votre UPRN sur {url_www_findmyaddress_co_uk}"
+          "uprn": "Trovez votre UPRN sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_tower_hamlets_gov_uk": {
@@ -20019,7 +20019,7 @@
           "uprn": "UPRN du bien"
         },
         "data_description": {
-          "uprn": "Trouvez votre UPRN sur {url_www_findmyaddress_co_uk}"
+          "uprn": "Trovez votre UPRN sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_maidstone_gov_uk": {

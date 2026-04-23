@@ -1,7 +1,6 @@
 import datetime
 
 import requests
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
@@ -53,10 +52,12 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         with requests.Session() as session:
-            session.headers.update({
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
-                "Accept": "application/json, text/javascript, */*; q=0.01",
-            })
+            session.headers.update(
+                {
+                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+                    "Accept": "application/json, text/javascript, */*; q=0.01",
+                }
+            )
 
             # 1. Initialize session and perform the authentication handshake
             try:
@@ -77,7 +78,9 @@ class Source:
                 token_resp.raise_for_status()
                 csrf = token_resp.json()["data"]["csrfToken"]
             except (requests.RequestException, ValueError, KeyError) as e:
-                raise Exception(f"Failed to authenticate with Tower Hamlets API: {e}") from e
+                raise Exception(
+                    f"Failed to authenticate with Tower Hamlets API: {e}"
+                ) from e
 
             # 2. Construct the nested payload
             now_str = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -121,11 +124,11 @@ class Source:
 
         # 4. Parse the results
         integration = data.get("integration", {}).get("transformed", {})
-        
+
         # Check for explicit API error messages first
         if integration.get("error"):
             raise Exception(f"Council API Error: {integration.get('error')}")
-            
+
         rows_data = integration.get("rows_data", {})
         rows = rows_data.values() if isinstance(rows_data, dict) else rows_data
 
@@ -150,7 +153,9 @@ class Source:
 
                 # Year-wrap logic: if the date is in the past, it's for next year
                 if collection_date < current_date - datetime.timedelta(days=7):
-                    collection_date = collection_date.replace(year=current_date.year + 1)
+                    collection_date = collection_date.replace(
+                        year=current_date.year + 1
+                    )
             except ValueError:
                 continue
 

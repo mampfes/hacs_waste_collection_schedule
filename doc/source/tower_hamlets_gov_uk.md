@@ -24,7 +24,7 @@ waste_collection_schedule:
   sources:
     - name: tower_hamlets_gov_uk
       args:
-        uprn: "5061647"
+        uprn: "6085613"
 ```
 
 ## How to get the source argument
