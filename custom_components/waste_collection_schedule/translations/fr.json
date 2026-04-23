@@ -20068,6 +20068,29 @@
         },
         "data_description": {}
       },
+      "args_richmond_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN du bien"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Trouvez votre UPRN sur {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "reconfigure_richmond_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "uprn": "UPRN du bien"
+        },
+        "data_description": {
+          "uprn": "Trouvez votre UPRN sur {url_www_findmyaddress_co_uk}"
+        }
+      },
       "args_southwark_gov_uk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

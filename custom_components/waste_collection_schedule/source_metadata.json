@@ -4552,6 +4552,13 @@
     "howto": {},
     "urls": {}
   },
+  "richmond_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/richmond_gov_uk.md",
+    "howto": {},
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
+  },
   "southwark_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southwark_gov_uk.md",
     "howto": {
