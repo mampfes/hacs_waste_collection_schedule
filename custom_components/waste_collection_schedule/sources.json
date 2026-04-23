@@ -631,6 +631,15 @@
       "id": "frasercoast_qld_gov_au"
     },
     {
+      "title": "Glenorchy City Council (TAS)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "GLENORCHY",
+        "project_id": "657"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Gold Coast City Council",
       "module": "goldcoast_qld_gov_au",
       "default_params": {},

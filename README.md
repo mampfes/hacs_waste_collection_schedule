@@ -129,6 +129,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Forbes Shire Council](/doc/source/impactapps_com_au.md) / forbes.nsw.gov.au
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
 - [Fraser Coast Regional Council](/doc/source/frasercoast_qld_gov_au.md) / frasercoast.qld.gov.au
+- [Glenorchy City Council (TAS)](/doc/source/recyclecoach_com.md) / gcc.tas.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
 - [Golden Plains Shire Council](/doc/source/goldenplains_vic_gov_au.md) / goldenplains.vic.gov.au
 - [Greater Dandenong City Council](/doc/source/greaterdandenong_vic_gov_au.md) / greaterdandenong.vic.gov.au

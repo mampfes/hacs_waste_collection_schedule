@@ -1255,6 +1255,36 @@
         },
         "data_description": {}
       },
+      "args_recyclecoach_com": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "district_id": "ID Distretto",
+          "project_id": "Project ID",
+          "state": "Stato",
+          "street": "Strada",
+          "zone_id": "ID Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_recyclecoach_com": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "district_id": "ID Distretto",
+          "project_id": "Project ID",
+          "state": "Stato",
+          "street": "Strada",
+          "zone_id": "ID Zona"
+        },
+        "data_description": {}
+      },
       "args_goldcoast_qld_gov_au": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -3783,36 +3813,6 @@
           "house_number": "Civico",
           "postcode": "Codice Postale CAP",
           "street": "Strada"
-        },
-        "data_description": {}
-      },
-      "args_recyclecoach_com": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "city": "Città",
-          "district_id": "ID Distretto",
-          "project_id": "Project ID",
-          "state": "Stato",
-          "street": "Strada",
-          "zone_id": "ID Zona"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_recyclecoach_com": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "city": "Città",
-          "district_id": "ID Distretto",
-          "project_id": "Project ID",
-          "state": "Stato",
-          "street": "Strada",
-          "zone_id": "ID Zona"
         },
         "data_description": {}
       },

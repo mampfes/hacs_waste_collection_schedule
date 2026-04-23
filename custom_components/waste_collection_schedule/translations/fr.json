@@ -1255,6 +1255,36 @@
         },
         "data_description": {}
       },
+      "args_recyclecoach_com": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "Ville",
+          "district_id": "ID de district",
+          "project_id": "Project Id",
+          "state": "État",
+          "street": "Rue",
+          "zone_id": "ID de zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_recyclecoach_com": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "Ville",
+          "district_id": "ID de district",
+          "project_id": "Project Id",
+          "state": "État",
+          "street": "Rue",
+          "zone_id": "ID de zone"
+        },
+        "data_description": {}
+      },
       "args_goldcoast_qld_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -3774,36 +3804,6 @@
           "house_number": "Numéro civique",
           "postcode": "Code postal",
           "street": "Rue"
-        },
-        "data_description": {}
-      },
-      "args_recyclecoach_com": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "district_id": "ID de district",
-          "project_id": "Project Id",
-          "state": "État",
-          "street": "Rue",
-          "zone_id": "ID de zone"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
-        }
-      },
-      "reconfigure_recyclecoach_com": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "district_id": "ID de district",
-          "project_id": "Project Id",
-          "state": "État",
-          "street": "Rue",
-          "zone_id": "ID de zone"
         },
         "data_description": {}
       },

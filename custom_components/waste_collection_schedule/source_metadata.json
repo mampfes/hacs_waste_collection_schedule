@@ -294,6 +294,11 @@
     },
     "urls": {}
   },
+  "recyclecoach_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclecoach_com.md",
+    "howto": {},
+    "urls": {}
+  },
   "goldcoast_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/goldcoast_qld_gov_au.md",
     "howto": {},
@@ -892,11 +897,6 @@
   },
   "recycleapp_be": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recycleapp_be.md",
-    "howto": {},
-    "urls": {}
-  },
-  "recyclecoach_com": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclecoach_com.md",
     "howto": {},
     "urls": {}
   },

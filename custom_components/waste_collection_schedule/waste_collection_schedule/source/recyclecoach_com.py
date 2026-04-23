@@ -44,7 +44,10 @@ ICON_MAP = {
     "E-waste Event": "mdi:calendar",
     "Additional EnviroDepot Hours": "mdi:calendar",
     "Garbage Collection": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
     "Recycling Collection": "mdi:recycle",
+    "Waste": "mdi:trash-can",
+    "FOGO": "mdi:food",
     "Yard Waste Collection Week": "mdi:leaf",
     "3 Container Exemption Pick-up": "mdi:calendar",
     "Holiday ": "mdi:calendar",
@@ -241,6 +244,15 @@ EXTRA_INFO = [
             "district_id": "LAS",
         },
     },
+    {
+        "title": "Glenorchy City Council (TAS)",
+        "url": "https://www.gcc.tas.gov.au/",
+        "country": "au",
+        "default_params": {
+            "project_id": "657",
+            "district_id": "GLENORCHY",
+        },
+    },
 ]
 
 TEST_CASES = {
@@ -335,6 +347,11 @@ TEST_CASES = {
         "district_id": "MEDHAT",
         "project_id": 500,
         "zone_id": "zone-z196",
+    },
+    "Glenorchy City Council, TAS, Australia": {
+        "district_id": "GLENORCHY",
+        "project_id": 657,
+        "zone_id": "zone-z15322-z16165-z16823",
     },
 }
 
