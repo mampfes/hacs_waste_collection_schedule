@@ -42,12 +42,6 @@ PARAM_TRANSLATIONS = {
         "street_address": "Street address",
         "token": "Bearer token",
     },
-    "sv": {
-        "service_provider": "Tjänsteleverantör",
-        "api_key": "API-nyckel / enhets-ID",
-        "street_address": "Gatuadress",
-        "token": "Bearer-token",
-    },
 }
 
 PARAM_DESCRIPTIONS = {
@@ -56,12 +50,6 @@ PARAM_DESCRIPTIONS = {
         "api_key": "API key or device ID used by the mobile app.",
         "street_address": "Street address used for address lookup and registration.",
         "token": "Bearer token required by some providers.",
-    },
-    "sv": {
-        "service_provider": "Namn på Avfallsapp-leverantören.",
-        "api_key": "API-nyckel eller enhets-ID från mobilappen.",
-        "street_address": "Gatuadress som används för adressökning och registrering.",
-        "token": "Bearer-token som krävs av vissa leverantörer.",
     },
 }
 
