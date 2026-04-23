@@ -2657,6 +2657,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Herefordshire City Council](/doc/source/herefordshire_gov_uk.md) / herefordshire.gov.uk
 - [High Peak Borough Council](/doc/source/highpeak_gov_uk.md) / highpeak.gov.uk
 - [Highland](/doc/source/highland_gov_uk.md) / highland.gov.uk
+- [Hinckley & Bosworth Borough Council](/doc/source/hinckley_bosworth_gov_uk.md) / hinckley-bosworth.gov.uk
 - [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
 - [Hull City Council](/doc/source/hull_gov_uk.md) / hull.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
