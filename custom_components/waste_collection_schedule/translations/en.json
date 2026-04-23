@@ -24061,6 +24061,29 @@
           "id": "The unique identifier for your properties collection schedule"
         }
       },
+      "args_communitywastedisposal_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address including city and ZIP (e.g. '123 Main St, Allen, TX 75002')"
+        }
+      },
+      "reconfigure_communitywastedisposal_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Street address including city and ZIP (e.g. '123 Main St, Allen, TX 75002')"
+        }
+      },
       "args_fuquay_varina_nc_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
