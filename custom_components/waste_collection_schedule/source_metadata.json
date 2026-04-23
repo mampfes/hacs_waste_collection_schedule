@@ -5088,6 +5088,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "spelthorne_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/spelthorne_gov_uk.md",
+    "howto": {
+      "en": "Find your UPRN by visiting https://spelthorne-self.achieveservice.com/service/Waste_Collections and searching for your address. Your UPRN can also be found at https://www.findmyaddress.co.uk/."
+    },
+    "urls": {}
+  },
   "stalbans_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stalbans_gov_uk.md",
     "howto": {},
