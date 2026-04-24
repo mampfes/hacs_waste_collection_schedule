@@ -219,6 +219,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wellington Shire Council](/doc/source/impactapps_com_au.md) / wellington.vic.gov.au
 - [Whitehorse City Counfil](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
+- [Willoughby City Council](/doc/source/willoughby_nsw_gov_au.md) / willoughby.nsw.gov.au
 - [Wollondilly Shire Council](/doc/source/wollondilly_nsw_gov_au.md) / wollondilly.nsw.gov.au
 - [Wollongong City Council](/doc/source/impactapps_com_au.md) / wollongong.vic.gov.au
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com

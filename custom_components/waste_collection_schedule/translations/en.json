@@ -2623,6 +2623,29 @@
         },
         "data_description": {}
       },
+      "args_willoughby_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address, for example: 18 Crabbes Avenue, North Willoughby, NSW 2068"
+        }
+      },
+      "reconfigure_willoughby_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street address"
+        },
+        "data_description": {
+          "address": "Street address, for example: 18 Crabbes Avenue, North Willoughby, NSW 2068"
+        }
+      },
       "args_wollondilly_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

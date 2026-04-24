@@ -1208,6 +1208,12 @@
       "id": "whittlesea_vic_gov_au"
     },
     {
+      "title": "Willoughby City Council",
+      "module": "willoughby_nsw_gov_au",
+      "default_params": {},
+      "id": "willoughby_nsw_gov_au"
+    },
+    {
       "title": "Wollondilly Shire Council",
       "module": "wollondilly_nsw_gov_au",
       "default_params": {},

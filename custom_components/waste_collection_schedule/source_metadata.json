@@ -618,6 +618,13 @@
     "howto": {},
     "urls": {}
   },
+  "willoughby_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/willoughby_nsw_gov_au.md",
+    "howto": {
+      "en": "Visit the Willoughby City Council waste service dates page, search for your address, and use the address text as shown by the lookup."
+    },
+    "urls": {}
+  },
   "wollondilly_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wollondilly_nsw_gov_au.md",
     "howto": {},
