@@ -14183,6 +14183,37 @@
         },
         "data_description": {}
       },
+      "args_saver_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "huisnummer": "House number",
+          "postcode": "Postal code",
+          "toevoeging": "Addition"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "huisnummer": "House number",
+          "postcode": "Dutch postal code (4 digits + 2 letters), e.g. 4702AA",
+          "toevoeging": "House letter or addition (only required when more than one address shares the postcode/huisnummer)"
+        }
+      },
+      "reconfigure_saver_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "huisnummer": "House number",
+          "postcode": "Postal code",
+          "toevoeging": "Addition"
+        },
+        "data_description": {
+          "huisnummer": "House number",
+          "postcode": "Dutch postal code (4 digits + 2 letters), e.g. 4702AA",
+          "toevoeging": "House letter or addition (only required when more than one address shares the postcode/huisnummer)"
+        }
+      },
       "args_ics_offalkalinder_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
