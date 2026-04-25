@@ -17,5 +17,5 @@
     "pypdf",
     "curl_cffi>=0.7.0"
   ],
-  "version": "2.20.0"
+  "version": "2.21.0"
 }

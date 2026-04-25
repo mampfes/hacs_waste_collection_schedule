@@ -4,6 +4,88 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.21.0] - 2026-04-26
+
+### New Services
+
+- added `abfall_io_graphql` for the abfall.io v3 GraphQL API (thanks @miggi92) (#3788)
+- added `AchieveForms` service helper (7 UK council sources refactored to use it)
+- added `WhitespaceWRP` service helper (3 UK council sources refactored to use it)
+- added `FirmstepSelfService` service helper (2 UK council sources refactored to use it)
+
+### Added Sources
+
+- added Saver, Roosendaal / Halderberge / Bergen op Zoom / Rucphen / Zundert / Steenbergen / Woensdrecht, NL (#6137)
+- added ASM Pavia, IT (#6138)
+- added Saalfelden am Steinernen Meer, AT (#6136)
+- added Gemeinde Würenlos, CH (ICS) (#6140)
+- added Wieliczka, PL (thanks @uberberben) (#6132)
+- added Willoughby City Council, NSW, AU (thanks @happygray) (#6130)
+- added Richmond upon Thames, UK (thanks @jimmym101) (#6128)
+- added Spelthorne Borough Council, UK (#6125)
+- added Community Waste Disposal (CWD), North Texas, US (thanks @ppritcha) (#4913)
+- added Bundaberg Regional Council, QLD, AU (#6124)
+- added Hinckley & Bosworth, UK (thanks @JackMottershaw) (#6115)
+- added Brandenburg an der Havel (ICS), DE (thanks @dt215git) (#6109)
+- added Tower Hamlets, UK (thanks @jimmym101) (#6107)
+- added Havant Borough Council, UK (thanks @stegzilla) (#6092)
+- added Golden Plains Shire Council, VIC, AU (thanks @smaurer3) (#6085)
+- added City of Boroondara, VIC, AU (#6079)
+- added East Staffs, UK (thanks @dt215git) (#6074)
+- added Glenorchy City Council, TAS, AU to Recycle Coach (#6126)
+- added Woerden / Oudewater to ximmio_nl (#6103)
+- added Bischofshofen and Bruck an der Mur to CitiesApps (#6098)
+- added Büren an der Aare, Liestal, and Therwil to localcities_ch
+- added Vänersborg (token auth) to avfallsapp_se (thanks @zer0coo) (#6070)
+
+### Fixed Sources
+
+- fixed potsdam_de: exception chain order, added type 7, JSON safety (thanks @johannesvedder) (#6134)
+- updated Wermelskirchen to its new domain and ICS schedule (thanks @crosserSniper) (#6131)
+- fixed exeter_gov_uk: handle dates without comma and `<img>` in `<h3>` (#6127)
+- fixed sector27_de: use first word of street as search prefix (#6123)
+- fixed innherredrenovasjon_no: use curl_cffi to bypass Cloudflare (#6122)
+- fixed winterthur_ch: update street lookup to new API endpoint (#6121)
+- fixed geelongaustralia_com_au: follow domain redirect for POST request (#6120)
+- fixed avfallsapp_se: typo Vänerborg → Vänersborg, removed unsupported `sv` language (#6119)
+- fixed iris_salten_no (thanks @p-t-e-r) (#6102)
+- fixed arun_gov_uk: ICON_MAP order (thanks @whi-tw) (#6099)
+- fixed tewkesbury_gov_uk: handle API response without status field (thanks @davewins) (#6094)
+- fixed toogoodtowaste_co_nz: Cloudflare-aware session flow and explicit API error paths (#6075)
+- fixed barrie_ca: form submit (thanks @mroote) (#6095)
+- fixed Overath: migrated from c_trace_de to abfallnavi_de (bav) (#6086)
+- fixed abfall_io: removed migrated test cases, improved 401 error message (#6084)
+- fixed junker_app: removed Veritas Spa (no longer served) (#6082)
+- fixed e_lindsey_gov_uk: updated for changed form API (#6081)
+- fixed kiedysmieci_info: validate district/municipality via streets endpoint (#6066)
+- removed Ortenaukreis from abfall_io listings (now use app_abfallplus_de) (#6139)
+
+### Removed Sources
+
+- removed Białogard from ecoharmonogram_pl (no longer uses the platform) (thanks @kfulko) (#6089)
+
+### Documentation
+
+- listed Upper Austria municipalities for gem2go (#6101)
+- listed Vorarlberg municipalities for Umweltv (zerowaste.io) (#6100)
+- added Grey Highlands ON and Spruce Grove AB to ReCollect (#6104)
+- added Community Recycling (Lunenburg, NS) and Colchester, NS to ReCollect (#6097)
+- added Vafab Miljö to provider list (thanks @progtologist) (#6093)
+- documented all burgerportaal_nl supported operators (#6096)
+- migrated docs/examples to non-deprecated `waste_collection_schedule.sensors` YAML structure (#6064)
+
+### Improvements
+
+- exposed ICS `LOCATION` and `DESCRIPTION` on `Collection` (thanks @sneumeister) (#5930)
+- expanded French (`fr`) defaults in `DEFAULT_PARAM_TRANSLATIONS` for common params (thanks @costajohnt) (#6087)
+- added Lillehammer test case to minrenovasjon_no (#6106)
+- added Tarnowskie Góry test case to ecoharmonogram_pl (#6105)
+- added "Aare" to codespell ignore list (#6080)
+
+### Tooling
+
+- auto-generate documentation via CI on merge instead of requiring contributors to run `update_docu_links.py` themselves (#5901)
+
 ## [2.20.0] - 2026-04-19
 
 ### Added Sources
