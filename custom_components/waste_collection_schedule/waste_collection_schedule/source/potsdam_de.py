@@ -39,6 +39,7 @@ ICON_MAP = {
     4: "mdi:package-variant",
     5: "mdi:shower-head",
     6: "mdi:pine-tree",
+    7: "mdi:leaf",
 }
 
 TYPE_MAP = {
@@ -48,6 +49,7 @@ TYPE_MAP = {
     4: "Altpapier",
     5: "Biotonnenreinigung",
     6: "Weihnachtsbaumabholung",
+    7: "Grünabfallsammlung",
 }
 
 RHYTHM_MAP = {
@@ -109,13 +111,13 @@ class Source:
             r.raise_for_status()
         except Exception:
             if year == today.year:
-                raise Exception("culd not get data from url exit")
+                raise Exception("Could not get data from URL")
             return None
 
         try:
             data = r.json()["result"]["data"]["dbapi"]
         except Exception as e:
-            raise Exception("culd not decode server response") from e
+            raise Exception("Could not decode server response") from e
 
         for ortsteil in data["allRegionen"][0]["regionen"][0]["ortsteile"]:
             if ortsteil["name"].lower().strip() != self._ortsteil.lower().strip():
@@ -166,9 +168,11 @@ class Source:
         )
 
     def __date_is_collection(self, node, day: datetime, exceptions) -> bool:
-        return self.__date_is_collection_1_to_4(
-            node, day, exceptions
-        ) or self.__date_is_collection5_6(node, day)
+        return (
+            self.__date_is_collection_1_to_4(node, day, exceptions)
+            or self.__date_is_collection5_6(node, day)
+            or self.__date_is_collection7(node, day)
+        )
 
     def __date_is_collection5_6(self, node, day: datetime) -> bool:
         if not node["typ"] in (5, 6):
@@ -178,6 +182,12 @@ class Source:
         day_date = day.date()
         return (termin1 == day_date) or (termin2 == day_date)
 
+    def __date_is_collection7(self, node, day: datetime) -> bool:
+        if node["typ"] != 7:
+            return False
+        termin1 = datetime.fromisoformat(node["termin1"].replace("Z", "+00:00")).date()
+        return termin1 == day.date()
+
     def __date_is_collection_1_to_4(
         self, node, day: datetime, exceptions, check_exception=True
     ) -> bool:
@@ -186,13 +196,16 @@ class Source:
         dow = day.weekday() + 1
 
         if check_exception:
+            ausnahme_from = False
             for e_from, e_to in exceptions.items():
-                if day == e_from:
-                    return False
                 if day == e_to:
                     return self.__date_is_collection_1_to_4(
                         node, e_from, exceptions, check_exception=False
                     )
+                if day == e_from:
+                    ausnahme_from = True
+            if ausnahme_from:
+                return False
 
         return (
             (
@@ -289,11 +302,15 @@ class Source:
                 continue
 
             for entry in entries:
+                try:
+                    ausnahmen_raw = json.loads(entry["ausnahmen"])
+                except (json.JSONDecodeError, TypeError):
+                    ausnahmen_raw = {}
                 exceptions = {
                     datetime.strptime(d_from, "%d.%m.%Y"): datetime.strptime(
                         d_to, "%d.%m.%Y"
                     )
-                    for d_from, d_to in json.loads(entry["ausnahmen"]).items()
+                    for d_from, d_to in ausnahmen_raw.items()
                 }
                 icon = ICON_MAP.get(entry["typ"])
                 type = TYPE_MAP.get(entry["typ"])
@@ -301,7 +318,7 @@ class Source:
                 if rhythm_type in RHYTHM_MAP:
                     type += " (" + RHYTHM_MAP.get(rhythm_type) + ")"
 
-                for day in self.__generate_dates(today, datetime(year + 1, 1, 1)):
+                for day in self.__generate_dates(today, datetime(year, 12, 31)):
                     if not self.__date_is_collection(entry, day, exceptions):
                         continue
 
