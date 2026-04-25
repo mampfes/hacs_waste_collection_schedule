@@ -3465,9 +3465,9 @@
     },
     {
       "title": "Saalfelden am Steinernen Meer",
-      "module": "citiesapps_com",
+      "module": "saalfelden_at",
       "default_params": {},
-      "id": "citiesapps_com"
+      "id": "saalfelden_at"
     },
     {
       "title": "Sachsenburg",

@@ -593,7 +593,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rudersdorf](/doc/source/citiesapps_com.md) / rudersdorf.at
 - [Rust](/doc/source/citiesapps_com.md) / freistadt-rust.at
 - [Röthis](/doc/source/citiesapps_com.md) / roethis.at
-- [Saalfelden am Steinernen Meer](/doc/source/citiesapps_com.md) / stadtmarketing-saalfelden.at/de
+- [Saalfelden am Steinernen Meer](/doc/source/saalfelden_at.md) / saalfelden.at
 - [Sachsenburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Sankt Georgen an der Stiefing](/doc/source/citiesapps_com.md) / st-georgen-stiefing.gv.at
 - [Sankt Gilgen](/doc/source/citiesapps_com.md) / gemgilgen.at

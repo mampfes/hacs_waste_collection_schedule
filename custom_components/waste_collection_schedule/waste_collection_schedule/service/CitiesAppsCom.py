@@ -1102,11 +1102,6 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
-        "title": "Saalfelden am Steinernen Meer",
-        "url": "www.stadtmarketing-saalfelden.at/de",
-        "country": "at",
-    },
-    {
         "title": "Sankt Georgen an der Stiefing",
         "url": "https://www.st-georgen-stiefing.gv.at",
         "country": "at",

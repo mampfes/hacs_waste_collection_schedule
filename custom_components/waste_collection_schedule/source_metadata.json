@@ -825,6 +825,14 @@
     "howto": {},
     "urls": {}
   },
+  "saalfelden_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/saalfelden_at.md",
+    "howto": {
+      "de": "Öffnen Sie https://www.saalfelden.at/Buergerservice/Abfallkalender, wählen Sie Ihre Straße und Hausnummer aus, und verwenden Sie dieselben Werte hier.",
+      "en": "Visit https://www.saalfelden.at/Buergerservice/Abfallkalender, pick your street and house number from the dropdowns, and use the same values here."
+    },
+    "urls": {}
+  },
   "klosterneuburg_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/klosterneuburg_at.md",
     "howto": {},

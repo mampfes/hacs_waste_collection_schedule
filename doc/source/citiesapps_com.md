@@ -224,7 +224,6 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Rudersdorf | [rudersdorf.at](http://www.rudersdorf.at) |
 | Rust | [freistadt-rust.at](https://www.freistadt-rust.at) |
 | Röthis | [roethis.at](https://www.roethis.at) |
-| Saalfelden am Steinernen Meer | [stadtmarketing-saalfelden.at/de](www.stadtmarketing-saalfelden.at/de) |
 | Sankt Georgen an der Stiefing | [st-georgen-stiefing.gv.at](https://www.st-georgen-stiefing.gv.at) |
 | Sankt Gilgen | [gemgilgen.at](https://www.gemgilgen.at) |
 | Sankt Oswald bei Plankenwarth | [sanktoswald.net](https://www.sanktoswald.net) |
