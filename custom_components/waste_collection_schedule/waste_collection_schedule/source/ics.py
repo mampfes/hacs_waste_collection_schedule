@@ -247,16 +247,7 @@ class Source:
         return self._convert(text)
 
     def _convert(self, data):
-        # Following 5 lines show original:  ICS.convert() -> List[Tuple[datetime.date, str]] 
-        #
-        # dates = self._ics.convert(data)
-        # entries = []
-        # for d in dates:
-        #     entries.append(Collection(d[0], d[1]))
-        # return entries
-
-        # Replaced by extended method ICS.convert_events() -> List[IcsEvent]
-        #        entries = []
+        entries = []
         for ev in self._ics.convert_events(data):
             entries.append(
                 Collection(
