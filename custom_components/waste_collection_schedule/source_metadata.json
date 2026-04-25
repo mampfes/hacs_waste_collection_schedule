@@ -2750,6 +2750,13 @@
     },
     "urls": {}
   },
+  "asm_pv_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/asm_pv_it.md",
+    "howto": {
+      "en": "Open https://www.asm.pv.it/raccolta-differenziata/porta-a-porta-pavia/ and pick your municipality and street from the search. Use the same values here. For small municipalities served by a single zone, use 'Tutte le vie' as the street."
+    },
+    "urls": {}
+  },
   "cidiu_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md",
     "howto": {},

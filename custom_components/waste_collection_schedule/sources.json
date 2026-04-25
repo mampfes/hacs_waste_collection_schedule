@@ -11426,6 +11426,12 @@
       "id": "junker_app"
     },
     {
+      "title": "ASM Pavia",
+      "module": "asm_pv_it",
+      "default_params": {},
+      "id": "asm_pv_it"
+    },
+    {
       "title": "Asm Terni",
       "module": "junker_app",
       "default_params": {},

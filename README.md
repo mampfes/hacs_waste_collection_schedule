@@ -1743,6 +1743,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Artena](/doc/source/junker_app.md) / junker.app
 - [Aset S.p.A](/doc/source/junker_app.md) / junker.app
 - [ASIA Azienda Speciale per l'Igiene Ambientale](/doc/source/junker_app.md) / junker.app
+- [ASM Pavia](/doc/source/asm_pv_it.md) / asm.pv.it
 - [Asm Terni](/doc/source/junker_app.md) / junker.app
 - [Assago - San Germano - Gruppo Iren](/doc/source/junker_app.md) / junker.app
 - [Assisi - ECE Srl](/doc/source/junker_app.md) / junker.app

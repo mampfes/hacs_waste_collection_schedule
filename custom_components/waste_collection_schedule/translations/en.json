@@ -13368,6 +13368,33 @@
           "house_number": "The house number of your address in Milan (e.g., '91')."
         }
       },
+      "args_asm_pv_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Municipality (comune) served by ASM Pavia, e.g. 'Pavia'.",
+          "street": "Street name as listed on the ASM porta-a-porta lookup. For municipalities with a single zone, use 'Tutte le vie'."
+        }
+      },
+      "reconfigure_asm_pv_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "street": "Street"
+        },
+        "data_description": {
+          "municipality": "Municipality (comune) served by ASM Pavia, e.g. 'Pavia'.",
+          "street": "Street name as listed on the ASM porta-a-porta lookup. For municipalities with a single zone, use 'Tutte le vie'."
+        }
+      },
       "args_cidiu_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
