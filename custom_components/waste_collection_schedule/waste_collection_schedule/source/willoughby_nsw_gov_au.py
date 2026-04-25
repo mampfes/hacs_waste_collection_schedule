@@ -7,7 +7,10 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Willoughby City Council"
 DESCRIPTION = "Source for Willoughby City Council waste collection."
@@ -80,7 +83,9 @@ class Source:
         try:
             session.get(PAGE_URL, timeout=30)
         except requests.RequestException:
-            _LOGGER.debug("Could not preload Willoughby page; continuing with API calls")
+            _LOGGER.debug(
+                "Could not preload Willoughby page; continuing with API calls"
+            )
 
         geolocation_id = self._get_geolocation_id(session)
         html = self._get_waste_services_html(session, geolocation_id)
@@ -101,6 +106,13 @@ class Source:
         items = data.get("Items") or []
         if not items:
             raise SourceArgumentNotFound("address", self._address)
+
+        if len(items) > 1:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                [item.get("AddressSingleLine", "") for item in items],
+            )
 
         geolocation_id = items[0].get("Id")
         if not geolocation_id:
@@ -123,7 +135,13 @@ class Source:
 
         data = response.json()
         if not data.get("success", False):
-            return ""
+            message = (
+                data.get("message")
+                or data.get("error")
+                or data.get("responseMessage")
+                or "Willoughby waste services API returned success=false"
+            )
+            raise RuntimeError(message)
 
         return data.get("responseContent") or ""
 
