@@ -73,11 +73,6 @@ SERVICE_MAP = [
         "service_id": "e5543a3e190cb8d91c645660ad60965f",
     },
     {
-        "title": "Abfallwirtschaft Ortenaukreis",
-        "url": "https://www.abfallwirtschaft-ortenaukreis.de/",
-        "service_id": "bb296b78763112266a391990f803f032",
-    },
-    {
         "title": "Abfallbewirtschaftung Ostalbkreis",
         "url": "https://www.goa-online.de/",
         "service_id": "3ca331fb42d25e25f95014693ebcf855",

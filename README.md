@@ -975,8 +975,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallwirtschaft Landkreis Nordhausen](/doc/ics/abfallportal_nordhausen_de.md) / abfall-nordhausen.de
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
 - [Abfallwirtschaft Nürnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
-- [Abfallwirtschaft Ortenaukreis](/doc/ics/abfall_io_ics.md) / abfallwirtschaft-ortenaukreis.de
-- [Abfallwirtschaft Ortenaukreis](/doc/source/abfall_io.md) / abfallwirtschaft-ortenaukreis.de
 - [Abfallwirtschaft Pforzheim](/doc/source/abfallwirtschaft_pforzheim_de.md) / abfallwirtschaft-pforzheim.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version](/doc/source/awido_de.md) / abfallwirtschaft-rems-murr.de

@@ -5814,20 +5814,6 @@
       "id": "nuernberger_land_de"
     },
     {
-      "title": "Abfallwirtschaft Ortenaukreis",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_abfall_io_ics"
-    },
-    {
-      "title": "Abfallwirtschaft Ortenaukreis",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "bb296b78763112266a391990f803f032"
-      },
-      "id": "abfall_io"
-    },
-    {
       "title": "Abfallwirtschaft Pforzheim",
       "module": "abfallwirtschaft_pforzheim_de",
       "default_params": {},
