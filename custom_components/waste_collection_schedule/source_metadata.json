@@ -3507,6 +3507,13 @@
     "howto": {},
     "urls": {}
   },
+  "ics_wuerenlos_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerenlos_ch.md",
+    "howto": {
+      "en": "Würenlos publishes a public iCalendar feed at\n`https://www.wuerenlos.ch/fileadmin/00_website/entsorgungskalender/Entsorgungskalender_Wuerenlos_{%Y}.ics`.\nUse this URL as the `url` parameter — `{%Y}` is replaced with the\ncurrent year automatically.\n"
+    },
+    "urls": {}
+  },
   "ics_gossau_zh_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gossau_zh_ch.md",
     "howto": {

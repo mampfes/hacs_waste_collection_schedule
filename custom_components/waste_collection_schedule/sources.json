@@ -15960,6 +15960,12 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Gemeinde W\u00fcrenlos",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_wuerenlos_ch"
+    },
+    {
       "title": "Goldach",
       "module": "a_region_ch",
       "default_params": {
