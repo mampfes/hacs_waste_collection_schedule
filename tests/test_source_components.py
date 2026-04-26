@@ -120,6 +120,27 @@ def test_no_extra_ics_mds() -> None:
         assert source in sources, f"found orphaned ics markdown file: {source}.md"
 
 
+def test_enfield_address_match_uses_whole_house_number() -> None:
+    module = _get_module("enfield_gov_uk")
+    normalized_input = module.Source._normalize_address("51 Example Road AB1 2CD")
+
+    correct_candidate = {
+        "ADDRESS": "51, EXAMPLE ROAD, EXAMPLE, AB1 2CD",
+        "PAO_START_NUMBER": "51",
+        "STREET_DESCRIPTION": "EXAMPLE ROAD",
+        "POSTCODE_LOCATOR": "AB1 2CD",
+    }
+    embedded_candidate = {
+        "ADDRESS": "1, EXAMPLE ROAD, EXAMPLE, AB1 2CD",
+        "PAO_START_NUMBER": "1",
+        "STREET_DESCRIPTION": "EXAMPLE ROAD",
+        "POSTCODE_LOCATOR": "AB1 2CD",
+    }
+
+    assert module.Source._matches_address(normalized_input, correct_candidate)
+    assert not module.Source._matches_address(normalized_input, embedded_candidate)
+
+
 def _param_translation_check(
     source: str,
     translations: Any,
