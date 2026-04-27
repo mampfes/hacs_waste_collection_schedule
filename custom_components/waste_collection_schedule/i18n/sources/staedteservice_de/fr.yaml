@@ -2,5 +2,4 @@
 ---
 params:
   street_number:
-    description: Numéro de rue de l'adresse.
     label: Numéro de rue

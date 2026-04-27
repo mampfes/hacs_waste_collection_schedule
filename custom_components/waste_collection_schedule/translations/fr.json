@@ -4696,7 +4696,7 @@
           "food": "Si différent du secteur des ordures ménagères.",
           "green": "Si différent du secteur des ordures ménagères.",
           "recycling": "Si différent du secteur des ordures ménagères.",
-          "sector": "Ce secteur est utilisé par défault"
+          "sector": "Ce secteur est utilisé par défaut"
         }
       },
       "reconfigure_montreal_ca": {
@@ -4715,7 +4715,7 @@
           "food": "Si différent du secteur des ordures ménagères.",
           "green": "Si différent du secteur des ordures ménagères.",
           "recycling": "Si différent du secteur des ordures ménagères.",
-          "sector": "Ce secteur est utilisé par défault"
+          "sector": "Ce secteur est utilisé par défaut"
         }
       },
       "args_info_collectes_ca": {
@@ -13732,8 +13732,7 @@
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
           "city": "Ville de l'adresse.",
           "house_number": "Numéro de maison de l'adresse.",
-          "street_name": "Nom de la rue de l'adresse.",
-          "street_number": "Numéro de rue de l'adresse."
+          "street_name": "Nom de la rue de l'adresse."
         }
       },
       "reconfigure_staedteservice_de": {
@@ -13749,8 +13748,7 @@
         "data_description": {
           "city": "Ville de l'adresse.",
           "house_number": "Numéro de maison de l'adresse.",
-          "street_name": "Nom de la rue de l'adresse.",
-          "street_number": "Numéro de rue de l'adresse."
+          "street_name": "Nom de la rue de l'adresse."
         }
       },
       "args_ics_swk_herford_de": {

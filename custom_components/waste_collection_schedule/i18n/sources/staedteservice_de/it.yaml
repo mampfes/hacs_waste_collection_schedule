@@ -2,5 +2,4 @@
 ---
 params:
   street_number:
-    description: Numero civico della via.
     label: Numero Strada

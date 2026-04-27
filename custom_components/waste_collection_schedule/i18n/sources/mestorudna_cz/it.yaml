@@ -1,5 +1,0 @@
-# Per-source overrides for mestorudna_cz (it).
----
-params:
-  city_part:
-    label: Parte della Città

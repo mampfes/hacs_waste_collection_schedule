@@ -5169,7 +5169,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city_part": "Parte della Città"
+          "city_part": "City Part"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -5180,7 +5180,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city_part": "Parte della Città"
+          "city_part": "City Part"
         },
         "data_description": {}
       },
@@ -13489,8 +13489,7 @@
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
           "city": "Città dell'indirizzo.",
           "house_number": "Numero civico dell'indirizzo.",
-          "street_name": "Nome della via dell'indirizzo.",
-          "street_number": "Numero civico della via."
+          "street_name": "Nome della via dell'indirizzo."
         }
       },
       "reconfigure_staedteservice_de": {
@@ -13506,8 +13505,7 @@
         "data_description": {
           "city": "Città dell'indirizzo.",
           "house_number": "Numero civico dell'indirizzo.",
-          "street_name": "Nome della via dell'indirizzo.",
-          "street_number": "Numero civico della via."
+          "street_name": "Nome della via dell'indirizzo."
         }
       },
       "args_ics_swk_herford_de": {

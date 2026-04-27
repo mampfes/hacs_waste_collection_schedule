@@ -12690,8 +12690,8 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Ort",
-          "paper_route": "Papier Rute",
-          "yellow_route": "Gelbe Tonne Rute"
+          "paper_route": "Papier Route",
+          "yellow_route": "Gelbe Tonne Route"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
@@ -12706,8 +12706,8 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Ort",
-          "paper_route": "Papier Rute",
-          "yellow_route": "Gelbe Tonne Rute"
+          "paper_route": "Papier Route",
+          "yellow_route": "Gelbe Tonne Route"
         },
         "data_description": {
           "city": "Genau wie in der `ort` URL-Parameter des Links auf der Website: {url_www_mzv_rotenburg_bebra_de__webapp_html} Z.B. `lisp`, `rot`, `bebra`, ...",

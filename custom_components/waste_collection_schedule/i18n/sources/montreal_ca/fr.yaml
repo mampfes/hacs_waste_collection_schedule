@@ -16,5 +16,5 @@ params:
     description: Si différent du secteur des ordures ménagères.
     label: Secteur recyclage
   sector:
-    description: Ce secteur est utilisé par défault
+    description: Ce secteur est utilisé par défaut
     label: Secteur ordure ménagère

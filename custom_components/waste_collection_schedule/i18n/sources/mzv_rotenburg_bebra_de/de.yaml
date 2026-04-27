@@ -10,8 +10,8 @@ params:
   paper_route:
     description: Wird verwendet, wenn es mehrere Routen für die Papierabholung gibt.
       Z.B. hat 'Rotenburg - Kernstadt' Papierabholrouten `West` und `Ost`.
-    label: Papier Rute
+    label: Papier Route
   yellow_route:
     description: Wird verwendet, wenn es mehrere Routen für die Gelbe Tonne gibt.
       Z.B. hat 'Rotenburg - Kernstadt' Gelbe Tonne Routen `1`,`2`,`3` und `4`.
-    label: Gelbe Tonne Rute
+    label: Gelbe Tonne Route
