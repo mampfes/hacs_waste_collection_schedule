@@ -19,15 +19,59 @@ except ImportError:
 
 import yaml
 
-from default_translations import default_descriptions, default_translations
-
-I18N_SOURCES_DIR = (
+I18N_ROOT = (
     Path(__file__).resolve().parents[0]
     / "custom_components"
     / "waste_collection_schedule"
     / "i18n"
-    / "sources"
 )
+I18N_SHARED_DIR = I18N_ROOT / "shared"
+I18N_SOURCES_DIR = I18N_ROOT / "sources"
+
+
+@lru_cache(maxsize=None)
+def _load_shared(lang: str) -> dict[str, dict[str, str]]:
+    """Load the shared registry for one language as
+    ``{param: {label?, description?}}``.
+    """
+    path = I18N_SHARED_DIR / f"{lang}.yaml"
+    if not path.is_file():
+        return {}
+    with path.open(encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    return data.get("params") or {}
+
+
+def default_translations(args) -> dict[str, dict[str, str]]:
+    """Return ``{lang: {arg: label}}`` for all supported languages, looking
+    up ``args`` in the shared registry. Mirrors the legacy
+    ``default_translations.py`` API so the rest of the generator pipeline
+    doesn't have to change shape.
+    """
+    out: dict[str, dict[str, str]] = {}
+    for lang in LANGUAGES:
+        shared = _load_shared(lang)
+        per_lang: dict[str, str] = {}
+        for arg in args:
+            entry = shared.get(arg)
+            if isinstance(entry, dict) and "label" in entry:
+                per_lang[arg] = entry["label"]
+        out[lang] = per_lang
+    return out
+
+
+def default_descriptions(args) -> dict[str, dict[str, str]]:
+    """Same shape as default_translations, but for descriptions."""
+    out: dict[str, dict[str, str]] = {}
+    for lang in LANGUAGES:
+        shared = _load_shared(lang)
+        per_lang: dict[str, str] = {}
+        for arg in args:
+            entry = shared.get(arg)
+            if isinstance(entry, dict) and "description" in entry:
+                per_lang[arg] = entry["description"]
+        out[lang] = per_lang
+    return out
 
 
 @lru_cache(maxsize=None)

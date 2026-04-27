@@ -264,7 +264,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id",
+          "property_id": "Property ID",
           "service": "Service",
           "street_name": "Street Name",
           "street_number": "Street Number",
@@ -279,7 +279,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id",
+          "property_id": "Property ID",
           "service": "Service",
           "street_name": "Street Name",
           "street_number": "Street Number",
@@ -656,7 +656,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "property_no": "Property No"
+          "property_no": "Property Number"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -668,7 +668,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "property_no": "Property No"
+          "property_no": "Property Number"
         },
         "data_description": {}
       },
@@ -1308,11 +1308,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
-          "district_id": "District Id",
-          "project_id": "Project Id",
+          "district_id": "District ID",
+          "project_id": "Project ID",
           "state": "State",
           "street": "Street",
-          "zone_id": "Zone Id"
+          "zone_id": "Zone ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -1324,11 +1324,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
-          "district_id": "District Id",
-          "project_id": "Project Id",
+          "district_id": "District ID",
+          "project_id": "Project ID",
           "state": "State",
           "street": "Street",
-          "zone_id": "Zone Id"
+          "zone_id": "Zone ID"
         },
         "data_description": {}
       },
@@ -1891,8 +1891,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -1913,8 +1913,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -2028,7 +2028,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "pid": "Pid",
+          "pid": "PID",
           "street_name": "Street Name",
           "street_number": "Street Number",
           "suburb": "Suburb"
@@ -2042,7 +2042,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "pid": "Pid",
+          "pid": "PID",
           "street_name": "Street Name",
           "street_number": "Street Number",
           "suburb": "Suburb"
@@ -2213,7 +2213,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "zone_id": "Zone Id"
+          "zone_id": "Zone ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -2224,7 +2224,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "zone_id": "Zone Id"
+          "zone_id": "Zone ID"
         },
         "data_description": {}
       },
@@ -2497,7 +2497,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id"
+          "property_id": "Property ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -2508,7 +2508,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id"
+          "property_id": "Property ID"
         },
         "data_description": {}
       },
@@ -2649,7 +2649,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id"
+          "property_id": "Property ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -2660,7 +2660,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_id": "Property Id"
+          "property_id": "Property ID"
         },
         "data_description": {}
       },
@@ -2796,8 +2796,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -2818,8 +2818,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -2897,8 +2897,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -2919,8 +2919,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3005,8 +3005,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3027,8 +3027,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3047,8 +3047,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3069,8 +3069,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3113,8 +3113,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3135,8 +3135,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3175,8 +3175,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3197,8 +3197,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3212,7 +3212,7 @@
           "gemeinde_id": "Municipality ID",
           "municipality": "Municipality",
           "street": "Street",
-          "street_id": "Street Id"
+          "street_id": "Street ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -3230,7 +3230,7 @@
           "gemeinde_id": "Municipality ID",
           "municipality": "Municipality",
           "street": "Street",
-          "street_id": "Street Id"
+          "street_id": "Street ID"
         },
         "data_description": {
           "gemeinde_id": "Numeric GemeindeID from Gemeinde24 (optional alternative to the municipality field).",
@@ -3378,8 +3378,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3400,8 +3400,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3420,8 +3420,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3442,8 +3442,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3541,8 +3541,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3563,8 +3563,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3655,8 +3655,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3677,8 +3677,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3721,8 +3721,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3743,8 +3743,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3785,8 +3785,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3807,8 +3807,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3820,7 +3820,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_id": "Address Id",
+          "address_id": "Address ID",
           "municipal": "Municipal",
           "street": "Street"
         },
@@ -3834,7 +3834,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_id": "Address Id",
+          "address_id": "Address ID",
           "municipal": "Municipal",
           "street": "Street"
         },
@@ -3876,8 +3876,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3898,8 +3898,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3958,8 +3958,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -3980,8 +3980,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4046,8 +4046,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4068,8 +4068,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4115,8 +4115,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4137,8 +4137,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4157,8 +4157,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4179,8 +4179,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4199,8 +4199,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4221,8 +4221,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4241,8 +4241,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4263,8 +4263,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4420,8 +4420,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4442,8 +4442,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4462,8 +4462,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4484,8 +4484,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4524,8 +4524,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4546,8 +4546,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4586,8 +4586,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4608,8 +4608,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4628,8 +4628,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4650,8 +4650,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4715,7 +4715,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "api_key": "Api Key",
+          "api_key": "API Key",
           "auto_suffix": "Auto Suffix",
           "ignored_containers": "Ignored Containers",
           "lat": "Latitude",
@@ -4733,7 +4733,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "api_key": "Api Key",
+          "api_key": "API Key",
           "auto_suffix": "Auto Suffix",
           "ignored_containers": "Ignored Containers",
           "lat": "Latitude",
@@ -4814,7 +4814,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4825,7 +4825,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {}
       },
@@ -4834,7 +4834,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4845,7 +4845,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {}
       },
@@ -4862,8 +4862,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4884,8 +4884,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -4896,7 +4896,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_no": "Address No"
+          "address_no": "Address Number"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4907,7 +4907,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_no": "Address No"
+          "address_no": "Address Number"
         },
         "data_description": {}
       },
@@ -4916,7 +4916,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4927,7 +4927,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {}
       },
@@ -4957,7 +4957,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_id": "Address Id",
+          "address_id": "Address ID",
           "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Municipality"
         },
@@ -4971,7 +4971,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_id": "Address Id",
+          "address_id": "Address ID",
           "include_ordered_pickup_entries": "Include Ordered Pickup Entries",
           "municipality": "Municipality"
         },
@@ -5339,8 +5339,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5361,8 +5361,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5437,8 +5437,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5459,8 +5459,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5479,8 +5479,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5501,8 +5501,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5521,8 +5521,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5543,8 +5543,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5563,8 +5563,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5585,8 +5585,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5605,8 +5605,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5627,8 +5627,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5717,7 +5717,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id_house_number": "Id House Number",
+          "id_house_number": "House Number ID",
           "key": "Key",
           "waste_types": "Waste Types"
         },
@@ -5730,7 +5730,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id_house_number": "Id House Number",
+          "id_house_number": "House Number ID",
           "key": "Key",
           "waste_types": "Waste Types"
         },
@@ -5771,8 +5771,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5793,8 +5793,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5813,8 +5813,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5835,8 +5835,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5855,8 +5855,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5877,8 +5877,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5890,7 +5890,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
-          "location_id": "Location Id",
+          "location_id": "Location ID",
           "municipality": "Municipality",
           "street": "Street"
         },
@@ -5904,7 +5904,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
-          "location_id": "Location Id",
+          "location_id": "Location ID",
           "municipality": "Municipality",
           "street": "Street"
         },
@@ -5965,8 +5965,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -5987,8 +5987,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6055,8 +6055,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6077,8 +6077,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6127,8 +6127,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6149,8 +6149,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6169,8 +6169,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6191,8 +6191,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6211,8 +6211,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6233,8 +6233,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6275,8 +6275,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6297,8 +6297,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6341,8 +6341,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6363,8 +6363,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6383,8 +6383,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6405,8 +6405,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6457,7 +6457,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -6468,7 +6468,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {}
       },
@@ -6509,8 +6509,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6531,8 +6531,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6551,8 +6551,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6573,8 +6573,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6650,8 +6650,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6672,8 +6672,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6684,7 +6684,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -6695,7 +6695,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {}
       },
@@ -6778,8 +6778,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6800,8 +6800,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6868,8 +6868,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6890,8 +6890,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6958,8 +6958,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -6980,8 +6980,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7024,8 +7024,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7046,8 +7046,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7092,8 +7092,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7114,8 +7114,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7162,8 +7162,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7184,8 +7184,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7254,8 +7254,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7276,8 +7276,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7352,8 +7352,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7374,8 +7374,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7388,9 +7388,9 @@
           "calendar_title": "Calendar Title",
           "area_id": "Area Id",
           "city": "City",
-          "city_id": "City Id",
+          "city_id": "City ID",
           "house_number": "House Number",
-          "service_id": "Service Id",
+          "service_id": "Service ID",
           "street": "Street"
         },
         "data_description": {
@@ -7404,9 +7404,9 @@
           "calendar_title": "Calendar Title",
           "area_id": "Area Id",
           "city": "City",
-          "city_id": "City Id",
+          "city_id": "City ID",
           "house_number": "House Number",
-          "service_id": "Service Id",
+          "service_id": "Service ID",
           "street": "Street"
         },
         "data_description": {}
@@ -7424,8 +7424,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7446,8 +7446,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7466,8 +7466,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7488,8 +7488,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7508,8 +7508,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7530,8 +7530,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7596,8 +7596,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7618,8 +7618,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7638,8 +7638,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7660,8 +7660,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7803,8 +7803,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7825,8 +7825,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7911,8 +7911,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -7933,8 +7933,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8035,8 +8035,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8057,8 +8057,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8130,8 +8130,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8152,8 +8152,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8196,8 +8196,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8218,8 +8218,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8238,8 +8238,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8260,8 +8260,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8322,8 +8322,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8344,8 +8344,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8388,8 +8388,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8410,8 +8410,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8430,8 +8430,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8452,8 +8452,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8542,8 +8542,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8564,8 +8564,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8712,8 +8712,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8734,8 +8734,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8754,8 +8754,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8776,8 +8776,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8796,8 +8796,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8818,8 +8818,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8838,8 +8838,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8860,8 +8860,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8928,8 +8928,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8950,8 +8950,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8970,8 +8970,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -8992,8 +8992,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9012,8 +9012,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9034,8 +9034,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9054,8 +9054,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9076,8 +9076,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9096,8 +9096,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9118,8 +9118,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9138,8 +9138,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9160,8 +9160,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9215,8 +9215,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9237,8 +9237,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9257,8 +9257,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9279,8 +9279,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9299,8 +9299,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9321,8 +9321,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9341,8 +9341,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9363,8 +9363,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9383,8 +9383,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9405,8 +9405,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9425,8 +9425,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9447,8 +9447,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9467,8 +9467,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9489,8 +9489,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9509,8 +9509,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9531,8 +9531,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9575,8 +9575,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9597,8 +9597,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9617,8 +9617,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9639,8 +9639,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9659,8 +9659,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9681,8 +9681,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9752,8 +9752,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9774,8 +9774,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9814,8 +9814,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9836,8 +9836,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9900,8 +9900,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9922,8 +9922,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9942,8 +9942,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -9964,8 +9964,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10008,8 +10008,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10030,8 +10030,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10050,8 +10050,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10072,8 +10072,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10136,8 +10136,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10158,8 +10158,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10178,8 +10178,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10200,8 +10200,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10264,8 +10264,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10286,8 +10286,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10306,8 +10306,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10328,8 +10328,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10387,8 +10387,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10409,8 +10409,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10491,8 +10491,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10513,8 +10513,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10533,8 +10533,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10555,8 +10555,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10686,8 +10686,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10708,8 +10708,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10754,8 +10754,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10776,8 +10776,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10818,8 +10818,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10840,8 +10840,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10860,8 +10860,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10882,8 +10882,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10902,8 +10902,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10924,8 +10924,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10944,8 +10944,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10966,8 +10966,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -10986,8 +10986,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11008,8 +11008,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11106,8 +11106,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11128,8 +11128,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11168,8 +11168,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11190,8 +11190,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11230,8 +11230,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11252,8 +11252,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11352,8 +11352,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11374,8 +11374,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11417,8 +11417,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11439,8 +11439,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11479,8 +11479,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11501,8 +11501,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11543,8 +11543,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11565,8 +11565,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11585,8 +11585,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11607,8 +11607,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11627,8 +11627,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11649,8 +11649,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11669,8 +11669,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11691,8 +11691,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11733,8 +11733,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11755,8 +11755,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11775,8 +11775,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11797,8 +11797,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11817,8 +11817,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11839,8 +11839,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11859,8 +11859,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11881,8 +11881,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11901,8 +11901,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11923,8 +11923,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11943,8 +11943,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11965,8 +11965,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -11985,8 +11985,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12007,8 +12007,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12065,7 +12065,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "as_id": "As Id",
-          "hn_id": "Hn Id"
+          "hn_id": "House Number ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -12077,7 +12077,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "as_id": "As Id",
-          "hn_id": "Hn Id"
+          "hn_id": "House Number ID"
         },
         "data_description": {}
       },
@@ -12094,8 +12094,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12116,8 +12116,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12180,8 +12180,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12202,8 +12202,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12222,8 +12222,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12244,8 +12244,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12310,8 +12310,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12332,8 +12332,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12352,8 +12352,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12374,8 +12374,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12414,8 +12414,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12436,8 +12436,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12448,7 +12448,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "Url"
+          "url": "URL"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -12459,7 +12459,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "url": "Url"
+          "url": "URL"
         },
         "data_description": {}
       },
@@ -12503,8 +12503,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12525,8 +12525,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12545,8 +12545,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12567,8 +12567,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12587,8 +12587,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12609,8 +12609,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12629,8 +12629,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12651,8 +12651,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12693,8 +12693,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12715,8 +12715,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12757,8 +12757,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12779,8 +12779,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12825,8 +12825,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12847,8 +12847,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12867,8 +12867,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12889,8 +12889,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -12984,8 +12984,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13006,8 +13006,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13078,8 +13078,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13100,8 +13100,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13394,8 +13394,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13416,8 +13416,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13436,8 +13436,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13458,8 +13458,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13518,7 +13518,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Address ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -13529,7 +13529,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Address ID"
         },
         "data_description": {}
       },
@@ -13661,8 +13661,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13683,8 +13683,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -13995,8 +13995,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14017,8 +14017,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14037,8 +14037,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14059,8 +14059,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14079,8 +14079,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14101,8 +14101,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14121,8 +14121,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14143,8 +14143,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14214,8 +14214,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14236,8 +14236,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14540,7 +14540,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_id": "Street Id",
+          "street_id": "Street ID",
           "street_name": "Street Name"
         },
         "data_description": {
@@ -14552,7 +14552,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_id": "Street Id",
+          "street_id": "Street ID",
           "street_name": "Street Name"
         },
         "data_description": {}
@@ -14688,7 +14688,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "county_id": "County Id",
+          "county_id": "County ID",
           "house_number": "House Number",
           "street_code": "Street Code",
           "street_name": "Street Name"
@@ -14702,7 +14702,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "county_id": "County Id",
+          "county_id": "County ID",
           "house_number": "House Number",
           "street_code": "Street Code",
           "street_name": "Street Name"
@@ -14737,7 +14737,7 @@
           "house_letter": "House Letter",
           "house_number": "House Number",
           "point_id": "Point ID",
-          "street_id": "Street Id",
+          "street_id": "Street ID",
           "street_name": "Street Name"
         },
         "data_description": {
@@ -14753,7 +14753,7 @@
           "house_letter": "House Letter",
           "house_number": "House Number",
           "point_id": "Point ID",
-          "street_id": "Street Id",
+          "street_id": "Street ID",
           "street_name": "Street Name"
         },
         "data_description": {
@@ -14787,7 +14787,7 @@
           "calendar_title": "Calendar Title",
           "bnumber": "Bnumber",
           "gnumber": "Gnumber",
-          "id": "Id",
+          "id": "ID",
           "municipality": "Municipality",
           "snumber": "Snumber"
         },
@@ -14802,7 +14802,7 @@
           "calendar_title": "Calendar Title",
           "bnumber": "Bnumber",
           "gnumber": "Gnumber",
-          "id": "Id",
+          "id": "ID",
           "municipality": "Municipality",
           "snumber": "Snumber"
         },
@@ -14815,7 +14815,7 @@
           "calendar_title": "Calendar Title",
           "bnumber": "Bnumber",
           "gnumber": "Gnumber",
-          "id": "Id",
+          "id": "ID",
           "municipality": "Municipality",
           "snumber": "Snumber"
         },
@@ -14830,7 +14830,7 @@
           "calendar_title": "Calendar Title",
           "bnumber": "Bnumber",
           "gnumber": "Gnumber",
-          "id": "Id",
+          "id": "ID",
           "municipality": "Municipality",
           "snumber": "Snumber"
         },
@@ -14872,8 +14872,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -14894,8 +14894,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -15107,7 +15107,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location_id": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -15118,7 +15118,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location_id": "Location ID"
         },
         "data_description": {}
       },
@@ -15147,7 +15147,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location_id": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -15159,7 +15159,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location_id": "Location ID"
         },
         "data_description": {
           "location_id": "Unique location id (LOCATION_ID)"
@@ -15418,7 +15418,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location_id": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -15429,7 +15429,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "location_id": "Location Id"
+          "location_id": "Location ID"
         },
         "data_description": {}
       },
@@ -15521,8 +15521,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -15543,8 +15543,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -15771,7 +15771,7 @@
           "calendar_title": "Calendar Title",
           "service_provider": "Service Provider",
           "street_address": "Street Address",
-          "url": "Url"
+          "url": "URL"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -15784,7 +15784,7 @@
           "calendar_title": "Calendar Title",
           "service_provider": "Service Provider",
           "street_address": "Street Address",
-          "url": "Url"
+          "url": "URL"
         },
         "data_description": {}
       },
@@ -16148,7 +16148,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "kund_nr": "Kund Nr"
+          "kund_nr": "Customer Number"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -16162,7 +16162,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "kund_nr": "Kund Nr"
+          "kund_nr": "Customer Number"
         },
         "data_description": {
           "address": "Address for collection",
@@ -16581,7 +16581,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "municipality": "Municipality",
-          "municipality_id": "Municipality Id",
+          "municipality_id": "Municipality ID",
           "zone": "Zone"
         },
         "data_description": {
@@ -16597,7 +16597,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "municipality": "Municipality",
-          "municipality_id": "Municipality Id",
+          "municipality_id": "Municipality ID",
           "zone": "Zone"
         },
         "data_description": {
@@ -16619,8 +16619,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16641,8 +16641,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16683,8 +16683,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16705,8 +16705,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16725,8 +16725,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16747,8 +16747,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16828,8 +16828,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16850,8 +16850,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16890,8 +16890,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16912,8 +16912,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -16942,8 +16942,8 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "municipality_id": "Municipality Id",
-          "street_id": "Street Id"
+          "municipality_id": "Municipality ID",
+          "street_id": "Street ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -16954,8 +16954,8 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "municipality_id": "Municipality Id",
-          "street_id": "Street Id"
+          "municipality_id": "Municipality ID",
+          "street_id": "Street ID"
         },
         "data_description": {}
       },
@@ -16998,8 +16998,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -17020,8 +17020,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -17040,8 +17040,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -17062,8 +17062,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -17199,8 +17199,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -17221,8 +17221,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -17258,7 +17258,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id",
+          "id": "ID",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -17271,7 +17271,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id",
+          "id": "ID",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -17332,7 +17332,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Address ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -17343,7 +17343,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Address ID"
         },
         "data_description": {}
       },
@@ -17533,7 +17533,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_name_or_number": "House Name Or Number",
+          "house_name_or_number": "House Name or Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -17547,7 +17547,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_name_or_number": "House Name Or Number",
+          "house_name_or_number": "House Name or Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -17949,8 +17949,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -17971,8 +17971,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -18127,7 +18127,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "id": "Id",
+          "id": "ID",
           "postcode": "Postcode"
         },
         "data_description": {
@@ -18140,7 +18140,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "id": "Id",
+          "id": "ID",
           "postcode": "Postcode"
         },
         "data_description": {}
@@ -18646,7 +18646,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number_or_name": "House Number Or Name",
+          "house_number_or_name": "House Number or Name",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -18660,7 +18660,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number_or_name": "House Number Or Name",
+          "house_number_or_name": "House Number or Name",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -18718,7 +18718,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_id": "House Id",
+          "house_id": "House ID",
           "postcode": "Postcode"
         },
         "data_description": {
@@ -18730,7 +18730,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_id": "House Id",
+          "house_id": "House ID",
           "postcode": "Postcode"
         },
         "data_description": {}
@@ -19198,7 +19198,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_id": "Address Id",
+          "address_id": "Address ID",
           "postcode": "Postcode"
         },
         "data_description": {
@@ -19211,7 +19211,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_id": "Address Id",
+          "address_id": "Address ID",
           "postcode": "Postcode"
         },
         "data_description": {}
@@ -19493,8 +19493,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -19515,8 +19515,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -19727,8 +19727,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -19749,8 +19749,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -20215,7 +20215,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "door_num": "Door Num",
+          "door_num": "Door Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -20229,7 +20229,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "door_num": "Door Num",
+          "door_num": "Door Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -20341,7 +20341,7 @@
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
           "postcode": "Postcode",
-          "property_id": "Property Id"
+          "property_id": "Property ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -20354,7 +20354,7 @@
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
           "postcode": "Postcode",
-          "property_id": "Property Id"
+          "property_id": "Property ID"
         },
         "data_description": {}
       },
@@ -20631,8 +20631,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -20653,8 +20653,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -20891,7 +20891,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_name_or_number": "House Name Or Number",
+          "house_name_or_number": "House Name or Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -20907,7 +20907,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_name_or_number": "House Name Or Number",
+          "house_name_or_number": "House Name or Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -21124,7 +21124,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -21135,7 +21135,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {}
       },
@@ -21464,8 +21464,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -21486,8 +21486,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -21916,7 +21916,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_name_or_number": "House Name Or Number",
+          "house_name_or_number": "House Name or Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -21930,7 +21930,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_name_or_number": "House Name Or Number",
+          "house_name_or_number": "House Name or Number",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -22297,7 +22297,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number_or_name": "House Number Or Name",
+          "house_number_or_name": "House Number or Name",
           "postcode": "Postcode",
           "street_name": "Street Name"
         },
@@ -22312,7 +22312,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number_or_name": "House Number Or Name",
+          "house_number_or_name": "House Number or Name",
           "postcode": "Postcode",
           "street_name": "Street Name"
         },
@@ -22490,7 +22490,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Address ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -22501,7 +22501,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_id": "Address Id"
+          "address_id": "Address ID"
         },
         "data_description": {}
       },
@@ -22837,7 +22837,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -22848,7 +22848,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id"
+          "id": "ID"
         },
         "data_description": {}
       },
@@ -23070,8 +23070,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -23092,8 +23092,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -23494,7 +23494,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number_or_name": "House Number Or Name",
+          "house_number_or_name": "House Number or Name",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -23508,7 +23508,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number_or_name": "House Number Or Name",
+          "house_number_or_name": "House Number or Name",
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
@@ -23698,8 +23698,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -23720,8 +23720,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -23740,8 +23740,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -23762,8 +23762,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -24026,8 +24026,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -24048,8 +24048,8 @@
           "regex": "Regex",
           "split_at": "Split At",
           "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
+          "url": "URL",
+          "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
         },
@@ -24084,7 +24084,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulky_object_id": "Bulky Object Id",
-          "object_id": "Object Id",
+          "object_id": "Object ID",
           "recycle_object_id": "Recycle Object Id",
           "trash_object_id": "Trash Object Id",
           "try_official": "Try Official"
@@ -24104,7 +24104,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulky_object_id": "Bulky Object Id",
-          "object_id": "Object Id",
+          "object_id": "Object ID",
           "recycle_object_id": "Recycle Object Id",
           "trash_object_id": "Trash Object Id",
           "try_official": "Try Official"
@@ -24167,7 +24167,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "days_to_generate": "Number of days to generate for default collection (default: 3)",
-          "object_id": "Object Id"
+          "object_id": "Object ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -24180,7 +24180,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "days_to_generate": "Number of days to generate for default collection (default: 3)",
-          "object_id": "Object Id"
+          "object_id": "Object ID"
         },
         "data_description": {
           "object_id": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID."
@@ -24431,7 +24431,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "prem_code": "Prem Code",
+          "prem_code": "Premises Code",
           "street_address": "Street Address"
         },
         "data_description": {
@@ -24443,7 +24443,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "prem_code": "Prem Code",
+          "prem_code": "Premises Code",
           "street_address": "Street Address"
         },
         "data_description": {}
