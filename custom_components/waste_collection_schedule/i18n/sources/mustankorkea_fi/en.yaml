@@ -6,7 +6,6 @@ params:
   contract_id:
     description: Waste collection contract ID, only required if you have multiple
       contracts
-    label: e.g. 30-00012345-00
   password:
     label: ''
   username:

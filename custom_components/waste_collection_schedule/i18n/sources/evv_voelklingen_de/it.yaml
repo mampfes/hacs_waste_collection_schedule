@@ -5,7 +5,3 @@
 params:
   behaelter:
     label: Contenitori
-  district:
-    label: frazione
-  house_number:
-    label: numero civico

@@ -2606,7 +2606,8 @@
           "street_address": "Adresse de rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_address": "Adresse complète."
         }
       },
       "reconfigure_stirling_wa_gov_au": {
@@ -2618,7 +2619,9 @@
           "lon": "Longitude",
           "street_address": "Adresse de rue"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Adresse complète."
+        }
       },
       "args_stonnington_vic_gov_au": {
         "title": "Configurer la Source",
@@ -3053,7 +3056,8 @@
           "town": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "municipality": "Municipalité de l'adresse."
         }
       },
       "reconfigure_umweltverbaende_at": {
@@ -3072,7 +3076,9 @@
           "street": "Rue",
           "town": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Municipalité de l'adresse."
+        }
       },
       "args_ics_st-poelten_at": {
         "title": "Configurer la Source",
@@ -4722,8 +4728,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "municipality": "Nom de la municipalité",
-          "sector": "Secteur"
+          "municipality": "Municipalité de l'adresse."
         }
       },
       "reconfigure_info_collectes_ca": {
@@ -4735,8 +4740,7 @@
           "sector": "En option, Secteur de Châteauguay, nord-ouest ou est"
         },
         "data_description": {
-          "municipality": "Nom de la municipalité",
-          "sector": "Secteur"
+          "municipality": "Municipalité de l'adresse."
         }
       },
       "args_publidata_ca": {
@@ -8888,12 +8892,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "b_collection_cycle_string": "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
-          "b_location_id": "ID de site de la poubelle bio (par exemple, '70027977' ou sélection du formulaire)",
-          "house_number": "numéro de maison",
+          "b_location_id": "B Location Id",
+          "house_number": "Numéro civique",
           "p_collection_cycle_string": "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
-          "p_location_id": "ID du site de la poubelle à papier (par exemple, '70027977' ou sélection du formulaire)",
+          "p_location_id": "P Location Id",
           "r_collection_cycle_string": "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
-          "r_location_id": "ID de site des déchets résiduels (par exemple, '70027977' ou sélection de formulaire)",
+          "r_location_id": "R Location Id",
           "street": "Rue"
         },
         "data_description": {
@@ -8908,12 +8912,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "b_collection_cycle_string": "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
-          "b_location_id": "ID de site de la poubelle bio (par exemple, '70027977' ou sélection du formulaire)",
-          "house_number": "numéro de maison",
+          "b_location_id": "B Location Id",
+          "house_number": "Numéro civique",
           "p_collection_cycle_string": "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
-          "p_location_id": "ID du site de la poubelle à papier (par exemple, '70027977' ou sélection du formulaire)",
+          "p_location_id": "P Location Id",
           "r_collection_cycle_string": "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
-          "r_location_id": "ID de site des déchets résiduels (par exemple, '70027977' ou sélection de formulaire)",
+          "r_location_id": "R Location Id",
           "street": "Rue"
         },
         "data_description": {
@@ -9009,7 +9013,9 @@
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Numéro de maison de l'adresse.",
+          "street": "Rue de l'adresse."
         }
       },
       "reconfigure_abfallkalender_prezero_network": {
@@ -9021,7 +9027,10 @@
           "house_number": "Numéro civique",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Numéro de maison de l'adresse.",
+          "street": "Rue de l'adresse."
+        }
       },
       "args_reso_gmbh_de": {
         "title": "Configurer la Source",
@@ -10259,7 +10268,9 @@
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "district": "Quartier de l'adresse.",
+          "street": "Rue de l'adresse."
         }
       },
       "reconfigure_evv_voelklingen_de": {
@@ -10272,7 +10283,10 @@
           "house_number": "Numéro civique",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Quartier de l'adresse.",
+          "street": "Rue de l'adresse."
+        }
       },
       "args_ics_abfallkalender_erftstadt_de": {
         "title": "Configurer la Source",
@@ -12711,7 +12725,8 @@
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street": "Rue de l'adresse."
         }
       },
       "reconfigure_magdeburg_de": {
@@ -12721,7 +12736,9 @@
           "calendar_title": "Titre du Calendrier",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Rue de l'adresse."
+        }
       },
       "args_ics_asf_online_de": {
         "title": "Configurer la Source",
@@ -13927,7 +13944,8 @@
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Ville de l'adresse."
         }
       },
       "reconfigure_tonnenticker_pro_de": {
@@ -13938,7 +13956,9 @@
           "city": "Ville",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ville de l'adresse."
+        }
       },
       "args_ics_ebu_ulm_de": {
         "title": "Configurer la Source",
@@ -14441,7 +14461,8 @@
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Ville de l'adresse."
         }
       },
       "reconfigure_zvo_com": {
@@ -14452,7 +14473,9 @@
           "city": "Ville",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ville de l'adresse."
+        }
       },
       "args_zakb_de": {
         "title": "Configurer la Source",
@@ -14871,7 +14894,8 @@
           "house_number": "Numéro civique"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Ville de l'adresse."
         }
       },
       "reconfigure_amsa_it": {
@@ -14883,7 +14907,9 @@
           "city": "Ville",
           "house_number": "Numéro civique"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ville de l'adresse."
+        }
       },
       "args_asm_pv_it": {
         "title": "Configurer la Source",
@@ -25352,6 +25378,7 @@
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
           "postcode": "Code postal de l'adresse.",
+          "street_address": "Adresse complète.",
           "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
         }
       },
@@ -25366,6 +25393,7 @@
         },
         "data_description": {
           "postcode": "Code postal de l'adresse.",
+          "street_address": "Adresse complète.",
           "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
         }
       },
@@ -26633,7 +26661,8 @@
           "street_address": "Adresse de rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_address": "Adresse complète."
         }
       },
       "reconfigure_communitywastedisposal_com": {
@@ -26643,7 +26672,9 @@
           "calendar_title": "Titre du Calendrier",
           "street_address": "Adresse de rue"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Adresse complète."
+        }
       },
       "args_fuquay_varina_nc_us": {
         "title": "Configurer la Source",

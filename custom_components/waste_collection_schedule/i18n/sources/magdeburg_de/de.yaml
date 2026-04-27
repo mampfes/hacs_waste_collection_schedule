@@ -4,5 +4,4 @@
 ---
 params:
   street:
-    description: Straßenname und Hausnummer (z.B. 'Halberstädter Chaussee 66')
     label: Straße und Hausnummer

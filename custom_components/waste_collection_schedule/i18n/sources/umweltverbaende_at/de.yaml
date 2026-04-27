@@ -1,58 +1,46 @@
 # Per-source overrides for umweltverbaende_at (de).
 ---
 params:
-  calendar:
-    description: >-
-      (Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt
-      werden (unterschiedliche Straßen oder Rayons), können Sie hier den
-      Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie
-      er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.
-  calendar_splitter:
-    label: Kalendereintrag-Trenner
-    description: >-
-      (Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur
-      erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden.
-      Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile
-      aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack`
-      (`:` ist der Trenner). Sie können den Text, den die Integration
-      verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen.
-  calendar_title_separator:
-    label: Kalendertitel Separator
-    description: >-
-      (Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist
-      das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie
-      `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder
-      `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können
-      den Text, den die Integration verwendet, auf der Abholtermine-Seite
-      unter `Kalenderansicht` sehen.
-  district:
-    label: Gebiet/Service provider id
-    description: >-
-      Subdomain des Abfallwirtschaftsverbandes, einer von `baden`, `gmuend`,
-      `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`,
-      `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`,
-      `scheibbs`, `schwechat`, `waidhofen`, `zwettl`.
   address_suffix:
-    description: >-
-      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+    description: (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
       wenn ein Fehler ohne diese Angabe auftritt.
+  calendar:
+    description: (Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt
+      werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen
+      angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite
+      unter `Kalenderansicht` erscheint.
+  calendar_splitter:
+    description: '(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist.
+      Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies
+      ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt
+      sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner).
+      Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite
+      unter `Kalenderansicht` sehen.'
+    label: Kalendereintrag-Trenner
+  calendar_title_separator:
+    description: '(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist.
+      Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie
+      `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone
+      B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration
+      verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen.'
+    label: Kalendertitel Separator
+  district:
+    description: Subdomain des Abfallwirtschaftsverbandes, einer von `baden`, `gmuend`,
+      `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`,
+      `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`,
+      `waidhofen`, `zwettl`.
+    label: Gebiet/Service provider id
   house_number:
-    description: >-
-      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+    description: (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
       wenn ein Fehler ohne diese Angabe auftritt.
-  municipality:
-    description: Gemeindename.
   postcode:
-    label: Postleitzahl
-    description: >-
-      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+    description: (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
       wenn ein Fehler ohne diese Angabe auftritt.
+    label: Postleitzahl
   street:
-    description: >-
-      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+    description: (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
       wenn ein Fehler ohne diese Angabe auftritt.
   town:
-    label: Ort
-    description: >-
-      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+    description: (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
       wenn ein Fehler ohne diese Angabe auftritt.
+    label: Ort

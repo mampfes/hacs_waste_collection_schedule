@@ -7,5 +7,3 @@ params:
     label: House Number (Deprecated, leave empty)
   postcode:
     label: Postcode (Deprecated, leave empty)
-  uprn:
-    label: Unique Property Reference Number (UPRN)

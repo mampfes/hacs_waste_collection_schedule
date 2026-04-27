@@ -4,7 +4,6 @@
 ---
 params:
   city:
-    description: Ortsname (z.B. 'Bad Schwartau')
     label: Ort
   street:
     description: Straßenname (bei einigen Orten nicht erforderlich)

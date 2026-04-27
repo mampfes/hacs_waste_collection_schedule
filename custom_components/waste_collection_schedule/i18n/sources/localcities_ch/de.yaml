@@ -7,5 +7,3 @@ params:
     description: URL-Name der Gemeinde (aus der localcities.ch URL)
   municipality_id:
     description: Gemeinde-ID (aus der localcities.ch URL)
-  zone:
-    description: Sammelzone oder Ortsname

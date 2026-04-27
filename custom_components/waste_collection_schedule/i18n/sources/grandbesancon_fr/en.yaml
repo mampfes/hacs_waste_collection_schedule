@@ -6,6 +6,4 @@ params:
   house_number:
     description: House number (optional, helps filter results)
   insee_code:
-    description: 5-digit INSEE code of your commune (e.g. 25014 for Amagney, 25056
-      for Besançon)
     label: INSEE Code

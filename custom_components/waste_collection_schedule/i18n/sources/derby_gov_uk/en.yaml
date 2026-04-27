@@ -9,5 +9,3 @@ params:
   postcode:
     description: LEAVE EMPTY is not used anymore.
     label: 'DEPRECATED: post_code'
-  premises_id:
-    label: premises_id

@@ -7,5 +7,3 @@ params:
     label: Address (legacy, use UPRN instead)
   postcode:
     label: Postcode (legacy, use UPRN instead)
-  uprn:
-    label: Unique Property Reference Number (UPRN)

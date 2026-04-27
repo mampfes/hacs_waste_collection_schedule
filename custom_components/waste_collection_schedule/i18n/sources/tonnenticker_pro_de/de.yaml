@@ -4,7 +4,6 @@
 ---
 params:
   city:
-    description: Ortsname (z. B. 'Steinhagen', 'Warendorf')
     label: Ort
   street:
     description: Straßenname — genaue Schreibweise des Anbieters verwenden

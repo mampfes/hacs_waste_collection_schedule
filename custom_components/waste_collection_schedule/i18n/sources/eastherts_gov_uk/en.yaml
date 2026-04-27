@@ -7,4 +7,3 @@ params:
     description: Every UK residential property is allocated a Unique Property Reference
       Number (UPRN). You can find yours by going to https://www.findmyaddress.co.uk/
       and entering in your address details.
-    label: Unique Property Reference Number

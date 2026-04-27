@@ -2618,7 +2618,8 @@
           "street_address": "Straßenadresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street_address": "Vollständige Straßenadresse."
         }
       },
       "reconfigure_stirling_wa_gov_au": {
@@ -2630,7 +2631,9 @@
           "lon": "Längengrad",
           "street_address": "Straßenadresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Vollständige Straßenadresse."
+        }
       },
       "args_stonnington_vic_gov_au": {
         "title": "Quelle konfigurieren",
@@ -3072,7 +3075,7 @@
           "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen.",
           "district": "Subdomain des Abfallwirtschaftsverbandes, einer von `baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `waidhofen`, `zwettl`.",
           "house_number": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt.",
-          "municipality": "Gemeindename.",
+          "municipality": "Gemeinde der Adresse.",
           "postcode": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt.",
           "street": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt.",
           "town": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt."
@@ -3101,7 +3104,7 @@
           "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen.",
           "district": "Subdomain des Abfallwirtschaftsverbandes, einer von `baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `waidhofen`, `zwettl`.",
           "house_number": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt.",
-          "municipality": "Gemeindename.",
+          "municipality": "Gemeinde der Adresse.",
           "postcode": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt.",
           "street": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt.",
           "town": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt."
@@ -4834,7 +4837,9 @@
           "sector": "Sektor"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "municipality": "Gemeinde der Adresse.",
+          "sector": "Sektor."
         }
       },
       "reconfigure_info_collectes_ca": {
@@ -4845,7 +4850,10 @@
           "municipality": "Gemeinde",
           "sector": "Sektor"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Gemeinde der Adresse.",
+          "sector": "Sektor."
+        }
       },
       "args_publidata_ca": {
         "title": "Quelle konfigurieren",
@@ -7817,7 +7825,7 @@
           "address_suffix": "Hausnummerzusatz",
           "city": "Ort",
           "house_number": "Hausnummer",
-          "street": "Strasse"
+          "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
@@ -7835,7 +7843,7 @@
           "address_suffix": "Hausnummerzusatz",
           "city": "Ort",
           "house_number": "Hausnummer",
-          "street": "Strasse"
+          "street": "Straße"
         },
         "data_description": {
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
@@ -9075,13 +9083,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "b_collection_cycle_string": "Biotonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
-          "b_location_id": "Biotonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
+          "b_collection_cycle_string": "B Collection Cycle String",
+          "b_location_id": "B Location Id",
           "house_number": "Hausnummer",
-          "p_collection_cycle_string": "Papiertonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
-          "p_location_id": "Papiertonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
-          "r_collection_cycle_string": "Restmüll Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
-          "r_location_id": "Restmüll Standort-ID (z.B. '70027977' oder Forumularauswahl)",
+          "p_collection_cycle_string": "P Collection Cycle String",
+          "p_location_id": "P Location Id",
+          "r_collection_cycle_string": "R Collection Cycle String",
+          "r_location_id": "R Location Id",
           "street": "Straße"
         },
         "data_description": {
@@ -9095,13 +9103,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "b_collection_cycle_string": "Biotonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
-          "b_location_id": "Biotonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
+          "b_collection_cycle_string": "B Collection Cycle String",
+          "b_location_id": "B Location Id",
           "house_number": "Hausnummer",
-          "p_collection_cycle_string": "Papiertonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
-          "p_location_id": "Papiertonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
-          "r_collection_cycle_string": "Restmüll Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
-          "r_location_id": "Restmüll Standort-ID (z.B. '70027977' oder Forumularauswahl)",
+          "p_collection_cycle_string": "P Collection Cycle String",
+          "p_location_id": "P Location Id",
+          "r_collection_cycle_string": "R Collection Cycle String",
+          "r_location_id": "R Location Id",
           "street": "Straße"
         },
         "data_description": {
@@ -9201,8 +9209,8 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "city": "Stadt-Kennung (Standard: 'bad-oeynhausen'; unterstützte Werte: 'bad-oeynhausen', 'willich')",
-          "house_number": "Hausnummer (z.B. '1')",
-          "street": "Straßenname (z.B. 'Aalstraße')"
+          "house_number": "Hausnummer der Adresse.",
+          "street": "Straße der Adresse."
         }
       },
       "reconfigure_abfallkalender_prezero_network": {
@@ -9216,8 +9224,8 @@
         },
         "data_description": {
           "city": "Stadt-Kennung (Standard: 'bad-oeynhausen'; unterstützte Werte: 'bad-oeynhausen', 'willich')",
-          "house_number": "Hausnummer (z.B. '1')",
-          "street": "Straßenname (z.B. 'Aalstraße')"
+          "house_number": "Hausnummer der Adresse.",
+          "street": "Straße der Adresse."
         }
       },
       "args_reso_gmbh_de": {
@@ -10492,9 +10500,9 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "behaelter": "Zuordnung von Abfallart zu Behältergröße in Litern (z. B. Restmüll: '240', Papier: '1100'). Nur angegebene Abfallarten werden gefiltert; andere werden für alle Behältergrößen angezeigt. Ohne Angabe werden alle Behältergrößen angezeigt.",
-          "district": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
+          "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer (optional, für manche Straßen erforderlich)",
-          "street": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')"
+          "street": "Straße der Adresse."
         }
       },
       "reconfigure_evv_voelklingen_de": {
@@ -10509,9 +10517,9 @@
         },
         "data_description": {
           "behaelter": "Zuordnung von Abfallart zu Behältergröße in Litern (z. B. Restmüll: '240', Papier: '1100'). Nur angegebene Abfallarten werden gefiltert; andere werden für alle Behältergrößen angezeigt. Ohne Angabe werden alle Behältergrößen angezeigt.",
-          "district": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
+          "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer (optional, für manche Straßen erforderlich)",
-          "street": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')"
+          "street": "Straße der Adresse."
         }
       },
       "args_ics_abfallkalender_erftstadt_de": {
@@ -13059,7 +13067,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "street": "Straßenname und Hausnummer (z.B. 'Halberstädter Chaussee 66')"
+          "street": "Straße der Adresse."
         }
       },
       "reconfigure_magdeburg_de": {
@@ -13070,7 +13078,7 @@
           "street": "Straße und Hausnummer"
         },
         "data_description": {
-          "street": "Straßenname und Hausnummer (z.B. 'Halberstädter Chaussee 66')"
+          "street": "Straße der Adresse."
         }
       },
       "args_ics_asf_online_de": {
@@ -14318,7 +14326,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Ortsname (z. B. 'Steinhagen', 'Warendorf')",
+          "city": "Stadt der Adresse.",
           "street": "Straßenname — genaue Schreibweise des Anbieters verwenden"
         }
       },
@@ -14331,7 +14339,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Ortsname (z. B. 'Steinhagen', 'Warendorf')",
+          "city": "Stadt der Adresse.",
           "street": "Straßenname — genaue Schreibweise des Anbieters verwenden"
         }
       },
@@ -14853,7 +14861,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Ortsname (z.B. 'Bad Schwartau')",
+          "city": "Stadt der Adresse.",
           "street": "Straßenname (bei einigen Orten nicht erforderlich)"
         }
       },
@@ -14866,7 +14874,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Ortsname (z.B. 'Bad Schwartau')",
+          "city": "Stadt der Adresse.",
           "street": "Straßenname (bei einigen Orten nicht erforderlich)"
         }
       },
@@ -15291,7 +15299,8 @@
           "house_number": "Hausnummer"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Stadt der Adresse."
         }
       },
       "reconfigure_amsa_it": {
@@ -15303,7 +15312,9 @@
           "city": "Stadt",
           "house_number": "Hausnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Stadt der Adresse."
+        }
       },
       "args_asm_pv_it": {
         "title": "Quelle konfigurieren",
@@ -18154,8 +18165,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "municipality": "Gemeinde, eine von: 'osteraker', 'vaxholm' oder 'ekero'",
-          "street_address": "Straßenadresse (z.B. Andromedavägen 1, Åkersberga)"
+          "municipality": "Gemeinde, eine von: 'osteraker', 'vaxholm' oder 'ekero'"
         }
       },
       "reconfigure_roslagsvatten_se": {
@@ -18167,8 +18177,7 @@
           "street_address": "Straßenadresse"
         },
         "data_description": {
-          "municipality": "Gemeinde, eine von: 'osteraker', 'vaxholm' oder 'ekero'",
-          "street_address": "Straßenadresse (z.B. Andromedavägen 1, Åkersberga)"
+          "municipality": "Gemeinde, eine von: 'osteraker', 'vaxholm' oder 'ekero'"
         }
       },
       "args_gastrikeatervinnare_se": {
@@ -19001,8 +19010,7 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
-          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
-          "zone": "Sammelzone oder Ortsname"
+          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)"
         }
       },
       "reconfigure_localcities_ch": {
@@ -19016,8 +19024,7 @@
         },
         "data_description": {
           "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
-          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
-          "zone": "Sammelzone oder Ortsname"
+          "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)"
         }
       },
       "args_ics_openerz_metaodi_ch": {
@@ -25843,6 +25850,7 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "postcode": "Postleitzahl der Adresse.",
+          "street_address": "Vollständige Straßenadresse.",
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
         }
       },
@@ -25857,6 +25865,7 @@
         },
         "data_description": {
           "postcode": "Postleitzahl der Adresse.",
+          "street_address": "Vollständige Straßenadresse.",
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
         }
       },
@@ -27132,7 +27141,8 @@
           "street_address": "Straßenadresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street_address": "Vollständige Straßenadresse."
         }
       },
       "reconfigure_communitywastedisposal_com": {
@@ -27142,7 +27152,9 @@
           "calendar_title": "Kalender Titel",
           "street_address": "Straßenadresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Vollständige Straßenadresse."
+        }
       },
       "args_fuquay_varina_nc_us": {
         "title": "Quelle konfigurieren",

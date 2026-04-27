@@ -5,5 +5,3 @@
 params:
   address:
     label: Full address
-  uprn:
-    label: Unique Property Reference Number (UPRN)

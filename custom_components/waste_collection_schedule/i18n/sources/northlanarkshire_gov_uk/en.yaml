@@ -7,7 +7,6 @@ params:
     description: Alternatively, an easy way to discover your Unique Property Reference
       Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in
       your address details
-    label: Unique Property Reference Number (UPRN)
   usrn:
     description: Your Unique Street Reference Number (USRN) can be found by searching
       for your address at https://uprn.uk/ and viewing the _Data Associations_ section.
