@@ -38,12 +38,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 
 class Source:
-    def __init__(
-        self,
-        premises_id: int | None = None,
-        postcode: str | None = None,
-        house_number: str | None = None,
-    ):
+    def __init__(self, premises_id: int):
         self._premises_id = premises_id
         if not self._premises_id:
             raise SourceArgumentExceptionMultiple(

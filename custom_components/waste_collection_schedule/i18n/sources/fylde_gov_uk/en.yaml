@@ -5,7 +5,3 @@
 params:
   email:
     label: Email Address
-  uprn:
-    description: Property UPRN (optional, only needed if you have multiple properties
-      registered)
-    label: UPRN (Optional)

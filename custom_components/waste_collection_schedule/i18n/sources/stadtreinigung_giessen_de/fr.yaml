@@ -3,8 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  house_number:
-    label: Numéro de maison
   street:
     description: Entrez le nom de la rue. Si non trouvée, une liste déroulante avec
       des suggestions apparaîtra.

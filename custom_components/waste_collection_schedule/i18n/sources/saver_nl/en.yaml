@@ -3,8 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  postcode:
-    label: Postal code
   toevoeging:
     description: House letter or addition (only required when more than one address
       shares the postcode/huisnummer)

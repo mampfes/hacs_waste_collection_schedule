@@ -16,9 +16,9 @@ DESCRIPTION = "Source for hastings.gov.uk services for Hastings Borough Council,
 URL = "https://www.hastings.gov.uk/"
 API_URL = "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService"
 TEST_CASES = {
-    "Test_001": {"postcode": "TN34 1QF", "house_number": 36, "uprn": 100060038877},
-    "Test_002": {"postcode": "TN34 2DL", "house_number": "28A", "uprn": "10070609836"},
-    "Test_003": {"postcode": "TN37 7QH", "house_number": 5, "uprn": "100060041770"},
+    "Test_001": {"uprn": 100060038877},
+    "Test_002": {"uprn": "10070609836"},
+    "Test_003": {"uprn": "100060041770"},
 }
 ICON_MAP = {
     "Recycling": "mdi:recycle",
@@ -30,16 +30,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 
 class Source:
-    def __init__(
-        self,
-        uprn: str | int,
-        postcode: (
-            str | None
-        ) = None,  # Not used but kept for compatibility with old version
-        house_number: (
-            str | int | None
-        ) = None,  # Not used but kept for compatibility with old version
-    ):
+    def __init__(self, uprn: str | int):
         self._uprn = str(uprn)
 
     def fetch(self):

@@ -3,9 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  house_number:
-    label: Numero civico
   street:
     description: Inserire il nome della via. Se non trovata, apparirà un menu a tendina
       con suggerimenti.
-    label: Via

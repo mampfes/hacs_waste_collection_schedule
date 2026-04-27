@@ -3,8 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  house_number:
-    description: Hausnummer
   street:
     description: Straßenname eingeben. Bei ungültiger Eingabe erscheint ein Dropdown
       mit Vorschlägen.

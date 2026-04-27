@@ -4330,7 +4330,9 @@
     "howto": {
       "en": "Register at https://waste.fylde.gov.uk/ and add your property to your account using your UPRN."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "gateshead_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gateshead_gov_uk.md",
@@ -4749,7 +4751,7 @@
       "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
     },
     "urls": {
-      "url_uprn_uk": "https://uprn.uk/"
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
   "newark_sherwooddc_gov_uk": {

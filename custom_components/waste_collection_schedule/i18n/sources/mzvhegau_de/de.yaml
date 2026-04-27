@@ -4,5 +4,4 @@
 ---
 params:
   city:
-    description: Ihre Stadt oder Gemeinde, z.B. Engen.
     label: Stadt/Gemeinde
