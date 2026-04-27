@@ -11,8 +11,16 @@ TITLE = "AHE Ennepe-Ruhr-Kreis"
 DESCRIPTION = "Source for AHE Ennepe-Ruhr-Kreis."
 URL = "https://ahe.de"
 TEST_CASES = {
-    "58300 Ahornstraße 1": {"plz": "58300", "strasse": "Ahornstraße", "hnr": 1},
-    "58313 Alte Straße 1": {"plz": 58313, "strasse": "alte STraße", "hnr": "1"},
+    "58300 Ahornstraße 1": {
+        "postcode": "58300",
+        "street": "Ahornstraße",
+        "house_number": 1,
+    },
+    "58313 Alte Straße 1": {
+        "postcode": 58313,
+        "street": "alte STraße",
+        "house_number": "1",
+    },
 }
 
 
@@ -33,10 +41,10 @@ SEARCH_API_URL = API_URL.format(search="search/{search}")
 
 
 class Source:
-    def __init__(self, plz: str | int, strasse: str, hnr: str | int):
-        self._plz: str = str(plz).strip()
-        self._strasse: str = strasse
-        self._hnr: str | int = hnr
+    def __init__(self, postcode: str | int, street: str, house_number: str | int):
+        self._plz: str = str(postcode).strip()
+        self._strasse: str = street
+        self._hnr: str | int = house_number
         self._ics = ICS()
 
     def fetch(self):
@@ -62,7 +70,7 @@ class Source:
                 post_id = entry["id"]
                 break
         if post_id is None:
-            raise SourceArgumentNotFound("plz", self._plz)
+            raise SourceArgumentNotFound("postcode", self._plz)
 
         r = s.get(
             SEARCH_API_URL.format(search="city"),
@@ -74,7 +82,7 @@ class Source:
 
         data = r.json()
         if "id" not in data:
-            raise SourceArgumentNotFound("plz", self._plz)
+            raise SourceArgumentNotFound("postcode", self._plz)
 
         city_id = data["id"]
 
@@ -95,7 +103,7 @@ class Source:
                 break
         if street_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "strasse", self._strasse, (entry["name"] for entry in data)
+                "street", self._strasse, (entry["name"] for entry in data)
             )
 
         data = {

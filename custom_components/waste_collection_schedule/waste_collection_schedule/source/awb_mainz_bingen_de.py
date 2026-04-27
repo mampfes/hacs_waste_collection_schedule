@@ -14,18 +14,18 @@ DESCRIPTION = "Source for Abfallwirtschaftsbetrieb LK Mainz-Bingen."
 URL = "https://www.awb-mainz-bingen.de/"
 TEST_CASES = {
     "Stadt Ingelheim Ingelheim Süd Albert-Schweitzer-Straße": {
-        "bezirk": "Stadt Ingelheim",
-        "ort": "Ingelheim Süd",
-        "strasse": "Albert-Schweitzer-Straße",
+        "district": "Stadt Ingelheim",
+        "city": "Ingelheim Süd",
+        "street": "Albert-Schweitzer-Straße",
     },
     "Verbandsgemeinde Rhein-Selz, Mommenheim": {
-        "bezirk": "Verbandsgemeinde Rhein-Selz",
-        "ort": "mOmMenHeiM",
+        "district": "Verbandsgemeinde Rhein-Selz",
+        "city": "mOmMenHeiM",
     },
     "Stadt Bingen, Bingen-Stadt, Martinstraße (Haus-Nr.: 5 - 11, 10 - 18)": {
-        "bezirk": "Stadt Bingen",
-        "ort": "Bingen-Stadt",
-        "strasse": "Martinstraße (Haus-Nr.: 5 - 11, 10 - 18)",
+        "district": "Stadt Bingen",
+        "city": "Bingen-Stadt",
+        "street": "Martinstraße (Haus-Nr.: 5 - 11, 10 - 18)",
     },
 }
 
@@ -44,29 +44,29 @@ API_URL = "https://abfallkalender.awb-mainz-bingen.de/"
 
 
 class Source:
-    def __init__(self, bezirk: str, ort: str, strasse: str | None = None):
-        self._bezirk: str = bezirk
-        self._ort: str = ort
-        self._strasse: str | None = strasse
+    def __init__(self, district: str, city: str, street: str | None = None):
+        self._bezirk: str = district
+        self._ort: str = city
+        self._strasse: str | None = street
         self._ics = ICS()
 
     def fetch(self):
         session = requests.Session()
 
-        # Get bezirk id from main page
+        # Get district id from main page
         r = session.get(API_URL)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        bezirk = soup.find("select", {"id": "Abfuhrbezirk"}).find(
+        district = soup.find("select", {"id": "Abfuhrbezirk"}).find(
             "option", text=re.compile(re.escape(self._bezirk), re.IGNORECASE)
         )
 
-        if not bezirk:
+        if not district:
             found = [i.text for i in soup.find_all("option")][1:]
-            raise SourceArgumentNotFoundWithSuggestions("bezirk", self._bezirk, found)
+            raise SourceArgumentNotFoundWithSuggestions("district", self._bezirk, found)
 
-        bezirk_id = bezirk.get("value")
+        bezirk_id = district.get("value")
 
         # set arguments to imitate xajax call
         xjxargs_string = "<xjxobj>"
@@ -85,7 +85,7 @@ class Source:
             ),
         }
 
-        # send request to get dropdown with for ort id
+        # send request to get dropdown with for city id
         r = session.post(API_URL, data=args)
         r.raise_for_status()
 
@@ -99,15 +99,15 @@ class Source:
             teilorte_div.text.replace("<![CDATA[", "").replace("]]>", ""), "html.parser"
         )
 
-        ort = teilorte.find(
+        city = teilorte.find(
             "option", text=re.compile(re.escape(self._ort), re.IGNORECASE)
         )
-        if not ort:
+        if not city:
             raise SourceArgumentNotFoundWithSuggestions(
-                "ort", self._ort, [i.text for i in teilorte.find_all("option")][1:]
+                "city", self._ort, [i.text for i in teilorte.find_all("option")][1:]
             )
 
-        ort_id = ort.get("value")
+        ort_id = city.get("value")
 
         args = {
             "xjxfun": "show_strasse_dropdown_or_abfuhrtermine",
@@ -129,19 +129,22 @@ class Source:
             div_strasse.text.replace("<![CDATA[", "").replace("]]>", ""), "html.parser"
         )
 
-        # If strasse is needed
+        # If street is needed
         if strassen_soup.find("option"):
             if not self._strasse:
-                raise SourceArgumentRequired("strasse", "A street (Strasse) must be selected from the available options")
+                raise SourceArgumentRequired(
+                    "street",
+                    "A street (Strasse) must be selected from the available options",
+                )
 
-            # get strasse id
+            # get street id
             strasse_id = strassen_soup.find(
                 "option", text=re.compile(re.escape(self._strasse), re.IGNORECASE)
             )
             if not strasse_id:
                 found = [i.text for i in strassen_soup.find_all("option")][1:]
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "strasse", self._strasse, found
+                    "street", self._strasse, found
                 )
 
             strasse_id = strasse_id.get("value")

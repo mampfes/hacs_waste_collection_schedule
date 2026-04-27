@@ -7,7 +7,7 @@ TITLE = "Wollongong City Council"
 DESCRIPTION = "Source script for wollongongwaste.com.au"
 URL = "https://wollongongwaste.com"
 COUNTRY = "au"
-TEST_CASES = {"TestName1": {"propertyID": "21444"}}
+TEST_CASES = {"TestName1": {"property_id": "21444"}}
 
 API_URL = "https://wollongong.waste-info.com.au/api/v1/properties/"
 
@@ -28,8 +28,8 @@ def day_of_week(start_date, end_date, day_of_week_index):
 
 
 class Source:
-    def __init__(self, propertyID):
-        self._propertyID = propertyID
+    def __init__(self, property_id):
+        self._propertyID = property_id
 
     def fetch(self):
         # Have to specify a start and end, or the API returns nothing. So lets request this year, and next year.

@@ -12,9 +12,9 @@ DESCRIPTION = (
 URL = "https://data.okc.gov"
 COUNTRY = "us"
 TEST_CASES = {
-    "Test_001": {"objectID": "1781151"},
-    "Test_002": {"objectID": "2002902"},
-    "Test_003": {"objectID": 1935340},
+    "Test_001": {"object_id": "1781151"},
+    "Test_002": {"object_id": "2002902"},
+    "Test_003": {"object_id": 1935340},
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:118.0) Gecko/20100101 Firefox/118.0",
@@ -50,19 +50,19 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Go to the table tab and filter by address. Find your Object ID. "
     "Next use the dropdown in the top right hand side of the screen to change the dataset from Bulky Waste Zones to Recycle Zones. "
     "Once again Filter by Map to find your Object ID. Do this once more for your Trash Zone. "
-    "Once you have these three Object IDs, enter them in bulkyObjectID, recycleObjectID, and trashObjectID and enable try_official. "
-    "If try_official is disabled, provide objectID for the unofficial source."
+    "Once you have these three Object IDs, enter them in bulky_object_id, recycle_object_id, and trash_object_id and enable try_official. "
+    "If try_official is disabled, provide object_id for the unofficial source."
 }
 
 
 class Source:
     def __init__(
         self,
-        objectID: str = "",
+        object_id: str = "",
         try_official: bool = False,
-        bulkyObjectID: str = "",
-        recycleObjectID: str = "",
-        trashObjectID: str = "",
+        bulky_object_id: str = "",
+        recycle_object_id: str = "",
+        trash_object_id: str = "",
     ):
         if isinstance(try_official, bool):
             self._try_official = try_official
@@ -73,11 +73,11 @@ class Source:
                 "yes",
                 "on",
             }
-        self._object_id = str(objectID).strip()
+        self._object_id = str(object_id).strip()
         self._record_ids = {
-            "BULKY": str(bulkyObjectID).strip(),
-            "RECYCLE": str(recycleObjectID).strip(),
-            "TRASH": str(trashObjectID).strip(),
+            "BULKY": str(bulky_object_id).strip(),
+            "RECYCLE": str(recycle_object_id).strip(),
+            "TRASH": str(trash_object_id).strip(),
         }
 
         if self._try_official:
@@ -90,11 +90,11 @@ class Source:
                 raise Exception(
                     "Missing official Object IDs for: "
                     + ", ".join(missing)
-                    + ". Provide bulkyObjectID, recycleObjectID, trashObjectID."
+                    + ". Provide bulky_object_id, recycle_object_id, trash_object_id."
                 )
         elif self._object_id == "":
             raise Exception(
-                "objectID is required when try_official is disabled (unofficial source mode)."
+                "object_id is required when try_official is disabled (unofficial source mode)."
             )
 
     def _fetch_rows(self, dataset_name: str, params: dict[str, str]):
@@ -311,7 +311,7 @@ class Source:
             records = json_data.get("records")
         if not records:
             raise Exception(
-                "No records found for objectID in unofficial source. Please verify your objectID."
+                "No records found for object_id in unofficial source. Please verify your object_id."
             )
 
         fields = json_data.get("Fields")

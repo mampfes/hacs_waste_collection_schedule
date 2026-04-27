@@ -29,7 +29,7 @@ COMMUNES = [
     "Saucats",
 ]
 
-TEST_CASES = {commune: {"commune": commune} for commune in COMMUNES}
+TEST_CASES = {municipality: {"municipality": municipality} for municipality in COMMUNES}
 
 ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
     "Bac d'ordures ménagères": "mdi:trash-can",
@@ -54,7 +54,7 @@ BIN_TYPE_MAP = {"Bac d'ordures ménagères": "ordures", "Bac jaune": "recyclage"
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "commune": "city of Montesquieu's community : " + ", ".join(COMMUNES),
+        "municipality": "city of Montesquieu's community : " + ", ".join(COMMUNES),
     },
 }
 
@@ -62,12 +62,12 @@ PARAM_DESCRIPTIONS = {
 
 
 class Source:
-    def __init__(self, commune: str):
-        self.commune = commune
+    def __init__(self, municipality: str):
+        self.municipality = municipality
 
-        if self.commune not in COMMUNES:
+        if self.municipality not in COMMUNES:
             raise SourceArgumentNotFoundWithSuggestions(
-                "Commune", self.commune, COMMUNES
+                "Commune", self.municipality, COMMUNES
             )
 
     def get_parsed_source(self) -> BeautifulSoup:
@@ -80,7 +80,7 @@ class Source:
     def fetch(self) -> list[Collection]:
         parsed_source = self.get_parsed_source()
         global_planning = self.get_planning_table(parsed_source)
-        city_planning = global_planning[self.commune]
+        city_planning = global_planning[self.municipality]
 
         entries = []  # List that holds collection schedule
 
@@ -106,7 +106,7 @@ class Source:
         global_planning2 = self.get_planning_table_dechets_verts_et_encombrants(
             parsed_source
         )
-        city_planning2 = global_planning2[self.commune]
+        city_planning2 = global_planning2[self.municipality]
 
         for bin_type in city_planning2.keys():
             for dt2 in city_planning2[bin_type]:

@@ -7,32 +7,32 @@ DESCRIPTION = "Source for Zweckverband Abfallwirtschaft Kreis Bergstraße."
 URL = "https://www.zakb.de"
 TEST_CASES = {
     "Abtsteinach, Am Hofböhl 1 ": {
-        "ort": "Abtsteinach",
-        "strasse": "Am Hofböhl",
-        "hnr": "1",
+        "city": "Abtsteinach",
+        "street": "Am Hofböhl",
+        "house_number": "1",
         "hnr_zusatz": "",
     },
     "Gorxheimertal, Am Herrschaftswald 10": {
-        "ort": "Gorxheimertal",
-        "strasse": "Am Herrschaftswald",
-        "hnr": "10",
+        "city": "Gorxheimertal",
+        "street": "Am Herrschaftswald",
+        "house_number": "10",
     },
     "Rimbach, Ahornweg 1 B": {
-        "ort": "Rimbach",
-        "strasse": "Ahornweg",
-        "hnr": "1",
+        "city": "Rimbach",
+        "street": "Ahornweg",
+        "house_number": "1",
         "hnr_zusatz": "B",
     },
     "Zwingenberg, Diefenbachstraße 57": {
-        "ort": "Zwingenberg",
-        "strasse": "Diefenbachstraße",
-        "hnr": 57,
+        "city": "Zwingenberg",
+        "street": "Diefenbachstraße",
+        "house_number": 57,
         "hnr_zusatz": "",
     },
     "Bensheim im Bangert 9 a": {
-        "ort": "Bensheim",
-        "strasse": "Im Bangert",
-        "hnr": 9,
+        "city": "Bensheim",
+        "street": "Im Bangert",
+        "house_number": 9,
         "hnr_zusatz": "A",
     },
 }
@@ -51,10 +51,12 @@ API_URL = "https://www.zakb.de/online-service/abfallkalender/"
 
 
 class Source:
-    def __init__(self, ort: str, strasse: str, hnr: str | int, hnr_zusatz: str = ""):
-        self._ort: str = ort
-        self._strasse: str = strasse
-        self._hnr: str = str(hnr)
+    def __init__(
+        self, city: str, street: str, house_number: str | int, hnr_zusatz: str = ""
+    ):
+        self._ort: str = city
+        self._strasse: str = street
+        self._hnr: str = str(house_number)
         self._hnr_zusatz: str = hnr_zusatz
         self._ics = ICS()
 

@@ -15,19 +15,19 @@ TEST_CASES = {
         "street_number": "30C",
         "street_name": "Oakes Avenue",
         "suburb": "CLAYTON SOUTH",
-        "post_code": "3169",
+        "postcode": "3169",
     },
     "randomAppartment": {
         "street_number": "1/51",
         "street_name": "Whatley Street",
         "suburb": "CARRUM",
-        "post_code": "3197",
+        "postcode": "3197",
     },
     "randomMultiunit": {
         "street_number": "1/1-5",
         "street_name": "Station Street",
         "suburb": "MOORABBIN",
-        "post_code": "3189",
+        "postcode": "3189",
     },
 }
 
@@ -47,12 +47,12 @@ BIN_NAMES = {
 
 class Source:
     def __init__(
-        self, street_number: str, street_name: str, suburb: str, post_code: str
+        self, street_number: str, street_name: str, suburb: str, postcode: str
     ):
         self.street_number = str(street_number)
         self.street_name = str(street_name)
         self.suburb = str(suburb)
-        self.post_code = str(post_code)
+        self.postcode = str(postcode)
 
         self._service: WhatBinDayService | None = None
 
@@ -60,7 +60,9 @@ class Source:
         """Get or create the WhatBinDay service instance."""
         if self._service is None:
             # Create location key for this address
-            location_key = f"{self.street_number}_{self.street_name}_{self.suburb}_{self.post_code}"
+            location_key = (
+                f"{self.street_number}_{self.street_name}_{self.suburb}_{self.postcode}"
+            )
 
             # Create service with custom mappings for Kingston
             self._service = WhatBinDayService(
@@ -79,7 +81,7 @@ class Source:
             self.street_number,
             self.street_name,
             self.suburb,
-            self.post_code,
+            self.postcode,
             state="VIC",
             country="Australia",
             coordinates={

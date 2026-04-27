@@ -14,8 +14,8 @@ TITLE = "Wellington City Council"
 DESCRIPTION = "Source for Wellington City Council."
 URL = "https://wellington.govt.nz"
 TEST_CASES = {
-    "Chelsea St": {"streetName": "Cheltenham Terrace"},  # Friday
-    # "Campbell St (ID Only)": {"streetId": "6515"},  # Wednesday
+    "Chelsea St": {"street_name": "Cheltenham Terrace"},  # Friday
+    # "Campbell St (ID Only)": {"street_id": "6515"},  # Wednesday
 }
 
 
@@ -37,9 +37,9 @@ HEADERS = {
 
 
 class Source:
-    def __init__(self, streetId=None, streetName=None):
-        self._streetId = streetId
-        self._streetName = streetName
+    def __init__(self, street_id=None, street_name=None):
+        self._streetId = street_id
+        self._streetName = street_name
         self._ics = ICS()
 
     def fetch(self):
@@ -50,18 +50,18 @@ class Source:
             r = requests.post(url, json=data, headers=HEADERS)
             data = json.loads(r.text)
             if len(data["d"]) == 0:
-                raise SourceArgumentNotFound("streetName", self._streetName)
+                raise SourceArgumentNotFound("street_name", self._streetName)
             if len(data["d"]) > 1:
                 print(data["d"])
                 raise SourceArgAmbiguousWithSuggestions(
-                    "streetName",
+                    "street_name",
                     self._streetName,
                     [x["Value"].split(",")[0] for x in data["d"]],
                 )
             self._streetId = data["d"][0].get("Key")
 
         if not self._streetId:
-            raise Exception("No streetId or streetName supplied")
+            raise Exception("No street_id or street_name supplied")
 
         url = "https://wellington.govt.nz/~/ical/"
         params = {
@@ -73,7 +73,7 @@ class Source:
 
         if not r.text.startswith("BEGIN:VCALENDAR"):
             raise SourceArgumentException(
-                "streetId", f"{self._streetId} is not a valid streetID"
+                "street_id", f"{self._streetId} is not a valid streetID"
             )
 
         dates = self._ics.convert(r.text)

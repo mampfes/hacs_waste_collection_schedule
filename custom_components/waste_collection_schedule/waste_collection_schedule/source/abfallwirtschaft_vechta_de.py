@@ -10,15 +10,15 @@ TITLE = "AWB Abfallwirtschaft Vechta"
 DESCRIPTION = "Source for AWB Abfallwirtschaft Vechta."
 URL = "https://www.abfallwirtschaft-vechta.de/"
 TEST_CASES = {
-    "Vechta, An der Hasenweide": {"stadt": "Vechta", "strasse": "An der Hasenweide"},
-    "Bakum, Up'n Sande": {"stadt": "Bakum", "strasse": "Up'n Sande"},
+    "Vechta, An der Hasenweide": {"city": "Vechta", "street": "An der Hasenweide"},
+    "Bakum, Up'n Sande": {"city": "Bakum", "street": "Up'n Sande"},
     "Neuenkirchen-Vörden, Braunschweiger Straße": {
-        "stadt": "Neuenkirchen-Vörden",
-        "strasse": "Braunschweiger Straße",
+        "city": "Neuenkirchen-Vörden",
+        "street": "Braunschweiger Straße",
     },
     "Goldenstedt, An der Ellenbäke": {
-        "stadt": "Goldenstedt",
-        "strasse": "An der Ellenbäke",
+        "city": "Goldenstedt",
+        "street": "An der Ellenbäke",
     },
 }
 
@@ -35,9 +35,9 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, stadt: str, strasse: str):
-        self._stadt: str = stadt
-        self._strasse: str = strasse
+    def __init__(self, city: str, street: str):
+        self._city: str = city
+        self._street: str = street
         self._ics = ICS()
 
     def fetch(self):
@@ -51,7 +51,7 @@ class Source:
             pass
 
     def get_data(self, jahr):
-        args = {"stadt": self._stadt, "strasse": self._strasse}
+        args = {"stadt": self._city, "strasse": self._street}
 
         collection_entries = []
         string_entries = []
@@ -62,7 +62,7 @@ class Source:
 
             r = session.get(
                 "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_stadt.php",
-                params={"term": self._stadt},
+                params={"term": self._city},
             )
             r.raise_for_status()
             city_id = r.json()[0]["id"]
@@ -70,7 +70,7 @@ class Source:
 
             r = session.get(
                 "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_strasse.php",
-                params={"stadt": city_id, "term": self._strasse},
+                params={"stadt": city_id, "term": self._street},
             )
             r.raise_for_status()
             street = json.loads(r.text[1:-2])["strassen"][0]

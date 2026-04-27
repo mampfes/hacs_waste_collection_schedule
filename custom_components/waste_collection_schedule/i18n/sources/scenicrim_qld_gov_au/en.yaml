@@ -4,5 +4,4 @@
 ---
 params:
   address:
-    description: Your address as it appears in the csf file used by the website
     label: Your address as it appears in the csf file used by the website

@@ -17,5 +17,3 @@ params:
     label: Residual waste emptying cycle (e.g. '1/2;G' or forum selection)
   r_location_id:
     label: Residual waste location ID (e.g. '70027977' or forum selection)
-  street:
-    label: Street

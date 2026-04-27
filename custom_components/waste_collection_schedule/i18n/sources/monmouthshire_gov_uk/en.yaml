@@ -4,5 +4,4 @@
 ---
 params:
   uprn:
-    description: Unique Property Reference Number (UPRN)
     label: Unique Property Reference Number (UPRN)

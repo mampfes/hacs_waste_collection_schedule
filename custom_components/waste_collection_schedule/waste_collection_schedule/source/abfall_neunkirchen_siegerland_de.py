@@ -9,7 +9,7 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Neunkirchen Siegerland"
 DESCRIPTION = " Source for 'Abfallkalender Neunkirchen Siegerland'."
 URL = "https://www.neunkirchen-siegerland.de"
-TEST_CASES = {"Waldstraße": {"strasse": "Waldstr"}}
+TEST_CASES = {"Waldstraße": {"street": "Waldstr"}}
 
 ICON_MAP = {
     "Biotonne": "mdi:leaf",
@@ -24,8 +24,8 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, strasse):
-        self._strasse = strasse
+    def __init__(self, street):
+        self._strasse = street
         self._ics = ICS()
 
     def fetch(self):
@@ -55,7 +55,7 @@ class Source:
 
         if len(ids) > 1:
             raise SourceArgAmbiguousWithSuggestions(
-                "strasse", self._strasse, [id[1] for id in ids]
+                "street", self._strasse, [id[1] for id in ids]
             )
 
         args = {"ModID": 48, "call": "ical", "pois": ids[0][0], "kat": 1, "alarm": 0}

@@ -24,26 +24,26 @@ def EXTRA_INFO():
 
 
 TEST_CASES = {
-    "Assen": {"organization": "assen", "post_code": "9401LN", "house_number": 6},
+    "Assen": {"organization": "assen", "postcode": "9401LN", "house_number": 6},
     "RMN": {
         "organization": "rmn",
-        "post_code": "3437GS",
+        "postcode": "3437GS",
         "house_number": 2,
         "addition": "A",
     },
     "BAT Tilburg": {
         "organization": "bat",
-        "post_code": "5071EN",
+        "postcode": "5071EN",
         "house_number": 122,
     },
     "Groningen": {
         "organization": "groningen",
-        "post_code": "9733AH",
+        "postcode": "9733AH",
         "house_number": 66,
     },
     "Utrecht": {
         "organization": "utrecht",
-        "post_code": "3581GG",
+        "postcode": "3581GG",
         "house_number": 7,
     },
 }
@@ -92,13 +92,13 @@ class Source:
     def __init__(
         self,
         organization: Organization,
-        post_code: str,
+        postcode: str,
         house_number: str,
         addition: str = "",
     ):
         self._api_key: str = "AIzaSyA6NkRqJypTfP-cjWzrZNFJzPUbBaGjOdk"
         self._addition: str = addition
-        self._post_code: str = post_code
+        self._post_code: str = postcode
         self._house_number: str = house_number
         self._url: str = (
             "https://europe-west3-burgerportaal-production.cloudfunctions.net"

@@ -18,18 +18,18 @@ URL = "https://www.karlsruhe.de/"
 TEST_CASES = {
     "Östliche Rheinbrückenstraße 1": {
         "street": "Östliche Rheinbrückenstraße",
-        "hnr": 1,
+        "house_number": 1,
     },
-    "Habichtweg 4": {"street": "Habichtweg", "hnr": 4},
-    "Machstraße 5": {"street": "Machstraße", "hnr": 5},
+    "Habichtweg 4": {"street": "Habichtweg", "house_number": 4},
+    "Machstraße 5": {"street": "Machstraße", "house_number": 5},
     "Bernsteinstraße 10 ladeort 1": {
         "street": "Bernsteinstraße",
-        "hnr": 10,
+        "house_number": 10,
         "ladeort": 1,
     },
     "Bernsteinstraße 10 ladeort 2": {
         "street": "Bernsteinstraße",
-        "hnr": 10,
+        "house_number": 10,
         "ladeort": 2,
     },
 }
@@ -46,9 +46,11 @@ API_URL = "https://web{i}.karlsruhe.de/service/abfall/akal/akal_{year}.php"
 
 
 class Source:
-    def __init__(self, street: str, hnr: str | int, ladeort: int | None = None):
+    def __init__(
+        self, street: str, house_number: str | int, ladeort: int | None = None
+    ):
         self._street: str = street
-        self._hnr: str | int = hnr
+        self._hnr: str | int = house_number
         self._ladeort: int | None = ladeort
         self.ics = ICS()
 

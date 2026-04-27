@@ -44,20 +44,20 @@ def EXTRA_INFO():
 TEST_CASES = {
     "Altlandsberg": {
         "key": "efb75cbd1f08fae1d4e47ae72a85c655",
-        "idHouseNumber": 4136,
+        "id_house_number": 4136,
     },
     "Strausberg": {
         "key": "efb75cbd1f08fae1d4e47ae72a85c655",
-        "idHouseNumber": 5985,
+        "id_house_number": 5985,
     },
 }
 
 
 class Source:
-    def __init__(self, key, idHouseNumber, wasteTypes=None):
+    def __init__(self, key, id_house_number, waste_types=None):
         self._key = key
-        self._id_house_number = str(idHouseNumber)
-        self._waste_types = [str(w) for w in wasteTypes] if wasteTypes else None
+        self._id_house_number = str(id_house_number)
+        self._waste_types = [str(w) for w in waste_types] if waste_types else None
 
     def fetch(self):
         r = requests.get(INIT_URL, params={"key": self._key}, headers=HEADERS)

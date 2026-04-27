@@ -1,0 +1,5 @@
+# Per-source overrides for reso_gmbh_de (fr).
+---
+params:
+  ortsteil:
+    label: District

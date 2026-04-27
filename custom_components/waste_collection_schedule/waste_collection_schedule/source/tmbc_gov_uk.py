@@ -4,7 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 # mostly copied from braintree_gov_uk
 
@@ -14,11 +17,11 @@ URL = "https://www.tmbc.gov.uk"
 TEST_CASES = {
     "High Street, West Malling": {
         "address": "138 High Street",
-        "post_code": "ME19 6NE",
+        "postcode": "ME19 6NE",
     },
     "Nutfields, Ightham, Sevenoaks": {
         "address": "5 Nutfields, Ightham, Sevenoaks",
-        "post_code": "TN15 9EA",
+        "postcode": "TN15 9EA",
     },
 }
 
@@ -31,12 +34,12 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, post_code: str, address: str):
-        self.post_code = post_code
+    def __init__(self, postcode: str, address: str):
+        self.postcode = postcode
         self.address = address
         self.url = f"{URL}/xfp/form/167"
         self.form_data = {
-            "q752eec300b2ffef2757e4536b77b07061842041a_0_0": (None, post_code),
+            "q752eec300b2ffef2757e4536b77b07061842041a_0_0": (None, postcode),
             "page": (None, 128),
         }
 

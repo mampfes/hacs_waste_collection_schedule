@@ -12,17 +12,17 @@ TEST_CASES = {
     "Bethenhausen Caasen 15A": {
         "city": "Bethenhausen OT Caasen",
         "street": "Caasen",
-        "hnr": "15A",
+        "house_number": "15A",
     },
     "Kraftsdorf OT Oberndorf, Klosterlausnitzer Straße 5/1": {
         "city": "Kraftsdorf OT Oberndorf",
         "street": "Klosterlausnitzer Straße",
-        "hnr": "5/1",
+        "house_number": "5/1",
     },
     "Gera, Aga Birkenstraße 9": {
         "city": "Gera",
         "street": "Aga Birkenstraße",
-        "hnr": "9",
+        "house_number": "9",
     },
 }
 
@@ -40,10 +40,10 @@ ICS_URL = "https://www.awv-ot.de/tourenauskunft/ics/ics.php"
 
 
 class Source:
-    def __init__(self, city: str, street: str, hnr: str):
+    def __init__(self, city: str, street: str, house_number: str):
         self._city: str = city
         self._street: str = street
-        self._hnr: str = hnr
+        self._hnr: str = house_number
         self._ics = ICS()
 
     def fetch(self) -> list[Collection]:

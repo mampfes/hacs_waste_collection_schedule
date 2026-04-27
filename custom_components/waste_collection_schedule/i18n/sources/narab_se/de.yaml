@@ -5,5 +5,5 @@
 params:
   address:
     description: Adresse für die Sammlung
-  kundNr:
+  kund_nr:
     description: Kundennummer

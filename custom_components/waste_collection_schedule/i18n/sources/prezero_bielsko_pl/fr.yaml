@@ -4,7 +4,6 @@
 ---
 params:
   house_number:
-    description: Numéro de maison
     label: Numéro de maison
   street:
     description: Rue

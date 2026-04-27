@@ -3,13 +3,13 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  bulkyObjectID:
+  bulky_object_id:
     description: Object ID from 'Bulky Waste Zones'.
-  objectID:
+  object_id:
     description: Object ID for unofficial source (okc.schizo.dev).
-  recycleObjectID:
+  recycle_object_id:
     description: Object ID from 'Recycle Zones'.
-  trashObjectID:
+  trash_object_id:
     description: Object ID from 'Trash Zones'.
   try_official:
     description: If checked, use official data.okc.gov zone datasets and the three

@@ -14,8 +14,8 @@ DESCRIPTION = (
 )
 URL = "https://scambs.gov.uk"
 TEST_CASES = {
-    "houseNumber": {"post_code": "CB236GZ", "number": 53},
-    "houseName": {"post_code": "CB225HT", "number": "Rectory Farm Cottage"},
+    "houseNumber": {"postcode": "CB236GZ", "number": 53},
+    "houseName": {"postcode": "CB225HT", "number": "Rectory Farm Cottage"},
 }
 
 API_URLS = {
@@ -37,8 +37,8 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, post_code: str, number: str):
-        self._post_code = post_code
+    def __init__(self, postcode: str, number: str):
+        self._post_code = postcode
         self._number = str(number).capitalize()
 
     def fetch(self):
@@ -47,7 +47,7 @@ class Source:
             API_URLS["address_search"], params={"postCode": self._post_code}
         )
         if r.status_code == 400:
-            raise SourceArgumentNotFound("post_code", self._post_code)
+            raise SourceArgumentNotFound("postcode", self._post_code)
         r.raise_for_status()
         addresses = r.json()
         address_ids = [

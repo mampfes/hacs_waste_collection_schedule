@@ -5,7 +5,5 @@
 params:
   address:
     description: Your full address
-    label: Address
   city:
     description: Your city
-    label: City

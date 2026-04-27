@@ -15,31 +15,31 @@ URL = "https://www.evv-voelklingen.de"
 COUNTRY = "de"
 TEST_CASES = {
     "Fürstenhausen, Kaiserstraße 2": {
-        "ortsteil": "Fürstenhausen",
-        "strasse": "Kaiserstraße",
-        "hausnummer": "2",
+        "district": "Fürstenhausen",
+        "street": "Kaiserstraße",
+        "house_number": "2",
     },
     "Fürstenhausen, Kaiserstraße 2, Behälterfilter": {
-        "ortsteil": "Fürstenhausen",
-        "strasse": "Kaiserstraße",
-        "hausnummer": "2",
+        "district": "Fürstenhausen",
+        "street": "Kaiserstraße",
+        "house_number": "2",
         "behaelter": {"Restmüll": "240", "Papier": "240"},
     },
     "Fürstenhausen, Kaiserstraße 2, Behälterfilter alle": {
-        "ortsteil": "Fürstenhausen",
-        "strasse": "Kaiserstraße",
-        "hausnummer": "2",
+        "district": "Fürstenhausen",
+        "street": "Kaiserstraße",
+        "house_number": "2",
         "behaelter": {"Restmüll": "240", "Papier": "240", "PVL": "1100"},
     },
     "Fürstenhausen, Kaiserstraße 2, Behälterfilter alle Papier gross": {
-        "ortsteil": "Fürstenhausen",
-        "strasse": "Kaiserstraße",
-        "hausnummer": "2",
+        "district": "Fürstenhausen",
+        "street": "Kaiserstraße",
+        "house_number": "2",
         "behaelter": {"Restmüll": "240", "Papier": "1100", "PVL": "1100"},
     },
     "Fürstenhausen, Zechenstraße": {
-        "ortsteil": "Fürstenhausen",
-        "strasse": "Zechenstraße",
+        "district": "Fürstenhausen",
+        "street": "Zechenstraße",
     },
 }
 
@@ -78,14 +78,14 @@ def _parse_odata_date(value: str) -> date | None:
 class Source:
     def __init__(
         self,
-        ortsteil: str,
-        strasse: str,
-        hausnummer: str | int | None = None,
+        district: str,
+        street: str,
+        house_number: str | int | None = None,
         behaelter: dict[str, str | int] | None = None,
     ):
-        self._ortsteil = ortsteil
-        self._strasse = strasse
-        self._hausnummer = str(hausnummer) if hausnummer is not None else None
+        self._ortsteil = district
+        self._strasse = street
+        self._hausnummer = str(house_number) if house_number is not None else None
         # Normalize values: strip trailing "L"/"l" → {"Restmüll": "240L"} → {"Restmüll": "240"}
         self._behaelter: dict[str, str] | None = (
             {k: str(v).strip().rstrip("lL") for k, v in behaelter.items()}
@@ -101,7 +101,7 @@ class Source:
     # ------------------------------------------------------------------
 
     def _resolve_ids(self) -> None:
-        """Resolve ortsteil and strasse names to the numeric IDs required by the API."""
+        """Resolve district and street names to the numeric IDs required by the API."""
         # Step 1: OrteMitOrtsteilen → flat list [{OrteId, Ortsname, Ortsteilname}]
         r = requests.get(
             f"{BASE_URL}/OrteMitOrtsteilen",
@@ -123,7 +123,7 @@ class Source:
 
         if orte_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "ortsteil", self._ortsteil, valid_ortsteile
+                "district", self._ortsteil, valid_ortsteile
             )
         self._orte_id = orte_id
 
@@ -146,7 +146,7 @@ class Source:
         str_key = self._strasse.strip().lower()
         if str_key not in strassen_map:
             raise SourceArgumentNotFoundWithSuggestions(
-                "strasse", self._strasse, [s["Name"] for s in strassen_data]
+                "street", self._strasse, [s["Name"] for s in strassen_data]
             )
         self._strassen_id = strassen_map[str_key]
 
@@ -183,7 +183,7 @@ class Source:
             f"&$orderby={urllib.parse.quote(orderby, safe=',/')}"
             f"&orteId={self._orte_id}"
             f"&strassenId={self._strassen_id}"
-            f"&ortsteil={qv(self._ortsteil)}"
+            f"&district={qv(self._ortsteil)}"
             f"&hausNr={haus_nr}"
             f"&jahr={year}"
         )

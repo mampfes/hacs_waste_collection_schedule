@@ -5,4 +5,3 @@
 params:
   city:
     description: Your city or municipality name, e.g. Engen.
-    label: City

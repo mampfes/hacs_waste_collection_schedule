@@ -3,7 +3,7 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  hnr:
+  house_number:
     label: House number
   hnr_zusatz:
     label: House number addition

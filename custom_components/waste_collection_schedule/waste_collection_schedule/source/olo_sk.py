@@ -17,7 +17,7 @@ TITLE = "OLO"
 DESCRIPTION = "Source for OLO in Bratislava, Slovakia"
 URL = "https://www.olo.sk"
 TEST_CASES = {
-    "ByRegistrationNumber": {"registrationNumber": "1353013"},
+    "ByRegistrationNumber": {"registration_number": "1353013"},
     "ByStreet": {"street": "Jantarova 47"},
 }
 
@@ -34,11 +34,11 @@ WASTE_TYPES = {
 # GraphQL API for direct registration number lookup (no API key needed)
 GRAPHQL_URL = "https://olo-strapi.bratislava.sk/graphql"
 GRAPHQL_QUERY = """
-query PickupDaysByRegistrationNumber($registrationNumber: String!) {
-  pickupDays(filters: {registrationNumber: {eq: $registrationNumber}}) {
+query PickupDaysByRegistrationNumber($registration_number: String!) {
+  pickupDays(filters: {registration_number: {eq: $registration_number}}) {
     data {
       attributes {
-        registrationNumber
+        registration_number
         address
         frequency
         wasteType
@@ -68,9 +68,9 @@ API_KEY_FALLBACK = "ae84ae0982c2162a81eb253765ceaa8593abd9105c71954cf5c9620b0178
 
 
 class Source:
-    def __init__(self, street: str = "", registrationNumber: str = ""):
+    def __init__(self, street: str = "", registration_number: str = ""):
         self._street = street
-        self._registrationNumber = registrationNumber
+        self._registrationNumber = registration_number
 
     def _find_api_key(self) -> str:
         """Find API key in the web page source code."""
@@ -283,8 +283,8 @@ class Source:
     def fetch(self) -> list[Collection]:
         if not self._street and not self._registrationNumber:
             raise SourceArgumentExceptionMultiple(
-                ["street", "registrationNumber"],
-                "street or registrationNumber is required",
+                ["street", "registration_number"],
+                "street or registration_number is required",
             )
 
         pickup_days = self._fetch_pickup_days()

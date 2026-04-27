@@ -3,7 +3,5 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  hnr:
-    label: Hausnummer
   ladeort:
     label: Ladeort

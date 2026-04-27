@@ -10,19 +10,19 @@ DESCRIPTION = "Source for City of Ryde rubbish collection."
 URL = "https://www.ryde.nsw.gov.au/"
 TEST_CASES = {
     "Ryde Aquatic Centre": {
-        "post_code": "2112",
+        "postcode": "2112",
         "suburb": "Ryde",
         "street_name": "Victoria Road",
         "street_number": "504",
     },
     "Harris Farm Markets Boronia Park": {
-        "post_code": "2111",
+        "postcode": "2111",
         "suburb": "Gladesville",
         "street_name": "Pittwater Road",
         "street_number": "128",
     },
     "Eastwood Shopping Centre": {
-        "post_code": "2122",
+        "postcode": "2122",
         "suburb": "Eastwood",
         "street_name": "Rowe Street",
         "street_number": "152",
@@ -50,9 +50,9 @@ ICON_MAP = {
 
 class Source:
     def __init__(
-        self, post_code: str, suburb: str, street_name: str, street_number: str
+        self, postcode: str, suburb: str, street_name: str, street_number: str
     ):
-        self.post_code = post_code
+        self.postcode = postcode
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
@@ -61,7 +61,7 @@ class Source:
         locationId = 0
 
         address = "{} {} {} {}".format(
-            self.street_number, self.street_name, self.suburb, self.post_code
+            self.street_number, self.street_name, self.suburb, self.postcode
         )
 
         # Retrieve suburbs
@@ -78,7 +78,7 @@ class Source:
 
         if locationId == 0:
             raise Exception(
-                f"Could not find address: {self.street_number} {self.street_name}, {self.suburb} {self.post_code}"
+                f"Could not find address: {self.street_number} {self.street_name}, {self.suburb} {self.postcode}"
             )
 
         # Retrieve the upcoming collections for our property

@@ -3,9 +3,7 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  registrationNumber:
+  registration_number:
     description: OLO registration number (use this OR street name)
-    label: Registration Number
   street:
     description: Street name and number (use this OR registration number)
-    label: Street

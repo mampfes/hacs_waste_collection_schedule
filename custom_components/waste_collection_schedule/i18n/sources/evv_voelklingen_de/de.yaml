@@ -9,11 +9,10 @@ params:
       werden für alle Behältergrößen angezeigt. Ohne Angabe werden alle Behältergrößen
       angezeigt.'
     label: Behältergröße (Liter)
-  hausnummer:
-    description: Hausnummer (optional, für manche Straßen erforderlich)
-    label: Hausnummer
-  ortsteil:
+  district:
     description: Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')
     label: Ortsteil
-  strasse:
+  house_number:
+    description: Hausnummer (optional, für manche Straßen erforderlich)
+  street:
     description: Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')

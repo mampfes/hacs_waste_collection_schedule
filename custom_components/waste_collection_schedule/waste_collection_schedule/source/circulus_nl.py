@@ -8,7 +8,7 @@ DESCRIPTION = "Source for circulus.nl waste collection."
 URL = "https://mijn.circulus.nl"
 
 TEST_CASES = {
-    "Test1": {"postal_code": "7206AC", "house_number": "1"},
+    "Test1": {"postcode": "7206AC", "house_number": "1"},
 }
 
 ICON_MAP = {
@@ -28,8 +28,8 @@ API_URL = "https://mijn.circulus.nl"
 
 
 class Source:
-    def __init__(self, postal_code, house_number):
-        self._postal_code = postal_code
+    def __init__(self, postcode, house_number):
+        self._postal_code = postcode
         self._house_number = house_number
 
     def fetch(self):

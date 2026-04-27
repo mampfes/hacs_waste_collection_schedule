@@ -8,13 +8,13 @@ TITLE = "Bracknell Forest Council"
 DESCRIPTION = "Bracknell Forest Council, UK - Waste Collection"
 URL = "https://selfservice.mybfc.bracknell-forest.gov.uk"
 TEST_CASES = {
-    "44 Kennel Lane": {"house_number": "44", "post_code": "RG42 2HB"},
-    "28 Kennel Lane": {"house_number": "28", "post_code": "RG42 2HB"},
-    "32 Ashbourne": {"house_number": "32", "post_code": "RG12 8SG"},
-    "1 Acacia Avenue": {"house_number": "1", "post_code": "GU47 0RU"},
+    "44 Kennel Lane": {"house_number": "44", "postcode": "RG42 2HB"},
+    "28 Kennel Lane": {"house_number": "28", "postcode": "RG42 2HB"},
+    "32 Ashbourne": {"house_number": "32", "postcode": "RG12 8SG"},
+    "1 Acacia Avenue": {"house_number": "1", "postcode": "GU47 0RU"},
     "Myrtle, 39 New Wokingham Road": {
         "house_number": "Myrtle",
-        "post_code": "RG45 6JG",
+        "postcode": "RG45 6JG",
     },
 }
 
@@ -27,7 +27,7 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, post_code: str, house_number: str):
+    def __init__(self, postcode: str, house_number: str):
         self.params = {
             "webpage_subpage_id": "PAG0000570FEFFB1",
             "webpage_token": "390170046582b0e3d7ca68ef1d6b4829ccff0b1ae9c531047219c6f9b5295738",
@@ -42,7 +42,7 @@ class Source:
             "action_page_id": "PAG0000570FEFFB1",
         }
         self.url = f"{URL}/w/webpage/waste-collection-days"
-        self.post_code = post_code
+        self.postcode = postcode
         self.house_number = str(house_number)
 
         if self.house_number.isnumeric():
@@ -55,7 +55,7 @@ class Source:
             headers=self.headers,
             data={
                 "code_action": "find_addresses",
-                "code_params": json.dumps({"search": self.post_code}),
+                "code_params": json.dumps({"search": self.postcode}),
             }
             | self.data,
         )

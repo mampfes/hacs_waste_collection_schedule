@@ -1,0 +1,5 @@
+# Per-source overrides for aha_region_de (it).
+---
+params:
+  ladeort:
+    label: Ladeort

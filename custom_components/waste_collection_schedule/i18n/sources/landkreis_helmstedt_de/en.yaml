@@ -16,7 +16,6 @@ params:
     description: 'Copy the name of the ICS calendar from the website for your municipal.
       This needs to be without the year at the end. For example: "Stadt Königslutter
       am Elm – ohne Ortsteile" (without quotes).'
-    label: Municipal
   restabfall:
     description: Number for the collection type from the PDF calendar
     label: Domestic

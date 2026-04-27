@@ -3,8 +3,8 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  daysToGenerate:
+  days_to_generate:
     label: 'Numero di giorni da generare per la collezione predefinita (predefinito:
       3)'
-  objectId:
+  object_id:
     label: ID oggetto

@@ -1,0 +1,5 @@
+# Per-source overrides for cmcitymedia_de (en).
+---
+params:
+  hpid:
+    label: HPID

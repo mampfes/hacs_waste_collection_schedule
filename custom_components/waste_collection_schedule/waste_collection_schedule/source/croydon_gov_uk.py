@@ -10,10 +10,10 @@ TITLE = "Croydon Council"
 DESCRIPTION = "Source for croydon.gov.uk services for Croydon Council, UK."
 URL = "https://croydon.gov.uk"
 TEST_CASES = {
-    "Test_001": {"postcode": "CR0 6LN", "houseID": "64 Coniston Road"},
-    "Test_002": {"postcode": "SE25 5BU", "houseID": "23B Howard Road"},
-    "Test_003": {"postcode": "CR0 6EG", "houseID": "48 Exeter Road"},
-    "Test_004": {"postcode": "CR5 2BG", "houseID": "18 South Drive"},
+    "Test_001": {"postcode": "CR0 6LN", "house_id": "64 Coniston Road"},
+    "Test_002": {"postcode": "SE25 5BU", "house_id": "23B Howard Road"},
+    "Test_003": {"postcode": "CR0 6EG", "house_id": "48 Exeter Road"},
+    "Test_004": {"postcode": "CR5 2BG", "house_id": "18 South Drive"},
 }
 ICON_MAP = {
     "Food waste": "mdi:food",
@@ -74,9 +74,9 @@ SESSION_STORAGE = {
 
 
 class Source:
-    def __init__(self, postcode, houseID):
+    def __init__(self, postcode, house_id):
         self._postcode = str(postcode).upper()
-        self._houseID = str(houseID)
+        self._houseID = str(house_id)
 
     def fetch(self):
         s = requests.Session()
@@ -130,7 +130,7 @@ class Source:
             "value"
         ]
 
-        # Use postcode and houseID to find address
+        # Use postcode and house_id to find address
         addressID = "0"
         url = API_URLS["BASE"] + API_URLS["SEARCH"]
         headers = {

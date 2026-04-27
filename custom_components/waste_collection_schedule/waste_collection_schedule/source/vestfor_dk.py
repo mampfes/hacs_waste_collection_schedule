@@ -12,7 +12,7 @@ TITLE = "Vestforbrænding"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source for Vestforbrændning collection"  # Describe your source
 URL = "https://selvbetjening.vestfor.dk/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Home": {"streetName": "Kløvertoften", "number": "61", "zipCode": "2740"}
+    "Home": {"street_name": "Kløvertoften", "number": "61", "zip_code": "2740"}
 }
 
 API_URL = "https://selvbetjening.vestfor.dk/Adresse/ToemmeDates"
@@ -30,10 +30,10 @@ ADRESS_LOOKUP_URL = "https://selvbetjening.vestfor.dk/Adresse/AddressByName"
 
 
 class Source:
-    def __init__(self, streetName, number, zipCode):
-        self._streetName = streetName
+    def __init__(self, street_name, number, zip_code):
+        self._streetName = street_name
         self._number = number
-        self._zipCode = zipCode
+        self._zipCode = zip_code
 
     def fetch(self):
         entries = []  # List that holds collection schedule
@@ -48,7 +48,7 @@ class Source:
         addresses = json.loads(addressResponse.text)
 
         if len(addresses) == 0:
-            raise SourceArgumentNotFound("streetName", self._streetName)
+            raise SourceArgumentNotFound("street_name", self._streetName)
         addressId = addresses[0]["Id"]
 
         _LOGGER.info("Fetching data from Vestforbrændning")

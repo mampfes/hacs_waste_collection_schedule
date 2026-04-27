@@ -11,10 +11,10 @@ TITLE = "Valorlux"
 DESCRIPTION = "Source for Valorlux waste collection."
 URL = "https://www.valorlux.lu"
 TEST_CASES = {
-    "Mersch": {"commune": "Mersch"},
-    "Luxembourg City (Tour 1)": {"commune": "Luxembourg", "zone": "Tour 1"},
-    "Parc Hosingen": {"commune": "Parc Hosingen"},
-    "Unknown Commune": {"commune": "Unknown", "zone": None},
+    "Mersch": {"municipality": "Mersch"},
+    "Luxembourg City (Tour 1)": {"municipality": "Luxembourg", "zone": "Tour 1"},
+    "Parc Hosingen": {"municipality": "Parc Hosingen"},
+    "Unknown Commune": {"municipality": "Unknown", "zone": None},
 }
 
 API_URL = "https://www.valorlux.lu/api/calendar/all"
@@ -31,8 +31,8 @@ HEADERS = {
 
 
 class Source:
-    def __init__(self, commune: str | None = None, zone: str | None = None):
-        self._commune = commune
+    def __init__(self, municipality: str | None = None, zone: str | None = None):
+        self._commune = municipality
         self._zone = zone
 
     def fetch(self):
@@ -48,19 +48,21 @@ class Source:
         other_communes = data.get("otherAddresses", {})
         communes.update(other_communes)
 
-        # Step 1: If no commune is provided, raise an exception with a list of all communes
+        # Step 1: If no municipality is provided, raise an exception with a list of all communes
         if self._commune is None:
             commune_names = sorted(list(communes.keys()))
-            raise SourceArgumentRequiredWithSuggestions("commune", None, commune_names)
+            raise SourceArgumentRequiredWithSuggestions(
+                "municipality", None, commune_names
+            )
 
-        # Step 2: If commune is provided, check if it's valid
+        # Step 2: If municipality is provided, check if it's valid
         if self._commune not in communes:
             commune_names = sorted(list(communes.keys()))
             raise SourceArgumentNotFoundWithSuggestions(
-                "commune", self._commune, commune_names
+                "municipality", self._commune, commune_names
             )
 
-        # Step 3: Check for zones/tours for the selected commune
+        # Step 3: Check for zones/tours for the selected municipality
         commune_data = communes[self._commune]
         zones = list(commune_data.keys())
 

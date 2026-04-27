@@ -12,34 +12,34 @@ DESCRIPTION = "Source for city of Heilbronn, Germany."
 URL = "https://heilbronn.de"
 TEST_CASES = {
     "Rosenau": {
-        "plz": 74072,
-        "strasse": "Rosenau",
-        "hausnr": 33,
+        "postcode": 74072,
+        "street": "Rosenau",
+        "house_number": 33,
     },
     "Biberach": {
-        "strasse": "Kehrhüttenstraße",
-        "plz": 74078,
-        "hausnr": "90",
+        "street": "Kehrhüttenstraße",
+        "postcode": 74078,
+        "house_number": "90",
     },
     "Klingenberg:": {
-        "strasse": "Wittumhalde",
-        "plz": "74081",
-        "hausnr": 75,
+        "street": "Wittumhalde",
+        "postcode": "74081",
+        "house_number": 75,
     },
-    "Klingenberg (hausnr as string):": {
-        "strasse": "Wittumhalde",
-        "plz": "74081",
-        "hausnr": "75",
+    "Klingenberg (house_number as string):": {
+        "street": "Wittumhalde",
+        "postcode": "74081",
+        "house_number": "75",
     },
     "Rosenbergstraße 53": {
-        "strasse": "Rosenbergstraße",
-        "plz": "74074",
-        "hausnr": "50",
+        "street": "Rosenbergstraße",
+        "postcode": "74074",
+        "house_number": "50",
     },
     "Rosenbergstraße 41": {
-        "strasse": "Rosenbergstraße",
-        "plz": "74072",
-        "hausnr": "41",
+        "street": "Rosenbergstraße",
+        "postcode": "74072",
+        "house_number": "41",
     },
 }
 
@@ -55,10 +55,12 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, plz: int, strasse: str, hausnr: str | int | None = None):
-        self._plz: str = str(plz)
-        self._strasse: str = strasse
-        self._hausnr: str | None = str(hausnr) if hausnr else None
+    def __init__(
+        self, postcode: int, street: str, house_number: str | int | None = None
+    ):
+        self._plz: str = str(postcode)
+        self._strasse: str = street
+        self._hausnr: str | None = str(house_number) if house_number else None
 
     def fetch(self):
         r = requests.get(
@@ -71,7 +73,7 @@ class Source:
         if not self._hausnr or "*" in street:
             if "*" not in street:
                 raise SourceArgumentRequiredWithSuggestions(
-                    "hausnr",
+                    "house_number",
                     "is required for this street",
                     suggestions=street.keys(),
                 )
@@ -82,7 +84,7 @@ class Source:
         else:
             if self._hausnr not in street:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "hausnr",
+                    "house_number",
                     self._hausnr,
                     suggestions=street.keys(),
                 )

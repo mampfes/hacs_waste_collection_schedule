@@ -14,4 +14,3 @@ params:
     label: Street Name
   town:
     description: The town corresponding to the selected street.
-    label: Town

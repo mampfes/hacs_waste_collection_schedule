@@ -13,16 +13,16 @@ TEST_CASES = {
     "Pittsburgh, Negley": {
         "house_number": 800,
         "street_name": "Negley",
-        "zipcode": 15232,
+        "zip_code": 15232,
     }
 }
 
 
 class Source:
-    def __init__(self, house_number, street_name, zipcode):
+    def __init__(self, house_number, street_name, zip_code):
         self._house_number = house_number
         self._street_name = street_name.replace(".", "").strip()
-        self._zipcode = zipcode
+        self._zipcode = zip_code
 
     def fetch(self):
         # get json file

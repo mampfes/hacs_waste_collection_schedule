@@ -11,13 +11,13 @@ TEST_CASES = {
     "Västra Radiogatan 18, Sundsvall": {
         "street": "Västra Radiogatan",
         "house_number": "18",
-        "postal_code": "85461",
+        "postcode": "85461",
         "city": "Sundsvall",
     },
     "Västra Radiogatan 22, Sundsvall": {
         "street": "Västra Radiogatan",
         "house_number": "22",
-        "postal_code": "85461",
+        "postcode": "85461",
         "city": "Sundsvall",
     },
 }
@@ -51,13 +51,13 @@ class Source:
         self,
         street: str,
         house_number: str,
-        postal_code: str,
+        postcode: str,
         city: str = "Sundsvall",
         additional_information: str = "",
     ):
         self._street = street
         self._house_number = str(house_number)
-        self._postal_code = str(postal_code)
+        self._postal_code = str(postcode)
         self._city = city
         self._additional_information = additional_information
 

@@ -13,8 +13,8 @@ TITLE = "Canterbury City Council"
 DESCRIPTION = "Source for canterbury.gov.uk services for canterbury"
 URL = "https://canterbury.gov.uk"
 TEST_CASES = {
-    "houseNumber": {"post_code": "ct68ru", "number": "63"},
-    "houseName": {"post_code": "ct68ru", "number": "KOWLOON"},
+    "houseNumber": {"postcode": "ct68ru", "number": "63"},
+    "houseName": {"postcode": "ct68ru", "number": "KOWLOON"},
 }
 HEADERS = {
     "Content-Type": "application/json",
@@ -40,8 +40,8 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, post_code: str, number: str):
-        self._post_code = post_code
+    def __init__(self, postcode: str, number: str):
+        self._post_code = postcode
         self._number = str(number).capitalize()
 
     def fetch(self):
@@ -68,7 +68,7 @@ class Source:
 
         if len(address_ids) == 0:
             if len(addresses["results"]) == 0:
-                raise SourceArgumentNotFound("post_code", self._post_code)
+                raise SourceArgumentNotFound("postcode", self._post_code)
             raise SourceArgumentNotFoundWithSuggestions(
                 "number",
                 self._number,

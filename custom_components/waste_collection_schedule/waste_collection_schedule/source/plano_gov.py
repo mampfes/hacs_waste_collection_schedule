@@ -11,21 +11,21 @@ COUNTRY = "us"  # ISO 3166-1 alpha-2 country code, e.g. "DE" for Germany, "US" f
 URL = "https://www.plano.gov/630/Residential-Collection-Schedules"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
     "GoodObjectId3Days": {
-        "objectId": "72866",
-        "daysToGenerate": "3",
+        "object_id": "72866",
+        "days_to_generate": "3",
     },  # Example object ID, This is an public art center run out of a residential address but its a historic home so not PII
     "GoodObjectId5Days": {
-        "objectId": "72866",
-        "daysToGenerate": "5",
+        "object_id": "72866",
+        "days_to_generate": "5",
     },  # Example object ID, This is an public art center run out of a residential address but its a historic home so not PII
     "GoodObjectId0Days": {
-        "objectId": "72866",
-        "daysToGenerate": "0",
+        "object_id": "72866",
+        "days_to_generate": "0",
     },  # Example object ID, This is an public art center run out of a residential address but its a historic home so not PII,
     # days to generate being 0 should result in the same output at the default (3)
     # "GoodObjectIdBadDays": {
-    #      "objectId": "72866",
-    #      "daysToGenerate": "f",
+    #      "object_id": "72866",
+    #      "days_to_generate": "f",
     # }, # This is commented because it fails (on purpose) and I don't know how we indicate to the test_sources script that we expect failure
 }
 
@@ -57,13 +57,13 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
 
 class Source:
     def __init__(
-        self, objectId: str, daysToGenerate: int = 3
+        self, object_id: str, days_to_generate: int = 3
     ):  # argX correspond to the args dict in the source configuration
-        self.object_id = objectId
+        self.object_id = object_id
         self.trash_days_to_generate = (
             # the int check here could cause issues if the passed value isn't coercible to an int, but the UI presently does insist this be a number
-            daysToGenerate
-            if daysToGenerate is not None and int(daysToGenerate) > 0
+            days_to_generate
+            if days_to_generate is not None and int(days_to_generate) > 0
             else 3
         )  # Default to 3 days if not provided
 

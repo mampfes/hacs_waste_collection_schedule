@@ -12,9 +12,9 @@ TITLE = "SIDEC"
 DESCRIPTION = "Source for SIDEC waste collection."
 URL = "https://www.sidec.lu"
 TEST_CASES = {
-    "Parc Hosingen": {"commune": "Parc Hosingen (36777)"},
-    "Mersch": {"commune": "Mersch (2611)"},
-    "Invalid Commune": {"commune": "Invalid (12345)"},
+    "Parc Hosingen": {"municipality": "Parc Hosingen (36777)"},
+    "Mersch": {"municipality": "Mersch (2611)"},
+    "Invalid Commune": {"municipality": "Invalid (12345)"},
 }
 
 API_URL = "https://www.sidec.lu/fr/Collectes/Calendrier"
@@ -36,24 +36,26 @@ WASTE_MAPPING = {
 
 
 class Source:
-    def __init__(self, commune: str | None = None):
-        self._commune = commune
+    def __init__(self, municipality: str | None = None):
+        self._commune = municipality
         self._commune_id: str | None = None
-        if commune:
+        if municipality:
             # Parse the ID from the formatted string, e.g., "Parc Hosingen (36777)"
-            match = re.search(r"\((\d+)\)", commune)
+            match = re.search(r"\((\d+)\)", municipality)
             if match:
                 self._commune_id = match.group(1)
 
     def fetch(self):
         if not self._commune or not self._commune_id:
-            # Step 1: No commune provided, fetch list from website and raise exception
+            # Step 1: No municipality provided, fetch list from website and raise exception
             r = requests.get(API_URL)
             r.raise_for_status()
             soup = BeautifulSoup(r.text, "html.parser")
             select = soup.find("select", {"name": "myCommune"})
             if not select:
-                raise Exception("Could not find commune dropdown on SIDEC website.")
+                raise Exception(
+                    "Could not find municipality dropdown on SIDEC website."
+                )
 
             suggestions = []
             for option in select.find_all("option"):
@@ -63,14 +65,14 @@ class Source:
                     suggestions.append(f"{name} ({commune_id})")
 
             raise SourceArgumentRequiredWithSuggestions(
-                "commune", None, sorted(suggestions)
+                "municipality", None, sorted(suggestions)
             )
 
-        # If commune was provided but ID could not be parsed, raise error
+        # If municipality was provided but ID could not be parsed, raise error
         # This happens if user enters a free-text value not from the dropdown
         if not self._commune_id:
             raise Exception(
-                f'Invalid commune format: "{self._commune}". Please select an entry from the dropdown list.'
+                f'Invalid municipality format: "{self._commune}". Please select an entry from the dropdown list.'
             )
 
         # --- Proceed with fetching data ---

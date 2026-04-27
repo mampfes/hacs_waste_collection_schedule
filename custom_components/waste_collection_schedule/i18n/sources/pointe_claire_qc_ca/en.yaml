@@ -5,4 +5,3 @@
 params:
   sector:
     description: Collection sector (A or B)
-    label: Sector

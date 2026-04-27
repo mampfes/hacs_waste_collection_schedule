@@ -6,13 +6,13 @@ TITLE = "Stadtreinigung Hamburg"
 DESCRIPTION = "Source for Stadtreinigung Hamburg waste collection."
 URL = "https://www.stadtreinigung.hamburg"
 TEST_CASES = {
-    "Zabelweg 1B": {"hnId": 53814},
+    "Zabelweg 1B": {"hn_id": 53814},
 }
 
 
 class Source:
-    def __init__(self, hnId, asId=None):
-        self._hnId = hnId
+    def __init__(self, hn_id, as_id=None):
+        self._hnId = hn_id
         self._ics = ICS()
 
     def fetch(self):

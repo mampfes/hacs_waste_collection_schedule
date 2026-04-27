@@ -5,7 +5,5 @@
 params:
   house_number_or_name:
     description: House name or number
-  postcode:
-    description: Postcode
-  streetname:
+  street_name:
     description: Street name

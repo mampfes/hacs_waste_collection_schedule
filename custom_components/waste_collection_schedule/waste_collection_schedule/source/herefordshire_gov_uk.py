@@ -13,7 +13,7 @@ TITLE = "Herefordshire City Council"
 DESCRIPTION = "Source for herefordshire.gov.uk services for hereford"
 URL = "https://herefordshire.gov.uk"
 TEST_CASES = {
-    "houseNumber": {"post_code": "hr49js", "number": "52"},
+    "houseNumber": {"postcode": "hr49js", "number": "52"},
 }
 
 API_URLS = {
@@ -30,8 +30,8 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, post_code: str, number: str):
-        self._post_code = post_code
+    def __init__(self, postcode: str, number: str):
+        self._post_code = postcode
         # keep original behaviour, but normalise for comparisons later
         self._number = str(number).capitalize()
 
@@ -49,7 +49,7 @@ class Source:
             or "results" not in addresses
             or len(addresses["results"]) == 0
         ):
-            raise SourceArgumentNotFound("post_code", self._post_code)
+            raise SourceArgumentNotFound("postcode", self._post_code)
 
         # cast PAO fields to str to avoid .lower() on non-strings (some APIs return ints)
         target = self._number.lower()

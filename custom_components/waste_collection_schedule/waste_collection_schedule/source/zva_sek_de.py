@@ -14,26 +14,26 @@ DESCRIPTION = "Source for ZVA (Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis)
 URL = "https://www.zva-sek.de"
 TEST_CASES = {
     "Fritzlar": {
-        "bezirk": "Fritzlar",
-        "ortsteil": "Fritzlar-kernstadt",
-        "strasse": "Ahornweg",
+        "city": "Fritzlar",
+        "district": "Fritzlar-kernstadt",
+        "street": "Ahornweg",
     },
     "Ottrau": {
-        "bezirk": "Ottrau",
-        "ortsteil": "immichenhain",
-        "strasse": "",
+        "city": "Ottrau",
+        "district": "immichenhain",
+        "street": "",
     },
     "Knüllwald": {
-        "bezirk": "Knüllwald",
-        "ortsteil": "Hergetsfeld",
+        "city": "Knüllwald",
+        "district": "Hergetsfeld",
     },
     "Felsberg": {
-        "bezirk": "Felsberg",
-        "ortsteil": "Felsberg",
+        "city": "Felsberg",
+        "district": "Felsberg",
     },
     "Guxhagen": {
-        "bezirk": "Guxhagen",
-        "ortsteil": "Guxhagen",
+        "city": "Guxhagen",
+        "district": "Guxhagen",
     },
 }
 SERVLET = "https://www.zva-sek.de/module/abfallkalender/generate_ical.php"
@@ -42,10 +42,10 @@ API_URL = "https://www.zva-sek.de/module/abfallkalender/{file}"
 
 
 class Source:
-    def __init__(self, bezirk: str, ortsteil: str, strasse: str | None = None):
-        self._bezirk = bezirk
-        self._ortsteil = ortsteil
-        self._street = strasse if strasse != "" else None
+    def __init__(self, city: str, district: str, street: str | None = None):
+        self._bezirk = city
+        self._ortsteil = district
+        self._street = street if street != "" else None
         self._ics = ICS()
 
     def fetch(self):
@@ -73,7 +73,7 @@ class Source:
 
         if not bezirk_id:
             raise SourceArgumentNotFoundWithSuggestions(
-                "bezirk",
+                "city",
                 self._bezirk,
                 [
                     option.text
@@ -82,7 +82,7 @@ class Source:
                     )
                 ],
             )
-        # get ortsteil id
+        # get district id
         r = session.get(
             API_URL.format(file="get_ortsteile.php"), params={"bez_id": bezirk_id}
         )
@@ -99,7 +99,7 @@ class Source:
 
         if not ortsteil_id:
             raise SourceArgumentNotFoundWithSuggestions(
-                "ortsteil",
+                "district",
                 self._ortsteil,
                 [part.split(" = ")[1][1:-1] for part in r.text.split(";")[2:-1]],
             )

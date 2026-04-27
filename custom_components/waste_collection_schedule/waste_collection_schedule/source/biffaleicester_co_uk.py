@@ -10,7 +10,7 @@ TITLE = "Leicester City Council"
 DESCRIPTION = "Source for city of Leicester, UK."
 URL = "https://www.leicester.gov.uk"
 TEST_CASES = {
-    "30 Mayflower Rd, Leicester LE5 5QD": {"post_code": "LE5 5QD", "number": "30"},
+    "30 Mayflower Rd, Leicester LE5 5QD": {"postcode": "LE5 5QD", "number": "30"},
     "235 Glenfield Rd, Leicester LE3 6DL": {"uprn": "002465020938"},
 }
 
@@ -30,9 +30,9 @@ BINS = {
 
 
 class Source:
-    def __init__(self, uprn=None, post_code=None, number=None):
+    def __init__(self, uprn=None, postcode=None, number=None):
         self._uprn = uprn
-        self._post_code = post_code
+        self._post_code = postcode
         self._number = number
 
     def fetch(self):

@@ -11,19 +11,19 @@ DESCRIPTION = "Source for Horowhenua District Council Rubbish & Recycling collec
 URL = "https://www.horowhenua.govt.nz/"
 TEST_CASES = {
     "House-Shannon": {
-        "post_code": "4821",
+        "postcode": "4821",
         "town": "Shannon",
         "street_name": "Bryce Street",
         "street_number": "55",
     },
     "House-Levin": {
-        "post_code": "5510",
+        "postcode": "5510",
         "town": "Levin",
         "street_name": "McKenzie Street",
         "street_number": "15",
     },
     "Commercial-Foxton": {
-        "post_code": "4814",
+        "postcode": "4814",
         "town": "Foxton",
         "street_name": "State Highway 1",
         "street_number": "18",
@@ -49,8 +49,8 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, post_code: str, town: str, street_name: str, street_number: str):
-        self.post_code = post_code
+    def __init__(self, postcode: str, town: str, street_name: str, street_number: str):
+        self.postcode = postcode
         self.town = town.upper()
         self.street_name = street_name
         self.street_number = street_number
@@ -65,9 +65,7 @@ class Source:
         s.get(q, headers=HEADERS)
 
         # Do initial address search
-        address = (
-            f"{self.street_number} {self.street_name} {self.town} {self.post_code}"
-        )
+        address = f"{self.street_number} {self.street_name} {self.town} {self.postcode}"
         q = requote_uri(str(API_URLS["search"]).format(address))
         r1 = s.get(q, headers=HEADERS)
         data = json.loads(r1.text)

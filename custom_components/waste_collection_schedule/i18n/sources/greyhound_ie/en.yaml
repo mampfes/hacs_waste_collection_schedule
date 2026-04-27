@@ -4,7 +4,6 @@
 ---
 params:
   account_number:
-    description: Account Number
     label: Account Number
   pin:
     description: PIN

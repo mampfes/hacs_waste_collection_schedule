@@ -3,7 +3,7 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  hausnummer:
+  house_number:
     label: House number
   subdomain:
     label: Subdomain

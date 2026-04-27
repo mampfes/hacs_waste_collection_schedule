@@ -3,10 +3,9 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  daysToGenerate:
+  days_to_generate:
     label: 'Number of days to generate for default collection (default: 3)'
-  objectId:
+  object_id:
     description: A valid object ID from the Plano GIS service. You can find this by
       searching for your address on the Plano GIS map and clicking on the address
       to get the object ID.
-    label: Object ID

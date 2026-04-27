@@ -5,10 +5,7 @@
 params:
   municipality:
     description: Municipality URL slug (from the localcities.ch URL)
-    label: Municipality
   municipality_id:
     description: Municipality ID number (from the localcities.ch URL)
-    label: Municipality ID
   zone:
     description: Collection zone or locality name
-    label: Zone

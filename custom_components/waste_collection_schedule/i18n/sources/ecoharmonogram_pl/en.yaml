@@ -6,12 +6,6 @@ params:
   additional_sides_matcher:
     description: Additional matcher for collection sides
     label: Additional Sides Matcher
-  community:
-    description: Community
-    label: Community
-  district:
-    description: District
-    label: District
   g1:
     description: Select Collection group to limit results to a specific group within
       a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month).
@@ -38,14 +32,7 @@ params:
       Leave empty and only fill if it fails, you'll then see a list of available groups.
     label: Group 5
   house_number:
-    description: House number
     label: House number
   language:
     description: Language for waste type names (pl, en, uk, ru)
     label: Language
-  street:
-    description: Street
-    label: Street
-  town:
-    description: Town
-    label: Town

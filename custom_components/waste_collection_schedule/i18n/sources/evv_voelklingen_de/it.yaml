@@ -5,9 +5,7 @@
 params:
   behaelter:
     label: Contenitori
-  hausnummer:
-    label: numero civico
-  ortsteil:
+  district:
     label: frazione
-  strasse:
-    label: Strada
+  house_number:
+    label: numero civico

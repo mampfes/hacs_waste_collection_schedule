@@ -5,4 +5,3 @@
 params:
   address:
     description: Address slug as it appears in the URL, e.g. 'blåbærlia-16' or 'storgata-1'
-    label: Address

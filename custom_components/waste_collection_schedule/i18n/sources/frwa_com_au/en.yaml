@@ -4,12 +4,8 @@
 ---
 params:
   district:
-    description: The district name of the property, as displayed on the FRWA web site.
     label: The district name of the property, as displayed on the FRWA web site.
   name_or_number:
-    description: The number or name of the property, as displayed on the FRWA web
-      site.
     label: The number or name of the property, as displayed on the FRWA web site.
   street:
-    description: The street name of the property, as displayed on the FRWA web site.
     label: The street name of the property, as displayed on the FRWA web site.

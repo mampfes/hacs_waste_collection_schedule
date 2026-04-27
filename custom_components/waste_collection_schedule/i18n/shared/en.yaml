@@ -6,73 +6,221 @@
 # Spell-checked against en_US dictionary by pyspelling.
 ---
 params:
-  abf_suche:
-    label: Search
+  address:
+    label: Address
+  address_id:
+    label: Address ID
   address_name_number:
     label: Address Name or Number
-  bezirk:
+  address_no:
+    label: Address Number
+  address_suffix:
+    label: Address Suffix
+  api_key:
+    label: API Key
+  area:
+    label: Area
+  bill_number:
+    label: Bill Number
+  building_number:
+    label: Building Number
+  calendar:
+    label: Calendar
+  calendar_splitter:
+    label: Calendar Splitter
+  calendar_title:
+    label: Calendar Title
+  calendar_title_separator:
+    label: Calendar Title Separator
+  city:
+    label: City
+  city_id:
+    label: City ID
+  city_part:
+    label: City Part
+  client:
+    label: Client
+  community:
+    label: Community
+  company:
+    label: Company
+  council:
+    label: Council
+  count:
+    label: Count
+  county_id:
+    label: County ID
+  customer:
+    label: Customer
+  dates:
+    label: Dates
+  district:
     label: District
-  gemeinde:
-    label: Municipality
-  hausnr:
-    label: House Number
-  hausnummer:
-    label: House Number
-  hnr:
-    label: House Number
-  houseNo:
-    label: House Number
-  housenameornumber:
+  district_id:
+    label: District ID
+  door_num:
+    label: Door Number
+  email:
+    label: Email
+  excludes:
+    label: Excludes
+  file:
+    label: File
+  frequency:
+    label: Frequency
+  hn_id:
+    label: House Number ID
+  house:
+    label: House
+  house_id:
+    label: House ID
+  house_letter:
+    label: House Letter
+  house_name:
+    label: House Name
+  house_name_or_number:
     label: House Name or Number
-  housenumber:
+  house_number:
     label: House Number
-  housenumberorname:
+  house_number_or_name:
     label: House Number or Name
-  hpid:
-    label: HPID
-  kommune:
-    label: Municipality
-  ladeort:
-    label: Loading Location
+  id:
+    label: ID
+  id_house_number:
+    label: House Number ID
+  ignored_containers:
+    label: Ignored Containers
+  interval:
+    label: Interval
+  kund_nr:
+    label: Customer Number
   lat:
     label: Latitude
+  location:
+    label: Location
+  location_id:
+    label: Location ID
   lon:
     label: Longitude
-  ort:
-    label: City
-  ortsgemeinde:
-    label: Local Community
-  ortsteil:
-    label: District
+  method:
+    label: Method
+  municipal:
+    label: Municipal
+  municipality:
+    label: Municipality
+  municipality_id:
+    label: Municipality ID
+  name:
+    label: Name
+  number:
+    label: Number
+  object_id:
+    label: Object ID
+  operator:
+    label: Operator
   params:
     label: Parameters
-  postCode:
-    label: Postcode
-  post_code:
-    label: Postcode
+  password:
+    label: Password
+  phone:
+    label: Phone
+  pid:
+    label: PID
   postcode:
     label: Postcode
-  stadt:
-    label: City
-  stadtteil:
-    label: District
-  strasse:
+  predict:
+    label: Predict
+  prem_code:
+    label: Premises Code
+  premises_id:
+    label: Premises ID
+  project_id:
+    label: Project ID
+  property:
+    label: Property
+  property_id:
+    label: Property ID
+  property_location:
+    label: Property Location
+  property_no:
+    label: Property Number
+  radius:
+    label: Radius
+  region:
+    label: Region
+  registration_number:
+    label: Registration Number
+  road_name:
+    label: Road Name
+  sector:
+    label: Sector
+  service:
+    label: Service
+  service_id:
+    label: Service ID
+  service_provider:
+    label: Service Provider
+  show_nights:
+    label: Show Nights
+  start:
+    label: Start
+  state:
+    label: State
+  street:
     label: Street
-  teilgebiet:
-    label: Subarea
-  turnus:
-    label: Cycle
+  street_address:
+    label: Street Address
+  street_code:
+    label: Street Code
+  street_id:
+    label: Street ID
+  street_index:
+    label: Street Index
+  street_name:
+    label: Street Name
+  street_number:
+    label: Street Number
+  street_town:
+    label: Street Town
+  suburb:
+    label: Suburb
+  suffix:
+    label: Suffix
+  territory:
+    label: Territory
+  town:
+    label: Town
+  types:
+    label: Types
+  unit_number:
+    label: Unit Number
+  until:
+    label: Until
   uprn:
     label: UPRN
     description: >-
       An easy way to discover your Unique Property Reference Number (UPRN) is
       by going to https://www.findmyaddress.co.uk/ and entering in your address
       details.
-  zipCode:
-    label: ZIP Code
+  url:
+    label: URL
+  username:
+    label: Username
+  values:
+    label: Values
+  verify_ssl:
+    label: Verify SSL
+  version:
+    label: Version
+  village:
+    label: Village
+  waste_types:
+    label: Waste Types
+  weekdays:
+    label: Weekdays
   zip_code:
     label: ZIP Code
-  zipcode:
-    label: ZIP Code
-  zusatz:
-    label: Addition
+  zone:
+    label: Zone
+  zone_id:
+    label: Zone ID

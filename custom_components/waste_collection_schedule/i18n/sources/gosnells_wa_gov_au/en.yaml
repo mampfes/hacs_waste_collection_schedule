@@ -4,7 +4,5 @@
 ---
 params:
   address:
-    description: Your street name and house number as it appears on the City of Gosnells
-      website
     label: Your street name and house number as it appears on the City of Gosnells
       website

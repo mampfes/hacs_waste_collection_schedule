@@ -22,50 +22,50 @@ def EXTRA_INFO():
 TEST_CASES = {
     "Aachen, Abteiplatz 7": {
         "service": "aachen",
-        "ort": "Aachen",
-        "strasse": "Abteiplatz",
-        "hausnummer": "7",
+        "city": "Aachen",
+        "street": "Abteiplatz",
+        "house_number": "7",
     },
     "Lindlar, Aggerweg": {
         "service": "bav",
-        "ort": "Lindlar",
-        "strasse": "Aggerweg",
+        "city": "Lindlar",
+        "street": "Aggerweg",
     },
     "Overath, Hauptstraße": {
         "service": "bav",
-        "ort": "Overath",
-        "strasse": "Hauptstraße",
+        "city": "Overath",
+        "street": "Hauptstraße",
     },
     "Roetgen, Am Sportplatz 2": {
         "service": "zew2",
-        "ort": "Roetgen",
-        "strasse": "Am Sportplatz",
-        "hausnummer": "2",
+        "city": "Roetgen",
+        "street": "Am Sportplatz",
+        "house_number": "2",
     },
     "nds Norderstedt Adenauerplatz": {
         "service": "nds",
-        "ort": "Norderstedt",
-        "strasse": "Distelweg",
+        "city": "Norderstedt",
+        "street": "Distelweg",
     },
     "una Bergkamen, Agnes-Miegel-Str.": {
         "service": "unna",
-        "ort": "Bergkamen",
-        "strasse": "Agnes-Miegel-Str.",
+        "city": "Bergkamen",
+        "street": "Agnes-Miegel-Str.",
     },
     "Pinneberg Kummerfeld no Street": {
         "service": "pi",
-        "ort": "Kummerfeld",
-        "strasse": "alle Straßen",
+        "city": "Kummerfeld",
+        "street": "alle Straßen",
     },
     "Cuxhaven": {
         "service": "cux",
-        "ort": "Cuxhaven",
-        "strasse": "Zur Holter Höhe",
+        "city": "Cuxhaven",
+        "street": "Zur Holter Höhe",
     },
     "frankenthal, Am Martinspfad": {
         "service": "frankenthal",
-        "ort": "Frankenthal",
-        "strasse": "Am Martinspfad",
+        "city": "Frankenthal",
+        "street": "Am Martinspfad",
     },
 }
 
@@ -74,15 +74,15 @@ class Source:
     def __init__(
         self,
         service: str,
-        ort: str,
-        strasse: str | None = None,
-        hausnummer: str | int | None = None,
+        city: str,
+        street: str | None = None,
+        house_number: str | int | None = None,
     ):
         self._api = AbfallnaviDe(service)
-        self._ort = ort
-        self._strasse = strasse
+        self._ort = city
+        self._strasse = street
         self._hausnummer = (
-            str(hausnummer) if isinstance(hausnummer, int) else hausnummer
+            str(house_number) if isinstance(house_number, int) else house_number
         )
 
     def fetch(self):

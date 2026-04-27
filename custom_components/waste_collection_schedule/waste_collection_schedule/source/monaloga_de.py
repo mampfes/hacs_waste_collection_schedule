@@ -10,7 +10,7 @@ URL = "https://www.monaloga.de/"
 TEST_CASES = {
     "Adolf-Clarenbach-Straße 42899": {
         "street": "Adolf-Clarenbach-Straße",
-        "plz": 42899,
+        "postcode": 42899,
     },
     "Alte Wendung": {"street": "Alte Wendung"},
 }
@@ -38,9 +38,9 @@ API_URL = "https://www.monaloga.de/mportal/awista-logistik/stadt-remscheid/index
 
 
 class Source:
-    def __init__(self, street: str, plz: str | int | None = None):
+    def __init__(self, street: str, postcode: str | int | None = None):
         self._street: str = street
-        self._plz: str | None = str(plz).strip() if plz else None
+        self._plz: str | None = str(postcode).strip() if postcode else None
 
     def fetch(self):
         args = {

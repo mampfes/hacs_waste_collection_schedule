@@ -13,9 +13,9 @@ URL = "https://www.saalfelden.at"
 COUNTRY = "at"
 
 TEST_CASES = {
-    "Achenweg 1": {"strasse": "Achenweg", "hausnummer": 1},
-    "Abdeckerweg 5": {"strasse": "Abdeckerweg", "hausnummer": "5"},
-    "Achenweg 4a": {"strasse": "Achenweg", "hausnummer": "4a"},
+    "Achenweg 1": {"street": "Achenweg", "house_number": 1},
+    "Abdeckerweg 5": {"street": "Abdeckerweg", "house_number": "5"},
+    "Achenweg 4a": {"street": "Achenweg", "house_number": "4a"},
 }
 
 ICON_MAP = {
@@ -54,9 +54,9 @@ LOOKAHEAD_DAYS = 365
 
 
 class Source:
-    def __init__(self, strasse: str, hausnummer):
-        self._strasse = str(strasse).strip()
-        self._hausnummer = str(hausnummer).strip()
+    def __init__(self, street: str, house_number):
+        self._strasse = str(street).strip()
+        self._hausnummer = str(house_number).strip()
 
     def fetch(self) -> list[Collection]:
         session = requests.Session()
@@ -93,7 +93,7 @@ class Source:
                     break
         if street_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "strasse", self._strasse, sorted(name_to_id)
+                "street", self._strasse, sorted(name_to_id)
             )
 
         strassen_arr = self._parse_strassen_arr(html)
@@ -108,11 +108,11 @@ class Source:
                 if hnr_text.casefold() == self._hausnummer.casefold():
                     return hnr[2]
             raise SourceArgumentNotFoundWithSuggestions(
-                "hausnummer", self._hausnummer, hnr_labels
+                "house_number", self._hausnummer, hnr_labels
             )
 
         raise SourceArgumentNotFoundWithSuggestions(
-            "strasse", self._strasse, sorted(name_to_id)
+            "street", self._strasse, sorted(name_to_id)
         )
 
     @staticmethod

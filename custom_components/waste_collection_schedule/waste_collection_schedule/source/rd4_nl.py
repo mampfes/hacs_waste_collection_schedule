@@ -6,7 +6,7 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Rd4"
 DESCRIPTION = "Source for Rd4."
 URL = "https://rd4.nl/"
-TEST_CASES = {"6417 AT 32": {"postal_code": "6417 AT", "house_number": 32}}
+TEST_CASES = {"6417 AT 32": {"postcode": "6417 AT", "house_number": 32}}
 
 
 ICON_MAP = {
@@ -24,8 +24,8 @@ API_URL = "https://data.rd4.nl/api/v1/waste-calendar"
 
 
 class Source:
-    def __init__(self, postal_code: str, house_number: str | int):
-        self._postal_code: str = postal_code
+    def __init__(self, postcode: str, house_number: str | int):
+        self._postal_code: str = postcode
         self._house_number: str | int = house_number
 
     def fetch(self) -> list[Collection]:

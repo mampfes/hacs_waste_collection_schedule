@@ -4,8 +4,6 @@
 ---
 params:
   house_number:
-    description: Numero civico
     label: Numero civico
   street:
-    description: Via
     label: Via

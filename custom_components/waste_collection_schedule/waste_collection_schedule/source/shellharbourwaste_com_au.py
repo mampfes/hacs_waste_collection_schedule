@@ -8,7 +8,10 @@ TITLE = "Shellharbour City Council"
 DESCRIPTION = "Source script for shellharbourwaste.com.au"
 URL = "https://shellharbourwaste.com.au"
 COUNTRY = "au"
-TEST_CASES = {"TestName1": {"zoneID": "Monday A"}, "TestName2": {"zoneID": "Friday A"}}
+TEST_CASES = {
+    "TestName1": {"zone_id": "Monday A"},
+    "TestName2": {"zone_id": "Friday A"},
+}
 
 API_URL = "https://www.shellharbourwaste.com.au/waste-collection"
 
@@ -19,10 +22,10 @@ ICON_MAP = {
 }
 
 
-def findUrl(zoneID):
+def findUrl(zone_id):
     # Take Zone ID and find url to parse
     r = requests.get(
-        f"https://www.shellharbourwaste.com.au/wp-json/rb_co/v1/get-waste-url?zone={zoneID}"
+        f"https://www.shellharbourwaste.com.au/wp-json/rb_co/v1/get-waste-url?zone={zone_id}"
     )
     r.raise_for_status
     d = r.json()
@@ -30,8 +33,8 @@ def findUrl(zoneID):
 
 
 class Source:
-    def __init__(self, zoneID):
-        self._zoneID = zoneID
+    def __init__(self, zone_id):
+        self._zoneID = zone_id
 
     def fetch(self):
         data = {"Referer": "https://www.shellharbourwaste.com.au/find-my-bin-day/"}

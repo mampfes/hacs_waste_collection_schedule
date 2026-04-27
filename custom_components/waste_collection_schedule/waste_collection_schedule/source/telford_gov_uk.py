@@ -16,8 +16,8 @@ URL = "https://www.telford.gov.uk"
 
 TEST_CASES = {
     "10 Long Row Drive, Lawley": {"uprn": "000452097493"},
-    "126 Dunsheath, Telford": {"post_code": "TF3 2DA", "name_number": "126"},
-    "11 Pinewoods, Telford": {"post_code": "TF10 9LN", "name_number": "11"},
+    "126 Dunsheath, Telford": {"postcode": "TF3 2DA", "name_number": "126"},
+    "11 Pinewoods, Telford": {"postcode": "TF10 9LN", "name_number": "11"},
 }
 
 API_URLS = {
@@ -38,8 +38,8 @@ IMAGEPATH = "https://dac.telford.gov.uk/BinDayFinder/Content/BinIcons/"
 
 
 class Source:
-    def __init__(self, post_code=None, name_number=None, uprn=None):
-        self._post_code = post_code
+    def __init__(self, postcode=None, name_number=None, uprn=None):
+        self._post_code = postcode
         self._name_number = name_number
         self._uprn = uprn
 
@@ -51,7 +51,7 @@ class Source:
             r = requests.get(API_URLS["address_search"], params=params)
             if r.status_code == 500:
                 raise SourceArgumentException(
-                    "post_code",
+                    "postcode",
                     "Postcode is not in the correct format or service is unavailable",
                 )
 
@@ -60,7 +60,7 @@ class Source:
             # Required to parse the returned JSON
             addresses = json.loads(r.json())
             if len(addresses["properties"]) == 0:
-                raise SourceArgumentNotFound("post_code", self._post_code)
+                raise SourceArgumentNotFound("postcode", self._post_code)
 
             for property in addresses["properties"]:
                 if property["PrimaryName"].lower() == self._name_number.lower():

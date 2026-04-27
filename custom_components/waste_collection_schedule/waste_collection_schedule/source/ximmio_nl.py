@@ -20,12 +20,12 @@ def EXTRA_INFO():
 
 
 TEST_CASES = {
-    "ACV Group": {"company": "acv", "post_code": "6721MH", "house_number": 1},
-    "Meerlanden": {"company": "meerlanden", "post_code": "1435BX", "house_number": 650},
-    "Almere": {"company": "almere", "post_code": "1318NG", "house_number": 15},
+    "ACV Group": {"company": "acv", "postcode": "6721MH", "house_number": 1},
+    "Meerlanden": {"company": "meerlanden", "postcode": "1435BX", "house_number": 650},
+    "Almere": {"company": "almere", "postcode": "1318NG", "house_number": 15},
     "Woerden": {
         "company": "woerdenoudewater",
-        "post_code": "3441AX",
+        "postcode": "3441AX",
         "house_number": 1,
     },
 }
@@ -145,8 +145,8 @@ def get_service_name_map():
 
 
 class Source:
-    def __init__(self, company, post_code, house_number):
-        self._post_code = post_code
+    def __init__(self, company, postcode, house_number):
+        self._post_code = postcode
         self._house_number = house_number
         self._url = SERVICE_URLS.get(company, "https://wasteapi.ximmio.com")
         self._company_code = get_service_name_map()[company]

@@ -19,8 +19,8 @@ TEST_CASES = {
         "street_id": "4321",
     },
     "Gaal by names": {
-        "gemeinde": "Gaal",
-        "strasse": "Gaal",
+        "municipality": "Gaal",
+        "street": "Gaal",
     },
 }
 
@@ -72,13 +72,13 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 class Source:
     def __init__(
         self,
-        gemeinde: str | None = None,
-        strasse: str | None = None,
+        municipality: str | None = None,
+        street: str | None = None,
         gemeinde_id: str | int | None = None,
         street_id: str | int | None = None,
     ):
-        self._gemeinde = self._clean(gemeinde)
-        self._strasse = self._clean(strasse)
+        self._gemeinde = self._clean(municipality)
+        self._strasse = self._clean(street)
         self._gemeinde_id = self._clean(gemeinde_id)
         self._street_id = self._clean(street_id)
 
@@ -139,7 +139,7 @@ class Source:
 
         if not self._gemeinde:
             raise SourceArgumentRequired(
-                "gemeinde", "or provide 'gemeinde_id' as an alternative."
+                "municipality", "or provide 'gemeinde_id' as an alternative."
             )
 
         payload = self._request_json(
@@ -194,11 +194,11 @@ class Source:
                 for match in exact_matches_with_id
             ]
             raise SourceArgAmbiguousWithSuggestions(
-                "gemeinde", self._gemeinde, self._deduplicate(suggestions)
+                "municipality", self._gemeinde, self._deduplicate(suggestions)
             )
 
         raise SourceArgumentNotFoundWithSuggestions(
-            "gemeinde",
+            "municipality",
             self._gemeinde,
             self._build_suggestions(self._gemeinde, all_names_with_id),
         )
@@ -243,7 +243,7 @@ class Source:
 
         if not self._strasse:
             raise SourceArgumentRequired(
-                "strasse", "or provide 'street_id' as an alternative."
+                "street", "or provide 'street_id' as an alternative."
             )
 
         exact_matches = [
@@ -257,7 +257,7 @@ class Source:
 
         if len(exact_matches) > 1:
             raise SourceArgAmbiguousWithSuggestions(
-                "strasse",
+                "street",
                 self._strasse,
                 [
                     self._format_street_suggestion(name, sid)
@@ -266,7 +266,7 @@ class Source:
             )
 
         raise SourceArgumentNotFoundWithSuggestions(
-            "strasse",
+            "street",
             self._strasse,
             self._build_suggestions(self._strasse, [name for name, _ in street_pairs]),
         )

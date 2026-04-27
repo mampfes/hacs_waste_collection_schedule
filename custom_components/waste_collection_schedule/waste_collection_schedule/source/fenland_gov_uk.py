@@ -12,8 +12,8 @@ TITLE = "Fenland District Council"
 DESCRIPTION = "Source script for fenland.gov.uk services for Fenland"
 URL = "https://www.fenland.gov.uk/"
 TEST_CASES = {
-    "Address1": {"post_code": "PE13 1JR", "house_number": "Flat 1"},
-    "Address2": {"post_code": "PE15 0SD", "house_number": 1},
+    "Address1": {"postcode": "PE13 1JR", "house_number": "Flat 1"},
+    "Address2": {"postcode": "PE15 0SD", "house_number": 1},
 }
 
 ICON_MAP = {
@@ -26,8 +26,8 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, post_code: str, house_number: str):
-        self._post_code = post_code
+    def __init__(self, postcode: str, house_number: str):
+        self._post_code = postcode
         self._house_number = house_number
 
     def fetch(self):
@@ -41,7 +41,7 @@ class Source:
 
         addresses = r.json()
         if len(addresses) == 0:
-            raise SourceArgumentNotFound("post_code", self._post_code)
+            raise SourceArgumentNotFound("postcode", self._post_code)
 
         address_ids = [
             address

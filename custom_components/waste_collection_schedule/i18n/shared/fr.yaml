@@ -2,8 +2,6 @@
 # Vérifié orthographiquement par pyspelling avec le dictionnaire fr_FR.
 ---
 params:
-  abf_suche:
-    label: Recherche
   addition:
     label: Ajout
   address:
@@ -14,14 +12,10 @@ params:
     label: Code postal
   address_street:
     label: Rue
-  addressNo:
-    label: Numéro d'adresse
   api_key:
     label: Clé API
   area:
     label: Zone
-  bezirk:
-    label: District
   bill_number:
     label: Numéro de facture
   building_number:
@@ -56,20 +50,8 @@ params:
     label: Numéro de porte
   email:
     label: E-mail
-  gemeinde:
-    label: Municipalité
-  hausnr:
-    label: Numéro civique
-  hausnummer:
-    label: Numéro civique
-  hnr:
-    label: Numéro civique
   house:
     label: Maison
-  houseID:
-    label: ID de maison
-  houseNo:
-    label: Numéro civique
   house_letter:
     label: Lettre de maison
   house_name:
@@ -78,18 +60,6 @@ params:
     label: Numéro civique
   house_number_or_name:
     label: Numéro civique
-  housenameornumber:
-    label: Numéro civique
-  housenumber:
-    label: Numéro civique
-  housenumberorname:
-    label: Numéro civique
-  hpid:
-    label: HPID
-  kommune:
-    label: Municipalité
-  ladeort:
-    label: Chargement de la localisation
   lat:
     label: Latitude
   location:
@@ -110,32 +80,16 @@ params:
     label: Numéro
   operator:
     label: Opérateur
-  ort:
-    label: Ville
-  ortsgemeinde:
-    label: Communauté
-  ortsteil:
-    label: District
   params:
     label: Paramètres
   password:
     label: Mot de passe
   phone:
     label: Téléphone
-  plz:
-    label: Code postal
-  postCode:
-    label: Code postal
-  post_code:
-    label: Code postal
-  postal_code:
-    label: Code postal
   postcode:
     label: Code postal
   property:
     label: Propriété
-  propertyID:
-    label: ID de propriété
   property_id:
     label: ID de propriété
   property_location:
@@ -146,8 +100,6 @@ params:
     label: Rayon
   region:
     label: Région
-  road:
-    label: Route
   road_name:
     label: Nom de route
   sector:
@@ -158,22 +110,10 @@ params:
     label: ID de service
   service_provider:
     label: Fournisseur de services
-  stadt:
-    label: Ville
-  stadtteil:
-    label: District
   state:
     label: État
-  strasse:
-    label: Rue
   street:
     label: Rue
-  streetId:
-    label: ID de rue
-  streetIndex:
-    label: Index de rue
-  streetName:
-    label: Nom de rue
   street_address:
     label: Adresse de rue
   street_code:
@@ -186,12 +126,8 @@ params:
     label: Numéro de rue
   subdomain:
     label: Sous-domaine
-  teilgebiet:
-    label: Sous-zone
   town:
     label: Ville
-  turnus:
-    label: Cycle
   uprn:
     label: UPRN
     description: >-
@@ -208,17 +144,9 @@ params:
     label: Version
   village:
     label: Village
-  zipCode:
-    label: Code postal
   zip_code:
-    label: Code postal
-  zipcode:
     label: Code postal
   zone:
     label: Zone
-  zoneID:
-    label: ID de zone
   zone_id:
     label: ID de zone
-  zusatz:
-    label: Ajout

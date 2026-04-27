@@ -7,9 +7,9 @@ TITLE = "Odense Renovation"
 DESCRIPTION = "Source for Odense Renovation"
 URL = "https://odenserenovation.dk"
 TEST_CASES = {
-    "Jernbanegade 19, Odense C": {"addressNo": 122518},
-    "Nyborgvej 3, Odense C": {"addressNo": 133517},
-    "Næsbyhave 105, Odense N": {"addressNo": 134008},
+    "Jernbanegade 19, Odense C": {"address_no": 122518},
+    "Nyborgvej 3, Odense C": {"address_no": 133517},
+    "Næsbyhave 105, Odense N": {"address_no": 134008},
 }
 
 API_URL = "https://mit.odenserenovation.dk/api/Calendar/GetCalendarByAddress"
@@ -25,8 +25,8 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, addressNo: int):
-        self.addressNo = addressNo
+    def __init__(self, address_no: int):
+        self.address_no = address_no
 
     def fetch(self):
         fromDate = datetime.now()
@@ -35,7 +35,7 @@ class Source:
         response = requests.get(
             API_URL,
             params={
-                "addressNo": self.addressNo,
+                "addressNo": self.address_no,
                 "startDate": fromDate.isoformat(),
                 "endDate": toDate.isoformat(),
                 "noCache": False,

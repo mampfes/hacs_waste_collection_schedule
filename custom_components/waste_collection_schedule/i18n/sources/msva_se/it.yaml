@@ -12,7 +12,7 @@ params:
   house_number:
     description: Numero civico, es. '18'.
     label: Numero civico
-  postal_code:
+  postcode:
     description: Codice postale svedese di cinque cifre, es. '85461'.
     label: Codice postale
   street:

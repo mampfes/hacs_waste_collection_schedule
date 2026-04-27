@@ -4,7 +4,6 @@
 ---
 params:
   huisnummer:
-    description: House number
     label: House number
   postcode:
     description: Dutch postal code (4 digits + 2 letters), e.g. 4702AA

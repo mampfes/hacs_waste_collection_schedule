@@ -9,4 +9,3 @@ params:
     label: House number to collect from is even
   street:
     description: The street you want to get the waste collection schedule for.
-    label: Street

@@ -5,7 +5,5 @@
 params:
   city:
     description: City name (e.g. 'Bad Schwartau')
-    label: City
   street:
     description: Street name (optional for some cities)
-    label: Street

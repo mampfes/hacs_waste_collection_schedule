@@ -36,24 +36,24 @@ TEST_CASES = {
         "customer": "ikb",
         "city": "Innsbruck",
         "street": "Achselkopfweg",
-        "housenumber": "1",
+        "house_number": "1",
     },
     "salzburg": {
         "customer": "salzburg",
         "city": "Salzburg",
         "street": "Adolf-Schemel-Straße",
-        "housenumber": "13",
+        "house_number": "13",
     },
 }
 
 
 class Source:
-    def __init__(self, customer, zone=None, city=None, street=None, housenumber=None):
+    def __init__(self, customer, zone=None, city=None, street=None, house_number=None):
         self._customer = customer
         self._zone = zone
         self._city = city
         self._street = street
-        self._housenumber = None if housenumber is None else str(housenumber)
+        self._housenumber = None if house_number is None else str(house_number)
         self._ics = ICS()
 
     def fetch(self):
@@ -134,7 +134,7 @@ class Source:
                 for d in dates:
                     entries.append(Collection(d[0], d[1]))
 
-            # we will use city, street and housenumber instead of zone
+            # we will use city, street and house_number instead of zone
             else:
                 # CITY
                 # get available cities for calendar year
@@ -218,14 +218,14 @@ class Source:
 
                 housenumberId = 0
 
-                # try to find the configured and matching housenumber
-                for housenumber in response:
-                    if self._housenumber in housenumber:
+                # try to find the configured and matching house_number
+                for house_number in response:
+                    if self._housenumber in house_number:
                         housenumberId = self._housenumber
 
                 if housenumberId == 0:
                     _LOGGER.warning(
-                        f"housenumber '{self._housenumber}' not found in calendar year {calendarYearName}, continuing with next calendar year ..."
+                        f"house_number '{self._housenumber}' not found in calendar year {calendarYearName}, continuing with next calendar year ..."
                     )
                     continue
 
@@ -237,7 +237,7 @@ class Source:
                     "outputType": "ical",
                 }
 
-                # get ical data for year and city, street, housenumber
+                # get ical data for year and city, street, house_number
                 url = f"{baseUrl}/v2/export"
                 response = requests.get(url, params=params)
                 response.raise_for_status()

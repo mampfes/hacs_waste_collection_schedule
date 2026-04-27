@@ -5,7 +5,5 @@
 params:
   city:
     description: Municipality name (e.g. 'Steinhagen', 'Warendorf')
-    label: City
   street:
     description: Street name — use exact spelling from the provider's calendar
-    label: Street

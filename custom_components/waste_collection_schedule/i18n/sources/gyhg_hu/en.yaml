@@ -4,11 +4,8 @@
 ---
 params:
   city:
-    description: City name
     label: City name
   house_number:
-    description: House number
     label: House number
   street:
-    description: Street name
     label: Street name

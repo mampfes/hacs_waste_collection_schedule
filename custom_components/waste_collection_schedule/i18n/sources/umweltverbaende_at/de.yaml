@@ -5,8 +5,6 @@
 # parameter name.
 ---
 params:
-  addition:
-    label: Zusatz
   calendar:
     label: Kalender
   calendar_splitter:
@@ -15,13 +13,7 @@ params:
     label: Kalendertitel Separator
   district:
     label: Gebiet/Service provider id
-  hnr:
-    label: Hausnummer
-  municipal:
-    label: Gemeinde
-  plz:
+  postcode:
     label: Postleitzahl
-  street:
-    label: Straße
   town:
     label: Ort

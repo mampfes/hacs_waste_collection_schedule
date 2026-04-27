@@ -41,7 +41,7 @@ class Source:
     def __init__(
         self,
         premises_id: int | None = None,
-        post_code: str | None = None,
+        postcode: str | None = None,
         house_number: str | None = None,
     ):
         self._premises_id = premises_id

@@ -10,114 +10,114 @@ TEST_CASES = {
     "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
         "app_id": "de.k4systems.abfallappnf",
         "city": "Ahrenviöl",
-        "strasse": "Alle Straßen",
+        "street": "Alle Straßen",
     },
     "de.albagroup.app Braunschweig Hauptstraße 7A  ": {
         "app_id": "de.albagroup.app",
         "city": "Braunschweig",
-        "strasse": "Hauptstraße",
-        "hnr": "7A",
+        "street": "Hauptstraße",
+        "house_number": "7A",
     },
     "de.k4systems.bonnorange Auf dem Hügel": {
         "app_id": "de.k4systems.bonnorange",
         "city": "A",  # First letter of street required
-        "strasse": "Auf dem Hügel",
-        "hnr": 6,
+        "street": "Auf dem Hügel",
+        "house_number": 6,
     },
     "de.ucom.abfallavr Brühl Habichtstr. 4A": {
         "app_id": "de.ucom.abfallavr",
-        "strasse": "Habichtstr.",
-        "hnr": "4A",
+        "street": "Habichtstr.",
+        "house_number": "4A",
         "city": "Brühl",
     },
     "de.k4systems.abfallappwug Bergen hauptstr. 1": {
         "app_id": "de.k4systems.abfallappwug",
-        "strasse": "Alle Straßen",
+        "street": "Alle Straßen",
         "city": "Bergen",
     },
     "de.k4systems.abfallappcux Wurster Nordseeküste Aakweg Alle Hausnummern": {
         "app_id": "de.k4systems.abfallappcux",
-        "strasse": "Aakweg",
-        "hnr": "Alle Hausnummern",
+        "street": "Aakweg",
+        "house_number": "Alle Hausnummern",
         "city": "Wurster Nordseeküste",
     },
     "de.abfallwecker Mutzschen, Am Lindigt 1": {
         "app_id": "de.abfallwecker",
         "city": "Dahlen",
-        "strasse": "Hauptstraße",
-        "hnr": 2,
+        "street": "Hauptstraße",
+        "house_number": 2,
         "bundesland": "Sachsen",
         "landkreis": "Landkreis Nordsachsen",
     },
     "de.k4systems.leipziglk Brandis Brandis": {
         "app_id": "de.k4systems.leipziglk",
         "city": "Brandis",
-        "bezirk": "Brandis",
+        "district": "Brandis",
     },
     "de.k4systems.leipziglk Machern Machern": {
         "app_id": "de.k4systems.leipziglk",
         "city": "Machern",
-        "bezirk": "Machern",
-        "strasse": "alle Straßen",
+        "district": "Machern",
+        "street": "alle Straßen",
     },
     "de.k4systems.lkgoettingen, Abfallwirtschaft Altkreis Göttingen,  Adelebsen, Alle Straßen": {
         "app_id": "de.k4systems.lkgoettingen",
         "landkreis": "Abfallwirtschaft Altkreis Göttingen",
         "city": "Adelebsen",
-        "strasse": "Alle Straßen",
-        "bezirk": "Adelebsen",
+        "street": "Alle Straßen",
+        "district": "Adelebsen",
     },
     # MORE TEST CASES UNCOMMENT IF NEEDED FOR DEBUGGING
     # "de.k4systems.zakb Fürth Ahornweg 3": {
     #     "app_id": "de.k4systems.zakb",
-    #     "strasse": "Ahornweg",
-    #     "hnr": "3",
+    #     "street": "Ahornweg",
+    #     "house_number": "3",
     #     "city": "Fürth",
     # },
     # "de.albagroup.app Kreis Oberhavel, Region Marwitz, Oberkrämer, Dreihügelweg  ": {
     #     "app_id": "de.albagroup.app",
-    #     "bezirk": "Marwitz",
+    #     "district": "Marwitz",
     #     "city": "Oberkrämer",
-    #     "strasse": "Dreihügelweg",
+    #     "street": "Dreihügelweg",
     #     "landkreis": "Oberhavel",
     # },
     # "de.k4systems.avea Leverkusen Haberstr.": {
     #     "app_id": "de.k4systems.avea",
-    #     "strasse": "Haberstr.",
+    #     "street": "Haberstr.",
     #     "city": "Leverkusen",
     # },
     # "de.k4systems.abfallappog Bad Peterstal-Griesbach alle Straßen": {
     #     "app_id": "de.k4systems.abfallappog",
-    #     "strasse": "Alle Straßen",
+    #     "street": "Alle Straßen",
     #     "city": "Bad Peterstal-Griesbach",
     # },
     # "de.k4systems.abfallappfuerth Großhabersdorf Am Dürren Grund 1 a": {
     #     "app_id": "de.k4systems.abfallappfuerth",
-    #     "strasse": "Am Dürren Grund",
-    #     "hnr": "1",
+    #     "street": "Am Dürren Grund",
+    #     "house_number": "1",
     #     "city": "Großhabersdorf",
     # },
     # "de.k4systems.awbgp Bad Boll Ahornstraße Alle Hausnummern": {
     #     "app_id": "de.k4systems.awbgp",
-    #     "strasse": "Ahornstraße",
-    #     "hnr": "Alle Hausnummern",
+    #     "street": "Ahornstraße",
+    #     "house_number": "Alle Hausnummern",
     #     "city": "Bad Boll",
     # },
-    # "de.k4systems.abfalllkbz Hoyerswerda bezirk: WK VIII": {
+    # "de.k4systems.abfalllkbz Hoyerswerda district: WK VIII": {
     #     "app_id": "de.k4systems.abfalllkbz",
-    #     "bezirk": "WK VIII",
+    #     "district": "WK VIII",
     #     "city": "Hoyerswerda",
     # },
     # "de.idcontor.abfallwbd Duisburg, Rahm Am Junkersknappen 6": {
     #     "app_id": "de.idcontor.abfallwbd",
-    #     "strasse": "Am Junkersknappen",
-    #     "bezirk": "Rahm",
-    #     "hnr": "6",
+    #     "street": "Am Junkersknappen",
+    #     "district": "Rahm",
+    #     "house_number": "6",
     #     "city": "Duisburg",
     # },
     # "de.k4systems.awbrastatt Muggensturm Adlergasse": {
     #     "app_id": "de.k4systems.awbrastatt",
-    #     "strasse": "Adlergasse",
+    #     "street": "Adlergasse",
     #     "city": "Muggensturm",
     # },
     # # This test case will probably fail in 2025, due to harmonization of waste collection services
@@ -126,15 +126,15 @@ TEST_CASES = {
     #     "app_id": "de.k4systems.lkgoettingen",
     #     "landkreis": "Abfallwirtschaft Altkreis Osterode am Harz",
     #     "city": "Osterode am Harz",
-    #     "strasse": "Kornmarkt",
-    #     "bezirk": "Osterode am Harz"
+    #     "street": "Kornmarkt",
+    #     "district": "Osterode am Harz"
     # }
     # "de.k4systems.abfallscout Hammelburg Morlesau": {
     #     "app_id": "de.k4systems.abfallscout",
     #     "city": "Hammelburg",
-    #     "bezirk": "Morlesau",
-    #     # "strasse": "Alle Straßen", # OPTIONAL
-    #     # "hnr": "Alle Hausnummern" # OPTIONAL
+    #     "district": "Morlesau",
+    #     # "street": "Alle Straßen", # OPTIONAL
+    #     # "house_number": "Alle Hausnummern" # OPTIONAL
     # }
 }
 
@@ -161,9 +161,9 @@ class Source:
     def __init__(
         self,
         app_id: str,
-        strasse: str | None = None,
-        hnr: str | int | None = None,
-        bezirk: str | None = None,
+        street: str | None = None,
+        house_number: str | int | None = None,
+        district: str | None = None,
         city: str | None = None,
         bundesland: str | None = None,
         landkreis: str | None = None,
@@ -171,11 +171,13 @@ class Source:
         self._app = AppAbfallplusDe.AppAbfallplusDe(
             app_id=app_id,
             kommune=city,
-            strasse=strasse,
-            hnr=str(hnr) if isinstance(hnr, int) else hnr,
+            street=street,
+            house_number=(
+                str(house_number) if isinstance(house_number, int) else house_number
+            ),
             bundesland=bundesland,
             landkreis=landkreis,
-            bezirk=bezirk,
+            district=district,
         )
 
     def fetch(self):

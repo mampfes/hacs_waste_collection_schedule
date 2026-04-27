@@ -10,11 +10,11 @@ API_URL = "https://www.hschmid24.de/BlaueTonne/php/ajax.php"
 
 TEST_CASES = {
     "Albatsried(Seeg)": {"city": "Albatsried(Seeg)"},
-    "Nesselwang > Attlesee": {"city": "Nesselwang", "ortsteil": "Attlesee"},
+    "Nesselwang > Attlesee": {"city": "Nesselwang", "district": "Attlesee"},
     "Buchloe > Hausen > Dorfstraße": {
         "city": "Buchloe",
-        "ortsteil": "Hausen",
-        "strasse": "Dorfstraße",
+        "district": "Hausen",
+        "street": "Dorfstraße",
     },
 }
 
@@ -23,12 +23,12 @@ class Source:
     def __init__(
         self,
         city: str,
-        ortsteil: str | None = None,
-        strasse: str | None = None,
+        district: str | None = None,
+        street: str | None = None,
     ):
         self._city = city
-        self._ortsteil = ortsteil
-        self._strasse = strasse
+        self._ortsteil = district
+        self._strasse = street
 
     def fetch(self):
         r = requests.post(

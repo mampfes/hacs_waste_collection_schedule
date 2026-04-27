@@ -16,59 +16,59 @@ def EXTRA_INFO():
 
 
 TEST_CASES = {
-    "Bremen": {"ort": "Bremen", "strasse": "Abbentorstraße", "hausnummer": 5},
+    "Bremen": {"city": "Bremen", "street": "Abbentorstraße", "house_number": 5},
     "AugsburgLand": {
-        "ort": "Königsbrunn",
-        "strasse": "Marktplatz",
-        "hausnummer": 7,
+        "city": "Königsbrunn",
+        "street": "Marktplatz",
+        "house_number": 7,
         "service": "augsburglandkreis",
     },
     "landau": {
-        "strasse": "Am Kindergarten",
-        "hausnummer": 1,
+        "street": "Am Kindergarten",
+        "house_number": 1,
         "service": "landau",
     },
     "WZV": {
-        "ort": "Bark",
-        "strasse": "Birkenweg",
-        "hausnummer": 1,
+        "city": "Bark",
+        "street": "Birkenweg",
+        "house_number": 1,
         "service": "segebergwzv-abfallkalender",
     },
     "oberursel": {
         "service": "oberursel",
-        "strasse": "Ahornweg",
-        "hausnummer": "8a",
+        "street": "Ahornweg",
+        "house_number": "8a",
     },
     "roth": {
-        "ort": "Georgensgmünd",
-        "strasse": "Mauk",
-        "hausnummer": 2,
+        "city": "Georgensgmünd",
+        "street": "Mauk",
+        "house_number": 2,
         "service": "roth",
     },
-    "Groß-Gerau landkreis: Gernsheim (without ortsteil)": {
-        "ort": "Gernsheim am Rhein",
-        "strasse": "Alsbacher Straße",
-        "hausnummer": 4,
+    "Groß-Gerau landkreis: Gernsheim (without district)": {
+        "city": "Gernsheim am Rhein",
+        "street": "Alsbacher Straße",
+        "house_number": 4,
         "service": "grossgeraulandkreis-abfallkalender",
     },
-    "Groß-Gerau landkreis: Riedstadt (with ortsteil)": {
-        "ort": "Riedstadt",
-        "ortsteil": "Crumstadt",
-        "strasse": "Am Lohrrain",
-        "hausnummer": 3,
+    "Groß-Gerau landkreis: Riedstadt (with district)": {
+        "city": "Riedstadt",
+        "district": "Crumstadt",
+        "street": "Am Lohrrain",
+        "house_number": 3,
         "service": "grossgeraulandkreis-abfallkalender",
     },
     "Aurich Kirchdorf": {
-        "ort": "Kirchdorf",
-        "gemeinde": "Aurich",
-        "strasse": "Am Reidigermeer",
-        "hausnummer": "2d/e",
+        "city": "Kirchdorf",
+        "municipality": "Aurich",
+        "street": "Am Reidigermeer",
+        "house_number": "2d/e",
         "service": "aurich-abfallkalender",
     },
     "MainTauber 4-weekly": {
-        "ort": "Tauberbischofsheim",
-        "strasse": "Hauptstraße",
-        "hausnummer": 1,
+        "city": "Tauberbischofsheim",
+        "street": "Hauptstraße",
+        "house_number": 1,
         "service": "maintauberkreis-abfallkalender",
         "abfall": "0|1|2|5",
     },
@@ -164,22 +164,22 @@ BASE_URL = "https://{subdomain}.c-trace.de"
 class Source:
     def __init__(
         self,
-        strasse,
-        hausnummer,
-        gemeinde="",
-        ort="",
-        ortsteil="",
+        street,
+        house_number,
+        municipality="",
+        city="",
+        district="",
         service=None,
         abfall="",
     ):
         # Compatibility handling for Bremen which was the first supported
         # district and didn't require to set a service name.
         if service is None:
-            if ort == "Bremen":
+            if city == "Bremen":
                 service = "bremenabfallkalender"
             else:
                 raise SourceArgumentRequired(
-                    "service", "service is required if ort is not Bremen"
+                    "service", "service is required if city is not Bremen"
                 )
 
         subdomain = DEFAULT_SUBDOMAIN
@@ -194,13 +194,13 @@ class Source:
                 service = SERVICE_MAP[service]["full_service_name"]
 
         self._service = service
-        self._ort = ort
-        if not gemeinde:
-            gemeinde = ort
-        self._gemeinde = gemeinde
-        self._ortsteil = ortsteil
-        self._strasse = strasse
-        self._hausnummer = hausnummer
+        self._ort = city
+        if not municipality:
+            municipality = city
+        self._gemeinde = municipality
+        self._ortsteil = district
+        self._strasse = street
+        self._hausnummer = house_number
         self._base_url = BASE_URL.format(subdomain=subdomain)
         self.ical_url_file = ical_url_file
         self._ics = ICS(regex=r"Abfuhr: (.*)")

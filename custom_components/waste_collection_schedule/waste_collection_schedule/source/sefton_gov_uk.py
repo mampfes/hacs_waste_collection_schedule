@@ -11,17 +11,17 @@ URL = "https://www.sefton.gov.uk/"  # Insert url to service homepage. URL will s
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
     "Issue2369": {
         "house_number_or_name": "1",
-        "streetname": "Ken Mews",
+        "street_name": "Ken Mews",
         "postcode": "L20 6GF",
     },
     "Housename": {
         "house_number_or_name": "Gladstone House",
-        "streetname": "Rosemary Lane",
+        "street_name": "Rosemary Lane",
         "postcode": "L37 3JB",
     },
     "Issue2496": {
         "house_number_or_name": 22,
-        "streetname": "Elton Avenue",
+        "street_name": "Elton Avenue",
         "postcode": "L23 8UW",
     },
 }
@@ -39,7 +39,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "en": "Using a browser, go to [sefton.gov.uk](https://www.sefton.gov.uk/bins-and-recycling/bins-and-recycling/when-is-my-bin-collection-day/). "
     "For _Postcode_ and _Street name_ use the values you'd enter on Sefton's first page."
     "Search, and then for _House Name or Number_ you need the value that comes before the street name you entered on the first screen."
-    "e.g. if your streetname is 'Liverpool Road' and the select box has an option of '1A Liverpool Road' enter '1A' as your _House Name or Number_."
+    "e.g. if your street_name is 'Liverpool Road' and the select box has an option of '1A Liverpool Road' enter '1A' as your _House Name or Number_."
 }
 
 
@@ -48,10 +48,10 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
 
 class Source:
     def __init__(
-        self, house_number_or_name: str | int, streetname: str, postcode: str
+        self, house_number_or_name: str | int, street_name: str, postcode: str
     ):  # argX correspond to the args dict in the source configuration
         self._house_number_or_name = str(house_number_or_name).upper()
-        self._streetname = streetname
+        self._streetname = street_name
         self._postcode = postcode
 
     def fetch(self) -> list[Collection]:

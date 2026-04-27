@@ -8,14 +8,14 @@ DESCRIPTION = "Source for Abfallbehandlungsgesellschaft Havelland mbH."
 URL = "https://abfall-havelland.de/"
 TEST_CASES = {
     "Wustermark Drosselgasse": {
-        "ort": "Wustermark",
-        "strasse": "Drosselgasse",
+        "city": "Wustermark",
+        "street": "Drosselgasse",
     },
-    "Milow Friedhofstr.": {"ort": "Milow", "strasse": "Friedhofstr."},
-    "Falkensee Ahornstr.": {"ort": "Falkensee", "strasse": "Ahornstr."},
+    "Milow Friedhofstr.": {"city": "Milow", "street": "Friedhofstr."},
+    "Falkensee Ahornstr.": {"city": "Falkensee", "street": "Ahornstr."},
     "Falkensee complex street name": {
-        "ort": "Falkensee",
-        "strasse": "Karl-Marx-Str. (von Friedrich-Hahn-Str. bis Am Schlaggraben)",
+        "city": "Falkensee",
+        "street": "Karl-Marx-Str. (von Friedrich-Hahn-Str. bis Am Schlaggraben)",
     },
 }
 
@@ -30,9 +30,9 @@ API_URL = "https://www.abfall-havelland.de/ics.php"
 
 
 class Source:
-    def __init__(self, ort: str, strasse: str):
-        self._ort: str = ort
-        self._strasse: str = strasse
+    def __init__(self, city: str, street: str):
+        self._ort: str = city
+        self._strasse: str = street
         self._ics = ICS(split_at=", ")
 
     def fetch(self) -> list[Collection]:

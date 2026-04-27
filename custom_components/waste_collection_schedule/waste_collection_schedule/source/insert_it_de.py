@@ -25,10 +25,14 @@ TEST_CASES = {
     "Offenbach Address": {
         "municipality": "Offenbach",
         "street": "Kaiserstraße",
-        "hnr": 1,
+        "house_number": 1,
     },
     "Offenbach Location ID": {"municipality": "Offenbach", "location_id": 7036},
-    "Mannheim Address": {"municipality": "Mannheim", "street": "A 3", "hnr": 1},
+    "Mannheim Address": {
+        "municipality": "Mannheim",
+        "street": "A 3",
+        "house_number": 1,
+    },
     "Mannheim Location ID": {"municipality": "Mannheim", "location_id": 430650},
 }
 
@@ -70,10 +74,10 @@ REGEX_MAP = {
 
 
 class Source:
-    def __init__(self, municipality, street=None, hnr=None, location_id=None):
+    def __init__(self, municipality, street=None, house_number=None, location_id=None):
         self._municipality = municipality
         self._street = street
-        self._hnr = hnr
+        self._hnr = house_number
         self._location = location_id
 
         # Check if municipality is in list
@@ -86,19 +90,22 @@ class Source:
         self._api_url = f"https://www.insert-it.de/{municipalities[municipality]}"
         self._ics = ICS(regex=REGEX_MAP.get(municipality))
 
-        # Check if at least either location_id is set or both street and hnr are set
-        if not ((location_id is not None) or (street is not None and hnr is not None)):
+        # Check if at least either location_id is set or both street and house_number are set
+        if not (
+            (location_id is not None)
+            or (street is not None and house_number is not None)
+        ):
             problems = []
             if street is not None:
-                problems.append("hnr")
-            elif hnr is not None:
+                problems.append("house_number")
+            elif house_number is not None:
                 problems.append("street")
             else:
-                problems = ["location_id", "street", "hnr"]
+                problems = ["location_id", "street", "house_number"]
 
             raise SourceArgumentExceptionMultiple(
                 problems,
-                "At least either location_id should be set or both street and hnr should be set.",
+                "At least either location_id should be set or both street and house_number should be set.",
             )
 
         self._uselocation = location_id is not None
@@ -146,7 +153,9 @@ class Source:
                 return location_id
 
         raise SourceArgumentNotFound(
-            "hnr", self._hnr, [x["Text"] for x in result if x["StreetId"] == street_id]
+            "house_number",
+            self._hnr,
+            [x["Text"] for x in result if x["StreetId"] == street_id],
         )
 
     def fetch(self):

@@ -13,25 +13,25 @@ TEST_CASES = {
         "city": "Grevenbroich",
         "district": "Noithausen",
         "street": "Von-Immelhausen-Straße",
-        "housenumber": 12,
+        "house_number": 12,
     },
     "Dormagen": {
         "city": "Dormagen",
         "district": "Hackenbroich",
         "street": "Aggerstraße",
-        "housenumber": 2,
+        "house_number": 2,
     },
     "Grefrath": {
         "city": "Grefrath",
         "district": "Grefrath",
         "street": "An Haus Bruch",
-        "housenumber": 18,
+        "house_number": 18,
     },
     "Schwalmtal Amern Hauptstraße 1": {
         "city": "Schwalmtal",
         "district": "Amern",
         "street": "Hauptstrasse",
-        "housenumber": 1,
+        "house_number": 1,
     },
 }
 
@@ -48,11 +48,11 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, city, district, street, housenumber):
+    def __init__(self, city, district, street, house_number):
         self._city = city
         self._district = district
         self._street = street
-        self._housenumber = housenumber
+        self._housenumber = house_number
 
     def fetch(self):
         s = requests.session()

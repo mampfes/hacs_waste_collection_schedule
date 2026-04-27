@@ -6,4 +6,3 @@ params:
   address:
     description: Full address including street number, e.g. '39 avenue larribau 64000
       Pau'
-    label: Address

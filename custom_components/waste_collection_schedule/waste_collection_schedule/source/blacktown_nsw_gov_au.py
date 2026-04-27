@@ -10,31 +10,31 @@ DESCRIPTION = "Source for Blacktown City Council rubbish collection."
 URL = "https://www.blacktown.nsw.gov.au/"
 TEST_CASES = {
     "Plumpton Marketplace": {
-        "post_code": "2761",
+        "postcode": "2761",
         "suburb": "Plumpton",
         "street_name": "Jersey Rd",
         "street_number": "260",
     },
     "Rooty Hill Tennis & Squash Centre": {
-        "post_code": "2766",
+        "postcode": "2766",
         "suburb": "Rooty Hill",
         "street_name": "Learmonth St",
         "street_number": "13-15",
     },
     "Workers Blacktown": {
-        "post_code": "2148",
+        "postcode": "2148",
         "suburb": "Blacktown",
         "street_name": "Campbell Street",
         "street_number": "18",
     },
     "Hythe St": {
-        "post_code": "2770",
+        "postcode": "2770",
         "suburb": "Mount Druitt",
         "street_name": "Hythe St",
         "street_number": "9-11",
     },
     "Issue#4434": {
-        "post_code": "2762",
+        "postcode": "2762",
         "suburb": "Tallawong",
         "street_name": "Coffey St",
         "street_number": "13",
@@ -62,9 +62,9 @@ ICON_MAP = {
 
 class Source:
     def __init__(
-        self, post_code: str, suburb: str, street_name: str, street_number: str
+        self, postcode: str, suburb: str, street_name: str, street_number: str
     ):
-        self.post_code = post_code
+        self.postcode = postcode
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
@@ -74,7 +74,7 @@ class Source:
         session.headers.update(HEADERS)
 
         # Retrieve suburbs
-        address = f"{self.street_number} {self.street_name}, {self.suburb} NSW {self.post_code}"
+        address = f"{self.street_number} {self.street_name}, {self.suburb} NSW {self.postcode}"
         payload = {"keywords": address}
         r = session.get(API_URLS["address_search"], params=payload)
         data = json.loads(r.text)

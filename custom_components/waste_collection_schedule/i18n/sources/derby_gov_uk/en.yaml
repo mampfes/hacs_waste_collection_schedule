@@ -6,7 +6,7 @@ params:
   house_number:
     description: LEAVE EMPTY is not used anymore.
     label: 'DEPRECATED: house_number'
-  post_code:
+  postcode:
     description: LEAVE EMPTY is not used anymore.
     label: 'DEPRECATED: post_code'
   premises_id:

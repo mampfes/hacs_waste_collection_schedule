@@ -6,4 +6,3 @@ params:
   address:
     description: Exact address as shown in the Telge autocomplete (uppercase, e.g.
       BERGSGATAN 22, SÖDERTÄLJE)
-    label: Address

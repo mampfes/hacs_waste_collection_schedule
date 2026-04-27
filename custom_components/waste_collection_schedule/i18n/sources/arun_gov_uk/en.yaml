@@ -4,11 +4,8 @@
 ---
 params:
   address:
-    description: Address (legacy, use UPRN instead)
     label: Address (legacy, use UPRN instead)
   postcode:
-    description: Postcode (legacy, use UPRN instead)
     label: Postcode (legacy, use UPRN instead)
   uprn:
-    description: Unique Property Reference Number (UPRN)
     label: Unique Property Reference Number (UPRN)

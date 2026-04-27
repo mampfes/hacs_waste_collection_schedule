@@ -3,7 +3,7 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  hausnr:
+  house_number:
     label: House number
-  plz:
+  postcode:
     label: Zip Code

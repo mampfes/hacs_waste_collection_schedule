@@ -30,21 +30,13 @@ params:
     label: Bezirk
   email:
     label: E-Mail
-  hausnr:
-    label: Hausnummer
   house:
     label: Haus
-  houseNo:
-    label: Hausnummer
   house_name:
     label: Hausname
   house_number:
     label: Hausnummer
   house_number_or_name:
-    label: Hausnummer oder Name
-  housenumber:
-    label: Hausnummer
-  housenumberorname:
     label: Hausnummer oder Name
   lat:
     label: Breitengrad
@@ -64,22 +56,12 @@ params:
     label: Passwort
   phone:
     label: Telefon
-  plz:
-    label: PLZ
-  postCode:
-    label: PLZ
-  post_code:
-    label: PLZ
   postcode:
     label: PLZ
   property_no:
     label: Grundstück Nr.
-  strasse:
-    label: Straße
   street:
     label: Straße
-  streetId:
-    label: Straßen ID
   street_id:
     label: Straßen ID
   street_name:
@@ -106,11 +88,7 @@ params:
     label: Version
   village:
     label: Ort
-  zipCode:
-    label: PLZ
   zip_code:
-    label: PLZ
-  zipcode:
     label: PLZ
   zone:
     label: Zone

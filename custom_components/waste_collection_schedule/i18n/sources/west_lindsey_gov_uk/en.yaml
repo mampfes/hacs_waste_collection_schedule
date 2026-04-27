@@ -4,11 +4,8 @@
 ---
 params:
   id:
-    description: The unique property id assigned to your property
     label: The unique property id assigned to your property
   x:
-    description: The 6-figure Easting grid reference assigned to your property.
     label: The 6-figure Easting grid reference assigned to your property.
   y:
-    description: The 6-figure Northing grid reference assigned to your property.
     label: The 6-figure Northing grid reference assigned to your property.

@@ -4,8 +4,6 @@
 params:
   address:
     label: Indirizzo
-  addressNo:
-    label: Indirizzo Numero
   api_key:
     label: Chiave API
   bill_number:
@@ -56,28 +54,16 @@ params:
     label: Frequenza
   house:
     label: Casa
-  houseID:
-    label: ID Casa
-  houseNo:
-    label: Civico
   house_letter:
     label: Lettera Casa
   house_name:
     label: Nome Casa
   house_number:
     label: Civico
-  housenameornumber:
-    label: Numero o Nome Casa
-  housenumber:
-    label: Civico
-  housenumberorname:
-    label: Numero o Nome Casa
   ignored_containers:
     label: Ignored Containers
   interval:
     label: Intervallo
-  ladeort:
-    label: Ladeort
   location:
     label: Posizione
   location_id:
@@ -94,20 +80,12 @@ params:
     label: Numero
   operator:
     label: Operatore
-  p_collect_cycle:
-    label: P Collect Cycle
   params:
     label: Parametri
   phone:
     label: Telefono
   pid:
     label: PID
-  postCode:
-    label: Codice Postale CAP
-  post_code:
-    label: Codice Postale CAP
-  postal_code:
-    label: Codice Postale CAP
   postcode:
     label: Codice Postale CAP
   predict:
@@ -120,22 +98,16 @@ params:
     label: Project ID
   property:
     label: Proprietà
-  propertyID:
-    label: ID Proprietà
   property_id:
     label: ID Proprietà
   property_location:
     label: Posizione Proprietà
   property_no:
     label: Proprietà Numero
-  r_collect_cycle:
-    label: R Collect Cycle
   radius:
     label: Raggio
   region:
     label: Regione
-  road:
-    label: Strada
   road_name:
     label: Nome Strada
   sector:
@@ -146,20 +118,12 @@ params:
     label: ID Servizio
   service_provider:
     label: Fornitore di Servizi
-  show_nights:
-    label: Mostra Notti
   start:
     label: Inizio
   state:
     label: Stato
   street:
     label: Strada
-  streetId:
-    label: ID Strada
-  streetIndex:
-    label: Indice Strada
-  streetName:
-    label: Nome della Strada
   street_address:
     label: Indirizzo Strada
   street_code:
@@ -198,15 +162,9 @@ params:
     label: Villaggio
   weekdays:
     label: Giorni feriali
-  zipCode:
-    label: Codice Postale CAP
   zip_code:
-    label: Codice Postale CAP
-  zipcode:
     label: Codice Postale CAP
   zone:
     label: Zona
-  zoneID:
-    label: ID Zona
   zone_id:
     label: ID Zona

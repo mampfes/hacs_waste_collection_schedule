@@ -9,16 +9,16 @@ TITLE = "Burgenländischer Müllverband"
 DESCRIPTION = "Source for BMV, Austria"
 URL = "https://www.bmv.at"
 TEST_CASES = {
-    "Allersdorf": {"ort": "ALLERSDORF", "strasse": "HAUSNUMMER", "hausnummer": 9},
+    "Allersdorf": {"city": "ALLERSDORF", "street": "HAUSNUMMER", "house_number": 9},
     "Bad Sauerbrunn": {
-        "ort": "BAD SAUERBRUNN",
-        "strasse": "BUCHINGERWEG",
-        "hausnummer": 16,
+        "city": "BAD SAUERBRUNN",
+        "street": "BUCHINGERWEG",
+        "house_number": 16,
     },
     "Rattersdorf": {
-        "ort": "RATTERSDORF",
-        "strasse": "SIEBENBRÜNDLGASSE",
-        "hausnummer": 30,
+        "city": "RATTERSDORF",
+        "street": "SIEBENBRÜNDLGASSE",
+        "house_number": 30,
     },
 }
 
@@ -43,10 +43,10 @@ class HiddenInputParser(HTMLParser):
 
 
 class Source:
-    def __init__(self, ort, strasse, hausnummer):
-        self._ort = ort
-        self._strasse = strasse
-        self._hausnummer = hausnummer
+    def __init__(self, city, street, house_number):
+        self._ort = city
+        self._strasse = street
+        self._hausnummer = house_number
         self._ics = ICS()
 
     def fetch(self):

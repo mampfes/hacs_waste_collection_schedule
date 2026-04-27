@@ -6,7 +6,6 @@ params:
   address:
     description: Street address only (e.g. '4 rue de Paris'). Do not include city
       name or postcode.
-    label: Address
   insee_code:
     description: The 5-digit INSEE code of your commune. Check https://www.insee.fr
       if your commune has merged (communes nouvelles have a new code).

@@ -15,10 +15,10 @@ URL = "https://reading.gov.uk"
 TEST_CASES = {
     "known_uprn": {"uprn": "310027679"},
     "known_uprn as number": {"uprn": 310027679},
-    "unknown_uprn_by_number": {"postcode": "RG31 5PN", "housenameornumber": "65"},
+    "unknown_uprn_by_number": {"postcode": "RG31 5PN", "house_name_or_number": "65"},
     "unknown_uprn_by_number as number": {
         "postcode": "RG31 5PN",
-        "housenameornumber": 65,
+        "house_name_or_number": 65,
     },
 }
 
@@ -43,18 +43,18 @@ SEARCH_URLS = {
 
 
 class Source:
-    def __init__(self, uprn=None, postcode=None, housenameornumber=None):
+    def __init__(self, uprn=None, postcode=None, house_name_or_number=None):
         self._postcode = postcode
-        self._housenameornumber = str(housenameornumber)
+        self._housenameornumber = str(house_name_or_number)
         self._uprn = uprn
-        if not any((uprn, postcode and housenameornumber)):
+        if not any((uprn, postcode and house_name_or_number)):
             errors = []
             if postcode:
-                errors.append("housenameornumber")
-            elif housenameornumber:
+                errors.append("house_name_or_number")
+            elif house_name_or_number:
                 errors.append("postcode")
             else:
-                errors = ["uprn", "postcode", "housenameornumber"]
+                errors = ["uprn", "postcode", "house_name_or_number"]
             raise SourceArgumentExceptionMultiple(
                 errors,
                 "Must provide either a UPRN or both the Postcode and House Name or Number",
@@ -74,7 +74,7 @@ class Source:
         address = next(filter(self.filter_addresses, addresses), None)
         if address is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "housenameornumber",
+                "house_name_or_number",
                 self._housenameornumber,
                 {self.extract_nameornum(a) for a in addresses},
             )

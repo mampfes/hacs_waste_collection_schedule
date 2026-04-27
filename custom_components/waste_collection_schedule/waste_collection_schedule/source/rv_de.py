@@ -10,21 +10,21 @@ DESCRIPTION = "Source for Landkreis Ravensburg."
 URL = "https://www.rv.de/"
 TEST_CASES = {
     "Altshausen Altshauser Weg 1 ": {
-        "ort": "Altshausen",
-        "strasse": "Altshauser Weg",
-        "hnr": 1,
+        "city": "Altshausen",
+        "street": "Altshauser Weg",
+        "house_number": 1,
         "hnr_zusatz": "",
     },
     "Hoßkirch, Ob den Gärten 1": {
-        "ort": "Hoßkirch",
-        "strasse": "Ob den Gärten",
-        "hnr": "1",
+        "city": "Hoßkirch",
+        "street": "Ob den Gärten",
+        "house_number": "1",
         "hnr_zusatz": "",
     },
     "Bad Kreznach, Steubenstraße 5645A": {
-        "ort": "bAd KrezNach",
-        "strasse": "steuBenstraße",
-        "hnr": 5645,
+        "city": "bAd KrezNach",
+        "street": "steuBenstraße",
+        "house_number": 5645,
         "hnr_zusatz": "A",
     },
 }
@@ -58,10 +58,12 @@ class HiddenInputParser(HTMLParser):
 
 
 class Source:
-    def __init__(self, ort: str, strasse: str, hnr: str | int, hnr_zusatz: str | int):
-        self._ort: str = ort
-        self._strasse: str = strasse
-        self._hnr: str | int = hnr
+    def __init__(
+        self, city: str, street: str, house_number: str | int, hnr_zusatz: str | int
+    ):
+        self._ort: str = city
+        self._strasse: str = street
+        self._hnr: str | int = house_number
         self._hnr_zusatz: str | int = hnr_zusatz
         self._ics = ICS()
 

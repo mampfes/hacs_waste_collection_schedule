@@ -11,19 +11,19 @@ DESCRIPTION = "Source for Unley City Council rubbish collection."
 URL = "https://www.unley.sa.gov.au/"
 TEST_CASES = {
     "Test1": {
-        "post_code": "5061",
+        "postcode": "5061",
         "suburb": "Malvern",
         "street_name": "Wattle Street",
         "street_number": "188",
     },
     "Test2": {
-        "post_code": 5061,
+        "postcode": 5061,
         "suburb": "Unley",
         "street_name": "Unley Road",
         "street_number": "192",
     },
     "Test3": {
-        "post_code": "5063",
+        "postcode": "5063",
         "suburb": "Parkside",
         "street_name": "Castle Street",
         "street_number": 63,
@@ -64,9 +64,9 @@ ICON_MAP = {
 
 class Source:
     def __init__(
-        self, post_code: str, suburb: str, street_name: str, street_number: str | int
+        self, postcode: str, suburb: str, street_name: str, street_number: str | int
     ):
-        self.post_code = post_code
+        self.postcode = postcode
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
@@ -75,7 +75,7 @@ class Source:
         locationId = ""
 
         address = "{} {} {} SA {}".format(
-            self.street_number, self.street_name, self.suburb, self.post_code
+            self.street_number, self.street_name, self.suburb, self.postcode
         )
 
         q = requote_uri(str(API_URLS["address_search"]).format(address))

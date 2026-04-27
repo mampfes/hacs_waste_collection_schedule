@@ -9,10 +9,10 @@ TITLE = "Swansea Council"
 DESCRIPTION = "Source script for swansea.gov.uk"
 URL = "https://swansea.gov.uk"
 TEST_CASES = {
-    "Cwmdonkin Drive": {"street_name": "cwmdonkin", "post_code": "SA20RA"},
-    "Park Street": {"street_name": "Park Street", "post_code": "sa1 3dj"},
-    "High Street": {"street_name": "High", "post_code": "SA1 1PE"},
-    "St. Helen's": {"street_name": "St. Helen's", "post_code": "sa14nd"},
+    "Cwmdonkin Drive": {"street_name": "cwmdonkin", "postcode": "SA20RA"},
+    "Park Street": {"street_name": "Park Street", "postcode": "sa1 3dj"},
+    "High Street": {"street_name": "High", "postcode": "SA1 1PE"},
+    "St. Helen's": {"street_name": "St. Helen's", "postcode": "sa14nd"},
 }
 
 API_URL = "https://www1.swansea.gov.uk/recyclingsearch/"
@@ -34,9 +34,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, street_name=None, post_code=None):
+    def __init__(self, street_name=None, postcode=None):
         self._street_name = street_name
-        self._postcode = post_code
+        self._postcode = postcode
 
     def get_asp_var(self, broth, id) -> str:
         asp_var = broth.find("input", {"id": id}).get("value")

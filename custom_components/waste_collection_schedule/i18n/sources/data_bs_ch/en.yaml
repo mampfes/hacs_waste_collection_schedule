@@ -5,4 +5,3 @@
 params:
   zone:
     description: Your waste collection zone (A-H or GUF).
-    label: Zone

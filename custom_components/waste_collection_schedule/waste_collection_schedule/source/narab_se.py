@@ -32,9 +32,9 @@ URL = "https://narab.se"
 # The script implements all the collection types supported by the tooltips contained in the page source, but not all of them have been tested.
 
 TEST_CASES = {
-    "Residential - Villa": {"address": "Helsingborgsvägen 31", "kundNr": 25494},
-    "Residential - Apartment": {"address": "Hallandsvägen 9", "kundNr": 13726},
-    "Commercial": {"address": "Hallandsvägen 9", "kundNr": 33159},
+    "Residential - Villa": {"address": "Helsingborgsvägen 31", "kund_nr": 25494},
+    "Residential - Apartment": {"address": "Hallandsvägen 9", "kund_nr": 13726},
+    "Commercial": {"address": "Hallandsvägen 9", "kund_nr": 33159},
 }
 
 API_URL_FETCH_ADDRESS = (
@@ -291,9 +291,9 @@ swedish_months = {
 
 
 class Source:
-    def __init__(self, address: str, kundNr: int = 0):
+    def __init__(self, address: str, kund_nr: int = 0):
         self._address = address
-        self._kundNr = kundNr
+        self._kundNr = kund_nr
 
     def parse_address_list(self, text: str):
         addresses = []
@@ -325,23 +325,23 @@ class Source:
             hsG, hsO, knR, abK, nrA = addresses[0].values()
         elif len(addresses) > 1:
             if self._kundNr == 0:
-                # if multiple addresses are found but no kundNr is given, throw exception
+                # if multiple addresses are found but no kund_nr is given, throw exception
                 raise SourceArgumentException(
                     argument="address",
                     message=f"Multiple values found for the argument 'address' with the value '{self._address}'",
                 )
             else:
-                # If a kundNr is given, use the one with the matching kundNr
+                # If a kund_nr is given, use the one with the matching kund_nr
                 for addr in addresses:
                     if addr["knR"] == str(self._kundNr):
                         hsG, hsO, knR, abK, nrA = addr.values()
                         break
 
                 if not (hsG and hsO and knR and abK and nrA):
-                    # If no matching kundNr is found, raise exception
+                    # If no matching kund_nr is found, raise exception
                     raise SourceArgumentException(
-                        argument="kundNr",
-                        message=f"No results found for the argument 'kundNr' with the value '{self._kundNr}'. Please check the value and verify the address.",
+                        argument="kund_nr",
+                        message=f"No results found for the argument 'kund_nr' with the value '{self._kundNr}'. Please check the value and verify the address.",
                     )
         else:
             # If no addresses are found, raise exception

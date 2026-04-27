@@ -1,0 +1,5 @@
+# Per-source overrides for mags_de (fr).
+---
+params:
+  turnus:
+    label: Cycle

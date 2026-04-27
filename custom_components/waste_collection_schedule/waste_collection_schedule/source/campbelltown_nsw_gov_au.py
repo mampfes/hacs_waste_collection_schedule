@@ -11,19 +11,19 @@ DESCRIPTION = "Source for Campbelltown City Council rubbish collection."
 URL = "https://www.campbelltown.nsw.gov.au/"
 TEST_CASES = {
     "Minto Mall": {
-        "post_code": "2566",
+        "postcode": "2566",
         "suburb": "Minto",
         "street_name": "Brookfield Road",
         "street_number": "10",
     },
     "Campbelltown Catholic Club": {
-        "post_code": "2560",
+        "postcode": "2560",
         "suburb": "Campbelltown",
         "street_name": "Camden Road",
         "street_number": "20-22",
     },
     "Australia Post Ingleburn": {
-        "post_code": "2565",
+        "postcode": "2565",
         "suburb": "INGLEBURN",
         "street_name": "Oxford Road",
         "street_number": "34",
@@ -59,9 +59,9 @@ ICON_MAP = {
 
 class Source:
     def __init__(
-        self, post_code: str, suburb: str, street_name: str, street_number: str
+        self, postcode: str, suburb: str, street_name: str, street_number: str
     ):
-        self.post_code = post_code
+        self.postcode = postcode
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
@@ -70,7 +70,7 @@ class Source:
         locationId = ""
 
         address = "{} {} {} NSW {}".format(
-            self.street_number, self.street_name, self.suburb, self.post_code
+            self.street_number, self.street_name, self.suburb, self.postcode
         )
 
         q = requote_uri(str(API_URLS["address_search"]).format(address))

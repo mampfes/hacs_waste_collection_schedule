@@ -11,69 +11,69 @@ URL = "https://hausmuell.info"
 COUNTRY = "de"
 TEST_CASES = {
     "Dietzhausen Am Rain 10 ebkds": {
-        "ort": "Dietzhausen",
-        "strasse": "Am Rain",
-        "hausnummer": 10,
+        "city": "Dietzhausen",
+        "street": "Am Rain",
+        "house_number": 10,
         "subdomain": "ebkds",
     },
     "Adam-Ries-Straße 5, Erfurt": {
         "subdomain": "erfurt",
-        "strasse": "Adam-Ries-Straße",
-        "hausnummer": "5",
+        "street": "Adam-Ries-Straße",
+        "house_number": "5",
     },
     "schmalkalden-meiningen, Obermaßfeld-Grimmenthal": {
         "subdomain": "schmalkalden-meiningen",
-        "ort": "Obermaßfeld-Grimmenthal",
+        "city": "Obermaßfeld-Grimmenthal",
     },
     "schmalkalden-meiningen, Dillstädt": {
         "subdomain": "schmalkalden-meiningen",
-        "ort": "Dillstädt",
+        "city": "Dillstädt",
     },
     "schmalkalden-meiningen Zella-Mehils Benshausen Albrechter Straße": {
         "subdomain": "schmalkalden-meiningen",
-        "ort": "Zella-Mehlis",
-        "ortsteil": "Benshausen",
-        "strasse": "Albrechtser Straße",
+        "city": "Zella-Mehlis",
+        "district": "Benshausen",
+        "street": "Albrechtser Straße",
     },
     "schmalkalden-meiningen Breitungen, Bußhof": {
         "subdomain": "schmalkalden-meiningen",
-        "ort": "Breitungen",
-        "ortsteil": "Bußhof",
+        "city": "Breitungen",
+        "district": "Bußhof",
     },
     "ew, Döringsdorf, Wanfrieder Str.": {
         "subdomain": "ew",
-        "ort": "Döringsdorf",
-        "strasse": "Wanfrieder Str.",
+        "city": "Döringsdorf",
+        "street": "Wanfrieder Str.",
     },
     "ew, Bernterode (WBS), Hinter den Höfen": {
         "subdomain": "ew",
-        "ort": "Bernterode (WBS)",
-        "strasse": "Hinter den Höfen",
+        "city": "Bernterode (WBS)",
+        "street": "Hinter den Höfen",
     },
     "azv, Berka vor dem Hainich": {
         "subdomain": "azv",
-        "ort": "Berka vor dem Hainich",
+        "city": "Berka vor dem Hainich",
     },
     "azv, Hörselberg-Hainich": {
         "subdomain": "azv",
-        "ort": "Hörselberg-Hainich",
-        "ortsteil": "Ettenhausen/Nesse",
+        "city": "Hörselberg-Hainich",
+        "district": "Ettenhausen/Nesse",
     },
     "börde, Belsdorf (Altkreis BÖ), Alleringerslebener Straße 15a": {
         "subdomain": "boerde",
-        "ort": "Belsdorf (Altkreis BÖ)",
-        "strasse": "Alleringerslebener Straße",
-        "hausnummer": "15a",
+        "city": "Belsdorf (Altkreis BÖ)",
+        "street": "Alleringerslebener Straße",
+        "house_number": "15a",
     },
     "chemnitz, Straße des Friedens/Wittgensdorf 2 a": {
         "subdomain": "asc",
-        "strasse": "Straße des Friedens/Wittgensdorf",
-        "hausnummer": "2 a",
+        "street": "Straße des Friedens/Wittgensdorf",
+        "house_number": "2 a",
     },
     "wesel Flüren, In der Flürener Heide": {
         "subdomain": "wesel",
-        "ort": "Flüren",
-        "strasse": "In der Flürener Heide",
+        "city": "Flüren",
+        "street": "In der Flürener Heide",
     },
 }
 
@@ -193,15 +193,15 @@ class Source:
     def __init__(
         self,
         subdomain: str,
-        ort: str | None = None,
-        ortsteil: str | None = None,
-        strasse: str | None = None,
-        hausnummer: str | int | None = None,
+        city: str | None = None,
+        district: str | None = None,
+        street: str | None = None,
+        house_number: str | int | None = None,
     ):
-        self._ort: str = ort if ort else ""
-        self._strasse: str = strasse if strasse else ""
-        self._hausnummer: str = str(hausnummer) if hausnummer else ""
-        self._ortsteil: str = ortsteil if ortsteil else ""
+        self._ort: str = city if city else ""
+        self._strasse: str = street if street else ""
+        self._hausnummer: str = str(house_number) if house_number else ""
+        self._ortsteil: str = district if district else ""
 
         self._api_url: str = API_URL.format(subdomain)
         self._ics = ICS()
@@ -338,7 +338,7 @@ class Source:
                 self._search_url + "search_hnr.php",
                 args,
                 {"input": self._hausnummer, "hnr_id": "0", "str_id": args["str_id"]},
-                "hausnummer provided but not found in search results.",
+                "house_number provided but not found in search results.",
             )
 
             ids = self._get_elemts(r.text)

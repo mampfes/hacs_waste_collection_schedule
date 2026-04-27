@@ -26,17 +26,17 @@ TITLE = "ZAW Donau-Wald"
 DESCRIPTION = "Source for ZAW Donau-Wald."
 URL = "https://www.awg.de/"
 TEST_CASES = {
-    "Achslach Aign 1 ": {"city": "Achslach", "street": "Aign", "hnr": "1"},
+    "Achslach Aign 1 ": {"city": "Achslach", "street": "Aign", "house_number": "1"},
     "Böbrach Bärnerauweg 10A": {
         "city": "Böbrach",
         "street": "Bärnerauweg",
-        "hnr": 10,
+        "house_number": 10,
         "addition": "A",
     },
     "Am Bäckergütl 1, 94094 Malching": {
         "city": "Malching",
         "street": "Am Bäckergütl",
-        "hnr": 1,
+        "house_number": 1,
         "addition": "",
     },
 }
@@ -57,10 +57,10 @@ API_URL = (
 
 
 class Source:
-    def __init__(self, city, street, hnr, addition=""):
+    def __init__(self, city, street, house_number, addition=""):
         self._city = city
         self._street = street
-        self._house_number = hnr
+        self._house_number = house_number
         self._address_suffix = addition
         self._boundary = "WebKitFormBoundary" + "".join(
             random.sample(string.ascii_letters + string.digits, 16)

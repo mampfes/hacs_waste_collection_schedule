@@ -1,0 +1,5 @@
+# Per-source overrides for landkreis_kusel_de (fr).
+---
+params:
+  ortsgemeinde:
+    label: Communauté

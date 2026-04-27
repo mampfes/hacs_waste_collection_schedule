@@ -12,10 +12,10 @@ DESCRIPTION = "Source for ashfield.gov.uk, Ashfield District Council, UK"
 URL = "https://www.ashfield.gov.uk"
 TEST_CASES = {
     "11 Maun View Gardens, Sutton-in-Ashfield": {"uprn": 10001336299},
-    "101 Main Street, Huthwaite": {"post_code": "NG17 2LQ", "uprn": "100031253415"},
-    "1 Acacia Avenue, Kirkby-in-Ashfield": {"post_code": "NG17 9BH", "number": "1"},
+    "101 Main Street, Huthwaite": {"postcode": "NG17 2LQ", "uprn": "100031253415"},
+    "1 Acacia Avenue, Kirkby-in-Ashfield": {"postcode": "NG17 9BH", "number": "1"},
     "Council Offices, Kirkby-in-Ashfield": {
-        "post_code": "NG178ZA",
+        "postcode": "NG178ZA",
         "name": "COUNCIL OFFICES",
     },
 }
@@ -41,8 +41,8 @@ NAMES = {
 
 
 class Source:
-    def __init__(self, post_code=None, number=None, name=None, uprn=None):
-        self._post_code = post_code
+    def __init__(self, postcode=None, number=None, name=None, uprn=None):
+        self._post_code = postcode
         self._number = number
         self._name = name
         self._uprn = uprn
@@ -50,7 +50,7 @@ class Source:
     def fetch(self):
         if not self._uprn:
             if not self._post_code:
-                raise ValueError("post_code is required when uprn is not provided")
+                raise ValueError("postcode is required when uprn is not provided")
             if not (self._name or self._number):
                 raise ValueError(
                     "Either name or number must be provided when uprn is not provided"
@@ -62,7 +62,7 @@ class Source:
             addresses = r.json()["results"]
 
             if not addresses:
-                raise SourceArgumentNotFound("post_code", self._post_code)
+                raise SourceArgumentNotFound("postcode", self._post_code)
 
             matching = []
             if self._name:
@@ -89,7 +89,7 @@ class Source:
                     argument=(
                         "name"
                         if self._name
-                        else "number" if self._number else "post_code"
+                        else "number" if self._number else "postcode"
                     ),
                     value=self._name or self._number or self._post_code,
                     suggestions=[

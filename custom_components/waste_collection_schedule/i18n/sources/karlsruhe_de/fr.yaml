@@ -1,0 +1,5 @@
+# Per-source overrides for karlsruhe_de (fr).
+---
+params:
+  ladeort:
+    label: Chargement de la localisation

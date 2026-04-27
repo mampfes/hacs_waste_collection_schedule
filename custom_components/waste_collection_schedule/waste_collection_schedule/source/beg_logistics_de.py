@@ -9,10 +9,10 @@ TITLE = "Bremerhavener Entsorgungsgesellschaft mbH"
 DESCRIPTION = "Source for Bremerhavener Entsorgungsgesellschaft mbH."
 URL = "https://beg-bhv.de"
 TEST_CASES = {
-    "Hafenstraße 22": {"street": "Hafenstraße, Bremerhaven", "hnr": 2},
+    "Hafenstraße 22": {"street": "Hafenstraße, Bremerhaven", "house_number": 2},
     "Hadeler Heide, Cuxhaven": {
         "street": "Hadeler Heide, Cuxhaven",
-        "hnr": "2",
+        "house_number": "2",
         "two_weeks": True,
     },
 }
@@ -30,9 +30,9 @@ STREET_UPDATE_URL = "https://kalender.beg-logistics.de/auto_complete/update_stre
 
 
 class Source:
-    def __init__(self, street: str, hnr: str | int, two_weeks: bool = False):
+    def __init__(self, street: str, house_number: str | int, two_weeks: bool = False):
         self._street: str = street
-        self._hnr: str | int = hnr
+        self._hnr: str | int = house_number
         self._two_weeks: bool = two_weeks
 
     def fetch_street(self, s: requests.Session, term: str | None = None) -> str:

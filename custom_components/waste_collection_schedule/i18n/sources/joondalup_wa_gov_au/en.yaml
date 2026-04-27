@@ -4,14 +4,10 @@
 ---
 params:
   mapkey:
-    description: The unique identifier for your property used by the Joondalup website
     label: The unique identifier for your property used by the Joondalup website
   number:
-    description: Your house number as it appears on the Joondalup website
     label: Your house number as it appears on the Joondalup website
   street:
-    description: Your street name as it appears on the Joondalup website
     label: Your street name as it appears on the Joondalup website
   suburb:
-    description: Your suburb as it appears on the Joondalup website
     label: Your suburb as it appears on the Joondalup website

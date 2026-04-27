@@ -5,4 +5,3 @@
 params:
   zone:
     description: Collection zone (A or B)
-    label: Zone

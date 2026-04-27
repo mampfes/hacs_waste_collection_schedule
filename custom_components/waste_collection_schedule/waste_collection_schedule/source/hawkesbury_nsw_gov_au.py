@@ -14,20 +14,20 @@ TEST_CASES = {
     "south windsor, 539a George Street": {
         "suburb": "south windsor",
         "street": "George Street",
-        "houseNo": 539,
-        "postCode": 2756,
+        "house_no": 539,
+        "postcode": 2756,
     },
     "Windsor, catherine street 7": {
         "suburb": "Windsor",
         "street": "catherine st",
-        "houseNo": 7,
-        "postCode": 2756,
+        "house_no": 7,
+        "postcode": 2756,
     },
     "Kurrajong, Bells Line Of Road 1052 ": {
         "suburb": "Kurrajong HILLS",
         "street": "Bells Line Of Road",
-        "houseNo": 1052,
-        "postCode": 2758,
+        "house_no": 1052,
+        "postcode": 2758,
     },
 }
 API_URL = "https://data.hawkesbury.nsw.gov.au/api"
@@ -56,12 +56,12 @@ STREETNAMES = {
 
 
 class Source:
-    def __init__(self, suburb, street, houseNo, postCode):
+    def __init__(self, suburb, street, house_no, postcode):
         self._suburb = suburb.upper()
         self._street = street
-        self._houseNo = str(houseNo)
+        self._houseNo = str(house_no)
         self._url = API_URL
-        self._postCode = postCode
+        self._postCode = postcode
 
     def get_data(self, bin_prefix: str, fields) -> list[Collection]:
         entries: list[Collection] = []
@@ -109,7 +109,7 @@ class Source:
 
         # Check if house record was found
         if len(data["records"]) == 0:
-            raise SourceArgumentNotFound("houseNo", self._houseNo)
+            raise SourceArgumentNotFound("house_no", self._houseNo)
 
         # get collection schedule
         record = data["records"][-1]

@@ -9,22 +9,22 @@ DESCRIPTION = "Source for Potsdam."
 URL = "https://www.potsdam.de"
 TEST_CASES = {
     "Golm Akazienweg mixed ": {
-        "ortsteil": "Golm",
-        "strasse": "Akazienweg",
+        "district": "Golm",
+        "street": "Akazienweg",
         "rest_rhythm": 4,
         "papier_rhythm": 2,
         "bio_rhythm": 3,
     },
     "Teltower Vorstadt  Albert-Einstein-Str. 2": {
-        "ortsteil": "Teltower Vorstadt",
-        "strasse": "Albert-Einstein-Str.",
+        "district": "Teltower Vorstadt",
+        "street": "Albert-Einstein-Str.",
         "rest_rhythm": 1,
         "papier_rhythm": 3,
         "bio_rhythm": 5,
     },
     "Uetz  Kanalweg ": {
-        "ortsteil": "Uetz",
-        "strasse": "Kanalweg",
+        "district": "Uetz",
+        "street": "Kanalweg",
         "rest_rhythm": 4,
         "papier_rhythm": 4,
         "bio_rhythm": 2,
@@ -65,15 +65,15 @@ API_URL = "https://www.geben-und-nehmen-markt.de/abfallkalender/potsdam/{year}/p
 class Source:
     def __init__(
         self,
-        ortsteil: str,
-        strasse: str,
+        district: str,
+        street: str,
         rest_rhythm: int = 0,
         papier_rhythm: int = 0,
         bio_rhythm: int = 0,
         gelb_rhythm: int = 3,
     ):
-        self._ortsteil: str = ortsteil
-        self._strasse: str = strasse
+        self._ortsteil: str = district
+        self._strasse: str = street
         self._rhythms = {
             1: int(rest_rhythm),
             2: int(bio_rhythm),
@@ -98,13 +98,13 @@ class Source:
         except Exception as e:
             raise Exception("Could not decode server response") from e
 
-        for ortsteil in data["allRegionen"][0]["regionen"][0]["ortsteile"]:
-            if ortsteil["name"].lower().strip() != self._ortsteil.lower().strip():
+        for district in data["allRegionen"][0]["regionen"][0]["ortsteile"]:
+            if district["name"].lower().strip() != self._ortsteil.lower().strip():
                 continue
-            for strasse in ortsteil["strassen"]:
-                if strasse["name"].lower().strip() != self._strasse.lower().strip():
+            for street in district["strassen"]:
+                if street["name"].lower().strip() != self._strasse.lower().strip():
                     continue
-                return strasse["eintraege"]
+                return street["eintraege"]
         return None
 
     # generate dates, typematch and date_is_collection* are nearly 1:1 implementation of teir original crappy js code

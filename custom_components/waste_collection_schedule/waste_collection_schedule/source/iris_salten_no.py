@@ -10,7 +10,9 @@ DESCRIPTION = "Fetches waste collection schedule from Iris Salten (based on addr
 URL = "https://www.iris-salten.no"
 
 # Tests to verify that the module works in Waste Collection Schedule
-TEST_CASES = {"My address": {"address": "Alsosgården 11", "kommune": "Bodø kommune"}}
+TEST_CASES = {
+    "My address": {"address": "Alsosgården 11", "municipality": "Bodø municipality"}
+}
 
 ICON_MAP = {
     "Restavfall": "mdi:trash-can",
@@ -37,9 +39,9 @@ MONTH_MAP = {
 
 
 class Source:
-    def __init__(self, address: str, kommune: str = ""):
+    def __init__(self, address: str, municipality: str = ""):
         self._address = address
-        self._kommune = kommune
+        self._kommune = municipality
 
     def fetch(self):
         s = requests.Session()
@@ -73,7 +75,7 @@ class Source:
             if result.get("adresse", "").lower() == self._address.lower():
                 # If municipality is provided in config, check it as well
                 if self._kommune:
-                    if self._kommune.lower() in result.get("kommune", "").lower():
+                    if self._kommune.lower() in result.get("municipality", "").lower():
                         uuid = result.get("id")
                         break
                 else:

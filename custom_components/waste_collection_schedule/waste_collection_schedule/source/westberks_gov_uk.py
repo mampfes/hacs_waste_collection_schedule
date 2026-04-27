@@ -13,10 +13,10 @@ TEST_CASES = {
     "known_uprn as number": {"uprn": 100081026602},
     "unknown_uprn_by_name": {
         "postcode": "RG7 6NZ",
-        "housenumberorname": "PARROG HOUSE",
+        "house_number_or_name": "PARROG HOUSE",
     },
-    "unknown_uprn_by_number": {"postcode": "RG18 4QU", "housenumberorname": "6"},
-    "unknown_uprn_business": {"postcode": "RG18 4GE", "housenumberorname": "3"},
+    "unknown_uprn_by_number": {"postcode": "RG18 4QU", "house_number_or_name": "6"},
+    "unknown_uprn_business": {"postcode": "RG18 4GE", "house_number_or_name": "3"},
 }
 
 ICON_MAP = {
@@ -41,11 +41,11 @@ def fix_date(d: date):
 
 class Source:
     def __init__(
-        self, uprn=None, postcode=None, housenumberorname=None
+        self, uprn=None, postcode=None, house_number_or_name=None
     ):  # argX correspond to the args dict in the source configuration
         self._uprn = str(uprn).zfill(12) if uprn is not None else None
         self._postcode = postcode
-        self._housenumberorname = housenumberorname
+        self._housenumberorname = house_number_or_name
 
     def fetch(self):
         entries = []

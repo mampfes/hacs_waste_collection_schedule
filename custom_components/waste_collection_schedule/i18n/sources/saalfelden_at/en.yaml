@@ -3,8 +3,8 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  hausnummer:
+  house_number:
     description: House number as listed in the Saalfelden waste calendar.
     label: House number
-  strasse:
+  street:
     description: Street name as listed in the Saalfelden waste calendar.

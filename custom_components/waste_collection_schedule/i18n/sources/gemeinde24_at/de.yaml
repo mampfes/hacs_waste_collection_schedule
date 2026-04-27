@@ -3,13 +3,12 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  gemeinde:
-    description: Gemeindename wie in Gemeinde24 angezeigt.
-    label: Gemeinde
   gemeinde_id:
     description: Numerische GemeindeID aus Gemeinde24 (optional statt des Gemeinde-Feldes).
     label: Gemeinde ID
-  strasse:
+  municipality:
+    description: Gemeindename wie in Gemeinde24 angezeigt.
+  street:
     description: Strassen-/Ortsteilname wie in Gemeinde24 angezeigt.
     label: Strasse
   street_id:

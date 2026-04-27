@@ -13,18 +13,18 @@ TITLE = "AWB Bad Kreuznach"
 DESCRIPTION = "Source for AWB Bad Kreuznach."
 URL = "https://blupassionsystem.de/city/rest/garbageregion/filterRegion"
 TEST_CASES = {
-    "Hargesheim": {"ort": "Hargesheim"},
+    "Hargesheim": {"city": "Hargesheim"},
     "Bad Kreuznach": {
-        "ort": "Bad Kreuznach",
-        "strasse": "adalbert-stifter-straße",
+        "city": "Bad Kreuznach",
+        "street": "adalbert-stifter-straße",
         "nummer": "3",
     },
     "Bad Kreuznach OT Bad Münster-Ebernburg": {
-        "ort": "Bad Kreuznach OT Bad Münster-Ebernburg",
-        "strasse": "am Götzenfels",
+        "city": "Bad Kreuznach OT Bad Münster-Ebernburg",
+        "street": "am Götzenfels",
     },
-    "Stromberg": {"ort": "Stromberg", "stadtteil": "Schindeldorf"},
-    "Altenbamberg": {"ort": "Altenbamberg"},
+    "Stromberg": {"city": "Stromberg", "district": "Schindeldorf"},
+    "Altenbamberg": {"city": "Altenbamberg"},
 }
 
 TYPES = ("restmuell", "bio", "wert", "papier")
@@ -49,10 +49,10 @@ def compare_str(a: str, b: str):
 
 
 class Source:
-    def __init__(self, ort, strasse=None, nummer=None, stadtteil=None):
-        self._stadtteil = stadtteil if stadtteil else None
-        self._ort = ort
-        self._strasse = strasse if strasse else None
+    def __init__(self, city, street=None, nummer=None, district=None):
+        self._stadtteil = district if district else None
+        self._ort = city
+        self._strasse = street if street else None
         self._nummer = str(nummer) if nummer else None
 
     def fetch(self):
@@ -89,7 +89,7 @@ class Source:
 
         if not found:
             SourceArgumentNotFoundWithSuggestions(
-                "ort", self._ort, [city["name"] for city in data["data"]["citys"]]
+                "city", self._ort, [city["name"] for city in data["data"]["citys"]]
             )
 
         r = requests.post(URL, json=params)
@@ -98,9 +98,12 @@ class Source:
 
         if data["data"]["partOfCitys"] != []:
             if self._stadtteil is None:
-                raise SourceArgumentRequired("stadtteil", "A district (Stadtteil) must be selected from the available options")
+                raise SourceArgumentRequired(
+                    "district",
+                    "A district (Stadtteil) must be selected from the available options",
+                )
         elif self._stadtteil is not None:
-            LOGGER.warning("stadtteil provided but not needed")
+            LOGGER.warning("district provided but not needed")
 
         if data["data"]["partOfCitys"]:
             found = False
@@ -113,7 +116,7 @@ class Source:
 
             if not found:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "stadtteil",
+                    "district",
                     self._stadtteil,
                     [
                         part_of_city["name"]
@@ -127,9 +130,12 @@ class Source:
 
         if data["data"]["streets"] != []:
             if self._strasse is None:
-                raise SourceArgumentRequired("strasse", "A street (Strasse) must be selected from the available options")
+                raise SourceArgumentRequired(
+                    "street",
+                    "A street (Strasse) must be selected from the available options",
+                )
         elif self._strasse is not None:
-            LOGGER.warning("strasse provided but not needed")
+            LOGGER.warning("street provided but not needed")
 
         if data["data"]["streets"]:
             found = False
@@ -140,7 +146,7 @@ class Source:
                     break
             if not found:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "strasse",
+                    "street",
                     self._strasse,
                     [street["name"] for street in data["data"]["streets"]],
                 )
@@ -151,7 +157,10 @@ class Source:
 
         if data["data"]["houseNumbers"] != []:
             if self._nummer is None:
-                raise SourceArgumentRequired("nummer", "A house number (Nummer) must be selected from the available options")
+                raise SourceArgumentRequired(
+                    "nummer",
+                    "A house number (Nummer) must be selected from the available options",
+                )
         elif self._nummer is not None:
             LOGGER.warning("nummer provided but not needed")
 

@@ -13,10 +13,18 @@ TITLE = "AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH"
 DESCRIPTION = "Source for AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH."
 URL = "https://www.awigo.de/"
 TEST_CASES = {
-    "Bippen Am Bad 4": {"ort": "Bippen", "strasse": "Am Bad", "hnr": 4},
-    "fürstenau, Am Gültum, 9": {"ort": "Fürstenau", "strasse": "Am Gültum", "hnr": 9},
-    "Melle, Allee, 78-80": {"ort": "Melle", "strasse": "Allee", "hnr": "78-80"},
-    "Berge": {"ort": "Berge", "strasse": "Poststr.", "hnr": 3},
+    "Bippen Am Bad 4": {"city": "Bippen", "street": "Am Bad", "house_number": 4},
+    "fürstenau, Am Gültum, 9": {
+        "city": "Fürstenau",
+        "street": "Am Gültum",
+        "house_number": 9,
+    },
+    "Melle, Allee, 78-80": {
+        "city": "Melle",
+        "street": "Allee",
+        "house_number": "78-80",
+    },
+    "Berge": {"city": "Berge", "street": "Poststr.", "house_number": 3},
 }
 
 
@@ -40,10 +48,10 @@ def compare_cities(a: str, b: str) -> bool:
 
 
 class Source:
-    def __init__(self, ort: str, strasse: str, hnr: str | int):
-        self._ort: str = str(ort)
-        self._strasse: str = strasse
-        self._hnr: str = str(hnr)
+    def __init__(self, city: str, street: str, house_number: str | int):
+        self._ort: str = str(city)
+        self._strasse: str = street
+        self._hnr: str = str(house_number)
         self._ics = ICS()
 
     def fetch(self):
@@ -71,7 +79,9 @@ class Source:
                     break
             if "calendar[cityID]" not in args:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "ort", self._ort, [option.text for option in soup.findAll("option")]
+                    "city",
+                    self._ort,
+                    [option.text for option in soup.findAll("option")],
                 )
 
             args["calendar[method]"] = "getStreets"
@@ -86,7 +96,7 @@ class Source:
                     break
             if "calendar[streetID]" not in args:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "strasse",
+                    "street",
                     self._strasse,
                     [option.text for option in soup.findAll("option")],
                 )
@@ -102,7 +112,9 @@ class Source:
                     break
             if "calendar[locationID]" not in args:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "hnr", self._hnr, [option.text for option in soup.findAll("option")]
+                    "house_number",
+                    self._hnr,
+                    [option.text for option in soup.findAll("option")],
                 )
 
             args["calendar[method]"] = "getICSfile"

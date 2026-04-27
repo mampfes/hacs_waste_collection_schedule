@@ -9,15 +9,15 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "StadtService Brühl"
 DESCRIPTION = "Source für Abfallkalender StadtService Brühl"
 URL = "https://stadtservice-bruehl.de"
-TEST_CASES = {"TEST1": {"strasse": "Badorfer Straße", "hnr": "1"}}
+TEST_CASES = {"TEST1": {"street": "Badorfer Straße", "house_number": "1"}}
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, strasse, hnr):
-        self._strasse = strasse
-        self._hnr = hnr
+    def __init__(self, street, house_number):
+        self._strasse = street
+        self._hnr = house_number
         self._ics = ICS(regex="(.*?) \\- ", split_at=", ")
 
     def fetch(self):

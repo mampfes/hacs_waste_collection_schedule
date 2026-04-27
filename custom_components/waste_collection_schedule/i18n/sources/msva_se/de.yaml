@@ -11,7 +11,7 @@ params:
     label: Ort
   house_number:
     description: Hausnummer, z.B. '18'.
-  postal_code:
+  postcode:
     description: Fünfstellige schwedische Postleitzahl, z.B. '85461'.
     label: Postleitzahl
   street:

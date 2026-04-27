@@ -6,4 +6,3 @@ params:
   street_address:
     description: Full street address including suburb, state and postal code without
       separating commas.
-    label: Street Address

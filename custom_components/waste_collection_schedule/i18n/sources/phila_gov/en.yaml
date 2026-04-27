@@ -4,5 +4,4 @@
 ---
 params:
   address:
-    description: Street name and house number of the property
     label: Street name and house number of the property

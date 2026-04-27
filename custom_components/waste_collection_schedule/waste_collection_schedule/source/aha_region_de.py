@@ -14,30 +14,30 @@ DESCRIPTION = "Source for Zweckverband Abfallwirtschaft Region Hannover."
 URL = "https://www.aha-region.de/"
 TEST_CASES = {
     "Neustadt a. Rbge., Am Rotdorn / Nöpke, 1 ": {
-        "gemeinde": "Neustadt a. Rbge.",
-        "strasse": "Am Rotdorn / Nöpke",
-        "hnr": 1,
+        "municipality": "Neustadt a. Rbge.",
+        "street": "Am Rotdorn / Nöpke",
+        "house_number": 1,
     },
     "Isernhagen, Am Lohner Hof / Isernhagen Fb, 10": {
-        "gemeinde": "Isernhagen",
-        "strasse": "Am Lohner Hof / Isernhagen Fb",
-        "hnr": "10",
+        "municipality": "Isernhagen",
+        "street": "Am Lohner Hof / Isernhagen Fb",
+        "house_number": "10",
     },
     "Hannover, Voltastr. / Vahrenwald, 25": {
-        "gemeinde": "Hannover",
-        "strasse": "Voltastr. / Vahrenwald",
-        "hnr": "25",
+        "municipality": "Hannover",
+        "street": "Voltastr. / Vahrenwald",
+        "house_number": "25",
     },
     "Hannover, Melanchthonstr., 10A": {
-        "gemeinde": "Hannover",
-        "strasse": "Melanchthonstr.",
-        "hnr": "10",
+        "municipality": "Hannover",
+        "street": "Melanchthonstr.",
+        "house_number": "10",
         "zusatz": "A",
     },
     "Mit Ladeort": {
-        "gemeinde": "Gehrden",
-        "strasse": "Kirchstr. / Gehrden",
-        "hnr": "1",
+        "municipality": "Gehrden",
+        "street": "Kirchstr. / Gehrden",
+        "house_number": "1",
         "ladeort": "Kirchstr. 6, Gehrden / Gehrden",
     },
 }
@@ -57,22 +57,22 @@ LOGGER = logging.getLogger(__name__)
 class Source:
     def __init__(
         self,
-        gemeinde: str,
-        strasse: str,
-        hnr: str | int,
+        municipality: str,
+        street: str,
+        house_number: str | int,
         zusatz: str | int = "",
         ladeort=None,
     ):
-        self._gemeinde: str = gemeinde
-        self._strasse: str = strasse
-        self._hnr: str = str(hnr)
+        self._gemeinde: str = municipality
+        self._strasse: str = street
+        self._hnr: str = str(house_number)
         self._zusatz: str = str(zusatz)
         self._ladeort: str | None = ladeort
         self._ics = ICS()
 
     def fetch(self):
         if not self._strasse:
-            raise Exception("No strasse set")
+            raise Exception("No street set")
 
         # find strassen_id
         r = requests.get(
@@ -84,7 +84,7 @@ class Source:
         strassen_id = None
         selects = (
             BeautifulSoup(r.text, "html.parser")
-            .find("select", {"id": "strasse"})
+            .find("select", {"id": "street"})
             .find_all("option")
         )
         for select in selects:
@@ -96,7 +96,7 @@ class Source:
 
         if not strassen_id:
             raise SourceArgumentNotFoundWithSuggestions(
-                "strasse", self._strasse, [select.text for select in selects]
+                "street", self._strasse, [select.text for select in selects]
             )
 
         # request overview page

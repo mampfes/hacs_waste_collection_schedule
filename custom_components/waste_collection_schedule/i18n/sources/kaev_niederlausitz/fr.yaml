@@ -1,0 +1,5 @@
+# Per-source overrides for kaev_niederlausitz (fr).
+---
+params:
+  abf_suche:
+    label: Recherche

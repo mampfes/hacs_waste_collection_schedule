@@ -23,35 +23,35 @@ def EXTRA_INFO():
 
 TEST_CASES = {
     "Alphen a/d Rijn": {
-        "postal_code": "2404EN",
+        "postcode": "2404EN",
         "house_number": "7",
         "service": "alphenaandenrijn",
     },
     "Cranendonck": {
-        "postal_code": "6027PL",
+        "postcode": "6027PL",
         "house_number": "1",
         "house_letter": "b",
         "service": "cranendonck",
     },
-    "Cyclus": {"postal_code": "2841ML", "house_number": "1090", "service": "cyclusnv"},
-    "GAD": {"postal_code": "1401EE", "house_number": "22", "service": "gad"},
-    "Den Haag": {"postal_code": "2591BB", "house_number": "87", "service": "denhaag"},
+    "Cyclus": {"postcode": "2841ML", "house_number": "1090", "service": "cyclusnv"},
+    "GAD": {"postcode": "1401EE", "house_number": "22", "service": "gad"},
+    "Den Haag": {"postcode": "2591BB", "house_number": "87", "service": "denhaag"},
     "Peel en Maas": {
-        "postal_code": "5991GT",
+        "postcode": "5991GT",
         "house_number": "1",
         "service": "peelenmaas",
     },
-    "Tollebeek": {"postal_code": "8309AV", "house_number": "1"},
+    "Tollebeek": {"postcode": "8309AV", "house_number": "1"},
     "Hvcgroep: Tollebeek": {
-        "postal_code": "8309AV",
+        "postcode": "8309AV",
         "house_number": "1",
         "service": "hvcgroep",
     },
-    "Reinis": {"postal_code": "3201AA", "house_number": "1", "service": "reinis"},
-    "ZRD": {"postal_code": "4691DH", "house_number": "4", "service": "zrd"},
-    "Hoorn": {"postal_code": "1628XA", "house_number": "1", "service": "hvcgroep"},
+    "Reinis": {"postcode": "3201AA", "house_number": "1", "service": "reinis"},
+    "ZRD": {"postcode": "4691DH", "house_number": "4", "service": "zrd"},
+    "Hoorn": {"postcode": "1628XA", "house_number": "1", "service": "hvcgroep"},
     "Uitgeest": {
-        "postal_code": "1911LB",
+        "postcode": "1911LB",
         "house_number": "14",
     },
 }
@@ -305,9 +305,9 @@ def get_main_url(url):
 
 class Source:
     def __init__(
-        self, postal_code, house_number, house_letter="", suffix="", service="hvcgroep"
+        self, postcode, house_number, house_letter="", suffix="", service="hvcgroep"
     ):
-        self.postal_code = postal_code
+        self.postcode = postcode
         self.house_number = house_number
         self.house_letter = house_letter
         self.suffix = suffix
@@ -315,13 +315,13 @@ class Source:
 
     def fetch(self):
         # Retrieve bagid (unique waste management identifier)
-        r = requests.get(f"{self._url}/adressen/{self.postal_code}:{self.house_number}")
+        r = requests.get(f"{self._url}/adressen/{self.postcode}:{self.house_number}")
         r.raise_for_status()
         data = r.json()
 
         # Something must be wrong, maybe the address isn't valid? No need to do the extra requests so just return here.
         if len(data) == 0:
-            raise SourceArgumentNotFound("postal_code", self.postal_code)
+            raise SourceArgumentNotFound("postcode", self.postcode)
 
         bag_id = data[0]["bagid"]
         if len(data) > 1 and (self.house_letter or self.suffix):

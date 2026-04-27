@@ -17,7 +17,7 @@ TEST_CASES = {
         "service_provider": "zeba",
         "municipality": "Baar",
         "street": "Aberenrain",
-        "hnr": 10,
+        "house_number": 10,
     },
     "zkri Rothenthurm": {
         "service_provider": "zkri",
@@ -107,7 +107,7 @@ class Source:
         service_provider: PROVIDER_LITERALS,
         municipality: str,
         street: str | None = None,
-        hnr: str | int | None = None,
+        house_number: str | int | None = None,
     ) -> None:
         service_provider_str = service_provider.lower()
         if service_provider not in SERVICES:
@@ -119,7 +119,7 @@ class Source:
 
         self._municipality: str = municipality
         self._street: str | None = street
-        self._hnr: str | None = str(hnr) if hnr is not None else None
+        self._hnr: str | None = str(house_number) if house_number is not None else None
 
         self._municipality_id: str | None = None
         self._address_id: str | None = None
@@ -166,15 +166,14 @@ class Source:
             return
         # check: street parameter defined?
         if not self._street:
-            sage_names = list(
-                {s.get("STRname") or s.get("SAGEname") for s in sages}
-            )
-            # by default use first Sammelgebiet and log a Warning 
+            sage_names = list({s.get("STRname") or s.get("SAGEname") for s in sages})
+            # by default use first Sammelgebiet and log a Warning
             # (prevents breaking changes: existing users may have no street configured, because it was not mandatory previously)
             self._address_id = sages[0]["SAGEid"]
             _LOGGER.warning(
                 "No Sammelgebiet configured for this municipality. Using default Sammelgebiet '%s'. To configure, insert for the parameter 'street': %s",
-                sages[0]["SAGEname"], ", ".join(sage_names),
+                sages[0]["SAGEname"],
+                ", ".join(sage_names),
             )
             return
         # otherwise find correct sage
@@ -230,7 +229,7 @@ class Source:
 
             if self._hnr is None:
                 raise SourceArgumentRequiredWithSuggestions(
-                    "hnr",
+                    "house_number",
                     "House number required for this street",
                     [s["STRhausnr"] for s in street_matches],
                 )
@@ -240,7 +239,7 @@ class Source:
 
         if not self._address_id:
             raise SourceArgumentNotFoundWithSuggestions(
-                "hnr",
+                "house_number",
                 self._hnr,
                 list({s["STRhausnr"] for s in street_matches}),
             )

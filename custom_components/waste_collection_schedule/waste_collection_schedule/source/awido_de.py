@@ -408,13 +408,13 @@ TEST_CASES = {
         "customer": "coburg",
         "city": "rödental",
         "street": "krötenleite",
-        "housenumber": 4,
+        "house_number": 4,
     },
     "Schorndorf, Miedelsbacher Straße 30 /1": {
         "customer": "rmk",
         "city": "Schorndorf",
         "street": "Miedelsbacher Straße",
-        "housenumber": "30 /1",
+        "house_number": "30 /1",
     },
     "Altomünster, Maisbrunn": {
         "customer": "lra-dah",
@@ -432,7 +432,7 @@ TEST_CASES = {
         "customer": "bgl",
         "city": "Laufen",
         "street": "Ahornweg",
-        "housenumber": 1,
+        "house_number": 1,
     },
     "Daaden-Herdorf": {
         "customer": "awb-ak",
@@ -469,12 +469,12 @@ class Source:
         customer: str,
         city: str,
         street: str | None = None,
-        housenumber: str | int | None = None,
+        house_number: str | int | None = None,
     ):
         self._customer = customer.lower()
         self._city = city.lower()
         self._street = street.lower() if street else None
-        self._housenumber = None if housenumber is None else str(housenumber).lower()
+        self._housenumber = None if house_number is None else str(house_number).lower()
 
     def fetch(self) -> list[Collection]:
         # Retrieve list of places
@@ -538,7 +538,7 @@ class Source:
                 r.raise_for_status()
                 hsnbrs = r.json()
 
-                # create housenumber to key map from retrieved places
+                # create house_number to key map from retrieved places
                 hsnbr_to_oid = {
                     hsnbr["value"].strip().lower(): hsnbr["key"] for (hsnbr) in hsnbrs
                 }
@@ -553,7 +553,7 @@ class Source:
                 else:
                     if self._housenumber not in hsnbr_to_oid:
                         raise SourceArgumentNotFoundWithSuggestions(
-                            "housenumber",
+                            "house_number",
                             self._housenumber,
                             suggestions=list(hsnbr_to_oid.keys()),
                         )

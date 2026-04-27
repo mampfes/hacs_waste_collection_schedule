@@ -17,7 +17,7 @@ TITLE = "RessourceIndsamling.dk"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source for RessourceIndsamling.dk collection"  # Describe your source
 URL = "https://www.ressourceindsamling.dk/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Home": {"streetName": "Kløvertoften", "number": "61"}
+    "Home": {"street_name": "Kløvertoften", "number": "61"}
 }
 
 API_URL = (
@@ -50,26 +50,21 @@ TEST_DATE = [
         "binTypeId": 56,
         "binTypePublicName": "240 L tokammer",
         "startTime": "2026-04-15T22:00:00Z",
-        "stopTime": "2026-04-16T22:00:00Z", # Use this for the date of the schedule
+        "stopTime": "2026-04-16T22:00:00Z",  # Use this for the date of the schedule
         "originalStartTime": "2026-04-15T22:00:00Z",
         "originalStopTime": "2026-04-16T22:00:00Z",
-        "coordinate": {
-            "lat": 55.713405,
-            "lon": 12.390497,
-            "z": None,
-            "srid": 4326
-        },
+        "coordinate": {"lat": 55.713405, "lon": 12.390497, "z": None, "srid": 4326},
         "serviceSchemeId": 257318,
         "schemeTypePublicName": "Enfamilie",
         "frequencyTypeId": 1,
-        "serviceScheme_ServiceSchemeChangeBin_Mandatory": True
+        "serviceScheme_ServiceSchemeChangeBin_Mandatory": True,
     }
 ]
 
 
 class Source:
-    def __init__(self, streetName, number):
-        self._streetName = streetName
+    def __init__(self, street_name, number):
+        self._streetName = street_name
         self._number = number
 
     def fetch(self):
@@ -88,7 +83,7 @@ class Source:
         _LOGGER.debug(f"Address lookup response: {address_response.text}")
         if address_response.status_code != 200:
             raise SourceArgumentNotFound(
-                "streetName",
+                "street_name",
                 term,
                 f"Failed to lookup address: HTTP {address_response.status_code}",
             )
@@ -103,7 +98,7 @@ class Source:
 
         if "items" not in response_data or not response_data["items"]:
             raise SourceArgumentException(
-                "streetName",
+                "street_name",
                 f"Address '{term}' not found in waste2x.dk database.",
             )
 

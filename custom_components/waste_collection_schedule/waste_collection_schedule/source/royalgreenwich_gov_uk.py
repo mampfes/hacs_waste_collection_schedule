@@ -16,7 +16,7 @@ DESCRIPTION = "Source for services from the Royal Borough Of Greenwich"
 URL = "https://www.royalgreenwich.gov.uk/"
 TEST_CASES = {
     "address": {"address": "25 - Tizzard Grove - London - SE3 9DH"},
-    "houseNumber": {"post_code": "SE9 5AW", "house": "11"},
+    "houseNumber": {"postcode": "SE9 5AW", "house": "11"},
     "alternativeWeek": {"address": "32 - Glenlyon Road - London - SE9 1AJ"},
 }
 
@@ -47,18 +47,18 @@ HEADERS = {
 class Source:
     def __init__(
         self,
-        post_code: Optional[str] = None,
+        postcode: Optional[str] = None,
         house: Optional[str] = None,
         address: Optional[str] = None,
     ):
-        self._post_code = post_code
+        self._post_code = postcode
         self._house = house
         self._address = address
 
     def _find_address(self) -> str:
         if not self._post_code:
             raise SourceArgumentRequired(
-                "post_code", "postcode is required if address is not provided"
+                "postcode", "postcode is required if address is not provided"
             )
         term_list = [self._post_code]
         if self._house:

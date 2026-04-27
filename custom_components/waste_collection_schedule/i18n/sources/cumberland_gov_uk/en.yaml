@@ -4,7 +4,6 @@
 ---
 params:
   postcode:
-    description: Postcode of your property
     label: Postcode of your property
   uprn:
     label: Unique Property Reference Number (UPRN)

@@ -1,0 +1,7 @@
+# Per-source overrides for aha_region_de (en).
+---
+params:
+  ladeort:
+    label: Loading Location
+  zusatz:
+    label: Addition

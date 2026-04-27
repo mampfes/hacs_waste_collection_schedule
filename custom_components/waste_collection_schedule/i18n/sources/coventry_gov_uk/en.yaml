@@ -4,5 +4,4 @@
 ---
 params:
   street:
-    description: Your street name, as it appears on the Coventry City Council website
     label: Your street name, as it appears on the Coventry City Council website

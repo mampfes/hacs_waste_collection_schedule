@@ -7,5 +7,3 @@ params:
     description: Full address
   house:
     description: House number or name
-  post_code:
-    description: Postcode

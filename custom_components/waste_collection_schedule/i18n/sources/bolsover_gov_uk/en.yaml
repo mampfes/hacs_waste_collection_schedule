@@ -5,7 +5,6 @@
 params:
   calendar:
     description: 'Your bin calendar letter: ''a'' or ''b''.'
-    label: Calendar
   collection_day:
     description: 'Your collection day: tuesday, wednesday, thursday, or friday.'
     label: Collection Day

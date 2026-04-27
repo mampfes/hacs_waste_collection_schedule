@@ -7,7 +7,7 @@ params:
     label: Bio Rhythmus
   gelb_rhythm:
     label: Gelb Rhythmus
-  ortsteil:
+  district:
     label: Ortsteil
   papier_rhythm:
     label: Papier Rhythmus

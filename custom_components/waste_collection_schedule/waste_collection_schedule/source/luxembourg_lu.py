@@ -46,15 +46,15 @@ ICON_MAP = {
 }
 
 TEST_CASES = {
-    "Beaufort": {"commune": "Beaufort"},
-    "Reisdorf": {"commune": "Reisdorf"},
+    "Beaufort": {"municipality": "Beaufort"},
+    "Reisdorf": {"municipality": "Reisdorf"},
     "Bech - specific street": {
-        "commune": "Bech",
+        "municipality": "Bech",
         "localite": "Bech",
         "rue": "Am Biirk",
     },
     "Pétange - Rodange": {
-        "commune": "Pétange",
+        "municipality": "Pétange",
         "localite": "Rodange",
         "rue": "Rue Willy Huberty",
     },
@@ -73,24 +73,24 @@ def _fetch_rows() -> list[dict]:
 class Source:
     def __init__(
         self,
-        commune: str,
+        municipality: str,
         localite: str | None = None,
         rue: str | None = None,
     ):
-        self._commune = commune.strip()
+        self._commune = municipality.strip()
         self._localite = localite.strip() if localite else None
         self._rue = rue.strip() if rue else None
 
     def fetch(self) -> list[Collection]:
         rows = _fetch_rows()
 
-        # --- Validate commune ---
+        # --- Validate municipality ---
         all_communes = sorted(
             {r.get("Commune", "").strip() for r in rows if r.get("Commune", "").strip()}
         )
         if self._commune not in all_communes:
             raise SourceArgumentNotFoundWithSuggestions(
-                "commune", self._commune, all_communes
+                "municipality", self._commune, all_communes
             )
 
         commune_rows = [
@@ -107,7 +107,7 @@ class Source:
         )
 
         if all_localites:
-            # This commune has per-locality rows
+            # This municipality has per-locality rows
             if self._localite is None:
                 raise SourceArgumentRequiredWithSuggestions(
                     "localite",
@@ -119,14 +119,14 @@ class Source:
                     "localite", self._localite, all_localites
                 )
 
-            # Include rows matching the locality AND rows with no locality (commune-wide)
+            # Include rows matching the locality AND rows with no locality (municipality-wide)
             localite_rows = [
                 r
                 for r in commune_rows
                 if r.get("Localité", "").strip() in (self._localite, "")
             ]
         else:
-            # Commune has no locality breakdown — use all commune rows
+            # Commune has no locality breakdown — use all municipality rows
             localite_rows = commune_rows
 
         # --- Validate / resolve rue ---

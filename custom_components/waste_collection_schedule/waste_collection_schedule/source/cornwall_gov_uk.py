@@ -13,8 +13,8 @@ DESCRIPTION = "Source for cornwall.gov.uk services for Cornwall Council"
 URL = "https://cornwall.gov.uk"
 TEST_CASES = {
     "known_uprn": {"uprn": "100040118005"},
-    "unknown_uprn": {"postcode": "TR261SP", "housenumberorname": "7"},
-    "unknown_uprn_int": {"postcode": "PL17 8PL", "housenumberorname": 3},
+    "unknown_uprn": {"postcode": "TR261SP", "house_number_or_name": "7"},
+    "unknown_uprn_int": {"postcode": "PL17 8PL", "house_number_or_name": 3},
     "uprn_with_garden_int_uprn": {"uprn": 100040080721},
 }
 
@@ -31,11 +31,13 @@ ICON_MAP = {
 
 class Source:
     def __init__(
-        self, uprn=None, postcode=None, housenumberorname=None
+        self, uprn=None, postcode=None, house_number_or_name=None
     ):  # argX correspond to the args dict in the source configuration
         self._uprn = uprn
         self._postcode = postcode
-        self._housenumberorname = str(housenumberorname) if housenumberorname else None
+        self._housenumberorname = (
+            str(house_number_or_name) if house_number_or_name else None
+        )
 
     def fetch(self):
         entries = []
@@ -58,7 +60,7 @@ class Source:
                     self._uprn = match["value"]
             if self._uprn is None:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "housenumberorname",
+                    "house_number_or_name",
                     self._housenumberorname,
                     [match.text for match in propertyUprns],
                 )

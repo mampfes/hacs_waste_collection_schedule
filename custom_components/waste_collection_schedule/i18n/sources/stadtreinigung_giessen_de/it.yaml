@@ -4,7 +4,6 @@
 ---
 params:
   house_number:
-    description: Numero civico
     label: Numero civico
   street:
     description: Inserire il nome della via. Se non trovata, apparirà un menu a tendina

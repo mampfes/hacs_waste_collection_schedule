@@ -4,5 +4,4 @@
 ---
 params:
   district:
-    description: Ortsteil
     label: Ortsteil

@@ -8,10 +8,10 @@ params:
       ''240'', Papier: ''1100''). Only specified waste types are filtered; others
       are shown for all container sizes. If omitted all container sizes are shown.'
     label: Container size
-  hausnummer:
+  house_number:
     description: House number (optional, required for some streets)
-  ortsteil:
+  district:
     description: District / city part as shown in the EVV portal (e.g. 'Fürstenhausen',
       'Völklingen')
-  strasse:
+  street:
     description: Street name as shown in the EVV portal (e.g. 'Kaiserstraße')

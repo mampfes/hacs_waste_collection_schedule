@@ -9,8 +9,8 @@ TITLE = "Hygea"
 DESCRIPTION = "Source for Hygea garbage collection"
 URL = "https://www.hygea.be/"
 TEST_CASES = {
-    "Soignies": {"streetIndex": "3758"},
-    "Frameries": {"streetIndex": "4203"},
+    "Soignies": {"street_index": "3758"},
+    "Frameries": {"street_index": "4203"},
     "Erquelinnes": {"cp": "6560"},
 }
 
@@ -23,8 +23,8 @@ WASTE_MAP = {
 
 
 class Source:
-    def __init__(self, streetIndex=None, cp=None):
-        self._street_index = streetIndex
+    def __init__(self, street_index=None, cp=None):
+        self._street_index = street_index
         self._cp = cp
 
     def fetch(self):
