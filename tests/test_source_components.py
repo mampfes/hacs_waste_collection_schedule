@@ -120,34 +120,6 @@ def test_no_extra_ics_mds() -> None:
         assert source in sources, f"found orphaned ics markdown file: {source}.md"
 
 
-def _param_translation_check(
-    source: str,
-    translations: Any,
-    init_params_names: Iterable[str],
-    source_param_to_test: str = "translations",
-) -> None:
-    assert isinstance(
-        translations, dict
-    ), f"{source_param_to_test} must be a dictionary in {source}"
-    for lang, lang_translations in translations.items():
-        assert (
-            lang in LANGUAGES
-        ), f"unknown/unsupported language code {lang} in {source} {source_param_to_test}, must be one of {LANGUAGES}"
-        assert isinstance(
-            lang_translations, dict
-        ), f"{source_param_to_test} must be a dictionary in {source}"
-        for argument, argument_translation in lang_translations.items():
-            assert isinstance(
-                argument, str
-            ), f"{source_param_to_test} keys must be strings in {source} for language {lang}"
-            assert isinstance(
-                argument_translation, str
-            ), f"{source_param_to_test} values must be strings in {source} for language {lang}"
-            assert (
-                argument in init_params_names
-            ), f"{source_param_to_test} key {argument} for language {lang} not a valid parameter in Source class in {source}"
-
-
 def _test_case_check(
     name: Any,
     test_case: Any,
@@ -294,22 +266,6 @@ def test_source_has_necessary_parameters() -> None:
                 assert isinstance(
                     value, str
                 ), f"HOW_TO_GET_ARGUMENTS_DESCRIPTION values must be strings in {source}"
-
-        if hasattr(module, "PARAM_TRANSLATIONS"):
-            _param_translation_check(
-                source,
-                module.PARAM_TRANSLATIONS,
-                init_params_names,
-                "PARAM_TRANSLATIONS",
-            )
-        if hasattr(module, "PARAM_DESCRIPTIONS"):
-            _param_translation_check(
-                source,
-                module.PARAM_DESCRIPTIONS,
-                init_params_names,
-                "PARAM_DESCRIPTIONS",
-            )
-
 
 def test_ics_source_has_necessary_parameters():
     sources = _get_ics_sources()

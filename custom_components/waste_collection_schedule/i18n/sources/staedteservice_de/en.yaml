@@ -1,5 +1,0 @@
-# Per-source overrides for staedteservice_de (en).
----
-params:
-  street_number:
-    label: Street Number

@@ -5,10 +5,8 @@
 params:
   additional_sides_matcher:
     description: Additional matcher for collection sides
-    label: Additional Sides Matcher
   community:
     description: Community of the property.
-    label: Community
   g1:
     description: Select Collection group to limit results to a specific group within
       a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month).
@@ -36,4 +34,3 @@ params:
     label: Group 5
   language:
     description: Language for waste type names (pl, en, uk, ru)
-    label: Language

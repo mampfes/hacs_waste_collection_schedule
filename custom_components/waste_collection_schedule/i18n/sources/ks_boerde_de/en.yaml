@@ -3,4 +3,3 @@
 params:
   village:
     description: Village of the property.
-    label: Village

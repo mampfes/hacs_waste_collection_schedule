@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import argparse
 import hashlib
 import importlib
 import inspect
@@ -81,10 +80,6 @@ def _i18n_source_overrides(
     """Return (translations, descriptions) for one source as
     ``{lang: {param: value}}`` dicts loaded from
     ``custom_components/.../i18n/sources/<source_id>/<lang>.yaml``.
-
-    The two output dicts mirror the shape of legacy ``PARAM_TRANSLATIONS`` and
-    ``PARAM_DESCRIPTIONS`` so they can be merged into the existing pipeline
-    without touching ``SourceInfo``.
     """
     translations: dict[str, dict[str, str]] = {}
     descriptions: dict[str, dict[str, str]] = {}
@@ -104,22 +99,6 @@ def _i18n_source_overrides(
             if "description" in entry:
                 descriptions.setdefault(lang, {})[param] = entry["description"]
     return translations, descriptions
-
-
-def _merge_i18n_overrides(
-    legacy: dict[str, dict[str, str]],
-    overrides: dict[str, dict[str, str]],
-) -> dict[str, dict[str, str]]:
-    """Merge the new YAML overrides into the legacy inline dict, with overrides
-    winning per (lang, param). Returns a fresh dict so the caller can mutate
-    without affecting either input.
-    """
-    merged: dict[str, dict[str, str]] = {
-        lang: dict(params) for lang, params in legacy.items()
-    }
-    for lang, params in overrides.items():
-        merged.setdefault(lang, {}).update(params)
-    return merged
 
 
 SECRET_FILENAME = "secrets.yaml"
@@ -539,17 +518,11 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     params = [param.name for param in sig.parameters.values()]
     if "self" in params:
         params.remove("self")
-    param_translations = getattr(module, "PARAM_TRANSLATIONS", {})
-    param_descriptions = getattr(module, "PARAM_DESCRIPTIONS", {})
     howto = getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
 
-    # Merge per-source YAML overrides from i18n/sources/<source_id>/. These
-    # win over legacy inline PARAM_TRANSLATIONS / PARAM_DESCRIPTIONS dicts so
-    # newly-migrated sources take effect without removing the legacy reader
-    # path during the transition.
-    yaml_translations, yaml_descriptions = _i18n_source_overrides(file)
-    param_translations = _merge_i18n_overrides(param_translations, yaml_translations)
-    param_descriptions = _merge_i18n_overrides(param_descriptions, yaml_descriptions)
+    # Per-source YAML overrides from i18n/sources/<source_id>/. The shape
+    # ``{lang: {param: value}}`` matches what SourceInfo expects.
+    param_translations, param_descriptions = _i18n_source_overrides(file)
 
     filename = f"/doc/source/{file}.md"
     sources = []

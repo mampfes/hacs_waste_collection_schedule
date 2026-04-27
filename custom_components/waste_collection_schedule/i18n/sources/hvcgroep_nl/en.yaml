@@ -3,4 +3,3 @@
 params:
   house_letter:
     description: House letter of the property.
-    label: House Letter
