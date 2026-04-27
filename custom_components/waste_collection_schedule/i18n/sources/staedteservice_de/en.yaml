@@ -2,5 +2,4 @@
 ---
 params:
   street_number:
-    description: Street number of the property.
     label: Street Number

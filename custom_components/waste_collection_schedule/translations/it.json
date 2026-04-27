@@ -3907,7 +3907,8 @@
           "street": "Strada"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Numero civico dell'indirizzo."
         }
       },
       "reconfigure_klosterneuburg_at": {
@@ -3918,7 +3919,9 @@
           "house_number": "Civico",
           "street": "Strada"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Numero civico dell'indirizzo."
+        }
       },
       "args_ics_traiskirchen_gv_at": {
         "title": "Configurazione Sorgente",
@@ -16541,7 +16544,8 @@
           "street": "Strada"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Numero civico dell'indirizzo."
         }
       },
       "reconfigure_smiecioplan_pl": {
@@ -16553,7 +16557,9 @@
           "house_number": "Civico",
           "street": "Strada"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Numero civico dell'indirizzo."
+        }
       },
       "args_gmina_miekinia_pl": {
         "title": "Configurazione Sorgente",
@@ -23889,6 +23895,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo."
         }
       },
@@ -23902,6 +23909,7 @@
           "postcode": "Codice Postale CAP"
         },
         "data_description": {
+          "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo."
         }
       },
@@ -24085,7 +24093,9 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "postcode": "Codice postale dell'indirizzo."
+          "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
+          "postcode": "Codice postale dell'indirizzo.",
+          "street_name": "Nome della via dell'indirizzo."
         }
       },
       "reconfigure_sefton_gov_uk": {
@@ -24098,7 +24108,9 @@
           "street_name": "Nome Strada"
         },
         "data_description": {
-          "postcode": "Codice postale dell'indirizzo."
+          "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
+          "postcode": "Codice postale dell'indirizzo.",
+          "street_name": "Nome della via dell'indirizzo."
         }
       },
       "args_sheffield_gov_uk": {

@@ -4,7 +4,6 @@
 ---
 params:
   municipality:
-    description: Municipality Name
     label: Municipality name in MRC de Roussillon
   sector:
     label: Optional, Sector for Châteauguay, nord-ouest or est

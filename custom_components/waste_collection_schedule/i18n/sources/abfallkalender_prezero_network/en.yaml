@@ -6,7 +6,3 @@ params:
   city:
     description: 'City identifier (default: ''bad-oeynhausen''; supported values:
       ''bad-oeynhausen'', ''willich'')'
-  house_number:
-    description: House number (e.g. '1')
-  street:
-    description: Street name (e.g. 'Aalstraße')

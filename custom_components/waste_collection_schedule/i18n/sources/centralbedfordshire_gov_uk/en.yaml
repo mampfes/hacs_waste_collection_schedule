@@ -2,5 +2,4 @@
 ---
 params:
   house_name:
-    description: House name of the property.
     label: House Name

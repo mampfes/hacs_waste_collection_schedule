@@ -3906,7 +3906,8 @@
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Numéro de maison de l'adresse."
         }
       },
       "reconfigure_klosterneuburg_at": {
@@ -3917,7 +3918,9 @@
           "house_number": "Numéro civique",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Numéro de maison de l'adresse."
+        }
       },
       "args_ics_traiskirchen_gv_at": {
         "title": "Configurer la Source",
@@ -16827,7 +16830,8 @@
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Numéro de maison de l'adresse."
         }
       },
       "reconfigure_smiecioplan_pl": {
@@ -16839,7 +16843,9 @@
           "house_number": "Numéro civique",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Numéro de maison de l'adresse."
+        }
       },
       "args_gmina_miekinia_pl": {
         "title": "Configurer la Source",
@@ -24213,6 +24219,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
           "postcode": "Code postal de l'adresse."
         }
       },
@@ -24226,6 +24233,7 @@
           "postcode": "Code postal"
         },
         "data_description": {
+          "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
           "postcode": "Code postal de l'adresse."
         }
       },
@@ -24409,7 +24417,9 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "postcode": "Code postal de l'adresse."
+          "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
+          "postcode": "Code postal de l'adresse.",
+          "street_name": "Nom de la rue de l'adresse."
         }
       },
       "reconfigure_sefton_gov_uk": {
@@ -24422,7 +24432,9 @@
           "street_name": "Nom de rue"
         },
         "data_description": {
-          "postcode": "Code postal de l'adresse."
+          "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
+          "postcode": "Code postal de l'adresse.",
+          "street_name": "Nom de la rue de l'adresse."
         }
       },
       "args_sheffield_gov_uk": {

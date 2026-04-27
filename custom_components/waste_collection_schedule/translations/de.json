@@ -3996,7 +3996,8 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Hausnummer der Adresse."
         }
       },
       "reconfigure_klosterneuburg_at": {
@@ -4007,7 +4008,9 @@
           "house_number": "Hausnummer",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Hausnummer der Adresse."
+        }
       },
       "args_ics_traiskirchen_gv_at": {
         "title": "Quelle konfigurieren",
@@ -17266,7 +17269,8 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Hausnummer der Adresse."
         }
       },
       "reconfigure_smiecioplan_pl": {
@@ -17278,7 +17282,9 @@
           "house_number": "Hausnummer",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Hausnummer der Adresse."
+        }
       },
       "args_gmina_miekinia_pl": {
         "title": "Quelle konfigurieren",
@@ -24697,6 +24703,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number_or_name": "Hausnummer oder -name der Adresse.",
           "postcode": "Postleitzahl der Adresse."
         }
       },
@@ -24710,6 +24717,7 @@
           "postcode": "PLZ"
         },
         "data_description": {
+          "house_number_or_name": "Hausnummer oder -name der Adresse.",
           "postcode": "Postleitzahl der Adresse."
         }
       },
@@ -24893,7 +24901,9 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "postcode": "Postleitzahl der Adresse."
+          "house_number_or_name": "Hausnummer oder -name der Adresse.",
+          "postcode": "Postleitzahl der Adresse.",
+          "street_name": "Straßenname der Adresse."
         }
       },
       "reconfigure_sefton_gov_uk": {
@@ -24906,7 +24916,9 @@
           "street_name": "Straßenname"
         },
         "data_description": {
-          "postcode": "Postleitzahl der Adresse."
+          "house_number_or_name": "Hausnummer oder -name der Adresse.",
+          "postcode": "Postleitzahl der Adresse.",
+          "street_name": "Straßenname der Adresse."
         }
       },
       "args_sheffield_gov_uk": {

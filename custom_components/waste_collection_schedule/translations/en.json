@@ -3369,7 +3369,6 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
           "map_name": "The name of the calendar map displayed in the app.",
-          "street_name": "The street name to get garbage collection dates for.",
           "town": "The town corresponding to the selected street."
         }
       },
@@ -3386,7 +3385,6 @@
         "data_description": {
           "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
           "map_name": "The name of the calendar map displayed in the app.",
-          "street_name": "The street name to get garbage collection dates for.",
           "town": "The town corresponding to the selected street."
         }
       },
@@ -4177,7 +4175,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "House number",
+          "house_number": "House number of the property.",
           "street": "Street name as shown on the Klosterneuburg website"
         }
       },
@@ -4190,7 +4188,7 @@
           "street": "Street"
         },
         "data_description": {
-          "house_number": "House number",
+          "house_number": "House number of the property.",
           "street": "Street name as shown on the Klosterneuburg website"
         }
       },
@@ -5032,8 +5030,7 @@
           "sector": "Optional, Sector for Châteauguay, nord-ouest or est"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "municipality": "Municipality Name"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_info_collectes_ca": {
@@ -5044,9 +5041,7 @@
           "municipality": "Municipality name in MRC de Roussillon",
           "sector": "Optional, Sector for Châteauguay, nord-ouest or est"
         },
-        "data_description": {
-          "municipality": "Municipality Name"
-        }
+        "data_description": {}
       },
       "args_publidata_ca": {
         "title": "Configure Source",
@@ -9713,9 +9708,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')",
-          "house_number": "House number (e.g. '1')",
-          "street": "Street name (e.g. 'Aalstraße')"
+          "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')"
         }
       },
       "reconfigure_abfallkalender_prezero_network": {
@@ -9728,9 +9721,7 @@
           "street": "Street"
         },
         "data_description": {
-          "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')",
-          "house_number": "House number (e.g. '1')",
-          "street": "Street name (e.g. 'Aalstraße')"
+          "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')"
         }
       },
       "args_reso_gmbh_de": {
@@ -15023,8 +15014,7 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "city": "City of the property.",
           "house_number": "House number of the property.",
-          "street_name": "Street name of the property.",
-          "street_number": "Street number of the property."
+          "street_name": "Street name of the property."
         }
       },
       "reconfigure_staedteservice_de": {
@@ -15040,8 +15030,7 @@
         "data_description": {
           "city": "City of the property.",
           "house_number": "House number of the property.",
-          "street_name": "Street name of the property.",
-          "street_number": "Street number of the property."
+          "street_name": "Street name of the property."
         }
       },
       "args_ics_swk_herford_de": {
@@ -16310,10 +16299,7 @@
           "house_number": "House Number"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "The street name of your address in Milan (e.g., 'Via Monte Rosa').",
-          "city": "The city of your address (e.g., 'Milano').",
-          "house_number": "The house number of your address in Milan (e.g., '91')."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_amsa_it": {
@@ -16325,11 +16311,7 @@
           "city": "City",
           "house_number": "House Number"
         },
-        "data_description": {
-          "address": "The street name of your address in Milan (e.g., 'Via Monte Rosa').",
-          "city": "The city of your address (e.g., 'Milano').",
-          "house_number": "The house number of your address in Milan (e.g., '91')."
-        }
+        "data_description": {}
       },
       "args_asm_pv_it": {
         "title": "Configure Source",
@@ -18454,7 +18436,7 @@
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "city": "City name (szczecin, gdansk, gdynia, or sopot).",
-          "house_number": "House number.",
+          "house_number": "House number of the property.",
           "street": "Street name in uppercase as shown on SmiecioPlan."
         }
       },
@@ -18469,7 +18451,7 @@
         },
         "data_description": {
           "city": "City name (szczecin, gdansk, gdynia, or sopot).",
-          "house_number": "House number.",
+          "house_number": "House number of the property.",
           "street": "Street name in uppercase as shown on SmiecioPlan."
         }
       },
@@ -19527,9 +19509,7 @@
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "additional_information": "House letter or unit identifier, e.g. 'A'. Leave empty if not applicable.",
           "city": "Locality within Sundsvall kommun. Defaults to 'Sundsvall'.",
-          "house_number": "House number, e.g. '18'.",
-          "postcode": "Five-digit Swedish postal code, e.g. '85461'.",
-          "street": "Street name without house number, e.g. 'Västra Radiogatan'."
+          "postcode": "Five-digit Swedish postal code, e.g. '85461'."
         }
       },
       "reconfigure_msva_se": {
@@ -19546,9 +19526,7 @@
         "data_description": {
           "additional_information": "House letter or unit identifier, e.g. 'A'. Leave empty if not applicable.",
           "city": "Locality within Sundsvall kommun. Defaults to 'Sundsvall'.",
-          "house_number": "House number, e.g. '18'.",
-          "postcode": "Five-digit Swedish postal code, e.g. '85461'.",
-          "street": "Street name without house number, e.g. 'Västra Radiogatan'."
+          "postcode": "Five-digit Swedish postal code, e.g. '85461'."
         }
       },
       "args_molndal_se": {
@@ -22124,7 +22102,6 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_name": "House name of the property.",
           "postcode": "Postcode of the property."
         }
       },
@@ -22137,7 +22114,6 @@
           "postcode": "Postcode"
         },
         "data_description": {
-          "house_name": "House name of the property.",
           "postcode": "Postcode of the property."
         }
       },
@@ -26126,7 +26102,7 @@
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "address": "Full address",
-          "house_number_or_name": "House number or name",
+          "house_number_or_name": "House number or name of the property.",
           "postcode": "Postcode of the property."
         }
       },
@@ -26141,7 +26117,7 @@
         },
         "data_description": {
           "address": "Full address",
-          "house_number_or_name": "House number or name",
+          "house_number_or_name": "House number or name of the property.",
           "postcode": "Postcode of the property."
         }
       },
@@ -26325,9 +26301,9 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number_or_name": "House name or number",
+          "house_number_or_name": "House number or name of the property.",
           "postcode": "Postcode of the property.",
-          "street_name": "Street name"
+          "street_name": "Street name of the property."
         }
       },
       "reconfigure_sefton_gov_uk": {
@@ -26340,9 +26316,9 @@
           "street_name": "Street Name"
         },
         "data_description": {
-          "house_number_or_name": "House name or number",
+          "house_number_or_name": "House number or name of the property.",
           "postcode": "Postcode of the property.",
-          "street_name": "Street name"
+          "street_name": "Street name of the property."
         }
       },
       "args_sheffield_gov_uk": {

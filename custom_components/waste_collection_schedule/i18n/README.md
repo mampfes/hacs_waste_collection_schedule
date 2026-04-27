@@ -62,6 +62,30 @@ Per-source files only need entries that **override** what shared provides.
 Re-stating the shared label is auto-pruned by the redundancy audit
 (`tests/test_i18n.py`).
 
+### When does a per-source description earn its keep?
+
+The shared registry already says `"Address of the property."`, `"House
+number of the property."`, etc. A per-source description that just
+restates that (e.g. `"The street name of your address in Milan (e.g.,
+'Via Monte Rosa')."`) is noise — drop it.
+
+A per-source description **earns its place** only when it carries
+information the shared label / shared description / auto-titlecase
+doesn't:
+
+- Conditional usage (`"only required when ..."`, `"optional, helps
+  filter results"`, `"use this OR registration_number"`)
+- Format requirements (`"uppercase only"`, `"4 digits + 2 letters"`,
+  `"include suburb"`, `"without city / state"`)
+- Where to find it (`"as shown on the X portal"`, `"from the leftmost
+  column of the schedule PDF"`)
+- An enumerated list of valid values (`"one of: foo, bar, baz"`)
+- A non-trivial example showing a non-obvious format (`"39 avenue
+  larribau 64000 Pau"` for a French combined-address field)
+
+If the override only adds a city qualifier (`"in Milan"`) or a trivial
+example (`"e.g. 91"` for a house number), it isn't pulling its weight.
+
 ## TITLE / DESCRIPTION / EXTRA_INFO
 
 `TITLE`, `DESCRIPTION`, and `EXTRA_INFO[].title` strings stay in source
