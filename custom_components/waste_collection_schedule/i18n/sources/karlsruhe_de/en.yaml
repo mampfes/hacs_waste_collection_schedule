@@ -3,7 +3,5 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  house_number:
-    label: House number
   ladeort:
     label: Loading point

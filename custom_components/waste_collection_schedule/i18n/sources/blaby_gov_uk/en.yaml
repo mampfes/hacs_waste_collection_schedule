@@ -4,7 +4,4 @@
 ---
 params:
   uprn:
-    description: An easy way to discover your Unique Property Reference Number (UPRN)
-      is by going to https://www.findmyaddress.co.uk/ and entering in your address
-      details
     label: Unique Property Reference Number (UPRN)

@@ -9,11 +9,7 @@ params:
     label: Addition
   calendar_splitter:
     label: Calendar entry splitter
-  calendar_title_separator:
-    label: Calendar title separator
   district:
     label: District/Service provider id
-  house_number:
-    label: House number
   postcode:
     label: Postal code

@@ -8,8 +8,6 @@ params:
       to fetch all types. Visit your provider's calendar page to see which IDs correspond
       to which waste types.
     label: Waste type IDs
-  house_number:
-    label: House number
   city:
     label: District
   district:

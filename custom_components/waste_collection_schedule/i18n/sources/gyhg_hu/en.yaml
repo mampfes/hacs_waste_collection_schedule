@@ -5,7 +5,3 @@
 params:
   city:
     label: City name
-  house_number:
-    label: House number
-  street_name:
-    label: Street name

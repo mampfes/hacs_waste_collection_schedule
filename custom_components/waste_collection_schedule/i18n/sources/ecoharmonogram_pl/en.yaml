@@ -31,8 +31,6 @@ params:
       a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month).
       Leave empty and only fill if it fails, you'll then see a list of available groups.
     label: Group 5
-  house_number:
-    label: House number
   language:
     description: Language for waste type names (pl, en, uk, ru)
     label: Language

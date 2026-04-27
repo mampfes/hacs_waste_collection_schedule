@@ -5,4 +5,3 @@
 params:
   street_address:
     description: Street address for waste collection, including city.
-    label: Street address

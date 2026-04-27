@@ -5,6 +5,5 @@
 params:
   house_number:
     description: House number as listed in the Saalfelden waste calendar.
-    label: House number
   street:
     description: Street name as listed in the Saalfelden waste calendar.

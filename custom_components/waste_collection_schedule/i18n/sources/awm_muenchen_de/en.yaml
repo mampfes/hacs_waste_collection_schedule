@@ -7,8 +7,6 @@ params:
     label: Organic waste garbage can emptying cycle (e.g. '1/2;G' or form selection)
   b_location_id:
     label: Organic waste garbage can location ID (e.g. '70027977' or forum selection)
-  house_number:
-    label: House number
   p_collection_cycle_string:
     label: Paper garbage can emptying cycle (e.g. '1/2;G' or form selection)
   p_location_id:

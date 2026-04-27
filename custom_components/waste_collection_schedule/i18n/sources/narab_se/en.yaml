@@ -5,5 +5,3 @@
 params:
   address:
     description: Address for collection
-  kund_nr:
-    description: Customer number

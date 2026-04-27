@@ -21,5 +21,3 @@ params:
   r_location_id:
     label: ID de site des déchets résiduels (par exemple, '70027977' ou sélection
       de formulaire)
-  street:
-    label: rue

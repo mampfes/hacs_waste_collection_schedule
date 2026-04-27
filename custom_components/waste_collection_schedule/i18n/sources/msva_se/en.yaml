@@ -10,7 +10,6 @@ params:
     description: Locality within Sundsvall kommun. Defaults to 'Sundsvall'.
   house_number:
     description: House number, e.g. '18'.
-    label: House number
   postcode:
     description: Five-digit Swedish postal code, e.g. '85461'.
     label: Postal code

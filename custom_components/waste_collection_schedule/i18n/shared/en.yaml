@@ -7,14 +7,18 @@
 ---
 params:
   address:
+    description: Address of the property.
     label: Address
   address_id:
+    description: Address identifier of the property.
     label: Address ID
   address_name_number:
     label: Address Name or Number
   address_no:
+    description: Address number of the property.
     label: Address Number
   address_suffix:
+    description: Address suffix (e.g. flat or unit identifier).
     label: Address Suffix
   api_key:
     label: API Key
@@ -23,6 +27,7 @@ params:
   bill_number:
     label: Bill Number
   building_number:
+    description: Building number of the property.
     label: Building Number
   calendar:
     label: Calendar
@@ -33,14 +38,18 @@ params:
   calendar_title_separator:
     label: Calendar Title Separator
   city:
+    description: City of the property.
     label: City
   city_id:
+    description: City identifier.
     label: City ID
   city_part:
+    description: Part of the city.
     label: City Part
   client:
     label: Client
   community:
+    description: Community of the property.
     label: Community
   company:
     label: Company
@@ -49,16 +58,20 @@ params:
   count:
     label: Count
   county_id:
+    description: County identifier of the property.
     label: County ID
   customer:
     label: Customer
   dates:
     label: Dates
   district:
+    description: District of the property.
     label: District
   district_id:
+    description: District identifier.
     label: District ID
   door_num:
+    description: Door number of the property.
     label: Door Number
   email:
     label: Email
@@ -69,36 +82,48 @@ params:
   frequency:
     label: Frequency
   hn_id:
+    description: House number identifier.
     label: House Number ID
   house:
+    description: House of the property.
     label: House
   house_id:
+    description: House identifier of the property.
     label: House ID
   house_letter:
+    description: House letter of the property.
     label: House Letter
   house_name:
+    description: House name of the property.
     label: House Name
   house_name_or_number:
+    description: House name or number of the property.
     label: House Name or Number
   house_number:
+    description: House number of the property.
     label: House Number
   house_number_or_name:
+    description: House number or name of the property.
     label: House Number or Name
   id:
     label: ID
   id_house_number:
+    description: House number identifier.
     label: House Number ID
   ignored_containers:
     label: Ignored Containers
   interval:
     label: Interval
   kund_nr:
+    description: Customer number.
     label: Customer Number
   lat:
     label: Latitude
   location:
+    description: Geographic location.
     label: Location
   location_id:
+    description: Location identifier.
     label: Location ID
   lon:
     label: Longitude
@@ -107,14 +132,17 @@ params:
   municipal:
     label: Municipal
   municipality:
+    description: Municipality of the property.
     label: Municipality
   municipality_id:
+    description: Municipality identifier.
     label: Municipality ID
   name:
     label: Name
   number:
     label: Number
   object_id:
+    description: Object identifier.
     label: Object ID
   operator:
     label: Operator
@@ -127,6 +155,7 @@ params:
   pid:
     label: PID
   postcode:
+    description: Postcode of the property.
     label: Postcode
   predict:
     label: Predict
@@ -139,16 +168,21 @@ params:
   property:
     label: Property
   property_id:
+    description: Property identifier.
     label: Property ID
   property_location:
+    description: Property location.
     label: Property Location
   property_no:
+    description: Property number.
     label: Property Number
   radius:
     label: Radius
   region:
+    description: Region of the property.
     label: Region
   registration_number:
+    description: Registration number.
     label: Registration Number
   road_name:
     label: Road Name
@@ -165,43 +199,53 @@ params:
   start:
     label: Start
   state:
+    description: State of the property.
     label: State
   street:
+    description: Street of the property.
     label: Street
   street_address:
+    description: Full street address of the property.
     label: Street Address
   street_code:
+    description: Street code of the property.
     label: Street Code
   street_id:
+    description: Street identifier of the property.
     label: Street ID
   street_index:
+    description: Street index of the property.
     label: Street Index
   street_name:
+    description: Street name of the property.
     label: Street Name
   street_number:
+    description: Street number of the property.
     label: Street Number
   street_town:
     label: Street Town
   suburb:
+    description: Suburb of the property.
     label: Suburb
   suffix:
     label: Suffix
   territory:
     label: Territory
   town:
+    description: Town of the property.
     label: Town
   types:
     label: Types
   unit_number:
+    description: Unit number of the property.
     label: Unit Number
   until:
     label: Until
   uprn:
-    label: UPRN
-    description: >-
-      An easy way to discover your Unique Property Reference Number (UPRN) is
-      by going to https://www.findmyaddress.co.uk/ and entering in your address
+    description: An easy way to discover your Unique Property Reference Number (UPRN)
+      is by going to https://www.findmyaddress.co.uk/ and entering in your address
       details.
+    label: UPRN
   url:
     label: URL
   username:
@@ -213,12 +257,14 @@ params:
   version:
     label: Version
   village:
+    description: Village of the property.
     label: Village
   waste_types:
     label: Waste Types
   weekdays:
     label: Weekdays
   zip_code:
+    description: ZIP code of the property.
     label: ZIP Code
   zone:
     label: Zone

@@ -3,7 +3,5 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  postcode:
-    description: Postcode of the property
   uprn:
     description: Unique Property Reference Number (UPRN)
