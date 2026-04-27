@@ -3,12 +3,8 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  black_rhythm:
-    description: Rhythm of the black bin collection
   black_seasonal:
     description: Check if the black bins are only collected seasonally
-  green_rhythm:
-    description: Rhythm of the green bin collection
   green_seasonal:
     description: Check if the green bins are only collected seasonally
   municipality:

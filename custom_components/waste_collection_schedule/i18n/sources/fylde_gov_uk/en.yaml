@@ -4,10 +4,7 @@
 ---
 params:
   email:
-    description: Email address for waste portal account
     label: Email Address
-  password:
-    description: Password for waste portal account
   uprn:
     description: Property UPRN (optional, only needed if you have multiple properties
       registered)

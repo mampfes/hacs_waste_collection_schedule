@@ -6,5 +6,3 @@ params:
   address_value:
     description: The 12-digit address value from the dropdown on the Wirral bin calendar
       page.
-  postcode:
-    description: Your postcode, e.g. CH49 4NP.

@@ -4,5 +4,4 @@
 ---
 params:
   waste_object_ids:
-    description: Waste object ID, or IDs separated by commas.
     label: e.g. 13-L-115261, 13-P-505460

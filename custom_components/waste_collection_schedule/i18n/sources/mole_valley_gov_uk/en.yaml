@@ -4,7 +4,4 @@
 ---
 params:
   house_number:
-    description: Your house number or name, e.g. 17 or Rose Cottage
     label: House Number or Name
-  postcode:
-    description: Your property's postcode, e.g. KT22 9BG

@@ -1,6 +1,0 @@
-# Per-source overrides for ks_boerde_de (de).
----
-params:
-  village:
-    description: Dorf der Adresse.
-    label: Ort

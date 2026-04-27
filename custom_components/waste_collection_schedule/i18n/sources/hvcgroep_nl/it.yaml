@@ -1,6 +1,0 @@
-# Per-source overrides for hvcgroep_nl (it).
----
-params:
-  house_letter:
-    description: Lettera della casa.
-    label: Lettera Casa

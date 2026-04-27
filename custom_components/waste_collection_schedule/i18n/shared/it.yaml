@@ -33,8 +33,17 @@ params:
   city:
     description: Città dell'indirizzo.
     label: Città
+  city_id:
+    description: Identificatore della città.
+    label: ID Città
+  community:
+    description: Comunità dell'indirizzo.
+    label: Comunità
   count:
     label: Conteggio
+  county_id:
+    description: Identificatore di contea.
+    label: ID Paese
   customer:
     label: Cliente
   customer_number:
@@ -45,6 +54,9 @@ params:
   district:
     description: Distretto dell'indirizzo.
     label: Distretto
+  district_id:
+    description: Identificatore del distretto.
+    label: ID Distretto
   email:
     label: Email
   excludes:
@@ -53,6 +65,15 @@ params:
     label: Nome File
   frequency:
     label: Frequenza
+  house_id:
+    description: Identificatore di casa.
+    label: ID casa
+  house_letter:
+    description: Lettera della casa.
+    label: Lettera Casa
+  house_name:
+    description: Nome della casa dell'indirizzo.
+    label: Nome Casa
   house_number:
     description: Numero civico dell'indirizzo.
     label: Civico
@@ -107,6 +128,8 @@ params:
   premises_id:
     description: Identificatore dei locali.
     label: Premises ID
+  project_id:
+    label: Project ID
   property_id:
     description: Identificatore di proprietà.
     label: ID Proprietà
@@ -117,6 +140,8 @@ params:
     label: Settore
   service:
     label: Servizio
+  service_id:
+    label: ID Servizio
   service_provider:
     label: Fornitore di Servizi
   start:
@@ -167,6 +192,9 @@ params:
     label: Verifica SSL
   version:
     label: Versione
+  village:
+    description: Villaggio dell'indirizzo.
+    label: Villaggio
   waste_types:
     description: Tipi di rifiuti.
     label: Tipi di rifiuti

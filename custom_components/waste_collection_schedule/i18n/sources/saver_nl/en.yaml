@@ -4,7 +4,6 @@
 ---
 params:
   postcode:
-    description: Dutch postal code (4 digits + 2 letters), e.g. 4702AA
     label: Postal code
   toevoeging:
     description: House letter or addition (only required when more than one address

@@ -4,17 +4,12 @@
 ---
 params:
   bulky:
-    description: If value is different from waste sector.
     label: Bulky items sector
   food:
-    description: If value is different from waste sector.
     label: Food waste sector
   green:
-    description: If value is different from waste sector.
     label: Greens and leafs sector
   recycling:
-    description: If value is different from waste sector.
     label: Recycling sector
   sector:
-    description: This is the default sector.
     label: Waste sector

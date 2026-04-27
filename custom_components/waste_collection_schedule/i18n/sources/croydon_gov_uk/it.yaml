@@ -1,6 +1,0 @@
-# Per-source overrides for croydon_gov_uk (it).
----
-params:
-  house_id:
-    description: Identificatore di casa.
-    label: ID casa

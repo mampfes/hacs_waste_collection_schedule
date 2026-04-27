@@ -3,8 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  postcode:
-    description: The postcode of the address to look up (e.g., SA11 1AB).
   uprn:
     description: Your Unique Street Reference Number (USRN) can be found by searching
       for your address at https://uprn.uk/ and viewing the _Data Associations_ section.

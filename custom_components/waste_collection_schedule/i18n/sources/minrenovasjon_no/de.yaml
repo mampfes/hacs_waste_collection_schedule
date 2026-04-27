@@ -1,6 +1,0 @@
-# Per-source overrides for minrenovasjon_no (de).
----
-params:
-  county_id:
-    description: Landkreiskennung.
-    label: Landkreis-ID

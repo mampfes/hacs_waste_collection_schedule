@@ -4,10 +4,8 @@
 ---
 params:
   house_number:
-    description: Deprecated, leave mpty, will be ignored
     label: House Number (Deprecated, leave empty)
   postcode:
-    description: Deprecated, leave mpty, will be ignored
     label: Postcode (Deprecated, leave empty)
   uprn:
     label: Unique Property Reference Number (UPRN)

@@ -4,5 +4,4 @@
 ---
 params:
   address:
-    description: Your full address / Votre adresse complete
     label: Address / Adresse

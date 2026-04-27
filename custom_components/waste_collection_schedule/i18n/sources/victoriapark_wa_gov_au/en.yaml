@@ -4,8 +4,6 @@
 ---
 params:
   day:
-    description: Collection day (Monday to Friday)
     label: Collection Day
   group:
-    description: Collection group (1 or 2) — check the calendar on the council website
     label: Collection Group

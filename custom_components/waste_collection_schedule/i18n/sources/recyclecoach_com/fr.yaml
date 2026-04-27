@@ -1,9 +1,0 @@
-# Per-source overrides for recyclecoach_com (fr).
----
-params:
-  district_id:
-    description: Identifiant de quartier.
-    label: ID de district
-  project_id:
-    description: Identifiant de projet.
-    label: ID de projet

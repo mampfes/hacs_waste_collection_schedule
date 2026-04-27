@@ -3,8 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  additional_sides_matcher:
-    description: Additional matcher for collection sides
   g1:
     description: Select Collection group to limit results to a specific group within
       a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month).

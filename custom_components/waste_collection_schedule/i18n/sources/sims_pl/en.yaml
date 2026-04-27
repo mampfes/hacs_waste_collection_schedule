@@ -6,7 +6,3 @@ params:
   owner_id:
     description: Owner of the waste collection service You can see the owner id in
       the url requested by the search page
-  street_address:
-    description: House number of the street if street is set
-  town_address:
-    description: House number of the town if street is not set

@@ -3,7 +3,5 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  city:
-    description: Municipality name (e.g. 'Steinhagen', 'Warendorf')
   street:
     description: Street name — use exact spelling from the provider's calendar

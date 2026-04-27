@@ -5,5 +5,3 @@
 params:
   municipality:
     description: 'Municipality, one of: ''osteraker'', ''vaxholm'', or ''ekero'''
-  street_address:
-    description: Street Address (e.g., Andromedavägen 1, Åkersberga)

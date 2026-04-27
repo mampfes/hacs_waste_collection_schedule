@@ -9,5 +9,3 @@ params:
     description: 5-digit INSEE code of your commune (e.g. 25014 for Amagney, 25056
       for Besançon)
     label: INSEE Code
-  street:
-    description: Street name as shown in the Grand Besançon system

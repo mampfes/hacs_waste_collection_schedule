@@ -42,9 +42,13 @@ params:
   city:
     description: City of the property.
     label: City
+  city_id:
+    label: City ID
   count:
     description: Count of items.
     label: Count
+  county_id:
+    label: County ID
   customer:
     description: Customer name.
     label: Customer
@@ -57,6 +61,8 @@ params:
   district:
     description: District of the property.
     label: District
+  district_id:
+    label: District ID
   email:
     description: Email address.
     label: Email
@@ -69,6 +75,8 @@ params:
   frequency:
     description: Collection frequency.
     label: Frequency
+  house_id:
+    label: House ID
   house_number:
     description: House number of the property.
     label: House Number
@@ -129,6 +137,8 @@ params:
   premises_id:
     description: Premises identifier.
     label: Premises ID
+  project_id:
+    label: Project ID
   property_id:
     description: Property identifier.
     label: Property ID
@@ -141,6 +151,8 @@ params:
   service:
     description: Service.
     label: Service
+  service_id:
+    label: Service ID
   service_provider:
     description: Waste collection service provider.
     label: Service Provider

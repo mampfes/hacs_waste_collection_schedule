@@ -33,9 +33,18 @@ params:
   city:
     description: Ville de l'adresse.
     label: Ville
+  city_id:
+    description: Identifiant de ville.
+    label: ID de ville
+  community:
+    description: Communauté de l'adresse.
+    label: Communauté
   count:
     description: Nombre.
     label: Nombre
+  county_id:
+    description: Identifiant de comté.
+    label: ID de comté
   customer:
     label: Client
   customer_number:
@@ -47,6 +56,9 @@ params:
   district:
     description: Quartier de l'adresse.
     label: District
+  district_id:
+    description: Identifiant de quartier.
+    label: ID de district
   email:
     label: E-mail
   excludes:
@@ -58,6 +70,15 @@ params:
   frequency:
     description: Fréquence.
     label: Fréquence
+  house_id:
+    description: Identifiant de maison de l'adresse.
+    label: ID de maison
+  house_letter:
+    description: Lettre de maison de l'adresse.
+    label: Lettre de maison
+  house_name:
+    description: Nom de la maison de l'adresse.
+    label: Nom de maison
   house_number:
     description: Numéro de maison de l'adresse.
     label: Numéro civique
@@ -112,6 +133,9 @@ params:
   premises_id:
     description: Identifiant des locaux.
     label: ID des locaux
+  project_id:
+    description: Identifiant de projet.
+    label: ID de projet
   property_id:
     description: Identifiant de propriété.
     label: ID de propriété
@@ -122,6 +146,8 @@ params:
     label: Secteur
   service:
     label: Service
+  service_id:
+    label: ID de service
   service_provider:
     label: Fournisseur de services
   start:
@@ -175,6 +201,9 @@ params:
     label: Vérifier SSL
   version:
     label: Version
+  village:
+    description: Village de l'adresse.
+    label: Village
   waste_types:
     description: Types de déchets.
     label: Types de déchets

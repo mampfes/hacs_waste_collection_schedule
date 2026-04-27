@@ -7,7 +7,3 @@ params:
     description: Enter the house name (e.g., HAPSTEAD HALL) or number (e.g., 11),
       or the business name.
     label: House/Business Name/Number
-  postcode:
-    description: Enter the postcode (e.g., RH17 6TB).
-  street_name:
-    description: Enter the street name (e.g., HIGH STREET).

@@ -8,8 +8,6 @@ params:
       contracts
     label: e.g. 30-00012345-00
   password:
-    description: Password for oma.mustankorkea.fi account
     label: ''
   username:
-    description: Username for oma.mustankorkea.fi account
     label: ''

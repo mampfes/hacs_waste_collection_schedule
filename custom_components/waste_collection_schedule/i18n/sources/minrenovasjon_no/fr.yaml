@@ -1,6 +1,0 @@
-# Per-source overrides for minrenovasjon_no (fr).
----
-params:
-  county_id:
-    description: Identifiant de comté.
-    label: ID de comté

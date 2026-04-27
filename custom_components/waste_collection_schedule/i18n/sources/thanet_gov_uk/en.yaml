@@ -5,5 +5,3 @@
 params:
   street_address:
     description: House name OR Number and Street name
-  uprn:
-    description: Unique Property Reference Number (UPRN)

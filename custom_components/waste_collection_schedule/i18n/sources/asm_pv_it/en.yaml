@@ -3,8 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  municipality:
-    description: Municipality (comune) served by ASM Pavia, e.g. 'Pavia'.
   street:
     description: Street name as listed on the ASM porta-a-porta lookup. For municipalities
       with a single zone, use 'Tutte le vie'.

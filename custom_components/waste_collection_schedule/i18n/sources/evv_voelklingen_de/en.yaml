@@ -10,8 +10,3 @@ params:
     label: Container size
   house_number:
     description: House number (optional, required for some streets)
-  district:
-    description: District / city part as shown in the EVV portal (e.g. 'Fürstenhausen',
-      'Völklingen')
-  street:
-    description: Street name as shown in the EVV portal (e.g. 'Kaiserstraße')

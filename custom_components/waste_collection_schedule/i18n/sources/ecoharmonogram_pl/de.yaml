@@ -1,6 +1,0 @@
-# Per-source overrides for ecoharmonogram_pl (de).
----
-params:
-  community:
-    description: Gemeinschaft der Adresse.
-    label: Gemeinde

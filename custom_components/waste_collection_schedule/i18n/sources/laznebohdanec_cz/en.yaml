@@ -4,9 +4,6 @@
 ---
 params:
   file:
-    description: Path to a local XLSX file with dates (needs to be uploaded manually
-      into HA)
     label: Local XLSX file
   url:
-    description: Direct URL to the XLSX file with dates
     label: Direct XLSX URL

@@ -4,12 +4,6 @@
 ---
 params:
   api_key:
-    description: API key or device ID used by the mobile app.
     label: API key / device ID
-  service_provider:
-    description: Name of the Avfallsapp provider.
-  street_address:
-    description: Street address used for address lookup and registration.
   token:
-    description: Bearer token required by some providers.
     label: Bearer token

@@ -7,7 +7,3 @@ params:
     label: Bereich ID
   city:
     label: Ort
-  city_id:
-    label: Ort ID
-  service_id:
-    label: Service ID

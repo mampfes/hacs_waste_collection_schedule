@@ -4,11 +4,8 @@
 ---
 params:
   altpapier_zone:
-    description: Zone number for paper waste (Altpapier)
     label: Paper Waste Zone
   biomuell_zone:
-    description: Zone number for organic waste (Biomüll)
     label: Organic Waste Zone
   restmuell_zone:
-    description: Zone number for residual waste (Restmüll)
     label: Residual Waste Zone

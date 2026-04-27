@@ -4,5 +4,4 @@
 ---
 params:
   pin:
-    description: The PIN
     label: PIN

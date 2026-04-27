@@ -7,5 +7,3 @@ params:
     label: Weekly residual waste collection
   even_house_number:
     label: House number to collect from is even
-  street:
-    description: The street you want to get the waste collection schedule for.

@@ -4,10 +4,6 @@
 ---
 params:
   calendar:
-    description: Your calendar cycle (A or B). Check the map on the back of the waste
-      calendar PDF.
     label: Calendar cycle
   day:
-    description: Your collection day (Monday to Friday). Check the map on the back
-      of the waste calendar PDF.
     label: Collection day

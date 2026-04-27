@@ -3,7 +3,5 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  city:
-    description: City name (e.g. 'Bad Schwartau')
   street:
     description: Street name (optional for some cities)

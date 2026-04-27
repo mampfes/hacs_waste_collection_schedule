@@ -4,7 +4,6 @@
 ---
 params:
   street_number_and_name:
-    description: Your street number and name in Quebec City (e.g. '123 Rue Example')
     label: Street Number and Name
   unique_id:
     description: (Optional) If multiple addresses match your search, this value is

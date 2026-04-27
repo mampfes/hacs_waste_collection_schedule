@@ -4,5 +4,4 @@
 ---
 params:
   geolocation_id:
-    description: Your unique Geolocation ID for the address (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6)
     label: Geolocation ID

@@ -4,9 +4,6 @@
 ---
 params:
   address:
-    description: Full Enfield address, for example '127 Palmerston Rd, London N22
-      8QX'.
     label: Full address
   uprn:
-    description: Use your UPRN if you know it.
     label: Unique Property Reference Number (UPRN)

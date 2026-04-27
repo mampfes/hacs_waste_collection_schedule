@@ -6,8 +6,6 @@ params:
   additional_information:
     description: House letter or unit identifier, e.g. 'A'. Leave empty if not applicable.
     label: Additional information
-  city:
-    description: Locality within Sundsvall kommun. Defaults to 'Sundsvall'.
   postcode:
     description: Five-digit Swedish postal code, e.g. '85461'.
     label: Postal code
