@@ -13,7 +13,9 @@ from waste_collection_schedule.service.ICS import ICS
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "AHK Heidekreis"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Abfallwirtschaft Heidekreis."
+DESCRIPTION_LANG = "de"
 URL = "https://www.ahk-heidekreis.de/"
 TEST_CASES = {
     "Munster - Wagnerstr. 10-18": {

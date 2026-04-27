@@ -8,7 +8,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "GFA Lüneburg"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for GFA Lüneburg."
+DESCRIPTION_LANG = "de"
 URL = "https://www.gfa-lueneburg.de/"
 TEST_CASES = {
     "Dahlem Hauptstr. 7": {

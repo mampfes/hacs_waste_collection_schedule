@@ -8,7 +8,9 @@ from waste_collection_schedule import Collection
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "GVA Baden"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for waste collection services Association of Municipalities in the District of Baden"
+DESCRIPTION_LANG = "de"
 URL = "https://baden.umweltverbaende.at/"
 TEST_CASES = {
     "Test_001": {"region": "Alland"},

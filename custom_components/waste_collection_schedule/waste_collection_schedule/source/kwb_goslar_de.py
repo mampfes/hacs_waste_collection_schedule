@@ -3,7 +3,9 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Kreiswirtschaftsbetriebe Goslar"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for kwb-goslar.de waste collection."
+DESCRIPTION_LANG = "de"
 URL = "https://www.kwb-goslar.de"
 TEST_CASES = {
     "Berliner Straße (Clausthal-Zellerfeld)": {"pois": "2523.602"},

@@ -5,7 +5,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Müllabfuhr Deutschland"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Müllabfuhr, Germany"
+DESCRIPTION_LANG = "de"
 URL = "https://portal.muellabfuhr-deutschland.de/"
 TEST_CASES = {
     "TestcaseI": {
@@ -50,6 +52,7 @@ EXTRA_INFO = [
     }
     for district in SERVICE_MAP
 ]
+EXTRA_INFO_LANG = "de"
 
 
 class Source:

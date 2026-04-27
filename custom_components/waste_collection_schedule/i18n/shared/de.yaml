@@ -5,43 +5,83 @@ params:
   addition:
     label: Zusatz
   address:
+    description: Adresse.
     label: Adresse
+  address_id:
+    description: Adresskennung.
+  address_no:
+    description: Adressnummer.
   address_postcode:
     label: Postleitzahl
   address_street:
     label: Straße
+  address_suffix:
+    description: Adresszusatz (z. B. Wohnungs- oder Einheitskennung).
   area:
     label: Gebiet
   bill_number:
     label: Rechnungsnummer
+  building_number:
+    description: Gebäudenummer der Adresse.
   city:
+    description: Stadt der Adresse.
     label: Stadt
   city_id:
+    description: Stadtkennung.
     label: Stadt ID
+  city_part:
+    description: Stadtteil.
   client:
     label: Kunde
   community:
+    description: Gemeinschaft der Adresse.
     label: Gemeinde
   company:
     label: Unternehmen
+  county_id:
+    description: Landkreiskennung.
   customer:
     label: Kunde
   district:
+    description: Bezirk der Adresse.
     label: Bezirk
+  district_id:
+    description: Bezirkskennung.
+  door_num:
+    description: Türnummer der Adresse.
   email:
     label: E-Mail
+  hn_id:
+    description: Hausnummernkennung.
   house:
+    description: Haus der Adresse.
     label: Haus
+  house_id:
+    description: Hauskennung der Adresse.
+  house_letter:
+    description: Hausbuchstabe der Adresse.
   house_name:
+    description: Hausname der Adresse.
     label: Hausname
+  house_name_or_number:
+    description: Hausname oder -nummer der Adresse.
   house_number:
+    description: Hausnummer der Adresse.
     label: Hausnummer
   house_number_or_name:
+    description: Hausnummer oder -name der Adresse.
     label: Hausnummer oder Name
+  id_house_number:
+    description: Hausnummernkennung.
+  kund_nr:
+    description: Kundennummer.
   lat:
     label: Breitengrad
   location:
+    description: Geografischer Standort.
     label: Position
+  location_id:
+    description: Standortkennung.
   lon:
     label: Längengrad
   method:
@@ -49,35 +89,67 @@ params:
   municipal:
     label: Gemeinde
   municipality:
+    description: Gemeinde der Adresse.
     label: Gemeinde
+  municipality_id:
+    description: Gemeindekennung.
   number:
     label: Nummer
+  object_id:
+    description: Objektkennung.
   password:
     label: Passwort
   phone:
     label: Telefon
   postcode:
+    description: Postleitzahl der Adresse.
     label: PLZ
+  property_id:
+    description: Grundstückskennung.
+  property_location:
+    description: Grundstücksstandort.
   property_no:
+    description: Grundstücksnummer.
     label: Grundstück Nr.
+  region:
+    description: Region der Adresse.
+  registration_number:
+    description: Registrierungsnummer.
+  state:
+    description: Bundesland der Adresse.
   street:
+    description: Straße der Adresse.
     label: Straße
+  street_address:
+    description: Vollständige Straßenadresse.
+  street_code:
+    description: Straßencode der Adresse.
   street_id:
+    description: Straßenkennung der Adresse.
     label: Straßen ID
+  street_index:
+    description: Straßenindex der Adresse.
   street_name:
+    description: Straßenname der Adresse.
     label: Straßenname
+  street_number:
+    description: Hausnummer der Adresse.
   subdomain:
     label: Subdomain
+  suburb:
+    description: Vorort der Adresse.
   town:
+    description: Ort der Adresse.
     label: Stadt
   types:
     label: Typen
+  unit_number:
+    description: Wohnungsnummer der Adresse.
   uprn:
-    label: UPRN
-    description: >-
-      Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN)
-      zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen
+    description: Eine einfache Möglichkeit, Ihre Unique Property Reference Number
+      (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen
       und Ihre Adressdaten einzugeben.
+    label: UPRN
   url:
     label: URL
   username:
@@ -87,8 +159,10 @@ params:
   version:
     label: Version
   village:
+    description: Dorf der Adresse.
     label: Ort
   zip_code:
+    description: ZIP-Code der Adresse.
     label: PLZ
   zone:
     label: Zone

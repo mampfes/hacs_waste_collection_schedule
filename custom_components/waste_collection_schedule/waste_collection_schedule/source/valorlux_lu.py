@@ -8,7 +8,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "Valorlux"
+TITLE_LANG = "fr"
 DESCRIPTION = "Source for Valorlux waste collection."
+DESCRIPTION_LANG = "fr"
 URL = "https://www.valorlux.lu"
 TEST_CASES = {
     "Mersch": {"municipality": "Mersch"},

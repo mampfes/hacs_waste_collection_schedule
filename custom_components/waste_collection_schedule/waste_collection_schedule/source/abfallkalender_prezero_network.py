@@ -7,7 +7,9 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "PreZero"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for PreZero waste collection calendar"
+DESCRIPTION_LANG = "de"
 URL = "https://abfallkalender.prezero.network"
 COUNTRY = "de"
 
@@ -23,6 +25,7 @@ EXTRA_INFO = [
         "default_params": {"city": "willich"},
     },
 ]
+EXTRA_INFO_LANG = "de"
 
 TEST_CASES = {
     "Bad Oeynhausen Aalstraße": {

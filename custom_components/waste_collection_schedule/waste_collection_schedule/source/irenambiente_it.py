@@ -14,7 +14,9 @@ from waste_collection_schedule.exceptions import (
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Iren Ambiente"
+TITLE_LANG = "it"
 DESCRIPTION = "Source for Iren Ambiente."
+DESCRIPTION_LANG = "it"
 URL = "https://servizi.irenambiente.it/"
 TEST_CASES = {
     "Torino Corso Quintino Sella 133": {

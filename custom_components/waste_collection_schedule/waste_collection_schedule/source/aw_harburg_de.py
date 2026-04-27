@@ -4,7 +4,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaft Landkreis Harburg"
+TITLE_LANG = "de"
 DESCRIPTION = "Abfallwirtschaft Landkreis Harburg"
+DESCRIPTION_LANG = "de"
 URL = "https://www.landkreis-harburg.de"
 
 TEST_CASES = {

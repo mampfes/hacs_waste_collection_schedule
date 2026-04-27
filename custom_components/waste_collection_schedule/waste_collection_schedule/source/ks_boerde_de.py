@@ -5,7 +5,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Kommunalservice Landkreis Börde AöR"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for KS Börde."
+DESCRIPTION_LANG = "de"
 URL = "https://ks-boerde.de"
 COUNTRY = "de"
 TEST_CASES = {

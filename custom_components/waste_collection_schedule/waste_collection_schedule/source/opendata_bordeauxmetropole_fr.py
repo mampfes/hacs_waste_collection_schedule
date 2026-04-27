@@ -8,7 +8,9 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Bordeaux Métropole"
+TITLE_LANG = "fr"
 DESCRIPTION = "Source script for opendata.bordeaux-metropole.fr"
+DESCRIPTION_LANG = "fr"
 URL = "https://opendata.bordeaux-metropole.fr/"
 TEST_CASES = {
     "Bordeaux": {"address": "20 Cr Pasteur", "city": "Bordeaux"},
@@ -158,6 +160,7 @@ EXTRA_INFO = [
         "default_params": {"city": "Saint-Vincent-de-Paul"},
     },
 ]
+EXTRA_INFO_LANG = "fr"
 
 
 class DayNames(Enum):

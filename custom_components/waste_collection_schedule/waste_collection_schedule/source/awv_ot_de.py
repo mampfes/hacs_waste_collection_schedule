@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWV: Abfall Wirtschaftszweckverband Ostthüringen"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for AWV: Abfall Wirtschaftszweckverband Ostthüringen."
+DESCRIPTION_LANG = "de"
 URL = "https://www.awv-ot.de/"
 TEST_CASES = {
     "Bethenhausen Caasen 15A": {

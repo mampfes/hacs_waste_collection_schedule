@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Marktgemeinde Eggelsberg"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Marktgemeinde Eggelsberg waste collection."
+DESCRIPTION_LANG = "de"
 URL = "https://www.eggelsberg.at"
 COUNTRY = "at"
 

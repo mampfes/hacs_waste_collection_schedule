@@ -10,7 +10,9 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "RegioEntsorgung Städteregion Aachen"
+TITLE_LANG = "de"
 DESCRIPTION = "RegioEntsorgung Städteregion Aachen"
+DESCRIPTION_LANG = "de"
 URL = "https://regioentsorgung.de"
 TEST_CASES = {
     "Merzbrück": {"city": "Würselen", "street": "Merzbrück", "house_number": 200},

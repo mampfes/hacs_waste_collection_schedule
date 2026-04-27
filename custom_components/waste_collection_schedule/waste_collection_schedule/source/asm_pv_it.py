@@ -5,10 +5,12 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "ASM Pavia"
+TITLE_LANG = "it"
 DESCRIPTION = (
     "Source for ASM Pavia (porta a porta) waste collection in Pavia and "
     "surrounding municipalities, Italy."
 )
+DESCRIPTION_LANG = "it"
 URL = "https://www.asm.pv.it"
 COUNTRY = "it"
 

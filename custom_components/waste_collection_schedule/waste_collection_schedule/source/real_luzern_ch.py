@@ -4,7 +4,9 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Real Luzern"
+TITLE_LANG = "de"
 DESCRIPTION = "Source script for Real Luzern, Switzerland"
+DESCRIPTION_LANG = "de"
 URL = "https://www.real-luzern.ch"
 
 TEST_CASES = {

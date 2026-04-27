@@ -24,7 +24,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "Mémotri - Agglomération Pau Béarn Pyrénées"
+TITLE_LANG = "fr"
 DESCRIPTION = "Source script for memotri.agglo-pau.fr"
+DESCRIPTION_LANG = "fr"
 URL = "https://memotri.agglo-pau.fr/"
 COUNTRY = "fr"
 

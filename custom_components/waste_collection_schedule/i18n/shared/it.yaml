@@ -3,12 +3,20 @@
 ---
 params:
   address:
+    description: Indirizzo.
     label: Indirizzo
+  address_id:
+    description: Identificatore dell'indirizzo.
+  address_no:
+    description: Numero dell'indirizzo.
+  address_suffix:
+    description: Suffisso dell'indirizzo (es. identificatore di appartamento o unità).
   api_key:
     label: Chiave API
   bill_number:
     label: Numero della bolletta
   building_number:
+    description: Numero di edificio dell'indirizzo.
     label: Numero Edificio
   calendar:
     label: Calendario
@@ -17,14 +25,18 @@ params:
   calendar_title:
     label: Nome Calendario
   city:
+    description: Città dell'indirizzo.
     label: Città
   city_id:
+    description: Identificatore della città.
     label: ID Città
   city_part:
+    description: Parte della città.
     label: Parte della Città
   client:
     label: Cliente
   community:
+    description: Comunità dell'indirizzo.
     label: Comunità
   company:
     label: Compagnia
@@ -33,16 +45,20 @@ params:
   count:
     label: Conteggio
   county_id:
+    description: Identificatore di contea.
     label: ID Paese
   customer:
     label: Cliente
   dates:
     label: Date
   district:
+    description: Distretto dell'indirizzo.
     label: Distretto
   district_id:
+    description: Identificatore del distretto.
     label: ID Distretto
   door_num:
+    description: Numero di porta dell'indirizzo.
     label: Numero Interno
   email:
     label: Email
@@ -52,32 +68,54 @@ params:
     label: Nome File
   frequency:
     label: Frequenza
+  hn_id:
+    description: Identificatore del numero civico.
   house:
+    description: Casa dell'indirizzo.
     label: Casa
+  house_id:
+    description: Identificatore di casa.
   house_letter:
+    description: Lettera della casa.
     label: Lettera Casa
   house_name:
+    description: Nome della casa dell'indirizzo.
     label: Nome Casa
+  house_name_or_number:
+    description: Nome o numero della casa dell'indirizzo.
   house_number:
+    description: Numero civico dell'indirizzo.
     label: Civico
+  house_number_or_name:
+    description: Numero o nome della casa dell'indirizzo.
+  id_house_number:
+    description: Identificatore del numero civico.
   ignored_containers:
     label: Ignored Containers
   interval:
     label: Intervallo
+  kund_nr:
+    description: Numero cliente.
   location:
+    description: Posizione geografica.
     label: Posizione
   location_id:
+    description: Identificatore di posizione.
     label: ID Posizione
   method:
     label: Metodo
   municipality:
+    description: Comune dell'indirizzo.
     label: Municipality
   municipality_id:
+    description: Identificatore del comune.
     label: Municipality ID
   name:
     label: Nome
   number:
     label: Numero
+  object_id:
+    description: Identificatore dell'oggetto.
   operator:
     label: Operatore
   params:
@@ -87,6 +125,7 @@ params:
   pid:
     label: PID
   postcode:
+    description: Codice postale dell'indirizzo.
     label: Codice Postale CAP
   predict:
     label: Predict
@@ -99,15 +138,21 @@ params:
   property:
     label: Proprietà
   property_id:
+    description: Identificatore di proprietà.
     label: ID Proprietà
   property_location:
+    description: Posizione della proprietà.
     label: Posizione Proprietà
   property_no:
+    description: Numero di proprietà.
     label: Proprietà Numero
   radius:
     label: Raggio
   region:
+    description: Regione dell'indirizzo.
     label: Regione
+  registration_number:
+    description: Numero di registrazione.
   road_name:
     label: Nome Strada
   sector:
@@ -121,37 +166,49 @@ params:
   start:
     label: Inizio
   state:
+    description: Stato dell'indirizzo.
     label: Stato
   street:
+    description: Via dell'indirizzo.
     label: Strada
   street_address:
+    description: Indirizzo completo.
     label: Indirizzo Strada
   street_code:
+    description: Codice della via.
     label: Codice Strada
   street_id:
+    description: Identificatore della via.
     label: ID Strada
+  street_index:
+    description: Indice della via.
   street_name:
+    description: Nome della via dell'indirizzo.
     label: Nome Strada
   street_number:
+    description: Numero civico della via.
     label: Numero Strada
   street_town:
     label: Città Strada
+  suburb:
+    description: Sobborgo dell'indirizzo.
   suffix:
     label: Suffisso
   territory:
     label: Territorio
   town:
+    description: Paese dell'indirizzo.
     label: Città
   unit_number:
+    description: Numero di unità dell'indirizzo.
     label: Numero Interno
   until:
     label: Fino
   uprn:
-    label: UPRN
-    description: >-
-      Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica
-      (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli
+    description: Un modo facile per scoprire il tuo Numero di Riferimento Proprietà
+      Unica (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli
       del tuo indirizzo.
+    label: UPRN
   values:
     label: Valori
   verify_ssl:
@@ -159,10 +216,12 @@ params:
   version:
     label: Versione
   village:
+    description: Villaggio dell'indirizzo.
     label: Villaggio
   weekdays:
     label: Giorni feriali
   zip_code:
+    description: Codice ZIP dell'indirizzo.
     label: Codice Postale CAP
   zone:
     label: Zona

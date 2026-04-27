@@ -10,7 +10,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "Sammelkalender.ch"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Sammelkalender.ch."
+DESCRIPTION_LANG = "de"
 URL = "https://info.sammelkalender.ch"
 TEST_CASES = {
     "zeba Baar Aberenrain 10": {
@@ -91,6 +93,7 @@ EXTRA_INFO = [
     }
     for key, s in SERVICES.items()
 ]
+EXTRA_INFO_LANG = "de"
 
 
 PROVIDER_LITERALS = Literal["zeba", "zkri", "real_luzern", "zaku"]

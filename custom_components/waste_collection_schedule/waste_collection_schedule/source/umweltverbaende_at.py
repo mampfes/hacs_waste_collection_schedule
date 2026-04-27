@@ -12,9 +12,11 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.source.ics import Source as ICSSource
 
 TITLE = "Die NÖ Umweltverbände"
+TITLE_LANG = "de"
 DESCRIPTION = (
     "Consolidated waste collection provider for several districts in Lower Austria"
 )
+DESCRIPTION_LANG = "de"
 URL = "https://www.umweltverbaende.at/"
 
 

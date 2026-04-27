@@ -2,9 +2,11 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.AbfallnaviDe import SERVICE_DOMAINS, AbfallnaviDe
 
 TITLE = "AbfallNavi (RegioIT.de)"
+TITLE_LANG = "de"
 DESCRIPTION = (
     "Source for AbfallNavi waste collection. AbfallNavi is a brand name of regioit.de."
 )
+DESCRIPTION_LANG = "de"
 URL = "https://www.regioit.de"
 
 

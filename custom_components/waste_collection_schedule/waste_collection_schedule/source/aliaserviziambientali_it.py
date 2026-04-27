@@ -4,7 +4,9 @@ import requests
 from waste_collection_schedule.service.junker_app import Junker
 
 TITLE = "Alia Servizi Ambientali S.p.A."
+TITLE_LANG = "it"
 DESCRIPTION = "Source for Alia Servizi Ambientali S.p.A.."
+DESCRIPTION_LANG = "it"
 URL = "https://www.aliaserviziambientali.it"
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -156,6 +158,7 @@ MUNICIPALITIES = list(MUNICIPALITIES_WITH_AREA.keys()) + MUNICIPALITIES_WITHOUT_
 EXTRA_INFO = [
     {"title": mun, "default_params": {"municipality": mun}} for mun in MUNICIPALITIES
 ]
+EXTRA_INFO_LANG = "it"
 
 
 class Source(Junker):

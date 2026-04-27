@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.AbfallIOGraphQL import SERVICE_MAP
 
 TITLE = "Abfall.IO / AbfallPlus (GraphQL)"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for AbfallPlus.de waste collection using the v3 GraphQL API."
+DESCRIPTION_LANG = "de"
 URL = "https://www.abfallplus.de"
 COUNTRY = "de"
 

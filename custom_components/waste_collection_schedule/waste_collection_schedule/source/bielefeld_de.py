@@ -7,7 +7,9 @@ from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
 TITLE = "Bielefeld"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Stadt Bielefeld."
+DESCRIPTION_LANG = "de"
 URL = "https://bielefeld.de"
 TEST_CASES = {
     "Umweltbetrieb": {

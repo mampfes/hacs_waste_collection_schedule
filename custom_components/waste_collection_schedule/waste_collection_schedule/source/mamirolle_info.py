@@ -5,7 +5,9 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "Mairie de Mamirolle"
+TITLE_LANG = "fr"
 DESCRIPTION = "Source script for mamirolle.info"
+DESCRIPTION_LANG = "fr"
 COUNTRY = "fr"
 URL = "http://mamirolle.info/"
 

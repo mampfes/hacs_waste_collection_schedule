@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Burgenländischer Müllverband"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for BMV, Austria"
+DESCRIPTION_LANG = "de"
 URL = "https://www.bmv.at"
 TEST_CASES = {
     "Allersdorf": {"city": "ALLERSDORF", "street": "HAUSNUMMER", "house_number": 9},

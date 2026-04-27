@@ -8,7 +8,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWB Oldenburg"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for 'Abfallwirtschaftsbetrieb Stadt Oldenburg (Oldb)'."
+DESCRIPTION_LANG = "de"
 URL = "https://www.oldenburg.de"
 TEST_CASES = {
     "Polizeiinspektion Oldenburg": {"street": "Friedhofsweg", "house_number": 30}

@@ -9,9 +9,11 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "Grand Besançon Métropole"
+TITLE_LANG = "fr"
 DESCRIPTION = (
     "Source for waste collection schedules in Grand Besançon Métropole, France."
 )
+DESCRIPTION_LANG = "fr"
 URL = "https://www.grandbesancon.fr"
 COUNTRY = "fr"
 

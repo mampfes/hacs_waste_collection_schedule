@@ -5,7 +5,9 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wolfsburger Abfallwirtschaft und Straßenreinigung"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for waste collections for WAS-Wolfsburg, Germany."
+DESCRIPTION_LANG = "de"
 URL = "https://was-wolfsburg.de"
 TEST_CASES = {
     "Barnstorf": {"street": "Bahnhofspassage", "number": 1},

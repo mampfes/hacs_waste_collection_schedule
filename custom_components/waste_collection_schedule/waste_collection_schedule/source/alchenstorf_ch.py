@@ -6,7 +6,9 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Alchenstorf"
+TITLE_LANG = "de"
 DESCRIPTION = " Source for 'Alchenstorf, CH'"
+DESCRIPTION_LANG = "de"
 URL = "https://www.alchenstorf.ch"
 TEST_CASES: dict[str, dict] = {"TEST": {}}
 

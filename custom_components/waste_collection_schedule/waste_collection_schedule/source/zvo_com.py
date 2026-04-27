@@ -9,7 +9,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "ZVO Entsorgung - Zweckverband Ostholstein"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for ZVO waste collection schedule in Ostholstein, Germany."
+DESCRIPTION_LANG = "de"
 URL = "https://www.zvo.com"
 COUNTRY = "de"
 
@@ -32,6 +34,7 @@ EXTRA_INFO = [
         "country": "de",
     },
 ]
+EXTRA_INFO_LANG = "de"
 
 ICON_MAP = {
     "Gelbe Tonne": "mdi:recycle",

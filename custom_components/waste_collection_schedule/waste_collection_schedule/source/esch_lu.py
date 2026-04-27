@@ -7,7 +7,9 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
 TITLE = "Esch-sur-Alzette"
+TITLE_LANG = "fr"
 DESCRIPTION = "Source script for administration.esch.lu, communal website of the city of Esch-sur-Alzette in Luxembourg"
+DESCRIPTION_LANG = "fr"
 URL = "https://esch.lu"
 TEST_CASES = {"Zone A": {"zone": "A"}, "Zone B": {"zone": "B"}}
 

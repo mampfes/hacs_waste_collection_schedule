@@ -10,7 +10,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "Stadtgemeinde Klosterneuburg"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Stadtgemeinde Klosterneuburg waste collection."
+DESCRIPTION_LANG = "de"
 URL = "https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender"
 COUNTRY = "at"
 

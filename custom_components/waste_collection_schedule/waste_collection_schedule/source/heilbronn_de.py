@@ -8,7 +8,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "Heilbronn Entsorgungsbetriebe"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for city of Heilbronn, Germany."
+DESCRIPTION_LANG = "de"
 URL = "https://heilbronn.de"
 TEST_CASES = {
     "Rosenau": {

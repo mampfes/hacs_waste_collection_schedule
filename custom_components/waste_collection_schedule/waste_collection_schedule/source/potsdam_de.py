@@ -5,7 +5,9 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Potsdam"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Potsdam."
+DESCRIPTION_LANG = "de"
 URL = "https://www.potsdam.de"
 TEST_CASES = {
     "Golm Akazienweg mixed ": {

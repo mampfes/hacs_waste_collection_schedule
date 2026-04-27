@@ -4,8 +4,11 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.CitiesAppsCom import SERVICE_MAP, CitiesApps
 
 EXTRA_INFO = SERVICE_MAP
+EXTRA_INFO_LANG = "de"
 TITLE = "App CITIES"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for App CITIES."
+DESCRIPTION_LANG = "de"
 URL = "https://citiesapps.com"
 TEST_CASES = {
     "Fürstenfeld Haushalt Altenmarkt": {

@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "hausmüll.info"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for hausmüll.info."
+DESCRIPTION_LANG = "de"
 URL = "https://hausmuell.info"
 COUNTRY = "de"
 TEST_CASES = {
@@ -150,6 +152,7 @@ EXTRA_INFO = [
     }
     for p in SUPPORTED_PROVIDERS
 ]
+EXTRA_INFO_LANG = "de"
 
 API_URL = "https://{}.hausmuell.info/"
 

@@ -7,9 +7,11 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 TITLE = "CIDIU S.p.A."
+TITLE_LANG = "it"
 DESCRIPTION = (
     "Source for CIDIU waste collection services for the north-west Turin province"
 )
+DESCRIPTION_LANG = "it"
 URL = "https://cidiu.it/"
 
 TEST_CASES = {

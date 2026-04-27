@@ -11,7 +11,9 @@ import requests
 from waste_collection_schedule import Collection
 
 TITLE = "Betzdorf"
+TITLE_LANG = "fr"
 DESCRIPTION = "Source for Betzdorf, Luxembourg waste collection."
+DESCRIPTION_LANG = "fr"
 URL = "https://www.betzdorf.lu"
 TEST_CASES: dict[str, dict] = {
     "Betzdorf": {},

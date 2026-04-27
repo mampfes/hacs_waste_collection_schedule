@@ -5,7 +5,9 @@ import requests
 from waste_collection_schedule import Collection
 
 TITLE = "Berliner Stadtreinigungsbetriebe"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Berliner Stadtreinigungsbetriebe waste collection."
+DESCRIPTION_LANG = "de"
 URL = "https://bsr.de"
 TEST_CASES = {
     "Hufeland_45a": {

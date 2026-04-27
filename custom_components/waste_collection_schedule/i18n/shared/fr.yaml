@@ -5,13 +5,20 @@ params:
   addition:
     label: Ajout
   address:
+    description: Adresse.
     label: Adresse
+  address_id:
+    description: Identifiant de l'adresse.
   address_name_number:
     label: Numéro et nom de rue
+  address_no:
+    description: Numéro de l'adresse.
   address_postcode:
     label: Code postal
   address_street:
     label: Rue
+  address_suffix:
+    description: Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).
   api_key:
     label: Clé API
   area:
@@ -19,52 +26,78 @@ params:
   bill_number:
     label: Numéro de facture
   building_number:
+    description: Numéro de bâtiment de l'adresse.
     label: Numéro de bâtiment
   calendar:
     label: Calendrier
   calendar_title:
     label: Titre du calendrier
   city:
+    description: Ville de l'adresse.
     label: Ville
   city_id:
+    description: Identifiant de ville.
     label: ID de ville
   city_part:
+    description: Quartier de la ville.
     label: Quartier de ville
   client:
     label: Client
   community:
+    description: Communauté de l'adresse.
     label: Communauté
   company:
     label: Entreprise
   council:
     label: Conseil
   county_id:
+    description: Identifiant de comté.
     label: ID de comté
   customer:
     label: Client
   district:
+    description: Quartier de l'adresse.
     label: District
   district_id:
+    description: Identifiant de quartier.
     label: ID de district
   door_num:
+    description: Numéro de porte de l'adresse.
     label: Numéro de porte
   email:
     label: E-mail
+  hn_id:
+    description: Identifiant du numéro de maison.
   house:
+    description: Maison de l'adresse.
     label: Maison
+  house_id:
+    description: Identifiant de maison de l'adresse.
   house_letter:
+    description: Lettre de maison de l'adresse.
     label: Lettre de maison
   house_name:
+    description: Nom de la maison de l'adresse.
     label: Nom de maison
+  house_name_or_number:
+    description: Nom ou numéro de la maison de l'adresse.
   house_number:
+    description: Numéro de maison de l'adresse.
     label: Numéro civique
   house_number_or_name:
+    description: Numéro ou nom de la maison de l'adresse.
     label: Numéro civique
+  id_house_number:
+    description: Identifiant du numéro de maison.
+  kund_nr:
+    description: Numéro de client.
   lat:
     label: Latitude
   location:
+    description: Emplacement géographique.
     label: Emplacement
   location_id:
+    description: Identifiant d'emplacement.
     label: ID d'emplacement
   lon:
     label: Longitude
@@ -73,11 +106,15 @@ params:
   municipal:
     label: Municipalité
   municipality:
+    description: Municipalité de l'adresse.
     label: Municipalité
   municipality_id:
+    description: Identifiant de municipalité.
     label: ID de municipalité
   number:
     label: Numéro
+  object_id:
+    description: Identifiant d'objet.
   operator:
     label: Opérateur
   params:
@@ -87,19 +124,26 @@ params:
   phone:
     label: Téléphone
   postcode:
+    description: Code postal de l'adresse.
     label: Code postal
   property:
     label: Propriété
   property_id:
+    description: Identifiant de propriété.
     label: ID de propriété
   property_location:
+    description: Emplacement de la propriété.
     label: Emplacement de la propriété
   property_no:
+    description: Numéro de propriété.
     label: Numéro de propriété
   radius:
     label: Rayon
   region:
+    description: Région de l'adresse.
     label: Région
+  registration_number:
+    description: Numéro d'immatriculation.
   road_name:
     label: Nom de route
   sector:
@@ -111,29 +155,42 @@ params:
   service_provider:
     label: Fournisseur de services
   state:
+    description: État de l'adresse.
     label: État
   street:
+    description: Rue de l'adresse.
     label: Rue
   street_address:
+    description: Adresse complète.
     label: Adresse de rue
   street_code:
+    description: Code de rue de l'adresse.
     label: Code de rue
   street_id:
+    description: Identifiant de rue de l'adresse.
     label: ID de rue
+  street_index:
+    description: Index de rue de l'adresse.
   street_name:
+    description: Nom de la rue de l'adresse.
     label: Nom de rue
   street_number:
+    description: Numéro de rue de l'adresse.
     label: Numéro de rue
   subdomain:
     label: Sous-domaine
+  suburb:
+    description: Banlieue de l'adresse.
   town:
+    description: Ville de l'adresse.
     label: Ville
+  unit_number:
+    description: Numéro d'unité de l'adresse.
   uprn:
+    description: Une manière simple de retrouver votre numéro unique de propriété
+      (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir
+      les détails de votre adresse.
     label: UPRN
-    description: >-
-      Une manière simple de retrouver votre numéro unique de propriété (UPRN)
-      est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les
-      détails de votre adresse.
   url:
     label: URL
   username:
@@ -143,8 +200,10 @@ params:
   version:
     label: Version
   village:
+    description: Village de l'adresse.
     label: Village
   zip_code:
+    description: Code ZIP de l'adresse.
     label: Code postal
   zone:
     label: Zone

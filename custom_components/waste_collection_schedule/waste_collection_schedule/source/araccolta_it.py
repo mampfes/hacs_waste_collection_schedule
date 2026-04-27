@@ -5,7 +5,9 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "Taranto (araccolta.it)"
+TITLE_LANG = "it"
 DESCRIPTION = "Source for Taranto (araccolta.it)."
+DESCRIPTION_LANG = "it"
 URL = "https://araccolta.it/"
 TEST_CASES = {
     "lama-san-vito-talsano Domestic": {

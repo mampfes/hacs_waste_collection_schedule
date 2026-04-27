@@ -5,7 +5,9 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaftsbetrieb Esslingen"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for AWB Esslingen, Germany"
+DESCRIPTION_LANG = "de"
 URL = "https://www.awb-es.de"
 
 TEST_CASES = {

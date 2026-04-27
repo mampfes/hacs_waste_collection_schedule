@@ -8,7 +8,9 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Stadtreinigung Gießen"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Stadtreinigung Gießen waste collection schedule."
+DESCRIPTION_LANG = "de"
 URL = "https://stadtreinigung.giessen.de"
 TEST_CASES = {
     "Achstattring 1": {

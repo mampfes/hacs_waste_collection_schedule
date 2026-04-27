@@ -9,7 +9,9 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "KWU Entsorgung Landkreis Oder-Spree"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for KWU Entsorgung, Germany"
+DESCRIPTION_LANG = "de"
 URL = "https://www.kwu-entsorgung.de/"
 TEST_CASES = {
     "Erkner": {"city": "Erkner", "street": "Heinrich-Heine-Straße", "number": "11"},

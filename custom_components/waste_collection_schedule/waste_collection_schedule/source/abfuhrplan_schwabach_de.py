@@ -7,7 +7,9 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Schwabach"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for the city of Schwabach"
+DESCRIPTION_LANG = "de"
 URL = "https://www.abfuhrplan-schwabach.de/"
 TEST_CASES = {
     "Am Alten Friedhof 3, 3a": {"street": "Am Alten Friedhof 3, 3a"},

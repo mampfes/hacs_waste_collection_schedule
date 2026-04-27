@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Wermelskirchen"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Abfallabholung Wermelskirchen, Germany"
+DESCRIPTION_LANG = "de"
 URL = "https://www.bavweb.de/Bergischer-Abfallwirtschaftsverband/Abfuhrkalender-Service/Wermelskirchen/"
 TEST_CASES = {
     "Rathaus": {"street": "Telegrafenstraße", "house_number": "29"},

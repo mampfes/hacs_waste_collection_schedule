@@ -17,7 +17,9 @@ FRENSH_WEEKDAYS = {
 }
 
 TITLE = "Sivom Rive Droite - Bassens"
+TITLE_LANG = "fr"
 DESCRIPTION = "Source for Sivom Rive Droite."
+DESCRIPTION_LANG = "fr"
 URL = "https://www.sivom-rivedroite.fr/"
 TEST_CASES = {
     "BASSENS 3": {"district": "BASSENS 3"},

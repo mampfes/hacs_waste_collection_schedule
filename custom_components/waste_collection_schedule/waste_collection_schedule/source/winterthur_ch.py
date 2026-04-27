@@ -4,7 +4,9 @@ from waste_collection_schedule.service.A_region_ch import (
 )
 
 TITLE = "Winterthur"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Winterthur."
+DESCRIPTION_LANG = "de"
 URL = "https://winterthur.ch/"
 TEST_CASES = {"Am Iberghang": {"street": "Am Iberghang"}}
 

@@ -1,7 +1,9 @@
 from waste_collection_schedule.source.jumomind_de import Source as JumomindSource
 
 TITLE = "Rhein-Hunsrück Entsorgung (RHE)"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for RHE (Rhein Hunsrück Entsorgung)."
+DESCRIPTION_LANG = "de"
 URL = "https://www.rh-entsorgung.de"
 TEST_CASES = {
     "Horn": {

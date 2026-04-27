@@ -21,7 +21,9 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Publidata generic source"
+TITLE_LANG = "fr"
 DESCRIPTION = "Publidata is a French public operator with a reach of up to 6M inhabitants. Check if your area is concerned on their website."
+DESCRIPTION_LANG = "fr"
 URL = "https://www.publidata.io/fr/"
 COUNTRY = "fr"
 
@@ -232,6 +234,7 @@ EXTRA_INFO = [
         "default_params": {"instance_id": 1027},
     },
 ]
+EXTRA_INFO_LANG = "fr"
 
 _CALENDAR_DAY_VERY_ABBR = {
     "Mo": MO,

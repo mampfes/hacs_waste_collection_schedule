@@ -8,7 +8,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "Il Rifiutologo"
+TITLE_LANG = "it"
 DESCRIPTION = "Source for ilrifiutologo.it"
+DESCRIPTION_LANG = "it"
 URL = "https://ilrifiutologo.it"
 COUNTRY = "it"
 TEST_CASES = {

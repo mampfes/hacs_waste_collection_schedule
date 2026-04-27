@@ -11,7 +11,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "AMSA"
+TITLE_LANG = "it"
 DESCRIPTION = "Source for AMSA (Milan, Italy) waste collection."
+DESCRIPTION_LANG = "it"
 URL = "https://www.amsa.it/it/milano"
 COUNTRY = "it"
 

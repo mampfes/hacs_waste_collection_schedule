@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "123abfallkalender"
+TITLE_LANG = "de"
 DESCRIPTION = "Source script for 123abfallkalender.de (Ebsdorfergrund)"
+DESCRIPTION_LANG = "de"
 URL = "https://www.123abfallkalender.de/"
 
 EXTRA_INFO = [
@@ -102,6 +104,7 @@ EXTRA_INFO = [
         },
     },
 ]
+EXTRA_INFO_LANG = "de"
 
 SUPPORTED_DISTRICTS = {
     "Beltershausen": "1-beltershausen",

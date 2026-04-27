@@ -5,7 +5,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Stadtreinigung Dresden"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Stadtreinigung Dresden waste collection."
+DESCRIPTION_LANG = "de"
 URL = "https://www.dresden.de"
 TEST_CASES = {
     "Neumarkt 6": {"standort": 80542},

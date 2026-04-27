@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "GOJER"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for GOJER."
+DESCRIPTION_LANG = "de"
 URL = "https://www.gojer.at/"
 TEST_CASES = {
     "Ruden Kleindiex": {"municipality": "Ruden", "city": "Kleindiex"},

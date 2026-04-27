@@ -5,7 +5,9 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.A_region_ch import A_region_ch
 
 TITLE = "A-Region"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for A-Region, Switzerland waste collection."
+DESCRIPTION_LANG = "de"
 URL = "https://www.a-region.ch"
 
 

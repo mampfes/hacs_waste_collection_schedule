@@ -6,7 +6,9 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Lindau"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Lindau waste collection."
+DESCRIPTION_LANG = "de"
 URL = "https://www.lindau.ch"
 TEST_CASES = {
     "Tagelswangen": {"city": "Tagelswangen"},

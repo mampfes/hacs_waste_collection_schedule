@@ -7,7 +7,9 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Helmstedt"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Helmstedt."
+DESCRIPTION_LANG = "de"
 URL = "landkreis-helmstedt.de"
 TEST_CASES = {
     "Grasleben": {

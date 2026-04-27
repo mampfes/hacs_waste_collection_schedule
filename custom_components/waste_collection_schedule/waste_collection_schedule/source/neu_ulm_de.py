@@ -5,7 +5,9 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Neu-Ulm"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Neu-Ulm."
+DESCRIPTION_LANG = "de"
 URL = "https://nu.neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender"
 TEST_CASES = {
     "Bezirk 1": {"region": "Bezirk 1"},

@@ -9,9 +9,11 @@ from waste_collection_schedule.service.AbfallIO import SERVICE_MAP
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfall.IO / AbfallPlus"
+TITLE_LANG = "de"
 DESCRIPTION = (
     "Source for AbfallPlus.de waste collection. Service is hosted on abfall.io."
 )
+DESCRIPTION_LANG = "de"
 URL = "https://www.abfallplus.de"
 COUNTRY = "de"
 

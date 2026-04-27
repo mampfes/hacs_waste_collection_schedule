@@ -6,7 +6,9 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "EGN Abfallkalender"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for EGN Abfallkalender"
+DESCRIPTION_LANG = "de"
 URL = "https://www.egn-abfallkalender.de"
 TEST_CASES = {
     "Grevenbroich": {

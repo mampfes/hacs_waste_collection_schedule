@@ -8,7 +8,9 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Coburg Entsorgungs- und Baubetrieb CEB"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Coburg Entsorgungs- und Baubetrieb CEB."
+DESCRIPTION_LANG = "de"
 URL = "https://www.ceb-coburg.de/"
 TEST_CASES = {
     "Kanalstraße (Seite HUK)": {"street": "Kanalstraße, Seite HUK"},

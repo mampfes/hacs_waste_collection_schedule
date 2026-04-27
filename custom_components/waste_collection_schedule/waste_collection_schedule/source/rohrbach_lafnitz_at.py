@@ -3,7 +3,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Rohrbach an der Lafnitz"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Rohrbach an der Lafnitz, Austria."
+DESCRIPTION_LANG = "de"
 URL = "https://www.rohrbach-lafnitz.at"
 COUNTRY = "at"
 

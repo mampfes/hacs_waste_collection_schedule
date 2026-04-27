@@ -7,7 +7,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Umweltprofis"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Umweltprofis"
+DESCRIPTION_LANG = "de"
 URL = "https://www.umweltprofis.at"
 TEST_CASES = {
     "Ebensee": {

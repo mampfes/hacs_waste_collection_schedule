@@ -6,9 +6,11 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen"
+TITLE_LANG = "de"
 DESCRIPTION = (
     "Source for tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen."
 )
+DESCRIPTION_LANG = "de"
 URL = "https://tonnenleerung.de"
 TEST_CASES = {
     "nd-sob/neuburg-donau/abbevillestrasse/": {

@@ -1,4 +1,21 @@
+"""Source exceptions backed by the i18n phrase registry.
+
+Each subclass stores a ``phrase_key`` plus the placeholder values needed to
+format that phrase. ``.message`` resolves lazily, defaulting to English so
+``str(exc)`` and existing log output continue to behave the same way.
+Display layers (config_flow, sensor) can re-render the message in the
+user's Home Assistant UI language by calling ``exc.render(lang)``.
+
+The ``__init__`` signatures are unchanged from the previous hand-built
+English implementation, so all existing ``raise SourceArgumentNotFound(...)``
+call sites continue to work without modification — the change is internal.
+"""
+
+from __future__ import annotations
+
 from typing import Any, Generic, Iterable, Type, TypeVar
+
+from .i18n_runtime import phrase
 
 T = TypeVar("T")
 
@@ -7,13 +24,9 @@ class SourceArgumentExceptionMultiple(Exception):
     """Error base class for errors associated with multiple arguments."""
 
     def __init__(self, arguments: Iterable[str], message: str) -> None:
-        """Initialize the SourceArgumentExceptionMultiple.
-
-        Args:
-            arguments (Iterable[str]): an iterable of arguments the source arguments (written exactly like in the source __init__).
-            message (str): Message to be displayed for all provided arguments.
-        """
-        self._arguments = arguments
+        self._arguments = list(arguments)
+        self.phrase_key: str | None = None
+        self.placeholders: dict[str, Any] = {}
         self.message = message
         super().__init__(self.message)
 
@@ -21,48 +34,63 @@ class SourceArgumentExceptionMultiple(Exception):
     def arguments(self) -> Iterable[str]:
         return self._arguments
 
+    def render(self, lang: str = "en") -> str:
+        if self.phrase_key is None:
+            return self.message
+        return phrase(self.phrase_key, lang=lang, **self.placeholders)
+
 
 class SourceArgumentException(Exception):
-    def __init__(self, argument: str, message: str) -> None:
-        """Initialize the SourceArgumentException.
+    """Base for exceptions tied to a single source argument.
 
-        Args:
-            argument (str): The source argument that caused the exception (written exactly like in the source __init__).
-            message (str): Message to be displayed for the provided argument.
-        """
+    Subclasses set ``phrase_key`` and ``placeholders`` to drive both the
+    English ``.message`` rendering and any later locale resolution.
+    """
+
+    def __init__(
+        self,
+        argument: str,
+        message: str | None = None,
+        *,
+        phrase_key: str | None = None,
+        placeholders: dict[str, Any] | None = None,
+    ) -> None:
         self._argument = argument
-        self.message = message
+        self.phrase_key = phrase_key
+        self.placeholders: dict[str, Any] = dict(placeholders or {})
+        if message is None and phrase_key is not None:
+            message = phrase(phrase_key, lang="en", **self.placeholders)
+        self.message = message or ""
         super().__init__(self.message)
 
     @property
     def argument(self) -> str:
         return self._argument
 
+    def render(self, lang: str = "en") -> str:
+        """Render the message in ``lang`` (falls back to English)."""
+        if self.phrase_key is None:
+            return self.message
+        return phrase(self.phrase_key, lang=lang, **self.placeholders)
+
 
 class SourceArgumentSuggestionsExceptionBase(SourceArgumentException, Generic[T]):
-    """Base class for exceptions that provide suggestions for a source argument."""
+    """Base for exceptions that carry a suggestions list."""
 
     def __init__(
         self,
         argument: str,
-        message: str,
         suggestions: Iterable[T],
-        message_addition: str = "",
-    ):
-        """Initialize the SourceArgumentSuggestionsExceptionBase.
-
-        Args:
-            argument (str): The source argument that caused the exception (written exactly like in the source __init__).
-            message (str): Message to be displayed for the provided argument.
-            suggestions (Iterable[T]): An iterable of suggestions for the provided argument.
-            message_addition (str, optional): Additional message appended after the main message adding additional information. Defaults to "".
-        """
-        self._simple_message = message
-        message += f", {message_addition}" if message_addition else ""
-        super().__init__(argument=argument, message=message)
-        self._suggestions = suggestions
+        *,
+        phrase_key: str,
+        placeholders: dict[str, Any],
+    ) -> None:
+        self._suggestions = list(suggestions)
         self._suggestion_type: Type[T] | None = (
-            type(list(suggestions)[0]) if suggestions else None
+            type(self._suggestions[0]) if self._suggestions else None
+        )
+        super().__init__(
+            argument=argument, phrase_key=phrase_key, placeholders=placeholders
         )
 
     @property
@@ -75,133 +103,126 @@ class SourceArgumentSuggestionsExceptionBase(SourceArgumentException, Generic[T]
 
     @property
     def simple_message(self) -> str:
-        return self._simple_message
+        """The message without the suggestion list — kept for callers
+        that previously relied on the bare-bones text.
+        """
+        return phrase(
+            self.phrase_key.replace("_with_suggestions", "").replace(
+                "_no_suggestions", ""
+            )
+            + ("_check_spelling" if "_not_found" in (self.phrase_key or "") else ""),
+            lang="en",
+            **self.placeholders,
+        )
 
 
 class SourceArgumentNotFound(SourceArgumentException):
-    """Invalid source arguments provided."""
+    """Source argument value didn't match any candidate."""
 
     def __init__(
         self,
         argument: str,
         value: Any,
-        message_addition="please check the spelling and try again.",
+        message_addition: str = "please check the spelling and try again.",
     ) -> None:
-        """Initialize the SourceArgumentNotFound.
-
-        Args:
-            argument (str): The source argument that caused the exception (written exactly like in the source __init__).
-            value (Any): The value of that source argument.
-            message_addition (str, optional): Additional message information. Defaults to "please check the spelling and try again.".
-        """
-        self._simple_message = f"We could not find values for the argument '{argument}' with the value '{value}'"
-        self.message = self._simple_message
-        if message_addition:
-            self.message += f", {message_addition}"
-        super().__init__(argument, self.message)
+        if message_addition == "please check the spelling and try again.":
+            phrase_key = "errors.argument_not_found_check_spelling"
+        else:
+            phrase_key = "errors.argument_not_found"
+        placeholders = {"argument": argument, "value": value}
+        super().__init__(
+            argument=argument, phrase_key=phrase_key, placeholders=placeholders
+        )
+        # Preserve free-text addition for callers using legacy phrasing.
+        if message_addition and message_addition != "please check the spelling and try again.":
+            self.message = (
+                phrase("errors.argument_not_found", lang="en", **placeholders)
+                + f" {message_addition}"
+            )
 
     @property
     def simple_message(self) -> str:
-        return self._simple_message
+        return phrase(
+            "errors.argument_not_found", lang="en", **self.placeholders
+        )
 
 
 class SourceArgumentNotFoundWithSuggestions(SourceArgumentSuggestionsExceptionBase):
-    """Invalid source arguments provided but suggestions provided.
-
-    This should be raised if a source argument is not valid but you want to provide suggestions to the user what they could use instead.
-    """
+    """Source argument value didn't match; suggest alternatives."""
 
     def __init__(self, argument: str, value: Any, suggestions: Iterable[T]) -> None:
-        """Initialize the SourceArgumentNotFoundWithSuggestions.
-
-        Args:
-            argument (str): The source argument that caused the exception (written exactly like in the source __init__).
-            value (Any): The value of that source argument.
-            suggestions (Iterable[T]): An iterable of suggestions for the provided argument.
-        """
-        message = f"We could not find values for the argument '{argument}' with the value '{value}'"
-        suggestions = list(suggestions)
-        if len(suggestions) == 0:
-            message += ", We could not find any suggestions. Please also check other arguments."
-            message_addition = ""
+        suggestions_list = list(suggestions)
+        if suggestions_list:
+            phrase_key = "errors.argument_not_found_with_suggestions"
+            placeholders = {
+                "argument": argument,
+                "value": value,
+                "suggestions": suggestions_list,
+            }
         else:
-            message_addition = (
-                f"you may want to use one of the following: {suggestions}"
-            )
+            phrase_key = "errors.argument_not_found_no_suggestions"
+            placeholders = {"argument": argument, "value": value}
         super().__init__(
             argument=argument,
-            message=message,
-            message_addition=message_addition,
-            suggestions=suggestions,
+            suggestions=suggestions_list,
+            phrase_key=phrase_key,
+            placeholders=placeholders,
         )
 
 
 class SourceArgAmbiguousWithSuggestions(SourceArgumentSuggestionsExceptionBase):
-    """Multiple values found for the argument with suggestions provided.
-
-    This should be raised if a there are multiple different results matching the source argument and you want to provide suggestions to the user what they could use instead.
-    """
+    """Multiple candidates matched; ask the user to pick one."""
 
     def __init__(self, argument: str, value: Any, suggestions: Iterable[T]) -> None:
-        """Initialize the SourceArgAmbiguousWithSuggestions.
-
-        Args:
-            argument (str): The source argument that caused the exception (written exactly like in the source __init__).
-            value (Any): The value of that source argument.
-            suggestions (Iterable[T]): An iterable of suggestions for the provided argument.
-        """
-        message = f"Multiple values found for the argument '{argument}' with the value '{value}'"
-        message_addition = f"please specify one of: {suggestions}"
+        suggestions_list = list(suggestions)
         super().__init__(
             argument=argument,
-            message=message,
-            suggestions=suggestions,
-            message_addition=message_addition,
+            suggestions=suggestions_list,
+            phrase_key="errors.argument_ambiguous",
+            placeholders={
+                "argument": argument,
+                "value": value,
+                "suggestions": suggestions_list,
+            },
         )
 
 
 class SourceArgumentRequired(SourceArgumentException):
-    """Argument must be provided.
-
-    This should be raised if a source argument is required but not provided by the user.
-    """
+    """Argument is required but wasn't provided."""
 
     def __init__(self, argument: str, reason: str) -> None:
-        """Initialize the SourceArgumentRequired.
-
-        Args:
-            argument (str): The source argument that is required but not provided (written exactly like in the source __init__).
-            reason (str): The reason why the source argument is required.
-        """
-        self.message = f"Argument '{argument}' must be provided"
         if reason:
-            self.message += f", {reason}"
-        super().__init__(argument, self.message)
+            phrase_key = "errors.argument_required_with_reason"
+            placeholders = {"argument": argument, "reason": reason}
+        else:
+            phrase_key = "errors.argument_required"
+            placeholders = {"argument": argument}
+        super().__init__(
+            argument=argument, phrase_key=phrase_key, placeholders=placeholders
+        )
 
 
 class SourceArgumentRequiredWithSuggestions(SourceArgumentSuggestionsExceptionBase):
-    """Argument must be provided.
-
-    This should be raised if a source argument is required but not provided by the user and you want to provide suggestions to the user what they could use.
-    """
+    """Argument is required; suggest valid values."""
 
     def __init__(self, argument: str, reason: str, suggestions: Iterable[T]) -> None:
-        """Initialize the SourceArgumentRequiredWithSuggestions.
-
-        Args:
-            argument (str): The source argument that is required but not provided (written exactly like in the source __init__).
-            reason (str): The reason why the source argument is required.
-            suggestions (Iterable[T]): An iterable of suggestions for the provided argument.
-        """
-        message = f"Argument '{argument}' must be provided"
-        message_addition = (
-            f"you may want to use one of the following: {list(suggestions)}"
-        )
+        suggestions_list = list(suggestions)
         if reason:
-            message += f", {reason}"
+            phrase_key = "errors.argument_required_with_reason_and_suggestions"
+            placeholders = {
+                "argument": argument,
+                "reason": reason,
+                "suggestions": suggestions_list,
+            }
+        else:
+            phrase_key = "errors.argument_required_with_suggestions"
+            placeholders = {
+                "argument": argument,
+                "suggestions": suggestions_list,
+            }
         super().__init__(
             argument=argument,
-            message=message,
-            message_addition=message_addition,
-            suggestions=suggestions,
+            suggestions=suggestions_list,
+            phrase_key=phrase_key,
+            placeholders=placeholders,
         )

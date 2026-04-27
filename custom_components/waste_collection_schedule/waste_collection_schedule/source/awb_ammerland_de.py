@@ -9,7 +9,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "AWB Ammerland"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for AWB Ammerland (Abfallwirtschaftsbetrieb Landkreis Ammerland)."
+DESCRIPTION_LANG = "de"
 URL = "https://www.awb-ammerland.de"
 
 TEST_CASES = {

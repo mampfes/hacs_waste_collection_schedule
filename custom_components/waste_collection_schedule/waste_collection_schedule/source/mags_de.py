@@ -5,7 +5,9 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "mags Mönchengladbacher Abfall-, Grün- und Straßenbetriebe AöR"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Stadt Mönchengladbach"
+DESCRIPTION_LANG = "de"
 URL = "https://mags.de"
 COUNTRY = "de"
 TEST_CASES = {

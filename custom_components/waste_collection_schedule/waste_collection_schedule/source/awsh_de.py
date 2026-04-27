@@ -8,7 +8,9 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaft Südholstein"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Abfallwirtschaft Südholstein"
+DESCRIPTION_LANG = "de"
 URL = "https://www.awsh.de"
 TEST_CASES = {
     "Reinbek": {"city": "Reinbek", "street": "Ahornweg"},

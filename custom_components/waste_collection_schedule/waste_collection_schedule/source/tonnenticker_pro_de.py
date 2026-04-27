@@ -5,7 +5,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Tonnenticker Pro"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Tonnenticker Pro (RegioIT) waste collection schedules."
+DESCRIPTION_LANG = "de"
 URL = "https://www.regioit.de"
 COUNTRY = "de"
 

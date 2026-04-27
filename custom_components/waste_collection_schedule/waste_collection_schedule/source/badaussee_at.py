@@ -3,7 +3,9 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Bad Aussee"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Bad Aussee, Austria"
+DESCRIPTION_LANG = "de"
 URL = "https://www.badaussee.at"
 TEST_CASES = {
     "Zone 1": {

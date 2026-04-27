@@ -4,7 +4,9 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Rapperswil"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Rapperswil."
+DESCRIPTION_LANG = "de"
 URL = "https://www.rapperswil-be.ch/"
 TEST_CASES: dict[str, dict[str, str]] = {
     "Rapperswil": {},

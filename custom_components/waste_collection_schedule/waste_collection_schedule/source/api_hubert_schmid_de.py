@@ -4,7 +4,9 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "HubertSchmid Recycling und Umweltschutz GmbH"
+TITLE_LANG = "de"
 DESCRIPTION = "Abfuhrtermine Blaue Tonne"
+DESCRIPTION_LANG = "de"
 URL = "https://www.hschmid24.de/BlaueTonne/"
 API_URL = "https://www.hschmid24.de/BlaueTonne/php/ajax.php"
 

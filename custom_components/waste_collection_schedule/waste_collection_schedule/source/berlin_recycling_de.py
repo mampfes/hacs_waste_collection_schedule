@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Berlin Recycling"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Berlin Recycling waste collection."
+DESCRIPTION_LANG = "de"
 URL = "https://berlin-recycling.de"
 TEST_CASES = {
     "Germanenstrasse": {

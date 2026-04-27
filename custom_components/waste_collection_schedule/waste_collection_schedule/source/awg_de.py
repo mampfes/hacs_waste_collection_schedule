@@ -23,7 +23,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 TITLE = "ZAW Donau-Wald"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for ZAW Donau-Wald."
+DESCRIPTION_LANG = "de"
 URL = "https://www.awg.de/"
 TEST_CASES = {
     "Achslach Aign 1 ": {"city": "Achslach", "street": "Aign", "house_number": "1"},

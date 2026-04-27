@@ -8,8 +8,10 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Bürgerportal"
+TITLE_LANG = "de"
 URL = "https://www.c-trace.de"
 DESCRIPTION = "Source for waste collection in multiple service areas."
+DESCRIPTION_LANG = "de"
 
 
 def EXTRA_INFO():

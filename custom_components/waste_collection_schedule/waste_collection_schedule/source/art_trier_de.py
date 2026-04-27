@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "ART Trier (Depreciated)"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for waste collection of ART Trier."
+DESCRIPTION_LANG = "de"
 URL = "https://www.art-trier.de"
 TEST_CASES = {
     "Trier": {

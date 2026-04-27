@@ -8,7 +8,9 @@ from waste_collection_schedule import Collection
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "GVU Scheibbs"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for waste collection services Association of Municipalities in the District of Scheibbs"
+DESCRIPTION_LANG = "de"
 URL = "https://scheibbs.umweltverbaende.at/"
 TEST_CASES = {
     "Test_001": {"region": "Gaming"},

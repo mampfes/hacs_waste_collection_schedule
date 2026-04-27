@@ -5,9 +5,11 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Dillingen Saar"  # Title will show up in README.md and info.md
+TITLE_LANG = "de"
 DESCRIPTION = (
     "Source script for waste collection Dillingen Saar"  # Describe your source
 )
+DESCRIPTION_LANG = "de"
 URL = "https://www.dillingen-saar.de/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
     "Am Fischerberg": {

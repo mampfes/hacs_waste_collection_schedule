@@ -8,7 +8,9 @@ from waste_collection_schedule.service.ICS import ICS
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "infeo"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for INFEO waste collection."
+DESCRIPTION_LANG = "de"
 URL = "https://www.infeo.at/"
 EXTRA_INFO = [
     {
@@ -30,6 +32,7 @@ EXTRA_INFO = [
         "default_params": {"customer": "salzburg"},
     },
 ]
+EXTRA_INFO_LANG = "de"
 TEST_CASES = {
     "Bogeschütz": {"customer": "bogenschütz", "zone": "Dettenhausen"},
     "ikb": {

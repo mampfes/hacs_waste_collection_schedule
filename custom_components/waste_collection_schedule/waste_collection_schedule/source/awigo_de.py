@@ -10,7 +10,9 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH."
+DESCRIPTION_LANG = "de"
 URL = "https://www.awigo.de/"
 TEST_CASES = {
     "Bippen Am Bad 4": {"city": "Bippen", "street": "Am Bad", "house_number": 4},

@@ -6,7 +6,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Nordwestmecklenburg"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Nordwestmecklenburg"
+DESCRIPTION_LANG = "de"
 URL = "https://www.geoport-nwm.de"
 TEST_CASES = {
     "Rüting": {"district": "Rüting"},

@@ -11,7 +11,9 @@ from ..exceptions import (
 )
 
 TITLE = "Luxembourg"
+TITLE_LANG = "fr"
 DESCRIPTION = "Source for Luxembourg waste collection using data.public.lu"
+DESCRIPTION_LANG = "fr"
 URL = "https://data.public.lu"
 COUNTRY = "lu"
 

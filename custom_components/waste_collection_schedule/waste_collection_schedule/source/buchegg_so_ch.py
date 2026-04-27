@@ -14,9 +14,11 @@ from waste_collection_schedule.exceptions import (
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Buchegg"
+TITLE_LANG = "de"
 DESCRIPTION = (
     "Source for waste collection schedule of Gemeinde Buchegg (SO), Switzerland."
 )
+DESCRIPTION_LANG = "de"
 URL = "https://www.buchegg-so.ch"
 COUNTRY = "ch"
 

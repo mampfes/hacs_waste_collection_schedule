@@ -11,8 +11,10 @@ from waste_collection_schedule import Collection
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Abfallwirtschaftsbetrieb Landkreis Ahrweiler"
+TITLE_LANG = "de"
 URL = "https://www.meinawb.de"
 DESCRIPTION = "Bin collection service from Kreis Ahrweiler/Germany"
+DESCRIPTION_LANG = "de"
 API_URL = (
     "https://extdienste01.koblenz.de/WasteManagementAhrweiler/WasteManagementServlet"
 )

@@ -3,7 +3,9 @@ from waste_collection_schedule import Collection
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "MZV Hegau"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for mzvhegau.de services for MZV Hegau, Germany."
+DESCRIPTION_LANG = "de"
 URL = "https://www.mzvhegau.de"
 COUNTRY = "de"
 TEST_CASES = {

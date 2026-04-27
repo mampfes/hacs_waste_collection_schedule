@@ -7,7 +7,9 @@ from waste_collection_schedule.service.ICS import ICS
 
 # Source code based on rh_entsorgung_de.md
 TITLE = "Abfallwirtschaft Pforzheim"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for Abfallwirtschaft Pforzheim."
+DESCRIPTION_LANG = "de"
 URL = "https://www.abfallwirtschaft-pforzheim.de"
 TEST_CASES = {
     "Abnobstraße": {

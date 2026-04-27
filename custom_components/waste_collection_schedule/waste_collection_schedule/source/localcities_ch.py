@@ -7,7 +7,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "localcities.ch"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for waste collection schedules from localcities.ch (Switzerland)."
+DESCRIPTION_LANG = "de"
 URL = "https://www.localcities.ch"
 COUNTRY = "ch"
 
@@ -105,6 +107,7 @@ EXTRA_INFO = [
         },
     },
 ]
+EXTRA_INFO_LANG = "de"
 
 ICON_MAP = {
     "Altpapier": "mdi:newspaper",

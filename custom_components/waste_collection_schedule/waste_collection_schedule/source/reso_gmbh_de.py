@@ -5,7 +5,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "RESO"
+TITLE_LANG = "de"
 DESCRIPTION = "Source for RESO."
+DESCRIPTION_LANG = "de"
 URL = "https://reso-gmbh.de"
 TEST_CASES = {
     "Reichelsheim Kerngemeinde": {"city": "Reichelsheim", "district": "Kerngemeinde"}
@@ -35,6 +37,7 @@ EXTRA_INFO = [
     {"title": "Oberzent", "default_params": {"ort": "Oberzent"}},
     {"title": "Reichelsheim", "default_params": {"ort": "Reichelsheim"}},
 ]
+EXTRA_INFO_LANG = "de"
 
 
 API_URL = "https://reso-gmbh.abfallkalender.services/php/Kalender-2-ICS.php"
