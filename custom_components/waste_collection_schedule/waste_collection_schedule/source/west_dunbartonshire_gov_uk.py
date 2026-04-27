@@ -9,36 +9,11 @@ TITLE = "West Dunbartonshire Council"
 DESCRIPTION = "Source for waste collection services from West Dunbartonshire Council"
 URL = "https://www.west-dunbarton.gov.uk"
 TEST_CASES = {
-    "2/2 26 Kilbowie Road, Clydebank": {
-        "house_number": "2/2 26",
-        "street": "Kilbowie Road",
-        "town": "Clydebank",
-        "uprn": "129040292",
-    },
-    "6A Victoria Street, Dumbarton": {
-        "house_number": "6A",
-        "street": "Victoria Street",
-        "town": "Dumbarton",
-        "uprn": "129033978",
-    },
-    "8 Clairinsh, Balloch": {
-        "house_number": "8",
-        "street": "Clairinsh",
-        "town": "Balloch",
-        "uprn": "129491488",
-    },
-    "Rowan Lea, Gartocharn": {
-        "house_number": "Rowan Lea",
-        "street": "Stirling Road",
-        "town": "Gartocharn",
-        "uprn": "129490987",
-    },
-    "20 35 Risk Street, Dumbarton": {
-        "house_number": "20 35",
-        "street": "Risk Street",
-        "town": "Dumbarton",
-        "uprn": "129003614",
-    },
+    "2/2 26 Kilbowie Road, Clydebank": {"uprn": "129040292"},
+    "6A Victoria Street, Dumbarton": {"uprn": "129033978"},
+    "8 Clairinsh, Balloch": {"uprn": "129491488"},
+    "Rowan Lea, Gartocharn": {"uprn": "129490987"},
+    "20 35 Risk Street, Dumbarton": {"uprn": "129003614"},
 }
 
 API_URL = "https://www.west-dunbarton.gov.uk/recycling-and-waste/bin-collection-day"
@@ -56,7 +31,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, house_number=None, uprn=None, street=None, town=None):
+    def __init__(self, uprn):
         self._uprn = str(uprn)
 
     def fetch(self):

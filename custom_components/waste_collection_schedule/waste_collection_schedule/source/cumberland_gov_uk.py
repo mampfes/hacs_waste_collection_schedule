@@ -8,9 +8,9 @@ TITLE = "Cumberland Council"
 DESCRIPTION = "Source for cumberland.gov.uk services for Cumberland Council, UK."
 URL = "https://cumberland.gov.uk"
 TEST_CASES = {
-    "Test_001": {"postcode": "CA28 7QS", "uprn": "100110319463"},
-    "Test_002": {"postcode": "CA28 8LG", "uprn": 100110320734},
-    "Test_003": {"postcode": "CA28 6SW", "uprn": "10000895390"},
+    "Test_001": {"uprn": "100110319463"},
+    "Test_002": {"uprn": 100110320734},
+    "Test_003": {"uprn": "10000895390"},
     "Test_004": {"uprn": 10000895390},
 }
 ICON_MAP = {
@@ -26,12 +26,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 
 class Source:
-    def __init__(
-        self,
-        uprn: str | int,
-        postcode: str | None = None,
-    ):
-        # postcode is no longer needed, provide default value to make it optional for newer configs
+    def __init__(self, uprn: str | int):
         self._uprn: str = str(uprn)
 
     def fetch(self) -> list[Collection]:

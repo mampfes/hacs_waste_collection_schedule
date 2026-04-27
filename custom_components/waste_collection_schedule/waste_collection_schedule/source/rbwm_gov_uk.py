@@ -10,8 +10,8 @@ TITLE = "Windsor and Maidenhead"
 DESCRIPTION = "Source for Windsor and Maidenhead."
 URL = "https://my.rbwm.gov.uk/"
 TEST_CASES = {
-    "Windsor 1": {"postcode": "SL4 4EN", "uprn": 100080381393},
-    "Windsor 2": {"postcode": "", "uprn": "100080384194"},
+    "Windsor 1": {"uprn": 100080381393},
+    "Windsor 2": {"uprn": "100080384194"},
     "Maidenhead 1": {"uprn": "100080359672"},
     "Maidenhead 2": {"uprn": 100080355442},
 }
@@ -32,8 +32,7 @@ HEADERS = {
 
 
 class Source:
-    # postcode was previously required by this source. This is no longer the case but argument kept for backwards compatibility
-    def __init__(self, uprn: str | int, postcode: Optional[str] = None):
+    def __init__(self, uprn: str | int):
         self._uprn: str = str(uprn).zfill(12)
 
     def fetch(self):

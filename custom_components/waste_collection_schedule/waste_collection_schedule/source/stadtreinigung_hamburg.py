@@ -11,7 +11,7 @@ TEST_CASES = {
 
 
 class Source:
-    def __init__(self, house_number_id, as_id=None):
+    def __init__(self, house_number_id):
         self._hnId = house_number_id
         self._ics = ICS()
 

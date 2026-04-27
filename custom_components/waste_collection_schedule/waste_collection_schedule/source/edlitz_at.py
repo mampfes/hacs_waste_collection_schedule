@@ -9,7 +9,7 @@ TITLE_LANG = "de"
 DESCRIPTION = "Source for Marktgeneinde Edlitz, AT"
 DESCRIPTION_LANG = "de"
 URL = "https://edlitz.at"
-TEST_CASES = {"TestSource": {}, "IgnoredArgument": {"_": ""}}
+TEST_CASES = {"TestSource": {}}
 ICON_MAP = {
     "Biomüllabfuhr": "mdi:food",
     "Papier Tonne": "mdi:newspaper",
@@ -21,7 +21,7 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, _=None):
+    def __init__(self):
         pass
 
     def fetch(self):

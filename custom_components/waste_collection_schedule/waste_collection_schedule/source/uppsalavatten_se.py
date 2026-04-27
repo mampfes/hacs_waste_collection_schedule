@@ -12,22 +12,19 @@ _LOGGER = logging.getLogger(__name__)
 
 TEST_CASES = {
     "Test1": {
-        "city": "BJÖRKLINGE",
         "street": "SADELVÄGEN 1",
     },
     "Test2": {
-        "city": "BJÖRKLINGE",
         "street": "BJÖRKLINGE-GRÄNBY 33",
     },
     "Test3": {
-        "city": "BJÖRKLINGE",
         "street": "BJÖRKLINGE-GRÄNBY 20",
     },
 }
 
 
 class Source(EdpEventSource):
-    def __init__(self, street, city):
+    def __init__(self, street):
         super().__init__(street, service_provider="uppsalavatten")
         # Log a warning message indicating that this source is deprecated
         _LOGGER.warning(
