@@ -33,24 +33,9 @@ ICON_MAP = {
     "odpady zielone": "mdi:leaf",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "city": "City Name",
-        "street": "Street Name",
-        "number": "House Number",
-    }
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Open https://wieliczka.kiedyodpady.pl and select your location. Use the city name, street name, and house number exactly as shown in the UI.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "City name from the Kiedy Odpady locality list.",
-        "street": "Street name from the selected city.",
-        "number": "House number/address value from the selected street.",
-    }
 }
 
 

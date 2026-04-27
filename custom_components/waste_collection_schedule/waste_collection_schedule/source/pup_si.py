@@ -27,11 +27,6 @@ ICON_MAP = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Find your place_id (Odjemno mesto number) on your monthly PUP bill, or visit https://www.pup-saubermacher.si/index.php/domov/urnik-odvoza-odpadkov",
 }
-PARAM_TRANSLATIONS = {
-    "en": {
-        "place_id": "Place ID (Odjemno mesto)",
-    }
-}
 
 BASE_URL = "https://www.pup-saubermacher.si/php/dobi_tabelo.php"
 

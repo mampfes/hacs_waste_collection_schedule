@@ -50,20 +50,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Check your bin calendar letter (A or B) and collection day (Tuesday–Friday) on the Bolsover website at https://www.bolsover.gov.uk/services/b/bins-and-recycling/.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "calendar": "Your bin calendar letter: 'a' or 'b'.",
-        "collection_day": "Your collection day: tuesday, wednesday, thursday, or friday.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "calendar": "Calendar",
-        "collection_day": "Collection Day",
-    },
-}
-
 
 def _get_icon(bin_type: str) -> str | None:
     for key, icon in ICON_MAP.items():

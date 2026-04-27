@@ -121,31 +121,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "de": "Besuchen Sie die Seite Ihrer Gemeinde auf localcities.ch. Der Gemeindename und die ID sind in der URL (z.B. /de/entsorgung/volketswil/529). Die Zone wird neben jedem Entsorgungstermin angezeigt.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "municipality": "Municipality URL slug (from the localcities.ch URL)",
-        "municipality_id": "Municipality ID number (from the localcities.ch URL)",
-        "zone": "Collection zone or locality name",
-    },
-    "de": {
-        "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
-        "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
-        "zone": "Sammelzone oder Ortsname",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "municipality": "Municipality",
-        "municipality_id": "Municipality ID",
-        "zone": "Zone",
-    },
-    "de": {
-        "municipality": "Gemeinde",
-        "municipality_id": "Gemeinde-ID",
-        "zone": "Zone",
-    },
-}
 
 HEADERS = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",

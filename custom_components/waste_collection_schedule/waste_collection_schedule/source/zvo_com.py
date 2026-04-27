@@ -47,28 +47,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Einige kleinere Orte benötigen keine Straße.",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "city": "City",
-        "street": "Street",
-    },
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "City name (e.g. 'Bad Schwartau')",
-        "street": "Street name (optional for some cities)",
-    },
-    "de": {
-        "city": "Ortsname (z.B. 'Bad Schwartau')",
-        "street": "Straßenname (bei einigen Orten nicht erforderlich)",
-    },
-}
-
 
 class Source:
     def __init__(self, city: str, street: str = ""):

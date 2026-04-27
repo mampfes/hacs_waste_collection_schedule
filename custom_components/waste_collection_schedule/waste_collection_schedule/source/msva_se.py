@@ -45,68 +45,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "fr": "Saisissez l'adresse complète d'une propriété dans la commune de Sundsvall. L'API ne prend en charge que Sundsvall (code communal 2281) ; les adresses de Timrå et Nordanstig ne sont pas couvertes.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street name without house number, e.g. 'Västra Radiogatan'.",
-        "house_number": "House number, e.g. '18'.",
-        "postal_code": "Five-digit Swedish postal code, e.g. '85461'.",
-        "city": "Locality within Sundsvall kommun. Defaults to 'Sundsvall'.",
-        "additional_information": "House letter or unit identifier, e.g. 'A'. Leave empty if not applicable.",
-    },
-    "de": {
-        "street": "Straßenname ohne Hausnummer, z.B. 'Västra Radiogatan'.",
-        "house_number": "Hausnummer, z.B. '18'.",
-        "postal_code": "Fünfstellige schwedische Postleitzahl, z.B. '85461'.",
-        "city": "Ortschaft innerhalb der Gemeinde Sundsvall. Standard: 'Sundsvall'.",
-        "additional_information": "Hauskennung, z.B. 'A'. Leer lassen, falls nicht zutreffend.",
-    },
-    "it": {
-        "street": "Nome della via senza numero civico, es. 'Västra Radiogatan'.",
-        "house_number": "Numero civico, es. '18'.",
-        "postal_code": "Codice postale svedese di cinque cifre, es. '85461'.",
-        "city": "Località all'interno del comune di Sundsvall. Predefinito: 'Sundsvall'.",
-        "additional_information": "Lettera o identificativo aggiuntivo, es. 'A'. Lasciare vuoto se non applicabile.",
-    },
-    "fr": {
-        "street": "Nom de la rue sans numéro, ex. 'Västra Radiogatan'.",
-        "house_number": "Numéro de maison, ex. '18'.",
-        "postal_code": "Code postal suédois à cinq chiffres, ex. '85461'.",
-        "city": "Localité dans la commune de Sundsvall. Par défaut : 'Sundsvall'.",
-        "additional_information": "Lettre ou identifiant supplémentaire, ex. 'A'. Laisser vide si non applicable.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street",
-        "house_number": "House number",
-        "postal_code": "Postal code",
-        "city": "City",
-        "additional_information": "Additional information",
-    },
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
-        "postal_code": "Postleitzahl",
-        "city": "Ort",
-        "additional_information": "Zusatzinformation",
-    },
-    "it": {
-        "street": "Via",
-        "house_number": "Numero civico",
-        "postal_code": "Codice postale",
-        "city": "Città",
-        "additional_information": "Informazioni aggiuntive",
-    },
-    "fr": {
-        "street": "Rue",
-        "house_number": "Numéro",
-        "postal_code": "Code postal",
-        "city": "Ville",
-        "additional_information": "Informations complémentaires",
-    },
-}
-
 
 class Source:
     def __init__(
@@ -140,9 +78,7 @@ class Source:
         entries = []
         for facility in facilities:
             for item in facility.get("schedules", []):
-                waste_label = WASTE_TYPE_MAP.get(
-                    item["wasteType"], item["wasteType"]
-                )
+                waste_label = WASTE_TYPE_MAP.get(item["wasteType"], item["wasteType"])
                 entries.append(
                     Collection(
                         date=date.fromisoformat(item["nextPickupDate"]),

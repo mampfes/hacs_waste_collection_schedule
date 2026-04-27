@@ -53,17 +53,6 @@ LABEL_MAP = {
     "sapin": "Sapin de Noël",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Your full address / Votre adresse complete",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address / Adresse",
-    },
-}
 
 EXTRA_INFO = [
     {

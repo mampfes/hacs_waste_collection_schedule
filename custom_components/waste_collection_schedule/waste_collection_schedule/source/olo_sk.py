@@ -6,7 +6,10 @@ from typing import Any
 import requests
 from dateutil.rrule import WEEKLY, rrule, weekday
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple, SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -60,43 +63,6 @@ API_KEY_FALLBACK = "ae84ae0982c2162a81eb253765ceaa8593abd9105c71954cf5c9620b0178
 
 # ### Arguments affecting the configuration GUI ####
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street name and number (use this OR registration number)",
-        "registrationNumber": "OLO registration number (use this OR street name)",
-    },
-    "de": {
-        "street": "Straßenname und Hausnummer (verwenden Sie dies ODER Registrierungsnummer)",
-        "registrationNumber": "OLO-Registrierungsnummer (verwenden Sie dies ODER Straßenname)",
-    },
-    "it": {
-        "street": "Nome della strada e numero civico (usare questo O numero di registrazione)",
-        "registrationNumber": "Numero di registrazione OLO (usare questo O nome della strada)",
-    },
-    "fr": {
-        "street": "Nom de la rue et numéro (utilisez ceci OU numéro d'enregistrement)",
-        "registrationNumber": "Numéro d'enregistrement OLO (utilisez ceci OU nom de la rue)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street",
-        "registrationNumber": "Registration Number",
-    },
-    "de": {
-        "street": "Straße",
-        "registrationNumber": "Registrierungsnummer",
-    },
-    "it": {
-        "street": "Strada",
-        "registrationNumber": "Numero di registrazione",
-    },
-    "fr": {
-        "street": "Rue",
-        "registrationNumber": "Numéro d'enregistrement",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

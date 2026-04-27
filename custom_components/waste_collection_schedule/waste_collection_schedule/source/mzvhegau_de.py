@@ -19,19 +19,6 @@ ICON_MAP = {
     "Grünschnitt": "mdi:tree",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {"city": "City"},
-    "de": {"city": "Stadt/Gemeinde"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "Your city or municipality name, e.g. Engen.",
-    },
-    "de": {
-        "city": "Ihre Stadt oder Gemeinde, z.B. Engen.",
-    },
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter your city/municipality in the " "MZV Hegau service area.",

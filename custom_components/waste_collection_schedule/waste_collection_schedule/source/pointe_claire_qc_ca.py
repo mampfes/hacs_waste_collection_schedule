@@ -27,23 +27,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "fr": "Trouvez votre secteur de collecte sur le site de la Ville de Pointe-Claire à https://www.pointe-claire.ca/residents/travaux-publics/gestion-des-dechets/",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "sector": "Collection sector (A or B)",
-    },
-    "fr": {
-        "sector": "Secteur de collecte (A ou B)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "sector": "Sector",
-    },
-    "fr": {
-        "sector": "Secteur",
-    },
-}
 
 SECTOR_URL_MAP: dict[str, str] = {
     "A": "https://raw.githubusercontent.com/jordanconway/pointe-claire-waste-calendars/refs/heads/main/pointe-claire-a.ics",
@@ -74,5 +57,7 @@ class Source:
             # Strip " (Sector A)" / " (Sector B)" suffix — the sector is already
             # captured by the source configuration, so it's redundant in the type.
             collection_type = re.sub(r"\s*\(Sector [AB]\)$", "", d[1]).strip()
-            entries.append(Collection(d[0], collection_type, ICON_MAP.get(collection_type)))
+            entries.append(
+                Collection(d[0], collection_type, ICON_MAP.get(collection_type))
+            )
         return entries

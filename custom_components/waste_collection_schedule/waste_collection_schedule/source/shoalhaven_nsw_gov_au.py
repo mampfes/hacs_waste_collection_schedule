@@ -42,17 +42,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     """,
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "geolocation_id": "Your unique Geolocation ID for the address (e.g., 2ea7b0c7-b627-421d-8436-248b8da384b6)",
-    }
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "geolocation_id": "Geolocation ID",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

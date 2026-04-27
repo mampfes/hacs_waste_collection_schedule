@@ -2,7 +2,6 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
@@ -16,11 +15,6 @@ TEST_CASES = {
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Find your collection zone at https://www.muswellbrook.nsw.gov.au/waste-collection/ and enter it as e.g. '3a' or '5b'."
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "zone": "Collection zone, e.g. '3a' or '5b'. Find your zone at https://www.muswellbrook.nsw.gov.au/waste-collection/"
-    }
 }
 
 ICON_MAP = {

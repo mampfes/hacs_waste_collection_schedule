@@ -41,20 +41,6 @@ MAIN_URL = "https://www.zva-sek.de/online-dienste/abfallkalender-{year}/{file}"
 API_URL = "https://www.zva-sek.de/module/abfallkalender/{file}"
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "bezirk": "Abfuhrbezirk",
-        "strasse": "Straße",
-        "ortsteil": "Ortsteil",
-    },
-    "en": {
-        "bezirk": "City district",
-        "strasse": "Street",
-        "ortsteil": "District",
-    },
-}
-
-
 class Source:
     def __init__(self, bezirk: str, ortsteil: str, strasse: str | None = None):
         self._bezirk = bezirk

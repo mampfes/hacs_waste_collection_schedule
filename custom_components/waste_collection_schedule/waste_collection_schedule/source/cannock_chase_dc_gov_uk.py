@@ -25,12 +25,6 @@ ICON_MAP = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.",
 }
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-        "postcode": "Postcode of the property",
-    },
-}
 
 SERVICE_NAME_MAP = {
     "Refuse Collection Service": "Refuse",

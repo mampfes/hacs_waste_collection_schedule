@@ -28,15 +28,6 @@ HEADERS = {
 }
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    },
-}
-
-
 class FormStateParser(HTMLParser):
     def __init__(self):
         super().__init__()

@@ -45,32 +45,9 @@ MUNICIPALITY_LITERAL = Literal[
 ]
 MUNICIPALITY_NAMES = list(get_args(MUNICIPALITY_LITERAL))
 
-
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
     "en": "HOW TO GET ARGUMENTS DESCRIPTION",
     "fr": "COMMENT OBTENIR LES ARGUMENTS",
-}
-
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "municipality": "Municipality Name",
-        "sector": "Sector",
-    },
-    "fr": {
-        "municipality": "Nom de la municipalité",
-        "sector": "Secteur",
-    },
-}
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "municipality": "Municipality name in MRC de Roussillon",
-        "sector": "Optional, Sector for Châteauguay, nord-ouest or est",
-    },
-    "fr": {
-        "municipality": "Nom de la municipalité dans le MRC de Roussillon",
-        "sector": "En option, Secteur de Châteauguay, nord-ouest ou est",
-    },
 }
 
 

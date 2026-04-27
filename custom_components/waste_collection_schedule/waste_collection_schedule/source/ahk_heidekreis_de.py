@@ -52,15 +52,6 @@ _OBJECT_ID_KEYS = (
     "ObjectId",
 )
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-        "postcode": "PLZ",
-        "house_number": "Hausnummer",
-    }
-}
-
 
 def _get_field(item: dict, *possible_keys: str):
     """Return the value for the first matching key found in item."""

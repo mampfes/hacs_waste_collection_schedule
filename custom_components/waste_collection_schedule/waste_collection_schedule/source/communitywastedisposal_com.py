@@ -24,17 +24,6 @@ TEST_CASES = {
     "Allen TX": {"address": "123 Main St, Allen, TX 75002"},
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address including city and ZIP (e.g. '123 Main St, Allen, TX 75002')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 LAYER_CONFIG = {
     0: {"type": "HHW", "icon": "mdi:delete-sweep"},

@@ -13,7 +13,6 @@ from waste_collection_schedule.exceptions import (
 
 _LOGGER = logging.getLogger(__name__)
 
-
 TITLE = "Iren Ambiente"
 DESCRIPTION = "Source for Iren Ambiente."
 URL = "https://servizi.irenambiente.it/"
@@ -71,14 +70,6 @@ ICON_MAP = {
     "Alluminio": "mdi:recycle",
 }
 
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "it": {
-        "city": "Comune",
-        "street": "Via/Piazza/Corso",
-        "house_number": "N° Civico",
-    },
-}
 
 API_URL = "https://servizi.irenambiente.it/bin/iam/api-services"
 COLLECTION_ULR = (

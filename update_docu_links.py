@@ -218,8 +218,12 @@ class SourceInfo:
         # Per-key (deep) merge so a partial inline / YAML override for one
         # language doesn't wipe shared defaults for other params in that same
         # language. ``dict.update`` would replace the whole inner dict.
+        param_set = set(params)
         for lang, lang_params in custom_param_translation.items():
-            self._custom_param_translation.setdefault(lang, {}).update(lang_params)
+            for param, value in lang_params.items():
+                if param not in param_set:
+                    continue  # drop stale entries that don't match __init__
+                self._custom_param_translation.setdefault(lang, {})[param] = value
         self._custom_param_translation = extract_urls(self._custom_param_translation)
 
         # sort alphabetically
@@ -244,7 +248,10 @@ class SourceInfo:
 
         # Per-key (deep) merge — see PARAM_TRANSLATIONS comment above.
         for lang, lang_params in custom_param_description.items():
-            self._custom_param_description.setdefault(lang, {}).update(lang_params)
+            for param, value in lang_params.items():
+                if param not in param_set:
+                    continue
+                self._custom_param_description.setdefault(lang, {})[param] = value
         self._custom_param_description = extract_urls(self._custom_param_description)
         self._url_placeholders = url_placeholders
 

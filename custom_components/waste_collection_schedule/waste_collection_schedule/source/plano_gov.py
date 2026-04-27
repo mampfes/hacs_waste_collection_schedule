@@ -51,30 +51,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "en": "Use [The Plano interactive waste map](https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler"
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "objectId": "A valid object ID from the Plano GIS service. You can find this by searching for your address on the Plano GIS map and clicking on the address to get the object ID.",
-    }
-}
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "objectId": "Object ID",
-        "daysToGenerate": "Number of days to generate for default collection (default: 3)",
-    },
-    "de": {
-        "objectId": "Objekt-ID",
-        "daysToGenerate": "Anzahl der Tage, die für die Standardkollektion generiert werden sollen (Standard: 3)",
-    },
-    "it": {
-        "objectId": "ID oggetto",
-        "daysToGenerate": "Numero di giorni da generare per la collezione predefinita (predefinito: 3)",
-    },
-    "fr": {
-        "objectId": "ID d'objet",
-        "daysToGenerate": "Nombre de jours à générer pour la collection par défaut (par défaut : 3)",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

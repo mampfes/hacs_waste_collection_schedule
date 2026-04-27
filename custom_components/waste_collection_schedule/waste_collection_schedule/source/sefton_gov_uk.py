@@ -42,14 +42,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "e.g. if your streetname is 'Liverpool Road' and the select box has an option of '1A Liverpool Road' enter '1A' as your _House Name or Number_."
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "house_number_or_name": "House name or number",
-        "streetname": "Street name",
-        "postcode": "Postcode",
-    }
-}
-
 
 # ### End of arguments affecting the configuration GUI ####
 

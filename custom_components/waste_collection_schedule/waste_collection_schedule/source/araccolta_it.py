@@ -18,11 +18,6 @@ TEST_CASES = {
 }
 
 
-PARAM_TRANSLATIONS = {
-    "en": {"district": "District", "domestic": "Domestic"},
-    "it": {"district": "Quartiere", "domestic": "Utenze domestiche"},
-}
-
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Visit [https://araccolta.it/#calendario](https://araccolta.it/#calendario) and select your district (Quartiere) write the argument exactly like in the URL after clicking on your district.",
     "it": "Visita [https://araccolta.it/#calendario](https://araccolta.it/#calendario) e seleziona il tuo quartiere, scrivi l'argomento esattamente come nell'URL dopo aver cliccato sul tuo quartiere.",
@@ -35,7 +30,6 @@ ICON_MAP = {
     "Vetro": "mdi:bottle-wine",
     "Plastica e metalli": "mdi:bottle-soda-classic",
 }
-
 
 ITALIAN_WEEKDAYS = [
     "lunedì",

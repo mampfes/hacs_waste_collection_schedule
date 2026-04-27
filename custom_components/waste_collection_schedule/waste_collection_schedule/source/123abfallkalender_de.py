@@ -151,17 +151,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "de": "Wählen Sie Ihren Ortsteil aus der Liste.",
 }
 
-PARAM_DESCRIPTIONS = {"en": {"district": "District"}, "de": {"district": "Ortsteil"}}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "district": "District",
-    },
-    "de": {
-        "district": "Ortsteil",
-    },
-}
-
 
 class Source:
     def __init__(self, district: str):

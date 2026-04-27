@@ -29,19 +29,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     ),
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street_number": "Street Number",
-        "street_name": "Street Name",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_number": "Your house/street number",
-        "street_name": "Street name with abbreviated suffix (e.g. 'Quance St')",
-    },
-}
 
 FORM_URL = "https://sites.barrie.ca/barrieforms/Collection.aspx"
 EVENTS_URL = "https://sites.barrie.ca/barrieforms/Scripts/collection_events.json"

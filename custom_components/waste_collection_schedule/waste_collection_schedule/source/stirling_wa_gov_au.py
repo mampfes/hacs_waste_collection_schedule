@@ -23,21 +23,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "or provide latitude and longitude coordinates.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '100 Cedric Street, Stirling, WA, Australia')",
-        "lat": "Latitude (optional if address is provided)",
-        "lon": "Longitude (optional if address is provided)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-        "lat": "Latitude",
-        "lon": "Longitude",
-    },
-}
 
 ICON_MAP = {
     "red": "mdi:trash-can",

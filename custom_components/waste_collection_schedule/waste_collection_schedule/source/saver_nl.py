@@ -34,21 +34,6 @@ ICON_MAP = {
     "Snoeiafval": "mdi:tree",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Dutch postal code (4 digits + 2 letters), e.g. 4702AA",
-        "huisnummer": "House number",
-        "toevoeging": "House letter or addition (only required when more than one address shares the postcode/huisnummer)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postal code",
-        "huisnummer": "House number",
-        "toevoeging": "Addition",
-    },
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (

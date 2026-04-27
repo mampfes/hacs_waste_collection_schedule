@@ -17,26 +17,16 @@ TEST_CASES = {
     },
 }
 
-
 ICON_MAP = {
     "Graue tonne": "mdi:trash-can",
     "Gelber sack": "mdi:recycle",
     "Gelbe tonne" "Tannenbaum": "mdi:pine-tree",
 }
 
-
 API_URL = "https://kalender.beg-logistics.de/schedules/public"
 API_URL2 = "https://kalender.beg-logistics.de/sessions"
 STREETS_SEARCH_URL = "https://kalender.beg-logistics.de/auto_complete/streets.json"
 STREET_UPDATE_URL = "https://kalender.beg-logistics.de/auto_complete/update_street.js"
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
-        "hnr": "Hausnummer",
-        "two_weeks": "14-tägliche Abfuhr",
-    }
-}
 
 
 class Source:

@@ -34,16 +34,6 @@ DAYS = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "An easy way to discover your parcel_number is by going to https://geohub-mundaring.hub.arcgis.com/, and use the Property Map to search for your address ensuring both Lot Numbers and House Number checkboxes are ticked. The pop-up that appears contains an entry that shows your parcel number.",
 }
-PARAM_TRANSLATIONS = {
-    "en": {
-        "parcel_number": "A number that uniquely identifies your property.",
-    }
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "parcel_number": "An easy way to discover your parcel_number is by going to https://geohub-mundaring.hub.arcgis.com/, and use the Property Map to search for your address ensuring both Lot Numbers and House Number checkboxes are ticked. The pop-up that appears contains an entry that shows your parcel number.",
-    }
-}
 
 
 class Source:

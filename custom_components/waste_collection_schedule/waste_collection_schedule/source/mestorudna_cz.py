@@ -47,17 +47,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Choose your service area from the published map https://www.rudnamesto.cz/odpadovy-kalendar/d-193572",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city_part": "Select whether waste is collected on even or odd weeks.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "city_part": "Service area",
-    },
-}
 
 CONFIG_FLOW_TYPES = {
     "city_part": {

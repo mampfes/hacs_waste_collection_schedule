@@ -29,12 +29,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "en": "You can find your collection round by visiting https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details.",
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "collection_round": "Collection round identifier (e.g. Tuesday A). You can find yours by going to https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day and entering in your address details.",
-    },
-}
-
 
 class Source:
     def __init__(self, collection_round):

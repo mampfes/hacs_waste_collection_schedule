@@ -44,15 +44,6 @@ MUNICIPAL_CHOICES = {
     "Techelsberg": "20435",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "address_id": "Adressen ID",
-        "municipal": "Gemeinde",
-        "address": "Adresse",
-        "street": "Straße",
-    }
-}
-
 
 class Source:
     def __init__(

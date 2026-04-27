@@ -37,15 +37,6 @@ ICON_MAP = {
 }
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "village": "Ort",
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    }
-}
-
-
 class Source:
     def __init__(self, village: str, street: str, house_number: str | int):
         self._village = village

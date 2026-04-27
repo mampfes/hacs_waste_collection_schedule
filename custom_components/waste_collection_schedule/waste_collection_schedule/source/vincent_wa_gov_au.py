@@ -23,17 +23,6 @@ ICON_MAP = {
     "FOGO": "mdi:leaf",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address within the City of Vincent (e.g. '8 Kadina St, North Perth WA 6006')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 WFS_BASE_URL = "https://mapping.vincent.wa.gov.au/pozi/qgisserver"
 WFS_MAP_PATH = "C:/Pozi/Waste.qgs"

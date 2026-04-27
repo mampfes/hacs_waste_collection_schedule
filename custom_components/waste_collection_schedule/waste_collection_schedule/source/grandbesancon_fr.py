@@ -56,32 +56,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "fr": "Trouvez le code INSEE de votre commune sur https://www.insee.fr. Entrez le nom de votre rue tel qu'affiché sur le calendrier des déchets de Grand Besançon à https://data.grandbesancon.fr/opendata/dataset/joursDeCollecteDechets.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "insee_code": "5-digit INSEE code of your commune (e.g. 25014 for Amagney, 25056 for Besançon)",
-        "street": "Street name as shown in the Grand Besançon system",
-        "house_number": "House number (optional, helps filter results)",
-    },
-    "fr": {
-        "insee_code": "Code INSEE à 5 chiffres de votre commune (ex : 25014 pour Amagney, 25056 pour Besançon)",
-        "street": "Nom de la rue tel qu'affiché dans le système Grand Besançon",
-        "house_number": "Numéro de rue (optionnel, aide à filtrer les résultats)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "insee_code": "INSEE Code",
-        "street": "Street",
-        "house_number": "House Number",
-    },
-    "fr": {
-        "insee_code": "Code INSEE",
-        "street": "Rue",
-        "house_number": "Numéro",
-    },
-}
-
 
 class Source:
     def __init__(

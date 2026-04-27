@@ -23,17 +23,6 @@ ICON_MAP = {
     "Compostables": "mdi:leaf",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. '16795 Northville Rd')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 FEATURE_URL = "https://services.arcgis.com/eKu0BIfy09ymzWZF/arcgis/rest/services/Day_change_TrashCollection/FeatureServer/0"
 

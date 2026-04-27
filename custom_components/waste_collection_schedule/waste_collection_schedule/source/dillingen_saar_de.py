@@ -33,12 +33,6 @@ ICON_MAP = {
     "Gelbesäcke Abholung": "mdi:recycle",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
-    }
-}
-
 
 class Source:
     def __init__(self, street: str):

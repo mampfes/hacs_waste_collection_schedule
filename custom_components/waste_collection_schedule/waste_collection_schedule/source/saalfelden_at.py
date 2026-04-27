@@ -31,27 +31,6 @@ ICON_MAP = {
     "Problemstoff": "mdi:bottle-tonic-skull",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "strasse": "Street name as listed in the Saalfelden waste calendar.",
-        "hausnummer": "House number as listed in the Saalfelden waste calendar.",
-    },
-    "de": {
-        "strasse": "Straßenname wie im Saalfeldener Abfallkalender aufgelistet.",
-        "hausnummer": "Hausnummer wie im Saalfeldener Abfallkalender aufgelistet.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "strasse": "Street",
-        "hausnummer": "House number",
-    },
-    "de": {
-        "strasse": "Straße",
-        "hausnummer": "Hausnummer",
-    },
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (

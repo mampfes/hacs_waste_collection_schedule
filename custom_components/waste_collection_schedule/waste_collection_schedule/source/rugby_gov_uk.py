@@ -12,16 +12,6 @@ TEST_CASES = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
 }
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
 ICON_MAP = {
     "recycl": "mdi:recycle",
     "rubbish": "mdi:trash-can",

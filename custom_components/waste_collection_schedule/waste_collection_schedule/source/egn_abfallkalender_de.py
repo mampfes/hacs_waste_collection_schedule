@@ -46,15 +46,6 @@ ICON_MAP = {
     "Bio": "mdi:leaf",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "district": "Ortsteil",
-        "street": "Straße",
-        "housenumber": "Hausnummer",
-    }
-}
-
 
 class Source:
     def __init__(self, city, district, street, housenumber):

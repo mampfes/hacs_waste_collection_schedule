@@ -34,12 +34,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     )
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_address": "Your complete street address without city/state (e.g. '22472 Denker Ave')"
-    }
-}
-
 
 class Source:
     def __init__(self, street_address: str):

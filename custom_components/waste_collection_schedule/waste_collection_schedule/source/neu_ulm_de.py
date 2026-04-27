@@ -22,14 +22,7 @@ ICON_MAP = {
     "Wertstoffhof geschlossen": "mdi:factory",
 }
 
-
 HOST_URI = "https://nu.neu-ulm.de"
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "region": "Bezirk",
-    }
-}
 
 
 class Source:

@@ -40,18 +40,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Search at https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street name and number (e.g. 'Storgatan 1')",
-    },
-}
-
 
 class Source:
     def __init__(self, address: str):

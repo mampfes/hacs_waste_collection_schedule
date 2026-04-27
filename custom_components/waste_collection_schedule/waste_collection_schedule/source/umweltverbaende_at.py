@@ -214,33 +214,6 @@ EXTRA_INFO: list[E_I_TYPE] = [
     },
 ]
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "district": "Gebiet/Service provider id",
-        "municipal": "Gemeinde",
-        "town": "Ort",
-        "plz": "Postleitzahl",
-        "street": "Straße",
-        "hnr": "Hausnummer",
-        "zusatz": "Zusatz",
-        "calendar": "Kalender",
-        "calendar_title_separator": "Kalendertitel Separator",
-        "calendar_splitter": "Kalendereintrag-Trenner",
-    },
-    "en": {
-        "district": "District/Service provider id",
-        "municipal": "Municipal",
-        "town": "Town",
-        "plz": "Postal code",
-        "street": "Street",
-        "hnr": "House number",
-        "zusatz": "Addition",
-        "calendar": "Calendar",
-        "calendar_title_separator": "Calendar title separator",
-        "calendar_splitter": "Calendar entry splitter",
-    },
-}
-
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "There are two kinds of websites supported: The old one: Light blue header with green buttons. And a new one Dark blue header with only Blue accent elements. Follow the descriptions of the attributes according to your website type.",
     "de": "Es werden zwei Arten von Websites unterstützt: Die alte: Hellblaue Kopfzeile mit grünen Schaltflächen. Und eine neue: Dunkelblaue Kopfzeile mit nur blauen Akzentelementen. Befolgen Sie die Beschreibungen der Attribute entsprechend Ihrem Website-Typ.",
@@ -278,7 +251,6 @@ PARAM_DESCRIPTIONS = {
         "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
     },
 }
-
 
 TEST_CASES = {
     # "Bruck/Leitha": {"district": "bruck", "municipal": "Berg"}, # Not supported anymore as they only provide a PDFs now
@@ -376,15 +348,6 @@ ICON_MAP = {
     "LVP": "mdi:package-variant",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "district": "Gebiet",
-        "municipal": "Gemeinde",
-        "calendar": "Kalender",
-        "calendar_title_separator": "Kalendertitel Separator",
-        "calendar_splitter": "Kalendereintrag-Trenner",
-    }
-}
 
 POSSIBLE_COLLECTION_PATHS = (
     "abholtermine-preview/",  # Hollabrunn

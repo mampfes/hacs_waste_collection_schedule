@@ -27,20 +27,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "it": "Selezionate la vostra località dalla lista.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "locality": "Village",
-    },
-    "de": {
-        "locality": "Ortschaft",
-    },
-    "fr": {
-        "locality": "Localité",
-    },
-    "it": {
-        "locality": "Località",
-    },
-}
 
 TEST_CASES = {
     "Aetingen": {"locality": "Aetingen"},

@@ -32,15 +32,6 @@ ICON_MAP = {
     "Weihnachtsbaum": "mdi:pine-tree",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-        "house_number": "Hausnummer",
-        "house_number_addition": "Hausnummerzusatz",
-    },
-}
-
 
 class Source:
     def __init__(

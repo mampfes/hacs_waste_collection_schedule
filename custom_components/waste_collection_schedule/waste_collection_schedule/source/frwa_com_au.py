@@ -61,20 +61,6 @@ EXTRA_INFO = [
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
     "en": "Visit https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads and search for your street. Use the name/number, street name and district name as they appear when your collection schedule in being displayed.",
 }
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
-        "street": "The street name of the property, as displayed on the FRWA web site.",
-        "district": "The district name of the property, as displayed on the FRWA web site.",
-    },
-}
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
-        "street": "The street name of the property, as displayed on the FRWA web site.",
-        "district": "The district name of the property, as displayed on the FRWA web site.",
-    },
-}
 
 
 class Source:

@@ -34,20 +34,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Find your UPRN and postcode from your council documents or invoices.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (required)",
-        "postcode": "Postcode of the property (required)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "UPRN",
-        "postcode": "Postcode",
-    },
-}
-
 
 class Source:
     def __init__(self, uprn: str, postcode: str):

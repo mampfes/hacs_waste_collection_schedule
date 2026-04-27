@@ -114,47 +114,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "it": "Apri l'app Lipizzanerheimat, accedi o usa la modalità ospite, seleziona la tua città, vai alla vista del calendario dei rifiuti e seleziona la strada per cui desideri ottenere le date di raccolta dei rifiuti. Puoi fornire il nome del calendario nella parte inferiore centrale, il nome della strada e la città come scritto nel menu a discesa oppure fornire direttamente l'ID garbage_calendar_id.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
-        "street": "The street name to get garbage collection dates for.",
-        "town": "The town corresponding to the selected street.",
-        "map_name": "The name of the calendar map displayed in the app.",
-    },
-    "de": {
-        "garbage_calendar_id": "Die ID des Müllkalenders, für den Daten abgerufen werden sollen.",
-        "street": "Der Straßenname, für den die Müllabfuhrtermine abgerufen werden sollen.",
-        "town": "Die Stadt, die zur ausgewählten Straße gehört.",
-        "map_name": "Der Name der Kalenderkarte, die in der App angezeigt wird.",
-    },
-    "it": {
-        "garbage_calendar_id": "L'ID del calendario dei rifiuti da cui recuperare i dati.",
-        "street": "Il nome della strada per ottenere le date di raccolta dei rifiuti.",
-        "town": "La città corrispondente alla strada selezionata.",
-        "map_name": "Il nome della mappa del calendario mostrata nell'app.",
-    },
-}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "garbage_calendar_id": "Garbage Calendar ID",
-        "street": "Street Name",
-        "town": "Town",
-        "map_name": "Calendar Map Name",
-    },
-    "de": {
-        "garbage_calendar_id": "Müllkalender-ID",
-        "street": "Straßenname",
-        "town": "Stadt",
-        "map_name": "Kalenderkartenname",
-    },
-    "it": {
-        "garbage_calendar_id": "ID Calendario Rifiuti",
-        "street": "Nome della Strada",
-        "town": "Città",
-        "map_name": "Nome della Mappa del Calendario",
-    },
-}
 ICON_MAP = {
     "Müll": "mdi:trash-can",
     "Restmüll": "mdi:trash-can",
@@ -347,7 +307,10 @@ class Source:
         ).json()["data"]
 
         if len(data) == 0:
-            raise SourceArgumentExceptionMultiple(["garbage_calendar_id", "street", "town", "map_name"], "No data found for the provided arguments.")
+            raise SourceArgumentExceptionMultiple(
+                ["garbage_calendar_id", "street", "town", "map_name"],
+                "No data found for the provided arguments.",
+            )
 
         self.icons = {
             label["garbage_label_id"]: label["garbage_label_title"]

@@ -68,47 +68,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     ),
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "gemeinde": "Municipality name as shown in Gemeinde24.",
-        "strasse": "Street/local area name as shown in Gemeinde24.",
-        "gemeinde_id": (
-            "Numeric GemeindeID from Gemeinde24 "
-            "(optional alternative to the municipality field)."
-        ),
-        "street_id": (
-            "Numeric streetID from Gemeinde24 "
-            "(optional alternative to the street field)."
-        ),
-    },
-    "de": {
-        "gemeinde": "Gemeindename wie in Gemeinde24 angezeigt.",
-        "strasse": "Strassen-/Ortsteilname wie in Gemeinde24 angezeigt.",
-        "gemeinde_id": (
-            "Numerische GemeindeID aus Gemeinde24 "
-            "(optional statt des Gemeinde-Feldes)."
-        ),
-        "street_id": (
-            "Numerische streetID aus Gemeinde24 " "(optional statt des Straßen-Feldes)."
-        ),
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "gemeinde": "Municipality",
-        "strasse": "Street",
-        "gemeinde_id": "Municipality ID",
-        "street_id": "Street ID",
-    },
-    "de": {
-        "gemeinde": "Gemeinde",
-        "strasse": "Strasse",
-        "gemeinde_id": "Gemeinde ID",
-        "street_id": "Strassen ID",
-    },
-}
-
 
 class Source:
     def __init__(

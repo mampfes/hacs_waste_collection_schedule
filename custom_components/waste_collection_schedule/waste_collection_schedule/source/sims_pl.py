@@ -22,7 +22,6 @@ TEST_CASES = {
     },
 }
 
-
 ICON_MAP = {
     "Trash": "mdi:trash-can",
     "Glass": "mdi:bottle-soda",
@@ -30,7 +29,6 @@ ICON_MAP = {
     "Paper": "mdi:package-variant",
     "Recycle": "mdi:recycle",
 }
-
 
 API_URL_LIST = "https://gateway.sisms.pl/akun/api/owners/{owner_id}/{key}/list"
 API_URL_GET = "https://gateway.sisms.pl/akun/api/owners/{owner_id}/{key}/get"
@@ -227,15 +225,6 @@ PARAM_TRANSLATION = {
         "owner_id": "ownerId",
         "street_address": "Street House Number (Numer domu)",
         "town_address": "Town House Number (Numer domu)",
-    }
-}
-
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "owner_id": "Owner of the waste collection service You can see the owner id in the url requested by the search page",
-        "street_address": "House number of the street if street is set",
-        "town_address": "House number of the town if street is not set",
     }
 }
 

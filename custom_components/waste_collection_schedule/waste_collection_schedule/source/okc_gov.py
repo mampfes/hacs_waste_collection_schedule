@@ -44,15 +44,6 @@ ICON_MAP = {
     "BULKY": "mdi:sofa",
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "objectID": "Object ID for unofficial source (okc.schizo.dev).",
-        "try_official": "If checked, use official data.okc.gov zone datasets and the three Object IDs below.",
-        "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
-        "recycleObjectID": "Object ID from 'Recycle Zones'.",
-        "trashObjectID": "Object ID from 'Trash Zones'.",
-    },
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Using your browser, go to https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map and search for your address. "

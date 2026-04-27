@@ -50,18 +50,6 @@ NORWEGIAN_MONTHS = {
     "desember": 12,
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Address slug as it appears in the URL, e.g. 'blåbærlia-16' or 'storgata-1'",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address",
-    },
-}
-
 
 class Source:
     def __init__(self, address: str):

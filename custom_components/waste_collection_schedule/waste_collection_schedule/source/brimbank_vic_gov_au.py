@@ -20,19 +20,6 @@ TEST_CASES = {
     "Wednesday A": {"day": "Wednesday", "calendar": "A"},
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "day": "Your collection day (Monday to Friday). Check the map on the back of the waste calendar PDF.",
-        "calendar": "Your calendar cycle (A or B). Check the map on the back of the waste calendar PDF.",
-    }
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "day": "Collection day",
-        "calendar": "Calendar cycle",
-    }
-}
 
 ICON_MAP = {
     "General Waste": "mdi:trash-can",

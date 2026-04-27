@@ -31,19 +31,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     ),
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "url": "Direct URL to the XLSX file with dates",
-        "file": "Path to a local XLSX file with dates (needs to be uploaded manually into HA)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "url": "Direct XLSX URL",
-        "file": "Local XLSX file",
-    },
-}
 
 ICON_MAP = {
     "PAPIR": "mdi:newspaper-variant",

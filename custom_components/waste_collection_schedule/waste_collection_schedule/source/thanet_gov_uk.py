@@ -33,14 +33,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "UPRNs should work all of the time, Postcodes and Street Addresses will work if a match can be found."
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-        "street_address": "House name OR Number and Street name",
-        "postcode": "Postcode",
-    }
-}
-
 
 class Source:
     def __init__(self, uprn=None, postcode=None, street_address=None):

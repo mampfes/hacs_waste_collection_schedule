@@ -20,7 +20,6 @@ TEST_CASES = {
     },
 }
 
-
 ICON_MAP = {
     "Bioabfall": "mdi:leaf",
     "Hausmüll": "mdi:trash-can",
@@ -30,17 +29,8 @@ ICON_MAP = {
     "Altstoffsammelzentrum": "mdi:factory",
 }
 
-
 API_URL = "https://www.gojer.at/service/abfuhrkalender.html"
 CITY_URL = "https://www.gojer.at/ortausgemeinde.html"
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "municipality": "Gemeinde",
-        "city": "Ort",
-    }
-}
 
 
 def cmp(a: str, b: str) -> bool:

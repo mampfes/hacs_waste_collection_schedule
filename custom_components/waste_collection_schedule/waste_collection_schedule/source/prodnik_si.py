@@ -19,12 +19,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": 'Go to "https://e.prodnik.si/Registracija" to register.'
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "customer_number": "Your customer number written on the bill.",
-        "password": "Your password created during the registration.",
-    }
-}
 
 ICON_MAP = {
     "m": "mdi:trash-can",
@@ -39,7 +33,6 @@ BIN_TYPES = {
     "e": "Embalaza",
     "k": "Kosovni",
 }
-
 
 LOGIN_URL = "https://e.prodnik.si/Prijava"
 BASE_URL = "https://e.prodnik.si/Domov"
@@ -74,7 +67,9 @@ class Source:
         r = s.post(LOGIN_URL, data=data)
         r.raise_for_status()
         if "Uporabniško ime oz. geslo ni pravilno." in r.text:
-            raise SourceArgumentExceptionMultiple(["customer_number", "password"], "Login failed: invalid credentials")
+            raise SourceArgumentExceptionMultiple(
+                ["customer_number", "password"], "Login failed: invalid credentials"
+            )
 
         r = s.get(BASE_URL)
         r.raise_for_status()

@@ -52,17 +52,6 @@ DEFAULT_INTERVAL_DAYS = 7
 
 # ### Arguments affecting the configuration GUI ####
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "point_id": "Optional waste point ID to filter by",
-    },
-}
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "point_id": "Point ID",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

@@ -25,17 +25,6 @@ ICON_MAP = {
     "Green Waste": "mdi:leaf",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address within the City of Newcastle (e.g. '1 King Street, Newcastle NSW 2300')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 FEATURE_URL = "https://services-ap1.arcgis.com/CNeUPE1voVc22gNk/arcgis/rest/services/WasteCollectionDay/FeatureServer/0"
 

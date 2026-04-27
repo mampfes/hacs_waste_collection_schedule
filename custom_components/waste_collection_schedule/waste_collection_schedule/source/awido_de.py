@@ -463,16 +463,6 @@ class JSONNotSupported(Exception):
     pass
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "customer": "Kunde",
-        "city": "Ort",
-        "street": "Straße",
-        "housenumber": "Hausnummer",
-    }
-}
-
-
 class Source:
     def __init__(
         self,

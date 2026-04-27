@@ -37,19 +37,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter your postcode and house number or name. You can verify your address at https://myproperty.molevalley.gov.uk/molevalley/",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "house_number": "House Number or Name",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Your property's postcode, e.g. KT22 9BG",
-        "house_number": "Your house number or name, e.g. 17 or Rose Cottage",
-    },
-}
 
 ICON_MAP = {
     "Refuse (black bin)": "mdi:trash-can",

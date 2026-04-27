@@ -37,12 +37,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter your street name as shown on the Värmdö kommun waste collection page.",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street_address": "Street Address",
-    },
-}
-
 
 class Source:
     def __init__(self, street_address: str):

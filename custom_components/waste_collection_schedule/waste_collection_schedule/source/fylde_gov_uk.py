@@ -39,21 +39,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Register at https://waste.fylde.gov.uk/ and add your property to your account using your UPRN.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "email": "Email address for waste portal account",
-        "password": "Password for waste portal account",
-        "uprn": "Property UPRN (optional, only needed if you have multiple properties registered)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "email": "Email Address",
-        "password": "Password",
-        "uprn": "UPRN (Optional)",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

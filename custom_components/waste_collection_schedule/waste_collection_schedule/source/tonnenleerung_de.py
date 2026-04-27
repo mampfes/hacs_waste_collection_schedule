@@ -20,7 +20,6 @@ TEST_CASES = {
     },
 }
 
-
 ICON_MAP = {
     "grau4": "mdi:trash-can",
     "grau": "mdi:trash-can",
@@ -28,7 +27,6 @@ ICON_MAP = {
     "blau": "mdi:package-variant",
     "gelb": "mdi:recycle",
 }
-
 
 API_URL = "https://tonnenleerung.de/{url}"
 
@@ -39,12 +37,6 @@ JSON_KEY_TO_TYPE = {
     "braun": "Bio",
     "grau": "grau",
     "grau4": "grau4",
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "url": "URL",
-    }
 }
 
 

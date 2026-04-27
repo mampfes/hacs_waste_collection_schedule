@@ -18,14 +18,6 @@ TEST_CASES = {
 SERVICE_URL = "https://kundenportal.berlin-recycling.de/"
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "username": "Benutzername",
-        "password": "Passwort",
-    }
-}
-
-
 class Source:
     def __init__(self, username, password):
         self._username = username
@@ -84,7 +76,9 @@ class Source:
 
         entries = []
         if "Object" not in data or "data" not in data["Object"]:
-            raise SourceArgumentExceptionMultiple(["username", "password"], "No data found")
+            raise SourceArgumentExceptionMultiple(
+                ["username", "password"], "No data found"
+            )
 
         for d in data["Object"]["data"]:
             date = datetime.strptime(d["Task Date"], "%Y-%m-%d").date()

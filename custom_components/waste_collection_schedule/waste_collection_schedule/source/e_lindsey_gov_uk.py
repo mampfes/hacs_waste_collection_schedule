@@ -18,8 +18,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Find your UPRN using a tool like findmyaddress.co.uk or finders.io."
 }
 
-PARAM_DESCRIPTIONS = {"en": {"uprn": "Unique Property Reference Number (UPRN)"}}
-PARAM_TRANSLATIONS = {"en": {"uprn": "UPRN"}}
 
 ICON_MAP = {
     "Refuse": "mdi:trash-can",

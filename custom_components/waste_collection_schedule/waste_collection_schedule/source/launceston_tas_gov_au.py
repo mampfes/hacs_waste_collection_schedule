@@ -25,17 +25,6 @@ ICON_MAP = {
     "Hard Waste": "mdi:sofa",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. '40 Southgate Dr, Kings Meadows, TAS')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 WASTE_URL = "https://services.arcgis.com/yeXpdyjk3azbqItW/arcgis/rest/services/Waste/FeatureServer/0"
 

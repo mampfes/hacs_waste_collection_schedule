@@ -23,16 +23,6 @@ ICON_MAP = {
     "General Waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
 }
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '156 Lansdowne Road KENSINGTON')",
-    },
-}
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://cosp.spatial.t1cloud.com",
     instance="spatial/intramaps",

@@ -1,7 +1,6 @@
 import datetime
 
 import requests
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
@@ -24,35 +23,6 @@ ICON_MAP = {
     "Domestic Garden Collection Service": "mdi:leaf",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Property UPRN (Unique Property Reference Number)",
-    },
-    "de": {
-        "uprn": "UPRN der Immobilie",
-    },
-    "it": {
-        "uprn": "UPRN della proprietà",
-    },
-    "fr": {
-        "uprn": "UPRN du bien",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Find your UPRN at https://www.findmyaddress.co.uk/",
-    },
-    "de": {
-        "uprn": "Finden Sie Ihre UPRN unter https://www.findmyaddress.co.uk/",
-    },
-    "it": {
-        "uprn": "Trova il tuo UPRN su https://www.findmyaddress.co.uk/",
-    },
-    "fr": {
-        "uprn": "Trouvez votre UPRN sur https://www.findmyaddress.co.uk/",
-    },
-}
 
 # Strict allowlist of valid waste collection services
 ALLOWED_SERVICES = set(ICON_MAP.keys())

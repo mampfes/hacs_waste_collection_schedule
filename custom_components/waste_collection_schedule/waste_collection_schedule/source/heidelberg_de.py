@@ -14,27 +14,6 @@ TITLE = "Heidelberg"
 DESCRIPTION = "Support for the waste collection schedule provided by the Office of Waste Management and Municipal Cleansing Heidelberg"
 URL = "https://www.heidelberg.de/abfall"
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street",
-        "collect_residual_waste_weekly": "Weekly residual waste collection",
-        "even_house_number": "House number to collect from is even",
-    },
-    "de": {
-        "street": "Straße",
-        "collect_residual_waste_weekly": "Wöchentliche Abholung des Restmülls",
-        "even_house_number": "Hausnummer der Abholadresse ist gerade",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "The street you want to get the waste collection schedule for.",
-    },
-    "de": {
-        "street": "Die Straße, für die ein Abfallkalender angelegt werden soll.",
-    },
-}
 
 TEST_CASES = {
     "Typical street": {"street": "Alte Bergheimer Straße"},

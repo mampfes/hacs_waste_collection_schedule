@@ -30,19 +30,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "fr": "Entrez votre adresse complète avec le nom de la commune (ex : '1 place Roger Salengro, Oullins').",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Your street address with city",
-    },
-    "fr": {
-        "address": "Votre adresse postale avec la commune",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"address": "Address"},
-    "fr": {"address": "Adresse"},
-}
 
 BAN_GEOCODE_URL = "https://api-adresse.data.gouv.fr/search/"
 PHOTON_GEOCODE_URL = "https://download.data.grandlyon.com/geocoding/photon-bal/api"

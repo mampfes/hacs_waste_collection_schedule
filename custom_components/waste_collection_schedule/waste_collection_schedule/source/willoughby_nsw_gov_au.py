@@ -31,17 +31,6 @@ ICON_MAP = {
     "Street Sweeping": "mdi:broom",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address, for example: 18 Crabbes Avenue, North Willoughby, NSW 2068",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street address",
-    },
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Visit the Willoughby City Council waste service dates page, search for your address, and use the address text as shown by the lookup.",

@@ -20,11 +20,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
         "https://www.findmyaddress.co.uk/."
     )
 }
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN) for your address.",
-    }
-}
 
 BASE_URL = "https://spelthorne-self.achieveservice.com"
 SERVICE_URL = f"{BASE_URL}/service/Waste_Collections"

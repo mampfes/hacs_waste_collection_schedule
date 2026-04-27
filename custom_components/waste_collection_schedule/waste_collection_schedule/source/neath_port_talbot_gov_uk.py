@@ -13,25 +13,8 @@ TITLE = "Neath Port Talbot Council"
 DESCRIPTION = "Source for waste collection services for Neath Port Talbot Council"
 URL = "https://www.npt.gov.uk/"
 
-
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
-
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
-
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "The postcode of the address to look up (e.g., SA11 1AB).",
-        "uprn": "Your Unique Street Reference Number (USRN) can be found by searching for your address at https://uprn.uk/ and viewing the _Data Associations_ section.",
-    }
 }
 
 
@@ -49,7 +32,6 @@ TEST_CASES = {
         "uprn": "100100600279",
     },
 }
-
 
 ICON_MAP = {
     "Plastic / Tins / Cans": "mdi:bottle-soda",

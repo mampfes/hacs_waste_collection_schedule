@@ -26,12 +26,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "en": "To get your LOCATION_ID go to https://waste-collection.sciana.pro and search for your address.",
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "location_id": "Unique location id (LOCATION_ID)",
-    },
-}
-
 
 class Source:
     def __init__(self, location_id):

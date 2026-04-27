@@ -22,19 +22,6 @@ ICON_MAP = {
     "Garden Waste": "mdi:flower",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {"uprn": "Property UPRN (Unique Property Reference Number)"},
-    "de": {"uprn": "UPRN der Immobilie"},
-    "it": {"uprn": "UPRN della proprietà"},
-    "fr": {"uprn": "UPRN du bien"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {"uprn": "Find your UPRN at https://www.findmyaddress.co.uk/"},
-    "de": {"uprn": "Finden Sie Ihre UPRN unter https://www.findmyaddress.co.uk/"},
-    "it": {"uprn": "Trova il tuo UPRN su https://www.findmyaddress.co.uk/"},
-    "fr": {"uprn": "Trovez votre UPRN sur https://www.findmyaddress.co.uk/"},
-}
 
 ALLOWED_SERVICES = set(ICON_MAP.keys())
 

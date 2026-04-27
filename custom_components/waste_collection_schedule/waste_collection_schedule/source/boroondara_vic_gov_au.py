@@ -25,17 +25,6 @@ ICON_MAP = {
     "Recycling": "mdi:recycle",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address within Boroondara (e.g. '211 Mont Albert Road, Surrey Hills')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 _LOGGER = logging.getLogger(__name__)
 

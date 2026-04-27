@@ -12,7 +12,6 @@ from waste_collection_schedule.service.ICS import ICS
 # This line suppresses the InsecureRequestWarning when using verify=False
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-
 TITLE = "Abfallwirtschaft Neckar-Odenwald-Kreis"
 DESCRIPTION = "Source for AWN (Abfallwirtschaft Neckar-Odenwald-Kreis)."
 URL = "https://www.awn-online.de"
@@ -38,15 +37,6 @@ TEST_CASES = {
 SERVLET = (
     "https://athos.awn-online.de/WasteManagementNeckarOdenwald/WasteManagementServlet"
 )
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-        "house_number": "Hausnummer",
-        "address_suffix": "Hausnummerzusatz",
-    }
-}
 
 
 # Parser for HTML input (hidden) text

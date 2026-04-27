@@ -139,47 +139,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "it": "Inserisci il tuo indirizzo (solo numero civico e nome della via, senza città o codice postale). Trova il codice INSEE aggiornato del tuo comune su https://www.insee.fr/fr/recherche/recherche-geographique — i comuni uniti (communes nouvelles) hanno un nuovo codice. L'instance_id viene precompilato quando selezioni un fornitore noto.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
-        "insee_code": "The 5-digit INSEE code of your commune. Check https://www.insee.fr if your commune has merged (communes nouvelles have a new code).",
-        "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
-        "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type.",
-    },
-    "de": {
-        "address": "Nur Straßenadresse (z.B. '4 rue de Paris'). Keine Stadt oder Postleitzahl angeben.",
-        "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde. Prüfen Sie https://www.insee.fr, ob Ihre Gemeinde fusioniert wurde (neuer Code).",
-        "instance_id": "Wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister wählen. Nur für nicht gelistete Anbieter nötig.",
-        "public_type": "Wohnungstyp-Filter (optional). Verwenden Sie 'individual_housing' für Häuser oder 'collective_housing' für Wohnungen, wenn Ihr Gebiet unterschiedliche Abholpläne je Wohnungstyp hat.",
-    },
-    "it": {
-        "address": "Solo indirizzo stradale (es. '4 rue de Paris'). Non includere città o codice postale.",
-        "insee_code": "Il codice INSEE a 5 cifre del tuo comune. Verifica su https://www.insee.fr se il tuo comune è stato unito (nuovo codice).",
-        "instance_id": "Precompilato quando selezioni un fornitore noto. Necessario solo per fornitori non elencati (trovato tramite ispettore di rete sul widget rifiuti del fornitore).",
-        "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address",
-        "insee_code": "INSEE Code",
-        "instance_id": "Instance ID",
-        "public_type": "Housing Type",
-    },
-    "de": {
-        "address": "Adresse",
-        "insee_code": "INSEE-Code",
-        "instance_id": "Instanz-ID",
-        "public_type": "Wohnungstyp",
-    },
-    "it": {
-        "address": "Indirizzo",
-        "insee_code": "Codice INSEE",
-        "instance_id": "ID Istanza",
-        "public_type": "Tipo Abitazione",
-    },
-}
 
 EXTRA_INFO = [
     {
@@ -619,7 +578,6 @@ class Source:
 
         Return:
             rrule object
-
 
         Handled opening_hours formats:
             "week 2-52/2 Mo 12:00-17:00"

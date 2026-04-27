@@ -22,18 +22,6 @@ ICON_MAP = {
     "Metallförp.": "mdi:nail",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_address": "Street address for waste collection, including city.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street_address": "Street address",
-    },
-}
-
 
 class Source:
     def __init__(self, street_address: str):

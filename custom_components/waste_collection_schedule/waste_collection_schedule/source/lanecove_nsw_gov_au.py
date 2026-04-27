@@ -30,17 +30,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Use the exact address shown in the autocomplete result.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Full street address including suburb and postal code",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 API_URLS = {
     "search": "https://www.lanecove.nsw.gov.au/api/v1/myarea/search",

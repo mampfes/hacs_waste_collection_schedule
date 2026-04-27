@@ -23,14 +23,6 @@ API_URL = "https://www.wuerzburg.de/themen/umwelt-klima/vorsorge-entsorgung/abfa
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "district": "Stadtteil",
-        "street": "Straße",
-    }
-}
-
-
 class Source:
     def __init__(self, district: str | None = None, street: str | None = None):
         self._district = district

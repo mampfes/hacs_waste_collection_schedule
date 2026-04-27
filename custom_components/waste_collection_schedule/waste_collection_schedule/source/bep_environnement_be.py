@@ -30,10 +30,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "en": 'Go to the "https://www.bep-environnement.be" website if you\'re unsure about your locality.',
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {"locality": "Name of the locality"}
-}
-
 
 def GetLocalities() -> dict[str, str]:
     """Return id for each locality available in calendar.

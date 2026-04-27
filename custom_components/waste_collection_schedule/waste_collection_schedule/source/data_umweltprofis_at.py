@@ -23,16 +23,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "de": "Sie müssen zuerst Ihren persönlichen XML-Link generieren, bevor Sie diese Quelle verwenden können. Gehen Sie zu [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) und füllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie einen Link zu einer XML-Datei. Kopieren Sie diesen Link und verwenden Sie ihn als xmlurl-Parameter.",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "url": "URL (Deprecated do not use)",
-        "xmlurl": "XML URL",
-    },
-    "de": {
-        "url": "URL (Veraltet nicht verwenden)",
-        "xmlurl": "XML URL",
-    },
-}
 
 _LOGGER = logging.getLogger(__name__)
 

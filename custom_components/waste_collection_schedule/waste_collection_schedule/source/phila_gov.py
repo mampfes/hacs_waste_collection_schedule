@@ -33,18 +33,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Search for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street name and house number of the property",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street name and house number of the property",
-    },
-}
-
 
 class Source:
     def __init__(self, address: str):

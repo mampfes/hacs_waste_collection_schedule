@@ -77,7 +77,6 @@ TEST_CASES = {
     },
 }
 
-
 ICON_MAP = {
     "hausmüll": "mdi:trash-can",
     "restabfall": "mdi:trash-can",
@@ -152,7 +151,6 @@ EXTRA_INFO = [
     for p in SUPPORTED_PROVIDERS
 ]
 
-
 API_URL = "https://{}.hausmuell.info/"
 
 
@@ -189,24 +187,6 @@ def replace_special_chars_args(d: dict, replace_func=replace_special_chars) -> d
             to_return[k] = replace_func(v)
 
     return to_return
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "subdomain": "Subdomain",
-        "ort": "Ort",
-        "ortsteil": "Ortsteil",
-        "strasse": "Straße",
-        "hausnummer": "Hausnummer",
-    },
-    "en": {
-        "subdomain": "Subdomain",
-        "ort": "City",
-        "ortsteil": "District",
-        "strasse": "Street",
-        "hausnummer": "House number",
-    },
-}
 
 
 class Source:

@@ -32,7 +32,6 @@ TEST_CASES = {
     "Mannheim Location ID": {"municipality": "Mannheim", "location_id": 430650},
 }
 
-
 MUNICIPALITIES = {
     "Hattingen": "BmsAbfallkalenderHattingen",
     "Herne": "BmsAbfallkalenderHerne",
@@ -67,15 +66,6 @@ REGEX_MAP = {
     "Luebeck": r"Leerung:\s+(.*)\s+\(.*\)",
     "Mannheim": r"Leerung:\s+(.*)",
     "Offenbach": r"Leerung:\s+(.*)\s+\(.*\)",
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "municipality": "Ort",
-        "street": "Straße",
-        "hnr": "Hausnummer",
-        "location_id": "Standort ID",
-    }
 }
 
 

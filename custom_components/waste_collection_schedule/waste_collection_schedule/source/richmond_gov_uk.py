@@ -2,7 +2,6 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
@@ -25,22 +24,10 @@ ICON_MAP = {
     "Garden waste": "mdi:leaf",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {"uprn": "Property UPRN (Unique Property Reference Number)"},
-    "de": {"uprn": "UPRN der Immobilie"},
-    "it": {"uprn": "UPRN della proprietà"},
-    "fr": {"uprn": "UPRN du bien"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {"uprn": "Find your UPRN at https://www.findmyaddress.co.uk/"},
-    "de": {"uprn": "Finden Sie Ihre UPRN unter https://www.findmyaddress.co.uk/"},
-    "it": {"uprn": "Trova il tuo UPRN su https://www.findmyaddress.co.uk/"},
-    "fr": {"uprn": "Trouvez votre UPRN sur https://www.findmyaddress.co.uk/"},
-}
 
 # Strict allowlist of valid waste collection services
 ALLOWED_SERVICES = set(ICON_MAP.keys())
+
 
 class Source:
     def __init__(self, uprn: str):
@@ -64,7 +51,7 @@ class Source:
             raise Exception(f"API request failed: {e}")
 
         soup = BeautifulSoup(response.text, "html.parser")
-        
+
         # Check if the property exists/valid by looking for the waste section
         waste_div = soup.find("div", class_="my-waste")
         if not waste_div:
@@ -76,17 +63,17 @@ class Source:
         # Find all <h4> headers (waste types) inside the waste div
         for h4 in waste_div.find_all("h4"):
             service_name = h4.get_text(strip=True)
-            
+
             if service_name not in ALLOWED_SERVICES:
                 continue
-            
+
             # The date is usually in the next <ul> <li> sibling
             ul_sibling = h4.find_next_sibling("ul")
             if not ul_sibling:
                 continue
 
             li_text = ul_sibling.get_text(strip=True)
-            
+
             # Logic to ignore text-only entries (like missing garden waste contracts)
             if "No collection contract" in li_text:
                 continue
@@ -97,12 +84,12 @@ class Source:
                 date_parts = li_text.split()
                 if len(date_parts) < 3:
                     continue
-                    
+
                 date_str = " ".join(date_parts[-3:])
                 collection_date = datetime.datetime.strptime(
                     date_str, "%d %B %Y"
                 ).date()
-                
+
                 entries.append(
                     Collection(
                         date=collection_date,

@@ -2638,12 +2638,12 @@
           "calendar": "Kalender",
           "calendar_splitter": "Kalendereintrag-Trenner",
           "calendar_title_separator": "Kalendertitel Separator",
-          "district": "Gebiet",
-          "hnr": "Hnr",
+          "district": "Gebiet/Service provider id",
+          "hnr": "Hausnummer",
           "municipal": "Gemeinde",
-          "plz": "PLZ",
+          "plz": "Postleitzahl",
           "street": "Straße",
-          "town": "Stadt"
+          "town": "Ort"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
@@ -2668,12 +2668,12 @@
           "calendar": "Kalender",
           "calendar_splitter": "Kalendereintrag-Trenner",
           "calendar_title_separator": "Kalendertitel Separator",
-          "district": "Gebiet",
-          "hnr": "Hnr",
+          "district": "Gebiet/Service provider id",
+          "hnr": "Hausnummer",
           "municipal": "Gemeinde",
-          "plz": "PLZ",
+          "plz": "Postleitzahl",
           "street": "Straße",
-          "town": "Stadt"
+          "town": "Ort"
         },
         "data_description": {
           "addition": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
@@ -17959,7 +17959,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
         }
       },
       "reconfigure_cannock_chase_dc_gov_uk": {
@@ -17970,7 +17971,9 @@
           "postcode": "PLZ",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+        }
       },
       "args_canterbury_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -18459,7 +18462,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
         }
       },
       "reconfigure_cumberland_gov_uk": {
@@ -18470,7 +18474,9 @@
           "postcode": "PLZ",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+        }
       },
       "args_dacorum_gov_uk": {
         "title": "Quelle konfigurieren",
@@ -23556,7 +23562,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "garden_cutomer": "Garden Cutomer",
+          "garden_customer": "Garden Customer",
           "street": "Straße",
           "town": "Stadt"
         },
@@ -23569,7 +23575,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "garden_cutomer": "Garden Cutomer",
+          "garden_customer": "Garden Customer",
           "street": "Straße",
           "town": "Stadt"
         },

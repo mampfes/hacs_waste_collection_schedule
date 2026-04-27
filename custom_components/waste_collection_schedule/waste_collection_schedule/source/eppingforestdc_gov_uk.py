@@ -19,11 +19,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
         "and searching for your address. Your UPRN can also be found at https://www.findmyaddress.co.uk/."
     )
 }
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN) for your address.",
-    }
-}
 
 BASE_URL = "https://eppingforestdc-self.achieveservice.com"
 SERVICE_URL = f"{BASE_URL}/en/service/Check_your_collection_day"
@@ -70,9 +65,7 @@ class Source:
             {"Address": {"LookupUPRN": {"value": self._uprn}}},
         )
 
-        rows = (
-            result.get("integration", {}).get("transformed", {}).get("rows_data", {})
-        )
+        rows = result.get("integration", {}).get("transformed", {}).get("rows_data", {})
         row = rows.get("0", {})
 
         entries = []

@@ -34,43 +34,6 @@ ICON_MAP = {
     "Weihnachtsbaum": "mdi:pine-tree",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street",
-        "house_number": "House number",
-    },
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    },
-    "it": {
-        "street": "Via",
-        "house_number": "Numero civico",
-    },
-    "fr": {
-        "street": "Rue",
-        "house_number": "Numéro de maison",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Enter the street name. If not found, a dropdown with suggestions will appear.",
-        "house_number": "House number",
-    },
-    "de": {
-        "street": "Straßenname eingeben. Bei ungültiger Eingabe erscheint ein Dropdown mit Vorschlägen.",
-        "house_number": "Hausnummer",
-    },
-    "it": {
-        "street": "Inserire il nome della via. Se non trovata, apparirà un menu a tendina con suggerimenti.",
-        "house_number": "Numero civico",
-    },
-    "fr": {
-        "street": "Entrez le nom de la rue. Si non trouvée, une liste déroulante avec des suggestions apparaîtra.",
-        "house_number": "Numéro de maison",
-    },
-}
 
 BASE_URL = "https://stadtreinigung.giessen.de/akal/akal1.php"
 

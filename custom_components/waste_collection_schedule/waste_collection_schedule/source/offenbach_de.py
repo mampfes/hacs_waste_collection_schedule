@@ -12,12 +12,6 @@ TEST_CASES = {
     "offenbach": {"f_id_location": 7036},  # KaiserStraße 1
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "f_id_location": "Standort ID",
-    },
-}
-
 
 class Source(InsertItSource):
     def __init__(self, f_id_location):

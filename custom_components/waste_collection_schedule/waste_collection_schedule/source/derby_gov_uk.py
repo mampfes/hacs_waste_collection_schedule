@@ -32,21 +32,6 @@ ICON_MAP = {
 _LOGGER = logging.getLogger(__name__)
 
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "premises_id": "premises_id",
-        "post_code": "DEPRECATED: post_code",
-        "house_number": "DEPRECATED: house_number",
-    }
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "post_code": "LEAVE EMPTY is not used anymore.",
-        "house_number": "LEAVE EMPTY is not used anymore.",
-    }
-}
-
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Search your address on <https://secure.derby.gov.uk/binday>. The url will contain your premises ID, e.g. `https://secure.derby.gov.uk/binday/BinDays/10010688168?...` where `10010688168` is the premises ID.",
 }

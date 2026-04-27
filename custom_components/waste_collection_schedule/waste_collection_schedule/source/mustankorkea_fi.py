@@ -37,22 +37,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "then see the last part of the URL after emptying-infos/ for the contract ID."
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "username": "Username for oma.mustankorkea.fi account",
-        "password": "Password for oma.mustankorkea.fi account",
-        "contract_id": "Waste collection contract ID, only required if you have multiple contracts",
-    }
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "username": "",
-        "password": "",
-        "contract_id": "e.g. 30-00012345-00",
-    }
-}
-
 
 class Source:
     REQUEST_TIMEOUT = 10

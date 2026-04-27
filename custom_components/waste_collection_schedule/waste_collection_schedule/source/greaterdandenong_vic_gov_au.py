@@ -48,12 +48,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter your address as it appears on the <a href='https://www.greaterdandenong.vic.gov.au/find-my-bin-day'>Find My Bin Day</a> page.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. 45 Ardgower Road Noble Park)",
-    },
-}
-
 
 class Source:
     def __init__(self, address: str):

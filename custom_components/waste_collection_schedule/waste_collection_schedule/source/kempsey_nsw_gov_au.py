@@ -32,18 +32,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter your full street address as it appears on the Kempsey Shire Council website, e.g. '10-12 Smith Street Kempsey'.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Your full street address including suburb, e.g. '10-12 Smith Street Kempsey'",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Full Street Address",
-    },
-}
-
 
 class Source:
     def __init__(self, address: str):

@@ -31,19 +31,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     ),
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Your postcode, e.g. PR6 7YD.",
-        "uprn": "The UPRN from the address dropdown.",
-    }
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "uprn": "UPRN",
-    }
-}
 
 FORM_URL = "https://forms.chorleysouthribble.gov.uk/xfp/form/71"
 FIELD_PREFIX = "qc576c657112a8277ba6f954ebc0490c946168363"

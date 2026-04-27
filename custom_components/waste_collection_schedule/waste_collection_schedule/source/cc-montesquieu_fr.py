@@ -58,14 +58,6 @@ PARAM_DESCRIPTIONS = {
     },
 }
 
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "commune": "City",
-    },
-    "de": {
-        "commune": "Stadt",
-    },
-}
 # ### End of arguments affecting the configuration GUI ####
 
 

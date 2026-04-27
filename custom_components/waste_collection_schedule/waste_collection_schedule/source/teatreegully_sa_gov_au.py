@@ -25,17 +25,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Search at https://www.teatreegully.sa.gov.au/services/bins-and-waste/bin-collection-days",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. '4 Erica Street, Tea Tree Gully')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 GEOCODE_URL = "https://utility.arcgis.com/usrsvcs/servers/5c770a0bb67f4b8d893e21dccad13b70/rest/services/World/GeocodeServer/findAddressCandidates"
 ZONE_URL = "https://services9.arcgis.com/CsUMpO9iTKFFwe1O/arcgis/rest/services/Waste_View_Public/FeatureServer/4/query"

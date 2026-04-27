@@ -42,18 +42,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Find your address at https://www.telge.se by searching for your street name in the waste collection schedule (Sopbilsschema). Use the exact address string shown in the autocomplete dropdown, e.g. 'BERGSGATAN 22, SÖDERTÄLJE'.",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Exact address as shown in the Telge autocomplete (uppercase, e.g. BERGSGATAN 22, SÖDERTÄLJE)",
-    },
-}
-
 
 class Source:
     def __init__(self, address: str):

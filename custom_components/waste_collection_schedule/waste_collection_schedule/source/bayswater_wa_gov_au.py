@@ -26,17 +26,6 @@ ICON_MAP = {
     "FOGO": "mdi:leaf",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '9 Wholley St Bayswater')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://bayswater.spatial.t1cloud.com",

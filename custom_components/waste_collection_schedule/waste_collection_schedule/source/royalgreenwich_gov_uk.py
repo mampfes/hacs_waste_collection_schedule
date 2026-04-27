@@ -22,7 +22,6 @@ TEST_CASES = {
 
 ADDRESS_SEARCH_URL = "https://www.royalgreenwich.gov.uk/site/custom_scripts/apps/waste-collection/source.php"
 
-
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 ICON_MAP = {
     "recycling": "mdi:recycle",
@@ -37,13 +36,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     'Find the collection day and the first bold text in the message below the search bar (right after "At" and before ":") is your address, use it as-is.'
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "post_code": "Postcode",
-        "house": "House number or name",
-        "address": "Full address",
-    }
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

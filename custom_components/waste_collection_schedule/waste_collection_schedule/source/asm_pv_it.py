@@ -35,23 +35,6 @@ ICON_MAP = {
     "ingombranti": "mdi:sofa",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "municipality": "Municipality (comune) served by ASM Pavia, e.g. 'Pavia'.",
-        "street": "Street name as listed on the ASM porta-a-porta lookup. For municipalities with a single zone, use 'Tutte le vie'.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "municipality": "Municipality",
-        "street": "Street",
-    },
-    "it": {
-        "municipality": "Comune",
-        "street": "Via",
-    },
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (

@@ -39,20 +39,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Visit the <a href='https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx'>Bins and Collections</a> page to find your collection group (1 or 2) and day.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "group": "Collection group (1 or 2) — check the calendar on the council website",
-        "day": "Collection day (Monday to Friday)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "group": "Collection Group",
-        "day": "Collection Day",
-    },
-}
-
 
 class Source:
     def __init__(self, group: int, day: str):

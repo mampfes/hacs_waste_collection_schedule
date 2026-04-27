@@ -29,22 +29,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     ),
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Your postcode, e.g. CH49 4NP.",
-        "address_value": (
-            "The 12-digit address value from the dropdown "
-            "on the Wirral bin calendar page."
-        ),
-    }
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "address_value": "Address Value",
-    }
-}
 
 BIN_URL = "https://www.wirral.gov.uk/bincal_dev/"
 DATE_REGEX = r"(\w+ \d{1,2} \w+ \d{4})"

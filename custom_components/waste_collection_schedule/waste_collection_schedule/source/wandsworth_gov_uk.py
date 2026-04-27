@@ -4,7 +4,10 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -34,17 +37,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",

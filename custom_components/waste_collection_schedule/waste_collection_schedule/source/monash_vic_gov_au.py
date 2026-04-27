@@ -26,17 +26,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": f'Visit the [City of Monash]({SEARCH_PAGE_URL}) "When we collect your bins" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result.',
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Full street address including suburb and postal code",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

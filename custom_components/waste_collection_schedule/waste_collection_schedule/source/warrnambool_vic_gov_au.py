@@ -15,11 +15,6 @@ TEST_CASES = {
     "Henna St": {"street_address": "13 Henna St WARRNAMBOOL VIC 3280"},
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_address": "Full street address including suburb and postcode, e.g. '3 Kiama Ave WARRNAMBOOL VIC 3280'",
-    }
-}
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -31,17 +31,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Search at https://www.swan.wa.gov.au/waste-and-sustainability/waste-and-recycling-services/bins/find-my-bin-day",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '34 Oldenburg Pass Stratton')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://swan.spatial.t1cloud.com",

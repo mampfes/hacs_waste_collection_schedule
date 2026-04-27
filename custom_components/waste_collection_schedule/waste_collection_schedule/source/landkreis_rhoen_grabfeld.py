@@ -34,14 +34,6 @@ ICON_MAP = {
 }
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Stadt, Markt, Gemeinde",
-        "district": "Ort, Ortsteil",
-    }
-}
-
-
 class Source:
     def __init__(self, city: str | None = None, district: str | None = None):
         self._city = city

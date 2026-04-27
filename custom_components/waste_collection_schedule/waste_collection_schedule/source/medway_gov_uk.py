@@ -26,21 +26,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Find your UPRN by entering your postcode at https://www.medway.gov.uk/homepage/45/check_collection_day. Alternatively provide your postcode and house name/number.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number",
-        "postcode": "Your postcode (e.g. ME4 4AY)",
-        "housenameornumber": "Your house name or number exactly as shown on the Medway website (e.g. '194-198')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "UPRN",
-        "postcode": "Postcode",
-        "housenameornumber": "House Name or Number",
-    },
-}
 
 API_BASE = "https://api.medway.gov.uk/api"
 HEADERS = {

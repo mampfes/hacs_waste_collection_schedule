@@ -20,15 +20,6 @@ ICON_MAP = {
     "Refuse and food waste": "mdi:trash-can",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-    },
-    "de": {
-        "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
-    },
-}
-
 
 class Source:
     def __init__(self, uprn):

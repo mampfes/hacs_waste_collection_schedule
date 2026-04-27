@@ -33,17 +33,6 @@ ICON_MAP = {
     "brown-lidded (garden waste) bin": "mdi:leaf",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Your street name, as it appears on the Coventry City Council website",
-    }
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Your street name, as it appears on the Coventry City Council website",
-    }
-}
-
 
 def _normalize_space(text: str) -> str:
     return re.sub(r"\s+", " ", text.replace("\xa0", " ")).strip()

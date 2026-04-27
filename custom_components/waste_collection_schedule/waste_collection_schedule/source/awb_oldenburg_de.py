@@ -19,14 +19,6 @@ API_URL = "https://www.oldenburg.de/startseite/leben-umwelt/awb/awb-von-a-bis-z/
 _LOGGER = logging.getLogger(__name__)
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    }
-}
-
-
 class Source:
     def __init__(self, street, house_number):
         self._street = street

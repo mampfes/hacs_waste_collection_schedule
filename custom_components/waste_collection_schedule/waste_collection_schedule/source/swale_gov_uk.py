@@ -35,12 +35,6 @@ TEST_CASES = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.",
 }
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-        "postcode": "Postcode of the property",
-    },
-}
 
 
 class Source:

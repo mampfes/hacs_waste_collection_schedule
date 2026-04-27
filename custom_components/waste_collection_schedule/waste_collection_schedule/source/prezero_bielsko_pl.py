@@ -42,43 +42,6 @@ ICON_MAP = {
 
 # ### Arguments affecting the configuration GUI ####
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street",
-        "house_number": "House number",
-    },
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    },
-    "it": {
-        "street": "Via",
-        "house_number": "Numero civico",
-    },
-    "fr": {
-        "street": "Rue",
-        "house_number": "Numéro de maison",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street",
-        "house_number": "House number",
-    },
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    },
-    "it": {
-        "street": "Via",
-        "house_number": "Numero civico",
-    },
-    "fr": {
-        "street": "Rue",
-        "house_number": "Numéro de maison",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

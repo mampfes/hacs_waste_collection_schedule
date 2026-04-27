@@ -36,17 +36,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Search at https://www.melvillecity.com.au/waste-and-environment/waste-recycling-fogo/residential-bins",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '43 Williams Road, Melville, WA')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 INTRAMAPS_CONFIG = IntegrationClientConfig(
     base_url="https://melville.spatial.t1cloud.com",

@@ -33,13 +33,6 @@ CITIES = {
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-    },
-}
-
 
 class Source:
     def __init__(self, city, street):

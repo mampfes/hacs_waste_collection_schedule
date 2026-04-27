@@ -27,14 +27,6 @@ AUTOCOMPLETE_URL = "https://www.landkreis-wittmund.de/output/autocomplete.php?ou
 DOWNLOAD_URL = "https://www.landkreis-wittmund.de/output/options.php?ModID=48&call=ical&ArtID%5B0%5D=3105.1&ArtID%5B1%5D=1.4&ArtID%5B2%5D=1.2&ArtID%5B3%5D=1.3&ArtID%5B4%5D=1.1&pois={}&alarm=0"
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-    }
-}
-
-
 class Source:
     def __init__(self, city, street=None):
         self._city = city

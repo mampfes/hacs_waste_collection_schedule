@@ -53,15 +53,6 @@ TEST_CASES = {
     },
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Strasse",
-        "house_number": "Hausnummer",
-        "address_suffix": "Hausnummerzusatz",
-    }
-}
-
 
 class Source:
     def __init__(self, city, street, house_number, address_suffix=""):

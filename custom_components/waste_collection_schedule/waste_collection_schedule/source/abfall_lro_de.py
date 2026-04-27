@@ -35,7 +35,6 @@ TEST_CASES = {
     },
 }
 
-
 ICON_MAP = {
     "Schwarze": "mdi:trash-can",
     "Grüne": "mdi:leaf",
@@ -43,42 +42,11 @@ ICON_MAP = {
     "Gelbe": "mdi:recycle",
 }
 
-
 API_URL = "https://www.abfall-lro.de/de/abfuhrtermine/"
 GUESTROW_URL = "https://www.abfall-lro.de/de/abfuhrtermine/guestrow.php"
 ICAL_URL = "https://www.abfall-lro.de/default-wGlobal/wGlobal/abfuhrtermine/ical.php"
 
 RHYTHMS = Literal["2w", "4w", ""]
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "municipality": "Gemeinde",
-        "street": "Straße",
-        "black_rhythm": "Schwarze Tonne Rythmus",
-        "green_rhythm": "Gelbe Tonne Rythmus",
-        "black_seasonal": "Schwarze Tonne Saisonal",
-        "green_seasonal": "Gelbe Tonne Saisonal",
-    }
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "municipality": "Name of the municipality, should match the name shown https://www.abfall-lro.de/de/abfuhrtermine/ (including sub region in bracktes). Use 'Güstrow' for Güstrow city streets.",
-        "street": "Street name (only required for Güstrow)",
-        "black_rhythm": "Rhythm of the black bin collection",
-        "green_rhythm": "Rhythm of the green bin collection",
-        "black_seasonal": "Check if the black bins are only collected seasonally",
-        "green_seasonal": "Check if the green bins are only collected seasonally",
-    },
-    "de": {
-        "municipality": "Name der Gemeinde, sollte mit dem Namen auf https://www.abfall-lro.de/de/abfuhrtermine/ übereinstimmen (einschließlich Unterregion in Klammern). Für Güstrower Straßen 'Güstrow' verwenden.",
-        "street": "Straßenname (nur für Güstrow erforderlich)",
-        "black_rhythm": "Leerungsrythmus der schwarzen Tonne",
-        "green_rhythm": "Leerungsrythmus der grünen Tonne",
-        "black_seasonal": "Ankreuzen, wenn die schwarzen Tonnen nur saisonal geleert werden",
-        "green_seasonal": "Ankreuzen, wenn die Grünen Tonnen nur saisonal geleert werden",
-    },
-}
 
 
 class Source:

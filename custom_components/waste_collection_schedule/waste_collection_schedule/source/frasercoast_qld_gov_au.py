@@ -32,17 +32,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Search at https://www.frasercoast.qld.gov.au/Services/Online-Services/Check-your-bin-day",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '57 Arbornine Road Glenwood')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://fcrc.spatial.t1cloud.com",

@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from curl_cffi import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Teignbridge District Council"
@@ -27,13 +27,6 @@ BIN_URL = "https://www.teignbridge.gov.uk/repositories/hidden-pages/bin-finder"
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Visit <a href='https://www.teignbridge.gov.uk/recycling-and-waste/forms/download-your-collection-calendar/'>Download your collection calendar</a>, enter your postcode and note the UPRN from the address dropdown.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Postcode (e.g. EX4 2JR)",
-        "uprn": "Unique Property Reference Number",
-    },
 }
 
 

@@ -15,7 +15,6 @@ TEST_CASES = {
 
 API_URL = "https://www.muenchenstein.ch/abfuhrdaten"
 
-
 ICON_MAP = {
     "kehricht-und-kleinsperrgut-brennbar": "mdi:trash-can-outline",
     "hackseldienst": "mdi:leaf",
@@ -23,13 +22,6 @@ ICON_MAP = {
     "kartonabfuhr": "mdi:package-variant",
     "metallabfuhr": "mdi:nail",
     "grobsperrgut (brennbar)": "mdi:sofa-single-outline",
-}
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "waste_district": "Abfuhrkreis",
-    },
 }
 
 

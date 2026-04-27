@@ -56,23 +56,6 @@ WEEKDAY_MAP = {
     "dimanche": SU,
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Full address including street number, e.g. '39 avenue larribau 64000 Pau'",
-    },
-    "fr": {
-        "address": "Adresse complète avec numéro de rue, ex : '39 avenue larribau 64000 Pau'",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address",
-    },
-    "fr": {
-        "address": "Adresse",
-    },
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter your full address as you would on the memotri.agglo-pau.fr website, including street number, street name, postal code, and city.",

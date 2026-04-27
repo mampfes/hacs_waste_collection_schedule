@@ -31,23 +31,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Abholplan. Alle anderen Abfallarten gelten für alle Zonen.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "zone": "Collection zone (A or B)",
-    },
-    "de": {
-        "zone": "Abholzone (A oder B)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "zone": "Zone",
-    },
-    "de": {
-        "zone": "Zone",
-    },
-}
 
 VALID_ZONES = ["A", "B"]
 CALENDAR_URL = "https://www.eggelsberg.at/system/web/kalender.aspx"

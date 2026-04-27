@@ -55,21 +55,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter your property's exact Postcode, Street Name, and House Name/Number (or business name) as they appear on the council's website's collection search tool.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "number": "Enter the house name (e.g., HAPSTEAD HALL) or number (e.g., 11), or the business name.",
-        "street": "Enter the street name (e.g., HIGH STREET).",
-        "postcode": "Enter the postcode (e.g., RH17 6TB).",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "number": "House/Business Name/Number",
-        "street": "Street Name",
-        "postcode": "Postcode",
-    },
-}
 
 # End of arguments affecting the configuration GUI
 

@@ -34,16 +34,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "de": "Finden Sie Ihre Zone auf der Basel-Stadt Zonenkarte unter https://map.geo.bs.ch (suchen Sie nach 'Abfuhrzonen').",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {"zone": "Your waste collection zone (A-H or GUF)."},
-    "de": {"zone": "Ihre Abfuhrzone (A-H oder GUF)."},
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"zone": "Zone"},
-    "de": {"zone": "Zone"},
-}
-
 
 class Source:
     def __init__(self, zone: str):

@@ -24,17 +24,6 @@ ICON_MAP = {
     "Recycling": "mdi:recycle",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. '124 Parsells Ave, Rochester, NY')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 BASE_URL = "http://maps.cityofrochester.gov/arcgis/rest/services/App_CityServices/City_Services/MapServer"
 TRASH_URL = f"{BASE_URL}/8"

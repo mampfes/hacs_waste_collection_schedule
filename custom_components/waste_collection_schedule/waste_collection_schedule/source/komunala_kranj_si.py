@@ -32,12 +32,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter the street name and house number exactly as shown in the Komunala Kranj address search.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Address as accepted by the Komunala Kranj address search (e.g. 'Street 1, City').",
-    }
-}
-
 
 ADDRESS_URL = "https://gis.komunala-kranj.si/mapguide/KaliopaFDOService/Service.asmx/GetResultsSimplified"
 SCHEDULE_URL = (

@@ -16,9 +16,6 @@ ICON_MAP = {
     "GREENWASTE": "mdi:leaf",
 }
 
-PARAM_DESCRIPTIONS = {"en": {"address": "The address of the collection"}}
-
-PARAM_TRANSLATIONS = {"en": {"address": "123 Clarence St ROSNY TAS 7018"}}
 
 TEST_CASES = {
     "80 Clarence St": {"address": "80 Clarence St"},

@@ -51,25 +51,6 @@ ICON_MAP = {
     "Slam": "mdi:emoticon-poop",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_address": "Street Address (e.g., Andromedavägen 1, Åkersberga)",
-        "municipality": "Municipality, one of: 'osteraker', 'vaxholm', or 'ekero'",
-    },
-    "de": {
-        "street_address": "Straßenadresse (z.B. Andromedavägen 1, Åkersberga)",
-        "municipality": "Gemeinde, eine von: 'osteraker', 'vaxholm' oder 'ekero'",
-    },
-    "it": {
-        "street_address": "Indirizzo (es. Andromedavägen 1, Åkersberga)",
-        "municipality": "Comune, uno di: 'osteraker', 'vaxholm' o 'ekero'",
-    },
-    "fr": {
-        "street_address": "Adresse (par ex. Andromedavägen 1, Åkersberga)",
-        "municipality": "Municipalité, l'une des suivantes : 'osteraker', 'vaxholm' ou 'ekero'",
-    },
-}
-
 
 class Source:
     def __init__(self, street_address: str, municipality: str):

@@ -22,17 +22,6 @@ ICON_MAP = {
     "Garbage": "mdi:trash-can",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. '2255 Tyler Rd, Hoover, AL')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 GARBAGE_ZONE_URL = "https://services8.arcgis.com/LmhR4UJYxC4YhccG/arcgis/rest/services/Hoover_Garbage_Pickup_WFL1/FeatureServer/2"
 

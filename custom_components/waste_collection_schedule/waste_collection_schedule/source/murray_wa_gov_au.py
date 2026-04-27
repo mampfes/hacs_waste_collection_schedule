@@ -28,11 +28,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Visit https://www.murray.wa.gov.au/waste-and-environment/waste-and-recycling/bins.aspx and search for your address to verify it is found.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Your street address as shown on the Shire of Murray bins page (e.g. '41 Wilson Road').",
-    },
-}
 
 API_BASE = "https://www.murray.wa.gov.au/api/cms/v1/wastecollection"
 ADDRESS_URL = f"{API_BASE}/GetAddressesByQuery"

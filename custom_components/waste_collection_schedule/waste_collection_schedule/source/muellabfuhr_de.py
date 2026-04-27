@@ -32,14 +32,6 @@ ICON_MAP = {
     "Biomüll": "mdi:leaf",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "client": "Client",
-        "city": "Ort",
-        "district": "Ortsteil",
-        "street": "Straße",
-    }
-}
 
 SERVICE_MAP = [
     "Landkreis Hildburghausen",

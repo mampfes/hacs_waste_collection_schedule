@@ -46,23 +46,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Suchen Sie unter https://sab.ssl.metageneric.de/app/sab_i_tp/index.php",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street and house number",
-    },
-    "de": {
-        "street": "Straße und Hausnummer",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street name and house number (e.g. 'Halberstädter Chaussee 66')",
-    },
-    "de": {
-        "street": "Straßenname und Hausnummer (z.B. 'Halberstädter Chaussee 66')",
-    },
-}
 
 PREFIX = "Abfallkalender: "
 

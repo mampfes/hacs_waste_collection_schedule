@@ -1,0 +1,27 @@
+# Per-source overrides for umweltverbaende_at (de).
+# Initial content from scripts/migrate_i18n.py; the source file had two
+# PARAM_TRANSLATIONS dicts so this was completed by hand. ``zusatz`` in the
+# original dict has been renamed to ``addition`` to match the actual __init__
+# parameter name.
+---
+params:
+  addition:
+    label: Zusatz
+  calendar:
+    label: Kalender
+  calendar_splitter:
+    label: Kalendereintrag-Trenner
+  calendar_title_separator:
+    label: Kalendertitel Separator
+  district:
+    label: Gebiet/Service provider id
+  hnr:
+    label: Hausnummer
+  municipal:
+    label: Gemeinde
+  plz:
+    label: Postleitzahl
+  street:
+    label: Straße
+  town:
+    label: Ort

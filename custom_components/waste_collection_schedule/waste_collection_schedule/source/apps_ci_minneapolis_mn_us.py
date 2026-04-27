@@ -6,8 +6,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
-PARAM_TRANSLATIONS = {"en": {"apn": "APN"}}
-
 TITLE = "Minneapolis MN USA"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for apps_ci_minneapolis_mn_us"  # Describe your source
 URL = "https://www.minneapolismn.gov"  # Insert url to service homepage. URL will show up in README.md and info.md
@@ -16,7 +14,6 @@ TEST_CASES = {
     "City Hall": {"apn": 2302924330044},
     "Library": {"apn": 2402924310071},
 }
-
 
 # https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx?AppID=RecycleFinderApp&apn=0902824440154
 API_URL = "https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx"

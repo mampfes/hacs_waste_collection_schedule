@@ -36,21 +36,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Select the desired address on the https://www.gyhg.hu/hulladeknaptar#/ website. The town, street name, and house number must be entered in this integration in the exact same format as they appear there.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "City name",
-        "street": "Street name",
-        "house_number": "House number",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "city": "City name",
-        "street": "Street name",
-        "house_number": "House number",
-    },
-}
 
 # End of arguments affecting the configuration GUI
 

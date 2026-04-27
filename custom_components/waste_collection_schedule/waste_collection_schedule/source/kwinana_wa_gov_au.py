@@ -31,17 +31,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "Search at https://www.kwinana.wa.gov.au/property-and-pets/waste-and-recycling/your-bins-and-collection-day",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '25 Breccia Parade WELLARD')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://kwinana.spatial.t1cloud.com",

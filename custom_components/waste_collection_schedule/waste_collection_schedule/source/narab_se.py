@@ -44,24 +44,6 @@ API_URL_FETCH_COLLECTIONS = (
     "https://www.narabtomningskalender.se/basfiler/online_kalender_skapa.php"
 )
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Address for collection",
-        "kundNr": "Customer number",
-    },
-    "de": {
-        "address": "Adresse für die Sammlung",
-        "kundNr": "Kundennummer",
-    },
-    "it": {
-        "address": "Indirizzo per la raccolta",
-        "kundNr": "Numero cliente",
-    },
-    "fr": {
-        "address": "Adresse pour la collecte",
-        "kundNr": "Numéro client",
-    },
-}
 
 # Map collection names to icons
 ICON_MAP = {
@@ -290,7 +272,6 @@ collections_map_en = {
     "FA": "FA",
     "FA-H": "FA - Around public holidays, there may be deviations from the regular emptying day. The day shown is the current emptying day.",
 }
-
 
 # Map Swedish month names to month numbers
 swedish_months = {

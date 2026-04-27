@@ -34,21 +34,6 @@ ICON_MAP = {
     "wertstoff": "mdi:recycle",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "Municipality name (e.g. 'Steinhagen', 'Warendorf')",
-        "street": "Street name — use exact spelling from the provider's calendar",
-    },
-    "de": {
-        "city": "Ortsname (z. B. 'Steinhagen', 'Warendorf')",
-        "street": "Straßenname — genaue Schreibweise des Anbieters verwenden",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"city": "City", "street": "Street"},
-    "de": {"city": "Ort", "street": "Straße"},
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Select your municipality, then use the exact street name shown in the Tonnenticker Pro app or the provider's website.",

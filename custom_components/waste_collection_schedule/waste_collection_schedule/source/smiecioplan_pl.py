@@ -64,27 +64,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "de": "Gehen Sie auf https://smiecioplan.pl und suchen Sie nach Ihrer Adresse. Verwenden Sie die Stadt, den Straßennamen (Großbuchstaben) und die Hausnummer.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "City name (szczecin, gdansk, gdynia, or sopot).",
-        "street": "Street name in uppercase as shown on SmiecioPlan.",
-        "house": "House number.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "city": "City",
-        "street": "Street",
-        "house": "House Number",
-    },
-    "de": {
-        "city": "Stadt",
-        "street": "Straße",
-        "house": "Hausnummer",
-    },
-}
-
 
 def _get_icon(summary: str) -> str | None:
     lower = summary.lower()

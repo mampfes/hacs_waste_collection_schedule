@@ -21,14 +21,7 @@ ICON_MAP = {
     "Gelbe": "mdi:recycle",
 }
 
-
 API_URL = "https://www.bad-eisenkappel.info/gemeinde/onlineservice/abfuhrtermine.html"
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "region": "Ortsteil",
-    }
-}
 
 
 class Source:

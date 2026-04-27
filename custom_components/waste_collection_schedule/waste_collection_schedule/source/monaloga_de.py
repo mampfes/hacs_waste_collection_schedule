@@ -15,7 +15,6 @@ TEST_CASES = {
     "Alte Wendung": {"street": "Alte Wendung"},
 }
 
-
 ICON_MAP = {
     "Leichtverpackungen": "mdi:recycle",
 }
@@ -35,20 +34,7 @@ GERMAN_MONTHS = {
     "Dezember": 12,
 }
 
-
 API_URL = "https://www.monaloga.de/mportal/awista-logistik/stadt-remscheid/index.php"
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "plz": "PLZ",
-        "street": "Straße",
-    },
-    "en": {
-        "plz": "ZIP",
-        "street": "Street",
-    },
-}
 
 
 class Source:

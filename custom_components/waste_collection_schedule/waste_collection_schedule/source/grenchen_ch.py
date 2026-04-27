@@ -21,15 +21,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "de": "Diese Quelle ist veraltet. Bitte verwenden Sie 'localcities.ch' mit municipality='grenchen' und municipality_id='3533'.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "zone": "Collection zone (Zone Ost or Zone West)",
-    },
-    "de": {
-        "zone": "Abfuhrzone (Zone Ost oder Zone West)",
-    },
-}
-
 
 class Source(LocalcitiesSource):
     def __init__(self, zone: str):

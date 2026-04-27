@@ -21,7 +21,6 @@ TEST_CASES = {
     }
 }
 
-
 ICON_MAP = {
     "Gelbe Tonne": "mdi:recycle",
     "Bioabfall": "mdi:leaf",
@@ -30,27 +29,6 @@ ICON_MAP = {
     "Sperrmüll": "mdi:sofa",
     "Weiße Ware": "mdi:fridge",
     "Kühlgeräte": "mdi:fridge-outline",
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "yellow_route": "Gelbe Tonne Rute",
-        "paper_route": "Papier Rute",
-    }
-}
-
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "yellow_route": "Used if there are multiple routes for the yellow bin collection. E.g 'Rotenburg - Kernstadt' has yellow bin collection routes `1`,`2`,`3` and `4`.",
-        "paper_route": "Used if there are multiple routes for the paper collection. E.g 'Rotenburg - Kernstadt' has paper collection routes `West` and `Ost`.",
-        "city": "Should be spelled exactly like in the `ort` URL parameter of the link url shown on the website: https://www.mzv-rotenburg-bebra.de//webapp.html Like: `lisp`, `rot`, `bebra`, ...",
-    },
-    "de": {
-        "city": "Genau wie in der `ort` URL-Parameter des Links auf der Website: https://www.mzv-rotenburg-bebra.de//webapp.html. Z.B. `lisp`, `rot`, `bebra`, ...",
-        "yellow_route": "Wird verwendet, wenn es mehrere Routen für die Gelbe Tonne gibt. Z.B. hat 'Rotenburg - Kernstadt' Gelbe Tonne Routen `1`,`2`,`3` und `4`.",
-        "paper_route": "Wird verwendet, wenn es mehrere Routen für die Papierabholung gibt. Z.B. hat 'Rotenburg - Kernstadt' Papierabholrouten `West` und `Ost`.",
-    },
 }
 
 

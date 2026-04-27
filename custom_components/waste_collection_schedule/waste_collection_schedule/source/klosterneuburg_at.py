@@ -33,19 +33,6 @@ ICON_MAP = {
     "Sperrmüll": "mdi:sofa",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street name as shown on the Klosterneuburg website",
-        "house_number": "House number",
-    },
-}
 
 PAGE_URL = "https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender"
 CALENDAR_URL = "https://www.klosterneuburg.at/system/web/kalender.aspx"

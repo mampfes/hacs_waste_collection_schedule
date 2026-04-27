@@ -13,11 +13,6 @@ URL = "https://www.sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day"
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "The source argument is the street number and street name to the house with waste collection. The address can be tested [here](https://www.sa.gov/Directory/Departments/SWMD/Brush-Bulky/My-Collection-Day).",
 }
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street number and street name (e.g., 123 Main St)",
-    }
-}
 
 API_URL = "https://gis.sanantonio.gov/swmd/mycollectionday/Request.aspx?addr={addr}"
 COUNTRY = "us"

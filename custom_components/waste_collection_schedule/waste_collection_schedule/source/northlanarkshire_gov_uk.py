@@ -12,19 +12,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "The easiest way to get the source arguments is to look at the url of the web page that displays your collection schedule. The url has the format: `www.northlanarkshire.gov.uk/bin-collection-dates/UPRN/USRN`",
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-        "usrn": "Unique Street Reference Number (USRN)",
-    }
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "usrn": "Your Unique Street Reference Number (USRN) can be found by searching for your address at https://uprn.uk/ and viewing the _Data Associations_ section.",
-        "uprn": "Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
-    }
-}
 
 TEST_CASES = {
     "Test_001": {
@@ -40,7 +27,6 @@ TEST_CASES = {
         "usrn": "48409125",
     },
 }
-
 
 ICON_MAP = {
     "General Waste": "mdi:trash-can",

@@ -4783,8 +4783,8 @@
       "en": "The easiest way to get the source arguments is to look at the url of the web page that displays your collection schedule. The url has the format: `www.northlanarkshire.gov.uk/bin-collection-dates/UPRN/USRN`"
     },
     "urls": {
-      "url_uprn_uk": "https://uprn.uk/",
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/",
+      "url_uprn_uk": "https://uprn.uk/"
     }
   },
   "northlincs_gov_uk": {

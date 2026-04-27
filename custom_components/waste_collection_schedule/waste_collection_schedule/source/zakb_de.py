@@ -37,7 +37,6 @@ TEST_CASES = {
     },
 }
 
-
 ICON_MAP = {
     "Restabfallbehaelter": "mdi:trash-can",
     "Restabfallcontainer": "mdi:trash-can",
@@ -48,24 +47,7 @@ ICON_MAP = {
     "Gruensperrmuell": "mdi:forest",
 }
 
-
 API_URL = "https://www.zakb.de/online-service/abfallkalender/"
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "ort": "Ort",
-        "strasse": "Straße",
-        "hnr": "Hausnummer",
-        "hnr_zusatz": "Hausnummerzusatz",
-    },
-    "en": {
-        "ort": "City",
-        "strasse": "Street",
-        "hnr": "House number",
-        "hnr_zusatz": "House number addition",
-    },
-}
 
 
 class Source:

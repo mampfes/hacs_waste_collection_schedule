@@ -35,23 +35,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     ),
 }
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "service_provider": "Service provider",
-        "api_key": "API key / device ID",
-        "street_address": "Street address",
-        "token": "Bearer token",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "service_provider": "Name of the Avfallsapp provider.",
-        "api_key": "API key or device ID used by the mobile app.",
-        "street_address": "Street address used for address lookup and registration.",
-        "token": "Bearer token required by some providers.",
-    },
-}
 
 _LOGGER = logging.getLogger(__name__)
 

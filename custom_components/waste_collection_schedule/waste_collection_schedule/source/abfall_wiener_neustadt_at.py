@@ -54,31 +54,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "de": "Besuchen Sie die Website https://abfall.wiener-neustadt.at/ und wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie sich Ihren Straßennamen und wählen Sie die Abfuhrhäufigkeit, die für Ihre Adresse gilt.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz'). Must match exactly as shown on the website.",
-        "str_id": "Optional: Street ID if known (skips street lookup)",
-        "rm_art": "Collection frequency for residual waste: 'wöchentlich' (weekly), '14-tägig' (bi-weekly), or 'monatlich' (monthly)",
-    },
-    "de": {
-        "street": "Straßenname in Wiener Neustadt (z.B. 'Martinsgasse', 'Hauptplatz'). Die Straße muss exakt so geschrieben werden, wie sie auf der Website erscheint.",
-        "str_id": "Optional: Straßen-ID falls bekannt. Wenn angegeben, wird die Straßensuche übersprungen.",
-        "rm_art": "Abfuhrhäufigkeit für Restmüll. Wählen Sie 'wöchentlich' für wöchentliche Abfuhr, '14-tägig' für zweiwöchentliche Abfuhr, oder 'monatlich' für monatliche Abfuhr.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street Name",
-        "str_id": "Street ID",
-        "rm_art": "Collection Frequency",
-    },
-    "de": {
-        "street": "Straße",
-        "str_id": "Straßen-ID",
-        "rm_art": "Abfuhrhäufigkeit (Restmüll)",
-    },
-}
 
 # Map user-friendly frequency names to internal codes
 # Website codes: 31=wöchentlich, 33=14-tägig, 36=monatlich

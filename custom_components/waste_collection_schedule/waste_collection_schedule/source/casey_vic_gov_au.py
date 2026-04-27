@@ -41,35 +41,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": f'Visit the [City of Casey]({SEARCH_PAGE_URL}) "Find your bin collection day" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 55 Victor Crescent NARRE WARREN VIC 3805. The arguments should exactly match the full street address after selecting the autocomplete result.',
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        _STREET_ADDRESS_ARG_NAME: "Full street address including suburb, state and postal code without separating commas.",
-    },
-    "de": {
-        _STREET_ADDRESS_ARG_NAME: "Vollständige Straßenadresse einschließlich Stadtteil, Bundesland und Postleitzahl ohne Trennzeichen.",
-    },
-    "it": {
-        _STREET_ADDRESS_ARG_NAME: "Indirizzo completo comprensivo di quartiere, regione e CAP, senza virgole di separazione.",
-    },
-    "fr": {
-        _STREET_ADDRESS_ARG_NAME: "Adresse complète incluant le quartier, la région et le code postal, sans virgules de séparation.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        _STREET_ADDRESS_ARG_NAME: "Street Address",
-    },
-    "de": {
-        _STREET_ADDRESS_ARG_NAME: "Straßenadresse",
-    },
-    "it": {
-        _STREET_ADDRESS_ARG_NAME: "Indirizzo completo",
-    },
-    "fr": {
-        _STREET_ADDRESS_ARG_NAME: "Adresse complète",
-    },
-}
 
 # Collection date property name prefix / postfix
 _PREV_STRING = "Prev"

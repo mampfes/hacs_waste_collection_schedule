@@ -24,10 +24,8 @@ ICON_MAP = {
     "GREEN": "mdi:recycle",
 }
 
-
 COLLECTION_URL = "https://app.greyhound.ie/collection/collection_calendar"
 LOGIN_URL = "https://app.greyhound.ie/"
-
 
 # ### Arguments affecting the configuration GUI ####
 
@@ -35,19 +33,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "en": "You can use the account number and pin provided by the company, which are the same details to access their mobile app.",
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "account_number": "Account Number",
-        "pin": "PIN",
-    },
-}
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "account_number": "Account Number",
-        "pin": "PIN Number",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

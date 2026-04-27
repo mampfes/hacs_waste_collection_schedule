@@ -13,19 +13,12 @@ TEST_CASES = {
     "Grafstal": {"city": "190"},
 }
 
-
 ICON_MAP = {
     "kehricht": "mdi:trash-can",
     "grungut": "mdi:leaf",
     "hackseldienst": "mdi:leaf",
     "papier und karton": "mdi:package-variant",
     "altmetalle": "mdi:nail",
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-    }
 }
 
 

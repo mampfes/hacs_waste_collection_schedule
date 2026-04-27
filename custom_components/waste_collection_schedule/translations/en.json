@@ -2753,12 +2753,12 @@
           "calendar_title": "Calendar Title",
           "addition": "Addition",
           "calendar": "Calendar",
-          "calendar_splitter": "Calendar Splitter",
-          "calendar_title_separator": "Calendar Title Separator",
-          "district": "District",
-          "hnr": "House Number",
+          "calendar_splitter": "Calendar entry splitter",
+          "calendar_title_separator": "Calendar title separator",
+          "district": "District/Service provider id",
+          "hnr": "House number",
           "municipal": "Municipal",
-          "plz": "Plz",
+          "plz": "Postal code",
           "street": "Street",
           "town": "Town"
         },
@@ -2783,12 +2783,12 @@
           "calendar_title": "Calendar Title",
           "addition": "Addition",
           "calendar": "Calendar",
-          "calendar_splitter": "Calendar Splitter",
-          "calendar_title_separator": "Calendar Title Separator",
-          "district": "District",
-          "hnr": "House Number",
+          "calendar_splitter": "Calendar entry splitter",
+          "calendar_title_separator": "Calendar title separator",
+          "district": "District/Service provider id",
+          "hnr": "House number",
           "municipal": "Municipal",
-          "plz": "Plz",
+          "plz": "Postal code",
           "street": "Street",
           "town": "Town"
         },
@@ -24071,7 +24071,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "garden_cutomer": "Garden Cutomer",
+          "garden_customer": "Garden Customer",
           "street": "Street",
           "town": "Town"
         },
@@ -24084,7 +24084,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "garden_cutomer": "Garden Cutomer",
+          "garden_customer": "Garden Customer",
           "street": "Street",
           "town": "Town"
         },

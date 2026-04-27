@@ -60,32 +60,6 @@ ICON_MAP = {
     "Altpapier": "mdi:package-variant",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "restmuell_zone": "Zone number for residual waste (Restmüll)",
-        "biomuell_zone": "Zone number for organic waste (Biomüll)",
-        "altpapier_zone": "Zone number for paper waste (Altpapier)",
-    },
-    "de": {
-        "restmuell_zone": "Zonennummer für Restmüll",
-        "biomuell_zone": "Zonennummer für Biomüll",
-        "altpapier_zone": "Zonennummer für Altpapier",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "restmuell_zone": "Residual Waste Zone",
-        "biomuell_zone": "Organic Waste Zone",
-        "altpapier_zone": "Paper Waste Zone",
-    },
-    "de": {
-        "restmuell_zone": "Restmüll Zone",
-        "biomuell_zone": "Biomüll Zone",
-        "altpapier_zone": "Altpapier Zone",
-    },
-}
-
 
 class Source:
     def __init__(

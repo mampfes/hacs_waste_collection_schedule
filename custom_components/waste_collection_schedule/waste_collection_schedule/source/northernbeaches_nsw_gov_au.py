@@ -27,17 +27,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter your address as shown on the Northern Beaches Council website, e.g. '25 Pittwater Road MANLY'.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Your street address including suburb in uppercase, e.g. '25 Pittwater Road MANLY'.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
 
 SEARCH_URL = "https://pubapp.northernbeaches.nsw.gov.au/waste/waste.ashx"
 SCHEDULE_URL = "https://pubapp.northernbeaches.nsw.gov.au/waste/wastesearch.ashx"

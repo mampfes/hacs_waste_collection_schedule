@@ -20,16 +20,6 @@ ICON_MAP = {
 }
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "pois": "POIS",
-    },
-    "en": {
-        "pois": "POIS",
-    },
-}
-
-
 class Source:
     def __init__(self, pois):
         self.ics = ICS()

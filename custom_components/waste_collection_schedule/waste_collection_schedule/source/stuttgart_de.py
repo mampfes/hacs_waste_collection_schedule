@@ -10,14 +10,6 @@ URL = "https://service.stuttgart.de"
 TEST_CASES = {"Im Steinengarten 7": {"street": "Im Steinengarten", "streetnr": 7}}
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
-        "streetnr": "Hausnummer",
-    }
-}
-
-
 # Parser for HTML checkbox
 class InputCheckboxParser(HTMLParser):
     def __init__(self, name):

@@ -25,14 +25,6 @@ ICON_MAP = {
     "Elektrokleingeräte-Sammlung": "mdi:radio",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
-        "number": "Hausnummer",
-        "turnus": "Turnus",
-    },
-}
-
 
 class Source:
     def __init__(self, street, number, turnus=2):

@@ -31,20 +31,6 @@ WASTE_TYPE_URLS = {
 }
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street_name": "Straßenname",
-        "street_number": "Hausnummer",
-        "teilgebiet": "Teilgebiet",
-    },
-    "en": {
-        "street_name": "Street Name",
-        "street_number": "Street Number",
-        "teilgebiet": "Subarea",
-    },
-}
-
-
 class Source:
     def __init__(self, street_name, street_number, teilgebiet=-1):
         self.street_name = street_name

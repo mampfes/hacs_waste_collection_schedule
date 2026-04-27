@@ -43,47 +43,6 @@ TEST_CASES = {
     },
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "ortsteil": "Ortsteil",
-        "strasse": "Straße",
-        "hausnummer": "Hausnummer",
-        "behaelter": "Behältergröße (Liter)",
-    },
-    "en": {
-        "behaelter": "Container size",
-        "hausnummer": "House Number",
-        "ortsteil": "District",
-        "strasse": "Street",
-    },
-    "fr": {
-        "behaelter": "Poubelle",
-        "hausnummer": "Numéro civique",
-        "ortsteil": "District",
-        "strasse": "Rue",
-    },
-    "it": {
-        "behaelter": "Contenitori",
-        "hausnummer": "numero civico",
-        "ortsteil": "frazione",
-        "strasse": "Strada",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "ortsteil": "District / city part as shown in the EVV portal (e.g. 'Fürstenhausen', 'Völklingen')",
-        "strasse": "Street name as shown in the EVV portal (e.g. 'Kaiserstraße')",
-        "hausnummer": "House number (optional, required for some streets)",
-        "behaelter": "Mapping of waste type name to container size in litres (e.g. Restmüll: '240', Papier: '1100'). Only specified waste types are filtered; others are shown for all container sizes. If omitted all container sizes are shown.",
-    },
-    "de": {
-        "ortsteil": "Ortsteil wie im EVV-Portal angezeigt (z. B. 'Fürstenhausen', 'Völklingen')",
-        "strasse": "Straßenname wie im EVV-Portal angezeigt (z. B. 'Kaiserstraße')",
-        "hausnummer": "Hausnummer (optional, für manche Straßen erforderlich)",
-        "behaelter": "Zuordnung von Abfallart zu Behältergröße in Litern (z. B. Restmüll: '240', Papier: '1100'). Nur angegebene Abfallarten werden gefiltert; andere werden für alle Behältergrößen angezeigt. Ohne Angabe werden alle Behältergrößen angezeigt.",
-    },
-}
 
 ICON_MAP = {
     "Restmüll": "mdi:trash-can",

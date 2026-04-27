@@ -38,11 +38,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     "en": "To get your UPRN go to https://www.findmyaddress.co.uk and search for your address.",
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
 

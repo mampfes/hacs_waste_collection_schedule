@@ -37,13 +37,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Go to https://www.gosport.gov.uk/refuserecyclingdays, enter your postcode, and select your address. The UPRN is the number shown next to your address in the dropdown (also appended at the end of the address text).",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Your postcode (e.g. PO12 4RL)",
-        "uprn": "The Whitespace property reference number for your address",
-    },
-}
-
 
 class Source:
     def __init__(self, postcode: str, uprn: str | int):

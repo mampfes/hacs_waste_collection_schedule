@@ -14,7 +14,7 @@ TEST_CASES = {
     "2 Kinver Avenue, Kidderminster": {
         "street": "hilltop avenue",
         "town": "BEWDLEY",
-        "garden_cutomer": "308072",
+        "garden_customer": "308072",
     },
 }
 
@@ -82,14 +82,14 @@ def predict_next_collections(first_date: date, day_interval: int = 14):
 
 
 class Source:
-    def __init__(self, street: str, town: str, garden_cutomer: str | int | None = None):
+    def __init__(self, street: str, town: str, garden_customer: str | int | None = None):
         self._street = street.upper().strip()
         self._town = town.upper().strip()
-        self._garden_cutomer = str(garden_cutomer).strip() if garden_cutomer else None
+        self._garden_customer = str(garden_customer).strip() if garden_customer else None
 
     def get_garden_waste(self, type_to_day: dict[str, str]) -> list[Collection]:
         data = {
-            "CUST_No": self._garden_cutomer,
+            "CUST_No": self._garden_customer,
         }
         r = requests.post(API_URLS["garden_waste"], data=data)
         r.raise_for_status()
@@ -165,7 +165,7 @@ class Source:
                         )
                     )
 
-        if self._garden_cutomer:
+        if self._garden_customer:
             entries += self.get_garden_waste(type_to_day)
 
         return entries

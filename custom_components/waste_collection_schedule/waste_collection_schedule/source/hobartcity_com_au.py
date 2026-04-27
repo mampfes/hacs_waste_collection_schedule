@@ -18,7 +18,6 @@ TEST_CASES = {
     },
 }
 
-
 ICON_MAP = {
     "rubbish": "mdi:trash-can",
     "recycling": "mdi:recycle",
@@ -31,12 +30,6 @@ API_PARAMS = {
     "geolocationid": "",  # filled in later
     "ocsvclang": "en-AU",
     "pageLink": "/$720cfbd8-df7e-4b88-bf92-e218d51ee173$/Residents/Waste-and-recycling/When-is-my-bin-collected",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "The address should exactly match the address autocompleted by the website: https://www.hobartcity.com.au/Residents/Waste-and-recycling/When-is-my-bin-collected",
-    }
 }
 
 

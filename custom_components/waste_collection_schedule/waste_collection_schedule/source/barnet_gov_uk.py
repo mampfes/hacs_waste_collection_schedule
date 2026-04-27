@@ -14,14 +14,6 @@ ICON_MAP = {
     "Food Waste": "mdi:food-apple",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-    },
-    "de": {
-        "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
-    },
-}
 
 API_URL = "https://myforms.barnet.gov.uk/homepage/11/find-your-bin-collection-day"
 

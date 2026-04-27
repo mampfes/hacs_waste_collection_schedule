@@ -58,27 +58,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "fr": "Vous devez fournir votre numéro et nom de rue dans la ville de Québec.",
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_number_and_name": "Your street number and name in Quebec City (e.g. '123 Rue Example')",
-        "unique_id": "(Optional) If multiple addresses match your search, this value is used to select one of them",
-    },
-    "fr": {
-        "street_number_and_name": "Votre numéro et nom de rue dans la ville de Québec (ex. '123 Rue Example')",
-        "unique_id": "(Optionnel) Si plusieurs adresses correspondent à votre recherche, cette valeur est utilisée pour en sélectionner une",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street_number_and_name": "Street Number and Name",
-        "unique_id": "Address Unique ID",
-    },
-    "fr": {
-        "street_number_and_name": "Numéro et nom de rue",
-        "unique_id": "ID unique d'adresse",
-    },
-}
 
 # End of arguments affecting the configuration GUI
 

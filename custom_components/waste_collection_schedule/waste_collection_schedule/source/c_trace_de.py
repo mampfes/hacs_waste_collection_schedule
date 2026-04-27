@@ -81,7 +81,6 @@ DEFAULT_ICAL_URL_FILE = "cal"
 # lekarowarschau-abfallkalender
 # web.torgauoschatz2015
 
-
 SERVICE_MAP = {
     "bremenabfallkalender": {
         "title": "Bremer Stadtreinigung",
@@ -160,27 +159,6 @@ SERVICE_MAP = {
 }
 
 BASE_URL = "https://{subdomain}.c-trace.de"
-
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "abfall": "Pipe-separated waste type IDs to fetch (e.g. '0|1|2|5'). "
-        "Leave empty to fetch all types. Visit your provider's calendar page "
-        "to see which IDs correspond to which waste types.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "strasse": "Street",
-        "hausnummer": "House number",
-        "gemeinde": "Municipality",
-        "ort": "District",
-        "ortsteil": "Subdistrict",
-        "service": "Operator",
-        "abfall": "Waste type IDs",
-    }
-}
 
 
 class Source:

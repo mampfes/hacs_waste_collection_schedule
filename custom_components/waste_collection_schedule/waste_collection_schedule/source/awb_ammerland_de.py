@@ -38,31 +38,6 @@ ICON_MAP = {
     "Problemstoffe": "mdi:biohazard",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-        "street_section": "Straßenabschnitt",
-        "four_weekly_rest": "4-wöchentlicher Restabfallrhythmus",
-    },
-    "en": {
-        "city": "City",
-        "street": "Street",
-        "street_section": "Street section",
-        "four_weekly_rest": "4-weekly residual waste collection",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "de": {
-        "street_section": "Nur erforderlich, wenn die Straße in mehrere Abschnitte aufgeteilt ist (z.B. 'nördl.d. A 28').",
-        "four_weekly_rest": "Aktivieren, wenn ein 4-wöchentlicher Abfuhrrythmus für die Restabfalltonne beantragt wurde.",
-    },
-    "en": {
-        "street_section": "Only required if the street is divided into sections (e.g. 'nördl.d. A 28').",
-        "four_weekly_rest": "Enable if a 4-weekly collection interval for residual waste has been requested.",
-    },
-}
 
 # Firebase Storage endpoint (app version 2.21+, path and/7/)
 API_URL = "https://firebasestorage.googleapis.com/v0/b/abfall-ammerland.appspot.com/o/and%2F7%2Fawbapp.json?alt=media"

@@ -70,48 +70,13 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
     + " und finde den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.",
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "municipal": 'Copy the name of the ICS calendar from the website for your municipal. This needs to be without the year at the end. For example: "Stadt Königslutter am Elm – ohne Ortsteile" (without quotes).',
-        "restabfall": "Number for the collection type from the PDF calendar",
-        "altpapier": "Number for the collection type from the PDF calendar",
-        "gelber_sack": "Number for the collection type from the PDF calendar",
-        "bioabfall": "Number for the collection type from the PDF calendar",
-    },
-    "de": {
-        "municipal": 'Kopiere den Namen des ICS Kalenders der Gemeinde von der Website. Der Name darf nicht das Jahr beinhalten. Z.B. "Stadt Königslutter am Elm – ohne Ortsteile" (ohne Anführungszeichen).',
-        "restabfall": "Nummer des Abfuhrgebietes aus dem PDF Kalender.",
-        "altpapier": "Nummer des Abfuhrgebietes aus dem PDF Kalender.",
-        "gelber_sack": "Nummer des Abfuhrgebietes aus dem PDF Kalender.",
-        "bioabfall": "Nummer des Abfuhrgebietes aus dem PDF Kalender.",
-    },
-}
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "municipal": "Municipal",
-        "restabfall": "Domestic",
-        "altpapier": "Paper",
-        "gelber_sack": "Recycling",
-        "bioabfall": "Organic",
-    },
-    "de": {
-        "municipal": "Gemeinde",
-        "restabfall": "Restabfall",
-        "altpapier": "Altpapier",
-        "gelber_sack": "Gelber Sack",
-        "bioabfall": "Bioabfall",
-    },
-}
 
 # ### End of arguments affecting the configuration GUI ####
-
 
 COLLECTION_TYPE_RESTABFALL = "Restabfall"
 COLLECTION_TYPE_ALTPAPIER = "Altpapier"
 COLLECTION_TYPE_GELBER_SACK = "Gelber Sack"
 COLLECTION_TYPE_BIOABFALL = "Bioabfall"
-
 
 ICON_MAP = {
     COLLECTION_TYPE_RESTABFALL: "mdi:trash-can",

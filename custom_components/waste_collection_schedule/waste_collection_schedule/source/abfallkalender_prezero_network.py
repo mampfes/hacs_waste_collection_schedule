@@ -54,31 +54,6 @@ ICON_MAP = {
     "Schadstoffsammlung": "mdi:bottle-tonic-skull",
 }
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Stadt",
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    },
-    "en": {
-        "city": "City",
-        "street": "Street",
-        "house_number": "House Number",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "de": {
-        "city": "Stadt-Kennung (Standard: 'bad-oeynhausen'; unterstützte Werte: 'bad-oeynhausen', 'willich')",
-        "street": "Straßenname (z.B. 'Aalstraße')",
-        "house_number": "Hausnummer (z.B. '1')",
-    },
-    "en": {
-        "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')",
-        "street": "Street name (e.g. 'Aalstraße')",
-        "house_number": "House number (e.g. '1')",
-    },
-}
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "de": "Geben Sie Ihre Straße und Hausnummer ein. Die Stadt ist standardmäßig auf Bad Oeynhausen eingestellt (unterstützt: Bad Oeynhausen, Willich).",
