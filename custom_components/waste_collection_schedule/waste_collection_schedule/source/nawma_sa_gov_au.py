@@ -11,12 +11,12 @@ DESCRIPTION = (
 URL = "https://www.nawma.sa.gov.au"
 TEST_CASES = {
     "128 Bridge Road": {
-        "street_number": "128",
+        "house_number": "128",
         "street_name": "Bridge Road",
         "suburb": "Pooraka",
     },  # Monday
     "226 Bridge Road": {
-        "street_number": "226",
+        "house_number": "226",
         "street_name": "Bridge Road",
         "suburb": "Pooraka",
     },  # Monday reverse
@@ -91,8 +91,8 @@ class CollectionResultsParser(HTMLParser):
 
 
 class Source:
-    def __init__(self, street_name, suburb, street_number="", property_id="2444"):
-        self._street_number = street_number  # Optional
+    def __init__(self, street_name, suburb, house_number="", property_id="2444"):
+        self._street_number = house_number  # Optional
         self.street_name = street_name
         self._suburb = suburb
         self._pid = property_id  # Not really sure what this is!

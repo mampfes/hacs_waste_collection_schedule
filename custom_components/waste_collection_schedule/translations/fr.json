@@ -2218,16 +2218,16 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro civique",
           "property_id": "ID de propriété",
           "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
           "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Numéro de maison de l'adresse.",
           "property_id": "Identifiant de propriété.",
           "street_name": "Nom de la rue de l'adresse.",
-          "street_number": "Numéro de rue de l'adresse.",
           "suburb": "Banlieue de l'adresse."
         }
       },
@@ -2236,15 +2236,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro civique",
           "property_id": "ID de propriété",
           "street_name": "Nom de rue",
-          "street_number": "Numéro de rue",
           "suburb": "Suburb"
         },
         "data_description": {
+          "house_number": "Numéro de maison de l'adresse.",
           "property_id": "Identifiant de propriété.",
           "street_name": "Nom de la rue de l'adresse.",
-          "street_number": "Numéro de rue de l'adresse.",
           "suburb": "Banlieue de l'adresse."
         }
       },
@@ -2985,7 +2985,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
+          "address_suffix": "Address Suffix",
           "calendar": "Calendrier",
           "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
@@ -3005,7 +3005,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
+          "address_suffix": "Address Suffix",
           "calendar": "Calendrier",
           "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
@@ -6406,7 +6406,7 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "district": "District",
-          "number": "Numéro",
+          "house_number": "Numéro civique",
           "service_provider": "Fournisseur de services",
           "show_volume": "Show Volume",
           "street": "Rue",
@@ -6415,6 +6415,7 @@
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
           "district": "Quartier de l'adresse.",
+          "house_number": "Numéro de maison de l'adresse.",
           "street": "Rue de l'adresse."
         }
       },
@@ -6424,7 +6425,7 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "district": "District",
-          "number": "Numéro",
+          "house_number": "Numéro civique",
           "service_provider": "Fournisseur de services",
           "show_volume": "Show Volume",
           "street": "Rue",
@@ -6432,6 +6433,7 @@
         },
         "data_description": {
           "district": "Quartier de l'adresse.",
+          "house_number": "Numéro de maison de l'adresse.",
           "street": "Rue de l'adresse."
         }
       },
@@ -13480,13 +13482,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
+          "address_suffix": "Address Suffix",
           "city": "Ville",
           "house_number": "Numéro civique",
           "street": "Rue"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address_suffix": "Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).",
           "city": "Ville de l'adresse.",
           "house_number": "Numéro de maison de l'adresse.",
           "street": "Rue de l'adresse."
@@ -13497,12 +13500,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
+          "address_suffix": "Address Suffix",
           "city": "Ville",
           "house_number": "Numéro civique",
           "street": "Rue"
         },
         "data_description": {
+          "address_suffix": "Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).",
           "city": "Ville de l'adresse.",
           "house_number": "Numéro de maison de l'adresse.",
           "street": "Rue de l'adresse."
@@ -14679,13 +14683,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
+          "address_suffix": "Address Suffix",
           "house_number": "Numéro civique",
           "postcode": "Code postal",
           "region": "Région"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address_suffix": "Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).",
           "house_number": "Numéro de maison de l'adresse.",
           "postcode": "Code postal de l'adresse.",
           "region": "Région de l'adresse."
@@ -14696,12 +14701,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
+          "address_suffix": "Address Suffix",
           "house_number": "Numéro civique",
           "postcode": "Code postal",
           "region": "Région"
         },
         "data_description": {
+          "address_suffix": "Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).",
           "house_number": "Numéro de maison de l'adresse.",
           "postcode": "Code postal de l'adresse.",
           "region": "Région de l'adresse."
@@ -14712,14 +14718,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "address_suffix": "Address Suffix",
           "house_letter": "Lettre de maison",
           "house_number": "Numéro civique",
           "postcode": "Code postal",
-          "service": "Service",
-          "suffix": "Suffix"
+          "service": "Service"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address_suffix": "Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).",
           "house_letter": "Lettre de maison de l'adresse.",
           "house_number": "Numéro de maison de l'adresse.",
           "postcode": "Code postal de l'adresse."
@@ -14730,13 +14737,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "address_suffix": "Address Suffix",
           "house_letter": "Lettre de maison",
           "house_number": "Numéro civique",
           "postcode": "Code postal",
-          "service": "Service",
-          "suffix": "Suffix"
+          "service": "Service"
         },
         "data_description": {
+          "address_suffix": "Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).",
           "house_letter": "Lettre de maison de l'adresse.",
           "house_number": "Numéro de maison de l'adresse.",
           "postcode": "Code postal de l'adresse."
@@ -14747,13 +14755,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
+          "address_suffix": "Address Suffix",
           "house_number": "Numéro civique",
           "organization": "Organization",
           "postcode": "Code postal"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address_suffix": "Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).",
           "house_number": "Numéro de maison de l'adresse.",
           "postcode": "Code postal de l'adresse."
         }
@@ -14763,12 +14772,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "addition": "Ajout",
+          "address_suffix": "Address Suffix",
           "house_number": "Numéro civique",
           "organization": "Organization",
           "postcode": "Code postal"
         },
         "data_description": {
+          "address_suffix": "Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).",
           "house_number": "Numéro de maison de l'adresse.",
           "postcode": "Code postal de l'adresse."
         }
@@ -18202,12 +18212,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address_postcode": "Code postal",
-          "house_number_or_name": "Numéro civique"
+          "house_number_or_name": "Numéro civique",
+          "postcode": "Code postal"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "house_number_or_name": "Numéro ou nom de la maison de l'adresse."
+          "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
+          "postcode": "Code postal de l'adresse."
         }
       },
       "reconfigure_allerdale_gov_uk": {
@@ -18215,11 +18226,12 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address_postcode": "Code postal",
-          "house_number_or_name": "Numéro civique"
+          "house_number_or_name": "Numéro civique",
+          "postcode": "Code postal"
         },
         "data_description": {
-          "house_number_or_name": "Numéro ou nom de la maison de l'adresse."
+          "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
+          "postcode": "Code postal de l'adresse."
         }
       },
       "args_ambervalley_gov_uk": {
@@ -20292,15 +20304,17 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Code postal",
-          "address_street": "Rue",
           "house_number_or_name": "Numéro civique",
+          "postcode": "Code postal",
+          "street": "Rue",
           "street_address": "Adresse de rue",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
           "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
+          "postcode": "Code postal de l'adresse.",
+          "street": "Rue de l'adresse.",
           "street_address": "Adresse complète."
         }
       },
@@ -20310,14 +20324,16 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Code postal",
-          "address_street": "Rue",
           "house_number_or_name": "Numéro civique",
+          "postcode": "Code postal",
+          "street": "Rue",
           "street_address": "Adresse de rue",
           "uprn": "UPRN"
         },
         "data_description": {
           "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
+          "postcode": "Code postal de l'adresse.",
+          "street": "Rue de l'adresse.",
           "street_address": "Adresse complète."
         }
       },
@@ -22455,12 +22471,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Code postal",
-          "address_street": "Rue",
+          "postcode": "Code postal",
+          "street": "Rue",
           "street_address": "Adresse de rue"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "postcode": "Code postal de l'adresse.",
+          "street": "Rue de l'adresse.",
           "street_address": "Adresse complète."
         }
       },
@@ -22470,11 +22488,13 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Code postal",
-          "address_street": "Rue",
+          "postcode": "Code postal",
+          "street": "Rue",
           "street_address": "Adresse de rue"
         },
         "data_description": {
+          "postcode": "Code postal de l'adresse.",
+          "street": "Rue de l'adresse.",
           "street_address": "Adresse complète."
         }
       },
@@ -24638,12 +24658,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Code postal",
-          "address_street": "Rue",
+          "postcode": "Code postal",
+          "street": "Rue",
           "street_address": "Adresse de rue"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "postcode": "Code postal de l'adresse.",
+          "street": "Rue de l'adresse.",
           "street_address": "Adresse complète."
         }
       },
@@ -24653,11 +24675,13 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Code postal",
-          "address_street": "Rue",
+          "postcode": "Code postal",
+          "street": "Rue",
           "street_address": "Adresse de rue"
         },
         "data_description": {
+          "postcode": "Code postal de l'adresse.",
+          "street": "Rue de l'adresse.",
           "street_address": "Adresse complète."
         }
       },

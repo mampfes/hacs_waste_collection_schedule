@@ -232,7 +232,7 @@ PARAM_DESCRIPTIONS = {
         "postcode": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
         "street": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
         "house_number": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-        "addition": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
+        "address_suffix": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
         "calendar": "(Old website only) If you see multiple collection calendars for your municipality (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
         "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
         "calendar_splitter": "(Old website only) rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
@@ -247,7 +247,7 @@ PARAM_DESCRIPTIONS = {
         "postcode": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
         "street": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
         "house_number": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
-        "addition": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
+        "address_suffix": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
         "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
         "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
         "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
@@ -379,7 +379,7 @@ class Source:
         postcode: str | None = None,
         street: str | None = None,
         house_number: str | None = None,
-        addition: str | None = None,
+        address_suffix: str | None = None,
         calendar: list[str] | str | None = None,
         calendar_title_separator: str = ":",
         calendar_splitter: str | None = None,
@@ -392,7 +392,7 @@ class Source:
         self._plz = postcode
         self._street = street
         self._hnr = house_number
-        self._addition = addition
+        self._addition = address_suffix
 
         # ##  END arguments for new version
 
@@ -604,7 +604,7 @@ class Source:
             return data
 
         return self.get_genereic(
-            s, data, "addition", self._addition, "zusatz", do_nothing
+            s, data, "address_suffix", self._addition, "zusatz", do_nothing
         )
 
     def get_hnr(self, s: requests.Session, data: dict[str, str]) -> dict[str, str]:

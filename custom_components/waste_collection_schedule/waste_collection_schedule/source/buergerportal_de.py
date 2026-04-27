@@ -31,20 +31,20 @@ TEST_CASES = {
         "district": "Bullay",
         "subdistrict": "Bullay",
         "street": "Layenweg",
-        "number": 3,
+        "house_number": 3,
     },
     "Alb-Donau": {
         "service_provider": "alb_donau",
         "district": "Blaubeuren",
         "street": "Alberstraße",
-        "number": 3,
+        "house_number": 3,
     },
     "Biedenkopf": {
         "service_provider": "biedenkopf",
         "district": "Biedenkopf",
         "subdistrict": "Breidenstein",
         "street": "Auf dem Hammer",
-        "number": 1,
+        "house_number": 1,
     },
 }
 
@@ -132,14 +132,14 @@ class Source:
         district: str,
         street: str,
         subdistrict: Optional[str] = None,
-        number: Union[int, str, None] = None,
+        house_number: Union[int, str, None] = None,
         show_volume: bool = False,
     ):
         self.api_url = get_api_map()[service_provider]
         self.district = district
         self.subdistrict = subdistrict
         self.street = street
-        self.number = number
+        self.house_number = house_number
         self.show_volume = show_volume
         self.new_params = True
 
@@ -166,8 +166,8 @@ class Source:
                 "Abfuhrplan/GefaesstarifArt/Abfallart/Name,Abfuhrplan/GefaesstarifArt/Volumen/VolumenWert"
             )
 
-        if self.number:
-            params["hausNr"] = (f"'{self.number}'",)
+        if self.house_number:
+            params["hausNr"] = (f"'{self.house_number}'",)
         return session.get(
             f"{self.api_url}/AbfuhrtermineAbJahr",
             params=params,
@@ -182,7 +182,7 @@ class Source:
 
         district_id = self.fetch_district_id(session)
         street_id = self.fetch_street_id(session, district_id)
-        # Eventually verify house number in the future
+        # Eventually verify house house_number in the future
 
         res = self._do_fetch_request(
             session, district_id, street_id, year, self.new_params

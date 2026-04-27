@@ -182,8 +182,6 @@ params:
   suburb:
     description: Suburb of the property.
     label: Suburb
-  suffix:
-    label: Suffix
   town:
     description: Town of the property.
     label: Town

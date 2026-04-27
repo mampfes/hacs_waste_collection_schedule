@@ -5,7 +5,7 @@
 params:
   district:
     label: Ort
-  number:
+  house_number:
     label: Hausnummer
   service_provider:
     label: Betreiber

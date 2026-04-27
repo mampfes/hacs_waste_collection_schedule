@@ -33,13 +33,13 @@ TEST_CASES = {
         "city": "Böbrach",
         "street": "Bärnerauweg",
         "house_number": 10,
-        "addition": "A",
+        "address_suffix": "A",
     },
     "Am Bäckergütl 1, 94094 Malching": {
         "city": "Malching",
         "street": "Am Bäckergütl",
         "house_number": 1,
-        "addition": "",
+        "address_suffix": "",
     },
 }
 
@@ -59,11 +59,11 @@ API_URL = (
 
 
 class Source:
-    def __init__(self, city, street, house_number, addition=""):
+    def __init__(self, city, street, house_number, address_suffix=""):
         self._city = city
         self._street = street
         self._house_number = house_number
-        self._address_suffix = addition
+        self._address_suffix = address_suffix
         self._boundary = "WebKitFormBoundary" + "".join(
             random.sample(string.ascii_letters + string.digits, 16)
         )

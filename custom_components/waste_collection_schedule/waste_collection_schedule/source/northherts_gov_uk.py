@@ -6,24 +6,24 @@ DESCRIPTION = "Source for www.north-herts.gov.uk services for North Herts Counci
 URL = "https://www.north-herts.gov.uk/"
 TEST_CASES = {
     "Example": {
-        "address_postcode": "SG4 9QY",
+        "postcode": "SG4 9QY",
         "address_name_numer": "26",
-        "address_street": "BENSLOW RISE",
+        "street": "BENSLOW RISE",
     },
     "Example No Postcode Space": {
-        "address_postcode": "SG49QY",
+        "postcode": "SG49QY",
         "address_name_numer": "26",
-        "address_street": "BENSLOW RISE",
+        "street": "BENSLOW RISE",
     },
     "Example fuzzy matching": {
-        "address_postcode": "SG6 4EG",
+        "postcode": "SG6 4EG",
         "address_name_numer": "4",
-        "address_street": "Wilbury Road",
+        "street": "Wilbury Road",
     },
     "Example garden waste": {
-        "address_postcode": "SG8 5BN",
+        "postcode": "SG8 5BN",
         "address_name_numer": "37",
-        "address_street": "Heathfield",
+        "street": "Heathfield",
     },
 }
 ICON_MAP = {
@@ -42,15 +42,15 @@ class Source:
     def __init__(
         self,
         address_name_numer: str | None = None,
-        address_street: str | None = None,
+        street: str | None = None,
         street_address: str | None = None,
-        address_postcode: str | None = None,
+        postcode: str | None = None,
     ):
         self._client = Cloud9Client("northherts", icon_keywords=ICON_MAP)
         self._address_name_numer = address_name_numer
-        self._address_street = address_street
+        self._address_street = street
         self._street_town = street_address
-        self._address_postcode = address_postcode
+        self._address_postcode = postcode
 
     def fetch(self) -> list[Collection]:
         search_query = " ".join(
@@ -67,7 +67,7 @@ class Source:
             postcode=self._address_postcode,
             address_string=search_query,
             address_name_number=self._address_name_numer,
-            address_street=self._address_street,
+            street=self._address_street,
             street_address=self._street_town,
-            argument_name="address_postcode",
+            argument_name="postcode",
         )

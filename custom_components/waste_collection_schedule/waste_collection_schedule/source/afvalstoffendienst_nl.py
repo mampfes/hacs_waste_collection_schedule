@@ -20,7 +20,7 @@ TEST_CASES = {
     "s-Hertogenbosch, 5212SB 41A": {
         "postcode": "5212SB",
         "house_number": "41",
-        "addition": "A",
+        "address_suffix": "A",
     },
     "Heusden, 5256EJ, 32": {
         "postcode": "5256EJ",
@@ -33,7 +33,7 @@ TEST_CASES = {
     "Cromvoirt 5266AD 31": {
         "postcode": "5266AH",
         "house_number": "102",
-        "addition": "A",
+        "address_suffix": "A",
     },
     "Rosmalen 5241AV 18": {
         "postcode": "5241AV",
@@ -62,12 +62,12 @@ class Source:
         self,
         postcode: str,
         house_number: str | int,
-        addition: str | None = None,
+        address_suffix: str | None = None,
         region: str | None = None,
     ):
         self._postcode: str = postcode.replace(" ", "").upper()
         self._house_number: str | int = house_number
-        self._addition: str | None = addition.lower() if addition else None
+        self._addition: str | None = address_suffix.lower() if address_suffix else None
         if region is not None:
             _LOGGER.debug("region argument is ignored; API no longer uses it")
 
@@ -78,7 +78,9 @@ class Source:
         addresses = response.json()
 
         if len(addresses) == 0:
-            raise SourceArgumentException("postcode", "Address is not within service area. Please check.")
+            raise SourceArgumentException(
+                "postcode", "Address is not within service area. Please check."
+            )
 
         if self._addition:
             for address in addresses:

@@ -8,15 +8,15 @@ DESCRIPTION = "Source for www.allerdale.gov.uk services for Allerdale Borough Co
 URL = "https://www.allerdale.gov.uk"
 TEST_CASES = {
     "Keswick": {
-        "address_postcode": "CA12 4HU",
+        "postcode": "CA12 4HU",
         "house_number_or_name": "11",
     },
     "Workington": {
-        "address_postcode": "CA14 3NS",
+        "postcode": "CA14 3NS",
         "house_number_or_name": "177",
     },
     "Wigton": {
-        "address_postcode": "CA7 9RS",
+        "postcode": "CA7 9RS",
         "house_number_or_name": "55",
     },
 }
@@ -32,16 +32,16 @@ class Source:
     def __init__(
         self,
         house_number_or_name=None,
-        address_postcode=None,
+        postcode=None,
     ):
         self._address_name_number = house_number_or_name
-        self._address_postcode = address_postcode
+        self._address_postcode = postcode
         self._client = WhitespaceClient(API_URL)
 
     def fetch(self):
         schedule = self._client.fetch_schedule(
             house_number_or_name=self._address_name_number,
-            address_postcode=self._address_postcode,
+            postcode=self._address_postcode,
         )
 
         entries = []

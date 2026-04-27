@@ -5,7 +5,7 @@
 # parameter name.
 ---
 params:
-  addition:
+  address_suffix:
     label: Addition
   calendar_splitter:
     label: Calendar entry splitter

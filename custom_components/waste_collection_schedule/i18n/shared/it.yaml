@@ -157,8 +157,6 @@ params:
     label: Numero Strada
   suburb:
     description: Sobborgo dell'indirizzo.
-  suffix:
-    label: Suffisso
   town:
     description: Paese dell'indirizzo.
     label: Città

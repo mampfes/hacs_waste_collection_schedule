@@ -8,14 +8,14 @@ DESCRIPTION = "Source for www.waverley.gov.uk services for Waverley Borough Coun
 URL = "https://waverley.gov.uk"
 TEST_CASES = {
     "Example": {
-        "address_postcode": "GU8 5QQ",
+        "postcode": "GU8 5QQ",
         "address_name_numer": "1",
-        "address_street": "Gasden Drive",
+        "street": "Gasden Drive",
     },
     "Example No Postcode Space": {
-        "address_postcode": "GU85QQ",
+        "postcode": "GU85QQ",
         "address_name_numer": "1",
-        "address_street": "Gasden Drive",
+        "street": "Gasden Drive",
     },
 }
 ICON_MAP = {
@@ -32,21 +32,21 @@ class Source:
     def __init__(
         self,
         address_name_numer=None,
-        address_street=None,
+        street=None,
         street_address=None,
-        address_postcode=None,
+        postcode=None,
     ):
         self._address_name_numer = address_name_numer
-        self._address_street = address_street
+        self._address_street = street
         self._street_town = street_address
-        self._address_postcode = address_postcode
+        self._address_postcode = postcode
         self._client = WhitespaceClient(API_URL)
 
     def fetch(self):
         schedule = self._client.fetch_schedule(
             address_name_number=self._address_name_numer,
-            address_postcode=self._address_postcode,
-            address_street=self._address_street,
+            postcode=self._address_postcode,
+            street=self._address_street,
             street_address=self._street_town,
         )
 

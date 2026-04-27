@@ -2,17 +2,11 @@
 # Wird von pyspelling gegen das de_DE-Wörterbuch geprüft.
 ---
 params:
-  addition:
-    label: Zusatz
   address:
     description: Adresse.
     label: Adresse
   address_id:
     description: Adresskennung.
-  address_postcode:
-    label: Postleitzahl
-  address_street:
-    label: Straße
   address_suffix:
     description: Adresszusatz (z. B. Wohnungs- oder Einheitskennung).
   area:

@@ -29,7 +29,7 @@ TEST_CASES = {
         "organization": "rmn",
         "postcode": "3437GS",
         "house_number": 2,
-        "addition": "A",
+        "address_suffix": "A",
     },
     "BAT Tilburg": {
         "organization": "bat",
@@ -94,10 +94,10 @@ class Source:
         organization: Organization,
         postcode: str,
         house_number: str,
-        addition: str = "",
+        address_suffix: str = "",
     ):
         self._api_key: str = "AIzaSyA6NkRqJypTfP-cjWzrZNFJzPUbBaGjOdk"
-        self._addition: str = addition
+        self._addition: str = address_suffix
         self._post_code: str = postcode
         self._house_number: str = house_number
         self._url: str = (
@@ -149,7 +149,10 @@ class Source:
             return
 
         for address in payload:
-            if "addition" in address and address["addition"] == self._addition.upper():
+            if (
+                "address_suffix" in address
+                and address["address_suffix"] == self._addition.upper()
+            ):
                 self.address_id = address["addressId"]
 
         if not self._address_id:

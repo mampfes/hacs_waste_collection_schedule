@@ -14,17 +14,17 @@ DESCRIPTION = "Source for www.eastherts.gov.uk services for East Herts Council."
 URL = "https://www.eastherts.gov.uk"
 TEST_CASES = {
     "Example": {
-        "address_postcode": "SG9 9AA",
+        "postcode": "SG9 9AA",
         "house_number_or_name": "1",
     },
     "Example No Postcode Space": {
-        "address_postcode": "SG99AA",
+        "postcode": "SG99AA",
         "house_number_or_name": "1",
     },
     "UPRN only": {"uprn": "100080738904"},
     "UPRN, POSTCODE & NUMBER": {
         "uprn": "10033104539",
-        "address_postcode": "SG9 9AA",
+        "postcode": "SG9 9AA",
         "house_number_or_name": "1",
     },
 }
@@ -55,9 +55,9 @@ class Source:
         self,
         address_name_numer=None,
         house_number_or_name=None,
-        address_street=None,
+        street=None,
         street_address=None,
-        address_postcode=None,
+        postcode=None,
         uprn=None,
     ):
 
@@ -66,22 +66,22 @@ class Source:
             if house_number_or_name is not None
             else address_name_numer
         )
-        self._address_street = address_street
+        self._address_street = street
         self._street_town = street_address
-        self._address_postcode = address_postcode
+        self._address_postcode = postcode
         self._uprn = uprn
 
         if address_name_numer is not None:
             _LOGGER.warning(
                 "address_name_numer is deprecated. Use house_number_or_name instead."
             )
-        if address_street is not None:
+        if street is not None:
             _LOGGER.warning(
-                "address_street is deprecated. Only house_number_or_name and address_postcode are required"
+                "street is deprecated. Only house_number_or_name and postcode are required"
             )
         if street_address is not None:
             _LOGGER.warning(
-                "street_address is deprecated. Only house_number_or_name and address_postcode are required"
+                "street_address is deprecated. Only house_number_or_name and postcode are required"
             )
 
     def get_uprn_from_postcode(self, s, pcode):

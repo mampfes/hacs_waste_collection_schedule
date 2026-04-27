@@ -305,12 +305,17 @@ def get_main_url(url):
 
 class Source:
     def __init__(
-        self, postcode, house_number, house_letter="", suffix="", service="hvcgroep"
+        self,
+        postcode,
+        house_number,
+        house_letter="",
+        address_suffix="",
+        service="hvcgroep",
     ):
         self.postcode = postcode
         self.house_number = house_number
         self.house_letter = house_letter
-        self.suffix = suffix
+        self.address_suffix = address_suffix
         self._url, self._icons = get_service_name_map()[service]
 
     def fetch(self):
@@ -324,12 +329,12 @@ class Source:
             raise SourceArgumentNotFound("postcode", self.postcode)
 
         bag_id = data[0]["bagid"]
-        if len(data) > 1 and (self.house_letter or self.suffix):
-            _LOGGER.info(f"Checking {self.house_letter} {self.suffix}")
+        if len(data) > 1 and (self.house_letter or self.address_suffix):
+            _LOGGER.info(f"Checking {self.house_letter} {self.address_suffix}")
             for address in data:
                 if (
                     address["huisletter"].lower() == self.house_letter.lower()
-                    and address["toevoeging"] == self.suffix
+                    and address["toevoeging"] == self.address_suffix
                 ):
                     bag_id = address["bagid"]
                     break

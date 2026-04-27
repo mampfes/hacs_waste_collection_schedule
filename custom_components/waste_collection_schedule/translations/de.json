@@ -2218,16 +2218,16 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
           "property_id": "Property Id",
           "street_name": "Straßenname",
-          "street_number": "Street Number",
           "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Hausnummer der Adresse.",
           "property_id": "Grundstückskennung.",
           "street_name": "Straßenname der Adresse.",
-          "street_number": "Hausnummer der Adresse.",
           "suburb": "Vorort der Adresse."
         }
       },
@@ -2236,15 +2236,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
           "property_id": "Property Id",
           "street_name": "Straßenname",
-          "street_number": "Street Number",
           "suburb": "Suburb"
         },
         "data_description": {
+          "house_number": "Hausnummer der Adresse.",
           "property_id": "Grundstückskennung.",
           "street_name": "Straßenname der Adresse.",
-          "street_number": "Hausnummer der Adresse.",
           "suburb": "Vorort der Adresse."
         }
       },
@@ -2985,7 +2985,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
+          "address_suffix": "Address Suffix",
           "calendar": "Kalender",
           "calendar_splitter": "Kalendereintrag-Trenner",
           "calendar_title_separator": "Kalendertitel Separator",
@@ -2998,7 +2998,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "addition": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
+          "address_suffix": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
           "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
           "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
           "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
@@ -3015,7 +3015,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
+          "address_suffix": "Address Suffix",
           "calendar": "Kalender",
           "calendar_splitter": "Kalendereintrag-Trenner",
           "calendar_title_separator": "Kalendertitel Separator",
@@ -3027,7 +3027,7 @@
           "town": "Ort"
         },
         "data_description": {
-          "addition": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
+          "address_suffix": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
           "calendar": "(Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt werden (unterschiedliche Straßen oder Rayons), können Sie hier den Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.",
           "calendar_splitter": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden. Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` ist der Trenner) Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
           "calendar_title_separator": "(Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können den Text, den die Integration verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen",
@@ -6450,7 +6450,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "district": "Ort",
-          "number": "Hausnummer",
+          "house_number": "Hausnummer",
           "service_provider": "Betreiber",
           "show_volume": "Große Container anzeigen",
           "street": "Straße",
@@ -6459,6 +6459,7 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "district": "Bezirk der Adresse.",
+          "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -6468,7 +6469,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "district": "Ort",
-          "number": "Hausnummer",
+          "house_number": "Hausnummer",
           "service_provider": "Betreiber",
           "show_volume": "Große Container anzeigen",
           "street": "Straße",
@@ -6476,6 +6477,7 @@
         },
         "data_description": {
           "district": "Bezirk der Adresse.",
+          "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -13591,13 +13593,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
+          "address_suffix": "Address Suffix",
           "city": "Stadt",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
           "city": "Stadt der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
@@ -13608,12 +13611,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
+          "address_suffix": "Address Suffix",
           "city": "Stadt",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
+          "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
           "city": "Stadt der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
@@ -14795,13 +14799,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
+          "address_suffix": "Address Suffix",
           "house_number": "Hausnummer",
           "postcode": "PLZ",
           "region": "Region"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
           "house_number": "Hausnummer der Adresse.",
           "postcode": "Postleitzahl der Adresse.",
           "region": "Region der Adresse."
@@ -14812,12 +14817,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
+          "address_suffix": "Address Suffix",
           "house_number": "Hausnummer",
           "postcode": "PLZ",
           "region": "Region"
         },
         "data_description": {
+          "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
           "house_number": "Hausnummer der Adresse.",
           "postcode": "Postleitzahl der Adresse.",
           "region": "Region der Adresse."
@@ -14828,14 +14834,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "address_suffix": "Address Suffix",
           "house_letter": "House Letter",
           "house_number": "Hausnummer",
           "postcode": "PLZ",
-          "service": "Service",
-          "suffix": "Suffix"
+          "service": "Service"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
           "house_letter": "Hausbuchstabe der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "postcode": "Postleitzahl der Adresse."
@@ -14846,13 +14853,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "address_suffix": "Address Suffix",
           "house_letter": "House Letter",
           "house_number": "Hausnummer",
           "postcode": "PLZ",
-          "service": "Service",
-          "suffix": "Suffix"
+          "service": "Service"
         },
         "data_description": {
+          "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
           "house_letter": "Hausbuchstabe der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "postcode": "Postleitzahl der Adresse."
@@ -14863,13 +14871,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
+          "address_suffix": "Address Suffix",
           "house_number": "Hausnummer",
           "organization": "Organization",
           "postcode": "PLZ"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
           "house_number": "Hausnummer der Adresse.",
           "postcode": "Postleitzahl der Adresse."
         }
@@ -14879,12 +14888,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Zusatz",
+          "address_suffix": "Address Suffix",
           "house_number": "Hausnummer",
           "organization": "Organization",
           "postcode": "PLZ"
         },
         "data_description": {
+          "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
           "house_number": "Hausnummer der Adresse.",
           "postcode": "Postleitzahl der Adresse."
         }
@@ -18333,12 +18343,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_postcode": "Postleitzahl",
-          "house_number_or_name": "Hausnummer oder Name"
+          "house_number_or_name": "Hausnummer oder Name",
+          "postcode": "PLZ"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "house_number_or_name": "Hausnummer oder -name der Adresse."
+          "house_number_or_name": "Hausnummer oder -name der Adresse.",
+          "postcode": "Postleitzahl der Adresse."
         }
       },
       "reconfigure_allerdale_gov_uk": {
@@ -18346,11 +18357,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_postcode": "Postleitzahl",
-          "house_number_or_name": "Hausnummer oder Name"
+          "house_number_or_name": "Hausnummer oder Name",
+          "postcode": "PLZ"
         },
         "data_description": {
-          "house_number_or_name": "Hausnummer oder -name der Adresse."
+          "house_number_or_name": "Hausnummer oder -name der Adresse.",
+          "postcode": "Postleitzahl der Adresse."
         }
       },
       "args_ambervalley_gov_uk": {
@@ -20423,15 +20435,17 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Postleitzahl",
-          "address_street": "Straße",
           "house_number_or_name": "Hausnummer oder Name",
+          "postcode": "PLZ",
+          "street": "Straße",
           "street_address": "Street Address",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "house_number_or_name": "Hausnummer oder -name der Adresse.",
+          "postcode": "Postleitzahl der Adresse.",
+          "street": "Straße der Adresse.",
           "street_address": "Vollständige Straßenadresse."
         }
       },
@@ -20441,14 +20455,16 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Postleitzahl",
-          "address_street": "Straße",
           "house_number_or_name": "Hausnummer oder Name",
+          "postcode": "PLZ",
+          "street": "Straße",
           "street_address": "Street Address",
           "uprn": "UPRN"
         },
         "data_description": {
           "house_number_or_name": "Hausnummer oder -name der Adresse.",
+          "postcode": "Postleitzahl der Adresse.",
+          "street": "Straße der Adresse.",
           "street_address": "Vollständige Straßenadresse."
         }
       },
@@ -22586,12 +22602,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Postleitzahl",
-          "address_street": "Straße",
+          "postcode": "PLZ",
+          "street": "Straße",
           "street_address": "Street Address"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "postcode": "Postleitzahl der Adresse.",
+          "street": "Straße der Adresse.",
           "street_address": "Vollständige Straßenadresse."
         }
       },
@@ -22601,11 +22619,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Postleitzahl",
-          "address_street": "Straße",
+          "postcode": "PLZ",
+          "street": "Straße",
           "street_address": "Street Address"
         },
         "data_description": {
+          "postcode": "Postleitzahl der Adresse.",
+          "street": "Straße der Adresse.",
           "street_address": "Vollständige Straßenadresse."
         }
       },
@@ -24769,12 +24789,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Postleitzahl",
-          "address_street": "Straße",
+          "postcode": "PLZ",
+          "street": "Straße",
           "street_address": "Street Address"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "postcode": "Postleitzahl der Adresse.",
+          "street": "Straße der Adresse.",
           "street_address": "Vollständige Straßenadresse."
         }
       },
@@ -24784,11 +24806,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Postleitzahl",
-          "address_street": "Straße",
+          "postcode": "PLZ",
+          "street": "Straße",
           "street_address": "Street Address"
         },
         "data_description": {
+          "postcode": "Postleitzahl der Adresse.",
+          "street": "Straße der Adresse.",
           "street_address": "Vollständige Straßenadresse."
         }
       },

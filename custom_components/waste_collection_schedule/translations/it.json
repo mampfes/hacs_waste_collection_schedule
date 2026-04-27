@@ -2218,16 +2218,16 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
           "property_id": "ID Proprietà",
           "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
           "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Numero civico dell'indirizzo.",
           "property_id": "Identificatore di proprietà.",
           "street_name": "Nome della via dell'indirizzo.",
-          "street_number": "Numero civico della via.",
           "suburb": "Sobborgo dell'indirizzo."
         }
       },
@@ -2236,15 +2236,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
           "property_id": "ID Proprietà",
           "street_name": "Nome Strada",
-          "street_number": "Numero Strada",
           "suburb": "Suburb"
         },
         "data_description": {
+          "house_number": "Numero civico dell'indirizzo.",
           "property_id": "Identificatore di proprietà.",
           "street_name": "Nome della via dell'indirizzo.",
-          "street_number": "Numero civico della via.",
           "suburb": "Sobborgo dell'indirizzo."
         }
       },
@@ -2985,7 +2985,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Addition",
+          "address_suffix": "Address Suffix",
           "calendar": "Calendario",
           "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
@@ -3005,7 +3005,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Addition",
+          "address_suffix": "Address Suffix",
           "calendar": "Calendario",
           "calendar_splitter": "Calendar Splitter",
           "calendar_title_separator": "Calendar Title Separator",
@@ -6398,7 +6398,7 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "district": "Distretto",
-          "number": "Numero",
+          "house_number": "Civico",
           "service_provider": "Fornitore di Servizi",
           "show_volume": "Show Volume",
           "street": "Strada",
@@ -6407,6 +6407,7 @@
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
           "district": "Distretto dell'indirizzo.",
+          "house_number": "Numero civico dell'indirizzo.",
           "street": "Via dell'indirizzo."
         }
       },
@@ -6416,7 +6417,7 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "district": "Distretto",
-          "number": "Numero",
+          "house_number": "Civico",
           "service_provider": "Fornitore di Servizi",
           "show_volume": "Show Volume",
           "street": "Strada",
@@ -6424,6 +6425,7 @@
         },
         "data_description": {
           "district": "Distretto dell'indirizzo.",
+          "house_number": "Numero civico dell'indirizzo.",
           "street": "Via dell'indirizzo."
         }
       },
@@ -13472,13 +13474,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Addition",
+          "address_suffix": "Address Suffix",
           "city": "Città",
           "house_number": "Civico",
           "street": "Strada"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address_suffix": "Suffisso dell'indirizzo (es. identificatore di appartamento o unità).",
           "city": "Città dell'indirizzo.",
           "house_number": "Numero civico dell'indirizzo.",
           "street": "Via dell'indirizzo."
@@ -13489,12 +13492,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Addition",
+          "address_suffix": "Address Suffix",
           "city": "Città",
           "house_number": "Civico",
           "street": "Strada"
         },
         "data_description": {
+          "address_suffix": "Suffisso dell'indirizzo (es. identificatore di appartamento o unità).",
           "city": "Città dell'indirizzo.",
           "house_number": "Numero civico dell'indirizzo.",
           "street": "Via dell'indirizzo."
@@ -14678,13 +14682,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Addition",
+          "address_suffix": "Address Suffix",
           "house_number": "Civico",
           "postcode": "Codice Postale CAP",
           "region": "Regione"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address_suffix": "Suffisso dell'indirizzo (es. identificatore di appartamento o unità).",
           "house_number": "Numero civico dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo.",
           "region": "Regione dell'indirizzo."
@@ -14695,12 +14700,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Addition",
+          "address_suffix": "Address Suffix",
           "house_number": "Civico",
           "postcode": "Codice Postale CAP",
           "region": "Regione"
         },
         "data_description": {
+          "address_suffix": "Suffisso dell'indirizzo (es. identificatore di appartamento o unità).",
           "house_number": "Numero civico dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo.",
           "region": "Regione dell'indirizzo."
@@ -14711,14 +14717,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "address_suffix": "Address Suffix",
           "house_letter": "Lettera Casa",
           "house_number": "Civico",
           "postcode": "Codice Postale CAP",
-          "service": "Servizio",
-          "suffix": "Suffisso"
+          "service": "Servizio"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address_suffix": "Suffisso dell'indirizzo (es. identificatore di appartamento o unità).",
           "house_letter": "Lettera della casa.",
           "house_number": "Numero civico dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo."
@@ -14729,13 +14736,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "address_suffix": "Address Suffix",
           "house_letter": "Lettera Casa",
           "house_number": "Civico",
           "postcode": "Codice Postale CAP",
-          "service": "Servizio",
-          "suffix": "Suffisso"
+          "service": "Servizio"
         },
         "data_description": {
+          "address_suffix": "Suffisso dell'indirizzo (es. identificatore di appartamento o unità).",
           "house_letter": "Lettera della casa.",
           "house_number": "Numero civico dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo."
@@ -14746,13 +14754,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Addition",
+          "address_suffix": "Address Suffix",
           "house_number": "Civico",
           "organization": "Organization",
           "postcode": "Codice Postale CAP"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address_suffix": "Suffisso dell'indirizzo (es. identificatore di appartamento o unità).",
           "house_number": "Numero civico dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo."
         }
@@ -14762,12 +14771,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Addition",
+          "address_suffix": "Address Suffix",
           "house_number": "Civico",
           "organization": "Organization",
           "postcode": "Codice Postale CAP"
         },
         "data_description": {
+          "address_suffix": "Suffisso dell'indirizzo (es. identificatore di appartamento o unità).",
           "house_number": "Numero civico dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo."
         }
@@ -18198,12 +18208,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address_postcode": "Address Postcode",
-          "house_number_or_name": "House Number Or Name"
+          "house_number_or_name": "House Number Or Name",
+          "postcode": "Codice Postale CAP"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "house_number_or_name": "Numero o nome della casa dell'indirizzo."
+          "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
+          "postcode": "Codice postale dell'indirizzo."
         }
       },
       "reconfigure_allerdale_gov_uk": {
@@ -18211,11 +18222,12 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address_postcode": "Address Postcode",
-          "house_number_or_name": "House Number Or Name"
+          "house_number_or_name": "House Number Or Name",
+          "postcode": "Codice Postale CAP"
         },
         "data_description": {
-          "house_number_or_name": "Numero o nome della casa dell'indirizzo."
+          "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
+          "postcode": "Codice postale dell'indirizzo."
         }
       },
       "args_ambervalley_gov_uk": {
@@ -20288,15 +20300,17 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Address Postcode",
-          "address_street": "Address Street",
           "house_number_or_name": "House Number Or Name",
+          "postcode": "Codice Postale CAP",
+          "street": "Strada",
           "street_address": "Indirizzo Strada",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
           "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
+          "postcode": "Codice postale dell'indirizzo.",
+          "street": "Via dell'indirizzo.",
           "street_address": "Indirizzo completo."
         }
       },
@@ -20306,14 +20320,16 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Address Postcode",
-          "address_street": "Address Street",
           "house_number_or_name": "House Number Or Name",
+          "postcode": "Codice Postale CAP",
+          "street": "Strada",
           "street_address": "Indirizzo Strada",
           "uprn": "UPRN"
         },
         "data_description": {
           "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
+          "postcode": "Codice postale dell'indirizzo.",
+          "street": "Via dell'indirizzo.",
           "street_address": "Indirizzo completo."
         }
       },
@@ -22451,12 +22467,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Address Postcode",
-          "address_street": "Address Street",
+          "postcode": "Codice Postale CAP",
+          "street": "Strada",
           "street_address": "Indirizzo Strada"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "postcode": "Codice postale dell'indirizzo.",
+          "street": "Via dell'indirizzo.",
           "street_address": "Indirizzo completo."
         }
       },
@@ -22466,11 +22484,13 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Address Postcode",
-          "address_street": "Address Street",
+          "postcode": "Codice Postale CAP",
+          "street": "Strada",
           "street_address": "Indirizzo Strada"
         },
         "data_description": {
+          "postcode": "Codice postale dell'indirizzo.",
+          "street": "Via dell'indirizzo.",
           "street_address": "Indirizzo completo."
         }
       },
@@ -24634,12 +24654,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Address Postcode",
-          "address_street": "Address Street",
+          "postcode": "Codice Postale CAP",
+          "street": "Strada",
           "street_address": "Indirizzo Strada"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "postcode": "Codice postale dell'indirizzo.",
+          "street": "Via dell'indirizzo.",
           "street_address": "Indirizzo completo."
         }
       },
@@ -24649,11 +24671,13 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address_name_numer": "Address Name Numer",
-          "address_postcode": "Address Postcode",
-          "address_street": "Address Street",
+          "postcode": "Codice Postale CAP",
+          "street": "Strada",
           "street_address": "Indirizzo Strada"
         },
         "data_description": {
+          "postcode": "Codice postale dell'indirizzo.",
+          "street": "Via dell'indirizzo.",
           "street_address": "Indirizzo completo."
         }
       },

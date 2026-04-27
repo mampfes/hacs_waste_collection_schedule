@@ -2,17 +2,11 @@
 # Vérifié orthographiquement par pyspelling avec le dictionnaire fr_FR.
 ---
 params:
-  addition:
-    label: Ajout
   address:
     description: Adresse.
     label: Adresse
   address_id:
     description: Identifiant de l'adresse.
-  address_postcode:
-    label: Code postal
-  address_street:
-    label: Rue
   address_suffix:
     description: Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).
   api_key:
