@@ -14635,9 +14635,9 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "address": "Il nome della via del tuo indirizzo a Milano (ad esempio, 'Via Monte Rosa').",
+          "address": "Indirizzo.",
           "city": "Città dell'indirizzo.",
-          "house_number": "Il numero civico del tuo indirizzo a Milano (ad esempio, '91')."
+          "house_number": "Numero civico dell'indirizzo."
         }
       },
       "reconfigure_amsa_it": {
@@ -14650,9 +14650,9 @@
           "house_number": "Numero Civico"
         },
         "data_description": {
-          "address": "Il nome della via del tuo indirizzo a Milano (ad esempio, 'Via Monte Rosa').",
+          "address": "Indirizzo.",
           "city": "Città dell'indirizzo.",
-          "house_number": "Il numero civico del tuo indirizzo a Milano (ad esempio, '91')."
+          "house_number": "Numero civico dell'indirizzo."
         }
       },
       "args_asm_pv_it": {

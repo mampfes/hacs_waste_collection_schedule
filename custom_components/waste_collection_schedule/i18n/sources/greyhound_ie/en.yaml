@@ -1,5 +1,0 @@
-# Per-source overrides for greyhound_ie (en).
----
-params:
-  pin:
-    label: PIN Number

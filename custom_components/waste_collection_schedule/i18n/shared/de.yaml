@@ -10,7 +10,7 @@ params:
     label: Adress-ID
   address_suffix:
     description: Adresszusatz (z. B. Wohnungs- oder Einheitskennung).
-    label: Adresszusatz
+    label: Hausnummerzusatz
   api_key:
     description: API-Schlüssel.
     label: API-Schlüssel
@@ -34,8 +34,8 @@ params:
     description: Trennzeichen für den Kalendertitel.
     label: Kalendertitel-Trenner
   city:
-    description: Stadt der Adresse.
-    label: Stadt
+    description: Ort der Adresse.
+    label: Ort
   city_id:
     label: Ort ID
   community:

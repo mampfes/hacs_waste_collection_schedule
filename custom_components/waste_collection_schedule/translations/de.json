@@ -1459,7 +1459,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district_id": "Bezirks-ID",
           "project_id": "Projekt-ID",
           "state": "Bundesland",
@@ -1468,7 +1468,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district_id": "Bezirkskennung.",
           "project_id": "Projektkennung.",
           "state": "Bundesland der Adresse.",
@@ -1481,7 +1481,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district_id": "Bezirks-ID",
           "project_id": "Projekt-ID",
           "state": "Bundesland",
@@ -1489,7 +1489,7 @@
           "zone_id": "Zonen-ID"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district_id": "Bezirkskennung.",
           "project_id": "Projektkennung.",
           "state": "Bundesland der Adresse.",
@@ -3056,7 +3056,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "calendar": "Kalender",
           "calendar_splitter": "Kalendereintrag-Trenner",
           "calendar_title_separator": "Kalendertitel Separator",
@@ -3086,7 +3086,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "calendar": "Kalender",
           "calendar_splitter": "Kalendereintrag-Trenner",
           "calendar_title_separator": "Kalendertitel Separator",
@@ -3196,7 +3196,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "calendar": "Kalender",
-          "city": "Stadt",
+          "city": "Ort",
           "email": "E-Mail",
           "password": "Passwort",
           "phone": "Telefon"
@@ -3204,7 +3204,7 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "calendar": "Kalender.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "reconfigure_citiesapps_com": {
@@ -3213,14 +3213,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "calendar": "Kalender",
-          "city": "Stadt",
+          "city": "Ort",
           "email": "E-Mail",
           "password": "Passwort",
           "phone": "Telefon"
         },
         "data_description": {
           "calendar": "Kalender.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "args_ics_muellapp_com": {
@@ -3441,13 +3441,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -3457,12 +3457,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -3633,7 +3633,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "municipality": "Gemeinde der Adresse."
         }
       },
@@ -3646,7 +3646,7 @@
           "municipality": "Gemeinde"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "municipality": "Gemeinde der Adresse."
         }
       },
@@ -3727,7 +3727,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -3744,7 +3744,7 @@
           "zone": "Zone"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -4269,7 +4269,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "address_id": "Adressen ID",
+          "address_id": "Adress-ID",
           "municipality": "Gemeinde",
           "street": "Straße"
         },
@@ -4287,7 +4287,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "address_id": "Adressen ID",
+          "address_id": "Adress-ID",
           "municipality": "Gemeinde",
           "street": "Straße"
         },
@@ -5276,7 +5276,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "api_key": "API-Schlüssel",
           "auto_suffix": "Auto Suffix",
           "ignored_containers": "Ignorierte Behälter",
@@ -5296,7 +5296,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "api_key": "API-Schlüssel",
           "auto_suffix": "Auto Suffix",
           "ignored_containers": "Ignorierte Behälter",
@@ -5707,12 +5707,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "reconfigure_opendata_bordeauxmetropole_fr": {
@@ -5721,11 +5721,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "args_data_angers_fr": {
@@ -5734,14 +5734,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt",
+          "city": "Ort",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "reconfigure_data_angers_fr": {
@@ -5750,13 +5750,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt",
+          "city": "Ort",
           "num_voie": "Num Voie",
           "typevoie": "Typevoie"
         },
         "data_description": {
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "args_publidata_fr": {
@@ -6328,7 +6328,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -6344,7 +6344,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -6413,12 +6413,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -6427,11 +6427,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -6718,14 +6718,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "service": "Dienst",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "service": "Dienst.",
           "street": "Straße der Adresse."
@@ -6736,13 +6736,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "service": "Dienst",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "service": "Dienst.",
           "street": "Straße der Adresse."
@@ -6754,11 +6754,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "area": "Gebiet",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "reconfigure_abfalltermine_forchheim_de": {
@@ -6767,10 +6767,10 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "area": "Gebiet",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "args_ics_mein_abfallkalender_online": {
@@ -7013,12 +7013,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7027,11 +7027,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7226,7 +7226,7 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -7250,7 +7250,7 @@
         },
         "data_description": {
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -7283,7 +7283,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
@@ -7299,7 +7299,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
@@ -7417,7 +7417,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7430,7 +7430,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7440,7 +7440,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "abfall": "Abfall",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "house_number": "Hausnummer",
           "municipality": "Gemeinde",
@@ -7449,7 +7449,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "municipality": "Gemeinde der Adresse.",
@@ -7463,7 +7463,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "abfall": "Abfall",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "house_number": "Hausnummer",
           "municipality": "Gemeinde",
@@ -7471,7 +7471,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "municipality": "Gemeinde der Adresse.",
@@ -7586,7 +7586,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7599,7 +7599,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7613,7 +7613,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7626,7 +7626,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7692,7 +7692,7 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -7709,7 +7709,7 @@
         },
         "data_description": {
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -7719,12 +7719,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7733,11 +7733,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -7830,7 +7830,7 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -7847,7 +7847,7 @@
         },
         "data_description": {
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -7906,13 +7906,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -7922,12 +7922,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -8072,7 +8072,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
@@ -8090,7 +8090,7 @@
           "subdomain": "Subdomain"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
@@ -8188,7 +8188,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "postcode": "Postleitzahl der Adresse.",
           "street": "Straße der Adresse."
@@ -8205,7 +8205,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "postcode": "Postleitzahl der Adresse.",
           "street": "Straße der Adresse."
@@ -8267,7 +8267,7 @@
           "calendar_title": "Kalender Titel",
           "app_id": "App Id",
           "bundesland": "Bundesland",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "house_number": "Hausnummer",
           "landkreis": "Landkreis",
@@ -8275,7 +8275,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
@@ -8288,14 +8288,14 @@
           "calendar_title": "Kalender Titel",
           "app_id": "App Id",
           "bundesland": "Bundesland",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "house_number": "Hausnummer",
           "landkreis": "Landkreis",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
@@ -8306,13 +8306,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "state": "Bundesland",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "state": "Bundesland der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -8322,12 +8322,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "state": "Bundesland",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "state": "Bundesland der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -8395,7 +8395,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -8413,7 +8413,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -8724,12 +8724,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -8738,11 +8738,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -8758,7 +8758,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "four_weekly_rest": "Aktivieren, wenn ein 4-wöchentlicher Abfuhrrythmus für die Restabfalltonne beantragt wurde.",
           "street": "Straße der Adresse.",
           "street_section": "Nur erforderlich, wenn die Straße in mehrere Abschnitte aufgeteilt ist (z.B. 'nördl.d. A 28')."
@@ -8775,7 +8775,7 @@
           "street_section": "Straßenabschnitt"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "four_weekly_rest": "Aktivieren, wenn ein 4-wöchentlicher Abfuhrrythmus für die Restabfalltonne beantragt wurde.",
           "street": "Straße der Adresse.",
           "street_section": "Nur erforderlich, wenn die Straße in mehrere Abschnitte aufgeteilt ist (z.B. 'nördl.d. A 28')."
@@ -8786,14 +8786,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "nummer": "Nummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -8803,13 +8803,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "nummer": "Nummer",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -8945,13 +8945,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -8961,12 +8961,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -9122,13 +9122,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -9138,12 +9138,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -9202,7 +9202,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
@@ -9218,7 +9218,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
@@ -9233,12 +9233,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse."
         }
       },
@@ -9247,11 +9247,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse."
         }
       },
@@ -9309,7 +9309,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
@@ -9325,7 +9325,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
@@ -9694,7 +9694,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -9710,7 +9710,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -10143,7 +10143,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
@@ -10160,7 +10160,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
@@ -10176,7 +10176,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -10189,7 +10189,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -10925,7 +10925,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -10940,7 +10940,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -11273,13 +11273,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -11289,12 +11289,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "district": "Bezirk",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -11577,7 +11577,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -11592,7 +11592,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -11705,7 +11705,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -11718,7 +11718,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -11960,12 +11960,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -11974,11 +11974,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -12108,14 +12108,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "hnr_zusatz": "Hnr Zusatz",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -12125,13 +12125,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "hnr_zusatz": "Hnr Zusatz",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -12146,7 +12146,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse."
         }
       },
@@ -12159,7 +12159,7 @@
           "district": "Ort, Ortsteil"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse."
         }
       },
@@ -12290,7 +12290,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -12306,7 +12306,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -12370,7 +12370,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -12383,7 +12383,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -12670,7 +12670,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "reconfigure_mzvhegau_de": {
@@ -12681,7 +12681,7 @@
           "city": "Stadt/Gemeinde"
         },
         "data_description": {
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "args_mzv_rotenburg_bebra_de": {
@@ -12954,7 +12954,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -12969,7 +12969,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -12987,7 +12987,7 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -13004,7 +13004,7 @@
         },
         "data_description": {
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -13212,7 +13212,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -13225,7 +13225,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -14096,17 +14096,16 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street_name": "Straßenname",
           "street_number": "Hausnummer"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
-          "street_name": "Straßenname der Adresse.",
-          "street_number": "Hausnummer der Adresse."
+          "street_name": "Straßenname der Adresse."
         }
       },
       "reconfigure_staedteservice_de": {
@@ -14114,16 +14113,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street_name": "Straßenname",
           "street_number": "Hausnummer"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
-          "street_name": "Straßenname der Adresse.",
-          "street_number": "Hausnummer der Adresse."
+          "street_name": "Straßenname der Adresse."
         }
       },
       "args_ics_swk_herford_de": {
@@ -14326,7 +14324,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straßenname — genaue Schreibweise des Anbieters verwenden"
         }
       },
@@ -14339,7 +14337,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straßenname — genaue Schreibweise des Anbieters verwenden"
         }
       },
@@ -14696,15 +14694,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
-          "city": "Stadt",
+          "address_suffix": "Hausnummerzusatz",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -14714,14 +14712,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
-          "city": "Stadt",
+          "address_suffix": "Hausnummerzusatz",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "address_suffix": "Adresszusatz (z. B. Wohnungs- oder Einheitskennung).",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -14861,7 +14859,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straßenname (bei einigen Orten nicht erforderlich)"
         }
       },
@@ -14874,7 +14872,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straßenname (bei einigen Orten nicht erforderlich)"
         }
       },
@@ -14890,7 +14888,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -14906,7 +14904,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -15006,7 +15004,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -15021,7 +15019,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "district": "Bezirk der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -15105,13 +15103,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street_name": "Straßenname der Adresse."
         }
@@ -15121,12 +15119,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street_name": "Straßenname der Adresse."
         }
@@ -15169,13 +15167,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -15185,12 +15183,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -15295,12 +15293,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse."
+          "address": "Adresse.",
+          "city": "Ort der Adresse.",
+          "house_number": "Hausnummer der Adresse."
         }
       },
       "reconfigure_amsa_it": {
@@ -15309,11 +15309,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer"
         },
         "data_description": {
-          "city": "Stadt der Adresse."
+          "address": "Adresse.",
+          "city": "Ort der Adresse.",
+          "house_number": "Hausnummer der Adresse."
         }
       },
       "args_asm_pv_it": {
@@ -15346,13 +15348,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -15362,12 +15364,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -15506,13 +15508,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -15522,12 +15524,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -15928,7 +15930,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "postcode": "PLZ"
         },
@@ -15944,7 +15946,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "postcode": "PLZ"
         },
@@ -15959,7 +15961,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "postcode": "PLZ",
           "region": "Region"
@@ -15977,7 +15979,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "postcode": "PLZ",
           "region": "Region"
@@ -15994,7 +15996,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_letter": "Hausbuchstabe",
           "house_number": "Hausnummer",
           "postcode": "PLZ",
@@ -16014,7 +16016,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_letter": "Hausbuchstabe",
           "house_number": "Hausnummer",
           "postcode": "PLZ",
@@ -16033,7 +16035,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "organization": "Organization",
           "postcode": "PLZ"
@@ -16050,7 +16052,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "organization": "Organization",
           "postcode": "PLZ"
@@ -16801,7 +16803,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
@@ -16817,7 +16819,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
@@ -16963,7 +16965,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "point_id": "Point Id",
           "street_id": "Straßen ID",
@@ -16982,7 +16984,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address_suffix": "Adresszusatz",
+          "address_suffix": "Hausnummerzusatz",
           "house_number": "Hausnummer",
           "point_id": "Point Id",
           "street_id": "Straßen ID",
@@ -17199,7 +17201,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt",
+          "city": "Ort",
           "english": "English",
           "house_number": "Hausnummer",
           "voivodeship": "Voivodeship"
@@ -17207,7 +17209,7 @@
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address": "Adresse.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse."
         }
       },
@@ -17217,14 +17219,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt",
+          "city": "Ort",
           "english": "English",
           "house_number": "Hausnummer",
           "voivodeship": "Voivodeship"
         },
         "data_description": {
           "address": "Adresse.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse."
         }
       },
@@ -17260,13 +17262,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -17276,12 +17278,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street": "Straße der Adresse."
         }
@@ -17346,7 +17348,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
@@ -17360,7 +17362,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street": "Straße"
         },
@@ -17472,14 +17474,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "commune_name": "Commune Name",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street_name": "Straßenname der Adresse."
         }
@@ -17489,13 +17491,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "commune_name": "Commune Name",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street_name": "Straßenname der Adresse."
         }
@@ -17505,13 +17507,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street_name": "Straßenname der Adresse."
         }
@@ -17521,12 +17523,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street_name": "Straßenname der Adresse."
         }
@@ -17693,13 +17695,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street_name": "Straßenname der Adresse."
         }
@@ -17709,12 +17711,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "house_number": "Hausnummer",
           "street_name": "Straßenname"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "house_number": "Hausnummer der Adresse.",
           "street_name": "Straßenname der Adresse."
         }
@@ -17776,13 +17778,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "frequency": "Häufigkeit",
           "location": "Position"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "frequency": "Häufigkeit.",
           "location": "Geografischer Standort."
         }
@@ -17792,12 +17794,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "frequency": "Häufigkeit",
           "location": "Position"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "frequency": "Häufigkeit.",
           "location": "Geografischer Standort."
         }
@@ -18052,12 +18054,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "reconfigure_skaraborg_se": {
@@ -18066,11 +18068,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "args_avfallsapp_se": {
@@ -18185,12 +18187,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -18199,11 +18201,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -18617,12 +18619,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -18631,11 +18633,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -18645,12 +18647,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "reconfigure_sjobo_se": {
@@ -18659,11 +18661,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "args_srvatervinning_se": {
@@ -18672,12 +18674,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "reconfigure_srvatervinning_se": {
@@ -18686,11 +18688,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "city": "Stadt"
+          "city": "Ort"
         },
         "data_description": {
           "address": "Adresse.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "args_ssam_se": {
@@ -18764,12 +18766,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -18778,11 +18780,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -18862,12 +18864,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -18876,11 +18878,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Stadt",
+          "city": "Ort",
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt der Adresse.",
+          "city": "Ort der Adresse.",
           "street": "Straße der Adresse."
         }
       },
@@ -19253,7 +19255,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "reconfigure_lindau_ch": {
@@ -19264,7 +19266,7 @@
           "city": "Ort"
         },
         "data_description": {
-          "city": "Stadt der Adresse."
+          "city": "Ort der Adresse."
         }
       },
       "args_ics_mopage_ch": {

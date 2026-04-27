@@ -3,8 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  city:
-    label: Ort
   four_weekly_rest:
     description: Aktivieren, wenn ein 4-wöchentlicher Abfuhrrythmus für die Restabfalltonne
       beantragt wurde.

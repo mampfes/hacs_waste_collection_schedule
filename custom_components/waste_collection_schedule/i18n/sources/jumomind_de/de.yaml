@@ -5,5 +5,3 @@
 params:
   area_id:
     label: Bereich ID
-  city:
-    label: Ort

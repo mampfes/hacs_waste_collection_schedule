@@ -4723,8 +4723,8 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "municipality": "Nom de la municipalité dans le MRC de Roussillon",
-          "sector": "En option, Secteur de Châteauguay, nord-ouest ou est"
+          "municipality": "Municipalité",
+          "sector": "Secteur"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
@@ -4736,8 +4736,8 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "municipality": "Nom de la municipalité dans le MRC de Roussillon",
-          "sector": "En option, Secteur de Châteauguay, nord-ouest ou est"
+          "municipality": "Municipalité",
+          "sector": "Secteur"
         },
         "data_description": {
           "municipality": "Municipalité de l'adresse."
@@ -5202,8 +5202,7 @@
           "city_part": "Quartier de ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "city_part": "Quartier de la ville."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
         }
       },
       "reconfigure_mestorudna_cz": {
@@ -5213,9 +5212,7 @@
           "calendar_title": "Titre du Calendrier",
           "city_part": "Quartier de ville"
         },
-        "data_description": {
-          "city_part": "Quartier de la ville."
-        }
+        "data_description": {}
       },
       "args_tsceskybrod_cz": {
         "title": "Configurer la Source",
@@ -14900,7 +14897,9 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "city": "Ville de l'adresse."
+          "address": "Adresse.",
+          "city": "Ville de l'adresse.",
+          "house_number": "Numéro de maison de l'adresse."
         }
       },
       "reconfigure_amsa_it": {
@@ -14913,7 +14912,9 @@
           "house_number": "Numéro civique"
         },
         "data_description": {
-          "city": "Ville de l'adresse."
+          "address": "Adresse.",
+          "city": "Ville de l'adresse.",
+          "house_number": "Numéro de maison de l'adresse."
         }
       },
       "args_asm_pv_it": {

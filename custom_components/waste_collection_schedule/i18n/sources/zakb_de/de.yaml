@@ -3,7 +3,5 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  city:
-    label: Ort
   hnr_zusatz:
     label: Hausnummerzusatz

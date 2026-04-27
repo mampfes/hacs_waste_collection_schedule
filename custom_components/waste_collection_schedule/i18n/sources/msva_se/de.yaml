@@ -8,7 +8,6 @@ params:
     label: Zusatzinformation
   city:
     description: 'Ortschaft innerhalb der Gemeinde Sundsvall. Standard: ''Sundsvall''.'
-    label: Ort
   house_number:
     description: Hausnummer, z.B. '18'.
   postcode:

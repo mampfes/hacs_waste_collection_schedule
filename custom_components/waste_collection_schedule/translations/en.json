@@ -164,9 +164,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "The district name of the property, as displayed on the FRWA web site.",
-          "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
-          "street": "The street name of the property, as displayed on the FRWA web site."
+          "district": "District",
+          "name_or_number": "Name Or Number",
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -179,9 +179,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "The district name of the property, as displayed on the FRWA web site.",
-          "name_or_number": "The number or name of the property, as displayed on the FRWA web site.",
-          "street": "The street name of the property, as displayed on the FRWA web site."
+          "district": "District",
+          "name_or_number": "Name Or Number",
+          "street": "Street"
         },
         "data_description": {
           "district": "District of the property.",
@@ -16108,7 +16108,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "account_number": "Account Number",
-          "pin": "PIN Number"
+          "pin": "Pin"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -16120,7 +16120,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "account_number": "Account Number",
-          "pin": "PIN Number"
+          "pin": "Pin"
         },
         "data_description": {}
       },
@@ -16211,7 +16211,9 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "City of the property."
+          "address": "Address of the property.",
+          "city": "City of the property.",
+          "house_number": "House number of the property."
         }
       },
       "reconfigure_amsa_it": {
@@ -16224,7 +16226,9 @@
           "house_number": "House Number"
         },
         "data_description": {
-          "city": "City of the property."
+          "address": "Address of the property.",
+          "city": "City of the property.",
+          "house_number": "House number of the property."
         }
       },
       "args_asm_pv_it": {
@@ -18688,7 +18692,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City Name",
+          "city": "City",
           "house_number": "House Number",
           "street_name": "Street Name"
         },
@@ -18704,7 +18708,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City Name",
+          "city": "City",
           "house_number": "House Number",
           "street_name": "Street Name"
         },
@@ -23096,7 +23100,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Full address",
+          "address": "Address",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -23110,7 +23114,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Full address",
+          "address": "Address",
           "uprn": "UPRN"
         },
         "data_description": {
@@ -23397,7 +23401,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "email": "Email Address",
+          "email": "Email",
           "password": "Password",
           "uprn": "UPRN"
         },
@@ -23413,7 +23417,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "email": "Email Address",
+          "email": "Email",
           "password": "Password",
           "uprn": "UPRN"
         },
@@ -27534,9 +27538,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "The unique property id assigned to your property",
-          "x": "The 6-figure Easting grid reference assigned to your property.",
-          "y": "The 6-figure Northing grid reference assigned to your property."
+          "id": "ID",
+          "x": "X",
+          "y": "Y"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -27548,9 +27552,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "The unique property id assigned to your property",
-          "x": "The 6-figure Easting grid reference assigned to your property.",
-          "y": "The 6-figure Northing grid reference assigned to your property."
+          "id": "ID",
+          "x": "X",
+          "y": "Y"
         },
         "data_description": {
           "id": "Identifier."
