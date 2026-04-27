@@ -3,8 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  account_number:
-    description: The account number
   pin:
     description: The PIN
     label: PIN

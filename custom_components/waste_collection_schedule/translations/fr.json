@@ -24231,6 +24231,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Adresse.",
           "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
           "postcode": "Code postal de l'adresse."
         }
@@ -24245,6 +24246,7 @@
           "postcode": "Code postal"
         },
         "data_description": {
+          "address": "Adresse.",
           "house_number_or_name": "Numéro ou nom de la maison de l'adresse.",
           "postcode": "Code postal de l'adresse."
         }

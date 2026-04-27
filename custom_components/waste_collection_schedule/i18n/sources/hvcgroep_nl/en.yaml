@@ -1,5 +1,0 @@
-# Per-source overrides for hvcgroep_nl (en).
----
-params:
-  house_letter:
-    description: House letter of the property.

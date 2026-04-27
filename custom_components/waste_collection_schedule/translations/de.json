@@ -24715,6 +24715,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Adresse.",
           "house_number_or_name": "Hausnummer oder -name der Adresse.",
           "postcode": "Postleitzahl der Adresse."
         }
@@ -24729,6 +24730,7 @@
           "postcode": "PLZ"
         },
         "data_description": {
+          "address": "Adresse.",
           "house_number_or_name": "Hausnummer oder -name der Adresse.",
           "postcode": "Postleitzahl der Adresse."
         }

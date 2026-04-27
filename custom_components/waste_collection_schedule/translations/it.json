@@ -23907,6 +23907,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Indirizzo.",
           "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo."
         }
@@ -23921,6 +23922,7 @@
           "postcode": "Codice Postale CAP"
         },
         "data_description": {
+          "address": "Indirizzo.",
           "house_number_or_name": "Numero o nome della casa dell'indirizzo.",
           "postcode": "Codice postale dell'indirizzo."
         }

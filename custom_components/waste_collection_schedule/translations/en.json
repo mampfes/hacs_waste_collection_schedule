@@ -3140,7 +3140,6 @@
           "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text the integration will use, at the Abholtermine page below `Kalenderansicht`.",
           "district": "Subdomain of the waste collection provider; one of `baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `waidhofen`, `zwettl`.",
           "house_number": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it.",
-          "municipality": "Municipality name.",
           "postcode": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it.",
           "street": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it.",
           "town": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it."
@@ -3169,7 +3168,6 @@
           "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text the integration will use, at the Abholtermine page below `Kalenderansicht`.",
           "district": "Subdomain of the waste collection provider; one of `baden`, `gmuend`, `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`, `schwechat`, `waidhofen`, `zwettl`.",
           "house_number": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it.",
-          "municipality": "Municipality name.",
           "postcode": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it.",
           "street": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it.",
           "town": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it."
@@ -5970,9 +5968,7 @@
           "city": "City"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your full address",
-          "city": "Your city"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_opendata_bordeauxmetropole_fr": {
@@ -5983,10 +5979,7 @@
           "address": "Address",
           "city": "City"
         },
-        "data_description": {
-          "address": "Your full address",
-          "city": "Your city"
-        }
+        "data_description": {}
       },
       "args_data_angers_fr": {
         "title": "Configure Source",
@@ -12124,8 +12117,7 @@
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "house_number": "House number of the property.",
-          "street": "Street of the property.",
-          "village": "Village of the property."
+          "street": "Street of the property."
         }
       },
       "reconfigure_ks_boerde_de": {
@@ -12139,8 +12131,7 @@
         },
         "data_description": {
           "house_number": "House number of the property.",
-          "street": "Street of the property.",
-          "village": "Village of the property."
+          "street": "Street of the property."
         }
       },
       "args_ics_steinburg_de": {
@@ -16192,8 +16183,7 @@
           "pin": "PIN Number"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "pin": "PIN"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_greyhound_ie": {
@@ -16204,9 +16194,7 @@
           "account_number": "Account Number",
           "pin": "PIN Number"
         },
-        "data_description": {
-          "pin": "PIN"
-        }
+        "data_description": {}
       },
       "args_panda_ie": {
         "title": "Configure Source",
@@ -16218,7 +16206,6 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "account_number": "The account number",
           "pin": "The PIN"
         }
       },
@@ -16231,7 +16218,6 @@
           "pin": "PIN"
         },
         "data_description": {
-          "account_number": "The account number",
           "pin": "The PIN"
         }
       },
@@ -17028,7 +17014,6 @@
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "address_suffix": "Address suffix (e.g. flat or unit identifier).",
-          "house_letter": "House letter of the property.",
           "house_number": "House number of the property.",
           "postcode": "Postcode of the property.",
           "service": "Service."
@@ -17047,7 +17032,6 @@
         },
         "data_description": {
           "address_suffix": "Address suffix (e.g. flat or unit identifier).",
-          "house_letter": "House letter of the property.",
           "house_number": "House number of the property.",
           "postcode": "Postcode of the property.",
           "service": "Service."
@@ -18377,7 +18361,6 @@
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "additional_sides_matcher": "Additional matcher for collection sides",
-          "community": "Community of the property.",
           "district": "District of the property.",
           "g1": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
           "g2": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
@@ -18411,7 +18394,6 @@
         },
         "data_description": {
           "additional_sides_matcher": "Additional matcher for collection sides",
-          "community": "Community of the property.",
           "district": "District of the property.",
           "g1": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
           "g2": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
@@ -19627,8 +19609,7 @@
           "customer_number": "Customer Number"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Address for collection"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_narab_se": {
@@ -19639,9 +19620,7 @@
           "address": "Address",
           "customer_number": "Customer Number"
         },
-        "data_description": {
-          "address": "Address for collection"
-        }
+        "data_description": {}
       },
       "args_pireva_se": {
         "title": "Configure Source",
@@ -20087,8 +20066,7 @@
           "ortschaft": "Ortschaft"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "locality": "Village"
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_buchegg_so_ch": {
@@ -20099,9 +20077,7 @@
           "locality": "Locality",
           "ortschaft": "Ortschaft"
         },
-        "data_description": {
-          "locality": "Village"
-        }
+        "data_description": {}
       },
       "args_localcities_ch": {
         "title": "Configure Source",
@@ -26101,7 +26077,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Full address",
+          "address": "Address of the property.",
           "house_number_or_name": "House number or name of the property.",
           "postcode": "Postcode of the property."
         }
@@ -26116,7 +26092,7 @@
           "postcode": "Postcode"
         },
         "data_description": {
-          "address": "Full address",
+          "address": "Address of the property.",
           "house_number_or_name": "House number or name of the property.",
           "postcode": "Postcode of the property."
         }
