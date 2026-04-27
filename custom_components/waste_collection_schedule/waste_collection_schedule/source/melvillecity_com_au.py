@@ -20,8 +20,8 @@ URL = "https://www.melvillecity.com.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "Williams Road": {"address": "43 Williams Road, Melville, WA"},
-    "Canning Highway": {"address": "356 Canning Highway, Bicton, WA"},
+    "Williams Road": {"street_address": "43 Williams Road, Melville, WA"},
+    "Canning Highway": {"street_address": "356 Canning Highway, Bicton, WA"},
 }
 
 ICON_MAP = {
@@ -31,7 +31,7 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address including suburb "
+    "en": "Enter your street street_address including suburb "
     "(e.g. '43 Williams Road, Melville, WA'). "
     "Search at https://www.melvillecity.com.au/waste-and-environment/waste-recycling-fogo/residential-bins",
 }
@@ -60,15 +60,17 @@ WEEKDAYS = {
 
 
 class Source:
-    def __init__(self, address: str):
-        if not address:
-            raise SourceArgumentRequired("address", "A street address is required")
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        if not street_address:
+            raise SourceArgumentRequired(
+                "street_address", "A street street_address is required"
+            )
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         client = IntegrationClient(INTRAMAPS_CONFIG)
 
-        # Step 1: Geocode address via Nominatim
+        # Step 1: Geocode street_address via Nominatim
         r = requests.get(
             NOMINATIM_URL,
             params={
@@ -83,7 +85,7 @@ class Source:
         r.raise_for_status()
         results = r.json()
         if not results:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         lat = float(results[0]["lat"])
         lng = float(results[0]["lon"])
@@ -95,7 +97,7 @@ class Source:
         try:
             fields = client.search(WASTE_FORM_ID, f"{proj['x']},{proj['y']}")
         except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         entries = []
 

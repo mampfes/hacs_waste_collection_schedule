@@ -3,6 +3,5 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  address:
+  street_address:
     description: Street address with suburb (e.g. '156 Lansdowne Road KENSINGTON')
-    label: Street Address

@@ -8,7 +8,7 @@ TITLE = "RESO"
 DESCRIPTION = "Source for RESO."
 URL = "https://reso-gmbh.de"
 TEST_CASES = {
-    "Reichelsheim Kerngemeinde": {"city": "Reichelsheim", "ortsteil": "Kerngemeinde"}
+    "Reichelsheim Kerngemeinde": {"city": "Reichelsheim", "district": "Kerngemeinde"}
 }
 
 
@@ -41,9 +41,9 @@ API_URL = "https://reso-gmbh.abfallkalender.services/php/Kalender-2-ICS.php"
 
 
 class Source:
-    def __init__(self, city: str, ortsteil: str):
+    def __init__(self, city: str, district: str):
         self._ort: str = city
-        self._ortsteil: str = ortsteil
+        self._ortsteil: str = district
         self._ics = ICS(split_at=r" \+ ")
 
     def fetch(self) -> list[Collection]:

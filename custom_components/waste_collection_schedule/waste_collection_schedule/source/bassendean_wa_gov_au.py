@@ -14,8 +14,8 @@ URL = "https://www.bassendean.wa.gov.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "Kenny St": {"address": "16 Kenny St, Bassendean"},
-    "Broadway": {"address": "50 Broadway, Bassendean"},
+    "Kenny St": {"street_address": "16 Kenny St, Bassendean"},
+    "Broadway": {"street_address": "50 Broadway, Bassendean"},
 }
 
 ICON_MAP = {
@@ -56,20 +56,20 @@ RECYCLING_BASE: dict[str, date] = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             location = geocode(self._address)
             features = query_feature_layer(FEATURE_URL, geometry=location)
         except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         attrs = features[0]
         service_day = attrs.get("ServiceDay", "").strip()
         if not service_day or service_day not in WEEKDAYS:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         entries: list[Collection] = []
 

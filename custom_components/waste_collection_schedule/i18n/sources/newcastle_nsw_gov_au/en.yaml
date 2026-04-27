@@ -3,7 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  address:
+  street_address:
     description: Street address within the City of Newcastle (e.g. '1 King Street,
       Newcastle NSW 2300')
-    label: Street Address

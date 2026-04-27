@@ -9,16 +9,16 @@ URL = "https://ozoostrava.cz"
 
 TEST_CASES = {
     "Ostrava Poruba": {
-        "obec": "Ostrava",
-        "obvod": "Poruba",
-        "ulice": "Hlavní třída",
-        "cislo": "583",
+        "municipality": "Ostrava",
+        "district": "Poruba",
+        "street": "Hlavní třída",
+        "house_number": "583",
     },
     "Hladké Životice": {
-        "obec": "Hladké Životice",
-        "obvod": "Hladké Životice",
-        "ulice": "Hlavní",
-        "cislo": "12",
+        "municipality": "Hladké Životice",
+        "district": "Hladké Životice",
+        "street": "Hlavní",
+        "house_number": "12",
     },
 }
 
@@ -33,11 +33,13 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, obec: str, obvod: str, ulice: str, cislo: str):
-        self._obec = obec
-        self._obvod = obvod
-        self._ulice = ulice
-        self._cislo = cislo
+    def __init__(
+        self, municipality: str, district: str, street: str, house_number: str
+    ):
+        self._obec = municipality
+        self._obvod = district
+        self._ulice = street
+        self._cislo = house_number
 
     def fetch(self):
         params = {

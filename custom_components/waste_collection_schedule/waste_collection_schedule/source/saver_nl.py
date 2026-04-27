@@ -16,9 +16,9 @@ URL = "https://saver.nl"
 COUNTRY = "nl"
 
 TEST_CASES = {
-    "Roosendaal Eikenlaan 1": {"postcode": "4702AA", "huisnummer": 1},
-    "Oudenbosch Voorzet 1": {"postcode": "4731XR", "huisnummer": "1"},
-    "St. Willebrord Weberstraat 1": {"postcode": "4711AA", "huisnummer": 1},
+    "Roosendaal Eikenlaan 1": {"postcode": "4702AA", "house_number": 1},
+    "Oudenbosch Voorzet 1": {"postcode": "4731XR", "house_number": "1"},
+    "St. Willebrord Weberstraat 1": {"postcode": "4711AA", "house_number": 1},
 }
 
 ICON_MAP = {
@@ -48,9 +48,9 @@ API_BASE = "https://saver.nl"
 
 
 class Source:
-    def __init__(self, postcode: str, huisnummer, toevoeging: str = ""):
+    def __init__(self, postcode: str, house_number, toevoeging: str = ""):
         self._postcode = str(postcode).replace(" ", "").upper()
-        self._huisnummer = str(huisnummer).strip()
+        self._huisnummer = str(house_number).strip()
         self._toevoeging = str(toevoeging or "").strip()
 
     def fetch(self) -> list[Collection]:

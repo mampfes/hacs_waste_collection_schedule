@@ -15,8 +15,8 @@ URL = "https://www.cityofrochester.gov"
 COUNTRY = "us"
 
 TEST_CASES = {
-    "Parsells Ave (Wed/A)": {"address": "124 Parsells Ave, Rochester, NY"},
-    "Lyell Ave (Mon/B)": {"address": "200 Lyell Ave, Rochester, NY"},
+    "Parsells Ave (Wed/A)": {"street_address": "124 Parsells Ave, Rochester, NY"},
+    "Lyell Ave (Mon/B)": {"street_address": "200 Lyell Ave, Rochester, NY"},
 }
 
 ICON_MAP = {
@@ -61,14 +61,14 @@ DATE_RE = re.compile(r"(?P<month>" + "|".join(MONTHS.keys()) + r")\s+(?P<day>\d{
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             location = geocode(self._address)
         except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         entries: list[Collection] = []
 
@@ -107,7 +107,7 @@ class Source:
             pass
 
         if not entries:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         return entries
 

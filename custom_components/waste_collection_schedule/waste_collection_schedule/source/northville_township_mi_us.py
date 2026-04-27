@@ -13,8 +13,8 @@ URL = "https://www.twp.northville.mi.us"
 COUNTRY = "us"
 
 TEST_CASES = {
-    "Northville Rd": {"address": "16795 Northville Rd"},
-    "6 Mile Rd": {"address": "39715 6 Mile Rd"},
+    "Northville Rd": {"street_address": "16795 Northville Rd"},
+    "6 Mile Rd": {"street_address": "39715 6 Mile Rd"},
 }
 
 ICON_MAP = {
@@ -35,8 +35,8 @@ WEEKDAYS = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         address_upper = self._address.upper()
@@ -48,13 +48,13 @@ class Source:
                 out_fields="propstreetcombined,New_Day",
             )
         except ArcGisQueryError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         attrs = features[0]
         service_day = (attrs.get("New_Day") or "").strip()
 
         if not service_day or service_day not in WEEKDAYS:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         entries: list[Collection] = []
         for waste_type in ICON_MAP:

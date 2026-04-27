@@ -12,8 +12,8 @@ COUNTRY = "pl"
 TEST_CASES = {
     "Wieliczka (miasto), ul. Adama Asnyka, pozostałe": {
         "city": "Wieliczka (miasto)",
-        "street": "ul. Adama Asnyka",
-        "number": "pozostałe",
+        "street_name": "ul. Adama Asnyka",
+        "house_number": "pozostałe",
     }
 }
 
@@ -35,7 +35,7 @@ ICON_MAP = {
 
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Open https://wieliczka.kiedyodpady.pl and select your location. Use the city name, street name, and house number exactly as shown in the UI.",
+    "en": "Open https://wieliczka.kiedyodpady.pl and select your location. Use the city name, street_name name, and house house_number exactly as shown in the UI.",
 }
 
 
@@ -55,12 +55,12 @@ class Source:
     def __init__(
         self,
         city: str,
-        street: str | None = None,
-        number: str | None = None,
+        street_name: str | None = None,
+        house_number: str | None = None,
     ):
         self._city = city
-        self._street = street.strip() if isinstance(street, str) else None
-        self._number = number.strip() if isinstance(number, str) else None
+        self._street = street_name.strip() if isinstance(street_name, str) else None
+        self._number = house_number.strip() if isinstance(house_number, str) else None
         self._session = requests.Session()
         self._session.headers.update(
             {
@@ -109,18 +109,18 @@ class Source:
         streets = self._get_streets(locality_id)
         target = _normalize(self._street)
 
-        for street in streets:
-            extended_name = street.get("extendedName", "")
+        for street_name in streets:
+            extended_name = street_name.get("extendedName", "")
             if extended_name and _normalize(extended_name) == target:
-                return street["id"]
+                return street_name["id"]
 
         suggestions = [
-            street.get("extendedName")
-            for street in streets
-            if street.get("extendedName")
+            street_name.get("extendedName")
+            for street_name in streets
+            if street_name.get("extendedName")
         ]
         raise SourceArgumentNotFoundWithSuggestions(
-            "street",
+            "street_name",
             self._street,
             suggestions=suggestions,
         )
@@ -136,7 +136,7 @@ class Source:
         numbers = response.json()
         if self._number not in numbers:
             raise SourceArgumentNotFoundWithSuggestions(
-                "number",
+                "house_number",
                 self._number,
                 suggestions=numbers,
             )

@@ -190,7 +190,7 @@
   "kwinana_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kwinana_wa_gov_au.md",
     "howto": {
-      "en": "Enter your street address including suburb (e.g. '25 Breccia Parade WELLARD'). Search at https://www.kwinana.wa.gov.au/property-and-pets/waste-and-recycling/your-bins-and-collection-day"
+      "en": "Enter your street street_address including suburb (e.g. '25 Breccia Parade WELLARD'). Search at https://www.kwinana.wa.gov.au/property-and-pets/waste-and-recycling/your-bins-and-collection-day"
     },
     "urls": {}
   },
@@ -202,14 +202,14 @@
   "melvillecity_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/melvillecity_com_au.md",
     "howto": {
-      "en": "Enter your street address including suburb (e.g. '43 Williams Road, Melville, WA'). Search at https://www.melvillecity.com.au/waste-and-environment/waste-recycling-fogo/residential-bins"
+      "en": "Enter your street street_address including suburb (e.g. '43 Williams Road, Melville, WA'). Search at https://www.melvillecity.com.au/waste-and-environment/waste-recycling-fogo/residential-bins"
     },
     "urls": {}
   },
   "monash_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monash_vic_gov_au.md",
     "howto": {
-      "en": "Visit the [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) \"When we collect your bins\" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result."
+      "en": "Visit the [City of Monash](https://www.monash.vic.gov.au/Waste-Sustainability/Bin-Collection/When-we-collect-your-bins) \"When we collect your bins\" page and search for your street_address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street street_address after selecting the autocomplete result."
     },
     "urls": {}
   },
@@ -251,14 +251,14 @@
   "swan_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swan_wa_gov_au.md",
     "howto": {
-      "en": "Enter your street address including suburb (e.g. '34 Oldenburg Pass Stratton'). Search at https://www.swan.wa.gov.au/waste-and-sustainability/waste-and-recycling-services/bins/find-my-bin-day"
+      "en": "Enter your street street_address including suburb (e.g. '34 Oldenburg Pass Stratton'). Search at https://www.swan.wa.gov.au/waste-and-sustainability/waste-and-recycling-services/bins/find-my-bin-day"
     },
     "urls": {}
   },
   "teatreegully_sa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/teatreegully_sa_gov_au.md",
     "howto": {
-      "en": "Enter your street address (e.g. '4 Erica Street, Tea Tree Gully'). Search at https://www.teatreegully.sa.gov.au/services/bins-and-waste/bin-collection-days"
+      "en": "Enter your street street_address (e.g. '4 Erica Street, Tea Tree Gully'). Search at https://www.teatreegully.sa.gov.au/services/bins-and-waste/bin-collection-days"
     },
     "urls": {}
   },
@@ -290,7 +290,7 @@
   "frasercoast_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frasercoast_qld_gov_au.md",
     "howto": {
-      "en": "Enter your street address including suburb (e.g. '57 Arbornine Road Glenwood'). Search at https://www.frasercoast.qld.gov.au/Services/Online-Services/Check-your-bin-day"
+      "en": "Enter your street street_address including suburb (e.g. '57 Arbornine Road Glenwood'). Search at https://www.frasercoast.qld.gov.au/Services/Online-Services/Check-your-bin-day"
     },
     "urls": {}
   },
@@ -368,7 +368,7 @@
   "lanecove_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lanecove_nsw_gov_au.md",
     "howto": {
-      "en": "Visit the Lane Cove Council website and search for your address. Use the exact address shown in the autocomplete result."
+      "en": "Visit the Lane Cove Council website and search for your street_address. Use the exact street_address shown in the autocomplete result."
     },
     "urls": {}
   },
@@ -485,7 +485,7 @@
   "northernbeaches_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northernbeaches_nsw_gov_au.md",
     "howto": {
-      "en": "Enter your address as shown on the Northern Beaches Council website, e.g. '25 Pittwater Road MANLY'."
+      "en": "Enter your street_address as shown on the Northern Beaches Council website, e.g. '25 Pittwater Road MANLY'."
     },
     "urls": {}
   },
@@ -557,7 +557,7 @@
   "stirling_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stirling_wa_gov_au.md",
     "howto": {
-      "en": "Enter your street address including suburb (e.g. '100 Cedric Street, Stirling, WA, Australia'), or provide latitude and longitude coordinates."
+      "en": "Enter your street street_address including suburb (e.g. '100 Cedric Street, Stirling, WA, Australia'), or provide latitude and longitude coordinates."
     },
     "urls": {}
   },
@@ -621,7 +621,7 @@
   "willoughby_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/willoughby_nsw_gov_au.md",
     "howto": {
-      "en": "Visit the Willoughby City Council waste service dates page, search for your address, and use the address text as shown by the lookup."
+      "en": "Visit the Willoughby City Council waste service dates page, search for your street_address, and use the street_address text as shown by the lookup."
     },
     "urls": {}
   },
@@ -669,7 +669,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md",
     "howto": {
       "de": "Besuchen Sie die Website https://abfall.wiener-neustadt.at/ und wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie sich Ihren Straßennamen und wählen Sie die Abfuhrhäufigkeit, die für Ihre Adresse gilt.",
-      "en": "Visit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address."
+      "en": "Visit the website https://abfall.wiener-neustadt.at/ and select your street_name from the dropdown menu. Note your street_name name and select the waste collection frequency that applies to your address."
     },
     "urls": {}
   },
@@ -689,7 +689,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lipizzanerheimat_at.md",
     "howto": {
       "de": "Öffnen Sie die Lipizzanerheimat-App, melden Sie sich an oder nutzen Sie den Gastmodus, wählen Sie Ihre Stadt aus, gehen Sie zur Ansicht des Müllkalenders und wählen Sie die Straße aus, für die Sie die Müllabfuhrtermine erhalten möchten. Sie können entweder den Kalendernamen in der unteren Mitte, den Straßennamen und die Stadt, wie sie im Dropdown-Menü geschrieben sind, oder direkt die garbage_calendar_id angeben.",
-      "en": "Open the Lipizzanerheimat app, login or use guest mode, select your town, go to the garbage calendar view and select the street you want to get the garbage collection dates for. You can either provide the calendar name in the lower center, the street name and town as written in the dropdown or provide the garbage_calendar_id directly.",
+      "en": "Open the Lipizzanerheimat app, login or use guest mode, select your town, go to the garbage calendar view and select the street_name you want to get the garbage collection dates for. You can either provide the calendar name in the lower center, the street_name name and town as written in the dropdown or provide the garbage_calendar_id directly.",
       "it": "Apri l'app Lipizzanerheimat, accedi o usa la modalità ospite, seleziona la tua città, vai alla vista del calendario dei rifiuti e seleziona la strada per cui desideri ottenere le date di raccolta dei rifiuti. Puoi fornire il nome del calendario nella parte inferiore centrale, il nome della strada e la città come scritto nel menu a discesa oppure fornire direttamente l'ID garbage_calendar_id."
     },
     "urls": {}
@@ -2701,7 +2701,7 @@
   "gyhg_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gyhg_hu.md",
     "howto": {
-      "en": "Select the desired address on the https://www.gyhg.hu/hulladeknaptar#/ website. The town, street name, and house number must be entered in this integration in the exact same format as they appear there."
+      "en": "Select the desired address on the https://www.gyhg.hu/hulladeknaptar#/ website. The town, street_name name, and house number must be entered in this integration in the exact same format as they appear there."
     },
     "urls": {}
   },
@@ -3124,7 +3124,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/smiecioplan_pl.md",
     "howto": {
       "de": "Gehen Sie auf https://smiecioplan.pl und suchen Sie nach Ihrer Adresse. Verwenden Sie die Stadt, den Straßennamen (Großbuchstaben) und die Hausnummer.",
-      "en": "Go to https://smiecioplan.pl and search for your address. Use the city, street name (uppercase), and house number."
+      "en": "Go to https://smiecioplan.pl and search for your address. Use the city, street name (uppercase), and house_number number."
     },
     "urls": {}
   },
@@ -3195,7 +3195,7 @@
   "wieliczka_kiedyodpady_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wieliczka_kiedyodpady_pl.md",
     "howto": {
-      "en": "Open https://wieliczka.kiedyodpady.pl and select your location. Use the city name, street name, and house number exactly as shown in the UI."
+      "en": "Open https://wieliczka.kiedyodpady.pl and select your location. Use the city name, street_name name, and house house_number exactly as shown in the UI."
     },
     "urls": {}
   },
@@ -3369,7 +3369,7 @@
   "nsr_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nsr_se.md",
     "howto": {
-      "en": "Enter your street address as shown on the NSR website (e.g. 'Storgatan 1'). Do not include postal code. Search at https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/"
+      "en": "Enter your street street_address as shown on the NSR website (e.g. 'Storgatan 1'). Do not include postal code. Search at https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/"
     },
     "urls": {}
   },

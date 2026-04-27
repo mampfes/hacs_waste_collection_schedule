@@ -16,8 +16,8 @@ URL = "https://www.bayswater.wa.gov.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "Wholley St Bayswater": {"address": "9 Wholley St Bayswater"},
-    "Ivory St Noranda": {"address": "14 Ivory St Noranda"},
+    "Wholley St Bayswater": {"street_address": "9 Wholley St Bayswater"},
+    "Ivory St Noranda": {"street_address": "14 Ivory St Noranda"},
 }
 
 ICON_MAP = {
@@ -55,15 +55,15 @@ WEEKDAYS = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             with MapsClient(INTRAMAPS_CONFIG) as client:
                 result = client.select_address(self._address)
         except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         fields = extract_panel_fields(result["response"])
 

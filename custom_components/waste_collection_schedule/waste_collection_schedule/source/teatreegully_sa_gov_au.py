@@ -10,8 +10,8 @@ URL = "https://www.teatreegully.sa.gov.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "Erica Street": {"address": "4 Erica Street, Tea Tree Gully"},
-    "Smart Road": {"address": "1 Smart Road, Modbury"},
+    "Erica Street": {"street_address": "4 Erica Street, Tea Tree Gully"},
+    "Smart Road": {"street_address": "1 Smart Road, Modbury"},
 }
 
 ICON_MAP = {
@@ -21,7 +21,7 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address (e.g. '4 Erica Street, Tea Tree Gully'). "
+    "en": "Enter your street street_address (e.g. '4 Erica Street, Tea Tree Gully'). "
     "Search at https://www.teatreegully.sa.gov.au/services/bins-and-waste/bin-collection-days",
 }
 
@@ -76,11 +76,11 @@ def _adjust_holiday(d: date) -> date:
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
-        # Step 1: Geocode address
+        # Step 1: Geocode street_address
         r = requests.get(
             GEOCODE_URL,
             params={
@@ -99,7 +99,7 @@ class Source:
         r.raise_for_status()
         candidates = r.json().get("candidates", [])
         if not candidates:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         location = candidates[0]["location"]
 
@@ -125,7 +125,7 @@ class Source:
         r.raise_for_status()
         features = r.json().get("features", [])
         if not features:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         attrs = features[0]["attributes"]
         collection_day = attrs["Collection"]
@@ -133,7 +133,7 @@ class Source:
 
         day_offset = WEEKDAY_OFFSET.get(collection_day)
         if day_offset is None:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         # Step 3: Generate collection dates
         # JS-style offsets from REF_DATE (Monday Jan 5, 2025)

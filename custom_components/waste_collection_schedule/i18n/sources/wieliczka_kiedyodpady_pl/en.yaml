@@ -6,9 +6,7 @@ params:
   city:
     description: City name from the Kiedy Odpady locality list.
     label: City Name
-  number:
+  house_number:
     description: House number/address value from the selected street.
-    label: House Number
-  street:
+  street_name:
     description: Street name from the selected city.
-    label: Street Name

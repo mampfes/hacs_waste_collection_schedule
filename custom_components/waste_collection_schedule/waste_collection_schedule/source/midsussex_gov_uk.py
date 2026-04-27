@@ -24,19 +24,19 @@ TEST_CASES = {
     # 1. Simple Numerical Address
     "Test Case 1: 23 High Street": {
         "number": "23",
-        "street": "HIGH STREET",
+        "street_name": "HIGH STREET",
         "postcode": "RH17 6TB",
     },
     # 2. Complex Named Property
     "Test Case 2: Hapstead Hall": {
         "number": "HAPSTEAD HALL",
-        "street": "HIGH STREET",
+        "street_name": "HIGH STREET",
         "postcode": "RH17 6TB",
     },
     # 3. Commercial/Pub Named Property
     "Test Case 3: The Gardeners Arms": {
         "number": "THE GARDENERS ARMS",
-        "street": "SELSFIELD ROAD",
+        "street_name": "SELSFIELD ROAD",
         "postcode": "RH17 6TJ",
     },
 }
@@ -65,7 +65,7 @@ class Source:
     def __init__(
         self,
         number: str | None = None,
-        street: str = "",
+        street_name: str = "",
         postcode: str = "",
         house_number: str | None = None,
     ):
@@ -77,7 +77,7 @@ class Source:
         resolved = number or house_number
         assert resolved is not None
         self._number = resolved.strip()
-        self._street = street.strip()
+        self._street = street_name.strip()
         self._postcode = postcode.strip().replace(" ", "+")  # URL-encode space
 
     def fetch(self) -> list[Collection]:

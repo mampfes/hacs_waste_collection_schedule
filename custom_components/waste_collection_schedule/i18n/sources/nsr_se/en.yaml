@@ -3,6 +3,5 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  address:
+  street_address:
     description: Street name and number (e.g. 'Storgatan 1')
-    label: Street Address

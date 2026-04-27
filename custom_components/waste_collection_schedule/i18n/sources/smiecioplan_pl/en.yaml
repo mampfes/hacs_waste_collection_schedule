@@ -5,8 +5,7 @@
 params:
   city:
     description: City name (szczecin, gdansk, gdynia, or sopot).
-  house:
+  house_number:
     description: House number.
-    label: House Number
   street:
     description: Street name in uppercase as shown on SmiecioPlan.

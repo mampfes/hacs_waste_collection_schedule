@@ -99,17 +99,17 @@ SERVICE_MAP = [
 
 TEST_CASES = {
     # "Köflach - Debug": {"debug": True},
-    "Köflach - Endgasse": {"town": "Köflach", "street": "Endgasse"},
-    "Voitsberg - Bahnweg": {"town": "Voitsberg", "street": "Bahnweg"},
+    "Köflach - Endgasse": {"town": "Köflach", "street_name": "Endgasse"},
+    "Voitsberg - Bahnweg": {"town": "Voitsberg", "street_name": "Bahnweg"},
     "Köflach - 8580 Köflach 1/7/9/13/30": {
         "map_name": "8580 Köflach 1/7/9/13/30",
     },
-    "Voitsberg - Am Hügel": {"town": "Voitsberg", "street": "Am Hügel"},
+    "Voitsberg - Am Hügel": {"town": "Voitsberg", "street_name": "Am Hügel"},
     "8580 Köflach 1/13/14/30": {"map_name": "8580 Köflach 1/13/14/30"},
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Open the Lipizzanerheimat app, login or use guest mode, select your town, go to the garbage calendar view and select the street you want to get the garbage collection dates for. You can either provide the calendar name in the lower center, the street name and town as written in the dropdown or provide the garbage_calendar_id directly.",
+    "en": "Open the Lipizzanerheimat app, login or use guest mode, select your town, go to the garbage calendar view and select the street_name you want to get the garbage collection dates for. You can either provide the calendar name in the lower center, the street_name name and town as written in the dropdown or provide the garbage_calendar_id directly.",
     "de": "Öffnen Sie die Lipizzanerheimat-App, melden Sie sich an oder nutzen Sie den Gastmodus, wählen Sie Ihre Stadt aus, gehen Sie zur Ansicht des Müllkalenders und wählen Sie die Straße aus, für die Sie die Müllabfuhrtermine erhalten möchten. Sie können entweder den Kalendernamen in der unteren Mitte, den Straßennamen und die Stadt, wie sie im Dropdown-Menü geschrieben sind, oder direkt die garbage_calendar_id angeben.",
     "it": "Apri l'app Lipizzanerheimat, accedi o usa la modalità ospite, seleziona la tua città, vai alla vista del calendario dei rifiuti e seleziona la strada per cui desideri ottenere le date di raccolta dei rifiuti. Puoi fornire il nome del calendario nella parte inferiore centrale, il nome della strada e la città come scritto nel menu a discesa oppure fornire direttamente l'ID garbage_calendar_id.",
 }
@@ -159,7 +159,7 @@ class Source:
     def __init__(
         self,
         garbage_calendar_id: int | None = None,
-        street: str | None = None,
+        street_name: str | None = None,
         town: str | None = None,
         map_name: str | None = None,
     ):
@@ -168,7 +168,7 @@ class Source:
         self.icons: dict[int, str] = {}
 
         self.garbage_calendar_id = garbage_calendar_id
-        self.street = street
+        self.street_name = street_name
         self.town = town
         self.map_name = map_name
 
@@ -272,7 +272,7 @@ class Source:
             (
                 c["garbage_calendars_available"][0]
                 for c in calendarData["street_structure"]
-                if c["garbage_calendar_street"] == self.street
+                if c["garbage_calendar_street"] == self.street_name
             ),
             None,
         )
@@ -281,12 +281,12 @@ class Source:
                 c["garbage_calendar_street"] for c in calendarData["street_structure"]
             ]
             raise SourceArgumentNotFoundWithSuggestions(
-                "street", self.street, suggestions
+                "street_name", self.street_name, suggestions
             )
         return cal_id
 
     def _first_setup(self):
-        if self.street and self.town:
+        if self.street_name and self.town:
             garbage_calendar_id = self.fetch_calendar_id()
         elif self.map_name:
             garbage_calendar_id = self.fetch_calendar_id_by_name()
@@ -294,7 +294,7 @@ class Source:
             garbage_calendar_id = self.garbage_calendar_id
         else:
             raise Exception(
-                "Please provide either `garbage_calendar_id`, `street` and `town`, or `map_name`."
+                "Please provide either `garbage_calendar_id`, `street_name` and `town`, or `map_name`."
             )
 
         payload = f"garbage_calendar_id={garbage_calendar_id}&language=de"
@@ -308,7 +308,7 @@ class Source:
 
         if len(data) == 0:
             raise SourceArgumentExceptionMultiple(
-                ["garbage_calendar_id", "street", "town", "map_name"],
+                ["garbage_calendar_id", "street_name", "town", "map_name"],
                 "No data found for the provided arguments.",
             )
 

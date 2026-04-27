@@ -15,8 +15,8 @@ URL = "https://www.swan.wa.gov.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "Stratton": {"address": "34 Oldenburg Pass Stratton"},
-    "Midland": {"address": "307 Great Eastern Highway Midland"},
+    "Stratton": {"street_address": "34 Oldenburg Pass Stratton"},
+    "Midland": {"street_address": "307 Great Eastern Highway Midland"},
 }
 
 ICON_MAP = {
@@ -26,7 +26,7 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address including suburb "
+    "en": "Enter your street street_address including suburb "
     "(e.g. '34 Oldenburg Pass Stratton'). "
     "Search at https://www.swan.wa.gov.au/waste-and-sustainability/waste-and-recycling-services/bins/find-my-bin-day",
 }
@@ -44,19 +44,19 @@ INTRAMAPS_CONFIG = MapsClientConfig(
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             with MapsClient(INTRAMAPS_CONFIG) as client:
                 result = client.select_address(self._address)
         except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         response = result["response"]
         if not isinstance(response, dict):
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         fields = extract_panel_fields(response)
 

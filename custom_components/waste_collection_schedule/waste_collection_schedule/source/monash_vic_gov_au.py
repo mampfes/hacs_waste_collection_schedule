@@ -9,8 +9,8 @@ DESCRIPTION = "Source for City of Monash rubbish collection."
 URL = "https://www.monash.vic.gov.au/"
 
 TEST_CASES = {
-    "Test_001": {"address": "4 Carson Street, Mulgrave 3170"},
-    "Test_002": {"address": "57 Hamilton Place, Mount Waverley 3149"},
+    "Test_001": {"street_address": "4 Carson Street, Mulgrave 3170"},
+    "Test_002": {"street_address": "57 Hamilton Place, Mount Waverley 3149"},
 }
 
 SEARCH_PAGE_URL = f"{URL}Waste-Sustainability/Bin-Collection/When-we-collect-your-bins"
@@ -23,7 +23,7 @@ ICON_MAP = {
 # ### Arguments affecting the configuration GUI ####
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": f'Visit the [City of Monash]({SEARCH_PAGE_URL}) "When we collect your bins" page and search for your address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street address after selecting the autocomplete result.',
+    "en": f'Visit the [City of Monash]({SEARCH_PAGE_URL}) "When we collect your bins" page and search for your street_address. For example: 4 Carson Street, Mulgrave 3170. The arguments should exactly match the full street street_address after selecting the autocomplete result.',
 }
 
 
@@ -31,8 +31,8 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address
+    def __init__(self, street_address: str):
+        self._address = street_address
 
     def fetch(self) -> list[Collection]:
         s = requests.Session()

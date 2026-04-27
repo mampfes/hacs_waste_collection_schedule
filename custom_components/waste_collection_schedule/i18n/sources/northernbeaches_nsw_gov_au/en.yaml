@@ -3,7 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  address:
+  street_address:
     description: Your street address including suburb in uppercase, e.g. '25 Pittwater
       Road MANLY'.
-    label: Street Address

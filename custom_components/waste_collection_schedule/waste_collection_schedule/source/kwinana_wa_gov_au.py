@@ -15,8 +15,8 @@ URL = "https://www.kwinana.wa.gov.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "Kwinana Town Centre": {"address": "1 Chisham Avenue KWINANA TOWN CENTRE"},
-    "Wellard": {"address": "25 Breccia Parade WELLARD"},
+    "Kwinana Town Centre": {"street_address": "1 Chisham Avenue KWINANA TOWN CENTRE"},
+    "Wellard": {"street_address": "25 Breccia Parade WELLARD"},
 }
 
 ICON_MAP = {
@@ -26,7 +26,7 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address including suburb "
+    "en": "Enter your street street_address including suburb "
     "(e.g. '25 Breccia Parade WELLARD'). "
     "Search at https://www.kwinana.wa.gov.au/property-and-pets/waste-and-recycling/your-bins-and-collection-day",
 }
@@ -62,19 +62,19 @@ COLUMN_MAP = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             with MapsClient(INTRAMAPS_CONFIG) as client:
                 result = client.select_address(self._address)
         except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         response = result["response"]
         if not isinstance(response, dict):
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         # Parse fields using column names (some fields have empty name/caption)
         raw_fields = (

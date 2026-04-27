@@ -12,9 +12,9 @@ URL = "https://www.vincent.wa.gov.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "North Perth": {"address": "8 Kadina St, North Perth WA 6006"},
-    "Leederville": {"address": "18 Stamford St, Leederville WA"},
-    "Mount Lawley": {"address": "28 Ruby St, North Perth WA"},
+    "North Perth": {"street_address": "8 Kadina St, North Perth WA 6006"},
+    "Leederville": {"street_address": "18 Stamford St, Leederville WA"},
+    "Mount Lawley": {"street_address": "28 Ruby St, North Perth WA"},
 }
 
 ICON_MAP = {
@@ -42,14 +42,14 @@ COLLECTION_FIELDS = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             location = geocode(self._address)
         except ArcGisGeocodeError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         try:
             props = query_wfs_layer(
@@ -60,7 +60,7 @@ class Source:
                 lng=location["x"],
             )
         except PoziWfsError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         entries: list[Collection] = []
 

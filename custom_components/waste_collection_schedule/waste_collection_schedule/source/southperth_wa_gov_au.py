@@ -16,8 +16,8 @@ DESCRIPTION = "Source for City of South Perth waste collection."
 URL = "https://southperth.wa.gov.au"
 COUNTRY = "au"
 TEST_CASES = {
-    "Lansdowne Road": {"address": "156 Lansdowne Road KENSINGTON"},
-    "Roebuck Drive": {"address": "13 Roebuck Drive"},
+    "Lansdowne Road": {"street_address": "156 Lansdowne Road KENSINGTON"},
+    "Roebuck Drive": {"street_address": "13 Roebuck Drive"},
 }
 ICON_MAP = {
     "General Waste": "mdi:trash-can",
@@ -47,19 +47,19 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             with MapsClient(INTRAMAPS_CONFIG) as client:
                 result = client.select_address(self._address)
         except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         response = result.get("response")
         if not isinstance(response, dict):
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         fields = extract_panel_fields(response)
         entries: list[Collection] = []

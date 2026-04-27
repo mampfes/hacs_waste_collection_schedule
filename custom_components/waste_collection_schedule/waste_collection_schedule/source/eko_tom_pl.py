@@ -16,11 +16,11 @@ DESCRIPTION = (
 URL = "https://www.eko-tom.pl"
 
 TEST_CASES = {
-    "Czerwonak": {"city": "Czerwonak", "street": "Źródlana", "nr": "39"},
-    "BIAŁĘŻYN": {"city": "BIAŁĘŻYN", "street": "BIAŁĘŻYN", "nr": "1/A"},
+    "Czerwonak": {"city": "Czerwonak", "street": "Źródlana", "house_number": "39"},
+    "BIAŁĘŻYN": {"city": "BIAŁĘŻYN", "street": "BIAŁĘŻYN", "house_number": "1/A"},
 }
 
-API_URL = "https://web.c-trace.de/ekotom-abfallkalender/(S(y0ommq52pdbwa0jek4oqqzgr))/kalendarzodpadow/abc?Ort={city}&Strasse={street}&Hausnr={nr}"
+API_URL = "https://web.c-trace.de/ekotom-abfallkalender/(S(y0ommq52pdbwa0jek4oqqzgr))/kalendarzodpadow/abc?Ort={city}&Strasse={street}&Hausnr={house_number}"
 
 ICON_MAP = {
     "Zmieszane": "mdi:trash-can",  # Mixed
@@ -33,13 +33,15 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, street, city, nr):
+    def __init__(self, street, city, house_number):
         self._city = city
         self._street = street
-        self._nr = nr
+        self._nr = house_number
 
     def fetch(self):
-        address = API_URL.format(city=self._city, street=self._street, nr=self._nr)
+        address = API_URL.format(
+            city=self._city, street=self._street, house_number=self._nr
+        )
         response = req.get(address)
 
         if response.status_code != 200:

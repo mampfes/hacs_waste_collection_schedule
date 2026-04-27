@@ -3,7 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  address:
+  street_address:
     description: Street address within Boroondara (e.g. '211 Mont Albert Road, Surrey
       Hills')
-    label: Street Address

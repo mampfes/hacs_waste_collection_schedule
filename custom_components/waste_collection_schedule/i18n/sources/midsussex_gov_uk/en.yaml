@@ -9,6 +9,5 @@ params:
     label: House/Business Name/Number
   postcode:
     description: Enter the postcode (e.g., RH17 6TB).
-  street:
+  street_name:
     description: Enter the street name (e.g., HIGH STREET).
-    label: Street Name

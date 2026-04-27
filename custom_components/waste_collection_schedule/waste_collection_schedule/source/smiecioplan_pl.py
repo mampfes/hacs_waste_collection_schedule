@@ -16,12 +16,12 @@ TEST_CASES = {
     "Szczecin, Aleja Wojska Polskiego 2": {
         "city": "szczecin",
         "street": "ALEJA WOJSKA POLSKIEGO",
-        "house": "2",
+        "house_number": "2",
     },
     "Gdansk, Abrahama 1": {
         "city": "gdansk",
         "street": "ABRAHAMA",
-        "house": "1",
+        "house_number": "1",
     },
 }
 
@@ -60,7 +60,7 @@ EXTRA_INFO = [
 API_URL = "https://smiecioplan.pl/wp-json/smiecioplan/v1"
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Go to https://smiecioplan.pl and search for your address. Use the city, street name (uppercase), and house number.",
+    "en": "Go to https://smiecioplan.pl and search for your address. Use the city, street name (uppercase), and house_number number.",
     "de": "Gehen Sie auf https://smiecioplan.pl und suchen Sie nach Ihrer Adresse. Verwenden Sie die Stadt, den Straßennamen (Großbuchstaben) und die Hausnummer.",
 }
 
@@ -74,17 +74,17 @@ def _get_icon(summary: str) -> str | None:
 
 
 class Source:
-    def __init__(self, city: str, street: str, house: str | int):
+    def __init__(self, city: str, street: str, house_number: str | int):
         if not city:
             raise SourceArgumentRequired("city", "City is required.")
         if not street:
             raise SourceArgumentRequired("street", "Street is required.")
-        if not house:
-            raise SourceArgumentRequired("house", "House number is required.")
+        if not house_number:
+            raise SourceArgumentRequired("house_number", "House number is required.")
 
         self._city = city.strip().lower()
         self._street = street.strip().upper()
-        self._house = str(house).strip()
+        self._house = str(house_number).strip()
 
     def fetch(self) -> list[Collection]:
         # Validate street exists
@@ -108,7 +108,7 @@ class Source:
                 "street", self._street, suggestions=suggestions
             )
 
-        # Validate house number exists
+        # Validate house_number number exists
         houses_params: dict[str, str | int] = {
             "street": self._street,
             "city": self._city,
@@ -124,7 +124,7 @@ class Source:
 
         if self._house not in houses:
             raise SourceArgumentNotFoundWithSuggestions(
-                "house", self._house, suggestions=houses[:20]
+                "house_number", self._house, suggestions=houses[:20]
             )
 
         # Fetch ICS

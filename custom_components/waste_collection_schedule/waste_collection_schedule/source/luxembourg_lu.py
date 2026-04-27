@@ -50,13 +50,13 @@ TEST_CASES = {
     "Reisdorf": {"municipality": "Reisdorf"},
     "Bech - specific street": {
         "municipality": "Bech",
-        "localite": "Bech",
-        "rue": "Am Biirk",
+        "locality": "Bech",
+        "street": "Am Biirk",
     },
     "Pétange - Rodange": {
         "municipality": "Pétange",
-        "localite": "Rodange",
-        "rue": "Rue Willy Huberty",
+        "locality": "Rodange",
+        "street": "Rue Willy Huberty",
     },
 }
 
@@ -74,12 +74,12 @@ class Source:
     def __init__(
         self,
         municipality: str,
-        localite: str | None = None,
-        rue: str | None = None,
+        locality: str | None = None,
+        street: str | None = None,
     ):
         self._commune = municipality.strip()
-        self._localite = localite.strip() if localite else None
-        self._rue = rue.strip() if rue else None
+        self._localite = locality.strip() if locality else None
+        self._rue = street.strip() if street else None
 
     def fetch(self) -> list[Collection]:
         rows = _fetch_rows()
@@ -97,7 +97,7 @@ class Source:
             r for r in rows if r.get("Commune", "").strip() == self._commune
         ]
 
-        # --- Validate / resolve localite ---
+        # --- Validate / resolve locality ---
         all_localites = sorted(
             {
                 r.get("Localité", "").strip()
@@ -110,13 +110,13 @@ class Source:
             # This municipality has per-locality rows
             if self._localite is None:
                 raise SourceArgumentRequiredWithSuggestions(
-                    "localite",
+                    "locality",
                     "required to narrow down the collection schedule",
                     all_localites,
                 )
             if self._localite not in all_localites:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "localite", self._localite, all_localites
+                    "locality", self._localite, all_localites
                 )
 
             # Include rows matching the locality AND rows with no locality (municipality-wide)
@@ -129,7 +129,7 @@ class Source:
             # Commune has no locality breakdown — use all municipality rows
             localite_rows = commune_rows
 
-        # --- Validate / resolve rue ---
+        # --- Validate / resolve street ---
         all_rues = sorted(
             {
                 r.get("Rue", "").strip()
@@ -142,12 +142,14 @@ class Source:
             # Has per-street rows (beyond "Toutes les rues")
             if self._rue is None:
                 raise SourceArgumentRequiredWithSuggestions(
-                    "rue",
+                    "street",
                     "required to narrow down the collection schedule",
                     all_rues,
                 )
             if self._rue not in all_rues:
-                raise SourceArgumentNotFoundWithSuggestions("rue", self._rue, all_rues)
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "street", self._rue, all_rues
+                )
 
             active_rows = [
                 r

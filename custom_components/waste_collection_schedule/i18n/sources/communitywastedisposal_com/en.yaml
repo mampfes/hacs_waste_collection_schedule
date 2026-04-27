@@ -3,7 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  address:
+  street_address:
     description: Street address including city and ZIP (e.g. '123 Main St, Allen,
       TX 75002')
-    label: Street Address

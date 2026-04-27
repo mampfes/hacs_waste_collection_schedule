@@ -12,13 +12,13 @@ TITLE = "Stirling"
 DESCRIPTION = "Source for Stirling."
 URL = "https://www.stirling.wa.gov.au"
 TEST_CASES = {
-    "by_address": {"address": "100 Cedric Street, Stirling, WA, Australia"},
+    "by_address": {"street_address": "100 Cedric Street, Stirling, WA, Australia"},
     "by_coords": {"lat": -31.9034183, "lon": 115.8320855},
     "by_coords_str": {"lat": "-31.8783052", "lon": "115.8157741"},
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address including suburb "
+    "en": "Enter your street street_address including suburb "
     "(e.g. '100 Cedric Street, Stirling, WA, Australia'), "
     "or provide latitude and longitude coordinates.",
 }
@@ -38,28 +38,28 @@ REFERER_PATH = "/waste-and-environment/waste-and-recycling/bin-collections"
 class Source:
     def __init__(
         self,
-        address: str | None = None,
+        street_address: str | None = None,
         lat: float | None = None,
         lon: float | None = None,
     ):
-        self._address = address
+        self._address = street_address
         self._lat = float(lat) if lat is not None else None
         self._lon = float(lon) if lon is not None else None
 
         if not self._address and (self._lat is None or self._lon is None):
             raise ValueError(
-                "Either 'address' or both 'lat' and 'lon' must be provided"
+                "Either 'street_address' or both 'lat' and 'lon' must be provided"
             )
 
     def _resolve_coordinates(self) -> tuple[float, float]:
-        """Return (lat, lon), geocoding from address if needed."""
+        """Return (lat, lon), geocoding from street_address if needed."""
         if self._lat is not None and self._lon is not None:
             return self._lat, self._lon
 
         try:
             location = geocode(self._address)
         except ArcGisGeocodeError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         return location["y"], location["x"]
 

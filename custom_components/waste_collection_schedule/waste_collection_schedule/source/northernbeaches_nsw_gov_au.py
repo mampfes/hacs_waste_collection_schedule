@@ -12,9 +12,9 @@ TITLE = "Northern Beaches Council (NSW)"
 DESCRIPTION = "Source for Northern Beaches Council waste collection."
 URL = "https://www.northernbeaches.nsw.gov.au"
 TEST_CASES = {
-    "Manly": {"address": "25 Pittwater Road MANLY"},
-    "Brookvale": {"address": "25 Old Pittwater Road BROOKVALE"},
-    "Dee Why": {"address": "10 Howard Avenue DEE WHY"},
+    "Manly": {"street_address": "25 Pittwater Road MANLY"},
+    "Brookvale": {"street_address": "25 Old Pittwater Road BROOKVALE"},
+    "Dee Why": {"street_address": "10 Howard Avenue DEE WHY"},
 }
 
 ICON_MAP = {
@@ -24,7 +24,7 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your address as shown on the Northern Beaches Council website, e.g. '25 Pittwater Road MANLY'.",
+    "en": "Enter your street_address as shown on the Northern Beaches Council website, e.g. '25 Pittwater Road MANLY'.",
 }
 
 
@@ -49,11 +49,11 @@ MONTH_MAP = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address
+    def __init__(self, street_address: str):
+        self._address = street_address
 
     def fetch(self) -> list[Collection]:
-        # Step 1: Search for address via autocomplete endpoint
+        # Step 1: Search for street_address via autocomplete endpoint
         r = requests.get(
             SEARCH_URL,
             params={"term": self._address},
@@ -64,7 +64,7 @@ class Source:
         results = r.json()
 
         if not results:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         # Try exact match first (case-insensitive)
         property_id = None
@@ -81,7 +81,7 @@ class Source:
                 # Multiple matches, none exact - provide suggestions
                 suggestions = [entry["value"] for entry in results]
                 raise SourceArgAmbiguousWithSuggestions(
-                    "address", self._address, suggestions
+                    "street_address", self._address, suggestions
                 )
 
         # Step 2: Get collection schedule HTML

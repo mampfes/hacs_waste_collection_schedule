@@ -9,13 +9,17 @@ DESCRIPTION = "Source script using GYHG API at https://gyhg.bluespot.hu/api"
 URL = "https://www.gyhg.hu"
 COUNTRY = "hu"
 TEST_CASES = {
-    "Test_1": {"city": "Écs", "street": "Ady Endre utca", "house_number": "1/A"},
+    "Test_1": {"city": "Écs", "street_name": "Ady Endre utca", "house_number": "1/A"},
     "Test_2": {
         "city": "Mosonszentmiklós-Mosonújhely",
-        "street": "Radnóti Miklós utca",
+        "street_name": "Radnóti Miklós utca",
         "house_number": 25,
     },
-    "Test_3": {"city": "Veszprémvarsány", "street": "Zrínyi utca", "house_number": 34},
+    "Test_3": {
+        "city": "Veszprémvarsány",
+        "street_name": "Zrínyi utca",
+        "house_number": 34,
+    },
 }
 
 API_URL = "https://gyhg.bluespot.hu/api/"
@@ -33,7 +37,7 @@ NAME_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Select the desired address on the https://www.gyhg.hu/hulladeknaptar#/ website. The town, street name, and house number must be entered in this integration in the exact same format as they appear there.",
+    "en": "Select the desired address on the https://www.gyhg.hu/hulladeknaptar#/ website. The town, street_name name, and house number must be entered in this integration in the exact same format as they appear there.",
 }
 
 
@@ -41,9 +45,9 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 
 class Source:
-    def __init__(self, city: str, street: str, house_number: str | int):
+    def __init__(self, city: str, street_name: str, house_number: str | int):
         self._city = city
-        self._street = street
+        self._street = street_name
         self._house_number = str(house_number)
 
     def fetch(self) -> list[Collection]:

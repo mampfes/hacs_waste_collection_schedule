@@ -20,8 +20,8 @@ URL = "https://www.communitywastedisposal.com"
 COUNTRY = "us"
 
 TEST_CASES = {
-    "Forney TX": {"address": "100 Princeton Cir, Forney, TX 75126"},
-    "Allen TX": {"address": "123 Main St, Allen, TX 75002"},
+    "Forney TX": {"street_address": "100 Princeton Cir, Forney, TX 75126"},
+    "Allen TX": {"street_address": "123 Main St, Allen, TX 75002"},
 }
 
 
@@ -59,8 +59,8 @@ GEOCODE_URL = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServ
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def _geocode(self) -> tuple[dict, str]:
         r = requests.get(
@@ -77,7 +77,7 @@ class Source:
         r.raise_for_status()
         candidates = r.json().get("candidates", [])
         if not candidates:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
         location = candidates[0]["location"]
         city = candidates[0].get("attributes", {}).get("City", "")
         return location, city
@@ -188,7 +188,7 @@ class Source:
         except SourceArgumentNotFound:
             raise
         except Exception as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         holidays = self._get_holidays(community) if community else {}
 
@@ -230,6 +230,6 @@ class Source:
                     )
 
         if not entries:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         return entries

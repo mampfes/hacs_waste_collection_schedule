@@ -7,10 +7,8 @@ params:
     description: 'Collection frequency for residual waste: ''wöchentlich'' (weekly),
       ''14-tägig'' (bi-weekly), or ''monatlich'' (monthly)'
     label: Collection Frequency
-  str_id:
+  street_id:
     description: 'Optional: Street ID if known (skips street lookup)'
-    label: Street ID
-  street:
+  street_name:
     description: Street name in Wiener Neustadt (e.g., 'Martinsgasse', 'Hauptplatz').
       Must match exactly as shown on the website.
-    label: Street Name

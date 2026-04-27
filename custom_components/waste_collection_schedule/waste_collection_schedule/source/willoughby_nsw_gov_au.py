@@ -19,7 +19,7 @@ COUNTRY = "au"
 
 TEST_CASES = {
     "18 Crabbes Avenue, North Willoughby": {
-        "address": "18 Crabbes Avenue, North Willoughby, NSW 2068",
+        "street_address": "18 Crabbes Avenue, North Willoughby, NSW 2068",
     },
 }
 
@@ -33,7 +33,7 @@ ICON_MAP = {
 
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit the Willoughby City Council waste service dates page, search for your address, and use the address text as shown by the lookup.",
+    "en": "Visit the Willoughby City Council waste service dates page, search for your street_address, and use the street_address text as shown by the lookup.",
 }
 
 BASE_URL = "https://www.willoughby.nsw.gov.au"
@@ -61,8 +61,8 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         session = requests.Session()
@@ -94,18 +94,18 @@ class Source:
         data = response.json()
         items = data.get("Items") or []
         if not items:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         if len(items) > 1:
             raise SourceArgumentNotFoundWithSuggestions(
-                "address",
+                "street_address",
                 self._address,
                 [item.get("AddressSingleLine", "") for item in items],
             )
 
         geolocation_id = items[0].get("Id")
         if not geolocation_id:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         return geolocation_id
 

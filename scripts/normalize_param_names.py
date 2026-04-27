@@ -92,6 +92,18 @@ RENAMES: dict[str, str] = {
     "stadtteil": "district",
     "stadt": "city",
     "ort": "city",
+    # Abbreviations -> canonical full English snake_case.
+    "str_id": "street_id",
+    "nr": "house_number",
+    "cp": "postcode",
+    "add": "address_suffix",
+    # Czech / French / Polish param names with clear English equivalents.
+    "obec": "municipality",
+    "obvod": "district",
+    "ulice": "street",
+    "cislo": "house_number",
+    "rue": "street",
+    "localite": "locality",
 }
 
 

@@ -14,8 +14,8 @@ URL = "https://www.launceston.tas.gov.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "Southgate Dr": {"address": "40 Southgate Dr, Kings Meadows, TAS"},
-    "Brisbane St": {"address": "68 Brisbane St, Launceston, TAS"},
+    "Southgate Dr": {"street_address": "40 Southgate Dr, Kings Meadows, TAS"},
+    "Brisbane St": {"street_address": "68 Brisbane St, Launceston, TAS"},
 }
 
 ICON_MAP = {
@@ -38,15 +38,15 @@ DATE_FIELDS = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             location = geocode(self._address)
             features = query_feature_layer(WASTE_URL, geometry=location)
         except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         attrs = features[0]
         service_types = (attrs.get("Servicetypes") or "").upper()

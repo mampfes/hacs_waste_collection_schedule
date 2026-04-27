@@ -17,8 +17,8 @@ URL = "https://www.frasercoast.qld.gov.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "Arbornine Road Glenwood": {"address": "57 Arbornine Road Glenwood"},
-    "Tavistock Street Torquay": {"address": "77 Tavistock Street Torquay"},
+    "Arbornine Road Glenwood": {"street_address": "57 Arbornine Road Glenwood"},
+    "Tavistock Street Torquay": {"street_address": "77 Tavistock Street Torquay"},
 }
 
 ICON_MAP = {
@@ -27,7 +27,7 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address including suburb "
+    "en": "Enter your street street_address including suburb "
     "(e.g. '57 Arbornine Road Glenwood'). "
     "Search at https://www.frasercoast.qld.gov.au/Services/Online-Services/Check-your-bin-day",
 }
@@ -56,15 +56,15 @@ WEEKDAYS = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             with MapsClient(INTRAMAPS_CONFIG) as client:
                 result = client.select_address(self._address)
         except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         response = result["response"]
         if not isinstance(response, dict):
@@ -72,7 +72,7 @@ class Source:
 
         fields = extract_panel_fields(response)
         if not fields:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         entries: list[Collection] = []
 

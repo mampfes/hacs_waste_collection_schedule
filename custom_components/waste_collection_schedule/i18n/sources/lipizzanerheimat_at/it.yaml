@@ -9,7 +9,7 @@ params:
   map_name:
     description: Il nome della mappa del calendario mostrata nell'app.
     label: Nome della Mappa del Calendario
-  street:
+  street_name:
     description: Il nome della strada per ottenere le date di raccolta dei rifiuti.
     label: Nome della Strada
   town:

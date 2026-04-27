@@ -7,5 +7,5 @@ params:
     label: City name
   house_number:
     label: House number
-  street:
+  street_name:
     label: Street name

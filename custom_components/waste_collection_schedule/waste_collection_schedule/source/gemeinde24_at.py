@@ -15,7 +15,7 @@ COUNTRY = "at"
 URL = "https://www.gemeinde24.at"
 TEST_CASES = {
     "Gaal by IDs": {
-        "gemeinde_id": "114",
+        "municipality_id": "114",
         "street_id": "4321",
     },
     "Gaal by names": {
@@ -74,12 +74,12 @@ class Source:
         self,
         municipality: str | None = None,
         street: str | None = None,
-        gemeinde_id: str | int | None = None,
+        municipality_id: str | int | None = None,
         street_id: str | int | None = None,
     ):
         self._gemeinde = self._clean(municipality)
         self._strasse = self._clean(street)
-        self._gemeinde_id = self._clean(gemeinde_id)
+        self._gemeinde_id = self._clean(municipality_id)
         self._street_id = self._clean(street_id)
 
         self._session = requests.Session()
@@ -91,14 +91,14 @@ class Source:
         )
 
     def fetch(self) -> list[Collection]:
-        gemeinde_id = self._resolve_gemeinde_id()
-        street_id = self._resolve_street_id(gemeinde_id)
+        municipality_id = self._resolve_gemeinde_id()
+        street_id = self._resolve_street_id(municipality_id)
 
         payload = self._request_json(
             method="GET",
             endpoint="content2.php",
             params={
-                "GemeindeID": gemeinde_id,
+                "GemeindeID": municipality_id,
                 "apiKEY": API_KEY,
                 "StreetID": street_id,
                 "appversion": APP_VERSION,
@@ -139,7 +139,7 @@ class Source:
 
         if not self._gemeinde:
             raise SourceArgumentRequired(
-                "municipality", "or provide 'gemeinde_id' as an alternative."
+                "municipality", "or provide 'municipality_id' as an alternative."
             )
 
         payload = self._request_json(
@@ -203,11 +203,11 @@ class Source:
             self._build_suggestions(self._gemeinde, all_names_with_id),
         )
 
-    def _resolve_street_id(self, gemeinde_id: str) -> str:
+    def _resolve_street_id(self, municipality_id: str) -> str:
         payload = self._request_json(
             method="GET",
             endpoint="wastesetup_v2.php",
-            params={"GemeindeID": gemeinde_id, "apiKEY": API_KEY},
+            params={"GemeindeID": municipality_id, "apiKEY": API_KEY},
         )
 
         if str(payload.get("code", "")).upper() != "OK":
@@ -356,10 +356,12 @@ class Source:
         return ordered[:20]
 
     @staticmethod
-    def _format_gemeinde_suggestion(gemeinde_id: str, name: str, zip_code: str) -> str:
+    def _format_gemeinde_suggestion(
+        municipality_id: str, name: str, zip_code: str
+    ) -> str:
         if zip_code:
-            return f"{name} ({zip_code}, GemeindeID={gemeinde_id})"
-        return f"{name} (GemeindeID={gemeinde_id})"
+            return f"{name} ({zip_code}, GemeindeID={municipality_id})"
+        return f"{name} (GemeindeID={municipality_id})"
 
     @staticmethod
     def _format_street_suggestion(name: str, street_id: str) -> str:

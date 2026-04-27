@@ -3,7 +3,7 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  huisnummer:
+  house_number:
     label: House number
   postcode:
     description: Dutch postal code (4 digits + 2 letters), e.g. 4702AA

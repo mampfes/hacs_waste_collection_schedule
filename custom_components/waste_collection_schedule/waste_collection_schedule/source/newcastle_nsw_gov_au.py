@@ -14,9 +14,9 @@ URL = "https://www.newcastle.nsw.gov.au"
 COUNTRY = "au"
 
 TEST_CASES = {
-    "King Street": {"address": "1 King Street, Newcastle NSW 2300"},
-    "Stockton": {"address": "5 Pacific Street, Stockton NSW 2295"},
-    "Waratah": {"address": "30 Turton Road, Waratah NSW 2298"},
+    "King Street": {"street_address": "1 King Street, Newcastle NSW 2300"},
+    "Stockton": {"street_address": "5 Pacific Street, Stockton NSW 2295"},
+    "Waratah": {"street_address": "30 Turton Road, Waratah NSW 2298"},
 }
 
 ICON_MAP = {
@@ -43,8 +43,8 @@ EPOCH = date(2021, 6, 28)
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
@@ -55,14 +55,14 @@ class Source:
                 out_fields="WeekNo,Day",
             )
         except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         attrs = features[0]
         day = attrs.get("Day", "").strip()
         week_no = attrs.get("WeekNo")
 
         if not day or day not in WEEKDAYS or week_no not in (1, 2):
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         entries: list[Collection] = []
 

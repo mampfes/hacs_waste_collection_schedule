@@ -3,7 +3,6 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  address:
+  street_address:
     description: Street address within the City of Vincent (e.g. '8 Kadina St, North
       Perth WA 6006')
-    label: Street Address

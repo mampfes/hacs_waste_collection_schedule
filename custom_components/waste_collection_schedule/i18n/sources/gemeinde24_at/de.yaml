@@ -3,7 +3,7 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  gemeinde_id:
+  municipality_id:
     description: Numerische GemeindeID aus Gemeinde24 (optional statt des Gemeinde-Feldes).
     label: Gemeinde ID
   municipality:

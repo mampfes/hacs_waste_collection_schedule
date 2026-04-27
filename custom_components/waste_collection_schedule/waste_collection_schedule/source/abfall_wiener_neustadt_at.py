@@ -24,18 +24,18 @@ URL = "https://abfall.wiener-neustadt.at/"
 # Note: All waste types are always fetched; filtering is done via customize feature
 TEST_CASES = {
     "Martinsgasse Monthly": {
-        "street": "Martinsgasse",
+        "street_name": "Martinsgasse",
         "rm_art": "monatlich",
     },
     "Hauptplatz Weekly": {
-        "street": "Hauptplatz",
+        "street_name": "Hauptplatz",
         "rm_art": "wöchentlich",
     },
     "Leithakoloniestrasse Default": {
-        "street": "Leithakoloniestraße",
+        "street_name": "Leithakoloniestraße",
     },
     "Leithakoloniestrasse Bi-Weekly": {
-        "street": "Leithakoloniestraße",
+        "street_name": "Leithakoloniestraße",
         "rm_art": "14-tägig",
     },
 }
@@ -50,7 +50,7 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address.",
+    "en": "Visit the website https://abfall.wiener-neustadt.at/ and select your street_name from the dropdown menu. Note your street_name name and select the waste collection frequency that applies to your address.",
     "de": "Besuchen Sie die Website https://abfall.wiener-neustadt.at/ und wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie sich Ihren Straßennamen und wählen Sie die Abfuhrhäufigkeit, die für Ihre Adresse gilt.",
 }
 
@@ -74,23 +74,23 @@ RM_ART_MAP = {
 class Source:
     def __init__(
         self,
-        street: str,
-        str_id: str | None = None,
+        street_name: str,
+        street_id: str | None = None,
         rm_art: Literal["wöchentlich", "14-tägig", "monatlich"] = "monatlich",
     ):
         """Initialize the Wiener Neustadt waste collection source.
 
         Args:
-            street: Street name in Wiener Neustadt
-            str_id: Optional street ID (if known, skips street lookup)
+            street_name: Street name in Wiener Neustadt
+            street_id: Optional street_name ID (if known, skips street_name lookup)
             rm_art: Collection frequency: 'wöchentlich', '14-tägig', or 'monatlich'
 
         Note:
             All waste types are always fetched.
             Use the integration's customize feature to filter or hide specific waste types.
         """
-        self._street = street
-        self._str_id = str_id
+        self._street = street_name
+        self._str_id = street_id
         self._rm_art = RM_ART_MAP.get(rm_art.lower(), "36")  # Default to monthly
         self._base_url = "https://abfall.wiener-neustadt.at"
 
@@ -101,9 +101,9 @@ class Source:
             List of Collection objects
 
         Raises:
-            Exception: If street not found or data cannot be retrieved
+            Exception: If street_name not found or data cannot be retrieved
         """
-        # Step 1: Get street ID if not provided
+        # Step 1: Get street_name ID if not provided
         if not self._str_id:
             self._str_id, str_name_full, tn_ez_zone = self._lookup_street()
         else:
@@ -115,20 +115,20 @@ class Source:
         return entries
 
     def _lookup_street(self) -> tuple[str, str | None, str | None]:
-        """Look up street ID from street name using the ASP backend.
+        """Look up street_name ID from street_name name using the ASP backend.
 
         Returns:
             Tuple of (street_id, full_street_name, tn_ez_zone)
 
         Raises:
-            SourceArgumentNotFoundWithSuggestions: If street not found
+            SourceArgumentNotFoundWithSuggestions: If street_name not found
         """
-        # The website uses vb_wn_termine.asp with street selection
+        # The website uses vb_wn_termine.asp with street_name selection
         # Step 1: Determine first letter for page loading
         current_year = datetime.now().year
         first_letter = self._street[0].upper() if self._street else "A"
 
-        # Step 2: Load initial page with first letter to get street dropdown
+        # Step 2: Load initial page with first letter to get street_name dropdown
         initial_url = (
             f"{self._base_url}/vb_wn_termine.asp?bst={first_letter}&jahr={current_year}"
         )
@@ -143,8 +143,8 @@ class Source:
 
         soup = BeautifulSoup(response.text, "html.parser")
 
-        # Step 3: Find street in select/option elements
-        str_id = None
+        # Step 3: Find street_name in select/option elements
+        street_id = None
         str_name_full = None
         tn_ez_zone = None
 
@@ -158,7 +158,7 @@ class Source:
 
         found_streets = []  # For suggestions if exact match fails
 
-        for select in soup.find_all("select", {"name": "str_id"}):
+        for select in soup.find_all("select", {"name": "street_id"}):
             for option in select.find_all("option"):
                 option_text = option.get_text().strip()
                 option_value = option.get("value", "").strip()
@@ -177,17 +177,17 @@ class Source:
 
                 # Try exact match only
                 if street_normalized == option_normalized:
-                    str_id = option_value
+                    street_id = option_value
                     str_name_full = option_text
                     break
-            if str_id:
+            if street_id:
                 break
 
-        if not str_id:
+        if not street_id:
             # Street not found - provide suggestions
             suggestions = [s[0] for s in found_streets[:20]]
             raise SourceArgumentNotFoundWithSuggestions(
-                "street",
+                "street_name",
                 self._street,
                 suggestions,
             )
@@ -197,15 +197,15 @@ class Source:
         if tn_ez_zone_input:
             tn_ez_zone = tn_ez_zone_input.get("value")
 
-        # Step 5: Reload page with selected street to get correct tn_ez_zone
+        # Step 5: Reload page with selected street_name to get correct tn_ez_zone
         try:
             reload_response = requests.post(
-                initial_url, data={"str_id": str_id}, timeout=30
+                initial_url, data={"str_id": street_id}, timeout=30
             )
             reload_response.raise_for_status()
         except requests.exceptions.RequestException as e:
             raise Exception(
-                f"Failed to retrieve zone information for street '{str_name_full}'. "
+                f"Failed to retrieve zone information for street_name '{str_name_full}'. "
                 f"The website may be temporarily unavailable. Error: {e}"
             )
 
@@ -223,19 +223,19 @@ class Source:
         if str_name_input:
             str_name_full = str_name_input.get("value")
 
-        return (str_id, str_name_full, tn_ez_zone)
+        return (street_id, str_name_full, tn_ez_zone)
 
     def _fetch_schedule(
         self,
-        str_id: str,
+        street_id: str,
         str_name_full: str | None,
         tn_ez_zone: str | None,
     ) -> list[Collection]:
         """Fetch and parse the waste collection schedule.
 
         Args:
-            str_id: Street ID
-            str_name_full: Full street name (optional)
+            street_id: Street ID
+            str_name_full: Full street_name name (optional)
             tn_ez_zone: Zone information (optional)
 
         Returns:
@@ -259,7 +259,7 @@ class Source:
 
         # Build form data
         post_data = {
-            "str_id": str_id,
+            "str_id": street_id,
             "rm_art": self._rm_art,
             # always include all waste types; customization/filtering is handled elsewhere
             "chk_biotonne": "ja",
@@ -279,8 +279,8 @@ class Source:
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             raise Exception(
-                f"Failed to fetch collection schedule for street ID '{str_id}'. "
-                f"The website may be temporarily unavailable or the street ID is invalid. Error: {e}"
+                f"Failed to fetch collection schedule for street_name ID '{street_id}'. "
+                f"The website may be temporarily unavailable or the street_name ID is invalid. Error: {e}"
             )
 
         # Parse response
@@ -330,9 +330,9 @@ class Source:
 
         if not entries:
             raise Exception(
-                f"No collection dates found for street '{self._street}'. "
+                f"No collection dates found for street_name '{self._street}'. "
                 "The website structure may have changed or no data is available for this address. "
-                "Please verify your street name on https://abfall.wiener-neustadt.at/"
+                "Please verify your street_name name on https://abfall.wiener-neustadt.at/"
             )
 
         return sorted(entries, key=lambda x: x.date)

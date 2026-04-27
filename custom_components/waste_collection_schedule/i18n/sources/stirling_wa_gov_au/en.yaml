@@ -3,11 +3,10 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  address:
-    description: Street address with suburb (e.g. '100 Cedric Street, Stirling, WA,
-      Australia')
-    label: Street Address
   lat:
     description: Latitude (optional if address is provided)
   lon:
     description: Longitude (optional if address is provided)
+  street_address:
+    description: Street address with suburb (e.g. '100 Cedric Street, Stirling, WA,
+      Australia')

@@ -14,8 +14,8 @@ URL = "https://hooveralabama.gov"
 COUNTRY = "us"
 
 TEST_CASES = {
-    "Tyler Rd (Mon/Thu)": {"address": "2255 Tyler Rd, Hoover, AL"},
-    "Cobblestone Ln (Tue/Fri)": {"address": "101 Cobblestone Ln, Hoover, AL"},
+    "Tyler Rd (Mon/Thu)": {"street_address": "2255 Tyler Rd, Hoover, AL"},
+    "Cobblestone Ln (Tue/Fri)": {"street_address": "101 Cobblestone Ln, Hoover, AL"},
 }
 
 ICON_MAP = {
@@ -35,20 +35,20 @@ WEEKDAYS = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             location = geocode(self._address)
             features = query_feature_layer(GARBAGE_ZONE_URL, geometry=location)
         except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         attrs = features[0]
         trashday = (attrs.get("Trashday") or "").strip()
         if not trashday:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         # Parse "Monday / Thursday" or "Tuesday / Friday"
         days = [d.strip() for d in trashday.split("/")]
@@ -59,7 +59,7 @@ class Source:
                 entries.extend(self._weekly_dates(day_name, "Garbage"))
 
         if not entries:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         return entries
 

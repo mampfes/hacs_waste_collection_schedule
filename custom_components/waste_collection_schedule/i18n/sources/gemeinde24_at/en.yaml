@@ -3,12 +3,11 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  gemeinde_id:
-    description: Numeric GemeindeID from Gemeinde24 (optional alternative to the municipality
-      field).
-    label: Municipality ID
   municipality:
     description: Municipality name as shown in Gemeinde24.
+  municipality_id:
+    description: Numeric GemeindeID from Gemeinde24 (optional alternative to the municipality
+      field).
   street:
     description: Street/local area name as shown in Gemeinde24.
   street_id:

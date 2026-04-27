@@ -3,7 +3,7 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  address:
+  street_address:
     description: 'Street address, for example: 18 Crabbes Avenue, North Willoughby,
       NSW 2068'
     label: Street address

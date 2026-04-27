@@ -9,8 +9,7 @@ params:
   map_name:
     description: The name of the calendar map displayed in the app.
     label: Calendar Map Name
-  street:
+  street_name:
     description: The street name to get garbage collection dates for.
-    label: Street Name
   town:
     description: The town corresponding to the selected street.

@@ -11,7 +11,7 @@ URL = "https://www.hygea.be/"
 TEST_CASES = {
     "Soignies": {"street_index": "3758"},
     "Frameries": {"street_index": "4203"},
-    "Erquelinnes": {"cp": "6560"},
+    "Erquelinnes": {"postcode": "6560"},
 }
 
 WASTE_MAP = {
@@ -23,9 +23,9 @@ WASTE_MAP = {
 
 
 class Source:
-    def __init__(self, street_index=None, cp=None):
+    def __init__(self, street_index=None, postcode=None):
         self._street_index = street_index
-        self._cp = cp
+        self._cp = postcode
 
     def fetch(self):
         params = {"start": int(time.time()), "end": int(time.time() + 2678400)}

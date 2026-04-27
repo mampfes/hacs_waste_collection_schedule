@@ -13,8 +13,8 @@ DESCRIPTION = "Source for Lane Cove Council rubbish collection."
 URL = "https://www.lanecove.nsw.gov.au/"
 
 TEST_CASES = {
-    "17 Moore ST": {"address": "17 Moore ST LANE COVE WEST, 2066"},
-    "1 Austin St": {"address": "1 Austin ST LANE COVE, 2066"},
+    "17 Moore ST": {"street_address": "17 Moore ST LANE COVE WEST, 2066"},
+    "1 Austin St": {"street_address": "1 Austin ST LANE COVE, 2066"},
 }
 
 ICON_MAP = {
@@ -26,8 +26,8 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit the Lane Cove Council website and search for your address. "
-    "Use the exact address shown in the autocomplete result.",
+    "en": "Visit the Lane Cove Council website and search for your street_address. "
+    "Use the exact street_address shown in the autocomplete result.",
 }
 
 
@@ -45,8 +45,8 @@ HEADERS = {
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address
+    def __init__(self, street_address: str):
+        self._address = street_address
 
     def fetch(self) -> list[Collection]:
         s = requests.Session()
@@ -58,11 +58,11 @@ class Source:
 
         items = data.get("Items", [])
         if not items:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         if len(items) > 1:
             raise SourceArgumentNotFoundWithSuggestions(
-                "address",
+                "street_address",
                 self._address,
                 [item["AddressSingleLine"] for item in items],
             )

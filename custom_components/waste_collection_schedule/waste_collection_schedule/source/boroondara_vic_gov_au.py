@@ -13,10 +13,12 @@ DESCRIPTION = "Source for City of Boroondara waste collection."
 URL = "https://www.boroondara.vic.gov.au"
 TEST_CASES = {
     "211 Mont Albert Road Surrey Hills": {
-        "address": "211 Mont Albert Road, Surrey Hills"
+        "street_address": "211 Mont Albert Road, Surrey Hills"
     },
-    "60 Barkers Road Hawthorn East": {"address": "60 Barkers Road, Hawthorn East"},
-    "1 Kew Boulevard Kew": {"address": "1 Kew Boulevard, Kew"},
+    "60 Barkers Road Hawthorn East": {
+        "street_address": "60 Barkers Road, Hawthorn East"
+    },
+    "1 Kew Boulevard Kew": {"street_address": "1 Kew Boulevard, Kew"},
 }
 
 ICON_MAP = {
@@ -103,14 +105,14 @@ def _next_fortnightly(
 
 
 class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+    def __init__(self, street_address: str):
+        self._address = street_address.strip()
 
     def fetch(self) -> list[Collection]:
         try:
             loc = geocode(f"{self._address}, Victoria, Australia")
         except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("street_address", self._address) from e
 
         lat, lng = loc["y"], loc["x"]
 
@@ -123,7 +125,7 @@ class Source:
                 break
 
         if zone is None:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("street_address", self._address)
 
         _LOGGER.debug("Address %s → zone %s", self._address, zone)
 

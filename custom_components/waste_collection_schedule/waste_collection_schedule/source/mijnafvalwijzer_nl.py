@@ -9,7 +9,7 @@ TITLE = "Afval Wijzer"
 DESCRIPTION = "Source for all cities regions supported in mijnafvalwijzer.nl"
 URL = "https://www.mijnafvalwijzer.nl"
 TEST_CASES = {
-    "Eindhoven1": {"postcode": "5651AN", "number": "34", "add": "A"},
+    "Eindhoven1": {"postcode": "5651AN", "number": "34", "address_suffix": "A"},
     "Eindhoven2": {"postcode": "5651AN", "number": "34"},
     "Tilburg": {"postcode": "5014NN", "number": "174"},
     "Meierijstad": {"postcode": "5481LR", "number": "6"},
@@ -38,13 +38,13 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
 
 
 class Source:
-    def __init__(self, postcode, number, add=""):
+    def __init__(self, postcode, number, address_suffix=""):
         self._postcode = postcode
         self._number = number
-        if add is None:
+        if address_suffix is None:
             self._add = ""
         else:
-            self._add = add
+            self._add = address_suffix
 
     def fetch(self):
         s = requests.Session()
