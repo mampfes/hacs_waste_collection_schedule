@@ -28208,11 +28208,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "ID"
+          "id": "Schedule ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "id": "Identifier."
+          "id": "The unique identifier for your property's collection schedule."
         }
       },
       "reconfigure_sandiego_gov": {
@@ -28220,10 +28220,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "ID"
+          "id": "Schedule ID"
         },
         "data_description": {
-          "id": "Identifier."
+          "id": "The unique identifier for your property's collection schedule."
         }
       },
       "args_communitywastedisposal_com": {

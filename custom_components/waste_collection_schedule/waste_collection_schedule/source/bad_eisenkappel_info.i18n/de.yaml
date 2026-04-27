@@ -1,0 +1,5 @@
+# Per-source overrides for bad_eisenkappel_info (de).
+---
+params:
+  region:
+    label: Ortsteil

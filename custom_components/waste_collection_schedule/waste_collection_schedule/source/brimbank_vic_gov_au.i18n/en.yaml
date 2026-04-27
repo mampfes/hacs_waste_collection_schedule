@@ -1,0 +1,7 @@
+# Per-source overrides for brimbank_vic_gov_au (en).
+---
+params:
+  calendar:
+    label: Calendar cycle
+  day:
+    label: Collection day

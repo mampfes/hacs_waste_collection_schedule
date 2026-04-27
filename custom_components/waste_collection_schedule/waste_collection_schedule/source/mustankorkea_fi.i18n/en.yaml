@@ -1,0 +1,10 @@
+# Per-source overrides for mustankorkea_fi (en).
+---
+params:
+  contract_id:
+    description: Waste collection contract ID, only required if you have multiple
+      contracts
+  password:
+    label: ''
+  username:
+    label: ''

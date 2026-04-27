@@ -1,0 +1,7 @@
+# Per-source overrides for casey_vic_gov_au (it).
+---
+params:
+  street_address:
+    description: Indirizzo completo comprensivo di quartiere, regione e CAP, senza
+      virgole di separazione.
+    label: Indirizzo completo

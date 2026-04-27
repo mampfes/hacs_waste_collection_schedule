@@ -1,0 +1,5 @@
+# Per-source overrides for eggelsberg_at (de).
+---
+params:
+  zone:
+    description: Abholzone (A oder B)

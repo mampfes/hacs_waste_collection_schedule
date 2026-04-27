@@ -1,0 +1,5 @@
+# Per-source overrides for mestorudna_cz (en).
+---
+params:
+  city_part:
+    label: Service area

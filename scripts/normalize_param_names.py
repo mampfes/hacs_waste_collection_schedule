@@ -5,7 +5,7 @@ source modules to ``snake_case`` English. Renames:
 * the parameter name in ``def __init__``
 * every reference to the parameter inside the source file (private
   attribute names, body usages, TEST_CASES dict keys)
-* the matching key in ``i18n/sources/<source_id>/<lang>.yaml`` overrides
+* the matching key in ``source/<source_id>.i18n/<lang>.yaml`` overrides
 
 The rename is implemented as a word-boundary regex substitution within each
 file. The names being renamed are unusual enough (``houseNo``, ``streetId``,
@@ -35,9 +35,8 @@ SOURCE_DIR = (
     / "waste_collection_schedule"
     / "source"
 )
-I18N_SOURCES_DIR = (
-    REPO_ROOT / "custom_components" / "waste_collection_schedule" / "i18n" / "sources"
-)
+def _source_overrides_dir(source_id: str) -> Path:
+    return SOURCE_DIR / f"{source_id}.i18n"
 
 
 # Rename map: old Python identifier -> new snake_case English identifier.
@@ -309,7 +308,7 @@ def main() -> int:
             if args.verbose:
                 print(f"py:   {py_path.stem}  {sorted(per_source)}")
 
-        yaml_dir = I18N_SOURCES_DIR / py_path.stem
+        yaml_dir = _source_overrides_dir(py_path.stem)
         if yaml_dir.is_dir():
             for yaml_path in sorted(yaml_dir.glob("*.yaml")):
                 if rewrite_yaml(yaml_path, per_source, args.dry_run):

@@ -1,0 +1,5 @@
+# Per-source overrides for amsa_it (it).
+---
+params:
+  house_number:
+    label: Numero Civico

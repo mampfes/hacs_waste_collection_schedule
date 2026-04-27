@@ -1,0 +1,15 @@
+# Per-source overrides for msva_se (de).
+---
+params:
+  additional_information:
+    description: Hauskennung, z.B. 'A'. Leer lassen, falls nicht zutreffend.
+    label: Zusatzinformation
+  city:
+    description: 'Ortschaft innerhalb der Gemeinde Sundsvall. Standard: ''Sundsvall''.'
+  house_number:
+    description: Hausnummer, z.B. '18'.
+  postcode:
+    description: Fünfstellige schwedische Postleitzahl, z.B. '85461'.
+    label: Postleitzahl
+  street:
+    description: Straßenname ohne Hausnummer, z.B. 'Västra Radiogatan'.

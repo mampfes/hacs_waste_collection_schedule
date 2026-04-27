@@ -1,0 +1,6 @@
+# Per-source overrides for hobartcity_com_au (en).
+---
+params:
+  address:
+    description: 'The address should exactly match the address autocompleted by the
+      website: https://www.hobartcity.com.au/Residents/Waste-and-recycling/When-is-my-bin-collected'

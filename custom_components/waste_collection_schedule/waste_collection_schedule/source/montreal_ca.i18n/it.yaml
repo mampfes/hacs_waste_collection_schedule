@@ -1,0 +1,18 @@
+# Per-source overrides for montreal_ca (it).
+---
+params:
+  bulky:
+    description: Se il valore è diverso dal settore dei rifiuti.
+    label: Settore rifiuti ingombranti
+  food:
+    description: Se il valore è diverso dal settore dei rifiuti.
+    label: Settore rifiuti organici
+  green:
+    description: Se il valore è diverso dal settore dei rifiuti.
+    label: Settore rifiuti verdi
+  recycling:
+    description: Se il valore è diverso dal settore dei rifiuti.
+    label: Settore riciclaggio
+  sector:
+    description: Questo è il settore predefinito.
+    label: Settore rifiuti

@@ -1,0 +1,10 @@
+# Per-source overrides for evv_voelklingen_de (en).
+---
+params:
+  behaelter:
+    description: 'Mapping of waste type name to container size in litres (e.g. Restmüll:
+      ''240'', Papier: ''1100''). Only specified waste types are filtered; others
+      are shown for all container sizes. If omitted all container sizes are shown.'
+    label: Container size
+  house_number:
+    description: House number (optional, required for some streets)

@@ -1,0 +1,5 @@
+# Per-source overrides for karlsruhe_de (de).
+---
+params:
+  ladeort:
+    label: Ladeort

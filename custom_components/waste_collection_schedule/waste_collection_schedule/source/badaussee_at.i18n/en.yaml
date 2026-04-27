@@ -1,0 +1,9 @@
+# Per-source overrides for badaussee_at (en).
+---
+params:
+  altpapier_zone:
+    label: Paper Waste Zone
+  biomuell_zone:
+    label: Organic Waste Zone
+  restmuell_zone:
+    label: Residual Waste Zone

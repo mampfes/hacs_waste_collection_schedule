@@ -1,0 +1,5 @@
+# Per-source overrides for 123abfallkalender_de (de).
+---
+params:
+  district:
+    label: Ortsteil

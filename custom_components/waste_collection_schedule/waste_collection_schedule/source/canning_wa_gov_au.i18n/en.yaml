@@ -1,0 +1,7 @@
+# Per-source overrides for canning_wa_gov_au (en).
+---
+params:
+  address:
+    description: 'Your address, as it is displayed on the website when showing your
+      collection schedule. Note: There are usually two whitespace characters between
+      the suburb and postal code.'

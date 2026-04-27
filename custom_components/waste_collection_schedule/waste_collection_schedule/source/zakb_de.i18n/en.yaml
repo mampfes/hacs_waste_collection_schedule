@@ -1,0 +1,5 @@
+# Per-source overrides for zakb_de (en).
+---
+params:
+  hnr_zusatz:
+    label: House number addition

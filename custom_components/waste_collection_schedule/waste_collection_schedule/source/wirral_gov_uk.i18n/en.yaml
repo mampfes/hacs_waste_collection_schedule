@@ -1,0 +1,6 @@
+# Per-source overrides for wirral_gov_uk (en).
+---
+params:
+  address_value:
+    description: The 12-digit address value from the dropdown on the Wirral bin calendar
+      page.

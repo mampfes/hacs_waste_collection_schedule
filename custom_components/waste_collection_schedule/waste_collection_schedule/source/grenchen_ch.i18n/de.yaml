@@ -1,0 +1,5 @@
+# Per-source overrides for grenchen_ch (de).
+---
+params:
+  zone:
+    description: Abfuhrzone (Zone Ost oder Zone West)

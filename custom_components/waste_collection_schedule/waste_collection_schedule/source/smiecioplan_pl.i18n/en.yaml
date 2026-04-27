@@ -1,0 +1,7 @@
+# Per-source overrides for smiecioplan_pl (en).
+---
+params:
+  city:
+    description: City name (szczecin, gdansk, gdynia, or sopot).
+  street:
+    description: Street name in uppercase as shown on SmiecioPlan.

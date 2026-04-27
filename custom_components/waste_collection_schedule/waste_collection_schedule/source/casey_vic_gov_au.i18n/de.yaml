@@ -1,0 +1,6 @@
+# Per-source overrides for casey_vic_gov_au (de).
+---
+params:
+  street_address:
+    description: Vollständige Straßenadresse einschließlich Stadtteil, Bundesland
+      und Postleitzahl ohne Trennzeichen.

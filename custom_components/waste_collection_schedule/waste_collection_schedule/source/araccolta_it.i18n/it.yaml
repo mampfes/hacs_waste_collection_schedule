@@ -1,0 +1,7 @@
+# Per-source overrides for araccolta_it (it).
+---
+params:
+  district:
+    label: Quartiere
+  domestic:
+    label: Utenze domestiche

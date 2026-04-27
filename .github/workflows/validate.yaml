@@ -50,4 +50,5 @@ jobs:
         # spot issues without blocking the build.
         continue-on-error: true
         run: |
+          python scripts/build_wordlists.py
           pyspelling -c .pyspelling.yml

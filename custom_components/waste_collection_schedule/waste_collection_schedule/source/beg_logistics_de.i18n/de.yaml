@@ -1,0 +1,5 @@
+# Per-source overrides for beg_logistics_de (de).
+---
+params:
+  two_weeks:
+    label: 14-tägliche Abfuhr

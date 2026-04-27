@@ -1,0 +1,5 @@
+# Per-source overrides for muenchenstein_ch (de).
+---
+params:
+  waste_district:
+    label: Abfuhrkreis

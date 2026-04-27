@@ -1,0 +1,7 @@
+# Per-source overrides for grandbesancon_fr (en).
+---
+params:
+  house_number:
+    description: House number (optional, helps filter results)
+  insee_code:
+    label: INSEE Code

@@ -1,0 +1,5 @@
+# Per-source overrides for multiple (de).
+---
+params:
+  sources:
+    label: Quellen

@@ -1,41 +1,50 @@
 # i18n catalogs for waste_collection_schedule
 
-This directory holds all translatable strings used by source modules. Each
-language lives in its own YAML file so `pyspelling` can pair each file with
-the matching hunspell dictionary (per-language spell checking).
+This directory holds the **shared** translatable strings used by source
+modules. Each language lives in its own YAML file so `pyspelling` can pair
+each file with the matching hunspell dictionary (per-language spell
+checking).
+
+Per-source overrides do **not** live here — they live next to the source
+module they override (see "Adding a new source" below).
 
 ## Layout
 
 ```
-i18n/
-├── shared/
-│   ├── en.yaml      canonical reusable param labels + descriptions
-│   ├── de.yaml
-│   ├── fr.yaml
-│   └── it.yaml
-├── phrases/
-│   ├── en.yaml      reusable error / help templates with {placeholders}
-│   ├── de.yaml
-│   ├── fr.yaml
-│   └── it.yaml
-└── sources/
-    └── <source_id>/
-        ├── en.yaml  per-source override (only when shared isn't enough)
-        └── <lang>.yaml
+custom_components/waste_collection_schedule/
+├── i18n/
+│   ├── shared/
+│   │   ├── en.yaml      canonical reusable param labels + descriptions
+│   │   ├── de.yaml
+│   │   ├── fr.yaml
+│   │   └── it.yaml
+│   └── phrases/
+│       ├── en.yaml      reusable error / help templates with {placeholders}
+│       ├── de.yaml
+│       ├── fr.yaml
+│       └── it.yaml
+└── waste_collection_schedule/
+    └── source/
+        ├── <source_id>.py
+        └── <source_id>.i18n/   per-source overrides (only when needed)
+            ├── en.yaml
+            ├── de.yaml         (per language as needed)
+            └── ...
 ```
 
 ## Adding a new source
 
 If your source's `__init__` parameters all use names that appear in
 `shared/en.yaml` (`street`, `city`, `house_number`, `postcode`, ...) you
-don't need to add anything here — labels and descriptions resolve through
-the shared registry automatically.
+don't need to add anything — labels and descriptions resolve through the
+shared registry automatically.
 
 If your source has a parameter that **isn't** in the shared registry, or
-you need different wording, create:
+you need different wording, create a sibling folder next to your source
+module:
 
 ```yaml
-# i18n/sources/<source_id>/en.yaml
+# custom_components/waste_collection_schedule/waste_collection_schedule/source/my_source.i18n/en.yaml
 ---
 params:
   my_special_param:
@@ -53,7 +62,7 @@ Required:
 When `update_docu_links.py` builds the per-language `translations/<lang>.json`
 that Home Assistant consumes:
 
-1. `i18n/sources/<source_id>/<lang>.yaml` (highest)
+1. `source/<source_id>.i18n/<lang>.yaml` (highest)
 2. `i18n/shared/<lang>.yaml`
 3. English fallback (`<lang>` -> `en` for the same key)
 4. Auto-titlecased Python identifier (`house_number` -> "House Number")
@@ -90,19 +99,16 @@ example (`"e.g. 91"` for a house number), it isn't pulling its weight.
 
 `TITLE`, `DESCRIPTION`, and `EXTRA_INFO[].title` strings stay in source
 modules (they're metadata, not user-facing form labels). For non-English
-sources, declare which dictionary should spell-check them via:
+titles, declare which dictionary should spell-check them via:
 
 ```python
 TITLE = "Abfallwirtschaft Bad Kreuznach"
 TITLE_LANG = "de"          # default "en" if omitted
-DESCRIPTION = "Abfuhrkalender für Bad Kreuznach"
-DESCRIPTION_LANG = "de"
 EXTRA_INFO_LANG = "de"     # for the title strings inside EXTRA_INFO entries
 ```
 
-`scripts/extract_titles.py` walks every source, buckets these strings by
-their `*_LANG` flag, and writes them out for the `titles-*` matrix entries
-in `.pyspelling.yml`.
+(`DESCRIPTION` is conventionally English even for non-English sources, so
+no `DESCRIPTION_LANG` flag is needed.)
 
 ## Phrases (exception messages)
 
@@ -134,10 +140,13 @@ provider acronyms ("AHE", "ABK"), and source-specific jargon. Treating
 every hunspell flag as a hard failure would either need a
 multi-thousand-entry wordlist or would block contributors on noise.
 
-Add genuinely common project terms to `.spelling/<lang>.wordlist`. For
-one-off place names that only appear in a single source's overrides,
-it's usually fine to leave them flagged in the report and rely on
-review.
+Allowed-words lists mirror the i18n layout — project-wide terms in
+`.spelling/<lang>.wordlist` at the repo root, source-specific names and
+acronyms next to the source itself in
+`source/<source_id>.i18n/<lang>.wordlist`. Per-source wordlists only need
+to exist when a source has flagged tokens worth suppressing.
+`scripts/build_wordlists.py` concatenates both layers into
+`build/spelling/<lang>.wordlist`, which `.pyspelling.yml` consumes.
 
 To run the spell-check locally on Linux:
 
@@ -145,6 +154,7 @@ To run the spell-check locally on Linux:
 sudo apt-get install -y hunspell hunspell-en-us hunspell-de-de \
                         hunspell-fr hunspell-it
 pip install pyspelling
+python scripts/build_wordlists.py
 pyspelling -c .pyspelling.yml
 ```
 

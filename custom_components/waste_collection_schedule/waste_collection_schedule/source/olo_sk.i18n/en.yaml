@@ -1,0 +1,7 @@
+# Per-source overrides for olo_sk (en).
+---
+params:
+  registration_number:
+    description: OLO registration number (use this OR street name)
+  street:
+    description: Street name and number (use this OR registration number)

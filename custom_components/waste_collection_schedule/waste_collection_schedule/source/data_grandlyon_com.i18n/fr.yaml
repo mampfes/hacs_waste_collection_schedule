@@ -1,0 +1,5 @@
+# Per-source overrides for data_grandlyon_com (fr).
+---
+params:
+  address:
+    description: Votre adresse postale avec la commune

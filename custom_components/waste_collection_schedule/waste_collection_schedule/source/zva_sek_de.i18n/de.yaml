@@ -1,0 +1,7 @@
+# Per-source overrides for zva_sek_de (de).
+---
+params:
+  city:
+    label: Abfuhrbezirk
+  district:
+    label: Ortsteil

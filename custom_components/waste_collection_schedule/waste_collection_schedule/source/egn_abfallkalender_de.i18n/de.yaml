@@ -1,0 +1,5 @@
+# Per-source overrides for egn_abfallkalender_de (de).
+---
+params:
+  district:
+    label: Ortsteil

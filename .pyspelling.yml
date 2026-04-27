@@ -1,11 +1,20 @@
 # Per-language spell-check matrix for the i18n catalogs.
 #
-# Each language file in i18n/shared, i18n/phrases, and i18n/sources gets
-# checked against the matching hunspell dictionary. Project-specific
-# allowed words live in .spelling/<lang>.wordlist (place names, council
-# acronyms, technical terms not in the standard dictionary).
+# Each language file in i18n/shared, i18n/phrases, and per-source
+# overrides at source/<id>.i18n/ gets checked against the matching
+# hunspell dictionary. Project-specific allowed words split into two
+# layers:
+#   - .spelling/<lang>.wordlist                          -- project-wide
+#   - source/<source_id>.i18n/<lang>.wordlist            -- per-source
+#                                                          (sibling of
+#                                                           the .py)
+# `scripts/build_wordlists.py` concatenates both into
+# `build/spelling/<lang>.wordlist`, which this config consumes.
 #
-# Run:  pyspelling -c .pyspelling.yml
+# Run (must build wordlists first so per-source overrides are picked up):
+#   python scripts/build_wordlists.py
+#   pyspelling -c .pyspelling.yml
+#
 # CI installs hunspell + the en/de/fr/it dictionaries; locally on Linux:
 #   sudo apt-get install -y hunspell hunspell-en-us hunspell-de-de \
 #                           hunspell-fr hunspell-it
@@ -20,12 +29,12 @@ matrix:
     sources:
       - 'custom_components/waste_collection_schedule/i18n/shared/en.yaml'
       - 'custom_components/waste_collection_schedule/i18n/phrases/en.yaml'
-      - 'custom_components/waste_collection_schedule/i18n/sources/**/en.yaml'
+      - 'custom_components/waste_collection_schedule/waste_collection_schedule/source/*.i18n/en.yaml'
     hunspell:
       d: en_US
     dictionary:
       wordlists:
-        - .spelling/en.wordlist
+        - build/spelling/en.wordlist
       output: build/dictionary/en.dic
     pipeline:
       - pyspelling.filters.context:
@@ -48,12 +57,12 @@ matrix:
     sources:
       - 'custom_components/waste_collection_schedule/i18n/shared/de.yaml'
       - 'custom_components/waste_collection_schedule/i18n/phrases/de.yaml'
-      - 'custom_components/waste_collection_schedule/i18n/sources/**/de.yaml'
+      - 'custom_components/waste_collection_schedule/waste_collection_schedule/source/*.i18n/de.yaml'
     hunspell:
       d: de_DE
     dictionary:
       wordlists:
-        - .spelling/de.wordlist
+        - build/spelling/de.wordlist
       output: build/dictionary/de.dic
     pipeline:
       - pyspelling.filters.context:
@@ -72,12 +81,12 @@ matrix:
     sources:
       - 'custom_components/waste_collection_schedule/i18n/shared/fr.yaml'
       - 'custom_components/waste_collection_schedule/i18n/phrases/fr.yaml'
-      - 'custom_components/waste_collection_schedule/i18n/sources/**/fr.yaml'
+      - 'custom_components/waste_collection_schedule/waste_collection_schedule/source/*.i18n/fr.yaml'
     hunspell:
       d: fr_FR
     dictionary:
       wordlists:
-        - .spelling/fr.wordlist
+        - build/spelling/fr.wordlist
       output: build/dictionary/fr.dic
     pipeline:
       - pyspelling.filters.context:
@@ -96,12 +105,12 @@ matrix:
     sources:
       - 'custom_components/waste_collection_schedule/i18n/shared/it.yaml'
       - 'custom_components/waste_collection_schedule/i18n/phrases/it.yaml'
-      - 'custom_components/waste_collection_schedule/i18n/sources/**/it.yaml'
+      - 'custom_components/waste_collection_schedule/waste_collection_schedule/source/*.i18n/it.yaml'
     hunspell:
       d: it_IT
     dictionary:
       wordlists:
-        - .spelling/it.wordlist
+        - build/spelling/it.wordlist
       output: build/dictionary/it.dic
     pipeline:
       - pyspelling.filters.context:

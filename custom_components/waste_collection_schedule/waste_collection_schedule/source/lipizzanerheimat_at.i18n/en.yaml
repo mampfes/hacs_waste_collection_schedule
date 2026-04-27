@@ -1,0 +1,7 @@
+# Per-source overrides for lipizzanerheimat_at (en).
+---
+params:
+  garbage_calendar_id:
+    label: Garbage Calendar ID
+  map_name:
+    label: Calendar Map Name

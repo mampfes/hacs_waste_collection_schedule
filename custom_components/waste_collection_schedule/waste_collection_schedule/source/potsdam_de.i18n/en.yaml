@@ -1,0 +1,11 @@
+# Per-source overrides for potsdam_de (en).
+---
+params:
+  bio_rhythm:
+    label: Organics rhythm
+  gelb_rhythm:
+    label: Recycling rhythm
+  papier_rhythm:
+    label: Paper rhythm
+  rest_rhythm:
+    label: General waste rhythm

@@ -1,0 +1,5 @@
+# Per-source overrides for monash_vic_gov_au (en).
+---
+params:
+  street_address:
+    description: Full street address including suburb and postal code

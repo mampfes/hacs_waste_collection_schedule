@@ -1,0 +1,7 @@
+# Per-source overrides for northlanarkshire_gov_uk (en).
+---
+params:
+  usrn:
+    description: Your Unique Street Reference Number (USRN) can be found by searching
+      for your address at https://uprn.uk/ and viewing the _Data Associations_ section.
+    label: Unique Street Reference Number (USRN)

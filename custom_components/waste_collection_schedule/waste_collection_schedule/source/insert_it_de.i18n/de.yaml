@@ -1,0 +1,7 @@
+# Per-source overrides for insert_it_de (de).
+---
+params:
+  location_id:
+    label: Standort ID
+  municipality:
+    label: Ort

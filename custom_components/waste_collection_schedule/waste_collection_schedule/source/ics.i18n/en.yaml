@@ -1,0 +1,5 @@
+# Per-source overrides for ics (en).
+---
+params:
+  version:
+    label: (Deprecated) Version, has no effect anymore

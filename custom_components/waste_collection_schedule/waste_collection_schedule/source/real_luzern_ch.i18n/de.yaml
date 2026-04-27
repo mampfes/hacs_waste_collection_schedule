@@ -1,0 +1,7 @@
+# Per-source overrides for real_luzern_ch (de).
+---
+params:
+  municipality_id:
+    label: Orts ID
+  street_id:
+    label: Strassen ID

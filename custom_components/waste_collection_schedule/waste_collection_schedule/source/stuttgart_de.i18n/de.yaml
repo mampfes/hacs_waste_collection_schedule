@@ -1,0 +1,5 @@
+# Per-source overrides for stuttgart_de (de).
+---
+params:
+  streetnr:
+    label: Hausnummer

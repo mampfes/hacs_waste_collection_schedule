@@ -1,0 +1,6 @@
+# Per-source overrides for memotri_agglo_pau_fr (en).
+---
+params:
+  address:
+    description: Full address including street number, e.g. '39 avenue larribau 64000
+      Pau'

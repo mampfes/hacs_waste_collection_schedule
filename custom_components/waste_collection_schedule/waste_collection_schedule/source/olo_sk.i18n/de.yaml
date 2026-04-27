@@ -1,0 +1,8 @@
+# Per-source overrides for olo_sk (de).
+---
+params:
+  registration_number:
+    description: OLO-Registrierungsnummer (verwenden Sie dies ODER Straßenname)
+    label: Registrierungsnummer
+  street:
+    description: Straßenname und Hausnummer (verwenden Sie dies ODER Registrierungsnummer)

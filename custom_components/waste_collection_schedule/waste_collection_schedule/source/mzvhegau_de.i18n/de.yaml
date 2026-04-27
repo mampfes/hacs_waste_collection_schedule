@@ -1,0 +1,5 @@
+# Per-source overrides for mzvhegau_de (de).
+---
+params:
+  city:
+    label: Stadt/Gemeinde

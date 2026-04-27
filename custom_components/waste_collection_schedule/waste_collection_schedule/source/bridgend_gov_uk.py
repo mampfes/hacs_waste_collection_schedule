@@ -21,18 +21,6 @@ HEADERS: dict = {"user-agent": "Mozilla/5.0"}
 HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
     "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
 }
-PARAM_TRANSLATIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
-PARAM_DESCRIPTIONS: dict = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-    }
-}
-
-
 class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn)

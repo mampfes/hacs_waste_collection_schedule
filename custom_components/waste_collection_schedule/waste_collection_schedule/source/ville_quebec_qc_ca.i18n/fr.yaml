@@ -1,0 +1,11 @@
+# Per-source overrides for ville_quebec_qc_ca (fr).
+---
+params:
+  street_number_and_name:
+    description: Votre numéro et nom de rue dans la ville de Québec (ex. '123 Rue
+      Example')
+    label: Numéro et nom de rue
+  unique_id:
+    description: (Optionnel) Si plusieurs adresses correspondent à votre recherche,
+      cette valeur est utilisée pour en sélectionner une
+    label: ID unique d'adresse

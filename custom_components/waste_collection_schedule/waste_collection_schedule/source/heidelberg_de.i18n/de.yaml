@@ -1,0 +1,9 @@
+# Per-source overrides for heidelberg_de (de).
+---
+params:
+  collect_residual_waste_weekly:
+    label: Wöchentliche Abholung des Restmülls
+  even_house_number:
+    label: Hausnummer der Abholadresse ist gerade
+  street:
+    description: Die Straße, für die ein Abfallkalender angelegt werden soll.

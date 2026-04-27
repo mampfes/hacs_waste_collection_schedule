@@ -1,0 +1,7 @@
+# Per-source overrides for data_umweltprofis_at (en).
+---
+params:
+  url:
+    label: URL (Deprecated do not use)
+  xmlurl:
+    label: XML URL

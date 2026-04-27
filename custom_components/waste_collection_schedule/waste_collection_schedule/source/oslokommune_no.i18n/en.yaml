@@ -1,0 +1,6 @@
+# Per-source overrides for oslokommune_no (en).
+---
+params:
+  point_id:
+    description: Optional waste point ID to filter by
+    label: Point ID

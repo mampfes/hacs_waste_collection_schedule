@@ -1,0 +1,7 @@
+# Per-source overrides for kempsey_nsw_gov_au (en).
+---
+params:
+  address:
+    description: Your full street address including suburb, e.g. '10-12 Smith Street
+      Kempsey'
+    label: Full Street Address

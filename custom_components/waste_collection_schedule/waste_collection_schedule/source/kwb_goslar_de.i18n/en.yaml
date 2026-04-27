@@ -1,0 +1,5 @@
+# Per-source overrides for kwb_goslar_de (en).
+---
+params:
+  pois:
+    label: POIS

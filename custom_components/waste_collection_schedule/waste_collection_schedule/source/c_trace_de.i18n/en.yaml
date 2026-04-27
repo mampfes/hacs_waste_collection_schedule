@@ -1,0 +1,14 @@
+# Per-source overrides for c_trace_de (en).
+---
+params:
+  abfall:
+    description: Pipe-separated waste type IDs to fetch (e.g. '0|1|2|5'). Leave empty
+      to fetch all types. Visit your provider's calendar page to see which IDs correspond
+      to which waste types.
+    label: Waste type IDs
+  city:
+    label: District
+  district:
+    label: Subdistrict
+  service:
+    label: Operator

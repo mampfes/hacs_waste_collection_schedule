@@ -1,0 +1,5 @@
+# Per-source overrides for evv_voelklingen_de (fr).
+---
+params:
+  behaelter:
+    label: Poubelle

@@ -1,0 +1,5 @@
+# Per-source overrides for buchegg_so_ch (de).
+---
+params:
+  locality:
+    description: Ortschaft

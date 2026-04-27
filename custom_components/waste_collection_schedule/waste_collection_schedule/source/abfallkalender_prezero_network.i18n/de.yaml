@@ -1,0 +1,6 @@
+# Per-source overrides for abfallkalender_prezero_network (de).
+---
+params:
+  city:
+    description: 'Stadt-Kennung (Standard: ''bad-oeynhausen''; unterstützte Werte:
+      ''bad-oeynhausen'', ''willich'')'

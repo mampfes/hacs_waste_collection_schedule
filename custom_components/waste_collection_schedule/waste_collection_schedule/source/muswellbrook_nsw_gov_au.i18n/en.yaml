@@ -1,0 +1,5 @@
+# Per-source overrides for muswellbrook_nsw_gov_au (en).
+---
+params:
+  zone:
+    description: Collection zone, e.g. '3a' or '5b'. Find your zone at https://www.muswellbrook.nsw.gov.au/waste-collection/

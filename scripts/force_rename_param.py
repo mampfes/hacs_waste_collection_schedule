@@ -30,9 +30,8 @@ SOURCE_DIR = (
     / "waste_collection_schedule"
     / "source"
 )
-I18N_SOURCES_DIR = (
-    REPO_ROOT / "custom_components" / "waste_collection_schedule" / "i18n" / "sources"
-)
+def _source_overrides_dir(source_id: str) -> Path:
+    return SOURCE_DIR / f"{source_id}.i18n"
 
 
 def collect_protected_positions(tree: ast.Module, names: set[str]) -> set[tuple[int, int]]:
@@ -160,7 +159,7 @@ def main() -> int:
         py_path.write_text(new_text, encoding="utf-8", newline="\n")
         print(f"rewrote {py_path.relative_to(REPO_ROOT)}")
 
-    yaml_dir = I18N_SOURCES_DIR / source_id
+    yaml_dir = _source_overrides_dir(source_id)
     if yaml_dir.is_dir():
         for yaml_path in sorted(yaml_dir.glob("*.yaml")):
             if rewrite_yaml_keys(yaml_path, renames):

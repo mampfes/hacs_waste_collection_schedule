@@ -1,0 +1,5 @@
+# Per-source overrides for pointe_claire_qc_ca (fr).
+---
+params:
+  sector:
+    description: Secteur de collecte (A ou B)

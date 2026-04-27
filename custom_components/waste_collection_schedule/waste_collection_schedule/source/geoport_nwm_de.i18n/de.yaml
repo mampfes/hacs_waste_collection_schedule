@@ -1,0 +1,5 @@
+# Per-source overrides for geoport_nwm_de (de).
+---
+params:
+  district:
+    label: Ortsteil

@@ -1,0 +1,5 @@
+# Per-source overrides for panda_ie (en).
+---
+params:
+  pin:
+    label: PIN

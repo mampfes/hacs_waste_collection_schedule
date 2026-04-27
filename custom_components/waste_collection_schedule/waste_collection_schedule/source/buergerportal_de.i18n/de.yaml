@@ -1,0 +1,11 @@
+# Per-source overrides for buergerportal_de (de).
+---
+params:
+  district:
+    label: Ort
+  service_provider:
+    label: Betreiber
+  show_volume:
+    label: Große Container anzeigen
+  subdistrict:
+    label: Ortsteil

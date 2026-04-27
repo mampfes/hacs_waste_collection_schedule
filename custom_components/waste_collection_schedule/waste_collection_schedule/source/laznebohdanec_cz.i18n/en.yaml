@@ -1,0 +1,7 @@
+# Per-source overrides for laznebohdanec_cz (en).
+---
+params:
+  file:
+    label: Local XLSX file
+  url:
+    label: Direct XLSX URL

@@ -1,0 +1,19 @@
+# Per-source overrides for ics (de).
+---
+params:
+  headers:
+    label: Headers
+  offset:
+    label: Offset
+  regex:
+    label: Regulärer Ausdruck
+  split_at:
+    label: Trennen bei
+  title_template:
+    label: Titelvorlage
+  verify_ssl:
+    label: SSL-Verifizierung aktivieren
+  version:
+    label: (Veraltet) Version, hat keine Auswirkung mehr
+  year_field:
+    label: Jahresfeld

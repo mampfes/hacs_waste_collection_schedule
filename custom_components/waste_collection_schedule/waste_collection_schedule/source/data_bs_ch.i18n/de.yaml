@@ -1,0 +1,5 @@
+# Per-source overrides for data_bs_ch (de).
+---
+params:
+  zone:
+    description: Ihre Abfuhrzone (A-H oder GUF).

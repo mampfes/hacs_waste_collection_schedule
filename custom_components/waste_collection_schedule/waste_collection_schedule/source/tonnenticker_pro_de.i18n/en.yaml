@@ -1,0 +1,5 @@
+# Per-source overrides for tonnenticker_pro_de (en).
+---
+params:
+  street:
+    description: Street name — use exact spelling from the provider's calendar

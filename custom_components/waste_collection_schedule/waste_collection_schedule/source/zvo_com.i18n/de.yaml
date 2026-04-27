@@ -1,0 +1,5 @@
+# Per-source overrides for zvo_com (de).
+---
+params:
+  street:
+    description: Straßenname (bei einigen Orten nicht erforderlich)

@@ -1,0 +1,18 @@
+# Per-source overrides for montreal_ca (de).
+---
+params:
+  bulky:
+    description: Wenn der Wert vom Abfallsektor abweicht.
+    label: Sperrmüllsektor
+  food:
+    description: Wenn der Wert vom Abfallsektor abweicht.
+    label: Biomüllsektor
+  green:
+    description: Wenn der Wert vom Abfallsektor abweicht.
+    label: Grünabfallsektor
+  recycling:
+    description: Wenn der Wert vom Abfallsektor abweicht.
+    label: Recyclingsektor
+  sector:
+    description: Dies ist der Standardsektor.
+    label: Abfallsektor

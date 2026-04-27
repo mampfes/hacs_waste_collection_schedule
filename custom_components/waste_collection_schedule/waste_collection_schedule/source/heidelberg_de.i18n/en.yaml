@@ -1,0 +1,7 @@
+# Per-source overrides for heidelberg_de (en).
+---
+params:
+  collect_residual_waste_weekly:
+    label: Weekly residual waste collection
+  even_house_number:
+    label: House number to collect from is even

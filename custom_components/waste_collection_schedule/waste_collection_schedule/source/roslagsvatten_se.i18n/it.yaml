@@ -1,0 +1,7 @@
+# Per-source overrides for roslagsvatten_se (it).
+---
+params:
+  municipality:
+    description: 'Comune, uno di: ''osteraker'', ''vaxholm'' o ''ekero'''
+  street_address:
+    description: Indirizzo (es. Andromedavägen 1, Åkersberga)

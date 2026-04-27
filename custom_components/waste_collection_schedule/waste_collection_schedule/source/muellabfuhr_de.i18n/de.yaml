@@ -1,0 +1,5 @@
+# Per-source overrides for muellabfuhr_de (de).
+---
+params:
+  district:
+    label: Ortsteil

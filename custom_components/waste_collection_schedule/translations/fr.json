@@ -26615,8 +26615,7 @@
           "id": "ID"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "id": "Identifiant."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
         }
       },
       "reconfigure_sandiego_gov": {
@@ -26626,9 +26625,7 @@
           "calendar_title": "Titre du Calendrier",
           "id": "ID"
         },
-        "data_description": {
-          "id": "Identifiant."
-        }
+        "data_description": {}
       },
       "args_communitywastedisposal_com": {
         "title": "Configurer la Source",

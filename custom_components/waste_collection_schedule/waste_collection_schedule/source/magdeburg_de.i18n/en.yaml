@@ -1,0 +1,5 @@
+# Per-source overrides for magdeburg_de (en).
+---
+params:
+  street:
+    label: Street and house number

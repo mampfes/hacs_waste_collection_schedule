@@ -1,0 +1,9 @@
+# Per-source overrides for irenambiente_it (it).
+---
+params:
+  city:
+    label: Comune
+  house_number:
+    label: N° Civico
+  street:
+    label: Via/Piazza/Corso

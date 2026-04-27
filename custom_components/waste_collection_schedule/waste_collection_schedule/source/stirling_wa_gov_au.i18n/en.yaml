@@ -1,0 +1,7 @@
+# Per-source overrides for stirling_wa_gov_au (en).
+---
+params:
+  lat:
+    description: Latitude (optional if address is provided)
+  lon:
+    description: Longitude (optional if address is provided)

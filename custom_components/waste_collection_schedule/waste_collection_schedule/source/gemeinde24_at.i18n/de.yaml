@@ -1,0 +1,14 @@
+# Per-source overrides for gemeinde24_at (de).
+---
+params:
+  municipality_id:
+    description: Numerische GemeindeID aus Gemeinde24 (optional statt des Gemeinde-Feldes).
+    label: Gemeinde ID
+  municipality:
+    description: Gemeindename wie in Gemeinde24 angezeigt.
+  street:
+    description: Strassen-/Ortsteilname wie in Gemeinde24 angezeigt.
+    label: Strasse
+  street_id:
+    description: Numerische streetID aus Gemeinde24 (optional statt des Straßen-Feldes).
+    label: Strassen ID

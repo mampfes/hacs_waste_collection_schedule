@@ -1,0 +1,10 @@
+# Per-source overrides for awm_muenchen_de (fr).
+---
+params:
+  b_collection_cycle_string:
+    label: Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)
+  p_collection_cycle_string:
+    label: Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du
+      formulaire)
+  r_collection_cycle_string:
+    label: cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)

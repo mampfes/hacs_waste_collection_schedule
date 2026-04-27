@@ -1,0 +1,5 @@
+# Per-source overrides for korneuburg_stadtservice_at (de).
+---
+params:
+  teilgebiet:
+    label: Teilgebiet

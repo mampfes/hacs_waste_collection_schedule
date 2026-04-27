@@ -1,0 +1,9 @@
+# Per-source overrides for gemeinde24_at (en).
+---
+params:
+  municipality_id:
+    description: Numeric GemeindeID from Gemeinde24 (optional alternative to the municipality
+      field).
+  street_id:
+    description: Numeric streetID from Gemeinde24 (optional alternative to the street
+      field).

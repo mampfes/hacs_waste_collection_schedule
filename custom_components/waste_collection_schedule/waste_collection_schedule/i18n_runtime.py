@@ -33,6 +33,7 @@ LANGUAGES: tuple[str, ...] = ("en", "de", "fr", "it")
 DEFAULT_LANG = "en"
 
 _I18N_ROOT = Path(__file__).resolve().parents[1] / "i18n"
+_SOURCE_DIR = Path(__file__).resolve().parent / "source"
 
 
 def _read_yaml(path: Path) -> dict[str, Any]:
@@ -41,6 +42,11 @@ def _read_yaml(path: Path) -> dict[str, Any]:
     with path.open(encoding="utf-8") as f:
         loaded = yaml.safe_load(f)
     return loaded or {}
+
+
+def _source_overrides_dir(source_id: str) -> Path:
+    """Per-source i18n directory living next to the source module."""
+    return _SOURCE_DIR / f"{source_id}.i18n"
 
 
 @lru_cache(maxsize=None)
@@ -57,8 +63,13 @@ def load_phrases(lang: str) -> dict[str, Any]:
 
 @lru_cache(maxsize=None)
 def load_source_overrides(source_id: str, lang: str) -> dict[str, Any]:
-    """Return a source's per-language override file, or {} if absent."""
-    return _read_yaml(_I18N_ROOT / "sources" / source_id / f"{lang}.yaml")
+    """Return a source's per-language override file, or {} if absent.
+
+    Per-source overrides live in ``source/<source_id>.i18n/<lang>.yaml``,
+    a sibling of the source module so contributors keep all assets for
+    one source in one place.
+    """
+    return _read_yaml(_source_overrides_dir(source_id) / f"{lang}.yaml")
 
 
 def shared_languages() -> Iterable[str]:
@@ -75,11 +86,14 @@ def shared_languages() -> Iterable[str]:
 
 
 def source_ids_with_overrides() -> list[str]:
-    """List source_ids that have an i18n/sources/<source_id>/ directory."""
-    sources_dir = _I18N_ROOT / "sources"
-    if not sources_dir.is_dir():
+    """List source_ids that have a sibling ``<source_id>.i18n/`` directory."""
+    if not _SOURCE_DIR.is_dir():
         return []
-    return sorted(p.name for p in sources_dir.iterdir() if p.is_dir())
+    return sorted(
+        p.name[: -len(".i18n")]
+        for p in _SOURCE_DIR.iterdir()
+        if p.is_dir() and p.name.endswith(".i18n")
+    )
 
 
 def resolve_param(

@@ -1,0 +1,6 @@
+# Per-source overrides for warrnambool_vic_gov_au (en).
+---
+params:
+  street_address:
+    description: Full street address including suburb and postcode, e.g. '3 Kiama
+      Ave WARRNAMBOOL VIC 3280'

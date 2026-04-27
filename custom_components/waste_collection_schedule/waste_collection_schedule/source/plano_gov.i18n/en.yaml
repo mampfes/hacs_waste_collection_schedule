@@ -1,0 +1,7 @@
+# Per-source overrides for plano_gov (en).
+---
+params:
+  object_id:
+    description: A valid object ID from the Plano GIS service. You can find this by
+      searching for your address on the Plano GIS map and clicking on the address
+      to get the object ID.

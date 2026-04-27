@@ -1,0 +1,7 @@
+# Per-source overrides for arun_gov_uk (en).
+---
+params:
+  address:
+    label: Address (legacy, use UPRN instead)
+  postcode:
+    label: Postcode (legacy, use UPRN instead)

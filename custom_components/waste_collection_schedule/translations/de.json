@@ -27093,8 +27093,7 @@
           "id": "ID"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "id": "Kennung."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
       "reconfigure_sandiego_gov": {
@@ -27104,9 +27103,7 @@
           "calendar_title": "Kalender Titel",
           "id": "ID"
         },
-        "data_description": {
-          "id": "Kennung."
-        }
+        "data_description": {}
       },
       "args_communitywastedisposal_com": {
         "title": "Quelle konfigurieren",

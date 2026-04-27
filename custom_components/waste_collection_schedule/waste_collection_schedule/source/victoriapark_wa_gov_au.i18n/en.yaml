@@ -1,0 +1,7 @@
+# Per-source overrides for victoriapark_wa_gov_au (en).
+---
+params:
+  day:
+    label: Collection Day
+  group:
+    label: Collection Group

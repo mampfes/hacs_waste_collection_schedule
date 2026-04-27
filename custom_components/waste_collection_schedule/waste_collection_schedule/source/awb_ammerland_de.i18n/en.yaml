@@ -1,0 +1,9 @@
+# Per-source overrides for awb_ammerland_de (en).
+---
+params:
+  four_weekly_rest:
+    label: 4-weekly residual waste collection
+  street_section:
+    description: Only required if the street is divided into sections (e.g. 'nördl.d.
+      A 28').
+    label: Street section

@@ -1,0 +1,7 @@
+# Per-source overrides for avfallsapp_se (en).
+---
+params:
+  api_key:
+    label: API key / device ID
+  token:
+    label: Bearer token

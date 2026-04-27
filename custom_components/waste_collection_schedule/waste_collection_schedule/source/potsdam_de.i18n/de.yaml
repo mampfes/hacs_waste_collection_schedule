@@ -1,0 +1,13 @@
+# Per-source overrides for potsdam_de (de).
+---
+params:
+  bio_rhythm:
+    label: Bio Rhythmus
+  gelb_rhythm:
+    label: Gelb Rhythmus
+  district:
+    label: Ortsteil
+  papier_rhythm:
+    label: Papier Rhythmus
+  rest_rhythm:
+    label: Restabfall Rhythmus

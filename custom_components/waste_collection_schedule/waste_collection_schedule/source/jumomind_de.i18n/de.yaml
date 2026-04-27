@@ -1,0 +1,5 @@
+# Per-source overrides for jumomind_de (de).
+---
+params:
+  area_id:
+    label: Bereich ID

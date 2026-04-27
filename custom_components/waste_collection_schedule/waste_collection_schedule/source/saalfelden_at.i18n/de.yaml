@@ -1,0 +1,7 @@
+# Per-source overrides for saalfelden_at (de).
+---
+params:
+  house_number:
+    description: Hausnummer wie im Saalfeldener Abfallkalender aufgelistet.
+  street:
+    description: Straßenname wie im Saalfeldener Abfallkalender aufgelistet.

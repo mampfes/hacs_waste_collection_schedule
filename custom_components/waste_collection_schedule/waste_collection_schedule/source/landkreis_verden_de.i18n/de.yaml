@@ -1,0 +1,5 @@
+# Per-source overrides for landkreis_verden_de (de).
+---
+params:
+  house_number_addition:
+    label: Hausnummerzusatz

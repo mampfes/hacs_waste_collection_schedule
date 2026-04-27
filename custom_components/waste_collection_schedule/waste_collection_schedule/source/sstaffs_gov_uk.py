@@ -29,16 +29,6 @@ ICON_MAP: dict = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
     "en": "Your UPRN can be found by searching your postcode at https://www.sstaffs.gov.uk/viewyourcollectioncalendar and selecting your address. The objectId in the resulting URL is your UPRN. Alternatively, find your UPRN at https://www.findmyaddress.co.uk/",
 }
-PARAM_TRANSLATIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
-PARAM_DESCRIPTIONS: dict = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    }
-}
 
 
 class Source:

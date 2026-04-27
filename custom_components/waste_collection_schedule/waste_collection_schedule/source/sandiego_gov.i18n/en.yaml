@@ -1,0 +1,6 @@
+# Per-source overrides for sandiego_gov (en).
+---
+params:
+  id:
+    label: Schedule ID
+    description: The unique identifier for your property's collection schedule.

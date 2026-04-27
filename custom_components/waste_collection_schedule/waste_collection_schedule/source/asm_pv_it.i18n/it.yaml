@@ -1,0 +1,7 @@
+# Per-source overrides for asm_pv_it (it).
+---
+params:
+  municipality:
+    label: Comune
+  street:
+    label: Via

@@ -1,0 +1,7 @@
+# Per-source overrides for landkreis_rhoen_grabfeld (de).
+---
+params:
+  city:
+    label: Stadt, Markt, Gemeinde
+  district:
+    label: Ort, Ortsteil

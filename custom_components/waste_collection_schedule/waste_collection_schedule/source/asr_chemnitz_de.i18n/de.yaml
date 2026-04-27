@@ -1,0 +1,5 @@
+# Per-source overrides for asr_chemnitz_de (de).
+---
+params:
+  object_number:
+    label: Objektnummer

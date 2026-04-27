@@ -1,0 +1,5 @@
+# Per-source overrides for roslagsvatten_se (en).
+---
+params:
+  municipality:
+    description: 'Municipality, one of: ''osteraker'', ''vaxholm'', or ''ekero'''

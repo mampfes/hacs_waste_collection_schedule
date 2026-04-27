@@ -1,0 +1,20 @@
+# Per-source overrides for publidata_fr (en).
+---
+params:
+  address:
+    description: Street address only (e.g. '4 rue de Paris'). Do not include city
+      name or postcode.
+  insee_code:
+    description: The 5-digit INSEE code of your commune. Check https://www.insee.fr
+      if your commune has merged (communes nouvelles have a new code).
+    label: INSEE Code
+  instance_id:
+    description: Pre-filled when you select a known service provider. Only needed
+      for unlisted providers (found via network inspector on the provider's waste
+      widget).
+    label: Instance ID
+  public_type:
+    description: Housing type filter (optional). Use 'individual_housing' for houses
+      or 'collective_housing' for apartments if your area has different schedules
+      per housing type.
+    label: Housing Type

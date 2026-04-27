@@ -1,7 +1,8 @@
 # Shared parameter labels and descriptions in English.
 # Source modules that use these parameter names get these labels for free in
 # the Home Assistant config UI. Override only when a specific source genuinely
-# needs different wording, via i18n/sources/<source_id>/en.yaml.
+# needs different wording, via source/<source_id>.i18n/en.yaml (sibling of
+# the source module).
 #
 # Spell-checked against en_US dictionary by pyspelling.
 ---

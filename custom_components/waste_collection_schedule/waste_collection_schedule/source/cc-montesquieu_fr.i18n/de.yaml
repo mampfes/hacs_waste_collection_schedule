@@ -1,0 +1,5 @@
+# Per-source overrides for cc-montesquieu_fr (de).
+---
+params:
+  municipality:
+    label: Stadt

@@ -1,0 +1,7 @@
+# Per-source overrides for gleneira_vic_gov_au (fr).
+---
+params:
+  street_address:
+    description: Adresse complète incluant le quartier, la région et le code postal,
+      sans virgules de séparation.
+    label: Adresse complète

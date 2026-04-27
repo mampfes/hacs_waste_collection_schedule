@@ -1,0 +1,5 @@
+# Per-source overrides for awbkoeln_de (de).
+---
+params:
+  building_number:
+    label: Hausnummer

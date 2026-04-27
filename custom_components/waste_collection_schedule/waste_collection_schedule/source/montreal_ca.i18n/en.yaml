@@ -1,0 +1,13 @@
+# Per-source overrides for montreal_ca (en).
+---
+params:
+  bulky:
+    label: Bulky items sector
+  food:
+    label: Food waste sector
+  green:
+    label: Greens and leafs sector
+  recycling:
+    label: Recycling sector
+  sector:
+    label: Waste sector

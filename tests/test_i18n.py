@@ -31,7 +31,6 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 I18N_ROOT = REPO_ROOT / "custom_components" / "waste_collection_schedule" / "i18n"
 SHARED_DIR = I18N_ROOT / "shared"
 PHRASES_DIR = I18N_ROOT / "phrases"
-SOURCES_DIR = I18N_ROOT / "sources"
 SOURCE_PY_DIR = (
     REPO_ROOT
     / "custom_components"
@@ -41,6 +40,20 @@ SOURCE_PY_DIR = (
 )
 LANGUAGES = ("en", "de", "fr", "it")
 PLACEHOLDER_RE = re.compile(r"\{([a-zA-Z_][a-zA-Z_0-9]*)\}")
+
+
+def _source_overrides_dir(source_id: str) -> Path:
+    """Per-source override dir lives next to the source module."""
+    return SOURCE_PY_DIR / f"{source_id}.i18n"
+
+
+def _all_source_override_dirs() -> Iterable[Path]:
+    """Yield every ``source/<id>.i18n/`` directory present on disk."""
+    if not SOURCE_PY_DIR.is_dir():
+        return
+    for entry in sorted(SOURCE_PY_DIR.iterdir()):
+        if entry.is_dir() and entry.name.endswith(".i18n"):
+            yield entry
 
 
 def _load_yaml(path: Path) -> dict:
@@ -127,13 +140,10 @@ def test_phrase_placeholder_parity() -> None:
 
 
 def _iter_source_overrides() -> Iterable[tuple[str, str, Path]]:
-    if not SOURCES_DIR.is_dir():
-        return
-    for src_dir in sorted(SOURCES_DIR.iterdir()):
-        if not src_dir.is_dir():
-            continue
+    for src_dir in _all_source_override_dirs():
+        source_id = src_dir.name[: -len(".i18n")]
         for yaml_path in sorted(src_dir.glob("*.yaml")):
-            yield src_dir.name, yaml_path.stem, yaml_path
+            yield source_id, yaml_path.stem, yaml_path
 
 
 def test_source_overrides_parse_and_match_init_params() -> None:
@@ -176,20 +186,15 @@ def test_source_overrides_parse_and_match_init_params() -> None:
 
 
 def test_every_override_directory_has_english_or_shared_entry() -> None:
-    """If ``i18n/sources/<id>/de.yaml`` defines a key, the same key must
-    have an English label reachable via either ``i18n/sources/<id>/en.yaml``
-    or ``i18n/shared/en.yaml``. Otherwise the English UI shows nothing for
-    that param.
+    """If ``source/<id>.i18n/de.yaml`` defines a key, the same key must
+    have an English label reachable via either
+    ``source/<id>.i18n/en.yaml`` or ``i18n/shared/en.yaml``. Otherwise
+    the English UI shows nothing for that param.
     """
     shared_en = (_load_yaml(SHARED_DIR / "en.yaml").get("params") or {})
     failures: list[str] = []
 
-    if not SOURCES_DIR.is_dir():
-        return
-
-    for src_dir in sorted(SOURCES_DIR.iterdir()):
-        if not src_dir.is_dir():
-            continue
+    for src_dir in _all_source_override_dirs():
         en_path = src_dir / "en.yaml"
         en_params = (
             (_load_yaml(en_path).get("params") or {}) if en_path.is_file() else {}
@@ -232,22 +237,23 @@ def test_no_source_has_legacy_param_translation_dicts() -> None:
     import ast as _ast
 
     failures: list[str] = []
+    banned = {"PARAM_TRANSLATIONS", "PARAM_DESCRIPTIONS"}
     for py_path in sorted(SOURCE_PY_DIR.glob("*.py")):
         try:
             tree = _ast.parse(py_path.read_text(encoding="utf-8"))
         except SyntaxError:
             continue
         for node in tree.body:
-            if not isinstance(node, _ast.Assign) or len(node.targets) != 1:
-                continue
-            target = node.targets[0]
-            if isinstance(target, _ast.Name) and target.id in (
-                "PARAM_TRANSLATIONS",
-                "PARAM_DESCRIPTIONS",
-            ):
+            target_name: str | None = None
+            if isinstance(node, _ast.Assign) and len(node.targets) == 1:
+                if isinstance(node.targets[0], _ast.Name):
+                    target_name = node.targets[0].id
+            elif isinstance(node, _ast.AnnAssign) and isinstance(node.target, _ast.Name):
+                target_name = node.target.id
+            if target_name in banned:
                 failures.append(
-                    f"{py_path.name}: {target.id} dict at line {node.lineno} -- "
-                    "translations live in i18n/sources/<source_id>/<lang>.yaml now"
+                    f"{py_path.name}: {target_name} dict at line {node.lineno} -- "
+                    "translations live in source/<source_id>.i18n/<lang>.yaml now"
                 )
     assert not failures, "\n".join(failures)
 
@@ -267,12 +273,9 @@ def test_every_init_param_resolves_to_english_label() -> None:
         params = _init_params(py_path.stem)
         if params is None:
             continue
+        en_path = _source_overrides_dir(py_path.stem) / "en.yaml"
         per_source = (
-            (
-                _load_yaml(SOURCES_DIR / py_path.stem / "en.yaml").get("params") or {}
-            )
-            if (SOURCES_DIR / py_path.stem / "en.yaml").is_file()
-            else {}
+            (_load_yaml(en_path).get("params") or {}) if en_path.is_file() else {}
         )
         for param in params:
             in_shared = (

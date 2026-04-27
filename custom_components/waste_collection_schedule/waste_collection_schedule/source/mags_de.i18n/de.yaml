@@ -1,0 +1,5 @@
+# Per-source overrides for mags_de (de).
+---
+params:
+  turnus:
+    label: Turnus

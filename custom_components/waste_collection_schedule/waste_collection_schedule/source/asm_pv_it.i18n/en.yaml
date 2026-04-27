@@ -1,0 +1,6 @@
+# Per-source overrides for asm_pv_it (en).
+---
+params:
+  street:
+    description: Street name as listed on the ASM porta-a-porta lookup. For municipalities
+      with a single zone, use 'Tutte le vie'.

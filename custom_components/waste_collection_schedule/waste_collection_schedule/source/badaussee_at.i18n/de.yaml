@@ -1,0 +1,12 @@
+# Per-source overrides for badaussee_at (de).
+---
+params:
+  altpapier_zone:
+    description: Zonennummer für Altpapier
+    label: Altpapier Zone
+  biomuell_zone:
+    description: Zonennummer für Biomüll
+    label: Biomüll Zone
+  restmuell_zone:
+    description: Zonennummer für Restmüll
+    label: Restmüll Zone

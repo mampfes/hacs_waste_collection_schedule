@@ -1,0 +1,5 @@
+# Per-source overrides for shoalhaven_nsw_gov_au (en).
+---
+params:
+  geolocation_id:
+    label: Geolocation ID

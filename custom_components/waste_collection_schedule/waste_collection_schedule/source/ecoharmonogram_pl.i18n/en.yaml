@@ -1,0 +1,30 @@
+# Per-source overrides for ecoharmonogram_pl (en).
+---
+params:
+  g1:
+    description: Select Collection group to limit results to a specific group within
+      a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month).
+      Leave empty and only fill if it fails, you'll then see a list of available groups.
+    label: Group 1
+  g2:
+    description: Select Collection group to limit results to a specific group within
+      a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month).
+      Leave empty and only fill if it fails, you'll then see a list of available groups.
+    label: Group 2
+  g3:
+    description: Select Collection group to limit results to a specific group within
+      a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month).
+      Leave empty and only fill if it fails, you'll then see a list of available groups.
+    label: Group 3
+  g4:
+    description: Select Collection group to limit results to a specific group within
+      a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month).
+      Leave empty and only fill if it fails, you'll then see a list of available groups.
+    label: Group 4
+  g5:
+    description: Select Collection group to limit results to a specific group within
+      a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month).
+      Leave empty and only fill if it fails, you'll then see a list of available groups.
+    label: Group 5
+  language:
+    description: Language for waste type names (pl, en, uk, ru)

@@ -25,7 +25,18 @@ I18N_ROOT = (
     / "i18n"
 )
 I18N_SHARED_DIR = I18N_ROOT / "shared"
-I18N_SOURCES_DIR = I18N_ROOT / "sources"
+SOURCE_MODULE_DIR = (
+    Path(__file__).resolve().parents[0]
+    / "custom_components"
+    / "waste_collection_schedule"
+    / "waste_collection_schedule"
+    / "source"
+)
+
+
+def _source_overrides_dir(source_id: str) -> Path:
+    """Per-source override directory: ``source/<id>.i18n/`` next to the .py."""
+    return SOURCE_MODULE_DIR / f"{source_id}.i18n"
 
 
 @lru_cache(maxsize=None)
@@ -79,11 +90,12 @@ def _i18n_source_overrides(
 ) -> tuple[dict[str, dict[str, str]], dict[str, dict[str, str]]]:
     """Return (translations, descriptions) for one source as
     ``{lang: {param: value}}`` dicts loaded from
-    ``custom_components/.../i18n/sources/<source_id>/<lang>.yaml``.
+    ``source/<source_id>.i18n/<lang>.yaml`` -- a sibling of the source
+    module so contributors keep all assets for one source in one place.
     """
     translations: dict[str, dict[str, str]] = {}
     descriptions: dict[str, dict[str, str]] = {}
-    src_dir = I18N_SOURCES_DIR / source_id
+    src_dir = _source_overrides_dir(source_id)
     if not src_dir.is_dir():
         return translations, descriptions
     for yaml_path in sorted(src_dir.glob("*.yaml")):
@@ -520,7 +532,7 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
         params.remove("self")
     howto = getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
 
-    # Per-source YAML overrides from i18n/sources/<source_id>/. The shape
+    # Per-source YAML overrides from source/<source_id>.i18n/. The shape
     # ``{lang: {param: value}}`` matches what SourceInfo expects.
     param_translations, param_descriptions = _i18n_source_overrides(file)
 

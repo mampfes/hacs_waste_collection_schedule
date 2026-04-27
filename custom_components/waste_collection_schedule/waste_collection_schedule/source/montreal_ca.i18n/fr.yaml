@@ -1,0 +1,18 @@
+# Per-source overrides for montreal_ca (fr).
+---
+params:
+  bulky:
+    description: Si différent du secteur des ordures ménagères.
+    label: Secteur item encombrants
+  food:
+    description: Si différent du secteur des ordures ménagères.
+    label: Secteur compost
+  green:
+    description: Si différent du secteur des ordures ménagères.
+    label: Secteur résiduts verts et feuilles mortes
+  recycling:
+    description: Si différent du secteur des ordures ménagères.
+    label: Secteur recyclage
+  sector:
+    description: Ce secteur est utilisé par défaut
+    label: Secteur ordure ménagère

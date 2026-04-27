@@ -1,0 +1,6 @@
+# Per-source overrides for stadtreinigung_giessen_de (it).
+---
+params:
+  street:
+    description: Inserire il nome della via. Se non trovata, apparirà un menu a tendina
+      con suggerimenti.
