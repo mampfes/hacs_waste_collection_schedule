@@ -12,6 +12,8 @@
 #
 # Author can scope a single language with:
 #   pyspelling -c .pyspelling.yml --name shared-en
+spellchecker: hunspell
+
 matrix:
   # ------------------------------------------------------------------ EN
   - name: shared-en
@@ -19,8 +21,7 @@ matrix:
       - 'custom_components/waste_collection_schedule/i18n/shared/en.yaml'
       - 'custom_components/waste_collection_schedule/i18n/phrases/en.yaml'
       - 'custom_components/waste_collection_schedule/i18n/sources/**/en.yaml'
-    aspell:
-      lang: en
+    hunspell:
       d: en_US
     dictionary:
       wordlists:
@@ -43,8 +44,7 @@ matrix:
       - 'custom_components/waste_collection_schedule/i18n/shared/de.yaml'
       - 'custom_components/waste_collection_schedule/i18n/phrases/de.yaml'
       - 'custom_components/waste_collection_schedule/i18n/sources/**/de.yaml'
-    aspell:
-      lang: de
+    hunspell:
       d: de_DE
     dictionary:
       wordlists:
@@ -66,8 +66,7 @@ matrix:
       - 'custom_components/waste_collection_schedule/i18n/shared/fr.yaml'
       - 'custom_components/waste_collection_schedule/i18n/phrases/fr.yaml'
       - 'custom_components/waste_collection_schedule/i18n/sources/**/fr.yaml'
-    aspell:
-      lang: fr
+    hunspell:
       d: fr_FR
     dictionary:
       wordlists:
@@ -89,8 +88,7 @@ matrix:
       - 'custom_components/waste_collection_schedule/i18n/shared/it.yaml'
       - 'custom_components/waste_collection_schedule/i18n/phrases/it.yaml'
       - 'custom_components/waste_collection_schedule/i18n/sources/**/it.yaml'
-    aspell:
-      lang: it
+    hunspell:
       d: it_IT
     dictionary:
       wordlists:
@@ -114,8 +112,7 @@ matrix:
   # hunspell dictionary by the entries below.
   - name: titles-en
     sources: ['build/i18n-extracted/titles_en.txt']
-    aspell:
-      lang: en
+    hunspell:
       d: en_US
     dictionary:
       wordlists:
@@ -124,8 +121,7 @@ matrix:
 
   - name: titles-de
     sources: ['build/i18n-extracted/titles_de.txt']
-    aspell:
-      lang: de
+    hunspell:
       d: de_DE
     dictionary:
       wordlists:
@@ -134,8 +130,7 @@ matrix:
 
   - name: titles-fr
     sources: ['build/i18n-extracted/titles_fr.txt']
-    aspell:
-      lang: fr
+    hunspell:
       d: fr_FR
     dictionary:
       wordlists:
@@ -144,8 +139,7 @@ matrix:
 
   - name: titles-it
     sources: ['build/i18n-extracted/titles_it.txt']
-    aspell:
-      lang: it
+    hunspell:
       d: it_IT
     dictionary:
       wordlists:
