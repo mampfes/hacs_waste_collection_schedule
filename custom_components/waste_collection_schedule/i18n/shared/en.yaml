@@ -6,10 +6,6 @@
 # Spell-checked against en_US dictionary by pyspelling.
 ---
 params:
-  abf_hausnr:
-    label: House Number
-  abf_strasse:
-    label: Street
   abf_suche:
     label: Search
   address_name_number:

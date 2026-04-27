@@ -2,8 +2,6 @@
 # Wird von pyspelling gegen das de_DE-Wörterbuch geprüft.
 ---
 params:
-  Calendar:
-    label: Kalender
   addition:
     label: Zusatz
   address:
@@ -12,8 +10,6 @@ params:
     label: Postleitzahl
   address_street:
     label: Straße
-  adress:
-    label: Adresse
   area:
     label: Gebiet
   bill_number:
@@ -90,8 +86,6 @@ params:
     label: Straßenname
   subdomain:
     label: Subdomain
-  terretory:
-    label: Gebiet
   town:
     label: Stadt
   types:
@@ -112,8 +106,6 @@ params:
     label: Version
   village:
     label: Ort
-  voivodship:
-    label: Woiwodschaft
   zipCode:
     label: PLZ
   zip_code:
