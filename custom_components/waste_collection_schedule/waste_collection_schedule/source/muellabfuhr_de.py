@@ -11,17 +11,17 @@ DESCRIPTION_LANG = "de"
 URL = "https://portal.muellabfuhr-deutschland.de/"
 TEST_CASES = {
     "TestcaseI": {
-        "client": "Landkreis hildburghausen",
+        "customer": "Landkreis hildburghausen",
         "city": "Gompertshausen",
     },
     "TestcaseII": {
-        "client": "Saalekreis",
+        "customer": "Saalekreis",
         "city": "kabelsketal",
         "district": " Großkugel",
         "street": "Am markt",
     },
     "TestcaseIII": {
-        "client": "saalekreis",
+        "customer": "saalekreis",
         "city": "Kabelsketal",
         "district": "kleinkugel ",
     },
@@ -56,8 +56,8 @@ EXTRA_INFO_LANG = "de"
 
 
 class Source:
-    def __init__(self, client, city, district=None, street=None):
-        self._client = client
+    def __init__(self, customer, city, district=None, street=None):
+        self._client = customer
         self._city = city
         self._district = district
         self._street = street
@@ -97,18 +97,18 @@ class Source:
         r.raise_for_status()
         clients = r.json()
 
-        for client in clients:
-            if self._client.lower().strip() == client["name"].lower().strip():
-                clientid = client["id"]
+        for customer in clients:
+            if self._client.lower().strip() == customer["name"].lower().strip():
+                clientid = customer["id"]
 
         if clientid is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "client",
+                "customer",
                 self._client,
-                [client["name"] for client in clients],
+                [customer["name"] for customer in clients],
             )
 
-        # get client config
+        # get customer config
         url = URL + "api-portal/mandators/" + clientid + "/config"
         r = requests.get(url)
         r.raise_for_status()

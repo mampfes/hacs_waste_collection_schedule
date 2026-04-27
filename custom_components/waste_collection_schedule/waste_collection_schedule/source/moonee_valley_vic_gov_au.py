@@ -13,10 +13,10 @@ DESCRIPTION = "Source for City of Moonee Valley waste collection."
 URL = "https://www.mvcc.vic.gov.au/"
 TEST_CASES = {
     "309 Buckley St, Aberfeldie VIC 3040": {
-        "property_location": "309 BUCKLEY STREET ABERFELDIE 3040"
+        "address": "309 BUCKLEY STREET ABERFELDIE 3040"
     },
     "1/157 Military Road, Avondale Heights VIC 3034": {
-        "property_location": "1/157 MILITARY ROAD AVONDALE HEIGHTS 3034"
+        "address": "1/157 MILITARY ROAD AVONDALE HEIGHTS 3034"
     },
 }
 API_URL = "https://services8.arcgis.com/Qhxu8dzT7BHYuJZL/arcgis/rest/services/BinCollection_add/FeatureServer/0/query"
@@ -32,12 +32,12 @@ WEEKDAY_MAP = {
 
 
 class Source:
-    def __init__(self, property_location: str):
-        self.property_location = property_location
+    def __init__(self, address: str):
+        self.address = address
 
     def fetch(self) -> list[Collection]:
         # Format address for LIKE query (partial match)
-        search_address = self.property_location.strip().replace("  ", " ")
+        search_address = self.address.strip().replace("  ", " ")
 
         # Query for the address
         params = {
@@ -54,7 +54,7 @@ class Source:
         features = data.get("features")
 
         if not features:
-            raise ValueError(f"Address not found: {self.property_location}")
+            raise ValueError(f"Address not found: {self.address}")
 
         # Use the first matching address
         attributes = features[0]["attributes"]

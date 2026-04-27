@@ -17,8 +17,8 @@ DESCRIPTION = """Consolidated source for waste collection services from:
         """
 TEST_CASES = {
     "houseUPRN": {"uprn": "100060063421"},
-    "houseNumber": {"postcode": "BN228SG", "number": 3},
-    "houseName": {"postcode": "BN73LG", "number": "Garden Cottage"},
+    "houseNumber": {"postcode": "BN228SG", "house_number": 3},
+    "houseName": {"postcode": "BN73LG", "house_number": "Garden Cottage"},
 }
 
 ICON_MAP = {
@@ -32,10 +32,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, postcode=None, number=None, name=None, uprn=None):
+    def __init__(self, postcode=None, house_number=None, name=None, uprn=None):
         self._uprn = uprn
         self._post_code = postcode
-        self._number = str(number)
+        self._number = str(house_number)
         self._name = name
 
     def fetch(self):
@@ -82,7 +82,7 @@ class Source:
 
         else:
             raise Exception(
-                "You need to specify either (uprn) or (postcode and (number or name))"
+                "You need to specify either (uprn) or (postcode and (house_number or name))"
             )
 
         entries = []

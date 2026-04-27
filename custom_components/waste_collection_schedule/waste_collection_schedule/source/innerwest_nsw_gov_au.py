@@ -11,17 +11,17 @@ TEST_CASES = {
     "Random Marrickville address": {
         "suburb": "Tempe",
         "street_name": "Princes Highway",
-        "street_number": "810",
+        "house_number": "810",
     },
     "Random Leichhardt address": {
         "suburb": "Rozelle",
         "street_name": "Darling Street",
-        "street_number": "599",
+        "house_number": "599",
     },
     "Random Ashfield address": {
         "suburb": "Summer Hill",
         "street_name": "Lackey Street",
-        "street_number": "29",
+        "house_number": "29",
     },
 }
 
@@ -42,10 +42,10 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, suburb, street_name, street_number):
+    def __init__(self, suburb, street_name, house_number):
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def fetch(self):
 
@@ -96,7 +96,7 @@ class Source:
 
         # Find the ID for our property
         for item in data["properties"]:
-            if item["name"] == f"{self.street_number} {self.street_name} {self.suburb}":
+            if item["name"] == f"{self.house_number} {self.street_name} {self.suburb}":
                 property_id = item["id"]
                 break
 

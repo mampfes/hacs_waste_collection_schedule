@@ -13,31 +13,31 @@ TEST_CASES = {
         "postcode": "2761",
         "suburb": "Plumpton",
         "street_name": "Jersey Rd",
-        "street_number": "260",
+        "house_number": "260",
     },
     "Rooty Hill Tennis & Squash Centre": {
         "postcode": "2766",
         "suburb": "Rooty Hill",
         "street_name": "Learmonth St",
-        "street_number": "13-15",
+        "house_number": "13-15",
     },
     "Workers Blacktown": {
         "postcode": "2148",
         "suburb": "Blacktown",
         "street_name": "Campbell Street",
-        "street_number": "18",
+        "house_number": "18",
     },
     "Hythe St": {
         "postcode": "2770",
         "suburb": "Mount Druitt",
         "street_name": "Hythe St",
-        "street_number": "9-11",
+        "house_number": "9-11",
     },
     "Issue#4434": {
         "postcode": "2762",
         "suburb": "Tallawong",
         "street_name": "Coffey St",
-        "street_number": "13",
+        "house_number": "13",
     },
 }
 
@@ -61,20 +61,20 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(
-        self, postcode: str, suburb: str, street_name: str, street_number: str
-    ):
+    def __init__(self, postcode: str, suburb: str, street_name: str, house_number: str):
         self.postcode = postcode
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def fetch(self):
         session = requests.Session()
         session.headers.update(HEADERS)
 
         # Retrieve suburbs
-        address = f"{self.street_number} {self.street_name}, {self.suburb} NSW {self.postcode}"
+        address = (
+            f"{self.house_number} {self.street_name}, {self.suburb} NSW {self.postcode}"
+        )
         payload = {"keywords": address}
         r = session.get(API_URLS["address_search"], params=payload)
         data = json.loads(r.text)

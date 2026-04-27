@@ -5,5 +5,5 @@
 params:
   address:
     description: Full address
-  house:
+  house_number_or_name:
     description: House number or name

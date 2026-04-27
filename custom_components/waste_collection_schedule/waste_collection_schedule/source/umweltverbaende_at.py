@@ -227,13 +227,13 @@ PARAM_DESCRIPTIONS = {
         + "`"
         + "`, `".join([item["default_params"]["district"] for item in EXTRA_INFO])
         + "`",
-        "municipal": "Municipal name",
+        "municipality": "Municipality name",
         "town": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
         "postcode": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
         "street": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
         "house_number": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
         "addition": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it",
-        "calendar": "(Old website only) If you see multiple collection calendars for your municipal (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
+        "calendar": "(Old website only) If you see multiple collection calendars for your municipality (different streets or Rayons), you can specify the calendar name here. The calendar name should be spelt as it appears on the Abholtermine page below `Kalenderansicht`.",
         "calendar_title_separator": "(Old website only) rarely needed, only works if `calendar` is set. This is the character that separates the calendar title from the collection dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator). You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
         "calendar_splitter": "(Old website only) rarely needed, only works if `calendar` is set. Only needed if multiple collections are shown in one line. This is the character that separates the collection times, that are listed in one line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the separator) You can see the text, the integration will use, at the Abholtermine page below `Kalenderansicht`",
     },
@@ -242,7 +242,7 @@ PARAM_DESCRIPTIONS = {
         + "`"
         + "`, `".join([item["default_params"]["district"] for item in EXTRA_INFO])
         + "`",
-        "municipal": "Gemeindename",
+        "municipality": "Gemeindename",
         "town": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
         "postcode": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
         "street": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
@@ -255,82 +255,82 @@ PARAM_DESCRIPTIONS = {
 }
 
 TEST_CASES = {
-    # "Bruck/Leitha": {"district": "bruck", "municipal": "Berg"}, # Not supported anymore as they only provide a PDFs now
+    # "Bruck/Leitha": {"district": "bruck", "municipality": "Berg"}, # Not supported anymore as they only provide a PDFs now
     "Baden": {
         "district": "baden",
-        "municipal": "Hernstein",
+        "municipality": "Hernstein",
         "calendar": "ICS Hernstein",
     },  # old version (as of 29.12.2024)
     "Gmünd": {
         "district": "gmuend",
-        "municipal": "Weitra",
+        "municipality": "Weitra",
     },  # old version (as of 29.12.2024)
-    "Gänserndorf": {"district": "gaenserndorf", "municipal": "Auersthal"},
+    "Gänserndorf": {"district": "gaenserndorf", "municipality": "Auersthal"},
     "Gänserndorf-New": {
         "district": "gaenserndorf",
-        "municipal": "Deutsch-Wagram",
+        "municipality": "Deutsch-Wagram",
         "street": "Johann Nestroy-Gasse",
         "house_number": "63",
     },
     "Hollabrunn": {
         "district": "hollabrunn",
-        "municipal": "Retz",
+        "municipality": "Retz",
         "town": "Obernalb",
         "street": "Zum weissen Engel",
     },
     "Horn": {
         "district": "horn",
-        "municipal": "Japons",
+        "municipality": "Japons",
     },  # old version (as of 29.12.2024)
     # "Klosterneuburg": {
     #     "district": "klosterneuburg",
-    #     "municipal": "Klosterneuburg",
+    #     "municipality": "Klosterneuburg",
     # },  # Not supported anymore
     "Korneuburg": {  # old version (as of 29.12.2024)
         "district": "korneuburg",
-        "municipal": "Bisamberg",
+        "municipality": "Bisamberg",
         "calendar": "Bisamberg B",
         "calendar_title_separator": ",",
         "calendar_splitter": ":",
     },
     "Krems - Langenlois Land": {
         "district": "krems",
-        "municipal": "Langenlois Land",
+        "municipality": "Langenlois Land",
         "calendar": "Gobelsburg, Mittelberg, Reith, Schiltern, Zöbing",
     },
-    # "Krems": {"district": "krems", "municipal": "Aggsbach"}, # 0 results with this config
-    # "Stadt Krems Old Version": {"district": "kremsstadt", "municipal": "Rehberg"}, # Does not offer same schedule but is supported via generic ICS kremsstadt_umweltverbaende_at
+    # "Krems": {"district": "krems", "municipality": "Aggsbach"}, # 0 results with this config
+    # "Stadt Krems Old Version": {"district": "kremsstadt", "municipality": "Rehberg"}, # Does not offer same schedule but is supported via generic ICS kremsstadt_umweltverbaende_at
     # "Lilienfeld": {
     #    "district": "lilienfeld",
-    #    "municipal": "Annaberg",
-    # },  # No ICAL or API available anymore - only redirects to the local municipal websites
+    #    "municipality": "Annaberg",
+    # },  # No ICAL or API available anymore - only redirects to the local municipality websites
     "Laa/Thaya": {
         "district": "laa",
-        "municipal": "Staatz",
+        "municipality": "Staatz",
         "town": "kautendorf",
     },  # schedules use www.gaul-laa.at
     # "Mödling": {
     #     "district": "moedling",
-    #     "municipal": "Wienerwald",
+    #     "municipality": "Wienerwald",
     # },  # Not supported anymore as they only provide a PDFs now
-    "Melk": {"district": "melk", "municipal": "Schollach"},
-    "Mistelbach": {"district": "mistelbach", "municipal": "Falkenstein"},
-    # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
-    "St. Pölten": {"district": "stpoeltenland", "municipal": "Pyhra"},
-    "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
+    "Melk": {"district": "melk", "municipality": "Schollach"},
+    "Mistelbach": {"district": "mistelbach", "municipality": "Falkenstein"},
+    # "Neunkirchen": {"district": "neunkirchen", "municipality": "?"},  # No schedules listed on website
+    "St. Pölten": {"district": "stpoeltenland", "municipality": "Pyhra"},
+    "Scheibbs": {"district": "scheibbs", "municipality": "Wolfpassing"},
     "Schwechat": {
         "district": "schwechat",
-        "municipal": "Schwechat",
+        "municipality": "Schwechat",
         "town": "Kledering Einfamilienhaus",
     },
     # "Tulln": {
     #    "district": "tulln",
-    #    "municipal": "Absdorf",
+    #    "municipality": "Absdorf",
     # },  # No ICAL or API available anymore
-    "Waidhofen/Thaya": {"district": "waidhofen", "municipal": "Kautzen"},
+    "Waidhofen/Thaya": {"district": "waidhofen", "municipality": "Kautzen"},
     "Zwettl": {
         "district": "zwettl",
-        "municipal": "Martinsberg",
+        "municipality": "Martinsberg",
     },  # old version (as of 29.12.2024)
 }
 
@@ -374,7 +374,7 @@ class Source:
     def __init__(
         self,
         district: str,
-        municipal: str | None = None,
+        municipality: str | None = None,
         town: str | None = None,
         postcode: str | None = None,
         street: str | None = None,
@@ -385,7 +385,7 @@ class Source:
         calendar_splitter: str | None = None,
     ):
         self._district = district.lower()
-        self._municipal = municipal
+        self._municipal = municipality
 
         # ## arguments for new version
         self._town = town
@@ -518,7 +518,7 @@ class Source:
             for col in table:
                 weblinks = col.select("a.weblink")
                 for col in weblinks:
-                    # match weblink with municipal to get collection schedule
+                    # match weblink with municipality to get collection schedule
                     if self._municipal in col.text:
                         r1 = s.get(f"{district_url}{col['href']}")
                         soup = BeautifulSoup(r1.text, "html.parser")
@@ -734,7 +734,7 @@ class Source:
                 break
         if not mun_value:
             raise SourceArgumentNotFoundWithSuggestions(
-                "municipal",
+                "municipality",
                 self._municipal,
                 [
                     city_option.text.strip()

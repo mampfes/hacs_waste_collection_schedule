@@ -3,7 +3,7 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  street_number:
+  house_number:
     label: Hausnummer
   teilgebiet:
     label: Teilgebiet

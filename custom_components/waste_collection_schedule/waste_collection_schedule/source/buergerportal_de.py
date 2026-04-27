@@ -19,7 +19,7 @@ def EXTRA_INFO():
         {
             "title": s["title"],
             "url": s["url"],
-            "default_params": {"operator": s["operator"]},
+            "default_params": {"service_provider": s["operator"]},
         }
         for s in SERVICE_MAP
     ]
@@ -27,20 +27,20 @@ def EXTRA_INFO():
 
 TEST_CASES = {
     "Cochem-Zell": {
-        "operator": "cochem_zell",
+        "service_provider": "cochem_zell",
         "district": "Bullay",
         "subdistrict": "Bullay",
         "street": "Layenweg",
         "number": 3,
     },
     "Alb-Donau": {
-        "operator": "alb_donau",
+        "service_provider": "alb_donau",
         "district": "Blaubeuren",
         "street": "Alberstraße",
         "number": 3,
     },
     "Biedenkopf": {
-        "operator": "biedenkopf",
+        "service_provider": "biedenkopf",
         "district": "Biedenkopf",
         "subdistrict": "Breidenstein",
         "street": "Auf dem Hammer",
@@ -122,20 +122,20 @@ def quote_none(value: Optional[str]) -> str:
 
 
 def get_api_map():
-    return {s["operator"]: s["api_url"] for s in SERVICE_MAP}
+    return {s["service_provider"]: s["api_url"] for s in SERVICE_MAP}
 
 
 class Source:
     def __init__(
         self,
-        operator: Operator,
+        service_provider: Operator,
         district: str,
         street: str,
         subdistrict: Optional[str] = None,
         number: Union[int, str, None] = None,
         show_volume: bool = False,
     ):
-        self.api_url = get_api_map()[operator]
+        self.api_url = get_api_map()[service_provider]
         self.district = district
         self.subdistrict = subdistrict
         self.street = street

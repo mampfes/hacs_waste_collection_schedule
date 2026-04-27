@@ -13,42 +13,42 @@ DESCRIPTION_LANG = "de"
 URL = "landkreis-helmstedt.de"
 TEST_CASES = {
     "Grasleben": {
-        "municipal": "Grasleben und Velpke",
+        "municipality": "Grasleben und Velpke",
         "restabfall": 1,
         "bioabfall": 1,
         "gelber_sack": 3,
         "altpapier": 5,
     },
     "Paläon": {
-        "municipal": "Schöningen und Heeseberg",
+        "municipality": "Schöningen und Heeseberg",
         "restabfall": 1,
         "bioabfall": 1,
         "gelber_sack": 1,
         "altpapier": 2,
     },
     "Rhode": {
-        "municipal": "Nord-Elm und Königslutter Ortsteile",
+        "municipality": "Nord-Elm und Königslutter Ortsteile",
         "restabfall": 2,
         "bioabfall": 2,
         "gelber_sack": 1,
         "altpapier": 2,
     },
     "Essehof": {
-        "municipal": "Lehre",
+        "municipality": "Lehre",
         "restabfall": 1,
         "bioabfall": 1,
         "gelber_sack": 2,
         "altpapier": 1,
     },
     "Braunschweiger Str.": {
-        "municipal": "Königslutter Stadtgebiet",
+        "municipality": "Königslutter Stadtgebiet",
         "restabfall": 1,
         "bioabfall": 1,
         "gelber_sack": 1,
         "altpapier": 1,
     },
     "Barmke": {
-        "municipal": "Helmstedt und Ortsteile",
+        "municipality": "Helmstedt und Ortsteile",
         "restabfall": 3,
         "bioabfall": 3,
         "gelber_sack": 3,
@@ -66,7 +66,7 @@ HEADERS = {
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
     "en": "Visit "
     + API_URL
-    + " and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.",
+    + " and first get the name of the ICS calendar on the website for your municipality, then open the related PDF calendar and find the collection areas.",
     "de": "Öffne "
     + API_URL
     + " und finde den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.",
@@ -91,13 +91,13 @@ ICON_MAP = {
 class Source:
     def __init__(
         self,
-        municipal: str,
+        municipality: str,
         restabfall: int,
         altpapier: int,
         gelber_sack: int,
         bioabfall: int,
     ):
-        self._municipal: str = municipal
+        self._municipal: str = municipality
         self._restabfall: int = restabfall
         self._altpapier: int = altpapier
         self._gelber_sack: int = gelber_sack
@@ -127,7 +127,7 @@ class Source:
 
         if not foundMunicipalCalendarICSDownloadURL:
             raise SourceArgumentException(
-                argument="municipal",
+                argument="municipality",
                 message="No Abholgebiet found for "
                 + self._municipal
                 + ". Please check "

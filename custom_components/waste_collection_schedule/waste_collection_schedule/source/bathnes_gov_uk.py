@@ -17,8 +17,8 @@ DESCRIPTION = (
 URL = "https://bathnes.gov.uk"
 TEST_CASES = {
     "uprn": {"uprn": "10001138699"},
-    "houseNumber": {"postcode": "BA1 2LR", "house_name_or_number": 1},
-    "houseName": {"postcode": "BA1 5SX", "house_name_or_number": "St Stephen's Church"},
+    "houseNumber": {"postcode": "BA1 2LR", "house_number_or_name": 1},
+    "houseName": {"postcode": "BA1 5SX", "house_number_or_name": "St Stephen's Church"},
 }
 
 TYPES = {
@@ -38,16 +38,16 @@ REQUEST_TIMEOUT = 10
 
 
 class Source:
-    def __init__(self, uprn=None, postcode=None, house_name_or_number=None):
+    def __init__(self, uprn=None, postcode=None, house_number_or_name=None):
         self._uprn = self._sanitise_uprn_val(uprn)
         self._postcode = self._sanitise_search_val(postcode)
-        self._housenameornumber = self._sanitise_search_val(house_name_or_number)
+        self._housenameornumber = self._sanitise_search_val(house_number_or_name)
 
         if self._uprn is None:
             self._check_required_args(
                 "Postcode and house name or number are required if UPRN is not provided",
                 ("postcode", self._postcode),
-                ("house_name_or_number", self._housenameornumber),
+                ("house_number_or_name", self._housenameornumber),
             )
 
     def _sanitise_uprn_val(self, val: Optional[int | str]) -> Optional[int]:
@@ -99,17 +99,17 @@ class Source:
         address = next(filter(self._filter_address, addresses), None)
         if address is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "house_name_or_number",
+                "house_number_or_name",
                 self._housenameornumber,
                 filter(None, [self._address_housenameornumber(a) for a in addresses]),
             )
         return int(address["uprn"])
 
     def _filter_address(self, address: Mapping[str, Any]) -> bool:
-        house_name_or_number = self._address_housenameornumber(address)
+        house_number_or_name = self._address_housenameornumber(address)
         return (
-            house_name_or_number is not None
-            and house_name_or_number.casefold() == self._housenameornumber.casefold()
+            house_number_or_name is not None
+            and house_number_or_name.casefold() == self._housenameornumber.casefold()
         )
 
     def _address_housenameornumber(self, address: Mapping[str, Any]) -> Optional[str]:

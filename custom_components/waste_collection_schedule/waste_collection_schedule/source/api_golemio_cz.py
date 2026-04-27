@@ -23,12 +23,12 @@ TEST_CASES = {
         "only_monitored": True,
         "api_key": "!secret api_golemio_api_key",
     },
-    "Chvalská - suffix": {
+    "Chvalská - address_suffix": {
         "lat": 50.104802397741665,
         "lon": 14.538238985303936,
         "radius": 1,
         "api_key": "!secret api_golemio_api_key",
-        "suffix": " - Chvalská",
+        "address_suffix": " - Chvalská",
         "ignored_containers": [35895],
     },
     "Radius - auto_suffix": {
@@ -128,7 +128,7 @@ class Source:
         only_monitored: bool = False,
         ignored_containers: list | None = None,
         auto_suffix: bool = False,
-        suffix: str | None = None,
+        address_suffix: str | None = None,
     ):
         self._lat = lat
         self._lon = lon
@@ -137,7 +137,7 @@ class Source:
         self._only_monitored = only_monitored
         self._ignored_containers = ignored_containers or []
         self._auto_suffix = auto_suffix
-        self._suffix = suffix
+        self._suffix = address_suffix
 
     def fetch(self):
         r = requests.get(

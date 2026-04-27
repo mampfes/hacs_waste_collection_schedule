@@ -14,7 +14,7 @@ TEST_CASES = {
     "Carmona Court": {"street_address": "1127 17th Ave E"},
     "2111 E John St": {
         "street_address": "2111 E John St",
-        "prem_code": "DRMGcnGxUEg+gu8pN8vesQ==",
+        "premises_id": "DRMGcnGxUEg+gu8pN8vesQ==",
     },
 }
 
@@ -25,9 +25,9 @@ def get_service_icon(service_name):
 
 
 class Source:
-    def __init__(self, street_address, prem_code=None):
+    def __init__(self, street_address, premises_id=None):
         self._street_address = street_address
-        self._prem_code = prem_code
+        self._prem_code = premises_id
 
     def fetch(self):
 
@@ -50,12 +50,12 @@ class Source:
             )
 
             address_info = json.loads(r.text)
-            prem_code = address_info["address"][0]["premCode"]
+            premises_id = address_info["address"][0]["premCode"]
         else:
-            prem_code = self._prem_code
+            premises_id = self._prem_code
 
         # step 2
-        find_account_payload = {"address": {"premCode": prem_code}}
+        find_account_payload = {"address": {"premCode": premises_id}}
 
         r = requests.post(
             "https://myutilities.seattle.gov/rest/serviceorder/findAccount",

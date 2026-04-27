@@ -12,7 +12,7 @@ params:
   gelber_sack:
     description: Nummer des Abfuhrgebietes aus dem PDF Kalender.
     label: Gelber Sack
-  municipal:
+  municipality:
     description: Kopiere den Namen des ICS Kalenders der Gemeinde von der Website.
       Der Name darf nicht das Jahr beinhalten. Z.B. "Stadt Königslutter am Elm – ohne
       Ortsteile" (ohne Anführungszeichen).

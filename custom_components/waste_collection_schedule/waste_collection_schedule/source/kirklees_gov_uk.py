@@ -13,9 +13,9 @@ TITLE = "Kirklees Council"
 DESCRIPTION = "Source for waste collections for Kirklees Council"
 URL = "https://www.kirklees.gov.uk"
 TEST_CASES = {
-    "Test_001": {"door_num": 20, "postcode": "HD9 6LW"},
-    "test_002": {"door_num": "6", "postcode": "hd9 1js"},
-    "HD8 8NA, 1": {"door_num": "1", "postcode": "HD8 8NA", "uprn": "83194785"},
+    "Test_001": {"unit_number": 20, "postcode": "HD9 6LW"},
+    "test_002": {"unit_number": "6", "postcode": "hd9 1js"},
+    "HD8 8NA, 1": {"unit_number": "1", "postcode": "HD8 8NA", "uprn": "83194785"},
 }
 
 BASE_URL = "https://www.kirklees.gov.uk/beta/your-property-bins-recycling/your-bins/"
@@ -45,9 +45,9 @@ ICON_MAP = {
 
 class Source:
     def __init__(
-        self, door_num: str | int, postcode: str, uprn: str | int | None = None
+        self, unit_number: str | int, postcode: str, uprn: str | int | None = None
     ):
-        self._door_num = door_num
+        self._door_num = unit_number
         self._postcode = postcode
         self._uprn = uprn
         self._session = requests.Session()

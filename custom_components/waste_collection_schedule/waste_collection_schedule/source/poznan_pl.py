@@ -12,7 +12,7 @@ URL = "https://www.poznan.pl/mim/odpady"
 TEST_CASES = {
     "Street Name": {
         "street_name": "ŚWIĘTY MARCIN",
-        "street_number": "1",
+        "house_number": "1",
     },
 }
 
@@ -33,9 +33,9 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, street_name: str, street_number: str | int):
+    def __init__(self, street_name: str, house_number: str | int):
         self._street_name = street_name.upper()
-        self._street_number = str(street_number).upper()
+        self._street_number = str(house_number).upper()
 
     def fetch(self) -> list[Collection]:
         data = {
@@ -60,7 +60,9 @@ class Source:
 
         table = soup.find("table", id="schedule_0")
         if not isinstance(table, Tag):
-            raise SourceArgumentExceptionMultiple(["street_name", "street_number"], "Invalid address")
+            raise SourceArgumentExceptionMultiple(
+                ["street_name", "house_number"], "Invalid address"
+            )
 
         entries = []
         for formatted_date in formatted_dates:

@@ -19,13 +19,13 @@ TEST_CASES = {
     "Villa Paradiso": {
         "street_name": "Olaf Ryes Plass",
         "house_number": 8,
-        "house_letter": "",
+        "address_suffix": "",
         "street_id": 15331,
     },
     "Nåkkves vei": {
         "street_name": "Nåkkves vei",
         "house_number": 5,
-        "house_letter": "",
+        "address_suffix": "",
         "street_id": 15280,
         "point_id": 38175,
     },
@@ -62,13 +62,13 @@ class Source:
         street_name: str,
         house_number: int,
         street_id: int,
-        house_letter: str | None = None,
+        address_suffix: str | None = None,
         point_id: int | None = None,
     ):
         self._street_name = street_name
         self._house_number = house_number
         self._street_id = street_id
-        self._house_letter = house_letter
+        self._house_letter = address_suffix
         self._point_id = point_id
 
     def fetch(self):

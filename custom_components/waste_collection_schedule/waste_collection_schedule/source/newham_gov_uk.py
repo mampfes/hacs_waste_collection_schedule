@@ -7,17 +7,17 @@ TITLE = "London Borough of Newham"
 DESCRIPTION = "Source for newham.gov.uk services for London Borough of Newham, UK."
 URL = "https://www.newham.gov.uk"
 TEST_CASES = {
-    "Test_001": {"property": "000046029461"},
-    "Test_002": {"property": "000046250697"},
-    "Test_003": {"property": 46012509},
+    "Test_001": {"property_id": "000046029461"},
+    "Test_002": {"property_id": "000046250697"},
+    "Test_003": {"property_id": 46012509},
 }
 
 ICON_MAP = {"DOMESTIC": "mdi:trash-can", "RECYCLING": "mdi:glass-fragile"}
 
 
 class Source:
-    def __init__(self, property):
-        self._property = str(property).zfill(12)
+    def __init__(self, property_id):
+        self._property = str(property_id).zfill(12)
 
     def fetch(self):
         s = requests.Session()

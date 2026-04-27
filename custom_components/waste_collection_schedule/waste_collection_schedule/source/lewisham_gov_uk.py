@@ -12,7 +12,7 @@ TITLE = "London Borough of Lewisham"
 DESCRIPTION = "Source for services from the London Borough of Lewisham"
 URL = "https://lewisham.gov.uk"
 TEST_CASES = {
-    "houseNumber": {"postcode": "SE41LR", "number": 4},
+    "houseNumber": {"postcode": "SE41LR", "house_number": 4},
     "houseName": {"postcode": "SE233TE", "name": "The Haven"},
     "houseUprn": {"uprn": "10070495030"},
     "houseUprn2": {"uprn": 100021959032},
@@ -46,9 +46,9 @@ class InsufficientDataError(Exception):
 
 
 class Source:
-    def __init__(self, postcode=None, number=None, name=None, uprn=None):
+    def __init__(self, postcode=None, house_number=None, name=None, uprn=None):
         self._post_code = postcode
-        self._number = number
+        self._number = house_number
         self._name = name
         self._uprn = uprn
 

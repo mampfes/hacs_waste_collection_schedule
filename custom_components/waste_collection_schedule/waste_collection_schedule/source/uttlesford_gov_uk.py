@@ -9,11 +9,11 @@ TITLE = "Uttlesford District Council"
 DESCRIPTION = "Source for uttlesford.gov.uk, Uttlesford District Council, UK"
 URL = "https://www.uttlesford.gov.uk"
 TEST_CASES = {
-    "Brook Cottage, CM6 1LW": {"house": "29142-Tuesday"},
-    "Springfields, CM6 1BP": {"house": "26455-Thursday"},
+    "Brook Cottage, CM6 1LW": {"house_number_or_name": "29142-Tuesday"},
+    "Springfields, CM6 1BP": {"house_number_or_name": "26455-Thursday"},
 }
 
-API_URL = "http://bins.uttlesford.gov.uk/collections.php?house={house}"
+API_URL = "http://bins.uttlesford.gov.uk/collections.php?house_number_or_name={house_number_or_name}"
 
 ICON_MAP = {"black": "mdi:trash-can", "green": "mdi:recycle", "brown": "mdi:food-apple"}
 
@@ -31,11 +31,11 @@ TEXT_MAP = {
 
 
 class Source:
-    def __init__(self, house=None):
-        self._house = house
+    def __init__(self, house_number_or_name=None):
+        self._house = house_number_or_name
 
     def fetch(self):
-        q = str(API_URL).format(house=self._house)
+        q = str(API_URL).format(house_number_or_name=self._house)
 
         r = requests.get(q)
         r.raise_for_status()

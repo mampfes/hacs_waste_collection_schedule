@@ -5,5 +5,5 @@
 params:
   street_name:
     description: Street name with abbreviated suffix (e.g. 'Quance St')
-  street_number:
+  house_number:
     description: Your house/street number

@@ -9,8 +9,8 @@ TITLE = "London Borough of Merton (Old)"
 DESCRIPTION = "Source for www.merton.gov.uk services for London Borough of Merton, UK"
 URL = "https://www.merton.gov.uk/"
 TEST_CASES = {
-    "Without Garden Waste": {"property": "25929128"},
-    "With Garden Waste": {"property": "25937841"},
+    "Without Garden Waste": {"property_id": "25929128"},
+    "With Garden Waste": {"property_id": "25937841"},
 }
 API_URL = "https://myneighbourhood.merton.gov.uk/Wasteservices/WasteServices.aspx"
 WASTE_CLASSES: list = [
@@ -34,8 +34,8 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, property: str):
-        self._property = property
+    def __init__(self, property_id: str):
+        self._property = property_id
 
     def fetch(self):
         session = requests.Session()
@@ -48,7 +48,7 @@ class Source:
         # Search for table containing bin schedule info
         collections = soup.find("table", {"class": "collectiondays"})
         if not collections:
-            raise SourceArgumentNotFound("property", self._property)
+            raise SourceArgumentNotFound("property_id", self._property)
 
         entries = []
         # iterate through waste types finding pick-up dates

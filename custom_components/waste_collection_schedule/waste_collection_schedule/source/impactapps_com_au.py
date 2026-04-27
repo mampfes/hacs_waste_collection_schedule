@@ -18,13 +18,13 @@ TEST_CASES = {
         "service": "redland",
         "suburb": "Redland Bay",
         "street_name": "Boundary Street",
-        "street_number": "1",
+        "house_number": "1",
     },
     "Teneriffe Green Beacon": {
         "service": "https://brisbane.waste-info.com.au",
         "suburb": "Teneriffe",
         "street_name": "Helen St",
-        "street_number": "26",
+        "house_number": "26",
     },
     "Test Penrith Address": {
         "service": "Penrith City Council",
@@ -34,19 +34,19 @@ TEST_CASES = {
         "service": "Penrith City Council",
         "suburb": "Emu Plains",
         "street_name": "Beach Street",
-        "street_number": "3",
+        "house_number": "3",
     },
     "Blue Mountains": {
         "service": "Blue Mountains City Council",
         "suburb": "Katoomba",
         "street_name": "Katoomba Street",
-        "street_number": "110",
+        "house_number": "110",
     },
     "Bayside Council, NSW": {
         "service": "Bayside Council",
         "suburb": "Eastlakes",
         "street_name": "Universal Street",
-        "street_number": "5",
+        "house_number": "5",
     },
     "Wollongong": {
         "service": "wollongong",
@@ -92,7 +92,7 @@ TEST_CASES = {
         "service": "lithgow",
         "suburb": "Clarence",
         "street_name": "Chifley Road",
-        "street_number": "590",
+        "house_number": "590",
     },
     "Livingstone": {
         "service": "livingstone",
@@ -135,43 +135,43 @@ TEST_CASES = {
         "service": "gympie",
         "suburb": "Cooloola Cove",
         "street_name": "Investigator Av",
-        "street_number": "11",
+        "house_number": "11",
     },
     "Benalla": {
         "service": "benalla",
         "suburb": "Benalla",
         "street_name": "Arundel Street",
-        "street_number": "110",
+        "house_number": "110",
     },
     "Coffs Coast": {
         "service": "coffs-coast",
         "suburb": "North Dorrigo",
         "street_name": "Tyringham Road",
-        "street_number": "666",
+        "house_number": "666",
     },
     "Ku-ring-gai": {
         "service": "ku-ring-gai",
         "suburb": "St Ives",
         "street_name": "Kitchener Street",
-        "street_number": "99/2-8",
+        "house_number": "99/2-8",
     },
     "Horsham Rural City": {
         "service": "hrcc",
         "suburb": "Mckenzie Creek",
         "street_name": "Henty Highway",
-        "street_number": "3999",
+        "house_number": "3999",
     },
     "Murrindindi Shire Council": {
         "service": "murrindindi",
         "suburb": "Yea",
         "street_name": "The Parade",
-        "street_number": "44",
+        "house_number": "44",
     },
     "Clarence Valley Council": {
         "service": "clarence",
         "suburb": "Yamba",
         "street_name": "Wattle Drive",
-        "street_number": "24",
+        "house_number": "24",
     },
 }
 
@@ -464,7 +464,7 @@ class LocationFinder:
         self,
         session: requests.Session,
         street_id: int,
-        street_number: str,
+        house_number: str,
         street_name: str,
         suburb: str,
     ) -> int:
@@ -476,14 +476,14 @@ class LocationFinder:
             (
                 item["id"]
                 for item in properties
-                if item["name"] == f"{street_number} {street_name} {suburb}"
+                if item["name"] == f"{house_number} {street_name} {suburb}"
             ),
             None,
         )
         if property_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
-                street_number,
+                "house_number",
+                house_number,
                 [
                     item["name"].split(f" {street_name} {suburb}")[0]
                     for item in properties
@@ -500,7 +500,7 @@ class Source:
         property_id: Optional[int] = None,
         suburb: Optional[str] = None,
         street_name: Optional[str] = None,
-        street_number: Optional[str] = None,
+        house_number: Optional[str] = None,
     ):
         if service in SERVICE_MAP_LOOKUP:
             api_url = SERVICE_MAP_LOOKUP[service]["url"]
@@ -515,14 +515,14 @@ class Source:
         self.property_id = property_id
 
         if not property_id:
-            if not suburb or not street_name or not street_number:
+            if not suburb or not street_name or not house_number:
                 errors = []
                 if suburb is None:
                     errors.append("suburb")
                 if street_name is None:
                     errors.append("street_name")
-                if street_number is None:
-                    errors.append("street_number")
+                if house_number is None:
+                    errors.append("house_number")
                 if len(errors) == 3:
                     errors.append("property_id")
 
@@ -532,7 +532,7 @@ class Source:
                 )
             self.suburb = suburb
             self.street_name = street_name
-            self.street_number = street_number
+            self.house_number = house_number
             self.location_finder = LocationFinder(self.api_url)
 
     def fetch(self) -> List[Collection]:
@@ -548,7 +548,7 @@ class Source:
                 session, suburb_id, self.street_name
             )
             self.property_id = self.location_finder.find_property_id(
-                session, street_id, self.street_number, self.street_name, self.suburb
+                session, street_id, self.house_number, self.street_name, self.suburb
             )
 
         # Retrieve the collection events for the property

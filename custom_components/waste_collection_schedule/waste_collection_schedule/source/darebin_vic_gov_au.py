@@ -12,11 +12,9 @@ TITLE = "City of Darebin"
 DESCRIPTION = "Source for City of Darebin waste collection."
 URL = "https://www.darebin.vic.gov.au/"
 TEST_CASES = {
-    "266 Gower Street PRESTON 3072": {
-        "property_location": "266 Gower Street PRESTON 3072"
-    },
+    "266 Gower Street PRESTON 3072": {"address": "266 Gower Street PRESTON 3072"},
     "23 EDWARDES STREET RESERVOIR 3073": {
-        "property_location": "23 EDWARDES STREET RESERVOIR 3073"
+        "address": "23 EDWARDES STREET RESERVOIR 3073"
     },
 }
 API_URL = "https://services-ap1.arcgis.com/1WJBRkF3v1EEG5gz/arcgis/rest/services/Waste_Collection_Date3/FeatureServer/0/query"
@@ -32,12 +30,12 @@ WEEKDAY_MAP = {
 
 
 class Source:
-    def __init__(self, property_location: str):
-        self.property_location = property_location
+    def __init__(self, address: str):
+        self.address = address
 
     def fetch(self) -> list[Collection]:
         params = {
-            "where": f"EZI_ADDRESS LIKE '{self.property_location}%'",
+            "where": f"EZI_ADDRESS LIKE '{self.address}%'",
             "outFields": "EZI_ADDRESS,OBJECTID",
             "f": "json",
         }
@@ -79,9 +77,7 @@ class Source:
         waste_collection_dates = get_next_n_dates(
             next_collection_date, 52, timedelta(days=7)
         )
-        street_sweeping_dates = get_next_n_dates(
-            street_sweeping, 1, timedelta(weeks=6)
-        )
+        street_sweeping_dates = get_next_n_dates(street_sweeping, 1, timedelta(weeks=6))
 
         entries = []
 

@@ -11,19 +11,19 @@ DESCRIPTION = "Source for Logan City Council rubbish collection."
 URL = "https://www.logan.qld.gov.au"
 TEST_CASES = {
     "The Family Place": {
-        "property_location": "35 North Road WOODRIDGE  4114 ",
+        "address": "35 North Road WOODRIDGE  4114 ",
     },
     "Lee Naki's Takeaway": {
-        "property_location": "12 Ashton Street KINGSTON  4114",
+        "address": "12 Ashton Street KINGSTON  4114",
     },
     "LCC ADMINISTRATION CENTRE - Fallback": {
-        "property_location": "LCC ADMINISTRATION CENTRE, 150 Wembley Road, LOGAN CENTRAL QLD 4114",
+        "address": "LCC ADMINISTRATION CENTRE, 150 Wembley Road, LOGAN CENTRAL QLD 4114",
     },
     "The Family Place - Fallback": {
-        "property_location": "35 North Road, WOODRIDGE QLD 4114",
+        "address": "35 North Road, WOODRIDGE QLD 4114",
     },
     "Lee Naki's Takeaway - Fallback": {
-        "property_location": "2 Ashton Street, KINGSTON QLD 4114",
+        "address": "2 Ashton Street, KINGSTON QLD 4114",
     },
 }
 
@@ -34,14 +34,14 @@ FALLBACK_API_URL = "https://services5.arcgis.com/ZUCWDRj8F77Xo351/arcgis/rest/se
 
 
 class Source:
-    def __init__(self, property_location):
-        self.property_location = urllib.parse.quote_plus(property_location.strip())
+    def __init__(self, address):
+        self.address = urllib.parse.quote_plus(address.strip())
 
     def fetch(self):
         # Retrieve collection day and whether there is recycling or green waste bin
         # Use LIKE as there is extra whitespaces at the end of the address
         r = requests.get(
-            f"{API_URL}?where=Address%20LIKE%20%27{self.property_location}%25%27&outFields=Rubbish_Collection,Recycling_Collection,Green_Waste_Collection&f=json",
+            f"{API_URL}?where=Address%20LIKE%20%27{self.address}%25%27&outFields=Rubbish_Collection,Recycling_Collection,Green_Waste_Collection&f=json",
             headers=HEADERS,
         )
         data = json.loads(r.text)
@@ -55,13 +55,13 @@ class Source:
         else:
             # Fall back to old API
             r = requests.get(
-                f"{FALLBACK_API_URL}?where=%20(Formatted_Property_Address%20%3D%20'{self.property_location}')%20&outFields=Collection_Day,Recycling_Week,Green_Waste_Week&outSR=4326&f=json",
+                f"{FALLBACK_API_URL}?where=%20(Formatted_Property_Address%20%3D%20'{self.address}')%20&outFields=Collection_Day,Recycling_Week,Green_Waste_Week&outSR=4326&f=json",
                 headers=HEADERS,
             )
             data = json.loads(r.text)
 
             if not data["features"]:
-                raise SourceArgumentNotFound("property_location", self.property_location)
+                raise SourceArgumentNotFound("address", self.address)
 
             collection_day = data["features"][0]["attributes"]["Collection_Day"]
             recycling_week = data["features"][0]["attributes"]["Recycling_Week"]

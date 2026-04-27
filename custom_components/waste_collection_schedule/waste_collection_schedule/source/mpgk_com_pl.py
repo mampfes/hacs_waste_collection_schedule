@@ -6,8 +6,8 @@ TITLE = "MPGK Katowice"
 DESCRIPTION = "Source for MPGK Katowice."
 URL = "https://www.mpgk.com.pl/"
 TEST_CASES = {
-    "Warszawska 17": {"street": "Warszawska", "number": 17},
-    "3 Maja 38": {"street": "3 Maja", "number": "38"},
+    "Warszawska 17": {"street": "Warszawska", "house_number": 17},
+    "3 Maja 38": {"street": "3 Maja", "house_number": "38"},
 }
 
 
@@ -24,9 +24,9 @@ API_URL = "https://www.mpgk.com.pl/mod/harmonogram/ics"
 
 
 class Source:
-    def __init__(self, street: str, number: str | int):
+    def __init__(self, street: str, house_number: str | int):
         self._street: str = street
-        self._number: str | int = number
+        self._number: str | int = house_number
         self._ics = ICS()
 
     def fetch(self) -> list[Collection]:

@@ -11,8 +11,8 @@ DESCRIPTION_LANG = "de"
 URL = "https://mags.de"
 COUNTRY = "de"
 TEST_CASES = {
-    "Schlossacker 43": {"street": "Schlossacker", "number": 43, "turnus": 2},
-    "Azaleenweg 24": {"street": "Azaleenweg", "number": 24, "turnus": 2},
+    "Schlossacker 43": {"street": "Schlossacker", "house_number": 43, "turnus": 2},
+    "Azaleenweg 24": {"street": "Azaleenweg", "house_number": 24, "turnus": 2},
 }
 
 API_URL = "https://mags.de/ics/icscal.php"
@@ -29,10 +29,10 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, street, number, turnus=2):
+    def __init__(self, street, house_number, turnus=2):
         self._ics = ICS(split_at="/")
         self._street = street
-        self._number = number
+        self._number = house_number
         self._turnus = turnus
 
     def fetch(self):

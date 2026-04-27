@@ -15,8 +15,8 @@ URL = "https://www.barrie.ca/services-payments/garbage-recycling-organics/curbsi
 COUNTRY = "ca"
 
 TEST_CASES = {
-    "Quance St": {"street_number": "47", "street_name": "Quance St"},
-    "Kozlov St": {"street_number": "100", "street_name": "Kozlov St"},
+    "Quance St": {"house_number": "47", "street_name": "Quance St"},
+    "Kozlov St": {"house_number": "100", "street_name": "Kozlov St"},
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -76,8 +76,8 @@ def _split_summary(summary: str) -> list[tuple[str, str]]:
 
 
 class Source:
-    def __init__(self, street_number: str, street_name: str):
-        self._street_number = str(street_number).strip()
+    def __init__(self, house_number: str, street_name: str):
+        self._street_number = str(house_number).strip()
         self._street_name = street_name.strip().upper()
 
     def fetch(self) -> list[Collection]:

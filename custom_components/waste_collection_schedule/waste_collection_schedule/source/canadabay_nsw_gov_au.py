@@ -11,17 +11,17 @@ TEST_CASES = {
     "Harry's Shed": {
         "suburb": "Concord",
         "street_name": "Gipps Street",
-        "street_number": "1A",
+        "house_number": "1A",
     },
     "Five Dock Library": {
         "suburb": "Five Dock",
         "street_name": "Garfield Street",
-        "street_number": "4-12",
+        "house_number": "4-12",
     },
     "Dazed cafe": {
         "suburb": "Mortlake",
         "street_name": "Tennyson Road",
-        "street_number": "76",
+        "house_number": "76",
     },
 }
 
@@ -30,10 +30,10 @@ API_URL = "https://canada-bay.waste-info.com.au/api/v1"
 
 
 class Source:
-    def __init__(self, suburb, street_name, street_number):
+    def __init__(self, suburb, street_name, house_number):
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def fetch(self):
 
@@ -86,7 +86,7 @@ class Source:
 
         # Find the ID for our property
         for item in data["properties"]:
-            if item["name"] == f"{self.street_number} {self.street_name} {self.suburb}":
+            if item["name"] == f"{self.house_number} {self.street_name} {self.suburb}":
                 property_id = item["id"]
                 break
 

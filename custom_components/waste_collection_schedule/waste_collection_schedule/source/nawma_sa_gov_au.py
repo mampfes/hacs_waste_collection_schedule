@@ -91,11 +91,11 @@ class CollectionResultsParser(HTMLParser):
 
 
 class Source:
-    def __init__(self, street_name, suburb, street_number="", pid="2444"):
+    def __init__(self, street_name, suburb, street_number="", property_id="2444"):
         self._street_number = street_number  # Optional
         self.street_name = street_name
         self._suburb = suburb
-        self._pid = pid  # Not really sure what this is!
+        self._pid = property_id  # Not really sure what this is!
 
     def fetch(self):
         params = {

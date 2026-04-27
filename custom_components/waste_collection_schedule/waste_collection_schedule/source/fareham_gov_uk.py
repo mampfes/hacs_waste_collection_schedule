@@ -14,10 +14,10 @@ TITLE = "Fareham Borough Council"
 DESCRIPTION = "Source for fareham.gov.uk"
 URL = "https://www.fareham.gov.uk"
 TEST_CASES = {
-    "HUNTS_POND_ROAD": {"road_name": "Hunts pond road", "postcode": "PO14 4PL"},
-    "CHRUCH_ROAD": {"road_name": "Church road", "postcode": "SO31 6LW"},
-    "BRIDGE_ROAD": {"road_name": "Bridge road", "postcode": "SO31 7GD"},
-    "SEGENSWORTH_ROAD": {"road_name": "203 Segensworth road", "postcode": "PO15 5EL"},
+    "HUNTS_POND_ROAD": {"street_name": "Hunts pond road", "postcode": "PO14 4PL"},
+    "CHRUCH_ROAD": {"street_name": "Church road", "postcode": "SO31 6LW"},
+    "BRIDGE_ROAD": {"street_name": "Bridge road", "postcode": "SO31 7GD"},
+    "SEGENSWORTH_ROAD": {"street_name": "203 Segensworth road", "postcode": "PO15 5EL"},
 }
 
 API_URL = "https://www.fareham.gov.uk/internetlookups/search_data.aspx"
@@ -31,17 +31,17 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, road_name: str, postcode: str):
-        if not road_name or not road_name.strip():
+    def __init__(self, street_name: str, postcode: str):
+        if not street_name or not street_name.strip():
             raise SourceArgumentRequired(
-                "road_name", "please provide the road name as listed by the council"
+                "street_name", "please provide the road name as listed by the council"
             )
         if not postcode or not postcode.strip():
             raise SourceArgumentRequired(
                 "postcode", "please provide the postcode recognised by the council"
             )
 
-        self._road_name = road_name.strip()
+        self._road_name = street_name.strip()
         self._postcode = postcode.strip()
 
     def fetch(self) -> list[Collection]:
@@ -57,7 +57,7 @@ class Source:
 
         if not matches:
             raise SourceArgumentNotFound(
-                "road_name",
+                "street_name",
                 self._road_name,
                 "please ensure it matches the selected postcode",
             )

@@ -14,19 +14,19 @@ TEST_CASES = {
         "postcode": "2566",
         "suburb": "Minto",
         "street_name": "Brookfield Road",
-        "street_number": "10",
+        "house_number": "10",
     },
     "Campbelltown Catholic Club": {
         "postcode": "2560",
         "suburb": "Campbelltown",
         "street_name": "Camden Road",
-        "street_number": "20-22",
+        "house_number": "20-22",
     },
     "Australia Post Ingleburn": {
         "postcode": "2565",
         "suburb": "INGLEBURN",
         "street_name": "Oxford Road",
-        "street_number": "34",
+        "house_number": "34",
     },
 }
 
@@ -58,19 +58,17 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(
-        self, postcode: str, suburb: str, street_name: str, street_number: str
-    ):
+    def __init__(self, postcode: str, suburb: str, street_name: str, house_number: str):
         self.postcode = postcode
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def fetch(self):
         locationId = ""
 
         address = "{} {} {} NSW {}".format(
-            self.street_number, self.street_name, self.suburb, self.postcode
+            self.house_number, self.street_name, self.suburb, self.postcode
         )
 
         q = requote_uri(str(API_URLS["address_search"]).format(address))

@@ -19,22 +19,22 @@ TEST_CASES = {
         "address_id": 69980
     },
     "Full: Moosburg, Obergöriach": {
-        "municipal": "Moosburg",
+        "municipality": "Moosburg",
         "address": "Obergöriach",
         "street": "Obergöriach",
     },
     "Full: Moosburg, Pestalozzistr": {
-        "municipal": "Moosburg",
+        "municipality": "Moosburg",
         "address": "Moosburg",
         "street": "Pestalozzistraße",
     },
     "Full: Pörtschach, 10. OktoberStr": {
-        "municipal": "Pörtschach",
+        "municipality": "Pörtschach",
         "address": "10.-Oktober-Straße",
         "street": "10.-Oktober-Straße",
     },
     "Data: Techelsberg, Südlich der Bahn: Bahnhof Töschling bis Saag Nr. 19": {
-        "municipal": "Techelsberg",
+        "municipality": "Techelsberg",
         "address": "Südlich der Bahn: Bahnhof Töschling bis Saag Nr. 19",
         "street": "Südlich der Bahn: Bahnhof Töschling bis Saag Nr. 19",
     },
@@ -51,19 +51,19 @@ class Source:
     def __init__(
         self,
         address_id: int | None = None,
-        municipal: str | None = None,
+        municipality: str | None = None,
         address: str | None = None,
         street: str | None = None,
     ):
         if address_id is not None:
             self._address_id = address_id
-        elif municipal is not None and address is not None and street is not None:
+        elif municipality is not None and address is not None and street is not None:
             self._address_id = self.get_address_id_from_address(
-                municipal, address, street
+                municipality, address, street
             )
         else:
             raise Exception(
-                "You must provide either an (address_id) or (municipal, address, street)"
+                "You must provide either an (address_id) or (municipality, address, street)"
             )
 
     def fetch(self):
@@ -83,8 +83,8 @@ class Source:
 
         return entries
 
-    def get_address_id_from_address(self, municipal, address, street):
-        municipal_id = MUNICIPAL_CHOICES[municipal]
+    def get_address_id_from_address(self, municipality, address, street):
+        municipal_id = MUNICIPAL_CHOICES[municipality]
 
         r = requests.get(f"https://wsz-moosburg.at/api/address/{municipal_id}")
         addressData = json.loads(r.text)["address"]

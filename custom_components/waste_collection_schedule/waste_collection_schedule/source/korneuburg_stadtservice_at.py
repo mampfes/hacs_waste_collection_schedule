@@ -15,13 +15,13 @@ DESCRIPTION = "Source for Stadtservice Korneuburg"
 DESCRIPTION_LANG = "de"
 URL = "https://www.korneuburg.gv.at"
 TEST_CASES = {
-    "Rathaus": {"street_name": "Hauptplatz", "street_number": 39},  # Teilgebiet 4
+    "Rathaus": {"street_name": "Hauptplatz", "house_number": 39},  # Teilgebiet 4
     "Rathaus using Teilgebiet": {
         "street_name": "SomeStreet",
-        "street_number": "1A",
+        "house_number": "1A",
         "teilgebiet": "4",
     },  # Teilgebiet 4
-    "Werft": {"street_name": "Am Hafen", "street_number": 6},  # Teilgebiet 2
+    "Werft": {"street_name": "Am Hafen", "house_number": 6},  # Teilgebiet 2
 }
 
 # Mapping of teilgebiete to calendar urls
@@ -34,9 +34,9 @@ WASTE_TYPE_URLS = {
 
 
 class Source:
-    def __init__(self, street_name, street_number, teilgebiet=-1):
+    def __init__(self, street_name, house_number, teilgebiet=-1):
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
         self.teilgebiet = teilgebiet
 
         self._region = None
@@ -121,12 +121,12 @@ class Source:
 
         self._street_number_id, street_number_link = number_dict.get(
             available_streets.get(self.street_name)
-        ).get(str(self.street_number), (-1, "not found"))
+        ).get(str(self.house_number), (-1, "not found"))
 
         if street_number_link == "not found":
             raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
-                self.street_number,
+                "house_number",
+                self.house_number,
                 list(number_dict.get(available_streets.get(self.street_name)).keys()),
             )
 

@@ -5,7 +5,7 @@
 params:
   city:
     label: Ort
-  client:
+  customer:
     label: Client
   district:
     label: Ortsteil

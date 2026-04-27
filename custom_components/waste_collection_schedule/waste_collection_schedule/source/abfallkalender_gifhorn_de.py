@@ -16,8 +16,8 @@ DESCRIPTION = "Source for Landkreis Gifhorn."
 DESCRIPTION_LANG = "de"
 URL = "https://www.abfallkalender-gifhorn.de"
 TEST_CASES = {
-    "Wittingen Glüsingen": {"territory": "Wittingen", "street": "Glüsingen"},
-    "Gifhorn, Ackerstraße": {"territory": "Gifhorn", "street": "Ackerstraße"},
+    "Wittingen Glüsingen": {"region": "Wittingen", "street": "Glüsingen"},
+    "Gifhorn, Ackerstraße": {"region": "Gifhorn", "street": "Ackerstraße"},
 }
 
 
@@ -41,8 +41,8 @@ class Terretory(TypedDict):
 
 
 class Source:
-    def __init__(self, territory: str, street: str):
-        self._territory: str = territory
+    def __init__(self, region: str, street: str):
+        self._territory: str = region
         self._street: str = street
         self._ics = ICS(split_at=" und ")
 
@@ -68,7 +68,7 @@ class Source:
 
         if matching_terretory is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "territory",
+                "region",
                 self._territory,
                 [t["id"] for t in terretories],
             )

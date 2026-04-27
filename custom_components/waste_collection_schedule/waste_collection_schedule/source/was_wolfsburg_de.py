@@ -10,8 +10,8 @@ DESCRIPTION = "Source for waste collections for WAS-Wolfsburg, Germany."
 DESCRIPTION_LANG = "de"
 URL = "https://was-wolfsburg.de"
 TEST_CASES = {
-    "Barnstorf": {"street": "Bahnhofspassage", "number": 1},
-    "Sülfeld": {"street": "Bärheide", "number": 1},
+    "Barnstorf": {"street": "Bahnhofspassage", "house_number": 1},
+    "Sülfeld": {"street": "Bärheide", "house_number": 1},
 }
 
 ICON_MAP = {
@@ -23,13 +23,13 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, street: str | None, number: int | None):
+    def __init__(self, street: str | None, house_number: int | None):
         self._street = street
-        self._number = str(number)
+        self._number = str(house_number)
 
         if street is None:
             raise ValueError("Street must be set")
-        if number is None:
+        if house_number is None:
             raise ValueError("Number must be set")
 
     def fetch(self) -> list[Collection]:

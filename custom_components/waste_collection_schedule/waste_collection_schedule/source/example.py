@@ -9,10 +9,10 @@ TEST_CASES = {"Example": {"days": 10}}
 
 
 class Source:
-    def __init__(self, days=20, per_day=2, types=5):
+    def __init__(self, days=20, per_day=2, waste_types=5):
         self._days = days
         self._per_day = per_day
-        self._types = types
+        self._types = waste_types
 
     def fetch(self):
         now = datetime.datetime.now().date()

@@ -12,7 +12,7 @@ TEST_CASES = {
     "Villa Paradiso": {
         "street_name": "Nordåsgrenda",
         "house_number": 7,
-        "house_letter": "",
+        "address_suffix": "",
     },
     "Mardalsrenen 12 B": {
         "street_name": "Mardalsrenen",
@@ -21,7 +21,7 @@ TEST_CASES = {
     "Alf Bondes Veg 13 B": {
         "street_name": "Alf Bondes Veg",
         "house_number": "13",
-        "house_letter": "B",
+        "address_suffix": "B",
     },
 }
 
@@ -41,10 +41,10 @@ def map_icon(text):
 
 
 class Source:
-    def __init__(self, street_name, house_number, house_letter=""):
+    def __init__(self, street_name, house_number, address_suffix=""):
         self._street_name = street_name
         self._house_number = house_number
-        self._house_letter = house_letter
+        self._house_letter = address_suffix
 
     def fetch(self):
         headers = {"user-agent": "Home-Assitant-waste-col-sched/0.1"}

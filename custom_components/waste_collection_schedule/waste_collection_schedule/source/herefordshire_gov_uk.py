@@ -13,7 +13,7 @@ TITLE = "Herefordshire City Council"
 DESCRIPTION = "Source for herefordshire.gov.uk services for hereford"
 URL = "https://herefordshire.gov.uk"
 TEST_CASES = {
-    "houseNumber": {"postcode": "hr49js", "number": "52"},
+    "houseNumber": {"postcode": "hr49js", "house_number": "52"},
 }
 
 API_URLS = {
@@ -30,10 +30,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, postcode: str, number: str):
+    def __init__(self, postcode: str, house_number: str):
         self._post_code = postcode
         # keep original behaviour, but normalise for comparisons later
-        self._number = str(number).capitalize()
+        self._number = str(house_number).capitalize()
 
     def fetch(self):
         # fetch location id
@@ -72,7 +72,9 @@ class Source:
                 {x["LPI"].get("PAO_START_NUMBER") for x in addresses["results"]}
             )
             numbers -= {None}
-            raise SourceArgumentNotFoundWithSuggestions("number", self._number, numbers)
+            raise SourceArgumentNotFoundWithSuggestions(
+                "house_number", self._number, numbers
+            )
 
         q = str(API_URLS["collection"])
         r = requests.get(

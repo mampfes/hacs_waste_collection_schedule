@@ -14,9 +14,17 @@ DESCRIPTION = "Source for KWU Entsorgung, Germany"
 DESCRIPTION_LANG = "de"
 URL = "https://www.kwu-entsorgung.de/"
 TEST_CASES = {
-    "Erkner": {"city": "Erkner", "street": "Heinrich-Heine-Straße", "number": "11"},
-    "Bad Saarow": {"city": "Bad Saarow", "street": "Ahornallee", "number": 1},
-    "Spreenhagen Feldweg 4": {"city": "Spreenhagen", "street": "Feldweg", "number": 4},
+    "Erkner": {
+        "city": "Erkner",
+        "street": "Heinrich-Heine-Straße",
+        "house_number": "11",
+    },
+    "Bad Saarow": {"city": "Bad Saarow", "street": "Ahornallee", "house_number": 1},
+    "Spreenhagen Feldweg 4": {
+        "city": "Spreenhagen",
+        "street": "Feldweg",
+        "house_number": 4,
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
@@ -29,10 +37,10 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, city, street, number):
+    def __init__(self, city, street, house_number):
         self._city = city.strip().lower()
         self._street = street.strip().lower()
-        self._number = str(number).lower().strip()
+        self._number = str(house_number).lower().strip()
         self._ics = ICS()
 
     def fetch(self):
@@ -92,7 +100,7 @@ class Source:
                 break
         if ObjektValue is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "number", self._number, [o.text.strip() for o in objects]
+                "house_number", self._number, [o.text.strip() for o in objects]
             )
 
         r = requests.post(

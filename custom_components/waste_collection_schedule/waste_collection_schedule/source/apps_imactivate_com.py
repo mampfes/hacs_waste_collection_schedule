@@ -14,25 +14,25 @@ TEST_CASES = {
         "postcode": "LS62SE",
         "town": "Leeds",
         "street": "sharp mews",
-        "number": 2,
+        "house_number": 2,
     },
     "Fenland: PE15 8RD March 90 Creek Rd": {
         "postcode": "PE158RD",
         "town": "March",
         "street": "Creek Road",
-        "number": "90",
+        "house_number": "90",
     },
     "Rotherham: S61 4BH 2 Eskdale Rd, Rotherham": {
         "postcode": "S614BH",
         "town": "Rotherham",
         "street": "Eskdale Road",
-        "number": 2,
+        "house_number": 2,
     },
     "Luton: LU2 9DF 23 Marshall Rd": {
         "postcode": "LU2 9DF",
         "town": "Luton",
         "street": "Marshall Rd",
-        "number": 23,
+        "house_number": 23,
     },
 }
 
@@ -80,11 +80,11 @@ API_URL = "https://bins.azurewebsites.net/api/"
 
 
 class Source:
-    def __init__(self, postcode: str, town: str, street: str, number: str | int):
+    def __init__(self, postcode: str, town: str, street: str, house_number: str | int):
         self._postcode: str = postcode
         self._town: str = town.lower().replace(" ", "")
         self._street: str = street.lower().replace(" ", "").replace("road", "rd")
-        self._number: str = str(number).lower().replace(" ", "")
+        self._number: str = str(house_number).lower().replace(" ", "")
         self._premises_id: int | None = None
         self._local_authority: str | None = None
 
@@ -138,7 +138,7 @@ class Source:
             location["Address1"] + location["Address2"] for location in street_matches
         }
         raise SourceArgumentNotFoundWithSuggestions(
-            "number", self._number, suggestions=possibilities
+            "house_number", self._number, suggestions=possibilities
         )
 
     def _fetch_premise(self) -> list[Collection]:

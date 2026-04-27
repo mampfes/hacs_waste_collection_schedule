@@ -15,7 +15,7 @@ URL = "https://www.medway.gov.uk"
 TEST_CASES = {
     "known_uprn": {"uprn": "100062390963"},
     "known_uprn_as_number": {"uprn": 100062390963},
-    "by_postcode": {"postcode": "ME4 4AY", "house_name_or_number": "194-198"},
+    "by_postcode": {"postcode": "ME4 4AY", "house_number_or_name": "194-198"},
 }
 
 ICON_MAP = {
@@ -36,23 +36,23 @@ TIMEOUT = 30
 
 
 class Source:
-    def __init__(self, uprn=None, postcode=None, house_name_or_number=None):
+    def __init__(self, uprn=None, postcode=None, house_number_or_name=None):
         self._uprn = str(uprn).strip() if uprn is not None else None
         self._postcode = str(postcode).strip() if postcode is not None else None
         self._housenameornumber = (
-            str(house_name_or_number).strip()
-            if house_name_or_number is not None
+            str(house_number_or_name).strip()
+            if house_number_or_name is not None
             else None
         )
 
         if not any((self._uprn, self._postcode and self._housenameornumber)):
             errors = []
             if self._postcode:
-                errors.append("house_name_or_number")
+                errors.append("house_number_or_name")
             elif self._housenameornumber:
                 errors.append("postcode")
             else:
-                errors = ["uprn", "postcode", "house_name_or_number"]
+                errors = ["uprn", "postcode", "house_number_or_name"]
             raise SourceArgumentExceptionMultiple(
                 errors,
                 "Must provide either a UPRN or both the Postcode and House Name or Number",
@@ -101,7 +101,7 @@ class Source:
                 return str(addr["uprn"])
 
         raise SourceArgumentNotFoundWithSuggestions(
-            "house_name_or_number",
+            "house_number_or_name",
             self._housenameornumber,
             [a["addressText"] for a in addresses],
         )

@@ -10,12 +10,12 @@ DESCRIPTION = "Source for Bundaberg Regional Council, QLD, Australia."
 URL = "https://www.bundaberg.qld.gov.au"
 TEST_CASES = {
     "10 Maynard Street Avenell Heights": {
-        "street_number": "10",
+        "house_number": "10",
         "street_name": "Maynard",
         "suburb": "AVENELL HEIGHTS",
     },
     "1 Bourbong Street Bundaberg East": {
-        "street_number": "1",
+        "house_number": "1",
         "street_name": "Bourbong",
         "suburb": "BUNDABERG EAST",
     },
@@ -40,8 +40,8 @@ def _week_code(d: date) -> str:
 
 
 class Source:
-    def __init__(self, street_number: str, street_name: str, suburb: str = ""):
-        self._street_number = str(street_number)
+    def __init__(self, house_number: str, street_name: str, suburb: str = ""):
+        self._street_number = str(house_number)
         self._street_name = street_name
         self._suburb = suburb.upper()
 
@@ -56,7 +56,7 @@ class Source:
 
         if not divs:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street_number/street_name", query, []
+                "house_number/street_name", query, []
             )
 
         # Pick the best match: exact suburb match if provided, otherwise first result

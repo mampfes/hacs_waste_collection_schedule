@@ -173,7 +173,7 @@
   "joondalup_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/joondalup_wa_gov_au.md",
     "howto": {
-      "en": "Your house number, street name, and suburb as they appear when searching for your collection schedule on the Joondalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it."
+      "en": "Your house house_number, street name, and suburb as they appear when searching for your collection schedule on the Joondalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it."
     },
     "urls": {}
   },
@@ -2162,7 +2162,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md",
     "howto": {
       "de": "Öffne https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html und finde den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.",
-      "en": "Visit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas."
+      "en": "Visit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipality, then open the related PDF calendar and find the collection areas."
     },
     "urls": {}
   },

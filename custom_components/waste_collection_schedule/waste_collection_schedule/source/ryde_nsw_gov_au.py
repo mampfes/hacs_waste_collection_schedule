@@ -13,19 +13,19 @@ TEST_CASES = {
         "postcode": "2112",
         "suburb": "Ryde",
         "street_name": "Victoria Road",
-        "street_number": "504",
+        "house_number": "504",
     },
     "Harris Farm Markets Boronia Park": {
         "postcode": "2111",
         "suburb": "Gladesville",
         "street_name": "Pittwater Road",
-        "street_number": "128",
+        "house_number": "128",
     },
     "Eastwood Shopping Centre": {
         "postcode": "2122",
         "suburb": "Eastwood",
         "street_name": "Rowe Street",
-        "street_number": "152",
+        "house_number": "152",
     },
 }
 
@@ -49,19 +49,17 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(
-        self, postcode: str, suburb: str, street_name: str, street_number: str
-    ):
+    def __init__(self, postcode: str, suburb: str, street_name: str, house_number: str):
         self.postcode = postcode
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def fetch(self):
         locationId = 0
 
         address = "{} {} {} {}".format(
-            self.street_number, self.street_name, self.suburb, self.postcode
+            self.house_number, self.street_name, self.suburb, self.postcode
         )
 
         # Retrieve suburbs
@@ -78,7 +76,7 @@ class Source:
 
         if locationId == 0:
             raise Exception(
-                f"Could not find address: {self.street_number} {self.street_name}, {self.suburb} {self.postcode}"
+                f"Could not find address: {self.house_number} {self.street_name}, {self.suburb} {self.postcode}"
             )
 
         # Retrieve the upcoming collections for our property

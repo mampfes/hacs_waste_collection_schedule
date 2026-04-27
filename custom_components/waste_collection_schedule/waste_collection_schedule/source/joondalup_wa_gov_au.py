@@ -11,7 +11,7 @@ DESCRIPTION = "Source for City of Joondalup (WA) waste collection."
 URL = "https://www.joondalup.wa.gov.au"
 TEST_CASES = {
     "test address": {
-        "number": "2",
+        "house_number": "2",
         "street": "Ashburton Drive",
         "suburb": "Heathridge",
     },
@@ -41,7 +41,7 @@ ICON_MAP: dict = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Your house number, street name, and suburb as they appear when searching for your collection schedule on the Joondalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it.",
+    "en": "Your house house_number, street name, and suburb as they appear when searching for your collection schedule on the Joondalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it.",
 }
 
 
@@ -51,13 +51,13 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
 class Source:
     def __init__(
         self,
-        number=None,
+        house_number=None,
         street=None,
         suburb=None,
         mapkey=None,
     ):
         if mapkey is None:
-            self._number = str(number)
+            self._number = str(house_number)
             self._street = str(street)
             self._suburb = str(suburb).upper()
             self._mapkey = None

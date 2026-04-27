@@ -14,19 +14,19 @@ TEST_CASES = {
     "south windsor, 539a George Street": {
         "suburb": "south windsor",
         "street": "George Street",
-        "house_no": 539,
+        "house_number": 539,
         "postcode": 2756,
     },
     "Windsor, catherine street 7": {
         "suburb": "Windsor",
         "street": "catherine st",
-        "house_no": 7,
+        "house_number": 7,
         "postcode": 2756,
     },
     "Kurrajong, Bells Line Of Road 1052 ": {
         "suburb": "Kurrajong HILLS",
         "street": "Bells Line Of Road",
-        "house_no": 1052,
+        "house_number": 1052,
         "postcode": 2758,
     },
 }
@@ -56,10 +56,10 @@ STREETNAMES = {
 
 
 class Source:
-    def __init__(self, suburb, street, house_no, postcode):
+    def __init__(self, suburb, street, house_number, postcode):
         self._suburb = suburb.upper()
         self._street = street
-        self._houseNo = str(house_no)
+        self._houseNo = str(house_number)
         self._url = API_URL
         self._postCode = postcode
 
@@ -109,7 +109,7 @@ class Source:
 
         # Check if house record was found
         if len(data["records"]) == 0:
-            raise SourceArgumentNotFound("house_no", self._houseNo)
+            raise SourceArgumentNotFound("house_number", self._houseNo)
 
         # get collection schedule
         record = data["records"][-1]

@@ -15,12 +15,12 @@ TEST_CASES = {
     "Annangrove, Amanda Place 10": {
         "suburb": "ANNANGROVE",
         "street": "Amanda Place",
-        "house_no": 10,
+        "house_number": 10,
     },
     "Annangrove, Amanda Place 10 (2)": {
         "suburb": "ANn ANgROvE",
         "street": "amanda PlaC e",
-        "house_no": " 10 ",
+        "house_number": " 10 ",
     },
 }
 
@@ -28,10 +28,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, suburb, street, house_no):
+    def __init__(self, suburb, street, house_number):
         self._suburb = suburb
         self._street = street
-        self._houseNo = str(house_no)
+        self._houseNo = str(house_number)
         self._url = "https://apps.thehills.nsw.gov.au/seamlessproxy/api"
 
     def fetch(self):
@@ -92,7 +92,7 @@ class Source:
         houseNo_search = self._houseNo.strip().upper().replace(" ", "")
         if houseNo_search not in house_numbers:
             raise SourceArgumentNotFoundWithSuggestions(
-                "house_no", self._houseNo, house_numbers.keys()
+                "house_number", self._houseNo, house_numbers.keys()
             )
         property_key = house_numbers[houseNo_search]
 

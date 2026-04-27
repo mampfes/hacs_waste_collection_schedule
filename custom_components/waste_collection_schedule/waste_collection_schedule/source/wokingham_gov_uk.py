@@ -9,11 +9,11 @@ DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
 URL = "https://wokingham.gov.uk"
 API_URL = "https://www.wokingham.gov.uk/rubbish-and-recycling/waste-collection/see-your-new-bin-collection-dates"
 TEST_CASES = {
-    "Test_001": {"postcode": "RG40 1GE", "property": "92923"},
-    "Test_002": {"postcode": "RG413BP", "property": "111744"},
-    "Test_003": {"postcode": "rg41 1ph", "property": 108604},
+    "Test_001": {"postcode": "RG40 1GE", "property_id": "92923"},
+    "Test_002": {"postcode": "RG413BP", "property_id": "111744"},
+    "Test_003": {"postcode": "rg41 1ph", "property_id": 108604},
     "Test_004": {"postcode": "RG40 2LW", "address": "16 Davy Close"},
-    "Xmas_Adjustment_Test": {"postcode": "RG40 1GE", "property": "92906"},
+    "Xmas_Adjustment_Test": {"postcode": "RG40 1GE", "property_id": "92906"},
     "No-Collection Test": {"postcode": "RG10 0EU", "address": "39 Broadwater Road"},
 }
 ICON_MAP = {
@@ -32,9 +32,9 @@ HEADERS = {
 
 
 class Source:
-    def __init__(self, postcode=None, property=None, address=None):
+    def __init__(self, postcode=None, property_id=None, address=None):
         self._postcode = postcode
-        self._property = property
+        self._property = property_id
         self._address = address
 
     def get_form_id(self, txt: str) -> str:
@@ -97,7 +97,7 @@ class Source:
         )
         form_id = self.get_form_id(r.text)
 
-        # Use address to get an ID if property wasn't supplied. Assumes first match is correct.
+        # Use address to get an ID if property_id wasn't supplied. Assumes first match is correct.
         if self._property is None:
             soup = BeautifulSoup(r.text, "html.parser")
             dropdown = soup.find("div", {"class": "form-item__dropdown"})

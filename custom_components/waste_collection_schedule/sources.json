@@ -5692,7 +5692,7 @@
       "title": "Abfallwirtschaft Alb-Donau-Kreis",
       "module": "buergerportal_de",
       "default_params": {
-        "operator": "alb_donau"
+        "service_provider": "alb_donau"
       },
       "id": "buergerportal_de"
     },
@@ -6872,7 +6872,7 @@
       "title": "B\u00fcrgerportal Bedburg",
       "module": "buergerportal_de",
       "default_params": {
-        "operator": "bedburg"
+        "service_provider": "bedburg"
       },
       "id": "buergerportal_de"
     },
@@ -8541,7 +8541,7 @@
       "title": "KV Cochem-Zell",
       "module": "buergerportal_de",
       "default_params": {
-        "operator": "cochem_zell"
+        "service_provider": "cochem_zell"
       },
       "id": "buergerportal_de"
     },
@@ -9554,7 +9554,7 @@
       "title": "MZV Biedenkopf",
       "module": "buergerportal_de",
       "default_params": {
-        "operator": "biedenkopf"
+        "service_provider": "biedenkopf"
       },
       "id": "buergerportal_de"
     },
@@ -10758,7 +10758,7 @@
       "title": "Umweltbetriebe USK Kleve",
       "module": "buergerportal_de",
       "default_params": {
-        "operator": "klevestadt"
+        "service_provider": "klevestadt"
       },
       "id": "buergerportal_de"
     },
@@ -13705,7 +13705,7 @@
       "title": "ACV Group",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "acv"
+        "service_provider": "acv"
       },
       "id": "ximmio_nl"
     },
@@ -13733,7 +13733,7 @@
       "title": "Area Afval",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "areareiniging"
+        "service_provider": "areareiniging"
       },
       "id": "ximmio_nl"
     },
@@ -13741,7 +13741,7 @@
       "title": "Avalex",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "avalex"
+        "service_provider": "avalex"
       },
       "id": "ximmio_nl"
     },
@@ -13749,7 +13749,7 @@
       "title": "Avri",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "avri"
+        "service_provider": "avri"
       },
       "id": "ximmio_nl"
     },
@@ -13757,7 +13757,7 @@
       "title": "Bar Afvalbeheer",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "bar"
+        "service_provider": "bar"
       },
       "id": "ximmio_nl"
     },
@@ -13823,7 +13823,7 @@
       "title": "Gemeente Almere",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "almere"
+        "service_provider": "almere"
       },
       "id": "ximmio_nl"
     },
@@ -13869,7 +13869,7 @@
       "title": "Gemeente Hellendoorn",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "hellendoorn"
+        "service_provider": "hellendoorn"
       },
       "id": "ximmio_nl"
     },
@@ -13885,7 +13885,7 @@
       "title": "Gemeente Meppel",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "meppel"
+        "service_provider": "meppel"
       },
       "id": "ximmio_nl"
     },
@@ -13933,7 +13933,7 @@
       "title": "Gemeente Venlo",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "venlo"
+        "service_provider": "venlo"
       },
       "id": "ximmio_nl"
     },
@@ -13971,7 +13971,7 @@
       "title": "Gemeente Westland",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "westland"
+        "service_provider": "westland"
       },
       "id": "ximmio_nl"
     },
@@ -13993,7 +13993,7 @@
       "title": "Meerlanden",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "meerlanden"
+        "service_provider": "meerlanden"
       },
       "id": "ximmio_nl"
     },
@@ -14009,7 +14009,7 @@
       "title": "Mijn Blink",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "mijnblink"
+        "service_provider": "mijnblink"
       },
       "id": "ximmio_nl"
     },
@@ -14033,7 +14033,7 @@
       "title": "RAD BV",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "rad"
+        "service_provider": "rad"
       },
       "id": "ximmio_nl"
     },
@@ -14077,7 +14077,7 @@
       "title": "Twente Milieu",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "twentemilieu"
+        "service_provider": "twentemilieu"
       },
       "id": "ximmio_nl"
     },
@@ -14085,7 +14085,7 @@
       "title": "Waardlanden",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "waardlanden"
+        "service_provider": "waardlanden"
       },
       "id": "ximmio_nl"
     },
@@ -14093,7 +14093,7 @@
       "title": "Woerden / Oudewater",
       "module": "ximmio_nl",
       "default_params": {
-        "company": "woerdenoudewater"
+        "service_provider": "woerdenoudewater"
       },
       "id": "ximmio_nl"
     },

@@ -9,10 +9,6 @@ params:
     label: Adresse
   address_id:
     description: Identifiant de l'adresse.
-  address_name_number:
-    label: Numéro et nom de rue
-  address_no:
-    description: Numéro de l'adresse.
   address_postcode:
     label: Code postal
   address_street:
@@ -41,13 +37,9 @@ params:
   city_part:
     description: Quartier de la ville.
     label: Quartier de ville
-  client:
-    label: Client
   community:
     description: Communauté de l'adresse.
     label: Communauté
-  company:
-    label: Entreprise
   council:
     label: Conseil
   county_id:
@@ -55,22 +47,16 @@ params:
     label: ID de comté
   customer:
     label: Client
+  customer_number:
+    description: Numéro de client.
   district:
     description: Quartier de l'adresse.
     label: District
   district_id:
     description: Identifiant de quartier.
     label: ID de district
-  door_num:
-    description: Numéro de porte de l'adresse.
-    label: Numéro de porte
   email:
     label: E-mail
-  hn_id:
-    description: Identifiant du numéro de maison.
-  house:
-    description: Maison de l'adresse.
-    label: Maison
   house_id:
     description: Identifiant de maison de l'adresse.
   house_letter:
@@ -79,18 +65,14 @@ params:
   house_name:
     description: Nom de la maison de l'adresse.
     label: Nom de maison
-  house_name_or_number:
-    description: Nom ou numéro de la maison de l'adresse.
   house_number:
     description: Numéro de maison de l'adresse.
     label: Numéro civique
+  house_number_id:
+    description: Identifiant du numéro de maison.
   house_number_or_name:
     description: Numéro ou nom de la maison de l'adresse.
     label: Numéro civique
-  id_house_number:
-    description: Identifiant du numéro de maison.
-  kund_nr:
-    description: Numéro de client.
   lat:
     label: Latitude
   location:
@@ -103,8 +85,6 @@ params:
     label: Longitude
   method:
     label: Méthode
-  municipal:
-    label: Municipalité
   municipality:
     description: Municipalité de l'adresse.
     label: Municipalité
@@ -115,8 +95,6 @@ params:
     label: Numéro
   object_id:
     description: Identifiant d'objet.
-  operator:
-    label: Opérateur
   params:
     label: Paramètres
   password:
@@ -126,17 +104,11 @@ params:
   postcode:
     description: Code postal de l'adresse.
     label: Code postal
-  property:
-    label: Propriété
+  premises_id:
+    description: Identifiant des locaux.
   property_id:
     description: Identifiant de propriété.
     label: ID de propriété
-  property_location:
-    description: Emplacement de la propriété.
-    label: Emplacement de la propriété
-  property_no:
-    description: Numéro de propriété.
-    label: Numéro de propriété
   radius:
     label: Rayon
   region:
@@ -144,8 +116,6 @@ params:
     label: Région
   registration_number:
     description: Numéro d'immatriculation.
-  road_name:
-    label: Nom de route
   sector:
     label: Secteur
   service:
@@ -169,8 +139,6 @@ params:
   street_id:
     description: Identifiant de rue de l'adresse.
     label: ID de rue
-  street_index:
-    description: Index de rue de l'adresse.
   street_name:
     description: Nom de la rue de l'adresse.
     label: Nom de rue

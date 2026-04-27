@@ -12,11 +12,6 @@ params:
   address_id:
     description: Address identifier of the property.
     label: Address ID
-  address_name_number:
-    label: Address Name or Number
-  address_no:
-    description: Address number of the property.
-    label: Address Number
   address_suffix:
     description: Address suffix (e.g. flat or unit identifier).
     label: Address Suffix
@@ -46,13 +41,9 @@ params:
   city_part:
     description: Part of the city.
     label: City Part
-  client:
-    label: Client
   community:
     description: Community of the property.
     label: Community
-  company:
-    label: Company
   council:
     label: Council
   count:
@@ -62,6 +53,9 @@ params:
     label: County ID
   customer:
     label: Customer
+  customer_number:
+    description: Customer number.
+    label: Customer Number
   dates:
     label: Dates
   district:
@@ -70,9 +64,6 @@ params:
   district_id:
     description: District identifier.
     label: District ID
-  door_num:
-    description: Door number of the property.
-    label: Door Number
   email:
     label: Email
   excludes:
@@ -81,12 +72,6 @@ params:
     label: File
   frequency:
     label: Frequency
-  hn_id:
-    description: House number identifier.
-    label: House Number ID
-  house:
-    description: House of the property.
-    label: House
   house_id:
     description: House identifier of the property.
     label: House ID
@@ -96,27 +81,21 @@ params:
   house_name:
     description: House name of the property.
     label: House Name
-  house_name_or_number:
-    description: House name or number of the property.
-    label: House Name or Number
   house_number:
     description: House number of the property.
     label: House Number
+  house_number_id:
+    description: House number identifier.
+    label: House Number ID
   house_number_or_name:
     description: House number or name of the property.
     label: House Number or Name
   id:
     label: ID
-  id_house_number:
-    description: House number identifier.
-    label: House Number ID
   ignored_containers:
     label: Ignored Containers
   interval:
     label: Interval
-  kund_nr:
-    description: Customer number.
-    label: Customer Number
   lat:
     label: Latitude
   location:
@@ -129,8 +108,6 @@ params:
     label: Longitude
   method:
     label: Method
-  municipal:
-    label: Municipal
   municipality:
     description: Municipality of the property.
     label: Municipality
@@ -144,38 +121,25 @@ params:
   object_id:
     description: Object identifier.
     label: Object ID
-  operator:
-    label: Operator
   params:
     label: Parameters
   password:
     label: Password
   phone:
     label: Phone
-  pid:
-    label: PID
   postcode:
     description: Postcode of the property.
     label: Postcode
   predict:
     label: Predict
-  prem_code:
-    label: Premises Code
   premises_id:
+    description: Premises identifier.
     label: Premises ID
   project_id:
     label: Project ID
-  property:
-    label: Property
   property_id:
     description: Property identifier.
     label: Property ID
-  property_location:
-    description: Property location.
-    label: Property Location
-  property_no:
-    description: Property number.
-    label: Property Number
   radius:
     label: Radius
   region:
@@ -184,8 +148,6 @@ params:
   registration_number:
     description: Registration number.
     label: Registration Number
-  road_name:
-    label: Road Name
   sector:
     label: Sector
   service:
@@ -194,8 +156,6 @@ params:
     label: Service ID
   service_provider:
     label: Service Provider
-  show_nights:
-    label: Show Nights
   start:
     label: Start
   state:
@@ -213,29 +173,20 @@ params:
   street_id:
     description: Street identifier of the property.
     label: Street ID
-  street_index:
-    description: Street index of the property.
-    label: Street Index
   street_name:
     description: Street name of the property.
     label: Street Name
   street_number:
     description: Street number of the property.
     label: Street Number
-  street_town:
-    label: Street Town
   suburb:
     description: Suburb of the property.
     label: Suburb
   suffix:
     label: Suffix
-  territory:
-    label: Territory
   town:
     description: Town of the property.
     label: Town
-  types:
-    label: Types
   unit_number:
     description: Unit number of the property.
     label: Unit Number

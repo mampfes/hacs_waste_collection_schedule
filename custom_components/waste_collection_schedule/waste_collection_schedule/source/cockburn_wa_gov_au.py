@@ -18,8 +18,8 @@ TEST_CASES = {
         "address": "23 Snowden St, Hammond Park WA 6164",
     },
     "Friday": {"address": "1 Eucalyptus Dr Hammond Park"},
-    "Tuesday int": {"property_no": 6025742},
-    "Tuesday str": {"property_no": "6025742"},
+    "Tuesday int": {"property_id": 6025742},
+    "Tuesday str": {"property_id": "6025742"},
 }
 
 ICON_MAP = {
@@ -43,13 +43,13 @@ class Collections(TypedDict):
 
 class Source:
     def __init__(
-        self, address: str | None = None, property_no: str | int | None = None
+        self, address: str | None = None, property_id: str | int | None = None
     ):
         self.address: str | None = None
-        self.property_no: str | None = None
+        self.property_id: str | None = None
 
-        if not address and not property_no:
-            raise ValueError("Either address or property_no must be provided")
+        if not address and not property_id:
+            raise ValueError("Either address or property_id must be provided")
 
         if address:
             address = address.strip()
@@ -69,9 +69,9 @@ class Source:
             self.address = address
             self.search_method = "address"
 
-        if property_no:
-            self.property_no = str(property_no)
-            self.search_method = "property_no"
+        if property_id:
+            self.property_id = str(property_id)
+            self.search_method = "property_id"
 
     def collect_dates(self, start_date, weeks):
         dates = []
@@ -106,9 +106,9 @@ class Source:
 
             full_url = f"{API_URL}?q={search_value}&search_method={self.search_method}"
 
-        # Check if property_no is available
-        if self.property_no:
-            search_value = self.property_no.strip()
+        # Check if property_id is available
+        if self.property_id:
+            search_value = self.property_id.strip()
             full_url = f"{API_URL}?q={search_value}&search_method={self.search_method}"
 
         # Build the full URL

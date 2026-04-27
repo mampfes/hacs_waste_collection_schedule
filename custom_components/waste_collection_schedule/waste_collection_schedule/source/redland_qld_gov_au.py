@@ -14,17 +14,17 @@ TEST_CASES = {
     "Mount Cotton": {
         "suburb": "Mount Cotton",
         "street_name": "Mount Cotton Road",
-        "street_number": "1,261",
+        "house_number": "1,261",
     },
     "Random Redland Bay": {
         "suburb": "Redland Bay",
         "street_name": "Boundary Street",
-        "street_number": "1",
+        "house_number": "1",
     },
     "Random Victoria Point": {
         "suburb": "Victoria Point",
         "street_name": "Colburn Avenue",
-        "street_number": "25",
+        "house_number": "25",
     },
 }
 
@@ -40,10 +40,10 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, suburb, street_name, street_number):
+    def __init__(self, suburb, street_name, house_number):
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def fetch(self):
         suburb_id = 0
@@ -94,14 +94,14 @@ class Source:
 
         # Find the ID for our property
         for item in data["properties"]:
-            if item["name"] == f"{self.street_number} {self.street_name} {self.suburb}":
+            if item["name"] == f"{self.house_number} {self.street_name} {self.suburb}":
                 property_id = item["id"]
                 break
 
         if property_id == 0:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
-                self.street_number,
+                "house_number",
+                self.house_number,
                 [
                     x["name"].split(f" {self.street_name} {self.suburb}")[0]
                     for x in data["properties"]
@@ -109,7 +109,7 @@ class Source:
                 ],
             )
             raise Exception(
-                f"{self.street_number} {self.street_name} {self.suburb} not found"
+                f"{self.house_number} {self.street_name} {self.suburb} not found"
             )
 
         # Retrieve the upcoming collections for our property

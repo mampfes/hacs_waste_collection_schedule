@@ -12,19 +12,19 @@ DESCRIPTION = "Source for City of Kingston (VIC) waste collection."
 URL = "https://www.kingston.vic.gov.au"
 TEST_CASES = {
     "randomHouse": {
-        "street_number": "30C",
+        "house_number": "30C",
         "street_name": "Oakes Avenue",
         "suburb": "CLAYTON SOUTH",
         "postcode": "3169",
     },
     "randomAppartment": {
-        "street_number": "1/51",
+        "house_number": "1/51",
         "street_name": "Whatley Street",
         "suburb": "CARRUM",
         "postcode": "3197",
     },
     "randomMultiunit": {
-        "street_number": "1/1-5",
+        "house_number": "1/1-5",
         "street_name": "Station Street",
         "suburb": "MOORABBIN",
         "postcode": "3189",
@@ -46,10 +46,8 @@ BIN_NAMES = {
 
 
 class Source:
-    def __init__(
-        self, street_number: str, street_name: str, suburb: str, postcode: str
-    ):
-        self.street_number = str(street_number)
+    def __init__(self, house_number: str, street_name: str, suburb: str, postcode: str):
+        self.house_number = str(house_number)
         self.street_name = str(street_name)
         self.suburb = str(suburb)
         self.postcode = str(postcode)
@@ -61,7 +59,7 @@ class Source:
         if self._service is None:
             # Create location key for this address
             location_key = (
-                f"{self.street_number}_{self.street_name}_{self.suburb}_{self.postcode}"
+                f"{self.house_number}_{self.street_name}_{self.suburb}_{self.postcode}"
             )
 
             # Create service with custom mappings for Kingston
@@ -78,7 +76,7 @@ class Source:
         """Fetch waste collection schedule."""
         service = self._get_service()
         return service.fetch_collections(
-            self.street_number,
+            self.house_number,
             self.street_name,
             self.suburb,
             self.postcode,

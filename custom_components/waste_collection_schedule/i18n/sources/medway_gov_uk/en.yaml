@@ -3,7 +3,7 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  house_name_or_number:
+  house_number_or_name:
     description: Your house name or number exactly as shown on the Medway website
       (e.g. '194-198')
   postcode:

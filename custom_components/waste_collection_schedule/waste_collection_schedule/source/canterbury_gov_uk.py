@@ -13,8 +13,8 @@ TITLE = "Canterbury City Council"
 DESCRIPTION = "Source for canterbury.gov.uk services for canterbury"
 URL = "https://canterbury.gov.uk"
 TEST_CASES = {
-    "houseNumber": {"postcode": "ct68ru", "number": "63"},
-    "houseName": {"postcode": "ct68ru", "number": "KOWLOON"},
+    "houseNumber": {"postcode": "ct68ru", "house_number": "63"},
+    "houseName": {"postcode": "ct68ru", "house_number": "KOWLOON"},
 }
 HEADERS = {
     "Content-Type": "application/json",
@@ -40,9 +40,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, postcode: str, number: str):
+    def __init__(self, postcode: str, house_number: str):
         self._post_code = postcode
-        self._number = str(number).capitalize()
+        self._number = str(house_number).capitalize()
 
     def fetch(self):
         # fetch location id
@@ -70,7 +70,7 @@ class Source:
             if len(addresses["results"]) == 0:
                 raise SourceArgumentNotFound("postcode", self._post_code)
             raise SourceArgumentNotFoundWithSuggestions(
-                "number",
+                "house_number",
                 self._number,
                 {
                     x["LPI"].get("PAO_TEXT") or x["LPI"].get("PAO_START_NUMBER")

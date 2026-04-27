@@ -14,17 +14,17 @@ TEST_CASES = {
     "Suburban Social": {
         "suburb": "Chapel Hill",
         "street_name": "Moordale St",
-        "street_number": "3",
+        "house_number": "3",
     },
     "The Scratch Bar": {
         "suburb": "Milton",
         "street_name": "Park Rd",
-        "street_number": "8/1",
+        "house_number": "8/1",
     },
     "Green Beacon": {
         "suburb": "Teneriffe",
         "street_name": "Helen St",
-        "street_number": "26",
+        "house_number": "26",
     },
 }
 
@@ -32,10 +32,10 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 
 
 class Source:
-    def __init__(self, suburb, street_name, street_number):
+    def __init__(self, suburb, street_name, house_number):
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def fetch(self):
         suburb_id = 0
@@ -88,14 +88,14 @@ class Source:
 
         # Find the ID for our property
         for item in data["properties"]:
-            if item["name"] == f"{self.street_number} {self.street_name} {self.suburb}":
+            if item["name"] == f"{self.house_number} {self.street_name} {self.suburb}":
                 property_id = item["id"]
                 break
 
         if property_id == 0:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
-                self.street_number,
+                "house_number",
+                self.house_number,
                 [
                     x["name"].split(f" {self.street_name}")[0]
                     for x in data["properties"]

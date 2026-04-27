@@ -16,7 +16,7 @@ DESCRIPTION = "Source for services from the Royal Borough Of Greenwich"
 URL = "https://www.royalgreenwich.gov.uk/"
 TEST_CASES = {
     "address": {"address": "25 - Tizzard Grove - London - SE3 9DH"},
-    "houseNumber": {"postcode": "SE9 5AW", "house": "11"},
+    "houseNumber": {"postcode": "SE9 5AW", "house_number_or_name": "11"},
     "alternativeWeek": {"address": "32 - Glenlyon Road - London - SE9 1AJ"},
 }
 
@@ -48,11 +48,11 @@ class Source:
     def __init__(
         self,
         postcode: Optional[str] = None,
-        house: Optional[str] = None,
+        house_number_or_name: Optional[str] = None,
         address: Optional[str] = None,
     ):
         self._post_code = postcode
-        self._house = house
+        self._house = house_number_or_name
         self._address = address
 
     def _find_address(self) -> str:
@@ -74,10 +74,12 @@ class Source:
         addresses = r.json()
 
         if len(addresses) > 1:
-            raise SourceArgAmbiguousWithSuggestions("house", self._house, addresses)
+            raise SourceArgAmbiguousWithSuggestions(
+                "house_number_or_name", self._house, addresses
+            )
 
         if len(addresses) == 0:
-            raise SourceArgumentNotFound("house", self._house)
+            raise SourceArgumentNotFound("house_number_or_name", self._house)
 
         return addresses[0]
 

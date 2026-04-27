@@ -12,7 +12,7 @@ TITLE = "Vestforbrænding"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source for Vestforbrændning collection"  # Describe your source
 URL = "https://selvbetjening.vestfor.dk/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Home": {"street_name": "Kløvertoften", "number": "61", "zip_code": "2740"}
+    "Home": {"street_name": "Kløvertoften", "house_number": "61", "zip_code": "2740"}
 }
 
 API_URL = "https://selvbetjening.vestfor.dk/Adresse/ToemmeDates"
@@ -30,9 +30,9 @@ ADRESS_LOOKUP_URL = "https://selvbetjening.vestfor.dk/Adresse/AddressByName"
 
 
 class Source:
-    def __init__(self, street_name, number, zip_code):
+    def __init__(self, street_name, house_number, zip_code):
         self._streetName = street_name
-        self._number = number
+        self._number = house_number
         self._zipCode = zip_code
 
     def fetch(self):

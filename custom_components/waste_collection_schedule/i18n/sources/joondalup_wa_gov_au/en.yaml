@@ -5,7 +5,7 @@
 params:
   mapkey:
     label: The unique identifier for your property used by the Joondalup website
-  number:
+  house_number:
     label: Your house number as it appears on the Joondalup website
   street:
     label: Your street name as it appears on the Joondalup website

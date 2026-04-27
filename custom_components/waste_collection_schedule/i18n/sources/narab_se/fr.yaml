@@ -5,5 +5,5 @@
 params:
   address:
     description: Adresse pour la collecte
-  kund_nr:
+  customer_number:
     description: Numéro client

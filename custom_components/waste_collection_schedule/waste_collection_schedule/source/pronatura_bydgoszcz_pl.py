@@ -16,11 +16,11 @@ COUNTRY = "pl"
 TEST_CASES = {
     "Case1": {
         "street_name": "LEGNICKA",
-        "street_number": 1,
+        "house_number": 1,
     },
     "Case2": {
         "street_name": "JÓZEFA SOWIŃSKIEGO",
-        "street_number": "22A",
+        "house_number": "22A",
     },
 }
 
@@ -46,9 +46,9 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, street_name, street_number):
+    def __init__(self, street_name, house_number):
         self._street_name = street_name.upper()
-        self._street_number = str(street_number).upper()
+        self._street_number = str(house_number).upper()
 
     def fetch(self):
         streets_url = f"{API_URL}/streets"
@@ -75,7 +75,7 @@ class Source:
                 break
         if address_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
+                "house_number",
                 self._street_number,
                 [x["buildingNumber"] for x in addresses],
             )

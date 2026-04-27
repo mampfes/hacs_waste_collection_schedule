@@ -14,19 +14,19 @@ TEST_CASES = {
         "postcode": "4821",
         "town": "Shannon",
         "street_name": "Bryce Street",
-        "street_number": "55",
+        "house_number": "55",
     },
     "House-Levin": {
         "postcode": "5510",
         "town": "Levin",
         "street_name": "McKenzie Street",
-        "street_number": "15",
+        "house_number": "15",
     },
     "Commercial-Foxton": {
         "postcode": "4814",
         "town": "Foxton",
         "street_name": "State Highway 1",
-        "street_number": "18",
+        "house_number": "18",
     },
 }
 
@@ -49,11 +49,11 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, postcode: str, town: str, street_name: str, street_number: str):
+    def __init__(self, postcode: str, town: str, street_name: str, house_number: str):
         self.postcode = postcode
         self.town = town.upper()
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def fetch(self):
 
@@ -65,7 +65,7 @@ class Source:
         s.get(q, headers=HEADERS)
 
         # Do initial address search
-        address = f"{self.street_number} {self.street_name} {self.town} {self.postcode}"
+        address = f"{self.house_number} {self.street_name} {self.town} {self.postcode}"
         q = requote_uri(str(API_URLS["search"]).format(address))
         r1 = s.get(q, headers=HEADERS)
         data = json.loads(r1.text)

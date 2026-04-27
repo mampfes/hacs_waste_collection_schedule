@@ -15,17 +15,17 @@ URL = "https://www.eastherts.gov.uk"
 TEST_CASES = {
     "Example": {
         "address_postcode": "SG9 9AA",
-        "address_name_number": "1",
+        "house_number_or_name": "1",
     },
     "Example No Postcode Space": {
         "address_postcode": "SG99AA",
-        "address_name_number": "1",
+        "house_number_or_name": "1",
     },
     "UPRN only": {"uprn": "100080738904"},
     "UPRN, POSTCODE & NUMBER": {
         "uprn": "10033104539",
         "address_postcode": "SG9 9AA",
-        "address_name_number": "1",
+        "house_number_or_name": "1",
     },
 }
 HEADERS = {
@@ -54,34 +54,34 @@ class Source:
     def __init__(
         self,
         address_name_numer=None,
-        address_name_number=None,
+        house_number_or_name=None,
         address_street=None,
-        street_town=None,
+        street_address=None,
         address_postcode=None,
         uprn=None,
     ):
 
         self._address_name_number = (
-            address_name_number
-            if address_name_number is not None
+            house_number_or_name
+            if house_number_or_name is not None
             else address_name_numer
         )
         self._address_street = address_street
-        self._street_town = street_town
+        self._street_town = street_address
         self._address_postcode = address_postcode
         self._uprn = uprn
 
         if address_name_numer is not None:
             _LOGGER.warning(
-                "address_name_numer is deprecated. Use address_name_number instead."
+                "address_name_numer is deprecated. Use house_number_or_name instead."
             )
         if address_street is not None:
             _LOGGER.warning(
-                "address_street is deprecated. Only address_name_number and address_postcode are required"
+                "address_street is deprecated. Only house_number_or_name and address_postcode are required"
             )
-        if street_town is not None:
+        if street_address is not None:
             _LOGGER.warning(
-                "street_town is deprecated. Only address_name_number and address_postcode are required"
+                "street_address is deprecated. Only house_number_or_name and address_postcode are required"
             )
 
     def get_uprn_from_postcode(self, s, pcode):

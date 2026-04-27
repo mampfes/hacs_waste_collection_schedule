@@ -10,7 +10,7 @@ TITLE = "Leicester City Council"
 DESCRIPTION = "Source for city of Leicester, UK."
 URL = "https://www.leicester.gov.uk"
 TEST_CASES = {
-    "30 Mayflower Rd, Leicester LE5 5QD": {"postcode": "LE5 5QD", "number": "30"},
+    "30 Mayflower Rd, Leicester LE5 5QD": {"postcode": "LE5 5QD", "house_number": "30"},
     "235 Glenfield Rd, Leicester LE3 6DL": {"uprn": "002465020938"},
 }
 
@@ -30,10 +30,10 @@ BINS = {
 
 
 class Source:
-    def __init__(self, uprn=None, postcode=None, number=None):
+    def __init__(self, uprn=None, postcode=None, house_number=None):
         self._uprn = uprn
         self._post_code = postcode
-        self._number = number
+        self._number = house_number
 
     def fetch(self):
         # Lookup UPRN
@@ -50,7 +50,7 @@ class Source:
 
             if not self._uprn:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "number", self._number, [a["UPRNAddress"] for a in addresses]
+                    "house_number", self._number, [a["UPRNAddress"] for a in addresses]
                 )
 
         # Get collections

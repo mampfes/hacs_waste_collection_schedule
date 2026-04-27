@@ -9,11 +9,11 @@ TITLE = "Afval Wijzer"
 DESCRIPTION = "Source for all cities regions supported in mijnafvalwijzer.nl"
 URL = "https://www.mijnafvalwijzer.nl"
 TEST_CASES = {
-    "Eindhoven1": {"postcode": "5651AN", "number": "34", "address_suffix": "A"},
-    "Eindhoven2": {"postcode": "5651AN", "number": "34"},
-    "Tilburg": {"postcode": "5014NN", "number": "174"},
-    "Meierijstad": {"postcode": "5481LR", "number": "6"},
-    "Rotterdam": {"postcode": "3067AL", "number": "53"},
+    "Eindhoven1": {"postcode": "5651AN", "house_number": "34", "address_suffix": "A"},
+    "Eindhoven2": {"postcode": "5651AN", "house_number": "34"},
+    "Tilburg": {"postcode": "5014NN", "house_number": "174"},
+    "Meierijstad": {"postcode": "5481LR", "house_number": "6"},
+    "Rotterdam": {"postcode": "3067AL", "house_number": "53"},
 }
 
 ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
@@ -38,9 +38,9 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
 
 
 class Source:
-    def __init__(self, postcode, number, address_suffix=""):
+    def __init__(self, postcode, house_number, address_suffix=""):
         self._postcode = postcode
-        self._number = number
+        self._number = house_number
         if address_suffix is None:
             self._add = ""
         else:

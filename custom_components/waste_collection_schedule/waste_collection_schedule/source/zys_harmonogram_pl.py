@@ -15,7 +15,7 @@ TEST_CASES = {
     "Street Name": {
         "city": "Komorniki",
         "street_name": "Komorniki",
-        "street_number": "93/2",
+        "house_number": "93/2",
         "commune_name": "Kleszczewo",
     },
 }
@@ -49,10 +49,10 @@ MONTHS = {
 
 
 class Source:
-    def __init__(self, city, street_name, street_number, commune_name):
+    def __init__(self, city, street_name, house_number, commune_name):
         self._city = city.upper()
         self._street_name = street_name.upper()
-        self._street_number = street_number.upper()
+        self._street_number = house_number.upper()
         self._commune_name = commune_name.lower()
 
     def fetch(self):
@@ -98,7 +98,7 @@ class Source:
             if item["value"] == self._street_number:
                 number_id = item["id"]
         if number_id == 0:
-            raise SourceArgumentNotFound("street_number", self._street_number)
+            raise SourceArgumentNotFound("house_number", self._street_number)
 
         # GET REPORTS URL
         r = requests.get(f"{api_url}/reports", params={"type": "html", "id": number_id})

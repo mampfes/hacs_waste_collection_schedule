@@ -29,24 +29,24 @@ EXTRA_INFO = [
 DESCRIPTION = "Manages Waste and Recycling services for Elmbridge, Mole Valley, Surrey Heath & Woking"
 TEST_CASES = {
     "Test Woking #1": {
-        "house": "4",
+        "house_number_or_name": "4",
         "postcode": "GU21 4PQ",
     },
     "Test Woking #2": {
-        "house": 9,
+        "house_number_or_name": 9,
         "postcode": "GU22 8RW",
     },
     "Test Woking #3": {
-        "house": "49",
+        "house_number_or_name": "49",
         "postcode": "GU22 0AY",
     },
     "Test Woking #4": {
-        "house": 5,
+        "house_number_or_name": 5,
         "postcode": "GU21 4HW",
         "borough": "woking",
     },
     "surrey heath #1": {
-        "house": "1",
+        "house_number_or_name": "1",
         "postcode": "GU15 1JT",
         "borough": "surreyheath",
     },
@@ -63,8 +63,8 @@ REGEX = r"(\d+\/\d+\/\d+\/[\d\w]+)"
 
 
 class Source:
-    def __init__(self, house, postcode, borough="woking"):
-        self._house = str(house).upper().strip()
+    def __init__(self, house_number_or_name, postcode, borough="woking"):
+        self._house = str(house_number_or_name).upper().strip()
         self._postcode = postcode.upper().replace(" ", "+").strip()
         self._borough = borough.lower().strip()
 

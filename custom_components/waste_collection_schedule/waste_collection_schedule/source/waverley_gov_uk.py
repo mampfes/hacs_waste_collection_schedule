@@ -33,12 +33,12 @@ class Source:
         self,
         address_name_numer=None,
         address_street=None,
-        street_town=None,
+        street_address=None,
         address_postcode=None,
     ):
         self._address_name_numer = address_name_numer
         self._address_street = address_street
-        self._street_town = street_town
+        self._street_town = street_address
         self._address_postcode = address_postcode
         self._client = WhitespaceClient(API_URL)
 
@@ -47,7 +47,7 @@ class Source:
             address_name_number=self._address_name_numer,
             address_postcode=self._address_postcode,
             address_street=self._address_street,
-            street_town=self._street_town,
+            street_address=self._street_town,
         )
 
         entries = []

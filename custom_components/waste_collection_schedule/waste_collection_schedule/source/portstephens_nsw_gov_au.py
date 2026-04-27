@@ -15,12 +15,12 @@ TEST_CASES = {
     "randomHouse1": {
         "suburb": "Soldiers Point",
         "street_name": "Lyndel Close",
-        "street_number": "2",
+        "house_number": "2",
     },
     "randomHouse2": {
         "suburb": "Bobs Farm",
         "street_name": "Marsh Road",
-        "street_number": 322,
+        "house_number": 322,
     },
 }
 
@@ -75,11 +75,11 @@ def get_id(
 
 
 class Source:
-    def __init__(self, suburb: str, street_name: str, street_number: str):
+    def __init__(self, suburb: str, street_name: str, house_number: str):
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
-        self.street_address = f"{street_number} {street_name} {suburb}".lower()
+        self.house_number = house_number
+        self.street_address = f"{house_number} {street_name} {suburb}".lower()
 
     def fetch(self):
         locality_id = 0
@@ -107,7 +107,7 @@ class Source:
             "properties",
             self.street_address,
             params={"street": street_id},
-            init_param_name="street_number",
+            init_param_name="house_number",
         )
 
         property_url = API_URLS["Collection"] + str(property_id) + ".json"

@@ -7,7 +7,7 @@ params:
     label: Ort
   number:
     label: Hausnummer
-  operator:
+  service_provider:
     label: Betreiber
   show_volume:
     label: Große Container anzeigen

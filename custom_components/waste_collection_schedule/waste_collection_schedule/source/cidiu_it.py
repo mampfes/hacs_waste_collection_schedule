@@ -18,17 +18,17 @@ TEST_CASES = {
     "Collegno": {
         "city": "COLLEGNO",
         "street": "VIA CONDOVE",
-        "street_number": "107",
+        "house_number": "107",
     },
     "Grugliasco": {
         "city": "GRUGLIASCO",
         "street": "VIALE GRAMSCI",
-        "street_number": "18",
+        "house_number": "18",
     },
     "Rivoli": {
         "city": "RIVOLI",
         "street": "CORSO SUSA",
-        "street_number": 124,
+        "house_number": 124,
     },
 }
 
@@ -53,9 +53,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, street, street_number, city):
+    def __init__(self, street, house_number, city):
         self._street = street.upper()
-        self._street_number = str(street_number).upper()
+        self._street_number = str(house_number).upper()
         self._city = city.upper()
 
     def fetch(self):

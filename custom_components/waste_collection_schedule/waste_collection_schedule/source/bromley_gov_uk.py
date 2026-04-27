@@ -8,9 +8,9 @@ TITLE = "London Borough of Bromley"
 DESCRIPTION = "Source for bromley.gov.uk services for London Borough of Bromley, UK."
 URL = "https://bromley.gov.uk"
 TEST_CASES = {
-    "Test_001": {"property": 6328436},
-    "Test_002": {"property": "6146611"},
-    "Test_003": {"property": 6283460},
+    "Test_001": {"property_id": 6328436},
+    "Test_002": {"property_id": "6146611"},
+    "Test_003": {"property_id": 6283460},
 }
 
 ICON_MAP = {
@@ -25,8 +25,8 @@ MAX_COUNT = 15
 
 
 class Source:
-    def __init__(self, property):
-        self._property = str(property)
+    def __init__(self, property_id):
+        self._property = str(property_id)
         self._ics = ICS()
 
     def fetch(self):

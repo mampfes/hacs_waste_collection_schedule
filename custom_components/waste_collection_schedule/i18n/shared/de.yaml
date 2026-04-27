@@ -9,8 +9,6 @@ params:
     label: Adresse
   address_id:
     description: Adresskennung.
-  address_no:
-    description: Adressnummer.
   address_postcode:
     label: Postleitzahl
   address_street:
@@ -31,31 +29,22 @@ params:
     label: Stadt ID
   city_part:
     description: Stadtteil.
-  client:
-    label: Kunde
   community:
     description: Gemeinschaft der Adresse.
     label: Gemeinde
-  company:
-    label: Unternehmen
   county_id:
     description: Landkreiskennung.
   customer:
     label: Kunde
+  customer_number:
+    description: Kundennummer.
   district:
     description: Bezirk der Adresse.
     label: Bezirk
   district_id:
     description: Bezirkskennung.
-  door_num:
-    description: Türnummer der Adresse.
   email:
     label: E-Mail
-  hn_id:
-    description: Hausnummernkennung.
-  house:
-    description: Haus der Adresse.
-    label: Haus
   house_id:
     description: Hauskennung der Adresse.
   house_letter:
@@ -63,18 +52,14 @@ params:
   house_name:
     description: Hausname der Adresse.
     label: Hausname
-  house_name_or_number:
-    description: Hausname oder -nummer der Adresse.
   house_number:
     description: Hausnummer der Adresse.
     label: Hausnummer
+  house_number_id:
+    description: Hausnummernkennung.
   house_number_or_name:
     description: Hausnummer oder -name der Adresse.
     label: Hausnummer oder Name
-  id_house_number:
-    description: Hausnummernkennung.
-  kund_nr:
-    description: Kundennummer.
   lat:
     label: Breitengrad
   location:
@@ -86,8 +71,6 @@ params:
     label: Längengrad
   method:
     label: Methode
-  municipal:
-    label: Gemeinde
   municipality:
     description: Gemeinde der Adresse.
     label: Gemeinde
@@ -104,13 +87,10 @@ params:
   postcode:
     description: Postleitzahl der Adresse.
     label: PLZ
+  premises_id:
+    description: Grundstückskennung.
   property_id:
     description: Grundstückskennung.
-  property_location:
-    description: Grundstücksstandort.
-  property_no:
-    description: Grundstücksnummer.
-    label: Grundstück Nr.
   region:
     description: Region der Adresse.
   registration_number:
@@ -127,8 +107,6 @@ params:
   street_id:
     description: Straßenkennung der Adresse.
     label: Straßen ID
-  street_index:
-    description: Straßenindex der Adresse.
   street_name:
     description: Straßenname der Adresse.
     label: Straßenname
@@ -141,8 +119,6 @@ params:
   town:
     description: Ort der Adresse.
     label: Stadt
-  types:
-    label: Typen
   unit_number:
     description: Wohnungsnummer der Adresse.
   uprn:

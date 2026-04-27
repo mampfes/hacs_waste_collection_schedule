@@ -22,17 +22,17 @@ TEST_CASES = {
     "IGA Baldivis Quarter": {
         "suburb": "Baldivis",
         "street_name": "Makybe Drive",
-        "street_number": "59",
+        "house_number": "59",
     },
     "The Warnbro Tavern": {
         "suburb": "Warnbro",
         "street_name": "Hokin Street",
-        "street_number": "7",
+        "house_number": "7",
     },
     "The Shoalwater Tavern": {
         "suburb": "Shoalwater",
         "street_name": "Second Avenue",
-        "street_number": "62",
+        "house_number": "62",
     },
 }
 
@@ -68,10 +68,10 @@ SUBURBS = get_args(SubUrbLiteral)
 
 
 class Source:
-    def __init__(self, suburb: SubUrbLiteral, street_name, street_number):
+    def __init__(self, suburb: SubUrbLiteral, street_name, house_number):
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def _get_next_weekday(self, day_name):
         """Calculate the date of the next occurrence of a named day (e.g., 'Wednesday')."""
@@ -128,9 +128,9 @@ class Source:
         if self.suburb not in SUBURBS:
             raise SourceArgumentNotFoundWithSuggestions("suburb", self.suburb, SUBURBS)
 
-        if self.street_number is None:
+        if self.house_number is None:
             raise SourceArgumentRequired(
-                "street_number", "The street number can not be null"
+                "house_number", "The street number can not be null"
             )
 
         if self.street_name is None:
@@ -139,7 +139,7 @@ class Source:
             )
 
         # Build the address string
-        address = f"{self.street_number} {self.street_name} {self.suburb}"
+        address = f"{self.house_number} {self.street_name} {self.suburb}"
         entries = []
 
         try:

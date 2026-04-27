@@ -97,6 +97,39 @@ RENAMES: dict[str, str] = {
     "nr": "house_number",
     "cp": "postcode",
     "add": "address_suffix",
+    "house_no": "house_number",
+    "property_no": "property_id",
+    "address_no": "address_id",
+    "kund_nr": "customer_number",
+    "prem_code": "premises_id",
+    "street_index": "street_id",
+    # ID variants pointing at the same concept -> single canonical key.
+    "hn_id": "house_number_id",
+    "id_house_number": "house_number_id",
+    # Address / house variants -> single canonical
+    "address_name_number": "house_number_or_name",
+    "house_name_or_number": "house_number_or_name",
+    "house": "house_number_or_name",
+    "house_letter": "address_suffix",
+    "street_number": "house_number",
+    "number": "house_number",
+    "suffix": "address_suffix",
+    "property": "property_id",
+    "pid": "property_id",
+    "property_location": "address",
+    "street_town": "street_address",
+    "door_num": "unit_number",
+    # Street / road
+    "road_name": "street_name",
+    # Admin / region
+    "municipal": "municipality",
+    "territory": "region",
+    # Customer / provider
+    "client": "customer",
+    "company": "service_provider",
+    "operator": "service_provider",
+    # Waste-types
+    "types": "waste_types",
     # Czech / French / Polish param names with clear English equivalents.
     "obec": "municipality",
     "obvod": "district",

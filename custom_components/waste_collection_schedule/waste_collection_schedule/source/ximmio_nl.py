@@ -13,18 +13,22 @@ def EXTRA_INFO():
         {
             "title": s["title"],
             "url": s["url"],
-            "default_params": {"company": s["company"]},
+            "default_params": {"service_provider": s["company"]},
         }
         for s in SERVICE_MAP
     ]
 
 
 TEST_CASES = {
-    "ACV Group": {"company": "acv", "postcode": "6721MH", "house_number": 1},
-    "Meerlanden": {"company": "meerlanden", "postcode": "1435BX", "house_number": 650},
-    "Almere": {"company": "almere", "postcode": "1318NG", "house_number": 15},
+    "ACV Group": {"service_provider": "acv", "postcode": "6721MH", "house_number": 1},
+    "Meerlanden": {
+        "service_provider": "meerlanden",
+        "postcode": "1435BX",
+        "house_number": 650,
+    },
+    "Almere": {"service_provider": "almere", "postcode": "1318NG", "house_number": 15},
     "Woerden": {
-        "company": "woerdenoudewater",
+        "service_provider": "woerdenoudewater",
         "postcode": "3441AX",
         "house_number": 1,
     },
@@ -141,15 +145,15 @@ SERVICE_MAP = [
 
 
 def get_service_name_map():
-    return {s["company"]: s["uuid"] for s in SERVICE_MAP}
+    return {s["service_provider"]: s["uuid"] for s in SERVICE_MAP}
 
 
 class Source:
-    def __init__(self, company, postcode, house_number):
+    def __init__(self, service_provider, postcode, house_number):
         self._post_code = postcode
         self._house_number = house_number
-        self._url = SERVICE_URLS.get(company, "https://wasteapi.ximmio.com")
-        self._company_code = get_service_name_map()[company]
+        self._url = SERVICE_URLS.get(service_provider, "https://wasteapi.ximmio.com")
+        self._company_code = get_service_name_map()[service_provider]
 
     def fetch(self):
         data = {

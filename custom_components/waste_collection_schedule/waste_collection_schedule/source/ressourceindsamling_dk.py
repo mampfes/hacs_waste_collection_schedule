@@ -17,7 +17,7 @@ TITLE = "RessourceIndsamling.dk"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source for RessourceIndsamling.dk collection"  # Describe your source
 URL = "https://www.ressourceindsamling.dk/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Home": {"street_name": "Kløvertoften", "number": "61"}
+    "Home": {"street_name": "Kløvertoften", "house_number": "61"}
 }
 
 API_URL = (
@@ -63,9 +63,9 @@ TEST_DATE = [
 
 
 class Source:
-    def __init__(self, street_name, number):
+    def __init__(self, street_name, house_number):
         self._streetName = street_name
-        self._number = number
+        self._number = house_number
 
     def fetch(self):
         entries = []  # List that holds collection schedule

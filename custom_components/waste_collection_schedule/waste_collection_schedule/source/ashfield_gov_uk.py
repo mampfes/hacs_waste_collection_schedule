@@ -13,7 +13,10 @@ URL = "https://www.ashfield.gov.uk"
 TEST_CASES = {
     "11 Maun View Gardens, Sutton-in-Ashfield": {"uprn": 10001336299},
     "101 Main Street, Huthwaite": {"postcode": "NG17 2LQ", "uprn": "100031253415"},
-    "1 Acacia Avenue, Kirkby-in-Ashfield": {"postcode": "NG17 9BH", "number": "1"},
+    "1 Acacia Avenue, Kirkby-in-Ashfield": {
+        "postcode": "NG17 9BH",
+        "house_number": "1",
+    },
     "Council Offices, Kirkby-in-Ashfield": {
         "postcode": "NG178ZA",
         "name": "COUNCIL OFFICES",
@@ -41,9 +44,9 @@ NAMES = {
 
 
 class Source:
-    def __init__(self, postcode=None, number=None, name=None, uprn=None):
+    def __init__(self, postcode=None, house_number=None, name=None, uprn=None):
         self._post_code = postcode
-        self._number = number
+        self._number = house_number
         self._name = name
         self._uprn = uprn
 
@@ -53,7 +56,7 @@ class Source:
                 raise ValueError("postcode is required when uprn is not provided")
             if not (self._name or self._number):
                 raise ValueError(
-                    "Either name or number must be provided when uprn is not provided"
+                    "Either name or house_number must be provided when uprn is not provided"
                 )
             # look up the UPRN for the address
             q = str(API_URLS["address_search"]).format(postcode=self._post_code)
@@ -89,7 +92,7 @@ class Source:
                     argument=(
                         "name"
                         if self._name
-                        else "number" if self._number else "postcode"
+                        else "house_number" if self._number else "postcode"
                     ),
                     value=self._name or self._number or self._post_code,
                     suggestions=[

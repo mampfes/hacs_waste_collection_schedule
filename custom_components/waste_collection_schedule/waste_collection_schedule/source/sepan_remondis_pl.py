@@ -16,7 +16,7 @@ TEST_CASES = {
     "Street Name": {
         "city": "Poznań",
         "street_name": "ŚWIĘTY MARCIN",
-        "street_number": "1",
+        "house_number": "1",
     },
 }
 
@@ -47,10 +47,10 @@ ICON_MAP = {
 
 
 class Source:
-    def __init__(self, city, street_name, street_number):
+    def __init__(self, city, street_name, house_number):
         self._city = city.upper()
         self._street_name = street_name.upper()
-        self._street_number = street_number.upper()
+        self._street_number = house_number.upper()
 
     def fetch(self):
         try:
@@ -95,7 +95,7 @@ class Source:
                 number_id = item["id"]
         if number_id == 0:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
+                "house_number",
                 self._street_number,
                 [item["value"] for item in numbers],
             )

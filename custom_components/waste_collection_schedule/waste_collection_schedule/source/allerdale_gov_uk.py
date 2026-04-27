@@ -9,15 +9,15 @@ URL = "https://www.allerdale.gov.uk"
 TEST_CASES = {
     "Keswick": {
         "address_postcode": "CA12 4HU",
-        "address_name_number": "11",
+        "house_number_or_name": "11",
     },
     "Workington": {
         "address_postcode": "CA14 3NS",
-        "address_name_number": "177",
+        "house_number_or_name": "177",
     },
     "Wigton": {
         "address_postcode": "CA7 9RS",
-        "address_name_number": "55",
+        "house_number_or_name": "55",
     },
 }
 ICON_MAP = {
@@ -31,22 +31,24 @@ API_URL = "https://abc-wrp.whitespacews.com/"
 class Source:
     def __init__(
         self,
-        address_name_number=None,
+        house_number_or_name=None,
         address_postcode=None,
     ):
-        self._address_name_number = address_name_number
+        self._address_name_number = house_number_or_name
         self._address_postcode = address_postcode
         self._client = WhitespaceClient(API_URL)
 
     def fetch(self):
         schedule = self._client.fetch_schedule(
-            address_name_number=self._address_name_number,
+            house_number_or_name=self._address_name_number,
             address_postcode=self._address_postcode,
         )
 
         entries = []
         for date_str, type_str in schedule:
-            collection_type = type_str.replace(" Collection", "").replace(" Service", "")
+            collection_type = type_str.replace(" Collection", "").replace(
+                " Service", ""
+            )
             entries.append(
                 Collection(
                     date=datetime.strptime(date_str, "%d/%m/%Y").date(),

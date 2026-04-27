@@ -12,9 +12,18 @@ DESCRIPTION = "Source for Abfallwirtschaftsbetrieb Kiel (ABK)."
 DESCRIPTION_LANG = "de"
 URL = "https://abki.de/"
 TEST_CASES = {
-    "auguste-viktoria-straße, 14": {"street": "auguste-viktoria-straße", "number": 14},
-    "Achterwehrer Straße, 1 A": {"street": "Achterwehrer Straße", "number": "1 a"},
-    "Boltenhagener Straße, 4-8": {"street": "Boltenhagener Straße", "number": "4-8"},
+    "auguste-viktoria-straße, 14": {
+        "street": "auguste-viktoria-straße",
+        "house_number": 14,
+    },
+    "Achterwehrer Straße, 1 A": {
+        "street": "Achterwehrer Straße",
+        "house_number": "1 a",
+    },
+    "Boltenhagener Straße, 4-8": {
+        "street": "Boltenhagener Straße",
+        "house_number": "4-8",
+    },
 }
 
 
@@ -32,9 +41,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, street: str, number: str | int):
+    def __init__(self, street: str, house_number: str | int):
         self._street: str = street
-        self._number: str = str(number)
+        self._number: str = str(house_number)
         self._ics = ICS()
 
     def fetch(self):
@@ -59,23 +68,23 @@ class Source:
 
         street_id = streets[0]["IDSTREET"]
 
-        # get number id
+        # get house_number id
         r = session.get(
             "https://abki.de/abki-services/streetnumber", params={"IDSTREET": street_id}
         )
         r.raise_for_status()
         numbers = r.json()
         number_id, standort_id = None, None
-        for number in numbers:
-            if number["NUMBER"].lower().replace(" ", "").replace(
+        for house_number in numbers:
+            if house_number["NUMBER"].lower().replace(" ", "").replace(
                 "-", ""
             ) == self._number.lower().replace(" ", "").replace("-", ""):
-                number_id = number["id"]
-                standort_id = number["IDSTANDORT"]
+                number_id = house_number["id"]
+                standort_id = house_number["IDSTANDORT"]
                 break
 
         if number_id is None:
-            raise SourceArgumentNotFound("number", self._number)
+            raise SourceArgumentNotFound("house_number", self._number)
 
         # get ics file link
         r = session.get(

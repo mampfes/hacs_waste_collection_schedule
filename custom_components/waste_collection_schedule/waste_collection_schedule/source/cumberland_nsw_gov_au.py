@@ -11,17 +11,17 @@ TEST_CASES = {
     "Berala Community Centre": {
         "suburb": "Berala",
         "street_name": "Woodburn Road",
-        "street_number": "98 to 104",
+        "house_number": "98 to 104",
     },
     "McDonald's Auburn": {
         "suburb": "Auburn",
         "street_name": "Parramatta Road",
-        "street_number": "116",
+        "house_number": "116",
     },
     "Chickenlicious Guildford": {
         "suburb": "Guildford",
         "street_name": "Woodville Road",
-        "street_number": 283,
+        "house_number": 283,
     },
 }
 
@@ -29,10 +29,10 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 
 
 class Source:
-    def __init__(self, suburb, street_name, street_number):
+    def __init__(self, suburb, street_name, house_number):
         self.suburb = suburb
         self.street_name = street_name
-        self.street_number = street_number
+        self.house_number = house_number
 
     def fetch(self):
 
@@ -83,7 +83,7 @@ class Source:
 
         # Find the ID for our property
         for item in data["properties"]:
-            if item["name"] == f"{self.street_number} {self.street_name} {self.suburb}":
+            if item["name"] == f"{self.house_number} {self.street_name} {self.suburb}":
                 property_id = item["id"]
                 break
 

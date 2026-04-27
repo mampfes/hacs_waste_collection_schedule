@@ -14,8 +14,8 @@ DESCRIPTION = (
 )
 URL = "https://scambs.gov.uk"
 TEST_CASES = {
-    "houseNumber": {"postcode": "CB236GZ", "number": 53},
-    "houseName": {"postcode": "CB225HT", "number": "Rectory Farm Cottage"},
+    "houseNumber": {"postcode": "CB236GZ", "house_number": 53},
+    "houseName": {"postcode": "CB225HT", "house_number": "Rectory Farm Cottage"},
 }
 
 API_URLS = {
@@ -37,9 +37,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Source:
-    def __init__(self, postcode: str, number: str):
+    def __init__(self, postcode: str, house_number: str):
         self._post_code = postcode
-        self._number = str(number).capitalize()
+        self._number = str(house_number).capitalize()
 
     def fetch(self):
         # fetch location id
@@ -56,7 +56,7 @@ class Source:
 
         if len(address_ids) == 0:
             raise SourceArgumentNotFoundWithSuggestions(
-                "number", self._number, [x["houseNumber"] for x in addresses]
+                "house_number", self._number, [x["houseNumber"] for x in addresses]
             )
 
         q = str(API_URLS["collection"]).format(address_ids[0])
