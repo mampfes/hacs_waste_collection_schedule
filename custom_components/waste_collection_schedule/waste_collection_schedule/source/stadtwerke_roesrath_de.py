@@ -8,7 +8,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 TITLE = "Stadtwerke Rösrath"
 TITLE_LANG = "de"
 DESCRIPTION = " Source for 'Stadtwerke Rösrath'."
-DESCRIPTION_LANG = "de"
 URL = "https://www.stadtwerke-roesrath.de/service/abfuhrkalender/"
 TEST_CASES = {"Ahornweg": {"street": "Ahornweg"}}
 

@@ -6,7 +6,6 @@ from waste_collection_schedule.service.junker_app import Junker
 TITLE = "Alia Servizi Ambientali S.p.A."
 TITLE_LANG = "it"
 DESCRIPTION = "Source for Alia Servizi Ambientali S.p.A.."
-DESCRIPTION_LANG = "it"
 URL = "https://www.aliaserviziambientali.it"
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

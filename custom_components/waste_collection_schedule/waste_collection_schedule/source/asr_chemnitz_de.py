@@ -7,7 +7,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "ASR Stadt Chemnitz"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for ASR Stadt Chemnitz."
-DESCRIPTION_LANG = "de"
 URL = "https://www.asr-chemnitz.de"
 TEST_CASES = {
     "Hübschmannstr. 4": {"street": "Hübschmannstr.", "house_number": "4"},

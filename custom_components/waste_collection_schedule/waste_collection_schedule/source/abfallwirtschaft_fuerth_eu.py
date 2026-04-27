@@ -5,7 +5,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Abfallwirtschaft Stadt Fürth"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Stadt Fürth"
-DESCRIPTION_LANG = "de"
 URL = "https://abfallwirtschaft.fuerth.eu/"
 COUNTRY = "de"
 TEST_CASES = {

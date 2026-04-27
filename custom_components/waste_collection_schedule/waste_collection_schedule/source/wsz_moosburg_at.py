@@ -9,7 +9,6 @@ TITLE_LANG = "de"
 DESCRIPTION = (
     "Source for WSZ Moosburg/Kärnten, including Moosburg, Pörtschach, Techelsberg"
 )
-DESCRIPTION_LANG = "de"
 URL = "https://wsz-moosburg.at"
 TEST_CASES = {
     "Id: Moosburg, Obergöriach": {"address_id": 70265},

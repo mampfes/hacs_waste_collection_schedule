@@ -14,7 +14,6 @@ _LOGGER = logging.getLogger(__name__)
 TITLE = "Stadtreinigung Leipzig"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Stadtreinigung Leipzig."
-DESCRIPTION_LANG = "de"
 URL = "https://stadtreinigung-leipzig.de"
 TEST_CASES = {"Bahnhofsallee": {"street": "Bahnhofsallee", "house_number": 7}}
 

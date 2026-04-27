@@ -12,7 +12,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Landkreis Wittmund"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Wittmund waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.landkreis-wittmund.de"
 TEST_CASES = {
     "CityWithoutStreet": {

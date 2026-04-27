@@ -9,7 +9,6 @@ _LOGGER = logging.getLogger(__name__)
 TITLE = "Grenchen (CH)"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for waste collection in Grenchen, Switzerland. Deprecated: use localcities_ch instead."
-DESCRIPTION_LANG = "de"
 URL = "https://www.grenchen.ch"
 COUNTRY = "ch"
 

@@ -7,7 +7,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Marktgemeinde Edlitz"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Marktgeneinde Edlitz, AT"
-DESCRIPTION_LANG = "de"
 URL = "https://edlitz.at"
 TEST_CASES = {"TestSource": {}}
 ICON_MAP = {

@@ -13,7 +13,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Städteservice Raunheim Rüsselsheim"
 TITLE_LANG = "de"
 DESCRIPTION = "Städteservice Raunheim Rüsselsheim"
-DESCRIPTION_LANG = "de"
 URL = "https://www.staedteservice.de"
 TEST_CASES = {
     "Rüsselsheim": {"city": "Rüsselsheim", "street_number": "411", "house_number": "3"},

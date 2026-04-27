@@ -12,7 +12,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Zweckverband Abfallwirtschaft Region Hannover"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Zweckverband Abfallwirtschaft Region Hannover."
-DESCRIPTION_LANG = "de"
 URL = "https://www.aha-region.de/"
 TEST_CASES = {
     "Neustadt a. Rbge., Am Rotdorn / Nöpke, 1 ": {

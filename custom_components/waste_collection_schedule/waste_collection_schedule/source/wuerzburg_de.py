@@ -12,7 +12,6 @@ LOGGER = logging.getLogger(__name__)
 TITLE = "Abfallkalender Würzburg (deprecated)"
 TITLE_LANG = "de"
 DESCRIPTION = "Deprecated: Use the ICS source instead. Source for waste collection in the city of Würzburg, Germany."
-DESCRIPTION_LANG = "de"
 URL = "https://www.wuerzburg.de"
 TEST_CASES = {
     "District only": {"district": "Altstadt"},

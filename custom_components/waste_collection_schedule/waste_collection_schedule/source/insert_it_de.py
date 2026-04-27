@@ -14,7 +14,6 @@ from waste_collection_schedule.service.InsertITDe import SERVICE_MAP
 TITLE = "Insert IT Apps"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Apps by Insert IT"
-DESCRIPTION_LANG = "de"
 URL = "https://insert-infotech.de/"
 COUNTRY = "de"
 

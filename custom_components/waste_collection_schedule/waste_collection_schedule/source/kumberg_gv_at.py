@@ -8,7 +8,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Kumberg"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Kumberg."
-DESCRIPTION_LANG = "de"
 URL = "https://www.kumberg.gv.at"
 TEST_CASES: dict[str, dict] = {"Whole Kumberg": {}}
 

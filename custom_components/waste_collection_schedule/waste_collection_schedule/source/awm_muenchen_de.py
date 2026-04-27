@@ -13,7 +13,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "AWM München"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for AWM München."
-DESCRIPTION_LANG = "de"
 URL = "https://www.awm-muenchen.de"
 TEST_CASES = {
     "Waltenbergerstr. 1": {

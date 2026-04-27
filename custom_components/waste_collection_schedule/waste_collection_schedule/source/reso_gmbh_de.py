@@ -7,7 +7,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "RESO"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for RESO."
-DESCRIPTION_LANG = "de"
 URL = "https://reso-gmbh.de"
 TEST_CASES = {
     "Reichelsheim Kerngemeinde": {"city": "Reichelsheim", "district": "Kerngemeinde"}

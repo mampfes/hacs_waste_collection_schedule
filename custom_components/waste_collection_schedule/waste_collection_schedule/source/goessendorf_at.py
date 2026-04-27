@@ -7,7 +7,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Marktgemeinde Gössendorf"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Marktgemeinde Gössendorf, AT"
-DESCRIPTION_LANG = "de"
 URL = "https://www.goessendorf.com/"
 TEST_CASES: dict[str, dict[str, str]] = {"TestSource": {}}
 ICON_MAP = {

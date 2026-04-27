@@ -15,7 +15,6 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 TITLE = "Abfallwirtschaft Neckar-Odenwald-Kreis"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for AWN (Abfallwirtschaft Neckar-Odenwald-Kreis)."
-DESCRIPTION_LANG = "de"
 URL = "https://www.awn-online.de"
 TEST_CASES = {
     "Adelsheim": {

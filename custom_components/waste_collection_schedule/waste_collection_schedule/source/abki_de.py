@@ -9,7 +9,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Abfallwirtschaftsbetrieb Kiel (ABK)"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Abfallwirtschaftsbetrieb Kiel (ABK)."
-DESCRIPTION_LANG = "de"
 URL = "https://abki.de/"
 TEST_CASES = {
     "auguste-viktoria-straße, 14": {

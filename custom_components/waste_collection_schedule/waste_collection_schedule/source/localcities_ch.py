@@ -9,7 +9,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "localcities.ch"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for waste collection schedules from localcities.ch (Switzerland)."
-DESCRIPTION_LANG = "de"
 URL = "https://www.localcities.ch"
 COUNTRY = "ch"
 

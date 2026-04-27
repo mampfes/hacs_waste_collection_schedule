@@ -7,7 +7,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Landkreis Verden"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Verden waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.landkreis-verden.de/"
 TEST_CASES = {
     "Achim": {"city": "Achim", "street": "Am Schießstand", "house_number": 10},

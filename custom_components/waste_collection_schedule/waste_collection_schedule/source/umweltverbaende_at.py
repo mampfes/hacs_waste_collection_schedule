@@ -16,7 +16,6 @@ TITLE_LANG = "de"
 DESCRIPTION = (
     "Consolidated waste collection provider for several districts in Lower Austria"
 )
-DESCRIPTION_LANG = "de"
 URL = "https://www.umweltverbaende.at/"
 
 

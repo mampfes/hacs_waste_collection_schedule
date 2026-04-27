@@ -7,7 +7,6 @@ EXTRA_INFO_LANG = "de"
 TITLE = "Apps by Abfall+"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Apps by Abfall+."
-DESCRIPTION_LANG = "de"
 URL = "https://www.abfallplus.de/"
 TEST_CASES = {
     "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {

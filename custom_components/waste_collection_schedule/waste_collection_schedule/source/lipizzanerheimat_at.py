@@ -12,7 +12,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "APP Lipizzanerheimat"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Lipizzanerheimat App"
-DESCRIPTION_LANG = "de"
 COUNTRY = "at"
 URL = "https://www.lipizzanerheimat.at"
 

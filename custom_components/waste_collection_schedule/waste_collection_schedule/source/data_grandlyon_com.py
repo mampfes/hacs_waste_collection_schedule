@@ -10,7 +10,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Métropole de Lyon"
 TITLE_LANG = "fr"
 DESCRIPTION = "Source script for data.grandlyon.com waste collection schedules"
-DESCRIPTION_LANG = "fr"
 URL = "https://data.grandlyon.com"
 COUNTRY = "fr"
 

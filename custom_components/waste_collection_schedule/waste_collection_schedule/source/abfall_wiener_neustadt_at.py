@@ -18,7 +18,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Abfallwirtschaft Wiener Neustadt"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for abfall.wiener-neustadt.at waste collection schedule for Wiener Neustadt, Austria"
-DESCRIPTION_LANG = "de"
 URL = "https://abfall.wiener-neustadt.at/"
 
 # TEST_CASES: Each test should return a list[Collection] with date, type, and icon

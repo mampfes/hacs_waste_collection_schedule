@@ -10,7 +10,6 @@ from waste_collection_schedule.exceptions import SourceArgumentException
 TITLE = "Bordeaux Métropole"
 TITLE_LANG = "fr"
 DESCRIPTION = "Source script for opendata.bordeaux-metropole.fr"
-DESCRIPTION_LANG = "fr"
 URL = "https://opendata.bordeaux-metropole.fr/"
 TEST_CASES = {
     "Bordeaux": {"address": "20 Cr Pasteur", "city": "Bordeaux"},

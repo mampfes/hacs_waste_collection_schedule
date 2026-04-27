@@ -11,7 +11,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Landkreis Kusel"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Kusel."
-DESCRIPTION_LANG = "de"
 URL = "https://www.landkreis-kusel.de/"
 TEST_CASES = {
     "Adenbach": {"ortsgemeinde": "Adenbach"},

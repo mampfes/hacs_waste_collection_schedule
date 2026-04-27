@@ -7,7 +7,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Abfalltermine Forchheim"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Forchheim"
-DESCRIPTION_LANG = "de"
 URL = "https://www.abfalltermine-forchheim.de/"
 TEST_CASES = {
     "Dormitz": {"city": "Dormitz", "area": "Dormitz"},

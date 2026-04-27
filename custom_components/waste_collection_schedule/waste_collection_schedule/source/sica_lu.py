@@ -8,7 +8,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "SICA"
 TITLE_LANG = "fr"
 DESCRIPTION = "Source script for sica.lu served municipalities"
-DESCRIPTION_LANG = "fr"
 URL = "https://sica.lu"
 TEST_CASES = {
     "Habscht": {"municipality": "habscht"},

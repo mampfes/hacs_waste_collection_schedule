@@ -8,7 +8,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "hausmüll.info"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for hausmüll.info."
-DESCRIPTION_LANG = "de"
 URL = "https://hausmuell.info"
 COUNTRY = "de"
 TEST_CASES = {

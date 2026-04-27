@@ -12,7 +12,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Sammelkalender.ch"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Sammelkalender.ch."
-DESCRIPTION_LANG = "de"
 URL = "https://info.sammelkalender.ch"
 TEST_CASES = {
     "zeba Baar Aberenrain 10": {

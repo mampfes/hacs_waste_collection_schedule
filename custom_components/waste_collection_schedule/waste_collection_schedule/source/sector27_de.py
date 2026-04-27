@@ -13,7 +13,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Sector 27 - Datteln, Marl, Oer-Erkenschwick"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Muellkalender in Kreis RE."
-DESCRIPTION_LANG = "de"
 URL = "https://muellkalender.sector27.de"
 TEST_CASES = {
     "Datteln": {"city": "Datteln", "street": "Am Bahnhof"},

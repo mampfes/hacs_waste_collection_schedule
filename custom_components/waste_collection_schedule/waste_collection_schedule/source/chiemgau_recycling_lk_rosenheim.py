@@ -6,7 +6,6 @@ from waste_collection_schedule import Collection
 TITLE = "Chiemgau Recycling - Landkreis Rosenheim"  # Title will show up in README.md and info.md
 TITLE_LANG = "de"
 DESCRIPTION = "Source script for paper waste collection in Landkreis Rosenheim area"  # Describe your source
-DESCRIPTION_LANG = "de"
 URL = "https://chiemgau-recycling.de"  # Insert url to service homepage. URL will show up in README.md and info.md
 COUNTRY = "de"
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script

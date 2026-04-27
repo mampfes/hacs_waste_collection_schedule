@@ -7,7 +7,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "AWB Köln"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Abfallwirtschaftsbetriebe Köln waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.awbkoeln.de"
 TEST_CASES = {"Koeln": {"street_code": 2, "building_number": 50}}
 

@@ -8,7 +8,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Landkreis Ravensburg"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Ravensburg."
-DESCRIPTION_LANG = "de"
 URL = "https://www.rv.de/"
 TEST_CASES = {
     "Altshausen Altshauser Weg 1 ": {

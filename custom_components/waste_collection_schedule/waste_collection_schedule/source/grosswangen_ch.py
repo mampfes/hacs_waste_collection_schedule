@@ -8,7 +8,6 @@ from waste_collection_schedule import Collection
 TITLE = "Grosswangen"
 TITLE_LANG = "de"
 DESCRIPTION = " Source for 'Grosswangen, CH'"
-DESCRIPTION_LANG = "de"
 URL = "https://www.grosswangen.ch"
 TEST_CASES: dict[str, dict[str, str]] = {"TEST": {}}
 

@@ -7,7 +7,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Landkreis Erlangen-Höchstadt"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Erlangen-Höchstadt"
-DESCRIPTION_LANG = "de"
 URL = "https://www.erlangen-hoechstadt.de/"
 TEST_CASES = {
     "Höchstadt": {"city": "Höchstadt", "street": "Böhmerwaldstraße"},

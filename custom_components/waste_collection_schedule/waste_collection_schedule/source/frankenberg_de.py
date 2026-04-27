@@ -11,7 +11,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Stadt Frankenberg (Eder)"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Stadt Frankenberg (Eder)."
-DESCRIPTION_LANG = "de"
 URL = "https://www.frankenberg.de/"
 TEST_CASES = {
     "Viermünden": {"district": "Viermünden"},

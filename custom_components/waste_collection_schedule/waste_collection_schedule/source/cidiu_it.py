@@ -11,7 +11,6 @@ TITLE_LANG = "it"
 DESCRIPTION = (
     "Source for CIDIU waste collection services for the north-west Turin province"
 )
-DESCRIPTION_LANG = "it"
 URL = "https://cidiu.it/"
 
 TEST_CASES = {

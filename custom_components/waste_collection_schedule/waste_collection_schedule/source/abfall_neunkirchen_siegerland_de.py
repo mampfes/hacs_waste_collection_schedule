@@ -9,7 +9,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Neunkirchen Siegerland"
 TITLE_LANG = "de"
 DESCRIPTION = " Source for 'Abfallkalender Neunkirchen Siegerland'."
-DESCRIPTION_LANG = "de"
 URL = "https://www.neunkirchen-siegerland.de"
 TEST_CASES = {"Waldstraße": {"street": "Waldstr"}}
 

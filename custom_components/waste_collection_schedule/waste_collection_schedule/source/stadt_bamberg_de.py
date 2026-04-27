@@ -9,7 +9,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Bamberg (City/Stadt)"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Bamberg (City/Stadt)."
-DESCRIPTION_LANG = "de"
 URL = "https://www.stadt.bamberg.de"
 
 

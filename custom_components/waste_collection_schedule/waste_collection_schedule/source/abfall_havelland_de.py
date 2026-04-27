@@ -6,7 +6,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Abfallbehandlungsgesellschaft Havelland mbH (abh)"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Abfallbehandlungsgesellschaft Havelland mbH."
-DESCRIPTION_LANG = "de"
 URL = "https://abfall-havelland.de/"
 TEST_CASES = {
     "Wustermark Drosselgasse": {

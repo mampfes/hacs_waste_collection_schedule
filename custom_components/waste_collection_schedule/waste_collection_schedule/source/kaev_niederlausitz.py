@@ -9,7 +9,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "KAEV Niederlausitz"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Kommunaler Abfallverband Niederlausitz waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.kaev.de/"
 COUNTRY = "de"
 TEST_CASES = {

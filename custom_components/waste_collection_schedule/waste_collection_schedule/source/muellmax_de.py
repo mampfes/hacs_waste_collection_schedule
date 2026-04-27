@@ -9,7 +9,6 @@ from waste_collection_schedule.service.MuellmaxDe import SERVICE_MAP
 TITLE = "Müllmax"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Müllmax waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.muellmax.de"
 
 

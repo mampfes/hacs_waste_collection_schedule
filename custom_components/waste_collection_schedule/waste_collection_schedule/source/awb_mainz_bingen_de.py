@@ -12,7 +12,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Abfallwirtschaftsbetrieb LK Mainz-Bingen"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Abfallwirtschaftsbetrieb LK Mainz-Bingen."
-DESCRIPTION_LANG = "de"
 URL = "https://www.awb-mainz-bingen.de/"
 TEST_CASES = {
     "Stadt Ingelheim Ingelheim Süd Albert-Schweitzer-Straße": {

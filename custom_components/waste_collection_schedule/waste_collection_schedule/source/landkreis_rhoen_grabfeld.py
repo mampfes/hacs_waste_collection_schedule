@@ -7,7 +7,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Landkreis Rhön Grabfeld"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Rhön Grabfeld in Germany. Uses service by offizium."
-DESCRIPTION_LANG = "de"
 URL = "https://www.abfallinfo-rhoen-grabfeld.de/"
 COUNTRY = "de"
 TEST_CASES = {

@@ -9,7 +9,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "PreZero"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for PreZero waste collection calendar"
-DESCRIPTION_LANG = "de"
 URL = "https://abfallkalender.prezero.network"
 COUNTRY = "de"
 

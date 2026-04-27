@@ -10,7 +10,6 @@ DESCRIPTION = (
     "Source for ASM Pavia (porta a porta) waste collection in Pavia and "
     "surrounding municipalities, Italy."
 )
-DESCRIPTION_LANG = "it"
 URL = "https://www.asm.pv.it"
 COUNTRY = "it"
 

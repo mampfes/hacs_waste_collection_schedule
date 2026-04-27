@@ -5,7 +5,6 @@ from waste_collection_schedule.service.A_region_ch import A_region_ch
 TITLE = "Köniz"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Köniz"
-DESCRIPTION_LANG = "de"
 URL = "https://koeniz.citymobile.ch"
 
 

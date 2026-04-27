@@ -10,7 +10,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Landkreis Rostock"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Rostock."
-DESCRIPTION_LANG = "de"
 URL = "https://www.abfall-lro.de/"
 TEST_CASES = {
     "Alt Kätwin": {

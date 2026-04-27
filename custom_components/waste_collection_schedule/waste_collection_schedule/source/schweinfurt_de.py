@@ -9,7 +9,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 TITLE = "Abfallwirtschaft Stadt Schweinfurt"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Schweinfurt, Germany"
-DESCRIPTION_LANG = "de"
 URL = "https://www.schweinfurt.de"
 TEST_CASES = {
     "TestcaseI": {"address": "Ahornstrasse"},

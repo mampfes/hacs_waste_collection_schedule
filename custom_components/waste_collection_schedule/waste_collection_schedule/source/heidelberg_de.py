@@ -13,7 +13,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Heidelberg"
 TITLE_LANG = "de"
 DESCRIPTION = "Support for the waste collection schedule provided by the Office of Waste Management and Municipal Cleansing Heidelberg"
-DESCRIPTION_LANG = "de"
 URL = "https://www.heidelberg.de/abfall"
 
 

@@ -23,7 +23,6 @@ from waste_collection_schedule.exceptions import SourceArgumentException
 TITLE = "Publidata generic source"
 TITLE_LANG = "fr"
 DESCRIPTION = "Publidata is a French public operator with a reach of up to 6M inhabitants. Check if your area is concerned on their website."
-DESCRIPTION_LANG = "fr"
 URL = "https://www.publidata.io/fr/"
 COUNTRY = "fr"
 

@@ -9,7 +9,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "AWB Abfallwirtschaft Vechta"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for AWB Abfallwirtschaft Vechta."
-DESCRIPTION_LANG = "de"
 URL = "https://www.abfallwirtschaft-vechta.de/"
 TEST_CASES = {
     "Vechta, An der Hasenweide": {"city": "Vechta", "street": "An der Hasenweide"},

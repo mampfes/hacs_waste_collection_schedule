@@ -7,7 +7,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "isontina ambiente: Ronchi dei legionari"
 TITLE_LANG = "it"
 DESCRIPTION = "Source for isontina ambiente, serving Ronchi dei legionari."
-DESCRIPTION_LANG = "it"
 URL = "https://isontinambiente.it"
 TEST_CASES = {
     "PIAZZA FURLAN, Ronchi dei Legionari Area B": {"address_id": 1172},

@@ -12,7 +12,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Jumomind"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Jumomind.de waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.jumomind.de"
 TEST_CASES = {
     # DEPRECATED

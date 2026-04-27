@@ -7,7 +7,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Abfallwirtschaft Werra-Meißner-Kreis"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Zweckverband Abfallwirtschaft Werra-Meißner-Kreis"
-DESCRIPTION_LANG = "de"
 URL = "https://www.zva-wmk.de/"
 TEST_CASES = {
     "Frankenhain": {"city": "Berkatal - Frankenhain", "street": "Teichhof"},

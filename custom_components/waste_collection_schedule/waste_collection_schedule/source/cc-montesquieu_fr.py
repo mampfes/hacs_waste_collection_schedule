@@ -10,7 +10,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Communauté de Communes de Montesquieu"  # Title will show up in README.md and info.md
 TITLE_LANG = "fr"
 DESCRIPTION = "Source script for cc-montesquieu.fr"  # Describe your source
-DESCRIPTION_LANG = "fr"
 URL = "https://www.cc-montesquieu.fr/"  # Insert url to service homepage. URL will show up in README.md and info.md
 DATA_URL = "https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets"  # url used to retrieve data
 COUNTRY = "fr"

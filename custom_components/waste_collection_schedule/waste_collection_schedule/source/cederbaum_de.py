@@ -8,7 +8,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Cederbaum Braunschweig"
 TITLE_LANG = "de"
 DESCRIPTION = "Cederbaum Braunschweig Paperimüll"
-DESCRIPTION_LANG = "de"
 URL = "https://www.cederbaum.de"
 TEST_CASES = {
     "Hans-Sommer-Str": {"street": "Hans-Sommer-Str."},

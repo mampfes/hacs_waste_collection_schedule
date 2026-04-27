@@ -7,7 +7,6 @@ from waste_collection_schedule import Collection
 TITLE = "Hausmannstätten"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Hausmannstätten."
-DESCRIPTION_LANG = "de"
 URL = "https://www.hausmannstaetten.gv.at"
 TEST_CASES: dict[str, dict] = {"Testcase": {}}
 COUNTRY = "at"

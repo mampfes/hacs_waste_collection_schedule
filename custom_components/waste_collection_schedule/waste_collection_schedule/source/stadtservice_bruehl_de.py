@@ -9,7 +9,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "StadtService Brühl"
 TITLE_LANG = "de"
 DESCRIPTION = "Source für Abfallkalender StadtService Brühl"
-DESCRIPTION_LANG = "de"
 URL = "https://stadtservice-bruehl.de"
 TEST_CASES = {"TEST1": {"street": "Badorfer Straße", "house_number": "1"}}
 

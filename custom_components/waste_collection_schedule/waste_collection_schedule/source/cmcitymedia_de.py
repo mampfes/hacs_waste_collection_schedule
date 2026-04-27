@@ -7,7 +7,6 @@ from waste_collection_schedule.service.CMCityMedia import SERVICE_MAP
 TITLE = "CM City Media - Müllkalender"
 TITLE_LANG = "de"
 DESCRIPTION = "Source script for cmcitymedia.de"
-DESCRIPTION_LANG = "de"
 URL = "https://cmcitymedia.de"
 TEST_CASES = {
     "Blankenheim - Bezirk F: Lindweiler, Rohr": {"hpid": 415, "district": 1371},

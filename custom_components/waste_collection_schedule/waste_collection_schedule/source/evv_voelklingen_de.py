@@ -12,7 +12,6 @@ _LOGGER = logging.getLogger(__name__)
 TITLE = "Entsorgungsverband Völklingen (EVV)"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Entsorgungsverband Völklingen waste collection schedules."
-DESCRIPTION_LANG = "de"
 URL = "https://www.evv-voelklingen.de"
 COUNTRY = "de"
 TEST_CASES = {

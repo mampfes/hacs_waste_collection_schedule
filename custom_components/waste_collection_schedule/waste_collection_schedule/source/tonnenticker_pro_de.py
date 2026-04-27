@@ -7,7 +7,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Tonnenticker Pro"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Tonnenticker Pro (RegioIT) waste collection schedules."
-DESCRIPTION_LANG = "de"
 URL = "https://www.regioit.de"
 COUNTRY = "de"
 

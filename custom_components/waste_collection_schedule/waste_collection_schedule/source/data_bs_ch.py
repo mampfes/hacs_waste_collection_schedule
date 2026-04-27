@@ -7,7 +7,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Basel-Stadt"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for waste collection schedule of Basel-Stadt, Switzerland."
-DESCRIPTION_LANG = "de"
 URL = "https://data.bs.ch"
 COUNTRY = "ch"
 

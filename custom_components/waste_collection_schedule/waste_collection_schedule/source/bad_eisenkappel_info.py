@@ -8,7 +8,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Eisenkappel-Vellach"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Eisenkappel-Vellach."
-DESCRIPTION_LANG = "de"
 URL = "https://www.bad-eisenkappel.info/"
 TEST_CASES = {"Leppen": {"region": "Leppen"}}
 COUNTRY = "at"

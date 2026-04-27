@@ -9,7 +9,6 @@ from waste_collection_schedule.exceptions import SourceArgumentException
 TITLE = "Angers Loire Métropole"
 TITLE_LANG = "fr"
 DESCRIPTION = "Source script for data.angers.fr"
-DESCRIPTION_LANG = "fr"
 URL = "https://data.angers.fr/"
 TEST_CASES = {
     "TRELAZE": {"address": "cerisiers", "city": "TRELAZE", "typevoie": "ALLEE"},

@@ -10,7 +10,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "AWIDO Online"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for AWIDO waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.awido-online.de/"
 
 

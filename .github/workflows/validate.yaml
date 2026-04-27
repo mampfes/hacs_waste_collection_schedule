@@ -43,5 +43,4 @@ jobs:
           pytest
       - name: Spell-check i18n catalogs (per-language)
         run: |
-          python scripts/extract_titles.py
           pyspelling -c .pyspelling.yml

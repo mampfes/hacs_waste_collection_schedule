@@ -10,7 +10,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Saalfelden am Steinernen Meer"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Saalfelden am Steinernen Meer waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.saalfelden.at"
 COUNTRY = "at"
 

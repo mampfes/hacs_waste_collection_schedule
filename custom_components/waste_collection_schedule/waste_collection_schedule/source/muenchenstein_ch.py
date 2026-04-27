@@ -8,7 +8,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Münchenstein"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Muenchenstein waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.muenchenstein.ch"
 TEST_CASES = {
     "Abfuhrkreis Ost": {"waste_district": "Abfuhrkreis Ost"},

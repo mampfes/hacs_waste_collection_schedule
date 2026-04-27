@@ -7,7 +7,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 TITLE = "EAD Darmstadt"  # Title will show up in README.md and info.md
 TITLE_LANG = "de"
 DESCRIPTION = "Source script for waste collection in Darmstadt ead.darmstadt.de"  # Describe your source
-DESCRIPTION_LANG = "de"
 URL = "https://ead.darmstadt.de/"  # Insert url to service homepage. URL will show up in README.md and info.md
 TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
     "Stresemannstraße": {"street": "Stresemannstraße"},

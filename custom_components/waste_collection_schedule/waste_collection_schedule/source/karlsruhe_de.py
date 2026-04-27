@@ -15,7 +15,6 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 TITLE = "City of Karlsruhe"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for City of Karlsruhe."
-DESCRIPTION_LANG = "de"
 URL = "https://www.karlsruhe.de/"
 TEST_CASES = {
     "Östliche Rheinbrückenstraße 1": {

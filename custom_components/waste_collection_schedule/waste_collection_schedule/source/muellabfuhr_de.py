@@ -7,7 +7,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Müllabfuhr Deutschland"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Müllabfuhr, Germany"
-DESCRIPTION_LANG = "de"
 URL = "https://portal.muellabfuhr-deutschland.de/"
 TEST_CASES = {
     "TestcaseI": {

@@ -10,7 +10,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "AHE Ennepe-Ruhr-Kreis"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for AHE Ennepe-Ruhr-Kreis."
-DESCRIPTION_LANG = "de"
 URL = "https://ahe.de"
 TEST_CASES = {
     "58300 Ahornstraße 1": {

@@ -7,7 +7,6 @@ _LOGGER = logging.getLogger(__name__)
 TITLE = "Abfallkalender Offenbach am Main (deprecated)"
 TITLE_LANG = "de"
 DESCRIPTION = "Source für Abfallkalender Offenbach (deprecated)"
-DESCRIPTION_LANG = "de"
 URL = "https://www.offenbach.de"
 
 TEST_CASES = {

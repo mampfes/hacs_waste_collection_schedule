@@ -7,7 +7,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Heinz-Entsorgung (Landkreis Freising)"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Heinz-Entsorgung (Landkreis Freising) waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://abfallkalender.heinz-entsorgung.de/"
 TEST_CASES = {
     "Test_Freising": {

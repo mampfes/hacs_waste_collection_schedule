@@ -7,7 +7,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "AWISTA LOGISTIK Stadt Remscheid"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for AWISTA LOGISTIK Stadt Remscheid."
-DESCRIPTION_LANG = "de"
 URL = "https://www.monaloga.de/"
 TEST_CASES = {
     "Adolf-Clarenbach-Straße 42899": {

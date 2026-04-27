@@ -7,7 +7,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Landkreis Neumarkt"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Neumarkt."
-DESCRIPTION_LANG = "de"
 URL = "https://www.abfuhrplan-landkreis-neumarkt.de"
 TEST_CASES = {
     "dietfurt industriestrasse": {"city": "dietfurt", "street": "industriestrasse"},

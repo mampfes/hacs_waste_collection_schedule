@@ -12,7 +12,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Gemeinde24"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Gemeinde24 municipal app waste collection data"
-DESCRIPTION_LANG = "de"
 COUNTRY = "at"
 URL = "https://www.gemeinde24.at"
 TEST_CASES = {

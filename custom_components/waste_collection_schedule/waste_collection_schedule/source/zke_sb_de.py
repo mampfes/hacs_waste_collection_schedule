@@ -9,7 +9,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "ZKE Saarbrücken"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Zentraler Kommunaler Entsorgungsbetrieb (ZKE) Saarbrücken."
-DESCRIPTION_LANG = "de"
 URL = "https://www.zke-sb.de"
 TEST_CASES = {
     "Harthweg": {

@@ -13,7 +13,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Landkreis Gifhorn"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Landkreis Gifhorn."
-DESCRIPTION_LANG = "de"
 URL = "https://www.abfallkalender-gifhorn.de"
 TEST_CASES = {
     "Wittingen Glüsingen": {"region": "Wittingen", "street": "Glüsingen"},

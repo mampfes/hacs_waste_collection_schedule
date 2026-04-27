@@ -12,7 +12,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for ZVA (Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis)."
-DESCRIPTION_LANG = "de"
 URL = "https://www.zva-sek.de"
 TEST_CASES = {
     "Fritzlar": {

@@ -6,7 +6,6 @@ TITLE_LANG = "de"
 DESCRIPTION = (
     "Source for AbfallNavi waste collection. AbfallNavi is a brand name of regioit.de."
 )
-DESCRIPTION_LANG = "de"
 URL = "https://www.regioit.de"
 
 

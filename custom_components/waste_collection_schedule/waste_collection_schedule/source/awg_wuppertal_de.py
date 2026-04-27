@@ -7,7 +7,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "AWG Wuppertal"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for AWG Wuppertal."
-DESCRIPTION_LANG = "de"
 URL = "https://awg-wuppertal.de/"
 TEST_CASES = {"Hauptstraße": {"street": "Hauptstraße"}}
 

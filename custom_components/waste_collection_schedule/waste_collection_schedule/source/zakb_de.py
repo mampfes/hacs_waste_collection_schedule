@@ -5,7 +5,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Zweckverband Abfallwirtschaft Kreis Bergstraße"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Zweckverband Abfallwirtschaft Kreis Bergstraße."
-DESCRIPTION_LANG = "de"
 URL = "https://www.zakb.de"
 TEST_CASES = {
     "Abtsteinach, Am Hofböhl 1 ": {

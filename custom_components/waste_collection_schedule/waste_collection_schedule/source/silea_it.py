@@ -8,7 +8,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Silea"
 TITLE_LANG = "it"
 DESCRIPTION = "Silea"
-DESCRIPTION_LANG = "it"
 URL = "https://www.sileaspa.it"
 
 API = "https://www.sileaspa.it/wp-admin/admin-ajax.php"

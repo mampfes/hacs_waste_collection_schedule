@@ -10,7 +10,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Abfallwirtschaft Rendsburg"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Abfallwirtschaft Rendsburg"
-DESCRIPTION_LANG = "de"
 URL = "https://www.awr.de"
 TEST_CASES = {
     "Rendsburg": {"city": "Rendsburg", "street": "Hindenburgstraße"},

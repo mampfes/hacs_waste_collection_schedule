@@ -12,7 +12,6 @@ from waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defin
 TITLE = "Stadtservice Korneuburg"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Stadtservice Korneuburg"
-DESCRIPTION_LANG = "de"
 URL = "https://www.korneuburg.gv.at"
 TEST_CASES = {
     "Rathaus": {"street_name": "Hauptplatz", "house_number": 39},  # Teilgebiet 4

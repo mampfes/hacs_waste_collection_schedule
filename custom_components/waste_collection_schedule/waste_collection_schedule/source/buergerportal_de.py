@@ -11,7 +11,6 @@ TITLE = "Bürgerportal"
 TITLE_LANG = "de"
 URL = "https://www.c-trace.de"
 DESCRIPTION = "Source for waste collection in multiple service areas."
-DESCRIPTION_LANG = "de"
 
 
 def EXTRA_INFO():

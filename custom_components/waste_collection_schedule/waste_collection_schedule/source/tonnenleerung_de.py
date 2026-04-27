@@ -10,7 +10,6 @@ TITLE_LANG = "de"
 DESCRIPTION = (
     "Source for tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen."
 )
-DESCRIPTION_LANG = "de"
 URL = "https://tonnenleerung.de"
 TEST_CASES = {
     "nd-sob/neuburg-donau/abbevillestrasse/": {

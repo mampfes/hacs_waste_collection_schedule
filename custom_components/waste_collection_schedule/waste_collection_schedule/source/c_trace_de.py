@@ -6,7 +6,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "C-Trace"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for C-Trace.de."
-DESCRIPTION_LANG = "de"
 URL = "https://c-trace.de/"
 
 

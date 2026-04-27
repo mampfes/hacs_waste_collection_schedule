@@ -8,7 +8,6 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 TITLE = "Bremerhavener Entsorgungsgesellschaft mbH"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Bremerhavener Entsorgungsgesellschaft mbH."
-DESCRIPTION_LANG = "de"
 URL = "https://beg-bhv.de"
 TEST_CASES = {
     "Hafenstraße 22": {"street": "Hafenstraße, Bremerhaven", "house_number": 2},

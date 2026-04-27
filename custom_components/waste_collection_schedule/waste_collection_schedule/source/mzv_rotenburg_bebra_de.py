@@ -13,7 +13,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "MZV Rotenburg"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for MZV Rotenburg."
-DESCRIPTION_LANG = "de"
 URL = "https://www.mzv-rotenburg-bebra.de"
 TEST_CASES = {
     "Rotenburg an der Fulda 2 Ost": {

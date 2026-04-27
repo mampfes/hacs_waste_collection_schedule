@@ -10,7 +10,6 @@ _LOGGER = logging.getLogger(__name__)
 TITLE = "infeo"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for INFEO waste collection."
-DESCRIPTION_LANG = "de"
 URL = "https://www.infeo.at/"
 EXTRA_INFO = [
     {

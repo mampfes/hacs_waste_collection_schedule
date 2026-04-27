@@ -12,7 +12,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Städtischer Abfallwirtschaftsbetrieb Magdeburg"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for SAB Magdeburg waste collection schedule."
-DESCRIPTION_LANG = "de"
 URL = "https://www.magdeburg.de"
 COUNTRY = "de"
 

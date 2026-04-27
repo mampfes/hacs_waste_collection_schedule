@@ -9,7 +9,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Eigenbetrieb Abfallwirtschaft Landkreis Spree-Neiße"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Eigenbetrieb Abfallwirtschaft Landkreis Spree-Neiße."
-DESCRIPTION_LANG = "de"
 URL = "https://www.eigenbetrieb-abfallwirtschaft.de"
 COUNTRY = "de"
 TEST_CASES = {

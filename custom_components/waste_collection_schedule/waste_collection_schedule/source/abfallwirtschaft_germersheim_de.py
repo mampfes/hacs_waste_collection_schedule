@@ -8,7 +8,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Abfallwirtschaft Germersheim"
 TITLE_LANG = "de"
 DESCRIPTION = "Source für Abfallkalender Kreis Germersheim"
-DESCRIPTION_LANG = "de"
 URL = "https://www.abfallwirtschaft-germersheim.de"
 TEST_CASES = {
     "Bellheim": {"city": "Bellheim", "street": "Albert-Schweitzer-Str."},

@@ -8,7 +8,6 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "TBV Velbert"
 TITLE_LANG = "de"
 DESCRIPTION = "Source script for tbv-velbert.de, germany"
-DESCRIPTION_LANG = "de"
 URL = "https://www.tbv-velbert.de"
 TEST_CASES = {
     "Lindenkamp": {"street": "Am Lindenkamp 33"},

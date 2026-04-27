@@ -5,7 +5,6 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "Abfallwirtschaft Nürnberger Land"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for Nürnberger Land"
-DESCRIPTION_LANG = "de"
 URL = "https://nuernberger-land.de"
 TEST_CASES = {
     "Schwarzenbruck, Mühlbergstraße": {"id": 16952001},

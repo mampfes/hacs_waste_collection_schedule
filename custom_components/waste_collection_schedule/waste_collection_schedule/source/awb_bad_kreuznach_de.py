@@ -12,7 +12,6 @@ from waste_collection_schedule.exceptions import (
 TITLE = "AWB Bad Kreuznach"
 TITLE_LANG = "de"
 DESCRIPTION = "Source for AWB Bad Kreuznach."
-DESCRIPTION_LANG = "de"
 URL = "https://blupassionsystem.de/city/rest/garbageregion/filterRegion"
 TEST_CASES = {
     "Hargesheim": {"city": "Hargesheim"},
