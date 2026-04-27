@@ -21,6 +21,63 @@ import yaml
 
 from default_translations import default_descriptions, default_translations
 
+I18N_SOURCES_DIR = (
+    Path(__file__).resolve().parents[0]
+    / "custom_components"
+    / "waste_collection_schedule"
+    / "i18n"
+    / "sources"
+)
+
+
+@lru_cache(maxsize=None)
+def _i18n_source_overrides(
+    source_id: str,
+) -> tuple[dict[str, dict[str, str]], dict[str, dict[str, str]]]:
+    """Return (translations, descriptions) for one source as
+    ``{lang: {param: value}}`` dicts loaded from
+    ``custom_components/.../i18n/sources/<source_id>/<lang>.yaml``.
+
+    The two output dicts mirror the shape of legacy ``PARAM_TRANSLATIONS`` and
+    ``PARAM_DESCRIPTIONS`` so they can be merged into the existing pipeline
+    without touching ``SourceInfo``.
+    """
+    translations: dict[str, dict[str, str]] = {}
+    descriptions: dict[str, dict[str, str]] = {}
+    src_dir = I18N_SOURCES_DIR / source_id
+    if not src_dir.is_dir():
+        return translations, descriptions
+    for yaml_path in sorted(src_dir.glob("*.yaml")):
+        lang = yaml_path.stem
+        with yaml_path.open(encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+        params = data.get("params") or {}
+        for param, entry in params.items():
+            if not isinstance(entry, dict):
+                continue
+            if "label" in entry:
+                translations.setdefault(lang, {})[param] = entry["label"]
+            if "description" in entry:
+                descriptions.setdefault(lang, {})[param] = entry["description"]
+    return translations, descriptions
+
+
+def _merge_i18n_overrides(
+    legacy: dict[str, dict[str, str]],
+    overrides: dict[str, dict[str, str]],
+) -> dict[str, dict[str, str]]:
+    """Merge the new YAML overrides into the legacy inline dict, with overrides
+    winning per (lang, param). Returns a fresh dict so the caller can mutate
+    without affecting either input.
+    """
+    merged: dict[str, dict[str, str]] = {
+        lang: dict(params) for lang, params in legacy.items()
+    }
+    for lang, params in overrides.items():
+        merged.setdefault(lang, {}).update(params)
+    return merged
+
+
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
 
@@ -158,7 +215,11 @@ class SourceInfo:
             }
 
         self._custom_param_translation = default_translations(params)
-        self._custom_param_translation.update(custom_param_translation)
+        # Per-key (deep) merge so a partial inline / YAML override for one
+        # language doesn't wipe shared defaults for other params in that same
+        # language. ``dict.update`` would replace the whole inner dict.
+        for lang, lang_params in custom_param_translation.items():
+            self._custom_param_translation.setdefault(lang, {}).update(lang_params)
         self._custom_param_translation = extract_urls(self._custom_param_translation)
 
         # sort alphabetically
@@ -181,7 +242,9 @@ class SourceInfo:
                 for param in custom_description_params:
                     lang_descriptions.pop(param, None)
 
-        self._custom_param_description.update(custom_param_description)
+        # Per-key (deep) merge — see PARAM_TRANSLATIONS comment above.
+        for lang, lang_params in custom_param_description.items():
+            self._custom_param_description.setdefault(lang, {}).update(lang_params)
         self._custom_param_description = extract_urls(self._custom_param_description)
         self._url_placeholders = url_placeholders
 
@@ -428,6 +491,14 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     param_translations = getattr(module, "PARAM_TRANSLATIONS", {})
     param_descriptions = getattr(module, "PARAM_DESCRIPTIONS", {})
     howto = getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
+
+    # Merge per-source YAML overrides from i18n/sources/<source_id>/. These
+    # win over legacy inline PARAM_TRANSLATIONS / PARAM_DESCRIPTIONS dicts so
+    # newly-migrated sources take effect without removing the legacy reader
+    # path during the transition.
+    yaml_translations, yaml_descriptions = _i18n_source_overrides(file)
+    param_translations = _merge_i18n_overrides(param_translations, yaml_translations)
+    param_descriptions = _merge_i18n_overrides(param_descriptions, yaml_descriptions)
 
     filename = f"/doc/source/{file}.md"
     sources = []

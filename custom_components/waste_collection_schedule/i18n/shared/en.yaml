@@ -1,0 +1,82 @@
+# Shared parameter labels and descriptions in English.
+# Source modules that use these parameter names get these labels for free in
+# the Home Assistant config UI. Override only when a specific source genuinely
+# needs different wording, via i18n/sources/<source_id>/en.yaml.
+#
+# Spell-checked against en_US dictionary by pyspelling.
+---
+params:
+  abf_hausnr:
+    label: House Number
+  abf_strasse:
+    label: Street
+  abf_suche:
+    label: Search
+  address_name_number:
+    label: Address Name or Number
+  bezirk:
+    label: District
+  gemeinde:
+    label: Municipality
+  hausnr:
+    label: House Number
+  hausnummer:
+    label: House Number
+  hnr:
+    label: House Number
+  houseNo:
+    label: House Number
+  housenameornumber:
+    label: House Name or Number
+  housenumber:
+    label: House Number
+  housenumberorname:
+    label: House Number or Name
+  hpid:
+    label: HPID
+  kommune:
+    label: Municipality
+  ladeort:
+    label: Loading Location
+  lat:
+    label: Latitude
+  lon:
+    label: Longitude
+  ort:
+    label: City
+  ortsgemeinde:
+    label: Local Community
+  ortsteil:
+    label: District
+  params:
+    label: Parameters
+  postCode:
+    label: Postcode
+  post_code:
+    label: Postcode
+  postcode:
+    label: Postcode
+  stadt:
+    label: City
+  stadtteil:
+    label: District
+  strasse:
+    label: Street
+  teilgebiet:
+    label: Subarea
+  turnus:
+    label: Cycle
+  uprn:
+    label: UPRN
+    description: >-
+      An easy way to discover your Unique Property Reference Number (UPRN) is
+      by going to https://www.findmyaddress.co.uk/ and entering in your address
+      details.
+  zipCode:
+    label: ZIP Code
+  zip_code:
+    label: ZIP Code
+  zipcode:
+    label: ZIP Code
+  zusatz:
+    label: Addition

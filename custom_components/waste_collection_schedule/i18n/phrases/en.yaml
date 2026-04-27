@@ -1,0 +1,56 @@
+# Reusable phrase templates in English with {placeholders}.
+#
+# These cover patterns repeated across many sources: "X not found",
+# "X is required", suggestion lists, etc. Source modules raise
+# SourceArgumentNotFound / SourceArgumentRequired / etc. and the message
+# body is resolved through this catalog at presentation time, so the user
+# sees the message in their Home Assistant UI language.
+#
+# Placeholder names MUST match across all language files (see fr/de/it).
+# Spell-checked against en_US dictionary by pyspelling.
+---
+errors:
+  # SourceArgumentNotFound — value supplied for an arg didn't match
+  # anything the source could find.
+  argument_not_found: >-
+    We could not find values for the argument '{argument}' with the value
+    '{value}'.
+  argument_not_found_check_spelling: >-
+    We could not find values for the argument '{argument}' with the value
+    '{value}', please check the spelling and try again.
+  argument_not_found_no_suggestions: >-
+    We could not find values for the argument '{argument}' with the value
+    '{value}'. We could not find any suggestions. Please also check other
+    arguments.
+  argument_not_found_with_suggestions: >-
+    We could not find values for the argument '{argument}' with the value
+    '{value}'. You may want to use one of the following: {suggestions}.
+
+  # SourceArgAmbiguousWithSuggestions — value matched multiple candidates.
+  argument_ambiguous: >-
+    Multiple values found for the argument '{argument}' with the value
+    '{value}', please specify one of: {suggestions}.
+
+  # SourceArgumentRequired — caller didn't supply a required arg.
+  argument_required: "Argument '{argument}' must be provided."
+  argument_required_with_reason: >-
+    Argument '{argument}' must be provided, {reason}.
+  argument_required_with_suggestions: >-
+    Argument '{argument}' must be provided, you may want to use one of the
+    following: {suggestions}.
+  argument_required_with_reason_and_suggestions: >-
+    Argument '{argument}' must be provided, {reason}, you may want to use one
+    of the following: {suggestions}.
+
+  # Fetch / network failure patterns.
+  fetch_failed: "Failed to fetch data from {provider}."
+  fetch_failed_status: "Failed to fetch data from {provider} (status {status})."
+  fetch_returned_empty: "{provider} returned no collection data."
+  invalid_response: >-
+    The source returned an invalid response. Please check the provided
+    arguments and try again.
+
+help:
+  visit_to_find: "Visit {url} to look up your {field}."
+  visit_to_find_with_steps: >-
+    Visit {url} and follow the on-screen steps to find your {field}.

@@ -1,0 +1,232 @@
+# Étiquettes et descriptions de paramètres partagés en français.
+# Vérifié orthographiquement par pyspelling avec le dictionnaire fr_FR.
+---
+params:
+  Calendar:
+    label: Calendrier
+  abf_hausnr:
+    label: Numéro civique
+  abf_strasse:
+    label: Rue
+  abf_suche:
+    label: Recherche
+  addition:
+    label: Ajout
+  address:
+    label: Adresse
+  address_name_number:
+    label: Numéro et nom de rue
+  address_postcode:
+    label: Code postal
+  address_street:
+    label: Rue
+  addressNo:
+    label: Numéro d'adresse
+  adress:
+    label: Adresse
+  api_key:
+    label: Clé API
+  area:
+    label: Zone
+  bezirk:
+    label: District
+  bill_number:
+    label: Numéro de facture
+  building_number:
+    label: Numéro de bâtiment
+  calendar:
+    label: Calendrier
+  calendar_title:
+    label: Titre du calendrier
+  city:
+    label: Ville
+  city_id:
+    label: ID de ville
+  city_part:
+    label: Quartier de ville
+  client:
+    label: Client
+  community:
+    label: Communauté
+  company:
+    label: Entreprise
+  council:
+    label: Conseil
+  county_id:
+    label: ID de comté
+  customer:
+    label: Client
+  district:
+    label: District
+  district_id:
+    label: ID de district
+  door_num:
+    label: Numéro de porte
+  email:
+    label: E-mail
+  gemeinde:
+    label: Municipalité
+  hausnr:
+    label: Numéro civique
+  hausnummer:
+    label: Numéro civique
+  hnr:
+    label: Numéro civique
+  house:
+    label: Maison
+  houseID:
+    label: ID de maison
+  houseNo:
+    label: Numéro civique
+  house_letter:
+    label: Lettre de maison
+  house_name:
+    label: Nom de maison
+  house_number:
+    label: Numéro civique
+  house_number_or_name:
+    label: Numéro civique
+  housenameornumber:
+    label: Numéro civique
+  housenumber:
+    label: Numéro civique
+  housenumberorname:
+    label: Numéro civique
+  hpid:
+    label: HPID
+  kommune:
+    label: Municipalité
+  ladeort:
+    label: Chargement de la localisation
+  lat:
+    label: Latitude
+  location:
+    label: Emplacement
+  location_id:
+    label: ID d'emplacement
+  lon:
+    label: Longitude
+  method:
+    label: Méthode
+  municipal:
+    label: Municipalité
+  municipality:
+    label: Municipalité
+  municipality_id:
+    label: ID de municipalité
+  number:
+    label: Numéro
+  operator:
+    label: Opérateur
+  ort:
+    label: Ville
+  ortsgemeinde:
+    label: Communauté
+  ortsteil:
+    label: District
+  params:
+    label: Paramètres
+  password:
+    label: Mot de passe
+  phone:
+    label: Téléphone
+  plz:
+    label: Code postal
+  postCode:
+    label: Code postal
+  post_code:
+    label: Code postal
+  postal_code:
+    label: Code postal
+  postcode:
+    label: Code postal
+  property:
+    label: Propriété
+  propertyID:
+    label: ID de propriété
+  property_id:
+    label: ID de propriété
+  property_location:
+    label: Emplacement de la propriété
+  property_no:
+    label: Numéro de propriété
+  radius:
+    label: Rayon
+  region:
+    label: Région
+  road:
+    label: Route
+  road_name:
+    label: Nom de route
+  sector:
+    label: Secteur
+  service:
+    label: Service
+  service_id:
+    label: ID de service
+  service_provider:
+    label: Fournisseur de services
+  stadt:
+    label: Ville
+  stadtteil:
+    label: District
+  state:
+    label: État
+  strasse:
+    label: Rue
+  street:
+    label: Rue
+  streetId:
+    label: ID de rue
+  streetIndex:
+    label: Index de rue
+  streetName:
+    label: Nom de rue
+  street_address:
+    label: Adresse de rue
+  street_code:
+    label: Code de rue
+  street_id:
+    label: ID de rue
+  street_name:
+    label: Nom de rue
+  street_number:
+    label: Numéro de rue
+  subdomain:
+    label: Sous-domaine
+  teilgebiet:
+    label: Sous-zone
+  town:
+    label: Ville
+  turnus:
+    label: Cycle
+  uprn:
+    label: UPRN
+    description: >-
+      Une manière simple de retrouver votre numéro unique de propriété (UPRN)
+      est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir les
+      détails de votre adresse.
+  url:
+    label: URL
+  username:
+    label: Nom d'utilisateur
+  values:
+    label: Valeurs
+  version:
+    label: Version
+  village:
+    label: Village
+  zipCode:
+    label: Code postal
+  zip_code:
+    label: Code postal
+  zipcode:
+    label: Code postal
+  zone:
+    label: Zone
+  zoneID:
+    label: ID de zone
+  zone_id:
+    label: ID de zone
+  zusatz:
+    label: Ajout

@@ -1,0 +1,46 @@
+# Modèles de phrases réutilisables en français avec des {placeholders}.
+# Les noms des placeholders DOIVENT correspondre à ceux de en.yaml.
+# Vérifié orthographiquement par pyspelling avec le dictionnaire fr_FR.
+---
+errors:
+  argument_not_found: >-
+    Aucune valeur trouvée pour l'argument '{argument}' avec la valeur
+    '{value}'.
+  argument_not_found_check_spelling: >-
+    Aucune valeur trouvée pour l'argument '{argument}' avec la valeur
+    '{value}'. Veuillez vérifier l'orthographe et réessayer.
+  argument_not_found_no_suggestions: >-
+    Aucune valeur trouvée pour l'argument '{argument}' avec la valeur
+    '{value}'. Aucune suggestion disponible. Veuillez également vérifier les
+    autres arguments.
+  argument_not_found_with_suggestions: >-
+    Aucune valeur trouvée pour l'argument '{argument}' avec la valeur
+    '{value}'. Vous pouvez utiliser l'une des valeurs suivantes :
+    {suggestions}.
+
+  argument_ambiguous: >-
+    Plusieurs valeurs trouvées pour l'argument '{argument}' avec la valeur
+    '{value}'. Veuillez en spécifier une parmi : {suggestions}.
+
+  argument_required: "L'argument '{argument}' doit être fourni."
+  argument_required_with_reason: >-
+    L'argument '{argument}' doit être fourni, {reason}.
+  argument_required_with_suggestions: >-
+    L'argument '{argument}' doit être fourni. Vous pouvez utiliser l'une des
+    valeurs suivantes : {suggestions}.
+  argument_required_with_reason_and_suggestions: >-
+    L'argument '{argument}' doit être fourni, {reason}. Vous pouvez utiliser
+    l'une des valeurs suivantes : {suggestions}.
+
+  fetch_failed: "Échec de la récupération des données depuis {provider}."
+  fetch_failed_status: >-
+    Échec de la récupération des données depuis {provider} (statut {status}).
+  fetch_returned_empty: "{provider} n'a retourné aucune donnée de collecte."
+  invalid_response: >-
+    La source a retourné une réponse invalide. Veuillez vérifier les arguments
+    fournis et réessayer.
+
+help:
+  visit_to_find: "Visitez {url} pour rechercher votre {field}."
+  visit_to_find_with_steps: >-
+    Visitez {url} et suivez les étapes à l'écran pour trouver votre {field}.

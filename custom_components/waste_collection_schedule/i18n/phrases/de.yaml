@@ -1,0 +1,48 @@
+# Wiederverwendbare Phrasen-Vorlagen auf Deutsch mit {Platzhaltern}.
+# Platzhaltername MUSS mit en.yaml übereinstimmen.
+# Geprüft gegen das de_DE-Wörterbuch durch pyspelling.
+---
+errors:
+  argument_not_found: >-
+    Es konnten keine Werte für das Argument '{argument}' mit dem Wert
+    '{value}' gefunden werden.
+  argument_not_found_check_spelling: >-
+    Es konnten keine Werte für das Argument '{argument}' mit dem Wert
+    '{value}' gefunden werden. Bitte überprüfen Sie die Schreibweise und
+    versuchen Sie es erneut.
+  argument_not_found_no_suggestions: >-
+    Es konnten keine Werte für das Argument '{argument}' mit dem Wert
+    '{value}' gefunden werden. Es konnten keine Vorschläge gefunden werden.
+    Bitte überprüfen Sie auch die anderen Argumente.
+  argument_not_found_with_suggestions: >-
+    Es konnten keine Werte für das Argument '{argument}' mit dem Wert
+    '{value}' gefunden werden. Verwenden Sie ggf. einen der folgenden Werte:
+    {suggestions}.
+
+  argument_ambiguous: >-
+    Mehrere Werte für das Argument '{argument}' mit dem Wert '{value}'
+    gefunden. Bitte geben Sie einen der folgenden an: {suggestions}.
+
+  argument_required: "Das Argument '{argument}' muss angegeben werden."
+  argument_required_with_reason: >-
+    Das Argument '{argument}' muss angegeben werden, {reason}.
+  argument_required_with_suggestions: >-
+    Das Argument '{argument}' muss angegeben werden. Verwenden Sie ggf. einen
+    der folgenden Werte: {suggestions}.
+  argument_required_with_reason_and_suggestions: >-
+    Das Argument '{argument}' muss angegeben werden, {reason}. Verwenden Sie
+    ggf. einen der folgenden Werte: {suggestions}.
+
+  fetch_failed: "Daten konnten nicht von {provider} abgerufen werden."
+  fetch_failed_status: >-
+    Daten konnten nicht von {provider} abgerufen werden (Status {status}).
+  fetch_returned_empty: "{provider} hat keine Abholdaten zurückgegeben."
+  invalid_response: >-
+    Die Quelle hat eine ungültige Antwort zurückgegeben. Bitte überprüfen Sie
+    die angegebenen Argumente und versuchen Sie es erneut.
+
+help:
+  visit_to_find: "Besuchen Sie {url}, um Ihren Wert für {field} zu finden."
+  visit_to_find_with_steps: >-
+    Besuchen Sie {url} und folgen Sie den Anweisungen auf dem Bildschirm, um
+    Ihren Wert für {field} zu finden.

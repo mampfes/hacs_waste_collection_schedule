@@ -41,26 +41,9 @@ ICON_MAP: dict = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Your house number, street name, and suburb as they appear when searching for your collection schedule on the Joonalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it.",
+    "en": "Your house number, street name, and suburb as they appear when searching for your collection schedule on the Joondalup website: https://www.joondalup.wa.gov.au/residents/waste-and-recycling/residential-bin-collections. Alternatively, you can use your mapkey, if you know it.",
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "number": "Your house number as it appears on the Joonalup website",
-        "street": "Your stree name as it appears on the Joonalup website",
-        "suburb": "Your suburb as it appears on the Joonalup website",
-        "mapkey": "The unique identifier for your property used by the Joonalup website",
-    },
-}
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "number": "Your house number as it appears on the Joonalup website",
-        "street": "Your stree name as it appears on the Joonalup website",
-        "suburb": "Your suburb as it appears on the Joonalup website",
-        "mapkey": "The unique identifier for your property used by the Joonalup website",
-    },
-}
 
 # _LOGGER = logging.getLogger(__name__)
 

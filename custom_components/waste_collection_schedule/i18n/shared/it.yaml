@@ -1,0 +1,212 @@
+# Etichette e descrizioni dei parametri condivisi in italiano.
+# Controllato ortograficamente da pyspelling con il dizionario it_IT.
+---
+params:
+  address:
+    label: Indirizzo
+  addressNo:
+    label: Indirizzo Numero
+  api_key:
+    label: Chiave API
+  bill_number:
+    label: Numero della bolletta
+  building_number:
+    label: Numero Edificio
+  calendar:
+    label: Calendario
+  calendar_splitter:
+    label: Calendar Splitter
+  calendar_title:
+    label: Nome Calendario
+  city:
+    label: Città
+  city_id:
+    label: ID Città
+  city_part:
+    label: Parte della Città
+  client:
+    label: Cliente
+  community:
+    label: Comunità
+  company:
+    label: Compagnia
+  council:
+    label: Consiglio
+  count:
+    label: Conteggio
+  county_id:
+    label: ID Paese
+  customer:
+    label: Cliente
+  dates:
+    label: Date
+  district:
+    label: Distretto
+  district_id:
+    label: ID Distretto
+  door_num:
+    label: Numero Interno
+  email:
+    label: Email
+  excludes:
+    label: Escludi
+  file:
+    label: Nome File
+  frequency:
+    label: Frequenza
+  house:
+    label: Casa
+  houseID:
+    label: ID Casa
+  houseNo:
+    label: Civico
+  house_letter:
+    label: Lettera Casa
+  house_name:
+    label: Nome Casa
+  house_number:
+    label: Civico
+  housenameornumber:
+    label: Numero o Nome Casa
+  housenumber:
+    label: Civico
+  housenumberorname:
+    label: Numero o Nome Casa
+  ignored_containers:
+    label: Ignored Containers
+  interval:
+    label: Intervallo
+  ladeort:
+    label: Ladeort
+  location:
+    label: Posizione
+  location_id:
+    label: ID Posizione
+  method:
+    label: Metodo
+  municipality:
+    label: Municipality
+  municipality_id:
+    label: Municipality ID
+  name:
+    label: Nome
+  number:
+    label: Numero
+  operator:
+    label: Operatore
+  p_collect_cycle:
+    label: P Collect Cycle
+  params:
+    label: Parametri
+  phone:
+    label: Telefono
+  pid:
+    label: PID
+  postCode:
+    label: Codice Postale CAP
+  post_code:
+    label: Codice Postale CAP
+  postal_code:
+    label: Codice Postale CAP
+  postcode:
+    label: Codice Postale CAP
+  predict:
+    label: Predict
+  prem_code:
+    label: Premises Code
+  premises_id:
+    label: Premises ID
+  project_id:
+    label: Project ID
+  property:
+    label: Proprietà
+  propertyID:
+    label: ID Proprietà
+  property_id:
+    label: ID Proprietà
+  property_location:
+    label: Posizione Proprietà
+  property_no:
+    label: Proprietà Numero
+  r_collect_cycle:
+    label: R Collect Cycle
+  radius:
+    label: Raggio
+  region:
+    label: Regione
+  road:
+    label: Strada
+  road_name:
+    label: Nome Strada
+  sector:
+    label: Settore
+  service:
+    label: Servizio
+  service_id:
+    label: ID Servizio
+  service_provider:
+    label: Fornitore di Servizi
+  show_nights:
+    label: Mostra Notti
+  start:
+    label: Inizio
+  state:
+    label: Stato
+  street:
+    label: Strada
+  streetId:
+    label: ID Strada
+  streetIndex:
+    label: Indice Strada
+  streetName:
+    label: Nome della Strada
+  street_address:
+    label: Indirizzo Strada
+  street_code:
+    label: Codice Strada
+  street_id:
+    label: ID Strada
+  street_name:
+    label: Nome Strada
+  street_number:
+    label: Numero Strada
+  street_town:
+    label: Città Strada
+  suffix:
+    label: Suffisso
+  territory:
+    label: Territorio
+  town:
+    label: Città
+  unit_number:
+    label: Numero Interno
+  until:
+    label: Fino
+  uprn:
+    label: UPRN
+    description: >-
+      Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica
+      (UPRN) è andare su https://www.findmyaddress.co.uk/ e inserire i dettagli
+      del tuo indirizzo.
+  values:
+    label: Valori
+  verify_ssl:
+    label: Verifica SSL
+  version:
+    label: Versione
+  village:
+    label: Villaggio
+  weekdays:
+    label: Giorni feriali
+  zipCode:
+    label: Codice Postale CAP
+  zip_code:
+    label: Codice Postale CAP
+  zipcode:
+    label: Codice Postale CAP
+  zone:
+    label: Zona
+  zoneID:
+    label: ID Zona
+  zone_id:
+    label: ID Zona

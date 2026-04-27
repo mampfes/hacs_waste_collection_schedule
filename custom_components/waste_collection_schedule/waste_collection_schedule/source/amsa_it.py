@@ -4,9 +4,9 @@ from typing import Any, Dict, List, Optional, Tuple
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
     SourceArgumentRequired,
 )
 
@@ -41,40 +41,11 @@ ICON_MAP = {
     "vetro": "mdi:bottle-soda",
 }
 
-
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "You need to provide the street name and house number "
     "of your address, as well as the city.",
     "it": "Devi fornire il nome della via e il numero civico "
     "del tuo indirizzo, oltre alla città.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "The street name of your address in Milan (e.g., 'Via Monte Rosa').",
-        "house_number": "The house number of your address in Milan (e.g., '91').",
-        "city": "The city of your address (e.g., 'Milano').",
-    },
-    "it": {
-        "address": "Il nome della via del tuo indirizzo a Milano "
-        "(ad esempio, 'Via Monte Rosa').",
-        "house_number": "Il numero civico del tuo indirizzo a Milano "
-        "(ad esempio, '91').",
-        "city": "La città del tuo indirizzo (ad esempio, 'Milano').",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address",
-        "house_number": "House Number",
-        "city": "City",
-    },
-    "it": {
-        "address": "Indirizzo",
-        "house_number": "Numero Civico",
-        "city": "Città",
-    },
 }
 
 

@@ -1,0 +1,45 @@
+# Modelli di frase riutilizzabili in italiano con {placeholder}.
+# I nomi dei placeholder DEVONO corrispondere a quelli in en.yaml.
+# Controllato ortograficamente da pyspelling con il dizionario it_IT.
+---
+errors:
+  argument_not_found: >-
+    Nessun valore trovato per l'argomento '{argument}' con il valore
+    '{value}'.
+  argument_not_found_check_spelling: >-
+    Nessun valore trovato per l'argomento '{argument}' con il valore
+    '{value}'. Si prega di controllare l'ortografia e riprovare.
+  argument_not_found_no_suggestions: >-
+    Nessun valore trovato per l'argomento '{argument}' con il valore
+    '{value}'. Nessun suggerimento disponibile. Si prega di controllare anche
+    gli altri argomenti.
+  argument_not_found_with_suggestions: >-
+    Nessun valore trovato per l'argomento '{argument}' con il valore
+    '{value}'. È possibile utilizzare uno dei seguenti valori: {suggestions}.
+
+  argument_ambiguous: >-
+    Trovati più valori per l'argomento '{argument}' con il valore '{value}'.
+    Si prega di specificarne uno tra: {suggestions}.
+
+  argument_required: "L'argomento '{argument}' deve essere fornito."
+  argument_required_with_reason: >-
+    L'argomento '{argument}' deve essere fornito, {reason}.
+  argument_required_with_suggestions: >-
+    L'argomento '{argument}' deve essere fornito. È possibile utilizzare uno
+    dei seguenti valori: {suggestions}.
+  argument_required_with_reason_and_suggestions: >-
+    L'argomento '{argument}' deve essere fornito, {reason}. È possibile
+    utilizzare uno dei seguenti valori: {suggestions}.
+
+  fetch_failed: "Impossibile recuperare i dati da {provider}."
+  fetch_failed_status: >-
+    Impossibile recuperare i dati da {provider} (stato {status}).
+  fetch_returned_empty: "{provider} non ha restituito alcun dato di raccolta."
+  invalid_response: >-
+    La sorgente ha restituito una risposta non valida. Si prega di verificare
+    gli argomenti forniti e riprovare.
+
+help:
+  visit_to_find: "Visita {url} per cercare il tuo {field}."
+  visit_to_find_with_steps: >-
+    Visita {url} e segui i passaggi sullo schermo per trovare il tuo {field}.

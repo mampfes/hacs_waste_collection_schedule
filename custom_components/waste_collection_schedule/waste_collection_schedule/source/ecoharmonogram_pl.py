@@ -29,65 +29,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 GROUP_DESCRIPTION_EN = "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups."
 GROUP_DESCRIPTION_PL = "Wybierz grupę zbiórki, aby ograniczyć wyniki do konkretnej grupy w obrębie typu odpadów (np. 'Papier (1 x miesiąc)' dla papieru zbieranego raz w miesiącu). Pozostaw puste i wypełnij tylko wtedy, gdy wystąpi błąd, wtedy zobaczysz listę dostępnych grup."
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "town": "Town",
-        "street": "Street",
-        "house_number": "House number",
-        "district": "District",
-        "language": "Language",
-        "additional_sides_matcher": "Additional Sides Matcher",
-        "community": "Community",
-        "g1": "Group 1",
-        "g2": "Group 2",
-        "g3": "Group 3",
-        "g4": "Group 4",
-        "g5": "Group 5",
-    },
-    # "pl": {
-    #     "town": "Miasto",
-    #     "street": "Ulica",
-    #     "house_number": "Numer domu",
-    #     "district": "Dzielnica",
-    #     "additional_sides_matcher": "Matcher dodatkowych stron zbiórki",
-    #     "community": "Społeczność",
-    #     "g1": "Grupa 1",
-    #     "g2": "Grupa 2",
-    #     "g3": "Grupa 3",
-    #     "g4": "Grupa 4",
-    #     "g5": "Grupa 5",
-    # },
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "town": "Town",
-        "street": "Street",
-        "house_number": "House number",
-        "district": "District",
-        "language": "Language for waste type names (pl, en, uk, ru)",
-        "additional_sides_matcher": "Additional matcher for collection sides",
-        "community": "Community",
-        "g1": GROUP_DESCRIPTION_EN,
-        "g2": GROUP_DESCRIPTION_EN,
-        "g3": GROUP_DESCRIPTION_EN,
-        "g4": GROUP_DESCRIPTION_EN,
-        "g5": GROUP_DESCRIPTION_EN,
-    },
-    # "pl": {
-    #     "town": "Miasto",
-    #     "street": "Ulica",
-    #     "house_number": "Numer domu",
-    #     "district": "Dzielnica",
-    #     "additional_sides_matcher": "Dodatkowy matcher dla stron zbiórki",
-    #     "community": "Społeczność",
-    #     "g1": GROUP_DESCRIPTION_PL,
-    #     "g2": GROUP_DESCRIPTION_PL,
-    #     "g3": GROUP_DESCRIPTION_PL,
-    #     "g4": GROUP_DESCRIPTION_PL,
-    #     "g5": GROUP_DESCRIPTION_PL,
-    # },
-}
-
 
 # {"schedulePeriods":[{"id":"7059","startDate":"2025-01-01","endDate":"2025-03-31","changeDate":"2024-12-19 23:05:18"},{"id":"7946","startDate":"2025-04-01","endDate":"2025-10-31","changeDate":"2025-05-07 09:42:53"}]}
 
