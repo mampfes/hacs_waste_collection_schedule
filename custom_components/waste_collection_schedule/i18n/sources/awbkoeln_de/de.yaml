@@ -5,5 +5,3 @@
 params:
   building_number:
     label: Hausnummer
-  street_code:
-    label: Straßencode

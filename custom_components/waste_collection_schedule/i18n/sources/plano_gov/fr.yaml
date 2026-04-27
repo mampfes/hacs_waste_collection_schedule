@@ -6,5 +6,3 @@ params:
   days_to_generate:
     label: 'Nombre de jours à générer pour la collection par défaut (par défaut :
       3)'
-  object_id:
-    label: ID d'objet

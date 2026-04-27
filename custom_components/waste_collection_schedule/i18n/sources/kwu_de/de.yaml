@@ -5,5 +5,3 @@
 params:
   city:
     label: Ort
-  house_number:
-    label: Hausnummer

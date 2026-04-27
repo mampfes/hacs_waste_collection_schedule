@@ -1,0 +1,6 @@
+# Per-source overrides for ecoharmonogram_pl (fr).
+---
+params:
+  community:
+    description: Communauté de l'adresse.
+    label: Communauté

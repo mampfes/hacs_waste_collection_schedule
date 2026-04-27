@@ -6,5 +6,3 @@ params:
   days_to_generate:
     label: 'Anzahl der Tage, die für die Standardkollektion generiert werden sollen
       (Standard: 3)'
-  object_id:
-    label: Objekt-ID

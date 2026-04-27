@@ -1,15 +1,57 @@
 # Per-source overrides for umweltverbaende_at (en).
-# Initial content from scripts/migrate_i18n.py; the source file had two
-# PARAM_TRANSLATIONS dicts so this was completed by hand. ``zusatz`` in the
-# original dict has been renamed to ``addition`` to match the actual __init__
-# parameter name.
 ---
 params:
   address_suffix:
     label: Addition
+    description: >-
+      (New Website only) Not needed in most cases leave empty and only use if
+      you get an error without it.
+  calendar:
+    description: >-
+      (Old website only) If you see multiple collection calendars for your
+      municipality (different streets or Rayons), you can specify the calendar
+      name here. The calendar name should be spelt as it appears on the
+      Abholtermine page below `Kalenderansicht`.
   calendar_splitter:
     label: Calendar entry splitter
+    description: >-
+      (Old website only) rarely needed, only works if `calendar` is set. Only
+      needed if multiple collections are shown in one line. This is the
+      character that separates the collection times, that are listed in one
+      line. Like `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack` (`:` is the
+      separator). You can see the text the integration will use, at the
+      Abholtermine page below `Kalenderansicht`.
+  calendar_title_separator:
+    description: >-
+      (Old website only) rarely needed, only works if `calendar` is set. This
+      is the character that separates the calendar title from the collection
+      dates. Like `Tour 1: Restmüll` (`:` is the separator which is the default
+      value) or `Bisamberg Zone B, Restmüll 14-tägig` (`,` is the separator).
+      You can see the text the integration will use, at the Abholtermine page
+      below `Kalenderansicht`.
   district:
     label: District/Service provider id
+    description: >-
+      Subdomain of the waste collection provider; one of `baden`, `gmuend`,
+      `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`, `lilienfeld`,
+      `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`, `scheibbs`,
+      `schwechat`, `waidhofen`, `zwettl`.
+  house_number:
+    description: >-
+      (New Website only) Not needed in most cases leave empty and only use if
+      you get an error without it.
+  municipality:
+    description: Municipality name.
   postcode:
     label: Postal code
+    description: >-
+      (New Website only) Not needed in most cases leave empty and only use if
+      you get an error without it.
+  street:
+    description: >-
+      (New Website only) Not needed in most cases leave empty and only use if
+      you get an error without it.
+  town:
+    description: >-
+      (New Website only) Not needed in most cases leave empty and only use if
+      you get an error without it.

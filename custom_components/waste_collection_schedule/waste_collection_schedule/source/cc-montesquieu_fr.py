@@ -52,17 +52,6 @@ WEEKDAY_MAP = {
 
 BIN_TYPE_MAP = {"Bac d'ordures ménagères": "ordures", "Bac jaune": "recyclage"}
 
-# ### Arguments affecting the configuration GUI ####
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "municipality": "city of Montesquieu's community : " + ", ".join(COMMUNES),
-    },
-}
-
-# ### End of arguments affecting the configuration GUI ####
-
-
 class Source:
     def __init__(self, municipality: str):
         self.municipality = municipality

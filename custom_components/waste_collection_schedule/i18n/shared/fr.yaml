@@ -7,8 +7,10 @@ params:
     label: Adresse
   address_id:
     description: Identifiant de l'adresse.
+    label: ID d'adresse
   address_suffix:
     description: Suffixe de l'adresse (par ex. identifiant d'appartement ou d'unité).
+    label: Suffixe d'adresse
   api_key:
     label: Clé API
   area:
@@ -20,53 +22,57 @@ params:
     label: Numéro de bâtiment
   calendar:
     label: Calendrier
+  calendar_splitter:
+    description: Séparateur d'entrées de calendrier.
+    label: Séparateur de calendrier
   calendar_title:
     label: Titre du calendrier
+  calendar_title_separator:
+    description: Séparateur du titre du calendrier.
+    label: Séparateur de titre de calendrier
   city:
     description: Ville de l'adresse.
     label: Ville
-  city_id:
-    description: Identifiant de ville.
-    label: ID de ville
-  city_part:
-    description: Quartier de la ville.
-    label: Quartier de ville
-  community:
-    description: Communauté de l'adresse.
-    label: Communauté
-  council:
-    label: Conseil
-  county_id:
-    description: Identifiant de comté.
-    label: ID de comté
+  count:
+    description: Nombre.
+    label: Nombre
   customer:
     label: Client
   customer_number:
     description: Numéro de client.
+    label: Numéro de client
+  dates:
+    description: Dates.
+    label: Dates
   district:
     description: Quartier de l'adresse.
     label: District
-  district_id:
-    description: Identifiant de quartier.
-    label: ID de district
   email:
     label: E-mail
-  house_id:
-    description: Identifiant de maison de l'adresse.
-  house_letter:
-    description: Lettre de maison de l'adresse.
-    label: Lettre de maison
-  house_name:
-    description: Nom de la maison de l'adresse.
-    label: Nom de maison
+  excludes:
+    description: Exclusions.
+    label: Exclusions
+  file:
+    description: Fichier.
+    label: Fichier
+  frequency:
+    description: Fréquence.
+    label: Fréquence
   house_number:
     description: Numéro de maison de l'adresse.
     label: Numéro civique
   house_number_id:
     description: Identifiant du numéro de maison.
+    label: ID de numéro de maison
   house_number_or_name:
     description: Numéro ou nom de la maison de l'adresse.
     label: Numéro civique
+  id:
+    description: Identifiant.
+    label: ID
+  interval:
+    description: Intervalle.
+    label: Intervalle
   lat:
     label: Latitude
   location:
@@ -85,10 +91,12 @@ params:
   municipality_id:
     description: Identifiant de municipalité.
     label: ID de municipalité
-  number:
-    label: Numéro
+  name:
+    description: Nom.
+    label: Nom
   object_id:
     description: Identifiant d'objet.
+    label: ID d'objet
   params:
     label: Paramètres
   password:
@@ -98,26 +106,27 @@ params:
   postcode:
     description: Code postal de l'adresse.
     label: Code postal
+  predict:
+    description: Prévision.
+    label: Prévision
   premises_id:
     description: Identifiant des locaux.
+    label: ID des locaux
   property_id:
     description: Identifiant de propriété.
     label: ID de propriété
-  radius:
-    label: Rayon
   region:
     description: Région de l'adresse.
     label: Région
-  registration_number:
-    description: Numéro d'immatriculation.
   sector:
     label: Secteur
   service:
     label: Service
-  service_id:
-    label: ID de service
   service_provider:
     label: Fournisseur de services
+  start:
+    description: Début.
+    label: Début
   state:
     description: État de l'adresse.
     label: État
@@ -136,18 +145,20 @@ params:
   street_name:
     description: Nom de la rue de l'adresse.
     label: Nom de rue
-  street_number:
-    description: Numéro de rue de l'adresse.
-    label: Numéro de rue
   subdomain:
     label: Sous-domaine
   suburb:
     description: Banlieue de l'adresse.
+    label: Banlieue
   town:
     description: Ville de l'adresse.
     label: Ville
   unit_number:
     description: Numéro d'unité de l'adresse.
+    label: Numéro d'unité
+  until:
+    description: Jusqu'à.
+    label: Jusqu'à
   uprn:
     description: Une manière simple de retrouver votre numéro unique de propriété
       (UPRN) est de vous rendre sur https://www.findmyaddress.co.uk/ et de saisir
@@ -159,11 +170,17 @@ params:
     label: Nom d'utilisateur
   values:
     label: Valeurs
+  verify_ssl:
+    description: Vérifier le certificat SSL.
+    label: Vérifier SSL
   version:
     label: Version
-  village:
-    description: Village de l'adresse.
-    label: Village
+  waste_types:
+    description: Types de déchets.
+    label: Types de déchets
+  weekdays:
+    description: Jours de la semaine.
+    label: Jours de la semaine
   zip_code:
     description: Code ZIP de l'adresse.
     label: Code postal

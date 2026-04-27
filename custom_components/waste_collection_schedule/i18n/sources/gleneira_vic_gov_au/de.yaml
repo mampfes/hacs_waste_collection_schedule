@@ -6,4 +6,3 @@ params:
   street_address:
     description: Vollständige Straßenadresse einschließlich Stadtteil, Bundesland
       und Postleitzahl ohne Trennzeichen.
-    label: Straßenadresse

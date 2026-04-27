@@ -1,0 +1,21 @@
+# Per-source overrides for rybnik_pl (en).
+---
+params:
+  district:
+    description: >-
+      The district / area group name (determines which PDF is downloaded).
+      Must be one of: Boguszowice Stare, Chwalowice / Boguszowice Os. /
+      Klokocin, Gotartowice, Grabownia / Golejow / Ochojec, Ligota,
+      Maroko-Nowiny, Niedobczyce, Niewiadom, Orzepowice / Stodoly /
+      Chwalecice, Paruszowiec / Kamien, Polnoc, Radziejow / Popielow,
+      Smolna / Zamyslow / Meksyk, Srodmiescie / Wielopole / Kuznia,
+      Zebrzydowice.
+  sub_district:
+    description: >-
+      The Rejon (zone) name as shown in the leftmost column of the PDF
+      schedule table (e.g. 'Paruszowiec-Piaski', 'Kamień 1', 'Kamień 2').
+      Leave blank to return all zones in the district.
+  property_type:
+    description: >-
+      Type of property. One of: 'residential' (zamieszkałe, default),
+      'commercial' (firmy/niezamieszkałe).

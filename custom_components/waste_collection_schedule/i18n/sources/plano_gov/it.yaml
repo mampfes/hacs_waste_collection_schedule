@@ -6,5 +6,3 @@ params:
   days_to_generate:
     label: 'Numero di giorni da generare per la collezione predefinita (predefinito:
       3)'
-  object_id:
-    label: ID oggetto

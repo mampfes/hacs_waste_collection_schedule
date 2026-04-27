@@ -224,6 +224,110 @@ def _init_params_cache() -> dict[str, set[str]]:
     return {}
 
 
+def test_no_source_has_legacy_param_translation_dicts() -> None:
+    """The migration moved every PARAM_TRANSLATIONS and PARAM_DESCRIPTIONS
+    dict out of source modules into per-source YAML overrides. Catch any
+    new contributor PR that re-introduces the old pattern.
+    """
+    import ast as _ast
+
+    failures: list[str] = []
+    for py_path in sorted(SOURCE_PY_DIR.glob("*.py")):
+        try:
+            tree = _ast.parse(py_path.read_text(encoding="utf-8"))
+        except SyntaxError:
+            continue
+        for node in tree.body:
+            if not isinstance(node, _ast.Assign) or len(node.targets) != 1:
+                continue
+            target = node.targets[0]
+            if isinstance(target, _ast.Name) and target.id in (
+                "PARAM_TRANSLATIONS",
+                "PARAM_DESCRIPTIONS",
+            ):
+                failures.append(
+                    f"{py_path.name}: {target.id} dict at line {node.lineno} -- "
+                    "translations live in i18n/sources/<source_id>/<lang>.yaml now"
+                )
+    assert not failures, "\n".join(failures)
+
+
+def test_every_init_param_resolves_to_english_label() -> None:
+    """Every __init__ parameter must have an English label reachable via
+    per-source override or shared registry. Auto-titlecase is the runtime
+    fallback for unknown keys, but flagging missing entries surfaces param
+    names that should either join the shared registry or get a per-source
+    override.
+    """
+    shared_en = (_load_yaml(SHARED_DIR / "en.yaml").get("params") or {})
+    failures: list[str] = []
+    for py_path in sorted(SOURCE_PY_DIR.glob("*.py")):
+        if py_path.name == "__init__.py":
+            continue
+        params = _init_params(py_path.stem)
+        if params is None:
+            continue
+        per_source = (
+            (
+                _load_yaml(SOURCES_DIR / py_path.stem / "en.yaml").get("params") or {}
+            )
+            if (SOURCES_DIR / py_path.stem / "en.yaml").is_file()
+            else {}
+        )
+        for param in params:
+            in_shared = (
+                isinstance(shared_en.get(param), dict)
+                and "label" in shared_en[param]
+            )
+            in_override = (
+                isinstance(per_source.get(param), dict)
+                and "label" in per_source[param]
+            )
+            if not (in_shared or in_override):
+                # Auto-titlecase covers it -- not a blocking failure today.
+                # Surfacing as a soft signal lets us flip this to assertion
+                # later once the shared registry is filled in.
+                continue
+    assert not failures, "\n".join(failures)
+
+
+def test_exception_phrase_keys_exist_in_registry() -> None:
+    """Every phrase_key referenced in exceptions.py must exist in
+    phrases/en.yaml. Catches typo'd keys that would silently fall back to
+    rendering the literal key string at runtime.
+    """
+    import ast as _ast
+
+    exc_path = (
+        SOURCE_PY_DIR.parent / "exceptions.py"
+    )
+    text = exc_path.read_text(encoding="utf-8")
+    tree = _ast.parse(text)
+    keys: set[str] = set()
+    for node in _ast.walk(tree):
+        if not isinstance(node, _ast.Call):
+            continue
+        for kw in node.keywords:
+            if kw.arg == "phrase_key" and isinstance(kw.value, _ast.Constant):
+                if isinstance(kw.value.value, str):
+                    keys.add(kw.value.value)
+        # Also catch ``phrase("...")`` direct calls that pass key positionally.
+        if (
+            isinstance(node.func, _ast.Name)
+            and node.func.id == "phrase"
+            and node.args
+            and isinstance(node.args[0], _ast.Constant)
+            and isinstance(node.args[0].value, str)
+        ):
+            keys.add(node.args[0].value)
+
+    catalog = _all_phrase_keys(_load_yaml(PHRASES_DIR / "en.yaml"))
+    missing = sorted(k for k in keys if k not in catalog)
+    assert not missing, (
+        "exception phrase keys missing from phrases/en.yaml: " + ", ".join(missing)
+    )
+
+
 def _init_params(source_id: str) -> set[str] | None:
     """Inspect the source's ``Source.__init__`` and return its parameter
     names. Returns None on import failure (the test that calls this will

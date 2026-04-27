@@ -1,0 +1,6 @@
+# Per-source overrides for mestorudna_cz (fr).
+---
+params:
+  city_part:
+    description: Quartier de la ville.
+    label: Quartier de ville

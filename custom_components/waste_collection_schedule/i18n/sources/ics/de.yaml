@@ -3,14 +3,10 @@
 # and PARAM_DESCRIPTIONS dicts. Edit freely.
 ---
 params:
-  file:
-    label: Datei
   headers:
     label: Headers
   offset:
     label: Offset
-  params:
-    label: Parameter
   regex:
     label: Regulärer Ausdruck
   split_at:

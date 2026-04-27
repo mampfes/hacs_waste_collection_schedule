@@ -1,0 +1,6 @@
+# Per-source overrides for staedteservice_de (it).
+---
+params:
+  street_number:
+    description: Numero civico della via.
+    label: Numero Strada

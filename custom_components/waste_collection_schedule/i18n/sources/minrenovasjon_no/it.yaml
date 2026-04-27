@@ -1,0 +1,6 @@
+# Per-source overrides for minrenovasjon_no (it).
+---
+params:
+  county_id:
+    description: Identificatore di contea.
+    label: ID Paese

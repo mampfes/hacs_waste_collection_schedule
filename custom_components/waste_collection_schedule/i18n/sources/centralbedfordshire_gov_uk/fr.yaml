@@ -1,0 +1,6 @@
+# Per-source overrides for centralbedfordshire_gov_uk (fr).
+---
+params:
+  house_name:
+    description: Nom de la maison de l'adresse.
+    label: Nom de maison

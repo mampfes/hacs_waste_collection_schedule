@@ -81,24 +81,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     ),
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "district": (
-            "The district / area group name (determines which PDF is downloaded). "
-            f"Must be one of: {', '.join(DISTRICT_MAP.keys())}."
-        ),
-        "sub_district": (
-            "The Rejon (zone) name as shown in the leftmost column of the PDF schedule table "
-            "(e.g. 'Paruszowiec-Piaski', 'Kamień 1', 'Kamień 2'). "
-            "Leave blank to return all zones in the district."
-        ),
-        "property_type": (
-            "Type of property. One of: 'residential' (zamieszkałe, default), "
-            "'commercial' (firmy/niezamieszkałe)."
-        ),
-    },
-}
-
 # Matches a waste-type row: keyword followed by exactly 12 month columns of digits/semicolons.
 _ROW_RE = re.compile(r"(ZMIESZANE|SEGREGOWANE|BIODEGRADOWALNE)" r"((?:\s+[\d;]+){12})")
 

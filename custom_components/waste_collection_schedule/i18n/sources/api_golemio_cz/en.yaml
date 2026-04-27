@@ -1,0 +1,7 @@
+# Per-source overrides for api_golemio_cz (en).
+---
+params:
+  ignored_containers:
+    label: Ignored Containers
+  radius:
+    label: Radius

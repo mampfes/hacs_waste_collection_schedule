@@ -7,53 +7,75 @@ params:
     label: Adresse
   address_id:
     description: Adresskennung.
+    label: Adress-ID
   address_suffix:
     description: Adresszusatz (z. B. Wohnungs- oder Einheitskennung).
+    label: Adresszusatz
+  api_key:
+    description: API-Schlüssel.
+    label: API-Schlüssel
   area:
     label: Gebiet
   bill_number:
     label: Rechnungsnummer
   building_number:
     description: Gebäudenummer der Adresse.
+    label: Gebäudenummer
+  calendar:
+    description: Kalender.
+    label: Kalender
+  calendar_splitter:
+    description: Trennzeichen für Kalendereinträge.
+    label: Kalender-Trenner
+  calendar_title:
+    description: Titel des Kalenders.
+    label: Kalendertitel
+  calendar_title_separator:
+    description: Trennzeichen für den Kalendertitel.
+    label: Kalendertitel-Trenner
   city:
     description: Stadt der Adresse.
     label: Stadt
-  city_id:
-    description: Stadtkennung.
-    label: Stadt ID
-  city_part:
-    description: Stadtteil.
-  community:
-    description: Gemeinschaft der Adresse.
-    label: Gemeinde
-  county_id:
-    description: Landkreiskennung.
+  count:
+    description: Anzahl.
+    label: Anzahl
   customer:
     label: Kunde
   customer_number:
     description: Kundennummer.
+    label: Kundennummer
+  dates:
+    description: Daten.
+    label: Daten
   district:
     description: Bezirk der Adresse.
     label: Bezirk
-  district_id:
-    description: Bezirkskennung.
   email:
     label: E-Mail
-  house_id:
-    description: Hauskennung der Adresse.
-  house_letter:
-    description: Hausbuchstabe der Adresse.
-  house_name:
-    description: Hausname der Adresse.
-    label: Hausname
+  excludes:
+    description: Ausschlüsse.
+    label: Ausschlüsse
+  file:
+    description: Datei.
+    label: Datei
+  frequency:
+    description: Häufigkeit.
+    label: Häufigkeit
   house_number:
     description: Hausnummer der Adresse.
     label: Hausnummer
   house_number_id:
     description: Hausnummernkennung.
+    label: Hausnummern-ID
   house_number_or_name:
     description: Hausnummer oder -name der Adresse.
     label: Hausnummer oder Name
+  id:
+    description: Kennung.
+    label: ID
+  interval:
+    description: Intervall.
+    label: Intervall
   lat:
     label: Breitengrad
   location:
@@ -61,6 +83,7 @@ params:
     label: Position
   location_id:
     description: Standortkennung.
+    label: Standort-ID
   lon:
     label: Längengrad
   method:
@@ -70,10 +93,16 @@ params:
     label: Gemeinde
   municipality_id:
     description: Gemeindekennung.
-  number:
-    label: Nummer
+    label: Gemeinde-ID
+  name:
+    description: Name.
+    label: Name
   object_id:
     description: Objektkennung.
+    label: Objekt-ID
+  params:
+    description: Parameter.
+    label: Parameter
   password:
     label: Passwort
   phone:
@@ -81,40 +110,62 @@ params:
   postcode:
     description: Postleitzahl der Adresse.
     label: PLZ
+  predict:
+    description: Vorhersage.
+    label: Vorhersage
   premises_id:
     description: Grundstückskennung.
+    label: Grundstücks-ID
   property_id:
     description: Grundstückskennung.
+    label: Grundstücks-ID
   region:
     description: Region der Adresse.
-  registration_number:
-    description: Registrierungsnummer.
+    label: Region
+  sector:
+    description: Sektor.
+    label: Sektor
+  service:
+    description: Dienst.
+    label: Dienst
+  service_provider:
+    description: Dienstanbieter.
+    label: Dienstanbieter
+  start:
+    description: Start.
+    label: Start
   state:
     description: Bundesland der Adresse.
+    label: Bundesland
   street:
     description: Straße der Adresse.
     label: Straße
   street_address:
     description: Vollständige Straßenadresse.
+    label: Straßenadresse
   street_code:
     description: Straßencode der Adresse.
+    label: Straßencode
   street_id:
     description: Straßenkennung der Adresse.
     label: Straßen ID
   street_name:
     description: Straßenname der Adresse.
     label: Straßenname
-  street_number:
-    description: Hausnummer der Adresse.
   subdomain:
     label: Subdomain
   suburb:
     description: Vorort der Adresse.
+    label: Vorort
   town:
     description: Ort der Adresse.
     label: Stadt
   unit_number:
     description: Wohnungsnummer der Adresse.
+    label: Wohnungsnummer
+  until:
+    description: Bis.
+    label: Bis
   uprn:
     description: Eine einfache Möglichkeit, Ihre Unique Property Reference Number
       (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen
@@ -126,13 +177,22 @@ params:
     label: Benutzername
   values:
     label: Werte
+  verify_ssl:
+    description: SSL-Zertifikat überprüfen.
+    label: SSL überprüfen
   version:
     label: Version
-  village:
-    description: Dorf der Adresse.
-    label: Ort
+  waste_types:
+    description: Abfallarten.
+    label: Abfallarten
+  weekdays:
+    description: Wochentage.
+    label: Wochentage
   zip_code:
     description: ZIP-Code der Adresse.
     label: PLZ
   zone:
     label: Zone
+  zone_id:
+    description: Zonenkennung.
+    label: Zonen-ID

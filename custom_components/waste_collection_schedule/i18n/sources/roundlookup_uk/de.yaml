@@ -1,0 +1,5 @@
+# Per-source overrides for roundlookup_uk (de).
+---
+params:
+  council:
+    label: Gemeinderat

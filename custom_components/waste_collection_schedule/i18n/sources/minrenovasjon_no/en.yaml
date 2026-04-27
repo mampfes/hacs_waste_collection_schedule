@@ -1,0 +1,6 @@
+# Per-source overrides for minrenovasjon_no (en).
+---
+params:
+  county_id:
+    description: County identifier of the property.
+    label: County ID

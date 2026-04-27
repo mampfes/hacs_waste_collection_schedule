@@ -1,0 +1,6 @@
+# Per-source overrides for ks_boerde_de (it).
+---
+params:
+  village:
+    description: Villaggio dell'indirizzo.
+    label: Villaggio

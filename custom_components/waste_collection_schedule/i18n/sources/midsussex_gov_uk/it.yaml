@@ -1,0 +1,5 @@
+# Per-source overrides for midsussex_gov_uk (it).
+---
+params:
+  number:
+    label: Numero

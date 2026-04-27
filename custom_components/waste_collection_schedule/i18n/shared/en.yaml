@@ -16,71 +16,59 @@ params:
     description: Address suffix (e.g. flat or unit identifier).
     label: Address Suffix
   api_key:
+    description: API key.
     label: API Key
   area:
+    description: Area.
     label: Area
   bill_number:
+    description: Bill number.
     label: Bill Number
   building_number:
     description: Building number of the property.
     label: Building Number
   calendar:
+    description: Calendar identifier.
     label: Calendar
   calendar_splitter:
+    description: Character separating multiple collections in a single line.
     label: Calendar Splitter
   calendar_title:
+    description: Title of the calendar.
     label: Calendar Title
   calendar_title_separator:
+    description: Character separating the calendar title from collection dates.
     label: Calendar Title Separator
   city:
     description: City of the property.
     label: City
-  city_id:
-    description: City identifier.
-    label: City ID
-  city_part:
-    description: Part of the city.
-    label: City Part
-  community:
-    description: Community of the property.
-    label: Community
-  council:
-    label: Council
   count:
+    description: Count of items.
     label: Count
-  county_id:
-    description: County identifier of the property.
-    label: County ID
   customer:
+    description: Customer name.
     label: Customer
   customer_number:
     description: Customer number.
     label: Customer Number
   dates:
+    description: Collection dates.
     label: Dates
   district:
     description: District of the property.
     label: District
-  district_id:
-    description: District identifier.
-    label: District ID
   email:
+    description: Email address.
     label: Email
   excludes:
+    description: Items to exclude.
     label: Excludes
   file:
+    description: File path.
     label: File
   frequency:
+    description: Collection frequency.
     label: Frequency
-  house_id:
-    description: House identifier of the property.
-    label: House ID
-  house_letter:
-    description: House letter of the property.
-    label: House Letter
-  house_name:
-    description: House name of the property.
-    label: House Name
   house_number:
     description: House number of the property.
     label: House Number
@@ -91,12 +79,13 @@ params:
     description: House number or name of the property.
     label: House Number or Name
   id:
+    description: Identifier.
     label: ID
-  ignored_containers:
-    label: Ignored Containers
   interval:
+    description: Interval between collections.
     label: Interval
   lat:
+    description: Latitude.
     label: Latitude
   location:
     description: Geographic location.
@@ -105,8 +94,10 @@ params:
     description: Location identifier.
     label: Location ID
   lon:
+    description: Longitude.
     label: Longitude
   method:
+    description: Method.
     label: Method
   municipality:
     description: Municipality of the property.
@@ -115,48 +106,46 @@ params:
     description: Municipality identifier.
     label: Municipality ID
   name:
+    description: Name.
     label: Name
-  number:
-    label: Number
   object_id:
     description: Object identifier.
     label: Object ID
   params:
+    description: Parameters.
     label: Parameters
   password:
+    description: Password.
     label: Password
   phone:
+    description: Phone number.
     label: Phone
   postcode:
     description: Postcode of the property.
     label: Postcode
   predict:
+    description: Whether to predict future collections.
     label: Predict
   premises_id:
     description: Premises identifier.
     label: Premises ID
-  project_id:
-    label: Project ID
   property_id:
     description: Property identifier.
     label: Property ID
-  radius:
-    label: Radius
   region:
     description: Region of the property.
     label: Region
-  registration_number:
-    description: Registration number.
-    label: Registration Number
   sector:
+    description: Sector.
     label: Sector
   service:
+    description: Service.
     label: Service
-  service_id:
-    label: Service ID
   service_provider:
+    description: Waste collection service provider.
     label: Service Provider
   start:
+    description: Start date.
     label: Start
   state:
     description: State of the property.
@@ -176,9 +165,6 @@ params:
   street_name:
     description: Street name of the property.
     label: Street Name
-  street_number:
-    description: Street number of the property.
-    label: Street Number
   suburb:
     description: Suburb of the property.
     label: Suburb
@@ -189,6 +175,7 @@ params:
     description: Unit number of the property.
     label: Unit Number
   until:
+    description: End date.
     label: Until
   uprn:
     description: An easy way to discover your Unique Property Reference Number (UPRN)
@@ -196,26 +183,32 @@ params:
       details.
     label: UPRN
   url:
+    description: URL.
     label: URL
   username:
+    description: Username.
     label: Username
   values:
+    description: Values.
     label: Values
   verify_ssl:
+    description: Whether to verify the SSL certificate.
     label: Verify SSL
   version:
+    description: Version.
     label: Version
-  village:
-    description: Village of the property.
-    label: Village
   waste_types:
+    description: Types of waste collected.
     label: Waste Types
   weekdays:
+    description: Weekdays.
     label: Weekdays
   zip_code:
     description: ZIP code of the property.
     label: ZIP Code
   zone:
+    description: Collection zone.
     label: Zone
   zone_id:
+    description: Zone identifier.
     label: Zone ID

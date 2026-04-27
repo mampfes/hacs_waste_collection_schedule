@@ -1,0 +1,6 @@
+# Per-source overrides for staedteservice_de (de).
+---
+params:
+  street_number:
+    description: Hausnummer der Adresse.
+    label: Hausnummer

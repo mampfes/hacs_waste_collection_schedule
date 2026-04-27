@@ -1,0 +1,6 @@
+# Per-source overrides for croydon_gov_uk (de).
+---
+params:
+  house_id:
+    description: Hauskennung der Adresse.
+    label: Haus-ID

@@ -1,0 +1,5 @@
+# Per-source overrides for roundlookup_uk (it).
+---
+params:
+  council:
+    label: Consiglio

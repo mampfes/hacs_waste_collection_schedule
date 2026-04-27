@@ -675,6 +675,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         await self.async_set_unique_id(source + json.dumps(args_input))
         self._abort_if_unique_id_configured()
 
+        ui_lang = self.hass.config.language
+
         try:
             instance = await self.hass.async_add_executor_job(
                 self._get_source_instance, module, args_input
@@ -687,6 +689,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if len(resp) == 0:
                 errors["base"] = "fetch_empty"
             self._fetched_types = list({x.type.strip() for x in resp})
+        # Resolve translated exception messages in the user's HA UI language.
+        # The exception classes carry phrase_key + placeholder data;
+        # .render(lang) resolves through i18n/phrases/<lang>.yaml and falls
+        # back to English when a phrase is missing for that language.
         except SourceArgumentSuggestionsExceptionBase as e:
             if not hasattr(self, "_error_suggestions"):
                 self._error_suggestions = {}
@@ -694,15 +700,15 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             errors[e.argument] = "invalid_arg"
             description_placeholders["invalid_arg_message"] = e.simple_message
             if e.suggestion_type != str and e.suggestion_type != int:
-                description_placeholders["invalid_arg_message"] = e.message
+                description_placeholders["invalid_arg_message"] = e.render(ui_lang)
         except SourceArgumentRequired as e:
             errors[e.argument] = "invalid_arg"
-            description_placeholders["invalid_arg_message"] = e.message
+            description_placeholders["invalid_arg_message"] = e.render(ui_lang)
         except SourceArgumentException as e:
             errors[e.argument] = "invalid_arg"
-            description_placeholders["invalid_arg_message"] = e.message
+            description_placeholders["invalid_arg_message"] = e.render(ui_lang)
         except SourceArgumentExceptionMultiple as e:
-            description_placeholders["invalid_arg_message"] = e.message
+            description_placeholders["invalid_arg_message"] = e.render(ui_lang)
             if len(e.arguments) == 0:
                 errors["base"] = "invalid_arg"
             else:

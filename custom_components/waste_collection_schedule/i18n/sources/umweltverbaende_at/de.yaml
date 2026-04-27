@@ -1,19 +1,58 @@
 # Per-source overrides for umweltverbaende_at (de).
-# Initial content from scripts/migrate_i18n.py; the source file had two
-# PARAM_TRANSLATIONS dicts so this was completed by hand. ``zusatz`` in the
-# original dict has been renamed to ``addition`` to match the actual __init__
-# parameter name.
 ---
 params:
   calendar:
-    label: Kalender
+    description: >-
+      (Alte Website) Wenn mehrere Abfallkalender für Ihre Gemeinde angezeigt
+      werden (unterschiedliche Straßen oder Rayons), können Sie hier den
+      Kalendernamen angeben. Der Kalendername sollte so geschrieben sein, wie
+      er auf der Abholtermine-Seite unter `Kalenderansicht` erscheint.
   calendar_splitter:
     label: Kalendereintrag-Trenner
+    description: >-
+      (Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Nur
+      erforderlich, wenn mehrere Sammlungen in einer Zeile angezeigt werden.
+      Dies ist das Zeichen, das die Sammelzeiten trennt, die in einer Zeile
+      aufgeführt sind. Wie `Bisamberg Zone B, Restmüll 14-tägig: Gelber Sack`
+      (`:` ist der Trenner). Sie können den Text, den die Integration
+      verwendet, auf der Abholtermine-Seite unter `Kalenderansicht` sehen.
   calendar_title_separator:
     label: Kalendertitel Separator
+    description: >-
+      (Alte Website) selten benötigt, nur wenn `calendar` gesetzt ist. Dies ist
+      das Zeichen, das den Kalendertitel von den Abholterminen trennt. Wie
+      `Tour 1: Restmüll` (`:` ist der Trenner, der Standardwert) oder
+      `Bisamberg Zone B, Restmüll 14-tägig` (`,` ist der Trenner). Sie können
+      den Text, den die Integration verwendet, auf der Abholtermine-Seite
+      unter `Kalenderansicht` sehen.
   district:
     label: Gebiet/Service provider id
+    description: >-
+      Subdomain des Abfallwirtschaftsverbandes, einer von `baden`, `gmuend`,
+      `gaenserndorf`, `hollabrunn`, `horn`, `korneuburg`, `krems`,
+      `lilienfeld`, `laa`, `moedling`, `melk`, `mistelbach`, `stpoeltenland`,
+      `scheibbs`, `schwechat`, `waidhofen`, `zwettl`.
+  address_suffix:
+    description: >-
+      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+      wenn ein Fehler ohne diese Angabe auftritt.
+  house_number:
+    description: >-
+      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+      wenn ein Fehler ohne diese Angabe auftritt.
+  municipality:
+    description: Gemeindename.
   postcode:
     label: Postleitzahl
+    description: >-
+      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+      wenn ein Fehler ohne diese Angabe auftritt.
+  street:
+    description: >-
+      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+      wenn ein Fehler ohne diese Angabe auftritt.
   town:
     label: Ort
+    description: >-
+      (Neue Website) In den meisten Fällen nicht notwendig, nur verwenden,
+      wenn ein Fehler ohne diese Angabe auftritt.

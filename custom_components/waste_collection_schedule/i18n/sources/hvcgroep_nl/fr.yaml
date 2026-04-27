@@ -1,0 +1,6 @@
+# Per-source overrides for hvcgroep_nl (fr).
+---
+params:
+  house_letter:
+    description: Lettre de maison de l'adresse.
+    label: Lettre de maison

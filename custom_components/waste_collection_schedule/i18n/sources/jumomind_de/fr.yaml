@@ -1,0 +1,8 @@
+# Per-source overrides for jumomind_de (fr).
+---
+params:
+  city_id:
+    description: Identifiant de ville.
+    label: ID de ville
+  service_id:
+    label: ID de service
