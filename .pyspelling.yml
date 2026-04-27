@@ -28,15 +28,20 @@ matrix:
         - .spelling/en.wordlist
       output: build/dictionary/en.dic
     pipeline:
-      - pyspelling.filters.text:
-      - pyspelling.filters.url:
       - pyspelling.filters.context:
           context_visible_first: true
           escapes: '\\[\\`]'
           delimiters:
+            # strip YAML comment lines (# ... to end-of-line) -- the
+            # auto-generated header comments in per-source override files
+            # are English regardless of the per-language dictionary used.
+            - open: '(?m)^\s*#'
+              close: '$'
             # strip {placeholders} so format strings don't tank the check
             - open: '\{'
               close: '\}'
+      - pyspelling.filters.text:
+      - pyspelling.filters.url:
 
   # ------------------------------------------------------------------ DE
   - name: shared-de
@@ -51,14 +56,16 @@ matrix:
         - .spelling/de.wordlist
       output: build/dictionary/de.dic
     pipeline:
-      - pyspelling.filters.text:
-      - pyspelling.filters.url:
       - pyspelling.filters.context:
           context_visible_first: true
           escapes: '\\[\\`]'
           delimiters:
+            - open: '(?m)^\s*#'
+              close: '$'
             - open: '\{'
               close: '\}'
+      - pyspelling.filters.text:
+      - pyspelling.filters.url:
 
   # ------------------------------------------------------------------ FR
   - name: shared-fr
@@ -73,14 +80,16 @@ matrix:
         - .spelling/fr.wordlist
       output: build/dictionary/fr.dic
     pipeline:
-      - pyspelling.filters.text:
-      - pyspelling.filters.url:
       - pyspelling.filters.context:
           context_visible_first: true
           escapes: '\\[\\`]'
           delimiters:
+            - open: '(?m)^\s*#'
+              close: '$'
             - open: '\{'
               close: '\}'
+      - pyspelling.filters.text:
+      - pyspelling.filters.url:
 
   # ------------------------------------------------------------------ IT
   - name: shared-it
@@ -95,14 +104,16 @@ matrix:
         - .spelling/it.wordlist
       output: build/dictionary/it.dic
     pipeline:
-      - pyspelling.filters.text:
-      - pyspelling.filters.url:
       - pyspelling.filters.context:
           context_visible_first: true
           escapes: '\\[\\`]'
           delimiters:
+            - open: '(?m)^\s*#'
+              close: '$'
             - open: '\{'
               close: '\}'
+      - pyspelling.filters.text:
+      - pyspelling.filters.url:
 
 # TITLE / DESCRIPTION / EXTRA_INFO[].title strings are not spell-checked.
 # They're dominated by provider names ("AMSA", "Iren Ambiente"), place
