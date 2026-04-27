@@ -123,13 +123,30 @@ Adding a new shared error pattern:
 
 ## Spell checking
 
-`pyspelling -c .pyspelling.yml` runs in CI and pairs each language's
-catalog with the matching hunspell dictionary
+`pyspelling -c .pyspelling.yml` runs in CI as a **non-blocking** report
+and pairs each language's catalog with the matching hunspell dictionary
 (`hunspell-en-us` / `hunspell-de-de` / `hunspell-fr` / `hunspell-it`).
 
-If hunspell flags a legitimate-but-unknown term (place names, council
-acronyms, source-specific jargon), add it to the matching wordlist in
-`.spelling/<lang>.wordlist`.
+The report is non-blocking because the catalogs contain a long tail of
+legitimate-but-unrecognised tokens — compound German words
+("Hausnummerzusatz"), place names ("Aberdeenshire", "Mérignac"),
+provider acronyms ("AHE", "ABK"), and source-specific jargon. Treating
+every hunspell flag as a hard failure would either need a
+multi-thousand-entry wordlist or would block contributors on noise.
+
+Add genuinely common project terms to `.spelling/<lang>.wordlist`. For
+one-off place names that only appear in a single source's overrides,
+it's usually fine to leave them flagged in the report and rely on
+review.
+
+To run the spell-check locally on Linux:
+
+```bash
+sudo apt-get install -y hunspell hunspell-en-us hunspell-de-de \
+                        hunspell-fr hunspell-it
+pip install pyspelling
+pyspelling -c .pyspelling.yml
+```
 
 ## Tests (`tests/test_i18n.py`)
 

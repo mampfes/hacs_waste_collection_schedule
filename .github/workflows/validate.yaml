@@ -42,5 +42,12 @@ jobs:
         run: |
           pytest
       - name: Spell-check i18n catalogs (per-language)
+        # Non-blocking: hunspell flags many legitimate compound German
+        # words, place names, provider acronyms, and source-specific
+        # jargon. Maintaining an exhaustive wordlist is high-effort and
+        # the false-positive rate would mask real typos. Treat the
+        # output as a report; contributors and reviewers can use it to
+        # spot issues without blocking the build.
+        continue-on-error: true
         run: |
           pyspelling -c .pyspelling.yml
