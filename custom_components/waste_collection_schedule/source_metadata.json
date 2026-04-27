@@ -653,7 +653,7 @@
   "umweltverbaende_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/umweltverbaende_at.md",
     "howto": {
-      "de": "Es werden zwei Arten von Websites unterstützt: Die alte: Hellblaue Kopfzeile mit grünen Schaltflächen. Und eine neue: Dunkelblaue Kopfzeile mit nur blauen Akzentelementen. Befolgen Sie die Beschreibungen der Attribute entsprechend Ihrem Website-Typ.",
+      "de": "Es werden zwei Arten von Websites unterst\u00fctzt: Die alte: Hellblaue Kopfzeile mit gr\u00fcnen Schaltfl\u00e4chen. Und eine neue: Dunkelblaue Kopfzeile mit nur blauen Akzentelementen. Befolgen Sie die Beschreibungen der Attribute entsprechend Ihrem Website-Typ.",
       "en": "There are two kinds of websites supported: The old one: Light blue header with green buttons. And a new one Dark blue header with only Blue accent elements. Follow the descriptions of the attributes according to your website type."
     },
     "urls": {}
@@ -668,7 +668,7 @@
   "abfall_wiener_neustadt_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_wiener_neustadt_at.md",
     "howto": {
-      "de": "Besuchen Sie die Website https://abfall.wiener-neustadt.at/ und wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie sich Ihren Straßennamen und wählen Sie die Abfuhrhäufigkeit, die für Ihre Adresse gilt.",
+      "de": "Besuchen Sie die Website https://abfall.wiener-neustadt.at/ und w\u00e4hlen Sie Ihre Stra\u00dfe aus dem Dropdown-Men\u00fc. Notieren Sie sich Ihren Stra\u00dfennamen und w\u00e4hlen Sie die Abfuhrh\u00e4ufigkeit, die f\u00fcr Ihre Adresse gilt.",
       "en": "Visit the website https://abfall.wiener-neustadt.at/ and select your street from the dropdown menu. Note your street name and select the waste collection frequency that applies to your address."
     },
     "urls": {}
@@ -681,16 +681,16 @@
   "ics_muellapp_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/muellapp_com.md",
     "howto": {
-      "en": "- Go to the [Müll App homepage](https://muellapp.com/) and click on \"...abonniere den Kalender\" or follow [this Link](https://app.muellapp.com/web-reminder?channel=calendar)\n- Choose your municipality, address and collection types\n- Copy the URL under \"Adresse zum Abonnieren\" in the \"Kalender Abo/Download\" tab\n- Paste it to the `url` key in the example configuration\n"
+      "en": "- Go to the [M\u00fcll App homepage](https://muellapp.com/) and click on \"...abonniere den Kalender\" or follow [this Link](https://app.muellapp.com/web-reminder?channel=calendar)\n- Choose your municipality, address and collection types\n- Copy the URL under \"Adresse zum Abonnieren\" in the \"Kalender Abo/Download\" tab\n- Paste it to the `url` key in the example configuration\n"
     },
     "urls": {}
   },
   "lipizzanerheimat_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lipizzanerheimat_at.md",
     "howto": {
-      "de": "Öffnen Sie die Lipizzanerheimat-App, melden Sie sich an oder nutzen Sie den Gastmodus, wählen Sie Ihre Stadt aus, gehen Sie zur Ansicht des Müllkalenders und wählen Sie die Straße aus, für die Sie die Müllabfuhrtermine erhalten möchten. Sie können entweder den Kalendernamen in der unteren Mitte, den Straßennamen und die Stadt, wie sie im Dropdown-Menü geschrieben sind, oder direkt die garbage_calendar_id angeben.",
+      "de": "\u00d6ffnen Sie die Lipizzanerheimat-App, melden Sie sich an oder nutzen Sie den Gastmodus, w\u00e4hlen Sie Ihre Stadt aus, gehen Sie zur Ansicht des M\u00fcllkalenders und w\u00e4hlen Sie die Stra\u00dfe aus, f\u00fcr die Sie die M\u00fcllabfuhrtermine erhalten m\u00f6chten. Sie k\u00f6nnen entweder den Kalendernamen in der unteren Mitte, den Stra\u00dfennamen und die Stadt, wie sie im Dropdown-Men\u00fc geschrieben sind, oder direkt die garbage_calendar_id angeben.",
       "en": "Open the Lipizzanerheimat app, login or use guest mode, select your town, go to the garbage calendar view and select the street you want to get the garbage collection dates for. You can either provide the calendar name in the lower center, the street name and town as written in the dropdown or provide the garbage_calendar_id directly.",
-      "it": "Apri l'app Lipizzanerheimat, accedi o usa la modalità ospite, seleziona la tua città, vai alla vista del calendario dei rifiuti e seleziona la strada per cui desideri ottenere le date di raccolta dei rifiuti. Puoi fornire il nome del calendario nella parte inferiore centrale, il nome della strada e la città come scritto nel menu a discesa oppure fornire direttamente l'ID garbage_calendar_id."
+      "it": "Apri l'app Lipizzanerheimat, accedi o usa la modalit\u00e0 ospite, seleziona la tua citt\u00e0, vai alla vista del calendario dei rifiuti e seleziona la strada per cui desideri ottenere le date di raccolta dei rifiuti. Puoi fornire il nome del calendario nella parte inferiore centrale, il nome della strada e la citt\u00e0 come scritto nel menu a discesa oppure fornire direttamente l'ID garbage_calendar_id."
     },
     "urls": {}
   },
@@ -721,7 +721,7 @@
   "ics_kremsstadt_umweltverbaende_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kremsstadt_umweltverbaende_at.md",
     "howto": {
-      "de": "- Besuchen Sie <https://awa.abfuhrtermine.at> und wählen Sie Ihren Standort.\n- Klicken Sie mit der rechten Maustaste auf den `Termine {YEAR}`-Button und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
+      "de": "- Besuchen Sie <https://awa.abfuhrtermine.at> und w\u00e4hlen Sie Ihren Standort.\n- Klicken Sie mit der rechten Maustaste auf den `Termine {YEAR}`-Button und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
       "en": "- Visit <https://awa.abfuhrtermine.at> and select your location.  \n- Right click -> copy link address on the `Termine {YEAR}` button.\n- Use this URL as the `url` parameter.\n"
     },
     "urls": {}
@@ -741,7 +741,7 @@
   "gemeinde24_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gemeinde24_at.md",
     "howto": {
-      "de": "Nutzen Sie den Gemeinde24-Ablauf: zuerst Gemeinde wählen, dann Straße. Sie können entweder Namen oder die numerischen IDs eintragen.",
+      "de": "Nutzen Sie den Gemeinde24-Ablauf: zuerst Gemeinde w\u00e4hlen, dann Stra\u00dfe. Sie k\u00f6nnen entweder Namen oder die numerischen IDs eintragen.",
       "en": "Use the Gemeinde24 app flow: choose municipality, then choose street. You can configure either municipality/street names or the numeric IDs."
     },
     "urls": {}
@@ -798,7 +798,7 @@
   "eggelsberg_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eggelsberg_at.md",
     "howto": {
-      "de": "Wählen Sie Ihre Zone (A oder B). Dies bestimmt Ihren Bioabfall-Abholplan. Alle anderen Abfallarten gelten für alle Zonen.",
+      "de": "W\u00e4hlen Sie Ihre Zone (A oder B). Dies bestimmt Ihren Bioabfall-Abholplan. Alle anderen Abfallarten gelten f\u00fcr alle Zonen.",
       "en": "Select your zone (A or B). This determines your Bioabfall (organic waste) collection schedule. All other waste types apply to all zones."
     },
     "urls": {}
@@ -828,7 +828,7 @@
   "saalfelden_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/saalfelden_at.md",
     "howto": {
-      "de": "Öffnen Sie https://www.saalfelden.at/Buergerservice/Abfallkalender, wählen Sie Ihre Straße und Hausnummer aus, und verwenden Sie dieselben Werte hier.",
+      "de": "\u00d6ffnen Sie https://www.saalfelden.at/Buergerservice/Abfallkalender, w\u00e4hlen Sie Ihre Stra\u00dfe und Hausnummer aus, und verwenden Sie dieselben Werte hier.",
       "en": "Visit https://www.saalfelden.at/Buergerservice/Abfallkalender, pick your street and house number from the dropdowns, and use the same values here."
     },
     "urls": {}
@@ -860,7 +860,7 @@
   "data_umweltprofis_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_umweltprofis_at.md",
     "howto": {
-      "de": "Sie müssen zuerst Ihren persönlichen XML-Link generieren, bevor Sie diese Quelle verwenden können. Gehen Sie zu [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) und füllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie einen Link zu einer XML-Datei. Kopieren Sie diesen Link und verwenden Sie ihn als xmlurl-Parameter.",
+      "de": "Sie m\u00fcssen zuerst Ihren pers\u00f6nlichen XML-Link generieren, bevor Sie diese Quelle verwenden k\u00f6nnen. Gehen Sie zu [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) und f\u00fcllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie einen Link zu einer XML-Datei. Kopieren Sie diesen Link und verwenden Sie ihn als xmlurl-Parameter.",
       "en": "You need to generate your personal XML link before you can start using this source. Go to [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) and fill out the form. At the end at step 6 you get a link to a XML file. Copy this link use it as xmlurl parameter."
     },
     "urls": {}
@@ -868,7 +868,7 @@
   "ics_waidhofen_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/waidhofen_at.md",
     "howto": {
-      "de": "- Besuchen Sie <https://m.abfuhrtermine.at/> und wählen Sie Ihren Standort.\n- Klicken Sie mit der rechten Maustaste auf den `Termine importieren`-Button und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
+      "de": "- Besuchen Sie <https://m.abfuhrtermine.at/> und w\u00e4hlen Sie Ihren Standort.\n- Klicken Sie mit der rechten Maustaste auf den `Termine importieren`-Button und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
       "en": "- Visit <https://m.abfuhrtermine.at/> and select your location.  \n- Right click -> copy link address on the `Termine importieren` button.\n- Use this URL as the `url` parameter.\n"
     },
     "urls": {}
@@ -959,8 +959,8 @@
   "ics_longueuil_quebec": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/longueuil_quebec.md",
     "howto": {
-      "en": "- If you don't know your sector, go to `https://longueuil.quebec/fr/collectes` and use the \"Outil interactif - Collectes\" (enter your address or postal code) to identify your sector.\n- Once you know your sector number, scroll to and expand the section titled \"Calendrier des collectes XXXX : secteurs 1 à 10\" (replace XXXX with the year).\n- Scroll down to the \"Versions virtuelles\" subsection.\n- Right-click on your sector and select `Copy link`.\n- Use this copied URL as the `url` parameter.\n",
-      "fr": "- Si vous ne connaissez pas votre secteur, rendez-vous sur https://longueuil.quebec/fr/collectes et utilisez l'`Outil interactif - Collectes` (entrez votre adresse ou votre code postal) pour identifier votre secteur.\n- Une fois que vous connaissez le numéro de votre secteur, faites défiler la page et ouvrez la section intitulée `Calendrier des collectes XXXX : secteurs 1 à 10` (remplacez XXXX par l'année).\n- Faites défiler jusqu'à la sous-section `Versions virtuelles`.\n- Cliquez droit sur votre secteur et sélectionnez `Copier l'url`.      \n- Utilisez cette URL copiée comme paramètre `url`.\n"
+      "en": "- If you don't know your sector, go to `https://longueuil.quebec/fr/collectes` and use the \"Outil interactif - Collectes\" (enter your address or postal code) to identify your sector.\n- Once you know your sector number, scroll to and expand the section titled \"Calendrier des collectes XXXX : secteurs 1 \u00e0 10\" (replace XXXX with the year).\n- Scroll down to the \"Versions virtuelles\" subsection.\n- Right-click on your sector and select `Copy link`.\n- Use this copied URL as the `url` parameter.\n",
+      "fr": "- Si vous ne connaissez pas votre secteur, rendez-vous sur https://longueuil.quebec/fr/collectes et utilisez l'`Outil interactif - Collectes` (entrez votre adresse ou votre code postal) pour identifier votre secteur.\n- Une fois que vous connaissez le num\u00e9ro de votre secteur, faites d\u00e9filer la page et ouvrez la section intitul\u00e9e `Calendrier des collectes XXXX : secteurs 1 \u00e0 10` (remplacez XXXX par l'ann\u00e9e).\n- Faites d\u00e9filer jusqu'\u00e0 la sous-section `Versions virtuelles`.\n- Cliquez droit sur votre secteur et s\u00e9lectionnez `Copier l'url`.      \n- Utilisez cette URL copi\u00e9e comme param\u00e8tre `url`.\n"
     },
     "urls": {}
   },
@@ -968,16 +968,16 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ville_levis_qc_ca.md",
     "howto": {
       "en": "- Visit <https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646> figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes` section.\n- Click on the collection day relevant for you and select `Copier l'url`.\n- Use this copied URL as the `url` parameter.\n- You may get shorter entries when using the `regex` parameter. and set it to `(.*?) |.*` to filter out everything after the first pipe `|` (including the pipe).\n",
-      "fr": "- Visitez <https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646> pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et sélectionnez `Copier l'url`.\n- Utilisez cette URL copiée comme paramètre `url`.\n- Vous pouvez obtenir des entrées plus courtes en utilisant le paramètre `regex` et en le définissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n"
+      "fr": "- Visitez <https://www.ville.levis.qc.ca/environnement-et-collectes/collectes/horaire-frequence/#c12646> pour trouver votre jour de collecte.\n- Faites d\u00e9filer jusqu'\u00e0 la section `Synchronisez votre calendrier des collectes`.\n- Cliquez sur le jour de collecte qui vous concerne et s\u00e9lectionnez `Copier l'url`.\n- Utilisez cette URL copi\u00e9e comme param\u00e8tre `url`.\n- Vous pouvez obtenir des entr\u00e9es plus courtes en utilisant le param\u00e8tre `regex` et en le d\u00e9finissant sur `(.*?) |.*` pour filtrer tout ce qui suit le premier pipe `|` (y compris le pipe).\n"
     },
     "urls": {}
   },
   "montreal_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montreal_ca.md",
     "howto": {
-      "de": "Laden Sie eine <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">Montreal GeoJSON-Datei</a> auf Ihren Computer herunter<br/>Besuchen Sie https://geojson.io/<br/>Klicken Sie auf *Öffnen* und wählen Sie die Montreal GeoJSON-Datei aus<br/>Finden Sie Ihren Sektor auf der Karte.",
+      "de": "Laden Sie eine <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">Montreal GeoJSON-Datei</a> auf Ihren Computer herunter<br/>Besuchen Sie https://geojson.io/<br/>Klicken Sie auf *\u00d6ffnen* und w\u00e4hlen Sie die Montreal GeoJSON-Datei aus<br/>Finden Sie Ihren Sektor auf der Karte.",
       "en": "Download on your computer a <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">Montreal GeoJSON file</a><br/>Visit https://geojson.io/<br/>Click on *Open* and select the Montreal GeoJSON file<br/>Find your sector on the map.",
-      "fr": "Téléchargez un <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.",
+      "fr": "T\u00e9l\u00e9chargez un <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">fichier Montreal GeoJSON</a><br/>Visitez https://geojson.io/<br/>Ouvrez le fichier Montreal GeoJSON<br/>Trouvez votre secteur sur la carte.",
       "it": "Scarica sul tuo computer un <a href=\"https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson\">file GeoJSON di Montreal</a><br/>Visita https://geojson.io/<br/>Clicca su *Apri* e seleziona il file GeoJSON di Montreal<br/>Trova il tuo settore sulla mappa."
     },
     "urls": {}
@@ -999,7 +999,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pointe_claire_qc_ca.md",
     "howto": {
       "en": "Find your collection sector on the City of Pointe-Claire website at https://www.pointe-claire.ca/en/residents/public-works/waste-management/",
-      "fr": "Trouvez votre secteur de collecte sur le site de la Ville de Pointe-Claire à https://www.pointe-claire.ca/residents/travaux-publics/gestion-des-dechets/"
+      "fr": "Trouvez votre secteur de collecte sur le site de la Ville de Pointe-Claire \u00e0 https://www.pointe-claire.ca/residents/travaux-publics/gestion-des-dechets/"
     },
     "urls": {}
   },
@@ -1007,7 +1007,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ville_quebec_qc_ca.md",
     "howto": {
       "en": "You need to provide your street number and name in Quebec City.",
-      "fr": "Vous devez fournir votre numéro et nom de rue dans la ville de Québec."
+      "fr": "Vous devez fournir votre num\u00e9ro et nom de rue dans la ville de Qu\u00e9bec."
     },
     "urls": {}
   },
@@ -1015,15 +1015,15 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/riviere_beaudette_com.md",
     "howto": {
       "en": "- Go to <https://riviere-beaudette.com/> and find the waste collection calendar under the \"Calendriers\" section.\n- Download the ICS (.ics) calendar file.\n- The ICS file URL typically follows the pattern: `https://riviere-beaudette.com/wp-content/uploads/{year}/01/CollectesRB{year}V2.ics`\n- Use this URL as the `url` parameter, replacing the year with `{%Y}` for automatic year substitution.\n- Use the `regex` parameter to extract waste types from event summaries.\n",
-      "fr": "- Allez sur <https://riviere-beaudette.com/> et trouvez le calendrier de collecte sous la section \"Calendriers\".\n- Téléchargez le fichier calendrier ICS (.ics).\n- L'URL du fichier ICS suit généralement le format: `https://riviere-beaudette.com/wp-content/uploads/{année}/01/CollectesRB{année}V2.ics`\n- Utilisez cette URL comme paramètre `url`, en remplaçant l'année par `{%Y}` pour la substitution automatique.\n- Utilisez le paramètre `regex` pour extraire les types de collecte.\n"
+      "fr": "- Allez sur <https://riviere-beaudette.com/> et trouvez le calendrier de collecte sous la section \"Calendriers\".\n- T\u00e9l\u00e9chargez le fichier calendrier ICS (.ics).\n- L'URL du fichier ICS suit g\u00e9n\u00e9ralement le format: `https://riviere-beaudette.com/wp-content/uploads/{ann\u00e9e}/01/CollectesRB{ann\u00e9e}V2.ics`\n- Utilisez cette URL comme param\u00e8tre `url`, en rempla\u00e7ant l'ann\u00e9e par `{%Y}` pour la substitution automatique.\n- Utilisez le param\u00e8tre `regex` pour extraire les types de collecte.\n"
     },
     "urls": {}
   },
   "ics_vsj_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/vsj_ca.md",
     "howto": {
-      "en": "- If you don't know your sector, go to `https://www.vsj.ca/carte-interactive/` and open the \"Collectes\" section to find it.\n- Visit `https://www.vsj.ca/collectes/` to figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes avec votre agenda numérique` section.\n- Right-click on your sector and select `Copy link`.\n- Use this copied URL as the `url` parameter.\n",
-      "fr": "- Si vous ne connaissez pas votre secteur, allez sur `https://www.vsj.ca/carte-interactive/` et ouvrez la section Collectes pour le trouver.\n- Visitez `https://www.vsj.ca/collectes/` pour trouver votre jour de collecte.\n- Faites défiler jusqu'à la section `Synchronisez votre calendrier des collectes avec votre agenda numérique`.\n- Cliquez droit sur votre secteur et sélectionnez `Copier l'url`.      \n- Utilisez cette URL copiée comme paramètre `url`.    \n"
+      "en": "- If you don't know your sector, go to `https://www.vsj.ca/carte-interactive/` and open the \"Collectes\" section to find it.\n- Visit `https://www.vsj.ca/collectes/` to figure out your collection day.\n- Scroll down to `Synchronisez votre calendrier des collectes avec votre agenda num\u00e9rique` section.\n- Right-click on your sector and select `Copy link`.\n- Use this copied URL as the `url` parameter.\n",
+      "fr": "- Si vous ne connaissez pas votre secteur, allez sur `https://www.vsj.ca/carte-interactive/` et ouvrez la section Collectes pour le trouver.\n- Visitez `https://www.vsj.ca/collectes/` pour trouver votre jour de collecte.\n- Faites d\u00e9filer jusqu'\u00e0 la section `Synchronisez votre calendrier des collectes avec votre agenda num\u00e9rique`.\n- Cliquez droit sur votre secteur et s\u00e9lectionnez `Copier l'url`.      \n- Utilisez cette URL copi\u00e9e comme param\u00e8tre `url`.    \n"
     },
     "urls": {}
   },
@@ -1047,21 +1047,21 @@
   "ics_detmarovice_glembovec_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/detmarovice_glembovec_cz.md",
     "howto": {
-      "en": "- Village Dětmarovice does not provide calendar data in ICS format.\n- The data was generated from the local paper calendar.\n"
+      "en": "- Village D\u011btmarovice does not provide calendar data in ICS format.\n- The data was generated from the local paper calendar.\n"
     },
     "urls": {}
   },
   "ics_svoz_litovle_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/svoz_litovle_cz.md",
     "howto": {
-      "en": "- Go to <https://svoz.litovle.cz/> and using field \"Filtr Lokace\" filter desired location.\n- Click on \"Zkopírovat URL ICS souboru do schránky\". The URL to ICS calendar will be copied to clipboard.\n- Use the URL from the clipboard as the `url` parameter.\n"
+      "en": "- Go to <https://svoz.litovle.cz/> and using field \"Filtr Lokace\" filter desired location.\n- Click on \"Zkop\u00edrovat URL ICS souboru do schr\u00e1nky\". The URL to ICS calendar will be copied to clipboard.\n- Use the URL from the clipboard as the `url` parameter.\n"
     },
     "urls": {}
   },
   "laznebohdanec_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/laznebohdanec_cz.md",
     "howto": {
-      "en": "By default no arguments are required. The integration will automatically\nretrieve the current XLSX link from the official city page (Lázně Bohdaneč\nwebsite, sections \"Odpady\" -> \"Svozový kalendář\").\n* If you want to pin the exact URL, open that page, click the XLSX download link,\n  copy the direct XLSX URL, and use it as `url`.\n* As a fallback you can download the file and use a local `file` path. Beware you need to manually upload file to HA.\n* If you enable dedicated calendars per waste type, set colors per calendar in the HA calendar UI."
+      "en": "By default no arguments are required. The integration will automatically\nretrieve the current XLSX link from the official city page (L\u00e1zn\u011b Bohdane\u010d\nwebsite, sections \"Odpady\" -> \"Svozov\u00fd kalend\u00e1\u0159\").\n* If you want to pin the exact URL, open that page, click the XLSX download link,\n  copy the direct XLSX URL, and use it as `url`.\n* As a fallback you can download the file and use a local `file` path. Beware you need to manually upload file to HA.\n* If you enable dedicated calendars per waste type, set colors per calendar in the HA calendar UI."
     },
     "urls": {}
   },
@@ -1111,7 +1111,7 @@
   "ics_kredslob_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kredslob_dk.md",
     "howto": {
-      "en": "- Go to <https://www.kredslob.dk/produkter-og-services/genbrug-og-affald/affaldsbeholdere/toemmekalender> and select your location.  \n- Click on `Abonnér på kalender` to get a ical subscription url.\n- Use this link as the `url` parameter.\n"
+      "en": "- Go to <https://www.kredslob.dk/produkter-og-services/genbrug-og-affald/affaldsbeholdere/toemmekalender> and select your location.  \n- Click on `Abonn\u00e9r p\u00e5 kalender` to get a ical subscription url.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
   },
@@ -1175,9 +1175,9 @@
   "publidata_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/publidata_fr.md",
     "howto": {
-      "de": "Geben Sie Ihre Straßenadresse ein (nur Hausnummer und Straßenname, ohne Stadt oder Postleitzahl). Den aktuellen INSEE-Code Ihrer Gemeinde finden Sie unter https://www.insee.fr/fr/recherche/recherche-geographique — fusionierte Gemeinden (communes nouvelles) haben einen neuen Code. Die instance_id wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister auswählen.",
-      "en": "Enter your street address (number and street name only, without city or postcode). Find your commune's current INSEE code at https://www.insee.fr/fr/recherche/recherche-geographique — note that merged communes (communes nouvelles) have a new code. The instance_id is pre-filled when you select a known service provider.",
-      "it": "Inserisci il tuo indirizzo (solo numero civico e nome della via, senza città o codice postale). Trova il codice INSEE aggiornato del tuo comune su https://www.insee.fr/fr/recherche/recherche-geographique — i comuni uniti (communes nouvelles) hanno un nuovo codice. L'instance_id viene precompilato quando selezioni un fornitore noto."
+      "de": "Geben Sie Ihre Stra\u00dfenadresse ein (nur Hausnummer und Stra\u00dfenname, ohne Stadt oder Postleitzahl). Den aktuellen INSEE-Code Ihrer Gemeinde finden Sie unter https://www.insee.fr/fr/recherche/recherche-geographique \u2014 fusionierte Gemeinden (communes nouvelles) haben einen neuen Code. Die instance_id wird automatisch ausgef\u00fcllt, wenn Sie einen bekannten Dienstleister ausw\u00e4hlen.",
+      "en": "Enter your street address (number and street name only, without city or postcode). Find your commune's current INSEE code at https://www.insee.fr/fr/recherche/recherche-geographique \u2014 note that merged communes (communes nouvelles) have a new code. The instance_id is pre-filled when you select a known service provider.",
+      "it": "Inserisci il tuo indirizzo (solo numero civico e nome della via, senza citt\u00e0 o codice postale). Trova il codice INSEE aggiornato del tuo comune su https://www.insee.fr/fr/recherche/recherche-geographique \u2014 i comuni uniti (communes nouvelles) hanno un nuovo codice. L'instance_id viene precompilato quando selezioni un fornitore noto."
     },
     "urls": {
       "url_www_insee_fr": "https://www.insee.fr"
@@ -1191,8 +1191,8 @@
   "grandbesancon_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grandbesancon_fr.md",
     "howto": {
-      "en": "Find your commune's INSEE code at https://www.insee.fr. Enter your street name as shown on the Grand Besançon waste calendar at https://data.grandbesancon.fr/opendata/dataset/joursDeCollecteDechets.",
-      "fr": "Trouvez le code INSEE de votre commune sur https://www.insee.fr. Entrez le nom de votre rue tel qu'affiché sur le calendrier des déchets de Grand Besançon à https://data.grandbesancon.fr/opendata/dataset/joursDeCollecteDechets."
+      "en": "Find your commune's INSEE code at https://www.insee.fr. Enter your street name as shown on the Grand Besan\u00e7on waste calendar at https://data.grandbesancon.fr/opendata/dataset/joursDeCollecteDechets.",
+      "fr": "Trouvez le code INSEE de votre commune sur https://www.insee.fr. Entrez le nom de votre rue tel qu'affich\u00e9 sur le calendrier des d\u00e9chets de Grand Besan\u00e7on \u00e0 https://data.grandbesancon.fr/opendata/dataset/joursDeCollecteDechets."
     },
     "urls": {}
   },
@@ -1205,7 +1205,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/memotri_agglo_pau_fr.md",
     "howto": {
       "en": "Enter your full address as you would on the memotri.agglo-pau.fr website, including street number, street name, postal code, and city.",
-      "fr": "Saisissez votre adresse complète comme sur le site memotri.agglo-pau.fr, avec numéro de rue, nom de rue, code postal et ville."
+      "fr": "Saisissez votre adresse compl\u00e8te comme sur le site memotri.agglo-pau.fr, avec num\u00e9ro de rue, nom de rue, code postal et ville."
     },
     "urls": {}
   },
@@ -1213,7 +1213,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_grandlyon_com.md",
     "howto": {
       "en": "Enter your street address including the city name (e.g. '1 place Roger Salengro, Oullins').",
-      "fr": "Entrez votre adresse complète avec le nom de la commune (ex : '1 place Roger Salengro, Oullins')."
+      "fr": "Entrez votre adresse compl\u00e8te avec le nom de la commune (ex : '1 place Roger Salengro, Oullins')."
     },
     "urls": {}
   },
@@ -1235,7 +1235,7 @@
   "123abfallkalender_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/123abfallkalender_de.md",
     "howto": {
-      "de": "Wählen Sie Ihren Ortsteil aus der Liste.",
+      "de": "W\u00e4hlen Sie Ihren Ortsteil aus der Liste.",
       "en": "Select your district from the list."
     },
     "urls": {}
@@ -1250,7 +1250,7 @@
   "ics_abfall_app_net": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_app_net.md",
     "howto": {
-      "en": "- Go to your providers web site collections calendar (alternative https://{service}.abfall-app.net) and select your location.  \n- Copy the link of the `Sync zu Kalender` Button.\n- Use this link as the `url` parameter.\n\nknown supported:\n- Landkreis Stendal: <https://landkreis-stendal.abfall-app.net>\n- Landkreis soest: <https://soest.abfall-app.net>\n- Landkreis Böblingen: <https://boeblingen.abfall-app.net>\n- Altmarkkreis Salzwedel: <https://altmarkkreis-salzwedel.abfall-app.net>\n- Landkreis Lüchow-Dannenberg: <https://luechow-dannenberg.abfall-app.net>\n- Rhein-Pfalz-Kreis: <https://rhein-pfalz-kreis.abfall-app.net>\n- Landkreis Holzminden: <https://landkreis-holzminden.abfall-app.net>\n"
+      "en": "- Go to your providers web site collections calendar (alternative https://{service}.abfall-app.net) and select your location.  \n- Copy the link of the `Sync zu Kalender` Button.\n- Use this link as the `url` parameter.\n\nknown supported:\n- Landkreis Stendal: <https://landkreis-stendal.abfall-app.net>\n- Landkreis soest: <https://soest.abfall-app.net>\n- Landkreis B\u00f6blingen: <https://boeblingen.abfall-app.net>\n- Altmarkkreis Salzwedel: <https://altmarkkreis-salzwedel.abfall-app.net>\n- Landkreis L\u00fcchow-Dannenberg: <https://luechow-dannenberg.abfall-app.net>\n- Rhein-Pfalz-Kreis: <https://rhein-pfalz-kreis.abfall-app.net>\n- Landkreis Holzminden: <https://landkreis-holzminden.abfall-app.net>\n"
     },
     "urls": {}
   },
@@ -1310,15 +1310,15 @@
   "ics_delmenhorst_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/delmenhorst_de.md",
     "howto": {
-      "de": "- Öffnen Sie die Seite <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> \n- Öffnen Sie die PDF-Datei unter _\"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour\"_\n- Suchen Sie in der Übersicht die passende Straße heraus und kopieren Sie den rechts stehenden Link zu _\"iCalendar\"_\n- Fügen Sie den Link in diesem Formular unter `URL` ein.\n- **WICHTIG** Ersetzen Sie die Jahreszahl `20xx` *(die ersten vier Ziffern im Namen der .ics Datei)* durch die Variable `{%Y}`. Damit werden ab Dezember bereits die Einträge für das Folgejahr automatisch mit berücksichtigt.\n",
-      "en": "- Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> \n- Open the pdf file _\"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour\"_\n- Find your street in the pdf and copy the link labeled \"iCalendar\"\n- Use this link as the `url` parameter.\n- **IMPORTANT** Replace the year `20xx` *(first 4 digits in the name of the .ics file)* with the variable `{%Y}` to make sure that the schedule for the upcoming year will already be present from December on.\n"
+      "de": "- \u00d6ffnen Sie die Seite <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> \n- \u00d6ffnen Sie die PDF-Datei unter _\"Abfuhrbezirke [YYYY] - Stra\u00dfenverzeichnis mit Zuordnung zur Altpapiertour\"_\n- Suchen Sie in der \u00dcbersicht die passende Stra\u00dfe heraus und kopieren Sie den rechts stehenden Link zu _\"iCalendar\"_\n- F\u00fcgen Sie den Link in diesem Formular unter `URL` ein.\n- **WICHTIG** Ersetzen Sie die Jahreszahl `20xx` *(die ersten vier Ziffern im Namen der .ics Datei)* durch die Variable `{%Y}`. Damit werden ab Dezember bereits die Eintr\u00e4ge f\u00fcr das Folgejahr automatisch mit ber\u00fccksichtigt.\n",
+      "en": "- Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> \n- Open the pdf file _\"Abfuhrbezirke [YYYY] - Stra\u00dfenverzeichnis mit Zuordnung zur Altpapiertour\"_\n- Find your street in the pdf and copy the link labeled \"iCalendar\"\n- Use this link as the `url` parameter.\n- **IMPORTANT** Replace the year `20xx` *(first 4 digits in the name of the .ics file)* with the variable `{%Y}` to make sure that the schedule for the upcoming year will already be present from December on.\n"
     },
     "urls": {}
   },
   "ics_abfallkalender_erkelenz_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erkelenz_de.md",
     "howto": {
-      "de": "- Gehen Sie zu <https://www.abfallkalender-erkelenz.de> und wählen Sie Ihren Bezirk aus.\n- Ermitteln Sie Ihre Bezirksnummer und verwenden Sie diese im `url`-Parameter unten, indem Sie `BEZIRK` durch Ihre Nummer ersetzen.\n",
+      "de": "- Gehen Sie zu <https://www.abfallkalender-erkelenz.de> und w\u00e4hlen Sie Ihren Bezirk aus.\n- Ermitteln Sie Ihre Bezirksnummer und verwenden Sie diese im `url`-Parameter unten, indem Sie `BEZIRK` durch Ihre Nummer ersetzen.\n",
       "en": "- Go to <https://www.abfallkalender-erkelenz.de> and select your district (Bezirk).\n- Find your district number and use it in the `url` parameter below, replacing `BEZIRK` with your number.\n"
     },
     "urls": {}
@@ -1341,7 +1341,7 @@
   "ics_wuerzburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerzburg_de.md",
     "howto": {
-      "de": "- Besuchen Sie <https://www.wuerzburg.de/themen/umwelt-klima/abfall-und-stadtreinigung/abfallkalender> und wählen Sie Ihre Straße.\n- Klicken Sie auf \"Kalender als ICS\"\n- Klicken Sie mit der rechten Maustaste auf \"Download\" und wählen Sie \"Adresse des Links kopieren\"\n- Verwenden Sie diesen Link als URL-Parameter\n",
+      "de": "- Besuchen Sie <https://www.wuerzburg.de/themen/umwelt-klima/abfall-und-stadtreinigung/abfallkalender> und w\u00e4hlen Sie Ihre Stra\u00dfe.\n- Klicken Sie auf \"Kalender als ICS\"\n- Klicken Sie mit der rechten Maustaste auf \"Download\" und w\u00e4hlen Sie \"Adresse des Links kopieren\"\n- Verwenden Sie diesen Link als URL-Parameter\n",
       "en": "- Visit <https://www.wuerzburg.de/themen/umwelt-klima/abfall-und-stadtreinigung/abfallkalender> and select your street.\n- Click on \"Calendar as ICS\"\n- Right-lick on \"Download\" and select \"Copy link address\"\n- Use this link as URL parameter\n"
     },
     "urls": {}
@@ -1359,7 +1359,7 @@
   "ics_mein_abfallkalender_online": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md",
     "howto": {
-      "de": "- `mein-abfallkalender.online` nutzt eine Subdomain pro unterstützter Gemeinde/Stadt. Öffne die Subdomain deiner Region, z.B. <https://eppstein.mein-abfallkalender.online>. Wenn du die Subdomain deiner Region nicht kennst, kannst du die Referenzseite besuchen: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.\n- Wähle deine Region (falls nötig).\n- Klicke auf `Meine Termine anzeigen` [nicht für allen Regionen verfügbar nötig/verfügbar].\n- Klicke auf `Termine (iCal / WebCal)` [nicht für allen Regionen verfügbar nötig/verfügbar].\n- Vergiss nicht, deine E-Mail zu registrieren, sonst erhältst du keinen gültigen Webcal-Link!\n- Klicke auf `Termine via iCal/WebCal nutzen`.\n- Kopiere den Webcal-Link unter `Online=Kalender \"Google Kalender\" (manuell)`.\n- Verwende diese URL als `url`-Parameter.\n",
+      "de": "- `mein-abfallkalender.online` nutzt eine Subdomain pro unterst\u00fctzter Gemeinde/Stadt. \u00d6ffne die Subdomain deiner Region, z.B. <https://eppstein.mein-abfallkalender.online>. Wenn du die Subdomain deiner Region nicht kennst, kannst du die Referenzseite besuchen: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.\n- W\u00e4hle deine Region (falls n\u00f6tig).\n- Klicke auf `Meine Termine anzeigen` [nicht f\u00fcr allen Regionen verf\u00fcgbar n\u00f6tig/verf\u00fcgbar].\n- Klicke auf `Termine (iCal / WebCal)` [nicht f\u00fcr allen Regionen verf\u00fcgbar n\u00f6tig/verf\u00fcgbar].\n- Vergiss nicht, deine E-Mail zu registrieren, sonst erh\u00e4ltst du keinen g\u00fcltigen Webcal-Link!\n- Klicke auf `Termine via iCal/WebCal nutzen`.\n- Kopiere den Webcal-Link unter `Online=Kalender \"Google Kalender\" (manuell)`.\n- Verwende diese URL als `url`-Parameter.\n",
       "en": "- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., <https://eppstein.mein-abfallkalender.online>. If you not know the subdomain for your location, you can check their references page: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen` [not on all regions].\n- Click on `Termine (iCal / WebCal)` [not on all regions].\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
@@ -1379,7 +1379,7 @@
   "ics_entsorgung_regional_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/entsorgung_regional_de.md",
     "howto": {
-      "de": "- Gehen Sie auf <https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html>.\n- Wählen Sie Ihre Gemeinde, Ortsteil und Abfallarten, dann klicken Sie auf \"ICS Datei herunterladen\".\n- Kopieren Sie die Download-URL aus Ihrem Browser und verwenden Sie sie als `url`-Parameter.\n- Die `method` (POST) und `params` sind vorausgefüllt.\n",
+      "de": "- Gehen Sie auf <https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html>.\n- W\u00e4hlen Sie Ihre Gemeinde, Ortsteil und Abfallarten, dann klicken Sie auf \"ICS Datei herunterladen\".\n- Kopieren Sie die Download-URL aus Ihrem Browser und verwenden Sie sie als `url`-Parameter.\n- Die `method` (POST) und `params` sind vorausgef\u00fcllt.\n",
       "en": "- Go to <https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html>.\n- Select your municipality, district, and waste types, then click \"ICS Datei herunterladen\".\n- Copy the download URL from your browser. Use it as the `url` parameter.\n- The `method` (POST) and `params` are pre-filled.\n"
     },
     "urls": {}
@@ -1399,7 +1399,7 @@
   "ics_kreis_ploen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_ploen_de.md",
     "howto": {
-      "en": "- Go to <https://www.kreis-ploen.de/Bürgerservice/Termine-Müllabfuhr/> and select your location.\n- Select `Jahreskalender` as view\n- Choose the types of waste you need\n- Click on `Als Kalenderdatei (.ics) exportieren`.\n- Get link of download (firefox only?):\n  - select `Keine benachrichting` which should start the download\n  - save the file\n  - copy the download link (firefox download icon: right click(on the downloaded ics file) -> copy download link)\n- If the above does not work (could not find a way to do this with chromium based browsers):\n  - Open the developer tools (F12)\n  - Go to the network tab\n  - Select `Keine benachrichting` which should start the download\n  - Look for the request in the network tab\n  - copy the request url\n- Use this link as the `url` parameter.\n- Replace the year field in the url with `{%Y}`.\n"
+      "en": "- Go to <https://www.kreis-ploen.de/B\u00fcrgerservice/Termine-M\u00fcllabfuhr/> and select your location.\n- Select `Jahreskalender` as view\n- Choose the types of waste you need\n- Click on `Als Kalenderdatei (.ics) exportieren`.\n- Get link of download (firefox only?):\n  - select `Keine benachrichting` which should start the download\n  - save the file\n  - copy the download link (firefox download icon: right click(on the downloaded ics file) -> copy download link)\n- If the above does not work (could not find a way to do this with chromium based browsers):\n  - Open the developer tools (F12)\n  - Go to the network tab\n  - Select `Keine benachrichting` which should start the download\n  - Look for the request in the network tab\n  - copy the request url\n- Use this link as the `url` parameter.\n- Replace the year field in the url with `{%Y}`.\n"
     },
     "urls": {}
   },
@@ -1418,7 +1418,7 @@
   "ics_abfallportal_nordhausen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallportal_nordhausen_de.md",
     "howto": {
-      "de": "- Gehen Sie zu <https://abfallportal-nordhausen.de/kalender/#/> und wählen in Stadt/Straße aus.\n- Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
+      "de": "- Gehen Sie zu <https://abfallportal-nordhausen.de/kalender/#/> und w\u00e4hlen in Stadt/Stra\u00dfe aus.\n- Klicken Sie mit der rechten Maustaste auf `.ics-Datei herunterladen` und kopieren diesen Link\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
       "en": "- Go to <https://abfallportal-nordhausen.de/kalender/#/> and select your city/street.\n- Right-click on `.ics-Datei herunterladen` and copy link address.\n- Use this URL as the `url` parameter.\n"
     },
     "urls": {}
@@ -1448,7 +1448,7 @@
   "ics_abfallwirtschaft_rems_murr_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_rems_murr_de.md",
     "howto": {
-      "de": "- Gehen Sie zu <https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender> und wählen Sie Ihren Ort, Straße und Hausnummer aus.\n- Wählen Sie die gewünschten Abfallarten aus.\n- Die Auswahl des Jahres kann ignoriert werden, falls sie angezeigt wird. Klicken Sie auf `Weiter`.\n- Unter `ical-Kalenderabo`, lassen Sie sich die URL anzeigen und kopieren Sie diese, oder klicken auf `URL in die Zwischenablage kopieren`.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n",
+      "de": "- Gehen Sie zu <https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender> und w\u00e4hlen Sie Ihren Ort, Stra\u00dfe und Hausnummer aus.\n- W\u00e4hlen Sie die gew\u00fcnschten Abfallarten aus.\n- Die Auswahl des Jahres kann ignoriert werden, falls sie angezeigt wird. Klicken Sie auf `Weiter`.\n- Unter `ical-Kalenderabo`, lassen Sie sich die URL anzeigen und kopieren Sie diese, oder klicken auf `URL in die Zwischenablage kopieren`.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n",
       "en": "- Go to <https://www.abfallwirtschaft-rems-murr.de/muell-entsorgen/ihr-abfallkalender> and select your town, street name and number.\n- Select the waste types that should be included in the waste calendar.\n- You can ignore the year selection, if present. Click `Weiter`.\n- In the `ical-Kalenderabo` section, show and copy the URL or press `URL in die Zwischenablage kopieren`.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
@@ -1466,7 +1466,7 @@
   "ics_abfallwirtschaft_sonneberg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_sonneberg_de.md",
     "howto": {
-      "en": "- Go to <https://www.abfallwirtschaft-sonneberg.de/abfallkalender/>.\n- Select your municipality (`Ort`), district (`Ortsteil`) and - if necessary - street (`Straße`).\n- Right-click each dropdown field an click `Inspect`. This will open your browser's developer tools and display the corresponding HTML source:\n\n  ```html\n    <!-- Some lines of code have been removed from the below for readability -->\n\n    <select class=\"form-control\" id=\"ort\" name=\"ort\">\n        <option value=\"\">Bitte Ort wählen</option>\n        <option value=\"Föritztal\">Föritztal</option>\n        <option value=\"Neuhaus am Rennweg\">Neuhaus am Rennweg</option>\n        <option value=\"Sonneberg\">Sonneberg</option>\n    </select>\n\n    <select class=\"form-control stadtteil\" name=\"stadtteil\" id=\"stadtteil\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Bettelhecken\">Bettelhecken (ab Bettelhecker Straße Nr. 57 und 66)</option>\n        <option value=\"Hönbach\">Hönbach</option>\n        <option value=\"Innenstadtbereich\">Innenstadtbereich</option>\n        <option value=\"Steinbach\">Steinbach (einschl. gesamte Bergstr.)</option>\n    </select>\n\n    <select class=\"form-control\" name=\"strasse\" id=\"strasse\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Alte Molkerei\">Alte Molkerei</option>\n        <option value=\"Bettelhecker Straße bis Nr. 55 und 64\">Bettelhecker Straße bis Nr. 55 und 64 (Coburger Allee bis Eisenbahnbrücke)</option>\n    </select>\n  ```\n\n  You will need to get the exact `value` of your selected option as an option's value might differ from the text shown in the dropdown field for certain options, especially for the longer.\n  \n- Replace the corresponding `params` in the example configuration with your values.\n\n  *Please note that there's usually no need to replace umlauts in parameter values with their respective Unicode number (e.g. `ä` -> `\\xE4`).*\n  *This just happens while generating this documentation from source.*\n  *Refer to [Abfallwirtschaft Sonneberg's documentation source](/doc/ics/yaml/abfallwirtschaft_sonneberg_de.yaml) for unaltered examples.*\n"
+      "en": "- Go to <https://www.abfallwirtschaft-sonneberg.de/abfallkalender/>.\n- Select your municipality (`Ort`), district (`Ortsteil`) and - if necessary - street (`Stra\u00dfe`).\n- Right-click each dropdown field an click `Inspect`. This will open your browser's developer tools and display the corresponding HTML source:\n\n  ```html\n    <!-- Some lines of code have been removed from the below for readability -->\n\n    <select class=\"form-control\" id=\"ort\" name=\"ort\">\n        <option value=\"\">Bitte Ort w\u00e4hlen</option>\n        <option value=\"F\u00f6ritztal\">F\u00f6ritztal</option>\n        <option value=\"Neuhaus am Rennweg\">Neuhaus am Rennweg</option>\n        <option value=\"Sonneberg\">Sonneberg</option>\n    </select>\n\n    <select class=\"form-control stadtteil\" name=\"stadtteil\" id=\"stadtteil\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Bettelhecken\">Bettelhecken (ab Bettelhecker Stra\u00dfe Nr. 57 und 66)</option>\n        <option value=\"H\u00f6nbach\">H\u00f6nbach</option>\n        <option value=\"Innenstadtbereich\">Innenstadtbereich</option>\n        <option value=\"Steinbach\">Steinbach (einschl. gesamte Bergstr.)</option>\n    </select>\n\n    <select class=\"form-control\" name=\"strasse\" id=\"strasse\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Alte Molkerei\">Alte Molkerei</option>\n        <option value=\"Bettelhecker Stra\u00dfe bis Nr. 55 und 64\">Bettelhecker Stra\u00dfe bis Nr. 55 und 64 (Coburger Allee bis Eisenbahnbr\u00fccke)</option>\n    </select>\n  ```\n\n  You will need to get the exact `value` of your selected option as an option's value might differ from the text shown in the dropdown field for certain options, especially for the longer.\n  \n- Replace the corresponding `params` in the example configuration with your values.\n\n  *Please note that there's usually no need to replace umlauts in parameter values with their respective Unicode number (e.g. `\u00e4` -> `\\xE4`).*\n  *This just happens while generating this documentation from source.*\n  *Refer to [Abfallwirtschaft Sonneberg's documentation source](/doc/ics/yaml/abfallwirtschaft_sonneberg_de.yaml) for unaltered examples.*\n"
     },
     "urls": {}
   },
@@ -1582,7 +1582,7 @@
   "ics_alba_bs_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/alba_bs_de.md",
     "howto": {
-      "de": "- Gehe zu <https://alba-bs.de/service/abfuhrtermine.html> und wähle deinen Standort aus.\n- Kopiere den Link der `ICS-Kalender-Datei`. Du musst zuerst darauf klicken und dann den Link des `ok`-Buttons kopieren, wenn der Link nicht direkt zur ICS-Datei führt.\n- Benutze diese URL als URL parameter.\n- Ersetze das Jahr in der URL durch `{%Y}`.\n- Du kannst den cHash Parameter aus der URL entfernen.\n",
+      "de": "- Gehe zu <https://alba-bs.de/service/abfuhrtermine.html> und w\u00e4hle deinen Standort aus.\n- Kopiere den Link der `ICS-Kalender-Datei`. Du musst zuerst darauf klicken und dann den Link des `ok`-Buttons kopieren, wenn der Link nicht direkt zur ICS-Datei f\u00fchrt.\n- Benutze diese URL als URL parameter.\n- Ersetze das Jahr in der URL durch `{%Y}`.\n- Du kannst den cHash Parameter aus der URL entfernen.\n",
       "en": "- Go to <https://alba-bs.de/service/abfuhrtermine.html> and select your location.  \n- Copy the link of `ICS-Kalender-Datei`. You need to click it first and then copy the link of the `ok` button if the link does not directly leads to the ICS file.\n- Use this url as the `URL` parameter.\n- Replace the year in the `url` with `{%Y}`.  \n  This will be replaced by the current year.\n- You can remove the cHash parameter from the url.\n"
     },
     "urls": {}
@@ -1600,8 +1600,8 @@
   "ics_gemeinde_allensbach_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gemeinde_allensbach_de.md",
     "howto": {
-      "de": "- Besuchen Sie <https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender> und wählen Sie Ihren Standort aus.  \n- Klicken Sie mit der rechten Maustaste auf den Link zur Kalenderdatei unter \"Müll-Abfuhrtermine als Kalender-Datei\" und kopieren Sie die Linkadresse.\n- Verwenden Sie diese URL als `url`-Parameter.\n- Sie können das Jahr in der URL durch `{%Y}` ersetzen, damit der Kalender für das aktuelle Jahr funktioniert (sofern sie die URL-Struktur nicht aktualisieren).\n",
-      "en": "- Visit <https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender> and select your location.  \n- Right-click on the link to the calendar below \"Müll-Abfuhrtermine als Kalender-Datei\" and copy the link address.\n- Use this URL as the `url` parameter.\n- You can replace the year in the URL with `{%Y}` so the calendar works for the current year (if they do not update the URL structure).\n"
+      "de": "- Besuchen Sie <https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender> und w\u00e4hlen Sie Ihren Standort aus.  \n- Klicken Sie mit der rechten Maustaste auf den Link zur Kalenderdatei unter \"M\u00fcll-Abfuhrtermine als Kalender-Datei\" und kopieren Sie die Linkadresse.\n- Verwenden Sie diese URL als `url`-Parameter.\n- Sie k\u00f6nnen das Jahr in der URL durch `{%Y}` ersetzen, damit der Kalender f\u00fcr das aktuelle Jahr funktioniert (sofern sie die URL-Struktur nicht aktualisieren).\n",
+      "en": "- Visit <https://www.gemeinde-allensbach.de/wohnen-leben/abfuhrkalender> and select your location.  \n- Right-click on the link to the calendar below \"M\u00fcll-Abfuhrtermine als Kalender-Datei\" and copy the link address.\n- Use this URL as the `url` parameter.\n- You can replace the year in the URL with `{%Y}` so the calendar works for the current year (if they do not update the URL structure).\n"
     },
     "urls": {}
   },
@@ -1613,14 +1613,14 @@
   "ics_kreis_alzey_worms_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_alzey_worms_de.md",
     "howto": {
-      "en": "- Visit <https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/> and select your location.  \n- Click on `URL anzeigen` to see the ICS link.\n- Use this url for the `url` parameter.\n- You might want to add regex `(.*) \\d+ \\d+-wöchentl\\.` parameter to remove the size and frequency of collections (e.g. `Restmüll 240 02-wöchentl.` -> `Restmüll`).\n"
+      "en": "- Visit <https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/> and select your location.  \n- Click on `URL anzeigen` to see the ICS link.\n- Use this url for the `url` parameter.\n- You might want to add regex `(.*) \\d+ \\d+-w\u00f6chentl\\.` parameter to remove the size and frequency of collections (e.g. `Restm\u00fcll 240 02-w\u00f6chentl.` -> `Restm\u00fcll`).\n"
     },
     "urls": {}
   },
   "ics_ambnet_biz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ambnet_biz.md",
     "howto": {
-      "de": "- Gehe auf <https://www.ambnet.biz> und finde die ICS-Datei für deine Region.\n- Verwende die URL als `url`-Parameter.\n",
+      "de": "- Gehe auf <https://www.ambnet.biz> und finde die ICS-Datei f\u00fcr deine Region.\n- Verwende die URL als `url`-Parameter.\n",
       "en": "- Go to <https://www.ambnet.biz> and find the ICS file for your area.\n- Use the URL as the `url` parameter.\n"
     },
     "urls": {}
@@ -1628,7 +1628,7 @@
   "ics_art_trier_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/art_trier_de.md",
     "howto": {
-      "en": "- Go to <https://www.art-trier.de/> and select your municipality.  \n- Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  \n- Set `Wann möchten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).\n- Click on `> Kalender (ICS) importieren` to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.\n- Use this link as the `url` parameter.\n"
+      "en": "- Go to <https://www.art-trier.de/> and select your municipality.  \n- Scroll down to `JAHRESKALENDER F\u00dcR IHR OUTLOOK, ETC.`  \n- Set `Wann m\u00f6chten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).\n- Click on `> Kalender (ICS) importieren` to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
   },
@@ -1684,7 +1684,7 @@
   "ics_awg_bassum_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/awg_bassum_de.md",
     "howto": {
-      "en": "- Go to <https://www.awg-bassum.de/abfuhrkalender.html>\n- Click on \"Ort wählen\" and choose your location\n- Type in your street address in \"Ihre Straße\"\n- Click on the name of your street\n- Scroll down and copy the link of \"iCal herunterladen\".\n- Use this link as the `url` parameter.\n- Replace the year in the URL with `{%Y}` to automatically get the current year.\n"
+      "en": "- Go to <https://www.awg-bassum.de/abfuhrkalender.html>\n- Click on \"Ort w\u00e4hlen\" and choose your location\n- Type in your street address in \"Ihre Stra\u00dfe\"\n- Click on the name of your street\n- Scroll down and copy the link of \"iCal herunterladen\".\n- Use this link as the `url` parameter.\n- Replace the year in the URL with `{%Y}` to automatically get the current year.\n"
     },
     "urls": {}
   },
@@ -1718,10 +1718,10 @@
   "awm_muenchen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
     "howto": {
-      "de": "Straße und Hausnummer ausfüllen, dann abschicken. Die Formularfelder werden nacheinander getested und bieten ggf. eine Auswahl der zulässigen Werte an. Alternativ bekannt Werte direkt eingeben. Mehr Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+      "de": "Stra\u00dfe und Hausnummer ausf\u00fcllen, dann abschicken. Die Formularfelder werden nacheinander getested und bieten ggf. eine Auswahl der zul\u00e4ssigen Werte an. Alternativ bekannt Werte direkt eingeben. Mehr Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
       "en": "Fill in the street and house number, then submit. The form fields are tested one after the other and offer a selection of permitted values if necessary. Alternatively, enter known values directly. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
-      "fr": "Remplir la rue et le numéro, puis envoyer. Les champs du formulaire sont testés les uns après les autres et proposent, le cas échéant, un choix de valeurs autorisées. Sinon, connu Saisir directement les valeurs. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
-      "it": "Compilare la via e il numero civico, quindi inviare. I campi del modulo vengono testati uno dopo l'altro e possono offrire una selezione di valori consentiti. In alternativa, è possibile inserire direttamente i valori noti. Ulteriori dettagli: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md"
+      "fr": "Remplir la rue et le num\u00e9ro, puis envoyer. Les champs du formulaire sont test\u00e9s les uns apr\u00e8s les autres et proposent, le cas \u00e9ch\u00e9ant, un choix de valeurs autoris\u00e9es. Sinon, connu Saisir directement les valeurs. Plus de d\u00e9tails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
+      "it": "Compilare la via e il numero civico, quindi inviare. I campi del modulo vengono testati uno dopo l'altro e possono offrire una selezione di valori consentiti. In alternativa, \u00e8 possibile inserire direttamente i valori noti. Ulteriori dettagli: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md"
     },
     "urls": {}
   },
@@ -1740,7 +1740,7 @@
   "abfallkalender_prezero_network": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md",
     "howto": {
-      "de": "Geben Sie Ihre Straße und Hausnummer ein. Die Stadt ist standardmäßig auf Bad Oeynhausen eingestellt (unterstützt: Bad Oeynhausen, Willich).",
+      "de": "Geben Sie Ihre Stra\u00dfe und Hausnummer ein. Die Stadt ist standardm\u00e4\u00dfig auf Bad Oeynhausen eingestellt (unterst\u00fctzt: Bad Oeynhausen, Willich).",
       "en": "Enter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich)."
     },
     "urls": {}
@@ -1753,7 +1753,7 @@
   "ics_baden_baden_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/baden_baden_de.md",
     "howto": {
-      "de": "- Gehe zu <https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/> und wähle deinen Ort aus.\n- Klicke mit der rechten Maustaste auf den Link `iCal Download` über der Kalendertabelle und kopiere den Link.\n- Verwende diesen Link als `url`-Parameter.\n- Setze Parameter auf `jahr: \"\"` und Jahresfeld auf `jahr`.\n",
+      "de": "- Gehe zu <https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/> und w\u00e4hle deinen Ort aus.\n- Klicke mit der rechten Maustaste auf den Link `iCal Download` \u00fcber der Kalendertabelle und kopiere den Link.\n- Verwende diesen Link als `url`-Parameter.\n- Setze Parameter auf `jahr: \"\"` und Jahresfeld auf `jahr`.\n",
       "en": "- Go to <https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/> and select your location.  \n- Rightclick on the link `iCal Download` link above the calendar table and copy the liink address.\n- Use this url as `url` parameter.\n- Set Params to `jahr: \"\"` and year_field to `jahr`.\n"
     },
     "urls": {}
@@ -1790,8 +1790,8 @@
   "ics_best_bottrop_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/best_bottrop_de.md",
     "howto": {
-      "de": "- Besuchen Sie <https://www.best-bottrop.de/abfuhrtermine-0910213539.html> und wählen Sie Ihren Standort aus.\n- Klicken Sie auf `Termine für Kalender exportieren` und dann auf `Kalender abonnieren`, um einen iCal-Abonnementlink zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
-      "en": "- Visit <https://www.best-bottrop.de/abfuhrtermine-0910213539.html> and select your location.  \n- Click on `Termine für Kalender exportieren` then `Kalender abonnieren` to get an ical subscription link.\n- Use this link as the `url` parameter.\n"
+      "de": "- Besuchen Sie <https://www.best-bottrop.de/abfuhrtermine-0910213539.html> und w\u00e4hlen Sie Ihren Standort aus.\n- Klicken Sie auf `Termine f\u00fcr Kalender exportieren` und dann auf `Kalender abonnieren`, um einen iCal-Abonnementlink zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
+      "en": "- Visit <https://www.best-bottrop.de/abfuhrtermine-0910213539.html> and select your location.  \n- Click on `Termine f\u00fcr Kalender exportieren` then `Kalender abonnieren` to get an ical subscription link.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
   },
@@ -1914,15 +1914,15 @@
   "ics_elw_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/elw_de.md",
     "howto": {
-      "en": "- Go to <https://www.elw.de/abfallkalender>.\n- Within the section \"Ihr persönlicher Abfallkalender\", enter your address and wait for loading to complete.\n- Scroll down to the section with the gray box \"Kalender abonnieren als\"\n- Right click on the link \"ical\" and copy the link address.\n"
+      "en": "- Go to <https://www.elw.de/abfallkalender>.\n- Within the section \"Ihr pers\u00f6nlicher Abfallkalender\", enter your address and wait for loading to complete.\n- Scroll down to the section with the gray box \"Kalender abonnieren als\"\n- Right click on the link \"ical\" and copy the link address.\n"
     },
     "urls": {}
   },
   "ics_abfallkalender_enni_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_enni_de.md",
     "howto": {
-      "de": "- Gehen Sie zu <https://abfallkalender.enni.de> und finden Sie Ihren Straßennamen.\n- Die URL lautet `https://abfallkalender.enni.de/ics-kalender/{strasse}`, wobei `{strasse}` Ihr Straßenname in Kleinbuchstaben ohne Umlaute ist (z.B. `ae` statt `ä`, `ss` statt `ß`).\n",
-      "en": "- Go to <https://abfallkalender.enni.de> and find your street name.\n- The URL is `https://abfallkalender.enni.de/ics-kalender/{street}` where `{street}` is your street name in lowercase without umlauts (e.g. `ae` instead of `ä`, `ss` instead of `ß`).\n"
+      "de": "- Gehen Sie zu <https://abfallkalender.enni.de> und finden Sie Ihren Stra\u00dfennamen.\n- Die URL lautet `https://abfallkalender.enni.de/ics-kalender/{strasse}`, wobei `{strasse}` Ihr Stra\u00dfenname in Kleinbuchstaben ohne Umlaute ist (z.B. `ae` statt `\u00e4`, `ss` statt `\u00df`).\n",
+      "en": "- Go to <https://abfallkalender.enni.de> and find your street name.\n- The URL is `https://abfallkalender.enni.de/ics-kalender/{street}` where `{street}` is your street name in lowercase without umlauts (e.g. `ae` instead of `\u00e4`, `ss` instead of `\u00df`).\n"
     },
     "urls": {}
   },
@@ -1936,7 +1936,7 @@
   "ics_abfall_eglz_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_eglz_de.md",
     "howto": {
-      "de": "- Gehen Sie zu <https://www.eglz-abfall.de/service/abfallkalender> und wählen Sie Ihre Gemeinde aus.\n- Klicken Sie mit der rechten Maustaste auf `Entsorgungstermine als iCalendar herunterladen` und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n",
+      "de": "- Gehen Sie zu <https://www.eglz-abfall.de/service/abfallkalender> und w\u00e4hlen Sie Ihre Gemeinde aus.\n- Klicken Sie mit der rechten Maustaste auf `Entsorgungstermine als iCalendar herunterladen` und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n",
       "en": "- Go to <https://www.eglz-abfall.de/service/abfallkalender> and select your municipality.\n- Right-click on `Entsorgungstermine als iCalendar herunterladen` and copy link address.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
@@ -1956,7 +1956,7 @@
   "ics_abfallkalender_erftstadt_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallkalender_erftstadt_de.md",
     "howto": {
-      "en": "- Go to <https://abfallkalender-erftstadt.de/> and select your location.\n- Click on `Zum Kalender hinzufügen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `Für Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Use this link as the `url` parameter.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n"
+      "en": "- Go to <https://abfallkalender-erftstadt.de/> and select your location.\n- Click on `Zum Kalender hinzuf\u00fcgen`.\n- Click on `weiter` without selecting reminder.\n- Copy the link below `F\u00fcr Google Kalender` or copy the link from the `Abonnieren` or `Download` button.\n- Use this link as the `url` parameter.\n- Keeping the `regex` as it is, will remove the district name from the event title.\n"
     },
     "urls": {}
   },
@@ -1970,7 +1970,7 @@
   "ics_euv_stadtbetrieb_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/euv_stadtbetrieb_de.md",
     "howto": {
-      "de": "- Gehen Sie zu <https://www.euv-stadtbetrieb.de/private-haushalte/leerungsabfrage/> und tragen Sie Ihre Straße ein.    \n- Wählen Sie anschließend Ihre Hausnummer aus\n- Klicken Sie unter \"Google Kalender\" auf \"Link kopieren\"\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n",
+      "de": "- Gehen Sie zu <https://www.euv-stadtbetrieb.de/private-haushalte/leerungsabfrage/> und tragen Sie Ihre Stra\u00dfe ein.    \n- W\u00e4hlen Sie anschlie\u00dfend Ihre Hausnummer aus\n- Klicken Sie unter \"Google Kalender\" auf \"Link kopieren\"\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link.\n",
       "en": "- Go to <https://www.euv-stadtbetrieb.de/private-haushalte/leerungsabfrage/> and enter your street.    \n- Next select your house number\n- Click under the section \"Google Kalender\" on \"Link kopieren\"\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
@@ -1978,8 +1978,8 @@
   "ics_eva_abfallentsorgung_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/eva_abfallentsorgung_de.md",
     "howto": {
-      "de": "- Gehen Sie zu https://www.eva-abfallentsorgung.de/Service-Center/Downloads%20-%20Infos/Abfuhrkalender%20individuell\n- Wählen Sie Ort und Straße\n- Klicken Sie auf `ICS-Datei`\n- Schalten Sie die Erinnerung aus\n- Klicken Sie mit der rechten Maustaste auf `herunterladen` und kopieren Sie die Linkadresse\n- Verwenden Sie diesen Link als `url`-Parameter\n- Entfernen Sie das Jahr-Argument aus der URL (eventuell nicht notwendig)\n- Sie können das Regex `^(.*) in ` verwenden, um den Ort aus dem Titel zu entfernen (Restmüll<s> In Böbing, Böbing</s>)\n",
-      "en": "- Go to https://www.eva-abfallentsorgung.de/Service-Center/Downloads%20-%20Infos/Abfuhrkalender%20individuell\n- Choose Place and Location\n- Click on `ICS-Datei`\n- Turn off Erinnerung\n- Right click on `herunterladen` and copy the link address\n- Use this link as `url` parameter\n- Remove the year argument from the url (may not be necessary)\n- You may want to use regex `^(.*) in ` to remove the location from the title (Restmüll<s> In Böbing, Böbing</s>)\n"
+      "de": "- Gehen Sie zu https://www.eva-abfallentsorgung.de/Service-Center/Downloads%20-%20Infos/Abfuhrkalender%20individuell\n- W\u00e4hlen Sie Ort und Stra\u00dfe\n- Klicken Sie auf `ICS-Datei`\n- Schalten Sie die Erinnerung aus\n- Klicken Sie mit der rechten Maustaste auf `herunterladen` und kopieren Sie die Linkadresse\n- Verwenden Sie diesen Link als `url`-Parameter\n- Entfernen Sie das Jahr-Argument aus der URL (eventuell nicht notwendig)\n- Sie k\u00f6nnen das Regex `^(.*) in ` verwenden, um den Ort aus dem Titel zu entfernen (Restm\u00fcll<s> In B\u00f6bing, B\u00f6bing</s>)\n",
+      "en": "- Go to https://www.eva-abfallentsorgung.de/Service-Center/Downloads%20-%20Infos/Abfuhrkalender%20individuell\n- Choose Place and Location\n- Click on `ICS-Datei`\n- Turn off Erinnerung\n- Right click on `herunterladen` and copy the link address\n- Use this link as `url` parameter\n- Remove the year argument from the url (may not be necessary)\n- You may want to use regex `^(.*) in ` to remove the location from the title (Restm\u00fcll<s> In B\u00f6bing, B\u00f6bing</s>)\n"
     },
     "urls": {}
   },
@@ -1993,7 +1993,7 @@
   "ics_floersheim_umweltkalender_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/floersheim_umweltkalender_de.md",
     "howto": {
-      "en": "- Visit <https://www.floersheim-umweltkalender.de/abfuhrtermine.html> and select your location.  \n- Richt click -> copy link address on `Kalender für das ganze Jahr im iCal (ics) Format herunterladen` to get the ical link.\n- Use this link as the `url` parameter.\n- You might want to add regex `(.*?, .*?), .*?` to remove some unwanted information from the event title.\n"
+      "en": "- Visit <https://www.floersheim-umweltkalender.de/abfuhrtermine.html> and select your location.  \n- Richt click -> copy link address on `Kalender f\u00fcr das ganze Jahr im iCal (ics) Format herunterladen` to get the ical link.\n- Use this link as the `url` parameter.\n- You might want to add regex `(.*?, .*?), .*?` to remove some unwanted information from the event title.\n"
     },
     "urls": {}
   },
@@ -2014,7 +2014,7 @@
   "gfa_lueneburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gfa_lueneburg_de.md",
     "howto": {
-      "de": "Stellen Sie sicher, dass die Adresse genau der entspricht, die vom Website-Formular automatisch vervollständigt wird: https://www.gfa-lueneburg.de/service/abfuhrkalender.html",
+      "de": "Stellen Sie sicher, dass die Adresse genau der entspricht, die vom Website-Formular automatisch vervollst\u00e4ndigt wird: https://www.gfa-lueneburg.de/service/abfuhrkalender.html",
       "en": "Make sure that the address exactly matches the one auto-completed by the website form: https://www.gfa-lueneburg.de/service/abfuhrkalender.html"
     },
     "urls": {}
@@ -2022,7 +2022,7 @@
   "ics_gigu_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gigu_de.md",
     "howto": {
-      "de": "- Gehe zu <https://www.gigu.de/service-rathaus/dienstleistungen-online-rathaus/abfall/abfallkalender/> und wähle deinen Stadtteil aus.\n- Setze `district` auf deine Stadtteilnummer (`1` für Ginsheim, `2` für Gustavsburg).\n- Die `category`-Liste wählt die Abfallarten aus (1-9 für alle Abfallarten). Passe die Liste nach Bedarf an.\n- Setze `dateFrom` und `dateTo` auf den gewünschten Zeitraum (Format: `YYYY-MM-DD`).\n",
+      "de": "- Gehe zu <https://www.gigu.de/service-rathaus/dienstleistungen-online-rathaus/abfall/abfallkalender/> und w\u00e4hle deinen Stadtteil aus.\n- Setze `district` auf deine Stadtteilnummer (`1` f\u00fcr Ginsheim, `2` f\u00fcr Gustavsburg).\n- Die `category`-Liste w\u00e4hlt die Abfallarten aus (1-9 f\u00fcr alle Abfallarten). Passe die Liste nach Bedarf an.\n- Setze `dateFrom` und `dateTo` auf den gew\u00fcnschten Zeitraum (Format: `YYYY-MM-DD`).\n",
       "en": "- Go to <https://www.gigu.de/service-rathaus/dienstleistungen-online-rathaus/abfall/abfallkalender/> and select your district.\n- Set `district` to your district number (`1` for Ginsheim, `2` for Gustavsburg).\n- The `category` list selects which waste types to include (1-9 for all types). Adjust as needed.\n- Set `dateFrom` and `dateTo` to the desired date range (format: `YYYY-MM-DD`).\n"
     },
     "urls": {}
@@ -2030,7 +2030,7 @@
   "ics_gipsprojekt_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gipsprojekt_de.md",
     "howto": {
-      "de": "- Geh auf die Webseite der entsprechenden Region (für Speyer z. B. <https://www.stadtwerke-speyer.de/muellkalender>) und wähle die passende Region/Straße aus.\n- Suche den \"Im iCalendar-Format abonnieren/speichern\"-Link im unteren Teil der Webseite und mache darauf einen Rechtsklick. Kopiere nun die URL.\n- Nutze diese URL als `url`-Parameter.\n- Prüfe die URL auf Jahreszahlen. Diese findest du im Beispiel von Speyer in den `Abfuhrkalender`- und `Jahr`-Parametern. Ersetze sie durch `{%Y}`, wie im Beispiel zu sehen. Dies ermöglicht eine automatische Anpassung des abgerufenen Jahres. Ein manueller Eingriff ist an Silvester dadurch nicht nötig.\n",
+      "de": "- Geh auf die Webseite der entsprechenden Region (f\u00fcr Speyer z. B. <https://www.stadtwerke-speyer.de/muellkalender>) und w\u00e4hle die passende Region/Stra\u00dfe aus.\n- Suche den \"Im iCalendar-Format abonnieren/speichern\"-Link im unteren Teil der Webseite und mache darauf einen Rechtsklick. Kopiere nun die URL.\n- Nutze diese URL als `url`-Parameter.\n- Pr\u00fcfe die URL auf Jahreszahlen. Diese findest du im Beispiel von Speyer in den `Abfuhrkalender`- und `Jahr`-Parametern. Ersetze sie durch `{%Y}`, wie im Beispiel zu sehen. Dies erm\u00f6glicht eine automatische Anpassung des abgerufenen Jahres. Ein manueller Eingriff ist an Silvester dadurch nicht n\u00f6tig.\n",
       "en": "- Go to the collection schedule URL of your service provider (like <https://www.stadtwerke-speyer.de/muellkalender>) and click on your location/street.\n- Right-click the \"Im iCalendar-Format abonnieren/speichern\" link on the bottom half of the page and copy the URL.\n- Use this URL as the `url` parameter\n- Check the URL for any year. In the case of Speyer, it is the case in the `Abfuhrkalender` and `Jahr` argument. Replace it with `{%Y}` as seen in the example configuration. This way the year will be automatically updated.\n"
     },
     "urls": {}
@@ -2038,7 +2038,7 @@
   "ics_hws_halle_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/hws_halle_de.md",
     "howto": {
-      "en": "- Go to <https://hws-halle.de/privatkunden/entsorgung-reinigung/behaelterentsorgung/entsorgungskalender> and enter your address.\n- Click on `Suchen`\n- Right-click on `Termine in Kalender übernehmen` and copy link address.\n- Use this link as the `url` parameter.\n"
+      "en": "- Go to <https://hws-halle.de/privatkunden/entsorgung-reinigung/behaelterentsorgung/entsorgungskalender> and enter your address.\n- Click on `Suchen`\n- Right-click on `Termine in Kalender \u00fcbernehmen` and copy link address.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
   },
@@ -2062,8 +2062,8 @@
   "heinz_entsorgung_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heinz_entsorgung_de.md",
     "howto": {
-      "de": "So erhalten Sie den erforderlichen Parameter:\n1. Öffnen Sie https://abfallkalender.heinz-entsorgung.de/ in Ihrem Browser\n2. Öffnen Sie die Entwicklertools des Browsers (F12)\n3. Gehen Sie zum Tab 'Netzwerk'\n4. Wählen Sie Ihren Ort und Ihre Straße aus\n5. Suchen Sie nach einer Anfrage an 'api-enttermine.heinz-entsorgung.net/termine'\n6. Kopieren Sie den 'param'-Wert aus der URL-Abfragezeichenfolge\n7. Verwenden Sie diesen Wert als 'param'-Argument\n\nHinweis: Der Parameter ist verschlüsselt und spezifisch für Ihre Orts- und Straßenauswahl.\n",
-      "en": "To get the required parameter:\n1. Open https://abfallkalender.heinz-entsorgung.de/ in your browser\n2. Open the browser's Developer Tools (F12)\n3. Go to the 'Network' tab\n4. Select your location (Ort) and street (Straße)\n5. Look for a request to 'api-enttermine.heinz-entsorgung.net/termine'\n6. Copy the 'param' value from the URL query string\n7. Use this value as the 'param' argument\n\nNote: The parameter is encrypted and specific to your location and street selection.\n"
+      "de": "So erhalten Sie den erforderlichen Parameter:\n1. \u00d6ffnen Sie https://abfallkalender.heinz-entsorgung.de/ in Ihrem Browser\n2. \u00d6ffnen Sie die Entwicklertools des Browsers (F12)\n3. Gehen Sie zum Tab 'Netzwerk'\n4. W\u00e4hlen Sie Ihren Ort und Ihre Stra\u00dfe aus\n5. Suchen Sie nach einer Anfrage an 'api-enttermine.heinz-entsorgung.net/termine'\n6. Kopieren Sie den 'param'-Wert aus der URL-Abfragezeichenfolge\n7. Verwenden Sie diesen Wert als 'param'-Argument\n\nHinweis: Der Parameter ist verschl\u00fcsselt und spezifisch f\u00fcr Ihre Orts- und Stra\u00dfenauswahl.\n",
+      "en": "To get the required parameter:\n1. Open https://abfallkalender.heinz-entsorgung.de/ in your browser\n2. Open the browser's Developer Tools (F12)\n3. Go to the 'Network' tab\n4. Select your location (Ort) and street (Stra\u00dfe)\n5. Look for a request to 'api-enttermine.heinz-entsorgung.net/termine'\n6. Copy the 'param' value from the URL query string\n7. Use this value as the 'param' argument\n\nNote: The parameter is encrypted and specific to your location and street selection.\n"
     },
     "urls": {}
   },
@@ -2130,7 +2130,7 @@
   "ics_landkreis_as_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/landkreis_as_de.md",
     "howto": {
-      "en": "- Go to <https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php> and select your location.  \n- Click on `Kalenderübersicht anzegen`.\n- Right click -> copy link address on the `exportieren` link.\n- Use this link as the `url` parameter.\n- You can also use the `regex` to strip unwanted text from the event summary.\n"
+      "en": "- Go to <https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php> and select your location.  \n- Click on `Kalender\u00fcbersicht anzegen`.\n- Right click -> copy link address on the `exportieren` link.\n- Use this link as the `url` parameter.\n- You can also use the `regex` to strip unwanted text from the event summary.\n"
     },
     "urls": {}
   },
@@ -2161,7 +2161,7 @@
   "ics_abfall_hdh_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_hdh_de.md",
     "howto": {
-      "de": "- Gehen Sie auf <https://www.abfall-hdh.de/internet/inhalt/inhalt.php?seite=98> und wählen Sie Ihren Standort.\n- Die meisten Felder sind vorausgefüllt. Fügen Sie im Feld **Parameter** Ihre `gemeinde`, `ortsteil` und `strasse` zum vorhandenen JSON hinzu, z.B.: `{\"gemeinde\": \"Dischingen\", \"ortsteil\": \"Hofen\", \"strasse\": \"\", \"bio\": \"1\", ...}`\n- Setzen Sie `split_at` auf `\\+`, wenn Termine kombinierte Abfallarten enthalten.\n- Setzen Sie Abfallart-Schalter (`bio`, `garten`, `gs`, `rest`, `papier`, `papiertonne`) auf `\"0\"`, um ungewünschte Typen auszublenden.\n",
+      "de": "- Gehen Sie auf <https://www.abfall-hdh.de/internet/inhalt/inhalt.php?seite=98> und w\u00e4hlen Sie Ihren Standort.\n- Die meisten Felder sind vorausgef\u00fcllt. F\u00fcgen Sie im Feld **Parameter** Ihre `gemeinde`, `ortsteil` und `strasse` zum vorhandenen JSON hinzu, z.B.: `{\"gemeinde\": \"Dischingen\", \"ortsteil\": \"Hofen\", \"strasse\": \"\", \"bio\": \"1\", ...}`\n- Setzen Sie `split_at` auf `\\+`, wenn Termine kombinierte Abfallarten enthalten.\n- Setzen Sie Abfallart-Schalter (`bio`, `garten`, `gs`, `rest`, `papier`, `papiertonne`) auf `\"0\"`, um ungew\u00fcnschte Typen auszublenden.\n",
       "en": "- Go to <https://www.abfall-hdh.de/internet/inhalt/inhalt.php?seite=98> and select your location.\n- Most fields are pre-filled. In the **Params** field, add your `gemeinde`, `ortsteil` and `strasse` to the existing JSON, e.g.: `{\"gemeinde\": \"Dischingen\", \"ortsteil\": \"Hofen\", \"strasse\": \"\", \"bio\": \"1\", ...}`\n- Set `split_at` to `\\+` if events contain combined waste types.\n- Set waste type toggles (`bio`, `garten`, `gs`, `rest`, `papier`, `papiertonne`) to `\"0\"` to hide unwanted types.\n"
     },
     "urls": {}
@@ -2169,7 +2169,7 @@
   "landkreis_helmstedt_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/landkreis_helmstedt_de.md",
     "howto": {
-      "de": "Öffne https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html und finde den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.",
+      "de": "\u00d6ffne https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html und finde den Name des ICS Kalenders deiner Gemeinde heraus. \u00d6ffne danach den PDF Kalender und suche die passenden Abholgebiete.",
       "en": "Visit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas."
     },
     "urls": {}
@@ -2177,7 +2177,7 @@
   "ics_kreis_kaiserslautern_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_kaiserslautern_de.md",
     "howto": {
-      "de": "- Besuchen Sie <https://abfallapp.softwareentwicklung-roth.de/web/KL/de/kalender>.\n- Wählen Sie Ihren Ort, Ihre Straße und die Abfallarten aus.\n- Klicken Sie mit der rechten Maustaste auf den `Als iCalendar herunterladen`-Button und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie die Jahreszahl in der URL mit `{%Y}`.\n",
+      "de": "- Besuchen Sie <https://abfallapp.softwareentwicklung-roth.de/web/KL/de/kalender>.\n- W\u00e4hlen Sie Ihren Ort, Ihre Stra\u00dfe und die Abfallarten aus.\n- Klicken Sie mit der rechten Maustaste auf den `Als iCalendar herunterladen`-Button und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie die Jahreszahl in der URL mit `{%Y}`.\n",
       "en": "- Go to <https://abfallapp.softwareentwicklung-roth.de/web/KL/en/kalender>.\n- Select your city, street, and waste types.\n- Right-click on the `Download as iCalendar` button and copy the link.\n- Use this url as the `url` parameter in your configuration.\n- Replace the year in the url with `{%Y}`.\n"
     },
     "urls": {}
@@ -2248,7 +2248,7 @@
   "ics_vogtlandkreis_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/vogtlandkreis_de.md",
     "howto": {
-      "en": "- Go to <https://vogtlandkreis.de/Bürgerservice-und-Verwaltung/Infos-und-Services/Abfallentsorgung/Abfuhrtermine> and select your location.  \n- Click on `URL ANZEIGEN` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.\n- Use this link as the `url` parameter.\n"
+      "en": "- Go to <https://vogtlandkreis.de/B\u00fcrgerservice-und-Verwaltung/Infos-und-Services/Abfallentsorgung/Abfuhrtermine> and select your location.  \n- Click on `URL ANZEIGEN` to get a ical link. If the button is broken use the `URL in Zwichenablage kopieren` button.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
   },
@@ -2315,7 +2315,7 @@
   "ics_moerfelden_walldorf_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/moerfelden_walldorf_de.md",
     "howto": {
-      "de": "- Besuchen Sie <https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp> und wählen Sie Ihre Straße aus.\n- Klicken Sie auf `Herunterladen (ICS)` und wählen Sie `Keine Erinnerung`.\n- Einfacher Weg (Firefox):\n  - Klicken Sie auf `Herunterladen (ICS)` um den Download zu starten.\n  - Klicken Sie auf das Download Icon von Firefox und rechtsklick -> `Download-Link kopieren` auf die ics Datei.\n- Schwieriger Weg (Alle Browser):\n  - Öffnen Sie die Entwicklerwerkzeuge Ihres Browsers (F12) und gehen Sie zum Netzwerk-Tab.\n  - Klicken Sie auf `Herunterladen (ICS)` und suchen Sie nach dem Request, der zum Herunterladen der ics-Datei führt.\n  - Kopieren Sie die URL des Requests.\n- Verwenden Sie diese URL als `url`-Parameter.\n- Ersetzen Sie das Jahr in der URL durch `{%Y}`, damit es automatisch durch das aktuelle Jahr ersetzt wird.\n",
+      "de": "- Besuchen Sie <https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp> und w\u00e4hlen Sie Ihre Stra\u00dfe aus.\n- Klicken Sie auf `Herunterladen (ICS)` und w\u00e4hlen Sie `Keine Erinnerung`.\n- Einfacher Weg (Firefox):\n  - Klicken Sie auf `Herunterladen (ICS)` um den Download zu starten.\n  - Klicken Sie auf das Download Icon von Firefox und rechtsklick -> `Download-Link kopieren` auf die ics Datei.\n- Schwieriger Weg (Alle Browser):\n  - \u00d6ffnen Sie die Entwicklerwerkzeuge Ihres Browsers (F12) und gehen Sie zum Netzwerk-Tab.\n  - Klicken Sie auf `Herunterladen (ICS)` und suchen Sie nach dem Request, der zum Herunterladen der ics-Datei f\u00fchrt.\n  - Kopieren Sie die URL des Requests.\n- Verwenden Sie diese URL als `url`-Parameter.\n- Ersetzen Sie das Jahr in der URL durch `{%Y}`, damit es automatisch durch das aktuelle Jahr ersetzt wird.\n",
       "en": "- Visit <https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp> and select your street.  \n- Click on `Herunterladen (ICS)` and select `Keine Erinnerung`.\n- Easy way (firefox):\n  - Click on `Herunterladen (ICS)` to start the download.\n  - Click on the download icon of Firefox and right click -> `Copy Download Link` on the ics file.\n- Harder Way (All Browsers):\n  - Open your browsers developer tools (F12) and go to the network tab.\n  - Click on `Herunterladen (ICS)` and look for the request that is made to download the ics file.\n  - Copy the URL of the request.\n- Use this URL as `url` parameter.\n- Replace the year in the URL with `{%Y}`, so it will be automatically replaced by the current year.\n"
     },
     "urls": {}
@@ -2362,7 +2362,7 @@
   "ics_rhein_lahn_kreis_abfallwirtschaft_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md",
     "howto": {
-      "de": "- Gehe zu <https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html> und wähle deinen Ort aus.\n- Klicke mit der rechten Maustaste auf den ICS-Link über der Kalendertabelle und kopiere den Link.\n- Verwende diesen Link als `url`-Parameter.\n- Ersetze das Jahr in der `url` durch `{%Y}`, was immer durch das aktuelle Jahr ersetzt wird.\n",
+      "de": "- Gehe zu <https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html> und w\u00e4hle deinen Ort aus.\n- Klicke mit der rechten Maustaste auf den ICS-Link \u00fcber der Kalendertabelle und kopiere den Link.\n- Verwende diesen Link als `url`-Parameter.\n- Ersetze das Jahr in der `url` durch `{%Y}`, was immer durch das aktuelle Jahr ersetzt wird.\n",
       "en": "- Go to <https://www.rhein-lahn-kreis-abfallwirtschaft.de/html/cs_6615.html> and select your location.  \n- Rightclick on the link ICS link above the calendar table and copy the liink address.\n- Use this url as `url` parameter.\n- Replace the year in the `url` with `{%Y}` which will always be replaced with the current year.\n"
     },
     "urls": {}
@@ -2370,8 +2370,8 @@
   "magdeburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/magdeburg_de.md",
     "howto": {
-      "de": "Geben Sie Ihren Straßennamen und die Hausnummer ein, wie auf der SAB Magdeburg Webseite angezeigt (z.B. 'Halberstädter Chaussee 66'). Suchen Sie unter https://sab.ssl.metageneric.de/app/sab_i_tp/index.php",
-      "en": "Enter your street name and house number as shown on the SAB Magdeburg website (e.g. 'Halberstädter Chaussee 66'). Search at https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
+      "de": "Geben Sie Ihren Stra\u00dfennamen und die Hausnummer ein, wie auf der SAB Magdeburg Webseite angezeigt (z.B. 'Halberst\u00e4dter Chaussee 66'). Suchen Sie unter https://sab.ssl.metageneric.de/app/sab_i_tp/index.php",
+      "en": "Enter your street name and house number as shown on the SAB Magdeburg website (e.g. 'Halberst\u00e4dter Chaussee 66'). Search at https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
     },
     "urls": {}
   },
@@ -2390,7 +2390,7 @@
   "ics_sds_schwerin_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sds_schwerin_de.md",
     "howto": {
-      "de": "- Besuchen Sie <https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/> und wählen Sie Ihren Standort.\n- Klicken Sie auf `Exportieren iCal` und kopieren Sie den Link unter `URL in Kalender-App einbinden`\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr in der URL durch `{%Y}`, das immer durch das aktuelle Jahr ersetzt wird.\n",
+      "de": "- Besuchen Sie <https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/> und w\u00e4hlen Sie Ihren Standort.\n- Klicken Sie auf `Exportieren iCal` und kopieren Sie den Link unter `URL in Kalender-App einbinden`\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr in der URL durch `{%Y}`, das immer durch das aktuelle Jahr ersetzt wird.\n",
       "en": "- Visit <https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/> and select your location.  \n- Click on `Exportieren iCal` and copy the link below `URL in Kalender-App einbinden`\n- Use this link as `url` parameter.\n- Replace the year in the URL with `{%Y}`, which will be replaced by the current year.\n"
     },
     "urls": {}
@@ -2410,7 +2410,7 @@
   "ics_stadt_delmenhorst_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadt_delmenhorst_de.md",
     "howto": {
-      "de": "- Gehen Sie zu <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf `iCalendar <Jahr> Altpapiertour <A oder B>` und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link. Sie können das Jahr in der URL mit \"{%Y}\" ersetzen, damit die nächsten Jahre ebenfalls funktionieren.\n",
+      "de": "- Gehen Sie zu <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> und bestimmen Sie Ihren Abfuhrbezirk sowie die Altpapiertour.\n- Klicken Sie mit der rechten Maustaste auf `iCalendar <Jahr> Altpapiertour <A oder B>` und kopieren Sie den Link.\n- Ersetzen Sie die `url` in der Beispielkonfiguration durch diesen Link. Sie k\u00f6nnen das Jahr in der URL mit \"{%Y}\" ersetzen, damit die n\u00e4chsten Jahre ebenfalls funktionieren.\n",
       "en": "- Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> and determine your collection district and the waste paper route.  \n- Right-click on `iCalendar <year> Altpapiertour <A or B>` of your collection district and copy link address.\n- Use this link as the `url` parameter. You can replace the year in the URL with \"{%Y}\" to make it work the next years.\n-\n"
     },
     "urls": {}
@@ -2425,7 +2425,7 @@
   "ics_enger_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/enger_de.md",
     "howto": {
-      "de": "- Besuchen Sie <https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/> und wählen Sie Ihre Straße.\n- Wählen Sie `Jahreskalender` und die Müllarten, die Sie sehen möchten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Abfuhrtermine in elektronischen Kalender übernehmen` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2025`) durch `{%Y}` in der URL.\n- Sie können den `regex`-Parameter auf \"EN (.*): Enger\" setzen, um bessere Titel zu erhalten.\n",
+      "de": "- Besuchen Sie <https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/> und w\u00e4hlen Sie Ihre Stra\u00dfe.\n- W\u00e4hlen Sie `Jahreskalender` und die M\u00fcllarten, die Sie sehen m\u00f6chten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Abfuhrtermine in elektronischen Kalender \u00fcbernehmen` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2025`) durch `{%Y}` in der URL.\n- Sie k\u00f6nnen den `regex`-Parameter auf \"EN (.*): Enger\" setzen, um bessere Titel zu erhalten.\n",
       "en": "- Visit <https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/> and select your Street.  \n- Select `Jahreskalender` and the bin types you want to see (leave all unchecked to get all types).\n- Right-click copy link address on the `Export in Kalenderanwendung` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year (`vJ=2025`) with `{%Y}` in the URL.\n- You may want to set the `regex` parameter to \"EN (.*): Enger\" to get better titles.\n"
     },
     "urls": {}
@@ -2459,7 +2459,7 @@
   "ics_spenge_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/spenge_de.md",
     "howto": {
-      "de": "- Besuchen Sie <https://www.spenge.de/Rathaus-Politik/Allgemeines-Stadtservice/Abfall/Online-Abfall-Kalender/> und wählen Sie Ihre Straße.\n- Wählen Sie `Jahreskalender` und die Müllarten, die Sie sehen möchten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Export in Kalenderanwendung` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2024`) durch `{%Y}` in der URL.\n- Sie können den `regex`-Parameter auf \"SP (.*): Spenge\" setzen, um bessere Titel zu erhalten.\n",
+      "de": "- Besuchen Sie <https://www.spenge.de/Rathaus-Politik/Allgemeines-Stadtservice/Abfall/Online-Abfall-Kalender/> und w\u00e4hlen Sie Ihre Stra\u00dfe.\n- W\u00e4hlen Sie `Jahreskalender` und die M\u00fcllarten, die Sie sehen m\u00f6chten (lassen Sie alle nicht angekreuzt, um alle Arten zu erhalten).\n- Klicken Sie mit der rechten Maustaste auf den Link `Export in Kalenderanwendung` und kopieren Sie die Linkaddresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2024`) durch `{%Y}` in der URL.\n- Sie k\u00f6nnen den `regex`-Parameter auf \"SP (.*): Spenge\" setzen, um bessere Titel zu erhalten.\n",
       "en": "- Visit <https://www.spenge.de/Rathaus-Politik/Allgemeines-Stadtservice/Abfall/Online-Abfall-Kalender/> and select your Street.  \n- Select `Jahreskalender` and the bin types you want to see (leave all unchecked to get all types).\n- Right-click copy link address on the `Export in Kalenderanwendung` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year (`vJ=2024`) with `{%Y}` in the URL.\n- You may want to set the `regex` parameter to \"SP (.*): Spenge\" to get better titles.\n"
     },
     "urls": {}
@@ -2467,8 +2467,8 @@
   "ics_wetzlar_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wetzlar_de.md",
     "howto": {
-      "de": "- Besuchen Sie https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/ und wählen Sie Jahreskalender <Jahr>.\n- Suchen Sie nach Ihrem `Ortsteil und Straße`.\n- Wählen Sie `Ansicht` und die gewünschte `Abfallart`.\n- Klicken Sie auf `anzeigen`.\n- Klicken Sie mit der rechten Maustaste auf den Link `Jahreskalender als iCal` und wählen Sie \"Link-Adresse kopieren\", um den ICAL-Link zu erhalten.\n- Verwenden Sie diesen Link als`url`.\n- Ersetzen Sie das Jahr in (`abfuhrtermine-2024`) mit {%Y}` im URL z.B. `abfuhrtermine-{%Y}`.\n",
-      "en": "- Visit <https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/> and select `Jahreskalender <Jahr>`.\n- Search for your `Ortsteil und Straße`.\n- Select `Ansicht` and the `Abfallart` you want to see.\n- Click `anzeigen`\n- Right-click copy link address on the `Jahreskalender als iCal` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year in(`abfuhrtermine-2024`) with `{%Y}` in the URL e.g. `abfuhrtermine-{%Y}`.\n"
+      "de": "- Besuchen Sie https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/ und w\u00e4hlen Sie Jahreskalender <Jahr>.\n- Suchen Sie nach Ihrem `Ortsteil und Stra\u00dfe`.\n- W\u00e4hlen Sie `Ansicht` und die gew\u00fcnschte `Abfallart`.\n- Klicken Sie auf `anzeigen`.\n- Klicken Sie mit der rechten Maustaste auf den Link `Jahreskalender als iCal` und w\u00e4hlen Sie \"Link-Adresse kopieren\", um den ICAL-Link zu erhalten.\n- Verwenden Sie diesen Link als`url`.\n- Ersetzen Sie das Jahr in (`abfuhrtermine-2024`) mit {%Y}` im URL z.B. `abfuhrtermine-{%Y}`.\n",
+      "en": "- Visit <https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/> and select `Jahreskalender <Jahr>`.\n- Search for your `Ortsteil und Stra\u00dfe`.\n- Select `Ansicht` and the `Abfallart` you want to see.\n- Click `anzeigen`\n- Right-click copy link address on the `Jahreskalender als iCal` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year in(`abfuhrtermine-2024`) with `{%Y}` in the URL e.g. `abfuhrtermine-{%Y}`.\n"
     },
     "urls": {}
   },
@@ -2504,7 +2504,7 @@
   "ics_stadtreinigung_leipzig_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtreinigung_leipzig_de.md",
     "howto": {
-      "en": "- Go to <https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender>, select your location and click on \"Termine anzeigen\".  \n- Download the iCal file by clicking on 'Exportieren' -> `Ganztätig` -> `Herunterladen`.\n- Copy the download link of the ical file (firefox: downloads menu -> right click -> copy download-link).\n- Use this link as the `url` parameter.\n"
+      "en": "- Go to <https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender>, select your location and click on \"Termine anzeigen\".  \n- Download the iCal file by clicking on 'Exportieren' -> `Ganzt\u00e4tig` -> `Herunterladen`.\n- Copy the download link of the ical file (firefox: downloads menu -> right click -> copy download-link).\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
   },
@@ -2528,7 +2528,7 @@
   "ics_stadtwerke_huerth_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/stadtwerke_huerth_de.md",
     "howto": {
-      "en": "- Go to <https://www.stadtwerke-huerth.de/de/Muellkalender/Muellkalender.html> and select your location on the left of the calendar (not the dropdown menu above the calendar).\n- Copy the link of the button `Termine herunterladen` below the calendar.\n- Use this link as the `url` parameter.\n- You may want to change the date in the url to `{%Y}-01-01` für multi year use (not sure if necessary)\n"
+      "en": "- Go to <https://www.stadtwerke-huerth.de/de/Muellkalender/Muellkalender.html> and select your location on the left of the calendar (not the dropdown menu above the calendar).\n- Copy the link of the button `Termine herunterladen` below the calendar.\n- Use this link as the `url` parameter.\n- You may want to change the date in the url to `{%Y}-01-01` f\u00fcr multi year use (not sure if necessary)\n"
     },
     "urls": {}
   },
@@ -2565,7 +2565,7 @@
   "ics_tbr_reutlingen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/tbr_reutlingen_de.md",
     "howto": {
-      "de": "- Öffnen Sie <https://www.tbr-reutlingen.de/entsorgungskalender> und gehen Sie zum Bereich `Entsorgungskalender 2025`.\n- Wählen Sie ihre Straße, die gewünschten Abfallarten und den Zeitraum aus.\n- Klicken Sie mit der rechten Maustaste auf `ICS` und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Der Link beinhaltet einen Abfrageparameter namens `timeperiod`, welcher das Start- und Enddatum des ausgewählten Jahres definiert. Sie müssen dessen Wert von z.B. `20250101-20251231` zu `{%Y}0101-{%Y}1231` abändern.\n",
+      "de": "- \u00d6ffnen Sie <https://www.tbr-reutlingen.de/entsorgungskalender> und gehen Sie zum Bereich `Entsorgungskalender 2025`.\n- W\u00e4hlen Sie ihre Stra\u00dfe, die gew\u00fcnschten Abfallarten und den Zeitraum aus.\n- Klicken Sie mit der rechten Maustaste auf `ICS` und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Der Link beinhaltet einen Abfrageparameter namens `timeperiod`, welcher das Start- und Enddatum des ausgew\u00e4hlten Jahres definiert. Sie m\u00fcssen dessen Wert von z.B. `20250101-20251231` zu `{%Y}0101-{%Y}1231` ab\u00e4ndern.\n",
       "en": "- Open <https://www.tbr-reutlingen.de/entsorgungskalender> and go to section `Entsorgungskalender 2025`.\n- Select your street, desired waste types and timeperiod.\n- Right-click on `ICS` and copy link address.\n- Use this link as `url` parameter.\n- The link contains a query parameter called `timeperiod` which defines the start and end of the selected year. You need to modify the value of it from e.g. `20250101-20251231` to `{%Y}0101-{%Y}1231`.\n"
     },
     "urls": {}
@@ -2578,7 +2578,7 @@
   "tonnenticker_pro_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tonnenticker_pro_de.md",
     "howto": {
-      "de": "Wählen Sie Ihren Ort und verwenden Sie den genauen Straßennamen aus der Tonnenticker Pro App oder der Website des Anbieters.",
+      "de": "W\u00e4hlen Sie Ihren Ort und verwenden Sie den genauen Stra\u00dfennamen aus der Tonnenticker Pro App oder der Website des Anbieters.",
       "en": "Select your municipality, then use the exact street name shown in the Tonnenticker Pro app or the provider's website."
     },
     "urls": {}
@@ -2586,15 +2586,15 @@
   "ics_ebu_ulm_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ebu_ulm_de.md",
     "howto": {
-      "en": "- Go to <https://www.ebu-ulm.de/abfall/abfuhrtermine.php> and select your location.  \n- Scroll down and copy the link of the `ICS Kalenderdaten für Outlook / iCal...` button.\n- Use this link as the `url` parameter.\n- Replcae the year with `{%Y}` to keep the link valid for following years.\n"
+      "en": "- Go to <https://www.ebu-ulm.de/abfall/abfuhrtermine.php> and select your location.  \n- Scroll down and copy the link of the `ICS Kalenderdaten f\u00fcr Outlook / iCal...` button.\n- Use this link as the `url` parameter.\n- Replcae the year with `{%Y}` to keep the link valid for following years.\n"
     },
     "urls": {}
   },
   "ics_vlotho_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/vlotho_de.md",
     "howto": {
-      "de": "- Gehen Sie auf <https://www.vlotho.de/Leben-in-Vlotho/Abfallkalender-online/> und wählen Sie Ihre Straße.\n- Klicken Sie mit der rechten Maustaste auf \"Export in Kalenderanwendung\" und kopieren Sie die URL.\n- Finden Sie den `strasse`-Parameterwert in der URL (z.B. `3136.93.1` für Burgstraße).\n- Verwenden Sie diesen Wert als `strasse`-Parameter.\n",
-      "en": "- Go to <https://www.vlotho.de/Leben-in-Vlotho/Abfallkalender-online/> and select your street.\n- Right-click the \"Export in Kalenderanwendung\" link and copy the URL.\n- Find the `strasse` parameter value in the URL (e.g. `3136.93.1` for Burgstraße).\n- Use this value as the `strasse` parameter below.\n"
+      "de": "- Gehen Sie auf <https://www.vlotho.de/Leben-in-Vlotho/Abfallkalender-online/> und w\u00e4hlen Sie Ihre Stra\u00dfe.\n- Klicken Sie mit der rechten Maustaste auf \"Export in Kalenderanwendung\" und kopieren Sie die URL.\n- Finden Sie den `strasse`-Parameterwert in der URL (z.B. `3136.93.1` f\u00fcr Burgstra\u00dfe).\n- Verwenden Sie diesen Wert als `strasse`-Parameter.\n",
+      "en": "- Go to <https://www.vlotho.de/Leben-in-Vlotho/Abfallkalender-online/> and select your street.\n- Right-click the \"Export in Kalenderanwendung\" link and copy the URL.\n- Find the `strasse` parameter value in the URL (e.g. `3136.93.1` for Burgstra\u00dfe).\n- Use this value as the `strasse` parameter below.\n"
     },
     "urls": {}
   },
@@ -2609,7 +2609,7 @@
   "ics_wbl_luenen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wbl_luenen_de.md",
     "howto": {
-      "de": "- Gehen Sie zu <https://wbl.de/abfallkalender> und suchen Sie Ihre Straße.\n- Kopieren Sie den ICS-Download-Link.\n- Ersetzen Sie das Jahr in der URL (z.B. `ical2026.php`) durch `ical{%Y}.php`.\n",
+      "de": "- Gehen Sie zu <https://wbl.de/abfallkalender> und suchen Sie Ihre Stra\u00dfe.\n- Kopieren Sie den ICS-Download-Link.\n- Ersetzen Sie das Jahr in der URL (z.B. `ical2026.php`) durch `ical{%Y}.php`.\n",
       "en": "- Go to <https://wbl.de/abfallkalender> and search for your street.\n- Copy the ICS download link.\n- Replace the year in the URL (e.g. `ical2026.php`) with `ical{%Y}.php`.\n"
     },
     "urls": {}
@@ -2622,7 +2622,7 @@
   "ics_wilnsdorf_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wilnsdorf_de.md",
     "howto": {
-      "de": "- Besuche <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> und wähle deinen Addresse.\n- Wähle `Jahreskalender` und deine gewünschten Abfallarten.\n- Rechtsklick -> `Linkadresse kopieren` auf den `Export in Kalenderanwendung` Button.\n- Verwende diese URL als `url` Parameter.\n- **wichtig**: ersetze das Jahr in der URL (`vJ=20XX`) mit `{%Y}` damit es automatisch aktualisiert wird.\n- Du musst möglicherweise `verify_ssl: False` setzen, da es ein Problem mit dem SSL-Zertifikat der Website zu geben scheint.\n- Mit dem Regex `(.+):.*` wird der Ort aus dem Titel entfernt.\n",
+      "de": "- Besuche <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> und w\u00e4hle deinen Addresse.\n- W\u00e4hle `Jahreskalender` und deine gew\u00fcnschten Abfallarten.\n- Rechtsklick -> `Linkadresse kopieren` auf den `Export in Kalenderanwendung` Button.\n- Verwende diese URL als `url` Parameter.\n- **wichtig**: ersetze das Jahr in der URL (`vJ=20XX`) mit `{%Y}` damit es automatisch aktualisiert wird.\n- Du musst m\u00f6glicherweise `verify_ssl: False` setzen, da es ein Problem mit dem SSL-Zertifikat der Website zu geben scheint.\n- Mit dem Regex `(.+):.*` wird der Ort aus dem Titel entfernt.\n",
       "en": "- Visit <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> and select your location.\n- Select `Jahreskalender` and your desired waste types.\n- Right-click -> `Copy link address` on the `Export in Kalenderanwendung` button.\n- Use this URL as the `url` parameter.\n- **important**: replace the year in the URL (`vJ=20XX`) with `{%Y}` so it will be automatically updated.\n- You might need to set `verify_ssl: False` as there seems to be an issue with the website's SSL certificate.\n- Using regex `(.+):.*` will remove the location from the title.\n"
     },
     "urls": {}
@@ -2647,8 +2647,8 @@
   "ics_zb_gladbeck_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/zb_gladbeck_de.md",
     "howto": {
-      "de": "- Besuchen Sie <https://www.zb-gladbeck.de/Abfuhrkalender-2326374551.html> und wählen Sie Ihre Adresse aus.\n- Klicken Sie auf `Termine für Kalender exportieren`, dann auf `Kalender abonnieren`, um den ical-Link zu erhalten.\n- Verwenden Sie diese URL als `url`-Parameter.\n",
-      "en": "- Visit <https://www.zb-gladbeck.de/Abfuhrkalender-2326374551.html> and select your location.  \n- Click on `Termine für Kalender exportieren`, then `Kalender abonnieren` to get the ical link.\n- Use this url as `url` parameter.\n"
+      "de": "- Besuchen Sie <https://www.zb-gladbeck.de/Abfuhrkalender-2326374551.html> und w\u00e4hlen Sie Ihre Adresse aus.\n- Klicken Sie auf `Termine f\u00fcr Kalender exportieren`, dann auf `Kalender abonnieren`, um den ical-Link zu erhalten.\n- Verwenden Sie diese URL als `url`-Parameter.\n",
+      "en": "- Visit <https://www.zb-gladbeck.de/Abfuhrkalender-2326374551.html> and select your location.  \n- Click on `Termine f\u00fcr Kalender exportieren`, then `Kalender abonnieren` to get the ical link.\n- Use this url as `url` parameter.\n"
     },
     "urls": {}
   },
@@ -2667,7 +2667,7 @@
   "zvo_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zvo_com.md",
     "howto": {
-      "de": "Finden Sie Ihren Ort und Ihre Straße unter https://www.zvo.com/abfuhrkalender2026. Einige kleinere Orte benötigen keine Straße.",
+      "de": "Finden Sie Ihren Ort und Ihre Stra\u00dfe unter https://www.zvo.com/abfuhrkalender2026. Einige kleinere Orte ben\u00f6tigen keine Stra\u00dfe.",
       "en": "Find your city and street at https://www.zvo.com/abfuhrkalender2026. Some smaller towns do not require a street."
     },
     "urls": {}
@@ -2746,7 +2746,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aliaserviziambientali_it.md",
     "howto": {
       "en": "Visit <https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti> and select your municiaplity, if you see an embedded calendar you can just use the municipality name, and leave the area empty. If you see a list of areas, you need to follow the link to the area calendar, there you can fin the area ID in the URL, for example: `https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario` the area ID is `67333`.",
-      "it": "Visita https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti e seleziona il tuo comune. Se vedi un calendario incorporato, puoi semplicemente utilizzare il nome del comune e lasciare vuoto il campo dell'area. Se invece vedi un elenco di aree, devi seguire il link al calendario dell'area; lì puoi trovare l'ID dell'area nell'URL, ad esempio: https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario l'ID dell'area è 67333."
+      "it": "Visita https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti e seleziona il tuo comune. Se vedi un calendario incorporato, puoi semplicemente utilizzare il nome del comune e lasciare vuoto il campo dell'area. Se invece vedi un elenco di aree, devi seguire il link al calendario dell'area; l\u00ec puoi trovare l'ID dell'area nell'URL, ad esempio: https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario l'ID dell'area \u00e8 67333."
     },
     "urls": {}
   },
@@ -2754,7 +2754,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
     "howto": {
       "en": "You need to provide the street name and house number of your address, as well as the city.",
-      "it": "Devi fornire il nome della via e il numero civico del tuo indirizzo, oltre alla città."
+      "it": "Devi fornire il nome della via e il numero civico del tuo indirizzo, oltre alla citt\u00e0."
     },
     "urls": {}
   },
@@ -2801,7 +2801,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/isontinambiente_it.md",
     "howto": {
       "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> and select your address. The address ID is the number at the end of the URL. e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` the address ID is `1172`.",
-      "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> e seleziona il tuo indirizzo. L'ID dell'indirizzo è il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo è `1172`."
+      "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> e seleziona il tuo indirizzo. L'ID dell'indirizzo \u00e8 il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo \u00e8 `1172`."
     },
     "urls": {}
   },
@@ -3131,7 +3131,7 @@
   "smiecioplan_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/smiecioplan_pl.md",
     "howto": {
-      "de": "Gehen Sie auf https://smiecioplan.pl und suchen Sie nach Ihrer Adresse. Verwenden Sie die Stadt, den Straßennamen (Großbuchstaben) und die Hausnummer.",
+      "de": "Gehen Sie auf https://smiecioplan.pl und suchen Sie nach Ihrer Adresse. Verwenden Sie die Stadt, den Stra\u00dfennamen (Gro\u00dfbuchstaben) und die Hausnummer.",
       "en": "Go to https://smiecioplan.pl and search for your address. Use the city, street name (uppercase), and house number."
     },
     "urls": {}
@@ -3352,10 +3352,10 @@
   "msva_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/msva_se.md",
     "howto": {
-      "de": "Geben Sie die vollständige Adresse für ein Grundstück in der Gemeinde Sundsvall ein. Die API unterstützt nur Sundsvall (Gemeindecode 2281) — Adressen in Timrå und Nordanstig werden nicht abgedeckt.",
-      "en": "Enter the full street address for a property in Sundsvall kommun. The API only supports Sundsvall (municipality code 2281) — Timrå and Nordanstig addresses are not covered. Use the same street, house number, postal code and city you would enter on msva.se.",
-      "fr": "Saisissez l'adresse complète d'une propriété dans la commune de Sundsvall. L'API ne prend en charge que Sundsvall (code communal 2281) ; les adresses de Timrå et Nordanstig ne sont pas couvertes.",
-      "it": "Inserire l'indirizzo completo di una proprietà nel comune di Sundsvall. L'API supporta solo Sundsvall (codice comunale 2281); gli indirizzi di Timrå e Nordanstig non sono coperti."
+      "de": "Geben Sie die vollst\u00e4ndige Adresse f\u00fcr ein Grundst\u00fcck in der Gemeinde Sundsvall ein. Die API unterst\u00fctzt nur Sundsvall (Gemeindecode 2281) \u2014 Adressen in Timr\u00e5 und Nordanstig werden nicht abgedeckt.",
+      "en": "Enter the full street address for a property in Sundsvall kommun. The API only supports Sundsvall (municipality code 2281) \u2014 Timr\u00e5 and Nordanstig addresses are not covered. Use the same street, house number, postal code and city you would enter on msva.se.",
+      "fr": "Saisissez l'adresse compl\u00e8te d'une propri\u00e9t\u00e9 dans la commune de Sundsvall. L'API ne prend en charge que Sundsvall (code communal 2281) ; les adresses de Timr\u00e5 et Nordanstig ne sont pas couvertes.",
+      "it": "Inserire l'indirizzo completo di una propriet\u00e0 nel comune di Sundsvall. L'API supporta solo Sundsvall (codice comunale 2281); gli indirizzi di Timr\u00e5 e Nordanstig non sono coperti."
     },
     "urls": {}
   },
@@ -3431,7 +3431,7 @@
   "telge_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/telge_se.md",
     "howto": {
-      "en": "Find your address at https://www.telge.se by searching for your street name in the waste collection schedule (Sopbilsschema). Use the exact address string shown in the autocomplete dropdown, e.g. 'BERGSGATAN 22, SÖDERTÄLJE'."
+      "en": "Find your address at https://www.telge.se by searching for your street name in the waste collection schedule (Sopbilsschema). Use the exact address string shown in the autocomplete dropdown, e.g. 'BERGSGATAN 22, S\u00d6DERT\u00c4LJE'."
     },
     "urls": {}
   },
@@ -3453,7 +3453,7 @@
   "varmdo_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/varmdo_se.md",
     "howto": {
-      "en": "Enter your street name as shown on the Värmdö kommun waste collection page."
+      "en": "Enter your street name as shown on the V\u00e4rmd\u00f6 kommun waste collection page."
     },
     "urls": {}
   },
@@ -3488,10 +3488,10 @@
   "buchegg_so_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buchegg_so_ch.md",
     "howto": {
-      "de": "Wählen Sie Ihre Ortschaft aus der Liste.",
+      "de": "W\u00e4hlen Sie Ihre Ortschaft aus der Liste.",
       "en": "Select your village from the list.",
-      "fr": "Sélectionnez votre localité dans la liste.",
-      "it": "Selezionate la vostra località dalla lista."
+      "fr": "S\u00e9lectionnez votre localit\u00e9 dans la liste.",
+      "it": "Selezionate la vostra localit\u00e0 dalla lista."
     },
     "urls": {}
   },
@@ -3518,7 +3518,7 @@
   "ics_wuerenlos_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerenlos_ch.md",
     "howto": {
-      "en": "Würenlos publishes a public iCalendar feed at\n`https://www.wuerenlos.ch/fileadmin/00_website/entsorgungskalender/Entsorgungskalender_Wuerenlos_{%Y}.ics`.\nUse this URL as the `url` parameter — `{%Y}` is replaced with the\ncurrent year automatically.\n"
+      "en": "W\u00fcrenlos publishes a public iCalendar feed at\n`https://www.wuerenlos.ch/fileadmin/00_website/entsorgungskalender/Entsorgungskalender_Wuerenlos_{%Y}.ics`.\nUse this URL as the `url` parameter \u2014 `{%Y}` is replaced with the\ncurrent year automatically.\n"
     },
     "urls": {}
   },
@@ -3526,7 +3526,7 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gossau_zh_ch.md",
     "howto": {
       "de": "Verwenden Sie die untenstehende URL. Alle Gebiete von Gossau ZH sind in einem Kalender enthalten.\nVerwenden Sie den `types`-Filter in Ihrer Sensorkonfiguration, um nur Ihr Gebiet anzuzeigen.\n",
-      "en": "Use the URL below. All areas of Gossau ZH are included in a single calendar.\nUse the `types` filter in your sensor configuration to show only your area\n(e.g. \"Kehricht und Sperrgut (Gossau-Dorf, Grüt, Ober-Ottikon, Hellberg)\").\n"
+      "en": "Use the URL below. All areas of Gossau ZH are included in a single calendar.\nUse the `types` filter in your sensor configuration to show only your area\n(e.g. \"Kehricht und Sperrgut (Gossau-Dorf, Gr\u00fct, Ober-Ottikon, Hellberg)\").\n"
     },
     "urls": {}
   },
@@ -3585,7 +3585,7 @@
   "ics_seon_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md",
     "howto": {
-      "de": "- Aktuell stellt <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370> leider nur die PDF-Version zur Verfügung\n- Daher bitte den RAW-Link zum ics-File im Repository <https://github.com/starwarsfan/entsorgungskalender> verwenden\n- `url` in der Beispielkonfiguration mit <https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics> ersetzen.\n",
+      "de": "- Aktuell stellt <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370> leider nur die PDF-Version zur Verf\u00fcgung\n- Daher bitte den RAW-Link zum ics-File im Repository <https://github.com/starwarsfan/entsorgungskalender> verwenden\n- `url` in der Beispielkonfiguration mit <https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics> ersetzen.\n",
       "en": "- Currently <https://www.seon.ch/verwaltung/dienstleistungen.html/21/service/370> provides only a PDF version of the waste schedule\n- Because of this use the RAW link to the ics file within repository <https://github.com/starwarsfan/entsorgungskalender>\n- Use <https://raw.githubusercontent.com/starwarsfan/entsorgungskalender/refs/heads/main/entsorgungskalender.ics> as the `url` parameter.\n"
     },
     "urls": {}
@@ -3787,7 +3787,7 @@
   "bolsover_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bolsover_gov_uk.md",
     "howto": {
-      "en": "Check your bin calendar letter (A or B) and collection day (Tuesday–Friday) on the Bolsover website at https://www.bolsover.gov.uk/services/b/bins-and-recycling/."
+      "en": "Check your bin calendar letter (A or B) and collection day (Tuesday\u2013Friday) on the Bolsover website at https://www.bolsover.gov.uk/services/b/bins-and-recycling/."
     },
     "urls": {}
   },
@@ -5636,6 +5636,11 @@
   },
   "sunbury_ohio_org": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunbury_ohio_org.md",
+    "howto": {},
+    "urls": {}
+  },
+  "maitland_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maitland_nsw_gov_au.md",
     "howto": {},
     "urls": {}
   }
