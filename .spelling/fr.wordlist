@@ -1,0 +1,25 @@
+# Mots autorisés spécifiques au projet en français.
+# Termes réels manquants dans le dictionnaire standard fr_FR
+# (noms propres, acronymes, vocabulaire technique).
+
+# Acronymes / Techniques
+URL
+UPRN
+HPID
+SSL
+JSON
+YAML
+GraphQL
+
+# Vocabulaire de la collecte
+ordures
+déchets
+recyclage
+biodéchets
+encombrants
+
+# Termes d'adresse / administration
+commune
+arrondissement
+intercommunalité
+sousdomaine

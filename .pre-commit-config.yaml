@@ -13,16 +13,23 @@ repos:
           - --safe
           - --quiet
         files: ^((custom_components|script|tests)/.+)?[^/]+\.py$
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+  # pyspelling replaces codespell. Per-language hunspell dictionaries
+  # spell-check each language's i18n YAML file (en against en_US, de against
+  # de_DE, etc.) plus the TITLE / DESCRIPTION strings extracted from source
+  # modules. Project-specific allowed words live in .spelling/<lang>.wordlist.
+  # See .pyspelling.yml for the matrix.
+  #
+  # Manual run:  pyspelling -c .pyspelling.yml
+  # Local install:  pip install pyspelling   (then sudo apt install hunspell + dicts)
+  - repo: local
     hooks:
-      - id: codespell
-        args:
-          - -I
-          - .codespellignore
-          - --skip="./.*,*.csv,*.json"
-          - --quiet-level=2
-        exclude_types: [csv, json]
+      - id: pyspelling
+        name: pyspelling (per-language)
+        language: system
+        pass_filenames: false
+        entry: bash -c 'python scripts/extract_titles.py && pyspelling -c .pyspelling.yml'
+        files: ^(custom_components/waste_collection_schedule/i18n/|custom_components/waste_collection_schedule/waste_collection_schedule/source/.+\.py$|\.spelling/|\.pyspelling\.yml$)
+        stages: [manual]
   - repo: https://github.com/pycqa/flake8
     rev: 7.2.0
     hooks:

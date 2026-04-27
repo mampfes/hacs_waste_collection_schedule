@@ -1,0 +1,28 @@
+# Parole consentite specifiche del progetto in italiano.
+# Termini reali assenti dal dizionario standard it_IT
+# (nomi propri, acronimi, vocabolario tecnico).
+
+# Acronimi / Tecnico
+URL
+UPRN
+HPID
+CAP
+SSL
+JSON
+YAML
+GraphQL
+
+# Vocabolario della raccolta
+indifferenziato
+organico
+multimateriale
+ingombranti
+plastica
+vetro
+carta
+cartone
+
+# Termini di indirizzo
+comune
+municipalità
+quartiere

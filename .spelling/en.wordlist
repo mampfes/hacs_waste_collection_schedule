@@ -1,0 +1,34 @@
+# Project-specific English allowed words.
+# These are real terms (place names, council acronyms, technical IDs) that
+# the standard en_US hunspell dictionary doesn't know about.
+# Add to this file rather than .codespellignore for new false positives.
+
+# Acronyms / technical
+HPID
+PID
+SSL
+URL
+UPRN
+APIs
+
+# Property identifier conventions
+postcode
+postcodes
+mapkey
+configurable
+preconfigured
+
+# Common waste / collection vocabulary
+recyclables
+biowaste
+greenwaste
+greenswaste
+kerbside
+
+# Software / package names referenced in source descriptions
+HACS
+Hassio
+ICS
+JSON
+YAML
+GraphQL

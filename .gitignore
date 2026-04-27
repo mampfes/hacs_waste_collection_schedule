@@ -9,3 +9,6 @@ custom_components/waste_collection_schedule/waste_collection_schedule/test/secre
 .venv/
 .idea/
 .python-version
+
+# pyspelling extracts and Hunspell-compiled dictionaries
+build/

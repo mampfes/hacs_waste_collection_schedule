@@ -1,0 +1,34 @@
+# Projektspezifische deutsche Zulassungswörter.
+# Echte Begriffe, die im Standard-de_DE-Wörterbuch fehlen
+# (Eigennamen, Akronyme, Fachbegriffe).
+
+# Akronyme / Technisches
+PLZ
+URL
+UPRN
+HPID
+SSL
+
+# Abfallwirtschaft-Vokabular
+Mülltonne
+Restmüll
+Biotonne
+Wertstoff
+Wertstoffhof
+Abfuhrkalender
+Abholtermine
+Sperrmüll
+Restabfall
+Bioabfall
+Gelbe
+Müllabfuhr
+Hausabfall
+
+# Strukturbegriffe
+Ortsteil
+Ortsgemeinde
+Gemeinde
+Bezirk
+Stadtteil
+Teilgebiet
+Subdomain

@@ -1,0 +1,153 @@
+# Per-language spell-check matrix for the i18n catalogs.
+#
+# Each language file in i18n/shared, i18n/phrases, and i18n/sources gets
+# checked against the matching hunspell dictionary. Project-specific
+# allowed words live in .spelling/<lang>.wordlist (place names, council
+# acronyms, technical terms not in the standard dictionary).
+#
+# Run:  pyspelling -c .pyspelling.yml
+# CI installs hunspell + the en/de/fr/it dictionaries; locally on Linux:
+#   sudo apt-get install -y hunspell hunspell-en-us hunspell-de-de \
+#                           hunspell-fr hunspell-it
+#
+# Author can scope a single language with:
+#   pyspelling -c .pyspelling.yml --name shared-en
+matrix:
+  # ------------------------------------------------------------------ EN
+  - name: shared-en
+    sources:
+      - 'custom_components/waste_collection_schedule/i18n/shared/en.yaml'
+      - 'custom_components/waste_collection_schedule/i18n/phrases/en.yaml'
+      - 'custom_components/waste_collection_schedule/i18n/sources/**/en.yaml'
+    aspell:
+      lang: en
+      d: en_US
+    dictionary:
+      wordlists:
+        - .spelling/en.wordlist
+      output: build/dictionary/en.dic
+    pipeline:
+      - pyspelling.filters.text:
+      - pyspelling.filters.url:
+      - pyspelling.filters.context:
+          context_visible_first: true
+          escapes: '\\[\\`]'
+          delimiters:
+            # strip {placeholders} so format strings don't tank the check
+            - open: '\{'
+              close: '\}'
+
+  # ------------------------------------------------------------------ DE
+  - name: shared-de
+    sources:
+      - 'custom_components/waste_collection_schedule/i18n/shared/de.yaml'
+      - 'custom_components/waste_collection_schedule/i18n/phrases/de.yaml'
+      - 'custom_components/waste_collection_schedule/i18n/sources/**/de.yaml'
+    aspell:
+      lang: de
+      d: de_DE
+    dictionary:
+      wordlists:
+        - .spelling/de.wordlist
+      output: build/dictionary/de.dic
+    pipeline:
+      - pyspelling.filters.text:
+      - pyspelling.filters.url:
+      - pyspelling.filters.context:
+          context_visible_first: true
+          escapes: '\\[\\`]'
+          delimiters:
+            - open: '\{'
+              close: '\}'
+
+  # ------------------------------------------------------------------ FR
+  - name: shared-fr
+    sources:
+      - 'custom_components/waste_collection_schedule/i18n/shared/fr.yaml'
+      - 'custom_components/waste_collection_schedule/i18n/phrases/fr.yaml'
+      - 'custom_components/waste_collection_schedule/i18n/sources/**/fr.yaml'
+    aspell:
+      lang: fr
+      d: fr_FR
+    dictionary:
+      wordlists:
+        - .spelling/fr.wordlist
+      output: build/dictionary/fr.dic
+    pipeline:
+      - pyspelling.filters.text:
+      - pyspelling.filters.url:
+      - pyspelling.filters.context:
+          context_visible_first: true
+          escapes: '\\[\\`]'
+          delimiters:
+            - open: '\{'
+              close: '\}'
+
+  # ------------------------------------------------------------------ IT
+  - name: shared-it
+    sources:
+      - 'custom_components/waste_collection_schedule/i18n/shared/it.yaml'
+      - 'custom_components/waste_collection_schedule/i18n/phrases/it.yaml'
+      - 'custom_components/waste_collection_schedule/i18n/sources/**/it.yaml'
+    aspell:
+      lang: it
+      d: it_IT
+    dictionary:
+      wordlists:
+        - .spelling/it.wordlist
+      output: build/dictionary/it.dic
+    pipeline:
+      - pyspelling.filters.text:
+      - pyspelling.filters.url:
+      - pyspelling.filters.context:
+          context_visible_first: true
+          escapes: '\\[\\`]'
+          delimiters:
+            - open: '\{'
+              close: '\}'
+
+  # ------------------------------------------------ TITLE / DESCRIPTION
+  # TITLE, DESCRIPTION and EXTRA_INFO[].title still live inside the .py
+  # source modules. ``scripts/extract_titles.py`` writes them out grouped
+  # by the source's TITLE_LANG / DESCRIPTION_LANG / EXTRA_INFO_LANG flag
+  # (default 'en'). Each output file gets matched against the right
+  # hunspell dictionary by the entries below.
+  - name: titles-en
+    sources: ['build/i18n-extracted/titles_en.txt']
+    aspell:
+      lang: en
+      d: en_US
+    dictionary:
+      wordlists:
+        - .spelling/en.wordlist
+      output: build/dictionary/titles_en.dic
+
+  - name: titles-de
+    sources: ['build/i18n-extracted/titles_de.txt']
+    aspell:
+      lang: de
+      d: de_DE
+    dictionary:
+      wordlists:
+        - .spelling/de.wordlist
+      output: build/dictionary/titles_de.dic
+
+  - name: titles-fr
+    sources: ['build/i18n-extracted/titles_fr.txt']
+    aspell:
+      lang: fr
+      d: fr_FR
+    dictionary:
+      wordlists:
+        - .spelling/fr.wordlist
+      output: build/dictionary/titles_fr.dic
+
+  - name: titles-it
+    sources: ['build/i18n-extracted/titles_it.txt']
+    aspell:
+      lang: it
+      d: it_IT
+    dictionary:
+      wordlists:
+        - .spelling/it.wordlist
+      output: build/dictionary/titles_it.dic
