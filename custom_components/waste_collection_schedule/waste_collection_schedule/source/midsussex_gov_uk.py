@@ -23,19 +23,19 @@ DATE_FORMAT = "%d/%m/%Y"
 TEST_CASES = {
     # 1. Simple Numerical Address
     "Test Case 1: 23 High Street": {
-        "number": "23",
+        "house_number": "23",
         "street_name": "HIGH STREET",
         "postcode": "RH17 6TB",
     },
     # 2. Complex Named Property
     "Test Case 2: Hapstead Hall": {
-        "number": "HAPSTEAD HALL",
+        "house_number": "HAPSTEAD HALL",
         "street_name": "HIGH STREET",
         "postcode": "RH17 6TB",
     },
     # 3. Commercial/Pub Named Property
     "Test Case 3: The Gardeners Arms": {
-        "number": "THE GARDENERS ARMS",
+        "house_number": "THE GARDENERS ARMS",
         "street_name": "SELSFIELD ROAD",
         "postcode": "RH17 6TJ",
     },
@@ -64,19 +64,11 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 class Source:
     def __init__(
         self,
-        number: str | None = None,
+        house_number: str,
         street_name: str = "",
         postcode: str = "",
-        house_number: str | None = None,
     ):
-        # Support legacy 'house_number' parameter for backwards compatibility
-        if number is None and house_number is None:
-            raise SourceArgumentException(
-                "Either 'number' or 'house_number' must be provided.", argument="number"
-            )
-        resolved = number or house_number
-        assert resolved is not None
-        self._number = resolved.strip()
+        self._number = house_number.strip()
         self._street = street_name.strip()
         self._postcode = postcode.strip().replace(" ", "+")  # URL-encode space
 
@@ -132,7 +124,7 @@ class Source:
             )
 
             if not address_link:
-                raise SourceArgumentNotFound("number", self._number)
+                raise SourceArgumentNotFound("house_number", self._number)
 
             final_link_path = address_link["href"]  # type: ignore[index]
             final_schedule_url = f"{BASE_URL}/{final_link_path}"

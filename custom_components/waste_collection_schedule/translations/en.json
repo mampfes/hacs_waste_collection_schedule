@@ -24806,14 +24806,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
-          "number": "House/Business Name/Number",
           "postcode": "Postcode",
           "street_name": "Street Name"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "house_number": "House number of the property.",
-          "number": "Enter the house name (e.g., HAPSTEAD HALL) or number (e.g., 11), or the business name.",
           "postcode": "Postcode of the property.",
           "street_name": "Street name of the property."
         }
@@ -24824,13 +24822,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
-          "number": "House/Business Name/Number",
           "postcode": "Postcode",
           "street_name": "Street Name"
         },
         "data_description": {
           "house_number": "House number of the property.",
-          "number": "Enter the house name (e.g., HAPSTEAD HALL) or number (e.g., 11), or the business name.",
           "postcode": "Postcode of the property.",
           "street_name": "Street name of the property."
         }
@@ -24890,7 +24886,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number or Name",
+          "house_number": "House Number",
           "postcode": "Postcode"
         },
         "data_description": {
@@ -24904,7 +24900,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number or Name",
+          "house_number": "House Number",
           "postcode": "Postcode"
         },
         "data_description": {

@@ -23260,7 +23260,6 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "Numéro civique",
-          "number": "Numéro",
           "postcode": "Code postal",
           "street_name": "Nom de rue"
         },
@@ -23277,7 +23276,6 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "Numéro civique",
-          "number": "Numéro",
           "postcode": "Code postal",
           "street_name": "Nom de rue"
         },

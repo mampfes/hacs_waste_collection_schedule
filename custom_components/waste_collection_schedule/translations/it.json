@@ -22953,7 +22953,6 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Civico",
-          "number": "Numero",
           "postcode": "Codice Postale CAP",
           "street_name": "Nome Strada"
         },
@@ -22970,7 +22969,6 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Civico",
-          "number": "Numero",
           "postcode": "Codice Postale CAP",
           "street_name": "Nome Strada"
         },
