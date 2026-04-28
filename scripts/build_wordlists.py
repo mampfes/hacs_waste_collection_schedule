@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
-"""Concatenate base + per-source wordlists into per-language build files.
+"""Concatenate common + per-language + per-source wordlists into build files.
 
-Mirrors the i18n catalog structure: project-wide allowed words live in
-``.spelling/<lang>.wordlist``; source-specific names / acronyms live next
-to the source module at
-``custom_components/.../source/<source_id>.i18n/<lang>.wordlist``. This
-script merges both layers into ``build/spelling/<lang>.wordlist``, which
-``.pyspelling.yml`` consumes.
+Three layers feed each language's build wordlist:
+
+* ``.spelling/common.wordlist`` -- cross-language tokens (YAML structural
+  keys, English parameter identifier keys that show up unchanged in every
+  language's value catalog).
+* ``.spelling/<lang>.wordlist`` -- language-specific common terms.
+* ``custom_components/.../source/<source_id>.i18n/<lang>.wordlist`` --
+  per-source names / acronyms, sibling of the source module.
+
+This script merges all three into ``build/spelling/<lang>.wordlist``,
+which ``.pyspelling.yml`` consumes.
 
 Run before ``pyspelling -c .pyspelling.yml``. CI does this automatically;
 locally::
@@ -55,6 +60,7 @@ def _per_source_wordlists(lang: str) -> list[Path]:
 def build(out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     spelling_dir = REPO_ROOT / ".spelling"
+    common = spelling_dir / "common.wordlist"
 
     for lang in LANGUAGES:
         merged: list[str] = []
@@ -69,6 +75,7 @@ def build(out_dir: Path) -> None:
                     count += 1
             return count
 
+        common_count = add(common) if common.exists() else 0
         base = spelling_dir / f"{lang}.wordlist"
         base_count = add(base) if base.exists() else 0
 
@@ -79,8 +86,8 @@ def build(out_dir: Path) -> None:
         out_path.write_text("\n".join(merged) + "\n", encoding="utf-8")
         print(
             f"[{lang}] {out_path.relative_to(REPO_ROOT)}: "
-            f"{base_count} base + {per_source_count} from "
-            f"{len(per_source_files)} per-source file(s) = "
+            f"{common_count} common + {base_count} base + {per_source_count} "
+            f"from {len(per_source_files)} per-source file(s) = "
             f"{len(merged)} unique words"
         )
 

@@ -1,0 +1,82 @@
+# Cross-language allowed words.
+# These words appear in EVERY i18n YAML file regardless of the language,
+# either as YAML structural keys or as parameter identifier keys (which
+# are English by convention even inside de/fr/it value catalogs). Adding
+# them here once -- vs. per-language wordlists -- avoids 4x duplication.
+#
+# `scripts/build_wordlists.py` prepends this file to every language's
+# build wordlist.
+
+# YAML structural keys
+params
+label
+description
+
+# Parameter identifier keys (single-word components -- compound keys like
+# `house_number` get tokenized by hunspell on the underscore, so the
+# components are what hunspell actually checks). Sourced from
+# i18n/shared/<lang>.yaml. Keep alphabetised.
+address
+api
+area
+bill
+building
+calendar
+city
+code
+count
+county
+customer
+dates
+district
+email
+excludes
+file
+frequency
+house
+id
+interval
+key
+lat
+location
+lon
+method
+municipality
+name
+number
+object
+or
+password
+phone
+postcode
+predict
+premises
+project
+property
+provider
+region
+sector
+separator
+service
+splitter
+ssl
+start
+state
+street
+suburb
+suffix
+title
+town
+types
+unit
+until
+uprn
+url
+username
+values
+verify
+version
+waste
+weekdays
+zip
+zone

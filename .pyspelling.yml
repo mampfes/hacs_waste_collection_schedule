@@ -2,13 +2,16 @@
 #
 # Each language file in i18n/shared, i18n/phrases, and per-source
 # overrides at source/<id>.i18n/ gets checked against the matching
-# hunspell dictionary. Project-specific allowed words split into two
+# hunspell dictionary. Project-specific allowed words split into three
 # layers:
-#   - .spelling/<lang>.wordlist                          -- project-wide
+#   - .spelling/common.wordlist                          -- cross-language
+#                                                          (YAML keys,
+#                                                          param ids)
+#   - .spelling/<lang>.wordlist                          -- language-wide
 #   - source/<source_id>.i18n/<lang>.wordlist            -- per-source
 #                                                          (sibling of
 #                                                           the .py)
-# `scripts/build_wordlists.py` concatenates both into
+# `scripts/build_wordlists.py` concatenates all three into
 # `build/spelling/<lang>.wordlist`, which this config consumes.
 #
 # Run (must build wordlists first so per-source overrides are picked up):
