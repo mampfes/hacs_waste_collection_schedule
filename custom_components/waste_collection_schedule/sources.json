@@ -4985,6 +4985,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Shawinigan (QC)",
+      "module": "shawinigan_ca",
+      "default_params": {},
+      "id": "shawinigan_ca"
+    },
+    {
       "title": "Sherbrooke (QC)",
       "module": "ics",
       "default_params": {},
