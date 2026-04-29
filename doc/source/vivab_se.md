@@ -16,7 +16,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **street_address**  
-*(string) (required)* The address of the property to get the waste collection schedule for. Should end with Varberg or Falkenberg.
+*(string) (required)* The address of the property to get the waste collection schedule for. Should end with a locality within the Varberg or Falkenberg municipality, e.g. Varberg, Veddige, Tvååker, Bua, Träslövsläge, Väröbacka, Åsa, Falkenberg, Ullared, Vessigebro, Slöinge, Glommen.
 
 **building_id**  
 *(string) (optional)* You can also provide the building id, which is shown behind the search result on the website. You still need to set street address to "Varberg" or "Falkenberg". Might be required if there are two results for the same address.
