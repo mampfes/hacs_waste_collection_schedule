@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 import requests
 from waste_collection_schedule import Collection
@@ -10,7 +10,7 @@ TITLE = "MRC Joliette (QC)"
 DESCRIPTION = "Source script for mrcjoliette.qc.ca"
 URL = "https://mrcjoliette.qc.ca"
 COUNTRY = "ca"
-API_URL = "https://mrcjoliette.qc.ca/wp-content/plugins/mrcjoliette-gmr//json/collectes_public_cal.json.php"
+API_URL = "https://mrcjoliette.qc.ca/wp-content/plugins/mrcjoliette-gmr/json/collectes_public_cal.json.php"
 TEST_CASES = {
     "Joliette Mardi": {"city_id": "Joliette - Mardi"},
     "Saint-Charles-Borromée Mercredi": {"city_id": "Saint-Charles-Borromée - Mercredi"},
@@ -87,29 +87,23 @@ class Source:
                 "city_id",
                 city_id,
                 list(CITIES.values()),
-                f"Invalid city: {city_id}",
             )
         self._city_id = city_id_num
 
     def fetch(self) -> list[Collection]:
-        if self._city_id not in CITIES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city_id",
-                self._city_id,
-                list(CITIES.keys()),
-                f"Invalid city_id: {self._city_id}",
-            )
-
-        now = datetime.now()
-        from_ts = int(datetime(now.year, 1, 1).timestamp() * 1000)
-        to_ts = int(datetime(now.year, 12, 31, 23, 59, 59).timestamp() * 1000)
+        now = datetime.now(timezone.utc)
+        from_ts = int(datetime(now.year, 1, 1, tzinfo=timezone.utc).timestamp() * 1000)
+        to_ts = int(
+            datetime(now.year, 12, 31, 23, 59, 59, tzinfo=timezone.utc).timestamp()
+            * 1000
+        )
 
         params = {
             "id": self._city_id,
             "from": from_ts,
             "to": to_ts,
-            "utc_offset_from": 240,
-            "utc_offset_to": 240,
+            "utc_offset_from": 0,
+            "utc_offset_to": 0,
         }
 
         response = requests.get(API_URL, params=params)
