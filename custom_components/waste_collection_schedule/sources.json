@@ -17365,12 +17365,6 @@
       "id": "camden_gov_uk"
     },
     {
-      "title": "London Borough of Hackney",
-      "module": "hackney_gov_uk",
-      "default_params": {},
-      "id": "hackney_gov_uk"
-    },
-    {
       "title": "London Borough of Harrow",
       "module": "harrow_gov_uk",
       "default_params": {},

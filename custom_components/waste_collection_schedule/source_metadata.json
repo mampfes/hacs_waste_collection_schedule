@@ -4551,13 +4551,6 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
-  "hackney_gov_uk": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hackney_gov_uk.md",
-    "howto": {},
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
-  },
   "harrow_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/harrow_gov_uk.md",
     "howto": {},
