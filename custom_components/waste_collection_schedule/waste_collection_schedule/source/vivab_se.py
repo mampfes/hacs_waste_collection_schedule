@@ -39,13 +39,29 @@ API_URLS = {
 # Used to resolve a street_address to the correct regional API.
 MUNICIPALITY_LOCALITIES = {
     "varberg": [
-        "varberg", "bua", "kungsäter", "rolfstorp", "skällinge",
-        "stråvalla", "träslövsläge", "tvååker", "veddige",
-        "väröbacka", "åskloster", "åsa",
+        "varberg",
+        "bua",
+        "kungsäter",
+        "rolfstorp",
+        "skällinge",
+        "stråvalla",
+        "träslövsläge",
+        "tvååker",
+        "veddige",
+        "väröbacka",
+        "åskloster",
+        "åsa",
     ],
     "falkenberg": [
-        "falkenberg", "glommen", "långås", "skogstorp", "slöinge",
-        "ullared", "vessigebro", "ätran", "älvsered",
+        "falkenberg",
+        "glommen",
+        "långås",
+        "skogstorp",
+        "slöinge",
+        "ullared",
+        "vessigebro",
+        "ätran",
+        "älvsered",
     ],
 }
 
@@ -63,7 +79,9 @@ class Source:
         addr_lower = street_address.lower()
         region = None
         for municipality, localities in MUNICIPALITY_LOCALITIES.items():
-            if any(re.search(rf"\b{re.escape(loc)}\b", addr_lower) for loc in localities):
+            if any(
+                re.search(rf"\b{re.escape(loc)}\b", addr_lower) for loc in localities
+            ):
                 region = municipality
                 break
         if region is None:
