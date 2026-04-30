@@ -17,6 +17,20 @@ TEST_CASES = {
 
 API_URL = "https://www.richmond.gov.uk/my_richmond"
 
+PARAM_TRANSLATIONS = {
+    "en": {"uprn": "Property UPRN (Unique Property Reference Number)"},
+    "de": {"uprn": "UPRN der Immobilie"},
+    "it": {"uprn": "UPRN della proprietà"},
+    "fr": {"uprn": "UPRN du bien"},
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {"uprn": "Find your UPRN at https://www.findmyaddress.co.uk/"},
+    "de": {"uprn": "Finden Sie Ihre UPRN unter https://www.findmyaddress.co.uk/"},
+    "it": {"uprn": "Trova il tuo UPRN su https://www.findmyaddress.co.uk/"},
+    "fr": {"uprn": "Trouvez votre UPRN sur https://www.findmyaddress.co.uk/"},
+}
+
 ICON_MAP = {
     "Glass, can, plastic and carton recycling": "mdi:recycle",
     "Paper and card recycling": "mdi:newspaper-variant",
