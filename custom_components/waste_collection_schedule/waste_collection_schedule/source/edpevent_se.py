@@ -335,22 +335,19 @@ class Source:
                 if "v" in next_pickup:
                     date_parts = next_pickup.split()
                     month = MONTH_MAP[date_parts[1]]
-                    date_joined = "-".join([date_parts[0],
-                                           str(month), date_parts[2]])
+                    date_joined = "-".join([date_parts[0], str(month), date_parts[2]])
                     next_pickup_date = datetime.strptime(
                         date_joined, "v%W-%m-%Y"
                     ).date()
                 elif not next_pickup:
                     continue
                 else:
-                    next_pickup_date = datetime.strptime(
-                        next_pickup, "%Y-%m-%d").date()
+                    next_pickup_date = datetime.strptime(next_pickup, "%Y-%m-%d").date()
             except ValueError:
                 # In some cases the date is just a month, so parse this as the
                 # first of the month to at least get something close
                 try:
-                    next_pickup_date = datetime.strptime(
-                        next_pickup, "%b %Y").date()
+                    next_pickup_date = datetime.strptime(next_pickup, "%b %Y").date()
                 except ValueError as month_parse_error:
                     _LOGGER.warning(
                         "Failed to parse date %s, %s,",
