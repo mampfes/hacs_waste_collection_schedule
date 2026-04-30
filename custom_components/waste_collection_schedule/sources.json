@@ -4677,6 +4677,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Laval (QC)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_laval_ca"
+    },
+    {
       "title": "London (ON)",
       "module": "recyclecoach_com",
       "default_params": {
