@@ -115,19 +115,13 @@ class Source:
         entries: list[Collection] = []
 
         # Red bin (General Waste) - weekly
-        entries.extend(
-            self._generate_weekly(next_collection_date, "General Waste")
-        )
+        entries.extend(self._generate_weekly(next_collection_date, "General Waste"))
 
         # Green bin (Organics) - weekly
-        entries.extend(
-            self._generate_weekly(next_collection_date, "Green Waste")
-        )
+        entries.extend(self._generate_weekly(next_collection_date, "Green Waste"))
 
         # Yellow bin (Recycling) - fortnightly from HRR anchor date
-        entries.extend(
-            self._generate_fortnightly(hrr_date, "Recycling")
-        )
+        entries.extend(self._generate_fortnightly(hrr_date, "Recycling"))
 
         return entries
 
@@ -197,9 +191,7 @@ class Source:
                 f"HRR returned no collection data for customer {cust_number}",
             )
         if data.get("message") == "ERROR":
-            raise RuntimeError(
-                f"HRR API returned an error for customer {cust_number}"
-            )
+            raise RuntimeError(f"HRR API returned an error for customer {cust_number}")
 
         records = data.get("records", [])
         if not records:
@@ -224,9 +216,7 @@ class Source:
         ]
 
     @staticmethod
-    def _generate_fortnightly(
-        start_date: date, waste_type: str
-    ) -> list[Collection]:
+    def _generate_fortnightly(start_date: date, waste_type: str) -> list[Collection]:
         icon = ICON_MAP.get(waste_type)
         today = date.today()
         # Ensure start_date is not in the past

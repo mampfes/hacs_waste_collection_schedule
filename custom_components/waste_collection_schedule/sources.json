@@ -814,12 +814,6 @@
       "id": "mrsc_vic_gov_au"
     },
     {
-      "title": "Maitland City Council",
-      "module": "maitland_nsw_gov_au",
-      "default_params": {},
-      "id": "maitland_nsw_gov_au"
-    },
-    {
       "title": "Mansfield Shire Council",
       "module": "mansfield_vic_gov_au",
       "default_params": {},
