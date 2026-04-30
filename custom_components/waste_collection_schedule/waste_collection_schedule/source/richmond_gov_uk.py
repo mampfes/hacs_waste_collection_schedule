@@ -1,4 +1,5 @@
 import datetime
+
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
@@ -10,23 +11,11 @@ URL = "https://www.richmond.gov.uk/"
 
 TEST_CASES = {
     "Sheen Common Drive": {"uprn": "100022316011"},
+    "Rosemont Road": {"uprn": "100022315214"},
+    "Bryanston Avenue": {"uprn": "100022330653"},
 }
 
 API_URL = "https://www.richmond.gov.uk/my_richmond"
-
-PARAM_TRANSLATIONS = {
-    "en": {"uprn": "Property UPRN (Unique Property Reference Number)"},
-    "de": {"uprn": "UPRN der Immobilie"},
-    "it": {"uprn": "UPRN della proprietà"},
-    "fr": {"uprn": "UPRN du bien"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {"uprn": "Find your UPRN at https://www.findmyaddress.co.uk/"},
-    "de": {"uprn": "Finden Sie Ihre UPRN unter https://www.findmyaddress.co.uk/"},
-    "it": {"uprn": "Trova il tuo UPRN su https://www.findmyaddress.co.uk/"},
-    "fr": {"uprn": "Trouvez votre UPRN sur https://www.findmyaddress.co.uk/"},
-}
 
 ICON_MAP = {
     "Glass, can, plastic and carton recycling": "mdi:recycle",
@@ -36,6 +25,7 @@ ICON_MAP = {
 }
 
 ALLOWED_SERVICES = set(ICON_MAP.keys())
+
 
 class Source:
     def __init__(self, uprn: str):
@@ -50,7 +40,7 @@ class Source:
 
         soup = BeautifulSoup(response.text, "html.parser")
         waste_div = soup.find("div", class_="my-waste")
-        
+
         if not waste_div:
             raise SourceArgumentNotFound("uprn", self._uprn)
 
@@ -58,10 +48,10 @@ class Source:
 
         for h4 in waste_div.find_all("h4"):
             service_name = h4.get_text(strip=True)
-            
+
             if service_name not in ALLOWED_SERVICES:
                 continue
-            
+
             ul_sibling = h4.find_next_sibling("ul")
             if not ul_sibling:
                 continue
@@ -72,9 +62,9 @@ class Source:
 
             for a in li.find_all("a"):
                 a.decompose()
-            
+
             li_text = li.get_text(strip=True)
-            
+
             if "No collection contract" in li_text or not li_text:
                 continue
 
@@ -82,13 +72,13 @@ class Source:
                 date_parts = li_text.split()
                 if len(date_parts) < 3:
                     continue
-                
+
                 date_str = " ".join(date_parts[-3:])
-                
+
                 collection_date = datetime.datetime.strptime(
                     date_str, "%d %B %Y"
                 ).date()
-                
+
                 entries.append(
                     Collection(
                         date=collection_date,
