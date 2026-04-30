@@ -43,7 +43,9 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn).strip()
 
-    def get_collections(self, session_key: str, session: requests.Session) -> list[Collection]:
+    def get_collections(
+        self, session_key: str, session: requests.Session
+    ) -> list[Collection]:
         result = run_lookup(
             session,
             API_URL,
@@ -51,7 +53,8 @@ class Source:
             "663b557cdaece",
             {"Section 1": {"UPRN": {"value": self._uprn}}},
         )
-        return list(result["integration"]["transformed"]["rows_data"].values())
+        rows_data = result["integration"]["transformed"]["rows_data"]
+        return list(rows_data.values()) if isinstance(rows_data, dict) else rows_data
 
     def fetch(self) -> list[Collection]:
         session = requests.Session()
