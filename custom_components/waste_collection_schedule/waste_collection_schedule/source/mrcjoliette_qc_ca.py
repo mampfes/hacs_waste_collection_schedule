@@ -65,13 +65,13 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 }
 
 PARAM_DESCRIPTIONS = {
-    "en": {"city_id": "City/Sector ID number"},
-    "fr": {"city_id": "Numéro d'identification de la ville/secteur"},
+    "en": {"city_id": "Select your city/sector from the list"},
+    "fr": {"city_id": "Sélectionnez votre ville/secteur dans la liste"},
 }
 
 PARAM_TRANSLATIONS = {
-    "en": {"city_id": "City ID"},
-    "fr": {"city_id": "ID de la ville"},
+    "en": {"city_id": "City/Sector"},
+    "fr": {"city_id": "Ville/Secteur"},
 }
 
 
