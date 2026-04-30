@@ -100,11 +100,13 @@ class Source:
         BASE_URL = "https://waste.services.midsussex.gov.uk"
 
         with requests.Session() as session:
-            session.headers.update({
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'en-GB,en;q=0.5',
-            })            
+            session.headers.update(
+                {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                    "Accept-Language": "en-GB,en;q=0.5",
+                }
+            )
             # --- STEP 1: Get the Dynamic Track Token ---
             r1 = session.get(f"{BASE_URL}/mop.php", timeout=30)
             r1.raise_for_status()
