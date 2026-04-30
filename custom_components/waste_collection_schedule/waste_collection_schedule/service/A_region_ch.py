@@ -2,11 +2,27 @@ from typing import Literal
 
 import requests
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
 from waste_collection_schedule.source.ics import Source as ICS
+
+
+def _session() -> requests.Session:
+    s = requests.Session()
+    retry = Retry(
+        total=3,
+        backoff_factor=2,
+        status_forcelist=[429, 500, 502, 503, 504],
+        respect_retry_after_header=True,
+    )
+    s.mount("https://", HTTPAdapter(max_retries=retry))
+    s.mount("http://", HTTPAdapter(max_retries=retry))
+    return s
+
 
 SERVICES = {
     "winterthur": "https://m.winterthur.ch",
@@ -46,7 +62,7 @@ class A_region_ch:
         municipalities: dict[str, str] = {}
 
         # get PHPSESSID
-        session = requests.session()
+        session = _session()
         r = session.get(f"{self._base_url}")
         r.raise_for_status()
 
@@ -91,7 +107,7 @@ class A_region_ch:
     def get_waste_types(self, link: str) -> dict[str, str]:
         if not link.startswith("http"):
             link = f"{self._base_url}{link}"
-        r = requests.get(link)
+        r = _session().get(link)
         r.raise_for_status()
 
         waste_types = {}
@@ -119,7 +135,7 @@ class A_region_ch:
     def get_ICS_sources(self, link: str, tour: str) -> list[ICS]:
         if not link.startswith("http"):
             link = f"{self._base_url}{link}"
-        r = requests.get(link)
+        r = _session().get(link)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
@@ -172,7 +188,7 @@ def get_region_url_by_street(
     district: str | None = None,
     regex: str | None = None,
 ) -> A_region_ch:
-    r = requests.get(search_url, params={"q": street})
+    r = _session().get(search_url, params={"q": street})
     r.raise_for_status()
 
     soup = BeautifulSoup(r.text, features="html.parser")
