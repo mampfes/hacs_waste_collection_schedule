@@ -14,9 +14,15 @@ URL = "https://www.brla.gov/337/Garbage-Collection"
 COUNTRY = "us"
 
 TEST_CASES = {
-    "City Hall (Fri, Fri, Tue/Fri)": {"address": "222 Saint Louis St, Baton Rouge, LA 70802"},
-    "Mall of Louisiana (Thu, Thu, Mon/Thu)": {"address": "6401 Bluebonnet Boulevard, Baton Rouge, LA 70836"},
-    "Amazon Fulfillment Center (Wed, Sat, Wed/Sat)": {"address": "9001 Cortana Pl, Baton Rouge, LA 70815"},
+    "City Hall (Fri, Fri, Tue/Fri)": {
+        "address": "222 Saint Louis St, Baton Rouge, LA 70802"
+    },
+    "Mall of Louisiana (Thu, Thu, Mon/Thu)": {
+        "address": "6401 Bluebonnet Boulevard, Baton Rouge, LA 70836"
+    },
+    "Amazon Fulfillment Center (Wed, Sat, Wed/Sat)": {
+        "address": "9001 Cortana Pl, Baton Rouge, LA 70815"
+    },
 }
 
 PARAM_DESCRIPTIONS = {
