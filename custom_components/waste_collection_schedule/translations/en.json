@@ -1572,6 +1572,29 @@
         },
         "data_description": {}
       },
+      "args_strathfield_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. \n\nYour collection day is printed on your rates notice. It can also be found by contacting Strathfield Council.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/strathfield_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "collection_day": "The day of the week your bins are collected (e.g. Tuesday). Check your rates notice or contact Strathfield Council."
+        }
+      },
+      "reconfigure_strathfield_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. \n\nYour collection day is printed on your rates notice. It can also be found by contacting Strathfield Council.\n\nMore details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/strathfield_nsw_gov_au.md.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {
+          "collection_day": "The day of the week your bins are collected (e.g. Tuesday). Check your rates notice or contact Strathfield Council."
+        }
+      },
       "args_sunshinecoast_qld_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md.",

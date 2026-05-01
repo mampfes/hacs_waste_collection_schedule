@@ -1539,6 +1539,26 @@
         },
         "data_description": {}
       },
+      "args_strathfield_nsw_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYour collection day is printed on your rates notice. It can also be found by contacting Strathfield Council.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/strathfield_nsw_gov_au.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_strathfield_nsw_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. \n\nYour collection day is printed on your rates notice. It can also be found by contacting Strathfield Council.\n\nMehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/strathfield_nsw_gov_au.md",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {}
+      },
       "args_sunshinecoast_qld_gov_au": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. Mehr details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md",
