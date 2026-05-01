@@ -1,7 +1,6 @@
 import datetime
 
 from dateutil.rrule import WEEKLY, rrule
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentException
 
@@ -80,7 +79,5 @@ class Source:
                 Collection(dt.date(), "Garden Organics", ICON_MAP["Garden Organics"])
             )
         for dt in rrule(WEEKLY, interval=2, dtstart=first_yellow, until=until):
-            entries.append(
-                Collection(dt.date(), "Recycling", ICON_MAP["Recycling"])
-            )
+            entries.append(Collection(dt.date(), "Recycling", ICON_MAP["Recycling"]))
         return entries
