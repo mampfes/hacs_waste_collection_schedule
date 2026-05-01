@@ -58,20 +58,24 @@ def _seroval_encode_request(api_path: str, tenant_id: int = _TENANT_ID) -> str:
     return json.dumps(
         {
             "t": {
-                "t": 10, "i": 0,
+                "t": 10,
+                "i": 0,
                 "p": {
                     "k": ["data"],
-                    "v": [{
-                        "t": 10, "i": 1,
-                        "p": {
-                            "k": ["apiPath", "tenantId"],
-                            "v": [
-                                {"t": 1, "s": api_path},
-                                {"t": 2, "s": tenant_id},
-                            ],
-                        },
-                        "o": 0,
-                    }],
+                    "v": [
+                        {
+                            "t": 10,
+                            "i": 1,
+                            "p": {
+                                "k": ["apiPath", "tenantId"],
+                                "v": [
+                                    {"t": 1, "s": api_path},
+                                    {"t": 2, "s": tenant_id},
+                                ],
+                            },
+                            "o": 0,
+                        }
+                    ],
                 },
                 "o": 0,
             },
@@ -148,7 +152,7 @@ def _candidate_fn_ids(session: requests.Session) -> list[str]:
         html = session.get(_BASE_URL + "/", timeout=15).text
     except requests.RequestException:
         return []
-    bundles = re.findall(r'/assets/[A-Za-z0-9._-]+\.js', html)
+    bundles = re.findall(r"/assets/[A-Za-z0-9._-]+\.js", html)
     seen: set[str] = set()
     ordered: list[str] = []
     for bundle in bundles:
@@ -222,9 +226,7 @@ class Source:
             )
         return self._fn_id
 
-    def _raw_call(
-        self, session: requests.Session, fn_id: str, api_path: str
-    ) -> dict:
+    def _raw_call(self, session: requests.Session, fn_id: str, api_path: str) -> dict:
         payload = _seroval_encode_request(api_path)
         r = session.get(
             _SERVER_FN_URL_TEMPLATE.format(fn_id=fn_id) + "?payload=" + quote(payload),
@@ -237,9 +239,7 @@ class Source:
         # Anything other than a normal JSON 200 implies the fn_id is no
         # longer valid (most likely upstream redeployed). Signal stale and
         # let the caller re-discover and retry once.
-        if r.status_code != 200 or "json" not in r.headers.get(
-            "content-type", ""
-        ):
+        if r.status_code != 200 or "json" not in r.headers.get("content-type", ""):
             raise _StaleFnId(f"fn_id {fn_id} returned HTTP {r.status_code}")
         decoded = _seroval_decode(r.json()) or {}
         if "result" not in decoded:
