@@ -2,7 +2,7 @@ import datetime
 
 from dateutil.rrule import WEEKLY, rrule
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Strathfield Council"
 DESCRIPTION = "Source for Strathfield Council, NSW, Australia."
@@ -56,9 +56,10 @@ class Source:
     def __init__(self, collection_day: str):
         day = collection_day.strip().lower()
         if day not in _WEEKDAY_MAP:
-            raise SourceArgumentException(
+            raise SourceArgumentNotFoundWithSuggestions(
                 "collection_day",
-                f"Invalid value '{collection_day}'. Must be a weekday name (Monday–Friday).",
+                collection_day,
+                [d.capitalize() for d in _WEEKDAY_MAP],
             )
         self._day_offset = _WEEKDAY_MAP[day]
 
