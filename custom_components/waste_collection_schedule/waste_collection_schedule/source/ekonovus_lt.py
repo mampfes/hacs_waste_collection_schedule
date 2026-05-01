@@ -28,9 +28,6 @@ PARAM_DESCRIPTIONS = {
     "en": {
         "address": "Part of the address as shown in the Ekonovus schedule (e.g. 'Margirio g. 35'). Must be unique enough to match your address.",
     },
-    "lt": {
-        "address": "Adreso dalis, kaip rodoma Ekonovus grafike (pvz. 'Margirio g. 35'). Turi būti pakankamai unikali.",
-    },
 }
 
 # Power BI public report API constants
@@ -151,7 +148,13 @@ def _build_query(address: str) -> dict:
                                                         }
                                                     ],
                                                     "Values": [
-                                                        [{"Literal": {"Value": "'true'"}}]
+                                                        [
+                                                            {
+                                                                "Literal": {
+                                                                    "Value": "'true'"
+                                                                }
+                                                            }
+                                                        ]
                                                     ],
                                                 }
                                             }
@@ -227,9 +230,7 @@ def _build_query(address: str) -> dict:
                                     ],
                                 },
                                 "Binding": {
-                                    "Primary": {
-                                        "Groupings": [{"Projections": [0, 1]}]
-                                    },
+                                    "Primary": {"Groupings": [{"Projections": [0, 1]}]},
                                     "DataReduction": {
                                         "DataVolume": 4,
                                         "Primary": {"Window": {"Count": 500}},
