@@ -61,7 +61,7 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        soup = soup.find("div", id="jaaroverzicht", class_="pageBlock")
+        soup = soup.find("div", class_="block md:hidden")
         years = soup.find_all("div", id=re.compile("^jaar-"), class_="ophaaldagen")
 
         dict_month = {

@@ -7,7 +7,7 @@ Abfall App is supported by the generic [ICS](/doc/source/ics.md) source. For all
 
 - Go to your providers web site collections calendar (alternative https://{service}.abfall-app.net) and select your location.  
 - Copy the link of the `Sync zu Kalender` Button.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 known supported:
 - Landkreis Stendal: <https://landkreis-stendal.abfall-app.net>
@@ -16,6 +16,7 @@ known supported:
 - Altmarkkreis Salzwedel: <https://altmarkkreis-salzwedel.abfall-app.net>
 - Landkreis Lüchow-Dannenberg: <https://luechow-dannenberg.abfall-app.net>
 - Rhein-Pfalz-Kreis: <https://rhein-pfalz-kreis.abfall-app.net>
+- Landkreis Holzminden: <https://landkreis-holzminden.abfall-app.net>
 
 ## Examples
 

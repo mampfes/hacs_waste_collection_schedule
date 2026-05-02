@@ -2,8 +2,6 @@
 
 Support for schedules provided by [WAS-Wolfsburg.de](https://was-wolfsburg.de).
 
-Please note that WAS Wolfsburg provides 2 different schedules: One for "Restabfall - Bioabfall - Altpapier" and one for "Gelber Sack". This source fetches both schedules and merges it into one.
-
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -11,14 +9,10 @@ waste_collection_schedule:
   sources:
     - name: was_wolfsburg_de
       args:
-        city: CITY
         street: STREET
 ```
 
 ### Configuration Variables
-
-**city**  
-*(string) (required)*
 
 **street**  
 *(string) (required)*
@@ -30,7 +24,6 @@ waste_collection_schedule:
   sources:
     - name: was_wolfsburg_de
       args:
-        city: Barnstorf
         street: Bahnhofspassage
 ```
 
@@ -38,5 +31,4 @@ waste_collection_schedule:
 
 | Argument | Description |
 | ----------- | ----------- |
-| city | Full district name as shown in the `Gelber Sack` web page. (can be left out if you do not want to fetch `Gelber Sack`) |
 | street | Full street name as shown in the `Restabfall/Bioabfall/Altpapier` web page. (can be left out if you ONLY want to fetch `Gelber Sack`) |

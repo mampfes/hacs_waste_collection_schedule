@@ -1,0 +1,12 @@
+---
+title: Knittel Entsorgung
+url: https://www.knittel-entsorgung.com
+country: de
+howto:
+  en: |
+    - Go to <https://www.knittel-entsorgung.com> and find the waste collection calendar for your area.
+    - Right-click the ICS download link and copy the URL.
+    - Use this URL as the `url` parameter.
+test_cases:
+  Nersingen:
+    url: "https://www.knittel-entsorgung.com/wp-content/uploads/2025/11/NERSINGEN_Nersingen_Leibi_Ober-Unterfahlheim_Strass_2026.ics"

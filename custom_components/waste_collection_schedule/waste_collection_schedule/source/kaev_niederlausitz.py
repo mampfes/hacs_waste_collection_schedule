@@ -1,7 +1,8 @@
-import requests
 import html
 import json
+import re
 
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -21,15 +22,19 @@ TEST_CASES = {
     },
 }
 
-API_URL = 'https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/ajax.aspx/getAddress'
+API_URL = (
+    "https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/ajax.aspx/getAddress"
+)
+
 
 def get_kalender_id(search):
-    s=requests.Session()
-    s.get('https://www.kaev.de/')
-    payload={"query": search}
+    s = requests.Session()
+    s.get("https://www.kaev.de/")
+    payload = {"query": search}
     resp = s.post(API_URL, json=payload).json()
     abf_cal = json.loads(resp["d"])
     return abf_cal
+
 
 class Source:
     def __init__(self, abf_suche):
@@ -40,24 +45,48 @@ class Source:
         abf_kalender = get_kalender_id(self._abf_suche)
         if len(abf_kalender) == 1:
             for abf_daten in abf_kalender:
-                calurl = "https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/iCal.aspx?Ort=" + abf_daten["name"] + "&OrtId=" + str(abf_daten["ortId"]) + "&OrtsteilId=" + str(abf_daten["ortsteilId"])
+                calurl = (
+                    "https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/iCal.aspx?Ort="
+                    + abf_daten["name"]
+                    + "&OrtId="
+                    + str(abf_daten["ortId"])
+                    + "&OrtsteilId="
+                    + str(abf_daten["ortsteilId"])
+                )
                 calurl = html.escape(calurl)
         elif "/" not in self._abf_suche:
             for abf_daten in abf_kalender[0:1]:
-                    abf_kalender = abf_kalender[0:1]
-                    calurl = "https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/iCal.aspx?Ort=" + abf_daten["name"] + "&OrtId=" + str(abf_daten["ortId"])
-                    calurl = html.escape(calurl)
+                abf_kalender = abf_kalender[0:1]
+                calurl = (
+                    "https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/iCal.aspx?Ort="
+                    + abf_daten["name"]
+                    + "&OrtId="
+                    + str(abf_daten["ortId"])
+                )
+                calurl = html.escape(calurl)
 
         if len(abf_kalender) > 1:
             raise Exception("Error: Mehrere Einträge gefunden")
 
         if len(abf_kalender) == 0:
             raise Exception("Error: Keine Einträge gefunden")
-        
-        r=requests.get(calurl)
-        r.encoding = "utf-8"
 
-        dates = self._ics.convert(r.text)
+        r = requests.get(calurl)
+        r.encoding = "utf-8"
+        ics_text = r.text
+
+        # Prüfe auf fehlerhaften VTIMEZONE Eintrag.
+        if (
+            "BEGIN:VTIMEZONE\r\nTZID:W. Europe Standard Time\r\nEND:VTIMEZONE"
+            in ics_text
+        ):
+            vtimezone_pattern = re.compile(
+                r"BEGIN:VTIMEZONE.*?END:VTIMEZONE\r?\n", re.DOTALL
+            )
+            ics_text = vtimezone_pattern.sub("", ics_text)
+            ics_text = ics_text.replace("TZID=W. Europe Standard Time;", "")
+
+        dates = self._ics.convert(ics_text)
         entries = []
         for d in dates:
             entries.append(Collection(d[0], d[1].removesuffix(", ")))

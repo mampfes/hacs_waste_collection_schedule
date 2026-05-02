@@ -57,6 +57,23 @@ There are 2 ways to add support for a new service provider:
 
    This is the fallback if the preferred way via the generic ICS source doesn't work.
 
+### Example Implementations
+
+If you want to contribute a new source, these existing implementations can be used as practical examples:
+
+- **HTML parsing (BeautifulSoup / bs4):** [`birmingham_gov_uk.py`](/custom_components/waste_collection_schedule/waste_collection_schedule/source/birmingham_gov_uk.py)
+- **ICS-based implementation:** [`stadtreinigung_hamburg.py`](/custom_components/waste_collection_schedule/waste_collection_schedule/source/stadtreinigung_hamburg.py)
+- **JSON/API implementation:** [`toronto_ca.py`](/custom_components/waste_collection_schedule/waste_collection_schedule/source/toronto_ca.py)
+
+### Using AI coding assistants
+
+If you're using an AI assistant (Claude Code, Cursor, codex, Aider, GitHub Copilot, etc.) to draft a contribution, point it at the project-specific instruction files in the repo:
+
+- [`AGENTS.md`](/AGENTS.md) — read by Claude Code, Cursor, codex and other tools that support the `AGENTS.md` convention.
+- [`.github/copilot-instructions.md`](/.github/copilot-instructions.md) — used by GitHub Copilot.
+
+Both files capture the source module contract, the lint/test commands, and the patterns that reviewers consistently flag — they help the assistant produce a PR that's much closer to mergeable on the first pass.
+
 ### Sync Branch and Create A Pull Request
 
 Having completed your changes, sync your local branch to your GitHub repo, and then create a pull request. When creating a pull request, please provide a meaningful description of what the pull request covers. Ideally it should cite the service provider, confirm the .py, .md, README and info.md files have all been updated, and the output of the test_sources.py script demonstrating functionality. Once submitted a number of automated tests are run against the updated files to confirm they can be merged into the master branch. Note: Pull requests from first time contributors also undergo a manual code review before a merge confirmation in indicated.

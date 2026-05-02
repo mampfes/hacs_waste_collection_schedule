@@ -115,7 +115,7 @@ class Source:
             ("calendar[street]", self._street),
             ("calendar[streetnr]", self._streetnr),
             ("calendar[datefrom]", now.strftime("%d.%m.%Y")),
-            ("calendar[dateto]", f"31.01.{now.year+1}"),
+            ("calendar[dateto]", f"31.01.{now.year + 1}"),
         ]
         for w in wastetypes.value:
             args.append(("calendar[wastetype][]", w))

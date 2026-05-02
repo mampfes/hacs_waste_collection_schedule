@@ -44,8 +44,7 @@ def clean_string(text: str) -> str:
 
 
 class Source:
-    def __init__(self):
-        ...
+    def __init__(self): ...  # noqa: E704
 
     def fetch(self) -> list[Collection]:
         r = requests.get(API_URL)

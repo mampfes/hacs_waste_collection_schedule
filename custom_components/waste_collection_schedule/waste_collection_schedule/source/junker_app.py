@@ -8,7 +8,7 @@ from waste_collection_schedule.service.junker_app import (
     Junker,
 )
 
-TITLE = "Jnker APP"
+TITLE = "Junker APP"
 DESCRIPTION = "Source for Jnker APP."
 URL = "https://junker.app"
 TEST_CASES = {"Val della torre": {"municipality": "Val della torre"}}
@@ -17,6 +17,7 @@ COUNTRY = "it"
 
 
 SERVICE_PROVIDERS = {
+    "NET SpA - Udine",
     "Unione dei Comuni di Valmalenco",
     "Bubbiano",
     "Econova Srl",
@@ -29,7 +30,6 @@ SERVICE_PROVIDERS = {
     "Buonvicino",
     "Chiaramonte Gulfi - Mecogest",
     "Valle Umbra Servizi S.p.A.",
-    "Veritas Spa",
     "Anguillara Sabazia - Cosp Tecno Service",
     "Sezze - SPL",
     "Bitti, Luna e Onanì - Formula Ambiente Spa",
@@ -344,6 +344,7 @@ TEST_CASES = {
     "Unione dei Comuni di Valmalenco, Boroneddu": {"municipality": "Boroneddu"},
     "Mosciano Sant'Angelo": {"municipality": "Mosciano Sant'Angelo"},
     "Lodè": {"municipality": "Lodè", "area": "Utenze non domestiche"},
+    "Udine": {"municipality": "Udine", "area": "Zona 2-4-5-6 - Utenze domestiche"},
 }
 
 

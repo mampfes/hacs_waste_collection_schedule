@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Windsor and Maidenhead"
 DESCRIPTION = "Source for Windsor and Maidenhead."
@@ -53,14 +54,14 @@ class Source:
 
     def fetch(self):
         s = requests.Session()
-        r = s.get(API_URL, params={"uprn": self._uprn})
+        r = s.get(API_URL, params={"uprn": self._uprn}, headers=HEADERS)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
 
         table = soup.find("table")
         if table is None:
-            raise Exception("No results found. UPRN may be incorrect.")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         entries = []
         for tr in table.find_all("tr"):

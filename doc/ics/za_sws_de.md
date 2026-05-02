@@ -7,7 +7,7 @@ Zweckverband Abfallwirtschaft Südwestsachsen (ZAS) is supported by the generic 
 
 - Go to <https://www.za-sws.de/abfallkalender.cfm?ab=1> and select your location.  
 - Click on `URL in die Zwischenablage kopieren` to copy the link to the ICS file.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

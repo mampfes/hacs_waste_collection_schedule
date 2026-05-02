@@ -1,6 +1,5 @@
 import json
-import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
@@ -19,8 +18,6 @@ ICON_MAP = {
     "Alteisenabfuhr Alchenstorf": "mdi:desktop-classic",
 }
 
-_LOGGER = logging.getLogger(__name__)
-
 
 class Source:
     def __init__(self):
@@ -28,26 +25,61 @@ class Source:
 
     def fetch(self):
         response = requests.get("https://www.alchenstorf.ch/abfalldaten")
+        response.raise_for_status()
 
         html = BeautifulSoup(response.text, "html.parser")
 
         table = html.find("table", attrs={"id": "icmsTable-abfallsammlung"})
-        data = json.loads(table.attrs["data-entities"])
+        if not table:
+            raise ValueError("Could not find the waste collection table on the page")
+
+        try:
+            data = json.loads(table.attrs["data-entities"])
+        except (json.JSONDecodeError, KeyError):
+            raise ValueError("Could not parse the waste collection data from the page")
 
         entries = []
-        for item in data["data"]:
-            next_pickup = item["_anlassDate-sort"].split()[0]
-            next_pickup_date = datetime.fromisoformat(next_pickup).date()
+        for item in data.get("data", []):
+            try:
+                waste_type = BeautifulSoup(item["name"], "html.parser").text.strip()
+                icon = ICON_MAP.get(waste_type, "mdi:trash-can")
 
-            waste_type = BeautifulSoup(item["name"], "html.parser").text
-            waste_type_sorted = BeautifulSoup(item["name-sort"], "html.parser").text
+                date_html = item["_anlassDate"]
+                date_soup = BeautifulSoup(date_html, "html.parser")
 
-            entries.append(
-                Collection(
-                    date=next_pickup_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type_sorted, "mdi:trash-can"),
-                )
-            )
+                date_span = date_soup.find("span", class_="text-nowrap")
+                date_text = date_span.get_text().strip()
+
+                clean_date_part = date_text.split(",")[0].strip()
+
+                dates_to_add = []
+
+                if " - " in clean_date_part:
+                    parts = clean_date_part.split(" - ")
+                    start_str = parts[0].strip()
+                    end_str = parts[1].strip()
+
+                    start_date = datetime.strptime(start_str, "%d.%m.%Y").date()
+                    end_date = datetime.strptime(end_str, "%d.%m.%Y").date()
+
+                    current_date = start_date
+                    while current_date <= end_date:
+                        dates_to_add.append(current_date)
+                        current_date += timedelta(days=1)
+                else:
+                    single_date = datetime.strptime(clean_date_part, "%d.%m.%Y").date()
+                    dates_to_add.append(single_date)
+
+                for pickup_date in dates_to_add:
+                    entries.append(
+                        Collection(
+                            date=pickup_date,
+                            t=waste_type,
+                            icon=icon,
+                        )
+                    )
+
+            except Exception:
+                raise ValueError("Could not parse the waste collection entry")
 
         return entries

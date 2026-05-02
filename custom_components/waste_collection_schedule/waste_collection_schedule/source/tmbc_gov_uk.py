@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
 
 # mostly copied from braintree_gov_uk
 
@@ -56,9 +57,9 @@ class Source:
             if addresses[address].startswith(self.address)
         ]
         if len(id) == 0:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("address", self.address)
         if len(id) > 1:
-            raise Exception("Address is not unique")
+            raise SourceArgumentException("address", "Address is not unique")
         id = id[0]
 
         self.form_data["q752eec300b2ffef2757e4536b77b07061842041a_1_0"] = (None, id)

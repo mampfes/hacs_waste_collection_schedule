@@ -26,9 +26,9 @@ waste_collection_schedule:
     sources:
     - name: ceb_coburg_de
       args:
-        street: Kanalstraße (Seite HUK)
+        street: Kanalstraße, Seite HUK
 ```
 
 ## How to get the source argument
 
-You can validate your parameter by looking for your street here: <https://ceb-coburg.de/04_Stadtreinigung-Abfall/Abfallentsorgung-Recycling/Abfallbehaelter/muellabfuhr.php>
+You can validate your parameter by looking for your street here: <https://abfuhrkalender.ceb-coburg.de/>

@@ -1,7 +1,8 @@
-from datetime import datetime
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 import json
+from datetime import datetime
+
 import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Region Gotland"
 DESCRIPTION = "Source for Region Gotland waste collection."
@@ -10,10 +11,8 @@ TEST_CASES = {
     "TestService": {"uprn": "16903059805"},
 }
 
-ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:leaf"
-}
+ICON_MAP = {"Restavfall": "mdi:trash-can", "Matavfall": "mdi:leaf"}
+
 
 class Source:
     def __init__(self, uprn):
@@ -23,21 +22,19 @@ class Source:
         query_params = {"address": "(" + self._uprn + ")"}
         response = requests.get(
             "https://edpfuture.gotland.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
-            params=query_params
+            params=query_params,
         )
         data = json.loads(response.text)
 
         entries = []
         for item in data["RhServices"]:
-            if item["WasteType"] == "Slam":
+            if item["WasteType"] != "Restavfall" and item["WasteType"] != "Matavfall":
                 continue
 
             next_pickup = item["NextWastePickup"]
             next_pickup_date = datetime.fromisoformat(next_pickup).date()
             waste_type = item["WasteType"]
             icon = ICON_MAP.get(waste_type)
-            entries.append(
-                Collection(date=next_pickup_date, t=waste_type, icon=icon)
-            )
+            entries.append(Collection(date=next_pickup_date, t=waste_type, icon=icon))
 
         return entries

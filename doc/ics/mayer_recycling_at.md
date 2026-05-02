@@ -7,7 +7,7 @@ Mayer Recycling is supported by the generic [ICS](/doc/source/ics.md) source. Fo
 
 - Go to <https://www.mayer-recycling.at/abfuhrplaene>.
 - Right click -> copy link the calendar icon of your Collection region to get the link of the ICS file.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

@@ -4,6 +4,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Maldon District Council"
 
@@ -45,7 +46,7 @@ class Source:
         collections = soup.find_all("div", {"class": "panel-default"})
 
         if not collections:
-            raise Exception("No collections found for given UPRN")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         for collection in collections:
             # check is a collection row

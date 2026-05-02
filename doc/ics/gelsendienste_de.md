@@ -7,7 +7,7 @@ Gelsendienste Gelsenkirchen is supported by the generic [ICS](/doc/source/ics.md
 
 - Go to <https://www.gelsendienste.de/privathaushalte/abfallkalender> and select your location.  
 - Click on `Abfallkalender abonnieren` to open a sub-frame, and then copy the link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

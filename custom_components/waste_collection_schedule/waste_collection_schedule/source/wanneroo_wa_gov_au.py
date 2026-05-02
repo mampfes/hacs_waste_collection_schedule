@@ -1,6 +1,6 @@
 import logging
 import re
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -24,36 +24,27 @@ TEST_CASES = {
     },
 }
 
-
 ICON_MAP = {
     "Recycling": "mdi:recycle",
     "General Waste": "mdi:trash-can",
     "Garden Organics": "mdi:leaf",
 }
 
-
-API_URL = "https://www.wanneroo.wa.gov.au/info/20008/waste_services"
-MAP_SESSION_URL = [
-    "https://wanneroo.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Configuration/PublicLite/Config/{liteConfigId}",
-    "https://wanneroo.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Projects/",
-]
-MAP_INITIALIZE_URL = (
-    "https://wanneroo.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Modules/"
+API_URL = "https://www.wanneroo.wa.gov.au/bincollections"
+MAP_SESSION_URL = (
+    "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Projects/"
 )
-COLLECTION_URL = "https://wanneroo.spatial.t1cloud.com/spatial/IntraMaps/ApplicationEngine/Integration/set"
+MAP_INITIALIZE_URL = (
+    "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Modules/"
+)
+COLLECTION_URL = "https://wanneroo.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Integration/set"
 
 
-# const API_URL = "https://enterprise.mapimage.net/IntraMaps22B/ApplicationEngine/Integration/api/search/";
 API_URL_REGEX = re.compile(r'const\s+API_URL\s*=\s*"(.*?Search/)";')
 API_KEY_REGEX = re.compile(r'const\s+API_KEY\s*=\s*"(.*?)";')
 FORM_ID_REGEX = re.compile(r'const\s+FORM_ID\s*=\s*"(.*?)";')
 CONFIG_ID_REGEX = re.compile(r'const\s+CONFIG_ID\s*=\s*"(.*?)";')
-LITE_CONGI_ID_REGEX = re.compile(r"liteConfigId=([0-9a-f-]+)&")
 PROJECT_NAME_REGEX = re.compile(r'const\s+PROJECT_NAME\s*=\s*"(.*?)";')
-
-# "Authorization": "apikey f49dd048-a442-4810-a567-544a1e0d32bc",
-AUTHORIZATION_REGEX = re.compile(r'"Authorization": "(.*?)"')
-
 
 WEEKDAYS = [
     "monday",
@@ -66,19 +57,45 @@ WEEKDAYS = [
 ]
 
 
-def _parse_rythm_description(rythm_description: str) -> list[date]:
-    if rythm_description.strip().lower() in WEEKDAYS:
+def _parse_rythm_description(rythm_description: str, bin_type: str) -> list[date]:
+    rythm_description_lower = rythm_description.strip().lower()
+
+    match = re.search(
+        r"(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+(this|next)\s+week",
+        rythm_description_lower,
+    )
+    if match:
+        weekday_str = match.group(1)
+        week_str = match.group(2)
+
+        interval = 1 if "general" in bin_type.lower() else 2
+
+        today = datetime.now().date()
+        current_week_start = today - timedelta(days=today.weekday())
+        target_weekday_idx = WEEKDAYS.index(weekday_str)
+        target_date = current_week_start + timedelta(days=target_weekday_idx)
+
+        if week_str == "next":
+            target_date += timedelta(days=7)
+
+        target_datetime = datetime.combine(target_date, datetime.min.time())
+        return [
+            d.date()
+            for d in rrule(WEEKLY, interval=interval, dtstart=target_datetime, count=10)
+        ]
+
+    if rythm_description_lower in WEEKDAYS:
         return [
             d.date()
             for d in rrule(
                 WEEKLY,
-                byweekday=WEEKDAYS.index(rythm_description.strip().lower()),
+                byweekday=WEEKDAYS.index(rythm_description_lower),
                 dtstart=datetime.now(),
                 count=20,
             )
         ]
-    if rythm_description.strip().lower().startswith("fortnightly"):
-        next_date_str = rythm_description.strip().lower().split("next collection", 1)[1]
+    if rythm_description_lower.startswith("fortnightly"):
+        next_date_str = rythm_description_lower.split("next collection", 1)[1]
         next_date = parse(next_date_str, dayfirst=True).date()
         return [
             d.date() for d in rrule(WEEKLY, interval=2, dtstart=next_date, count=10)
@@ -93,6 +110,11 @@ class Source:
         self._dbkey: str | None = None
         self._mapkey: str | None = None
         self._session = requests.Session()
+        self._session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+            }
+        )
 
     def _match_address(self, address: str) -> bool:
         return self._address.lower().replace(" ", "").replace(
@@ -100,14 +122,14 @@ class Source:
         ) == address.lower().replace(" ", "").replace(",", "")
 
     def _fetch_address_values(self) -> str:
-        session = requests.Session()
-
-        r = session.get(API_URL)
+        r = self._session.get(API_URL)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
         script = soup.find("script", {"src": lambda x: x and "widget.js" in x})
         if not isinstance(script, Tag):
-            raise Exception("Failed to find address values")
+            raise Exception(
+                "Failed to find address values - the City may have changed their website layout"
+            )
 
         script_url = script["src"]
         if isinstance(script_url, list):
@@ -115,7 +137,7 @@ class Source:
 
         if script_url.startswith("//"):
             script_url = "https:" + script_url
-        r = session.get(script_url)
+        r = self._session.get(script_url)
         r.raise_for_status()
 
         api_url_search = API_URL_REGEX.search(r.text)
@@ -138,12 +160,6 @@ class Source:
             raise Exception("Failed to find config ID")
         config_id = config_id_search.group(1)
 
-        lite_config_id_search = LITE_CONGI_ID_REGEX.search(r.text)
-        if not lite_config_id_search:
-            raise Exception("Failed to find lite config ID")
-
-        lite_config_id = lite_config_id_search.group(1)
-
         project_name_search = PROJECT_NAME_REGEX.search(r.text)
         if not project_name_search:
             raise Exception("Failed to find project name")
@@ -159,14 +175,16 @@ class Source:
         headers = {
             "Authorization": f"apikey {api_key}",
             "Content-Type": "application/json",
+            "Accept": "application/json",
         }
 
-        # get json file
-        r = session.get(api_url, params=params, headers=headers)
-        r.raise_for_status()
+        r = self._session.get(api_url, params=params, headers=headers)
+        try:
+            r.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            raise Exception(f"Search API Error ({r.status_code}): {r.text}") from e
 
         result = r.json()
-
         if len(result) == 0:
             raise SourceArgumentNotFound("address", self._address)
 
@@ -177,7 +195,7 @@ class Source:
             if self._match_address(address):
                 self._dbkey = [v for v in entry if v["name"] == "dbkey"][0]["value"]
                 self._mapkey = [v for v in entry if v["name"] == "mapkey"][0]["value"]
-                return self._fetch_map_session(config_id, lite_config_id)
+                return self._fetch_map_session(config_id)
 
         raise SourceArgumentNotFoundWithSuggestions(
             "address",
@@ -185,24 +203,9 @@ class Source:
             addresses,
         )
 
-    def _fetch_map_session(self, config_id: str, lite_config_id) -> str:
-        params = {
-            "configId": config_id,
-        }
-        r = self._session.get(
-            MAP_SESSION_URL[0].format(liteConfigId=lite_config_id), params=params
-        )
-        r.raise_for_status()
-        data = r.json()
-        if (
-            "intraMapsSettings" not in data
-            or "project" not in data["intraMapsSettings"]
-            or "module" not in data["intraMapsSettings"]
-        ):
-            raise Exception("Failed to get project id")
-
-        project_id = data["intraMapsSettings"]["project"]
-        module_id = data["intraMapsSettings"]["module"]
+    def _fetch_map_session(self, config_id: str) -> str:
+        project_id = "4c19a56b-7a9e-437b-a3f1-a584aa3184fd"
+        module_id = "aae4bf39-9508-4528-9436-5942a23ddd7a"
 
         params = {
             "configId": config_id,
@@ -210,16 +213,19 @@ class Source:
             "project": project_id,
             "datasetCode": "",
         }
-        r = self._session.get(MAP_SESSION_URL[1], params=params)
-        r.raise_for_status()
+
+        # Go straight to the Projects API to grab the required session headers
+        r = self._session.get(MAP_SESSION_URL, params=params)
+        if r.status_code != 200:
+            raise Exception(
+                f"Projects API failed! Status: {r.status_code} | Server Says: {r.text}"
+            )
 
         session = r.headers.get("x-intramaps-session")
         if not session:
-            raise Exception("Failed to get intramaps-session id")
+            raise Exception("Failed to get intramaps-session id from headers")
 
         self.initialize_map(session, module_id)
-        if not session:
-            raise Exception("Failed to get intramaps-session id")
         return session
 
     def initialize_map(self, map_session_id: str, module_id: str) -> None:
@@ -231,12 +237,22 @@ class Source:
             "includeBasemaps": False,
             "includeWktInSelection": True,
         }
-
-        r = self._session.post(MAP_INITIALIZE_URL, json=data, params=params)
-        r.raise_for_status()
+        headers = {
+            "Content-Type": "application/json",
+        }
+        r = self._session.post(
+            MAP_INITIALIZE_URL, json=data, params=params, headers=headers
+        )
+        if r.status_code != 200:
+            raise Exception(f"Initialize Map API failed! Server Says: {r.text}")
 
     def fetch(self) -> list[Collection]:
         self._session = requests.Session()
+        self._session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+            }
+        )
         map_session_id = self._fetch_address_values()
         return self._get_collections(map_session_id)
 
@@ -249,13 +265,13 @@ class Source:
             "infoPanelWidth": 0,
             "mapKeys": [self._mapkey],
             "multiLayer": False,
-            "selectionLayer": "Parcels",
+            "selectionLayer": "Property",
             "useCatalogId": False,
             "zoomTo": "entire",
         }
         headers = {
             "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0",
+            "Accept": "application/json",
             "X-Requested-With": "XMLHttpRequest",
         }
 
@@ -265,17 +281,18 @@ class Source:
             params={"IntraMapsSession": map_session},
             headers=headers,
         )
-        r.raise_for_status()
+        if r.status_code != 200:
+            raise Exception(f"Collection Data API failed! Server Says: {r.text}")
 
-        respone_data: dict = r.json()
+        response_data: dict = r.json()
         panel_fields = (
-            respone_data.get("infoPanels", {})
+            response_data.get("infoPanels", {})
             .get("info1", {})
             .get("feature", {})
             .get("fields")
         )
         if not panel_fields:
-            raise Exception("Invalid response from server")
+            raise Exception("Invalid response from server - no panel fields found")
 
         entries = []
         for field in panel_fields:
@@ -288,13 +305,28 @@ class Source:
             if "value" not in field["value"]:
                 continue
 
-            bin_type, rythm_description = field["value"]["value"].split("-", 1)
+            if "-" not in field["value"]["value"]:
+                continue
+
+            bin_type_raw, rythm_description = field["value"]["value"].split("-", 1)
             rythm_description = rythm_description.strip()
-            bin_type = bin_type.strip()
-            icon = ICON_MAP.get(bin_type)  # Collection icon
+            bin_type_raw = bin_type_raw.strip()
+
+            if "general" in bin_type_raw.lower():
+                bin_type = "General Waste"
+                icon = "mdi:trash-can"
+            elif "recycl" in bin_type_raw.lower():
+                bin_type = "Recycling"
+                icon = "mdi:recycle"
+            elif "green" in bin_type_raw.lower() or "garden" in bin_type_raw.lower():
+                bin_type = "Garden Organics"
+                icon = "mdi:leaf"
+            else:
+                bin_type = bin_type_raw
+                icon = ICON_MAP.get(bin_type)  # type: ignore[assignment, no-redef]
 
             try:
-                dates = _parse_rythm_description(rythm_description)
+                dates = _parse_rythm_description(rythm_description, bin_type)
             except Exception as e:
                 _LOGGER.warning(
                     f"Failed to parse rhythm description: {rythm_description}, {e}"

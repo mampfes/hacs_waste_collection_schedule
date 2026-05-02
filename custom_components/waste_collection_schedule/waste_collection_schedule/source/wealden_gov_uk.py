@@ -1,8 +1,7 @@
-import requests
 import json
-
 from datetime import datetime
 
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Wealden District Council"
@@ -20,12 +19,14 @@ ICON_MAP = {
     "refuseCollectionDate": "mdi:trash-can",
     "recyclingCollectionDate": "mdi:recycle",
     "gardenCollectionDate": "mdi:leaf",
+    "foodCollectionDate": "mdi:food-apple",
 }
 
 COLLECTIONS = {
     "refuseCollectionDate": "Rubbish",
     "recyclingCollectionDate": "Recycling",
-    "gardenCollectionDate": "Garden (if applicable)",
+    "gardenCollectionDate": "Garden",
+    "foodCollectionDate": "Food",
 }
 
 HEADERS = {

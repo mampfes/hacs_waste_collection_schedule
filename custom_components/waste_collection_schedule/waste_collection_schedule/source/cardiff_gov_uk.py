@@ -58,7 +58,7 @@ def get_token() -> str:
     r = requests.post(URL_GET_JWT, headers=headers, data=PAYLOAD_GET_JWT)
     r.raise_for_status()
 
-    tree = ET.fromstring(r.text)
+    tree = ET.fromstring(r.text)  # nosec B314
 
     jwt_result_element = tree.find(
         ".//GetJWTResult", namespaces={"": "http://tempuri.org/"}

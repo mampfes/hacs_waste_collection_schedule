@@ -7,7 +7,7 @@ Abfallwirtschaft Freiburg is supported by the generic [ICS](/doc/source/ics.md) 
 
 - Go to <https://www.abfallwirtschaft-freiburg.de/de/private_haushalte/abfuhrtermine.php> and select your location.
 - Right-click on `ICS` and copy link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Replace the **2** year fields in the url with `{%Y}`.
 
 ## Examples

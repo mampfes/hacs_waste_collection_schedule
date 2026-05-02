@@ -8,7 +8,7 @@ This is an unofficial service provided by nerdbridge Einbeck!
 
 - Go to <https://abfall.nerdbridge.de/> and select your municipality.  
 - Click on `In die Zwischenablage kopieren` to copy the link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

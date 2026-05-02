@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "SRV Återvinning"
 DESCRIPTION = "Source for SRV återvinning AB, Sweden"
@@ -34,6 +35,9 @@ class Source:
         r.raise_for_status()
 
         data = r.json()
+
+        if not data.get("results"):
+            raise SourceArgumentNotFound("address", self._address)
 
         entries = []
 

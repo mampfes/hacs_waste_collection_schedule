@@ -7,8 +7,9 @@ TITLE = "Luleå"
 DESCRIPTION = "Source for Luleå."
 URL = "https://www.lumire.se/"
 TEST_CASES = {
-    "Storgatan 2": {"address": "Storgatan 2"},
     "Ringgatan 20": {"address": "Ringgatan 20"},
+    "Gårdsvägen 11": {"address": "GÅRDSVÄGEN 11, LULEÅ"},
+    "Ymergatan 5": {"address": "Ymergatan 5"},
 }
 
 
@@ -26,9 +27,7 @@ ICON_MAP = {
     "Småbatterier": "mdi:battery",
 }
 
-
-API_URL = "https://www.lumire.se/wp-admin/admin-ajax.php"
-
+API_URL = "https://lumire.se/api/waste-pickup"
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 
@@ -37,29 +36,37 @@ class Source:
         self._address: str = address
 
     def fetch(self) -> list[Collection]:
-        data = {"search_address": self._address, "action": "waste_pickup_form"}
-
-        r = requests.post(API_URL, data=data, headers=HEADERS)
+        # Först ber man snällt om ens buildingId hos våra vänner på Lumire
+        r = requests.get(API_URL, params={"q": self._address}, headers=HEADERS)
         r.raise_for_status()
-        if "Den adress du har angivit finns inte i v\u00e5rt system" in r.text:
-            raise ValueError("Address not found")
+        search_results = r.json().get("addresses", [])
 
-        data_list = (
-            r.text.encode()
-            .decode("unicode_escape")
-            .replace(r"\/", "/")
-            .strip('"')
-            .split("<br>")
-        )
+        if not search_results:
+            raise ValueError(f"Address '{self._address}' not found")
 
-        collections = zip(data_list[::2], data_list[1::2])
+        building_id = search_results[0].get("buildingId")
+
+        # mha buildingId får man sitt faktiska schema
+        r = requests.get(f"{API_URL}/{building_id}", headers=HEADERS)
+        r.raise_for_status()
+        pickup_data = r.json().get("data", [])
 
         entries = []
-        for bin_type, date_str in collections:
-            date_str = date_str.replace(":", "").strip()
-            date_ = datetime.strptime(date_str, "%Y-%m-%d").date()
-            bin_type = bin_type.replace("Nästa tömning för", "").strip()
-            icon = ICON_MAP.get(bin_type.split()[0])
-            entries.append(Collection(date_, bin_type, icon))
+        for item in pickup_data:
+            date_str = item.get("nextPickup")
+            waste_type = item.get("fee", {}).get("waste_type") or item.get(
+                "description", ""
+            )
+
+            if date_str:
+                date_ = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+                icon = None
+                for key, val in ICON_MAP.items():
+                    if key.lower() in waste_type.lower():
+                        icon = val
+                        break
+
+                entries.append(Collection(date_, waste_type, icon))
 
         return entries

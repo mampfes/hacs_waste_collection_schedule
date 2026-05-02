@@ -1,18 +1,16 @@
 ---
 title: FES Frankfurter Entsorgungs- und Service GmbH
-url: https://www.fes-frankfurt.de/
+url: https://frankfurtplus.de/
 howto:
   en: |
-    - Go to <https://www.fes-frankfurt.de/services/abfallkalender> and select your location.  
-    - Click on `Kalender`.
-    - Copy link address.
-    - Replace the `url` in the example configuration with this link.
+    - Go to <https://frankfurtplus.de/abfallkalender> and search for your address.
+    - Select your street and house number.
+    - Note the `address_id` number from the URL (e.g. `https://frankfurtplus.de/abfallkalender?address_id=69882`).
+    - Use the ICS URL format: `https://frankfurtplus.de/abfallkalender/ADDRESS_ID/ical`
 
 default_params:
-  regex: (.*)\s+\|
-  split_at: ' / '
+  regex: "[^:]+:\\s*(.*)"
 test_cases:
-  Achenbachstr. 2:
-    url: https://www.fes-frankfurt.de/abfallkalender/QWNoZW5iYWNoc3RyLnwyfDYwNTk2.ics
-    regex: (.*)\s+\|
-    split_at: ' / '
+  Ludwig-Ruppel-Str. 89:
+    url: https://frankfurtplus.de/abfallkalender/69882/ical
+    regex: "[^:]+:\\s*(.*)"

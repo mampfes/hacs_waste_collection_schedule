@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Lake Macquarie City Council"
 DESCRIPTION = "Source for Lake Macquarie City Council, Australia."
@@ -39,7 +40,7 @@ class Source:
         addresses = r.json()
 
         if addresses == 0:
-            raise Exception("address not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         url = "https://www.lakemac.com.au/ocapi/Public/myarea/wasteservices"
 
@@ -60,8 +61,8 @@ class Source:
         for tag in soup.find_all("div", {"class": "next-service"}):
             try:
                 date_object = datetime.strptime(tag.text.strip(), "%a %d/%m/%Y").date()
-            except:
-                continue    
+            except Exception:
+                continue
             waste_date.append(date_object)
 
         waste = list(zip(waste_type, waste_date))

@@ -1,0 +1,55 @@
+name: Source Defect
+description: A previously working source has stopped working or returns incorrect data
+title: "[Source Defect]: "
+labels: ["source defect"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A source that was previously working is now broken, returning errors, or showing incorrect data.
+
+        **If you need help with sensor setup or configuration, please use the [Configuration Issue](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new?template=CONFIGURATION-ISSUE.yml) template instead.**
+  - type: input
+    id: source
+    attributes:
+      label: Source Name
+      description: The source module name (as shown in your configuration)
+      placeholder: ex. newham_gov_uk
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What's happening?
+      description: Describe the problem. When did it last work? What changed?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs
+      description: Paste relevant logs from Home Assistant (Settings → System → Logs). Remove any sensitive information (addresses, API keys).
+      render: Shell
+    validations:
+      required: true
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Source Configuration
+      description: Your source configuration from configuration.yaml or the UI. Use example addresses, not your own.
+      render: YAML
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have tested with the latest version (master branch) via HACS → 3-dot menu → Redownload → select `master`
+          required: true
+        - label: The service provider's website is still working
+          required: true
+        - label: I have tested with the example parameters from the documentation
+          required: false
+        - label: I have searched past issues (open and closed) for this problem
+          required: true

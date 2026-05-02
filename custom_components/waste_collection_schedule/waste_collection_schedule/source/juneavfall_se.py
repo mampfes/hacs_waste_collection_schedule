@@ -2,6 +2,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Jönköping - June Avfall & Miljö"
 DESCRIPTION = "Source for June Avfall & Miljö waste collection."
@@ -31,7 +32,7 @@ class Source:
                 address = address_data["Buildings"][0]
 
         if address is None:
-            raise Exception("address not found")
+            raise SourceArgumentNotFound("street_address", self._street_address)
 
         params = {"address": address}
         r = requests.get(

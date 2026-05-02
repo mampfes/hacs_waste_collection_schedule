@@ -1,5 +1,3 @@
-import re
-
 import requests
 from bs4 import BeautifulSoup, Tag
 from dateutil import parser
@@ -32,26 +30,31 @@ class Source:
 
     def fetch(self):
         session = requests.session()
+        session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
+            }
+        )
         args = {"UniqueId": self._uprn, "action": "SetAddress"}
 
         # get json file
         r = session.get(API_URL, params=args)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
-        collections_div = soup.find(
-            "", text=re.compile(r"Your next bin collection days", re.IGNORECASE)
-        ).find_next_sibling("div", class_="atPanelData")
+        waste_panel = soup.find("div", {"aria-label": "Waste and recycling"}).find(
+            "div", {"class": "atPanelData"}
+        )
 
         bin_type = None
         entries = []
 
-        for collection in collections_div.contents:
+        for collection in waste_panel.contents:
             if isinstance(collection, Tag):
                 if collection.name == "strong":
                     bin_type = " ".join(
                         a.strip()
                         for a in collection.text.strip().strip(":").split("\n")
-                    )
+                    ).replace("   ", " ")
                 continue
 
             collection = collection.strip()

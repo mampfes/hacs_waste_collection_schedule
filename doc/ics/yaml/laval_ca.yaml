@@ -1,0 +1,19 @@
+---
+title: Laval (QC)
+url: https://laval.ca
+country: ca
+howto:
+  en: |
+    - If you don't know your sector, go to `https://www.laval.ca/recherche-par-adresse/` and enter your address to identify your house matricule and zone.
+    - Right-click 'Add to my calendar' and select `Copy link address`.
+    - Use this copied URL as the `url` parameter.
+    - You can trim the tracking data after the `codeZone=#`
+  fr: |
+    - Si vous ne connaissez pas votre secteur, allez à `https://www.laval.ca/recherche-par-adresse/` et entrez votre adresse pour identifier votre matricule de maison et votre zone.
+    - Faites un clic droit sur 'Ajouter à mon agenda' et sélectionnez `Copier l'adresse du lien`.
+    - Utilisez ce lien copié comme paramètre `url`.
+    - Vous pouvez supprimer les données de suivi après `codeZone=#`
+test_cases:
+  "Default":
+    url: https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics?matricule=8753-16-3780-6-000-0000&codeZone=8
+    regex: Collecte\s*-\s(\w+)

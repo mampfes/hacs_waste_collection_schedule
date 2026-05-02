@@ -1,0 +1,12 @@
+---
+title: City of Windsor
+url: https://www.citywindsor.ca
+country: ca
+howto:
+  en: |
+    - Go to <https://opendata.citywindsor.ca/Tools/WasteCollectionCalendar> and find your collection zone/location code.
+    - Use the URL `https://opendata.citywindsor.ca/api/events/wasteCollection/ical/?location=YOUR_LOCATION` replacing `YOUR_LOCATION` with your zone code (e.g. `4A`).
+    - Use this URL as the `url` parameter.
+test_cases:
+  Location 4A:
+    url: "https://opendata.citywindsor.ca/api/events/wasteCollection/ical/?location=4A"

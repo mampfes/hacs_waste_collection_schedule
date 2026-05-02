@@ -60,7 +60,6 @@ Your serviceID can be found in the list below. `ort`, `strasse` and `hausnummer`
 | Dinslaken | din |
 | Stadt Dorsten | dorsten |
 | EGW Westmünsterland | wml2 |
-| Gütersloh (Stadt) | gt2 |
 | Kreis Gütersloh GEG | krwaf |
 | Halver | hlv |
 | Kreis Heinsberg | krhs |
@@ -77,6 +76,8 @@ Your serviceID can be found in the list below. `ort`, `strasse` and `hausnummer`
 | ZEW Zweckverband Entsorgungsregion West | zew2 |
 | Stadt Cuxhaven | cux |
 | Stadt Frankenthal | frankenthal |
+| Abfallwirtschaftsverband Lippe | awvlippe |
+| Gemeinde Kranenburg | kranenburg |
 <!--End of service section-->
 
 

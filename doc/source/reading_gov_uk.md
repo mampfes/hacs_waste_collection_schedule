@@ -34,16 +34,16 @@ waste_collection_schedule:
   sources:
     - name: reading_gov_uk
       args:
-        uprn: "100080241094"
+        uprn: "310027679"
 ```
 
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: westberks_gov_uk
+    - name: reading_gov_uk
       args:
-        postcode: "RG18 4QU"
-        housenameornumber: "6"
+        postcode: "RG31 5PN"
+        housenameornumber: "65"
 ```
 
 ## How to find your UPRN

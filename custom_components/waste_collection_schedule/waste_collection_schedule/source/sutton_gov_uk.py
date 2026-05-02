@@ -1,6 +1,6 @@
 from time import sleep
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
@@ -28,7 +28,8 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        s = requests.Session()
+        s = requests.Session(impersonate="chrome")
+
         api_url = API_URL.format(id=self._id)
         ical_url = ICAL_URL.format(id=self._id)
 

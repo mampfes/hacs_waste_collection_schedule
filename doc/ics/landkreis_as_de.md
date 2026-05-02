@@ -8,7 +8,7 @@ Landkreis Amberg-Sulzbach is supported by the generic [ICS](/doc/source/ics.md) 
 - Go to <https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php> and select your location.  
 - Click on `Kalenderübersicht anzegen`.
 - Right click -> copy link address on the `exportieren` link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - You can also use the `regex` to strip unwanted text from the event summary.
 
 ## Examples
@@ -29,7 +29,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: (.*?)\s+\|.*
+        regex: (.*?)\s*\|.*
         url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_freudenberg.ics
 ```
 ### Ensdorf (regex also strip `! vorgefahren !`)
@@ -39,6 +39,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: (.*?)\s+(\||\!).*
+        regex: (.*?)\s*(\||\!).*
         url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_ensdorf.ics
 ```

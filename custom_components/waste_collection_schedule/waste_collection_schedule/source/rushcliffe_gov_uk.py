@@ -1,10 +1,14 @@
 import datetime
-import json
 import re
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.service.FirmstepSelfService import (
+    get_verification_token,
+    lookup_addresses,
+)
 
 TITLE = "Rushcliffe Brough Council"
 DESCRIPTION = "Source for Rushcliffe Brough Council."
@@ -21,6 +25,7 @@ ICON_MAP = {
     "grey": "mdi:trash-can",
     "garden waste": "mdi:leaf",
     "blue": "mdi:package-variant",
+    "glass": "mdi:glass-fragile",
 }
 
 
@@ -58,30 +63,10 @@ class Source:
         header = {"User-Agent": "Mozilla/5.0", "Host": "selfservice.rushcliffe.gov.uk"}
         s.headers.update(header)
 
-        r = s.get(API_URL)
-        r.raise_for_status()
+        args: dict[str, str] = POST_ARGS.copy()
+        args["__RequestVerificationToken"] = get_verification_token(s, API_URL)
 
-        args: dict[str, str] = POST_ARGS
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        request_verification_token = soup.find(
-            "input", {"name": "__RequestVerificationToken"}
-        )
-
-        if request_verification_token is None or not request_verification_token.get(
-            "value"
-        ):
-            raise Exception("Invalid response")
-
-        args["__RequestVerificationToken"] = request_verification_token.get("value")
-
-        r = s.post(
-            ADDRESS_LOOKUP,
-            data=dict(query=self._postcode, searchNlpg="True", classification=""),
-        )
-
-        addresses = json.loads(r.text)
+        addresses = lookup_addresses(s, ADDRESS_LOOKUP, self._postcode)
 
         args[POST_POST_UPRN_KEY] = next(
             (
@@ -92,8 +77,8 @@ class Source:
             None,
         )
 
-        if args[POST_POST_UPRN_KEY] == "":
-            raise Exception("Address not found")
+        if args[POST_POST_UPRN_KEY] is None:
+            raise SourceArgumentNotFound("address", self._address)
 
         args[POST_POST_UPRN_KEY + "lbltxt"] = self._address
         args[POST_POST_UPRN_KEY + "FF3518-text"] = self._postcode
@@ -113,14 +98,17 @@ class Source:
             line = line.strip()
             if not line.startswith("Your"):
                 continue
-            bin_type = line[4 : line.find("bin")].strip()  # noqa: E203
-            date = re.search(r"\d{2}/\d{2}/\d{4}", line)
-            if not date:
+            before_bin = line.split(" bin", 1)[0]
+            before_bin = before_bin.replace("Your next ", "")
+            bin_type = before_bin.split("(", 1)[0].strip()
+            dates = re.findall(r"\d{2}/\d{2}/\d{4}", line)
+            if not dates:
                 continue
-            date = date.group(0)
 
-            date = datetime.datetime.strptime(date, "%d/%m/%Y").date()
             icon = ICON_MAP.get(bin_type)  # Collection icon
-            entries.append(Collection(date=date, t=bin_type, icon=icon))
+
+            for d in dates:
+                date = datetime.datetime.strptime(d, "%d/%m/%Y").date()
+                entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         return entries

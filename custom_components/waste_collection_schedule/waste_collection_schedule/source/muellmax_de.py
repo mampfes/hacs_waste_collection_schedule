@@ -2,6 +2,7 @@ from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.service.MuellmaxDe import SERVICE_MAP
 
@@ -39,6 +40,11 @@ TEST_CASES = {
         "mm_frm_str_sel": "Freiligrathstraße",
         "mm_frm_hnr_sel": "44791;Innenstadt;55;",
     },
+    "ASH Schäferstraße 49 (plain number)": {
+        "service": "Ash",
+        "mm_frm_str_sel": "Schäferstraße",
+        "mm_frm_hnr_sel": "49",
+    },
 }
 
 HEADERS = {
@@ -73,6 +79,32 @@ class InputCheckboxParser(HTMLParser):
                 self._value[d["name"]] = d.get("value")
 
 
+# Parser for HTML select options
+class SelectOptionParser(HTMLParser):
+    def __init__(self, select_name):
+        super().__init__()
+        self._select_name = select_name
+        self._in_select = False
+        self._options = []
+
+    @property
+    def options(self):
+        return self._options
+
+    def handle_starttag(self, tag, attrs):
+        d = dict(attrs)
+        if tag == "select" and d.get("name") == self._select_name:
+            self._in_select = True
+        if tag == "option" and self._in_select:
+            value = d.get("value", "")
+            if value:
+                self._options.append(value)
+
+    def handle_endtag(self, tag):
+        if tag == "select":
+            self._in_select = False
+
+
 # Parser for HTML input (hidden) text
 class InputTextParser(HTMLParser):
     def __init__(self, **identifiers):
@@ -95,7 +127,11 @@ class InputTextParser(HTMLParser):
 
 class Source:
     def __init__(
-        self, service, mm_frm_ort_sel=None, mm_frm_str_sel=None, mm_frm_hnr_sel=None
+        self,
+        service,
+        mm_frm_ort_sel=None,
+        mm_frm_str_sel=None,
+        mm_frm_hnr_sel=None,
     ):
         self._service = service
         self._mm_frm_ort_sel = mm_frm_ort_sel
@@ -106,13 +142,18 @@ class Source:
     def fetch(self):
         mm_ses = InputTextParser(name="mm_ses")
 
-        url = f"https://www.muellmax.de/abfallkalender/{self._service.lower()}/res/{self._service}Start.php"
-        r = requests.get(url, headers=HEADERS)
+        url = (
+            f"https://www.muellmax.de/abfallkalender/"
+            f"{self._service.lower()}/res/"
+            f"{self._service}Start.php"
+        )
+        session = requests.Session()
+        r = session.get(url, headers=HEADERS)
         mm_ses.feed(r.text)
 
         # select "Abfuhrtermine", returns ort or an empty street search field
-        args = {"mm_ses": mm_ses.value, "mm_aus_ort.x": 0, "mm_aus_ort.x": 0}
-        r = requests.post(url, data=args, headers=HEADERS)
+        args = {"mm_ses": mm_ses.value, "mm_aus_ort.x": 0, "mm_aus_ort.y": 0}
+        r = session.post(url, data=args, headers=HEADERS)
         mm_ses.feed(r.text)
 
         if self._mm_frm_ort_sel is not None:
@@ -123,34 +164,72 @@ class Source:
                 "mm_frm_ort_sel": self._mm_frm_ort_sel,
                 "mm_aus_ort_submit": "weiter",
             }
-            r = requests.post(url, data=args, headers=HEADERS)
+            r = session.post(url, data=args, headers=HEADERS)
             mm_ses.feed(r.text)
 
         if self._mm_frm_str_sel is not None:
+            # show street selection page
+            args = {
+                "mm_ses": mm_ses.value,
+                "xxx": 1,
+                "mm_frm_str_name": self._mm_frm_str_sel,
+                "mm_aus_str_txt_submit": "suchen",
+            }
+            r = session.post(url, data=args, headers=HEADERS)
+            mm_ses.feed(r.text)
+
             # select street
             args = {
                 "mm_ses": mm_ses.value,
                 "xxx": 1,
                 "mm_frm_str_sel": self._mm_frm_str_sel,
-                "mm_aus_str_sel_submit": "suchen",
+                "mm_aus_str_sel_submit": "weiter",
             }
-            r = requests.post(url, data=args, headers=HEADERS)
+            r = session.post(url, data=args, headers=HEADERS)
             mm_ses.feed(r.text)
 
-        if self._mm_frm_hnr_sel is not None:
-            # select house number
+        # auto-detect if house number selection is required
+        if "mm_frm_hnr_sel" in r.text:
+            hnr_value = self._mm_frm_hnr_sel
+            if hnr_value is None:
+                op = SelectOptionParser("mm_frm_hnr_sel")
+                op.feed(r.text)
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "mm_frm_hnr_sel", "", op.options
+                )
+
+            # if user provided a plain number, match against dropdown options
+            if ";" not in str(hnr_value):
+                op = SelectOptionParser("mm_frm_hnr_sel")
+                op.feed(r.text)
+                matches = [o for o in op.options if o.split(";")[2] == str(hnr_value)]
+                if len(matches) == 1:
+                    hnr_value = matches[0]
+                elif len(matches) == 0:
+                    raise SourceArgumentNotFoundWithSuggestions(
+                        "mm_frm_hnr_sel", str(hnr_value), op.options
+                    )
+                else:
+                    raise SourceArgumentNotFoundWithSuggestions(
+                        "mm_frm_hnr_sel", str(hnr_value), matches
+                    )
+
             args = {
                 "mm_ses": mm_ses.value,
                 "xxx": 1,
-                "mm_frm_hnr_sel": self._mm_frm_hnr_sel,
+                "mm_frm_hnr_sel": hnr_value,
                 "mm_aus_hnr_sel_submit": "weiter",
             }
-            r = requests.post(url, data=args, headers=HEADERS)
+            r = session.post(url, data=args, headers=HEADERS)
             mm_ses.feed(r.text)
 
         # select to get ical
-        args = {"mm_ses": mm_ses.value, "xxx": 1, "mm_ica_auswahl": "iCalendar-Datei"}
-        r = requests.post(url, data=args, headers=HEADERS)
+        args = {
+            "mm_ses": mm_ses.value,
+            "xxx": 1,
+            "mm_ica_auswahl": "iCalendar-Datei",
+        }
+        r = session.post(url, data=args, headers=HEADERS)
         mm_ses.feed(r.text)
 
         mm_frm_fra = InputCheckboxParser(startswith="mm_frm_fra")
@@ -160,7 +239,7 @@ class Source:
         args = {"mm_ses": mm_ses.value, "xxx": 1, "mm_frm_type": "termine"}
         args.update(mm_frm_fra.value)
         args.update({"mm_ica_gen": "iCalendar-Datei laden"})
-        r = requests.post(url, data=args, headers=HEADERS)
+        r = session.post(url, data=args, headers=HEADERS)
         mm_ses.feed(r.text)
 
         entries = []
@@ -170,7 +249,7 @@ class Source:
             dates = self._ics.convert(r.text)
         except ValueError as e:
             raise ValueError(
-                "Got invalid response from the server, please recheck your arguments"
+                "Got invalid response from the server, " "please recheck your arguments"
             ) from e
 
         entries = []

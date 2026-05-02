@@ -20,6 +20,7 @@ TEST_CASES = {
 ICON_MAP = {
     "RUBBISH": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
+    "GARDEN WASTE": "mdi:flower",
     "FOOD": "mdi:food",
 }
 
@@ -69,6 +70,8 @@ class Source:
                     collection["Next collection date"],
                     collection.get("Following collection date"),
                 ]:
+                    if not date:
+                        continue
                     entries.append(
                         Collection(
                             date=datetime.strptime(date, "%A %d %B")

@@ -1,0 +1,12 @@
+---
+title: Stadtwerke Bergheim
+url: https://swbm.de
+country: de
+howto:
+  en: |
+    - Go to <https://swbm.de/geschaeftsfelder/abfallentsorgung/abfallkalender/> and find your district's waste collection calendar.
+    - Right-click the ICS download link for your district and copy the URL.
+    - Use this URL as the `url` parameter.
+test_cases:
+  Bergheim:
+    url: "https://swbm.de/wp-content/uploads/2024/10/Bergheim.ics"

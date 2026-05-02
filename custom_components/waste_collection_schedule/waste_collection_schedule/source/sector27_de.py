@@ -15,6 +15,10 @@ DESCRIPTION = "Source for Muellkalender in Kreis RE."
 URL = "https://muellkalender.sector27.de"
 TEST_CASES = {
     "Datteln": {"city": "Datteln", "street": "Am Bahnhof"},
+    "Datteln range street": {
+        "city": "Datteln",
+        "street": "Ahsener Straße 113 - 161 (ungerade)",
+    },
     "Marl": {"city": "Marl", "street": "Ahornweg"},
     "Oer-Erkenschick": {"city": "Oer-Erkenschwick", "street": "An der Zechenbahn"},
 }
@@ -69,7 +73,7 @@ class Source:
             )
 
         args = city
-        args["searchFor"] = self._street
+        args["searchFor"] = self._street.split()[0] if self._street else self._street
 
         r = requests.get(
             "https://muellkalender.sector27.de/web/searchForStreets",
@@ -83,7 +87,7 @@ class Source:
 
         if self._street not in streets:
             if streets:
-                SourceArgumentNotFoundWithSuggestions(
+                raise SourceArgumentNotFoundWithSuggestions(
                     "street", self._street, [x for x in streets.keys()]
                 )
             raise SourceArgumentNotFound("street", self._street)

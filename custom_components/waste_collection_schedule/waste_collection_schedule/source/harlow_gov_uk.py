@@ -1,7 +1,7 @@
 import datetime
 
-from bs4 import BeautifulSoup
 import requests
+from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 
 TITLE = "Harlow Council"
@@ -44,7 +44,10 @@ class Source:
         x = soup.findAll("div", {"class": "row collectionsrow"})
         for row in x:
             fields = row.findChildren()
-            if fields[0].text.strip() == "Please select an address to view the upcoming collections.":
+            if (
+                fields[0].text.strip()
+                == "Please select an address to view the upcoming collections."
+            ):
                 continue
 
             entries.append(

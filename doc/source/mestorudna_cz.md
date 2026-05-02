@@ -25,14 +25,13 @@ waste_collection_schedule:
     sources:
     - name: mestorudna_cz
       args:
-        city_part: "S"
+        city_part: "Sudé týdny"
 
-sensor:
-  - platform: waste_collection_schedule
-    name: next_yard_collection
-    types:
-      - Svoz sběrných hnízd - papír
-    details_format: appointment_types
+  sensors:
+    - name: next_yard_collection
+      types:
+        - Svoz sběrných hnízd - papír
+      details_format: appointment_types
 ```
 
 #### How to find your `city_part`
@@ -42,6 +41,7 @@ Look at
 [https://www.rudnamesto.cz/odpadovy-kalendar/d-193572](https://www.rudnamesto.cz/odpadovy-kalendar/d-193572)
 
 
-city_part can be set to "S" for the North part of the city or "J" for the South part of the city.
+The `city_part` can be set to "Sudé týdny" for areas serviced during even weeks or "Liché týdny" for areas serviced during odd weeks.
 
-An empty city_part value retrieves all data from the dataset.
+
+An empty `city_part` value retrieves all data from the dataset.

@@ -9,7 +9,7 @@ Südbrandenburgischer Abfallzweckverband is supported by the generic [ICS](/doc/
 - Mark all types of waste and enter your address
 - Click on "Kalenderexport"
 - Click on "URL in die Zwischenablage kopieren"
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

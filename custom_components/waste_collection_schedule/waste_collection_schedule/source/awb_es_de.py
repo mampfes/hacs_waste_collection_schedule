@@ -1,5 +1,5 @@
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
@@ -13,23 +13,22 @@ TEST_CASES = {
     "Kohlberg": {"city": "Kohlberg", "street": "alle Straßen"},
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
-
 
 class Source:
-    def __init__(self, city, street=None):
+    def __init__(self, city: str, street: str | None = None):
         self._city = city
         self._street = street
         self._ics = ICS()
 
-    def _validate_city(self):
+    def _validate_city(self) -> None:
         data = {
             "search": self._city,
             "parent": "",
             "kind": "removaldate.city",
         }
-        r = requests.post(
-            "https://www.awb-es.de/statics/abfallplus/search.json.php", data=data
+        r = self._session.post(
+            "https://www.awb-es.de/statics/abfallplus/search.json.php",
+            data=data,
         )
         r.raise_for_status()
         suggestsion = r.json()["suggestions"]
@@ -43,18 +42,19 @@ class Source:
             suggestions=[suggestion["value"] for suggestion in suggestsion],
         )
 
-    def _validate_street(self):
+    def _validate_street(self) -> None:
         data = {
             "search": self._street,
             "parent": self._city,
             "kind": "removaldate.street",
         }
-        r = requests.post(
+        r = self._session.post(
             "https://www.awb-es.de/statics/abfallplus/search.json.php", data=data
         )
         r.raise_for_status()
         suggestsion = r.json()["suggestions"]
         for suggestion in suggestsion:
+            assert self._street is not None
             if suggestion["value"].lower() == self._street.lower():
                 return
         raise SourceArgumentNotFoundWithSuggestions(
@@ -63,15 +63,15 @@ class Source:
             suggestions=[suggestion["value"] for suggestion in suggestsion],
         )
 
-    def fetch(self):
-        session = requests.Session()
+    def fetch(self) -> list[Collection]:
+        self._session = requests.Session(impersonate="chrome124", verify=False)
 
         params = {
             "city": self._city,
             "street": self._street,
             "direct": "true",
         }
-        r = session.get(
+        r = self._session.get(
             "https://www.awb-es.de/abfuhr/abfuhrtermine/__Abfuhrtermine.html",
             params=params,
         )
@@ -95,7 +95,7 @@ class Source:
         entries = []
         for ics_url in ics_urls:
             # get ics file
-            r = session.get(ics_url, headers=HEADERS)
+            r = self._session.get(ics_url)
             r.raise_for_status()
 
             # parse ics file

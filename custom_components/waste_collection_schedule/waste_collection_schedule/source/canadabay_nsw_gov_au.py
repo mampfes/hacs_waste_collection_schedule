@@ -28,6 +28,7 @@ TEST_CASES = {
 HEADERS = {"user-agent": "Mozilla/5.0"}
 API_URL = "https://canada-bay.waste-info.com.au/api/v1"
 
+
 class Source:
     def __init__(self, suburb, street_name, street_number):
         self.suburb = suburb
@@ -111,7 +112,7 @@ class Source:
                 collection_date = date.fromisoformat(item["start"])
                 if (collection_date - today).days >= 0:
 
-                    if item["event_type"] in ["recycle","organic"]:
+                    if item["event_type"] in ["recycle", "organic"]:
                         # Every collection day includes rubbish
                         entries.append(
                             Collection(
@@ -121,7 +122,9 @@ class Source:
                         if item["event_type"] == "recycle":
                             entries.append(
                                 Collection(
-                                    date=collection_date, t="Recycling", icon="mdi:recycle"
+                                    date=collection_date,
+                                    t="Recycling",
+                                    icon="mdi:recycle",
                                 )
                             )
                         if item["event_type"] == "organic":
@@ -133,7 +136,9 @@ class Source:
                     elif item["event_type"] == "clean_up":
                         entries.append(
                             Collection(
-                                date=collection_date, t="Bulk Household", icon="mdi:couch"
+                                date=collection_date,
+                                t="Bulk Household",
+                                icon="mdi:couch",
                             )
                         )
 

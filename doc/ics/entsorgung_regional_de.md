@@ -5,10 +5,10 @@ Abfallwirtschaft Enzkreis is supported by the generic [ICS](/doc/source/ics.md) 
 
 ## How to get the configuration arguments
 
-- Go to <https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html> and select your location.  
-- Select all waste types (or at least the ones you want to be reminded of).
-- Replace the `url` in the example configuration with this link. 
-- Do not forget the method and params parameter.
+- Go to <https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html>.
+- Select your municipality, district, and waste types, then click "ICS Datei herunterladen".
+- Copy the download URL from your browser. Use it as the `url` parameter.
+- The `method` (POST) and `params` are pre-filled.
 
 ## Examples
 

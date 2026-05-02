@@ -3,7 +3,6 @@ import logging
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.service.ICS import ICS
@@ -63,7 +62,7 @@ class Source:
         }
 
         if self._street not in street_to_id:
-            raise Exception(f"street not found: {self._street}")
+            raise SourceArgumentNotFoundWithSuggestions("street", self._street, street_to_id.keys())
 
         streetId = street_to_id[self._street]
 

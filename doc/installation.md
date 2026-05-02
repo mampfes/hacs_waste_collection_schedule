@@ -132,25 +132,24 @@ waste_collection_schedule:
 Add the following lines to your `configuration.yaml` file:
 
 ```yaml
-sensor:
-  - platform: waste_collection_schedule
-    source_index: SOURCE_INDEX # (YAML only)
-    name: NAME
-    details_format: DETAILS_FORMAT
-    count: COUNT
-    leadtime: LEADTIME
-    value_template: VALUE_TEMPLATE
-    date_template: DATE_TEMPLATE
-    add_days_to: ADD_DAYS_TO
-    event_index: EVENT_INDEX
-    types:
-      - Waste Type 1
-      - Waste Type 2
+waste_collection_schedule:
+  sensors:
+    - source_index: SOURCE_INDEX # (YAML only)
+      name: NAME
+      details_format: DETAILS_FORMAT
+      count: COUNT
+      leadtime: LEADTIME
+      value_template: VALUE_TEMPLATE
+      date_template: DATE_TEMPLATE
+      add_days_to: ADD_DAYS_TO
+      event_index: EVENT_INDEX
+      types:
+        - Waste Type 1
+        - Waste Type 2
 ```
 
 | Parameter | Type | Requirement | Description |
 |--|--|--|--|
-| platform |  | required | waste_collection_schedule |
 | source_index *(YAML ONLY)* | int | optional | Used to assign a sensor to a specific source. Only needed if multiple sources are defined. The first source defined is source_index 0, the second source_index 1, etc. If no value is supplied, the default of 0 is used.<br><br>If you want to have a sensor which combines the data from multiple sources, just add a list of sources here. [Example](#combine-data-from-multiple-sources). This parameter is not available when using GUI configuration, as you're adding sensors directly to sources |
 | name | string | required | The name Home Assistant used for this sensor |
 | details_format | string | optional | Specifies the format used to display info in Home Assistant's _more info_ pop-up. Valid values are: `upcoming`, `appointment_types`, `generic` and `hidden`. If no value is supplied, the default of "upcoming" is used. See [options for details_format](#options-for-details_format-parameter) for more details |

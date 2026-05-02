@@ -1,0 +1,17 @@
+---
+title: mopage.ch
+url: https://mopage.ch
+country: ch
+extra_info:
+  - title: Wiedlisbach
+    url: https://wiedlisbach.mopage.ch
+    country: ch
+howto:
+  en: |
+    - Go to your municipality's mopage.ch waste calendar page.
+    - Find the iCal/ICS subscription link (usually a webcal:// URL).
+    - The generic ICS source automatically converts webcal:// to https://.
+    - Use the URL as the `url` parameter.
+test_cases:
+  Wiedlisbach:
+    url: "webcal://wiedlisbach.mopage.ch/appl/ical.php?apid=1366535605&calhome=1341293566"

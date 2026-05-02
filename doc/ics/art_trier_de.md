@@ -9,7 +9,7 @@ ART Trier is supported by the generic [ICS](/doc/source/ics.md) source. For all 
 - Scroll down to `JAHRESKALENDER FÜR IHR OUTLOOK, ETC.`  
 - Set `Wann möchten Sie erinnert werden?` to `Keine Erinnerung` (not mandatory).
 - Click on `> Kalender (ICS) importieren` to get a webcal link. Or click on the `ICS-Kalender Speichern` link to download the ics file copy the download link.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

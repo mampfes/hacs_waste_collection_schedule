@@ -1,0 +1,12 @@
+---
+title: Abfall Lippe
+url: https://abfall-lippe.de
+country: de
+howto:
+  en: |
+    - Go to <https://abfall-lippe.de> and find the waste collection calendar for your area.
+    - Right-click the ICS download link and copy the URL.
+    - Use this URL as the `url` parameter.
+test_cases:
+  Blomberg:
+    url: "https://abfall-lippe.de/wp-content/uploads/2024/12/Blomberg-2025.ics"

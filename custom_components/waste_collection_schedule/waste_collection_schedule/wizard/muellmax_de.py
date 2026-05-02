@@ -119,12 +119,13 @@ def main():
     mm_ses = InputTextParser(type="hidden", name="mm_ses")
 
     url = f"https://www.muellmax.de/abfallkalender/{answers['service'].lower()}/res/{answers['service']}Start.php"
-    r = requests.get(url, headers=HEADERS)
+    session = requests.Session()
+    r = session.get(url, headers=HEADERS)
     mm_ses.feed(r.text)
 
     # select "Abfuhrtermine", returns ort or an empty street search field
-    args = {"mm_ses": mm_ses.value, "mm_aus_ort.x": 0, "mm_aus_ort.x": 0}
-    r = requests.post(url, data=args, headers=HEADERS)
+    args = {"mm_ses": mm_ses.value, "mm_aus_ort.x": 0, "mm_aus_ort.y": 0}
+    r = session.post(url, data=args, headers=HEADERS)
     mm_ses.feed(r.text)
 
     # check if last request returns a list of cities
@@ -147,7 +148,7 @@ def main():
             "mm_frm_ort_sel": answers["mm_frm_ort_sel"],
             "mm_aus_ort_submit": "weiter",
         }
-        r = requests.post(url, data=args, headers=HEADERS)
+        r = session.post(url, data=args, headers=HEADERS)
         mm_ses.feed(r.text)
 
     # get list of streets
@@ -157,7 +158,7 @@ def main():
         "mm_frm_str_name": "",
         "mm_aus_str_txt_submit": "suchen",
     }
-    r = requests.post(url, data=args, headers=HEADERS)
+    r = session.post(url, data=args, headers=HEADERS)
     mm_ses.feed(r.text)
 
     mm_frm_str_sel = InputSelectParser(name="mm_frm_str_sel")
@@ -180,7 +181,7 @@ def main():
         "mm_frm_str_sel": answers["mm_frm_str_sel"],
         "mm_aus_str_sel_submit": "weiter",
     }
-    r = requests.post(url, data=args, headers=HEADERS)
+    r = session.post(url, data=args, headers=HEADERS)
     mm_ses.feed(r.text)
 
     mm_frm_hnr_sel = InputSelectParser(name="mm_frm_hnr_sel")

@@ -4,6 +4,7 @@ import logging
 
 import requests as request
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,7 +48,7 @@ class Source:
         addresses = json.loads(addressResponse.text)
 
         if len(addresses) == 0:
-            raise Exception("No address found for " + term)
+            raise SourceArgumentNotFound("streetName", self._streetName)
         addressId = addresses[0]["Id"]
 
         _LOGGER.info("Fetching data from Vestforbrændning")

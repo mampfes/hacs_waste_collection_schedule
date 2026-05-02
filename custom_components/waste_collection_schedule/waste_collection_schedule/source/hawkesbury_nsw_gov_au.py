@@ -5,6 +5,7 @@ import re
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "The Hawkesbury City Council, Sydney"
 DESCRIPTION = "Source for Hawkesbury City Council, Sydney, Australia waste collection."
@@ -108,7 +109,7 @@ class Source:
 
         # Check if house record was found
         if len(data["records"]) == 0:
-            raise Exception(f"House not found: {self._houseNo}")
+            raise SourceArgumentNotFound("houseNo", self._houseNo)
 
         # get collection schedule
         record = data["records"][-1]

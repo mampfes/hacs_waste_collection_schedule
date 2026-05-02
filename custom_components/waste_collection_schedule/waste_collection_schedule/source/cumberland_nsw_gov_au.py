@@ -22,7 +22,7 @@ TEST_CASES = {
         "suburb": "Guildford",
         "street_name": "Woodville Road",
         "street_number": 283,
-    }
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -44,7 +44,8 @@ class Source:
 
         # Retrieve suburbs
         r = requests.get(
-            "https://cumberland.waste-info.com.au/api/v1/localities.json", headers=HEADERS
+            "https://cumberland.waste-info.com.au/api/v1/localities.json",
+            headers=HEADERS,
         )
         data = json.loads(r.text)
 
@@ -104,7 +105,7 @@ class Source:
                 collection_date = date.fromisoformat(item["start"])
                 if (collection_date - today).days >= 0:
                     # Only consider recycle and organic events
-                    if item["event_type"] in ["recycle","organic"]:
+                    if item["event_type"] in ["recycle", "organic"]:
                         # Every collection day includes rubbish
                         entries.append(
                             Collection(
@@ -114,7 +115,9 @@ class Source:
                         if item["event_type"] == "recycle":
                             entries.append(
                                 Collection(
-                                    date=collection_date, t="Recycling", icon="mdi:recycle"
+                                    date=collection_date,
+                                    t="Recycling",
+                                    icon="mdi:recycle",
                                 )
                             )
                         if item["event_type"] == "organic":

@@ -32,9 +32,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
+    "bin": "mdi:leaf",
     "refuse": "mdi:trash-can",
     "recycling": "mdi:recycle",
-    "food": "mdi:food",
+    "caddy": "mdi:food",
     "box": "mdi:recycle",
 }
 
@@ -129,7 +130,7 @@ class Source:
                     "descriptor": "aura://FlowRuntimeConnectController/ACTION$startFlow",
                     "callingDescriptor": "UNKNOWN",
                     "params": {
-                        "flowDevName": "WebFormWasteCollectionEnquiry",
+                        "flowDevName": "WebFormAlloyWasteCollectionEnquiry",
                         "arguments": '[{"name":"vClientCode","type":"String","supportsRecordId":false,"value":"WOD"}]',
                         "enableTrace": False,
                         "enableRollbackMode": False,

@@ -67,15 +67,30 @@ class Source:
 
         s = requests.Session()
 
-        # visit homepage to get token for later queries
+        # Step 1: Launch the BinDaysJourney to start a session
         r = s.get(
-            "https://forms.north-norfolk.gov.uk/xforms/Address/Show/CollectionAddress",
+            "https://forms.north-norfolk.gov.uk/xforms/Launch/New/BinDaysJourney",
             headers=HEADERS,
         )
         soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
         token: str = soup.find("input", {"name": "__RequestVerificationToken"}).get(
             "value"
         )
+
+        # Step 2: Confirm the landing page to proceed to address search
+        r = s.post(
+            r.url,
+            headers=HEADERS,
+            data={
+                "__RequestVerificationToken": token,
+                "Confirm": "true",
+                "BusinessName": "",
+                "IsDirty": "False",
+                "Journey": "BinDaysJourney",
+            },
+        )
+        soup = BeautifulSoup(r.content, "html.parser")
+        token = soup.find("input", {"name": "__RequestVerificationToken"}).get("value")
 
         payload: dict = {
             "__RequestVerificationToken": token,
@@ -125,12 +140,17 @@ class Source:
         li: list = soup.find_all("li")
         for item in li:
             details: list = item.find_all("strong")
-            entries.append(
-                Collection(
-                    date=self.append_year(details[2].text),
-                    t=str(details[0].text),
-                    icon=ICON_MAP.get(details[0].text),
+            try:
+                entries.append(
+                    Collection(
+                        date=self.append_year(details[2].text),
+                        t=str(details[0].text),
+                        icon=ICON_MAP.get(details[0].text),
+                    )
                 )
-            )
+            except (
+                IndexError
+            ):  # empty list is returned if property doesn't subscribe to that collection
+                continue
 
         return entries

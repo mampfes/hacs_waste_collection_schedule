@@ -9,7 +9,7 @@ Stadt Detmold is supported by the generic [ICS](/doc/source/ics.md) source. For 
 - Click on `Weitere Information`.
 - Click on `Download ics-Datei (iCal).
 - Right-click on `Download` link and copy link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 - Replace the year in the url with `{%Y}`.
 
 ## Examples

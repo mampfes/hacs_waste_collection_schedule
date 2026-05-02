@@ -16,15 +16,15 @@ TEST_CASES = {
 API_URL = "https://movar.no/kalender.html"
 ICON_MAP = {
     "Restavfall": "mdi:trash-can",  # residual waste
-	"Papp og papir": "mdi:newspaper-variant-multiple",  # cardboard and paper
+    "Papp og papir": "mdi:newspaper-variant-multiple",  # cardboard and paper
     "Våtorganisk": "mdi:leaf",  # wet organic
-	"Glass og metallemballasje": "mdi:recycle",  # glass and metal packaging
-	"Drikkekartonger": "mdi:recycle",  # drink cartons
-	"Spesialavfall": "mdi:recycle",  # special waste
-	"Plastemballasje": "mdi:recycle",  # plastic packaging
-	"Hageavfall": "mdi:tree",  # yard waste
-	"Metaller": "mdi:recycle",  # metals
-	"Papp": "mdi:newspaper-variant-multiple",  # cardboard
+    "Glass og metallemballasje": "mdi:recycle",  # glass and metal packaging
+    "Drikkekartonger": "mdi:recycle",  # drink cartons
+    "Spesialavfall": "mdi:recycle",  # special waste
+    "Plastemballasje": "mdi:recycle",  # plastic packaging
+    "Hageavfall": "mdi:tree",  # yard waste
+    "Metaller": "mdi:recycle",  # metals
+    "Papp": "mdi:newspaper-variant-multiple",  # cardboard
 }
 
 
@@ -42,7 +42,7 @@ class Source:
         # search address
         url = "https://fritekstsok.api.norkart.no/search/kommunecustom"
 
-        params ={
+        params = {
             "Targets": "gateadresse",
             "Query": self._address,
             "Size": "100",
@@ -59,11 +59,11 @@ class Source:
             "sec-gpc": "1",
             "x-waapi-token": "e6727744-e3f9-4162-a43f-3480fdb1861d",
         }
-        
+
         data = self.connect(url, headers, params)
 
         results = data["SearchResults"][0]["Source"]
-        
+
         # return waste types
         url = "https://mdt-proxy.movar.no/api/Fraksjoner"
 
@@ -77,15 +77,15 @@ class Source:
             "accept": "*/*",
             "origin": "https://movar.no",
             "sec-fetch-mode": "cors",
-            "kommunenr": str(results["KommuneNummer"])
+            "kommunenr": str(results["KommuneNummer"]),
         }
-        
+
         wastetypes = self.connect(url, headers, params)
-        
+
         # get collection dates
         url = "https://mdt-proxy.movar.no/api/Tommekalender"
-        
-        next_year = str(int(datetime.now().strftime("%Y")) +1)
+
+        next_year = str(int(datetime.now().strftime("%Y")) + 1)
 
         params = {
             "dato": next_year + "-12-31T23:59:59+11:00",
@@ -114,9 +114,11 @@ class Source:
                     for collect_date in collection["tommedatoer"]:
                         entries.append(
                             Collection(
-                                date = datetime.strptime(collect_date[:10], "%Y-%m-%d").date(),  # Collection date
-                                t = wastetype["navn"],  # Collection type
-                                icon = ICON_MAP.get(wastetype["navn"]),  # Collection icon
+                                date=datetime.strptime(
+                                    collect_date[:10], "%Y-%m-%d"
+                                ).date(),  # Collection date
+                                t=wastetype["navn"],  # Collection type
+                                icon=ICON_MAP.get(wastetype["navn"]),  # Collection icon
                             )
                         )
 

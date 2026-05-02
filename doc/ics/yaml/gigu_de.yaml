@@ -1,0 +1,66 @@
+---
+title: Ginsheim-Gustavsburg
+url: https://www.gigu.de
+country: de
+howto:
+  en: |
+    - Go to <https://www.gigu.de/service-rathaus/dienstleistungen-online-rathaus/abfall/abfallkalender/> and select your district.
+    - Set `district` to your district number (`1` for Ginsheim, `2` for Gustavsburg).
+    - The `category` list selects which waste types to include (1-9 for all types). Adjust as needed.
+    - Set `dateFrom` and `dateTo` to the desired date range (format: `YYYY-MM-DD`).
+  de: |
+    - Gehe zu <https://www.gigu.de/service-rathaus/dienstleistungen-online-rathaus/abfall/abfallkalender/> und wähle deinen Stadtteil aus.
+    - Setze `district` auf deine Stadtteilnummer (`1` für Ginsheim, `2` für Gustavsburg).
+    - Die `category`-Liste wählt die Abfallarten aus (1-9 für alle Abfallarten). Passe die Liste nach Bedarf an.
+    - Setze `dateFrom` und `dateTo` auf den gewünschten Zeitraum (Format: `YYYY-MM-DD`).
+default_params:
+  url: https://abfallkalender.gigu.de/export
+  method: POST
+  params:
+    dateFrom: "2026-01-01"
+    dateTo: "2026-12-31"
+    category:
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+      - "5"
+      - "6"
+      - "7"
+      - "8"
+      - "9"
+test_cases:
+  Gustavsburg all categories:
+    url: https://abfallkalender.gigu.de/export
+    method: POST
+    params:
+      dateFrom: "2026-01-01"
+      dateTo: "2026-12-31"
+      category:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+        - "6"
+        - "7"
+        - "8"
+        - "9"
+      district: "2"
+  Ginsheim all categories:
+    url: https://abfallkalender.gigu.de/export
+    method: POST
+    params:
+      dateFrom: "2026-01-01"
+      dateTo: "2026-12-31"
+      category:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+        - "6"
+        - "7"
+        - "8"
+        - "9"
+      district: "1"

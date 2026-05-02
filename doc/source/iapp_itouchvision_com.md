@@ -1,6 +1,6 @@
-# Itouchvision Source using the encrypted API
+# iTouchVision Source using the encrypted API
 
-Support for schedules provided by [Itouchvision Source using the encrypted API](https://www.itouchvision.com/), serving multiple, UK.
+Support for schedules provided by [iTouchVision Source using the encrypted API](https://www.itouchvision.com/), serving multiple, UK.
 
 ## Configuration via configuration.yaml
 
@@ -22,10 +22,20 @@ waste_collection_schedule:
 *(String) (required)*  
 supported are:
 
+- AYLESBURY VALE
 - BLAENAU GWENT
 - BUCKINGHAMSHIRE
 - CHILTERN
+- HYNDBURN
+- MENDIP
 - NEWPORT
+- SEDGEMOOR
+- SOMERSET
+- SOMERSET COUNTY
+- SOMERSET WEST AND TAUNTON
+- SOUTH SOMERSET
+- TEST VALLEY
+- WINCHESTER
 
 ## Example
 

@@ -1,37 +1,35 @@
-# IRiS
+# Iris Salten
 
-Support for schedules provided by [IRiS](https://www.iris-salten.no), serving multiple, Norway.
+Supported collection schedule for [Iris Salten](https://www.iris-salten.no/), covering Bodø and surrounding municipalities in Nordland, Norway.
 
-## Configuration via configuration.yaml
+The script uses the official Iris Salten API to dynamically look up your address and fetch the internal ID.
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: iris_salten_no
-      args:
-        address: ADDRESS
-        
-```
+## Configuration via UI
+
+1. Go to `Settings` -> `Devices & Services` -> `Add Integration`.
+2. Search for `Waste Collection Schedule`.
+3. Select `Iris Salten` from the list of providers.
+4. Enter your street address and (optionally) your municipality.
+
+## Configuration via `configuration.yaml`
 
 ### Configuration Variables
 
-**address**  
-*(String) (required)*
+**address**
+*(string) (required)*
+Your street address exactly as it is written in the Iris Salten search field.
 
 **kommune**
-*(String) (required)*
+*(string) (optional)*
+Your municipality (e.g., "Bodø kommune"). Providing this is recommended if your street name exists in multiple municipalities within the Iris Salten region.
 
-## Example
+### Basic Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: iris_salten_no
       args:
-        address: Alsosgården 11, bodø
-        
+        address: "Alsosgården 11"
+        kommune: "Bodø kommune"
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://www.iris-salten.no/tommekalender/](https://www.iris-salten.no/tommekalender/) and write them exactly like on the web page.

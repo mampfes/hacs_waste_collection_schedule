@@ -85,7 +85,7 @@ class Source:
 
         if egebiet_id == "0":
             if self._object_number == "":
-                raise SourceArgumentRequired("object_number")
+                raise SourceArgumentRequired("object_number", "An object number is required for this address")
             args["input"] = self._object_number
             args["url"] = 7
             r = requests.post("https://asc.hausmuell.info/proxy.php", data=args)

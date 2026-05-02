@@ -1,12 +1,13 @@
+import base64
 from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Wermelskirchen (Service Down)"
+TITLE = "Wermelskirchen"
 DESCRIPTION = "Source for Abfallabholung Wermelskirchen, Germany"
-URL = "https://www.wermelskirchen.de"
+URL = "https://www.bavweb.de/Bergischer-Abfallwirtschaftsverband/Abfuhrkalender-Service/Wermelskirchen/"
 TEST_CASES = {
     "Rathaus": {"street": "Telegrafenstraße", "house_number": "29"},
     "Krankenhaus": {"street": "Königstraße", "house_number": "100"},
@@ -45,6 +46,16 @@ ICON_MAP = {
     "Weihnachtsbaum": {"icon": "mdi:pine-tree", "image": ""},
 }
 
+TYPE_MAP = {
+    "Restmülltonne 2-wöchentlich": "Restabfall 2-woechentlich",
+    "Restmülltonne 4-wöchentlich": "Restabfall 4-woechentlich",
+    "Restmülltonne 6-wöchentlich": "Restabfall 6-woechentlich",
+    "Gelber Sack / Tonne": "Gelber Sack",
+    "Papiertonne": "Papier",
+    "Schadstoffmobil": "Schadstoffsammlung",
+    "Weihnachtsbaum": "Abfuhr Weihnachtsbaum",
+}
+
 
 PARAM_TRANSLATIONS = {
     "de": {
@@ -60,24 +71,28 @@ class Source:
         self._house_number = str(house_number)
         self._ics = ICS()
 
+    def _normalize_street(self):
+        if "Ã" in self._street:
+            try:
+                return self._street.encode("latin1").decode("utf-8")
+            except UnicodeError:
+                return self._street
+        return self._street
+
     def fetch(self):
-        # the url contains the current year, but this doesn't really seems to matter at least for the ical, since the result is always the same
-        # still replace it for compatibility sake
         now = datetime.now()
-        url = f"https://abfallkalender.citkomm.de/wermelskirchen/abfallkalender-{str(now.year)}/ics/FrontendIcs.html"
+        street = self._normalize_street()
+        street_token = base64.b64encode(
+            f"Wermelskirchen42929{street}".encode("latin1")
+        ).decode("ascii")
+        url = "https://abfallkalender.regioit.de/kalender-bav/downloadfile.jsp"
         params = {
-            "tx_citkoabfall_abfallkalender[strasse]": self._street,
-            "tx_citkoabfall_abfallkalender[hausnummer]": self._house_number,
-            "tx_citkoabfall_abfallkalender[abfallarten][0]": 86,
-            "tx_citkoabfall_abfallkalender[abfallarten][1]": 85,
-            "tx_citkoabfall_abfallkalender[abfallarten][2]": 84,
-            "tx_citkoabfall_abfallkalender[abfallarten][3]": 82,
-            "tx_citkoabfall_abfallkalender[abfallarten][4]": 81,
-            "tx_citkoabfall_abfallkalender[abfallarten][5]": 80,
-            "tx_citkoabfall_abfallkalender[abfallarten][6]": 79,
-            "tx_citkoabfall_abfallkalender[abfallarten][7]": 76,
-            "tx_citkoabfall_abfallkalender[abfallarten][8]": 75,
-            "tx_citkoabfall_abfallkalender[abfallarten][9]": 74,
+            "format": "ics",
+            "jahr": str(now.year),
+            "ort": "Wermelskirchen",
+            "strStatic": street_token,
+            "zeit": "1:00:00",
+            "fraktion": [8, 12, 13, 15, 16, 22, 23, 24],
         }
         r = requests.get(url, params=params)
         r.raise_for_status()
@@ -87,8 +102,9 @@ class Source:
 
         entries = []
         for d in dates:
-            info = ICON_MAP.get(d[1], {"icon": None, "image": None})
+            waste_type = TYPE_MAP.get(d[1], d[1])
+            info = ICON_MAP.get(waste_type, {"icon": None, "image": None})
             entries.append(
-                Collection(d[0], d[1], picture=info["image"], icon=info["icon"])
+                Collection(d[0], waste_type, picture=info["image"], icon=info["icon"])
             )
         return entries

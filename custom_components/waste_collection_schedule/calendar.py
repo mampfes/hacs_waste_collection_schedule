@@ -104,7 +104,11 @@ class WasteCollectionCalendar(CalendarEntity):
         ):
             event = self._convert(collection)
 
-            if start_date <= event.start_datetime_local <= end_date:
+            if (
+                start_date.date()
+                <= event.start_datetime_local.date()
+                <= end_date.date()
+            ):
                 events.append(event)
 
         return events

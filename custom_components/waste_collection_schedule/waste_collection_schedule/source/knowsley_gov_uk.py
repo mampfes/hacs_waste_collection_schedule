@@ -119,7 +119,9 @@ class Source:
             params={cachebust: ""},
         )
         r.raise_for_status()
-        OPERATION_ID_REGEX = r'"config":{"operationId":"([a-zA-Z0-9/]+)",'
+
+        # OPERATION_ID_REGEX = r'"config":{"operationId":"([a-zA-Z0-9/]+)",'
+        OPERATION_ID_REGEX = r'"config":{"operationId":"(.+?)",'
         operation_ids = list(re.finditer(OPERATION_ID_REGEX, r.text))
         operation_id_post = operation_ids[0].group(1)
         operation_id_uprn = operation_ids[1].group(1)
@@ -187,7 +189,6 @@ class Source:
             for key, value in change.items():
                 if not key.startswith("Next"):
                     continue
-
                 # Tuesday 07/01/2025
                 date_str = value["value"]
                 bin_type = key.replace("Next", "")

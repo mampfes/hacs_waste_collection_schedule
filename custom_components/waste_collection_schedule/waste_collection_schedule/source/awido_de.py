@@ -1,10 +1,11 @@
 import datetime
 import logging
+import re
 
 import requests
+from icalevents import icalevents
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWIDO Online"
 DESCRIPTION = "Source for AWIDO waste collection."
@@ -16,7 +17,10 @@ def EXTRA_INFO():
         {
             "title": s["title"],
             "url": s["url"],
-            "default_params": {"customer": s["service_id"]},
+            "default_params": {
+                "customer": s["service_id"],
+                **s.get("default_params", {}),
+            },
         }
         for s in SERVICE_MAP
     ]
@@ -97,6 +101,11 @@ SERVICE_MAP = [
         "title": "Landkreis Kulmbach",
         "url": "https://www.landkreis-kulmbach.de/",
         "service_id": "kulmbach",
+    },
+    {
+        "title": "Landkreis Lichtenfels",
+        "url": "https://www.lkr-lif.de/",
+        "service_id": "lichtenfels",
     },
     {
         "title": "Landkreis Erding",
@@ -238,6 +247,155 @@ SERVICE_MAP = [
         "url": "https://www.gifhorn.de/",
         "service_id": "gifhorn",
     },
+    {
+        "title": "Stadt Königstein im Taunus",
+        "url": "https://www.koenigstein.de/",
+        "service_id": "koenigstein",
+    },
+    {
+        "title": "Anzing",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Anzing"},
+    },
+    {
+        "title": "Aßling",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Aßling"},
+    },
+    {
+        "title": "Baiern",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Baiern"},
+    },
+    {
+        "title": "Bruck",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Bruck"},
+    },
+    {
+        "title": "Ebersberg",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Ebersberg"},
+    },
+    {
+        "title": "Egmating",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Egmating"},
+    },
+    {
+        "title": "Emmering",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Emmering"},
+    },
+    {
+        "title": "Forstinning",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Forstinning"},
+    },
+    {
+        "title": "Frauenneuharting",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Frauenneuharting"},
+    },
+    {
+        "title": "Glonn",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Glonn"},
+    },
+    {
+        "title": "Grafing",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Grafing"},
+    },
+    {
+        "title": "Hohenlinden",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Hohenlinden"},
+    },
+    {
+        "title": "Kirchseeon",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Kirchseeon"},
+    },
+    {
+        "title": "Moosach",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Moosach"},
+    },
+    {
+        "title": "Oberpframmern",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Oberpframmern"},
+    },
+    {
+        "title": "Pliening",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Pliening"},
+    },
+    {
+        "title": "Poing",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Poing"},
+    },
+    {
+        "title": "Steinhöring",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Steinhöring"},
+    },
+    {
+        "title": "Vaterstetten",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Vaterstetten"},
+    },
+    {
+        "title": "Zorneding",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Zorneding"},
+    },
+    {
+        "title": "Ingelsberg (Zorneding)",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Zorneding"},
+    },
+    {
+        "title": "Markt Schwaben",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Markt Schwaben"},
+    },
+    {
+        "title": "Pöring (Zorneding)",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Zorneding"},
+    },
+    {
+        "title": "Wolfesing (Zorneding)",
+        "url": "https://www.lra-ebe.de/",
+        "service_id": "ebe",
+        "default_params": {"city": "Zorneding"},
+    },
 ]
 
 TEST_CASES = {
@@ -278,7 +436,7 @@ TEST_CASES = {
     },
     "Daaden-Herdorf": {
         "customer": "awb-ak",
-        "city": "VG Daaden-Herdorf - Kernstadt Herdorf",
+        "city": "VG Daaden-Herdorf",
     },
     "Mühldorf": {
         "customer": "lra-mue",
@@ -327,7 +485,6 @@ class Source:
         self._city = city.lower()
         self._street = street.lower() if street else None
         self._housenumber = None if housenumber is None else str(housenumber).lower()
-        self._ics = ICS()
 
     def fetch(self) -> list[Collection]:
         # Retrieve list of places
@@ -435,14 +592,61 @@ class Source:
             r.raise_for_status()
             ics_file = r.text
 
-            dates = self._ics.convert(ics_file)
+            # Fix EXDATE format issue (same as ICS service)
+            ics_file = re.sub(
+                r"(EXDATE;VALUE=DATE:[0-9]+)\r?\n",
+                lambda m: m.group(1) + "T010000\n",
+                ics_file,
+            )
+
+            start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+            end_date = start_date + datetime.timedelta(days=365)
+
+            events = icalevents.events(
+                start=start_date, end=end_date, string_content=ics_file.encode()
+            )
 
             entries = []
-            for d in dates:
-                # prevents duplicates
-                if any(e.date == d[0] and e.type == d[1] for e in entries):
+            for e in events:
+                if isinstance(e.start, datetime.datetime):
+                    date = e.start.date()
+                elif isinstance(e.start, datetime.date):
+                    date = e.start
+                else:
                     continue
-                entries.append(Collection(d[0], d[1]))
+
+                waste_type = e.summary
+
+                # Extract extra attributes (location, description, time) for
+                # special events like Schadstoffmobil that have specific
+                # locations and time windows
+                extra: dict = {}
+                if e.location:
+                    extra["location"] = e.location
+                if e.description:
+                    extra["description"] = e.description
+                # Only add time attributes for events with a specific time
+                # (not all-day events like regular waste collection pickups)
+                if not e.all_day:
+                    if isinstance(e.start, datetime.datetime):
+                        extra["start_time"] = e.start.strftime("%H:%M")
+                    if e.end and isinstance(e.end, datetime.datetime):
+                        extra["end_time"] = e.end.strftime("%H:%M")
+
+                # Prevent duplicates: two events are the same if they share
+                # date, type, location, and start_time
+                if any(
+                    existing.date == date
+                    and existing.type == waste_type
+                    and existing.get("location") == extra.get("location")
+                    and existing.get("start_time") == extra.get("start_time")
+                    for existing in entries
+                ):
+                    continue
+
+                c = Collection(date, waste_type)
+                c.update(extra)
+                entries.append(c)
 
         return entries
 
@@ -466,9 +670,18 @@ class Source:
         for calitem in calendar:
             date = datetime.datetime.strptime(calitem["dt"], "%Y%m%d").date()
 
-            # add all fractions for this date
-            for fracitem in calitem["fr"]:
+            # 'ad' is a list of addresses, one per fraction entry in 'fr'
+            ad_list = calitem.get("ad") or []
+            fr_list = calitem.get("fr") or []
+
+            # Add all fractions for this date
+            for i, fracitem in enumerate(fr_list):
                 waste_type = fractions[fracitem]
-                entries.append(Collection(date, waste_type))
+                extra: dict = {}
+                if i < len(ad_list) and ad_list[i]:
+                    extra["description"] = ad_list[i]
+                c = Collection(date, waste_type)
+                c.update(extra)
+                entries.append(c)
 
         return entries

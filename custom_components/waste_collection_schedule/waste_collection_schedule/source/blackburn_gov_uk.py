@@ -1,6 +1,6 @@
 from datetime import datetime
-import urllib3
 
+import urllib3
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.SSLError import get_legacy_session
 

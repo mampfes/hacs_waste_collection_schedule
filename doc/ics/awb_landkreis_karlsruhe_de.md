@@ -7,7 +7,7 @@ Abfallwirtschaftsbetrieb Landkreis Karlsruhe is supported by the generic [ICS](/
 
 - Go to <https://www.awb-landkreis-karlsruhe.de/start/wissen/abfuhrkalender.html> and select your location.  
 - Click on `URL in die Zwischenablage kopieren` to copy link address.
-- Replace the `url` in the example configuration with this link.
+- Use this link as the `url` parameter.
 
 ## Examples
 

@@ -11,38 +11,26 @@ waste_collection_schedule:
       args:
         uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
         post_code: POST_CODE
-        name: HOUSE_NAME
-        number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**uprn**  
-*(string) (optional)*
+**uprn**
+*(string) (required)*
 
-This is required if you do not supply any other options. (Using this removes the need to do an address look up web request)
-
-**name**  
-*(string) (optional)*
-
-This is required if you supply a Postcode and do not have a house number.
-
-**number**  
-*(string) (optional)*
-
-This is required if you supply a Postcode and have a house number.
+This is your Unique Property Reference Number (UPRN)
 
 **post_code**  
-*(string) (optional)*
+*(string) (required)*
 
 This is required if you do not supply a UPRN. Single space between 1st and 2nd part of postcode is optional.
 
 #### How to find your `UPRN`
 
 An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
-Otherwise you can inspect the web requests the Peterborough Council website makes when entering in your postcode and then selecting your address.
+Otherwise you can use the [Peterborough Council website](https://report.peterborough.gov.uk/waste) and enter in your postcode and select your address, the web page you will be taken to will be in the format of `https://report.peterborough.gov.uk/waste/{postcode}:{uprn}`.
 
-## Example using UPRN
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -50,15 +38,5 @@ waste_collection_schedule:
     - name: peterborough_gov_uk
       args:
         uprn: 100090214774
-```
-
-## Example using Address lookup
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: peterborough_gov_uk
-      args:
         post_code: PE57AX
-        number: 1
 ```

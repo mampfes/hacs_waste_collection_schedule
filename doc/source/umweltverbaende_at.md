@@ -27,7 +27,7 @@ waste_collection_schedule:
 Lower Austrian district, see table below for valid DISTRICT_ARG
 
 
-There are 2 kind of webistes supported. Service providers use one of them but not both.
+There are 2 kind of websites supported. Service providers use one of them but not both.
 
 ### 1. New WordPress based websites.
 
@@ -142,6 +142,7 @@ waaste_collection_schedule:
 
 ### Old websites
 
+<!-- Example removed: Tulln no longer supported (no ICS/API available)
 ```yaml
 waste_collection_schedule:
   sources:
@@ -153,6 +154,7 @@ waste_collection_schedule:
           - "Haushalte 2"
           - "Biotonne"
 ```
+-->
 
 *Advanced calendar options are needed*
 
@@ -163,7 +165,7 @@ waste_collection_schedule:
       args:
         district: "korneuburg" # Korneuburg
         municipal: "Bisamberg" # Municipal
-        calendar: "Zone B" # Rayon
+        calendar: "Bisamberg B" # Rayon
         calendar_title_separator: ","
         calendar_splitter: ":"
 ```
@@ -200,14 +202,13 @@ waste_collection_schedule:
 | St. Pölten | stpoeltenland | [link](https://stpoeltenland.umweltverbaende.at/?kat=32) |
 | Scheibbs | scheibbs | [link](https://scheibbs.umweltverbaende.at/?kat=32) |
 | Schwechat | schwechat | [link](https://schwechat.umweltverbaende.at/?kat=32) |
-| Tulln | tulln | [link](https://tulln.umweltverbaende.at/?kat=32) |
 | Waidhofen/Thaya | waidhofen | [link](https://waidhofen.umweltverbaende.at/?kat=32) |
 | Zwettl | zwettl | [link](https://zwettl.umweltverbaende.at/?kat=32) |
 
 
 ## Missing Districts
 
-Laa/Thaya, Neunkirchen, Wiener Neustadt serve their waste collection scheduled from local municipality web sites using different back-ends and aren't supported by this script.
+Laa/Thaya, Neunkirchen, Tulln serve their waste collection scheduled from local municipality web sites using different back-ends and aren't supported by this script.
 
 ## Districts supported via generic ICS source
 * [GDA Amstetten](/doc/ics/gda_gv_at.md)

@@ -34,7 +34,7 @@ class Source:
         }
 
     def fetch(self):
-        self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetchs fail
+        self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetches fail
         address_lookup = requests.post(self.url, files=self.form_data)
         address_lookup.raise_for_status()
         addresses = {}

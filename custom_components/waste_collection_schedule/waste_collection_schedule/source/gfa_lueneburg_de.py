@@ -1,5 +1,6 @@
 # Nearly direct copy of source awn_de, awb_emsland_de
 
+from datetime import datetime
 from html.parser import HTMLParser
 
 import requests
@@ -87,6 +88,7 @@ class Source:
         parser.feed(r.text)
 
         args = parser.args
+        args["Zeitraum"] = f"Jahresübersicht {datetime.now().year}"
         args["Ort"] = self._city
         args["Strasse"] = self._street
         args["Hausnummer"] = str(self._hnr)
@@ -100,6 +102,7 @@ class Source:
         r.raise_for_status()
 
         args = parser.args
+        args["Zeitraum"] = f"Jahresübersicht {datetime.now().year}"
         args["Ort"] = self._city
         args["Strasse"] = self._street
         args["Hausnummer"] = str(self._hnr)
@@ -116,13 +119,12 @@ class Source:
         )
         r.raise_for_status()
 
-        args["ApplicationName"] = (
-            "com.athos.kd.lueneburg.WasteDisposalServicesBusinessCase"
-        )
+        args["ApplicationName"] = "com.athos.kd.lueneburg.AbfuhrTerminModel"
         args["SubmitAction"] = "filedownload_ICAL"
         args["IsLastPage"] = "true"
         args["Method"] = "POST"
         args["PageName"] = "Terminliste"
+        del args["Zeitraum"]
         del args["Ort"]
         del args["Strasse"]
         del args["Hausnummer"]

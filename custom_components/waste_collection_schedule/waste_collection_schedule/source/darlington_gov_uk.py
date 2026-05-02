@@ -8,6 +8,7 @@ TITLE = "Darlington Borough Council"
 DESCRIPTION = "Source for Darlington Borough Council."
 URL = "https://darlington.gov.uk"
 TEST_CASES = {
+    "10013321444": {"uprn": 10013321444},
     "010013315817": {"uprn": 10013315817},
     "100110560916": {"uprn": 100110560916},
     "200002724471": {"uprn": "200002724471"},
@@ -17,13 +18,13 @@ TEST_CASES = {
 ICON_MAP = {
     "Recycle": "mdi:recycle",
     "Refuse": "mdi:trash-can",
-    "Garden": "mdi:leaf",
+    "GARDEN": "mdi:leaf",
 }
 
 
-API_URL = "https://www.darlington.gov.uk/bins-waste-and-recycling/calendar/"
+API_URL = "https://www.darlington.gov.uk/bins-waste-and-recycling/collection-day-lookup/calendar/"
 
-WASTE_TYPES = ["Recycle", "Refuse", "Garden"]
+WASTE_TYPES = ICON_MAP.keys()
 
 DATE_REGEX = re.compile(r"calDates.push\(new Date\((\d+)\)\);")
 

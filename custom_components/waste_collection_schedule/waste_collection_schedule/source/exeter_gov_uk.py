@@ -41,16 +41,22 @@ class Source:
 
         entries = []
         for b, d in zip(bins, dates):
-            # check cases where no date is given for a collection
-            if d and len(d.text.split(",")) > 1:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(
-                            re.compile(REGEX_ORDINALS).sub("", d.text), "%A, %d %B %Y"
-                        ).date(),
-                        t=b.text.replace(" collection", ""),
-                        icon=ICON_MAP.get(b.text.replace(" collection", "").upper()),
-                    )
+            raw_date = re.compile(REGEX_ORDINALS).sub("", d.get_text(strip=True))
+            for fmt in ("%A, %d %B %Y", "%A %d %B %Y"):
+                try:
+                    date = datetime.strptime(raw_date, fmt).date()
+                    break
+                except ValueError:
+                    continue
+            else:
+                continue
+
+            entries.append(
+                Collection(
+                    date=date,
+                    t=b.text.replace(" collection", ""),
+                    icon=ICON_MAP.get(b.text.replace(" collection", "").upper()),
                 )
+            )
 
         return entries

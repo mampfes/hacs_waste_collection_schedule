@@ -16,17 +16,18 @@ TEST_CASES: dict = {
         "uprn": 100031811736,
     },
     "Test_003": {
-        "uprn": "100031801746",
+        "uprn": "100031799974",
     },
 }
 ICON_MAP: dict = {
-    "Grey Bin": "mdi:trash-can",
-    "Green Bin and Blue Bin": "mdi:recycle",
-    "Blue Bin and Grey Bin": "mdi:trash-can",
+    "General waste": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
+    "Garden waste": "mdi:leaf",
+    "Recycling & Garden waste": "mdi:recycle",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
-    "en": "Your uprn is displayed in the url when viewing your collection schedule. Alternatively, an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
+    "en": "Your UPRN can be found by searching your postcode at https://www.sstaffs.gov.uk/viewyourcollectioncalendar and selecting your address. The objectId in the resulting URL is your UPRN. Alternatively, find your UPRN at https://www.findmyaddress.co.uk/",
 }
 PARAM_TRANSLATIONS: dict = {
     "en": {
@@ -47,7 +48,7 @@ class Source:
     def fetch(self) -> list[Collection]:
         s = requests.Session()
         r = s.get(
-            f"https://www.sstaffs.gov.uk/where-i-live?uprn={self._uprn}",
+            f"https://www.sstaffs.gov.uk/where-i-live?objectId={self._uprn}",
             headers=HEADERS,
         )
         soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
@@ -55,31 +56,33 @@ class Source:
         entries: list = []
 
         # get details on next bin collection
-        next_bin = soup.find("p", {"class": "collection-type"})
         next_date = soup.find("p", {"class": "collection-date"})
-        entries.append(
-            Collection(
-                date=datetime.strptime(next_date.text.strip(), "%A %d %B %Y").date(),
-                t=next_bin.text.strip(),
-                icon=ICON_MAP.get(next_bin.text.strip()),
+        next_bin = soup.find("p", {"class": "collection-type"})
+        if next_date and next_bin:
+            date_text = next_date.get_text(strip=True)
+            type_text = next_bin.get_text(strip=True)
+            entries.append(
+                Collection(
+                    date=datetime.strptime(date_text, "%A, %d %B %Y").date(),
+                    t=type_text,
+                    icon=ICON_MAP.get(type_text),
+                )
             )
-        )
 
         # get details of future bin collections
         trs: list = soup.find_all("tr")
         for tr in trs[1:]:
             tds: list = tr.find_all("td")
-            waste_types: list = tds[0::2]
-            waste_dates: list = tds[1::2]
-            for i in range(len(waste_types)):
-                waste_type: str = waste_types[i].text.strip()
-                waste_date: str = waste_dates[i].text.strip()
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(waste_date, "%A %d %B %Y").date(),
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
+            if len(tds) < 2:
+                continue
+            waste_type = tds[0].get_text(strip=True)
+            waste_date = tds[1].get_text(strip=True)
+            entries.append(
+                Collection(
+                    date=datetime.strptime(waste_date, "%A, %d %B %Y").date(),
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type),
                 )
+            )
 
         return entries

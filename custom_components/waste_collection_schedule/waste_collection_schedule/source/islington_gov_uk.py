@@ -1,5 +1,5 @@
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from dateutil.parser import parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
@@ -30,7 +30,7 @@ class Source:
     def __init__(self, postcode, uprn):
         self._uprn = str(uprn)
         self._postcode = str(postcode)
-        self._session = requests.Session()
+        self._session = requests.Session(impersonate="chrome124")
 
     def fetch(self):
         url = f"https://www.islington.gov.uk/your-area?Postcode={self._postcode}&Uprn={self._uprn}"

@@ -23,6 +23,10 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64)",
 }
 
+TYPE_NORMALIZATION = {
+    "Gelber Sack": "Gelbe Tonne",
+}
+
 
 class Source:
     def __init__(self, level_1, level_2, level_3=None):
@@ -88,7 +92,7 @@ class Source:
         # Sometimes there is no garbage calendar available
         if "Es sind keine Abfuhrbezirke hinterlegt." in r.text:
             raise Exception(
-                f'Error: "Es sind keine Abfuhrbezirke hinterlegt." for "{self._districts[3-1]}". Please use different input data.'
+                f'Error: "Es sind keine Abfuhrbezirke hinterlegt." for "{self._districts[3 - 1]}". Please use different input data.'
             )
 
         soup = BeautifulSoup(r.text, features="html.parser")
@@ -110,28 +114,44 @@ class Source:
                 dates = self._ics.convert(r.text)
 
                 for d in dates:
-                    entries.append(Collection(d[0], d[1]))
+                    entries.append(Collection(d[0], TYPE_NORMALIZATION.get(d[1], d[1])))
             except ValueError:
                 pass  # during year transition the ical for the next year may be empty
         return entries
 
     def parse_level(self, response, level):
+        def normalize_district_name(value):
+            if value is None:
+                return ""
+            return " ".join(str(value).replace("\xa0", " ").split())
+
         soup = BeautifulSoup(response, features="html.parser")
         select_content = soup.find_all("select", id=f"strukturEbene{level}")
         soup = BeautifulSoup(str(select_content), features="html.parser")
         options_content = soup.find_all("option")
         level_ids = {}
+        level_ids_normalized = {}
         for option in options_content:
             # Ignore the "Bitte wählen..."
             if option.get("value") != "0":
-                level_ids[option.text] = option.get("value")
+                option_text = option.text
+                option_value = option.get("value")
+                level_ids[option_text] = option_value
+                level_ids_normalized[normalize_district_name(option_text)] = (
+                    option_value
+                )
 
         if level_ids == {}:
             raise Exception(f"Error: Level {level} Dictionary empty")
 
-        if self._districts[level - 1] not in level_ids:
-            raise Exception(
-                f"Error: District {self._districts[level]} is not in the dictionary: {level_ids}"
-            )
+        district = self._districts[level - 1]
+        if district in level_ids:
+            return level_ids[district]
 
-        return level_ids[self._districts[level - 1]]
+        normalized_district = normalize_district_name(district)
+        if normalized_district in level_ids_normalized:
+            return level_ids_normalized[normalized_district]
+
+        raise Exception(
+            f"Error: District {district} is not in the dictionary: {level_ids}"
+        )

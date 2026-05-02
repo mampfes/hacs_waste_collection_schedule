@@ -114,8 +114,7 @@ class Source:
         self._uselocation = location_id is not None
 
     def get_street_id(self):
-        """Return ID of matching street"""
-
+        """Return ID of matching street."""
         s = requests.Session()
         params = {"text": self._street}
 
@@ -137,8 +136,7 @@ class Source:
         )
 
     def get_location_id(self, street_id):
-        """Return ID of first matching location"""
-
+        """Return ID of first matching location."""
         s = requests.Session()
         params = {"streetId": street_id, "houseNumber": self._hnr}
 

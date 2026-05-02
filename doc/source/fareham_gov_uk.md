@@ -1,6 +1,6 @@
 # Fareham Council
 
-The fareham gov uk website does not return all future collection dates, only the next upcoming one. You can test different addresses at <https://www.fareham.gov.uk/internetlookups/search.aspx?list=DomesticBinCollections>.
+The fareham gov uk website does not return all future collection dates, only the next upcoming one. You can test different addresses at <https://www.fareham.gov.uk/internetlookups/search.aspx?list=DomesticBinCollections2025on>.
 
 Credit to Fareham Borough Council for all data fetched from their API.
 
@@ -19,7 +19,7 @@ waste_collection_schedule:
 
 **road_name**  
 _(string) (required)_  
-The name of the road the house is on
+The name of the road the house is on. You can include an optional house number (for example `22 street`).
 
 **postcode**  
 _(string) (required)_  

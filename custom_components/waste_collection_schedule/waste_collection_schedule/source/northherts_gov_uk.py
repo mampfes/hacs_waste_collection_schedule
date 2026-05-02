@@ -1,8 +1,5 @@
-from datetime import datetime
-
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection
+from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
 
 TITLE = "North Herts Council"
 DESCRIPTION = "Source for www.north-herts.gov.uk services for North Herts Council."
@@ -18,95 +15,59 @@ TEST_CASES = {
         "address_name_numer": "26",
         "address_street": "BENSLOW RISE",
     },
+    "Example fuzzy matching": {
+        "address_postcode": "SG6 4EG",
+        "address_name_numer": "4",
+        "address_street": "Wilbury Road",
+    },
+    "Example garden waste": {
+        "address_postcode": "SG8 5BN",
+        "address_name_numer": "37",
+        "address_street": "Heathfield",
+    },
 }
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
-    "Food Waste": "mdi:food-apple",
+    "refuse": "mdi:trash-can",
+    "residual": "mdi:trash-can",
+    "recycle": "mdi:recycle",
+    "recycling": "mdi:recycle",
+    "garden": "mdi:leaf",
+    "food": "mdi:food-apple",
+    "paper": "mdi:package-variant",
+    "card": "mdi:package-variant",
 }
-
-API_URL = "https://uhtn-wrp.whitespacews.com/"
 
 
 class Source:
     def __init__(
         self,
-        address_name_numer=None,
-        address_street=None,
-        street_town=None,
-        address_postcode=None,
+        address_name_numer: str | None = None,
+        address_street: str | None = None,
+        street_town: str | None = None,
+        address_postcode: str | None = None,
     ):
+        self._client = Cloud9Client("northherts", icon_keywords=ICON_MAP)
         self._address_name_numer = address_name_numer
         self._address_street = address_street
         self._street_town = street_town
         self._address_postcode = address_postcode
 
-    def fetch(self):
-        session = requests.Session()
-
-        # get link from first page as has some kind of unique hash
-        r = session.get(
-            API_URL,
-        )
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, features="html.parser")
-
-        alink = soup.find("a", text="Find my bin collection day")
-
-        if alink is None:
-            raise Exception("Initial page did not load correctly")
-
-        # greplace 'seq' query string to skip next step
-        nextpageurl = alink["href"].replace("seq=1", "seq=2")
-
-        data = {
-            "address_name_number": self._address_name_numer,
-            "address_street": self._address_street,
-            "street_town": self._street_town,
-            "address_postcode": self._address_postcode,
-        }
-
-        # get list of addresses
-        r = session.post(nextpageurl, data)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, features="html.parser")
-
-        # get first address (if you don't enter enough argument values this won't find the right address)
-        alink = soup.find("div", id="property_list").find("a")
-
-        if alink is None:
-            raise Exception("Address not found")
-
-        nextpageurl = API_URL + alink["href"]
-
-        # get collection page
-        r = session.get(
-            nextpageurl,
-        )
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, features="html.parser")
-
-        if soup.find("span", id="waste-hint"):
-            raise Exception("No scheduled services at this address")
-
-        u1s = soup.find("section", id="scheduled-collections").find_all("u1")
-
-        entries = []
-
-        for u1 in u1s:
-            lis = u1.find_all("li", recursive=False)
-            entries.append(
-                Collection(
-                    date=datetime.strptime(
-                        lis[1].text.replace("\n", ""), "%d/%m/%Y"
-                    ).date(),
-                    t=lis[2].text.replace("\n", ""),
-                    icon=ICON_MAP.get(
-                        lis[2].text.replace("\n", "").replace(" Collection Service", "")
-                    ),
-                )
+    def fetch(self) -> list[Collection]:
+        search_query = " ".join(
+            part.strip()
+            for part in (
+                self._address_name_numer,
+                self._address_street,
+                self._street_town,
+                self._address_postcode,
             )
-
-        return entries
+            if isinstance(part, str) and part.strip()
+        )
+        return self._client.fetch_by_address(
+            postcode=self._address_postcode,
+            address_string=search_query,
+            address_name_number=self._address_name_numer,
+            address_street=self._address_street,
+            street_town=self._street_town,
+            argument_name="address_postcode",
+        )

@@ -15,7 +15,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 TITLE = "Hastings Borough Council"
 DESCRIPTION = "Source for hastings.gov.uk services for Hastings Borough Council, UK."
 URL = "https://www.hastings.gov.uk/"
-API_URL = "https://el.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService"
+API_URL = "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService"
 TEST_CASES = {
     "Test_001": {"postcode": "TN34 1QF", "house_number": 36, "uprn": 100060038877},
     "Test_002": {"postcode": "TN34 2DL", "house_number": "28A", "uprn": "10070609836"},

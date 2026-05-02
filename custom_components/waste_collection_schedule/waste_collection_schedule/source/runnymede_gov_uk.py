@@ -18,7 +18,7 @@ TEST_CASES = {
 }
 
 API_URL = "https://www.runnymede.gov.uk/bin-collection-day"
-
+HEADERS = {"user-agent": "Mozilla/5.0"}
 
 ICON_MAP = {
     "Food caddy": "mdi:food",
@@ -35,7 +35,7 @@ class Source:
     def fetch(self):
         session = requests.Session()
         params = {"address": self._uprn}
-        r = session.get(API_URL, params=params)
+        r = session.get(API_URL, params=params, headers=HEADERS)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         soup.prettify()

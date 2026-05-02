@@ -12,9 +12,12 @@ TITLE = "Dacorum Borough Council"
 DESCRIPTION = "Source for Dacorum Borough Council."
 URL = "https://www.dacorum.gov.uk/"
 TEST_CASES = {
-    "Hemel Hempsted": {"postcode": "HP1 1AB", "uprn": 200004054631},
-    "Berkhamsted": {"postcode": "HP4 2EZ", "uprn": "100081111531"},
-    "Tring": {"postcode": "HP23 6BE", "uprn": "100080716575"},
+    "Test_001": {"postcode": "HP1 1AB", "uprn": 200004054631},
+    "Test_002": {"postcode": "HP4 2EZ", "uprn": "100081111531"},
+    "Test_003": {
+        "postcode": "HP23 6BE",
+        "uprn": "100080716575",
+    },
 }
 
 ICON_MAP = {
@@ -63,23 +66,26 @@ class Source:
         return uprn_addresses
 
     def _parse_collection_entry(self, div: Tag) -> Collection | None:
-        children = div.findChildren("div", recursive=False)
-        if len(children) == 2:
-            bin_type = children[0].getText().strip()  # Green bin
+        # bin types are in strong tags
+        for strong in div.find_all("strong"):
+            bin_type = strong.get_text(strip=True)
+            # skip any non-bin finds
+            if "bin" not in bin_type.lower():
+                continue
+            # Find the nearest following cell containing a date
+            date_cell = strong.find_parent("div").find_next(
+                "div", string=lambda s: s and "Next collection on" in s
+            )
+            if date_cell:
+                collection_date = date_cell.find_next("div").get_text(strip=True)
+            # set bin icon
             bin_type_icon = ICON_MAP.get(bin_type.lower())
-            if bin_type != "":
-                collection_date_str = (
-                    children[1].getText().strip()
-                )  # 'Next collection on: Wed, 09 Oct 2024'
-                try:
-                    collection_date = datetime.strptime(
-                        collection_date_str, "Next collection on: %a, %d %b %Y"
-                    ).date()
-                    return Collection(
-                        date=collection_date, t=bin_type, icon=bin_type_icon
-                    )
-                except ValueError:
-                    return None
+            # try and add the collection details
+            try:
+                dt = datetime.strptime(collection_date, "%a, %d %b %Y").date()
+                return Collection(date=dt, t=bin_type, icon=bin_type_icon)
+            except ValueError:
+                return None
         return None
 
     def fetch(self) -> list[Collection]:
