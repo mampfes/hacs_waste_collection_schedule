@@ -1,6 +1,7 @@
 import re
 from datetime import datetime
 from typing import TypedDict
+from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -180,14 +181,14 @@ EXTRA_INFO: list[E_I_TYPE] = [
             "district": "scheibbs",
         },
     },
-    {
-        "title": "Abfallverband Schwechat",
-        "url": "https://schwechat.umweltverbaende.at/",
-        "country": "at",
-        "default_params": {
-            "district": "schwechat",
-        },
-    },
+    # { # Abfallverband Schwechat migrated to the Infeo platform; use infeo_at source with customer "av-schwechat"
+    #     "title": "Abfallverband Schwechat",
+    #     "url": "https://schwechat.umweltverbaende.at/",
+    #     "country": "at",
+    #     "default_params": {
+    #         "district": "schwechat",
+    #     },
+    # },
     # { No ICAL or API available anymore
     #     "title": "GVA Tulln",
     #     "url": "https://tulln.umweltverbaende.at/",
@@ -307,7 +308,8 @@ TEST_CASES = {
     "Horn": {
         "district": "horn",
         "municipal": "Japons",
-    },  # old version (as of 29.12.2024)
+        "town": "Japons",
+    },  # new version (as of 2026); town required — Japons has multiple sub-locations
     # "Klosterneuburg": {
     #     "district": "klosterneuburg",
     #     "municipal": "Klosterneuburg",
@@ -344,11 +346,11 @@ TEST_CASES = {
     # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
     "St. Pölten": {"district": "stpoeltenland", "municipal": "Pyhra"},
     "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
-    "Schwechat": {
-        "district": "schwechat",
-        "municipal": "Schwechat",
-        "town": "Kledering Einfamilienhaus",
-    },
+    # "Schwechat": {  # Migrated to Infeo platform; use infeo_at source with customer "av-schwechat"
+    #     "district": "schwechat",
+    #     "municipal": "Schwechat",
+    #     "town": "Kledering Einfamilienhaus",
+    # },
     # "Tulln": {
     #    "district": "tulln",
     #    "municipal": "Absdorf",
@@ -357,7 +359,7 @@ TEST_CASES = {
     "Zwettl": {
         "district": "zwettl",
         "municipal": "Martinsberg",
-    },  # old version (as of 29.12.2024)
+    },  # new version (as of 2026); site redirects to gvzwettl.at
 }
 
 ICON_MAP = {
@@ -468,9 +470,8 @@ class Source:
             r = requests.get(f"{self._district_url}{scheibbs_path}")
             if r.status_code == 200:
                 self._district_collection_url = r.url
-                self._district_url = self._district_collection_url.split(scheibbs_path)[
-                    0
-                ]
+                parsed = urlparse(r.url)
+                self._district_url = f"{parsed.scheme}://{parsed.netloc}/"
                 self.use_new = True
 
         if not self.use_new:
@@ -479,9 +480,8 @@ class Source:
                     r := requests.get(f"{self._district_url}{col_path}")
                 ).status_code == 200:
                     self._district_collection_url = r.url
-                    self._district_url = self._district_collection_url.split(col_path)[
-                        0
-                    ]
+                    parsed = urlparse(r.url)
+                    self._district_url = f"{parsed.scheme}://{parsed.netloc}/"
                     self.use_new = True
                     break
 
