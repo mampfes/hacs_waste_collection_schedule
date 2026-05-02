@@ -52,7 +52,7 @@ class ICS:
 
     def convert(self, ics_data: str) -> List[Tuple[datetime.date, str]]:
         # calculate start- and end-date for recurring events
-        start_date = datetime.datetime.now().replace(
+        start_date = datetime.datetime.now(datetime.timezone.utc).replace(
             hour=0, minute=0, second=0, microsecond=0
         )
         if self._offset is not None:
@@ -70,6 +70,17 @@ class ICS:
         ics_data = re.sub(
             r"(DT(?:START|END)[^:]*:\d{8})T(\r?\n)",
             r"\g<1>T000000\g<2>",
+            ics_data,
+        )
+
+        # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines.
+        # TZID is only valid on DATETIME values; combining it with VALUE=DATE is
+        # malformed ICS. When present, icalendar creates timezone-aware datetime
+        # objects for the recurrence rule while EXDATE lines (which lack TZID)
+        # stay naive, causing a TypeError when dateutil compares them.
+        ics_data = re.sub(
+            r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
+            r"\1;\2",
             ics_data,
         )
 
@@ -128,7 +139,7 @@ class ICS:
 
     def convert_events(self, ics_data: str) -> List[IcsEvent]:
         # calculate start- and end-date for recurring events
-        start_date = datetime.datetime.now().replace(
+        start_date = datetime.datetime.now(datetime.timezone.utc).replace(
             hour=0, minute=0, second=0, microsecond=0
         )
         if self._offset is not None:
@@ -138,6 +149,13 @@ class ICS:
         ics_data = re.sub(
             r"(EXDATE;VALUE=DATE:[0-9]+)\r?\n",
             lambda m: m.group(1) + "T010000\n",
+            ics_data,
+        )
+
+        # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines — see convert().
+        ics_data = re.sub(
+            r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
+            r"\1;\2",
             ics_data,
         )
 
