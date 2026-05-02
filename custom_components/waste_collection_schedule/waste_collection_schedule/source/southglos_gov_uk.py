@@ -16,12 +16,14 @@ ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
     "RECYCLING": "mdi:recycle",
     "GARDEN WASTE": "mdi:leaf",
     "FOOD BIN": "mdi:food",
+    "AHP BIN": "mdi:diaper-outline",
 }
 WASTE_MAP = {  # map new collection names to old collection names for compatibility
     "Refuse": "BLACK BIN",
     "Recycling": "RECYCLING",
     "Garden": "GARDEN WASTE",
     "Food": "FOOD BIN",
+    "AHP": "AHP BIN",
 }
 
 
