@@ -9,18 +9,16 @@ Support for waste collection schedules provided by [Orange City Council](https:/
 | General Waste | Red / Dark | Weekly (every Wednesday) |
 | Recycling | Yellow | Fortnightly (Wednesday, Zone A or Zone B) |
 
-> **Note:** Green waste is available as a paid additional service in Orange and is not included in the standard fortnightly bin collection calendar. See [orange.nsw.gov.au/waste](https://www.orange.nsw.gov.au/waste/) for details.
-
 ## Finding Your Zone
 
-Orange City Council divides the city into two fortnightly recycling zones:
+Orange City Council divides the city into two fortnightly recycling zones (referred to in the waste booklet as **Week A** and **Week B**):
 
 | Zone | Area |
 |---|---|
 | **Zone A** | Properties **west** of Anson Street |
 | **Zone B** | Properties **east** of Anson Street; properties **on** Anson Street; and all properties in **Spring Hill**, **Lucknow**, and **Clifton Grove** |
 
-If you are unsure of your zone, download the annual Waste Booklet from the [Orange City Council waste page](https://www.orange.nsw.gov.au/waste/) or contact Council on **+61 2 6393 8000**.
+Download the annual Waste Booklet from the [Orange City Council waste page](https://www.orange.nsw.gov.au/waste/) to confirm your zone, or contact Council on **+61 2 6393 8000**.
 
 ## Configuration
 
@@ -58,18 +56,14 @@ waste_collection_schedule:
         zone: B
 ```
 
-## Data Source & Annual Updates
+## How It Works
 
-Collection dates are hardcoded from the annual **Orange City Council Residential Waste Booklet** (PDF), published each year at:
-
-📄 [https://www.orange.nsw.gov.au/waste/](https://www.orange.nsw.gov.au/waste/)
-
-When a new year's booklet is published, the `_HARDCODED_SCHEDULES` dictionary in `orange_nsw_gov_au.py` should be updated with the new Zone A and Zone B recycling dates. The source will log a warning and fall back to an estimated fortnightly pattern if the current year's data is not present.
+Collection dates are calculated mathematically from the fortnightly Wednesday pattern — no annual updates are required. At runtime the source fetches the council's waste page to locate the current booklet PDF URL and extract the schedule year, ensuring the correct calendar year is always used. If the council website is unreachable, the source falls back to the current calendar year with a warning logged.
 
 ## How Collection Works
 
 - **General Waste** (red/dark lid) is collected **every Wednesday** from the kerb.
-- **Recycling** (yellow lid) is collected **every second Wednesday**, alternating between Zone A and Zone B. On your recycling week, put both bins out.
+- **Recycling** (yellow lid) is collected **every second Wednesday**, alternating between Zone A and Zone B.
 - Put bins out the **night before** (Tuesday evening) to ensure they are collected.
 
 For further information visit the [Orange City Council waste page](https://www.orange.nsw.gov.au/waste/).
