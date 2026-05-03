@@ -34,6 +34,7 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         source_shell: SourceShell,
         separator: str,
         fetch_time: str | datetime.time,
+        fetch_interval_days: int,
         random_fetch_time_offset: int,
         day_switch_time: str | datetime.time,
     ):
@@ -49,6 +50,7 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         if not fetch_time_new:
             raise ValueError(f"Invalid fetch_time: {fetch_time}")
         self._fetch_time = fetch_time_new
+        self._fetch_interval_days = max(1, fetch_interval_days)
         self._random_fetch_time_offset = random_fetch_time_offset
 
         day_switch_time_new = (
@@ -60,16 +62,25 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             raise ValueError(f"Invalid day_switch_time: {day_switch_time}")
         self._day_switch_time = day_switch_time_new
 
-        super().__init__(hass, _LOGGER, name=const.DOMAIN)
-
-        # start timer to fetch date once per day
-        self._fetch_tracker = async_track_time_change(
-            hass,
-            self._fetch_callback,
-            self._fetch_time.hour,
-            self._fetch_time.minute,
-            self._fetch_time.second,
+        update_interval = (
+            datetime.timedelta(days=self._fetch_interval_days)
+            if self._fetch_interval_days > 1
+            else None
         )
+        super().__init__(
+            hass, _LOGGER, name=const.DOMAIN, update_interval=update_interval
+        )
+
+        # For default behavior (daily fetch at configured fetch_time), keep
+        # the existing timer-based scheduling.
+        if self._fetch_interval_days == 1:
+            self._fetch_tracker = async_track_time_change(
+                hass,
+                self._fetch_callback,
+                self._fetch_time.hour,
+                self._fetch_time.minute,
+                self._fetch_time.second,
+            )
 
         # start timer for day-switch time
         if self._day_switch_time != self._fetch_time:

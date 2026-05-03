@@ -11,6 +11,7 @@ waste_collection_schedule:
           alias: Yard Waste
         - type: black bin
           alias: Garbage
+  fetch_interval_days: 1
 
   sensors:
     # next collection

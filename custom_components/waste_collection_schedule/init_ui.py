@@ -69,6 +69,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         fetch_time=cv.time(
             options.get(const.CONF_FETCH_TIME, const.CONF_FETCH_TIME_DEFAULT)
         ),
+        fetch_interval_days=options.get(
+            const.CONF_FETCH_INTERVAL_DAYS, const.CONF_FETCH_INTERVAL_DAYS_DEFAULT
+        ),
         random_fetch_time_offset=options.get(
             const.CONF_RANDOM_FETCH_TIME_OFFSET,
             const.CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
