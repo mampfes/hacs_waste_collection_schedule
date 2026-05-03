@@ -7611,10 +7611,12 @@
       "id": "ics_gelbersack_stuttgart_de"
     },
     {
-      "title": "Gelnhausen",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_mein_abfallkalender_online"
+      "title": "Gelnhausen (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      },
+      "id": "jumomind_de"
     },
     {
       "title": "Gelsendienste Gelsenkirchen",

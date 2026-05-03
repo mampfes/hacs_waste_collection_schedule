@@ -292,7 +292,6 @@ This source has been successfully tested with the following service providers:
 - [Flörsheim Am Main](/doc/ics/floersheim_umweltkalender_de.md) / floersheim-umweltkalender.de
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
-- [Gelnhausen](/doc/ics/mein_abfallkalender_online.md) / gelnhausen.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Ginsheim-Gustavsburg](/doc/ics/gigu_de.md) / gigu.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de

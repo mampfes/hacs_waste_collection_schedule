@@ -1222,7 +1222,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Fränkisch-Crumbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
-- [Gelnhausen](/doc/ics/mein_abfallkalender_online.md) / gelnhausen.de
+- [Gelnhausen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
