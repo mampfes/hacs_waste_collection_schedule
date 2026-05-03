@@ -1,14 +1,13 @@
 from datetime import date
-from typing import Collection
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Ville de Saguenay"
 DESCRIPTION = "Source for ville.saguenay.ca waste collection calendar"
 URL = "https://ville.saguenay.ca"
-COUNTRY = "ca"
 TEST_CASES = {
     "Test 8773": {"batiment": 8773},
 }
@@ -23,6 +22,12 @@ PARAM_TRANSLATIONS = {
     "en": {
         "batiment": "Building ID",
     },
+    "de": {
+        "batiment": "Gebäude-ID",
+    },
+    "it": {
+        "batiment": "ID edificio",
+    },
     "fr": {
         "batiment": "Numéro de bâtiment",
     },
@@ -31,6 +36,12 @@ PARAM_TRANSLATIONS = {
 PARAM_DESCRIPTIONS = {
     "en": {
         "batiment": "Building ID (cle_batiment) from the AJAX request payload",
+    },
+    "de": {
+        "batiment": "Gebäude-ID (cle_batiment) aus dem AJAX-Anfrage-Payload",
+    },
+    "it": {
+        "batiment": "ID edificio (cle_batiment) dal payload della richiesta AJAX",
     },
     "fr": {
         "batiment": "Numéro de bâtiment (cle_batiment) dans la requête AJAX",
@@ -56,9 +67,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     ),
 }
 
-URL_TEMPLATE = (
-    "https://ville.saguenay.ca/collecte_calendrier?batiment={batiment}&annee_suivante=0"
-)
+URL_TEMPLATE = "https://ville.saguenay.ca/collecte_calendrier?batiment={batiment}&annee_suivante={next_year}"
 
 
 class Source:
@@ -66,72 +75,58 @@ class Source:
         self._batiment = batiment
 
     def fetch(self) -> list[Collection]:
-        url = URL_TEMPLATE.format(batiment=self._batiment)
-        r = requests.get(url)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # Extract year from title: "Calendrier des matières résiduelles 2026"
-        title = soup.find("h1")
-        if title is None:
-            raise ValueError("Could not find page title to extract year")
-        year_text = title.text.strip()
-        year = int(year_text.split()[-1])
-
         entries = []
+        for next_year in (0, 1):
+            url = URL_TEMPLATE.format(batiment=self._batiment, next_year=next_year)
+            r = requests.get(url)
+            r.raise_for_status()
 
-        # Iterate through each month (month-1 to month-12)
-        for month_num in range(1, 13):
-            month_article = soup.find("article", class_=f"month-{month_num}")
-            if month_article is None:
-                continue
+            soup = BeautifulSoup(r.text, "html.parser")
 
-            # Find all day articles within this month
-            day_articles = month_article.find_all("article")
-            for article in day_articles:
-                # Check if this day has a collection
-                classes = article.get("class", [])
-                type_classes = [c for c in classes if c.startswith("collecte-type-")]
+            # Extract year from title: "Calendrier des matières résiduelles 2026"
+            title = soup.find("h1")
+            if title is None:
+                raise ValueError("Could not find page title to extract year")
+            year = int(title.text.strip().split()[-1])
 
-                if not type_classes:
+            # Iterate through each month (month-1 to month-12)
+            for month_num in range(1, 13):
+                month_article = soup.find("article", class_=f"month-{month_num}")
+                if month_article is None:
                     continue
 
-                # Extract day number from span
-                span = article.find("span")
-                if span is None:
-                    continue
-                day_text = span.text.strip()
-                if not day_text:
-                    continue
-                day = int(day_text)
+                for article in month_article.find_all("article"):
+                    classes = article.get("class", [])
+                    if not any(c.startswith("collecte-type-") for c in classes):
+                        continue
 
-                # Determine waste types from CSS classes
-                types = []
-                if "collecte-type-1" in classes:
-                    types.append("Ordures")
-                if "collecte-type-2" in classes:
-                    types.append("Recyclage")
-                if "collecte-type-3" in classes:
-                    types.append("Compostage")
+                    span = article.find("span")
+                    if span is None:
+                        continue
+                    day_text = span.text.strip()
+                    if not day_text:
+                        continue
+                    day = int(day_text)
 
-                if not types:
-                    continue
+                    types = []
+                    if "collecte-type-1" in classes:
+                        types.append("Ordures")
+                    if "collecte-type-2" in classes:
+                        types.append("Recyclage")
+                    if "collecte-type-3" in classes:
+                        types.append("Compostage")
 
-                # Create separate entries for each waste type
-                collection_date = date(year, month_num, day)
-                for waste_type in types:
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type),
+                    collection_date = date(year, month_num, day)
+                    for waste_type in types:
+                        entries.append(
+                            Collection(
+                                date=collection_date,
+                                t=waste_type,
+                                icon=ICON_MAP.get(waste_type),
+                            )
                         )
-                    )
 
         if not entries:
-            raise ValueError(
-                f"No collection data found for building ID {self._batiment}. Check that the batiment ID is correct."
-            )
+            raise SourceArgumentNotFound("batiment", self._batiment)
 
         return entries
