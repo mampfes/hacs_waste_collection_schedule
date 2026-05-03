@@ -57,6 +57,8 @@ from .const import (
     CONF_DEDICATED_CALENDAR_TITLE,
     CONF_DETAILS_FORMAT,
     CONF_EVENT_INDEX,
+    CONF_FETCH_INTERVAL_DAYS,
+    CONF_FETCH_INTERVAL_DAYS_DEFAULT,
     CONF_FETCH_TIME,
     CONF_FETCH_TIME_DEFAULT,
     CONF_ICON,
@@ -904,9 +906,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     CONF_NAME: t,
                     CONF_DETAILS_FORMAT: "upcoming",
                     CONF_COLLECTION_TYPES: [t],
-                    CONF_VALUE_TEMPLATE: 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}'
+                    CONF_VALUE_TEMPLATE: 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
                 }
-                for t in self._fetched_types if t
+                for t in self._fetched_types
+                if t
             ]
 
         return self.async_create_entry(
@@ -1017,6 +1020,12 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                     ),
                 ): TimeSelector(),
                 vol.Optional(
+                    CONF_FETCH_INTERVAL_DAYS,
+                    default=self._entry.options.get(
+                        CONF_FETCH_INTERVAL_DAYS, CONF_FETCH_INTERVAL_DAYS_DEFAULT
+                    ),
+                ): vol.All(int, vol.Range(min=1)),
+                vol.Optional(
                     CONF_RANDOM_FETCH_TIME_OFFSET,
                     default={
                         "hours": self._entry.options.get(
@@ -1105,6 +1114,8 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                 cv.time(user_input[CONF_DAY_SWITCH_TIME])
             except vol.Invalid:
                 errors[CONF_DAY_SWITCH_TIME] = "time_format"
+            if user_input.get(CONF_FETCH_INTERVAL_DAYS, 1) < 1:
+                errors[CONF_FETCH_INTERVAL_DAYS] = "invalid"
             if len(errors) == 0:
                 user_input[CONF_RANDOM_FETCH_TIME_OFFSET] = (
                     user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["hours"] * 60

@@ -92,6 +92,7 @@ waste_collection_schedule:
       day_offset: DAY_OFFSET
       calendar_title: CALENDAR_TITLE
   fetch_time: FETCH_TIME
+  fetch_interval_days: FETCH_INTERVAL_DAYS
   random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
   day_switch_time: DAY_SWITCH_TIME
   separator: SEPARATOR
@@ -101,6 +102,7 @@ waste_collection_schedule:
 |-----|-----|-----|-----|
 | sources | list | required | Contains information for the service provider being used. For details see [Attributes for sources](#attributes-for-sources) |
 | fetch_time | time | optional | representation of the time of day in "HH:MM" that Home Assistant polls service provider for latest collection schedule. If no time is provided, the default of "01:00" is used |
+| fetch_interval_days | int | optional | fetch interval in days. If set to `1` (default), behavior stays unchanged and fetching happens daily at `fetch_time` (plus optional random offset). If set to `>1`, data is fetched every _n_ days. |
 | random_fetch_time_offset | int | optional | randomly offsets the `fetch_time` by up to _int_ minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers |
 | day_switch_time | time | optional | time of the day in "HH:MM" that Home Assistant dismisses the current entry and moves to the next entry. If no time if provided, the default of "10:00" is used. |
 | separator | string | optional | Used to join entries if the multiple values for a single day are returned by the source. If no value is entered, the default of ", " is used |
@@ -213,6 +215,10 @@ If you want to trigger a manual update of the sources, you can call the service:
 `waste_collection_schedule.fetch_data`
 
 Normally the configuration option 'fetch_time' is used to do this periodically.
+
+You can also configure `fetch_interval_days` in the Home Assistant UI:
+`Settings` → `Devices & Services` → `Waste Collection Schedule` → `Configure`.
+This option defaults to `1` to preserve current behavior.
 
 ## Further Help
 

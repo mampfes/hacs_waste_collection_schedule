@@ -76,6 +76,10 @@ CONFIG_SCHEMA = vol.Schema(
                     const.CONF_FETCH_TIME, default=const.CONF_FETCH_TIME_DEFAULT
                 ): cv.time,
                 vol.Optional(
+                    const.CONF_FETCH_INTERVAL_DAYS,
+                    default=const.CONF_FETCH_INTERVAL_DAYS_DEFAULT,
+                ): cv.positive_int,
+                vol.Optional(
                     const.CONF_RANDOM_FETCH_TIME_OFFSET,
                     default=const.CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
                 ): cv.positive_int,
@@ -104,6 +108,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
         hass,
         separator=config[const.DOMAIN][const.CONF_SEPARATOR],
         fetch_time=config[const.DOMAIN][const.CONF_FETCH_TIME],
+        fetch_interval_days=config[const.DOMAIN][const.CONF_FETCH_INTERVAL_DAYS],
         random_fetch_time_offset=config[const.DOMAIN][
             const.CONF_RANDOM_FETCH_TIME_OFFSET
         ],

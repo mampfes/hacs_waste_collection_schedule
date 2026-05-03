@@ -1,5 +1,5 @@
 # This is the class organizing the different sources when using the yaml configuration
-from datetime import time
+from datetime import date, time
 from random import randrange
 from typing import Any
 
@@ -22,6 +22,7 @@ class WasteCollectionApi:
         hass: HomeAssistant,
         separator: str,
         fetch_time: time,
+        fetch_interval_days: int,
         random_fetch_time_offset: int,
         day_switch_time: time,
     ):
@@ -29,8 +30,10 @@ class WasteCollectionApi:
         self._source_shells: list[SourceShell] = []
         self._separator = separator
         self._fetch_time = fetch_time
+        self._fetch_interval_days = max(1, fetch_interval_days)
         self._random_fetch_time_offset = random_fetch_time_offset
         self._day_switch_time = day_switch_time
+        self._last_fetch_date: date | None = None
 
         # start timer to fetch date once per day
         async_track_time_change(
@@ -98,8 +101,17 @@ class WasteCollectionApi:
         return new_shell
 
     def _fetch(self, *_):
+        today = date.today()
+        if (
+            self._last_fetch_date is not None
+            and (today - self._last_fetch_date).days < self._fetch_interval_days
+        ):
+            self._update_sensors_callback()
+            return
+
         for shell in self._source_shells:
             shell.fetch()
+        self._last_fetch_date = today
 
         self._update_sensors_callback()
 
