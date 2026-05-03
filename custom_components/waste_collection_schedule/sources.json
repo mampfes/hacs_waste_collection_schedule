@@ -914,6 +914,12 @@
       "id": "mosman_nsw_gov_au"
     },
     {
+      "title": "Mount Alexander Shire Council",
+      "module": "mount_alexander_vic_gov_au",
+      "default_params": {},
+      "id": "mount_alexander_vic_gov_au"
+    },
+    {
       "title": "Moyne Shire Council",
       "module": "moyne_vic_gov_au",
       "default_params": {},

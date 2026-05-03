@@ -472,6 +472,13 @@
     "howto": {},
     "urls": {}
   },
+  "mount_alexander_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mount_alexander_vic_gov_au.md",
+    "howto": {
+      "en": "Enter your full street address as it appears on the council website, e.g. '1 Mostyn Street Castlemaine Victoria 3450'."
+    },
+    "urls": {}
+  },
   "moyne_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moyne_vic_gov_au.md",
     "howto": {},
