@@ -29,7 +29,7 @@ def _extract_waste_type(title: str) -> str:
     title_lower = title.lower()
     if "ordures" in title_lower:
         return "Ordures"
-    if "matières" in title_lower or "récupérables" in title_lower:
+    if "matières récupérables" in title_lower:
         return "Recyclage"
     if "résidus verts" in title_lower:
         return "Résidus verts"
