@@ -22,7 +22,6 @@ import logging
 import re
 
 import requests
-
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
@@ -44,21 +43,17 @@ ICON_MAP = {
     "Recycling": "mdi:recycle",
 }
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = """
-Orange City Council divides the city into two fortnightly recycling zones
-(referred to in the waste booklet as **Week A** and **Week B**):
-
-| Zone | Area |
-|------|------|
-| **A** | Properties **west** of Anson Street |
-| **B** | Properties **east** of Anson Street; properties **on** Anson Street; Spring Hill; Lucknow; Clifton Grove |
-
-General waste (red/dark lid) is collected every Wednesday.
-Recycling (yellow lid) is collected fortnightly on Wednesdays.
-
-Download the annual waste booklet from https://www.orange.nsw.gov.au/waste/
-to confirm which zone your street belongs to.
-"""
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": (
+        "Orange City Council divides the city into two fortnightly recycling zones "
+        "(referred to in the waste booklet as Week A and Week B). "
+        "Zone A covers properties west of Anson Street. "
+        "Zone B covers properties east of Anson Street, properties on Anson Street, "
+        "Spring Hill, Lucknow, and Clifton Grove. "
+        "Download the annual waste booklet from https://www.orange.nsw.gov.au/waste/ "
+        "to confirm which zone your street belongs to."
+    ),
+}
 
 _WASTE_PAGE_URL = "https://www.orange.nsw.gov.au/waste/"
 
@@ -119,7 +114,9 @@ def _year_from_pdf_text(session: requests.Session, url: str) -> int | None:
             if m:
                 return int(m.group(1))
     except Exception as exc:  # noqa: BLE001
-        _LOGGER.debug("orange_nsw_gov_au: Could not extract year from PDF text: %s", exc)
+        _LOGGER.debug(
+            "orange_nsw_gov_au: Could not extract year from PDF text: %s", exc
+        )
     return None
 
 
@@ -155,9 +152,7 @@ def _build_schedule(zone: str, year: int) -> list[Collection]:
 
     d = recycling_start
     while d.year == year:
-        entries.append(
-            Collection(date=d, t="Recycling", icon=ICON_MAP["Recycling"])
-        )
+        entries.append(Collection(date=d, t="Recycling", icon=ICON_MAP["Recycling"]))
         d += datetime.timedelta(weeks=2)
 
     return entries
