@@ -18,8 +18,7 @@ ICON_MAP = {
     "Recyclage": "mdi:recycle",
     "Résidus verts": "mdi:leaf",
     "Résidus alimentaires": "mdi:food-apple",
-        "Encombrants": "mdi:sofa",
-        "Dépôt de résidus domestiques dangereux (RDD)": "mdi:spray",
+    "Encombrants": "mdi:sofa",
 }
 
 FEED_URL = "https://www.villesblg.ca/calendrier-categories/collectes-et-depots/feed/"
@@ -38,8 +37,6 @@ def _extract_waste_type(title: str) -> str:
         return "Résidus alimentaires"
     if "encombrants" in title_lower:
         return "Encombrants"
-    if "rebuts" in title_lower:
-        return "Dépôt de rebuts"
     return title.strip()
 
 
@@ -64,6 +61,10 @@ class Source:
             if not title_tag:
                 continue
             title = title_tag.get_text(strip=True)
+
+            # Skip "rebuts" and RDD events (not regular collection types)
+            if "rebuts" in title.lower() or "dangereux" in title.lower():
+                continue
 
             # Extract date from startDay tag (actual collection date)
             start_day = item.find("startDay")

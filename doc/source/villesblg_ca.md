@@ -35,4 +35,5 @@ waste_collection_schedule:
 - **Résidus verts** (Green waste) - `mdi:leaf`
 - **Résidus alimentaires** (Food waste) - `mdi:food-apple`
 - **Encombrants** (Bulky items) - `mdi:sofa`
-- **Dépôt de résidus domestiques dangereux (RDD)** - `mdi:spray`
+
+Note: Events titled "Dépôt de rebuts encombrants et récupérables" and "Dépôt de résidus domestiques dangereux (RDD)" are skipped as they are not regular collection events.
