@@ -144,10 +144,10 @@ class Source:
         entries: list[Collection] = []
 
         for d in _next_weekly(day):
-            entries.append(Collection(d, "General Waste", ICON_MAP["General Waste"]))
-            entries.append(Collection(d, "FOGO", ICON_MAP["FOGO"]))
+            entries.append(Collection(d, "Recycling", ICON_MAP["Recycling"]))
 
         for d in _next_fortnightly(day, week):
-            entries.append(Collection(d, "Recycling", ICON_MAP["Recycling"]))
+            entries.append(Collection(d, "General Waste", ICON_MAP["General Waste"]))
+            entries.append(Collection(d, "FOGO", ICON_MAP["FOGO"]))
 
         return entries
