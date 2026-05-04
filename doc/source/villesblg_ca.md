@@ -1,4 +1,4 @@
-# Ville de Saint-Basile-le-Grand
+# Ville de Saint-Basile-le-Grand (QC)
 
 Support for schedules provided by [Ville de Saint-Basile-le-Grand](https://www.villesblg.ca).
 
