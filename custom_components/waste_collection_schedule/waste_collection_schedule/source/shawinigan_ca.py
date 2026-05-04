@@ -142,20 +142,6 @@ class Source:
 
         return sorted(entries, key=lambda x: x.date)
 
-    def _parse_schedule(
-        self,
-        schedule_str: str,
-        schedule_type: str,
-        day_name: str,
-        start_date: date,
-        end_date: date,
-        exclude_dates: dict | None = None,
-    ) -> list[date]:
-        """Public wrapper kept for unit-test compatibility."""
-        return _parse_schedule(
-            schedule_str, schedule_type, day_name, start_date, end_date
-        )
-
 
 # ---------------------------------------------------------------------------
 # Module-level helpers (stateless, easy to unit-test)
