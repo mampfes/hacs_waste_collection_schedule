@@ -38,12 +38,10 @@ def _normalize_commune(s: str) -> str:
     s = "".join(
         c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn"
     )
-    # Replace all hyphen/apostrophe variants (U+002D, U+0027, U+2018, U+2019) with a space
     s = re.sub("[-'‘’]", " ", s.upper())
     return re.sub(r"\s+", " ", s).strip()
 
 
-# Mapping from normalised commune name → canonical commune name from COMMUNES list
 COMMUNES_NORMALIZED = {_normalize_commune(c): c for c in COMMUNES}
 
 EXTRA_INFO = [
@@ -56,7 +54,7 @@ EXTRA_INFO = [
 
 TEST_CASES = {commune: {"commune": commune} for commune in COMMUNES}
 
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
+ICON_MAP = {
     "Bac d'ordures ménagères": "mdi:trash-can",
     "Bac jaune": "mdi:recycle",
     "Déchets verts": "mdi:leaf",
@@ -73,9 +71,20 @@ WEEKDAY_MAP = {
     "dimanche": SU,
 }
 
-BIN_TYPE_MAP = {"Bac d'ordures ménagères": "ordures", "Bac jaune": "recyclage"}
-
-# ### Arguments affecting the configuration GUI ####
+MOIS_MAP = {
+    "janvier": 1,
+    "fevrier": 2,
+    "mars": 3,
+    "avril": 4,
+    "mai": 5,
+    "juin": 6,
+    "juillet": 7,
+    "aout": 8,
+    "septembre": 9,
+    "octobre": 10,
+    "novembre": 11,
+    "decembre": 12,
+}
 
 PARAM_DESCRIPTIONS = {
     "fr": {
@@ -87,98 +96,75 @@ PARAM_DESCRIPTIONS = {
     },
 }
 
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
+PARAM_TRANSLATIONS = {
     "fr": {"commune": "Ville"},
     "en": {"commune": "City"},
     "de": {"commune": "Stadt"},
 }
-# ### End of arguments affecting the configuration GUI ####
 
 
 class Source:
     def __init__(self, commune: str):
         self.commune = commune
-
         if self.commune not in COMMUNES:
             raise SourceArgumentNotFoundWithSuggestions(
                 "Commune", self.commune, COMMUNES
             )
 
     def get_parsed_source(self) -> BeautifulSoup:
-        s = requests.Session()
-        response = s.get(DATA_URL)
+        response = requests.get(DATA_URL)
         response.raise_for_status()
-
         return BeautifulSoup(response.text, "html.parser")
 
     def fetch(self) -> list[Collection]:
         parsed_source = self.get_parsed_source()
-        global_planning = self.get_planning_table(parsed_source)
-        city_planning = global_planning[self.commune]
+        city_planning = self.get_planning_table(parsed_source)[self.commune]
 
-        entries = []  # List that holds collection schedule
-
-        for bin_type in city_planning.keys():
-            french_day = city_planning[bin_type]
-
-            collection_day = WEEKDAY_MAP[french_day.strip().lower()]
-
+        entries = [
+            Collection(date=dt.date(), t=bin_type, icon=ICON_MAP.get(bin_type))
+            for bin_type, french_day in city_planning.items()
             for dt in rrule(
                 freq=WEEKLY,
                 dtstart=date.today(),
                 count=20,
-                byweekday=collection_day,
-            ):
-                entries.append(
-                    Collection(
-                        date=dt.date(),  # Collection date
-                        t=bin_type,  # Collection type
-                        icon=ICON_MAP.get(bin_type),  # Collection icon
-                    )
-                )
+                byweekday=WEEKDAY_MAP[french_day.strip().lower()],
+            )
+        ]
 
-        global_planning2 = self.get_planning_table_dechets_verts_et_encombrants_pdf(
+        pdf_planning = self.get_planning_table_dechets_verts_et_encombrants_pdf(
             parsed_source
         )
+        for bin_type, dates in pdf_planning.get(self.commune, {}).items():
+            entries.extend(
+                Collection(date=dt, t=bin_type, icon=ICON_MAP.get(bin_type))
+                for dt in dates
+            )
 
-        if self.commune in global_planning2:
-            city_planning2 = global_planning2[self.commune]
-            for bin_type in city_planning2.keys():
-                for dt2 in city_planning2[bin_type]:
-                    entries.append(
-                        Collection(
-                            date=dt2,  # Collection date
-                            t=bin_type,  # Collection type
-                            icon=ICON_MAP.get(bin_type),  # Collection icon
-                        )
-                    )
         return entries
 
     def get_planning_table(
         self, parsed_source: BeautifulSoup
     ) -> dict[str, dict[str, str]]:
-        tables = parsed_source.select("table")
-
         planning: dict[str, dict[str, str]] = {}
-        for table in tables:
-            if str(table).__contains__("ordures ménagères"):
-                # thead = table.find('thead')
-                table_heads = table.find("thead").find_all("th")
-                table_body = table.find("tbody")
-                # The source html is malformed. The first <TR> is absent. So we need to select the first 3 TD cells by hands until the source is fixed
-                table_datas = table_body.find_all("td")
-                ville = table_datas[0].text.strip()
-                self.fill_planning(planning, ville, table_heads, table_datas)
-
-                # table_rows = table_body.find_all('tr')
-                for t in table_body.find_all("tr"):
-                    td = t.select("td")
-                    ville = td[0].text.strip()
-                    self.fill_planning(planning, ville, table_heads, td)
+        for table in parsed_source.select("table"):
+            if "ordures ménagères" not in str(table):
+                continue
+            thead = table.find("thead")
+            table_body = table.find("tbody")
+            if not thead or not table_body:
+                continue
+            table_heads = thead.find_all("th")
+            # The source HTML is malformed: the first <TR> is absent, so handle
+            # the orphan TDs before the first proper <TR> manually.
+            table_datas = table_body.find_all("td")
+            self._fill_planning(planning, table_datas[0].text.strip(), table_heads, table_datas)
+            for row in table_body.find_all("tr"):
+                td = row.select("td")
+                self._fill_planning(planning, td[0].text.strip(), table_heads, td)
         return planning
 
-    def fill_planning(self, planning, ville, table_heads, table_datas):
-        # HTML may use curly apostrophes; normalise to the canonical COMMUNES key
+    @staticmethod
+    def _fill_planning(planning, ville, table_heads, table_datas):
         canonical = COMMUNES_NORMALIZED.get(_normalize_commune(ville), ville)
         planning[canonical] = {
             table_heads[1].text: table_datas[1].text.strip(),
@@ -189,7 +175,6 @@ class Source:
         self, parsed_source: BeautifulSoup
     ) -> dict[str, dict[str, list[date]]]:
         """Extract déchets verts and encombrants planning from PDF files linked on the page."""
-        # Find PDF links on the page; prefer the most recent year >= current year
         current_year = date.today().year
         best_url = None
         best_year = 0
@@ -214,26 +199,19 @@ class Source:
         response.raise_for_status()
 
         pdf_reader = PdfReader(BytesIO(response.content))
-        layout_text = ""
-        for page in pdf_reader.pages:
-            layout_text += page.extract_text(extraction_mode="layout")
+        layout_text = "".join(
+            page.extract_text(extraction_mode="layout") for page in pdf_reader.pages
+        )
 
         return self._parse_pdf_layout(layout_text, best_year)
 
     def _parse_pdf_layout(
         self, layout_text: str, year: int
     ) -> dict[str, dict[str, list[date]]]:
-        """Parse the two-column layout PDF into a commune→waste_type→dates mapping.
-
-        The PDF has a left column (Déchets verts) and a right column (Encombrants).
-        Each column contains groups of communes that share collection dates.
-        pypdf layout extraction preserves horizontal positions so we can split columns.
-        """
         planning: dict[str, dict[str, list[date]]] = {}
         lines = layout_text.split("\n")
 
-        # Locate the column-header line (e.g. "  DÉCHETS VERTS          ENCOMBRANTS")
-        # to determine the horizontal split position between the two columns.
+        # Locate the column-header line to determine the horizontal split position.
         split_pos = None
         for line in lines:
             stripped = line.strip()
@@ -246,16 +224,17 @@ class Source:
         if split_pos is None:
             return planning
 
-        left_lines = [line[:split_pos] for line in lines]
-        right_lines = [line[split_pos:] for line in lines]
-
-        self._parse_column_groups(left_lines, "Déchets verts", year, planning)
-        self._parse_column_groups(right_lines, "Encombrants", year, planning)
+        self._parse_column_groups(
+            [line[:split_pos] for line in lines], "Déchets verts", year, planning
+        )
+        self._parse_column_groups(
+            [line[split_pos:] for line in lines], "Encombrants", year, planning
+        )
 
         return planning
 
-    def _find_commune_in_line(self, text: str) -> str | None:
-        """Return the canonical commune name if any known commune appears in text."""
+    @staticmethod
+    def _find_commune_in_line(text: str) -> str | None:
         norm = _normalize_commune(text)
         for norm_commune, commune in COMMUNES_NORMALIZED.items():
             if norm_commune in norm:
@@ -269,13 +248,6 @@ class Source:
         year: int,
         planning: dict,
     ) -> None:
-        """Parse one column of the layout text.
-
-        Lines alternate between commune names and dates; blank lines separate
-        groups of communes that share the same collection dates.
-        All dates accumulated since the last blank are assigned to all communes
-        accumulated since the last blank.
-        """
         current_communes: list[str] = []
         current_dates: list[date] = []
 
@@ -300,55 +272,21 @@ class Source:
 
             current_dates.extend(self._extract_dates_from_line(stripped, year))
 
-        commit()  # handle the last group
+        commit()
 
-    def _extract_dates_from_line(self, line: str, year: int) -> list[date]:
-        """Extract dates from a text line in format like '1 janvier', '15 février', etc."""
-        MOIS_PATTERN = {
-            "janvier": "01",
-            "fevrier": "02",
-            "mars": "03",
-            "avril": "04",
-            "mai": "05",
-            "juin": "06",
-            "juillet": "07",
-            "aout": "08",
-            "septembre": "09",
-            "octobre": "10",
-            "novembre": "11",
-            "decembre": "12",
-        }
-
+    @staticmethod
+    def _extract_dates_from_line(line: str, year: int) -> list[date]:
         dates = []
-        for jour_match in re.finditer(
-            r"(\d{1,2})\s*([a-zàâäéèêëïîôùûüç]+)", line.lower()
-        ):
-            jour_str = jour_match.group(1)
-            # Normalise accented characters so keys match MOIS_PATTERN
-            mois_str = (
-                jour_match.group(2)
-                .replace("é", "e")
-                .replace("è", "e")
-                .replace("ê", "e")
-                .replace("ë", "e")
-                .replace("à", "a")
-                .replace("â", "a")
-                .replace("ä", "a")
-                .replace("ï", "i")
-                .replace("î", "i")
-                .replace("ô", "o")
-                .replace("ù", "u")
-                .replace("û", "u")
-                .replace("ü", "u")
-                .replace("ç", "c")
+        for m in re.finditer(r"(\d{1,2})\s*([a-zàâäéèêëïîôùûüç]+)", line.lower()):
+            mois_str = "".join(
+                c
+                for c in unicodedata.normalize("NFD", m.group(2))
+                if unicodedata.category(c) != "Mn"
             )
-            if mois_str in MOIS_PATTERN:
+            mois = MOIS_MAP.get(mois_str)
+            if mois:
                 try:
-                    jour = int(jour_str)
-                    mois = MOIS_PATTERN[mois_str]
-                    dates.append(date.fromisoformat(f"{year}-{mois:0>2}-{jour:0>2}"))
-                except (ValueError, KeyError):
+                    dates.append(date(year, mois, int(m.group(1))))
+                except ValueError:
                     pass
-
         return dates
-
