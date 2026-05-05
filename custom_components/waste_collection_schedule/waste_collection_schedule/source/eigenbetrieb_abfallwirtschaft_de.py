@@ -50,7 +50,7 @@ class Source:
         # and in december for the next year
         if now.month == 12:
             try:
-                url_next_year = f"{URL}/termine/abfuhrtermine/{year +1 }/{self._city}/{self._street}.html"
+                url_next_year = f"{URL}/termine/abfuhrtermine/{year + 1}/{self._city}/{self._street}.html"
                 entries += self.get_data(url_next_year)
             except Exception:
                 pass

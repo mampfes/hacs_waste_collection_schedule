@@ -30,7 +30,7 @@ class Source:
         self._ics_sources = get_region_url_by_street(
             "winterthur",
             self._street,
-            "https://m.winterthur.ch/appl/ajax/index.php?id=street&usid=9749&do=lookupStreet&container=737670",
+            "https://m.winterthur.ch/api/v1/callmethod/trash/asyncLookupStreet?usid=9749&container=1066394&uri=/index.php?apid=737670",
             regex=r"(?:Tour \d{1,2} )?(.*?)(?=\s*ganze Stadt|$)",
         ).fetch()
         for source in self._ics_sources:

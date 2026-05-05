@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
     SourceArgumentRequired,
@@ -175,7 +176,7 @@ class Source:
         try:
             suggestions = j.get("data", [])
             if not suggestions:
-                raise Exception("No suggestions returned for address")
+                raise SourceArgumentNotFound("address", self._address)
             suggestion = suggestions[0]
             suggestion_id = suggestion.get("id")
         except Exception as e:
@@ -212,7 +213,7 @@ class Source:
             data: Dict[str, Any] = j2.get("data") or {}
             geociv = data.get("idCivico") or data.get("place_id") or suggestion_id
             if geociv is None:
-                raise Exception("No civic/place id returned from address-search")
+                raise SourceArgumentNotFound("house_number", self._house_number)
         except Exception as e:
             raise Exception("Could not parse address-search response: " + str(e)) from e
 

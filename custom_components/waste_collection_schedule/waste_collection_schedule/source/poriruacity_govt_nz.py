@@ -4,6 +4,7 @@ from datetime import date, datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Porirua City"
 DESCRIPTION = "Source for Porirua City."
@@ -70,7 +71,7 @@ class Source:
             collections_map_reg_result.group(0).replace("collections:", "").strip()
         )
 
-        # repalce glass with "glass"
+        # replace glass with "glass"
         collections_map_str = re.sub(r"(\w+):", r'"\1":', collections_map_str)
         COLLECTIONS_MAP: dict[str, list[str]] = json.loads(collections_map_str)
         return ZONES, COLLECTIONS_MAP
@@ -91,7 +92,7 @@ class Source:
 
         data = r.json()
         if "features" not in data or not data["features"]:
-            raise Exception(f"Address {self._address} not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         feature = data["features"][0]
         properties = feature["attributes"]
@@ -107,7 +108,7 @@ class Source:
                 next_col_day = today + timedelta(days=i)
                 break
         if not next_col_day:
-            raise Exception(f"Collection day {col_day} not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         z = ZONES[col_zone][next_col_day.weekday()]
 

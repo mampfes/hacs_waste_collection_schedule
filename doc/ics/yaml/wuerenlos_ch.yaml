@@ -1,0 +1,13 @@
+---
+title: Gemeinde Würenlos
+url: https://www.wuerenlos.ch
+country: ch
+howto:
+  en: |
+    Würenlos publishes a public iCalendar feed at
+    `https://www.wuerenlos.ch/fileadmin/00_website/entsorgungskalender/Entsorgungskalender_Wuerenlos_{%Y}.ics`.
+    Use this URL as the `url` parameter — `{%Y}` is replaced with the
+    current year automatically.
+test_cases:
+  Würenlos:
+    url: https://www.wuerenlos.ch/fileadmin/00_website/entsorgungskalender/Entsorgungskalender_Wuerenlos_{%Y}.ics

@@ -93,6 +93,6 @@ class Source:
                     t=fraktion,
                     icon=icon,
                 )
-                )
+            )
 
         return entries

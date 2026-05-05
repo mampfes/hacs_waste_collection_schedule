@@ -8,7 +8,7 @@ sds Schwerin is supported by the generic [ICS](/doc/source/ics.md) source. For a
 - Visit <https://www.sds-schwerin.de/abfall-strassenreinigung/entsorgungskalender/> and select your location.  
 - Click on `Exportieren iCal` and copy the link below `URL in Kalender-App einbinden`
 - Use this link as `url` parameter.
-- Rplace the year in the URL with `{%Y}`, which will be replaced by the current year.
+- Replace the year in the URL with `{%Y}`, which will be replaced by the current year.
 
 ## Examples
 

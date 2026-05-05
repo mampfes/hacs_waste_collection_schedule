@@ -11,7 +11,7 @@ Kreisstadt Groß-Gerau is supported by the generic [ICS](/doc/source/ics.md) sou
 
 ## Examples
 
-### Hagnau
+### Groß-Gerau
 
 ```yaml
 waste_collection_schedule:

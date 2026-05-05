@@ -24,10 +24,10 @@ waste_collection_schedule:
 *(string) (optional)*
 
 **mm_frm_str_sel**  
-*(string) (optional)*
+*(string) (optional)* Street name only — do **not** include house numbers. The value must match exactly what appears in the Müllmax street dropdown.
 
 **mm_frm_hnr_sel**  
-*(string) (optional)*
+*(string) (optional)* House number selection value. Only needed if the Müllmax form shows a house number dropdown after selecting your street. The format is typically `zipcode;district;number;` (e.g. `60596;Sachsenhausen;2;`).
 
 ## Example
 

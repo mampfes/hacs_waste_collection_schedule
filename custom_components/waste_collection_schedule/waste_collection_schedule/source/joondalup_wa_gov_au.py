@@ -91,6 +91,7 @@ class Source:
     def generate_general_waste_date(self, s: datetime, d: int) -> date:
         rr = rrule(WEEKLY, dtstart=s, byweekday=d)
         dt = rr.after(s)
+        assert dt is not None
         return dt.date()
 
     def generate_recycle_dates(self, s: str) -> tuple:

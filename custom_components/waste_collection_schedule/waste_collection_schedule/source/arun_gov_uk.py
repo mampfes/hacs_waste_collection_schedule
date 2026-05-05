@@ -1,12 +1,6 @@
-from datetime import datetime
-from typing import List
-
-import bs4
-import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
 
 TITLE = "Arun District Council"
 DESCRIPTION = "Source for arun.gov.uk services for Arun District, UK."
@@ -14,117 +8,55 @@ URL = "https://www.arun.gov.uk"
 TEST_CASES = {
     "Test_001": {"postcode": "BN17 5JA", "address": "21A Beach Road, Littlehampton"},
     "Test_002": {"postcode": "BN16 1AA", "address": "2 Downs Way, East Preston"},
+    "Test_003": {"uprn": 100062180214},
+    "Test_004": {"uprn": "0100062180214"},
 }
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
 }
-ICON_MAP = {"Recycling": "mdi:recycle", "Rubbish": "mdi:trash-can"}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
+        "postcode": "Postcode (legacy, use UPRN instead)",
+        "address": "Address (legacy, use UPRN instead)",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
+        "postcode": "Postcode (legacy, use UPRN instead)",
+        "address": "Address (legacy, use UPRN instead)",
+    }
+}
+ICON_MAP = {
+    "garden": "mdi:leaf",
+    "food": "mdi:food-apple",
+    "recycl": "mdi:recycle",
+    "waste": "mdi:trash-can",
+    "rubbish": "mdi:trash-can",
+    "refuse": "mdi:trash-can",
+}
 
 
 class Source:
-    def __init__(self, postcode, address):
+    def __init__(
+        self,
+        uprn: str | int | None = None,
+        postcode: str | None = None,
+        address: str | None = None,
+    ):
+        self._client = Cloud9Client("arun", icon_keywords=ICON_MAP)
+        self._uprn = str(uprn) if uprn else None
         self._postcode = postcode
         self._address = address
 
-    def _get_gds_error(self, soup: bs4.BeautifulSoup) -> str:
-        return soup.find("div", {"class": "govuk-error-summary__body"}).get_text(
-            strip=True
+    def fetch(self) -> list[Collection]:
+        if self._uprn:
+            return self._client.fetch_by_uprn(self._uprn)
+        if not self._postcode:
+            raise SourceArgumentRequired("uprn", "Provide a UPRN or postcode + address")
+        return self._client.fetch_by_address(
+            postcode=self._postcode,
+            address_string=self._address or "",
+            argument_name="postcode",
         )
-
-    def fetch(self) -> List[Collection]:
-        if self._postcode is None or self._address is None:
-            raise ValueError("Either postcode or address is None")
-
-        s = requests.Session()
-        s.headers.update(HEADERS)
-
-        try:
-            for url in (
-                "https://www1.arun.gov.uk/when-are-my-bins-collected",
-                "https://www1.arun.gov.uk/when-are-my-bins-collected/postcode",
-            ):
-                start_session = s.get(url)
-                start_session.raise_for_status()
-        except requests.HTTPError as e:
-            raise Exception("Failed to start session") from e
-
-        try:
-            postcode_search_request = s.post(
-                "https://www1.arun.gov.uk/when-are-my-bins-collected/postcode",
-                data={"postcode": self._postcode},
-            )
-            postcode_search_request.raise_for_status()
-        except requests.HTTPError as e:
-            raise Exception("Failed to search postcode") from e
-
-        addresses = bs4.BeautifulSoup(postcode_search_request.content, "html.parser")
-
-        addresses_select = addresses.find("select", {"id": "address"})
-        if addresses_select is None:
-            try:
-                error_summary = self._get_gds_error(addresses)
-            except (AttributeError, Exception) as e:
-                raise Exception(
-                    "An unexpected error occurred while fetching addresses"
-                ) from e
-            raise ValueError(error_summary)
-
-        options = addresses_select.find_all("option")[1:]
-        try:
-            found_address = next(
-                address
-                for address in options
-                if self._address.upper() in address.get_text().upper()
-            )
-        except StopIteration as e:
-            raise SourceArgumentNotFoundWithSuggestions(
-                argument="address",
-                value=self._address,
-                suggestions=[a.get_text() for a in options],
-            ) from e
-
-        try:
-            collections_request = s.post(
-                "https://www1.arun.gov.uk/when-are-my-bins-collected/select",
-                data={"address": found_address.get("value")},
-            )
-            collections_request.raise_for_status()
-        except requests.HTTPError as e:
-            raise Exception("Failed to fetch collections for address") from e
-
-        bin_collections = bs4.BeautifulSoup(collections_request.content, "html.parser")
-
-        try:
-            bin_days_main = bin_collections.find("main", {"id": "main-content"})
-            bin_days_table = bin_days_main.find("table")
-            bin_days_table_body = bin_days_table.find("tbody")
-            bin_days_by_type = bin_days_table_body.find_all("tr")
-
-            entries: dict[str, list[Collection]] = {}
-            for bin_by_type in bin_days_by_type:
-                bin_type = bin_by_type.find("th").text.split(" ")[0]
-                icon = ICON_MAP.get(bin_type)
-                html_bin_date = bin_by_type.find_all("td")[0].get_text()  # DD/MM/YYYY
-                bin_date = datetime.strptime(html_bin_date, "%d/%m/%Y").date()
-                entries.setdefault(bin_date.strftime("%Y-%m-%d"), []).append(
-                    Collection(t=bin_type, date=bin_date, icon=icon)
-                )
-
-            # Ensure Rubbish collection is also added if only Recycling is present
-            # For some postcodes, Arun Council only shows Recycling collection dates
-            # on Recycling weeks, but Rubbish is still collected on the same day.
-            for collections in entries.values():
-                if any(c.type == "Recycling" for c in collections):
-                    if not any(c.type == "Rubbish" for c in collections):
-                        collections.append(
-                            Collection(
-                                t="Rubbish",
-                                date=collections[0].date,
-                                icon=ICON_MAP.get("Rubbish"),
-                            )
-                        )
-        except Exception as e:
-            raise Exception("Failed to parse bin collection table") from e
-
-        # return flat list of entries
-        return [col for cols in entries.values() for col in cols]

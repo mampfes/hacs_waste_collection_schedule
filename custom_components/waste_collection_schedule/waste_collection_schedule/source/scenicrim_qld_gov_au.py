@@ -30,10 +30,12 @@ DAYS: dict = {
     "FRIDAY": FR,
 }
 WEEKDAYS: list = [MO, TU, WE, TH, FR]
-START_DATES: dict = {  # taken from https://www.scenicrim.qld.gov.au/downloads/file/6551/your-waste-bins-and-facilities-guide
-    "BLUE": datetime(2024, 12, 2, 0, 0, 0),  # known Monday in a Red Week
-    "RED": datetime(2024, 12, 9, 0, 0, 0),  # known Monday in a Blue Week
-}
+START_DATES: dict = (
+    {  # taken from https://www.scenicrim.qld.gov.au/downloads/file/6551/your-waste-bins-and-facilities-guide
+        "BLUE": datetime(2024, 12, 2, 0, 0, 0),  # known Monday in a Red Week
+        "RED": datetime(2024, 12, 9, 0, 0, 0),  # known Monday in a Blue Week
+    }
+)
 
 # ### Arguments affecting the configuration GUI ####
 

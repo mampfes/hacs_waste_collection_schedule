@@ -4,7 +4,6 @@ import json
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 
@@ -88,15 +87,17 @@ class Source:
 
         r = session.post(
             API_URL,
-            data={
-                "wctown": city_id,
-                "wcstreet": street_id,
-                "wchousenumber": self._house_number,
-            }
-            if has_streets
-            else {
-                "wctown": city_id,
-            },
+            data=(
+                {
+                    "wctown": city_id,
+                    "wcstreet": street_id,
+                    "wchousenumber": self._house_number,
+                }
+                if has_streets
+                else {
+                    "wctown": city_id,
+                }
+            ),
             headers={
                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
                 "X-Requested-With": "XMLHttpRequest",

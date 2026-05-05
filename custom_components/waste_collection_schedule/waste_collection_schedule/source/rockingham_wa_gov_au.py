@@ -4,10 +4,11 @@ from typing import Literal, get_args
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
 )
-from waste_collection_schedule.service.RockinghamCityMaps import (
+from waste_collection_schedule.service.IntraMaps import (
     IntraMapsError,
     IntraMapsSearchError,
     MapsClient,
@@ -197,7 +198,7 @@ class Source:
                             )
 
         except IntraMapsSearchError as e:
-            raise Exception(f"No results found for address: {address}") from e
+            raise SourceArgumentNotFound("street_name", self.street_name) from e
         except IntraMapsError as e:
             raise Exception(f"IntraMaps Operation Failed: {e}") from e
         except Exception as e:

@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 
 import requests
@@ -11,6 +10,9 @@ TEST_CASES = {
     "GU14": {"uprn": "100060551749"},
 }
 
+HEADERS = {
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
 ICON_MAP = {
     "Refuse": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -27,7 +29,7 @@ class Source:
 
     def fetch(self):
         params = {"selectedAddress": self._uprn, "weeks": "16"}
-        r = requests.get(API_URL, params=params)
+        r = requests.get(API_URL, params=params, headers=HEADERS)
         r.raise_for_status()
         data = r.json()
 

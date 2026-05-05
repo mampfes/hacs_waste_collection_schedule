@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Pembrokeshire County Council"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for pembrokeshire.gov.uk"  # Describe your source
@@ -65,7 +66,7 @@ class Source:
         collection_response = session.post(API_URL, params=form_data)
 
         if ast.literal_eval(collection_response.text)["error"] == "true":
-            raise Exception("No collections found for the given UPRN.")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         entries = []  # List that holds collection schedule
 

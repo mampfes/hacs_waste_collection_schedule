@@ -56,6 +56,7 @@ ICON_MAP = {
     "Green Waste": "mdi:leaf",
 }
 
+
 class Source:
     def __init__(
         self, post_code: str, suburb: str, street_name: str, street_number: str
@@ -82,10 +83,10 @@ class Source:
             data = json.loads(r.text)
         except Exception:
             # Try XML
-            soup = BeautifulSoup(r.text, 'xml')
-            address_results = soup.find_all('PhysicalAddressSearchResult')
+            soup = BeautifulSoup(r.text, "xml")
+            address_results = soup.find_all("PhysicalAddressSearchResult")
             for result in address_results:
-                id_element = result.find('Id')
+                id_element = result.find("Id")
                 if id_element:
                     locationId = id_element.text.strip()
                     break
@@ -122,9 +123,11 @@ class Source:
             waste_type = item.find("h3")
             if not date_text or not waste_type:
                 continue
-            date_format = '%a %d/%m/%Y'
+            date_format = "%a %d/%m/%Y"
             try:
-                cleaned_date_text = date_text.text.replace('\r','').replace('\n','').strip()
+                cleaned_date_text = (
+                    date_text.text.replace("\r", "").replace("\n", "").strip()
+                )
                 date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
                 waste_type_text = waste_type.text.strip()
                 entries.append(

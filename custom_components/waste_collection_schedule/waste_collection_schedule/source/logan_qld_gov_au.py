@@ -4,6 +4,7 @@ from datetime import date, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Logan City Council"
 DESCRIPTION = "Source for Logan City Council rubbish collection."
@@ -60,7 +61,7 @@ class Source:
             data = json.loads(r.text)
 
             if not data["features"]:
-                raise Exception("Address not found")
+                raise SourceArgumentNotFound("property_location", self.property_location)
 
             collection_day = data["features"][0]["attributes"]["Collection_Day"]
             recycling_week = data["features"][0]["attributes"]["Recycling_Week"]

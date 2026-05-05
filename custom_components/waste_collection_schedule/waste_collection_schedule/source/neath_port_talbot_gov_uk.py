@@ -1,14 +1,13 @@
 from __future__ import annotations
 
+import datetime
 import re
 from dataclasses import dataclass
-import datetime
-from dateutil import parser
 
 import requests
 from bs4 import BeautifulSoup
+from dateutil import parser
 from waste_collection_schedule import Collection
-
 
 TITLE = "Neath Port Talbot Council"
 DESCRIPTION = "Source for waste collection services for Neath Port Talbot Council"
@@ -63,10 +62,10 @@ ICON_MAP = {
 }
 
 
-class FailedToFindTokensError(Exception): ...
+class FailedToFindTokensError(Exception): ...  # noqa: E701
 
 
-class FailedToFindCollections(Exception): ...
+class FailedToFindCollections(Exception): ...  # noqa: E701
 
 
 _DAY_MONTH_RE = re.compile(
@@ -97,6 +96,7 @@ class Source:
 
     Finally, the waste collection schedule is parsed from the resulting HTML page.
     """
+
     _BASE_URL = f"{URL}bins-and-recycling/equipment-and-collections/bin-day-finder/"
     _HEADERS = {
         "User-Agent": "Mozilla/5.0",
@@ -121,25 +121,29 @@ class Source:
         fetch_addresses_payload = {
             **_base_post_payload(initial_request.text),
             "PostCode": self._postcode,
-            "action": "Find address"
+            "action": "Find address",
         }
-        fetch_addresses_request = session.post(self._BASE_URL, data=fetch_addresses_payload, timeout=20)
+        fetch_addresses_request = session.post(
+            self._BASE_URL, data=fetch_addresses_payload, timeout=20
+        )
         fetch_addresses_request.raise_for_status()
 
         # Step 2: Submit the UPRN to get the waste collection schedule.
         fetch_collections_payload = {
             **_base_post_payload(fetch_addresses_request.text),
             "Address": self._uprn,
-            "action": "Show my bin days"
+            "action": "Show my bin days",
         }
-        fetch_collections_request = session.post(self._BASE_URL, data=fetch_collections_payload, timeout=20)
+        fetch_collections_request = session.post(
+            self._BASE_URL, data=fetch_collections_payload, timeout=20
+        )
         fetch_collections_request.raise_for_status()
 
         # Step 3: Parse the waste collection schedule from the response HTML.
         return _parse_collections_from_page_source(fetch_collections_request.text)
 
 
-def _base_post_payload(raw_html: str) -> dict[str, str]:
+def _base_post_payload(raw_html: str) -> dict[str, str | None]:
     tokens = _extract_tokens(raw_html)
     return {
         "__RequestVerificationToken": tokens.request_verification_token,
@@ -151,18 +155,26 @@ def _extract_tokens(raw_html: str) -> Tokens:
     soup = BeautifulSoup(raw_html, "html.parser")
 
     try:
-        request_verification_token = soup.find("input", {"name": "__RequestVerificationToken"})["value"]
+        request_verification_token = soup.find(
+            "input", {"name": "__RequestVerificationToken"}
+        )[
+            "value"  # type: ignore[index]
+        ]
     except TypeError as e:
-        raise FailedToFindTokensError("Failed to find __RequestVerificationToken in HTML.") from e
+        raise FailedToFindTokensError(
+            "Failed to find __RequestVerificationToken in HTML."
+        ) from e
 
     try:
-        ufprt = soup.find("input", {"name": "ufprt"})["value"]
+        ufprt = soup.find("input", {"name": "ufprt"})["value"]  # type: ignore[index]
     except TypeError as e:
         raise FailedToFindTokensError("Failed to find ufprt in HTML.") from e
 
     return Tokens(
-        request_verification_token=request_verification_token,
-        ufprt=ufprt,
+        request_verification_token=(
+            str(request_verification_token) if request_verification_token else None
+        ),
+        ufprt=str(ufprt) if ufprt else None,
     )
 
 
@@ -171,7 +183,9 @@ def _parse_collections_from_page_source(raw_html: str) -> list[Collection]:
     root = soup.find(id="contentInner")
 
     # Find all date headers (they are <h2> containing e.g. "Thursday, 23 October").
-    headers = [h for h in root.find_all("h2") if _DAY_MONTH_RE.match(_clean_text(h.get_text()))]
+    headers = [
+        h for h in root.find_all("h2") if _DAY_MONTH_RE.match(_clean_text(h.get_text()))  # type: ignore[union-attr]
+    ]
 
     collections: list = []
     for h2 in headers:
@@ -211,9 +225,7 @@ def _parse_collections_from_page_source(raw_html: str) -> list[Collection]:
 
 
 def _collection_date_from_header(raw_html: str) -> datetime.date:
-    """
-    Parse a datetime from a header like 'Thursday, 23 October'.
-    """
+    """Parse a datetime from a header like 'Thursday, 23 October'."""
     return parser.parse(_clean_text(raw_html), dayfirst=True, fuzzy=True).date()
 
 

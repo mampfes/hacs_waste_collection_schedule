@@ -23,14 +23,21 @@ TEST_CASES = {
     "ACV Group": {"company": "acv", "post_code": "6721MH", "house_number": 1},
     "Meerlanden": {"company": "meerlanden", "post_code": "1435BX", "house_number": 650},
     "Almere": {"company": "almere", "post_code": "1318NG", "house_number": 15},
+    "Woerden": {
+        "company": "woerdenoudewater",
+        "post_code": "3441AX",
+        "house_number": 1,
+    },
 }
 
 
 SERVICE_URLS = {
     "avalex": "https://wasteprod2api.ximmio.com",
     "meerlanden": "https://wasteprod2api.ximmio.com",
+    "mijnblink": "https://wasteprod2api.ximmio.com",
     "rad": "https://wasteprod2api.ximmio.com",
     "westland": "https://wasteprod2api.ximmio.com",
+    "woerdenoudewater": "https://wasteprod2api.ximmio.com",
 }
 
 SERVICE_MAP = [
@@ -89,16 +96,16 @@ SERVICE_MAP = [
         "company": "meppel",
     },
     {
+        "title": "Mijn Blink",
+        "url": "https://mijnblink.nl/",
+        "uuid": "252d30d0-2e74-469c-8f1e-c0e2e434eb58",
+        "company": "mijnblink",
+    },
+    {
         "title": "RAD BV",
         "url": "https://www.radbv.nl",
         "uuid": "13a2cad9-36d0-4b01-b877-efcb421a864d",
         "company": "rad",
-    },
-    {
-        "title": "Reinis",
-        "url": "https://www.reinis.nl/",
-        "uuid": "9dc25c8a-175a-4a41-b7a1-83f237a80b77",
-        "company": "reinis",
     },
     {
         "title": "Twente Milieu",
@@ -123,6 +130,12 @@ SERVICE_MAP = [
         "url": "https://www.venlo.nl/",
         "uuid": "280affe9-1428-443b-895a-b90431b8ca31",
         "company": "venlo",
+    },
+    {
+        "title": "Woerden / Oudewater",
+        "url": "https://www.woerden.nl/",
+        "uuid": "06856f74-6826-4c6a-aabf-69bc9d20b5a6",
+        "company": "woerdenoudewater",
     },
 ]
 

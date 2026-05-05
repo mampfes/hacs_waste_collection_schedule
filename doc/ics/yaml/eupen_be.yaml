@@ -1,0 +1,20 @@
+---
+title: Eupen
+url: https://www.eupen.be
+country: be
+howto:
+  en: |
+    - Go to <https://www.eupen.be/leben-in-eupen/abfall-recycling/abfallentsorgung/> and identify your zone.
+    - There are 3 zones: `oberstadt`, `unterstadt`, and `kettenis`.
+    - Use `{%Y}` in the URL to automatically replace the year.
+  de: |
+    - Gehen Sie auf <https://www.eupen.be/leben-in-eupen/abfall-recycling/abfallentsorgung/> und identifizieren Sie Ihre Zone.
+    - Es gibt 3 Zonen: `oberstadt`, `unterstadt` und `kettenis`.
+    - Verwenden Sie `{%Y}` in der URL, um das Jahr automatisch zu ersetzen.
+test_cases:
+  Oberstadt:
+    url: "https://www.eupen.be/wp-content/uploads/digitaler-muellkalender-oberstadt-{%Y}-1.ics"
+  Unterstadt:
+    url: "https://www.eupen.be/wp-content/uploads/digitaler-muellkalender-unterstadt-{%Y}-1.ics"
+  Kettenis:
+    url: "https://www.eupen.be/wp-content/uploads/digitaler-muellkalender-kettenis-{%Y}-1.ics"

@@ -1,7 +1,12 @@
-from datetime import date, timedelta
+from datetime import timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ArcGis import (
+    epoch_ms_to_date,
+    get_next_n_dates,
+    most_recent_weekday,
+)
 
 TITLE = "City of Darebin"
 DESCRIPTION = "Source for City of Darebin waste collection."
@@ -24,21 +29,6 @@ WEEKDAY_MAP = {
     "Saturday": 5,
     "Sunday": 6,
 }
-
-
-def _get_next_n_dates(date_obj: date, n: int, delta: timedelta):
-    next_dates = []
-    for _ in range(n):
-        while date_obj < date.today():
-            date_obj += delta
-        next_dates.append(date_obj)
-        date_obj += delta 
-    return next_dates
-
-
-def _get_previous_date_for_day_of_week(day_of_week: int):
-    today = date.today()
-    return today - timedelta((today.weekday() - day_of_week + 7) % 7)
 
 
 class Source:
@@ -72,31 +62,26 @@ class Source:
         features = data.get("features")
         attributes = features[0]["attributes"]
 
-        green_collection_epoch_seconds = attributes["Green_Collection"] / 1000
-        recycle_collection_epoch_seconds = attributes["Recycle_Collection"] / 1000
-        street_sweeping_epoch_seconds = attributes["Street_Sweeping"] / 1000
         collection_day = attributes["Collection_Day"]
 
-        next_collection_date = _get_previous_date_for_day_of_week(
-            WEEKDAY_MAP[collection_day]
-        )
+        next_collection_date = most_recent_weekday(WEEKDAY_MAP[collection_day])
 
-        green_collection = date.fromtimestamp(green_collection_epoch_seconds)
-        recycle_collection = date.fromtimestamp(recycle_collection_epoch_seconds)
-        street_sweeping = date.fromtimestamp(street_sweeping_epoch_seconds)
+        green_collection = epoch_ms_to_date(attributes["Green_Collection"])
+        recycle_collection = epoch_ms_to_date(attributes["Recycle_Collection"])
+        street_sweeping = epoch_ms_to_date(attributes["Street_Sweeping"])
 
-        green_collection_dates = _get_next_n_dates(
+        green_collection_dates = get_next_n_dates(
             green_collection, 26, timedelta(days=14)
         )
-        recycle_collection_dates = _get_next_n_dates(
+        recycle_collection_dates = get_next_n_dates(
             recycle_collection, 26, timedelta(days=14)
         )
-        waste_collection_dates = _get_next_n_dates(
+        waste_collection_dates = get_next_n_dates(
             next_collection_date, 52, timedelta(days=7)
         )
-        street_sweeping_dates = _get_next_n_dates(
-            street_sweeping, 1, timedelta(weeks=6))
-
+        street_sweeping_dates = get_next_n_dates(
+            street_sweeping, 1, timedelta(weeks=6)
+        )
 
         entries = []
 

@@ -1,0 +1,17 @@
+---
+title: WBL Lünen
+url: https://wbl.de/
+country: de
+howto:
+  en: |
+    - Go to <https://wbl.de/abfallkalender> and search for your street.
+    - Copy the ICS download link.
+    - Replace the year in the URL (e.g. `ical2026.php`) with `ical{%Y}.php`.
+  de: |
+    - Gehen Sie zu <https://wbl.de/abfallkalender> und suchen Sie Ihre Straße.
+    - Kopieren Sie den ICS-Download-Link.
+    - Ersetzen Sie das Jahr in der URL (z.B. `ical2026.php`) durch `ical{%Y}.php`.
+
+test_cases:
+  Niederadener Straße:
+    url: "https://wbl.de/pdf/ical{%Y}.php?strasse=Niederadener+Stra%C3%9Fe"

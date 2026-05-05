@@ -1,7 +1,7 @@
 from datetime import datetime
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Eastleigh Borough Council"
@@ -31,10 +31,11 @@ class Source:
         self._uprn: str | int = uprn
 
     def fetch(self):
+        session = requests.Session(impersonate="chrome124")
         args = {"uprn": self._uprn}
 
         # get json file
-        r = requests.get(API_URL, params=args)
+        r = session.get(API_URL, params=args)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")

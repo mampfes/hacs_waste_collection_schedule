@@ -29,19 +29,17 @@ ICON_MAP = {
     "Recycle": "mdi:recycle",
 }
 
-# ### Arguments affecting the configuration GUI ####
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Search for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.",
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+PARAM_DESCRIPTIONS = {
     "en": {
         "address": "Street name and house number of the property",
     },
 }
 
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
+PARAM_TRANSLATIONS = {
     "en": {
         "address": "Street name and house number of the property",
     },
@@ -53,23 +51,47 @@ class Source:
         self._address: str = address.upper()
 
     def create_dates(self, days: list, start: date, end: date):
-        dts = list(rrule(freq=WEEKLY, byweekday=days, dtstart=start, until=end))
-        return dts
+        all_pickups = []
 
-    def check_holidays(self, hols: list[date], dt: date) -> date:
-        # collections shifted by 1 day if they fall on a holiday
-        # if adjusted day is also a holiday, it shifts again
-        if dt in hols:
-            x = dt + timedelta(days=1)
-            x = self.check_holidays(hols, x)
-        else:
-            x = dt
-        return x
+        for index, day in enumerate(days):
+            occurrences = rrule(freq=WEEKLY, byweekday=day, dtstart=start, until=end)
+
+            for dt in occurrences:
+                all_pickups.append({"date": dt.date(), "weekly_pickup_num": index + 1})
+        return sorted(all_pickups, key=lambda x: x["date"])
+
+    def check_holidays(self, hols: list[date], dt: date, pickup_number: int) -> date:
+        """
+        Shift a collection date forward for holidays in the same week.
+
+        Rules per phila.gov:
+        - Weekend holidays: already excluded from hols, no effect.
+        - One holiday in the week: all collections on or after that holiday
+          are shifted by 1 day.
+        - Two holidays in the same week: collections shift by 1 or 2 days
+          depending on how many holidays fall on or before the collection day.
+        - If the shifted date itself lands on a holiday, shift again.
+        """
+        # find all weekday holidays in the same Mon-Sun week as dt
+        week_start = dt - timedelta(days=dt.weekday())  # Monday
+        week_end = week_start + timedelta(days=6)  # Sunday
+        week_hols = sorted(h for h in hols if week_start <= h <= week_end)
+
+        # shift by 1 for each holiday that falls on or before the collection day
+        shift = sum(1 for h in week_hols if h <= dt)
+        adjusted = dt + timedelta(days=shift)
+
+        # if the adjusted date itself is a holiday, shift once more
+        if adjusted in hols and adjusted != dt:
+            adjusted = self.check_holidays(hols, adjusted, pickup_number)
+
+        return adjusted
 
     def fetch(self) -> list[Collection]:
         s = requests.Session()
 
         # get list of observed holidays
+        # weekend holidays are excluded as they don't affect collections
         holidays = []
         h_json = s.get(
             "https://api.phila.gov/phila/trashday/v1",
@@ -77,43 +99,53 @@ class Source:
         ).json()
         for item in h_json["holidays"]:
             h_date = datetime.strptime(item["start_date"], "%Y-%m-%d").date()
-            # weekend holidays don't impact collections so remove them
             if h_date.weekday() not in [5, 6]:
                 holidays.append(h_date)
 
         # get property info
         p_json = s.get(
-            f"https://api.phila.gov/ais/v1/addresses/{(self._address)}", headers=HEADERS
+            f"https://api.phila.gov/ais/v1/addresses/{self._address}",
+            headers=HEADERS,
         ).json()
+
+        props = p_json["features"][0]["properties"]
+
         # extract collection days
+        # rubbish_recycle_day   = primary day for BOTH trash and recycling
+        # secondary_rubbish_day = second trash-only day (some addresses)
         waste_days = []
         recycle_days = []
-        for item in p_json["features"][0]["properties"]:
-            if "rubbish_" in item:
-                try:
-                    waste_days.append(DAYS[p_json["features"][0]["properties"][item]])
-                except KeyError:  # not all keys have values
-                    pass
-            if "recycle_" in item:
-                try:
-                    recycle_days.append(DAYS[p_json["features"][0]["properties"][item]])
-                except KeyError:  # not all keys have values
-                    pass
-        # generate day dates
+
+        for key in props:
+            val = props[key]
+            if not isinstance(val, str) or val.upper() not in DAYS:
+                continue
+            day = DAYS[val.upper()]
+            if "rubbish" in key.lower():
+                # rubbish_recycle_day and secondary_rubbish_day both go into trash
+                waste_days.append(day)
+            if key.lower() == "rubbish_recycle_day":
+                # the primary day is also the recycling day
+                recycle_days.append(day)
+
+        # generate day dates for the current year
         year = datetime.now().year
         start: date = date(year, 1, 1)
         end: date = date(year, 12, 31)
         trash = self.create_dates(waste_days, start, end)
         recycle = self.create_dates(recycle_days, start, end)
+
         # adjust for observed holidays
-        adjusted_trash = []
-        adjusted_recycling = []
-        for item in trash:
-            adjusted_trash.append(self.check_holidays(holidays, item.date()))
-        for item in recycle:
-            adjusted_recycling.append(self.check_holidays(holidays, item.date()))
-        waste_schedule = list(set(adjusted_trash))
-        recycle_schedule = list(set(adjusted_recycling))
+        adjusted_trash = [
+            self.check_holidays(holidays, item["date"], item["weekly_pickup_num"])
+            for item in trash
+        ]
+        adjusted_recycling = [
+            self.check_holidays(holidays, item["date"], item["weekly_pickup_num"])
+            for item in recycle
+        ]
+        waste_schedule = list({d for d in adjusted_trash if d is not None})
+        recycle_schedule = list({d for d in adjusted_recycling if d is not None})
 
         entries = []
         for item in waste_schedule:

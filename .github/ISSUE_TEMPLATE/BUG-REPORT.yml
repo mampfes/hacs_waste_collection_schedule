@@ -1,82 +1,70 @@
-name: Bug Report
-description: Report a bug with a source, sensor or the integration in general
+name: Integration Bug
+description: Report a bug with the core integration (not a specific source or sensor configuration)
 title: "[Bug]: "
+labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this Bug Report!
-  - type: dropdown
-    id: error
-    attributes:
-      label: "I Have A Problem With:"
-      options:
-        - A specific source
-        - Sensor configuration
-        - The integration in general
-      multiple: true
-    validations:
-      required: true
+        Report a bug with the integration itself — config flow crashes, calendar not displaying, integration failing to load, etc.
+
+        **Please use the correct template for your issue:**
+        - **Source stopped working?** → [Source Defect](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new?template=SOURCE-DEFECT.yml)
+        - **Sensor showing "unknown" or wrong values?** → [Configuration Issue](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new?template=CONFIGURATION-ISSUE.yml)
+        - **Want a new source added?** → [Source Request](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new?template=SOURCE-REQUEST.yml)
   - type: textarea
     id: description
     attributes:
-      label: What's Your Problem
-      description: Describe your problem as detailed as possible
+      label: Describe the bug
+      description: What happened? What did you expect to happen?
     validations:
       required: true
-  - type: input
-    id: source
+  - type: textarea
+    id: steps
     attributes:
-      label: Source (if relevant)
-      description: Which source are you using?
-      placeholder: ex. broxtowe_gov_uk
+      label: Steps to reproduce
+      description: How can we reproduce this bug?
     validations:
-      required: false
+      required: true
   - type: textarea
     id: logs
     attributes:
       label: Logs
-      description: Please provide relevant logs from Home Assistant if no relevant logs are available please write "no relevant logs" (please remove sensitive information or use example addresses)
+      description: Relevant logs from Home Assistant (Settings → System → Logs). Remove sensitive information.
       render: Shell
     validations:
-      required: false
+      required: true
   - type: textarea
     id: configuration
     attributes:
       label: Relevant Configuration
-      description: Please provide your configuration (source/sensor) if relevant (please remove sensitive information or use example addresses)
+      description: Your configuration if relevant. Use example addresses, not your own.
       render: YAML
     validations:
       required: false
-  - type: checkboxes
-    id: checklist-source
+  - type: input
+    id: version
     attributes:
-      label: Checklist Source Error
-      description: Have you tried the following?
+      label: Integration Version
+      description: Which version of the integration are you running?
+      placeholder: ex. 2.19.0 or master
+    validations:
+      required: true
+  - type: input
+    id: ha-version
+    attributes:
+      label: Home Assistant Version
+      placeholder: ex. 2025.4.0
+    validations:
+      required: true
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
       options:
-        - label: Use the example parameters for your source (often available in the documentation) (don't forget to restart Home Assistant after changing the configuration)
-          required: false
-        - label: Checked that the website of your service provider is still working
-          required: false
-        - label: Tested my attributes on the service provider website (if possible)
-          required: false
-        - label: I have tested with the latest version of the integration (master) (for HACS in the 3 dot menu of the integration click on "Redownload" and choose master as version)
+        - label: I have tested with the latest version (master branch)
           required: true
-  - type: checkboxes
-    id: checklist-sensor
-    attributes:
-      label: Checklist Sensor Error
-      description: Have you tried the following?
-      options:
-        - label: Checked in the Home Assistant Calendar tab if the event names match the types names (if types argument is used) 
-          required: false
-  - type: checkboxes
-    id: checklist-general
-    attributes:
-      label: Required
-      description: "Please make sure you agree with these statements:"
-      options:
-        - label: I have searched past (closed AND opened) issues to see if this bug has already been reported, and it hasn't been.
+        - label: This is not a source-specific problem (it affects the integration itself)
           required: true
-        - label: I understand that people give their precious time for free, and thus I've done my very best to make this problem as easy as possible to investigate.
+        - label: I have searched past issues (open and closed) for this problem
           required: true

@@ -30,6 +30,28 @@ TEST_CASES = {
     },
 }
 
+# Field name mappings to support multiple API response formats.
+# The API may return field names in different conventions depending on server version.
+_STREET_NAME_KEYS = ("strassenName", "name", "Name", "streetName", "StreetName")
+_STREET_PLZ_KEYS = ("plz", "PLZ", "Plz", "postalCode", "PostalCode")
+_STREET_PLACE_KEYS = ("ort", "place", "Ort", "Place", "city", "City")
+_STREET_ID_KEYS = ("id", "Id", "streetId", "StreetId", "strassenId")
+_HOUSE_NR_KEYS = ("houseNr", "HouseNr", "hausnummer", "Hausnummer")
+_HOUSE_NR_ADD_KEYS = (
+    "houseNrAdd",
+    "HouseNrAdd",
+    "hausnummerZusatz",
+    "HausnummerZusatz",
+)
+_OBJECT_ID_KEYS = (
+    "idObject",
+    "IdObject",
+    "objektId",
+    "ObjektId",
+    "objectId",
+    "ObjectId",
+)
+
 PARAM_TRANSLATIONS = {
     "de": {
         "city": "Ort",
@@ -38,6 +60,14 @@ PARAM_TRANSLATIONS = {
         "house_number": "Hausnummer",
     }
 }
+
+
+def _get_field(item: dict, *possible_keys: str):
+    """Return the value for the first matching key found in item."""
+    for key in possible_keys:
+        if key in item:
+            return item[key]
+    return None
 
 
 class Source:
@@ -63,28 +93,42 @@ class Source:
         if len(data) == 0:
             raise SourceArgumentNotFound("street", self._street)
 
+        # Detect API field names from the first item and log for debugging
+        if data:
+            _LOGGER.debug(
+                "QStreetByPartialName response keys: %s", list(data[0].keys())
+            )
+
         street_entry = next(
             (
                 item
                 for item in data
-                if item["name"] == self._street
-                and item["plz"] == self._postcode
-                and item["place"] == self._city
+                if _get_field(item, *_STREET_NAME_KEYS) == self._street
+                and _get_field(item, *_STREET_PLZ_KEYS) == self._postcode
+                and _get_field(item, *_STREET_PLACE_KEYS) == self._city
             ),
             None,
         )
 
         if street_entry is None:
             suggestions = [
-                item["name"]
+                _get_field(item, *_STREET_NAME_KEYS)
                 for item in data
-                if item["plz"] == self._postcode and item["place"] == self._city
+                if _get_field(item, *_STREET_PLZ_KEYS) == self._postcode
+                and _get_field(item, *_STREET_PLACE_KEYS) == self._city
             ]
             raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, suggestions=suggestions
+                "street", self._street, suggestions=[s for s in suggestions if s]
             )
 
-        params = {"StreetId": street_entry["id"]}
+        street_id = _get_field(street_entry, *_STREET_ID_KEYS)
+        if street_id is None:
+            _LOGGER.error(
+                "Unexpected API response format for street ID. Available keys: %s",
+                list(street_entry.keys()),
+            )
+            raise SourceArgumentNotFound("street", self._street)
+        params = {"StreetId": street_id}
         r = requests.get(
             "https://ahkwebapi.heidekreis.de/api/QMasterData/QHouseNrEkal",
             params=params,
@@ -95,22 +139,41 @@ class Source:
         if len(data) == 0:
             raise SourceArgumentNotFound("house_number", self._house_number)
 
+        # Detect house number API field names and log for debugging
+        if data:
+            _LOGGER.debug("QHouseNrEkal response keys: %s", list(data[0].keys()))
+
         house_number_entry = next(
             (
                 item
                 for item in data
-                if f"{item['houseNr']}{item['houseNrAdd']}" == self._house_number
+                if _get_field(item, *_HOUSE_NR_KEYS) is not None
+                and _get_field(item, *_HOUSE_NR_ADD_KEYS) is not None
+                and f"{_get_field(item, *_HOUSE_NR_KEYS)}{_get_field(item, *_HOUSE_NR_ADD_KEYS)}"
+                == self._house_number
             ),
             None,
         )
 
         if house_number_entry is None:
-            suggestions = [f"{item['houseNr']}{item['houseNrAdd']}" for item in data]
+            suggestions = [
+                f"{_get_field(item, *_HOUSE_NR_KEYS)}{_get_field(item, *_HOUSE_NR_ADD_KEYS)}"
+                for item in data
+                if _get_field(item, *_HOUSE_NR_KEYS) is not None
+                and _get_field(item, *_HOUSE_NR_ADD_KEYS) is not None
+            ]
             raise SourceArgumentNotFoundWithSuggestions(
                 "house_number", self._house_number, suggestions=suggestions
             )
 
         # get ics file
+        object_id = _get_field(house_number_entry, *_OBJECT_ID_KEYS)
+        if object_id is None:
+            _LOGGER.error(
+                "Unexpected API response format for object ID. Available keys: %s",
+                list(house_number_entry.keys()),
+            )
+            raise SourceArgumentNotFound("house_number", self._house_number)
         params = {
             "von": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
             + "Z",
@@ -138,7 +201,7 @@ class Source:
         headers = {"content-type": "application/json"}
 
         r = requests.post(
-            f"https://ahkwebapi.heidekreis.de/api/object/{house_number_entry['idObject']}/QDisposalScheduler/asIcal",
+            f"https://ahkwebapi.heidekreis.de/api/object/{object_id}/QDisposalScheduler/asIcal",
             data=json.dumps(params),
             headers=headers,
         )

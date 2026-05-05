@@ -1,4 +1,5 @@
 import datetime
+import re
 from typing import cast
 
 from ..collection import Collection
@@ -10,6 +11,7 @@ from ..exceptions import (
 )
 from ..service.EcoHarmonogramPL import (
     SUPPORTED_APPS_LITERAL,
+    SUPPORTED_LANGUAGES_LITERAL,
     Ecoharmonogram,
     Schedule,
     ScheduleDescription,
@@ -33,6 +35,7 @@ PARAM_TRANSLATIONS = {
         "street": "Street",
         "house_number": "House number",
         "district": "District",
+        "language": "Language",
         "additional_sides_matcher": "Additional Sides Matcher",
         "community": "Community",
         "g1": "Group 1",
@@ -61,6 +64,7 @@ PARAM_DESCRIPTIONS = {
         "street": "Street",
         "house_number": "House number",
         "district": "District",
+        "language": "Language for waste type names (pl, en, uk, ru)",
         "additional_sides_matcher": "Additional matcher for collection sides",
         "community": "Community",
         "g1": GROUP_DESCRIPTION_EN,
@@ -169,6 +173,33 @@ TEST_CASES = {
         "app": "eco-przyszlosc",
         "additional_sides_matcher": "Zabudowa wielolokalowa i niezamieszkała o zwiększonej częstotliwości",
     },
+    "Rzeszów, Krakowska 317E (individual customers, range match numberFrom=16)": {
+        "town": "Rzeszów",
+        "community": "60",
+        "street": "Krakowska",
+        "house_number": "317E",
+        "g1": "Klienci indywidualni",
+        "additional_sides_matcher": "Klienci indywidualni",
+    },
+    "Ukrainian language": {
+        "town": "Krzeszowice",
+        "street": "Wyki",
+        "house_number": "1",
+        "additional_sides_matcher": "Заміська забудова",
+        "language": "uk",
+    },
+    "Sławków (mixed sides: empty + non-empty, no matcher)": {
+        "town": "Sławków",
+        "street": "Jagiellońska",
+        "house_number": "32",
+        "additional_sides_matcher": "",  # Available sides are "Zabudowa wysoka" and "" (empty string)
+    },
+    "Tarnowskie Góry, Gliwicka 1": {
+        "town": "Tarnowskie Góry",
+        "street": "Gliwicka",
+        "house_number": "1",
+        "additional_sides_matcher": "Zabudowa jednorodzinna",
+    },
 }
 
 
@@ -181,6 +212,7 @@ class Source:
         self,
         town,
         app: SUPPORTED_APPS_LITERAL = None,
+        language: SUPPORTED_LANGUAGES_LITERAL = "pl",
         district="",
         street="",
         house_number="",
@@ -219,10 +251,7 @@ class Source:
             "g5": self._g5,
         }
 
-        if app:
-            self._ecoharmonogram_pl = Ecoharmonogram(app)
-        else:
-            self._ecoharmonogram_pl = Ecoharmonogram()
+        self._ecoharmonogram_pl = Ecoharmonogram(app=app, language=language)
 
     def fetch(self):
         if self.community_input == "":
@@ -357,32 +386,86 @@ class Source:
         for street in streets["streets"]:
             if street["sides"] == "":
                 to_return.append(street)
-            elif self.additional_sides_matcher_input == "":
-                raise SourceArgumentRequiredWithSuggestions(
-                    "additional_sides_matcher",
-                    self.additional_sides_matcher_input,
-                    {x["sides"] for x in streets["streets"]},
-                )
-            elif (
+            elif self.additional_sides_matcher_input != "" and (
                 street["sides"].lower().casefold()
                 == self.additional_sides_matcher_input.lower().casefold()
             ):
                 to_return.append(street)
 
         if len(to_return) == 0:
+            if self.additional_sides_matcher_input == "":
+                raise SourceArgumentRequiredWithSuggestions(
+                    "additional_sides_matcher",
+                    self.additional_sides_matcher_input,
+                    {x["sides"] for x in streets["streets"]},
+                )
             raise SourceArgumentNotFoundWithSuggestions(
                 "additional_sides_matcher",
                 self.additional_sides_matcher_input,
                 {x["sides"] for x in streets["streets"]},
             )
 
+        return {**streets, "streets": to_return}
+
+    @staticmethod
+    def _extract_number(value: str) -> int | None:
+        """Return the leading integer from a house-number string, e.g. '317E' → 317."""
+        m = re.match(r"(\d+)", value.strip())
+        return int(m.group(1)) if m else None
+
+    def _filter_streets_by_house_number(self, streets: list[Street]) -> list[Street]:
+        """Narrow down streets to those matching the configured house number.
+
+        The API returns all streets in a group regardless of the searched house
+        number.  When multiple streets in the same group carry different
+        schedules (e.g. Rzeszów – Krakowska has per-house-number routes), we
+        need to pick only the street(s) that best match the user's house number.
+
+        Matching priority:
+        1. Exact match on ``numbers`` field (e.g. "7/B" == "7/B").
+        2. Exact match on ``numberFrom`` field.
+        3. Range match: ``numberFrom`` ≤ house_number ≤ ``numberTo``
+           (open upper bound when ``numberTo`` is empty).
+        Falls back to the full list when nothing matches.
+        """
+        if len(streets) <= 1 or not self.house_number_input:
+            return streets
+
+        hn = self.house_number_input.strip()
+        hn_int = self._extract_number(hn)
+
+        # 1. exact match on numbers
+        exact = [s for s in streets if s.get("numbers", "").strip() == hn]
+        if exact:
+            return exact
+
+        # 2. exact match on numberFrom
+        exact_from = [s for s in streets if s.get("numberFrom", "").strip() == hn]
+        if exact_from:
+            return exact_from
+
+        # 3. range match (needs a numeric house number)
+        if hn_int is not None:
+            range_match = []
+            for s in streets:
+                from_val = self._extract_number(s.get("numberFrom", ""))
+                to_val = self._extract_number(s.get("numberTo", ""))
+                if from_val is None:
+                    continue
+                if from_val <= hn_int:
+                    if to_val is None or hn_int <= to_val:
+                        range_match.append(s)
+            if range_match:
+                return range_match
+
         return streets
 
     def _create_entries(self, sp: SchedulePeriod, town: Town) -> list[Collection]:
         streets = self._get_streets_with_group(sp, town)
+        streets_list = self._filter_streets_by_house_number(streets["streets"])
 
         entries: list[Collection] = []
-        for street in streets["streets"]:
+        for street in streets_list:
             for streetId in street["id"].split(","):
                 schedules_response = self._ecoharmonogram_pl.fetch_schedules(
                     sp, streetId

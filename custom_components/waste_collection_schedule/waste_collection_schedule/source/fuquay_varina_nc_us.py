@@ -4,6 +4,7 @@ from typing import Optional
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Fuquay-Varina, North Carolina"
 DESCRIPTION = "Source for Fuquay-Varina, NC waste collection via ArcGIS services"
@@ -41,7 +42,7 @@ class Source:
         data = response.json()
 
         if not data.get("features"):
-            raise Exception("Address not found or no collection data available")
+            raise SourceArgumentNotFound("street_address", self._street_address)
 
         # Get the first matching feature
         feature = data["features"][0]

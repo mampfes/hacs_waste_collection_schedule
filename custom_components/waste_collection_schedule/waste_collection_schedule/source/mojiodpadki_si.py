@@ -1,10 +1,9 @@
 import datetime
 import logging
-import requests
 
+import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
-
 
 TITLE = "Moji odpadki, Ljubljana"
 DESCRIPTION = "Source script for mojiodpadki.si"
@@ -42,19 +41,23 @@ _LOGGER = logging.getLogger(__name__)
 
 class Source:
 
-
     def __init__(self, uprn):
-        _LOGGER.info(f"Initializing mojiodpadki.si waste collection service for uprn={uprn}")
+        _LOGGER.info(
+            f"Initializing mojiodpadki.si waste collection service for uprn={uprn}"
+        )
         self._uprn = uprn
-
 
     def fetch(self):
         # GET request returns schedule for matching uprn
         url = f"{API_URL}/s/{self._uprn}"
-        _LOGGER.info(f"Getting mojiodpadki.si waste collection schedule for uprn={self._uprn}, url={url}")
+        _LOGGER.info(
+            f"Getting mojiodpadki.si waste collection schedule for uprn={self._uprn}, url={url}"
+        )
         r = requests.Session().get(url)
         body = r.text
-        _LOGGER.debug(f"mojiodpadki.si waste collection schedule for uprn={self._uprn}: {body}")
+        _LOGGER.debug(
+            f"mojiodpadki.si waste collection schedule for uprn={self._uprn}: {body}"
+        )
 
         # list that holds collection schedule
         entries = []
@@ -90,12 +93,14 @@ class Source:
             for tag in table.tbody.find_all("span", class_="tag"):
                 _LOGGER.debug(f"found tag={tag.string}")
                 day = tag.parent.parent.find("td", class_="day-number").string
-                _LOGGER.debug(f"found day={day}, tag={tag.string}, title={tag['title']}")
+                _LOGGER.debug(
+                    f"found day={day}, tag={tag.string}, title={tag['title']}"
+                )
                 entries.append(
                     Collection(
                         date=datetime.date(int(year), MONTHS.get(month), int(day)),
                         t=tag["title"],
-                        icon=ICON_MAP.get(tag.string)
+                        icon=ICON_MAP.get(tag.string),
                     )
                 )
 

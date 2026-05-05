@@ -1,13 +1,14 @@
 from datetime import datetime
+from typing import Any
+
 import requests
 from bs4 import BeautifulSoup
+from icalendar import Calendar
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-from icalendar import Calendar
-from typing import Any
 
 TITLE = "MZV Rotenburg"
 DESCRIPTION = "Source for MZV Rotenburg."
@@ -57,9 +58,9 @@ API_URL = "https://www.mzv-rotenburg-bebra.de/entsorgung.php"
 
 
 def ics_prop_to_str(value: Any) -> str:
-    """
-    Converts icalendar properties (vText, list[vText], None)
-    into a clean UTF-8 string.
+    """Convert icalendar properties to a clean UTF-8 string.
+
+    Handles vText, list[vText], and None values.
     """
     if not value:
         return ""
@@ -101,9 +102,7 @@ class Source:
         args = {
             "ort": self._city,
         }
-        r = requests.get(API_URL,
-                         params=args,
-                         headers={"User-Agent": "Mozilla/5.0"})
+        r = requests.get(API_URL, params=args, headers={"User-Agent": "Mozilla/5.0"})
         r.raise_for_status()
 
         try:

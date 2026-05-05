@@ -35,6 +35,36 @@ API_URLS = {
     "varberg": "https://minasidor.vivab.info/FutureWebVarberg/SimpleWastePickup/",
 }
 
+# Localities (tätorter) within each municipality served by VIVAB.
+# Used to resolve a street_address to the correct regional API.
+MUNICIPALITY_LOCALITIES = {
+    "varberg": [
+        "varberg",
+        "bua",
+        "kungsäter",
+        "rolfstorp",
+        "skällinge",
+        "stråvalla",
+        "träslövsläge",
+        "tvååker",
+        "veddige",
+        "väröbacka",
+        "åskloster",
+        "åsa",
+    ],
+    "falkenberg": [
+        "falkenberg",
+        "glommen",
+        "långås",
+        "skogstorp",
+        "slöinge",
+        "ullared",
+        "vessigebro",
+        "ätran",
+        "älvsered",
+    ],
+}
+
 
 class Source:
     def __init__(self, street_address: str, building_id: str | int | None = None):
@@ -46,11 +76,14 @@ class Source:
 
         self._building_id = building_id
         self._street_address = street_address
+        addr_lower = street_address.lower()
         region = None
-        if "falkenberg" in street_address.lower():
-            region = "falkenberg"
-        elif "varberg" in street_address.lower():
-            region = "varberg"
+        for municipality, localities in MUNICIPALITY_LOCALITIES.items():
+            if any(
+                re.search(rf"\b{re.escape(loc)}\b", addr_lower) for loc in localities
+            ):
+                region = municipality
+                break
         if region is None:
             if self._building_id:
                 raise SourceArgumentSuggestionsExceptionBase(
@@ -60,7 +93,7 @@ class Source:
                 )
             raise SourceArgumentException(
                 "street_address",
-                "Address not supported should end with ', Varberg' or ', Falkenberg'",
+                "Address not supported, should end with a locality within the Varberg or Falkenberg municipality (e.g. 'Varberg', 'Veddige', 'Tvååker', 'Falkenberg', 'Ullared', 'Vessigebro')",
             )
         self._api_url = API_URLS[region]
 

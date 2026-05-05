@@ -1,8 +1,8 @@
-import re
-from datetime import date, datetime, timedelta
+import json
+from datetime import datetime, timedelta
+from time import time_ns
 
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Dudley Metropolitan Borough Council"
@@ -14,115 +14,77 @@ TEST_CASES = {
     "Test_003": {"uprn": "90164803"},
     "Test_004": {"uprn": 90092621},
 }
-ICON_MAP = {"RECYCLING": "mdi:recycle", "GARDEN": "mdi:leaf", "REFUSE": "mdi:trash-can"}
-REGEX = {
-    "DATES": r"(\d+ \w{3})",
-    "DAYS": r"every: (Monday|Tuesday|Wednesday|Thursday|Friday)",
+ICON_MAP = {
+    "RECYCLING": "mdi:recycle",
+    "FOOD": "mdi:food",
+    "REFUSE": "mdi:trash-can",
 }
-DAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
-    "Saturday": 5,
-    "Sunday": 6,
+
+LOOKUP_ID = "69a04ac70086b"
+BASE_URL = "https://my.dudley.gov.uk"
+
+COLLECTION_TYPES = {
+    "recyclingDate": "Recycling",
+    "foodDate": "Food",
+    "refuseDate": "Refuse",
+}
+
+HEADERS = {
+    "user-agent": "Mozilla/5.0",
 }
 
 
 class Source:
     def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-
-    def check_date(self, d: str, t: datetime, y: int):
-        """
-        Get date, append year, and increment year if date is >1 month in the past.
-
-        This tries to deal year-end dates when the YEAR is missing
-        """
-        d += " " + str(y)
-        try:
-            date = datetime.strptime(d, "%d %b %Y")
-        except ValueError:
-            date = datetime.strptime(d, "%A %d %b %Y")
-        if (date - t) < timedelta(days=-31):
-            date = date.replace(year=date.year + 1)
-        return date.date()
-
-    def append_entries(self, d: datetime, w: str, e: list) -> list:
-        e.append(
-            Collection(
-                date=d,
-                t=w,
-                icon=ICON_MAP.get(w.upper()),
-            )
-        )
-        return e
-
-    def get_xmas_map(self, footer_panel) -> dict[date, date]:
-        if not (
-            footer_panel
-            and footer_panel.find("table")
-            and footer_panel.find("table").find("tr")
-        ):
-            return {}
-        xmas_map: dict = {}
-        today = datetime.now()
-        yr = int(today.year)
-        for tr in footer_panel.find("table").findAll("tr")[1:]:
-            try:
-                moved, moved_to = tr.findAll("td")
-                moved = self.check_date(moved.text, today, yr)
-                moved_to = self.check_date(moved_to.text, today, yr)
-                xmas_map[moved] = moved_to
-            except Exception:
-                continue
-        return xmas_map
+        self._uprn = str(uprn).zfill(12)
 
     def fetch(self):
-        today = datetime.now()
-        today = today.replace(hour=0, minute=0, second=0, microsecond=0)
-        yr = int(today.year)
-
         s = requests.Session()
-        r = s.get(
-            f"https://maps.dudley.gov.uk/?action=SetAddress&UniqueId={self._uprn}"
+
+        # Get session ID
+        timestamp = time_ns() // 1_000_000
+        sid_request = s.get(
+            f"{BASE_URL}/authapi/isauthenticated?uri={BASE_URL}&hostname=my.dudley.gov.uk&withCredentials=true&_={timestamp}",
+            headers=HEADERS,
         )
-        soup = BeautifulSoup(r.text, "html.parser")
+        sid_data = sid_request.json()
+        sid = sid_data["auth-session"]
 
-        panel = soup.find("div", {"aria-label": "Refuse and Recycling Collection"})
-        panel_data = panel.find("div", {"class": "atPanelData"})
-        waste_data = panel_data.text.split("Next")[
-            1:
-        ]  # remove first element it just contains general info
-
-        # get table of holiday moved dates (only around xmas)
-        footer_panel = panel.find("div", {"class": "atPanelFooter"})
-        xmas_map = self.get_xmas_map(footer_panel)
+        # Fetch collection schedule
+        timestamp = time_ns() // 1_000_000
+        now = datetime.now()
+        from_date = now.strftime("%Y-%m-%d")
+        to_date = (now + timedelta(days=60)).strftime("%Y-%m-%d")
+        payload = {
+            "formValues": {
+                "Section 1": {
+                    "uprnToCheck": {"value": self._uprn},
+                    "NextCollectionFromDate": {"value": from_date},
+                    "NextCollectionToDate": {"value": to_date},
+                }
+            }
+        }
+        schedule_request = s.post(
+            f"{BASE_URL}/apibroker/runLookup?id={LOOKUP_ID}&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
+            headers=HEADERS,
+            json=payload,
+        )
+        schedule_request.raise_for_status()
+        data = json.loads(schedule_request.content)
+        rows_data = data["integration"]["transformed"]["rows_data"]
 
         entries = []
-        # Deal with Recycling and Garden collections
-        for item in waste_data:
-            text = item.replace("\r\n", "").strip()
-            if "recycling" in text:
-                dates = re.findall(REGEX["DATES"], text)
-                for dt in dates:
-                    dt = self.check_date(dt, today, yr)
-                    dt = xmas_map.get(dt, dt)
-                    self.append_entries(dt, "Recycling", entries)
-            elif "garden" in text:
-                dates = re.findall(REGEX["DATES"], text)
-                for dt in dates:
-                    dt = self.check_date(dt, today, yr)
-                    dt = xmas_map.get(dt, dt)
-                    self.append_entries(dt, "Garden", entries)
-
-        # Refuse collections only have a DAY not a date, so work out dates for the next few collections
-        refuse_day = re.findall(REGEX["DAYS"], panel_data.text)[0]
-        refuse_date = today + timedelta((int(DAYS[refuse_day]) - today.weekday()) % 7)
-        for i in range(0, 4):
-            temp_date = (refuse_date + timedelta(days=7 * i)).date()
-            temp_date = xmas_map.get(temp_date, temp_date)
-            self.append_entries(temp_date, "Refuse", entries)
+        for row in rows_data.values():
+            for date_key, waste_type in COLLECTION_TYPES.items():
+                date_str = row.get(date_key, "")
+                if not date_str:
+                    continue
+                entries.append(
+                    Collection(
+                        date=datetime.strptime(date_str, "%d/%m/%Y").date(),
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type.upper()),
+                    )
+                )
 
         return entries

@@ -1,0 +1,18 @@
+---
+title: AMBnet
+url: https://www.ambnet.biz
+country: de
+howto:
+  en: |
+    - Go to <https://www.ambnet.biz> and find the ICS file for your area.
+    - Use the URL as the `url` parameter.
+  de: |
+    - Gehe auf <https://www.ambnet.biz> und finde die ICS-Datei für deine Region.
+    - Verwende die URL als `url`-Parameter.
+test_cases:
+  Ranstadt:
+    url: "https://www.ambnet.biz/Abfall-Ranstadt.ics"
+  Ranstadt-RBB:
+    url: "https://www.ambnet.biz/Abfall-Ranstadt-RBB.ics"
+  Ranstadt-DO:
+    url: "https://www.ambnet.biz/Abfall-Ranstadt-DO.ics"

@@ -82,7 +82,9 @@ class Source:
         for d in dates:
             name = d[1]
             name = name.replace("Abfuhr: ", "")
-            entries.append(Collection(d[0], name, ICON_MAP.get(name.lower(), "mdi:trash-can")))
+            entries.append(
+                Collection(d[0], name, ICON_MAP.get(name.lower(), "mdi:trash-can"))
+            )
 
         return entries
 
@@ -141,6 +143,4 @@ class Source:
 
         return base64.b64decode(
             r.json()["d"]["ZeigeAbfallkalender"]["FileContents"]
-        ).decode(
-            "utf-8"
-        )
+        ).decode("utf-8")

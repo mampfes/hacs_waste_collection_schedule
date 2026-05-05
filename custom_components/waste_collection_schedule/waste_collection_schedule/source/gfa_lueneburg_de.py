@@ -1,11 +1,11 @@
 # Nearly direct copy of source awn_de, awb_emsland_de
 
+from datetime import datetime
 from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
-from datetime import datetime
 
 TITLE = "GFA Lüneburg"
 DESCRIPTION = "Source for GFA Lüneburg."

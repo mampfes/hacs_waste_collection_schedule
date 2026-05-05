@@ -12,19 +12,16 @@ waste_collection_schedule:
         - type: black bin
           alias: Garbage
 
-sensor:
-  # next collection
-  - platform: waste_collection_schedule
-    name: next_collection
-    
-  # next yard waste collection
-  - platform: waste_collection_schedule
-    name: next_yard_collection
-    types:
-      - Yard Waste
-    
-  # next garbage collection
-  - platform: waste_collection_schedule
-    name: next_garbage_collection
-    types:
-      - Garbage
+  sensors:
+    # next collection
+    - name: next_collection
+
+    # next yard waste collection
+    - name: next_yard_collection
+      types:
+        - Yard Waste
+
+    # next garbage collection
+    - name: next_garbage_collection
+      types:
+        - Garbage

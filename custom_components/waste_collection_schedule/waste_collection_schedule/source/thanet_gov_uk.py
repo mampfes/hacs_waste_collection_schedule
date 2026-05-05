@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
@@ -43,24 +43,20 @@ PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown
 
 
 class Source:
-    header_text = {
-        "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8",
-        "User-Agent": "Mozilla/5.0",
-    }
-
     def __init__(self, uprn=None, postcode=None, street_address=None):
         self._postcode = postcode
         self._street_address = str(street_address).upper()
         self._uprn = uprn
+        self._session = requests.Session(impersonate="chrome124")
 
     def fetch(self) -> List[Collection]:
         if self._uprn is None:
             self._uprn = self.get_uprn()
 
         url = "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
-        collections_json = requests.get(
-            url, headers=self.header_text, params={"pAddress": self._uprn}
-        ).json()
+        r = self._session.get(url, params={"pAddress": self._uprn}, timeout=30)
+        r.raise_for_status()
+        collections_json = r.json()
 
         entries = []
 
@@ -94,9 +90,9 @@ class Source:
                 "A postcode is required if no UPRN has been used. This allows the script to obtain the UPRN for you.",
             )
         url = "https://www.thanet.gov.uk/wp-content/mu-plugins/collection-day/incl/mu-collection-day-calls.php"
-        addresses_json = requests.get(
-            url, headers=self.header_text, params={"searchAddress": self._postcode}
-        ).json()
+        r = self._session.get(url, params={"searchAddress": self._postcode}, timeout=30)
+        r.raise_for_status()
+        addresses_json = r.json()
         uprn = next(
             (
                 key

@@ -13,7 +13,7 @@ test_cases:
     url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_sulzbach-rosenberg8.ics
   Freudenberg (regex strip after `|`):
     url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_freudenberg.ics
-    regex: (.*?)\s+\|.*
+    regex: (.*?)\s*\|.*
   Ensdorf (regex also strip `! vorgefahren !`):
     url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_ensdorf.ics
-    regex: (.*?)\s+(\||\!).*
+    regex: (.*?)\s*(\||\!).*

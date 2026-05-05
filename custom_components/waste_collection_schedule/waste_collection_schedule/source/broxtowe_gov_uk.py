@@ -108,9 +108,9 @@ class Source:
 
         self.__get_hidden_fiels(r, self._submit_args)
 
-        self._submit_args[
+        self._submit_args["ctl00$ContentPlaceHolder1$btnSubmit"] = (
             "ctl00$ContentPlaceHolder1$btnSubmit"
-        ] = "ctl00$ContentPlaceHolder1$btnSubmit"
+        )
         r = s.post(API_URL, data=self._submit_args)
         r.raise_for_status()
 

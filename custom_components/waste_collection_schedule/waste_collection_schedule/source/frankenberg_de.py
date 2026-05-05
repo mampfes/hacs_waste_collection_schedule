@@ -109,7 +109,7 @@ class Source:
                 "datum_von": datetime(year, 1, 1).strftime("%d.%m.%Y"),
                 "datum_bis": datetime(year, 12, 31).strftime("%d.%m.%Y"),
             }
-        
+
         r = requests.post(
             "https://abfall.frankenberg.de/module/abfallkalender/generate_ical.php",
             data=data,

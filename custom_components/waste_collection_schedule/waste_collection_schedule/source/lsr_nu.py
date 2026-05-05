@@ -30,13 +30,15 @@ TEST_CASES = {
 #   "typeOfWasteDescription": "Matavfall"
 # }
 
+
 class Source:
     def __init__(self, street_address):
         self._street_address = street_address
 
     def fetch(self):
         response = requests.get(
-            "https://minasidor.lsr.nu/api/api/external/schedule/" + self._street_address,
+            "https://minasidor.lsr.nu/api/api/external/schedule/"
+            + self._street_address,
         )
 
         data = response.json()

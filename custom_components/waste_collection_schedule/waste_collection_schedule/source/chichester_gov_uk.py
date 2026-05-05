@@ -1,8 +1,8 @@
 import re
 from datetime import datetime
 
-import cloudscraper
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 
 TITLE = "Chichester District Council"
@@ -27,7 +27,7 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        session = cloudscraper.create_scraper()
+        session = requests.Session(impersonate="chrome124")
         # Start a session
         r = session.get("https://www.chichester.gov.uk/checkyourbinday")
         r.raise_for_status()

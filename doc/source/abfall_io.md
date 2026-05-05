@@ -2,7 +2,7 @@
 
 Support for schedules provided by [Abfall.IO](https://abfall.io). The official homepage is using the URL [AbfallPlus.de](https://www.abfallplus.de/) instead.
 
-This source is designed for the old API of Abfall.IO. If your region/preovider uses the new API you should use the [Abfall ICS version](/doc/ics/abfall_io_ics.md) source instead. Your provider uses the new API if you can see an `ICS` button above your collection dates on the website after selecting your location and waste types.
+This source is designed for the old API of Abfall.IO. If your region/provider uses the new API, you should use the [Abfall ICS version](/doc/ics/abfall_io_ics.md) source instead. Your provider uses the new API if you can see an `ICS` button above your collection dates on the website after selecting your location and waste types.
 
 ## Configuration via configuration.yaml
 
@@ -54,6 +54,14 @@ waste_collection_schedule:
         f_id_strasse: 1087
 ```
 
+## Optional LOCATION and DESCRIPTION fields
+
+If the exported ICS data contains `LOCATION` and/or `DESCRIPTION`, those values are forwarded as optional `location` and `description` fields in collection entries.
+
+- In sensor `value_template`, you can use `value.location` and `value.description`.
+- In `details_format: generic`, entries in `upcoming` can include `location` and `description`.
+- Both fields are optional. If a field is missing (or empty), its value is `None`.
+
 ## How to get the source arguments
 
 ## Simple Variant: Use wizard script
@@ -66,7 +74,7 @@ First, install the Python module `inquirer`. Then run this script from a shell a
 
 ### Hardcore Variant: Extract arguments from website
 
-Another way get the source arguments is to us a (desktop) browser with developer tools, e.g. Google Chrome:
+Another way to get the source arguments is to use a (desktop) browser with developer tools, e.g. Google Chrome:
 
 1. Open your county's `Abfuhrtermine` homepage, e.g. [https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html).
 2. Enter your data, but don't click on `Datei exportieren` so far!

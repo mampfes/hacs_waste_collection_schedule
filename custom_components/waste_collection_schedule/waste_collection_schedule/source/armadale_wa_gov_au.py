@@ -1,12 +1,12 @@
 import datetime
 
 import requests
-from bs4 import BeautifulSoup, NavigableString
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Armadale (Western Australia)"
 DESCRIPTION = "Source for Armadale (Western Australia)."
-URL = "https://www.armadale.wa.gov.au"
+URL = "https://my.armadale.wa.gov.au"
 TEST_CASES = {
     "23 Sexty St, ARMADALE": {"address": "23 Sexty St, ARMADALE"},
     "270 Skeet Rd, HARRISDALE": {"address": "270 Skeet Rd, HARRISDALE"},
@@ -22,9 +22,7 @@ WEEKDAYS = {
     "Sunday": 6,
 }
 
-
-# this is the current ajax server used by the tool on their website 
-API_URL = "https://app-corporate-prod-001.azurewebsites.net/system/ajax"
+API_URL = "https://api.my.armadale.wa.gov.au/bins"
 
 
 def easter(year):
@@ -53,53 +51,20 @@ class Source:
         self._address: str = address
 
     def fetch(self):
-        s = requests.Session()
-
-        args: dict[str, str] = {
-            "address": self._address,
-            "form_id": "waste_collection_form",
-        }
-
-        r = s.get("https://info.armadale.wa.gov.au/find-my-waste-collection-day")
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        form_build_id = soup.find("input", {"type": "hidden", "name": "form_build_id"})
-        if (
-            not form_build_id
-            or isinstance(form_build_id, NavigableString)
-            or not form_build_id.attrs["value"]
-        ):
-            raise Exception("Could not find form_build_id")
-
-        form_build_id = form_build_id["value"]
-        if not isinstance(form_build_id, str):
-            raise Exception("Could not find form_build_id")
-        args["form_build_id"] = form_build_id
-
-        # get json
-        r = s.post(API_URL, data=args)
+        r = requests.get(API_URL, params={"address": self._address})
         r.raise_for_status()
 
         data = r.json()
+        if not data:
+            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
 
-        if len(data) < 2:
-            raise Exception("wrong data returned")
-
-        data = data[1]["data"]
-
-        soup = BeautifulSoup(data, "html.parser")
-
-        trs = soup.find_all("tr")
-        if not trs or len(trs) < 3:
-            raise Exception("Could not parse data correctly")
-
-        bin_day = trs[1].find("td").text.strip()
-        if not bin_day or bin_day not in WEEKDAYS:
-            raise Exception("Could not parse data correctly")
+        result = data[0]
+        bin_day = result["bin_day"]
+        if bin_day not in WEEKDAYS:
+            raise Exception(f"Unknown bin day: {bin_day}")
         bin_day = WEEKDAYS[bin_day]
 
-        recycling: bool = trs[2].find("td").text.strip().lower().startswith("this week")
+        recycling: bool = result["recycle_area"].lower().startswith("this week")
 
         current_day = datetime.datetime.now().date()
 

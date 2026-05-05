@@ -1,7 +1,7 @@
-import requests
 import json
-
 from datetime import datetime
+
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Bedford Borough Council"
@@ -20,6 +20,7 @@ ICON_MAP = {
     "BLACK BIN": "mdi:trash-can",
     "ORANGE BIN": "mdi:recycle",
     "GREEN BIN": "mdi:leaf",
+    "CADDY BIN": "mdi:food",
 }
 
 
@@ -30,7 +31,10 @@ class Source:
     def fetch(self):
 
         s = requests.Session()
-        r = s.get(f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35", headers=HEADERS)
+        r = s.get(
+            f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35",
+            headers=HEADERS,
+        )
         json_data = json.loads(r.text)["BinCollections"]
 
         entries = []
@@ -39,7 +43,9 @@ class Source:
             for bin in day:
                 entries.append(
                     Collection(
-                        date=datetime.strptime(bin["JobScheduledStart"], "%Y-%m-%dT00:00:00").date(),
+                        date=datetime.strptime(
+                            bin["JobScheduledStart"], "%Y-%m-%dT00:00:00"
+                        ).date(),
                         t=bin["BinType"],
                         icon=ICON_MAP.get(bin["BinType"].upper()),
                     )

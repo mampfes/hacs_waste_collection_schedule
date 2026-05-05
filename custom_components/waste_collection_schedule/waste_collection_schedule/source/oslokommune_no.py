@@ -1,6 +1,6 @@
 import datetime
-import requests
 
+import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Oslo Kommune"
@@ -19,32 +19,34 @@ TEST_CASES = {
     "Villa Paradiso": {
         "street_name": "Olaf Ryes Plass",
         "house_number": 8,
-        "house_letter": '',
-        "street_id": 15331
+        "house_letter": "",
+        "street_id": 15331,
     },
     "Nåkkves vei": {
         "street_name": "Nåkkves vei",
         "house_number": 5,
-        "house_letter": '',
+        "house_letter": "",
         "street_id": 15280,
-        "point_id": 38175
-    }
+        "point_id": 38175,
+    },
 }
 
-API_URL = "https://www.oslo.kommune.no/actions/snap-lib-waste-complaint/search-by-address"
+API_URL = (
+    "https://www.oslo.kommune.no/actions/snap-lib-waste-complaint/search-by-address"
+)
 ICON_MAP = {
-    "":           "mdi:trash-can",
+    "": "mdi:trash-can",
     "restavfall": "mdi:trash-can",
-    "papir":      "mdi:newspaper-variant-multiple"
+    "papir": "mdi:newspaper-variant-multiple",
 }
 
 # Map Hyppighet.Faktor to interval in days
 FREQUENCY_DAYS = {
-    10000: 7,    # 1 gang pr. uke (weekly)
-    20000: 4,    # 2 ganger pr. uke (twice weekly, approximate)
-    30000: 3,    # 3 ganger pr. uke (three times weekly, approximate)
-    40000: 14,   # annenhver uke (every other week)
-    50000: 28,   # 1 gang pr. måned (monthly)
+    10000: 7,  # 1 gang pr. uke (weekly)
+    20000: 4,  # 2 ganger pr. uke (twice weekly, approximate)
+    30000: 3,  # 3 ganger pr. uke (three times weekly, approximate)
+    40000: 14,  # annenhver uke (every other week)
+    50000: 28,  # 1 gang pr. måned (monthly)
 }
 DEFAULT_INTERVAL_DAYS = 7
 
@@ -63,6 +65,7 @@ PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be show
 }
 
 # ### End of arguments affecting the configuration GUI ####
+
 
 class Source:
     def __init__(

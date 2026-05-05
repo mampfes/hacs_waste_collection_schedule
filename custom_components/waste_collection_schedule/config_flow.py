@@ -723,13 +723,13 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if source in _SOURCE_METADATA:
             metadata = _SOURCE_METADATA[source]
             placeholders["docs_url"] = metadata.get("docs_url", "")
+            placeholders.update(metadata.get("urls", {}))
             # Get howto for current language (defaults to English)
             howto_dict = metadata.get("howto", {})
             # Try to get howto for the current language
             hass = getattr(self, "hass", None)
             language = getattr(getattr(hass, "config", None), "language", "en")
-            placeholders["howto"] = howto_dict.get(
-                language, howto_dict.get("en", ""))
+            placeholders["howto"] = howto_dict.get(language, howto_dict.get("en", ""))
             if placeholders["howto"]:
                 placeholders["howto"] = placeholders["howto"].rstrip("\n") + "\n\n"
         return placeholders
@@ -753,7 +753,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
         errors: dict[str, str] = {}
         description_placeholders: dict[str, str] = self._get_description_placeholders(
-            self._source
+            self._id
         )
         # If all args are filled in
         if args_input is not None:
@@ -898,6 +898,17 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
 
     async def finish(self) -> ConfigFlowResult:
+        if not self._options.get(CONF_SENSORS) and hasattr(self, "_fetched_types"):
+            self._options[CONF_SENSORS] = [
+                {
+                    CONF_NAME: t,
+                    CONF_DETAILS_FORMAT: "upcoming",
+                    CONF_COLLECTION_TYPES: [t],
+                    CONF_VALUE_TEMPLATE: 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}'
+                }
+                for t in self._fetched_types if t
+            ]
+
         return self.async_create_entry(
             title=self._title,
             data=self._args_data,
@@ -924,7 +935,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
         title = module.TITLE
         errors: dict[str, str] = {}
-        description_placeholders: dict[str, str] = self._get_description_placeholders(source)
+        description_placeholders: dict[str, str] = self._get_description_placeholders(
+            source
+        )
         # If all args are filled in
         if args_input is not None:
             # if contains method:
@@ -938,12 +951,15 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if len(errors) == 0:
                 data = {**config_entry.data}
                 data.update({CONF_SOURCE_NAME: source, CONF_SOURCE_ARGS: args_input})
+                # Preserve existing options (sensors, customizations, etc.)
+                # and only update the fields returned by validation
+                merged_options = {**config_entry.options, **options}
                 return self.async_update_reload_and_abort(
                     config_entry,
                     title=title,
                     unique_id=config_entry.unique_id,
                     data=data,
-                    options=options,
+                    options=merged_options,
                     reason="reconfigure_successful",
                 )
         return self.async_show_form(

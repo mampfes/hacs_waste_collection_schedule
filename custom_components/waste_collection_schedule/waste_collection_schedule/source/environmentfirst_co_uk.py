@@ -12,7 +12,7 @@ EXTRA_INFO = [
     {"title": "Lewes District Council", "url": "https://lewes-eastbourne.gov.uk"},
 ]
 DESCRIPTION = """Consolidated source for waste collection services from:
-        Eastbourne Borough Council 
+        Eastbourne Borough Council
         Lewes District Council
         """
 TEST_CASES = {

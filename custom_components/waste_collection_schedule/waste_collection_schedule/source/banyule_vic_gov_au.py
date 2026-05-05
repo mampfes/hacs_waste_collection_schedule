@@ -3,8 +3,8 @@ import re
 import typing
 from datetime import datetime
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
@@ -16,7 +16,7 @@ URL = "https://www.banyule.vic.gov.au"
 TEST_CASES = {
     "Monday A": {"street_address": "6 Mandall Avenue, IVANHOE"},
     "Monday A Geolocation ID": {
-        "geolocation_id": "4f7ebfca-1526-4363-8b87-df3103a10a87"
+        "geolocation_id": "486d9d83-8377-4709-987f-4627beaa0ac8"
     },
     "Monday B": {"street_address": "10 Burke Road North, IVANHOE EAST"},
     "Thursday A": {"street_address": "255 St Helena Road, GREENSBOROUGH"},
@@ -58,13 +58,17 @@ class Source:
         self._street_address = street_address
         self._geolocation_id = geolocation_id
 
-    @property
-    def geolocation_id(self) -> str:
-        if self._geolocation_id is None:
+    def fetch(self) -> typing.List[Collection]:
+        # Use curl_cffi session to bypass Incapsula bot protection
+        session = requests.Session(impersonate="chrome124")
+
+        geolocation_id = self._geolocation_id
+        if geolocation_id is None:
             # Search for geolocation ID
-            geolocation_response = requests.get(
+            geolocation_response = session.get(
                 self.OC_GEOLOCATION_SEARCH_URL,
                 params={"keywords": self._street_address, "maxresults": 1},
+                headers={"Accept": "application/json"},
             )
             geolocation_response.raise_for_status()
 
@@ -93,23 +97,17 @@ class Source:
                     "Location in address search result but missing geolocation ID"
                 )
 
-            self._geolocation_id = geolocation_data["Id"]
+            geolocation_id = geolocation_data["Id"]
             _LOGGER.info(
-                f"Address {self._street_address} mapped to geolocation ID {self._geolocation_id}"
+                f"Address {self._street_address} mapped to geolocation ID {geolocation_id}"
             )
 
-        return self._geolocation_id
-
-    def fetch(self) -> typing.List[Collection]:
-        # Calendar lookup cares about a cookie, so a Session must be used
-        calendar_session = requests.Session()
-
-        calendar_request = calendar_session.get(self.OC_SESSION_URL)
+        calendar_request = session.get(self.OC_SESSION_URL)
         calendar_request.raise_for_status()
 
-        calendar_request = calendar_session.get(
+        calendar_request = session.get(
             self.OC_CALENDAR_URL,
-            params={"geolocationid": self.geolocation_id, "ocsvclang": "en-AU"},
+            params={"geolocationid": geolocation_id, "ocsvclang": "en-AU"},
         )
         calendar_request.raise_for_status()
 

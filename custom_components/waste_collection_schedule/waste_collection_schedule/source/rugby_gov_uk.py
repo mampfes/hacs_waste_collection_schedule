@@ -1,8 +1,5 @@
-import json
-from datetime import datetime
-
-import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
 
 TITLE = "Rugby Borough Council"
 DESCRIPTION = "Source for Rugby Borough Council, UK."
@@ -12,43 +9,31 @@ TEST_CASES = {
     "Test_002": {"uprn": "100070200372"},
     "Test_003": {"uprn": "010010521297"},
 }
-ICON_MAP = {
-    "Blue-lid recycling bins": "mdi:recycle",
-    "Black rubbish bins": "mdi:trash-can",
-    "Green garden waste bins": "mdi:leaf",
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
 }
-
-# endpoint and api key based on rugby iOS app
-API_URL = "https://apps.cloud9technologies.com/rugby/citizenmobile/mobileapi/wastecollections/{uprn}"
-API_KEY = "Y2xvdWQ5OmlkQmNWNGJvcjU="
+PARAM_TRANSLATIONS = {
+    "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "uprn": "Unique Property Reference Number (UPRN)",
+    }
+}
+ICON_MAP = {
+    "recycl": "mdi:recycle",
+    "rubbish": "mdi:trash-can",
+    "garden": "mdi:leaf",
+    "refuse": "mdi:trash-can",
+}
 
 
 class Source:
     def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn)
+        self._client = Cloud9Client("rugby", icon_keywords=ICON_MAP)
+        self._uprn = str(uprn)
 
-    def fetch(self):
-        headers = {"Authorization": f"Basic {API_KEY}"}
-        r = requests.get(API_URL.format(uprn=self._uprn), headers=headers)
-
-        json_data = json.loads(r.content)
-        containers = json_data.get("WasteCollectionDates", {})
-        entries = []
-
-        # api returns 8 "containers" which may contain collections
-        for i in range(1, 9):
-            container = containers.get(f"Container{i}CollectionDetails")
-            if container and container.get("CollectionDate"):
-                date = datetime.strptime(
-                    container.get("CollectionDate"), "%Y-%m-%dT%H:%M:%S"
-                ).date()
-                desc = container.get("ContainerDescription")
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=desc,
-                        icon=ICON_MAP.get(desc, "mdi:trash-can"),
-                    )
-                )
-
-        return entries
+    def fetch(self) -> list[Collection]:
+        return self._client.fetch_by_uprn(self._uprn)

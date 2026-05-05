@@ -43,10 +43,10 @@ class Source:
             params=params,
             headers=headers,
         )
-        
+
         if r.status_code == 403 or "403 Client Error" in r.text:
             raise Exception("Rate limiting or IP ban may be in effect")
-        
+
         r.raise_for_status()
 
         entries = []

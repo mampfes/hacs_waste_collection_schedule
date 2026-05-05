@@ -1,4 +1,5 @@
 import json
+import re
 from datetime import datetime, timedelta
 from time import time_ns
 
@@ -110,7 +111,10 @@ class Source:
 
                 date_part = parts[1].split(" then ")[0].strip()  # e.g., "Wed 26 Feb"
 
-                # Handle "No collection" messages
+                # Strip parenthetical annotations e.g. "(Adjusted for Easter)"
+                date_part = re.sub(r"\(.*?\)", "", date_part).strip()
+
+                # Handle "No collection" or "No live" messages
                 if date_part.split()[0].lower() == "no":
                     continue  # Skip entries where collection isn't available
 
@@ -119,11 +123,11 @@ class Source:
                     collection_date = today + timedelta(days=RELATIVE_DATES[date_part])
                 else:
                     # Extract the date
-                    date_parts = date_part.split(" ")
+                    date_parts = date_part.split()
                     if len(date_parts) < 3:
                         raise ValueError("Unexpected date format")
 
-                    _, bin_day_num, bin_month = date_parts
+                    _, bin_day_num, bin_month = date_parts[:3]
                     if bin_month not in MONTHS:
                         raise ValueError(f"Unknown month: {bin_month}")
 

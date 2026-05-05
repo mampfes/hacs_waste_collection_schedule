@@ -1,4 +1,28 @@
-*       text=auto
-*.py    text
-*.md    text
-*.yaml  text
+# Normalize all text files to LF in the repo and on checkout.
+# This prevents CRLF warnings on Windows and ensures consistent
+# line endings across all platforms (Windows, macOS, Linux).
+*       text=auto eol=lf
+
+# Explicitly mark common text file types
+*.py    text eol=lf
+*.md    text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.json  text eol=lf
+*.xml   text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+*.js    text eol=lf
+*.txt   text eol=lf
+*.cfg   text eol=lf
+*.ini   text eol=lf
+*.toml  text eol=lf
+*.sh    text eol=lf
+
+# Binary files — do not modify
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.zip   binary

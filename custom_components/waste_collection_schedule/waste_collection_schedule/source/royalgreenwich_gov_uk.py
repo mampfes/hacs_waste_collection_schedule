@@ -158,11 +158,11 @@ class Source:
             if len(row_dates) < 2:
                 continue
 
-            from_date = parser.parse(row_dates[0].text).date()
+            from_date = parser.parse(row_dates[0].text, fuzzy=True).date()
             to_date = (
                 from_date
-                if row_dates[1].text == "Collection as usual"
-                else parser.parse(row_dates[1].text).date()
+                if row_dates[1].text == "Collections as normal"
+                else parser.parse(row_dates[1].text, fuzzy=True).date()
             )
 
             result[from_date] = to_date
@@ -193,7 +193,7 @@ class Source:
         # e.g. for flats they explicitly mentioned to contact management company instead
         # so in this case address can be found in previous steps, but there is no data for it and this error is returned
         if r.text == "ADDRESS_NOT_FOUND":
-            raise Exception(f"No data found for address '{self._address}'")
+            raise SourceArgumentNotFound("address", self._address)
 
         data = r.json()
 

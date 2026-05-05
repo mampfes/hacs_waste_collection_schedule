@@ -41,17 +41,14 @@ waste_collection_schedule:
           alias: Restavfall
 
 # Optional Sensors
-sensor:
-  - platform: waste_collection_schedule
-    name: next_collection
-  - platform: waste_collection_schedule
-    name: waste_collection_garbage
-    details_format: upcoming
-    types:
-      - Restavfall
-  - platform: waste_collection_schedule
-    name: waste_collection_paper
-    details_format: upcoming
-    types:
-      - Papir og plastemballasje
+  sensors:
+    - name: next_collection
+    - name: waste_collection_garbage
+      details_format: upcoming
+      types:
+        - Restavfall
+    - name: waste_collection_paper
+      details_format: upcoming
+      types:
+        - Papir og plastemballasje
 ```

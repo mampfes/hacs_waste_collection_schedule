@@ -113,7 +113,7 @@ class Source:
                 request_data = r.json()["dataFile"]
                 r = session.get(ICAL_URL, params={"data": request_data})
                 dates += self._ics.convert(r.text)
-            except:
+            except Exception:
                 pass
 
         entries = []

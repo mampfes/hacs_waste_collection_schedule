@@ -102,7 +102,7 @@ class Source:
                 "calendarId": calendarYearId,
             }
 
-            if self._zone != None:
+            if self._zone is not None:
                 # get available zones for calendar year
                 url = f"{baseUrl}/zones"
                 response = requests.get(url, params=params)

@@ -65,11 +65,6 @@ SERVICE_DOMAINS = [
         "service_id": "wml2",
     },
     {
-        "title": "Gütersloh (Stadt)",
-        "url": "https://www.guetersloh.de/",
-        "service_id": "gt2",
-    },
-    {
         "title": "Kreis Gütersloh GEG",
         "url": "https://www.geg-gt.de/",
         "service_id": "krwaf",
@@ -170,12 +165,35 @@ DEFAULT_TIMEOUT = 20
 
 
 class AbfallnaviDe:
+    # Services where the per-service subdomain DNS is dead;
+    # use the shared domain directly to avoid DNS timeout.
+    SHARED_DOMAIN_SERVICES = {
+        "unna",
+        "frankenthal",
+        "awvlippe",
+        "kranenburg",
+    }
+
     def __init__(self, service_domain):
         self._service_domain = service_domain
-        self._service_url = f"https://{service_domain}-abfallapp.regioit.de/abfall-app-{service_domain}/rest"
-        self._service_url_fallback = (
-            f"https://abfallapp.regioit.de/abfall-app-{service_domain}/rest"
-        )
+        if service_domain in self.SHARED_DOMAIN_SERVICES:
+            self._service_url = (
+                "https://abfallapp.regioit.de/" f"abfall-app-{service_domain}/rest"
+            )
+            self._service_url_fallback = (
+                f"https://{service_domain}"
+                f"-abfallapp.regioit.de/"
+                f"abfall-app-{service_domain}/rest"
+            )
+        else:
+            self._service_url = (
+                f"https://{service_domain}"
+                f"-abfallapp.regioit.de/"
+                f"abfall-app-{service_domain}/rest"
+            )
+            self._service_url_fallback = (
+                "https://abfallapp.regioit.de/" f"abfall-app-{service_domain}/rest"
+            )
         self._session = requests.Session()
 
     def _fetch(self, path, params=None):

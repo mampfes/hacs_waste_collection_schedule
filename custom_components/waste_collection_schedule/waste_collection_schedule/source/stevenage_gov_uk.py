@@ -3,6 +3,7 @@ import time
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Stevenage Borough Council"
 DESCRIPTION = "Source for Stevenage."
@@ -18,11 +19,13 @@ ICON_MAP = {
     "recycling": "mdi:recycle",
 }
 
-SESSION_URL = "https://stevenage-self.achieveservice.com/authapi/isauthenticated?uri=https%3A%2F%2Fstevenage-self.achieveservice.com%2Fen%2Fservice%2FCheck_your_household_bin_collection_days&hostname=stevenage-self.achieveservice.com&withCredentials=true"
-TOKEN_URL = (
-    "https://stevenage-self.achieveservice.com/apibroker/runLookup?id=5e55337a540d4"
-)
-API_URL = "https://stevenage-self.achieveservice.com/apibroker/runLookup"
+BASE_URL = "https://stevenage-self.achieveservice.com"
+INITIAL_URL = f"{BASE_URL}/en/service/Check_your_household_bin_collection_days"
+AUTH_URL = f"{BASE_URL}/authapi/isauthenticated"
+TOKEN_URL = f"{BASE_URL}/apibroker/runLookup?id=5e55337a540d4"
+API_URL = f"{BASE_URL}/apibroker/runLookup"
+LOOKUP_ID = "64ba8cee353e6"
+HOSTNAME = "stevenage-self.achieveservice.com"
 
 
 class Source:
@@ -30,60 +33,27 @@ class Source:
         self._uprn = str(uprn)
 
     def fetch(self):
-        data = {
-            "formValues": {
-                "Section 1": {
-                    "token": {"value": ""},
-                    "LLPGUPRN": {
-                        "value": self._uprn,
-                    },
-                    "MinimumDateLookAhead": {
-                        "value": time.strftime("%Y-%m-%d"),
-                    },
-                    "MaximumDateLookAhead": {
-                        "value": str(int(time.strftime("%Y")) + 1)
-                        + time.strftime("-%m-%d"),
-                    },
-                }
+        session = requests.Session()
+        sid = init_session(session, INITIAL_URL, AUTH_URL, HOSTNAME)
+
+        # Stevenage-specific: GET a one-time token before the main lookup
+        t = session.get(TOKEN_URL)
+        t.raise_for_status()
+        token = t.json()["integration"]["transformed"]["rows_data"]["0"]["token"]
+
+        form_values = {
+            "Section 1": {
+                "token": {"value": token},
+                "LLPGUPRN": {"value": self._uprn},
+                "MinimumDateLookAhead": {"value": time.strftime("%Y-%m-%d")},
+                "MaximumDateLookAhead": {
+                    "value": str(int(time.strftime("%Y")) + 1) + time.strftime("-%m-%d"),
+                },
             }
         }
 
-        headers = {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "User-Agent": "Mozilla/5.0",
-            "X-Requested-With": "XMLHttpRequest",
-            "Referer": "https://stevenage-self.achieveservice.com/fillform/?iframe_id=fillform-frame-1&db_id=",
-        }
-        s = requests.session()
-        r = s.get(SESSION_URL)
-        r.raise_for_status()
-        session_data = r.json()
-        sid = session_data["auth-session"]
-
-        t = s.get(TOKEN_URL)
-        t.raise_for_status()
-        token_data = t.json()
-        data["formValues"]["Section 1"]["token"]["value"] = token_data["integration"][
-            "transformed"
-        ]["rows_data"]["0"]["token"]
-
-        params = {
-            "id": "64ba8cee353e6",
-            "repeat_against": "",
-            "noRetry": "false",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            # unix_timestamp
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-
-        r = s.post(API_URL, json=data, headers=headers, params=params)
-        r.raise_for_status()
-        data = r.json()
-        rows_data = data["integration"]["transformed"]["rows_data"]
+        result = run_lookup(session, API_URL, sid, LOOKUP_ID, form_values)
+        rows_data = result["integration"]["transformed"]["rows_data"]
         if not isinstance(rows_data, dict):
             raise ValueError("Invalid data returned from API")
 

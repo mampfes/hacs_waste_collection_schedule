@@ -1,7 +1,8 @@
 import logging
 
-from waste_collection_schedule.source.roundlookup_uk import \
-    Source as Roundlookup  # type: ignore[attr-defined]
+from waste_collection_schedule.source.roundlookup_uk import (
+    Source as Roundlookup,  # type: ignore[attr-defined]
+)
 
 _LOGGER = logging.getLogger(__name__)
 TITLE = "Wychavon District Council (Deprecated)"

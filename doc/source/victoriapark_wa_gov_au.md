@@ -1,6 +1,6 @@
-# Town of Victoria Park Council
+# Town of Victoria Park
 
-Support for schedules provided by [Town of Victoria Park Bins and collections](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx).
+Support for schedules provided by [Town of Victoria Park Bins and Collections](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx).
 
 ## Configuration via configuration.yaml
 
@@ -9,13 +9,17 @@ waste_collection_schedule:
   sources:
     - name: victoriapark_wa_gov_au
       args:
-        address: ADDRESS
+        group: GROUP
+        day: DAY
 ```
 
 ### Configuration Variables
 
-**address**  
-*(string) (required)*
+**group**  
+*(int) (required)* Collection group: `1` or `2`
+
+**day**  
+*(string) (required)* Collection day: `Monday`, `Tuesday`, `Wednesday`, `Thursday`, or `Friday`
 
 ## Example
 
@@ -24,17 +28,16 @@ waste_collection_schedule:
   sources:
     - name: victoriapark_wa_gov_au
       args:
-        address: 99 Shepperton Road East Victoria Park 6101
+        group: 1
+        day: Monday
 ```
 
 ## How to get the source arguments
 
-Visit the [Town of Victoria Park Bins and collections](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx) page and search for your address. The arguments should exactly match the results of the property.
+Visit the [Bins and Collections](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx) page to find your collection group (1 or 2) and collection day from the calendar images.
 
-Currently exporting out:
+Collection types:
 
-- Rubbish
-- Recycling
-- Go Bin
-- Green Waste
-- Bulk Waste
+- **FOGO** (Food Organics/Garden Organics) — collected weekly
+- **Recycling** — collected fortnightly (yellow weeks)
+- **General Waste** — collected fortnightly (red weeks)

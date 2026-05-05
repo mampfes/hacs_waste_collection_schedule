@@ -1,16 +1,25 @@
 import logging
-import re
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import bs4
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.FirmstepSelfService import (
+    get_hidden_form_inputs,
+    lookup_addresses,
+)
 
 URL = "https://southkesteven.gov.uk"
+FORM_URL = (
+    "https://selfservice.southkesteven.gov.uk/"
+    "renderform?k=2074C945A63DDC0D18F1EB74DA230AC3122958B1&t=213"
+)
+RENDER_URL = "https://selfservice.southkesteven.gov.uk/RenderForm"
+ADDRESS_LOOKUP_URL = "https://selfservice.southkesteven.gov.uk/core/addresslookup"
 TEST_CASES = {
-    "Long Bennington": {"address_id": 33399},
-    "Bourne": {"address_id": "7351"},
-    "Grantham": {"address_id": 18029},
+    "Bourne": {"address_id": "PE10 0RX"},
+    "Long Bennington": {"address_id": "NG23 5EQ"},
+    "Grantham": {"address_id": "NG31 6NP"},
 }
 _LOGGER = logging.getLogger(__name__)
 ICON_MAP = {
@@ -25,87 +34,70 @@ TITLE = "South Kesteven District Council"
 DESCRIPTION = "Source for southkesteven.gov.uk services for South Kesteven, UK."
 
 
-# Extract bin type form text like "What goes in the black bin"
-FUTURE_BIN_TYPE_REGEX = re.compile(r"What goes in the (\w+) bin")
-
-# Extract bin type form text like "This is a black bin day - [...]"
-NEXT_BIN_TYPE_REGEX = re.compile(r"This is a (\w+) bin day")
-
-
 class Source:
     def __init__(self, address_id):
-        self._address_id = address_id
+        self._address_id = str(address_id)
 
     def fetch(self):
-        r = requests.post(
-            "https://pre.southkesteven.gov.uk/BinSearch.aspx",
-            data={"address": self._address_id},
-        )
-        r.raise_for_status()
+        session = requests.Session()
+        form_inputs = get_hidden_form_inputs(session, FORM_URL)
+        required = {"__RequestVerificationToken", "FormGuid", "ObjectTemplateID", "CurrentSectionID"}
+        if not required.issubset(form_inputs.keys()):
+            raise ValueError("Unable to read South Kesteven form metadata")
 
-        collections = []
-        soup = bs4.BeautifulSoup(r.content, "html.parser")
-
-        date_translate = {
-            "Tomorrow": datetime.now().date() + timedelta(days=1),
-            "Today": datetime.now().date(),
+        payload = {
+            "__RequestVerificationToken": form_inputs["__RequestVerificationToken"],
+            "FormGuid": form_inputs["FormGuid"],
+            "ObjectTemplateID": form_inputs["ObjectTemplateID"],
+            "Trigger": "submit",
+            "CurrentSectionID": form_inputs["CurrentSectionID"],
+            "FF5265": self._address_id,
+            "FF5265lbltxt": "Collection Address",
+            "FF5265searchnlpg": "False",
+            "FF5265manualaddressentry": "False",
+            "FF5265classification": "",
         }
+        data_resp = session.post(RENDER_URL, data=payload, timeout=30)
+        data_resp.raise_for_status()
+        data_soup = bs4.BeautifulSoup(data_resp.text, "html.parser")
 
-        # Find next collection
-        # find p looks like                     <p>Your next bin collection date is <span class="alert__heading alpha">Wed 19 June 2024</span></p>
-        next_collection_p = soup.find(
-            lambda tag: tag.name == "p"
-            and "Your next bin collection date is" in tag.text
-        )
-        # above does not work so try this
+        collections: list[Collection] = []
+        for row in data_soup.select("table.Alloy-table tr"):
+            cols = row.find_all("td", class_="Alloy-table-col")
+            if len(cols) < 2:
+                continue
+            raw_date = cols[0].get_text(strip=True)
+            raw_type = cols[1].get_text(strip=True)
+            try:
+                dt = datetime.strptime(raw_date, "%A %d %B, %Y").date()
+            except ValueError:
+                continue
+            icon = ICON_MAP.get(raw_type.lower())
+            if icon is None:
+                lower = raw_type.lower()
+                if "refuse" in lower:
+                    icon = ICON_MAP["black"]
+                elif "recycling" in lower or "paper" in lower:
+                    icon = ICON_MAP["gray"]
+                elif "green" in lower:
+                    icon = ICON_MAP["green"]
+                elif "purple" in lower:
+                    icon = ICON_MAP["purple"]
+            collections.append(Collection(dt, raw_type, icon))
 
-        if next_collection_p is None:
+        # If the new flow does not yield rows, try postcode lookup then resubmit.
+        if not collections and not self._address_id.startswith("U"):
+            addresses = lookup_addresses(
+                session, ADDRESS_LOOKUP_URL, self._address_id, search_nlpg="False"
+            )
+            if addresses:
+                self._address_id = next(iter(addresses.keys()))
+                return self.fetch()
+        if not collections:
             _LOGGER.warning(
-                "No next collection text found, continuing to look for future collections"
+                "South Kesteven returned no collection rows for address_id=%s",
+                self._address_id,
             )
-        else:
-            date_str = next_collection_p.find("span").text
-            date = (
-                date_translate.get(date_str)
-                or datetime.strptime(date_str, "%a %d %B %Y").date()
-            )
-            bin_type = NEXT_BIN_TYPE_REGEX.search(
-                next_collection_p.find_next("p").text
-            ).group(1)
-            collections.append(Collection(date, bin_type, ICON_MAP.get(bin_type)))
-
-        # Find all Future collections
-        s = soup.find_all("h3", text="Future collections")
-
-        for collections_list in s:
-            collections_ul = collections_list.find_next_sibling("ul")
-            collection_futher_info_link = (
-                collections_ul.find_previous_sibling("ul").find("a")
-            )
-            if (collection_futher_info_link is None):
-                garden_check = (collections_ul.find_previous_sibling("ul").find("li").text)
-                if garden_check == "Leaves":
-                    bin_type = "green"
-            else:
-                bin_type = FUTURE_BIN_TYPE_REGEX.search(collection_futher_info_link.text).group(
-                    1
-                )
-
-            for collection in collections_list.find_next_sibling("ul").find_all("li"):
-                # like: "Thu 29 August 2024"
-                date_str = collection.text
-
-                try:
-                    date = (
-                        date_translate.get(date_str)
-                        or datetime.strptime(date_str, "%a %d %B %Y").date()
-                    )
-                except ValueError:
-                    _LOGGER.warning(
-                        f"Failed to parse date {date_str}, skipping this collection"
-                    )
-                    continue
-                collections.append(Collection(date, bin_type, ICON_MAP.get(bin_type)))
 
         # filter out duplicate entries
         collections = list(
@@ -114,5 +106,4 @@ class Source:
                 for collection in collections
             }.values()
         )
-
         return collections

@@ -1,0 +1,16 @@
+---
+title: VUE Waltrop
+url: https://www.vue-waltrop.de
+country: de
+howto:
+  en: |
+    - Go to <https://www.vue-waltrop.de/bereich-abfall/abfallkalender/>.
+    - Find your district (Bezirk) and right-click the ICS download link.
+    - Copy the URL and use it as the `url` parameter.
+  de: |
+    - Gehe zu <https://www.vue-waltrop.de/bereich-abfall/abfallkalender/>.
+    - Finde deinen Bezirk und klicke mit der rechten Maustaste auf den ICS-Download-Link.
+    - Kopiere die URL und verwende sie als `url`-Parameter.
+test_cases:
+  Bezirk 3:
+    url: "https://www.vue-waltrop.de/wp-content/uploads/2025/11/Bezirk-3.ics"

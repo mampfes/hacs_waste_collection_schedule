@@ -1,11 +1,12 @@
 import json
 from datetime import datetime
-from typing import Dict, List, Tuple
+from typing import List, Tuple
 from urllib.parse import quote, urlencode
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Tauranga City Council"
 DESCRIPTION = "Source script for Tauranga City Council"
@@ -16,7 +17,7 @@ TEST_CASES = {
     "21 Wells Avenue": {"address": " 21 Wells Avenue"},
 }
 
-API_URL = "https://www.tauranga.govt.nz/living/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
+API_URL = "https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
 ICON_MAP = {
     "Rubbish": "mdi:trash-can",
     "Recycling": "mdi:recycle",
@@ -32,7 +33,7 @@ class Source:
         self._session: requests.Session = requests.Session()
 
     ADDRESS_URL = "https://www.tauranga.govt.nz/Services/SearchService.asmx/DoRIDStreetPredictiveSearch"
-    WASTE_URL = "https://www.tauranga.govt.nz/living/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
+    WASTE_URL = "https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
 
     def fetch(self):
         addr_1, addr_2 = self.get_address_detail()
@@ -49,7 +50,7 @@ class Source:
         ).json()
 
         if len(address_response.get("d")) == 0:
-            raise Exception("Address not found within TCC records")
+            raise SourceArgumentNotFound("address", self._address)
 
         # Parse address data from initial request
         address_dict = json.loads(address_response.get("d")[0])
@@ -58,7 +59,7 @@ class Source:
 
         return addr_1, addr_2
 
-    def get_waste_pickup_dates(self, form_data: Dict[str, str]) -> requests.Response:
+    def get_waste_pickup_dates(self, form_data: str) -> requests.Response:
         pickup_date_response = self._session.post(
             self.WASTE_URL,
             data=form_data,
@@ -72,21 +73,44 @@ class Source:
     def generate_form_data(self, addr_1: str, addr_2: str) -> str:
         state_response = self._session.get(self.WASTE_URL)
         soup = BeautifulSoup(state_response.content, "html.parser")
-        view_state = soup.find("input", attrs={"id": "__VIEWSTATE"})["value"]
-        view_state_generator = soup.find("input", attrs={"id": "__VIEWSTATEGENERATOR"})[
-            "value"
+        view_state = soup.find("input", attrs={"id": "__VIEWSTATE"})["value"]  # type: ignore[index]
+        view_state_generator = soup.find("input", attrs={"id": "__VIEWSTATEGENERATOR"})[  # type: ignore[index]
+            "value"  # type: ignore[index]
         ]
-        dnn_variable = soup.find("input", attrs={"id": "__dnnVariable"})["value"]
+        dnn_variable = soup.find("input", attrs={"id": "__dnnVariable"})["value"]  # type: ignore[index]
         request_verification_token = soup.find(
             "input", attrs={"name": "__RequestVerificationToken"}
-        )["value"]
-        event_validation = soup.find("input", attrs={"id": "__EVENTVALIDATION"})[
-            "value"
+        )[
+            "value"  # type: ignore[index]
+        ]
+        event_validation = soup.find("input", attrs={"id": "__EVENTVALIDATION"})[  # type: ignore[index]
+            "value"  # type: ignore[index]
         ]
 
+        # Discover the DNN form field names dynamically so the source
+        # keeps working when the ctr module ID changes on the server.
+        addr_input = soup.find(
+            "input",
+            attrs={
+                "id": lambda x: x
+                and "CollectionDaysSAP" in str(x)
+                and "Address" in str(x)
+            },
+        )
+        hdn_input = soup.find(
+            "input",
+            attrs={
+                "id": lambda x: x
+                and "CollectionDaysSAP" in str(x)
+                and "hdnValue" in str(x)
+            },
+        )
+        if not addr_input or not hdn_input:
+            raise Exception("Could not find CollectionDaysSAP form fields on the page")
+
         form_data = {
-            "dnn$ctr2863$MasterView$CollectionDaysSAP$Address": addr_1,
-            "dnn$ctr2863$MasterView$CollectionDaysSAP$hdnValue": f"{addr_1}||{addr_2}",
+            addr_input["name"]: addr_1,  # type: ignore[index]
+            hdn_input["name"]: f"{addr_1}||{addr_2}",  # type: ignore[index]
             "__VIEWSTATE": view_state,
             "__VIEWSTATEGENERATOR": view_state_generator,
             "__EVENTVALIDATION": event_validation,
@@ -94,7 +118,7 @@ class Source:
             "__RequestVerificationToken": request_verification_token,
         }
 
-        encoded_form_data = urlencode(form_data, quote_via=quote)
+        encoded_form_data = urlencode(form_data, quote_via=quote)  # type: ignore[arg-type]
 
         return encoded_form_data
 

@@ -4,7 +4,6 @@ from datetime import datetime
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
     SourceArgumentExceptionMultiple,
 )
 

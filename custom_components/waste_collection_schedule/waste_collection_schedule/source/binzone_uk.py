@@ -61,7 +61,7 @@ class Source:
 
         headers = {
             # latest chrome UA
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36',
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
         }
 
         # GET request returns schedule for matching uprn
@@ -84,7 +84,11 @@ class Source:
             bin_info = bin.text.split("-")
             try:
                 # No date validation since year isn't included on webpage
-                bin_date = bin_info[0].strip().replace("Your usual collection day is different this week", "")
+                bin_date = (
+                    bin_info[0]
+                    .strip()
+                    .replace("Your usual collection day is different this week", "")
+                )
                 bin_type = bin_info[1].strip()
             except Exception as ex:
                 raise ValueError(f"Error parsing bin data: {ex}")

@@ -38,9 +38,7 @@ class Source:
         self._location_id = location_id
 
     def fetch(self):
-        api_response = requests.get(
-            API_URL + str(self._location_id) + API_URL_JSON
-        )
+        api_response = requests.get(API_URL + str(self._location_id) + API_URL_JSON)
 
         entries = []
 

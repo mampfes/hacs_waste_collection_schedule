@@ -49,10 +49,6 @@ TEST_CASES = {
         "city": "Neustadt",
         "street": "Hauberallee (Kernstadt)",
     },
-    "Goldberg": {
-        "service_id": "zvo",
-        "city": "Goldberg",
-    },
     "Main-Kinzig-Kreis": {
         "service_id": "mkk",
         "city": "Freigericht",
@@ -62,6 +58,12 @@ TEST_CASES = {
         "service_id": "wol",
         "city": "Linden",
         "street": "Am Buschkopf",
+    },
+    "KSR Recklinghausen Ottostr. 53": {
+        "service_id": "ksr",
+        "city": "Recklinghausen",
+        "street": "Ottostr.",
+        "house_number": "53",
     },
 }
 
@@ -139,6 +141,7 @@ SERVICE_MAP = {
             "Darmstadt",
             "Esens",
             "Flensburg",
+            "Gelnhausen",
             "Grävenwiesbach",
             "Großkrotzenburg",
             "Hainburg",
@@ -172,7 +175,6 @@ SERVICE_MAP = {
         ],
     },
     "esn": {"list": ["Neustadt an der Weinstraße"], "url": "https://www.neustadt.eu/"},
-    "zvo": {"list": ["Ostholstein"], "url": "https://www.zvo.com/"},
     "zac": {"list": ["Celle"], "url": "https://www.zacelle.de/"},
     "ben": {
         "list": ["Landkreis Grafschaft"],
@@ -340,13 +342,24 @@ class Source:
                         street_found = True
                         area_id = street["area_id"]
                         if "houseNumbers" in street:
-                            for house_number in street["houseNumbers"]:
-                                if (
-                                    house_number[0].lower().strip().lstrip("0")
-                                    == self._house_number
-                                ):
-                                    area_id = house_number[1]
-                                    break
+                            if self._house_number is not None:
+                                for house_number in street["houseNumbers"]:
+                                    if (
+                                        house_number[0].lower().strip().lstrip("0")
+                                        == self._house_number
+                                    ):
+                                        area_id = house_number[1]
+                                        break
+                            else:
+                                distinct_area_ids = {
+                                    hn[1] for hn in street["houseNumbers"]
+                                }
+                                if len(distinct_area_ids) > 1:
+                                    LOGGER.warning(
+                                        "Street '%s' spans multiple collection zones. "
+                                        "Please provide a house_number for accurate results",
+                                        street["name"],
+                                    )
                         break
                 if not street_found:
                     streets_suggestions = {s.get("name") for s in streets}

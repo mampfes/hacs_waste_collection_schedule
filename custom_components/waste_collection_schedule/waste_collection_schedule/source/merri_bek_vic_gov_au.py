@@ -1,6 +1,8 @@
 from datetime import datetime
+
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Merri-bek City Council"
 DESCRIPTION = "Source for Merri-bek City Council (VIC) rubbish collection."
@@ -39,7 +41,7 @@ class Source:
 
         features = data.get("features")
         if not features:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("address", self.address)
 
         attr = features[0]["attributes"]
         geom = features[0]["geometry"]
@@ -65,7 +67,7 @@ class Source:
         data = r.json()
 
         if not data or len(data) == 0:
-            raise Exception("No collection data found")
+            raise SourceArgumentNotFound("address", self.address)
 
         # Step 3: Convert API response into schedule entries
         schedule = data[0]  # first result contains the collections

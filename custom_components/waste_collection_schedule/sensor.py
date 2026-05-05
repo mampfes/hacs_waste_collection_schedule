@@ -118,25 +118,49 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
     async_add_entities(entities, update_before_add=True)
 
 
-# YAML setup
+# YAML setup (via discovery from waste_collection_schedule: sensors: or legacy sensor platform)
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    value_template = config.get(CONF_VALUE_TEMPLATE)
+    if discovery_info is not None:
+        # New method: sensor loaded via discovery from waste_collection_schedule: sensors:
+        api = discovery_info["api"]
+        sensor_config = discovery_info["sensor_config"]
+    else:
+        # Legacy method: sensor: platform: waste_collection_schedule
+        _LOGGER.warning(
+            "Configuration of waste_collection_schedule sensors via "
+            "'sensor: platform: waste_collection_schedule' is deprecated and will be "
+            "removed in a future version. Please move your sensor configuration into "
+            "the 'sensors:' key under 'waste_collection_schedule:' in your "
+            "configuration.yaml"
+        )
+        sensor_config = config
+
+        if DOMAIN not in hass.data:
+            raise Exception(
+                "Waste Collection Schedule integration not set up, please check you configured a source in your configuration.yaml"
+            )
+
+        api = hass.data[DOMAIN].get("YAML_CONFIG")
+
+        if api is None:
+            raise Exception(
+                "Waste Collection Schedule YAML configuration not found, please check you have configured sources under waste_collection_schedule: in your configuration.yaml"
+            )
+
+    value_template = sensor_config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
+        if not isinstance(value_template, Template):
+            value_template = cv.template(value_template)
         value_template.hass = hass
 
-    date_template = config.get(CONF_DATE_TEMPLATE)
+    date_template = sensor_config.get(CONF_DATE_TEMPLATE)
     if date_template is not None:
+        if not isinstance(date_template, Template):
+            date_template = cv.template(date_template)
         date_template.hass = hass
 
-    if DOMAIN not in hass.data:
-        raise Exception(
-            "Waste Collection Schedule integration not set up, please check you configured a source in your configuration.yaml"
-        )
-
-    api = hass.data[DOMAIN].get("YAML_CONFIG")
-
     # create aggregator for all sources
-    source_index = config[CONF_SOURCE_INDEX]
+    source_index = sensor_config.get(CONF_SOURCE_INDEX, 0)
     if not isinstance(source_index, list):
         source_index = [source_index]
 
@@ -151,6 +175,10 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
     aggregator = CollectionAggregator(shells)
 
+    details_format = sensor_config.get(CONF_DETAILS_FORMAT, "upcoming")
+    if isinstance(details_format, str):
+        details_format = DetailsFormat(details_format)
+
     entities = []
 
     entities.append(
@@ -158,16 +186,16 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             hass=hass,
             api=api,
             coordinator=None,
-            name=config[CONF_NAME],
+            name=sensor_config[CONF_NAME],
             aggregator=aggregator,
-            details_format=config[CONF_DETAILS_FORMAT],
-            count=config.get(CONF_COUNT),
-            leadtime=config.get(CONF_LEADTIME),
-            collection_types=config.get(CONF_COLLECTION_TYPES),
+            details_format=details_format,
+            count=sensor_config.get(CONF_COUNT),
+            leadtime=sensor_config.get(CONF_LEADTIME),
+            collection_types=sensor_config.get(CONF_COLLECTION_TYPES),
             value_template=value_template,
             date_template=date_template,
-            add_days_to=config.get(CONF_ADD_DAYS_TO),
-            event_index=config.get(CONF_EVENT_INDEX),
+            add_days_to=sensor_config.get(CONF_ADD_DAYS_TO, False),
+            event_index=sensor_config.get(CONF_EVENT_INDEX, 0),
         )
     )
 

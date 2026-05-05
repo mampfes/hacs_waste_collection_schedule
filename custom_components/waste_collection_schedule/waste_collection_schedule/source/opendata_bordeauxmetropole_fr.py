@@ -316,7 +316,8 @@ class Source:
             i
             for i in json.loads(response.text)
             # For the cities not having geo_shape, all the city is concerned
-            if not i["geo_shape"] or self._is_within_geo_shape(i["geo_shape"], address_params)
+            if not i["geo_shape"]
+            or self._is_within_geo_shape(i["geo_shape"], address_params)
         ]
 
         filtered_responses: dict[str, list[str]] = {}

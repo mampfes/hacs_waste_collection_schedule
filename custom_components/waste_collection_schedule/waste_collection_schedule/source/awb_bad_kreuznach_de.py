@@ -98,7 +98,7 @@ class Source:
 
         if data["data"]["partOfCitys"] != []:
             if self._stadtteil is None:
-                raise SourceArgumentRequired("stadtteil")
+                raise SourceArgumentRequired("stadtteil", "A district (Stadtteil) must be selected from the available options")
         elif self._stadtteil is not None:
             LOGGER.warning("stadtteil provided but not needed")
 
@@ -127,7 +127,7 @@ class Source:
 
         if data["data"]["streets"] != []:
             if self._strasse is None:
-                raise SourceArgumentRequired("strasse")
+                raise SourceArgumentRequired("strasse", "A street (Strasse) must be selected from the available options")
         elif self._strasse is not None:
             LOGGER.warning("strasse provided but not needed")
 
@@ -151,7 +151,7 @@ class Source:
 
         if data["data"]["houseNumbers"] != []:
             if self._nummer is None:
-                raise SourceArgumentRequired("nummer")
+                raise SourceArgumentRequired("nummer", "A house number (Nummer) must be selected from the available options")
         elif self._nummer is not None:
             LOGGER.warning("nummer provided but not needed")
 
@@ -204,9 +204,11 @@ class Source:
                     freq=DAILY,
                     interval=cal_entry["frequency"],
                     dtstart=datetime.fromtimestamp(cal_entry["fromDate"] / 1000),
-                    until=datetime.fromtimestamp(cal_entry["toDate"] / 1000)
-                    if cal_entry["toDate"]
-                    else to_time,
+                    until=(
+                        datetime.fromtimestamp(cal_entry["toDate"] / 1000)
+                        if cal_entry["toDate"]
+                        else to_time
+                    ),
                 )
             )
 

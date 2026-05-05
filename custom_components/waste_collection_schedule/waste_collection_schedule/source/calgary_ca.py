@@ -52,7 +52,7 @@ class Source:
             week = single_date.isocalendar()[1]
             week_modulus = week % 2
 
-            # return true if the week moduls corresponds to the collection interval
+            # return true if the week modulus corresponds to the collection interval
             if (interval == "EVEN") and (week_modulus == 0):
                 return True
             elif (interval == "ODD") and (week_modulus == 1):
@@ -72,7 +72,7 @@ class Source:
         entries = []
 
         for entry in schedule:
-            date_format = "%Y-%m-%dT%H:%M:%S.%fZ"
+            date_format = "%Y-%m-%dT%H:%M:%S.%f"
 
             current_date = datetime.now()
             commodity = entry["commodity"]

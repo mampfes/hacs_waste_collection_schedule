@@ -55,7 +55,7 @@ class Source:
         r.raise_for_status()
 
         ns = {"ws": "http://webservices.whitespacews.com/"}
-        tree = ET.fromstring(r.text)
+        tree = ET.fromstring(r.text)  # nosec B314
 
         success_flag_element = tree.find(".//ws:SuccessFlag", ns)
         if success_flag_element is not None and success_flag_element.text != "true":

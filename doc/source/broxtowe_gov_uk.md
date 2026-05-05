@@ -47,5 +47,5 @@ An easy way to find your Unique Property Reference Number (UPRN) is by going to 
 - Fill out your postcode at https://selfservice.broxtowe.gov.uk/renderform.aspx?t=217&k=9D2EF214E144EE796430597FB475C3892C43C528 and press `Search`.
 - Open your browser developer tools (in most browser `F12` or `right click -> inspect`) and open the `network` tab.
 - Select your address.
-- Your network tab should recieve a new request, open it.
-- Select `request`. You should now see the argument `ctl00$ContentPlaceHolder1$FF5683DDL` containting your UPRN with a U as prefix (example: `ctl00$ContentPlaceHolder1$FF5683DDL: U100031343805` means your UPRN is `100031343805`).
+- Your network tab should receive a new request, open it.
+- Select `request`. You should now see the argument `ctl00$ContentPlaceHolder1$FF5683DDL` containing your UPRN with a U as prefix (example: `ctl00$ContentPlaceHolder1$FF5683DDL: U100031343805` means your UPRN is `100031343805`).

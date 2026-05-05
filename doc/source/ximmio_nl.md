@@ -1,6 +1,6 @@
 # Ximmio
 
-Support for schedules provided by [Ximmio.nl](https://www.ximmio.nl/).
+Support for schedules provided by [Ximmio](https://www.ximmio.nl) (Netherlands).
 
 ## Configuration via configuration.yaml
 
@@ -10,38 +10,47 @@ waste_collection_schedule:
     - name: ximmio_nl
       args:
         company: COMPANY
-        post_code: POST_CODE
+        post_code: POSTAL_CODE
         house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**company**  
+**company**
 *(string) (required)*
 
-Use one of the following codes as company code:
+Short name identifying your waste collection provider. See supported companies below.
 
-- acv
-- almere
-- areareiniging
-- avalex
-- avri
-- bar
-- hellendoorn
-- meerlanden
-- meppel
-- rad
-- reinis
-- twentemilieu
-- waardlanden
-- westland
-- ximmio
-
-**post_code**  
+**post_code**
 *(string) (required)*
 
-**house_number**  
-*(integer) (required)*
+Your postal code (e.g. `3441AX`).
+
+**house_number**
+*(string or integer) (required)*
+
+Your house number.
+
+## Supported Companies
+
+| Title | company |
+|---|---|
+| ACV Group | `acv` |
+| Gemeente Almere | `almere` |
+| Area Afval | `areareiniging` |
+| Avalex | `avalex` |
+| Avri | `avri` |
+| Bar Afvalbeheer | `bar` |
+| Gemeente Hellendoorn | `hellendoorn` |
+| Meerlanden | `meerlanden` |
+| Gemeente Meppel | `meppel` |
+| Mijn Blink | `mijnblink` |
+| RAD BV | `rad` |
+| Twente Milieu | `twentemilieu` |
+| Waardlanden | `waardlanden` |
+| Gemeente Westland | `westland` |
+| Gemeente Venlo | `venlo` |
+| Woerden / Oudewater | `woerdenoudewater` |
 
 ## Example
 
@@ -50,7 +59,7 @@ waste_collection_schedule:
   sources:
     - name: ximmio_nl
       args:
-        company: acv
-        post_code: 6721MH
+        company: woerdenoudewater
+        post_code: 3441AX
         house_number: 1
 ```

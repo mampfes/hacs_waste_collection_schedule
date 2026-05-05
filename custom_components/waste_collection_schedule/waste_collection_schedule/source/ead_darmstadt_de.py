@@ -2,6 +2,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "EAD Darmstadt"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for waste collection in Darmstadt ead.darmstadt.de"  # Describe your source
@@ -45,7 +46,7 @@ class Source:
 
         schedule = r.json()
         if schedule is None or len(schedule) == 0:
-            raise Exception("address not found")
+            raise SourceArgumentNotFound("street", self.street)
 
         entries = []  # List that holds collection schedule
         for date, waste_type_list in schedule.items():

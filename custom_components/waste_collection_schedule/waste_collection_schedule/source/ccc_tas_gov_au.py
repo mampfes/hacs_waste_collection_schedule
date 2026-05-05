@@ -3,6 +3,7 @@ from datetime import date, datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Clarence City Council"
 COUNTRY = "au"
@@ -95,7 +96,7 @@ def _query_api(address: str) -> dict:
     address_data = address_result.json()
 
     if not address_data["success"]:
-        raise Exception("Could not find address")
+        raise SourceArgumentNotFound("address", address)
 
     ccc_formatted_address = address_data["results"][0]
 

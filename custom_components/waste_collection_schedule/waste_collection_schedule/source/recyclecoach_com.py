@@ -44,7 +44,10 @@ ICON_MAP = {
     "E-waste Event": "mdi:calendar",
     "Additional EnviroDepot Hours": "mdi:calendar",
     "Garbage Collection": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
     "Recycling Collection": "mdi:recycle",
+    "Waste": "mdi:trash-can",
+    "FOGO": "mdi:food",
     "Yard Waste Collection Week": "mdi:leaf",
     "3 Container Exemption Pick-up": "mdi:calendar",
     "Holiday ": "mdi:calendar",
@@ -67,6 +70,10 @@ ICON_MAP = {
     "Pop-Up Drop-Off - Fern Creek HS": "mdi:calendar",
     "Pop-Up Drop-Off Doss High": "mdi:calendar",
     "Backyard Composting Class": "mdi:compost",
+    "Grey Household Waste Cart": "mdi:trash-can",
+    "Blue Recycling Cart": "mdi:recycle",
+    "Green Organic Waste Cart": "mdi:leaf",
+    "No Collection Day": "mdi:alert",
 }
 
 EXTRA_INFO = [
@@ -145,7 +152,7 @@ EXTRA_INFO = [
         "country": "ca",
     },
     {
-        "title": "City of Hamlton (ON)",
+        "title": "City of Hamilton (ON)",
         "url": "https://www.hamilton.ca/",
         "country": "ca",
     },
@@ -160,6 +167,145 @@ EXTRA_INFO = [
         "url": "https://www.delta.ca/",
         "country": "ca",
         "default_params": {"city": "Delta", "state": "British Columbia"},
+    },
+    {
+        "title": "Burnaby (BC)",
+        "url": "https://www.burnaby.ca/",
+        "country": "ca",
+        "default_params": {"city": "Burnaby", "state": "British Columbia"},
+    },
+    {
+        "title": "Orillia (ON)",
+        "url": "https://www.orillia.ca/",
+        "country": "ca",
+        "default_params": {"city": "Orillia", "state": "Ontario"},
+    },
+    {
+        "title": "Medicine Hat (AB)",
+        "url": "https://www.medicinehat.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "500",
+            "district_id": "MEDHAT",
+            "zone_id": "zone-z196",
+        },
+    },
+    {
+        "title": "Township of Langley (BC)",
+        "url": "https://www.tol.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "521",
+            "district_id": "LANGL",
+        },
+    },
+    {
+        "title": "East Gwillimbury (ON)",
+        "url": "https://www.eastgwillimbury.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "586",
+            "district_id": "EASTG",
+        },
+    },
+    {
+        "title": "Brantford (ON)",
+        "url": "https://www.brantford.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "3195",
+            "district_id": "BRAN",
+        },
+    },
+    {
+        "title": "Kelowna (BC)",
+        "url": "https://www.rdco.com/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "502",
+            "district_id": "Kelowna",
+        },
+    },
+    {
+        "title": "Plainville (CT)",
+        "url": "https://www.plainvillect.com/",
+        "country": "us",
+        "default_params": {
+            "project_id": "3066",
+            "district_id": "PLA",
+        },
+    },
+    {
+        "title": "LaSalle (ON)",
+        "url": "https://www.lasalle.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "583",
+            "district_id": "LAS",
+        },
+    },
+    {
+        "title": "Glenorchy City Council (TAS)",
+        "url": "https://www.gcc.tas.gov.au/",
+        "country": "au",
+        "default_params": {
+            "project_id": "657",
+            "district_id": "GLENORCHY",
+        },
+    },
+    {
+        "title": "Toronto (ON) - Circular Materials",
+        "url": "https://www.toronto.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "CIRCMATONT", "district_id": "TORONTO"},
+    },
+    {
+        "title": "Mississauga (ON)",
+        "url": "https://www.mississauga.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3179", "district_id": "MISS"},
+    },
+    {
+        "title": "Brampton (ON)",
+        "url": "https://www.brampton.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3179", "district_id": "BRAMP"},
+    },
+    {
+        "title": "Caledon (ON)",
+        "url": "https://www.caledon.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3179", "district_id": "CALED"},
+    },
+    {
+        "title": "Burlington (ON)",
+        "url": "https://www.burlington.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "BURL"},
+    },
+    {
+        "title": "Oakville (ON)",
+        "url": "https://www.oakville.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "OAKV"},
+    },
+    {
+        "title": "Milton (ON)",
+        "url": "https://www.milton.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "MILT"},
+    },
+    {
+        "title": "Halton Hills (ON)",
+        "url": "https://www.haltonhills.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "HALT"},
+    },
+    {
+        "title": "Guelph (ON)",
+        "url": "https://guelph.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3194", "district_id": "GUEL"},
     },
 ]
 
@@ -245,6 +391,21 @@ TEST_CASES = {
         "street": "6656 Ladner Trunk Rd",
         "city": "Delta",
         "state": "British Columbia",
+    },
+    "Burnaby, BC, Canada": {
+        "street": "215 Gilmore Ave N",
+        "city": "Burnaby",
+        "state": "British Columbia",
+    },
+    "City of Medicine Hat, AB, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "MEDHAT",
+        "project_id": 500,
+        "zone_id": "zone-z196",
+    },
+    "Glenorchy City Council, TAS, Australia": {
+        "district_id": "GLENORCHY",
+        "project_id": 657,
+        "zone_id": "zone-z15322-z16165-z16823",
     },
 }
 
@@ -373,12 +534,12 @@ class Source:
         if not self.zone_id:
             self._lookup_zones()
 
-
         collection_def_url = f"https://us-api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
 
         schedule_urls = [  # Some regions use different one of these should work
             f"https://api-city.recyclecoach.com/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
             f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
         ]
 
         collection_def = None

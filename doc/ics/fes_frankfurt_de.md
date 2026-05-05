@@ -5,21 +5,20 @@ FES Frankfurter Entsorgungs- und Service GmbH is supported by the generic [ICS](
 
 ## How to get the configuration arguments
 
-- Go to <https://www.fes-frankfurt.de/services/abfallkalender> and select your location.  
-- Click on `Kalender`.
-- Copy link address.
-- Use this link as the `url` parameter.
+- Go to <https://frankfurtplus.de/abfallkalender> and search for your address.
+- Select your street and house number.
+- Note the `address_id` number from the URL (e.g. `https://frankfurtplus.de/abfallkalender?address_id=69882`).
+- Use the ICS URL format: `https://frankfurtplus.de/abfallkalender/ADDRESS_ID/ical`
 
 ## Examples
 
-### Achenbachstr. 2
+### Ludwig-Ruppel-Str. 89
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: (.*)\s+\|
-        split_at: ' / '
-        url: https://www.fes-frankfurt.de/abfallkalender/QWNoZW5iYWNoc3RyLnwyfDYwNTk2.ics
+        regex: '[^:]+:\s*(.*)'
+        url: https://frankfurtplus.de/abfallkalender/69882/ical
 ```

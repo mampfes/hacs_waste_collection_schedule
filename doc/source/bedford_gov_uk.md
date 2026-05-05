@@ -1,4 +1,4 @@
-# Ashfield District Council
+# Bedford Borough Council
 
 Support for schedules provided by [Bedford Borough Council](https://www.bedford.gov.uk/), serving Bedford Borough Council, UK.
 

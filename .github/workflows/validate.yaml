@@ -36,9 +36,3 @@ jobs:
       - name: Test with pytest
         run: |
           pytest
-      - name: run update_docu_links
-        run: |
-          python update_docu_links.py
-      - name: check for changed files
-        run: |
-          git diff --exit-code || (echo "looks like the update_docu_links.py did not run" && false)

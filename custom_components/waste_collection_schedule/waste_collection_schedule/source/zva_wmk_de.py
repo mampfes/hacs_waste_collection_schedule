@@ -11,7 +11,10 @@ TEST_CASES = {
     "Frankenhain": {"city": "Berkatal - Frankenhain", "street": "Teichhof"},
     "Hebenshausen": {"city": "Neu-Eichenberg - Hebenshausen", "street": "Bachstraße"},
     "Vockerode": {"city": "Meißner - Vockerode", "street": "Feuerwehr"},
-    "Bad Sooden-Allendorf": {"city": "Bad Sooden-Allendorf - Allendorf", "street": "Kannhöhe"},
+    "Bad Sooden-Allendorf": {
+        "city": "Bad Sooden-Allendorf - Allendorf",
+        "street": "Kannhöhe",
+    },
 }
 
 PARAM_TRANSLATIONS = {
@@ -49,18 +52,18 @@ class Source:
 
     def _fetch_year(self, year):
         match year:
-                case 2021:
-                        yearstr="schnellsuche-2021"
-                case 2023:
-                        yearstr="schnellsuche-2023"
-                case 2024:
-                        yearstr=""
-                case 2025:
-                        yearstr="schnellsuche-2020"
-                case 2026:
-                        yearstr="persönlicher-terminkalender-2026"                    
-                case _:
-                        yearstr="persönlicher-terminkalender-2026"
+            case 2021:
+                yearstr = "schnellsuche-2021"
+            case 2023:
+                yearstr = "schnellsuche-2023"
+            case 2024:
+                yearstr = ""
+            case 2025:
+                yearstr = "schnellsuche-2020"
+            case 2026:
+                yearstr = "persönlicher-terminkalender-2026"
+            case _:
+                yearstr = "persönlicher-terminkalender-2026"
         try:
             return self._fetch_yearstr(yearstr, self._street)
         except Exception:
@@ -69,9 +72,7 @@ class Source:
     def _fetch_yearstr(self, yearstr, street):
         params = {"city": self._city, "street": street, "type": "all", "link": "ical"}
 
-        r = requests.get(
-            f"https://www.zva-wmk.de/termine/{yearstr}", params=params
-        )
+        r = requests.get(f"https://www.zva-wmk.de/termine/{yearstr}", params=params)
         r.raise_for_status()
 
         dates = self._ics.convert(r.text)

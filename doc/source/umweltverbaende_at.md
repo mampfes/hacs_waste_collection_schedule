@@ -27,7 +27,7 @@ waste_collection_schedule:
 Lower Austrian district, see table below for valid DISTRICT_ARG
 
 
-There are 2 kind of webistes supported. Service providers use one of them but not both.
+There are 2 kind of websites supported. Service providers use one of them but not both.
 
 ### 1. New WordPress based websites.
 
@@ -165,7 +165,7 @@ waste_collection_schedule:
       args:
         district: "korneuburg" # Korneuburg
         municipal: "Bisamberg" # Municipal
-        calendar: "Zone B" # Rayon
+        calendar: "Bisamberg B" # Rayon
         calendar_title_separator: ","
         calendar_splitter: ":"
 ```

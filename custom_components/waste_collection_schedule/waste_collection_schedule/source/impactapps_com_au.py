@@ -167,6 +167,12 @@ TEST_CASES = {
         "street_name": "The Parade",
         "street_number": "44",
     },
+    "Clarence Valley Council": {
+        "service": "clarence",
+        "suburb": "Yamba",
+        "street_name": "Wattle Drive",
+        "street_number": "24",
+    },
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
@@ -343,6 +349,11 @@ SERVICE_MAP = (
             "name": "Murrindindi Shire Counci",
             "url": "https://murrindindi.waste-info.com.au",
             "website": "https://www.murrindindi.vic.gov.au",
+        },
+        {
+            "name": "Clarence Valley Council",
+            "url": "https://clarane.waste-info.com.au",
+            "website": "https://www.clarence.nsw.gov.au",
         },
     ]
 )

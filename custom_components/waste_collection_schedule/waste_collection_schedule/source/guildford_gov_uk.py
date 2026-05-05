@@ -46,7 +46,7 @@ class Source:
             str = r.text.split(" ")
             current = 0
             while current < len(str):
-                # Having split the string in a space delimited list, walk through lookin for the cookie it was expecting
+                # Having split the string in a space delimited list, walk through looking for the cookie it was expecting
                 if str[current] == "Expected:":
                     framework = str[current + 1]
                     # Having updated the cookie, try the POST request again. It should work (As we're providing the cookie it told us to use !)

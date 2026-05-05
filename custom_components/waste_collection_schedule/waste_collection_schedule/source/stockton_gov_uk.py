@@ -3,8 +3,8 @@ import json
 import re
 from datetime import datetime
 
-import cloudscraper
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 
 # Source code based on gateshead_gov_uk
@@ -35,14 +35,8 @@ class Source:
         self._uprn: str | int = uprn
 
     def fetch(self):
-        """Fetch using cloudscraper to bypass Cloudflare anti-bot protection"""
-        scraper = cloudscraper.create_scraper(
-            browser={
-                'browser': 'chrome',
-                'platform': 'windows',
-                'mobile': False
-            }
-        )
+        """Fetch using curl_cffi to bypass Cloudflare anti-bot protection."""
+        scraper = requests.Session(impersonate="chrome124")
 
         # Start a session with the target URL
         r = scraper.get(API_URL, timeout=30)
@@ -51,28 +45,53 @@ class Source:
         # Process the response and extract collection data
         soup = BeautifulSoup(r.text, features="html.parser")
 
-        # Extract form submission url and form data
-        form_url = soup.find(
-            "form", attrs={"id": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_FORM"}
-        )["action"]
-        pageSessionId = soup.find(
+        # Stockton migrated this form to a V2 name (and action URL includes pageSessionId)
+        form = soup.find(
+            "form",
+            attrs={"id": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_FORM"},
+        )
+        if not form or not form.get("action"):
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_FORM or action"
+            )
+        form_url = form["action"]
+
+        pageSessionId_input = soup.find(
             "input",
-            attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_PAGESESSIONID"},
-        )["value"]
-        sessionId = soup.find(
-            "input", attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_SESSIONID"}
-        )["value"]
-        nonce = soup.find(
-            "input", attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_NONCE"}
-        )["value"]
+            attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_PAGESESSIONID"},
+        )
+        sessionId_input = soup.find(
+            "input",
+            attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_SESSIONID"},
+        )
+        nonce_input = soup.find(
+            "input",
+            attrs={"name": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_NONCE"},
+        )
+        if not pageSessionId_input or not pageSessionId_input.get("value"):
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_PAGESESSIONID"
+            )
+        if not sessionId_input or not sessionId_input.get("value"):
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_SESSIONID"
+            )
+        if not nonce_input or not nonce_input.get("value"):
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_NONCE"
+            )
+
+        pageSessionId = pageSessionId_input["value"]
+        sessionId = sessionId_input["value"]
+        nonce = nonce_input["value"]
 
         form_data = {
-            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_PAGESESSIONID": pageSessionId,
-            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_SESSIONID": sessionId,
-            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_NONCE": nonce,
-            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_FORMACTION_NEXT": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_FINDBUTTON",
-            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_UPRN": self._uprn,
-            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGION_CUSTODIAN": "738",
+            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_PAGESESSIONID": pageSessionId,
+            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_SESSIONID": sessionId,
+            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_NONCE": nonce,
+            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_FORMACTION_NEXT": "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_FINDBUTTON",
+            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_UPRN": self._uprn,
+            "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2_CUSTODIAN": "738",
         }
 
         # Submit form
@@ -82,12 +101,20 @@ class Source:
         # Extract encoded response data
         soup = BeautifulSoup(r.text, features="html.parser")
         pattern = re.compile(
-            r"var LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONFormData = \"(.*?)\";$",
+            r"var LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2FormData = \"(.*?)\";$",
             re.MULTILINE | re.DOTALL,
         )
-        script = soup.find("script", text=pattern)
-
-        response_data = pattern.search(script.text).group(1)
+        script = soup.find("script", string=pattern)
+        if not script:
+            raise ValueError(
+                "Could not find LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2FormData in response"
+            )
+        match = pattern.search(script.get_text())
+        if not match:
+            raise ValueError(
+                "Could not extract LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2FormData value"
+            )
+        response_data = match.group(1)
 
         # Decode base64 encoded response data and convert to JSON
         decoded_data = base64.b64decode(response_data)

@@ -1,13 +1,14 @@
 from datetime import datetime
 
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
 )
-import urllib3
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 TITLE = "Cheshire East Council"
@@ -16,8 +17,16 @@ URL = "https://cheshireeast.gov.uk"
 TEST_CASES = {
     "houseUPRN-VerifyTrue": {"uprn": "100010132073", "verify": True},
     "houseUPRN-VerifyFalse": {"uprn": "100010132073", "verify": False},
-    "houseAddress-VerifyTrue": {"postcode": "WA16 0AY", "name_number": "3", "verify": True},
-    "houseAddress-VerifyFalse": {"postcode": "WA16 0AY", "name_number": "3", "verify": False},
+    "houseAddress-VerifyTrue": {
+        "postcode": "WA16 0AY",
+        "name_number": "3",
+        "verify": True,
+    },
+    "houseAddress-VerifyFalse": {
+        "postcode": "WA16 0AY",
+        "name_number": "3",
+        "verify": False,
+    },
 }
 
 ICON_MAP = {

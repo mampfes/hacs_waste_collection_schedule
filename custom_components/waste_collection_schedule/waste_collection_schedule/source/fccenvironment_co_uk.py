@@ -1,3 +1,4 @@
+import datetime
 from urllib.parse import urlparse
 
 import requests
@@ -79,7 +80,7 @@ class Source:
             },
             verify=False,
         )
-        results = {}
+        results: dict[str, datetime.date] = {}
         for item in response.json()["binCollections"]["tile"]:
             try:
                 soup = BeautifulSoup(item[0], "html.parser")
@@ -124,10 +125,11 @@ class Source:
             verify=False,
         )
         soup = BeautifulSoup(r.text, "html.parser")
-        services = soup.find(
+        services_div = soup.find(
             "div",
             attrs={"class": "blocks block-your-next-scheduled-bin-collection-days"},
-        ).find_all("li")
+        )
+        services = services_div.find_all("li") if services_div else []  # type: ignore[union-attr]
         entries = []
         for service in services:
             for type in _icons:
@@ -161,3 +163,4 @@ class Source:
             return self.getcollectiondetails(
                 endpoint="https://waste.southhams.gov.uk/mycollections/getcollectiondetails"
             )
+        return []

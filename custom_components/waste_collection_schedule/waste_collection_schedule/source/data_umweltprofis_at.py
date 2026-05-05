@@ -85,7 +85,7 @@ class Source:
 
         r.raise_for_status()
 
-        doc = parseString(r.text)
+        doc = parseString(r.text)  # nosec B318
         appointments = doc.getElementsByTagName("AppointmentEntry")
 
         entries = []

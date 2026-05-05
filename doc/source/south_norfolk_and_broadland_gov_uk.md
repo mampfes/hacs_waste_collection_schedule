@@ -25,7 +25,7 @@ Full examples for both council areas are given at the bottom of the documentatio
 *(String) (optional)  
 
 **address_payload**  
-*(dict) (optional) (depreated)*  
+*(dict) (optional) (deprecated)*  
 
 Either address_payload or postcode and address are needed (address_payload will be used if both are present).
 
@@ -37,7 +37,7 @@ Either address_payload or postcode and address are needed (address_payload will 
 - Enter your postcode and also use it as postcode variable.
 - Select your address and use it as address variable. The configured string should exactly match the text of your selection in the dropdown.
 
-### address_payload (depricated)
+### address_payload (deprecated)
 
 This argument is the old way of configuring this source, and using it overrides any arguments given for postcode and address. It is easy to fetch by capturing the data from a cookie using Google Chrome or a Chromium-based browser (e.g. Edge). If you are using another browser (such as Firefox or Safari), please use the postcode and address arguments instead as this method will not work.
 1. Go to https://area.southnorfolkandbroadland.gov.uk/

@@ -10,3 +10,5 @@ howto:
 test_cases:
   Altlußheim:
     url: https://www.blauetonne-schlauetonne.de/abfuhrkalender/{%Y}/altlussheim-altlussheim-1668.ics
+  Bruchsal Untergrombach:
+    url: https://www.blauetonne-schlauetonne.de/abfuhrkalender/{%Y}/bruchsal-untergrombach-244.ics

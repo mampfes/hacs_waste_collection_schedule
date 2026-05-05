@@ -15,10 +15,12 @@ TEST_CASES = {
     "Blackthorn Avenue - string": {"uprn": "10013792881"},
 }
 API_URL = "https://satellite.horsham.gov.uk/environment/refuse/cal_details.asp"
+# Updated 1st April 2026 as Food Waste was added, and the names for the refuse bins had been updated
 ICON_MAP = {
-    "Refuse Bin for Non-Recycling": "mdi:trash-can",
+    "Green Bin for Refuse and Non-Recycling": "mdi:trash-can",
     "Blue-Top Bin for Recycling": "mdi:recycle",
     "Brown-Top Bin for Garden Waste": "mdi:leaf",
+    "Orange-Top Bin for Food Waste": "mdi:food",
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -69,20 +71,18 @@ class Source:
                 date = datetime.strptime(
                     result_row[1].text, "%d/%m/%Y"
                 ).date()  # Pull out the rows date
-                collection_text = result_row[2].text.replace(
-                    "\xa0", " "
-                )  # This is to remove a non-blanking space
-                collection_items = collection_text.split(
-                    "AND"
-                )  # Sometimes there will be multiple bins, split with the word AND
+
+                # The website now uses <li> elements for each bin type
+                list_items = result_row[2].find_all("li")
+                collection_items = [li.get_text(strip=True) for li in list_items]
                 for collection_type in collection_items:
+                    if not collection_type:
+                        continue
                     entries.append(
                         Collection(
                             date=date,
-                            t=collection_type.strip(),  # Strip added to remove trailing white space
-                            icon=ICON_MAP.get(
-                                collection_type.strip()
-                            ),  # Strip added to remove trailing white space
+                            t=collection_type,
+                            icon=ICON_MAP.get(collection_type),
                         )
                     )
 

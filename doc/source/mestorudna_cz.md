@@ -27,12 +27,11 @@ waste_collection_schedule:
       args:
         city_part: "Sudé týdny"
 
-sensor:
-  - platform: waste_collection_schedule
-    name: next_yard_collection
-    types:
-      - Svoz sběrných hnízd - papír
-    details_format: appointment_types
+  sensors:
+    - name: next_yard_collection
+      types:
+        - Svoz sběrných hnízd - papír
+      details_format: appointment_types
 ```
 
 #### How to find your `city_part`

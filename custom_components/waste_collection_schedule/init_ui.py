@@ -1,5 +1,7 @@
 """Config flow setup logic."""
 
+import asyncio
+import importlib
 import logging
 from typing import Any
 
@@ -79,6 +81,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(const.DOMAIN, {})[entry.entry_id] = coordinator
+
+    # Pre-import platforms in parallel to avoid blocking I/O in the event loop
+    await asyncio.gather(
+        *[
+            hass.async_add_executor_job(
+                importlib.import_module,
+                f"custom_components.waste_collection_schedule.{platform}",
+            )
+            for platform in PLATFORMS
+        ]
+    )
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 

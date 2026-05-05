@@ -36,7 +36,7 @@ You can find your house reference number by going to https://www.findmyaddress.c
 
 You can also check the Liverpool City Council website by browsing to https://liverpool.gov.uk/Address/GetAddressesByPostcode/?postcode=L19 8LR and replacing postcode with your own. (You can leave a space in the URL or use %20 instead of the space)
 
-## Returned collectons
+## Returned collections
 The API will return the next collection dates for each container type. This will typically be the collections for the next 3 weeks but may vary over holiday periods
 
 ## Returned collection types

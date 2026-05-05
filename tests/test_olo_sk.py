@@ -1,27 +1,43 @@
-import sys
 import os
-from datetime import date, timedelta
-from unittest.mock import MagicMock
+import sys
 import types
+from datetime import date
+from unittest.mock import MagicMock
+
 import pytest
 
 # Mock the waste_collection_schedule module before importing olo_sk
-wcs = types.ModuleType('waste_collection_schedule')
-wcs.Collection = MagicMock
-sys.modules['waste_collection_schedule'] = wcs
+wcs = types.ModuleType("waste_collection_schedule")
+wcs.Collection = MagicMock  # type: ignore[attr-defined]
+sys.modules["waste_collection_schedule"] = wcs
 
-exceptions = types.ModuleType('waste_collection_schedule.exceptions')
+exceptions = types.ModuleType("waste_collection_schedule.exceptions")
+
+
 class SourceArgumentExceptionMultiple(Exception):
     def __init__(self, args, reason):
         super().__init__(f"Arguments required: {args} - {reason}")
-exceptions.SourceArgumentExceptionMultiple = SourceArgumentExceptionMultiple
-sys.modules['waste_collection_schedule.exceptions'] = exceptions
+
+
+exceptions.SourceArgumentExceptionMultiple = SourceArgumentExceptionMultiple  # type: ignore[attr-defined]
+sys.modules["waste_collection_schedule.exceptions"] = exceptions
 
 # Insert source path to sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "custom_components", "waste_collection_schedule", "waste_collection_schedule")))
+sys.path.insert(
+    0,
+    os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "..",
+            "custom_components",
+            "waste_collection_schedule",
+            "waste_collection_schedule",
+        )
+    ),
+)
 
 # Now we can import the source module directly
-from source import olo_sk
+from source import olo_sk  # noqa: E402
 
 
 class FixedDate(date):
