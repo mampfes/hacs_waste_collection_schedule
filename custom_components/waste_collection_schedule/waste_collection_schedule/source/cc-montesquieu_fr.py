@@ -185,42 +185,6 @@ class Source:
             table_heads[2].text: table_datas[2].text.strip(),
         }
 
-    def get_planning_table_dechets_verts_et_encombrants(
-        self, parsed_source: BeautifulSoup
-    ) -> dict[str, dict[str, list[date]]]:
-        tables = parsed_source.find_all("div", class_="block-openclose skin-openclose")
-
-        planning: dict[str, dict[str, list[date]]] = {}
-
-        # If no matching divs found, return empty dict (planning data may be in PDF format)
-        if not tables:
-            return planning
-
-        for t in tables:
-            dechet = t.find("h3", class_="title")
-            if not dechet:
-                continue
-
-            table_rows = t.find_all("tr")
-            for row in table_rows:
-                td = row.find_all("td")
-                if td:
-                    villes = [
-                        ville.text.strip() for ville in td[0].find_all(string=True)
-                    ]
-                    parsed_dates = [
-                        self.convert_date(date.text.strip())
-                        for date in td[1].find_all("p")
-                    ]
-                    for ville in villes:
-                        try:
-                            planning[ville][dechet.text.strip()] = parsed_dates
-                        except KeyError:
-                            planning[ville] = dict()
-                            planning[ville][dechet.text.strip()] = parsed_dates
-
-        return planning
-
     def get_planning_table_dechets_verts_et_encombrants_pdf(
         self, parsed_source: BeautifulSoup
     ) -> dict[str, dict[str, list[date]]]:
@@ -388,24 +352,3 @@ class Source:
 
         return dates
 
-    def convert_date(self, raw_date: str) -> date:
-        MOIS = {
-            "janvier": "01",
-            "fevrier": "02",
-            "mars": "03",
-            "avril": "04",
-            "mai": "05",
-            "juin": "06",
-            "juillet": "07",
-            "aout": "08",
-            "septembre": "09",
-            "octobre": "10",
-            "novembre": "11",
-            "decembre": "12",
-        }
-        jour, mois = raw_date.split()
-        jour = jour.replace("*", "")
-        jour = jour.replace("er", "")
-        mois = mois.replace("é", "e")
-
-        return date.fromisoformat(f"{date.today().year}-{MOIS[mois]:0>2}-{jour:0>2}")
