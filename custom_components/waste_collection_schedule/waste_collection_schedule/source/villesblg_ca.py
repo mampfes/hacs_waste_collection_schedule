@@ -1,9 +1,8 @@
-from datetime import date, timedelta
-from typing import Collection
+from datetime import date
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Ville de Saint-Basile-le-Grand"
 DESCRIPTION = "Source for villesblg.ca waste collection calendar"
@@ -48,25 +47,18 @@ class Source:
         r = requests.get(FEED_URL)
         r.raise_for_status()
 
-        # Use lxml parser for better XML handling
         soup = BeautifulSoup(r.text, "lxml-xml")
         entries = []
 
-        # Find all item elements in the RSS feed
-        items = soup.find_all("item")
-
-        for item in items:
-            # Extract waste type from title
+        for item in soup.find_all("item"):
             title_tag = item.find("title")
             if not title_tag:
                 continue
             title = title_tag.get_text(strip=True)
 
-            # Skip "rebuts" and RDD events (not regular collection types)
             if "rebuts" in title.lower() or "dangereux" in title.lower():
                 continue
 
-            # Extract date from startDay tag (actual collection date)
             start_day = item.find("startDay")
             if not start_day:
                 continue
@@ -74,14 +66,12 @@ class Source:
             if not date_str or date_str == "Aucune":
                 continue
 
-            # Parse date in MM/DD/YYYY format
             try:
-                month, day, year = date_str.split("/")
+                day, month, year = date_str.split("/")
                 collection_date = date(int(year), int(month), int(day))
             except (ValueError, AttributeError):
                 continue
 
-            # Skip dates older than today (allow today and future)
             if collection_date < date.today():
                 continue
 

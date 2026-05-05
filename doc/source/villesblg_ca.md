@@ -19,15 +19,6 @@ waste_collection_schedule:
 
 No arguments required - the calendar is the same for all residents of Saint-Basile-le-Grand.
 
-## Example
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: villesblg_ca
-      args:
-```
-
 ## Waste Types
 
 - **Ordures** (Trash) - `mdi:trash-can`
