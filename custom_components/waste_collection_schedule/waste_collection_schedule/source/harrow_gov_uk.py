@@ -1,5 +1,4 @@
 import datetime
-import json
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -40,12 +39,21 @@ class Source:
 
     def fetch(self):
         r = requests.get(API_URL.format(uprn=self._uprn))
-        rubbish_data = json.loads(r.content)
+        r.raise_for_status()
+
+        if not r.content:
+            raise ValueError(
+                f"No data returned for UPRN {self._uprn} — the service may be temporarily unavailable"
+            )
+
+        rubbish_data = r.json()
 
         entries = []
 
         for next_collection in rubbish_data["results"]["collections"]["next"]:
-            collection_type = COLLECTION_MAP[next_collection["binType"]]
+            collection_type = COLLECTION_MAP.get(next_collection["binType"])
+            if collection_type is None:
+                continue
             collection_date = next_collection["eventTime"]
             entries.append(
                 Collection(
