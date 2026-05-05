@@ -20,5 +20,5 @@ waste_collection_schedule:
     - name: ics
       args:
         regex: Collecte\s*-\s(\w+)
-        url: https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics?matricule=8753-16-3780-6-000-0000&codeZone=8
+        url: https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics?matricule=8546-45-9730-2-000-0000&codeZone=12
 ```

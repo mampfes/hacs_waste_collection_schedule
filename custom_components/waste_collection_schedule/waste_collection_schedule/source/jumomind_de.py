@@ -141,6 +141,7 @@ SERVICE_MAP = {
             "Darmstadt",
             "Esens",
             "Flensburg",
+            "Gelnhausen",
             "Grävenwiesbach",
             "Großkrotzenburg",
             "Hainburg",

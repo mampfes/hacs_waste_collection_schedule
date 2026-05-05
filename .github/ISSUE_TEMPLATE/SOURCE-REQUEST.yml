@@ -12,11 +12,17 @@ body:
         - Search the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) for your municipality name
         - Check if your provider uses a platform we already support (Recollect, ArcGIS, ICS feeds, Abfall+ app, etc.)
 
-        Source requests are very welcome, but please note that only a small number of contributors are currently active in implementing new requests. Most available maintainer capacity is currently focused on reviewing pull requests and fixing critical issues.
+        ---
 
-        If you already have enough information for your municipality/region, you are very welcome to implement the source and open a pull request yourself: [How to contribute](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/contributing.md).
+        ### 💡 Have you considered implementing this yourself?
 
-        If you can support implementation, testing, documentation, or reviews, the project would greatly appreciate your help.
+        Source requests are very welcome, but please note that only a small number of contributors are currently active. Most available maintainer capacity is focused on reviewing pull requests and fixing critical issues — there is no guarantee your request will be picked up.
+
+        **The good news:** you don't need to be a programmer. Free AI coding agents (Claude, Copilot, Cursor, Codex, etc.) can often implement a new source in under an hour — even if you've never written Python before. This repository includes a dedicated guide for exactly this:
+
+        👉 **[AGENTS.md](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/AGENTS.md)** — step-by-step instructions written for AI assistants. Point your coding agent at this file and describe your waste provider. Then open a [pull request](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/contributing.md).
+
+        If your attempt didn't work out, that's absolutely fine — paste what you tried in the Additional Information field below and it will help whoever picks this up.
   - type: input
     id: region
     attributes:
@@ -92,3 +98,5 @@ body:
           required: true
         - label: I have provided a working example address (not my own) for testing
           required: true
+        - label: I have tried to implement this myself (or with a free coding agent like Claude or Copilot, following [AGENTS.md](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/AGENTS.md))
+          required: false

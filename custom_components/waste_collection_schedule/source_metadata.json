@@ -472,6 +472,13 @@
     "howto": {},
     "urls": {}
   },
+  "mount_alexander_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mount_alexander_vic_gov_au.md",
+    "howto": {
+      "en": "Enter your full street address as it appears on the council website, e.g. '1 Mostyn Street Castlemaine Victoria 3450'."
+    },
+    "urls": {}
+  },
   "moyne_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moyne_vic_gov_au.md",
     "howto": {},
@@ -500,6 +507,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northernbeaches_nsw_gov_au.md",
     "howto": {
       "en": "Enter your address as shown on the Northern Beaches Council website, e.g. '25 Pittwater Road MANLY'."
+    },
+    "urls": {}
+  },
+  "orange_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orange_nsw_gov_au.md",
+    "howto": {
+      "en": "Orange City Council divides the city into two fortnightly recycling zones (referred to in the waste booklet as Week A and Week B). Zone A covers properties west of Anson Street. Zone B covers properties east of Anson Street, properties on Anson Street, Spring Hill, Lucknow, and Clifton Grove. Download the annual waste booklet from https://www.orange.nsw.gov.au/waste/ to confirm which zone your street belongs to."
     },
     "urls": {}
   },
@@ -538,6 +552,20 @@
   "shellharbourwaste_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shellharbourwaste_com_au.md",
     "howto": {},
+    "urls": {}
+  },
+  "dardanup_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dardanup_wa_gov_au.md",
+    "howto": {
+      "en": "Visit https://www.dardanup.wa.gov.au/our-services/waste-and-recycling/find-your-bin-day.aspx and find your street in the list to determine your collection day. Enter your street name (without house number) as the 'street' argument, or enter the day directly as 'collection_day' (for Dardanup West / Ferguson Valley residents). For recycling_in_even_week: check your last recycling collection date and see if its ISO week number (https://whatweekisit.org/) was even (True) or odd (False)."
+    },
+    "urls": {}
+  },
+  "harvey_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/harvey_wa_gov_au.md",
+    "howto": {
+      "en": "Visit https://www.harvey.wa.gov.au/services/rubbish-and-waste-services/bin-collection-residential-and-commercial and find your suburb in the collection day list. Use the exact text shown. For recycling_in_even_week: check your last recycling collection date and see if its ISO week number (https://whatweekisit.org/) was even (True) or odd (False)."
+    },
     "urls": {}
   },
   "mundaring_wa_gov_au": {
@@ -1063,6 +1091,14 @@
     },
     "urls": {}
   },
+  "ics_sherbrooke_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sherbrooke_ca.md",
+    "howto": {
+      "en": "- Go to <https://www.sherbrooke.ca/fr/services-a-la-population/collecte-des-matieres-residuelles/calendrier-des-collectes>\n- Enter your address to retrieve your personalized calendar ICS URL\n- Copy the ICS URL (right-click the calendar link and select \"Copy link address\")\n- Use this URL as the `url` parameter.\n- Example URL pattern: `https://api.sherbrooke.ca/collection-schedules/calendars/{calendar}/sectors/{sector}/days/{day}/ics`\n",
+      "fr": "- Allez à <https://www.sherbrooke.ca/fr/services-a-la-population/collecte-des-matieres-residuelles/calendrier-des-collectes>\n- Entrez votre adresse pour obtenir l'URL personnalisée de votre calendrier ICS\n- Copiez l'URL ICS (faites un clic droit sur le lien du calendrier et sélectionnez \"Copier l'adresse du lien\")\n- Utilisez cette URL comme paramètre `url`.\n- Modèle d'URL: `https://api.sherbrooke.ca/collection-schedules/calendars/{calendar}/sectors/{sector}/days/{day}/ics`\n"
+    },
+    "urls": {}
+  },
   "toronto_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toronto_ca.md",
     "howto": {},
@@ -1073,6 +1109,19 @@
     "howto": {
       "en": "- Visit <https://www.ville.valleyfield.qc.ca/calendrier-electronique-collecte> and open the IOS tab.  \n- Copy the google calendar ICS link of your sector.\n- Use this link as the `url` parameter.\n- You can use the regex `Collecte (?:du|des) (.*)` to shorten the event titles (will remove the `Collecte du `/`Collecte des ` prefix).\n"
     },
+    "urls": {}
+  },
+  "saguenay_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/saguenay_ca.md",
+    "howto": {
+      "en": "1. Go to https://ville.saguenay.ca/services-aux-citoyens/environnement/horaire-des-collectes 2. Open your browser's developer tools (F12) and go to the Network tab 3. Enter your address in the search field 4. Look for a request named 'collectesinfos' (URL: https://ville.saguenay.ca/ajax/collectes/collectesinfos) 5. In the Payload tab, copy the value of 'cle_batiment' 6. Use this number as the batiment parameter",
+      "fr": "1. Allez à https://ville.saguenay.ca/services-aux-citoyens/environnement/horaire-des-collectes 2. Ouvrez les outils de développement de votre navigateur (F12) et allez à l'onglet Réseau 3. Entrez votre adresse dans le champ de recherche 4. Cherchez une requête nommée 'collectesinfos' (URL: https://ville.saguenay.ca/ajax/collectes/collectesinfos) 5. Dans l'onglet Payload, copiez la valeur de 'cle_batiment' 6. Utilisez ce numéro comme paramètre batiment"
+    },
+    "urls": {}
+  },
+  "villesblg_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/villesblg_ca.md",
+    "howto": {},
     "urls": {}
   },
   "myutility_winnipeg_ca": {
@@ -3102,6 +3151,11 @@
     "howto": {},
     "urls": {}
   },
+  "fredrikstad_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fredrikstad_no.md",
+    "howto": {},
+    "urls": {}
+  },
   "innherredrenovasjon_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/innherredrenovasjon_no.md",
     "howto": {},
@@ -3500,6 +3554,11 @@
   },
   "vivab_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vivab_se.md",
+    "howto": {},
+    "urls": {}
+  },
+  "vmab_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vmab_se.md",
     "howto": {},
     "urls": {}
   },

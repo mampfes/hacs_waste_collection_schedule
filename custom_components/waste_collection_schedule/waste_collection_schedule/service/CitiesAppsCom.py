@@ -1467,6 +1467,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Weinitzen",
+        "url": "https://www.weinitzen.gv.at",
+        "country": "at",
+    },
+    {
         "title": "Weiz",
         "url": "https://www.weiz.at",
         "country": "at",

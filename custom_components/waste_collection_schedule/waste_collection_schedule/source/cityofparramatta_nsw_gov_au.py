@@ -186,14 +186,11 @@ class Source:
                 )
             )
 
-        # Garden Organics / FOGO (Alternate Fortnightly)
-        fogo_dates = self.get_collection_dates(
-            collection_day, is_area_1, is_recycling=False
-        )
-        for d in fogo_dates:
+        # Garden Organics / FOGO (Weekly since late 2024 rollout)
+        for i in range(4):
             entries.append(
                 Collection(
-                    date=d,
+                    date=next_general + timedelta(days=i * 7),
                     t="Garden Organics (Green Bin)",
                     icon=ICON_MAP.get("Garden Organics (Green Bin)"),
                 )

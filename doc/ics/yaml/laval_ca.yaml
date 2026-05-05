@@ -13,7 +13,9 @@ howto:
     - Faites un clic droit sur 'Ajouter à mon agenda' et sélectionnez `Copier l'adresse du lien`.
     - Utilisez ce lien copié comme paramètre `url`.
     - Vous pouvez supprimer les données de suivi après `codeZone=#`
+default_params:
+  regex: Collecte\s*-\s(\w+)
 test_cases:
   "Default":
-    url: https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics?matricule=8753-16-3780-6-000-0000&codeZone=8
+    url: https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics?matricule=8546-45-9730-2-000-0000&codeZone=12
     regex: Collecte\s*-\s(\w+)
