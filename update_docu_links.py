@@ -1127,6 +1127,10 @@ COUNTRYCODES = [
         "code": "fi",
         "name": "Finland",
     },
+    {
+        "code": "pt",
+        "name": "Portugal",
+    },
 ]
 
 
