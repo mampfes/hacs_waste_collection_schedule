@@ -37,21 +37,7 @@ TEST_CASES = {
 
 # Provide (don’t comment out) so the GUI has instructions.
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "pl": """
-1) Wejdź na stronę z rejonami (ulice -> rejon):
-   kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/
-
-2) W tabelach znajdziesz nagłówki rejonów: R I, R II, ..., R VII.
-
-3) Wybierz numer district zgodnie z mapowaniem:
-   - R I   -> 1
-   - R II  -> 2
-   - R III -> 3
-   - R IV  -> 4
-   - R V   -> 5
-   - R VI  -> 6
-   - R VII -> 7
-""".strip(),
+    "en": "Enter your district number (1–7). Your district (R I through R VII) is printed on your bin collection notice or can be found on the KOM-LUB website (https://kom-lub.com.pl).",
 }
 
 INPUT_ARGUMENTS = [
