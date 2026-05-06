@@ -15,7 +15,8 @@ API_URL = "https://lcc-wrp.whitespacews.com"
 ICON_MAP = {
     "Domestic Waste": "mdi:trash-can",
     "Garden Waste": "mdi:leaf",
-    # Dynamic (non-PDF) calendar does not split the types of recycling other than garden and food.
+    "Recycling Red": "mdi:recycle",
+    "Recycling Yellow": "mdi:recycle",
     "Recycling": "mdi:recycle",
     "Food Waste": "mdi:food",
 }
@@ -51,9 +52,14 @@ class Source:
 
         entries = []
         for date_str, type_str in schedule:
-            collection_type = next(
-                (key for key in ICON_MAP if type_str.startswith(key)),
-                _clean_collection_type(type_str),
+            cleaned = _clean_collection_type(type_str)
+            collection_type = (
+                cleaned
+                if cleaned in ICON_MAP
+                else next(
+                    (key for key in ICON_MAP if type_str.startswith(key)),
+                    cleaned,
+                )
             )
             try:
                 entries.append(
