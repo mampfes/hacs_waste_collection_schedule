@@ -15529,6 +15529,29 @@
         },
         "data_description": {}
       },
+      "args_cm_lisboa_pt": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "area_name": "Area di raccolta"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "area_name": "Nome dell'area di raccolta (es. 'Restelo', 'Madredeus'). Visita {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} per trovare la tua area."
+        }
+      },
+      "reconfigure_cm_lisboa_pt": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "area_name": "Area di raccolta"
+        },
+        "data_description": {
+          "area_name": "Nome dell'area di raccolta (es. 'Restelo', 'Madredeus'). Visita {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} per trovare la tua area."
+        }
+      },
       "args_fcc_group_eu": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

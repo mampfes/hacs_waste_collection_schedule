@@ -15539,6 +15539,29 @@
         },
         "data_description": {}
       },
+      "args_cm_lisboa_pt": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area_name": "Zone de collecte"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "area_name": "Nom de la zone de collecte (ex. 'Restelo', 'Madredeus'). Visitez {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} pour trouver votre zone."
+        }
+      },
+      "reconfigure_cm_lisboa_pt": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area_name": "Zone de collecte"
+        },
+        "data_description": {
+          "area_name": "Nom de la zone de collecte (ex. 'Restelo', 'Madredeus'). Visitez {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} pour trouver votre zone."
+        }
+      },
       "args_fcc_group_eu": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

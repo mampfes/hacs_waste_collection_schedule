@@ -15653,6 +15653,14 @@
       "id": "lodz_pl"
     }
   ],
+  "Portugal": [
+    {
+      "title": "C\u00e2mara Municipal de Lisboa",
+      "module": "cm_lisboa_pt",
+      "default_params": {},
+      "id": "cm_lisboa_pt"
+    }
+  ],
   "Slovakia": [
     {
       "title": "fcc Environment",

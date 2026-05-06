@@ -2406,6 +2406,12 @@ If you already have enough information for your municipality/region, you are ver
 </details>
 
 <details>
+<summary>Portugal</summary>
+
+- [Câmara Municipal de Lisboa](/doc/source/cm_lisboa_pt.md) / informacoeseservicos.lisboa.pt/servicos/dias-do-lixo
+</details>
+
+<details>
 <summary>Slovakia</summary>
 
 - [fcc Environment](/doc/source/fcc_group_eu.md) / fcc-group.eu

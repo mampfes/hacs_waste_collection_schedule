@@ -3331,6 +3331,15 @@
     "howto": {},
     "urls": {}
   },
+  "cm_lisboa_pt": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cm_lisboa_pt.md",
+    "howto": {
+      "en": "Visit https://informacoeseservicos.lisboa.pt/servicos/dias-do-lixo and search for your address on the map. The area name shown in the popup (e.g. 'Restelo', 'Madredeus') is the value to use."
+    },
+    "urls": {
+      "url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo": "https://informacoeseservicos.lisboa.pt/servicos/dias-do-lixo"
+    }
+  },
   "fcc_group_eu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fcc_group_eu.md",
     "howto": {},

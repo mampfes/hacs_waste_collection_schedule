@@ -15966,6 +15966,29 @@
         },
         "data_description": {}
       },
+      "args_cm_lisboa_pt": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area_name": "Collection Area"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "area_name": "Name of the collection area (e.g. 'Restelo', 'Madredeus'). Visit {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} to find your area."
+        }
+      },
+      "reconfigure_cm_lisboa_pt": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area_name": "Collection Area"
+        },
+        "data_description": {
+          "area_name": "Name of the collection area (e.g. 'Restelo', 'Madredeus'). Visit {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} to find your area."
+        }
+      },
       "args_fcc_group_eu": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
