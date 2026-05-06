@@ -47,6 +47,7 @@ COMMUNES_NORMALIZED = {_normalize_commune(c): c for c in COMMUNES}
 EXTRA_INFO = [
     {
         "title": city,
+        "url": URL,
         "default_params": {"commune": city},
     }
     for city in COMMUNES
@@ -157,7 +158,9 @@ class Source:
             # The source HTML is malformed: the first <TR> is absent, so handle
             # the orphan TDs before the first proper <TR> manually.
             table_datas = table_body.find_all("td")
-            self._fill_planning(planning, table_datas[0].text.strip(), table_heads, table_datas)
+            self._fill_planning(
+                planning, table_datas[0].text.strip(), table_heads, table_datas
+            )
             for row in table_body.find_all("tr"):
                 td = row.select("td")
                 self._fill_planning(planning, td[0].text.strip(), table_heads, td)
