@@ -1096,6 +1096,10 @@ COUNTRYCODES = [
         "name": "Poland",
     },
     {
+        "code": "pt",
+        "name": "Portugal",
+    },
+    {
         "code": "se",
         "name": "Sweden",
     },
