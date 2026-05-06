@@ -27,7 +27,7 @@ Optional but recommended:
 
 - `COUNTRY: str` (ISO-3166-1 alpha-2, lower-case).
 - `EXTRA_INFO: list[dict]` for sources that cover multiple municipalities.
-- `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, `HOW_TO_GET_ARGUMENTS_DESCRIPTION` keyed by language code. **Only `en`, `de`, `it`, `fr` are supported** — other codes (e.g. `lt`, `pl`, `nl`) will fail the test suite.
+- `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, `HOW_TO_GET_ARGUMENTS_DESCRIPTION` keyed by language code. **Only `en`, `de`, `it`, `fr` are supported** — other codes (e.g. `lt`, `pl`, `nl`) will fail `test_source_has_necessary_parameters`. See the [HOW_TO_GET_ARGUMENTS_DESCRIPTION rules](#how_to_get_arguments_description-rules) section below.
 
 `Collection(date, t, icon=None, picture=None)` is the data model. Return one per collection event.
 
@@ -55,10 +55,38 @@ Things the maintainers consistently bounce in code review — avoid these from t
 - **Generic `Exception`.** Use `SourceArgumentNotFound` or `SourceArgumentNotFoundWithSuggestions` from `waste_collection_schedule.exceptions` for missing/invalid user input. Bubble up `requests.HTTPError` for upstream failures.
 - **`if __name__ == "__main__"` blocks.** Sources are libraries; no standalone entry points.
 - **Dummy parameters** added solely to satisfy the config GUI. If a parameter has no use, drop it.
-- **Unsupported language codes in `PARAM_DESCRIPTIONS` / `PARAM_TRANSLATIONS`.** Only `en`, `de`, `it`, `fr` are valid keys. Including any other code (e.g. `lt`, `nl`, `pl`) fails `test_source_has_necessary_parameters`.
+- **Unsupported language codes in `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, or `HOW_TO_GET_ARGUMENTS_DESCRIPTION`.** Only `en`, `de`, `it`, `fr` are valid keys. Including any other code (e.g. `lt`, `nl`, `pl`) fails `test_source_has_necessary_parameters`. If a contributor wrote their `HOW_TO_GET_ARGUMENTS_DESCRIPTION` in only one language (e.g. `{"en": "..."}`) that is fine — do not add translations for the other languages. See the [HOW_TO_GET_ARGUMENTS_DESCRIPTION rules](#how_to_get_arguments_description-rules) section.
 - **Editing files in the "must not hand-edit" list above** — they get overwritten by CI after merge.
 - **Suppressing failures silently.** Returning `[]` on an HTTP error masks problems as "no upcoming collections".
 - **Unformatted code.** Run `black` and `isort` before committing (see Commands below).
+
+## HOW_TO_GET_ARGUMENTS_DESCRIPTION rules
+
+`HOW_TO_GET_ARGUMENTS_DESCRIPTION` is an optional dict shown in the Home Assistant config flow above the input fields. It explains to users how to find the required parameter values (e.g. "Visit https://example.com and note the ID from the URL").
+
+**Valid language keys:** only `"en"`, `"de"`, `"it"`, `"fr"` — the same set as `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS`. Any other key (e.g. `"pl"`, `"nl"`, `"lt"`, `"cs"`) will cause `test_source_has_necessary_parameters` to fail.
+
+**It does not need to be provided in every language.** A contributor who only writes English or only writes their native language is perfectly valid:
+
+```python
+# Valid — only one language
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Visit https://example.com and select your street.",
+}
+
+# Also valid — contributor provided two languages
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Visit https://example.com and select your street.",
+    "de": "Besuchen Sie https://example.com und wählen Sie Ihre Straße.",
+}
+
+# Invalid — "pl" is not a supported language code
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "pl": "Odwiedź https://example.com i wybierz swoją ulicę.",
+}
+```
+
+**For reviewers and AI agents fixing up contributor PRs:** if a contributor has used an unsupported language code (e.g. `"pl"`), remove that key. Do not replace it by adding `"en"` unless you can write an accurate description of how to obtain the arguments — that knowledge belongs to the contributor. If you cannot write an accurate description, either remove the entire `HOW_TO_GET_ARGUMENTS_DESCRIPTION` dict or leave a comment for the contributor to provide one. Do **not** add language keys that the contributor did not originally include.
 
 ## Commands
 

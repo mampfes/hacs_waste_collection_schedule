@@ -20,7 +20,8 @@ For the human-facing guide, see [`doc/contributing.md`](../doc/contributing.md).
 - Generic `Exception` — use `SourceArgumentNotFound` / `SourceArgumentNotFoundWithSuggestions` for invalid user input.
 - `if __name__ == "__main__"` blocks in source modules.
 - Dummy parameters added just to satisfy the config GUI.
-- Unsupported language codes in `PARAM_DESCRIPTIONS` / `PARAM_TRANSLATIONS` — only `en`, `de`, `it`, `fr` are valid.
+- Unsupported language codes in `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, or `HOW_TO_GET_ARGUMENTS_DESCRIPTION` — only `en`, `de`, `it`, `fr` are valid keys. Any other code (e.g. `pl`, `nl`, `lt`) fails `test_source_has_necessary_parameters`.
+- Adding language keys to `HOW_TO_GET_ARGUMENTS_DESCRIPTION` that the contributor did not write — it is fine to provide the description in only one language. Reviewers and AI agents must not inject translations for languages the contributor did not include.
 - Committing generated files (`README.md`, `sources.json`, etc.) — CI handles these post-merge.
 - Silent `[]` returns on HTTP errors (masks failures as "no upcoming collections").
 - Unformatted code — always run `python -m black <path> && python -m isort --profile black <path>` before committing.
