@@ -37,21 +37,6 @@ TEST_CASES = {
 
 # Provide (don’t comment out) so the GUI has instructions.
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": """
-1) Go to the street-to-district lookup page:
-   kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/
-
-2) In the tables you will find district headings: R I, R II, ..., R VII.
-
-3) Choose your district number using the mapping:
-   - R I   -> 1
-   - R II  -> 2
-   - R III -> 3
-   - R IV  -> 4
-   - R V   -> 5
-   - R VI  -> 6
-   - R VII -> 7
-""".strip(),
     "pl": """
 1) Wejdź na stronę z rejonami (ulice -> rejon):
    kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/
