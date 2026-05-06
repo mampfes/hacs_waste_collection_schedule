@@ -1,46 +1,23 @@
 import os
 import sys
-import types
 from datetime import date
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
-# Mock the waste_collection_schedule module before importing stockport_gov_uk
-wcs = types.ModuleType("waste_collection_schedule")
-
-
-class MockCollection:
-    """Mock Collection class that stores the data for assertions."""
-
-    def __init__(self, date, t, icon):
-        self.date = date
-        self.t = t
-        self.icon = icon
-
-    def __repr__(self):
-        return f"Collection({self.date}, {self.t}, {self.icon})"
-
-
-wcs.Collection = MockCollection  # type: ignore[attr-defined]
-sys.modules["waste_collection_schedule"] = wcs
-
-# Insert source path to sys.path
-sys.path.insert(
-    0,
+sys.path.append(
     os.path.abspath(
         os.path.join(
             os.path.dirname(__file__),
             "..",
             "custom_components",
             "waste_collection_schedule",
-            "waste_collection_schedule",
         )
-    ),
+    )
 )
 
-# Now we can import the source module directly
-from source import stockport_gov_uk  # noqa: E402
+from waste_collection_schedule import Collection  # noqa: E402
+from waste_collection_schedule.source import stockport_gov_uk  # noqa: E402
 
 # Sample HTML that mimics the Stockport council website structure
 # This is the key test fixture - it should match the real website structure
@@ -148,7 +125,7 @@ def test_each_bin_gets_correct_date(source):
         entries = source.fetch()
 
     # Convert to dict for easier assertion
-    entries_by_type = {e.t: e.date for e in entries}
+    entries_by_type = {e.type: e.date for e in entries}
 
     assert entries_by_type["Green bin"] == date(2026, 5, 7)
     assert entries_by_type["Black bin"] == date(2026, 5, 14)  # NOT May 7!
@@ -163,7 +140,7 @@ def test_fetch_returns_all_bins(source):
         entries = source.fetch()
 
     assert len(entries) == 4
-    bin_types = {e.t for e in entries}
+    bin_types = {e.type for e in entries}
     assert bin_types == {"Green bin", "Blue bin", "Black bin", "Brown bin"}
 
 
@@ -173,7 +150,7 @@ def test_correct_icons_assigned(source):
         mock_get.return_value = MockResponse(SAMPLE_HTML)
         entries = source.fetch()
 
-    entries_by_type = {e.t: e.icon for e in entries}
+    entries_by_type = {e.type: e.icon for e in entries}
 
     assert entries_by_type["Green bin"] == "mdi:leaf"
     assert entries_by_type["Black bin"] == "mdi:trash-can"
@@ -193,7 +170,7 @@ def test_simple_class_structure(source):
         entries = source.fetch()
 
     assert len(entries) == 2
-    entries_by_type = {e.t: e.date for e in entries}
+    entries_by_type = {e.type: e.date for e in entries}
     assert entries_by_type["Green bin"] == date(2026, 5, 7)
     assert entries_by_type["Black bin"] == date(2026, 5, 14)
 
@@ -205,7 +182,7 @@ def test_short_date_format(source):
         entries = source.fetch()
 
     assert len(entries) == 2
-    entries_by_type = {e.t: e.date for e in entries}
+    entries_by_type = {e.type: e.date for e in entries}
     assert entries_by_type["Green bin"] == date(2026, 5, 7)
     assert entries_by_type["Black bin"] == date(2026, 5, 14)
 
@@ -261,7 +238,7 @@ def test_missing_date_in_section(source):
 
     # Should only return the bin with a valid date
     assert len(entries) == 1
-    assert entries[0].t == "Black bin"
+    assert entries[0].type == "Black bin"
     assert entries[0].date == date(2026, 5, 14)
 
 
@@ -297,7 +274,7 @@ def test_uppercase_bin_names():
         entries = source.fetch()
 
     assert len(entries) == 1
-    assert entries[0].t == "Black bin"
+    assert entries[0].type == "Black bin"
     assert entries[0].icon == "mdi:trash-can"
 
 
@@ -317,7 +294,7 @@ def test_mixed_case_bin_names():
         entries = source.fetch()
 
     assert len(entries) == 1
-    assert entries[0].t == "Black bin"
+    assert entries[0].type == "Black bin"
 
 
 # =============================================================================
@@ -358,7 +335,7 @@ def test_descriptions_with_commas():
         entries = source.fetch()
 
     assert len(entries) == 3
-    entries_by_type = {e.t: e.date for e in entries}
+    entries_by_type = {e.type: e.date for e in entries}
     assert entries_by_type["Green bin"] == date(2026, 5, 7)
     assert entries_by_type["Black bin"] == date(2026, 5, 14)
     assert entries_by_type["Blue bin"] == date(2026, 5, 21)

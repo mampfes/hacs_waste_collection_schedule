@@ -21,9 +21,7 @@ ICON_MAP = {
 }
 
 # Regex pattern to match dates like "Thursday, 14 May 2026" or "14 May 2026"
-DATE_PATTERN = re.compile(
-    r"(?:\w+,\s*)?(\d{1,2}\s+\w+\s+\d{4})", re.IGNORECASE
-)
+DATE_PATTERN = re.compile(r"(?:\w+,\s*)?(\d{1,2}\s+\w+\s+\d{4})", re.IGNORECASE)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -40,9 +38,7 @@ class Source:
         soup = BeautifulSoup(r.text, features="html.parser")
 
         # Find all bin service items
-        bins = soup.find_all(
-            "div", {"class": re.compile(r"service-item")}
-        )
+        bins = soup.find_all("div", {"class": re.compile(r"service-item")})
 
         entries = []
         for bin_div in bins:
@@ -57,10 +53,6 @@ class Source:
 
             # Normalize bin name to title case (e.g., "Black bin")
             bin_name = bin_name.capitalize()
-            if not bin_name.endswith("bin"):
-                # Handle cases like "BLACK BIN" -> "Black bin"
-                bin_name = " ".join(word.capitalize() if i == 0 else word.lower()
-                                    for i, word in enumerate(bin_name.split()))
 
             # Search for a date pattern within this bin's section
             bin_text = bin_div.get_text()
@@ -79,9 +71,12 @@ class Source:
                     )
                 except ValueError as e:
                     _LOGGER.warning(
-                        f"Could not parse date '{date_string}' for {bin_name}: {e}"
+                        "Could not parse date '%s' for %s: %s",
+                        date_string,
+                        bin_name,
+                        e,
                     )
             else:
-                _LOGGER.warning(f"No date found for {bin_name}")
+                _LOGGER.warning("No date found for %s", bin_name)
 
         return entries
