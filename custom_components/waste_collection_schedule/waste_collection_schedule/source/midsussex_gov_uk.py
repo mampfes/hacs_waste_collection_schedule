@@ -1,5 +1,6 @@
 import datetime
 import logging
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
@@ -147,17 +148,21 @@ class Source:
 
             search_text = self._number.upper()
 
-            address_link = soup2.find(
-                "a",
-                class_="app-subnav__link",
-                string=lambda t: t and search_text in t.upper(),
+            all_address_links = soup2.find_all("a", class_="app-subnav__link")
+            address_link = next(
+                (
+                    link
+                    for link in all_address_links
+                    if search_text in link.get_text(strip=True).upper()
+                ),
+                None,
             )
 
             if not address_link:
                 raise SourceArgumentNotFound("number", self._number)
 
             final_link_path = address_link["href"]  # type: ignore[index]
-            final_schedule_url = f"{BASE_URL}/{final_link_path}"
+            final_schedule_url = urljoin(BASE_URL + "/", final_link_path)
 
             # --- STEP 4: Scrape the Final Schedule ---
             r3 = session.get(final_schedule_url, timeout=30)
