@@ -7,6 +7,7 @@ import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
+    SourceArgumentException,
     SourceArgumentNotFound,
     SourceArgumentRequired,
 )
@@ -42,6 +43,15 @@ PARAM_DESCRIPTIONS = {
             "with the blue and brown bins."
         ),
         "postcode": "Postcode for the property.",
+    }
+}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "postcode": "Postcode",
+        "address": "Address",
+        "collection_zone": "Collection Zone",
+        "future_collection_dates": "Include Future Collection Dates",
+        "garden_waste_bin": "Has Garden Waste Bin",
     }
 }
 
@@ -413,17 +423,14 @@ class Source:
         addresses = self._lookup_addresses()
         selected_address = self._select_address(addresses)
 
-        layer_id = (
-            map_config.get("legend", {})
-            .get("layerGroups", [{}])[0]
-            .get("layers", [{}])[0]
-            .get("id")
-        )
+        layer_groups = map_config.get("legend", {}).get("layerGroups", [])
+        layers = layer_groups[0].get("layers", []) if layer_groups else []
+        layer_id = layers[0].get("id") if layers else None
         wms_url = map_config.get("doubleClick", {}).get("url")
 
         if not layer_id or not wms_url:
-            raise Exception(
-                "Pendle map configuration is missing the query layer details"
+            raise SourceArgumentException(
+                "address", "Pendle map configuration is missing the query layer details"
             )
 
         collections = self._fetch_collections(
@@ -435,9 +442,7 @@ class Source:
         collections = self._select_zone(collections)
 
         if not collections:
-            raise Exception(
-                "Pendle returned no collection data for the selected address"
-            )
+            raise SourceArgumentNotFound("address", self._address)
 
         entries: list[Collection] = []
         for item in collections:
