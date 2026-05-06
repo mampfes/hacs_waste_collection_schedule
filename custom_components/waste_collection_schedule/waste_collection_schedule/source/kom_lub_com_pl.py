@@ -4,11 +4,9 @@ import datetime as dt
 import logging
 import re
 from dataclasses import dataclass
-from typing import Optional
 
 import requests
 from bs4 import BeautifulSoup, Tag
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -17,7 +15,9 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "KOM-LUB (Luboń, PL)"
-DESCRIPTION = "Scrapes waste collection schedule by district (1..7) from kom-lub.com.pl."
+DESCRIPTION = (
+    "Scrapes waste collection schedule by district (1..7) from kom-lub.com.pl."
+)
 URL = "https://kom-lub.com.pl/aktualny-harmonogram-wywozow/"
 
 _LOGGER = logging.getLogger(__name__)
@@ -37,6 +37,21 @@ TEST_CASES = {
 
 # Provide (don’t comment out) so the GUI has instructions.
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": """
+1) Go to the street-to-district lookup page:
+   kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/
+
+2) In the tables you will find district headings: R I, R II, ..., R VII.
+
+3) Choose your district number using the mapping:
+   - R I   -> 1
+   - R II  -> 2
+   - R III -> 3
+   - R IV  -> 4
+   - R V   -> 5
+   - R VI  -> 6
+   - R VII -> 7
+""".strip(),
     "pl": """
 1) Wejdź na stronę z rejonami (ulice -> rejon):
    kom-lub.com.pl/alfabetyczny-wykaz-ulic-i-rejony/
@@ -51,7 +66,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
    - R V   -> 5
    - R VI  -> 6
    - R VII -> 7
-""".strip()
+""".strip(),
 }
 
 INPUT_ARGUMENTS = [
@@ -76,7 +91,9 @@ INPUT_ARGUMENTS = [
 # Types / constants
 ######################################################################
 DayList = list[int]
-Cols = list[DayList]  # exactly 6 columns in order: mixed, glass, plastics, paper, bulky, bio
+Cols = list[
+    DayList
+]  # exactly 6 columns in order: mixed, glass, plastics, paper, bulky, bio
 MonthRow = tuple[int, Cols]  # (month_number, cols)
 DistrictRows = list[MonthRow]
 QuarterKey = tuple[str, int]  # (year_str, quarter_number)
@@ -94,10 +111,20 @@ ICON_BY_TYPE: dict[str, str] = {
     "Bio": "mdi:leaf",
 }
 
-_DISTRICT_ROMAN: dict[int, str] = {1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII"}
+_DISTRICT_ROMAN: dict[int, str] = {
+    1: "I",
+    2: "II",
+    3: "III",
+    4: "IV",
+    5: "V",
+    6: "VI",
+    7: "VII",
+}
 _REGION_RE = re.compile(r"^R\s*[IVX]+$", re.IGNORECASE)
 
-_QUARTER_IN_TEXT_RE = re.compile(r"\b(I|II|III|IV)\s+kwartał\s+(20\d{2})\b", re.IGNORECASE)
+_QUARTER_IN_TEXT_RE = re.compile(
+    r"\b(I|II|III|IV)\s+kwartał\s+(20\d{2})\b", re.IGNORECASE
+)
 
 _ROMAN_MONTH = {
     "I": 1,
@@ -126,7 +153,7 @@ class ParsedRow:
     bio: DayList
 
 
-def safe_date(y: int, m: int, d: int) -> Optional[dt.date]:
+def safe_date(y: int, m: int, d: int) -> dt.date | None:
     try:
         return dt.date(y, m, d)
     except ValueError:
@@ -144,7 +171,9 @@ def extract_day_numbers(text: str) -> DayList:
 def normalize_district(district: int | str | None) -> str:
     """Accepts 1..7 (int/str) and returns 'R I' .. 'R VII'."""
     if district is None or str(district).strip() == "":
-        raise SourceArgumentRequired("district", "Podaj numer rejonu 1–7 (R I .. R VII).")
+        raise SourceArgumentRequired(
+            "district", "Podaj numer rejonu 1–7 (R I .. R VII)."
+        )
 
     try:
         n = int(district)
@@ -306,7 +335,9 @@ def split_table_by_district(table: Tag) -> QuarterData:
         if cur_district is None:
             cur_district = "R I"
             district_rows.setdefault(cur_district, [])
-            _LOGGER.debug("No district header found before month rows; defaulting to R I")
+            _LOGGER.debug(
+                "No district header found before month rows; defaulting to R I"
+            )
 
         district_rows[cur_district].append(extract_month_row(tr))
 
@@ -320,7 +351,9 @@ def parse_tables_dict(tables_by_title: dict[str, Tag]) -> AllData:
     for title, table in tables_by_title.items():
         key = parse_quarter_key(title)
         out[key] = split_table_by_district(table)
-        _LOGGER.debug("Parsed table %r -> key=%s districts=%s", title, key, list(out[key].keys()))
+        _LOGGER.debug(
+            "Parsed table %r -> key=%s districts=%s", title, key, list(out[key].keys())
+        )
 
     return out
 
@@ -360,14 +393,20 @@ def collections_from_row(year: int, row: ParsedRow) -> list[Collection]:
     return entries
 
 
-def scrape_for_region(soup: BeautifulSoup, region: str, district_value: int | str) -> list[Collection]:
+def scrape_for_region(
+    soup: BeautifulSoup, region: str, district_value: int | str
+) -> list[Collection]:
     tables = extract_tables(soup)
     if not tables:
-        raise Exception("Nie znaleziono tabel harmonogramu na stronie (zmienił się układ strony?).")
+        raise Exception(
+            "Nie znaleziono tabel harmonogramu na stronie (zmienił się układ strony?)."
+        )
 
     sections = parse_tables_dict(tables)
     if not sections:
-        raise Exception("Nie udało się sparsować tabel harmonogramu (brak danych po parsowaniu).")
+        raise Exception(
+            "Nie udało się sparsować tabel harmonogramu (brak danych po parsowaniu)."
+        )
 
     entries: list[Collection] = []
     found_region_anywhere = False
@@ -396,7 +435,9 @@ def scrape_for_region(soup: BeautifulSoup, region: str, district_value: int | st
         )
 
     if not entries:
-        raise Exception(f"Znaleziono rejon {region}, ale nie udało się wyciągnąć żadnych terminów odbioru.")
+        raise Exception(
+            f"Znaleziono rejon {region}, ale nie udało się wyciągnąć żadnych terminów odbioru."
+        )
 
     uniq = {(e.date, e.type): e for e in entries}
     return sorted(uniq.values(), key=lambda e: (e.date, e.type))
