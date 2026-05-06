@@ -6,7 +6,9 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "South Ribble Borough Council"
-DESCRIPTION = "Source for southribble.gov.uk services for South Ribble Borough Council, UK."
+DESCRIPTION = (
+    "Source for southribble.gov.uk services for South Ribble Borough Council, UK."
+)
 URL = "https://www.southribble.gov.uk"
 COUNTRY = "gb"
 TEST_CASES = {
@@ -29,20 +31,6 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
         "and enter your postcode. Use browser dev tools to "
         "find the UPRN (the option value in the address dropdown)."
     ),
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Your postcode, e.g. PR25 1DH.",
-        "uprn": "The UPRN from the address dropdown.",
-    }
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "uprn": "UPRN",
-    }
 }
 
 FORM_URL = "https://forms.chorleysouthribble.gov.uk/xfp/form/70"
