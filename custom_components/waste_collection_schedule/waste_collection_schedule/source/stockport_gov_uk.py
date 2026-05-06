@@ -20,6 +20,11 @@ ICON_MAP = {
     "Green bin": "mdi:leaf",
 }
 
+# Regex pattern to match dates like "Thursday, 14 May 2026" or "14 May 2026"
+DATE_PATTERN = re.compile(
+    r"(?:\w+,\s*)?(\d{1,2}\s+\w+\s+\d{4})", re.IGNORECASE
+)
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -28,38 +33,55 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-
         r = requests.get(
             f"https://myaccount.stockport.gov.uk/bin-collections/show/{self._uprn}"
         )
 
         soup = BeautifulSoup(r.text, features="html.parser")
 
+        # Find all bin service items
         bins = soup.find_all(
-            "div", {"class": re.compile("service-item service-item-.*")}
+            "div", {"class": re.compile(r"service-item")}
         )
 
-        bins = str(bins)
-        header_string = "<h3>"
-        bin_name_start_position = bins.find(header_string)
-
         entries = []
-        while bin_name_start_position != -1:
-            bin_name_start_position += len(header_string)
-            bin_name_end_position = bins.find(" bin", bin_name_start_position) + 4
-            bin_name = bins[bin_name_start_position:bin_name_end_position]
-            bin_date_pos = bins.find("<p>", bin_name_start_position)
-            bin_date_exc_day_of_week_pos = bins.find(", ", bin_date_pos) + 2
-            bin_date_end_pos = bins.find("</p>", bin_date_exc_day_of_week_pos)
-            bin_date_string = bins[bin_date_exc_day_of_week_pos:bin_date_end_pos]
-            bin_date = datetime.strptime(bin_date_string, "%d %B %Y").date()
-            entries.append(
-                Collection(
-                    date=bin_date,
-                    t=bin_name,
-                    icon=ICON_MAP.get(bin_name),
-                )
-            )
-            bin_name_start_position = bins.find(header_string, bin_date_end_pos)
+        for bin_div in bins:
+            # Find the bin name from h3 element
+            h3 = bin_div.find("h3")
+            if not h3:
+                continue
+
+            bin_name = h3.get_text(strip=True)
+            if "bin" not in bin_name.lower():
+                continue
+
+            # Normalize bin name to title case (e.g., "Black bin")
+            bin_name = bin_name.capitalize()
+            if not bin_name.endswith("bin"):
+                # Handle cases like "BLACK BIN" -> "Black bin"
+                bin_name = " ".join(word.capitalize() if i == 0 else word.lower()
+                                    for i, word in enumerate(bin_name.split()))
+
+            # Search for a date pattern within this bin's section
+            bin_text = bin_div.get_text()
+            date_match = DATE_PATTERN.search(bin_text)
+
+            if date_match:
+                date_string = date_match.group(1)
+                try:
+                    bin_date = datetime.strptime(date_string, "%d %B %Y").date()
+                    entries.append(
+                        Collection(
+                            date=bin_date,
+                            t=bin_name,
+                            icon=ICON_MAP.get(bin_name),
+                        )
+                    )
+                except ValueError as e:
+                    _LOGGER.warning(
+                        f"Could not parse date '{date_string}' for {bin_name}: {e}"
+                    )
+            else:
+                _LOGGER.warning(f"No date found for {bin_name}")
 
         return entries
