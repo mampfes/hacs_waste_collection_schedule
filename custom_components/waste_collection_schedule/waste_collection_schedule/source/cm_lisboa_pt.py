@@ -11,6 +11,10 @@ DESCRIPTION = "Source for waste collection schedules in Lisboa, Portugal."
 URL = "https://informacoeseservicos.lisboa.pt/servicos/dias-do-lixo"
 COUNTRY = "pt"
 
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Visit https://informacoeseservicos.lisboa.pt/servicos/dias-do-lixo and search for your address on the map. The area name shown in the popup (e.g. 'Restelo', 'Madredeus') is the value to use.",
+}
+
 TEST_CASES = {
     "Restelo": {"area_name": "Restelo"},
     "Madredeus": {"area_name": "Madredeus"},
