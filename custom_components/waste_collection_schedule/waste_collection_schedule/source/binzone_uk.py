@@ -1,11 +1,10 @@
 import logging
+from datetime import datetime
 
 import requests
-from bs4 import BeautifulSoup
-from dateutil.parser import parse
 from waste_collection_schedule import Collection
 
-TITLE = "Binzone"
+TITLE = "BinDay (South & Vale)"
 URL = "https://www.southoxon.gov.uk/"
 EXTRA_INFO = [
     {
@@ -27,16 +26,28 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "GREY BIN": "mdi:trash-can",
-    "GREEN BIN": "mdi:recycle",
-    "GARDEN WASTE BIN": "mdi:leaf",
-    "SMALL ELECTRICAL ITEMS": "mdi:hair-dryer",
-    "FOOD BIN": "mdi:food-apple",
-    "TEXTILES": "mdi:hanger",
+    "recycling": "mdi:recycle",
+    "refuse": "mdi:trash-can",
+    "garden": "mdi:leaf",
+    "food": "mdi:food-apple",
+    "textile": "mdi:hanger",
+    "clothes": "mdi:hanger",
+    "electric": "mdi:hair-dryer",
+    "batter": "mdi:battery",
+    "bulky": "mdi:sofa",
 }
 
+API_URL = "https://forms.southandvale.gov.uk/api/property/bins/{uprn}"
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _icon_for_bin_type(bin_type: str) -> str | None:
+    lower = bin_type.lower()
+    for keyword, icon in ICON_MAP.items():
+        if keyword in lower:
+            return icon
+    return None
 
 
 class Source:
@@ -44,62 +55,40 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-
-        s = requests.Session()
-
-        # Used https://github.com/robbrad/UKBinCollectionData/blob/master/uk_bin_collection/uk_bin_collection/councils/SouthOxfordshireCouncil.py
-        # as a reference. This works for both councils, using the same url.
-        # UPRN is passed in via a cookie. Set cookies/params and GET the page
-        cookies = {
-            "SVBINZONE": f"SOUTH%3AUPRN%40{self._uprn}",
-        }
-
-        params = {
-            "SOVA_TAG": "SOUTH",
-            "ebd": "0",
-        }
-
         headers = {
-            # latest chrome UA
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36",
+            "Accept": "application/json",
+            "Referer": "https://forms.southandvale.gov.uk/binday.eb",
         }
 
-        # GET request returns schedule for matching uprn
-        r = s.get(
-            "https://eform.southoxon.gov.uk/ebase/BINZONE_DESKTOP.eb",
-            params=params,
-            cookies=cookies,
+        r = requests.get(
+            API_URL.format(uprn=self._uprn),
             headers=headers,
+            timeout=30,
         )
         r.raise_for_status()
-        responseContent = r.text
+
+        data = r.json()
+
+        if data.get("setStatus") != "OK":
+            raise ValueError(
+                f"BinDay API returned non-OK status: {data.get('setStatus')}: {data.get('setMessage')}"
+            )
 
         entries = []
 
-        # Extract waste types and dates from responseContent
-        soup = BeautifulSoup(responseContent, "html.parser")
-        soup.prettify()
-
-        for bin in soup.find_all("div", {"class": "binextra"}):
-            bin_info = bin.text.split("-")
-            try:
-                # No date validation since year isn't included on webpage
-                bin_date = (
-                    bin_info[0]
-                    .strip()
-                    .replace("Your usual collection day is different this week", "")
-                )
-                bin_type = bin_info[1].strip()
-            except Exception as ex:
-                raise ValueError(f"Error parsing bin data: {ex}")
-
-            for round_type in ICON_MAP:
-                if round_type in bin_type.upper():
+        for week in data["setData"]["week"]:
+            for day in week["day"]:
+                collection_date = datetime.strptime(
+                    day["collection_date"], "%d/%m/%Y"
+                ).date()
+                for bin_info in day["bins"]:
+                    bin_type = bin_info["bin_type"]
                     entries.append(
                         Collection(
-                            date=parse(bin_date).date(),
-                            t=round_type,
-                            icon=ICON_MAP.get(round_type),
+                            date=collection_date,
+                            t=bin_type,
+                            icon=_icon_for_bin_type(bin_type),
                         )
                     )
 

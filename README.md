@@ -186,6 +186,7 @@ If you already have enough information for your municipality/region, you are ver
 - [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
 - [Northern Areas Council](/doc/source/app_my_local_services_au.md) / nacouncil.sa.gov.au/page.aspx
 - [Northern Beaches Council (NSW)](/doc/source/northernbeaches_nsw_gov_au.md) / northernbeaches.nsw.gov.au
+- [Orange City Council](/doc/source/orange_nsw_gov_au.md) / orange.nsw.gov.au
 - [Penrith City Council](/doc/source/impactapps_com_au.md) / penrithcity.nsw.gov.au
 - [Port Adelaide Enfield, South Australia](/doc/source/portenf_sa_gov_au.md) / ecouncil.portenf.sa.gov.au
 - [Port Augusta City Council](/doc/source/app_my_local_services_au.md) / portaugusta.sa.gov.au
@@ -203,6 +204,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Rural City of Wangaratta](/doc/source/wangaratta_vic_gov_au.md) / wangaratta.vic.gov.au
 - [Scenic Rim Regional Council](/doc/source/scenicrim_qld_gov_au.md) / scenicrim.qld.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
+- [Shire of Dardanup](/doc/source/dardanup_wa_gov_au.md) / dardanup.wa.gov.au
+- [Shire of Harvey](/doc/source/harvey_wa_gov_au.md) / harvey.wa.gov.au
 - [Shire of Mundaring](/doc/source/mundaring_wa_gov_au.md) / mundaring.wa.gov.au
 - [Shire of Murray](/doc/source/murray_wa_gov_au.md) / murray.wa.gov.au
 - [Shire of Serpentine Jarrahdale](/doc/source/sjshire_wa_gov_au.md) / sjshire.wa.gov.au
@@ -715,6 +718,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Wartberg ob der Aist](/doc/source/citiesapps_com.md) / wartberg-aist.at
 - [Wattens](/doc/ics/muellapp_com.md) / muellapp.com
 - [Weiden am See](/doc/source/citiesapps_com.md) / weiden-see.at
+- [Weinitzen](/doc/source/citiesapps_com.md) / weinitzen.gv.at
 - [Weitersfeld](/doc/source/citiesapps_com.md) / weitersfeld.gv.at
 - [Weiz](/doc/source/citiesapps_com.md) / weiz.at
 - [Weißenkirchen in der Wachau](/doc/source/citiesapps_com.md) / weissenkirchen-wachau.at
@@ -848,6 +852,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Vaughan (ON)](/doc/source/recyclecoach_com.md) / vaughan.ca
 - [Ville de Saguenay](/doc/source/saguenay_ca.md) / ville.saguenay.ca
+- [Ville de Saint-Basile-le-Grand](/doc/source/villesblg_ca.md) / villesblg.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
 - [Whitby, ON](/doc/ics/recollect.md) / whitby.ca
 - [Winnipeg (MB)](/doc/source/myutility_winnipeg_ca.md) / myutility.winnipeg.ca
@@ -903,12 +908,17 @@ If you already have enough information for your municipality/region, you are ver
 - [Ambès](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Angers Loire Métropole](/doc/source/data_angers_fr.md) / data.angers.fr
 - [Ardenne Métropole](/doc/source/publidata_fr.md) / ardenne-metropole.fr
+- [Ayguemorte-les-Graves](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Beautiran](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Blanquefort](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bordeaux](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bordeaux Métropole](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bruges](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bègles](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [CA Saint Germain Boucles de Seine](/doc/source/publidata_fr.md) / saintgermainbouclesdeseine.fr
+- [Cabanac-et-Villagrains](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Cadaujac](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Castres-Gironde](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Châteauroux Métropole](/doc/source/publidata_fr.md) / chateauroux-metropole.fr
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Dreux Agglomération](/doc/source/publidata_fr.md) / dreux-agglomeration.fr
@@ -919,12 +929,16 @@ If you already have enough information for your municipality/region, you are ver
 - [Grand Calais Terres et Mers](/doc/source/publidata_fr.md) / grandcalais.fr
 - [Grand Paris Seine et Oise](/doc/source/publidata_fr.md) / infos-dechets.gpseo.fr
 - [Grand Paris Seine Ouest](/doc/source/publidata_fr.md) / dechets.seineouest.fr
+- [Isle Saint-Georges](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [La Brède](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Le Bouscat](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Le Haillan](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Le Havre Seine Métropole](/doc/source/publidata_fr.md) / tripratik.lehavreseinemetropole.fr
 - [Le Taillan-Médoc](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Léognan](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
 - [Martignas-sur-Jalle](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Martillac](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Mémotri - Agglomération Pau Béarn Pyrénées](/doc/source/memotri_agglo_pau_fr.md) / memotri.agglo-pau.fr
 - [Mérignac](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Métropole de Lyon](/doc/source/data_grandlyon_com.md) / data.grandlyon.com
@@ -937,8 +951,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Saint Quentin en Yvelines](/doc/source/publidata_fr.md) / saint-quentin-en-yvelines.fr
 - [Saint-Aubin-de-Médoc](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Saint-Louis-de-Montferrand](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saint-Morillon](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Saint-Médard-d'Eyrans](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Médard-en-Jalles](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saint-Selve](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Vincent-de-Paul](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saucats](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saumur Val de Loire](/doc/source/publidata_fr.md) / saumurvaldeloire.fr
 - [SICTOM de Lons-le-Saunier](/doc/source/sictom_lons_le_saunier_fr.md) / sictom-lons-le-saunier.fr
 - [SIVOM Rive Droite](/doc/source/publidata_fr.md) / sivom-rivedroite.fr
@@ -2233,6 +2251,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Avfall Sør, Kristiansand](/doc/source/avfallsor_no.md) / avfallsor.no
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
+- [Fredrikstad kommune](/doc/source/fredrikstad_no.md) / fredrikstad.kommune.no
 - [Innherred Renovasjon](/doc/source/innherredrenovasjon_no.md) / innherredrenovasjon.no
 - [Iris Salten](/doc/source/iris_salten_no.md) / iris-salten.no
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
@@ -2356,6 +2375,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kleszczewo/Kostrzyn](/doc/source/zys_harmonogram_pl.md) / puk-zys.pl/index.php
 - [Klient Szablonowy - Ekostrażnik](/doc/source/sims_pl.md) / sisms.pl
 - [Klient Szablonowy - Karty Usług](/doc/source/sims_pl.md) / sisms.pl
+- [KOM-LUB (Luboń, PL)](/doc/source/kom_lub_com_pl.md) / kom-lub.com.pl/aktualny-harmonogram-wywozow
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Miasto i Gmina Morawica](/doc/source/sims_pl.md) / sisms.pl
@@ -2383,6 +2403,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
 - [ZGPD-7](/doc/source/sims_pl.md) / sisms.pl
 - [Łódź](/doc/source/lodz_pl.md) / kartalodzianina.pl
+</details>
+
+<details>
+<summary>Portugal</summary>
+
+- [Câmara Municipal de Lisboa](/doc/source/cm_lisboa_pt.md) / informacoeseservicos.lisboa.pt/servicos/dias-do-lixo
 </details>
 
 <details>
@@ -2466,6 +2492,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vafab Miljö](/doc/source/edpevent_se.md) / vafabmiljo.se
 - [Vaxholm](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
+- [VMAB](/doc/source/vmab_se.md) / vmab.se
 - [Vänersborg](/doc/source/avfallsapp_se.md) / vanersborg.se
 - [Värmdö Sophämtning](/doc/source/varmdo_se.md) / varmdo.se
 - [Västervik Miljö & Energi](/doc/source/vmeab_se.md) / vmeab.se
@@ -2583,7 +2610,7 @@ If you already have enough information for your municipality/region, you are ver
 - [BCP Council](/doc/source/bcp_gov_uk.md) / bcpportal.bcpcouncil.gov.uk
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
 - [Belfast City Council](/doc/source/belfast_city_gov_uk.md) / online.belfastcity.gov.uk/find-bin-collection-day
-- [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
+- [BinDay (South & Vale)](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
 - [Blaby District Council](/doc/source/blaby_gov_uk.md) / my.blaby.gov.uk/collections
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
@@ -2773,6 +2800,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Oldham Council](/doc/source/oldham_gov_uk.md) / oldham.gov.uk
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
 - [Pembrokeshire County Council](/doc/source/pembrokeshire_gov_uk.md) / pembrokeshire.gov.uk
+- [Pendle Borough Council](/doc/source/pendle_gov_uk.md) / pendle.gov.uk/binday
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Plymouth City Council](/doc/source/plymouth_gov_uk.md) / plymouth.gov.uk
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk

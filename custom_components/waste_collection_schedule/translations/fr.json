@@ -2067,6 +2067,26 @@
         },
         "data_description": {}
       },
+      "args_orange_nsw_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_orange_nsw_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_portenf_sa_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -2220,6 +2240,52 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "zoneID": "ID de zone"
+        },
+        "data_description": {}
+      },
+      "args_dardanup_wa_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "collection_day": "Collection Day",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_dardanup_wa_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "collection_day": "Collection Day",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "street": "Rue"
+        },
+        "data_description": {}
+      },
+      "args_harvey_wa_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_harvey_wa_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "suburb": "Suburb"
         },
         "data_description": {}
       },
@@ -4617,6 +4683,24 @@
           "batiment": "Numéro de bâtiment (cle_batiment) dans la requête AJAX"
         }
       },
+      "args_villesblg_ca": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_villesblg_ca": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier"
+        },
+        "data_description": {}
+      },
       "args_myutility_winnipeg_ca": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -5231,10 +5315,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "commune": "Commune"
+          "commune": "Ville"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "commune": "Votre ville de la Communauté de Communes de Montesquieu : Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d'Eyrans, Saint-Morillon, Saint-Selve, Saucats"
         }
       },
       "reconfigure_cc-montesquieu_fr": {
@@ -5242,9 +5327,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "commune": "Commune"
+          "commune": "Ville"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Votre ville de la Communauté de Communes de Montesquieu : Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d'Eyrans, Saint-Morillon, Saint-Selve, Saucats"
+        }
       },
       "args_grandbesancon_fr": {
         "title": "Configurer la Source",
@@ -14643,6 +14730,26 @@
         },
         "data_description": {}
       },
+      "args_fredrikstad_no": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_fredrikstad_no": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
       "args_innherredrenovasjon_no": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -15181,6 +15288,26 @@
         },
         "data_description": {}
       },
+      "args_kom_lub_com_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "district": "District"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_kom_lub_com_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "district": "District"
+        },
+        "data_description": {}
+      },
       "args_sepan_remondis_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -15411,6 +15538,29 @@
           "street": "Rue"
         },
         "data_description": {}
+      },
+      "args_cm_lisboa_pt": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area_name": "Zone de collecte"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "area_name": "Nom de la zone de collecte (ex. 'Restelo', 'Madredeus'). Visitez {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} pour trouver votre zone."
+        }
+      },
+      "reconfigure_cm_lisboa_pt": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area_name": "Zone de collecte"
+        },
+        "data_description": {
+          "area_name": "Nom de la zone de collecte (ex. 'Restelo', 'Madredeus'). Visitez {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} pour trouver votre zone."
+        }
       },
       "args_fcc_group_eu": {
         "title": "Configurer la Source",
@@ -16350,6 +16500,26 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "building_id": "Building Id",
+          "street_address": "Adresse de rue"
+        },
+        "data_description": {}
+      },
+      "args_vmab_se": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Adresse de rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_vmab_se": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
           "street_address": "Adresse de rue"
         },
         "data_description": {}
@@ -21603,6 +21773,34 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "uprn": "UPRN"
+        },
+        "data_description": {}
+      },
+      "args_pendle_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "collection_zone": "Collection Zone",
+          "future_collection_dates": "Future Collection Dates",
+          "garden_waste_bin": "Garden Waste Bin",
+          "postcode": "Code postal"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_pendle_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "collection_zone": "Collection Zone",
+          "future_collection_dates": "Future Collection Dates",
+          "garden_waste_bin": "Garden Waste Bin",
+          "postcode": "Code postal"
         },
         "data_description": {}
       },

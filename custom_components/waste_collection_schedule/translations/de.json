@@ -2067,6 +2067,26 @@
         },
         "data_description": {}
       },
+      "args_orange_nsw_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_orange_nsw_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_portenf_sa_gov_au": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -2220,6 +2240,52 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "zoneID": "Zone Id"
+        },
+        "data_description": {}
+      },
+      "args_dardanup_wa_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collection_day": "Collection Day",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_dardanup_wa_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "collection_day": "Collection Day",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "street": "Straße"
+        },
+        "data_description": {}
+      },
+      "args_harvey_wa_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_harvey_wa_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "suburb": "Suburb"
         },
         "data_description": {}
       },
@@ -4661,6 +4727,24 @@
         "data_description": {
           "batiment": "Gebäude-ID (cle_batiment) aus dem AJAX-Anfrage-Payload"
         }
+      },
+      "args_villesblg_ca": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_villesblg_ca": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel"
+        },
+        "data_description": {}
       },
       "args_myutility_winnipeg_ca": {
         "title": "Quelle konfigurieren",
@@ -14755,6 +14839,26 @@
         },
         "data_description": {}
       },
+      "args_fredrikstad_no": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_fredrikstad_no": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
       "args_innherredrenovasjon_no": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -15293,6 +15397,26 @@
         },
         "data_description": {}
       },
+      "args_kom_lub_com_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_kom_lub_com_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk"
+        },
+        "data_description": {}
+      },
       "args_sepan_remondis_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -15523,6 +15647,29 @@
           "street": "Straße"
         },
         "data_description": {}
+      },
+      "args_cm_lisboa_pt": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area_name": "Sammelgebiet"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "area_name": "Name des Sammelgebiets (z.B. 'Restelo', 'Madredeus'). Besuchen Sie {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} um Ihr Gebiet zu finden."
+        }
+      },
+      "reconfigure_cm_lisboa_pt": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area_name": "Sammelgebiet"
+        },
+        "data_description": {
+          "area_name": "Name des Sammelgebiets (z.B. 'Restelo', 'Madredeus'). Besuchen Sie {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} um Ihr Gebiet zu finden."
+        }
       },
       "args_fcc_group_eu": {
         "title": "Quelle konfigurieren",
@@ -16462,6 +16609,26 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "building_id": "Building Id",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
+      },
+      "args_vmab_se": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_vmab_se": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
           "street_address": "Street Address"
         },
         "data_description": {}
@@ -21734,6 +21901,34 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "uprn": "UPRN"
+        },
+        "data_description": {}
+      },
+      "args_pendle_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "collection_zone": "Collection Zone",
+          "future_collection_dates": "Future Collection Dates",
+          "garden_waste_bin": "Garden Waste Bin",
+          "postcode": "PLZ"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_pendle_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "collection_zone": "Collection Zone",
+          "future_collection_dates": "Future Collection Dates",
+          "garden_waste_bin": "Garden Waste Bin",
+          "postcode": "PLZ"
         },
         "data_description": {}
       },

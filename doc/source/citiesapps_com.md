@@ -294,6 +294,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Walpersbach | [walpersbach.gv.at](http://www.walpersbach.gv.at) |
 | Wartberg ob der Aist | [wartberg-aist.at](www.wartberg-aist.at/) |
 | Weiden am See | [weiden-see.at](https://www.weiden-see.at) |
+| Weinitzen | [weinitzen.gv.at](https://www.weinitzen.gv.at) |
 | Weitersfeld | [weitersfeld.gv.at](https://www.weitersfeld.gv.at) |
 | Weiz | [weiz.at](https://www.weiz.at) |
 | Weißenkirchen in der Wachau | [weissenkirchen-wachau.at](https://www.weissenkirchen-wachau.at) |

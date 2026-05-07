@@ -510,6 +510,13 @@
     },
     "urls": {}
   },
+  "orange_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/orange_nsw_gov_au.md",
+    "howto": {
+      "en": "Orange City Council divides the city into two fortnightly recycling zones (referred to in the waste booklet as Week A and Week B). Zone A covers properties west of Anson Street. Zone B covers properties east of Anson Street, properties on Anson Street, Spring Hill, Lucknow, and Clifton Grove. Download the annual waste booklet from https://www.orange.nsw.gov.au/waste/ to confirm which zone your street belongs to."
+    },
+    "urls": {}
+  },
   "portenf_sa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/portenf_sa_gov_au.md",
     "howto": {},
@@ -545,6 +552,20 @@
   "shellharbourwaste_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/shellharbourwaste_com_au.md",
     "howto": {},
+    "urls": {}
+  },
+  "dardanup_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dardanup_wa_gov_au.md",
+    "howto": {
+      "en": "Visit https://www.dardanup.wa.gov.au/our-services/waste-and-recycling/find-your-bin-day.aspx and find your street in the list to determine your collection day. Enter your street name (without house number) as the 'street' argument, or enter the day directly as 'collection_day' (for Dardanup West / Ferguson Valley residents). For recycling_in_even_week: check your last recycling collection date and see if its ISO week number (https://whatweekisit.org/) was even (True) or odd (False)."
+    },
+    "urls": {}
+  },
+  "harvey_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/harvey_wa_gov_au.md",
+    "howto": {
+      "en": "Visit https://www.harvey.wa.gov.au/services/rubbish-and-waste-services/bin-collection-residential-and-commercial and find your suburb in the collection day list. Use the exact text shown. For recycling_in_even_week: check your last recycling collection date and see if its ISO week number (https://whatweekisit.org/) was even (True) or odd (False)."
+    },
     "urls": {}
   },
   "mundaring_wa_gov_au": {
@@ -1096,6 +1117,11 @@
       "en": "1. Go to https://ville.saguenay.ca/services-aux-citoyens/environnement/horaire-des-collectes 2. Open your browser's developer tools (F12) and go to the Network tab 3. Enter your address in the search field 4. Look for a request named 'collectesinfos' (URL: https://ville.saguenay.ca/ajax/collectes/collectesinfos) 5. In the Payload tab, copy the value of 'cle_batiment' 6. Use this number as the batiment parameter",
       "fr": "1. Allez à https://ville.saguenay.ca/services-aux-citoyens/environnement/horaire-des-collectes 2. Ouvrez les outils de développement de votre navigateur (F12) et allez à l'onglet Réseau 3. Entrez votre adresse dans le champ de recherche 4. Cherchez une requête nommée 'collectesinfos' (URL: https://ville.saguenay.ca/ajax/collectes/collectesinfos) 5. Dans l'onglet Payload, copiez la valeur de 'cle_batiment' 6. Utilisez ce numéro comme paramètre batiment"
     },
+    "urls": {}
+  },
+  "villesblg_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/villesblg_ca.md",
+    "howto": {},
     "urls": {}
   },
   "myutility_winnipeg_ca": {
@@ -3125,6 +3151,11 @@
     "howto": {},
     "urls": {}
   },
+  "fredrikstad_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fredrikstad_no.md",
+    "howto": {},
+    "urls": {}
+  },
   "innherredrenovasjon_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/innherredrenovasjon_no.md",
     "howto": {},
@@ -3239,6 +3270,13 @@
     "howto": {},
     "urls": {}
   },
+  "kom_lub_com_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kom_lub_com_pl.md",
+    "howto": {
+      "en": "Enter your district number (1–7). Your district (R I through R VII) is printed on your bin collection notice or can be found on the KOM-LUB website (https://kom-lub.com.pl)."
+    },
+    "urls": {}
+  },
   "sepan_remondis_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
     "howto": {},
@@ -3292,6 +3330,15 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lodz_pl.md",
     "howto": {},
     "urls": {}
+  },
+  "cm_lisboa_pt": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cm_lisboa_pt.md",
+    "howto": {
+      "en": "Visit https://informacoeseservicos.lisboa.pt/servicos/dias-do-lixo and search for your address on the map. The area name shown in the popup (e.g. 'Restelo', 'Madredeus') is the value to use."
+    },
+    "urls": {
+      "url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo": "https://informacoeseservicos.lisboa.pt/servicos/dias-do-lixo"
+    }
   },
   "fcc_group_eu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fcc_group_eu.md",
@@ -3523,6 +3570,11 @@
   },
   "vivab_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vivab_se.md",
+    "howto": {},
+    "urls": {}
+  },
+  "vmab_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vmab_se.md",
     "howto": {},
     "urls": {}
   },
@@ -5008,6 +5060,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pembrokeshire_gov_uk.md",
     "howto": {
       "en": "To get your UPRN go to https://www.findmyaddress.co.uk and search for your address."
+    },
+    "urls": {}
+  },
+  "pendle_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pendle_gov_uk.md",
+    "howto": {
+      "en": "Enter the postcode and address as returned by Pendle Borough Council. Set garden_waste_bin to true when the property has a green garden waste bin, and set collection_zone only if Pendle returns multiple schedules for the address."
     },
     "urls": {}
   },

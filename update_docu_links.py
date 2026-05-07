@@ -1096,6 +1096,10 @@ COUNTRYCODES = [
         "name": "Poland",
     },
     {
+        "code": "pt",
+        "name": "Portugal",
+    },
+    {
         "code": "se",
         "name": "Sweden",
     },
@@ -1126,6 +1130,10 @@ COUNTRYCODES = [
     {
         "code": "fi",
         "name": "Finland",
+    },
+    {
+        "code": "pt",
+        "name": "Portugal",
     },
 ]
 

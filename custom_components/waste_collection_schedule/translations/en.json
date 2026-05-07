@@ -2157,6 +2157,26 @@
           "address": "Your street address including suburb in uppercase, e.g. '25 Pittwater Road MANLY'."
         }
       },
+      "args_orange_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_orange_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_portenf_sa_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -2315,6 +2335,64 @@
           "zoneID": "Zone Id"
         },
         "data_description": {}
+      },
+      "args_dardanup_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection Day (override)",
+          "recycling_in_even_week": "Recycling collected on even ISO weeks",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "collection_day": "Your collection day as a string: 'Monday', 'Tuesday', 'Wednesday', 'Thursday', or 'Friday'. Use this instead of 'street' for Dardanup West (Monday) and Ferguson Valley residents, or if street lookup fails.",
+          "recycling_in_even_week": "Set to True if your recycling bin is collected on even ISO week numbers, False if on odd ISO week numbers. Check your last recycling collection date to determine this.",
+          "street": "Your street name without a house number, e.g. 'Hale Street' or 'Flinders Street'. Used to look up your collection day automatically."
+        }
+      },
+      "reconfigure_dardanup_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection Day (override)",
+          "recycling_in_even_week": "Recycling collected on even ISO weeks",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "collection_day": "Your collection day as a string: 'Monday', 'Tuesday', 'Wednesday', 'Thursday', or 'Friday'. Use this instead of 'street' for Dardanup West (Monday) and Ferguson Valley residents, or if street lookup fails.",
+          "recycling_in_even_week": "Set to True if your recycling bin is collected on even ISO week numbers, False if on odd ISO week numbers. Check your last recycling collection date to determine this.",
+          "street": "Your street name without a house number, e.g. 'Hale Street' or 'Flinders Street'. Used to look up your collection day automatically."
+        }
+      },
+      "args_harvey_wa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "recycling_in_even_week": "Recycling collected on even ISO weeks",
+          "suburb": "Suburb / Collection Area"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "recycling_in_even_week": "Set to True if your recycling bin is collected on even ISO week numbers, False if collected on odd ISO week numbers. Check your last recycling collection date to determine this.",
+          "suburb": "Your suburb/area as listed on the Shire of Harvey bin collection page, e.g. 'Yarloop' or 'Australind (south of Paris Road)'."
+        }
+      },
+      "reconfigure_harvey_wa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "recycling_in_even_week": "Recycling collected on even ISO weeks",
+          "suburb": "Suburb / Collection Area"
+        },
+        "data_description": {
+          "recycling_in_even_week": "Set to True if your recycling bin is collected on even ISO week numbers, False if collected on odd ISO week numbers. Check your last recycling collection date to determine this.",
+          "suburb": "Your suburb/area as listed on the Shire of Harvey bin collection page, e.g. 'Yarloop' or 'Australind (south of Paris Road)'."
+        }
       },
       "args_mundaring_wa_gov_au": {
         "title": "Configure Source",
@@ -4827,6 +4905,24 @@
           "batiment": "Building ID (cle_batiment) from the AJAX request payload"
         }
       },
+      "args_villesblg_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_villesblg_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {}
+      },
       "args_myutility_winnipeg_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -5469,7 +5565,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "commune": "city of Montesquieu's community : Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d’Eyrans, Saint-Morillon, Saint-Selve, Saucats"
+          "commune": "Your city of Montesquieu's community: Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d'Eyrans, Saint-Morillon, Saint-Selve, Saucats"
         }
       },
       "reconfigure_cc-montesquieu_fr": {
@@ -5480,7 +5576,7 @@
           "commune": "City"
         },
         "data_description": {
-          "commune": "city of Montesquieu's community : Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d’Eyrans, Saint-Morillon, Saint-Selve, Saucats"
+          "commune": "Your city of Montesquieu's community: Ayguemorte-les-Graves, Beautiran, Cabanac-et-Villagrains, Cadaujac, Castres-Gironde, Isle Saint-Georges, La Brède, Léognan, Martillac, Saint-Médard-d'Eyrans, Saint-Morillon, Saint-Selve, Saucats"
         }
       },
       "args_grandbesancon_fr": {
@@ -14999,6 +15095,26 @@
         },
         "data_description": {}
       },
+      "args_fredrikstad_no": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_fredrikstad_no": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_innherredrenovasjon_no": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -15585,6 +15701,26 @@
         },
         "data_description": {}
       },
+      "args_kom_lub_com_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kom_lub_com_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {}
+      },
       "args_sepan_remondis_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -15829,6 +15965,29 @@
           "street": "Street"
         },
         "data_description": {}
+      },
+      "args_cm_lisboa_pt": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area_name": "Collection Area"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "area_name": "Name of the collection area (e.g. 'Restelo', 'Madredeus'). Visit {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} to find your area."
+        }
+      },
+      "reconfigure_cm_lisboa_pt": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area_name": "Collection Area"
+        },
+        "data_description": {
+          "area_name": "Name of the collection area (e.g. 'Restelo', 'Madredeus'). Visit {url_informacoeseservicos_lisboa_pt_servicos_dias_do_lixo} to find your area."
+        }
       },
       "args_fcc_group_eu": {
         "title": "Configure Source",
@@ -16794,6 +16953,26 @@
         "data": {
           "calendar_title": "Calendar Title",
           "building_id": "Building Id",
+          "street_address": "Street Address"
+        },
+        "data_description": {}
+      },
+      "args_vmab_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_vmab_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
           "street_address": "Street Address"
         },
         "data_description": {}
@@ -22222,6 +22401,45 @@
         },
         "data_description": {
           "uprn": "Unique Property Reference Number (UPRN)"
+        }
+      },
+      "args_pendle_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "collection_zone": "Collection Zone",
+          "future_collection_dates": "Include Future Collection Dates",
+          "garden_waste_bin": "Has Garden Waste Bin",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Address as returned by Pendle Borough Council.",
+          "collection_zone": "Collection zone, only needed if Pendle returns multiple schedules for your address.",
+          "future_collection_dates": "Generate future collection dates.",
+          "garden_waste_bin": "Set to true when the property has a green garden waste bin collected with the blue and brown bins.",
+          "postcode": "Postcode for the property."
+        }
+      },
+      "reconfigure_pendle_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "collection_zone": "Collection Zone",
+          "future_collection_dates": "Include Future Collection Dates",
+          "garden_waste_bin": "Has Garden Waste Bin",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "address": "Address as returned by Pendle Borough Council.",
+          "collection_zone": "Collection zone, only needed if Pendle returns multiple schedules for your address.",
+          "future_collection_dates": "Generate future collection dates.",
+          "garden_waste_bin": "Set to true when the property has a green garden waste bin collected with the blue and brown bins.",
+          "postcode": "Postcode for the property."
         }
       },
       "args_peterborough_gov_uk": {
