@@ -1114,8 +1114,6 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                 cv.time(user_input[CONF_DAY_SWITCH_TIME])
             except vol.Invalid:
                 errors[CONF_DAY_SWITCH_TIME] = "time_format"
-            if user_input.get(CONF_FETCH_INTERVAL_DAYS, 1) < 1:
-                errors[CONF_FETCH_INTERVAL_DAYS] = "invalid"
             if len(errors) == 0:
                 user_input[CONF_RANDOM_FETCH_TIME_OFFSET] = (
                     user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["hours"] * 60

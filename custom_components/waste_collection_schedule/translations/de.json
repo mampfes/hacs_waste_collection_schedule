@@ -24576,6 +24576,7 @@
           "fetch_time": "Abrufzeit",
           "random_fetch_time_offset": "Zufälliger Abfrufzeit Offset",
           "day_switch_time": "Tageswechselzeit",
+          "fetch_interval_days": "Tage zwischen den Abrufen von Abfuhrterminen",
           "day_offset": "Tagesoffset"
         },
         "data_description": {
@@ -24586,6 +24587,7 @@
           "fetch_time": "Die ungefähre Uhrzeit, zu der Home Assistant die neusten Termine abfragt.",
           "random_fetch_time_offset": "Verschiebt die Abrufzeit zufällig um bis zu x Minuten. Kann verwendet werden, um Home Assistant-Abrufbefehle über einen längeren Zeitraum zu verteilen, um Spitzenlasten bei Dienstanbietern zu vermeiden.",
           "day_switch_time": "Tageszeit in 'HH:MM', zu der Home Assistant den aktuellen Eintrag ignoriert und zum nächsten Eintrag wechselt.",
+          "fetch_interval_days": "Legt fest, in welchem Abstand Home Assistant Abfuhrtermine von dieser Kalenderquelle abruft. Der Standardwert ist 1 Tag. Bei einem Wert von 2 werden die Abfuhrtermine alle 2 Tage abgerufen.",
           "day_offset": "Offset in Tagen, der zum Sammeldatum hinzugefügt wird (kann negativ sein). Wenn kein Wert eingegeben wird, wird der Standardwert von 0 verwendet."
         }
       },

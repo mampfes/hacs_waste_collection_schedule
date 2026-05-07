@@ -27,6 +27,7 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     _aggregator: CollectionAggregator
     _day_switch_time: datetime.time
     _fetch_time: datetime.time
+    _last_fetch_date: datetime.date | None
 
     def __init__(
         self,
@@ -52,6 +53,7 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._fetch_time = fetch_time_new
         self._fetch_interval_days = max(1, fetch_interval_days)
         self._random_fetch_time_offset = random_fetch_time_offset
+        self._last_fetch_date = None
 
         day_switch_time_new = (
             dt_util.parse_time(day_switch_time)
@@ -62,25 +64,15 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             raise ValueError(f"Invalid day_switch_time: {day_switch_time}")
         self._day_switch_time = day_switch_time_new
 
-        update_interval = (
-            datetime.timedelta(days=self._fetch_interval_days)
-            if self._fetch_interval_days > 1
-            else None
-        )
-        super().__init__(
-            hass, _LOGGER, name=const.DOMAIN, update_interval=update_interval
-        )
+        super().__init__(hass, _LOGGER, name=const.DOMAIN)
 
-        # For default behavior (daily fetch at configured fetch_time), keep
-        # the existing timer-based scheduling.
-        if self._fetch_interval_days == 1:
-            self._fetch_tracker = async_track_time_change(
-                hass,
-                self._fetch_callback,
-                self._fetch_time.hour,
-                self._fetch_time.minute,
-                self._fetch_time.second,
-            )
+        self._fetch_tracker = async_track_time_change(
+            hass,
+            self._fetch_callback,
+            self._fetch_time.hour,
+            self._fetch_time.minute,
+            self._fetch_time.second,
+        )
 
         # start timer for day-switch time
         if self._day_switch_time != self._fetch_time:
@@ -143,8 +135,17 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         dispatcher_send(self._hass, const.UPDATE_SENSORS_SIGNAL)
 
     async def _fetch_now(self, *_):
+        today = datetime.date.today()
+        if (
+            self._last_fetch_date is not None
+            and (today - self._last_fetch_date).days < self._fetch_interval_days
+        ):
+            await self._update_sensors_callback()
+            return
+
         if self.shell:
             await self._hass.async_add_executor_job(self.shell.fetch)
+            self._last_fetch_date = today
 
             # Save device keys to storage after fetch
             device_store = get_device_key_store()
