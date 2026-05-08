@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Republic Services"
 DESCRIPTION = "Source for Republic Services Collection."
@@ -57,7 +58,15 @@ class Source:
             "https://www.republicservices.com/api/v1/addresses",
             params={"addressLine1": self._street_address},
         )
-        r0_json = json.loads(r0.text)["data"][0]
+        r0.raise_for_status()
+        r0_data = json.loads(r0.text).get("data")
+        if not r0_data:
+            raise SourceArgumentNotFound(
+                "street_address",
+                self._street_address,
+                "No address found matching the provided street address.",
+            )
+        r0_json = r0_data[0]
         address_hash = r0_json["addressHash"]
         longitude = r0_json["longitude"]
         latitude = r0_json["latitude"]
@@ -67,7 +76,13 @@ class Source:
             "https://www.republicservices.com/api/v1/publicPickup",
             params={"siteAddressHash": address_hash},
         )
-        r1_json = json.loads(r1.text)["data"]
+        r1_json = json.loads(r1.text).get("data")
+        if r1_json is None:
+            raise SourceArgumentNotFound(
+                "street_address",
+                self._street_address,
+                "Republic Services does not provide schedule data via their API for this address. This is a known limitation for some service areas (e.g. parts of Massachusetts). Contact Republic Services directly for your collection schedule.",
+            )
         service = ""
         schedule = {}
         for service_type in r1_json:
