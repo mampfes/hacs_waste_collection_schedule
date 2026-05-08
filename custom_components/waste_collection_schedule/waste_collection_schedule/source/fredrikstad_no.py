@@ -2,6 +2,7 @@ import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Fredrikstad kommune"
 DESCRIPTION = "Source for Fredrikstad kommune waste collection."
@@ -12,6 +13,17 @@ TEST_CASES = {
 
 BASE_URL = "https://arcgis.fredrikstad.kommune.no/server/rest/services/Renovasjon/MinRenovasjon/MapServer"
 SCHEDULE_DAYS = 365
+
+# Static fallback mapping for when the ArcGIS coded value domain does not
+# return proper Norwegian waste type names. Values confirmed by a Fredrikstad
+# resident (GitHub issue #2525).
+WASTE_TYPE_FALLBACK: dict[int, str] = {
+    1: "Restavfall",
+    2: "Papir og plast",
+    4: "Glass og metall",
+    6: "Farlig avfall",
+    16: "Matavfall",
+}
 
 
 class Source:
@@ -50,7 +62,9 @@ class Source:
             epoch_ms = attr["Dato"]
             avfall_id = attr["AvfallId"]
             collection_date = datetime.date.fromtimestamp(epoch_ms / 1000)
-            waste_name = waste_types.get(avfall_id, f"Avfall {avfall_id}")
+            waste_name = waste_types.get(avfall_id) or WASTE_TYPE_FALLBACK.get(
+                avfall_id, f"Avfall {avfall_id}"
+            )
             entries.append(Collection(date=collection_date, t=waste_name))
 
         return entries
@@ -69,7 +83,7 @@ class Source:
         r.raise_for_status()
         features = r.json().get("features", [])
         if not features:
-            raise ValueError(f"Address not found: {self._address}")
+            raise SourceArgumentNotFound("address", self._address)
         return features[0]["attributes"]["AvtLnr"]
 
 
