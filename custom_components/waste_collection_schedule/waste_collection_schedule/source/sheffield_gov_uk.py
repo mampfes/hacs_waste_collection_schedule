@@ -1,10 +1,8 @@
 import logging
-import requests
 
-import json
+import requests
 from dateutil import parser
 from waste_collection_schedule import Collection
-
 
 TITLE = "Sheffield City Council"
 DESCRIPTION = "Source for waste collection services from Sheffield City Council (SCC)"
@@ -44,26 +42,27 @@ class Source:
 
     def fetch(self):
         if self._uprn:
-            payload = {
-                "councilId": "1",
-                "uprn": f"{self._uprn}"
-            }
+            payload = {"councilId": "1", "uprn": f"{self._uprn}"}
 
             response = requests.post(f"{API_URL}api/getCalendarData", json=payload)
             response.raise_for_status()
             json_doc = response.json()
 
             if "data" not in json_doc:
-                raise ValueError("The returned API data does not contain expected data element")
+                raise ValueError(
+                    "The returned API data does not contain expected data element"
+                )
             if "message" in json_doc and json_doc["message"] != "OK":
                 raise ValueError(f"API advised error: {json_doc['message']}")
 
             entries = []
             for data_item in json_doc["data"]:
                 if "records" not in data_item:
-                    pass
+                    continue
                 for record in data_item["records"]:
-                    collection_date = parser.parse(record["actual_scheduled_date"]).date()
+                    collection_date = parser.parse(
+                        record["actual_scheduled_date"]
+                    ).date()
                     collection_icon = ICON_MAP.get(
                         record["service"].replace(" Bin", "").upper()
                     )
@@ -71,7 +70,7 @@ class Source:
                         Collection(
                             date=collection_date,
                             t=record["service"],
-                            icon=collection_icon
+                            icon=collection_icon,
                         )
                     )
             return entries
