@@ -32,13 +32,17 @@ COLLECTION_MAP = {
 
 API_URL = "https://www.harrow.gov.uk/ajax/bins?u={uprn}"
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+}
+
 
 class Source:
     def __init__(self, uprn: str | int):
         self._uprn: str = str(uprn).zfill(12)
 
     def fetch(self):
-        r = requests.get(API_URL.format(uprn=self._uprn))
+        r = requests.get(API_URL.format(uprn=self._uprn), headers=HEADERS)
         r.raise_for_status()
 
         if not r.content:
