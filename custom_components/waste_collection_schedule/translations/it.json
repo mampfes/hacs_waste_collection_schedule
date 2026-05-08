@@ -24438,6 +24438,7 @@
           "fetch_time": "Orario aggiornamento programma di raccolta",
           "random_fetch_time_offset": "Offset casuale dell'orario di aggiornamento (minuti)",
           "day_switch_time": "Orario di raccolta",
+          "fetch_interval_days": "Days between fetches",
           "day_offset": "Offset giorni"
         },
         "data_description": {
@@ -24448,6 +24449,7 @@
           "fetch_time": "Ora del giorno in formato 'HH:MM' in cui Home Assistant interroga il fornitore di servizi per l'ultimo programma di raccolta.",
           "random_fetch_time_offset": "Offset casuale dell'ora di recupero fino a x minuti. Può essere utilizzato per distribuire le richieste di recupero di Home Assistant su un periodo di tempo più lungo per evitare picchi di carico sui fornitori di servizi.",
           "day_switch_time": "Ora del giorno in formato 'HH:MM' entro la quale Home Assistant continuera' a mostrare i valori dei sensori del giorno precedente prima di passare a quelli del giorno corrente.",
+          "fetch_interval_days": "Specifies how often Home Assistant fetches waste collection events from this calendar source. The default value is 1 day. With a value of 2, waste collection events are fetched every 2 days.",
           "day_offset": "Offset in giorni da aggiungere alla data di raccolta (può essere negativo). Se non viene inserito alcun valore, viene utilizzato il valore predefinito di 0."
         }
       },
