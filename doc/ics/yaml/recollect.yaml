@@ -180,6 +180,11 @@ extra_info:
   - title: Bassetlaw District Council
     url: https://www.bassetlaw.gov.uk/
     country: uk
+  - title: Oxford County, ON
+    url: https://www.oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection/
+    country: ca
+    default_params:
+      service_url: https://api.recollect.net/r/area/OxfordCounty
 
 howto:
   en: |
@@ -231,6 +236,7 @@ howto:
     |Spruce Grove, AB|Canada|[sprucegrove.org](https://www.sprucegrove.org/services/garbage-organics-recycling/sort-with-success/)|
     |City of Beaumont, AB|Canada|[beaumont.ab.ca](https://www.beaumont.ab.ca/1159/Waste-and-Recycling)|
     |Bassetlaw District Council|UK|[bassetlaw.gov.uk](https://www.bassetlaw.gov.uk/bins-recycling-and-waste/bins-for-recycling-and-waste/bin-collection-days/)|
+    |Oxford County, ON|Canada|[oxfordcounty.ca](https://www.oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection/)|
 
     and probably a lot more.
 
