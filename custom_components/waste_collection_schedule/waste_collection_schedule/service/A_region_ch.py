@@ -119,8 +119,10 @@ class A_region_ch:
         for download in downloads:
             # href ::= "/index.php?apid=12731252&amp;apparentid=5011362"
             href = download.get("href")
-            if download.find("div", class_="badgeIcon") or download.find(
-                "img", class_="rowImg"
+            if (
+                download.find("div", class_="badgeIcon")
+                or download.find("img", class_="rowImg")
+                or download.find("img", class_="svgIconImg")
             ):
                 titles = download.find_all("div", class_="title")
                 if "PDF" in titles:
