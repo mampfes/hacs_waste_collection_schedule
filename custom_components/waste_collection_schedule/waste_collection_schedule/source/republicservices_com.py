@@ -1,5 +1,4 @@
-import json
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -44,6 +43,24 @@ DELAYS = {
     " seven ": 7,
 }
 
+# Number of months to project the recurring schedule forward
+SCHEDULE_MONTHS_AHEAD = 6
+
+
+def _project_schedule(seed_date: date, period_weeks: int, months_ahead: int) -> list:
+    """Generate recurring pickup dates from a seed date.
+
+    Uses the seed date (first known pickup) and projects forward at the given
+    interval (period_weeks) for the specified number of months.
+    """
+    end_date = seed_date + timedelta(days=months_ahead * 30)
+    dates = []
+    d = seed_date
+    while d <= end_date:
+        dates.append(d)
+        d += timedelta(weeks=period_weeks)
+    return dates
+
 
 class Source:
     def __init__(self, street_address, method=1):
@@ -54,12 +71,12 @@ class Source:
         s = requests.Session()
 
         # Get address data
-        r0 = requests.get(
+        r0 = s.get(
             "https://www.republicservices.com/api/v1/addresses",
             params={"addressLine1": self._street_address},
         )
         r0.raise_for_status()
-        r0_data = json.loads(r0.text).get("data")
+        r0_data = r0.json().get("data")
         if not r0_data:
             raise SourceArgumentNotFound(
                 "street_address",
@@ -72,86 +89,104 @@ class Source:
         latitude = r0_json["latitude"]
 
         # Get raw schedule
-        r1 = requests.get(
+        r1 = s.get(
             "https://www.republicservices.com/api/v1/publicPickup",
             params={"siteAddressHash": address_hash},
         )
-        r1_json = json.loads(r1.text).get("data")
+        r1_json = r1.json().get("data")
         if r1_json is None:
             raise SourceArgumentNotFound(
                 "street_address",
                 self._street_address,
                 "Republic Services does not provide schedule data via their API for this address. This is a known limitation for some service areas (e.g. parts of Massachusetts). Contact Republic Services directly for your collection schedule.",
             )
+
+        # Build schedule by projecting recurring pickup dates forward.
+        # The API often returns only the next single date in nextServiceDays for
+        # weekly services. We use the weekday frequency fields and period length
+        # to project the full recurring schedule, using nextServiceDays[0] as the
+        # seed/anchor date.
         service = ""
-        schedule = {}
+        schedule = []
         for service_type in r1_json:
-            if hasattr(service_type, "__iter__") and service_type != "isColaAccount":
-                i = 0
-                for item in r1_json[service_type]:
-                    for day in item["nextServiceDays"]:
-                        dt = datetime.strptime(day, "%Y-%m-%d").date()
-                        service = item["containerCategory"]
-                        schedule.update(
-                            {
-                                i: {
-                                    "date": dt,
-                                    "waste_type": item["wasteTypeDescription"],
-                                    "waste_description": item["productDescription"],
-                                    "service": service,
-                                }
-                            }
-                        )
-                        i += 1
+            if not hasattr(service_type, "__iter__") or service_type == "isColaAccount":
+                continue
+            for item in r1_json[service_type]:
+                next_days = item.get("nextServiceDays", [])
+                if not next_days:
+                    continue
+
+                seed_date = datetime.strptime(next_days[0], "%Y-%m-%d").date()
+                service = item.get("containerCategory", "")
+
+                # Determine the pickup interval in weeks.
+                period_unit = item.get("numberOfPickupsPeriodUnit", "W").strip()
+                period_length = int(item.get("numberOfPickupsPeriodLength", 1) or 1)
+
+                # Only project for week-based schedules; for others fall back to
+                # using the dates the API already provided.
+                if period_unit == "W" and period_length >= 1:
+                    pickup_dates = _project_schedule(
+                        seed_date, period_length, SCHEDULE_MONTHS_AHEAD
+                    )
+                else:
+                    pickup_dates = [
+                        datetime.strptime(d, "%Y-%m-%d").date() for d in next_days
+                    ]
+
+                for dt in pickup_dates:
+                    schedule.append(
+                        {
+                            "date": dt,
+                            "waste_type": item["wasteTypeDescription"],
+                            "waste_description": item["productDescription"],
+                            "service": service,
+                        }
+                    )
 
         # Compile holidays that impact collections
         r2 = s.get(
             "https://www.republicservices.com/api/v3/holidaySchedules/schedules",
             params={"latitude": latitude, "longitude": longitude},
         )
-        r2_json = json.loads(r2.text)["data"]
+        r2_json = r2.json()["data"]
         day_offset = 0
-        i = 0
-        holidays = {}
+        holidays = []
         for item in r2_json:
             if item and item["serviceImpacted"] is True and item["LOB"] == service:
                 for delay in DELAYS:
                     if delay in item["description"]:
                         day_offset = DELAYS[delay]
                 dt = datetime.strptime(item["date"].split("T")[0], "%Y-%m-%d").date()
-                holidays.update(
+                holidays.append(
                     {
-                        i: {
-                            "date": dt,
-                            "name": item["name"],
-                            "description": item["description"],
-                            "delay": day_offset,
-                            "incorporated": False,
-                        }
+                        "date": dt,
+                        "name": item["name"],
+                        "description": item["description"],
+                        "delay": day_offset,
+                        "incorporated": False,
                     }
                 )
-                i += 1
 
-        # Cycle through schedule and holidays incorporating delays
-        # According to Republic Waste "Holidays typically push our residential pickup
-        # schedules back one day with regular schedules resuming the following week."
+        # Cycle through schedule and holidays incorporating delays.
+        # According to Republic Services, "Holidays typically push our residential
+        # pickup schedules back one day with regular schedules resuming the
+        # following week."
         # Source: https://www.republicservices.com/customer-support/faq
         while True:
             changes = 0
             for holiday in holidays:
-                if not holidays[holiday]["incorporated"]:
-                    h = holidays[holiday]["date"]
-                    d = holidays[holiday]["delay"]
+                if not holiday["incorporated"]:
+                    h = holiday["date"]
+                    d = holiday["delay"]
                     for pickup in schedule:
-                        p = schedule[pickup]["date"]
+                        p = pickup["date"]
                         # Calculate the next Sunday since Sunday should reset the
                         # scheduled pickup date
                         ns = h + timedelta(days=6 - h.weekday())
                         if h <= p < ns:
-                            revised_date = p + timedelta(days=d)
-                            schedule[pickup]["date"] = revised_date
-                            holidays[holiday]["incorporated"] = True
-                            # print(p, h, d, date_difference, revised_date)
+                            pickup["date"] = p + timedelta(days=d)
+                            holiday["incorporated"] = True
                             changes += 1
             if changes == 0:
                 break
@@ -160,46 +195,44 @@ class Source:
         entries = []
         if self._method == 1:  # Original logic
             for item in schedule:
-                if "RECYCLE" in schedule[item]["waste_description"]:
+                if "RECYCLE" in item["waste_description"]:
                     icon = "mdi:recycle"
                 elif (
-                    "YARD" in schedule[item]["waste_description"]
-                    or "ORGANICS" in schedule[item]["waste_description"]
+                    "YARD" in item["waste_description"]
+                    or "ORGANICS" in item["waste_description"]
                 ):
                     icon = "mdi:leaf"
                 else:
                     icon = "mdi:trash-can"
                 entries.append(
                     Collection(
-                        date=schedule[item]["date"],
-                        t=schedule[item]["waste_type"],
+                        date=item["date"],
+                        t=item["waste_type"],
                         icon=icon,
                     ),
                 )
-        elif (
-            self._method == 2
-        ):  # Updated to report yard waste as a separate category to recycling
+        elif self._method == 2:  # Updated to report yard waste as a separate category
             for item in schedule:
                 if (
-                    "YARD" in schedule[item]["waste_description"]
-                    or "ORGANICS" in schedule[item]["waste_description"]
+                    "YARD" in item["waste_description"]
+                    or "ORGANICS" in item["waste_description"]
                 ):
                     icon = "mdi:leaf"
-                    schedule[item]["waste_type"] = "Yard Waste"
-                elif "BULK SERVICE" in schedule[item]["waste_description"]:
+                    waste_type = "Yard Waste"
+                elif "BULK SERVICE" in item["waste_description"]:
                     icon = "mdi:leaf"
-                    schedule[item]["waste_type"] = "Bulk Waste"
-                elif "RECYCLE" in schedule[item]["waste_description"]:
+                    waste_type = "Bulk Waste"
+                elif "RECYCLE" in item["waste_description"]:
                     icon = "mdi:recycle"
-                    schedule[item]["waste_type"] = "Recycle"
+                    waste_type = "Recycle"
                 else:
                     icon = "mdi:trash-can"
-                    schedule[item]["waste_type"] = "Solid Waste"
+                    waste_type = "Solid Waste"
 
                 entries.append(
                     Collection(
-                        date=schedule[item]["date"],
-                        t=schedule[item]["waste_type"],
+                        date=item["date"],
+                        t=waste_type,
                         icon=icon,
                     ),
                 )
