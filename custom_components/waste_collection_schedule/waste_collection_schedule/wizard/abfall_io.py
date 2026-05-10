@@ -13,7 +13,6 @@ package_dir = Path(__file__).resolve().parents[2]
 site.addsitedir(str(package_dir))
 from waste_collection_schedule.service.AbfallIO import SERVICE_MAP  # type: ignore # isort:skip # noqa: E402
 
-
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
@@ -174,10 +173,18 @@ def select_and_query(data, answers):
         questions = [inquirer.Text(parser.text_name, message=message)]
         answers.update(inquirer.prompt(questions))
 
+    waction_matches = ACTION_EXTRACTOR_PATTERN.findall(data)
+    if not waction_matches:
+        raise ValueError(
+            "Unexpected response from abfall.io API (no waction found). "
+            "This provider may have migrated to the new abfall.io v3 GraphQL API. "
+            "Try using the abfall_io_graphql wizard instead: "
+            "wizard/abfall_io_graphql.py"
+        )
     args = {
         "key": answers["key"],
         "modus": MODUS_KEY,
-        "waction": ACTION_EXTRACTOR_PATTERN.findall(data)[0],
+        "waction": waction_matches[0],
     }
     r = requests.post(
         "https://api.abfall.io", params=args, data=answers, headers=HEADERS
@@ -198,6 +205,15 @@ def main():
     # prompt for first level
     args = {"key": answers["key"], "modus": MODUS_KEY, "waction": "init"}
     r = requests.get("https://api.abfall.io", params=args, headers=HEADERS)
+
+    if r.status_code == 401:
+        raise ValueError(
+            f"API key '{answers['key']}' returned HTTP 401. "
+            "This provider has likely migrated to the new abfall.io v3 GraphQL API. "
+            "Please use the abfall_io_graphql wizard instead: "
+            "wizard/abfall_io_graphql.py"
+        )
+    r.raise_for_status()
 
     data = r.text
     while True:
