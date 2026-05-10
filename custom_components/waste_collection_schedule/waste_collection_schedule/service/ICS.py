@@ -152,6 +152,14 @@ class ICS:
             ics_data,
         )
 
+        # Fix truncated DTSTART/DTEND values where the time portion is missing
+        # after the 'T' separator (e.g. "DTSTART;TZID=Europe/Berlin:20260505T").
+        ics_data = re.sub(
+            r"(DT(?:START|END)[^:]*:\d{8})T(\r?\n)",
+            r"\g<1>T000000\g<2>",
+            ics_data,
+        )
+
         # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines — see convert().
         ics_data = re.sub(
             r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
