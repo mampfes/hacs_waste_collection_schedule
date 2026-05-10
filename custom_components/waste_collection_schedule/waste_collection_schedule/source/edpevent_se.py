@@ -114,6 +114,10 @@ TEST_CASES = {
         "street_address": "Gasverksgatan 7, Västerås",
         "service_provider": "vafabmiljo",
     },
+    "NVOA - Nacka (Fogdevägen)": {
+        "street_address": "Fogdevägen 13, Saltsjö-Duvnäs",
+        "service_provider": "nvoa",
+    },
 }
 
 COUNTRY = "se"
@@ -241,6 +245,11 @@ SERVICE_PROVIDERS = {
         "title": "Vafab Miljö",
         "url": "https://vafabmiljo.se",
         "api_url": "https://services.vafabmiljo.se/FutureWebVKFHus/SimpleWastePickup",
+    },
+    "nvoa": {
+        "title": "NVOA - Nacka Vatten och Avfall",
+        "url": "https://www.nacka.se/nackavattenavfall/avfall/sophamtning/tomningsdag/",
+        "api_url": "https://futureweb.nvoa.se/EDP/FutureWebBasic/SimpleWastePickup",
     },
 }
 
