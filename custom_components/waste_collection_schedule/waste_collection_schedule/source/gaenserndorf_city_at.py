@@ -18,12 +18,41 @@ DESCRIPTION = (
 )
 URL = "https://www.gaenserndorf.at/"
 COUNTRY = "at"
+EXTRA_INFO = [
+    {
+        "title": "Gänserndorf",
+        "url": "https://www.gaenserndorf.at/",
+        "country": "at",
+    },
+]
 TEST_CASES = {
     "Baumschulweg": {"street": "Baumschulweg"},
     "Ahornweg": {"street": "Ahornweg"},
     "Siebenbrunner Straße (first calendar)": {
         "street": "Siebenbrunner Straße",
         "calendar_index": 0,
+    },
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "street": "Street Name",
+        "calendar_index": "Calendar Index",
+    },
+    "de": {
+        "street": "Straßenname",
+        "calendar_index": "Kalender-Index",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street": "The name of your street as shown in the Gänserndorf App.",
+        "calendar_index": "Index of the calendar to use when a street maps to multiple calendars (starting at 0).",
+    },
+    "de": {
+        "street": "Der Straßenname, wie er in der Gänserndorf-App angezeigt wird.",
+        "calendar_index": "Index des zu verwendenden Kalenders, wenn eine Straße mehreren Kalendern zugeordnet ist (beginnt bei 0).",
     },
 }
 
