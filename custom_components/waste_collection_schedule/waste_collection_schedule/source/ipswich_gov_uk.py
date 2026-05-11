@@ -11,7 +11,7 @@ DESCRIPTION = (
     "Source for waste collection schedules provided by Ipswich Borough Council, UK."
 )
 URL = "https://www.ipswich.gov.uk"
-COUNTRY = "gb"
+COUNTRY = "uk"
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (

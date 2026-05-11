@@ -291,13 +291,17 @@ def test_source_has_necessary_parameters() -> None:
             module.Source, "fetch"
         ), f"missing fetch method in Source class of source {source}"
 
+        # If the module declares COUNTRY it must be a valid code — update_docu_links.py
+        # uses this value directly and silently orphans the source if it doesn't match.
+        if hasattr(module, "COUNTRY"):
+            assert _is_supported_country_code(
+                module.COUNTRY
+            ), f"unsupported country code {module.COUNTRY!r} in source {source}"
+
         if source not in SOURCES_NO_COUNTRY and not _has_supported_country_code(source):
             assert hasattr(
                 module, "COUNTRY"
             ), f"missing COUNTRY in source {source} or supported countrycode in filename"
-            assert _is_supported_country_code(
-                module.COUNTRY
-            ), f"unsupported country code in source {source}"
 
         if hasattr(module, "EXTRA_INFO"):
             _test_source_has_necessary_parameters_extra_info(

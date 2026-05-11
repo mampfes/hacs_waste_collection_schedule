@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 TITLE = "Shawinigan"
 DESCRIPTION = "Source for Shawinigan, Canada waste collection schedule."
 URL = "https://geoweb.shawinigan.ca/CollecteMatieresResiduelles/"
-COUNTRY = "CA"
+COUNTRY = "ca"
 
 TEST_CASES = {
     "Shawinigan": {"address": "1760 Avenue de la Paix, Shawinigan, QC G9N 6H7"},

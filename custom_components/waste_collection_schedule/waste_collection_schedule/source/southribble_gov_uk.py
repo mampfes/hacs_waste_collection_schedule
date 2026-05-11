@@ -10,7 +10,7 @@ DESCRIPTION = (
     "Source for southribble.gov.uk services for South Ribble Borough Council, UK."
 )
 URL = "https://www.southribble.gov.uk"
-COUNTRY = "gb"
+COUNTRY = "uk"
 TEST_CASES = {
     "South Ribble Borough Council, Civic Centre, W Paddock, Leyland PR25 1DH": {
         "postcode": "PR25 1DH",
