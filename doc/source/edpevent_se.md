@@ -22,6 +22,7 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `ssam`: SSAM Södra Smalånds Avfall & Miljö
 - `stenungsund-kommun`: Stenungsunds kommun
 - `uppsalavatten`: Uppsala Vatten
+- `vafabmiljo`: Vafab Miljö
 <!--End of service section-->
 
 ## Configuration via configuration.yaml

@@ -44,7 +44,10 @@ ICON_MAP = {
     "E-waste Event": "mdi:calendar",
     "Additional EnviroDepot Hours": "mdi:calendar",
     "Garbage Collection": "mdi:trash-can",
+    "Recycling": "mdi:recycle",
     "Recycling Collection": "mdi:recycle",
+    "Waste": "mdi:trash-can",
+    "FOGO": "mdi:food",
     "Yard Waste Collection Week": "mdi:leaf",
     "3 Container Exemption Pick-up": "mdi:calendar",
     "Holiday ": "mdi:calendar",
@@ -241,6 +244,69 @@ EXTRA_INFO = [
             "district_id": "LAS",
         },
     },
+    {
+        "title": "Glenorchy City Council (TAS)",
+        "url": "https://www.gcc.tas.gov.au/",
+        "country": "au",
+        "default_params": {
+            "project_id": "657",
+            "district_id": "GLENORCHY",
+        },
+    },
+    {
+        "title": "Toronto (ON) - Circular Materials",
+        "url": "https://www.toronto.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "CIRCMATONT", "district_id": "TORONTO"},
+    },
+    {
+        "title": "Mississauga (ON)",
+        "url": "https://www.mississauga.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3179", "district_id": "MISS"},
+    },
+    {
+        "title": "Brampton (ON)",
+        "url": "https://www.brampton.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3179", "district_id": "BRAMP"},
+    },
+    {
+        "title": "Caledon (ON)",
+        "url": "https://www.caledon.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3179", "district_id": "CALED"},
+    },
+    {
+        "title": "Burlington (ON)",
+        "url": "https://www.burlington.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "BURL"},
+    },
+    {
+        "title": "Oakville (ON)",
+        "url": "https://www.oakville.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "OAKV"},
+    },
+    {
+        "title": "Milton (ON)",
+        "url": "https://www.milton.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "MILT"},
+    },
+    {
+        "title": "Halton Hills (ON)",
+        "url": "https://www.haltonhills.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "HALT"},
+    },
+    {
+        "title": "Guelph (ON)",
+        "url": "https://guelph.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3194", "district_id": "GUEL"},
+    },
 ]
 
 TEST_CASES = {
@@ -335,6 +401,11 @@ TEST_CASES = {
         "district_id": "MEDHAT",
         "project_id": 500,
         "zone_id": "zone-z196",
+    },
+    "Glenorchy City Council, TAS, Australia": {
+        "district_id": "GLENORCHY",
+        "project_id": 657,
+        "zone_id": "zone-z15322-z16165-z16823",
     },
 }
 
@@ -463,7 +534,7 @@ class Source:
         if not self.zone_id:
             self._lookup_zones()
 
-        collection_def_url = f"https://us-api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
+        collection_def_url = f"https://api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
 
         schedule_urls = [  # Some regions use different one of these should work
             f"https://api-city.recyclecoach.com/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",

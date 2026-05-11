@@ -223,16 +223,28 @@ class Source:
         return (
             candidate_full == normalized_input
             or candidate_key == normalized_input
-            or candidate_key in normalized_input
-            or normalized_input in candidate_full
+            or cls._contains_normalized_phrase(normalized_input, candidate_key)
+            or cls._contains_normalized_phrase(candidate_full, normalized_input)
             or (
                 bool(postcode)
                 and bool(house_number)
                 and postcode == candidate_postcode
                 and house_number == candidate_house_number
                 and bool(candidate_street)
-                and candidate_street in normalized_input
+                and cls._contains_normalized_phrase(normalized_input, candidate_street)
             )
+        )
+
+    @staticmethod
+    def _contains_normalized_phrase(value: str, phrase: str) -> bool:
+        if not value or not phrase:
+            return False
+        return (
+            re.search(
+                rf"(?<![A-Z0-9]){re.escape(phrase)}(?![A-Z0-9])",
+                value,
+            )
+            is not None
         )
 
     @staticmethod

@@ -1,0 +1,13 @@
+---
+title: Brandenburg an der Havel
+url: https://www.stadt-brandenburg.de/
+country: de
+howto:
+  en: |
+    - Go to <https://www.stadt-brandenburg.de/leben/abfall-und-abwasser/entsorgungstermine> and select your street
+    - Right-click on the `Kalenderimport` button and copy the url
+    - Use this link as the `url` parameter
+
+test_cases:
+  Akazienweg\:
+    url: https://brandenburg.abfall-app.net/download?system=ical&period=1&street=4&categories=&view=month

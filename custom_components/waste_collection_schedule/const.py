@@ -21,6 +21,7 @@ CONF_SOURCE_ARGS: Final = "args"  # source arguments
 CONF_SOURCE_CALENDAR_TITLE: Final = "calendar_title"
 CONF_SEPARATOR: Final = "separator"
 CONF_FETCH_TIME: Final = "fetch_time"
+CONF_FETCH_INTERVAL_DAYS: Final = "fetch_interval_days"
 CONF_RANDOM_FETCH_TIME_OFFSET: Final = "random_fetch_time_offset"
 CONF_DAY_SWITCH_TIME: Final = "day_switch_time"
 
@@ -37,6 +38,7 @@ CONF_DAY_OFFSET_DEFAULT = 0
 
 CONF_SEPARATOR_DEFAULT: Final = ", "
 CONF_FETCH_TIME_DEFAULT: Final = "01:00"
+CONF_FETCH_INTERVAL_DAYS_DEFAULT: Final = 1
 CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT: Final = 60
 CONF_DAY_SWITCH_TIME_DEFAULT: Final = "10:00"
 

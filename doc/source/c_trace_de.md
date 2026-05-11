@@ -129,7 +129,6 @@ This source requires the name of a `service` which is specific to your municipal
 | Landratsamt Main-Tauber-Kreis | `maintauberkreis-abfallkalender` |
 | Stadt Arnsberg | `arnsberg-abfallkalender` |
 | Stadt Bayreuth | `bayreuthstadt-abfallkalender` |
-| Stadt Overath | `overathabfallkalender` |
 | WZV Kreis Segeberg | `segebergwzv-abfallkalender` |
 <!--End of service section-->
 

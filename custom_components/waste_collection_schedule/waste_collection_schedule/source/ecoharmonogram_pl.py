@@ -194,6 +194,12 @@ TEST_CASES = {
         "house_number": "32",
         "additional_sides_matcher": "",  # Available sides are "Zabudowa wysoka" and "" (empty string)
     },
+    "Tarnowskie Góry, Gliwicka 1": {
+        "town": "Tarnowskie Góry",
+        "street": "Gliwicka",
+        "house_number": "1",
+        "additional_sides_matcher": "Zabudowa jednorodzinna",
+    },
 }
 
 

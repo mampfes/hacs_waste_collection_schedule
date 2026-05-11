@@ -26,10 +26,12 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Bernstein | [bernstein.gv.at](http://www.bernstein.gv.at) |
 | Bildein | [bildein.at](http://www.bildein.at) |
 | Birkfeld | [birkfeld.at](http://www.birkfeld.at) |
+| Bischofshofen | [bischofshofen.at](https://www.bischofshofen.at) |
 | Blindenmarkt | [blindenmarkt.gv.at](blindenmarkt.gv.at/) |
 | Breitenbrunn am Neusiedler See | [breitenbrunn.at](http://www.breitenbrunn.at) |
 | Breitenstein | [breitenstein.at](https://www.breitenstein.at) |
 | Bromberg | [bromberg.at](http://www.bromberg.at) |
+| Bruck an der Mur | [bruckmur.at](https://www.bruckmur.at) |
 | Bruckneudorf | [bruckneudorf.eu](http://www.bruckneudorf.eu) |
 | Buch - St. Magdalena | [buch-stmagdalena.at](http://www.buch-stmagdalena.at) |
 | Burgau | [burgau.info](https://www.burgau.info) |
@@ -222,7 +224,6 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Rudersdorf | [rudersdorf.at](http://www.rudersdorf.at) |
 | Rust | [freistadt-rust.at](https://www.freistadt-rust.at) |
 | Röthis | [roethis.at](https://www.roethis.at) |
-| Saalfelden am Steinernen Meer | [stadtmarketing-saalfelden.at/de](www.stadtmarketing-saalfelden.at/de) |
 | Sankt Georgen an der Stiefing | [st-georgen-stiefing.gv.at](https://www.st-georgen-stiefing.gv.at) |
 | Sankt Gilgen | [gemgilgen.at](https://www.gemgilgen.at) |
 | Sankt Oswald bei Plankenwarth | [sanktoswald.net](https://www.sanktoswald.net) |
@@ -293,6 +294,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Walpersbach | [walpersbach.gv.at](http://www.walpersbach.gv.at) |
 | Wartberg ob der Aist | [wartberg-aist.at](www.wartberg-aist.at/) |
 | Weiden am See | [weiden-see.at](https://www.weiden-see.at) |
+| Weinitzen | [weinitzen.gv.at](https://www.weinitzen.gv.at) |
 | Weitersfeld | [weitersfeld.gv.at](https://www.weitersfeld.gv.at) |
 | Weiz | [weiz.at](https://www.weiz.at) |
 | Weißenkirchen in der Wachau | [weissenkirchen-wachau.at](https://www.weissenkirchen-wachau.at) |

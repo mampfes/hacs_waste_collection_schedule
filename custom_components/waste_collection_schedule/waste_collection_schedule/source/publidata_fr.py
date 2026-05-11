@@ -272,6 +272,11 @@ EXTRA_INFO = [
         "url": "https://www.sivom-rivedroite.fr/",
         "default_params": {"instance_id": 1027},
     },
+    {
+        "title": "Le Havre Seine Métropole",
+        "url": "https://tripratik.lehavreseinemetropole.fr/",
+        "default_params": {"instance_id": 1408},
+    },
 ]
 
 _CALENDAR_DAY_VERY_ABBR = {

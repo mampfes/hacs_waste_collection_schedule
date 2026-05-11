@@ -91,7 +91,7 @@ def _split_summary(summary: str) -> list[tuple[str, str]]:
 class Source:
     def __init__(self, street_number: str, street_name: str):
         self._street_number = str(street_number).strip()
-        self._street_name = street_name.strip()
+        self._street_name = street_name.strip().upper()
 
     def fetch(self) -> list[Collection]:
         session = requests.Session()
@@ -109,9 +109,9 @@ class Source:
             "__VIEWSTATE": viewstate["value"] if viewstate else "",
             "__VIEWSTATEGENERATOR": viewstate_gen["value"] if viewstate_gen else "",
             "__EVENTVALIDATION": event_validation["value"] if event_validation else "",
-            "ctl00$MainContent$txtStreetNumber": self._street_number,
+            "ctl00$MainContent$txtStreetNo": self._street_number,
             "ctl00$MainContent$txtStreet": self._street_name,
-            "ctl00$MainContent$btnSearch": "Search",
+            "ctl00$MainContent$btnSubmit": "Submit",
         }
 
         # Step 2: POST to get the collection area

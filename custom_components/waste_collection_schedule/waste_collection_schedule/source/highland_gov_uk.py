@@ -1,8 +1,8 @@
 import datetime
-import time
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Highland"
 DESCRIPTION = "Source for Highland."
@@ -23,10 +23,12 @@ ICON_MAP = {
     "containers": "mdi:package",
 }
 
-
-SESSION_URL = "https://highland-self.achieveservice.com/authapi/isauthenticated?uri=https%3A%2F%2Fhighland-self.achieveservice.com%2Fen%2Fservice%2FCheck_your_household_bin_collection_days&hostname=highland-self.achieveservice.com&withCredentials=true"
-
-API_URL = "https://highland-self.achieveservice.com/apibroker/runLookup"
+BASE_URL = "https://highland-self.achieveservice.com"
+INITIAL_URL = f"{BASE_URL}/en/service/Check_your_household_bin_collection_days"
+AUTH_URL = f"{BASE_URL}/authapi/isauthenticated"
+API_URL = f"{BASE_URL}/apibroker/runLookup"
+HOSTNAME = "highland-self.achieveservice.com"
+LOOKUP_ID = "660d44a698632"
 
 
 class Source:
@@ -35,38 +37,18 @@ class Source:
         self._predict: bool = predict
 
     def fetch(self) -> list[Collection]:
-        data = {
-            "formValues": {"Your address": {"propertyuprn": {"value": self._uprn}}},
-        }
-        headers = {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "User-Agent": "Mozilla/5.0",
-            "X-Requested-With": "XMLHttpRequest",
-            "Referer": "https://highland-self.achieveservice.com/fillform/?iframe_id=fillform-frame-1&db_id=",
-        }
-        s = requests.session()
-        r = s.get(SESSION_URL)
-        r.raise_for_status()
-        session_data = r.json()
-        sid = session_data["auth-session"]
-        params = {
-            "id": "660d44a698632",
-            "repeat_against": "",
-            "noRetry": "false",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            # unix_timestamp
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
+        session = requests.Session()
+        sid = init_session(session, INITIAL_URL, AUTH_URL, HOSTNAME)
 
-        r = s.post(API_URL, json=data, headers=headers, params=params)
-        r.raise_for_status()
+        result = run_lookup(
+            session,
+            API_URL,
+            sid,
+            LOOKUP_ID,
+            {"Your address": {"propertyuprn": {"value": self._uprn}}},
+        )
 
-        data = r.json()
-        rows_data = data["integration"]["transformed"]["rows_data"]["0"]
+        rows_data = result["integration"]["transformed"]["rows_data"]["0"]
         if not isinstance(rows_data, dict):
             raise ValueError("Invalid data returned from API")
 

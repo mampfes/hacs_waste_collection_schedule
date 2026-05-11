@@ -29,12 +29,12 @@ PARAM_DESCRIPTIONS = {
     }
 }
 ICON_MAP = {
+    "garden": "mdi:leaf",
+    "food": "mdi:food-apple",
+    "recycl": "mdi:recycle",
     "waste": "mdi:trash-can",
     "rubbish": "mdi:trash-can",
     "refuse": "mdi:trash-can",
-    "recycl": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food-apple",
 }
 
 

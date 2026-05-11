@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import logging
+from datetime import date, timedelta
 from typing import Any
 
 import requests
@@ -143,3 +144,33 @@ def query_feature_layer(
         raise ArcGisQueryError("No features found for the given query.")
 
     return [f.get("attributes", {}) for f in features]
+
+
+def epoch_ms_to_date(epoch_ms: int | float) -> date:
+    """Convert an ArcGIS epoch-millisecond timestamp to a Python date."""
+    return date.fromtimestamp(epoch_ms / 1000)
+
+
+def get_next_n_dates(start: date, n: int, delta: timedelta) -> list[date]:
+    """
+    Starting from `start`, advance past today by `delta` steps, then
+    collect the next `n` dates (each `delta` apart).
+    """
+    d = start
+    today = date.today()
+    result: list[date] = []
+    for _ in range(n):
+        while d < today:
+            d += delta
+        result.append(d)
+        d += delta
+    return result
+
+
+def most_recent_weekday(day_of_week: int) -> date:
+    """
+    Return the most recent (including today) occurrence of `day_of_week`
+    (0=Monday … 6=Sunday).
+    """
+    today = date.today()
+    return today - timedelta((today.weekday() - day_of_week + 7) % 7)

@@ -24,6 +24,8 @@ This source has been successfully tested with the following service providers:
 - [Berg im Drautal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Berndorf bei Salzburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Brandenberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Braunau am Inn](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
+- [Bregenz](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Breitenbach am Inn](/doc/ics/muellapp_com.md) / muellapp.com
 - [City of Krems](/doc/ics/kremsstadt_umweltverbaende_at.md) / kremsstadt.umweltverbaende.at
 - [Dellach](/doc/ics/muellapp_com.md) / muellapp.com
@@ -31,6 +33,7 @@ This source has been successfully tested with the following service providers:
 - [Ebenthal in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Eugendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Feistritz im Rosental](/doc/ics/muellapp_com.md) / muellapp.com
+- [Feldkirch](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Feldkirchen in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ferlach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ferndorf](/doc/ics/muellapp_com.md) / muellapp.com
@@ -48,6 +51,7 @@ This source has been successfully tested with the following service providers:
 - [Heiligenblut am Großglockner](/doc/ics/muellapp_com.md) / muellapp.com
 - [Henndorf am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hermagor-Pressegger See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Hohenems](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Hopfgarten im Brixental](/doc/ics/muellapp_com.md) / muellapp.com
 - [Irschen](/doc/ics/muellapp_com.md) / muellapp.com
 - [Keutschach am See](/doc/ics/muellapp_com.md) / muellapp.com
@@ -65,6 +69,7 @@ This source has been successfully tested with the following service providers:
 - [Köttmannsdorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Lendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leoben](/doc/ics/muellapp_com.md) / muellapp.com
+- [Leonding](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Lesachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Linz AG](/doc/ics/linzag_at.md) / linzag.at
 - [Ludmannsdorf](/doc/ics/muellapp_com.md) / muellapp.com
@@ -90,6 +95,7 @@ This source has been successfully tested with the following service providers:
 - [Obertrum am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ottobrunn](/doc/ics/muellapp_com.md) / muellapp.com
 - [Paternion](/doc/ics/muellapp_com.md) / muellapp.com
+- [Pichl bei Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Poggersdorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Pörtschach am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Radenthein](/doc/ics/muellapp_com.md) / muellapp.com
@@ -101,6 +107,7 @@ This source has been successfully tested with the following service providers:
 - [Reißeck](/doc/ics/muellapp_com.md) / muellapp.com
 - [Rennweg am Katschberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Sachsenburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schalchen](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Schiefling am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schleedorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schwaz](/doc/ics/muellapp_com.md) / muellapp.com
@@ -123,15 +130,19 @@ This source has been successfully tested with the following service providers:
 - [Straßwalchen](/doc/ics/muellapp_com.md) / muellapp.com
 - [Söll](/doc/ics/muellapp_com.md) / muellapp.com
 - [Techelsberg am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Traun](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Trebesing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Treffen am Ossiacher See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Umweltv](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
+- [Upper Austria (Oberösterreich)](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Villach](/doc/ics/muellapp_com.md) / muellapp.com
+- [Vorarlberg](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Völkermarkt](/doc/ics/muellapp_com.md) / muellapp.com
 - [Waidhofen an der Ybbs](/doc/ics/waidhofen_at.md) / waidhofen.at
 - [Wattens](/doc/ics/muellapp_com.md) / muellapp.com
 - [Weißensee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Winklern](/doc/ics/muellapp_com.md) / muellapp.com
 - [Wolfsberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zell](/doc/ics/muellapp_com.md) / muellapp.com
@@ -147,6 +158,7 @@ This source has been successfully tested with the following service providers:
 
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [Castlegar, BC](/doc/ics/recollect.md) / castlegar.ca
+- [City of Beaumont, AB](/doc/ics/recollect.md) / beaumont.ab.ca
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Guelph, ON](/doc/ics/recollect.md) / guelph.ca
@@ -157,6 +169,8 @@ This source has been successfully tested with the following service providers:
 - [City of Regina](/doc/ics/recollect.md) / regina.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [City of Windsor](/doc/ics/citywindsor_ca.md) / citywindsor.ca
+- [Colchester, NS](/doc/ics/recollect.md) / colchester.ca
+- [Community Recycling (Lunenburg, NS)](/doc/ics/recollect.md) / communityrecycling.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
@@ -164,14 +178,17 @@ This source has been successfully tested with the following service providers:
 - [Eco360 (Greater Moncton, NB)](/doc/ics/recollect.md) / eco360.ca
 - [Gatineau, QC](/doc/ics/recollect.md) / gatineau.ca
 - [Georgina (ON)](/doc/ics/georgina_ca.md) / georgina.ca
+- [Grey Highlands, ON](/doc/ics/recollect.md) / greyhighlands.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
+- [Laval (QC)](/doc/ics/laval_ca.md) / laval.ca
 - [Longueuil (QC)](/doc/ics/longueuil_quebec.md) / longueuil.quebec
 - [Lévis / Québec](/doc/ics/ville_levis_qc_ca.md) / ville.levis.qc.ca
 - [Markham, ON](/doc/ics/recollect.md) / markham.ca
 - [Muskoka District (Huntsville, ON)](/doc/ics/recollect.md) / muskoka.on.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [Oxford County, ON](/doc/ics/recollect.md) / oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
 - [Region of Waterloo](/doc/ics/recollect.md) / regionofwaterloo.ca
 - [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
@@ -180,6 +197,8 @@ This source has been successfully tested with the following service providers:
 - [Saint-Jean-Sur-Richelieu, QC](/doc/ics/recollect.md) / compo.qc.ca
 - [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
 - [Saskatoon, SK](/doc/ics/recollect.md) / saskatoon.ca
+- [Sherbrooke (QC)](/doc/ics/sherbrooke_ca.md) / sherbrooke.ca
+- [Spruce Grove, AB](/doc/ics/recollect.md) / sprucegrove.org
 - [St Clair Township, ON](/doc/ics/recollect.md) / stclairtownship.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
@@ -215,7 +234,6 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaft Landkreis Göppingen](/doc/ics/abfall_io_ics.md) / awb-gp.de
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
 - [Abfallwirtschaft Landkreis Nordhausen](/doc/ics/abfallportal_nordhausen_de.md) / abfall-nordhausen.de
-- [Abfallwirtschaft Ortenaukreis](/doc/ics/abfall_io_ics.md) / abfallwirtschaft-ortenaukreis.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaft Rems-Murr (AWRM) - ICS Version](/doc/ics/abfallwirtschaft_rems_murr_de.md) / abfallwirtschaft-rems-murr.de
 - [Abfallwirtschaft Sonneberg](/doc/ics/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
@@ -246,6 +264,7 @@ This source has been successfully tested with the following service providers:
 - [BEST - Bottrop](/doc/ics/best_bottrop_de.md) / best-bottrop.de
 - [Biebergemünd](/doc/ics/mein_abfallkalender_online.md) / biebergemuend.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
+- [Brandenburg an der Havel](/doc/ics/brandenburg_an_der_havel.md) / stadt-brandenburg.de
 - [Cham Landkreis](/doc/ics/entsorgung_cham_de.md) / entsorgung-cham.de
 - [Dienstleistungsbetrieb Dreieich und Neu-Isenburg AöR](/doc/ics/mein_abfallkalender_online.md) / dlb-aoer.de
 - [Dormagen](/doc/ics/mein_abfallkalender_online.md) / dormagen.de
@@ -274,7 +293,6 @@ This source has been successfully tested with the following service providers:
 - [Flörsheim Am Main](/doc/ics/floersheim_umweltkalender_de.md) / floersheim-umweltkalender.de
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
-- [Gelnhausen](/doc/ics/mein_abfallkalender_online.md) / gelnhausen.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Ginsheim-Gustavsburg](/doc/ics/gigu_de.md) / gigu.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
@@ -285,6 +303,7 @@ This source has been successfully tested with the following service providers:
 - [Heusenstamm](/doc/ics/mein_abfallkalender_online.md) / heusenstamm.de
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
+- [Karben](/doc/ics/mein_abfallkalender_online.md) / karben.de
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
 - [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
 - [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
@@ -406,6 +425,7 @@ This source has been successfully tested with the following service providers:
 ### Switzerland
 
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
+- [Gemeinde Würenlos](/doc/ics/wuerenlos_ch.md) / wuerenlos.ch
 - [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
@@ -416,6 +436,7 @@ This source has been successfully tested with the following service providers:
 ### United Kingdom
 
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
+- [Bassetlaw District Council](/doc/ics/recollect.md) / bassetlaw.gov.uk
 - [Brent Council](/doc/ics/brent_gov_uk.md) / brent.gov.uk
 - [Caerphilly, Wales](/doc/ics/recollect.md) / caerphilly.gov.uk
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
@@ -593,7 +614,21 @@ See also [example](#custom-headers) below.
 **title_template**  
 *(str) (optional, default: `{{date.summary}}`)*
 
-template for the event title. `date` is the event object depending on the selected ICS file parser version.
+Template for the event title. `date` is the parsed VEVENT object.
+You can also use fields such as `{{date.location}}` and `{{date.description}}` when those values are present.
+
+**LOCATION and DESCRIPTION support**
+
+If an ICS event contains `LOCATION` and/or `DESCRIPTION`, the values are stored as optional `location` / `description` fields in collection entries.
+
+- In sensor `value_template`, `value.location` and `value.description` are available.
+- In `details_format: generic`, entries in `upcoming` can include `location` and `description`.
+
+Fallback behavior remains unchanged:
+
+- `LOCATION` and `DESCRIPTION` are optional; either field may be missing.
+- If a field is missing (or empty), the corresponding value is `None`, so existing templates keep working.
+- If multiple events are grouped on the same day, non-empty values can be combined into comma-separated strings.
 
 ## Examples and Notes
 
@@ -632,17 +667,14 @@ waste_collection_schedule:
 [online calendar view](https://calendar.google.com/calendar/embed?src=gn2i5lqgobo5deb6p7j69l9aq8%40group.calendar.google.com&ctz=America%2FDenver)
 
 ```yaml
-sensor:
-  - platform: waste_collection_schedule
-    name: Trash Recycling # whatever you want the UI to show. Consider adding a similar prefix for both sensors so they get sorted together, "Trash" in this case
-    types:
-      - Recycling # matches alias in waste_collection_schedule below
-  - platform: waste_collection_schedule
-    name: Trash Compost
-    types:
-      - Compost
-
 waste_collection_schedule:
+  sensors:
+    - name: Trash Recycling # whatever you want the UI to show. Consider adding a similar prefix for both sensors so they get sorted together, "Trash" in this case
+      types:
+        - Recycling # matches alias in waste_collection_schedule below
+    - name: Trash Compost
+      types:
+        - Compost
   sources:
     - name: ics
       args:

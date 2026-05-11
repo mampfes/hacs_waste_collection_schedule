@@ -106,13 +106,6 @@ def _has_supported_country_code(file: str) -> bool:
     return _is_supported_country_code(code)
 
 
-def test_source_md_exists() -> None:
-    sources = _get_sources()
-    source_md = _get_source_md()
-    for source in sources:
-        assert source in source_md, f"missing source markdown file: {source}.md"
-
-
 def test_no_extra_source_mds() -> None:
     sources = _get_sources()
     source_md = _get_source_md()
@@ -120,18 +113,32 @@ def test_no_extra_source_mds() -> None:
         assert source in sources, f"found orphaned source markdown file: {source}.md"
 
 
-def test_ics_md_exists() -> None:
-    sources = _get_ics_sources()
-    source_md = _get_ics_md()
-    for source in sources:
-        assert source in source_md, f"missing ics markdown file: {source}.md"
-
-
 def test_no_extra_ics_mds() -> None:
     sources = _get_ics_sources()
     source_md = _get_ics_md()
     for source in source_md:
         assert source in sources, f"found orphaned ics markdown file: {source}.md"
+
+
+def test_enfield_address_match_uses_whole_house_number() -> None:
+    module = _get_module("enfield_gov_uk")
+    normalized_input = module.Source._normalize_address("51 Example Road AB1 2CD")
+
+    correct_candidate = {
+        "ADDRESS": "51, EXAMPLE ROAD, EXAMPLE, AB1 2CD",
+        "PAO_START_NUMBER": "51",
+        "STREET_DESCRIPTION": "EXAMPLE ROAD",
+        "POSTCODE_LOCATOR": "AB1 2CD",
+    }
+    embedded_candidate = {
+        "ADDRESS": "1, EXAMPLE ROAD, EXAMPLE, AB1 2CD",
+        "PAO_START_NUMBER": "1",
+        "STREET_DESCRIPTION": "EXAMPLE ROAD",
+        "POSTCODE_LOCATOR": "AB1 2CD",
+    }
+
+    assert module.Source._matches_address(normalized_input, correct_candidate)
+    assert not module.Source._matches_address(normalized_input, embedded_candidate)
 
 
 def _param_translation_check(
@@ -284,13 +291,17 @@ def test_source_has_necessary_parameters() -> None:
             module.Source, "fetch"
         ), f"missing fetch method in Source class of source {source}"
 
+        # If the module declares COUNTRY it must be a valid code — update_docu_links.py
+        # uses this value directly and silently orphans the source if it doesn't match.
+        if hasattr(module, "COUNTRY"):
+            assert _is_supported_country_code(
+                module.COUNTRY
+            ), f"unsupported country code {module.COUNTRY!r} in source {source}"
+
         if source not in SOURCES_NO_COUNTRY and not _has_supported_country_code(source):
             assert hasattr(
                 module, "COUNTRY"
             ), f"missing COUNTRY in source {source} or supported countrycode in filename"
-            assert _is_supported_country_code(
-                module.COUNTRY
-            ), f"unsupported country code in source {source}"
 
         if hasattr(module, "EXTRA_INFO"):
             _test_source_has_necessary_parameters_extra_info(

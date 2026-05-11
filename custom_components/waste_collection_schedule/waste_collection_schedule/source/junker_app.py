@@ -30,7 +30,6 @@ SERVICE_PROVIDERS = {
     "Buonvicino",
     "Chiaramonte Gulfi - Mecogest",
     "Valle Umbra Servizi S.p.A.",
-    "Veritas Spa",
     "Anguillara Sabazia - Cosp Tecno Service",
     "Sezze - SPL",
     "Bitti, Luna e Onanì - Formula Ambiente Spa",

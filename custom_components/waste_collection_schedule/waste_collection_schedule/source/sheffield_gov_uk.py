@@ -1,7 +1,6 @@
 import logging
-import urllib.request
 
-from bs4 import BeautifulSoup
+import requests
 from dateutil import parser
 from waste_collection_schedule import Collection
 
@@ -23,6 +22,7 @@ API_URL = "https://wasteservices.sheffield.gov.uk/"
 # Headers to mimic the browser
 HEADERS = {
     "user-agent": "Mozilla/5.0",
+    "Content-type": "application/json",
 }
 
 # Icons for the different bin types
@@ -42,44 +42,36 @@ class Source:
 
     def fetch(self):
         if self._uprn:
-            # Get the page containing bin details
-            # /calendar gives further future information over just the "Services" page
-            req = urllib.request.Request(
-                f"{API_URL}/property/{self._uprn}/calendar", headers=HEADERS
-            )
-            with urllib.request.urlopen(req) as response:
-                html_doc = response.read()
+            payload = {"councilId": "1", "uprn": f"{self._uprn}"}
 
-            # Parse the page to get the data required (collection date and type)
-            soup = BeautifulSoup(html_doc, "html.parser")
+            response = requests.post(f"{API_URL}api/getCalendarData", json=payload)
+            response.raise_for_status()
+            json_doc = response.json()
+
+            if "data" not in json_doc:
+                raise ValueError(
+                    "The returned API data does not contain expected data element"
+                )
+            if "message" in json_doc and json_doc["message"] != "OK":
+                raise ValueError(f"API advised error: {json_doc['message']}")
+
             entries = []
-            # Find all entries relating to bin collection & loop through them
-            for child in soup.find_all("div", {"class": "calendar-table-cell"}):
-                try:
-                    # There can be multiple bin collections on each day find them all
-                    for collection in child.find_all("li"):
-                        try:
-                            # The collection details are in the title field of each ul/li
-                            # Converting date from title field to a usable format
-                            collection_date = parser.parse(
-                                collection["title"].split(" - ")[0]
-                            ).date()
-                            # Getting the collection type
-                            collection_type = collection["title"].split(" - ")[1]
-
-                            # Append to entries for main program
-                            entries.append(
-                                Collection(
-                                    date=collection_date,
-                                    t=collection_type,
-                                    icon=ICON_MAP.get(
-                                        collection_type.replace(" Bin", "").upper()
-                                    ),
-                                )
-                            )
-                        except ValueError:
-                            pass
-                except ValueError:
-                    pass
-
-        return entries
+            for data_item in json_doc["data"]:
+                if "records" not in data_item:
+                    continue
+                for record in data_item["records"]:
+                    collection_date = parser.parse(
+                        record["actual_scheduled_date"]
+                    ).date()
+                    collection_icon = ICON_MAP.get(
+                        record["service"].replace(" Bin", "").upper()
+                    )
+                    entries.append(
+                        Collection(
+                            date=collection_date,
+                            t=record["service"],
+                            icon=collection_icon,
+                        )
+                    )
+            return entries
+        raise ValueError("No result information found when collected, recheck UPN")

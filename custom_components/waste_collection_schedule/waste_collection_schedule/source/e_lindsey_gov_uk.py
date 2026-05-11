@@ -14,15 +14,6 @@ TEST_CASES = {
     "13 Firbeck Avenue, Skegness": {"uprn": "100030786099"},
 }
 
-EXTRA_INFO = [
-    {
-        "title": TITLE,
-        "url": URL,
-        "country": "gb",
-        "default_params": {},
-    }
-]
-
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Find your UPRN using a tool like findmyaddress.co.uk or finders.io."
 }
@@ -38,7 +29,6 @@ ICON_MAP = {
 }
 
 _PAGE_URL = "https://www.e-lindsey.gov.uk/mywastecollections"
-_SUBMIT_URL = "https://www.e-lindsey.gov.uk/mywastecollections/processsubmission"
 
 _ORDINAL_RE = re.compile(r"(\d+)(st|nd|rd|th)")
 
@@ -47,9 +37,8 @@ def _parse_date(s: str) -> datetime.date | None:
     """Parse e.g. 'Wednesday 29th April 2026' → date."""
     if not s:
         return None
-    s = _ORDINAL_RE.sub(r"\1", s)  # strip ordinal suffix
+    s = _ORDINAL_RE.sub(r"\1", s)
     parts = s.split()
-    # format: "Weekday DD Month YYYY"
     if len(parts) == 4:
         try:
             return datetime.datetime.strptime(
@@ -73,42 +62,75 @@ class Source:
         html = r.text
 
         # Extract form prefix (e.g. WASTECOLLECTIONDAYS202627)
-        prefix_match = re.search(r'name="([A-Z0-9]+)_pageSessionId"', html)
+        prefix_match = re.search(r'name="([A-Z0-9]+)_PAGESESSIONID"', html)
         if not prefix_match:
             raise SourceArgumentNotFound(
                 "uprn", self._uprn, "Could not find form prefix on page"
             )
         prefix = prefix_match.group(1)
 
-        # Extract session tokens
-        page_session_id = re.search(
-            rf'name="{prefix}_pageSessionId"\s+value="([^"]+)"', html
+        # Extract form action URL (contains pageSessionId, fsid, fsn as query params)
+        action_match = re.search(
+            r'<form[^>]+action="(https://[^"]+/processsubmission[^"]*)"', html
         )
-        fsid = re.search(rf'name="{prefix}_fsid"\s+value="([^"]+)"', html)
-        fsn = re.search(rf'name="{prefix}_fsn"\s+value="([^"]+)"', html)
+        if not action_match:
+            raise SourceArgumentNotFound(
+                "uprn", self._uprn, "Could not find form action URL on page"
+            )
+        submit_url = action_match.group(1).replace("&amp;", "&")
 
-        if not all([page_session_id, fsid, fsn]):
+        # Extract hidden session tokens
+        pagesid_match = re.search(
+            rf'name="{prefix}_PAGESESSIONID"\s+value="([^"]+)"', html
+        )
+        sessionid_match = re.search(
+            rf'name="{prefix}_SESSIONID"\s+value="([^"]+)"', html
+        )
+        nonce_match = re.search(rf'name="{prefix}_NONCE"\s+value="([^"]+)"', html)
+
+        if not pagesid_match or not sessionid_match or not nonce_match:
             raise SourceArgumentNotFound(
                 "uprn", self._uprn, "Could not extract form session tokens"
             )
 
-        # Step 2: POST to processsubmission with UPRN
-        variables = json.dumps({"UPRN": self._uprn})
+        # Step 2: POST to processsubmission with UPRN in base64-encoded VARIABLES
+        # ADDRESSSOURCE must be NLPGEL (National Land and Property Gazetteer for East Lindsey)
+        variables = base64.b64encode(
+            json.dumps(
+                {
+                    "ADDRESSSOURCE": {
+                        "value": "NLPGEL",
+                        "scope": "SERVERCLIENTWITHUPDATE",
+                    },
+                    "ADDRESSUPRN": {
+                        "value": self._uprn,
+                        "scope": "SERVERCLIENTWITHUPDATE",
+                    },
+                    "TESTDATELAYOUT_DISPLAYED": {
+                        "value": False,
+                        "scope": "SERVERCLIENT",
+                    },
+                }
+            ).encode()
+        ).decode()
+
         form_data = {
-            f"{prefix}_pageSessionId": page_session_id.group(1),
-            f"{prefix}_fsid": fsid.group(1),
-            f"{prefix}_fsn": fsn.group(1),
-            f"{prefix}_FIELD1": self._uprn,
+            f"{prefix}_PAGESESSIONID": pagesid_match.group(1),
+            f"{prefix}_SESSIONID": sessionid_match.group(1),
+            f"{prefix}_NONCE": nonce_match.group(1),
             f"{prefix}_VARIABLES": variables,
-            f"{prefix}_submit": "1",
+            f"{prefix}_PAGENAME": "LOOKUP",
+            f"{prefix}_PAGEINSTANCE": "0",
+            f"{prefix}_LOOKUP_CHOSENADDRESS": self._uprn,
+            f"{prefix}_FORMACTION_NEXT": f"{prefix}_LOOKUP_FIELD2",
         }
 
-        r = session.post(_SUBMIT_URL, data=form_data, timeout=30)
+        r = session.post(submit_url, data=form_data, timeout=30)
         r.raise_for_status()
 
-        # Step 3: Extract base64-encoded FIELD12 data from response JS
+        # Step 3: Parse FormData from the results page
         data_match = re.search(
-            rf'var\s+{prefix}_RESULTS_FIELD12Data\s*=\s*"([^"]+)"',
+            rf"{prefix}FormData\s*=\s*\"([^\"]+)\"",
             r.text,
         )
         if not data_match:
@@ -118,8 +140,7 @@ class Source:
                 "No collection data found — check that the UPRN is valid",
             )
 
-        decoded = base64.b64decode(data_match.group(1)).decode("utf-8")
-        payload = json.loads(decoded)
+        payload = json.loads(base64.b64decode(data_match.group(1)).decode("utf-8"))
 
         result_list = payload.get("RESULTS_1", {}).get("FIELD12", {}).get("result", [])
         if not result_list:

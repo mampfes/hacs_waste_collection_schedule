@@ -51,6 +51,8 @@ from .const import (
     CONF_DAY_SWITCH_TIME,
     CONF_DAY_SWITCH_TIME_DEFAULT,
     CONF_DEDICATED_CALENDAR_TITLE,
+    CONF_FETCH_INTERVAL_DAYS,
+    CONF_FETCH_INTERVAL_DAYS_DEFAULT,
     CONF_FETCH_TIME,
     CONF_FETCH_TIME_DEFAULT,
     CONF_ICON,
@@ -1008,6 +1010,13 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                                     CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT
                                 ),
                             ): TimeSelector(),
+                            vol.Optional(
+                                CONF_FETCH_INTERVAL_DAYS,
+                                default=self._entry.options.get(
+                                    CONF_FETCH_INTERVAL_DAYS,
+                                    CONF_FETCH_INTERVAL_DAYS_DEFAULT,
+                                ),
+                            ): vol.All(int, vol.Range(min=1)),
                             vol.Optional(
                                 CONF_RANDOM_FETCH_TIME_OFFSET,
                                 default={

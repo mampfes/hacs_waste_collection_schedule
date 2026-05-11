@@ -2,6 +2,11 @@ from datetime import date, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.service.ArcGis import (
+    epoch_ms_to_date,
+    get_next_n_dates,
+    most_recent_weekday,
+)
 
 TITLE = "City of Moonee Valley"
 DESCRIPTION = "Source for City of Moonee Valley waste collection."
@@ -24,23 +29,6 @@ WEEKDAY_MAP = {
     "Saturday": 5,
     "Sunday": 6,
 }
-
-
-def _get_next_n_dates(date_obj: date, n: int, delta: timedelta):
-    """Get next n collection dates from the given start date."""
-    next_dates = []
-    for _ in range(n):
-        while date_obj < date.today():
-            date_obj += delta
-        next_dates.append(date_obj)
-        date_obj += delta
-    return next_dates
-
-
-def _get_previous_date_for_day_of_week(day_of_week: int):
-    """Get the most recent date for a given day of the week."""
-    today = date.today()
-    return today - timedelta((today.weekday() - day_of_week + 7) % 7)
 
 
 class Source:
@@ -86,7 +74,7 @@ class Source:
 
         # Get the collection day for weekly waste
         next_collection_date = (
-            _get_previous_date_for_day_of_week(WEEKDAY_MAP[collection_day])
+            most_recent_weekday(WEEKDAY_MAP[collection_day])
             if collection_day in WEEKDAY_MAP
             else date.today()
         )
@@ -94,7 +82,7 @@ class Source:
         entries = []
 
         # General waste (weekly)
-        waste_collection_dates = _get_next_n_dates(
+        waste_collection_dates = get_next_n_dates(
             next_collection_date, 52, timedelta(days=7)
         )
         entries.extend(
@@ -108,8 +96,8 @@ class Source:
 
         # Recycling (fortnightly)
         if recycling_timestamp:
-            recycling_date = date.fromtimestamp(recycling_timestamp / 1000)
-            recycling_dates = _get_next_n_dates(recycling_date, 26, timedelta(days=14))
+            recycling_date = epoch_ms_to_date(recycling_timestamp)
+            recycling_dates = get_next_n_dates(recycling_date, 26, timedelta(days=14))
             entries.extend(
                 [
                     Collection(date=collection_date, t="Recycling", icon="mdi:recycle")
@@ -119,8 +107,8 @@ class Source:
 
         # FOGO/Green waste (fortnightly)
         if fogo_timestamp:
-            fogo_date = date.fromtimestamp(fogo_timestamp / 1000)
-            fogo_dates = _get_next_n_dates(fogo_date, 26, timedelta(days=14))
+            fogo_date = epoch_ms_to_date(fogo_timestamp)
+            fogo_dates = get_next_n_dates(fogo_date, 26, timedelta(days=14))
             entries.extend(
                 [
                     Collection(date=collection_date, t="FOGO", icon="mdi:leaf")

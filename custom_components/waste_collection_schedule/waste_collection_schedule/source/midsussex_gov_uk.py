@@ -1,5 +1,6 @@
 import datetime
 import logging
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
@@ -97,9 +98,16 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         entries = []
-        BASE_URL = "https://sms-wrp.whitespacews.com"
+        BASE_URL = "https://waste.services.midsussex.gov.uk"
 
         with requests.Session() as session:
+            session.headers.update(
+                {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                    "Accept-Language": "en-GB,en;q=0.5",
+                }
+            )
             # --- STEP 1: Get the Dynamic Track Token ---
             r1 = session.get(f"{BASE_URL}/mop.php", timeout=30)
             r1.raise_for_status()
@@ -140,17 +148,21 @@ class Source:
 
             search_text = self._number.upper()
 
-            address_link = soup2.find(
-                "a",
-                class_="app-subnav__link",
-                string=lambda t: t and search_text in t.upper(),
+            all_address_links = soup2.find_all("a", class_="app-subnav__link")
+            address_link = next(
+                (
+                    link
+                    for link in all_address_links
+                    if search_text in link.get_text(strip=True).upper()
+                ),
+                None,
             )
 
             if not address_link:
                 raise SourceArgumentNotFound("number", self._number)
 
             final_link_path = address_link["href"]  # type: ignore[index]
-            final_schedule_url = f"{BASE_URL}/{final_link_path}"
+            final_schedule_url = urljoin(BASE_URL + "/", final_link_path)
 
             # --- STEP 4: Scrape the Final Schedule ---
             r3 = session.get(final_schedule_url, timeout=30)

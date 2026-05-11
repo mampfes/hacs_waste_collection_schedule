@@ -1,12 +1,33 @@
 import datetime
 import logging
 import re
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, NamedTuple, Optional, Tuple
 
 import jinja2
 from icalevents import icalevents
 
 _LOGGER = logging.getLogger(__name__)
+
+
+class IcsEvent(NamedTuple):
+    date: datetime.date
+    title: str
+    location: Optional[str] = None
+    description: Optional[str] = None
+
+
+def _event_location_description(e: Any) -> Tuple[Optional[str], Optional[str]]:
+    raw_loc = getattr(e, "location", None)
+    if isinstance(raw_loc, str):
+        loc = raw_loc.strip() or None
+    else:
+        loc = None
+    raw_desc = getattr(e, "description", None)
+    if isinstance(raw_desc, str):
+        desc = raw_desc.strip() or None
+    else:
+        desc = None
+    return loc, desc
 
 
 class ICS:
@@ -31,7 +52,7 @@ class ICS:
 
     def convert(self, ics_data: str) -> List[Tuple[datetime.date, str]]:
         # calculate start- and end-date for recurring events
-        start_date = datetime.datetime.now().replace(
+        start_date = datetime.datetime.now(datetime.timezone.utc).replace(
             hour=0, minute=0, second=0, microsecond=0
         )
         if self._offset is not None:
@@ -49,6 +70,17 @@ class ICS:
         ics_data = re.sub(
             r"(DT(?:START|END)[^:]*:\d{8})T(\r?\n)",
             r"\g<1>T000000\g<2>",
+            ics_data,
+        )
+
+        # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines.
+        # TZID is only valid on DATETIME values; combining it with VALUE=DATE is
+        # malformed ICS. When present, icalendar creates timezone-aware datetime
+        # objects for the recurrence rule while EXDATE lines (which lack TZID)
+        # stay naive, causing a TypeError when dateutil compares them.
+        ics_data = re.sub(
+            r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
+            r"\1;\2",
             ics_data,
         )
 
@@ -102,5 +134,103 @@ class ICS:
                     )
                 else:
                     entries.append((dtstart, entry_title))
+
+        return entries
+
+    def convert_events(self, ics_data: str) -> List[IcsEvent]:
+        # calculate start- and end-date for recurring events
+        start_date = datetime.datetime.now(datetime.timezone.utc).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
+        if self._offset is not None:
+            start_date -= datetime.timedelta(days=self._offset)
+        end_date = start_date + datetime.timedelta(days=365)
+
+        ics_data = re.sub(
+            r"(EXDATE;VALUE=DATE:[0-9]+)\r?\n",
+            lambda m: m.group(1) + "T010000\n",
+            ics_data,
+        )
+
+        # Fix truncated DTSTART/DTEND values where the time portion is missing
+        # after the 'T' separator (e.g. "DTSTART;TZID=Europe/Berlin:20260505T").
+        ics_data = re.sub(
+            r"(DT(?:START|END)[^:]*:\d{8})T(\r?\n)",
+            r"\g<1>T000000\g<2>",
+            ics_data,
+        )
+
+        # Strip TZID from all-day (VALUE=DATE) DTSTART/DTEND lines — see convert().
+        ics_data = re.sub(
+            r"(DT(?:START|END));TZID=[^;:]+;(VALUE=DATE:)",
+            r"\1;\2",
+            ics_data,
+        )
+
+        # parse ics data
+        events: List[Any] = icalevents.events(
+            start=start_date, end=end_date, string_content=ics_data.encode()
+        )
+
+        # Inherit summary for recurrence exceptions that lack one.
+        # Some ICS generators omit SUMMARY on replacement VEVENTs
+        # (those with RECURRENCE-ID), expecting clients to inherit
+        # from the parent recurring event.
+        uid_summaries: dict = {}
+        for e in events:
+            if e.summary and e.recurring:
+                uid_summaries[e.uid] = e.summary
+        for e in events:
+            if not e.summary and hasattr(e, "recurrence_id") and e.recurrence_id:
+                if e.uid in uid_summaries:
+                    e.summary = uid_summaries[e.uid]
+
+        entries: List[IcsEvent] = []
+
+        for e in events:
+            # calculate date
+            dtstart: Optional[datetime.date] = None
+
+            if isinstance(e.start, datetime.datetime):
+                dtstart = e.start.date()
+            elif isinstance(e.start, datetime.date):
+                dtstart = e.start
+
+            # Only continue if a start date can be found in the entry
+            if dtstart is not None:
+                if self._offset is not None:
+                    dtstart += datetime.timedelta(days=self._offset)
+
+                environment = jinja2.Environment()
+                title_template = environment.from_string(self._title_template)
+                entry_title = title_template.render(date=e)
+
+                if self._regex is not None:
+                    match = self._regex.match(entry_title)
+                    if match:
+                        entry_title = match.group(1)
+
+                loc, desc = _event_location_description(e)
+
+                if self._split_at is not None:
+                    entry_title_list = re.split(self._split_at, entry_title)
+                    entries.extend(
+                        IcsEvent(
+                            dtstart,
+                            t.strip().title(),
+                            location=loc,
+                            description=desc,
+                        )
+                        for t in entry_title_list
+                    )
+                else:
+                    entries.append(
+                        IcsEvent(
+                            dtstart,
+                            entry_title,
+                            location=loc,
+                            description=desc,
+                        )
+                    )
 
         return entries

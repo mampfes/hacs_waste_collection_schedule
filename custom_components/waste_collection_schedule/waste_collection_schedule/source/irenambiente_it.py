@@ -244,17 +244,16 @@ class Source:
     def _fortnightly_dtstart(flag_freq: str, year: int) -> datetime:
         """Compute DTSTART for fortnightly (2S) schedules.
 
-        The Iren annual calendar numbers weeks starting from the first
-        Monday of the year.  'Dispari' (odd) = weeks 1, 3, 5 …;
-        'Pari' (even) = weeks 2, 4, 6 ….
-
-        FlagFreq 'N' → dispari (start on first Monday).
-        FlagFreq 'P' → pari (start on second Monday).
+        Iren aligns odd/even weeks to ISO week numbers.
+        FlagFreq 'N' → dispari (odd ISO weeks); FlagFreq 'P' → pari (even ISO weeks).
+        The first Monday of the year may fall in an even or odd ISO week depending
+        on the year, so we check and shift by one week if needed.
         """
-        # Find first Monday of the year
         jan1 = datetime(year, 1, 1)
         first_monday = jan1 + timedelta(days=(7 - jan1.weekday()) % 7)
-        if flag_freq == "P":
+        first_monday_is_odd = first_monday.isocalendar()[1] % 2 == 1
+        want_odd = flag_freq == "N"
+        if first_monday_is_odd != want_odd:
             first_monday += timedelta(weeks=1)
         return first_monday
 

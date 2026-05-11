@@ -54,21 +54,25 @@ class Source:
 
         entries = []
 
-        if data["status"] != "OK":
-            raise Exception(
-                f"Error fetching data. \"{data['status']}\": \n {data['body']}"
-            )
-
-        schedule = data["body"]
-        for schedule_entry in schedule:
+        waste_type_map = {
+            "refuse": "Refuse",
+            "recycling": "Recycling",
+            "food": "Food",
+            "garden": "Garden",
+        }
+        for waste_key, waste_label in waste_type_map.items():
+            if waste_key not in data:
+                continue
+            date_str = data[waste_key].get("nextCollectionDate")
+            if not date_str:
+                continue
             entries.append(
                 Collection(
-                    date=datetime.strptime(
-                        schedule_entry["NextCollection"], "%Y-%m-%d"
-                    ).date(),
-                    t=schedule_entry["collectionType"],
-                    icon=ICON_MAP.get(schedule_entry["collectionType"]),
+                    date=datetime.fromisoformat(date_str.replace("Z", "+00:00")).date(),
+                    t=waste_label,
+                    icon=ICON_MAP.get(waste_label),
                 )
             )
-
+        if not entries:
+            raise Exception(f"No collection data returned for identifier: {uprn!r}")
         return entries
