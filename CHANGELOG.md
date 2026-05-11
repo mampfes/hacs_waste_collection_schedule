@@ -4,6 +4,59 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.23.0] - 2026-05-11
+
+### Added Sources
+
+- added Hässleholm Miljö, SE (#6292)
+- added Gänserndorf City, AT (#6290)
+- added City of Melbourne, VIC, AU (#6281)
+- added Mulhouse Alsace Agglomération, FR (#6273)
+- added Câmara Municipal de Lisboa, PT (#6266)
+- added Kom-Lub, PL (#6255)
+- added South Ribble Council, UK (#6256)
+- added Pendle Borough Council, UK (#6252)
+- added Shire of Dardanup, WA, AU (#6250)
+- added Ville de Saint-Basile-le-Grand, QC, CA (#6246)
+- added Gemeinde Weinitzen, AT (#6244)
+- added Fredrikstad kommune, NO (#6248)
+- added Shire of Harvey, WA, AU (#6239)
+- added Orange City Council, NSW, AU (#6229)
+- added Ville de Shawinigan, QC, CA (#6235)
+- added Västblekinge Miljö AB (VMAB), SE (#6238)
+- added Mount Alexander Shire Council, VIC, AU (#6231)
+- added Ipswich Borough Council, UK (#6220)
+- added Ville de Sherbrooke, QC, CA (#6221)
+- added Ville de Saguenay, QC, CA (#6224)
+- added Communauté de Communes du Montesquieu, FR (#3594)
+
+### Fixed Sources
+
+- fixed recyclecoach_com: replace dead us-api-city host with api-city for collection definitions (#6291)
+- fixed durham_gov_uk: switch from HTML scraping to JSON-RPC API (#6288)
+- fixed abfall_io wizard: handle HTTP 401 for providers migrated to v3 GraphQL API (#6287)
+- fixed ICS: apply truncated DTSTART/DTEND fix to convert_events() (#6286)
+- fixed republicservices_com: project full recurring schedule from period fields (#6280)
+- fixed republicservices_com: raise SourceArgumentNotFound for unsupported addresses (#6279)
+- fixed a_region_ch: add svgIconImg class to waste type selector (#6278)
+- fixed recollect: add Oxford County, ON to provider list (#6277)
+- fixed fredrikstad_no: add waste type fallback mapping and proper exception (#6275)
+- fixed sheffield_gov_uk: update to new site API (#6272)
+- fixed harrow_gov_uk: add User-Agent header to bypass AWS ELB block, improve error handling (#6274, #6249)
+- fixed midsussex_gov_uk: harden address selector and URL construction (#6268)
+- fixed stockport_gov_uk: fix parsing issues (#6260)
+- fixed lancaster_gov_uk: preserve distinct recycling stream names (#6267)
+- fixed binzone_uk: migrate to new BinDay API (#6264)
+- fixed winterthur_ch: share HTTP session across all A_region_ch requests (#6242)
+- fixed boroondara_vic_gov_au: swap collection types — Recycling weekly, General Waste/FOGO fortnightly (#6240)
+- fixed cityofparramatta: make FOGO/Garden Organics weekly instead of fortnightly (#6233)
+- fixed jumomind: add Gelnhausen (#6232)
+- fixed tower_hamlets_gov_uk: dynamically fetch URIs (#6218)
+
+### Added Features
+
+- added configurable fetch_interval_days to control fetch frequency (#6234)
+
 ## [2.22.0] - 2026-05-02
 
 ### Added Sources
