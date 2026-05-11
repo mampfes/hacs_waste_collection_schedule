@@ -69,6 +69,30 @@ def test_render_sensor_preview_exposes_grouped_pickup_attributes():
     assert attributes["upcoming_pickups"][1]["types"] == ["Segregowane"]
 
 
+def test_render_sensor_preview_defaults_missing_details_format_to_upcoming():
+    pickup_date = datetime.date.today() + datetime.timedelta(days=3)
+    aggregator = CollectionAggregator(
+        [DummyShell([Collection(pickup_date, "Bio", icon="mdi:leaf")])]
+    )
+
+    _, attributes, _, _ = render_sensor_preview(
+        aggregator=aggregator,
+        separator=", ",
+        day_switch_time=datetime.time(23, 59),
+        details_format=None,
+        count=None,
+        leadtime=None,
+        collection_types=None,
+        value_template=None,
+        date_template=None,
+        add_days_to=False,
+        event_index=0,
+    )
+
+    assert attributes[pickup_date.isoformat()] == "Bio"
+    assert attributes["next_pickup"]["types"] == ["Bio"]
+
+
 def test_render_sensor_preview_respects_hidden_details_for_structured_attributes():
     pickup_date = datetime.date.today() + datetime.timedelta(days=1)
     aggregator = CollectionAggregator(

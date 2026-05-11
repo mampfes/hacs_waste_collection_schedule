@@ -45,6 +45,7 @@ from custom_components.waste_collection_schedule.sensor_template_presets import 
 
 CONF_NAME = "name"
 CONF_SENSOR_ID = "sensor_id"
+CONF_DETAILS_FORMAT = "details_format"
 CONF_VALUE_TEMPLATE = "value_template"
 
 
@@ -259,6 +260,7 @@ def test_build_sensor_for_collection_type_creates_default_per_type_sensor():
     assert sensor == {
         CONF_NAME: "Bio",
         CONF_SENSOR_ID: "bio-id",
+        CONF_DETAILS_FORMAT: "upcoming",
         "types": ["Bio"],
     }
 
@@ -274,6 +276,7 @@ def test_build_combined_waste_sensor_creates_all_type_sensor():
     assert sensor == {
         CONF_NAME: COMBINED_SENSOR_NAME,
         CONF_SENSOR_ID: "combined-id",
+        CONF_DETAILS_FORMAT: "upcoming",
     }
     assert "types" not in sensor
 
@@ -302,7 +305,12 @@ def test_build_added_collection_type_sensor_options_appends_new_sensor():
 
     assert options["sensors"] == [
         {CONF_NAME: "Bio", CONF_SENSOR_ID: "bio-id"},
-        {CONF_NAME: "Paper", CONF_SENSOR_ID: "paper-id", "types": ["Paper"]},
+        {
+            CONF_NAME: "Paper",
+            CONF_SENSOR_ID: "paper-id",
+            CONF_DETAILS_FORMAT: "upcoming",
+            "types": ["Paper"],
+        },
     ]
 
 
@@ -316,7 +324,11 @@ def test_build_added_combined_sensor_options_appends_new_sensor():
 
     assert options["sensors"] == [
         {CONF_NAME: "Bio", CONF_SENSOR_ID: "bio-id"},
-        {CONF_NAME: COMBINED_SENSOR_NAME, CONF_SENSOR_ID: "combined-id"},
+        {
+            CONF_NAME: COMBINED_SENSOR_NAME,
+            CONF_SENSOR_ID: "combined-id",
+            CONF_DETAILS_FORMAT: "upcoming",
+        },
     ]
 
 

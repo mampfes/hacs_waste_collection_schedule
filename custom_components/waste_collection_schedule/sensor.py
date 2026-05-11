@@ -95,7 +95,7 @@ def render_sensor_preview(
     aggregator: CollectionAggregator,
     separator: str,
     day_switch_time: datetime.time,
-    details_format: DetailsFormat,
+    details_format: DetailsFormat | None,
     count: int | None,
     leadtime: int | None,
     collection_types: list[str] | None,
@@ -106,6 +106,7 @@ def render_sensor_preview(
     preset_language: str | None = None,
 ) -> tuple[Any, dict[str, Any], str, str | None]:
     """Render the current sensor state and attributes for UI preview and entities."""
+    details_format = details_format or DetailsFormat.upcoming
     include_today = datetime.datetime.now().time() < day_switch_time
 
     upcoming1 = aggregator.get_upcoming_group_by_day(
@@ -214,6 +215,8 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
         ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
             date_template = None
         details_format = sensor.get(CONF_DETAILS_FORMAT)
+        if details_format is None:
+            details_format = DetailsFormat.upcoming
         if isinstance(details_format, str):
             details_format = DetailsFormat(details_format)
 
@@ -388,11 +391,15 @@ class ScheduleSensor(SensorEntity):
             self._attr_unique_id = name
         self._attr_should_poll = False
 
-        async_dispatcher_connect(hass, UPDATE_SENSORS_SIGNAL, self._update_sensor)
-
     async def async_added_to_hass(self) -> None:
         """When entity is added to hass."""
         await super().async_added_to_hass()
+
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass, UPDATE_SENSORS_SIGNAL, self._update_sensor
+            )
+        )
 
         if self._coordinator:
             self.async_on_remove(

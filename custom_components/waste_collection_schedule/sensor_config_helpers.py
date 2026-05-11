@@ -8,10 +8,10 @@ from typing import TYPE_CHECKING, Any
 from uuid import uuid4
 
 try:
-    from .const import CONF_SENSOR_ID, CONF_SENSORS, DOMAIN
+    from .const import CONF_DETAILS_FORMAT, CONF_SENSOR_ID, CONF_SENSORS, DOMAIN
     from .waste_collection_schedule.type_aliases import expand_requested_types
 except ImportError:  # pragma: no cover - fallback for direct test imports
-    from const import CONF_SENSOR_ID, CONF_SENSORS, DOMAIN
+    from const import CONF_DETAILS_FORMAT, CONF_SENSOR_ID, CONF_SENSORS, DOMAIN
     from waste_collection_schedule.type_aliases import expand_requested_types
 
 if TYPE_CHECKING:
@@ -246,6 +246,7 @@ def build_sensor_for_collection_type(
     return {
         CONF_NAME: collection_type,
         CONF_SENSOR_ID: factory(),
+        CONF_DETAILS_FORMAT: "upcoming",
         "types": [collection_type],
     }
 
@@ -258,6 +259,7 @@ def build_combined_waste_sensor(
     return {
         CONF_NAME: COMBINED_SENSOR_NAME,
         CONF_SENSOR_ID: factory(),
+        CONF_DETAILS_FORMAT: "upcoming",
     }
 
 

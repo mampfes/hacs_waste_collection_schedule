@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
+import homeassistant.helpers.config_validation as cv
 from homeassistant.components.text import TextEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE, EntityCategory
@@ -121,6 +122,7 @@ class WasteSensorTemplateText(TextEntity):
     async def async_set_value(self, value: str) -> None:
         """Persist the edited template string."""
         if value.strip():
+            cv.template(value)
             options = build_updated_options_by_sensor_id(
                 self._entry,
                 sensor_id=self._sensor_id,
