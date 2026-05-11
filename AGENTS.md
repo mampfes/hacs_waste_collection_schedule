@@ -4,6 +4,8 @@ This file is written for AI coding assistants (Claude Code, Cursor, codex, Aider
 
 For the full human-facing guide, see [`doc/contributing.md`](doc/contributing.md).
 
+> **Claude Code users:** Claude Code also reads [`CLAUDE.md`](CLAUDE.md) (a role-aware project guide) and exposes specialised slash commands. Use `/new-source` to be walked through investigating a provider, generating the source module, and submitting a PR. See [`.claude/agents/`](.claude/agents/) for the full list of available agents.
+
 ## Project layout
 
 Two nested packages:

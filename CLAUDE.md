@@ -190,12 +190,10 @@ If you're a maintainer: see `.claude/commands/{review-pr,review-issue,cleanup}.m
 
 Key workflow rules:
 
-- **One ticket at a time.** `update_docu_links.py` runs post-merge and rebases concurrent branches against each other — concurrent work causes conflicts.
 - **Always present drafts before posting on GitHub.** Reviews, comments, label changes, closes — show the user the exact text first.
 - **Fix minor issues yourself; escalate substantive ones.** Style, whitespace, missing doc file, lint failures → push the fix to the contributor's branch and approve. Hardcoded data, missing API integration, security issues → request changes.
 - **Never commit directly to `master`** — local, origin, or upstream. Every change goes through a feature branch and PR to upstream.
 - **Never run `update_docu_links.py` manually.** CI runs it post-merge.
-- **Wait for review and release before moving on.** The merge confirmation gates the next ticket.
 - **After merge, clean up.** `/cleanup` syncs `master` with upstream, deletes merged branches locally and on origin, removes any contributor fork remotes.
 - **Never ask users for their address or identifying information.** Use existing TEST_CASES or ask for known-good public examples.
 

@@ -69,10 +69,16 @@ If you want to contribute a new source, these existing implementations can be us
 
 If you're using an AI assistant (Claude Code, Cursor, codex, Aider, GitHub Copilot, etc.) to draft a contribution, point it at the project-specific instruction files in the repo:
 
-- [`AGENTS.md`](/AGENTS.md) — read by Claude Code, Cursor, codex and other tools that support the `AGENTS.md` convention.
+- [`CLAUDE.md`](/CLAUDE.md) — read by Claude Code. Project overview, source module contract, common pitfalls, and pointers to the specialised agents and slash commands.
+- [`AGENTS.md`](/AGENTS.md) — read by Cursor, codex, Aider, and other tools that support the `AGENTS.md` convention.
 - [`.github/copilot-instructions.md`](/.github/copilot-instructions.md) — used by GitHub Copilot.
 
-Both files capture the source module contract, the lint/test commands, and the patterns that reviewers consistently flag — they help the assistant produce a PR that's much closer to mergeable on the first pass.
+All three capture the source module contract, the lint/test commands, and the patterns that reviewers consistently flag — they help the assistant produce a PR that's much closer to mergeable on the first pass.
+
+**Claude Code users:** the repo also ships with specialised agents and a slash command to walk you through implementing a source from scratch:
+
+- `/new-source` — orchestrated walkthrough: confirms the provider isn't already supported, identifies the best data feed (ICS / JSON API / HTML / PDF), generates the source module + doc page, lints, and runs the test cases. Reduces the round-trip with reviewers.
+- The underlying agents (`source-investigator`, `source-implementer`) can also be invoked directly if you prefer step-by-step control. See [`.claude/agents/`](/.claude/agents/) for the full list.
 
 ### Sync Branch and Create A Pull Request
 
