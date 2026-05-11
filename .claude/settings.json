@@ -1,0 +1,27 @@
+{
+  "$comment": "Project-shared Claude Code settings. Personal permissions and personal hooks belong in .claude/settings.local.json (gitignored).",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "$comment": "Block manual runs of update_docu_links.py. It runs automatically via the Update Documentation CI workflow on every push to master. Running it manually in a PR branch corrupts the generated files.",
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import os,json,sys; data=json.loads(os.environ.get('CLAUDE_TOOL_INPUT','{}')); cmd=data.get('command',''); 'update_docu_links.py' in cmd and (print('Permission for this action has been denied. Reason: update_docu_links.py must NEVER be run manually. It runs automatically via the Update Documentation CI workflow on every push to master (post-merge). Running it manually in a PR branch corrupts the generated files. Stop.') or sys.exit(2))\""
+          }
+        ]
+      },
+      {
+        "$comment": "Block posting/modifying GitHub content (issue comments, closes, PR reviews, discussion replies) without an explicit confirmation flow. Per CLAUDE.md: always present draft replies for the user's approval before posting. Other maintainers who prefer a more autonomous flow can override this hook in their .claude/settings.local.json.",
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import os,json,sys; data=json.loads(os.environ.get('CLAUDE_TOOL_INPUT','{}')); cmd=data.get('command',''); danger=['gh issue comment','gh issue close','gh issue reopen','gh pr review','addDiscussionComment','gh discussion']; blocked=[d for d in danger if d in cmd]; blocked+=[d for d in ['/reviews'] if d in cmd and 'gh api' in cmd]; blocked and (print('Permission for this action has been denied. Reason: This command posts or modifies content on GitHub. Per CLAUDE.md, always present draft replies for the user explicit approval before posting. Never post without approval.') or sys.exit(2))\""
+          }
+        ]
+      }
+    ]
+  }
+}
