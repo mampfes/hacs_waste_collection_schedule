@@ -20,6 +20,7 @@ ICON_MAP = {
     "REFUSE": "mdi:trash-can",
     "RECYCLING": "mdi:recycle",
     "GARDEN WASTE": "mdi:leaf",
+    "FOOD WASTE": "mdi:food-apple",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -36,6 +37,7 @@ SERVICE_NAME_MAP = {
     "Refuse Collection Service": "Refuse",
     "Recycle Collection Service": "Recycling",
     "Garden Collection Service": "Garden waste",
+    "Food Waste Collection Service": "Food waste",
 }
 
 
