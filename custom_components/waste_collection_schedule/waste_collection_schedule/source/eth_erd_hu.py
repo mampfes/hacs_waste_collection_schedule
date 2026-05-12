@@ -1,125 +1,160 @@
 import datetime
-import json
+import re
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 
-TITLE = "ÉTH (Érd, Diósd, Nagytarcsa, Sóskút, Tárnok)"
+TITLE = "ÉTH (Érd, Diósd, Ráckeresztúr, Sóskút, Tárnok)"
 DESCRIPTION = "Source script for www.eth-erd.hu"
 URL = "https://www.eth-erd.hu"
 COUNTRY = "hu"
 TEST_CASES = {
-    "Test_1": {"city": "Diósd", "street": "Diófasor", "house_number": 10},
-    "Test_2": {"city": "Érd", "street": "Hordó", "house_number": 3},
-    "Test_3": {"city": "Sóskút"},
+    "Test_Erd_Hordo": {"city": "Érd", "street": "Hordó utca"},
+    "Test_Diosd_Diofasor": {"city": "Diósd", "street": "Diófasor utca"},
+    "Test_Soskut_Ady": {"city": "Sóskút", "street": "Ady Endre utca"},
+    "Test_Tarnok_Amur": {"city": "Tárnok", "street": "Amur utca"},
+    "Test_Rackeresztur_Ady": {"city": "Ráckeresztúr", "street": "Ady Endre utca"},
 }
 
-API_URL = "https://www.eth-erd.hu/trashcalendarget"
+# Maps lowercase city name to the slug used in the HTML page URL
+CITY_SLUG_MAP = {
+    "érd": "erd",
+    "diósd": "diosd",
+    "sóskút": "soskut",
+    "tárnok": "tarnok",
+    "ráckeresztúr": "rackeresztur",
+}
 
+HTML_BASE_URL = "https://www.eth-erd.hu/storage/uploads/{slug}.html"
+
+# CSS classes used in the pre-generated JS calendar and what they mean.
+# csakkomm  = communal waste only (no selective on this day)
+# kommszel  = communal + selective on the same day
+# week<N>   = green (garden) waste, biweekly/monthly route N
+# uvegszin  = glass waste (Diósd, Tárnok)
 ICON_MAP = {
-    "Kommunális": "mdi:trash-can",
-    "Szelektív": "mdi:recycle",
-    "Zöldhulladék": "mdi:leaf",
-    "Papír": "mdi:newspaper",
-    "Fenyőfa": "mdi:pine-tree",
-    "Üveg": "mdi:glass-fragile",
+    "Communal": "mdi:trash-can",
+    "Selective": "mdi:recycle",
+    "Green": "mdi:leaf",
+    "Glass": "mdi:glass-fragile",
 }
 
-NAME_MAP = {
-    "Kommunális": "Communal",
-    "Szelektív": "Selective",
-    "Zöldhulladék": "Green",
-    "Papír": "Paper",
-    "Fenyőfa": "Pine Tree",
-    "Üveg": "Glass",
-}
 
-CITY_MAP = {
-    "diósd": 1,
-    "érd": 2,
-    "nagytarcsa": 822,
-    "sóskút": 3,
-    "tárnok": 4,
-}
+def _parse_date(date_str: str) -> datetime.date | None:
+    """Parse date strings in format 'YYYY-M-D' (no zero-padding)."""
+    try:
+        parts = date_str.split("-")
+        return datetime.date(int(parts[0]), int(parts[1]), int(parts[2]))
+    except (ValueError, IndexError):
+        return None
 
 
 class Source:
-    def __init__(self, city: str, street: str = "", house_number: int = 1) -> None:
+    def __init__(self, city: str, street: str = "") -> None:
         self._city = city
         self._street = street
-        self._house_number = house_number
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         session = requests.Session()
 
-        city_id = CITY_MAP.get(self._city.lower())
-        if city_id is None:
+        # Resolve city slug
+        city_slug = CITY_SLUG_MAP.get(self._city.lower())
+        if city_slug is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "city", self._city, CITY_MAP.keys()
+                "city", self._city, list(CITY_SLUG_MAP.keys())
             )
-        has_streets = city_id != CITY_MAP["sóskút"]
 
-        if has_streets:
-            r = session.post(
-                API_URL + "streets",
-                data={"sid": city_id},
-                headers={
-                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                    "X-Requested-With": "XMLHttpRequest",
-                },
-            )
-            r.raise_for_status()
-            streets = json.loads(r.text)["results"]
-            available_streets = [item["text"] for item in streets]
-            try:
-                street_id = [
-                    item for item in streets if item.get("text") == self._street
-                ][0]["id"]
-            except IndexError:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "street",
-                    self._street,
-                    available_streets,
-                )
-
-        r = session.post(
-            API_URL,
-            data=(
-                {
-                    "wctown": city_id,
-                    "wcstreet": street_id,
-                    "wchousenumber": self._house_number,
-                }
-                if has_streets
-                else {
-                    "wctown": city_id,
-                }
-            ),
-            headers={
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-Requested-With": "XMLHttpRequest",
-            },
-        )
+        # Fetch the city's HTML page to discover the current telepvegleges JS URL.
+        html_url = HTML_BASE_URL.format(slug=city_slug)
+        r = session.get(html_url, timeout=30)
         r.raise_for_status()
-        result: dict = json.loads(r.text)
 
-        entries = []
+        # Extract JSDelivr CDN script URLs – the telepvegleges file is the one
+        # containing the per-street date assignments.
+        cdn_scripts = re.findall(
+            r'src="(https://cdn\.jsdelivr\.net/gh/[^"]+telepvegleges[^"]+\.js)"',
+            r.text,
+        )
+        if not cdn_scripts:
+            raise SourceArgumentNotFound(
+                "city",
+                self._city,
+                "Could not find the schedule data URL on the provider page.",
+            )
 
-        for trash_type_id in result["types"]:
-            trash_type = result["types"][trash_type_id]
-            trash_icon = ICON_MAP[trash_type["name"]]
-            trash_name = NAME_MAP[trash_type["name"]]
+        telepvegleges_url = cdn_scripts[0]
 
-            for element in result["routelist"][trash_type_id]:
-                entries.append(
-                    Collection(
-                        date=datetime.datetime.strptime(element, "%Y-%m-%d").date(),
-                        t=trash_name,
-                        icon=trash_icon,
+        # Fetch the (large) schedule JS file.
+        r2 = session.get(telepvegleges_url, timeout=60)
+        r2.raise_for_status()
+        js_content = r2.text
+
+        # Discover all available street names in this file.
+        available_streets = re.findall(r"telep === '([^']+)'", js_content)
+
+        if not available_streets:
+            raise SourceArgumentNotFound(
+                "street",
+                self._street,
+                "No street data found in the provider schedule file.",
+            )
+
+        if not self._street:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, available_streets
+            )
+
+        # Find the block for the requested street.
+        escaped = re.escape(self._street)
+        block_match = re.search(
+            rf"telep === '{escaped}'(.+?)(?=telep === '|\Z)",
+            js_content,
+            re.DOTALL,
+        )
+        if block_match is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, available_streets
+            )
+
+        block = block_match.group(1)
+
+        # Extract all addClass assignments: $('#a2026-1-7').addClass('kommszel')
+        assignments: dict[str, list[str]] = {}
+        for date_str, css_class in re.findall(
+            r"'#a(\d{4}-\d+-\d+)'\)\.addClass\('([^']+)'\)", block
+        ):
+            assignments.setdefault(date_str, []).append(css_class)
+
+        entries: list[Collection] = []
+        for date_str, classes in assignments.items():
+            d = _parse_date(date_str)
+            if d is None:
+                continue
+
+            for css_class in classes:
+                if css_class == "csakkomm":
+                    # Communal waste only
+                    entries.append(Collection(d, "Communal", icon=ICON_MAP["Communal"]))
+                elif css_class == "kommszel":
+                    # Both communal and selective on the same day
+                    entries.append(Collection(d, "Communal", icon=ICON_MAP["Communal"]))
+                    entries.append(
+                        Collection(d, "Selective", icon=ICON_MAP["Selective"])
                     )
-                )
+                elif re.match(r"week\d+$", css_class) or css_class == "kommzold":
+                    # Green (garden) waste
+                    entries.append(Collection(d, "Green", icon=ICON_MAP["Green"]))
+                    if css_class == "kommzold":
+                        # Communal is also collected on these days
+                        entries.append(
+                            Collection(d, "Communal", icon=ICON_MAP["Communal"])
+                        )
+                elif css_class == "uvegszin":
+                    # Glass waste (Diósd, Tárnok)
+                    entries.append(Collection(d, "Glass", icon=ICON_MAP["Glass"]))
 
         return entries
