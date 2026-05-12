@@ -29,5 +29,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the Palm Coast [Solid Waste Collection](https://www.palmcoast.gov/Departments/Solid-Waste-Collection) page. Use your street name (e.g. "Ripcord Lane").</content>
-<parameter name="filePath">d:\git\hacs_waste_collection_schedule\doc\source\palmcoast_fl_gov.md
+Visit the Palm Coast [Solid Waste Collection](https://www.palmcoast.gov/Departments/Solid-Waste-Collection) page. Use your street name (e.g. "Ripcord Lane").
