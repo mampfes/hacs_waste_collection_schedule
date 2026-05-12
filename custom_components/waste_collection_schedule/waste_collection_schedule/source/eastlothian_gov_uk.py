@@ -11,18 +11,21 @@ from waste_collection_schedule.exceptions import (
 )
 
 TITLE = "East Lothian"
-DESCRIPTION = "Source for East Lothian."
+DESCRIPTION = "Source for East Lothian waste collection."
 URL = "https://www.eastlothian.gov.uk/"
 TEST_CASES = {
     "EH21 8GU 4 Laing Loan, Wallyford": {
-        "postcode": "EH218GU",
-        "address": "4 Laing Loan",
+        "postcode": "EH21 8GU",
+        "address": "4 Laing Loan, Wallyford",
     },
-    "EH41 4LN Peterhouse, Morham, Haddington, EH41 4LN": {
+    "EH41 4LN Peterhouse, Morham, Haddington": {
         "postcode": "EH41 4LN",
         "address": "Peterhouse, Morham, Haddington",
     },
-    "ELC-C26071": {"address_id": "ELC-C26071"},
+    "1 Colliers Row Wallyford": {
+        "postcode": "EH21 8GX",
+        "address": "1 Colliers Row, Wallyford",
+    },
 }
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,11 +36,8 @@ ICON_MAP = {
     "food waste": "mdi:food",
 }
 
-
-BASE_URL = "http://collectiondates.eastlothian.gov.uk"
-START_URL = f"{BASE_URL}/your-calendar"
-STREETS_URL_REGEX = re.compile(r'url\s*:\s*"(.*?)\?postcode=')
-COLLECTION_URL_REGEX = re.compile(r'url\s*:\s*"(.*?)\?id="\s*\+\s*selectStreet')
+BASE_URL = "https://collectiondates.eastlothian.gov.uk"
+SCHEDULE_URL = f"{BASE_URL}/waste-collection-schedule"
 
 
 class Source:
@@ -45,138 +45,122 @@ class Source:
         self,
         postcode: str | None = None,
         address: str | None = None,
-        address_id: str | None = None,
     ):
         self._postcode: str | None = postcode.strip() if postcode else None
-        self._address: str | None = (
-            address.lower().replace(" ", "") if address else None
-        )
-        self._address_id: str | None = address_id.strip() if address_id else None
-        self._collection_url: str | None = None
-        self._streets_url: str | None = None
+        self._address: str | None = address.strip() if address else None
 
-        if (not self._postcode or not self._address) and not self._address_id:
-            raise ValueError("(postcode and address) or (address_id) required")
-        # add space in postcode
-        if postcode and " " not in postcode:
-            self._postcode = postcode[:-3] + " " + postcode[-3:]
+        if not self._postcode or not self._address:
+            raise ValueError("postcode and address required")
 
-    def _address_match(self, other: str, level=0) -> bool:
-        if not self._address:
-            raise ValueError("Address required")
-        other = other.lower().replace(" ", "")
-        if level == 0:
-            return self._address == other
-        elif level == 1:
-            return other.split(",")[:-1] != [] and other.split(",")[:-1] in (
-                [self._address],
-                self._address.split(",")[:-1],
-            )
-        elif level == 2:
-            return other.split(",")[:-2] != [] and other.split(",")[:-2] in (
-                [self._address],
-                self._address.split(",")[:-1],
-                self._address.split(",")[:-2],
-            )
+    def _normalize(self, s: str) -> str:
+        return " ".join(s.lower().replace(",", " ").split())
+
+    def _address_match(self, option_text: str) -> bool:
+        g_norm = self._normalize(self._address)
+        o_norm = self._normalize(option_text)
+
+        if g_norm == o_norm:
+            return True
+        if g_norm in o_norm:
+            return True
+        # Remove postcode from option if present
+        o_parts = o_norm.split()
+        if len(o_parts) > 3:
+            o_without_postcode = " ".join(o_parts[:-2])
+            if g_norm == o_without_postcode:
+                return True
         return False
 
-    def _retrieve_address_id(self) -> None:
-        if self._streets_url is None:
-            raise ValueError("API URL not set")
-        if not self._postcode or not self._address:
-            raise ValueError("Postcode and address required")
-
-        params = {
-            "postcode": self._postcode,
-        }
-
-        r = requests.get(self._streets_url, params=params)
-
-        try:
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, "html.parser")
-            select = soup.find("select", id="SelectStreet")
-            if not isinstance(select, Tag):
-                raise ValueError("No address options found")
-            options = select.find_all("option")
-        except Exception as e:
-            raise SourceArgumentNotFound(
-                "postcode", self._postcode, "Invalid postcode Request recheck postcode"
-            ) from e
-
-        for level in range(3):
-            for option in options:
-                if self._address_match(option.text, level):
-                    self._address_id = option["value"]
-                    return
-        raise SourceArgumentNotFoundWithSuggestions(
-            "address", self._address, [option.text for option in options]
-        )
-
-    def _get_colledctions(self) -> list[Collection]:
-        if not self._collection_url:
-            raise ValueError("API URL required")
-        if not self._address_id:
-            raise ValueError("Address ID required")
-        params = {"id": self._address_id}
-        r = requests.get(self._collection_url, params=params)
+    def _resolve_address_id(self, session: requests.Session) -> str:
+        r = session.get(SCHEDULE_URL)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
-        calendar_item = soup.find_all("div", class_="calendar-item")
-        entries: list[Collection] = []
-        for item in calendar_item:
-            types = item.find("div", class_="waste-label").text.split("&")
-            date_string = item.find("div", class_="waste-value").text
-            try:
-                date_string = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", date_string)
-                d = datetime.strptime(date_string, "%A %d %B %Y").date()
-            except ValueError:
-                _LOGGER.info(f"Failed to parse date: {date_string}, skipping")
+        form_build_id_input = soup.find("input", {"name": "form_build_id"})
+        if not isinstance(form_build_id_input, Tag):
+            raise ValueError("Could not find form_build_id on schedule page")
+        form_build_id = form_build_id_input["value"]
+
+        data = {
+            "postcode": self._postcode,
+            "form_build_id": form_build_id,
+            "form_id": "localgov_waste_collection_postcode_form",
+            "op": "Find",
+        }
+        r = session.post(SCHEDULE_URL, data=data, allow_redirects=True)
+        r.raise_for_status()
+
+        soup = BeautifulSoup(r.text, "html.parser")
+        select = soup.find("select", {"name": "uprn"})
+        if not isinstance(select, Tag):
+            raise SourceArgumentNotFound(
+                "postcode",
+                self._postcode,
+                "No address options found for postcode",
+            )
+
+        options = select.find_all("option")
+        for option in options:
+            if self._address_match(option.text):
+                return str(option["value"])
+
+        available = [opt.text for opt in options if opt.get("value")]
+        raise SourceArgumentNotFoundWithSuggestions("address", self._address, available)
+
+    def _get_ics(self, session: requests.Session, uprn: str) -> str:
+        url = f"{BASE_URL}/waste-collection-schedule/download/{uprn}"
+        r = session.get(url)
+        r.raise_for_status()
+        return r.text
+
+    def _parse_ics(self, ics_data: str) -> list[Collection]:
+        events: list[Collection] = []
+        vevent_blocks = re.findall(
+            r"BEGIN:VEVENT\r?\n(.*?)END:VEVENT", ics_data, re.DOTALL
+        )
+
+        for block in vevent_blocks:
+            summary_match = re.search(r"SUMMARY:([^\r\n]+)", block)
+            if not summary_match:
+                continue
+            summary = summary_match.group(1).strip()
+
+            # Skip non-collection events
+            if "download" in summary.lower() or "calendar" in summary.lower():
                 continue
 
-            for type in types:
-                type = type.replace(" is:", "").strip()
-                icon = ICON_MAP.get(type.lower())
-                entries.append(Collection(date=d, t=type, icon=icon))
+            # Extract DTSTART
+            dtstart_match = re.search(r"DTSTART;TZID=[^:]+:(\d{8})T\d{6}", block)
+            if not dtstart_match:
+                dtstart_match = re.search(r"DTSTART:(\d{8})T", block)
+            if not dtstart_match:
+                dtstart_match = re.search(r"DTSTART[^:]*:(\d{8})", block)
+            if not dtstart_match:
+                continue
 
-        if len(entries) == 0:
-            raise ValueError("No collections found")
+            date_str = dtstart_match.group(1)
+            d = datetime.strptime(date_str, "%Y%m%d").date()
 
-        return entries
+            # Clean up summary to extract waste type
+            type_str = summary
+            if " for " in summary:
+                type_str = summary.split(" for ", 1)[1]
+            type_str = type_str.strip()
 
-    def _retrieve_api_url(self) -> None:
-        r = requests.get(START_URL)
-        r.raise_for_status()
-        collection_match = COLLECTION_URL_REGEX.search(r.text)
-        streets_match = STREETS_URL_REGEX.search(r.text)
-        if not collection_match or not streets_match:
-            raise ValueError("API URL not found")
-        self._streets_url = streets_match.group(1)
-        self._collection_url = collection_match.group(1)
-        if self._collection_url.startswith("/"):
-            self._collection_url = BASE_URL + self._collection_url
-        if self._streets_url.startswith("/"):
-            self._streets_url = BASE_URL + self._streets_url
+            # Split combined types (e.g. "Food waste and recycling")
+            if " and " in type_str.lower():
+                parts = type_str.split(" and ")
+                for part in parts:
+                    part = part.strip()
+                    icon = ICON_MAP.get(part.lower())
+                    events.append(Collection(date=d, t=part, icon=icon))
+            else:
+                icon = ICON_MAP.get(type_str.lower())
+                events.append(Collection(date=d, t=type_str, icon=icon))
+
+        return events
 
     def fetch(self) -> list[Collection]:
-        fresh = 0
-        if not self._collection_url:
-            self._retrieve_api_url()
-            fresh += 1
-        if not self._address_id:
-            self._retrieve_address_id()
-            fresh += 1
-        try:
-            return self._get_colledctions()
-        except Exception as e:
-            if not self._postcode or not self._address:
-                raise SourceArgumentNotFound(
-                    "address_id",
-                    self._address_id,
-                    "recheck id or use postcode and address",
-                ) from e
-            if fresh == 2:
-                raise e
-            self._retrieve_api_url()
-            self._retrieve_address_id()
-            return self._get_colledctions()
+        session = requests.Session()
+        uprn = self._resolve_address_id(session)
+        ics_data = self._get_ics(session, uprn)
+        return self._parse_ics(ics_data)
