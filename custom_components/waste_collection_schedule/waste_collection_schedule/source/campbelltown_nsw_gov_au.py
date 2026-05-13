@@ -1,10 +1,10 @@
 import datetime
 import json
+from urllib.parse import quote
 
-import requests
 from bs4 import BeautifulSoup
-from requests.utils import requote_uri
-from waste_collection_schedule import Collection
+from curl_cffi import requests
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Campbelltown City Council (NSW)"
 DESCRIPTION = "Source for Campbelltown City Council rubbish collection."
@@ -35,23 +35,8 @@ API_URLS = {
     "collection": "https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={}&ocsvclang=en-AU",
 }
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.5",
-    "Accept-Encoding": "gzip, deflate, br, zstd",
-    "DNT": "1",
-    "Connection": "keep-alive",
-    "Upgrade-Insecure-Requests": "1",
-    "Sec-Fetch-Dest": "document",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-Site": "none",
-    "Sec-Fetch-User": "?1",
-    "Cache-Control": "max-age=0",
-}
-
 ICON_MAP = {
-    "General Waste": "trash-can",
+    "General Waste": "mdi:trash-can",
     "Recycling": "mdi:recycle",
     "Green Waste": "mdi:leaf",
 }
@@ -73,16 +58,16 @@ class Source:
             self.street_number, self.street_name, self.suburb, self.post_code
         )
 
-        q = requote_uri(str(API_URLS["address_search"]).format(address))
-        r = requests.get(q, headers=HEADERS)
+        session = requests.Session(impersonate="chrome")
+
+        q = str(API_URLS["address_search"]).format(quote(address))
+        r = session.get(q)
         r.raise_for_status()
 
-        # Try JSON first, fallback to XML if needed
         data = None
         try:
             data = json.loads(r.text)
         except Exception:
-            # Try XML
             soup = BeautifulSoup(r.text, "xml")
             address_results = soup.find_all("PhysicalAddressSearchResult")
             for result in address_results:
@@ -91,7 +76,6 @@ class Source:
                     locationId = id_element.text.strip()
                     break
         else:
-            # JSON path
             for item in data.get("Items", []):
                 locationId = item.get("Id", "")
                 break
@@ -99,9 +83,8 @@ class Source:
         if not locationId:
             return []
 
-        # Retrieve the upcoming collections for our property
-        q = requote_uri(str(API_URLS["collection"]).format(locationId))
-        r = requests.get(q, headers=HEADERS)
+        q = str(API_URLS["collection"]).format(locationId)
+        r = session.get(q)
         r.raise_for_status()
 
         try:
