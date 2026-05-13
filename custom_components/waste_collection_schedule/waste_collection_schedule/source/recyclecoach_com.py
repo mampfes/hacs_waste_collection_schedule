@@ -462,10 +462,23 @@ class Source:
         )
 
     def _lookup_zones_with_geo(self):
-        pos_finder = f"https://api-city.recyclecoach.com/geo/address?address={self.street}&project_id={self.project_id}&district_id={self.district_id}"
-        res = requests.get(pos_finder)
+        geo_address_urls = [
+            f"https://api-city.recyclecoach.com/geo/address?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/address/geo?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/geo?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
+        ]
         lat = None
-        pos_data = res.json()
+        pos_data = []
+        for pos_url in geo_address_urls:
+            try:
+                res = requests.get(pos_url)
+                res.raise_for_status()
+                pos_data = res.json()
+                if pos_data:
+                    break
+            except (requests.exceptions.RequestException, json.JSONDecodeError):
+                continue
+
         streets = []
         for pos_res in pos_data:
             streetpart = self._format_key(pos_res["address"]).split(",")[0]
@@ -487,17 +500,49 @@ class Source:
                 "street",
                 self.street,
             )
-        zone_finder = f"https://api-city.recyclecoach.com/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}"
-        res = requests.get(zone_finder)
-        zone_data = {z["prompt_id"]: "z" + z["zone_id"] for z in res.json()}
-        self.zone_id = self._build_zone_string(zone_data)
-        return self.zone_id
+
+        zone_finder_urls = [
+            f"https://api-city.recyclecoach.com/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/address/geo/zone?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/geo/zone?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
+        ]
+        for zone_url in zone_finder_urls:
+            try:
+                res = requests.get(zone_url)
+                res.raise_for_status()
+                zone_data = {
+                    z["prompt_id"]: "z" + str(z["zone_id"]) for z in res.json()
+                }
+                if zone_data:
+                    self.zone_id = self._build_zone_string(zone_data)
+                    return self.zone_id
+            except (
+                requests.exceptions.RequestException,
+                json.JSONDecodeError,
+                KeyError,
+            ):
+                continue
+
+        raise SourceArgumentNotFound("street", self.street)
 
     def _lookup_zones(self):
-        zone_finder = f"https://api-city.recyclecoach.com/zone-setup/address?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}"
-        res = requests.get(zone_finder)
-        zone_data = res.json()
-        if "results" not in zone_data:
+        zone_lookup_urls = [
+            f"https://api-city.recyclecoach.com/zone-setup/address?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/address/single?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/single?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
+        ]
+        zone_data = None
+        for zone_url in zone_lookup_urls:
+            try:
+                res = requests.get(zone_url)
+                res.raise_for_status()
+                zone_data = res.json()
+                if "results" in zone_data:
+                    break
+            except (requests.exceptions.RequestException, json.JSONDecodeError):
+                continue
+
+        if not zone_data or "results" not in zone_data:
             return self._lookup_zones_with_geo()
         streets = []
         for zone_res in zone_data["results"]:
@@ -537,6 +582,7 @@ class Source:
         collection_urls = [
             f"https://api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
             f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/zone/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
         ]
 
         schedule_urls = [  # Some regions use different one of these should work
@@ -566,7 +612,10 @@ class Source:
             if isinstance(schedule_def, dict):
                 break  # retrieved correct schedule data
 
-        collection_types = collection_def["collection"]["types"]
+        coll_root = collection_def.get("collections") or collection_def.get(
+            "collection"
+        )
+        collection_types = coll_root["types"]
 
         entries = []
         date_format = "%Y-%m-%d"
