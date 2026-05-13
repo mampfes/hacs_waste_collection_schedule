@@ -322,6 +322,9 @@ SERVICE_PROVIDERS = {
     "Lodè - Eco Flap - Ciclat",
     "Toro",
     "C.C.S. - Consorzio Campale Stabile",
+    "Broni",
+    "San Cipriano Po",
+    "Stradella",
 }
 
 
