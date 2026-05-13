@@ -534,7 +534,10 @@ class Source:
         if not self.zone_id:
             self._lookup_zones()
 
-        collection_def_url = f"https://api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
+        collection_urls = [
+            f"https://api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
+        ]
 
         schedule_urls = [  # Some regions use different one of these should work
             f"https://api-city.recyclecoach.com/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
@@ -546,8 +549,16 @@ class Source:
         schedule_def = None
         collection_types = None
 
-        response = requests.get(collection_def_url)
-        collection_def = json.loads(response.text)
+        for collection_url in collection_urls:
+            try:
+                response = requests.get(collection_url)
+                response.raise_for_status()
+                collection_def = response.json()
+            except (requests.exceptions.RequestException, json.JSONDecodeError):
+                continue
+
+            if isinstance(collection_def, dict):
+                break  # retrieved correct schedule data
 
         for schedule_url in schedule_urls:
             response = requests.get(schedule_url)
