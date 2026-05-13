@@ -352,7 +352,7 @@ SERVICE_MAP = (
         },
         {
             "name": "Clarence Valley Council",
-            "url": "https://clarane.waste-info.com.au",
+            "url": "https://clarence.waste-info.com.au",
             "website": "https://www.clarence.nsw.gov.au",
         },
     ]
