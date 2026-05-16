@@ -1,0 +1,21 @@
+---
+title: Schwalbach am Taunus
+url: https://www.schwalbach.de
+howto:
+  en: |
+    - Go to <https://www.schwalbach.de/Rathaus-und-Buergerservice/Buergerservice/Abfallentsorgung/Digitaler-Abfallkalender.htm> and navigate to the digital waste calendar.
+    - Select your street from the dropdown.
+    - Right-click on the yellow calendar download button (e.g. "Termine mit wöchentlicher Restmüll-Abholung") and copy the link address.
+    - The link will look like: `https://www.schwalbach.de/city_info/display/ical/m_calendar_ical.cfm?region_id=431&year=2026&city_id=1&street_id=XXXXX`
+    - Replace the year value with `{year}` or use `year_field: year` in your config to keep it up to date automatically.
+    - Use this link as the `url` parameter.
+  de: |
+    - Öffnen Sie <https://www.schwalbach.de/Rathaus-und-Buergerservice/Buergerservice/Abfallentsorgung/Digitaler-Abfallkalender.htm> und navigieren Sie zum digitalen Abfallkalender.
+    - Wählen Sie Ihre Straße aus dem Dropdown-Menü.
+    - Klicken Sie mit der rechten Maustaste auf den gelben Download-Button (z. B. "Termine mit wöchentlicher Restmüll-Abholung") und kopieren Sie die Link-Adresse.
+    - Der Link sieht so aus: `https://www.schwalbach.de/city_info/display/ical/m_calendar_ical.cfm?region_id=431&year=2026&city_id=1&street_id=XXXXX`
+    - Verwenden Sie diesen Link als `url`-Parameter und fügen Sie `year_field: year` hinzu, damit das Jahr automatisch aktualisiert wird.
+test_cases:
+  Pommernstraße:
+    url: "https://www.schwalbach.de/city_info/display/ical/m_calendar_ical.cfm?region_id=431&year=2026&city_id=1&street_id=76874"
+    year_field: year
