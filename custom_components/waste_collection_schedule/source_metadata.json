@@ -3777,6 +3777,14 @@
     "howto": {},
     "urls": {}
   },
+  "reinach_bl_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reinach_bl_ch.md",
+    "howto": {
+      "de": "Wählen Sie Ihren Abfuhrkreis (Kreis Ost oder Kreis West). Den Kreis finden Sie auf dem Abfallkalender der Gemeinde Reinach BL unter https://www.reinach-bl.ch/de/abfallwirtschaft/abfallkalender.",
+      "en": "Select your collection zone (Kreis Ost or Kreis West). You can find your zone on the official Reinach BL waste calendar page at https://www.reinach-bl.ch/de/abfallwirtschaft/abfallkalender."
+    },
+    "urls": {}
+  },
   "ics_seon_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/seon_ch.md",
     "howto": {

@@ -17434,6 +17434,29 @@
         },
         "data_description": {}
       },
+      "args_reinach_bl_ch": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Abfuhrkreis"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "zone": "Abfuhrkreis: 'Kreis Ost' oder 'Kreis West'."
+        }
+      },
+      "reconfigure_reinach_bl_ch": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Abfuhrkreis"
+        },
+        "data_description": {
+          "zone": "Abfuhrkreis: 'Kreis Ost' oder 'Kreis West'."
+        }
+      },
       "args_ics_seon_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

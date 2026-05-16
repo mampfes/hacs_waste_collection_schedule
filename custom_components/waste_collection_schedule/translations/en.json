@@ -17808,6 +17808,29 @@
         },
         "data_description": {}
       },
+      "args_reinach_bl_ch": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Collection zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "zone": "Collection zone: 'Kreis Ost' or 'Kreis West'."
+        }
+      },
+      "reconfigure_reinach_bl_ch": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Collection zone"
+        },
+        "data_description": {
+          "zone": "Collection zone: 'Kreis Ost' or 'Kreis West'."
+        }
+      },
       "args_ics_seon_ch": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

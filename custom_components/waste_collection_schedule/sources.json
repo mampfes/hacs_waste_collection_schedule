@@ -16924,6 +16924,12 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Reinach BL",
+      "module": "reinach_bl_ch",
+      "default_params": {},
+      "id": "reinach_bl_ch"
+    },
+    {
       "title": "Rorschach",
       "module": "a_region_ch",
       "default_params": {
