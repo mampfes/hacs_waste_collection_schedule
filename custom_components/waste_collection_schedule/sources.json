@@ -15826,10 +15826,24 @@
       "id": "sims_pl"
     },
     {
+      "title": "Hemar (ichisystem.eu)",
+      "module": "ichisystem_eu",
+      "default_params": {},
+      "id": "ichisystem_eu"
+    },
+    {
       "title": "Kiedy \u015bmieci",
       "module": "kiedysmieci_info",
       "default_params": {},
       "id": "kiedysmieci_info"
+    },
+    {
+      "title": "Kiszkowo",
+      "module": "ichisystem_eu",
+      "default_params": {
+        "city": "Kiszkowo"
+      },
+      "id": "ichisystem_eu"
     },
     {
       "title": "Kleszczewo/Kostrzyn",
@@ -15948,6 +15962,14 @@
         "owner": "Parafia \u015bw. Wojciecha Biskupa i M\u0119czennika w Nidzicy"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Pobiedziska",
+      "module": "ichisystem_eu",
+      "default_params": {
+        "city": "Pobiedziska"
+      },
+      "id": "ichisystem_eu"
     },
     {
       "title": "Polkowice",

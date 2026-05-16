@@ -15900,6 +15900,37 @@
           "location_id": "Unique location id (LOCATION_ID)"
         }
       },
+      "args_ichisystem_eu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "City / town name as listed on the Hemar portal.",
+          "house_number": "House number as listed on the Hemar portal.",
+          "street": "Street name as listed on the Hemar portal."
+        }
+      },
+      "reconfigure_ichisystem_eu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "City / town name as listed on the Hemar portal.",
+          "house_number": "House number as listed on the Hemar portal.",
+          "street": "Street name as listed on the Hemar portal."
+        }
+      },
       "args_kiedysmieci_info": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

@@ -2424,7 +2424,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Gminne Przedsiębiorstwo Komunalne Sp. z o.o. w Skarszewach](/doc/source/sims_pl.md) / sisms.pl
 - [Gospodarka Odpadami - Pelplin](/doc/source/sims_pl.md) / sisms.pl
 - [Gospodarka Odpadami - Starogard Gdański](/doc/source/sims_pl.md) / sisms.pl
+- [Hemar (ichisystem.eu)](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Kiedy śmieci](/doc/source/kiedysmieci_info.md) / kiedysmieci.info
+- [Kiszkowo](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Kleszczewo/Kostrzyn](/doc/source/zys_harmonogram_pl.md) / puk-zys.pl/index.php
 - [Klient Szablonowy - Ekostrażnik](/doc/source/sims_pl.md) / sisms.pl
 - [Klient Szablonowy - Karty Usług](/doc/source/sims_pl.md) / sisms.pl
@@ -2441,6 +2443,7 @@ If you already have enough information for your municipality/region, you are ver
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl
 - [MPO Kraków](/doc/source/mpo_krakow_pl.md) / harmonogram.mpo.krakow.pl
 - [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
+- [Pobiedziska](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Polkowice](/doc/source/sims_pl.md) / sisms.pl
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
 - [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
