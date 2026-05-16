@@ -13796,6 +13796,29 @@
         },
         "data_description": {}
       },
+      "args_seab_biella_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "url": "Url"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "url": "URL del file PDF del calendario (es. {url_www_seab_biella_it_wp_content_uploads_2026_05_ailoche_ii_semestre_pdf}"
+        }
+      },
+      "reconfigure_seab_biella_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "url": "Url"
+        },
+        "data_description": {
+          "url": "URL del file PDF del calendario (es. {url_www_seab_biella_it_wp_content_uploads_2026_05_ailoche_ii_semestre_pdf}"
+        }
+      },
       "args_silea_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

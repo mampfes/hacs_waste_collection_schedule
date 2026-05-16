@@ -2120,6 +2120,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Scandicci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Scanzorosciate](/doc/source/junker_app.md) / junker.app
 - [Scarperia e San Piero](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [SEAB Biella](/doc/source/seab_biella_it.md) / seab.biella.it
 - [Seab SPA Bolzano](/doc/source/junker_app.md) / junker.app
 - [Sennori e Sorso - Gesenu Spa](/doc/source/junker_app.md) / junker.app
 - [Sermoneta - Del Prete Srl](/doc/source/junker_app.md) / junker.app

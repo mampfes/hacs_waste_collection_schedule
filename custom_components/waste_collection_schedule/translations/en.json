@@ -14190,6 +14190,29 @@
         },
         "data_description": {}
       },
+      "args_seab_biella_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "url": "URL"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "url": "URL of the PDF calendar file (e.g., {url_www_seab_biella_it_wp_content_uploads_2026_05_ailoche_ii_semestre_pdf}"
+        }
+      },
+      "reconfigure_seab_biella_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "url": "URL"
+        },
+        "data_description": {
+          "url": "URL of the PDF calendar file (e.g., {url_www_seab_biella_it_wp_content_uploads_2026_05_ailoche_ii_semestre_pdf}"
+        }
+      },
       "args_silea_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

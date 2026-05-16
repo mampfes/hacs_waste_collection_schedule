@@ -13900,6 +13900,12 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "SEAB Biella",
+      "module": "seab_biella_it",
+      "default_params": {},
+      "id": "seab_biella_it"
+    },
+    {
       "title": "Seab SPA Bolzano",
       "module": "junker_app",
       "default_params": {},

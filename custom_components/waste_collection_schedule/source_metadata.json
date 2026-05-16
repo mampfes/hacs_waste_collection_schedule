@@ -2954,6 +2954,16 @@
     },
     "urls": {}
   },
+  "seab_biella_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/seab_biella_it.md",
+    "howto": {
+      "en": "Visit https://www.seab.biella.it/aree-servite, select your municipality and copy the link to the PDF calendar file.",
+      "it": "Visita https://www.seab.biella.it/aree-servite, seleziona il tuo comune e copia il link al file PDF del calendario."
+    },
+    "urls": {
+      "url_www_seab_biella_it_wp_content_uploads_2026_05_ailoche_ii_semestre_pdf": "https://www.seab.biella.it/wp-content/uploads/2026/05/Ailoche-II-semestre.pdf)"
+    }
+  },
   "silea_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/silea_it.md",
     "howto": {},
