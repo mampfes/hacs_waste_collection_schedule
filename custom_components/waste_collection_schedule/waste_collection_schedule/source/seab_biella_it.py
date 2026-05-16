@@ -1,6 +1,5 @@
 import datetime
 import io
-import logging
 import re
 
 import requests
@@ -20,8 +19,6 @@ TEST_CASES = {
         "url": "https://www.seab.biella.it/wp-content/uploads/2026/05/Andorno-Micca-II-semestre.pdf"
     },
 }
-
-_LOGGER = logging.getLogger(__name__)
 
 MONTH_NAMES = {
     "GENNAIO": 1,
@@ -55,6 +52,12 @@ PARAM_DESCRIPTIONS = {
     "en": {
         "url": "URL of the PDF calendar file (e.g., https://www.seab.biella.it/wp-content/uploads/2026/05/Ailoche-II-semestre.pdf)",
     },
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "url": "URL",
+    }
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
