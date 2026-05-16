@@ -435,7 +435,7 @@ class Source:
 
     def _lookup_city(self):
         city_finder = f"https://api-city.recyclecoach.com/city/search?term={self.city}, {self.state}"
-        res = requests.get(city_finder)
+        res = requests.get(city_finder, timeout=30)
         city_data = res.json()
 
         if len(city_data) == 1:
@@ -471,7 +471,7 @@ class Source:
         pos_data = []
         for pos_url in geo_address_urls:
             try:
-                res = requests.get(pos_url)
+                res = requests.get(pos_url, timeout=30)
                 res.raise_for_status()
                 pos_data = res.json()
                 if pos_data:
@@ -508,7 +508,7 @@ class Source:
         ]
         for zone_url in zone_finder_urls:
             try:
-                res = requests.get(zone_url)
+                res = requests.get(zone_url, timeout=30)
                 res.raise_for_status()
                 zone_data = {
                     z["prompt_id"]: "z" + str(z["zone_id"]) for z in res.json()
@@ -534,7 +534,7 @@ class Source:
         zone_data = None
         for zone_url in zone_lookup_urls:
             try:
-                res = requests.get(zone_url)
+                res = requests.get(zone_url, timeout=30)
                 res.raise_for_status()
                 zone_data = res.json()
                 if "results" in zone_data:
@@ -597,7 +597,7 @@ class Source:
 
         for collection_url in collection_urls:
             try:
-                response = requests.get(collection_url)
+                response = requests.get(collection_url, timeout=30)
                 response.raise_for_status()
                 collection_def = response.json()
             except (requests.exceptions.RequestException, json.JSONDecodeError):
@@ -607,7 +607,7 @@ class Source:
                 break  # retrieved correct schedule data
 
         for schedule_url in schedule_urls:
-            response = requests.get(schedule_url)
+            response = requests.get(schedule_url, timeout=30)
             schedule_def = json.loads(response.text)
             if isinstance(schedule_def, dict):
                 break  # retrieved correct schedule data
