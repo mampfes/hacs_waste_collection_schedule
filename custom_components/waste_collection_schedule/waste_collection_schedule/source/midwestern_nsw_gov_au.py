@@ -54,8 +54,8 @@ class Source:
             # TEMP anchor until confirmed against MWRC calendar.
             # If the wrong fortnightly bin appears, swap recycle/paper below.
             if current.isocalendar().week % 2 == 0:
-                entries.append(Collection(date=current, t="recycle"))
-            else:
                 entries.append(Collection(date=current, t="paper"))
+            else:
+                entries.append(Collection(date=current, t="recycle"))
 
         return entries
