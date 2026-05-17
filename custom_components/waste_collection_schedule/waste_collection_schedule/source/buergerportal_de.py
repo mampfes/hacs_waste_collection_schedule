@@ -221,8 +221,9 @@ class Source:
                         icon = tested_icon
 
                 if self.show_volume:
+                    vol_key = "VolumenObj" if self.new_params else "Volumen"
                     volume = int(
-                        collection["Abfuhrplan"]["GefaesstarifArt"]["Volumen"][
+                        collection["Abfuhrplan"]["GefaesstarifArt"][vol_key][
                             "VolumenWert"
                         ]
                     )
