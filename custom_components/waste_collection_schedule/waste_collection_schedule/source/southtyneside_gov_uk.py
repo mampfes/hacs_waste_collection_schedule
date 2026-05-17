@@ -17,6 +17,7 @@ TEST_CASES = {
     "Test_001": {"postcode": "NE34 8RY", "uprn": "100000342955"},
     "Test_002": {"postcode": "SR6 7AJ", "uprn": "100000359535"},
     "Test_003": {"postcode": "NE31 1LY", "uprn": 100000304486},
+    "Test_004": {"postcode": "NE35 9BP", "uprn": 103009511},
 }
 ICON_MAP = {
     "HOUSEHOLD": "mdi:trash-can",
@@ -28,7 +29,7 @@ ICON_MAP = {
 class Source:
     def __init__(self, postcode, uprn):
         self._postcode = str(postcode).replace(" ", "")
-        self._uprn = str(uprn).zfill(12)
+        self._uprn = str(uprn)
 
     def fetch(self):
 
