@@ -352,6 +352,7 @@ This source has been successfully tested with the following service providers:
 - [Rodgau](/doc/ics/mein_abfallkalender_online.md) / stadtwerke-rodgau.de
 - [Rödermark](/doc/ics/mein_abfallkalender_online.md) / roedermark.de
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
+- [Schwalbach am Taunus](/doc/ics/schwalbach_am_taunus_de.md) / schwalbach.de
 - [sds Schwerin](/doc/ics/sds_schwerin_de.md) / sds-schwerin.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [St Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de

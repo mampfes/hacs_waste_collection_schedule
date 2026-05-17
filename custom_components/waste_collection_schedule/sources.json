@@ -10825,6 +10825,12 @@
       "id": "abfuhrplan_schwabach_de"
     },
     {
+      "title": "Schwalbach am Taunus",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_schwalbach_am_taunus_de"
+    },
+    {
       "title": "Schwarze Elster",
       "module": "app_abfallplus_de",
       "default_params": {

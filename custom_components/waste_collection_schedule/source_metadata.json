@@ -2536,6 +2536,14 @@
     "howto": {},
     "urls": {}
   },
+  "ics_schwalbach_am_taunus_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/schwalbach_am_taunus_de.md",
+    "howto": {
+      "de": "- Öffnen Sie <https://www.schwalbach.de/Rathaus-und-Buergerservice/Buergerservice/Abfallentsorgung/Digitaler-Abfallkalender.htm> und navigieren Sie zum digitalen Abfallkalender.\n- Wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie Ihren **Abfuhrbezirk** (1–4), der neben der Straße angezeigt wird.\n- Klicken Sie mit der rechten Maustaste auf den gelben Download-Button (z. B. \"Termine mit wöchentlicher Restmüll-Abholung für den Abfuhrbezirk 1 - 2026\") und kopieren Sie die Link-Adresse.\n- Der Link sieht so aus: `https://www.schwalbach.de/city_data/assets/431/ical/2026_Abfuhrbezirk-1_woechentlich.ics`\n- Ersetzen Sie die Jahreszahl (`2026`) durch `{%Y}` und fügen Sie `version: 1` zur Konfiguration hinzu, damit das Jahr automatisch aktualisiert wird.\n- Verwenden Sie diesen angepassten Link als `url`-Parameter.\n",
+      "en": "- Go to <https://www.schwalbach.de/Rathaus-und-Buergerservice/Buergerservice/Abfallentsorgung/Digitaler-Abfallkalender.htm> and navigate to the digital waste calendar.\n- Select your street from the dropdown. Note your **Abfuhrbezirk** number (1–4) shown next to the street.\n- Right-click on the yellow calendar download button (e.g. \"Termine mit wöchentlicher Restmüll-Abholung für den Abfuhrbezirk 1 - 2026\") and copy the link address.\n- The link will look like: `https://www.schwalbach.de/city_data/assets/431/ical/2026_Abfuhrbezirk-1_woechentlich.ics`\n- Replace the year (`2026`) with `{%Y}` and add `version: 1` to your config so the year is updated automatically.\n- Use this modified link as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
   "ics_sds_schwerin_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sds_schwerin_de.md",
     "howto": {

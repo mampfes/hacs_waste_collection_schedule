@@ -1643,6 +1643,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
 - [Schmitten im Taunus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Schwabach](/doc/source/abfuhrplan_schwabach_de.md) / abfuhrplan-schwabach.de
+- [Schwalbach am Taunus](/doc/ics/schwalbach_am_taunus_de.md) / schwalbach.de
 - [Schwarze Elster](/doc/source/app_abfallplus_de.md) / Abfall+ App: aevapp
 - [Schwarzwald-Baar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallsbk
 - [Schöneck (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
