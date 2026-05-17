@@ -1,8 +1,8 @@
 import re
 from datetime import datetime
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
@@ -37,7 +37,7 @@ class Source:
     def fetch(self):
         entries = []
 
-        session = requests.Session()
+        session = requests.Session(impersonate="chrome")
 
         r = session.get(f"{API_URL}{self._uprn}")
         soup = BeautifulSoup(
