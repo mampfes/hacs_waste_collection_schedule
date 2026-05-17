@@ -1,0 +1,14 @@
+title: Odvoz Odpadu (Slovakia)
+url: https://odvoz-odpadu.eu/
+howto:
+  en: |
+    - Go to <https://odvoz-odpadu.eu/zoznam> and find your municipality (obec).
+    - Click on the calendar icon or copy the link for the ICS file.
+    - Use this link as the `url` parameter.
+  sk: |
+    - Otvorte stránku <https://odvoz-odpadu.eu/zoznam> and nájdite svoju obec.
+    - Kliknite na ikonu kalendára alebo skopírujte odkaz na ICS súbor.
+    - Použite tento odkaz ako parameter `url`.
+test_cases:
+  Dolna Ves:
+    url: https://odvoz-odpadu.eu/miesto/1400/kalendar.ics
