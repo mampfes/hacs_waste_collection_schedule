@@ -11,10 +11,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Landfill": "mdi:trash-can",
-    "FOGO": "mdi:leaf",
-    "Recycling": "mdi:recycle",
-    "Paper/Cardboard": "mdi:newspaper",
+    "waste": "mdi:trash-can-outline",
+    "organic": "mdi:leaf",
+    "recycle": "mdi:recycle",
+    "paper": "mdi:newspaper",
 }
 
 AREAS = {
@@ -46,14 +46,16 @@ class Source:
             if current.weekday() != self._collection_day:
                 continue
 
-            entries.append(Collection(date=current, t="Landfill"))
-            entries.append(Collection(date=current, t="FOGO"))
+            # Weekly collections
+            entries.append(Collection(date=current, t="waste"))
+            entries.append(Collection(date=current, t="organic"))
 
-            # TEMP anchor until we confirm the exact MWRC alternating week pattern.
-            # Even ISO weeks = Recycling, odd ISO weeks = Paper/Cardboard.
+            # Fortnightly alternating collections
+            # TEMP anchor until confirmed against MWRC calendar.
+            # If the wrong fortnightly bin appears, swap recycle/paper below.
             if current.isocalendar().week % 2 == 0:
-                entries.append(Collection(date=current, t="Recycling"))
+                entries.append(Collection(date=current, t="recycle"))
             else:
-                entries.append(Collection(date=current, t="Paper/Cardboard"))
+                entries.append(Collection(date=current, t="paper"))
 
         return entries
