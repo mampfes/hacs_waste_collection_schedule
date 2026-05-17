@@ -4,6 +4,40 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.24.0] - 2026-05-17
+
+### Added Sources
+
+- added Schwalbach am Taunus, DE (#6342)
+- added Hemar / ichisystem.eu, EU (#6339)
+- added Reinach BL, CH (#6338)
+- added SEAB Biella, IT (#6334)
+- added Chesapeake, VA, US (#6321)
+- added Palm Coast, FL, US (#6307)
+- added Slough Borough Council, UK (#6308)
+- added Powys County Council, UK (#6299)
+- added Staffordshire Moorlands District Council, UK (#6298)
+- added Montpellier Méditerranée Métropole, FR (#6309)
+- added Brossard, QC, CA (#6304)
+- added MRC Matawinie, QC, CA (#6305)
+- added RMR Lac-Saint-Jean, QC, CA (#6306)
+- added NVOA (Nacka Vatten och Avfall), SE (#6297)
+
+### Fixed Sources
+
+- fixed southderbyshire_gov_uk: switch to curl_cffi to bypass User-Agent block (#6346)
+- fixed buergerportal_de: show_volume reads correct VolumenObj key (#6345)
+- fixed recyclecoach_com: add request timeouts to prevent hanging on unreachable subdomain (#6340)
+- fixed junker_app: add Stradella, San Cipriano Po, Broni service providers (#6331)
+- fixed campbelltown_nsw_gov_au: switch to curl_cffi to resolve 403 (#6330)
+- fixed impactapps_com_au: correct Clarence Valley Council URL typo (#6329)
+- fixed eastlothian_gov_uk: rewrite for new ICS-based website (#6319)
+- fixed recyclecoach_com: fix US Recycle Coach URL (#6322)
+- fixed rybnik_pl: Zebrzydowice sub_district parsing and Gabaryty support (#6318)
+- fixed cannock_chase_dc_gov_uk: add Food Waste mapping (#6317)
+- fixed eth_erd_hu: rewrite for redesigned provider website (#6312)
+- fixed nwleics_gov_uk: handle "Today"/"Tomorrow" date strings (#6311)
+
 ## [2.23.0] - 2026-05-11
 
 ### Added Sources
