@@ -7730,6 +7730,33 @@
         },
         "data_description": {}
       },
+      "args_heimat_info_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Abholbereich",
+          "commune": "Gemeinde (Slug)"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "area": "Der Name des Abholbereichs (z. B. 'Breitenborn'). Leer lassen, wenn die Gemeinde nur einen Bereich hat.",
+          "commune": "Der URL-Slug der Gemeinde auf heimat-info.de (z. B. 'gruendau'). Zu finden in der URL {url_www_heimat_info_de_gemeinden__slug__abfallkalender}"
+        }
+      },
+      "reconfigure_heimat_info_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Abholbereich",
+          "commune": "Gemeinde (Slug)"
+        },
+        "data_description": {
+          "area": "Der Name des Abholbereichs (z. B. 'Breitenborn'). Leer lassen, wenn die Gemeinde nur einen Bereich hat.",
+          "commune": "Der URL-Slug der Gemeinde auf heimat-info.de (z. B. 'gruendau'). Zu finden in der URL {url_www_heimat_info_de_gemeinden__slug__abfallkalender}"
+        }
+      },
       "args_ics_alba_bs_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

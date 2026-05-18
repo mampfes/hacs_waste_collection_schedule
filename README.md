@@ -1106,6 +1106,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Abfuhrtermine.info](/doc/ics/abfuhrtermine_info.md) / abfuhrtermine.info
 - [AHE Ennepe-Ruhr-Kreis](/doc/source/ahe_de.md) / ahe.de
 - [AHK Heidekreis](/doc/source/ahk_heidekreis_de.md) / ahk-heidekreis.de
+- [Aholfing](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/aholfing/abfallkalender
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [ALF Lahn-Fulda](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallhr
@@ -1182,6 +1183,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Battenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bau- und Entsorgungsbetrieb Emden](/doc/ics/bee_emden_de.md) / bee-emden.de
+- [Bellenberg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/bellenberg/abfallkalender
 - [Beltershausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/1-beltershausen
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
 - [Berlin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
@@ -1209,6 +1211,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Brombachtal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Bromskirchen](/doc/source/lobbe_app.md) / lobbe.app
 - [Bruck](/doc/source/awido_de.md) / lra-ebe.de
+- [Buch](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/buch/abfallkalender
 - [Burgenland (Landkreis)](/doc/source/app_abfallplus_de.md) / Abfall+ App: udb
 - [Burgenlandkreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Burgwald](/doc/source/lobbe_app.md) / lobbe.app
@@ -1254,6 +1257,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Eichsfeldwerke GmbH](/doc/source/hausmuell_info.md) / eichsfeldwerke.de
 - [Eigenbetrieb Abfallwirtschaft Landkreis Spree-Neiße](/doc/source/eigenbetrieb_abfallwirtschaft_de.md) / eigenbetrieb-abfallwirtschaft.de
 - [Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl](/doc/source/hausmuell_info.md) / ebkds.de
+- [Eisingen](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/eisingen/abfallkalender
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
 - [ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden](/doc/ics/elw_de.md) / elw.de
 - [Emmering](/doc/source/awido_de.md) / lra-ebe.de
@@ -1280,6 +1284,7 @@ If you already have enough information for your municipality/region, you are ver
 - [EUV Stadtbetrieb Castrop-Rauxel](/doc/ics/euv_stadtbetrieb_de.md) / euv-stadtbetrieb.de
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [EVS Entsorgungsverband Saar](/doc/source/muellmax_de.md) / evs.de
+- [Feichten a. d. Alz](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/feichten-alz/abfallkalender
 - [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / frankfurtplus.de
 - [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
 - [Flensburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1293,11 +1298,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Freiburg im Breisgau](/doc/source/app_abfallplus_de.md) / Abfall+ App: asf
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Fränkisch-Crumbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Gaimersheim](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/gaimersheim/abfallkalender
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelnhausen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Gemeinde Gründau](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/gruendau/abfallkalender
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Kranenburg](/doc/source/abfallnavi_de.md) / kranenburg.de
 - [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
@@ -1319,6 +1326,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hainburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Hallenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
+- [Halsbach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/halsbach/abfallkalender
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
 - [Halver](/doc/source/lobbe_app.md) / lobbe.app
 - [Hattersheim am Main](/doc/source/jumomind_de.md) / hattersheim.de
@@ -1327,6 +1335,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Havelland](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Heidelberg](/doc/source/heidelberg_de.md) / heidelberg.de/abfall
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
+- [Heimat-Info](/doc/source/heimat_info_de.md) / heimat-info.de
 - [Heimbach](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / abfallkalender.heinz-entsorgung.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/source/heinz_entsorgung_de.md) / abfallkalender.heinz-entsorgung.de
@@ -1343,6 +1352,7 @@ If you already have enough information for your municipality/region, you are ver
 - [HubertSchmid Recycling und Umweltschutz GmbH](/doc/source/api_hubert_schmid_de.md) / hschmid24.de/BlaueTonne
 - [Höchst](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
+- [Hürtgenwald](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/hurtgenwald/abfallkalender
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
 - [Ilschhausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/7-ilschhausen
 - [Inden](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
@@ -1354,11 +1364,13 @@ If you already have enough information for your municipality/region, you are ver
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
 - [Kamp-Lintfort (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Karben](/doc/ics/mein_abfallkalender_online.md) / karben.de
+- [Kastl (Lkr. AÖ)](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kastl/abfallkalender
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
 - [Kierspe](/doc/source/lobbe_app.md) / lobbe.app
 - [Kirchdorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
 - [Kirchseeon](/doc/source/awido_de.md) / lra-ebe.de
+- [Kirchweidach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kirchweidach/abfallkalender
 - [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
 - [Kommunalservice Landkreis Börde AöR](/doc/source/ks_boerde_de.md) / ks-boerde.de
 - [Korbach](/doc/source/lobbe_app.md) / lobbe.app
@@ -1434,6 +1446,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
 - [Kreuztal](/doc/ics/abfuhrtermine_info.md) / kreuztal.de
 - [Kronberg im Taunus](/doc/source/abfallnavi_de.md) / kronberg.de
+- [Kupferberg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kupferberg/abfallkalender
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
 - [Landkreis Amberg-Sulzbach](/doc/ics/landkreis_as_de.md) / landkreis-as.de
@@ -1542,6 +1555,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Linsengericht](/doc/ics/mein_abfallkalender_online.md) / linsengericht.de
 - [LK Schwandorf](/doc/ics/entsorgung_sad_de.md) / entsorgung-sad.de
 - [Lobbe App](/doc/source/lobbe_app.md) / lobbe.app
+- [Loiching](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/loiching/abfallkalender
 - [Ludwigshafen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllu
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
 - [Lübbecke (Jumomind)](/doc/source/jumomind_de.md) / luebbecke.de
@@ -1552,6 +1566,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Main-Kinzig-Kreis (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Marburg](/doc/ics/mein_abfallkalender_online.md) / marburg.de
 - [Marienmünster](/doc/source/lobbe_app.md) / lobbe.app
+- [Markt Kastl (Lauterachtal)](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kastl-lauterachtal/abfallkalender
 - [Markt Schwaben](/doc/source/awido_de.md) / lra-ebe.de
 - [Marsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Mechernich und Kommunen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
@@ -1596,6 +1611,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Oberhavel](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Oberpframmern](/doc/source/awido_de.md) / lra-ebe.de
+- [Oberrieden](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/oberrieden/abfallkalender
+- [Oberroth](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/oberroth/abfallkalender
 - [Obertshausen](/doc/ics/mein_abfallkalender_online.md) / obertshausen.de
 - [Oberzent](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Oldenburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappol
@@ -1604,7 +1621,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Ortenaukreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappog
 - [Osterode am Harz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
+- [Pastetten](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/pastetten/abfallkalender
 - [Petershagen](/doc/ics/mein_abfallkalender_online.md) / petershagen.de
+- [Pfaffenhausen](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/pfaffenhausen/abfallkalender
 - [Pirmasens](/doc/ics/mein_abfallkalender_online.md) / pirmasens.de
 - [Planegg](/doc/ics/mein_abfallkalender_online.md) / planegg.de
 - [Plettenberg](/doc/source/lobbe_app.md) / lobbe.app
@@ -1633,6 +1652,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Rodenbach](/doc/ics/mein_abfallkalender_online.md) / rodenbach.de
 - [Rodgau](/doc/ics/mein_abfallkalender_online.md) / stadtwerke-rodgau.de
 - [Roetgen](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Roggenburg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/roggenburg/abfallkalender
 - [Rosbach Vor Der Höhe](/doc/source/jumomind_de.md) / rosbach-hessen.de
 - [Rosenthal](/doc/source/lobbe_app.md) / lobbe.app
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
@@ -1640,9 +1660,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Roßberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/11-rossberg
 - [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
 - [Rödermark](/doc/ics/mein_abfallkalender_online.md) / roedermark.de
+- [Röttenbach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/rottenbach/abfallkalender
 - [Rüthen](/doc/source/lobbe_app.md) / lobbe.app
 - [Saalekreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [SAB Magdeburg Abfuhrkalender](/doc/source/magdeburg_de.md) / sab.ssl.metageneric.de/app/sab_i_tp/index.php
+- [Salgen](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/salgen/abfallkalender
 - [Salzgitter (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Salzlandkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallslk
 - [Schalksmühle](/doc/source/lobbe_app.md) / lobbe.app
@@ -1652,6 +1674,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Schwalbach am Taunus](/doc/ics/schwalbach_am_taunus_de.md) / schwalbach.de
 - [Schwarze Elster](/doc/source/app_abfallplus_de.md) / Abfall+ App: aevapp
 - [Schwarzwald-Baar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallsbk
+- [Schäftlarn](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/schaftlarn/abfallkalender
 - [Schöneck (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Schönmackers](/doc/source/app_abfallplus_de.md) / Abfall+ App: muellalarm
 - [sds Schwerin](/doc/ics/sds_schwerin_de.md) / sds-schwerin.de
@@ -1725,6 +1748,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
 - [tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen](/doc/source/tonnenleerung_de.md) / tonnenleerung.de
 - [Tonnenticker Pro](/doc/source/tonnenticker_pro_de.md) / regioit.de
+- [Trausnitz](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/trausnitz/abfallkalender
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
@@ -1734,6 +1758,7 @@ If you already have enough information for your municipality/region, you are ver
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Umweltbetriebe USK Kleve](/doc/source/buergerportal_de.md) / buerger-app-klevestadt.azurewebsites.net/calendar
+- [Unterroth](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/unterroth/abfallkalender
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
 - [Usingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Vaterstetten](/doc/source/awido_de.md) / lra-ebe.de
@@ -1772,6 +1797,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Witzenhausen](/doc/ics/mein_abfallkalender_online.md) / witzenhausen.eu
 - [Wolfesing (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
+- [Wutach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/wutach/abfallkalender
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
 - [Würselen](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: wuerzburg

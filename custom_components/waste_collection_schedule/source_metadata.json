@@ -1747,6 +1747,16 @@
     "howto": {},
     "urls": {}
   },
+  "heimat_info_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heimat_info_de.md",
+    "howto": {
+      "de": "Öffnen Sie https://www.heimat-info.de, suchen Sie Ihre Gemeinde und navigieren Sie zum Abfallkalender. Der Gemeinde-Slug ist der Teil der URL nach '/gemeinden/'. Falls der Kalender mehrere Abholbereiche zeigt, wählen Sie Ihren aus der Liste.",
+      "en": "Open https://www.heimat-info.de, search for your commune, and navigate to Abfallkalender. The commune slug is the part of the URL after '/gemeinden/'. If the calendar shows multiple collection areas, pick yours from the list."
+    },
+    "urls": {
+      "url_www_heimat_info_de_gemeinden__slug__abfallkalender": "https://www.heimat-info.de/gemeinden/<slug>/abfallkalender."
+    }
+  },
   "ics_alba_bs_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/alba_bs_de.md",
     "howto": {

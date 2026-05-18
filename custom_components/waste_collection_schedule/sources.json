@@ -6757,6 +6757,14 @@
       "id": "ahk_heidekreis_de"
     },
     {
+      "title": "Aholfing",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "aholfing"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "ALBA Berlin",
       "module": "abfall_io",
       "default_params": {
@@ -7320,6 +7328,14 @@
       "id": "ics_bee_emden_de"
     },
     {
+      "title": "Bellenberg",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "bellenberg"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Beltershausen",
       "module": "123abfallkalender_de",
       "default_params": {
@@ -7526,6 +7542,14 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Buch",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "buch"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Burgenland (Landkreis)",
@@ -7860,6 +7884,14 @@
       "id": "hausmuell_info"
     },
     {
+      "title": "Eisingen",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "eisingen"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "EKM Mittelsachsen GmbH",
       "module": "ics",
       "default_params": {},
@@ -8046,6 +8078,14 @@
       "id": "muellmax_de"
     },
     {
+      "title": "Feichten a. d. Alz",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "feichten-alz"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "FES Frankfurter Entsorgungs- und Service GmbH",
       "module": "ics",
       "default_params": {
@@ -8147,6 +8187,14 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "Gaimersheim",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "gaimersheim"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Gelber Sack Stuttgart",
       "module": "ics",
       "default_params": {},
@@ -8181,6 +8229,14 @@
         "hpid": 225
       },
       "id": "cmcitymedia_de"
+    },
+    {
+      "title": "Gemeinde Gr\u00fcndau",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "gruendau"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Gemeinde Kalletal",
@@ -8360,6 +8416,14 @@
       "id": "ics_hws_halle_de"
     },
     {
+      "title": "Halsbach",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "halsbach"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Halver",
       "module": "abfallnavi_de",
       "default_params": {
@@ -8418,6 +8482,12 @@
       "module": "heilbronn_de",
       "default_params": {},
       "id": "heilbronn_de"
+    },
+    {
+      "title": "Heimat-Info",
+      "module": "heimat_info_de",
+      "default_params": {},
+      "id": "heimat_info_de"
     },
     {
       "title": "Heimbach",
@@ -8536,6 +8606,14 @@
       "id": "jumomind_de"
     },
     {
+      "title": "H\u00fcrtgenwald",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "hurtgenwald"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Ilm-Kreis",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -8618,6 +8696,14 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Kastl (Lkr. A\u00d6)",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "kastl"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "KECL Kommunalentsorgung Chemnitzer Land",
       "module": "ics",
       "default_params": {},
@@ -8654,6 +8740,14 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Kirchweidach",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "kirchweidach"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Knittel Entsorgung",
@@ -9243,6 +9337,14 @@
         "service": "kronberg"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Kupferberg",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "kupferberg"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "KV Cochem-Zell",
@@ -10058,6 +10160,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Loiching",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "loiching"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Ludwigshafen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -10131,6 +10241,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Markt Kastl (Lauterachtal)",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "kastl-lauterachtal"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Markt Schwaben",
@@ -10468,6 +10586,22 @@
       "id": "awido_de"
     },
     {
+      "title": "Oberrieden",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "oberrieden"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Oberroth",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "oberroth"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Obertshausen",
       "module": "ics",
       "default_params": {},
@@ -10529,10 +10663,26 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Pastetten",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "pastetten"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Petershagen",
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Pfaffenhausen",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "pfaffenhausen"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Pirmasens",
@@ -10741,6 +10891,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Roggenburg",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "roggenburg"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Rosbach Vor Der H\u00f6he",
       "module": "jumomind_de",
       "default_params": {
@@ -10796,6 +10954,14 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "R\u00f6ttenbach",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "rottenbach"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "R\u00fcthen",
       "module": "lobbe_app",
       "default_params": {
@@ -10817,6 +10983,14 @@
       "module": "magdeburg_de",
       "default_params": {},
       "id": "magdeburg_de"
+    },
+    {
+      "title": "Salgen",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "salgen"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Salzgitter (MyMuell App)",
@@ -10884,6 +11058,14 @@
         "app_id": "de.k4systems.abfallsbk"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Sch\u00e4ftlarn",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "schaftlarn"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Sch\u00f6neck (MyMuell App)",
@@ -11411,6 +11593,14 @@
       "id": "tonnenticker_pro_de"
     },
     {
+      "title": "Trausnitz",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "trausnitz"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Tuttlingen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -11480,6 +11670,14 @@
         "operator": "klevestadt"
       },
       "id": "buergerportal_de"
+    },
+    {
+      "title": "Unterroth",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "unterroth"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "USB Bochum",
@@ -11774,6 +11972,14 @@
       "module": "was_wolfsburg_de",
       "default_params": {},
       "id": "was_wolfsburg_de"
+    },
+    {
+      "title": "Wutach",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "wutach"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "WZV Kreis Segeberg",

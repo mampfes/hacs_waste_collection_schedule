@@ -7977,6 +7977,33 @@
         },
         "data_description": {}
       },
+      "args_heimat_info_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Collection area",
+          "commune": "Commune (slug)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "area": "The name of the collection area / district (e.g. 'Breitenborn'). Leave empty if the commune has only one area.",
+          "commune": "The URL slug of the commune on heimat-info.de (e.g. 'gruendau'). Find it in the URL {url_www_heimat_info_de_gemeinden__slug__abfallkalender}"
+        }
+      },
+      "reconfigure_heimat_info_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Collection area",
+          "commune": "Commune (slug)"
+        },
+        "data_description": {
+          "area": "The name of the collection area / district (e.g. 'Breitenborn'). Leave empty if the commune has only one area.",
+          "commune": "The URL slug of the commune on heimat-info.de (e.g. 'gruendau'). Find it in the URL {url_www_heimat_info_de_gemeinden__slug__abfallkalender}"
+        }
+      },
       "args_ics_alba_bs_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
