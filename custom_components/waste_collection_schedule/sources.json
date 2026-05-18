@@ -9602,6 +9602,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Landkreis Mecklenburgische Seenplatte",
+      "module": "lk_mecklenburgische_seenplatte_de",
+      "default_params": {},
+      "id": "lk_mecklenburgische_seenplatte_de"
+    },
+    {
       "title": "Landkreis Mettmann (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -14789,6 +14795,12 @@
         "service": "reinis"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Rova",
+      "module": "rova_nl",
+      "default_params": {},
+      "id": "rova_nl"
     },
     {
       "title": "Saver",

@@ -2341,6 +2341,11 @@
     "howto": {},
     "urls": {}
   },
+  "lk_mecklenburgische_seenplatte_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lk_mecklenburgische_seenplatte_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "abfuhrplan_landkreis_neumarkt_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfuhrplan_landkreis_neumarkt_de.md",
     "howto": {},
@@ -3123,6 +3128,13 @@
   "rd4_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rd4_nl.md",
     "howto": {},
+    "urls": {}
+  },
+  "rova_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rova_nl.md",
+    "howto": {
+      "en": "Use the same postal code and house number you would enter at https://www.rova.nl/afvalkalender. If your address has a letter or addition, provide it in the 'addition' field."
+    },
     "urls": {}
   },
   "saver_nl": {

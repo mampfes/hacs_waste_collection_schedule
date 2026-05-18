@@ -11107,6 +11107,33 @@
         },
         "data_description": {}
       },
+      "args_lk_mecklenburgische_seenplatte_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Name of the municipality (as shown in the dropdown on the Abfallkalender page).",
+          "street": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
+        }
+      },
+      "reconfigure_lk_mecklenburgische_seenplatte_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "Name of the municipality (as shown in the dropdown on the Abfallkalender page).",
+          "street": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
+        }
+      },
       "args_abfuhrplan_landkreis_neumarkt_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -14970,6 +14997,37 @@
           "postal_code": "Postal Code"
         },
         "data_description": {}
+      },
+      "args_rova_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addition": "Addition",
+          "house_number": "House number",
+          "postalcode": "Postal code"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "addition": "House letter or addition (optional, only needed when multiple addresses share the same postal code and house number)",
+          "house_number": "House number",
+          "postalcode": "Dutch postal code (4 digits + 2 letters, e.g. 8148PC)"
+        }
+      },
+      "reconfigure_rova_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addition": "Addition",
+          "house_number": "House number",
+          "postalcode": "Postal code"
+        },
+        "data_description": {
+          "addition": "House letter or addition (optional, only needed when multiple addresses share the same postal code and house number)",
+          "house_number": "House number",
+          "postalcode": "Dutch postal code (4 digits + 2 letters, e.g. 8148PC)"
+        }
       },
       "args_saver_nl": {
         "title": "Configure Source",

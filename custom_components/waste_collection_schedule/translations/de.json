@@ -10863,6 +10863,33 @@
         },
         "data_description": {}
       },
+      "args_lk_mecklenburgische_seenplatte_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Name der Gemeinde (wie im Dropdown auf der Abfallkalender-Seite angezeigt).",
+          "street": "Straßen- oder Ortsteilname. Bei Einträgen mit Klammern (z.B. 'Dargun (Dargun)') nur den Teil vor der Klammer verwenden (z.B. 'Dargun')."
+        }
+      },
+      "reconfigure_lk_mecklenburgische_seenplatte_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort",
+          "street": "Straße"
+        },
+        "data_description": {
+          "city": "Name der Gemeinde (wie im Dropdown auf der Abfallkalender-Seite angezeigt).",
+          "street": "Straßen- oder Ortsteilname. Bei Einträgen mit Klammern (z.B. 'Dargun (Dargun)') nur den Teil vor der Klammer verwenden (z.B. 'Dargun')."
+        }
+      },
       "args_abfuhrplan_landkreis_neumarkt_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -14679,6 +14706,30 @@
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
           "postal_code": "Postal Code"
+        },
+        "data_description": {}
+      },
+      "args_rova_nl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "addition": "Zusatz",
+          "house_number": "Hausnummer",
+          "postalcode": "Postalcode"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_rova_nl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "addition": "Zusatz",
+          "house_number": "Hausnummer",
+          "postalcode": "Postalcode"
         },
         "data_description": {}
       },
