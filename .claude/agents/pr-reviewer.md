@@ -95,10 +95,20 @@ Revert these with `git checkout upstream/master -- <file>` if found:
 [Approve with tweaks / Request changes / Approve as-is]
 
 ### Execution Plan
-[Numbered list of exact steps for the pr-executor agent to run. Use verbatim bash commands where possible; for code edits, describe precisely (file path, what to find, what to replace). Include every step in order:]
+[Numbered list of exact steps for the pr-executor agent to run. Use verbatim bash commands where possible.
+
+**CRITICAL — the executor does not share your worktree.** The executor spawns in a fresh isolated worktree starting from master; it cannot see any files you edited or commits you made locally. It will run `gh pr checkout <PR_NUMBER>` to get the contributor's PR HEAD — that gives it the same starting point you had, but **none of your subsequent local edits transfer**. For every file you modified beyond running deterministic formatters (black/isort), include the **complete final file content** inline in a fenced code block so the executor can use Write to overwrite. Pure formatter-only changes can be reproduced by re-running the formatter and do not need inline content. New files (e.g. a missing `doc/source/<id>.md`) must always include the complete final content inline.]
+
 1. `gh pr checkout <PR_NUMBER> --repo mampfes/hacs_waste_collection_schedule`
 2. [revert commands if needed: `git checkout upstream/master -- <file>`]
-3. [edit steps: "Edit <file>: find <X>, replace with <Y>" — or omit if no edits]
+3. For each file you modified beyond a pure formatter pass, or for each new file:
+   ```
+   Write file <path> with this exact content:
+   ```<language>
+   <complete final file content>
+   ```
+   ```
+   (Repeat per file. Omit this step if no edits or new files.)
 4. [format commands: `python -m black <file>` and/or `python -m isort --profile black <file>`]
 5. `git add <files>`
 6. `git commit -m "<exact commit message>"`

@@ -107,16 +107,24 @@ Prepare an appropriate info-request or "not planned" comment.
 ["Commit, push, create PR, post comment" / "Post comment and close" / "Post comment, leave open" / "Post comment, apply label corrections" / etc.]
 
 ### Execution Plan
-[Numbered list of exact steps for the issue-executor agent. Use verbatim bash commands where possible; for code edits, describe precisely (file path, what to find, what to replace); for new files, include the complete file content inline.]
-[For Category A/B/C where a branch was created:]
+[Numbered list of exact steps for the issue-executor agent. Use verbatim bash commands where possible.
+
+**CRITICAL — the executor does not share your worktree.** The executor spawns in a fresh isolated worktree starting from master; it cannot see any files you edited, branches you created, or commits you made locally. For every file the executor must write or modify (new OR existing), include the **complete final file content** inline in a fenced code block — the executor will use Write to put down that exact content, not Edit. Never write "the file has already been written" or describe a partial diff. If you cannot fit the full content inline (very large files), say so explicitly and stop — do not produce a plan the executor cannot follow.]
+
+[For Category A/B/C where a branch needs to be created:]
 1. `git checkout -b <branch-name>`
-2. [edit steps or "Write file <path>: <complete content>"]
+2. Write file `<absolute or repo-relative path>` with this exact content:
+   ```<language>
+   <complete final file content>
+   ```
+   (Repeat for each file the executor must create or overwrite.)
 3. [format commands: `python -m black <file>` and/or `python -m isort --profile black <file>`]
-4. `git add <files>`
-5. `git commit -m "<exact commit message>"`
-6. `git push origin HEAD:<branch-name>`
-7. `gh pr create --repo mampfes/hacs_waste_collection_schedule --title "<title>" --body "<exact body>"`
-8. `gh issue comment <ISSUE_NUMBER> --repo mampfes/hacs_waste_collection_schedule --body "<exact comment text>"`
+4. [optional live test: `cd custom_components/waste_collection_schedule/waste_collection_schedule/test && python test_sources.py -s <id> -l`]
+5. `git add <files>`
+6. `git commit -m "<exact commit message>"`
+7. `git push origin HEAD:<branch-name>`
+8. `gh pr create --repo mampfes/hacs_waste_collection_schedule --title "<title>" --body "<exact body>"`
+9. `gh issue comment <ISSUE_NUMBER> --repo mampfes/hacs_waste_collection_schedule --body "<exact comment text>"`
 [For Category D/E/F (comment only):]
 1. `gh issue comment <ISSUE_NUMBER> --repo mampfes/hacs_waste_collection_schedule --body "<exact comment text>"`
 [Add close/label steps as needed]
