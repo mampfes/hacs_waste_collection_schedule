@@ -2915,6 +2915,14 @@
     },
     "urls": {}
   },
+  "apricaspa_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apricaspa_it.md",
+    "howto": {
+      "en": "You need to provide the street name, house number, and city of your address. Aprica serves cities like Brescia, Bergamo, Como, Cremona, Crema, Lodi and their provinces.",
+      "it": "Devi fornire il nome della via, il numero civico e la città del tuo indirizzo. Aprica serve città come Brescia, Bergamo, Como, Cremona, Crema, Lodi e relative province."
+    },
+    "urls": {}
+  },
   "asm_pv_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/asm_pv_it.md",
     "howto": {

@@ -1828,6 +1828,7 @@ If you already have enough information for your municipality/region, you are ver
 - [AnconAmbiente](/doc/source/junker_app.md) / junker.app
 - [Andora](/doc/source/junker_app.md) / junker.app
 - [Anguillara Sabazia - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
+- [Aprica S.p.A.](/doc/source/apricaspa_it.md) / apricaspa.it
 - [Aprilia - Progetto Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Ardea - DM Technology Srl](/doc/source/junker_app.md) / junker.app
 - [ARO Figulinas - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app

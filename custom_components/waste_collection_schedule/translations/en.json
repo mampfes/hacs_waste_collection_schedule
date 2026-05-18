@@ -14029,6 +14029,37 @@
           "house_number": "The house number of your address in Milan (e.g., '91')."
         }
       },
+      "args_apricaspa_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "city": "City",
+          "house_number": "House Number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "The street name of your address (e.g., 'Via Triumplina').",
+          "city": "The city of your address (e.g., 'Brescia').",
+          "house_number": "The house number of your address (e.g., '90')."
+        }
+      },
+      "reconfigure_apricaspa_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "city": "City",
+          "house_number": "House Number"
+        },
+        "data_description": {
+          "address": "The street name of your address (e.g., 'Via Triumplina').",
+          "city": "The city of your address (e.g., 'Brescia').",
+          "house_number": "The house number of your address (e.g., '90')."
+        }
+      },
       "args_asm_pv_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
