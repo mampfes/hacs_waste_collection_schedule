@@ -11746,7 +11746,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "Your city or municipality name, e.g. Engen."
+          "city": "Your city or municipality shorthand, e.g. Engen, Gai, GM."
         }
       },
       "reconfigure_mzvhegau_de": {
@@ -11757,7 +11757,7 @@
           "city": "City"
         },
         "data_description": {
-          "city": "Your city or municipality name, e.g. Engen."
+          "city": "Your city or municipality shorthand, e.g. Engen, Gai, GM."
         }
       },
       "args_mzv_rotenburg_bebra_de": {

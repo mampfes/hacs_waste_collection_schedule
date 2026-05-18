@@ -2459,8 +2459,8 @@
   "mzvhegau_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzvhegau_de.md",
     "howto": {
-      "de": "Stadt/Gemeinde im MZV Hegau Verbandsgebiet eingeben.",
-      "en": "Enter your city/municipality in the MZV Hegau service area."
+      "de": "Stadt/Gemeinde-Kürzel im MZV Hegau Verbandsgebiet eingeben.",
+      "en": "Enter your city/municipality shorthand in the MZV Hegau service area."
     },
     "urls": {}
   },

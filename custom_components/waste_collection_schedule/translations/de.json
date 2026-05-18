@@ -11502,7 +11502,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Ihre Stadt oder Gemeinde, z.B. Engen."
+          "city": "Ihre Stadt oder Gemeinde (Kürzel), z.B. Engen, Gai, GM."
         }
       },
       "reconfigure_mzvhegau_de": {
@@ -11513,7 +11513,7 @@
           "city": "Stadt/Gemeinde"
         },
         "data_description": {
-          "city": "Ihre Stadt oder Gemeinde, z.B. Engen."
+          "city": "Ihre Stadt oder Gemeinde (Kürzel), z.B. Engen, Gai, GM."
         }
       },
       "args_mzv_rotenburg_bebra_de": {
