@@ -53,6 +53,16 @@ TEST_CASES = {
         "frequency": "WEEKLY",
         "weekdays": "FR",
     },
+    "Recurrence with exclude date range": {
+        "type": "Weekly excluding summer break",
+        "frequency": "WEEKLY",
+        "weekdays": "MO",
+        "start": "2022-01-03",
+        "until": "2022-12-31",
+        "excludes": [
+            {"start": "2022-07-01", "end": "2022-08-31"},
+        ],
+    },
 }
 
 FREQ_TYPE = Literal["YEARLY", "MONTHLY", "WEEKLY", "DAILY"]
@@ -120,6 +130,45 @@ def get_tyep(params):
     return type(params)
 
 
+def parse_excludes(
+    excludes: list,
+) -> set[datetime.date]:
+    """Parse an excludes list that may contain individual date strings or
+    range dicts (``{"start": "YYYY-MM-DD", "end": "YYYY-MM-DD"}``).
+
+    Returns a flat set of all excluded dates.
+    """
+    result: set[datetime.date] = set()
+    for entry in excludes:
+        if isinstance(entry, datetime.date):
+            result.add(entry)
+        elif isinstance(entry, str):
+            result.add(parser.isoparse(entry).date())
+        elif isinstance(entry, dict):
+            if "start" not in entry or "end" not in entry:
+                raise SourceArgumentException(
+                    "excludes",
+                    "Range entries must have 'start' and 'end' keys.",
+                )
+            range_start = parser.isoparse(entry["start"]).date()
+            range_end = parser.isoparse(entry["end"]).date()
+            if range_start > range_end:
+                raise SourceArgumentException(
+                    "excludes",
+                    f"Range start '{entry['start']}' must not be after end '{entry['end']}'.",
+                )
+            day = range_start
+            while day <= range_end:
+                result.add(day)
+                day += datetime.timedelta(days=1)
+        else:
+            raise SourceArgumentException(
+                "excludes",
+                f"Invalid excludes entry: {entry!r}. Expected a date string or a dict with 'start' and 'end' keys.",
+            )
+    return result
+
+
 class Source:
     def __init__(
         self,
@@ -155,7 +204,9 @@ class Source:
                 self.add_weekday(weekdays, 1)
 
             else:
-                raise SourceArgumentException("weekdays", f"Invalid weekdays format: {weekdays}")
+                raise SourceArgumentException(
+                    "weekdays", f"Invalid weekdays format: {weekdays}"
+                )
 
             if self._weekdays == []:
                 self._weekdays = None
@@ -184,10 +235,9 @@ class Source:
         else:
             self._until = None
             self._count = count if count else 10
-        self._excludes = [
-            d if isinstance(d, datetime.date) else parser.isoparse(d).date()
-            for d in excludes or []
-        ]
+        self._excludes: set[datetime.date] = (
+            parse_excludes(excludes) if excludes else set()
+        )
 
     def add_weekday(self, weekday, count: int):
         if self._weekdays is None:
@@ -214,7 +264,7 @@ class Source:
             for ruleentry in ruledates:
                 date = ruleentry.date()
 
-                if self._excludes is not None and date in self._excludes:
+                if date in self._excludes:
                     continue
 
                 dates.append(date)
