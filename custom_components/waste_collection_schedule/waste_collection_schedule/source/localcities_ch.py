@@ -47,6 +47,10 @@ TEST_CASES = {
         "municipality_id": "3757",
         "zone": "",
     },
+    "Beinwil am See (zoneless)": {
+        "municipality": "beinwil-am-see",
+        "municipality_id": "5313",
+    },
 }
 
 EXTRA_INFO = [
@@ -104,6 +108,15 @@ EXTRA_INFO = [
             "municipality_id": "3757",
         },
     },
+    {
+        "title": "Beinwil am See",
+        "url": "https://www.beinwil-am-see.ch",
+        "country": "ch",
+        "default_params": {
+            "municipality": "beinwil-am-see",
+            "municipality_id": "5313",
+        },
+    },
 ]
 
 ICON_MAP = {
@@ -117,20 +130,20 @@ ICON_MAP = {
 BASE_URL = "https://www.localcities.ch/de/entsorgung"
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit your municipality's page on localcities.ch. The municipality name and ID are in the URL (e.g. /de/entsorgung/volketswil/529). The zone is shown next to each waste collection entry on the calendar.",
-    "de": "Besuchen Sie die Seite Ihrer Gemeinde auf localcities.ch. Der Gemeindename und die ID sind in der URL (z.B. /de/entsorgung/volketswil/529). Die Zone wird neben jedem Entsorgungstermin angezeigt.",
+    "en": "Visit your municipality's page on localcities.ch. The municipality name and ID are in the URL (e.g. /de/entsorgung/volketswil/529). The zone is shown next to each waste collection entry on the calendar. If your municipality does not use zones, you may omit the zone parameter.",
+    "de": "Besuchen Sie die Seite Ihrer Gemeinde auf localcities.ch. Der Gemeindename und die ID sind in der URL (z.B. /de/entsorgung/volketswil/529). Die Zone wird neben jedem Entsorgungstermin angezeigt. Wenn Ihre Gemeinde keine Zonen verwendet, kann der Zone-Parameter weggelassen werden.",
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
         "municipality": "Municipality URL slug (from the localcities.ch URL)",
         "municipality_id": "Municipality ID number (from the localcities.ch URL)",
-        "zone": "Collection zone or locality name",
+        "zone": "Collection zone or locality name (optional — omit for municipalities without zones)",
     },
     "de": {
         "municipality": "URL-Name der Gemeinde (aus der localcities.ch URL)",
         "municipality_id": "Gemeinde-ID (aus der localcities.ch URL)",
-        "zone": "Sammelzone oder Ortsname",
+        "zone": "Sammelzone oder Ortsname (optional – weglassen für Gemeinden ohne Zonen)",
     },
 }
 
@@ -158,10 +171,14 @@ HEADERS = {
 
 
 class Source:
-    def __init__(self, municipality: str, municipality_id: str | int, zone: str):
+    def __init__(
+        self, municipality: str, municipality_id: str | int, zone: str | None = None
+    ):
         self._municipality = municipality.strip().lower()
         self._municipality_id = str(municipality_id).strip()
-        self._zone = zone.strip()
+        self._zone = (
+            zone.strip() if isinstance(zone, str) and zone.strip() != "" else None
+        )
 
     def fetch(self) -> list[Collection]:
         base_url = f"{BASE_URL}/{self._municipality}/{self._municipality_id}"
@@ -221,7 +238,7 @@ class Source:
                     zone_text = self._extract_zone_text(item, waste_type)
                     discovered_zones.add(zone_text)
 
-                    if zone_text == self._zone:
+                    if self._zone is None or zone_text == self._zone:
                         entries.append(
                             Collection(
                                 date=collection_date,
@@ -253,7 +270,7 @@ class Source:
                 break
             page = next_page
 
-        if not entries and discovered_zones:
+        if not entries and self._zone is not None and discovered_zones:
             raise SourceArgumentNotFoundWithSuggestions(
                 "zone", self._zone, sorted(discovered_zones)
             )
