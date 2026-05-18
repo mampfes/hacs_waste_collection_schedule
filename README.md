@@ -814,6 +814,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
 - [Kelowna (BC)](/doc/source/recyclecoach_com.md) / rdco.com
+- [Lakeshore (ON)](/doc/source/recyclecoach_com.md) / lakeshore.ca
 - [LaSalle (ON)](/doc/source/recyclecoach_com.md) / lasalle.ca
 - [Laval (QC)](/doc/ics/laval_ca.md) / laval.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
