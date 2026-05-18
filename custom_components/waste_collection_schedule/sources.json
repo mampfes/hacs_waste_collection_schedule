@@ -15027,6 +15027,17 @@
       "id": "remidt_no"
     },
     {
+      "title": "ROAF (Romerike Avfallsforedling IKS)",
+      "module": "minrenovasjon_no",
+      "default_params": {
+        "county_id": 3205,
+        "house_number": 2,
+        "street_code": 12950,
+        "street_name": "Solvangen"
+      },
+      "id": "minrenovasjon_no"
+    },
+    {
       "title": "Sandnes Kommune",
       "module": "sandnes_no",
       "default_params": {},
