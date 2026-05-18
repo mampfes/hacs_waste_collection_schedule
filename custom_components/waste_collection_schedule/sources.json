@@ -16654,6 +16654,15 @@
       "id": "data_bs_ch"
     },
     {
+      "title": "Beinwil am See",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "beinwil-am-see",
+        "municipality_id": "5313"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Berg",
       "module": "a_region_ch",
       "default_params": {
