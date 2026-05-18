@@ -14953,6 +14953,12 @@
       "id": "rotorua_lakes_council_nz"
     },
     {
+      "title": "Taup\u014d District Council",
+      "module": "taupodc_govt_nz",
+      "default_params": {},
+      "id": "taupodc_govt_nz"
+    },
+    {
       "title": "Tauranga City Council",
       "module": "tauranga_govt_nz",
       "default_params": {},

@@ -15446,6 +15446,29 @@
         },
         "data_description": {}
       },
+      "args_taupodc_govt_nz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full street address as it appears on the Taupō District Council property map, e.g. '9 Richmond Avenue Taupo'"
+        }
+      },
+      "reconfigure_taupodc_govt_nz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Full street address as it appears on the Taupō District Council property map, e.g. '9 Richmond Avenue Taupo'"
+        }
+      },
       "args_tauranga_govt_nz": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
