@@ -868,6 +868,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Mid-Western Regional Council",
+      "module": "midwestern_nsw_gov_au",
+      "default_params": {},
+      "id": "midwestern_nsw_gov_au"
+    },
+    {
       "title": "MidCoast Council",
       "module": "midcoast_nsw_gov_au",
       "default_params": {},

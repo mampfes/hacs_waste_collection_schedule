@@ -1903,6 +1903,29 @@
         },
         "data_description": {}
       },
+      "args_midwestern_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Collection area"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "area": "Collection area as listed by Mid-Western Regional Council."
+        }
+      },
+      "reconfigure_midwestern_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Collection area"
+        },
+        "data_description": {
+          "area": "Collection area as listed by Mid-Western Regional Council."
+        }
+      },
       "args_midcoast_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

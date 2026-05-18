@@ -443,6 +443,11 @@
     "howto": {},
     "urls": {}
   },
+  "midwestern_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midwestern_nsw_gov_au.md",
+    "howto": {},
+    "urls": {}
+  },
   "midcoast_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midcoast_nsw_gov_au.md",
     "howto": {},

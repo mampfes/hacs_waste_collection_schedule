@@ -170,6 +170,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Melton City Council](/doc/source/melton_vic_gov_au.md) / melton.vic.gov.au
 - [Merri-bek City Council](/doc/source/merri_bek_vic_gov_au.md) / merri-bek.vic.gov.au
 - [Mid Murray Council](/doc/source/app_my_local_services_au.md) / mid-murray.sa.gov.au
+- [Mid-Western Regional Council](/doc/source/midwestern_nsw_gov_au.md) / midwestern.nsw.gov.au
 - [MidCoast Council](/doc/source/midcoast_nsw_gov_au.md) / midcoast.nsw.gov.au
 - [Mitchell Shire Council](/doc/source/mitchellshire_vic_gov_au.md) / mitchellshire.vic.gov.au
 - [Moira Shire Council](/doc/source/impactapps_com_au.md) / moira.vic.gov.au
