@@ -1,9 +1,8 @@
-from datetime import date
 import calendar
 import json
+from datetime import date
 
 import requests
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
