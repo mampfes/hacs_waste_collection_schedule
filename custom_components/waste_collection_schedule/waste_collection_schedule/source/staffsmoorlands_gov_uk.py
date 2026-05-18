@@ -2,9 +2,14 @@ import logging
 from datetime import datetime
 
 import requests
+import urllib3
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
+# With verify=True requests fail due to SSLCertVerificationError (missing intermediate CA).
+# verify=False is the established workaround used by other affected UK council sources.
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -72,6 +77,7 @@ class Source:
         response = session.get(
             f"{_BASE_URL}/findyourbinday",
             timeout=30,
+            verify=False,
         )
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
@@ -107,7 +113,9 @@ class Source:
             f"{prefix}_POSTCODESELECT_POSTCODE": self._postcode,
             f"{prefix}_FORMACTION_NEXT": f"{prefix}_POSTCODESELECT_PAGE1NEXT",
         }
-        response2 = session.post(submit_url, data=payload_postcode, timeout=30)
+        response2 = session.post(
+            submit_url, data=payload_postcode, timeout=30, verify=False
+        )
         response2.raise_for_status()
         soup2 = BeautifulSoup(response2.text, "html.parser")
 
@@ -150,7 +158,9 @@ class Source:
             f"{prefix}_ADDRESSSELECT_ADDRESS": self._uprn,
             f"{prefix}_FORMACTION_NEXT": f"{prefix}_ADDRESSSELECT_ADDRESSSELECTNEXTBTN",
         }
-        response3 = session.post(submit_url2, data=payload_uprn, timeout=30)
+        response3 = session.post(
+            submit_url2, data=payload_uprn, timeout=30, verify=False
+        )
         response3.raise_for_status()
         soup3 = BeautifulSoup(response3.text, "html.parser")
 
