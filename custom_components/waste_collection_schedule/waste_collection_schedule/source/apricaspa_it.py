@@ -1,12 +1,12 @@
 import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
 import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
     SourceArgumentRequired,
 )
 
@@ -73,8 +73,7 @@ PARAM_DESCRIPTIONS = {
     "it": {
         "address": "Il nome della via del tuo indirizzo "
         "(ad esempio, 'Via Triumplina').",
-        "house_number": "Il numero civico del tuo indirizzo "
-        "(ad esempio, '90').",
+        "house_number": "Il numero civico del tuo indirizzo " "(ad esempio, '90').",
         "city": "La città del tuo indirizzo (ad esempio, 'Brescia').",
     },
 }
@@ -227,9 +226,7 @@ class Source:
             if geociv is None:
                 raise SourceArgumentNotFound("house_number", self._house_number)
         except Exception as e:
-            raise Exception(
-                "Could not parse address-search response: " + str(e)
-            ) from e
+            raise Exception("Could not parse address-search response: " + str(e)) from e
 
         # 3) fetch calendar items
         try:
@@ -259,7 +256,7 @@ class Source:
 
                 desc = (item.get("desc") or "").lower()
                 if desc.startswith("raccolta "):
-                    desc = desc[len("raccolta "):]
+                    desc = desc[len("raccolta ") :]
                 desc = desc.strip()
 
                 # Prefer exact match, then longest substring match
