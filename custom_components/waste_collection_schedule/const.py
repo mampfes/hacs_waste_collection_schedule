@@ -35,6 +35,8 @@ CONF_USE_DEDICATED_CALENDAR: Final = "use_dedicated_calendar"
 CONF_DEDICATED_CALENDAR_TITLE: Final = "dedicated_calendar_title"
 CONF_DAY_OFFSET = "day_offset"
 CONF_DAY_OFFSET_DEFAULT = 0
+CONF_IGNORE_DUPLICATES: Final = "ignore_duplicates"
+CONF_IGNORE_DUPLICATES_DEFAULT: Final = False
 
 CONF_SEPARATOR_DEFAULT: Final = ", "
 CONF_FETCH_TIME_DEFAULT: Final = "01:00"
