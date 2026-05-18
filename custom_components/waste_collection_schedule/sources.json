@@ -2026,6 +2026,12 @@
       "id": "ics_gem2go_dev"
     },
     {
+      "title": "Gemeinde Aspang-Markt",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_aspangmarkt_at"
+    },
+    {
       "title": "Gemeinde Sulz",
       "module": "citiesapps_com",
       "default_params": {},
