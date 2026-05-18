@@ -25,17 +25,46 @@
         "title": "Select Configuration Details",
         "description": "Select How detailed you want to configure this integration. Leave empty if you only want to configure a basic calendar.",
         "data": {
-          "show_customize_config": "Show Collection Event Customize Configurations",
-          "show_sensor_config": "Show Sensor Configurations"
+          "show_customize_config": "Show Collection Event Customize Configurations"
         },
         "data_description": {
-          "show_customize_config": "Select this if you want to customize the collection types.",
-          "show_sensor_config": "Select this if you want to configure sensors."
+          "show_customize_config": "Select this if you want to customize the collection types."
+        }
+      },
+      "detected_types": {
+        "title": "Create Waste Sensors",
+        "description": "The source returned {count} collection types: {types}. Select the waste types that should get their own device-backed sensor. You can fine-tune each sensor later from its device page.",
+        "sections": {
+          "sensors": {
+            "name": "Detected Waste Types",
+            "data": {
+              "create_sensors_for_types": "Create sensors for",
+              "create_combined_sensor": "Create combined next pickup sensor"
+            },
+            "data_description": {
+              "create_sensors_for_types": "Each selected waste type gets its own Home Assistant device and sensor.",
+              "create_combined_sensor": "Adds one sensor that watches all waste types and displays same-day pickups together, for example \"Bio, Śmieci in 10 days\"."
+            }
+          },
+          "advanced": {
+            "name": "Advanced Setup",
+            "data": {
+              "customize_collection_types": "Rename, hide, or restyle collection types now"
+            },
+            "data_description": {
+              "customize_collection_types": "Use this if the source returned long or unfriendly waste type names."
+            }
+          }
+        },
+        "data": {
+          "create_sensors_for_types": "Create sensors for",
+          "create_combined_sensor": "Create combined next pickup sensor",
+          "customize_collection_types": "Rename, hide, or restyle collection types now"
         }
       },
       "customize_select": {
-        "title": "Collection Type Customization: Select (optional)",
-        "description": "Select the collection types you want to customize in the next step.",
+        "title": "Choose Collection Types To Edit",
+        "description": "Pick the waste types you want to rename, hide, or restyle.",
         "data": {
           "type": "Type (Optional)"
         },
@@ -44,8 +73,52 @@
         }
       },
       "customize": {
-        "title": "Collection Type Customization ({index}/{total}): {type}",
-        "description": "Customize {type}. You can leave all fields empty to use the default values.",
+        "title": "Edit Collection Type ({index}/{total}): {type}",
+        "description": "Adjust how \"{type}\" appears in Home Assistant.",
+        "sections": {
+          "basic": {
+            "name": "Name & Visibility",
+            "data": {
+              "alias": "Display name",
+              "show": "Visible"
+            },
+            "data_description": {
+              "alias": "Short friendly name to show instead of the raw collection text.",
+              "show": "Turn off to hide this waste type from the integration."
+            }
+          },
+          "appearance": {
+            "name": "Appearance",
+            "data": {
+              "icon": "Icon",
+              "picture": "Picture"
+            },
+            "data_description": {
+              "icon": "The icon of the collection type. (only if you want to change it)",
+              "picture": "The path to a picture for the collection type."
+            }
+          },
+          "calendar": {
+            "name": "Dedicated Calendar",
+            "data": {
+              "use_dedicated_calendar": "Create separate calendar",
+              "dedicated_calendar_title": "Calendar name"
+            },
+            "data_description": {
+              "use_dedicated_calendar": "Create a separate calendar entity just for this waste type.",
+              "dedicated_calendar_title": "Name to use for that separate calendar entity."
+            }
+          },
+          "management": {
+            "name": "Management",
+            "data": {
+              "delete": "Delete"
+            },
+            "data_description": {
+              "delete": "Delete this customization."
+            }
+          }
+        },
         "data": {
           "alias": "Alias",
           "show": "Show",
@@ -74,8 +147,65 @@
         }
       },
       "sensor": {
-        "title": "Create Sensor \"{sensor_number}\"",
-        "description": "Configure one sensor at a time.",
+        "title": "Create Sensor {sensor_number}",
+        "description": "Choose the sensor name and a friendly text style first. Turn on advanced mode only if you want to write your own templates.",
+        "sections": {
+          "identity": {
+            "name": "Rename",
+            "data": {
+              "name": "Sensor name"
+            }
+          },
+          "display": {
+            "name": "Display",
+            "data": {
+              "details_format": "Details in more-info",
+              "preset_language": "Display language",
+              "value_template_preset": "State text style",
+              "value_template": "Custom state template",
+              "date_template": "Custom date template",
+              "date_template_preset": "Date style",
+              "add_days_to": "Expose days-to value",
+              "advanced_mode": "Advanced mode"
+            },
+            "data_description": {
+              "details_format": "Choose how extra collection details should appear in the more-info dialog.",
+              "preset_language": "Choose which language should be used for ready-made state text presets.",
+              "value_template_preset": "Pick a ready-made state style such as 'in 13 days' or 'Bio in 13 days'.",
+              "value_template": "Optional Home Assistant template for the sensor state. Available values include 'value.date', 'value.daysTo', and 'value.types'.",
+              "date_template_preset": "Pick a ready-made date style for the upcoming list.",
+              "date_template": "Optional Home Assistant template for dates shown in more-info details, for example 'value.date.strftime(\"%d.%m.%Y\")'.",
+              "add_days_to": "Add a 'daysTo' attribute with the number of days until the next pickup.",
+              "advanced_mode": "Show raw template fields and pickup filtering options."
+            }
+          },
+          "filtering": {
+            "name": "Advanced Options",
+            "data": {
+              "count": "How many pickups to list",
+              "leadtime": "Only show pickups within days",
+              "event_index": "Pickup position",
+              "types": "Pickup types"
+            },
+            "data_description": {
+              "count": "Limit how many upcoming pickups appear in the more-info dialog.",
+              "leadtime": "Only include pickups happening within this many days.",
+              "event_index": "Use 0 for the next pickup, 1 for the second, 2 for the third, and so on.",
+              "types": "Only show the selected waste types in this sensor."
+            }
+          },
+          "management": {
+            "name": "Management",
+            "data": {
+              "skip": "Skip this sensor",
+              "additional": "Create another sensor after this"
+            },
+            "data_description": {
+              "skip": "Ignore this sensor and do not save it.",
+              "additional": "Open the form again after saving so you can create the next sensor."
+            }
+          }
+        },
         "data": {
           "name": "Name of the Sensor",
           "details_format": "Details Format",
@@ -25748,10 +25878,39 @@
   "options": {
     "step": {
       "init": {
-        "description": "Update Waste Collection Schedule details.",
+        "description": "Adjust source-level calendar settings. Most sensor changes now happen directly on each waste sensor device page.",
+        "sections": {
+          "general": {
+            "name": "Calendar Settings",
+            "data": {
+              "calendar_title": "Calendar Title",
+              "separator": "Separator",
+              "fetch_time": "Fetch Time",
+              "random_fetch_time_offset": "Random Fetch Time Offset",
+              "day_switch_time": "Day Switch Time",
+              "day_offset": "Day Offset"
+            },
+            "data_description": {
+              "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+              "separator": "Used to join entries if the multiple values for a single day are returned by the source.",
+              "fetch_time": "Representation of the time of day in 'HH:MM' that Home Assistant polls service provider for latest collection schedule.",
+              "random_fetch_time_offset": "Randomly offsets the Fetch Time by up to x minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers.",
+              "day_switch_time": "Time of the day in 'HH:MM' that Home Assistant dismisses the current entry and moves to the next entry.",
+              "day_offset": "Offset in days to add to the collection date (can be negative). If no value is entered, the default of 0 is used"
+            }
+          },
+          "manage": {
+            "name": "Collection Type Customization",
+            "data": {
+              "customize_select": "Edit collection type aliases"
+            },
+            "data_description": {
+              "customize_select": "Optional fallback for aliases, icons, hidden waste types, and dedicated calendars."
+            }
+          }
+        },
         "data": {
-          "sensor_select": "Sensors To Modify",
-          "customize_select": "Customizations To Modify",
+          "customize_select": "Edit collection type aliases",
           "calendar_title": "Calendar Title",
           "separator": "Separator",
           "fetch_time": "Fetch Time",
@@ -25761,8 +25920,7 @@
           "day_offset": "Day Offset"
         },
         "data_description": {
-          "sensor_select": "Select the sensor you want to modify. (select 'Add new sensor' to create a new sensor)",
-          "customize_select": "Select the customization you want to modify. (or select a new customization to create a new one)",
+          "customize_select": "Optional fallback for aliases, icons, hidden waste types, and dedicated calendars.",
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "separator": "Used to join entries if the multiple values for a single day are returned by the source.",
           "fetch_time": "Representation of the time of day in 'HH:MM' that Home Assistant polls service provider for latest collection schedule.",
@@ -25773,8 +25931,52 @@
         }
       },
       "customize": {
-        "title": "Modify/Create Collection Type Customization ({index}/{total}): {type}",
-        "description": "Modify/Create Customization for \"{type}\". You can leave all fields empty to use the default values.",
+        "title": "Edit Collection Type ({index}/{total}): {type}",
+        "description": "Adjust how \"{type}\" appears in Home Assistant.",
+        "sections": {
+          "basic": {
+            "name": "Name & Visibility",
+            "data": {
+              "alias": "Display name",
+              "show": "Visible"
+            },
+            "data_description": {
+              "alias": "Short friendly name to show instead of the raw collection text.",
+              "show": "Turn off to hide this waste type from the integration."
+            }
+          },
+          "appearance": {
+            "name": "Appearance",
+            "data": {
+              "icon": "Icon",
+              "picture": "Picture"
+            },
+            "data_description": {
+              "icon": "The icon of the collection type. (only if you want to change it)",
+              "picture": "The path to a picture for the collection type."
+            }
+          },
+          "calendar": {
+            "name": "Dedicated Calendar",
+            "data": {
+              "use_dedicated_calendar": "Create separate calendar",
+              "dedicated_calendar_title": "Calendar name"
+            },
+            "data_description": {
+              "use_dedicated_calendar": "Create a separate calendar entity just for this waste type.",
+              "dedicated_calendar_title": "Name to use for that separate calendar entity."
+            }
+          },
+          "management": {
+            "name": "Management",
+            "data": {
+              "delete": "Delete"
+            },
+            "data_description": {
+              "delete": "Delete this customization."
+            }
+          }
+        },
         "data": {
           "delete": "Delete",
           "alias": "Alias",
@@ -25795,8 +25997,61 @@
         }
       },
       "sensor": {
-        "title": "Modify/Create Sensor \"{sensor_number}\"",
-        "description": "Configure one sensor at a time.",
+        "title": "Edit Sensor {sensor_number}",
+        "description": "Choose the sensor name and a friendly text style first. Turn on advanced mode only if you want to write your own templates.",
+        "sections": {
+          "identity": {
+            "name": "Rename",
+            "data": {
+              "name": "Sensor name"
+            }
+          },
+          "display": {
+            "name": "Display",
+            "data": {
+              "details_format": "Details in more-info",
+              "value_template_preset": "State text style",
+              "value_template": "Custom state template",
+              "date_template": "Custom date template",
+              "date_template_preset": "Date style",
+              "add_days_to": "Expose days-to value",
+              "advanced_mode": "Advanced mode"
+            },
+            "data_description": {
+              "details_format": "Choose how extra collection details should appear in the more-info dialog.",
+              "value_template_preset": "Pick a ready-made state style such as 'in 13 days' or 'Bio in 13 days'.",
+              "value_template": "Optional Home Assistant template for the sensor state. Available values include 'value.date', 'value.daysTo', and 'value.types'.",
+              "date_template_preset": "Pick a ready-made date style for the upcoming list.",
+              "date_template": "Optional Home Assistant template for dates shown in more-info details, for example 'value.date.strftime(\"%d.%m.%Y\")'.",
+              "add_days_to": "Add a 'daysTo' attribute with the number of days until the next pickup.",
+              "advanced_mode": "Show raw template fields and pickup filtering options."
+            }
+          },
+          "filtering": {
+            "name": "Advanced Options",
+            "data": {
+              "count": "How many pickups to list",
+              "leadtime": "Only show pickups within days",
+              "event_index": "Pickup position",
+              "types": "Pickup types"
+            },
+            "data_description": {
+              "count": "Limit how many upcoming pickups appear in the more-info dialog.",
+              "leadtime": "Only include pickups happening within this many days.",
+              "event_index": "Use 0 for the next pickup, 1 for the second, 2 for the third, and so on.",
+              "types": "Only show the selected waste types in this sensor."
+            }
+          },
+          "management": {
+            "name": "Management",
+            "data": {
+              "delete": "Delete"
+            },
+            "data_description": {
+              "delete": "Delete this sensor."
+            }
+          }
+        },
         "data": {
           "delete": "Delete",
           "name": "Name of the Sensor",
@@ -25851,11 +26106,6 @@
         "monthly": "Monthly",
         "weekly": "Weekly",
         "daily": "Daily"
-      }
-    },
-    "sensor_select": {
-      "options": {
-        "sensor_select_add_new": "Add new sensor"
       }
     }
   },
