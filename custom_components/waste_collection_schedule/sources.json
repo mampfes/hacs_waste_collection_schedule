@@ -333,6 +333,12 @@
       "id": "kwinana_wa_gov_au"
     },
     {
+      "title": "City of Mandurah",
+      "module": "mandurah_wa_gov_au",
+      "default_params": {},
+      "id": "mandurah_wa_gov_au"
+    },
+    {
       "title": "City of Manningham",
       "module": "manningham_vic_gov_au",
       "default_params": {},

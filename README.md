@@ -85,6 +85,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Kalamunda](/doc/source/kalamunda_wa_gov_au.md) / kalamunda.wa.gov.au/kerbside-3-bin-system/collection-days/bin-day
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
 - [City of Kwinana](/doc/source/kwinana_wa_gov_au.md) / kwinana.wa.gov.au
+- [City of Mandurah](/doc/source/mandurah_wa_gov_au.md) / mandurah.wa.gov.au/live/waste-and-recycling/bin-collections
 - [City of Manningham](/doc/source/manningham_vic_gov_au.md) / manningham.vic.gov.au
 - [City of Melbourne](/doc/source/melbourne_vic_gov_au.md) / melbourne.vic.gov.au
 - [City of Melville](/doc/source/melvillecity_com_au.md) / melvillecity.com.au

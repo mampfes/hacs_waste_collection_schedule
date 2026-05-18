@@ -194,6 +194,13 @@
     },
     "urls": {}
   },
+  "mandurah_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mandurah_wa_gov_au.md",
+    "howto": {
+      "en": "Enter your street address including suburb. Search at https://www.mandurah.wa.gov.au/live/waste-and-recycling/bin-collections"
+    },
+    "urls": {}
+  },
   "manningham_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/manningham_vic_gov_au.md",
     "howto": {},
