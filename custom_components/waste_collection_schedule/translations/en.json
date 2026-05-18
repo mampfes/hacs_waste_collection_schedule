@@ -25866,7 +25866,8 @@
           "random_fetch_time_offset": "Random Fetch Time Offset",
           "day_switch_time": "Day Switch Time",
           "fetch_interval_days": "Days between fetches",
-          "day_offset": "Day Offset"
+          "day_offset": "Day Offset",
+          "ignore_duplicates": "Ignore Duplicate Entries per Day"
         },
         "data_description": {
           "sensor_select": "Select the sensor you want to modify. (select 'Add new sensor' to create a new sensor)",
@@ -25877,7 +25878,8 @@
           "random_fetch_time_offset": "Randomly offsets the Fetch Time by up to x minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers.",
           "day_switch_time": "Time of the day in 'HH:MM' that Home Assistant dismisses the current entry and moves to the next entry.",
           "fetch_interval_days": "Specifies how often Home Assistant fetches waste collection events from this calendar source. The default value is 1 day. With a value of 2, waste collection events are fetched every 2 days.",
-          "day_offset": "Offset in days to add to the collection date (can be negative). If no value is entered, the default of 0 is used"
+          "day_offset": "Offset in days to add to the collection date (can be negative). If no value is entered, the default of 0 is used",
+          "ignore_duplicates": "When enabled, duplicate collection entries with the same waste type on the same day are removed, keeping only one entry per type per day."
         }
       },
       "customize": {

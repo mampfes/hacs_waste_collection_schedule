@@ -25178,7 +25178,8 @@
           "random_fetch_time_offset": "Zufälliger Abfrufzeit Offset",
           "day_switch_time": "Tageswechselzeit",
           "fetch_interval_days": "Tage zwischen den Abrufen von Abfuhrterminen",
-          "day_offset": "Tagesoffset"
+          "day_offset": "Tagesoffset",
+          "ignore_duplicates": "Ignoriere doppelte Einträge pro Tag"
         },
         "data_description": {
           "sensor_select": "Wähle den Sensor aus, den du ändern möchtest. (wähle 'Neuen Sensor hinzufügen', um einen neuen Sensor zu erstellen)",
@@ -25189,7 +25190,8 @@
           "random_fetch_time_offset": "Verschiebt die Abrufzeit zufällig um bis zu x Minuten. Kann verwendet werden, um Home Assistant-Abrufbefehle über einen längeren Zeitraum zu verteilen, um Spitzenlasten bei Dienstanbietern zu vermeiden.",
           "day_switch_time": "Tageszeit in 'HH:MM', zu der Home Assistant den aktuellen Eintrag ignoriert und zum nächsten Eintrag wechselt.",
           "fetch_interval_days": "Legt fest, in welchem Abstand Home Assistant Abfuhrtermine von dieser Kalenderquelle abruft. Der Standardwert ist 1 Tag. Bei einem Wert von 2 werden die Abfuhrtermine alle 2 Tage abgerufen.",
-          "day_offset": "Offset in Tagen, der zum Sammeldatum hinzugefügt wird (kann negativ sein). Wenn kein Wert eingegeben wird, wird der Standardwert von 0 verwendet."
+          "day_offset": "Offset in Tagen, der zum Sammeldatum hinzugefügt wird (kann negativ sein). Wenn kein Wert eingegeben wird, wird der Standardwert von 0 verwendet.",
+          "ignore_duplicates": "Wenn aktiviert, werden doppelte Abfuhrtermine mit demselben Abfalltyp am selben Tag entfernt und nur ein Eintrag pro Typ und Tag beibehalten."
         }
       },
       "customize": {

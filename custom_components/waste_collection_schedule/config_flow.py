@@ -18,6 +18,7 @@ from homeassistant.config_entries import (
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import callback
 from homeassistant.helpers.selector import (
+    BooleanSelector,
     DurationSelector,
     DurationSelectorConfig,
     IconSelector,
@@ -62,6 +63,8 @@ from .const import (
     CONF_FETCH_TIME,
     CONF_FETCH_TIME_DEFAULT,
     CONF_ICON,
+    CONF_IGNORE_DUPLICATES,
+    CONF_IGNORE_DUPLICATES_DEFAULT,
     CONF_LEADTIME,
     CONF_PICTURE,
     CONF_RANDOM_FETCH_TIME_OFFSET,
@@ -1053,6 +1056,12 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                         CONF_DAY_OFFSET, CONF_DAY_OFFSET_DEFAULT
                     ),
                 ): int,
+                vol.Optional(
+                    CONF_IGNORE_DUPLICATES,
+                    default=self._entry.options.get(
+                        CONF_IGNORE_DUPLICATES, CONF_IGNORE_DUPLICATES_DEFAULT
+                    ),
+                ): BooleanSelector(),
                 vol.Optional(
                     "sensor_select",
                 ): SelectSelector(
