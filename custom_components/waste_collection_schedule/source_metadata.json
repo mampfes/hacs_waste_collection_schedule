@@ -2090,6 +2090,11 @@
     "howto": {},
     "urls": {}
   },
+  "eilenburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eilenburg_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "ics_ekm_mittelsachsen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ekm_mittelsachsen_de.md",
     "howto": {

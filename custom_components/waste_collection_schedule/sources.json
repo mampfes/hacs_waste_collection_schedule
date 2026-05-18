@@ -7884,6 +7884,12 @@
       "id": "hausmuell_info"
     },
     {
+      "title": "Eilenburg",
+      "module": "eilenburg_de",
+      "default_params": {},
+      "id": "eilenburg_de"
+    },
+    {
       "title": "Eisingen",
       "module": "heimat_info_de",
       "default_params": {

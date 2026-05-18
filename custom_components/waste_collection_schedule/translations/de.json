@@ -9458,6 +9458,29 @@
         },
         "data_description": {}
       },
+      "args_eilenburg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "areas": "Entsorgungsbezirke"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "areas": "Liste der Entsorgungsbezirke, z. B. ['EB Berg', 'EB 1']. Restmüll/Papier-Bezirke: EB Berg, EB Stadt, EB Ost, EB Ortsteile Dörfer. Gelber-Sack-Bezirke: EB 1 bis EB 5."
+        }
+      },
+      "reconfigure_eilenburg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "areas": "Entsorgungsbezirke"
+        },
+        "data_description": {
+          "areas": "Liste der Entsorgungsbezirke, z. B. ['EB Berg', 'EB 1']. Restmüll/Papier-Bezirke: EB Berg, EB Stadt, EB Ost, EB Ortsteile Dörfer. Gelber-Sack-Bezirke: EB 1 bis EB 5."
+        }
+      },
       "args_ics_ekm_mittelsachsen_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
