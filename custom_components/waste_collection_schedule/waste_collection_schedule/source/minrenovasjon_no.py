@@ -34,6 +34,20 @@ TEST_CASES = {
     },
 }
 
+EXTRA_INFO = [
+    {
+        "title": "ROAF (Romerike Avfallsforedling IKS)",
+        "url": "https://www.roaf.no",
+        "country": "no",
+        "default_params": {
+            "street_name": "Solvangen",
+            "house_number": 2,
+            "street_code": 12950,
+            "county_id": 3205,
+        },
+    },
+]
+
 API_URL = (
     "https://norkartrenovasjon.azurewebsites.net/proxyserver.ashx?server="
     "https://komteksky.norkart.no/MinRenovasjon.Api/api/"
