@@ -1771,6 +1771,14 @@
     },
     "urls": {}
   },
+  "amberg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amberg_de.md",
+    "howto": {
+      "de": "Besuchen Sie https://amberg.de/abfallberatung/abfuhrkalender-2026, suchen Sie Ihre Straße in der Tabelle, und notieren Sie das Abfuhrgebiet (z. B. A1). Sie können dann entweder den Straßennamen oder das Abfuhrgebiet direkt verwenden.",
+      "en": "Visit https://amberg.de/abfallberatung/abfuhrkalender-2026, look up your street in the table, and note the zone code (e.g. A1). You can then use either the street name or the zone code directly."
+    },
+    "urls": {}
+  },
   "ics_ambnet_biz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ambnet_biz.md",
     "howto": {

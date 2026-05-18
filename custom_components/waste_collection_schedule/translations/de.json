@@ -7880,6 +7880,33 @@
         },
         "data_description": {}
       },
+      "args_amberg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße",
+          "zone": "Abfuhrgebiet"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Straßenname wie im Strassenverzeichnis der Stadt (z. B. Adalbert-Stifter-Str.). Entweder Straße oder Abfuhrgebiet muss angegeben werden.",
+          "zone": "Abfuhrgebiet (z. B. A1, C4). Entweder Straße oder Abfuhrgebiet muss angegeben werden."
+        }
+      },
+      "reconfigure_amberg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße",
+          "zone": "Abfuhrgebiet"
+        },
+        "data_description": {
+          "street": "Straßenname wie im Strassenverzeichnis der Stadt (z. B. Adalbert-Stifter-Str.). Entweder Straße oder Abfuhrgebiet muss angegeben werden.",
+          "zone": "Abfuhrgebiet (z. B. A1, C4). Entweder Straße oder Abfuhrgebiet muss angegeben werden."
+        }
+      },
       "args_ics_ambnet_biz": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

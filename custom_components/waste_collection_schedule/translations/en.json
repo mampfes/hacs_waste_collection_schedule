@@ -8124,6 +8124,33 @@
         },
         "data_description": {}
       },
+      "args_amberg_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Street name as it appears in the city's street directory (e.g. Adalbert-Stifter-Str.). Either street or zone must be provided.",
+          "zone": "Zone code (e.g. A1, C4). Either street or zone must be provided."
+        }
+      },
+      "reconfigure_amberg_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "street": "Street name as it appears in the city's street directory (e.g. Adalbert-Stifter-Str.). Either street or zone must be provided.",
+          "zone": "Zone code (e.g. A1, C4). Either street or zone must be provided."
+        }
+      },
       "args_ics_ambnet_biz": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

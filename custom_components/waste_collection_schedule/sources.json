@@ -6836,6 +6836,12 @@
       "id": "ics_kreis_alzey_worms_de"
     },
     {
+      "title": "Amberg",
+      "module": "amberg_de",
+      "default_params": {},
+      "id": "amberg_de"
+    },
+    {
       "title": "AMBnet",
       "module": "ics",
       "default_params": {},
