@@ -36,5 +36,5 @@ Enter your street address as it appears on the [Boroondara bin day finder](https
 Collection types returned:
 
 - **Recycling** — weekly
+- **FOGO** (Food Organics and Garden Organics) — weekly, same day as Recycling
 - **General Waste** — fortnightly
-- **FOGO** (Food Organics and Garden Organics) — fortnightly, same day as General Waste
