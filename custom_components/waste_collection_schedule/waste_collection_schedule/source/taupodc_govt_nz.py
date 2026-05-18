@@ -59,7 +59,7 @@ class Source:
         params = {
             "where": f"UPPER(address) LIKE UPPER('%{self._address}%')",
             "outFields": "address,Latitude,Longitude",
-            "resultRecordCount": 5,
+            "resultRecordCount": "5",
             "f": "json",
         }
         r = requests.get(PROPERTY_URL, params=params, headers=HEADERS, timeout=20)
