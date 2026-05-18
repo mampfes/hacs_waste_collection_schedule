@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "South Tyneside Council"
 DESCRIPTION = "Source for southtyneside.gov.uk services for South Tyneside Council, UK."
@@ -47,9 +48,12 @@ class Source:
         r1 = s.post(API, headers=HEADERS, data=payload)
         json_data = json.loads(r1.text)["result"]["ReturnedList"]
         for item in json_data:
-            if self._uprn in item["UPRN"]:
+            if self._uprn == item["UPRN"].lstrip("S"):
                 self._uprn = item["UPRN"]
                 self._address = item["Address"]
+                break
+        else:
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         # get collection schedule
         payload = json.dumps(
