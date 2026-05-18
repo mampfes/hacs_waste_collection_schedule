@@ -245,6 +245,15 @@ EXTRA_INFO = [
         },
     },
     {
+        "title": "Lakeshore (ON)",
+        "url": "https://www.lakeshore.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "583",
+            "district_id": "LAK",
+        },
+    },
+    {
         "title": "Glenorchy City Council (TAS)",
         "url": "https://www.gcc.tas.gov.au/",
         "country": "au",
@@ -406,6 +415,11 @@ TEST_CASES = {
         "district_id": "GLENORCHY",
         "project_id": 657,
         "zone_id": "zone-z15322-z16165-z16823",
+    },
+    "Lakeshore, ON, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "LAK",
+        "project_id": 583,
+        "zone_id": "zone-z9942",
     },
 }
 
