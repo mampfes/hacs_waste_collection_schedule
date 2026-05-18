@@ -2940,6 +2940,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Tameside Metropolitan Borough Council](/doc/source/tameside_gov_uk.md) / tameside.gov.uk
 - [Teignbridge District Council](/doc/source/teignbridge_gov_uk.md) / teignbridge.gov.uk
 - [Telford and Wrekin Council](/doc/source/telford_gov_uk.md) / telford.gov.uk
+- [Tendring District Council](/doc/source/tendring_gov_uk.md) / tendringdc.gov.uk
 - [Test Valley Borough Council](/doc/source/iapp_itouchvision_com.md) / testvalley.gov.uk
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
 - [Thanet District Council](/doc/source/thanet_gov_uk.md) / thanet.gov.uk
