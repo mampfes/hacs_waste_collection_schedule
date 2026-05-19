@@ -131,16 +131,22 @@ def test_parse_pdf_schedule_extracts_labels_and_dates(
 
     schedule = source._parse_pdf_schedule("https://example.com/calendar_2026.pdf")
 
-    assert schedule[date(2026, 1, 5)] == "black"
-    assert schedule[date(2026, 1, 12)] == "grey+burgundy"
-    assert schedule[date(2026, 1, 26)] == "blue+burgundy"
-    assert source._label_for_color("black") == "Black/Green - Non Recyclable Waste"
-    assert source._label_for_color("grey") == "Light Grey - Glass, cans and plastics"
+    assert schedule[date(2026, 1, 5)] == ("Black/Green - Non Recyclable Waste",)
+    assert schedule[date(2026, 1, 12)] == (
+        "Light Grey - Glass, cans and plastics",
+        "Burgundy - Food and garden",
+    )
+    assert schedule[date(2026, 1, 26)] == (
+        "Blue (paper and card)",
+        "Burgundy - Food and garden",
+    )
+    assert "Black/Green - Non Recyclable Waste" in source._known_labels
+    assert "Light Grey - Glass, cans and plastics" in source._known_labels
 
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.PdfReader")
-def test_parse_pdf_schedule_uses_date_only_fallback(
+def test_parse_pdf_schedule_supports_black_and_burgundy_combination(
     mock_pdf_reader, mock_session, source
 ):
     session = Mock()
@@ -148,24 +154,33 @@ def test_parse_pdf_schedule_uses_date_only_fallback(
     mock_session.return_value = session
 
     page = Mock()
-    page.extract_text.return_value = "5 January 12 January 19 January 26 January"
+    page.extract_text.return_value = """
+    Black/Green - Non Recyclable Waste
+    Burgundy - Food and garden
+    5 January
+    Light Grey - Glass, cans and plastics
+    12 January
+    """
     mock_pdf_reader.return_value.pages = [page]
 
     schedule = source._parse_pdf_schedule("https://example.com/calendar_2026.pdf")
 
-    assert schedule[date(2026, 1, 5)] == "black"
-    assert schedule[date(2026, 1, 12)] == "grey+burgundy"
-    assert schedule[date(2026, 1, 19)] == "black"
-    assert schedule[date(2026, 1, 26)] == "blue+burgundy"
+    assert schedule[date(2026, 1, 5)] == (
+        "Black/Green - Non Recyclable Waste",
+        "Burgundy - Food and garden",
+    )
+    assert schedule[date(2026, 1, 12)] == ("Light Grey - Glass, cans and plastics",)
 
 
-@patch.object(
-    southlanarkshire_gov_uk.Source, "_determine_cycle_position", return_value=0
-)
 @patch.object(
     southlanarkshire_gov_uk.Source,
     "_parse_pdf_schedule",
-    return_value={date(2026, 1, 12): "grey+burgundy"},
+    return_value={
+        date(2026, 1, 16): (
+            "Light Grey - Glass, cans and plastics",
+            "Burgundy - Food and garden",
+        )
+    },
 )
 @patch.object(
     southlanarkshire_gov_uk.Source,
@@ -177,7 +192,6 @@ def test_fetch_returns_labels_from_table_rows(
     mock_session,
     _resolve_pdf_url,
     _parse_pdf_schedule,
-    _determine_cycle_position,
     source,
 ):
     session = Mock()
@@ -191,10 +205,45 @@ def test_fetch_returns_labels_from_table_rows(
     assert first_day[0].icon == "mdi:trash-can"
 
     second_cycle_day = [entry for entry in entries if entry.date == date(2026, 1, 16)]
-    assert [entry.type for entry in second_cycle_day] == [
+    assert {entry.type for entry in second_cycle_day} == {
         "Light Grey - Glass, cans and plastics",
         "Burgundy - Food and garden",
-    ]
+    }
+
+
+@patch.object(
+    southlanarkshire_gov_uk.Source,
+    "_parse_pdf_schedule",
+    return_value={
+        date(2026, 1, 9): (
+            "Black/Green - Non Recyclable Waste",
+            "Burgundy - Food and garden",
+        )
+    },
+)
+@patch.object(
+    southlanarkshire_gov_uk.Source,
+    "_resolve_pdf_url",
+    return_value="https://example.com/calendar_2026.pdf",
+)
+@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
+def test_fetch_keeps_pdf_defined_black_burgundy_combination(
+    mock_session,
+    _resolve_pdf_url,
+    _parse_pdf_schedule,
+    source,
+):
+    session = Mock()
+    session.get.return_value = MockResponse(text=SAMPLE_HTML)
+    mock_session.return_value = session
+
+    entries = source.fetch()
+
+    first_day = [entry for entry in entries if entry.date == date(2026, 1, 9)]
+    assert {entry.type for entry in first_day} == {
+        "Black/Green - Non Recyclable Waste",
+        "Burgundy - Food and garden",
+    }
 
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")

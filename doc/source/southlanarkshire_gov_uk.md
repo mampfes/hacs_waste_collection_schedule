@@ -29,9 +29,9 @@ The street name slug from your URL (e.g. `clincarthill_road_rutherglen`).
 **pdf_url**
 *(String) (required)*
 
-Full URL to the council's bin collection calendar PDF for your area. This is required to determine your exact position in the 4-week collection cycle, because black bins appear twice per cycle and cannot be positioned without reference to the PDF schedule.
+Full URL to the council's bin collection calendar PDF for your area.
 
-The integration also checks the council's calendar index page and, when possible, refreshes this URL to the latest yearly PDF for the same calendar.
+The integration combines the street webpage with the calendar PDF to build dated collections and keeps the council's published bin labels. It also checks the council's calendar index page and, when possible, refreshes this URL to the latest yearly PDF for the same calendar.
 
 ## Example
 
@@ -63,4 +63,4 @@ waste_collection_schedule:
 2. Download the PDF for your area (e.g. *East Kilbride, Cambuslang and Rutherglen* or *Hamilton and Clydesdale*).
 3. Copy the full URL of the PDF file — this is your **`pdf_url`**.
 
-The PDF is used to identify which week of the 4-week collection cycle your street is in. Without it, the black bin collection day cannot be determined unambiguously (black bins appear twice in the cycle).
+The PDF is required because it contains the dated collection schedule used by the source.

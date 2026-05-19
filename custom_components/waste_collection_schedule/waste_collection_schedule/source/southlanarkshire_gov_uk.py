@@ -58,15 +58,6 @@ TEST_CASES = {
 }
 
 
-# Keywords to recognize color names in PDF text and web pages.
-COLOR_KEYWORDS = {
-    "black": ("black", "green"),
-    "blue": ("blue",),
-    "grey": ("grey", "gray", "light grey"),
-    "burgundy": ("burgundy", "brown"),
-}
-
-
 class Source:
     def __init__(self, record_id: str | int, street_name: str, pdf_url: str):
         if not pdf_url:
@@ -79,17 +70,53 @@ class Source:
         self._street_name = str(street_name)
         self._pdf_url = pdf_url
         self._resolved_pdf_url = ""
-        self._pdf_color_labels = {}
-        self._bin_order_from_table = (
-            []
-        )  # Track order from web table for sort priorities
+        self._known_labels = []
 
     def fetch(self):
         import logging
 
         logger = logging.getLogger(__name__)
+        soup = self._fetch_street_page_soup()
+        self._validate_bin_details_present(soup)
 
-        # Get current week's bins from website
+        table = soup.find("table")
+        if not table:
+            raise RuntimeError("Could not find collection schedule table")
+
+        rows = table.find_all("tr")
+        self._set_known_labels_from_table_rows(rows)
+
+        current_collection_date, bins_this_week = self._extract_current_week_context(
+            soup, rows
+        )
+
+        logger.debug(f"Bins this week from website: {bins_this_week}")
+
+        # Parse the PDF for dated collections and use the live page to fill the
+        # current week if the PDF extraction misses it.
+        pdf_url = self._resolve_pdf_url(logger)
+        pdf_schedule = self._parse_pdf_schedule(pdf_url)
+        self._merge_current_week_if_missing(
+            pdf_schedule, current_collection_date, bins_this_week, logger
+        )
+
+        if not pdf_schedule:
+            raise RuntimeError(
+                "Could not derive a dated collection schedule from the PDF."
+            )
+
+        return self._build_collections(pdf_schedule, current_collection_date, logger)
+
+    def _validate_bin_details_present(self, soup):
+        if soup.find("div", {"class": "bin-dir-snip"}):
+            return
+        raise SourceArgumentNotFound(
+            "record_id",
+            self._record_id,
+            "the street page did not contain bin collection details; please verify record_id and street_name.",
+        )
+
+    def _fetch_street_page_soup(self):
         s = requests.Session(impersonate="chrome")
         s.headers.update({"User-Agent": USER_AGENT})
 
@@ -97,9 +124,12 @@ class Source:
             f"https://www.southlanarkshire.gov.uk/directory_record/{self._record_id}/{self._street_name}"
         )
         r.raise_for_status()
+        return BeautifulSoup(r.text, "html.parser")
 
-        soup = BeautifulSoup(r.text, "html.parser")
+    def _extract_current_week_context(self, soup, rows):
+        import logging
 
+        logger = logging.getLogger(__name__)
         bin_div = soup.find("div", {"class": "bin-dir-snip"})
         if not bin_div:
             raise SourceArgumentNotFound(
@@ -121,32 +151,13 @@ class Source:
         current_week_start = datetime.strptime(start_date_str, "%A %d %B %Y").date()
 
         bins_this_week = set()
-        bins_this_week_elements = bin_div.find_all("li")
-        for li in bins_this_week_elements:
+        for li in bin_div.find_all("li"):
             h4 = li.find("h4")
             if h4:
                 bin_name = h4.text.strip().lower()
                 bins_this_week.add(bin_name)
 
-        table = soup.find("table")
-        if not table:
-            raise RuntimeError("Could not find collection schedule table")
-
-        rows = table.find_all("tr")
-        self._set_color_labels_from_table_rows(rows)
-        collection_day = None
-
-        for row in rows:
-            th = row.find("th")
-            td = row.find("td")
-            if th and td:
-                schedule_text = td.text.strip()
-                day_match = re.match(
-                    r"(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
-                    schedule_text,
-                )
-                if day_match and collection_day is None:
-                    collection_day = day_match.group(1)
+        collection_day = self._extract_collection_day(rows)
 
         if not collection_day:
             raise RuntimeError("Could not determine collection day")
@@ -170,38 +181,53 @@ class Source:
         logger.debug(
             f"Current week start: {current_week_start}, Collection day: {collection_day}, First collection date: {current_collection_date}"
         )
-        logger.debug(f"Bins this week from website: {bins_this_week}")
+        return current_collection_date, bins_this_week
 
-        # Parse PDF to determine position in 4-week cycle.
-        pdf_url = self._resolve_pdf_url(logger)
-        pdf_schedule = self._parse_pdf_schedule(pdf_url)
-        cycle_position = self._determine_cycle_position(
-            current_collection_date, pdf_schedule, bins_this_week
-        )
-        pattern_cycle = self._get_pattern_from_cycle_position(cycle_position)
+    def _extract_collection_day(self, rows):
+        for row in rows:
+            th = row.find("th")
+            td = row.find("td")
+            if not th or not td:
+                continue
 
-        logger.debug(
-            f"Website bins: {bins_this_week}, Detected position: {cycle_position}, Expected pattern at position 0: {pattern_cycle[0]}"
-        )
-        logger.debug(
-            f"Cycle position detected: {cycle_position}, Pattern: {pattern_cycle}"
-        )
+            day_match = re.match(
+                r"(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
+                td.text.strip(),
+            )
+            if day_match:
+                return day_match.group(1)
+        return None
 
+    def _merge_current_week_if_missing(
+        self, pdf_schedule, current_collection_date, bins_this_week, logger
+    ):
+        current_week_labels = self._extract_labels_from_texts(bins_this_week)
+        if current_week_labels and current_collection_date not in pdf_schedule:
+            pdf_schedule[current_collection_date] = current_week_labels
+            logger.debug(
+                "Merged current website week into PDF schedule: %s -> %s",
+                current_collection_date,
+                current_week_labels,
+            )
+
+    def _build_collections(self, pdf_schedule, current_collection_date, logger):
         collections = []
-        for week_offset in range(52):
-            collection_date = current_collection_date + timedelta(weeks=week_offset)
-            bins_for_week = pattern_cycle[week_offset % len(pattern_cycle)]
+        horizon_end = current_collection_date + timedelta(weeks=52)
+        for collection_date in sorted(pdf_schedule):
+            if (
+                collection_date < current_collection_date
+                or collection_date >= horizon_end
+            ):
+                continue
 
-            for bin_type in bins_for_week:
-                bin_color = self._infer_color_from_label(bin_type)
-                icon = self._get_icon_for_color(bin_color)
+            for bin_type in pdf_schedule[collection_date]:
+                icon = self._get_icon_for_label(bin_type)
                 collections.append(
                     Collection(date=collection_date, t=bin_type, icon=icon)
                 )
 
         def get_sort_key(entry):
-            bin_color = self._infer_color_from_label(entry.type)
-            sort_order = self._get_sort_order_for_color(bin_color)
+            sort_order = self._get_sort_order_for_label(entry.type)
             return (entry.date, sort_order)
 
         collections.sort(key=get_sort_key)
@@ -234,42 +260,13 @@ class Source:
             self._resolved_pdf_url = self._pdf_url
             return self._resolved_pdf_url
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        pdf_links = []
-        for a in soup.find_all("a", href=True):
-            href = a["href"]
-            if ".pdf" not in href.lower():
-                if "/downloads/file/" not in href.lower():
-                    continue
-            if href.startswith("/"):
-                href = f"{URL}{href}"
-            elif href.startswith("http"):
-                href = href
-            else:
-                href = f"{URL}/{href.lstrip('/')}"
-            href = self._to_download_pdf_url(href)
-            pdf_links.append(href)
+        pdf_links = self._collect_pdf_links(r.text)
 
         if not pdf_links:
             self._resolved_pdf_url = self._pdf_url
             return self._resolved_pdf_url
 
-        provided_id_match = re.search(r"/download/downloads/id/(\d+)/", self._pdf_url)
-        if not provided_id_match:
-            provided_id_match = re.search(r"/downloads/file/(\d+)/", self._pdf_url)
-        if provided_id_match:
-            provided_id = provided_id_match.group(1)
-            same_id_links = [
-                link
-                for link in pdf_links
-                if re.search(rf"/download/downloads/id/{provided_id}/", link)
-            ]
-            if same_id_links:
-                candidates = same_id_links
-            else:
-                candidates = pdf_links
-        else:
-            candidates = pdf_links
+        candidates = self._filter_pdf_candidates(pdf_links)
 
         provided_norm = re.sub(YEAR_PATTERN, "YEAR", self._pdf_url.lower())
         same_calendar_links = [
@@ -290,6 +287,37 @@ class Source:
             )
         self._resolved_pdf_url = best
         return self._resolved_pdf_url
+
+    def _collect_pdf_links(self, html):
+        soup = BeautifulSoup(html, "html.parser")
+        links = []
+        for anchor in soup.find_all("a", href=True):
+            href = anchor["href"]
+            if ".pdf" not in href.lower() and "/downloads/file/" not in href.lower():
+                continue
+
+            if href.startswith("/"):
+                href = f"{URL}{href}"
+            elif not href.startswith("http"):
+                href = f"{URL}/{href.lstrip('/')}"
+
+            links.append(self._to_download_pdf_url(href))
+        return links
+
+    def _filter_pdf_candidates(self, pdf_links):
+        provided_id_match = re.search(r"/download/downloads/id/(\d+)/", self._pdf_url)
+        if not provided_id_match:
+            provided_id_match = re.search(r"/downloads/file/(\d+)/", self._pdf_url)
+        if not provided_id_match:
+            return pdf_links
+
+        provided_id = provided_id_match.group(1)
+        same_id_links = [
+            link
+            for link in pdf_links
+            if re.search(rf"/download/downloads/id/{provided_id}/", link)
+        ]
+        return same_id_links or pdf_links
 
     def _to_download_pdf_url(self, url):
         """Normalize listing/file URLs to direct PDF download URLs."""
@@ -319,16 +347,10 @@ class Source:
         s = requests.Session(impersonate="chrome")
         s.headers.update({"User-Agent": USER_AGENT})
 
-        # Add timeout to prevent hanging in Home Assistant
-        logger.debug(f"Downloading PDF from: {pdf_url}")
-        response = s.get(pdf_url, timeout=30)
-        response.raise_for_status()
-        logger.debug(f"PDF downloaded, size: {len(response.content)} bytes")
-
-        pdf_reader = PdfReader(BytesIO(response.content))
         schedule = {}
 
-        logger.debug(f"PDF has {len(pdf_reader.pages)} pages")
+        pdf_reader = self._download_pdf_reader(s, pdf_url, logger)
+        all_text = self._extract_pdf_text(pdf_reader, logger)
 
         # Try to detect year from PDF filename or content
         year_from_url = re.search(YEAR_PATTERN, pdf_url)
@@ -341,28 +363,6 @@ class Source:
         years_to_try.append(current_year + 1)
         logger.debug(f"Will try years: {years_to_try}")
 
-        # Extract text from all pages and parse dates and bins
-        all_text = ""
-        for page_num in range(len(pdf_reader.pages)):
-            page = pdf_reader.pages[page_num]
-            # Try layout mode first, fall back to default if not supported
-            try:
-                text = page.extract_text(extraction_mode="layout")
-                logger.debug(f"Page {page_num + 1}: extracted text with layout mode")
-            except (TypeError, AttributeError) as e:
-                # Older pypdf versions don't support extraction_mode parameter
-                text = page.extract_text()
-                logger.debug(
-                    f"Page {page_num + 1}: extracted text with default mode (layout not supported: {e})"
-                )
-            if text:
-                all_text += text + "\n"
-                logger.debug(f"Page {page_num + 1}: extracted {len(text)} characters")
-            else:
-                logger.debug(f"Page {page_num + 1}: no text extracted")
-
-        logger.debug(f"Total text extracted: {len(all_text)} characters")
-
         if not all_text.strip():
             logger.error(
                 "No text extracted from PDF at all - PDF may be image-based or encrypted"
@@ -373,8 +373,13 @@ class Source:
         logger.debug(f"First 1000 chars of PDF text: {all_text[:1000]}")
         logger.debug(f"Last 500 chars of PDF text: {all_text[-500:]}")
 
-        # Check if bin keywords exist ANYWHERE in the PDF
-        bin_keywords = ["black", "blue", "grey", "gray", "burgundy", "brown", "green"]
+        if not self._known_labels:
+            self._bootstrap_known_labels_from_pdf(
+                lines=[line.strip() for line in all_text.splitlines() if line.strip()]
+            )
+
+        # Check if any known label tokens exist ANYWHERE in the PDF
+        bin_keywords = self._known_label_tokens()
         found_keywords = [kw for kw in bin_keywords if kw in all_text.lower()]
         logger.debug(f"Bin keywords found in entire PDF: {found_keywords}")
 
@@ -383,12 +388,9 @@ class Source:
             logger.debug(
                 "No bin keywords found with layout mode, trying default extraction..."
             )
-            all_text_alt = ""
-            for page_num in range(len(pdf_reader.pages)):
-                page = pdf_reader.pages[page_num]
-                text = page.extract_text()
-                if text:
-                    all_text_alt += text + "\n"
+            all_text_alt = self._extract_pdf_text(
+                pdf_reader, logger, force_default=True
+            )
             logger.debug(f"Alternative extraction: {len(all_text_alt)} characters")
             logger.debug(f"Alternative first 1000 chars: {all_text_alt[:1000]}")
 
@@ -402,90 +404,19 @@ class Source:
             if len(found_keywords_alt) > len(found_keywords):
                 logger.debug("Using alternative extraction as it has more bin keywords")
                 all_text = all_text_alt
-                found_keywords = found_keywords_alt
 
         lines = [line.strip() for line in all_text.splitlines() if line.strip()]
-        extracted_labels = self._extract_color_labels_from_pdf(lines)
-        for color, label in extracted_labels.items():
-            self._pdf_color_labels[color] = label
-        simple_date_pattern = re.compile(
-            r"(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)"
-        )
+        if not self._known_labels:
+            self._bootstrap_known_labels_from_pdf(lines)
+        self._add_pdf_schedule_entries(schedule, lines, years_to_try)
 
-        def parse_date(day, month, previous_date):
-            candidates = []
-            for year in years_to_try:
-                try:
-                    candidates.append(
-                        datetime.strptime(f"{day} {month} {year}", "%d %B %Y").date()
-                    )
-                except ValueError:
-                    continue
-
-            if not candidates:
-                return None
-
-            if previous_date is None:
-                return min(
-                    candidates, key=lambda d: abs((d - datetime.now().date()).days)
-                )
-
-            non_past = [d for d in candidates if d >= previous_date - timedelta(days=7)]
-            if non_past:
-                return min(non_past, key=lambda d: abs((d - previous_date).days))
-            return min(candidates, key=lambda d: abs((d - previous_date).days))
-
-        previous_date = None
-        for idx, line in enumerate(lines):
-            bin_type = self._identify_bins_from_pdf_lines(lines, idx)
-            if not bin_type:
-                continue
-
-            for date_match in simple_date_pattern.finditer(line):
-                day, month = date_match.groups()
-                date_obj = parse_date(day, month, previous_date)
-                if date_obj is None:
-                    continue
-
-                existing = schedule.get(date_obj)
-                if existing == "black" and bin_type in {
-                    "grey+burgundy",
-                    "blue+burgundy",
-                }:
-                    schedule[date_obj] = bin_type
-                elif existing is None:
-                    schedule[date_obj] = bin_type
-
-                previous_date = date_obj
+        schedule = {
+            collection_date: tuple(colors)
+            for collection_date, colors in schedule.items()
+            if colors
+        }
 
         logger.debug(f"Parsed {len(schedule)} dated bin entries from PDF")
-
-        if not schedule:
-            # Some council PDFs render bin colors as graphics only; keep using
-            # parsed dates and apply a stable 4-week fallback for cycle alignment.
-            fallback_dates = []
-            for date_match in simple_date_pattern.finditer(all_text):
-                day, month = date_match.groups()
-                date_obj = parse_date(day, month, None)
-                if date_obj and date_obj not in fallback_dates:
-                    fallback_dates.append(date_obj)
-            fallback_dates.sort()
-
-            for idx, date_obj in enumerate(fallback_dates):
-                cycle_pos = idx % 4
-                if cycle_pos == 0:
-                    schedule[date_obj] = "black"
-                elif cycle_pos == 1:
-                    schedule[date_obj] = "grey+burgundy"
-                elif cycle_pos == 2:
-                    schedule[date_obj] = "black"
-                else:
-                    schedule[date_obj] = "blue+burgundy"
-
-            logger.debug(
-                "Used date-only fallback for PDF parsing, generated %d dated entries",
-                len(schedule),
-            )
 
         if not schedule:
             logger.error(
@@ -498,145 +429,142 @@ class Source:
 
         return schedule
 
+    def _download_pdf_reader(self, session, pdf_url, logger):
+        logger.debug(f"Downloading PDF from: {pdf_url}")
+        response = session.get(pdf_url, timeout=30)
+        response.raise_for_status()
+        logger.debug(f"PDF downloaded, size: {len(response.content)} bytes")
+        pdf_reader = PdfReader(BytesIO(response.content))
+        logger.debug(f"PDF has {len(pdf_reader.pages)} pages")
+        return pdf_reader
+
+    def _extract_pdf_text(self, pdf_reader, logger, force_default=False):
+        all_text = ""
+        for page_num, page in enumerate(pdf_reader.pages, start=1):
+            text = ""
+            if not force_default:
+                try:
+                    text = page.extract_text(extraction_mode="layout") or ""
+                    logger.debug(f"Page {page_num}: extracted text with layout mode")
+                except (TypeError, AttributeError) as error:
+                    logger.debug(
+                        f"Page {page_num}: layout mode not supported ({error}), using default"
+                    )
+            if not text:
+                text = page.extract_text() or ""
+                logger.debug(f"Page {page_num}: extracted text with default mode")
+
+            if text:
+                all_text += text + "\n"
+                logger.debug(f"Page {page_num}: extracted {len(text)} characters")
+            else:
+                logger.debug(f"Page {page_num}: no text extracted")
+
+        logger.debug(f"Total text extracted: {len(all_text)} characters")
+        return all_text
+
+    def _known_label_tokens(self):
+        return sorted(
+            {
+                token
+                for label in self._known_labels
+                for token in self._label_match_tokens(label)
+            }
+        )
+
+    def _add_pdf_schedule_entries(self, schedule, lines, years_to_try):
+        simple_date_pattern = re.compile(
+            r"(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)"
+        )
+
+        previous_date = None
+        for idx, line in enumerate(lines):
+            week_labels = self._identify_bins_from_pdf_lines(lines, idx)
+            if not week_labels:
+                continue
+
+            for date_match in simple_date_pattern.finditer(line):
+                day, month = date_match.groups()
+                date_obj = self._parse_collection_date(
+                    day, month, years_to_try, previous_date
+                )
+                if date_obj is None:
+                    continue
+
+                existing = schedule.setdefault(date_obj, [])
+                for label in week_labels:
+                    if label not in existing:
+                        existing.append(label)
+
+                previous_date = date_obj
+
+    def _parse_collection_date(self, day, month, years_to_try, previous_date):
+        candidates = []
+        for year in years_to_try:
+            try:
+                candidates.append(
+                    datetime.strptime(f"{day} {month} {year}", "%d %B %Y").date()
+                )
+            except ValueError:
+                continue
+
+        if not candidates:
+            return None
+
+        if previous_date is None:
+            return min(candidates, key=lambda d: abs((d - datetime.now().date()).days))
+
+        non_past = [d for d in candidates if d >= previous_date - timedelta(days=7)]
+        if non_past:
+            return min(non_past, key=lambda d: abs((d - previous_date).days))
+        return min(candidates, key=lambda d: abs((d - previous_date).days))
+
     def _identify_bins_from_pdf_lines(self, lines, current_line_idx):
-        """Extract bin types from PDF text around a date."""
+        """Extract known bin labels from PDF text around a date."""
         import logging
 
         logger = logging.getLogger(__name__)
 
-        bins = set()
-
-        # Search the current line AND surrounding lines (before and after)
-        search_range = range(
-            max(0, current_line_idx - 2), min(current_line_idx + 4, len(lines))
+        date_regex = re.compile(
+            r"\b\d{1,2}\s+(January|February|March|April|May|June|July|August|September|October|November|December)\b",
+            re.IGNORECASE,
         )
 
-        for i in search_range:
-            line_lower = lines[i].lower()
-            if "black" in line_lower or "green" in line_lower:
-                bins.add("black")
-            if "blue" in line_lower:
-                bins.add("blue")
-            if "grey" in line_lower or "gray" in line_lower:
-                bins.add("grey")
-            if "burgundy" in line_lower or "brown" in line_lower:
-                bins.add("burgundy")
+        search_lines = []
+        line_idx = current_line_idx - 1
+        while line_idx >= 0:
+            if date_regex.search(lines[line_idx]):
+                break
+            search_lines.append(lines[line_idx])
+            line_idx -= 1
+
+        bins = self._extract_labels_from_texts(reversed(search_lines))
 
         if bins:
             logger.debug(
                 f"Line {current_line_idx}: identified bins {bins} from surrounding text"
             )
 
-        return self._identify_bin_combination(bins) if bins else None
+        return bins if bins else None
 
-    def _determine_cycle_position(
-        self, current_week_date, pdf_schedule, bins_this_week
-    ):
-        """Determine where in the 4-week cycle we are based on website bins and PDF data."""
-        import logging
+    def _extract_labels_from_texts(self, labels):
+        """Infer known bin labels from one or more text fragments."""
+        matches = []
 
-        logger = logging.getLogger(__name__)
+        for label in labels:
+            label_tokens = self._tokenize_label(label)
+            if not label_tokens:
+                continue
 
-        if not pdf_schedule:
-            raise RuntimeError(
-                "PDF schedule is empty - could not parse date/bin entries from PDF."
-            )
+            for known_label in self._known_labels:
+                match_tokens = self._label_match_tokens(known_label)
+                if label_tokens & match_tokens and known_label not in matches:
+                    matches.append(known_label)
 
-        # Convert website bins to standardized type
-        current_week_type = self._identify_bin_combination(bins_this_week)
-        logger.debug(f"Current week bin type from website: {current_week_type}")
+        return tuple(matches)
 
-        # The base pattern is always: Black, Grey+Burgundy, Black, Blue+Burgundy
-        # Determine which position in this cycle we're currently at
-        position_map = {
-            "black": [0, 2],  # Black appears at positions 0 and 2
-            "grey+burgundy": [1],  # Grey+Burgundy at position 1
-            "blue+burgundy": [3],  # Blue+Burgundy at position 3
-        }
-
-        possible_positions = position_map.get(current_week_type, [0])
-
-        # If there are multiple possible positions (e.g., black at 0 or 2),
-        # use the PDF to disambiguate by checking the next week
-        if len(possible_positions) > 1:
-            logger.debug(
-                f"Multiple possible positions for {current_week_type}: {possible_positions}, checking PDF for next week..."
-            )
-            all_dates = list(pdf_schedule.keys())
-            # Find the closest date to next week
-            next_week_date = current_week_date + timedelta(weeks=1)
-            candidates = [d for d in all_dates if abs((d - next_week_date).days) <= 7]
-            if candidates:
-                closest_next = min(candidates, key=lambda d: abs(d - next_week_date))
-                next_week_type = pdf_schedule.get(closest_next, "black")
-                logger.debug(f"Next week PDF type: {next_week_type}")
-
-                # Check which position sequence matches
-                if current_week_type == "black":
-                    if next_week_type == "grey+burgundy":
-                        position = 0
-                    elif next_week_type == "blue+burgundy":
-                        position = 2
-                    else:
-                        position = possible_positions[0]  # Fallback
-                else:
-                    position = possible_positions[0]
-            else:
-                position = possible_positions[0]
-        else:
-            position = possible_positions[0]
-
-        logger.debug(f"Determined cycle position: {position}")
-        return position
-
-    def _get_pattern_from_cycle_position(self, position):
-        """Get the 4-week repeating pattern based on position."""
-        black_bins = [self._label_for_color("black")]
-        blue_burgundy_bins = [
-            self._label_for_color("blue"),
-            self._label_for_color("burgundy"),
-        ]
-        grey_burgundy_bins = [
-            self._label_for_color("grey"),
-            self._label_for_color("burgundy"),
-        ]
-
-        base_pattern = [
-            black_bins,
-            grey_burgundy_bins,
-            black_bins,
-            blue_burgundy_bins,
-        ]
-
-        # Rotate pattern based on position
-        return base_pattern[position:] + base_pattern[:position]
-
-    def _identify_bin_combination(self, bins_set):
-        """Convert bin set to standardized type string."""
-        has_black = any(
-            "black" in str(b).lower() or "green" in str(b).lower() for b in bins_set
-        )
-        has_blue = any("blue" in str(b).lower() for b in bins_set)
-        has_grey = any(
-            "grey" in str(b).lower() or "gray" in str(b).lower() for b in bins_set
-        )
-        has_burgundy = any(
-            "burgundy" in str(b).lower() or "brown" in str(b).lower() for b in bins_set
-        )
-
-        if has_black:
-            return "black"
-        elif (has_blue or has_grey) and has_burgundy:
-            if has_blue:
-                return "blue+burgundy"
-            else:
-                return "grey+burgundy"
-        else:
-            return "black"
-
-    def _extract_color_labels_from_pdf(self, lines):
-        """Extract display labels for each bin color from PDF legend/text."""
-        labels = {}
+    def _bootstrap_known_labels_from_pdf(self, lines):
+        """Seed known labels from PDF legend-like lines when table rows are unavailable."""
         date_regex = re.compile(
             r"\b\d{1,2}\s+(January|February|March|April|May|June|July|August|September|October|November|December)\b",
             re.IGNORECASE,
@@ -644,63 +572,58 @@ class Source:
 
         for raw_line in lines:
             line = " ".join(raw_line.split())
-            line_lower = line.lower()
-            if date_regex.search(line_lower):
+            if date_regex.search(line):
                 continue
             if len(line) < 4 or len(line) > 140:
                 continue
 
-            for color, keywords in COLOR_KEYWORDS.items():
-                if not any(keyword in line_lower for keyword in keywords):
-                    continue
-                if color not in labels or ("-" in line and "-" not in labels[color]):
-                    labels[color] = line
-
-        return labels
-
-    def _set_color_labels_from_table_rows(self, rows):
-        """Populate color labels from live table headings as fallback and track order."""
-        for row_index, row in enumerate(rows):
-            th = row.find("th")
-            if not th:
+            if "-" not in line and "(" not in line:
                 continue
+
+            if line not in self._known_labels:
+                self._known_labels.append(line)
+
+    def _set_known_labels_from_table_rows(self, rows):
+        """Populate known bin labels from live table headings."""
+        for row in rows:
+            th = row.find("th")
+            td = row.find("td")
+            if not th or not td:
+                continue
+
+            schedule_text = td.get_text(" ", strip=True)
+            if not re.search(r"\((Fortnightly|4 Weekly)\)", schedule_text):
+                continue
+
             label = th.get_text(" ", strip=True)
-            color = self._infer_color_from_label(label)
-            if color:
-                if color not in self._pdf_color_labels:
-                    self._pdf_color_labels[color] = label
-                if color not in self._bin_order_from_table:
-                    self._bin_order_from_table.append(color)
+            if label not in self._known_labels:
+                self._known_labels.append(label)
 
-    def _label_for_color(self, color):
-        """Get the best display label for a canonical color from parsed PDF text."""
-        label = self._pdf_color_labels.get(color)
-        if label:
-            return label
+    def _tokenize_label(self, label):
+        return {
+            token
+            for token in re.findall(r"[a-z]+", str(label).lower())
+            if len(token) >= 3
+        }
 
-        if color == "black" and self._pdf_color_labels.get("green"):
-            return self._pdf_color_labels["green"]
+    def _label_match_tokens(self, label):
+        all_tokens = self._tokenize_label(label)
+        token_counts = {}
+        for known_label in self._known_labels:
+            for token in self._tokenize_label(known_label):
+                token_counts[token] = token_counts.get(token, 0) + 1
 
-        return color.title()
+        unique_tokens = {token for token in all_tokens if token_counts.get(token) == 1}
+        return unique_tokens or all_tokens
 
-    def _infer_color_from_label(self, label):
-        """Infer canonical color key from a display label."""
-        label_lower = str(label).lower()
-        for canonical, keywords in COLOR_KEYWORDS.items():
-            if any(keyword in label_lower for keyword in keywords):
-                return canonical
-        return ""
-
-    def _get_icon_for_color(self, color):
-        """Get the MDI icon for a color, extracted from PDF when available."""
+    def _get_icon_for_label(self, label):
+        """Get the MDI icon for a label extracted from upstream content."""
         # Use default mapping as fallback; icons are determined by the canonical color
         return "mdi:trash-can"
 
-    def _get_sort_order_for_color(self, color):
-        """Get the sort priority for a color based on canonical ordering.
-
-        Sort order is based on logical bin collection sequence, not the table
-        display order. The _bin_order_from_table tracks what bins exist but
-        doesn't determine collection priority.
-        """
-        return 99
+    def _get_sort_order_for_label(self, label):
+        """Get sort priority based on the live table label order."""
+        try:
+            return self._known_labels.index(label)
+        except ValueError:
+            return 99
