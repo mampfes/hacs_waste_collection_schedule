@@ -39,6 +39,6 @@ waste_collection_schedule:
 ## How to get the source arguments
 
 1. Go to <https://wasteservices.southlanarkshire.gov.uk/PublicDashboard>.
-2. Your **UPRN** can be found using the [FindMyAddress](https://www.findmyaddress.co.uk/search) or [What is My UPRN?](https://www.whatismyuprn.com) lookup tools — search for your full address and note the UPRN shown.
+2. Your **UPRN** can be found using the [FindMyAddress](https://www.findmyaddress.co.uk/search) or [UPRN.uk](https://uprn.uk) lookup tools — search for your full address and note the UPRN shown.
 
 Alternatively, after entering your postcode on the South Lanarkshire portal and selecting your property, you can inspect the property dropdown option (right-click → Inspect Element) and use the numeric value in the `value=` attribute of the selected `<option>` tag.

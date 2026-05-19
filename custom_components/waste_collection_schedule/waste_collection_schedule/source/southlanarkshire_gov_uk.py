@@ -20,7 +20,7 @@ REQUEST_TIMEOUT = 30
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "Find your UPRN using FindMyAddress (https://www.findmyaddress.co.uk/search) "
-        "or What is My UPRN? (https://www.whatismyuprn.com) — search for your address "
+        "or UPRN.uk (https://uprn.uk) — search for your address "
         "and note the UPRN shown. Alternatively, visit "
         "https://wasteservices.southlanarkshire.gov.uk/PublicDashboard, enter your "
         "postcode, select your property, then inspect the dropdown option "
