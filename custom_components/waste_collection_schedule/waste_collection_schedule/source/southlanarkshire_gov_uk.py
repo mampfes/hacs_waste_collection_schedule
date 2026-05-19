@@ -17,6 +17,28 @@ COUNTRY = "uk"
 DASHBOARD_URL = "https://wasteservices.southlanarkshire.gov.uk/PublicDashboard"
 REQUEST_TIMEOUT = 30
 
+# Keywords are matched in order; earlier entries take priority.
+ICON_MAP = {
+    "food": "mdi:food-apple",
+    "garden": "mdi:leaf",
+    "recycl": "mdi:recycle",
+    "glass": "mdi:bottle-wine",
+    "blue": "mdi:recycle",
+    "green": "mdi:leaf",
+    "grey": "mdi:bottle-wine",
+    "burgundy": "mdi:food-apple",
+    "black": "mdi:trash-can",
+}
+
+
+def _icon_for(waste_type: str) -> str | None:
+    lower = waste_type.lower()
+    for keyword, icon in ICON_MAP.items():
+        if keyword in lower:
+            return icon
+    return None
+
+
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "Find your UPRN using FindMyAddress (https://www.findmyaddress.co.uk/search) "
@@ -115,7 +137,9 @@ class Source:
             key = (date, subject)
             if key not in seen:
                 seen.add(key)
-                entries.append(Collection(date=date, t=subject))
+                entries.append(
+                    Collection(date=date, t=subject, icon=_icon_for(subject))
+                )
 
         entries.sort(key=lambda entry: (entry.date, entry.type))
         return entries
