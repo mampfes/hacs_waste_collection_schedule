@@ -1,4 +1,5 @@
 import calendar
+import itertools
 import re
 from datetime import datetime, timedelta
 from io import BytesIO
@@ -101,11 +102,17 @@ class Source:
         # current week if the PDF extraction misses it.
         pdf_url = self._resolve_pdf_url(logger)
         pdf_schedule = self._parse_pdf_schedule(pdf_url)
+        linked_pairs = self._derive_linked_label_pairs(pdf_schedule)
         self._merge_current_week_if_missing(
             pdf_schedule, current_collection_date, bins_this_week, logger
         )
         self._augment_schedule_from_table_frequencies(
-            rows, pdf_schedule, current_collection_date, bins_this_week, logger
+            rows,
+            pdf_schedule,
+            current_collection_date,
+            bins_this_week,
+            logger,
+            linked_pairs,
         )
         pdf_schedule = self._filter_schedule_by_weekday(
             pdf_schedule, expected_weekday, logger
@@ -275,6 +282,7 @@ class Source:
         current_collection_date,
         bins_this_week,
         logger,
+        linked_pairs=None,
     ):
         """Backfill recurring dates from live table frequencies.
 
@@ -283,6 +291,11 @@ class Source:
         dated PDF anchors) to maintain a complete forward schedule.
         """
         current_week_labels = set(self._extract_labels_from_texts(bins_this_week))
+        if linked_pairs is None:
+            linked_pairs = self._derive_linked_label_pairs(pdf_schedule)
+        current_week_labels = self._expand_labels_with_links(
+            current_week_labels, linked_pairs
+        )
         horizon_end = current_collection_date + timedelta(weeks=52)
         expected_weekday = current_collection_date.weekday()
 
@@ -336,6 +349,47 @@ class Source:
                         pdf_schedule,
                         logger,
                     )
+
+    def _derive_linked_label_pairs(self, pdf_schedule):
+        """Find label pairs that consistently appear together in parsed PDF dates."""
+        label_dates = {label: set() for label in self._known_labels}
+        for collection_date, labels in pdf_schedule.items():
+            for label in labels:
+                if label in label_dates:
+                    label_dates[label].add(collection_date)
+
+        linked_pairs = []
+        for left, right in itertools.combinations(self._known_labels, 2):
+            left_dates = label_dates.get(left, set())
+            right_dates = label_dates.get(right, set())
+            if not left_dates or not right_dates:
+                continue
+
+            overlap = left_dates & right_dates
+            if len(overlap) < 2:
+                continue
+
+            # Treat streams as linked only if the PDF doesn't show independent dates.
+            if left_dates == overlap and right_dates == overlap:
+                linked_pairs.append((left, right))
+
+        return linked_pairs
+
+    def _expand_labels_with_links(self, labels, linked_pairs):
+        expanded = set(labels)
+
+        changed = True
+        while changed:
+            changed = False
+            for left, right in linked_pairs:
+                if left in expanded and right not in expanded:
+                    expanded.add(right)
+                    changed = True
+                elif right in expanded and left not in expanded:
+                    expanded.add(left)
+                    changed = True
+
+        return expanded
 
     def _expand_recurrence(
         self,
