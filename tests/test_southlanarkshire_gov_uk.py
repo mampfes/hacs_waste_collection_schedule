@@ -1,10 +1,10 @@
+import json
 import os
 import sys
 from datetime import date
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, patch
 
 import pytest
-from bs4 import BeautifulSoup
 
 sys.path.append(
     os.path.abspath(
@@ -17,296 +17,152 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule.exceptions import (  # noqa: E402
-    SourceArgumentNotFound,
-    SourceArgumentRequired,
-)
+from waste_collection_schedule.exceptions import SourceArgumentNotFound  # noqa: E402
 from waste_collection_schedule.source import southlanarkshire_gov_uk  # noqa: E402
 
-SAMPLE_HTML = """
-<html><body>
-  <div class="bin-dir-snip">
-    <p>Monday 5 January 2026 to Friday 9 January 2026</p>
-    <ul>
-      <li><h4>Black bin</h4></li>
-    </ul>
-  </div>
-  <table>
-    <tr><th>Black/Green - Non Recyclable Waste</th><td>Friday (Fortnightly)</td></tr>
-    <tr><th>Burgundy - Food and garden</th><td>Friday (Fortnightly)</td></tr>
-    <tr><th>Blue (paper and card)</th><td>Friday (4 Weekly)</td></tr>
-    <tr><th>Light Grey - Glass, cans and plastics</th><td>Friday (4 Weekly)</td></tr>
-  </table>
-</body></html>
-"""
+_PREMISES_JSON = json.dumps(
+    [{"id": 576, "UPRN": 484000578, "Premises": "11 Chapel Court, Glasgow, G73 1UR"}]
+)
+_APPOINTMENTS_JSON = json.dumps(
+    [
+        {
+            "Id": 1,
+            "UPRN": 484000600,
+            "Subject": "Black Bin",
+            "StartTime": "2026-05-04T00:00:00",
+            "EndTime": "2026-05-04T00:00:00",
+            "IsAllDay": True,
+        },
+        {
+            "Id": 2,
+            "UPRN": 484000600,
+            "Subject": "Grey Bin",
+            "StartTime": "2026-04-27T00:00:00",
+            "EndTime": "2026-04-27T00:00:00",
+            "IsAllDay": True,
+        },
+        {
+            "Id": 3,
+            "UPRN": 484000600,
+            "Subject": "Grey Bin",
+            "StartTime": "2026-04-27T00:00:00",
+            "EndTime": "2026-04-27T00:00:00",
+            "IsAllDay": True,
+        },
+    ]
+)
+
+SAMPLE_HTML = (
+    "<!DOCTYPE html><html><head><title>Public Dashboard</title></head><body>"
+    '<input name="__RequestVerificationToken" value="test-csrf-token" type="hidden" />'
+    "<script>"
+    'new ejs.dropdowns.DropDownList({"dataSource": ejs.data.DataUtil.parse.isJson('
+    + _PREMISES_JSON
+    + ")});"
+    'new ejs.Schedule({"dataSource": ejs.data.DataUtil.parse.isJson('
+    + _APPOINTMENTS_JSON
+    + ")});"
+    "</script></body></html>"
+)
 
 
 class MockResponse:
-    def __init__(self, text="", content=b"PDF", status_code=200):
+    def __init__(self, text="", status_code=200):
         self.text = text
-        self.content = content
         self.status_code = status_code
 
     def raise_for_status(self):
-        return None
+        if self.status_code >= 400:
+            raise Exception(f"HTTP {self.status_code}")
 
 
 @pytest.fixture
 def source():
-    return southlanarkshire_gov_uk.Source(
-        record_id="574605",
-        street_name="clincarthill_road_rutherglen",
-        pdf_url="https://www.southlanarkshire.gov.uk/downloads/file/18302/hamilton_and_clydesdale_bin_collection_calendar_2026_-_households_with_food_and_garden_waste_collected_on_the_same_week_as_general_waste",
+    return southlanarkshire_gov_uk.Source(postcode="G73 1UR", uprn=484000600)
+
+
+def test_init_normalises_postcode():
+    s = southlanarkshire_gov_uk.Source(postcode="  g73 1ur  ", uprn=484000600)
+    assert s._postcode == "G73 1UR"
+
+
+def test_init_coerces_uprn_to_int():
+    s = southlanarkshire_gov_uk.Source(postcode="G73 1UR", uprn="484000600")
+    assert s._uprn == 484000600
+
+
+def test_extract_appointments_returns_appointments_block():
+    appts = southlanarkshire_gov_uk.Source._extract_appointments(SAMPLE_HTML)
+    assert len(appts) == 3
+    assert appts[0]["Subject"] == "Black Bin"
+
+
+def test_extract_appointments_skips_premises_block():
+    appts = southlanarkshire_gov_uk.Source._extract_appointments(SAMPLE_HTML)
+    assert all("Subject" in a for a in appts)
+
+
+def test_extract_appointments_returns_empty_list_when_not_found():
+    appts = southlanarkshire_gov_uk.Source._extract_appointments(
+        "<html><body>no data here</body></html>"
     )
-
-
-def test_init_requires_pdf_url():
-    with pytest.raises(SourceArgumentRequired):
-        southlanarkshire_gov_uk.Source(
-            record_id="574605",
-            street_name="clincarthill_road_rutherglen",
-            pdf_url="",
-        )
-
-
-def test_to_download_pdf_url_normalizes_listing_link(source):
-    listing_url = (
-        "https://www.southlanarkshire.gov.uk/downloads/file/18302/"
-        "hamilton_and_clydesdale_bin_collection_calendar_2026_-_households_with_"
-        "food_and_garden_waste_collected_on_the_same_week_as_general_waste"
-    )
-
-    resolved = source._to_download_pdf_url(listing_url)
-
-    assert resolved == (
-        "https://www.southlanarkshire.gov.uk/download/downloads/id/18302/"
-        "hamilton_and_clydesdale_bin_collection_calendar_2026_-_households_with_"
-        "food_and_garden_waste_collected_on_the_same_week_as_general_waste.pdf"
-    )
+    assert appts == []
 
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
-def test_resolve_pdf_url_prefers_matching_variant(mock_session, source):
-    html = """
-    <html><body>
-      <a href="https://www.southlanarkshire.gov.uk/downloads/file/18301/east_kilbride_cambuslang_and_rutherglen_bin_collection_calendar_2026">A</a>
-      <a href="https://www.southlanarkshire.gov.uk/downloads/file/18300/hamilton_and_clydesdale_bin_collection_calendar_2026">B</a>
-      <a href="https://www.southlanarkshire.gov.uk/downloads/file/18302/hamilton_and_clydesdale_bin_collection_calendar_2026_-_households_with_food_and_garden_waste_collected_on_the_same_week_as_general_waste">C</a>
-    </body></html>
-    """
-    session = Mock()
-    session.get.return_value = MockResponse(text=html)
-    mock_session.return_value = session
-
-    resolved = source._resolve_pdf_url(Mock())
-
-    assert "/18302/" in resolved
-    assert resolved.endswith(".pdf")
-
-
-@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
-@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.PdfReader")
-def test_parse_pdf_schedule_extracts_labels_and_dates(
-    mock_pdf_reader, mock_session, source
-):
-    session = Mock()
-    session.get.return_value = MockResponse(content=b"PDF")
-    mock_session.return_value = session
-
-    page = Mock()
-    page.extract_text.return_value = """
-    Black/Green - Non Recyclable Waste
-    5 January
-    Light Grey - Glass, cans and plastics
-    Burgundy - Food and garden
-    12 January
-    filler
-    filler
-    filler
-    filler
-    Blue (paper and card)
-    Burgundy - Food and garden
-    26 January
-    """
-    mock_pdf_reader.return_value.pages = [page]
-
-    schedule = source._parse_pdf_schedule("https://example.com/calendar_2026.pdf")
-
-    assert schedule[date(2026, 1, 5)] == ("Black/Green - Non Recyclable Waste",)
-    assert schedule[date(2026, 1, 12)] == (
-        "Light Grey - Glass, cans and plastics",
-        "Burgundy - Food and garden",
-    )
-    assert schedule[date(2026, 1, 26)] == (
-        "Blue (paper and card)",
-        "Burgundy - Food and garden",
-    )
-    assert "Black/Green - Non Recyclable Waste" in source._known_labels
-    assert "Light Grey - Glass, cans and plastics" in source._known_labels
-
-
-@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
-@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.PdfReader")
-def test_parse_pdf_schedule_supports_black_and_burgundy_combination(
-    mock_pdf_reader, mock_session, source
-):
-    session = Mock()
-    session.get.return_value = MockResponse(content=b"PDF")
-    mock_session.return_value = session
-
-    page = Mock()
-    page.extract_text.return_value = """
-    Black/Green - Non Recyclable Waste
-    Burgundy - Food and garden
-    5 January
-    Light Grey - Glass, cans and plastics
-    12 January
-    """
-    mock_pdf_reader.return_value.pages = [page]
-
-    schedule = source._parse_pdf_schedule("https://example.com/calendar_2026.pdf")
-
-    assert schedule[date(2026, 1, 5)] == (
-        "Black/Green - Non Recyclable Waste",
-        "Burgundy - Food and garden",
-    )
-    assert schedule[date(2026, 1, 12)] == ("Light Grey - Glass, cans and plastics",)
-
-
-@patch.object(
-    southlanarkshire_gov_uk.Source,
-    "_parse_pdf_schedule",
-    return_value={
-        date(2026, 1, 16): (
-            "Light Grey - Glass, cans and plastics",
-            "Burgundy - Food and garden",
-        )
-    },
-)
-@patch.object(
-    southlanarkshire_gov_uk.Source,
-    "_resolve_pdf_url",
-    return_value="https://example.com/calendar_2026.pdf",
-)
-@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
-def test_fetch_returns_labels_from_table_rows(
-    mock_session,
-    _resolve_pdf_url,
-    _parse_pdf_schedule,
-    source,
-):
-    session = Mock()
+def test_fetch_returns_collection_entries(mock_session_cls, source):
+    session = MagicMock()
     session.get.return_value = MockResponse(text=SAMPLE_HTML)
-    mock_session.return_value = session
-
+    session.post.return_value = MockResponse(text=SAMPLE_HTML)
+    mock_session_cls.return_value = session
     entries = source.fetch()
-
-    first_day = [entry for entry in entries if entry.date == date(2026, 1, 9)]
-    assert [entry.type for entry in first_day] == ["Black/Green - Non Recyclable Waste"]
-    assert first_day[0].icon == "mdi:trash-can"
-
-    second_cycle_day = [entry for entry in entries if entry.date == date(2026, 1, 16)]
-    assert {entry.type for entry in second_cycle_day} == {
-        "Light Grey - Glass, cans and plastics",
-        "Burgundy - Food and garden",
-    }
+    assert len(entries) == 2
+    subjects = {e.type for e in entries}
+    assert subjects == {"Black Bin", "Grey Bin"}
 
 
-@patch.object(
-    southlanarkshire_gov_uk.Source,
-    "_parse_pdf_schedule",
-    return_value={
-        date(2026, 1, 9): (
-            "Black/Green - Non Recyclable Waste",
-            "Burgundy - Food and garden",
-        )
-    },
-)
-@patch.object(
-    southlanarkshire_gov_uk.Source,
-    "_resolve_pdf_url",
-    return_value="https://example.com/calendar_2026.pdf",
-)
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
-def test_fetch_keeps_pdf_defined_black_burgundy_combination(
-    mock_session,
-    _resolve_pdf_url,
-    _parse_pdf_schedule,
-    source,
-):
-    session = Mock()
+def test_fetch_deduplicates_entries(mock_session_cls, source):
+    session = MagicMock()
     session.get.return_value = MockResponse(text=SAMPLE_HTML)
-    mock_session.return_value = session
-
+    session.post.return_value = MockResponse(text=SAMPLE_HTML)
+    mock_session_cls.return_value = session
     entries = source.fetch()
-
-    first_day = [entry for entry in entries if entry.date == date(2026, 1, 9)]
-    assert {entry.type for entry in first_day} == {
-        "Black/Green - Non Recyclable Waste",
-        "Burgundy - Food and garden",
-    }
+    grey_entries = [e for e in entries if e.type == "Grey Bin"]
+    assert len(grey_entries) == 1
 
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
-def test_fetch_raises_for_missing_bin_info(mock_session, source):
-    session = Mock()
-    session.get.return_value = MockResponse(
-        text="<html><body>No bin info</body></html>"
-    )
-    mock_session.return_value = session
+def test_fetch_uses_correct_date(mock_session_cls, source):
+    session = MagicMock()
+    session.get.return_value = MockResponse(text=SAMPLE_HTML)
+    session.post.return_value = MockResponse(text=SAMPLE_HTML)
+    mock_session_cls.return_value = session
+    entries = source.fetch()
+    black_entry = next(e for e in entries if e.type == "Black Bin")
+    assert black_entry.date == date(2026, 5, 4)
 
+
+@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
+def test_fetch_raises_when_no_appointments_found(mock_session_cls, source):
+    empty_html = '<html><body><input name="__RequestVerificationToken" value="tok" /></body></html>'
+    session = MagicMock()
+    session.get.return_value = MockResponse(text=empty_html)
+    session.post.return_value = MockResponse(text=empty_html)
+    mock_session_cls.return_value = session
     with pytest.raises(SourceArgumentNotFound):
         source.fetch()
 
 
-def test_frequency_to_weeks_supports_three_weekly(source):
-    assert source._frequency_to_weeks("Friday (3 Weekly)") == 3
-    assert source._frequency_to_weeks("Friday (Fortnightly)") == 2
-    assert source._frequency_to_weeks("Friday (Weekly)") == 1
-
-
-def test_augment_schedule_supports_three_weekly_recurrence(source):
-    table_html = """
-    <table>
-      <tr><th>Black/Green - Non Recyclable Waste</th><td>Friday (3 Weekly)</td></tr>
-      <tr><th>Burgundy - Food and garden</th><td>Friday (3 Weekly)</td></tr>
-      <tr><th>Blue (paper and card)</th><td>Friday (3 Weekly)</td></tr>
-      <tr><th>Light Grey - Glass, cans and plastics</th><td>Friday (3 Weekly)</td></tr>
-    </table>
-    """
-    rows = BeautifulSoup(table_html, "html.parser").find_all("tr")
-
-    source._known_labels = [
-        "Black/Green - Non Recyclable Waste",
-        "Burgundy - Food and garden",
-        "Blue (paper and card)",
-        "Light Grey - Glass, cans and plastics",
-    ]
-
-    pdf_schedule = {}
-    current_collection_date = date(2026, 1, 9)  # Friday
-    bins_this_week = {"black/green bin - non-recyclable waste"}
-
-    source._augment_schedule_from_table_frequencies(
-        rows,
-        pdf_schedule,
-        current_collection_date,
-        bins_this_week,
-        Mock(),
-    )
-
-    labels_to_check = {
-        "Black/Green - Non Recyclable Waste",
-        "Burgundy - Food and garden",
-        "Blue (paper and card)",
-        "Light Grey - Glass, cans and plastics",
-    }
-
-    for label in labels_to_check:
-        dates_for_label = sorted(
-            collection_date
-            for collection_date, labels in pdf_schedule.items()
-            if label in labels
-        )
-        assert len(dates_for_label) >= 2
-        assert (dates_for_label[1] - dates_for_label[0]).days == 21
+@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
+def test_fetch_posts_to_select_prem_handler(mock_session_cls, source):
+    session = MagicMock()
+    session.get.return_value = MockResponse(text=SAMPLE_HTML)
+    session.post.return_value = MockResponse(text=SAMPLE_HTML)
+    mock_session_cls.return_value = session
+    source.fetch()
+    call_kwargs = session.post.call_args
+    assert call_kwargs[1]["params"] == {"handler": "SelectPrem"}
+    assert call_kwargs[1]["data"]["SelectedPostcode"] == "G73 1UR"
+    assert call_kwargs[1]["data"]["SelectedPremises"] == "484000600"
+    assert call_kwargs[1]["data"]["__RequestVerificationToken"] == "test-csrf-token"
