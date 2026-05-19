@@ -17,14 +17,9 @@ COUNTRY = "uk"
 DASHBOARD_URL = "https://wasteservices.southlanarkshire.gov.uk/PublicDashboard"
 REQUEST_TIMEOUT = 30
 
-# Keywords are matched in order; earlier entries take priority.
 ICON_MAP = {
     "food": "mdi:food-apple",
-    "garden": "mdi:leaf",
-    "recycl": "mdi:recycle",
-    "glass": "mdi:bottle-wine",
     "blue": "mdi:recycle",
-    "green": "mdi:leaf",
     "grey": "mdi:bottle-wine",
     "burgundy": "mdi:food-apple",
     "black": "mdi:trash-can",
@@ -181,10 +176,10 @@ class Source:
             start = idx + len(marker)
             try:
                 decoder = json.JSONDecoder()
-                data, idx_after = decoder.raw_decode(html, idx=start)
+                data, _ = decoder.raw_decode(html, idx=start)
                 if isinstance(data, list):
                     data_sources.append(data)
-            except (json.JSONDecodeError, ValueError):
+            except ValueError:
                 pass
             search_from = idx + 1
         return data_sources
