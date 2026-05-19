@@ -347,7 +347,10 @@ class Source:
         ).json()["data"]
 
         if len(data) == 0:
-            raise SourceArgumentExceptionMultiple(["garbage_calendar_id", "street", "town", "map_name"], "No data found for the provided arguments.")
+            raise SourceArgumentExceptionMultiple(
+                ["garbage_calendar_id", "street", "town", "map_name"],
+                "No data found for the provided arguments.",
+            )
 
         self.icons = {
             label["garbage_label_id"]: label["garbage_label_title"]

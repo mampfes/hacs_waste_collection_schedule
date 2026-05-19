@@ -35,7 +35,11 @@ class Source:
     def fetch(self):
         r = requests.post(self._url)
         if r.status_code == 500:
-            raise SourceArgumentNotFound("uprn", self._uprn, "web request failed: probably caused by an invalid UPRN")
+            raise SourceArgumentNotFound(
+                "uprn",
+                self._uprn,
+                "web request failed: probably caused by an invalid UPRN",
+            )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")

@@ -60,7 +60,9 @@ class Source:
 
         table = soup.find("table", id="schedule_0")
         if not isinstance(table, Tag):
-            raise SourceArgumentExceptionMultiple(["street_name", "street_number"], "Invalid address")
+            raise SourceArgumentExceptionMultiple(
+                ["street_name", "street_number"], "Invalid address"
+            )
 
         entries = []
         for formatted_date in formatted_dates:

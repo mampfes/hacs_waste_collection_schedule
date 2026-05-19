@@ -76,7 +76,7 @@ class Source:
             )
 
         # Extract propertyId from href
-        match = re.search(r'/([0-9a-f-]{36})/?$', href)
+        match = re.search(r"/([0-9a-f-]{36})/?$", href)
         if not match:
             raise ValueError(f"Could not extract propertyId from href: {href}")
         property_id = match.group(1)
@@ -101,10 +101,10 @@ class Source:
             for item in collection.get("items", []):
                 fraksjon_id = item.get("fraksjonId")
                 fraksjon = item.get("fraksjon")
-                
+
                 # Look up English waste type name using fraksjonId
                 mapping = FRAKSJON_ID_MAP.get(fraksjon_id)
-                
+
                 # Handle nested mappings for fraksjonIds with multiple waste types
                 if isinstance(mapping, dict):
                     # Lookup by both fraksjonId and fraksjon name
@@ -116,7 +116,7 @@ class Source:
                 else:
                     # Single waste type for this fraksjonId
                     waste_types = [mapping] if mapping else []
-                
+
                 # Create collection entries for each waste type
                 for waste_type in waste_types:
                     if waste_type:

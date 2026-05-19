@@ -50,19 +50,14 @@ TEST_DATE = [
         "binTypeId": 56,
         "binTypePublicName": "240 L tokammer",
         "startTime": "2026-04-15T22:00:00Z",
-        "stopTime": "2026-04-16T22:00:00Z", # Use this for the date of the schedule
+        "stopTime": "2026-04-16T22:00:00Z",  # Use this for the date of the schedule
         "originalStartTime": "2026-04-15T22:00:00Z",
         "originalStopTime": "2026-04-16T22:00:00Z",
-        "coordinate": {
-            "lat": 55.713405,
-            "lon": 12.390497,
-            "z": None,
-            "srid": 4326
-        },
+        "coordinate": {"lat": 55.713405, "lon": 12.390497, "z": None, "srid": 4326},
         "serviceSchemeId": 257318,
         "schemeTypePublicName": "Enfamilie",
         "frequencyTypeId": 1,
-        "serviceScheme_ServiceSchemeChangeBin_Mandatory": True
+        "serviceScheme_ServiceSchemeChangeBin_Mandatory": True,
     }
 ]
 

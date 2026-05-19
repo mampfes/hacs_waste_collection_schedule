@@ -59,7 +59,9 @@ class Source:
             }
         }
 
-    def get_collections(self, session_key: str, session: requests.Session) -> list[Collection]:
+    def get_collections(
+        self, session_key: str, session: requests.Session
+    ) -> list[Collection]:
         result = run_lookup(
             session,
             API_URL,

@@ -140,9 +140,7 @@ class Source:
         entries = []
         for facility in facilities:
             for item in facility.get("schedules", []):
-                waste_label = WASTE_TYPE_MAP.get(
-                    item["wasteType"], item["wasteType"]
-                )
+                waste_label = WASTE_TYPE_MAP.get(item["wasteType"], item["wasteType"])
                 entries.append(
                     Collection(
                         date=date.fromisoformat(item["nextPickupDate"]),

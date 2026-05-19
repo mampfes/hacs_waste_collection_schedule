@@ -188,7 +188,9 @@ class Source:
 
         collection_divs = soup.select("div.feature-box.bins")
         if not collection_divs:
-            raise SourceArgumentExceptionMultiple(["id", "uprn"], "No collections found")
+            raise SourceArgumentExceptionMultiple(
+                ["id", "uprn"], "No collections found"
+            )
 
         entries = []
         for collection_div in collection_divs:

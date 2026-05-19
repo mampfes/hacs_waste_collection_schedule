@@ -41,7 +41,12 @@ class Source:
     def fetch(self):
         session = requests.Session()
         form_inputs = get_hidden_form_inputs(session, FORM_URL)
-        required = {"__RequestVerificationToken", "FormGuid", "ObjectTemplateID", "CurrentSectionID"}
+        required = {
+            "__RequestVerificationToken",
+            "FormGuid",
+            "ObjectTemplateID",
+            "CurrentSectionID",
+        }
         if not required.issubset(form_inputs.keys()):
             raise ValueError("Unable to read South Kesteven form metadata")
 

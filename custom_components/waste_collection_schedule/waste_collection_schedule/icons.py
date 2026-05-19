@@ -19,7 +19,18 @@ Because :class:`Icons` is a :class:`~enum.StrEnum`, members are also strings::
 so existing code paths that compare-as-string keep working.
 """
 
-from enum import StrEnum
+import sys
+from enum import Enum
+
+if sys.version_info >= (3, 11):
+    from enum import StrEnum
+else:
+
+    class StrEnum(str, Enum):  # type: ignore[no-redef]
+        """Python 3.10 backport of :class:`enum.StrEnum` (added in 3.11)."""
+
+        def __str__(self) -> str:
+            return str(self.value)
 
 
 class Icons(StrEnum):

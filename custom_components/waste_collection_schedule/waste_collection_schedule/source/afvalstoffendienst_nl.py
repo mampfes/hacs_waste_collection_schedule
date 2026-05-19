@@ -78,7 +78,9 @@ class Source:
         addresses = response.json()
 
         if len(addresses) == 0:
-            raise SourceArgumentException("postcode", "Address is not within service area. Please check.")
+            raise SourceArgumentException(
+                "postcode", "Address is not within service area. Please check."
+            )
 
         if self._addition:
             for address in addresses:

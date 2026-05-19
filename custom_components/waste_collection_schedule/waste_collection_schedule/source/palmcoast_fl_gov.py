@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 import requests
 
 from ..collection import Collection
-from ..icons import Icons
 from ..exceptions import SourceArgumentNotFound
+from ..icons import Icons
 
 TITLE = "Palm Coast, FL"
 DESCRIPTION = "Source for Palm Coast, FL waste collection."

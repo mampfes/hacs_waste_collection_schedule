@@ -74,7 +74,9 @@ class Source:
         r = s.post(LOGIN_URL, data=data)
         r.raise_for_status()
         if "Uporabniško ime oz. geslo ni pravilno." in r.text:
-            raise SourceArgumentExceptionMultiple(["customer_number", "password"], "Login failed: invalid credentials")
+            raise SourceArgumentExceptionMultiple(
+                ["customer_number", "password"], "Login failed: invalid credentials"
+            )
 
         r = s.get(BASE_URL)
         r.raise_for_status()

@@ -70,9 +70,7 @@ class Source:
             {"Address": {"LookupUPRN": {"value": self._uprn}}},
         )
 
-        rows = (
-            result.get("integration", {}).get("transformed", {}).get("rows_data", {})
-        )
+        rows = result.get("integration", {}).get("transformed", {}).get("rows_data", {})
         row = rows.get("0", {})
 
         entries = []

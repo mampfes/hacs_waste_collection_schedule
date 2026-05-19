@@ -74,5 +74,7 @@ class Source:
             # Strip " (Sector A)" / " (Sector B)" suffix — the sector is already
             # captured by the source configuration, so it's redundant in the type.
             collection_type = re.sub(r"\s*\(Sector [AB]\)$", "", d[1]).strip()
-            entries.append(Collection(d[0], collection_type, ICON_MAP.get(collection_type)))
+            entries.append(
+                Collection(d[0], collection_type, ICON_MAP.get(collection_type))
+            )
         return entries

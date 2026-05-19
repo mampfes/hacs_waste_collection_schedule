@@ -47,7 +47,9 @@ class Source:
         r = requests.get(ADDRESS_ID_URL, params=args)
         r.raise_for_status()
         if r.text == "null" or not r.json():
-            raise SourceArgumentExceptionMultiple(["street", "house_number"], "Invalid address")
+            raise SourceArgumentExceptionMultiple(
+                ["street", "house_number"], "Invalid address"
+            )
 
         entries = []
         for id in r.json():

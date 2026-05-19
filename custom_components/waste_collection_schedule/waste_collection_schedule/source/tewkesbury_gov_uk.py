@@ -43,7 +43,9 @@ class Source:
 
     def get_data(self, uprn, api_url=API_URL):
         if uprn is None:
-            raise SourceArgumentRequired("uprn", "UPRN is required to fetch collection data")
+            raise SourceArgumentRequired(
+                "uprn", "UPRN is required to fetch collection data"
+            )
 
         encoded_uprn = urlquote(uprn)
         request_url = api_url % encoded_uprn

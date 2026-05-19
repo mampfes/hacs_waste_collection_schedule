@@ -5,11 +5,11 @@ from datetime import datetime
 import requests
 
 from ..collection import Collection
-from ..icons import Icons
 from ..exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
+from ..icons import Icons
 
 TITLE = "Luxembourg"
 DESCRIPTION = "Source for Luxembourg waste collection using data.public.lu"

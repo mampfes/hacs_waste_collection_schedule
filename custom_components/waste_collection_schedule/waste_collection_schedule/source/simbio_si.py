@@ -38,7 +38,9 @@ class Source:
         r = requests.post(BASE_URL, data=data)
         r.raise_for_status()
         if r.text == "null" or not r.json():
-            raise SourceArgumentExceptionMultiple(["street", "house_number"], "Invalid address")
+            raise SourceArgumentExceptionMultiple(
+                ["street", "house_number"], "Invalid address"
+            )
 
         entries = []
         response_data = r.json()

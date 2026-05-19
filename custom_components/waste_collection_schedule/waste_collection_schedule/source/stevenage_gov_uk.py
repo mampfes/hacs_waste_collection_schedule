@@ -47,7 +47,8 @@ class Source:
                 "LLPGUPRN": {"value": self._uprn},
                 "MinimumDateLookAhead": {"value": time.strftime("%Y-%m-%d")},
                 "MaximumDateLookAhead": {
-                    "value": str(int(time.strftime("%Y")) + 1) + time.strftime("-%m-%d"),
+                    "value": str(int(time.strftime("%Y")) + 1)
+                    + time.strftime("-%m-%d"),
                 },
             }
         }

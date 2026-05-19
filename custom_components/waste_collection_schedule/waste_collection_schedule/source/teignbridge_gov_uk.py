@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from curl_cffi import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Teignbridge District Council"

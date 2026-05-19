@@ -46,7 +46,9 @@ class Source:
 
         entries = []
         for date_str, type_str in schedule:
-            collection_type = type_str.replace(" Collection", "").replace(" Service", "")
+            collection_type = type_str.replace(" Collection", "").replace(
+                " Service", ""
+            )
             entries.append(
                 Collection(
                     date=datetime.strptime(date_str, "%d/%m/%Y").date(),

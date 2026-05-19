@@ -39,7 +39,9 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn).strip()
 
-    def get_collections(self, session_key: str, session: requests.Session) -> list[Collection]:
+    def get_collections(
+        self, session_key: str, session: requests.Session
+    ) -> list[Collection]:
         result = run_lookup(
             session,
             API_URL,

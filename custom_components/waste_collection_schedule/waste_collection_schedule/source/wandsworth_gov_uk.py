@@ -4,7 +4,10 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 _LOGGER = logging.getLogger(__name__)
 

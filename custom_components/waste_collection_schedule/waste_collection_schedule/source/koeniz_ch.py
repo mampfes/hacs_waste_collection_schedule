@@ -47,7 +47,9 @@ class Source:
         self._municipality = municipality
         self._district = district
         if municipality not in MUNICIPALITIES:
-            raise SourceArgumentNotFoundWithSuggestions("municipality", municipality, MUNICIPALITIES.keys())
+            raise SourceArgumentNotFoundWithSuggestions(
+                "municipality", municipality, MUNICIPALITIES.keys()
+            )
         self._municipality_url = MUNICIPALITIES[municipality]
 
         self._ics_sources = []

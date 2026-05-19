@@ -4,7 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 # mostly copied from braintree_gov_uk
 
