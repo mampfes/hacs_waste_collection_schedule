@@ -42,11 +42,11 @@ def _icon_for(waste_type: str) -> str | None:
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "Find your UPRN using FindMyAddress (https://www.findmyaddress.co.uk/search) "
-        "or UPRN.uk (https://uprn.uk) — search for your address "
+        "or UPRN.uk (https://uprn.uk) - search for your address "
         "and note the UPRN shown. Alternatively, visit "
         "https://wasteservices.southlanarkshire.gov.uk/PublicDashboard, enter your "
         "postcode, select your property, then inspect the dropdown option "
-        "(right-click → Inspect Element) and note the numeric value= attribute."
+        "(right-click > Inspect Element) and note the numeric value= attribute."
     ),
 }
 
