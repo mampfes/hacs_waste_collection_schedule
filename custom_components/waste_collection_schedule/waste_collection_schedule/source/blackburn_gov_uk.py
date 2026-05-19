@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import urllib3
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
 TITLE = "Blackburn with Darwen Borough Council"
@@ -15,9 +15,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Burgundy": "mdi:trash-can",
-    "Grey": "mdi:recycle",
-    "Blue": "mdi:package-variant",
+    "Burgundy": Icons.GENERAL_WASTE,
+    "Grey": Icons.RECYCLING,
+    "Blue": Icons.PAPER,
 }
 
 API_URL = "https://mybins.blackburn.gov.uk/api/mybins/getbincollectiondays"

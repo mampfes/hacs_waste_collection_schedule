@@ -5,7 +5,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Gmina Zgierz"
@@ -23,9 +23,9 @@ _LOGGER = logging.getLogger(__name__)
 API_URL = "https://bip.gminazgierz.pl/api/articles/59717"
 
 ICON_MAP = {
-    "Segregowane i zmieszane": "mdi:trash-can",
-    "BIO": "mdi:recycle",
-    "Gabaryty": "mdi:cupboard",
+    "Segregowane i zmieszane": Icons.GENERAL_WASTE,
+    "BIO": Icons.ORGANIC,
+    "Gabaryty": Icons.BULKY,
 }
 
 MONTH_MAP = {

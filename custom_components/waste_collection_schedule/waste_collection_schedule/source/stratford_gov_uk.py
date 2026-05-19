@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Stratford District Council"
 DESCRIPTION = (
@@ -18,10 +18,10 @@ TEST_CASES = (
 )
 
 ICON_MAP = {
-    "Garden waste": "mdi:leaf",
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food waste": "mdi:food-apple",
+    "Garden waste": Icons.GARDEN,
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food waste": Icons.BIO_KITCHEN,
 }
 # order of BINS is important, it's the order they appear left-to-right in the table.
 # these names have been chosen to accurately reflect naming convention on Stratford.gov

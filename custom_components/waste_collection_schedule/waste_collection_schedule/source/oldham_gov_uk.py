@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Oldham Council"
 DESCRIPTION = "Source for Oldham Council."
@@ -13,10 +13,10 @@ TEST_CASES = {
     "Test_003": {"uprn": 422000042299},
 }
 ICON_MAP = {
-    "Brown": "mdi:recycle",
-    "Green": "mdi:leaf",
-    "Grey": "mdi:trash-can",
-    "Blue": "mdi:newspaper",
+    "Brown": Icons.RECYCLING,
+    "Green": Icons.ORGANIC,
+    "Grey": Icons.GENERAL_WASTE,
+    "Blue": Icons.NEWSPAPER,
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",

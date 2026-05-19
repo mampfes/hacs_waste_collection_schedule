@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "BinDay (South & Vale)"
 URL = "https://www.southoxon.gov.uk/"
@@ -26,15 +26,15 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "recycling": "mdi:recycle",
-    "refuse": "mdi:trash-can",
-    "garden": "mdi:leaf",
-    "food": "mdi:food-apple",
-    "textile": "mdi:hanger",
-    "clothes": "mdi:hanger",
-    "electric": "mdi:hair-dryer",
-    "batter": "mdi:battery",
-    "bulky": "mdi:sofa",
+    "recycling": Icons.RECYCLING,
+    "refuse": Icons.GENERAL_WASTE,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
+    "textile": Icons.TEXTILE,
+    "clothes": Icons.TEXTILE,
+    "electric": Icons.ELECTRONICS,
+    "batter": Icons.BATTERY,
+    "bulky": Icons.BULKY,
 }
 
 API_URL = "https://forms.southandvale.gov.uk/api/property/bins/{uprn}"

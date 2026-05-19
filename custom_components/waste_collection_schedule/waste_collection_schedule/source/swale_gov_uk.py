@@ -4,7 +4,7 @@ from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -18,10 +18,10 @@ API_URL = (
     "https://swale.gov.uk/bins-littering-and-the-environment/bins/my-collection-day"
 )
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food": "mdi:food-apple",
-    "Garden": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
 }
 # swale.gov.uk has an aggressive limit of request frequency,
 # running test cases can result in the error: 429 Too Many Requests.

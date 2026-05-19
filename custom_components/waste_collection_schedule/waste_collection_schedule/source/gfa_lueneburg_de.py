@@ -4,7 +4,7 @@ from datetime import datetime
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "GFA Lüneburg"
@@ -25,13 +25,13 @@ TEST_CASES = {
 SERVLET = "https://portal.gfa-lueneburg.de:8443/WasteManagementLueneburg/WasteManagementServlet"
 
 ICON_MAP = {
-    "Restabfallbehaelter": "mdi:trash-can",
-    "Restmuell": "mdi:trash-can",
-    "Papiertonne": "mdi:package-variant",
-    "Gelber Sack": "mdi:recycle",
-    "Gruenabfall": "mdi:leaf",
-    "Biotonne": "mdi:leaf",
-    "Sperrmuell Altmetall": "mdi:recycle",
+    "Restabfallbehaelter": Icons.GENERAL_WASTE,
+    "Restmuell": Icons.GENERAL_WASTE,
+    "Papiertonne": Icons.PAPER,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Gruenabfall": Icons.ORGANIC,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Sperrmuell Altmetall": Icons.RECYCLING,
 }
 
 

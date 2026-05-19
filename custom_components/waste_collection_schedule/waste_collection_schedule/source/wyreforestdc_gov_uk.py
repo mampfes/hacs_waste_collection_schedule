@@ -4,7 +4,7 @@ from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wyre Forest District Council"
 DESCRIPTION = "Source for wyreforestdc.gov.uk, Wyre Forest District Council, UK"
@@ -24,9 +24,9 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "rubbish (black bin)": "mdi:trash-can",
-    "recycling (green bin)": "mdi:recycle",
-    "garden waste (brown bin)": "mdi:leaf",
+    "rubbish (black bin)": Icons.GENERAL_WASTE,
+    "recycling (green bin)": Icons.RECYCLING,
+    "garden waste (brown bin)": Icons.BIO_KITCHEN,
 }
 
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]

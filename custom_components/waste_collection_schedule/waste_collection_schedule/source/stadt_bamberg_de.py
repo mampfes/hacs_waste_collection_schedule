@@ -2,7 +2,7 @@ from datetime import datetime
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 # Source code based on rh_entsorgung_de.md
@@ -24,10 +24,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restmuell": "mdi:trash-can",
-    "Biomuell": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Gelber": "mdi:recycle",
+    "Restmuell": Icons.GENERAL_WASTE,
+    "Biomuell": Icons.ORGANIC,
+    "Papier": Icons.PAPER,
+    "Gelber": Icons.RECYCLING,
 }
 
 

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -19,7 +19,7 @@ TEST_CASES = {
 
 API_URL = "https://www.valorlux.lu/api/calendar/all"
 ICON_MAP = {
-    "PMC": "mdi:recycle",
+    "PMC": Icons.RECYCLING,
 }
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",

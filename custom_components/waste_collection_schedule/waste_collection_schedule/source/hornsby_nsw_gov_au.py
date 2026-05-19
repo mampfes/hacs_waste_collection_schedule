@@ -19,7 +19,7 @@ from pdfminer.layout import (
     LTTextLine,
 )
 from pypdf import PdfReader
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Hornsby Shire Council"
 DESCRIPTION = "Source for Hornsby Shire Council."
@@ -34,10 +34,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Green Waste": "mdi:leaf",
-    "Recycling": "mdi:recycle",
-    "General Waste": "mdi:trash-can",
-    "Bulky Waste": "mdi:delete",
+    "Green Waste": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Bulky Waste": Icons.BULKY,
 }
 
 MONTH_NUM_MAP = {

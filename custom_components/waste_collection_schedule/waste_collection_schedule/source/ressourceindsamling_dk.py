@@ -5,7 +5,7 @@ import urllib.parse
 import zoneinfo
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -23,15 +23,15 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 API_URL = (
     "https://selfserviceapi.waste2x.dk/api/Services/Services/GetServicesForCustomer"
 )
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "Haveaffald": "mdi:leaf",
-    "Storskrald": "mdi:recycle",
-    "Mad/Rest affald": "mdi:food",
-    "Pap": "mdi:archive",
-    "Papir/Plast \u0026 MDK": "mdi:bottle-soda",
-    "Metal/Glas affald": "mdi:wrench",
-    "Juletræer": "mdi:pine-tree",
-    "Farligt affald": "mdi:biohazard",
+ICON_MAP = {
+    "Haveaffald": Icons.ORGANIC,
+    "Storskrald": Icons.RECYCLING,
+    "Mad/Rest affald": Icons.BIO_KITCHEN,
+    "Pap": Icons.PAPER,
+    "Papir/Plast & MDK": Icons.PLASTIC_PACKAGING,
+    "Metal/Glas affald": Icons.GLASS,
+    "Juletræer": Icons.CHRISTMAS_TREE,
+    "Farligt affald": Icons.HAZARDOUS,
 }
 
 ADDRESS_LOOKUP_URL = (

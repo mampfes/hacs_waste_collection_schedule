@@ -7,7 +7,7 @@ from urllib.parse import quote
 
 import requests
 from bs4 import BeautifulSoup as soup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
@@ -57,9 +57,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden (if applicable)": "mdi:leaf",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden (if applicable)": Icons.GARDEN,
 }
 
 matcher = re.compile(r"^([A-Z][a-z]+) (\d{1,2}) ([A-Z][a-z]+) (\d{4})$")

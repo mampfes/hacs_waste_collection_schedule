@@ -4,7 +4,7 @@ import re
 from typing import Any, Optional
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentException,
@@ -56,12 +56,12 @@ PARAM_TRANSLATIONS = {
 }
 
 ICON_MAP = {
-    "blue collection": "mdi:recycle",
-    "brown collection": "mdi:leaf",
-    "food collection": "mdi:food-apple",
-    "food waste collection": "mdi:food-apple",
-    "green collection": "mdi:leaf",
-    "grey collection": "mdi:trash-can",
+    "blue collection": Icons.RECYCLING,
+    "brown collection": Icons.ORGANIC,
+    "food collection": Icons.BIO_KITCHEN,
+    "food waste collection": Icons.BIO_KITCHEN,
+    "green collection": Icons.ORGANIC,
+    "grey collection": Icons.GENERAL_WASTE,
 }
 
 MAP_CONFIG_URL = "https://opus4.co.uk/api/v1/map-configs/{map_id}"

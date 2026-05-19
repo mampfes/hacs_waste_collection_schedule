@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
 )
@@ -20,9 +20,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "Waste": "mdi:trash-can",
-    "Garden waste": "mdi:leaf",
+    "Recycling": Icons.RECYCLING,
+    "Waste": Icons.GENERAL_WASTE,
+    "Garden waste": Icons.GARDEN,
 }
 
 API_URL = "https://www.calderdale.gov.uk/environment/waste/household-collections/collectiondayfinder.jsp"

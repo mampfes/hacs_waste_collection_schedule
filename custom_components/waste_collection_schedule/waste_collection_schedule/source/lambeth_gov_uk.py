@@ -2,7 +2,7 @@ import datetime
 
 import requests
 
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "London Borough of Lambeth"
@@ -18,10 +18,10 @@ TEST_CASES = {
 API_URL = "https://wasteservice.lambeth.gov.uk/WhitespaceComms/GetServicesByUprn"
 
 ICON_MAP = {
-    "Domestic Food Collection Service": "mdi:food",
-    "Domestic Recycling Collection Service": "mdi:recycle",
-    "Domestic Refuse Collection Service": "mdi:trash-can",
-    "Domestic Garden Collection Service": "mdi:leaf",
+    "Domestic Food Collection Service": Icons.BIO_KITCHEN,
+    "Domestic Recycling Collection Service": Icons.GENERAL_WASTE,
+    "Domestic Refuse Collection Service": Icons.GENERAL_WASTE,
+    "Domestic Garden Collection Service": Icons.GARDEN,
 }
 
 PARAM_TRANSLATIONS = {

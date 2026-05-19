@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from time import time_ns
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Rochdale Borough Council"
 DESCRIPTION = "Source for Rochdale Borough Council, UK."
@@ -15,10 +15,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Paper and Cardboard": "mdi:recycle",
-    "Glass and Bottles": "mdi:glass-fragile",
-    "Food and Garden": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Paper and Cardboard": Icons.PAPER,
+    "Glass and Bottles": Icons.GLASS,
+    "Food and Garden": Icons.BIO_KITCHEN,
 }
 
 

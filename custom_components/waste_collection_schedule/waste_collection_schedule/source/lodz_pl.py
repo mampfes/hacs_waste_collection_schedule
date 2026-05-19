@@ -4,7 +4,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
@@ -36,11 +36,11 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "Szkło": "mdi:glass-fragile",
-    "Papier": "mdi:package-variant",
-    "Metale i tworzywa sztuczne": "mdi:recycle",
-    "Resztkowe": "mdi:trash-can",
-    "Mokre Bio": "mdi:leaf",
+    "Szkło": Icons.GLASS,
+    "Papier": Icons.PAPER,
+    "Metale i tworzywa sztuczne": Icons.METAL,
+    "Resztkowe": Icons.GENERAL_WASTE,
+    "Mokre Bio": Icons.ORGANIC,
 }
 
 

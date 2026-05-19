@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "London Borough of Richmond upon Thames"
@@ -32,10 +32,10 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    "Glass, can, plastic and carton recycling": "mdi:recycle",
-    "Paper and card recycling": "mdi:newspaper-variant",
-    "Rubbish and food": "mdi:trash-can",
-    "Garden waste": "mdi:leaf",
+    "Glass, can, plastic and carton recycling": Icons.PLASTIC_PACKAGING,
+    "Paper and card recycling": Icons.PAPER,
+    "Rubbish and food": Icons.BIO_KITCHEN,
+    "Garden waste": Icons.GARDEN,
 }
 
 ALLOWED_SERVICES = set(ICON_MAP.keys())

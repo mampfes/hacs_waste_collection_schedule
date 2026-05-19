@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 
 import requests
 from dateutil.rrule import DAILY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
@@ -30,13 +30,13 @@ TEST_CASES = {
 TYPES = ("restmuell", "bio", "wert", "papier")
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Bioabfall": "mdi:leaf",
-    "Gelber Sack/Gelbe Tonne": "mdi:sack",
-    "Papiertonne": "mdi:package-variant",
-    "Bildschirm-/Kühlgeräte": "mdi:television-classic",
-    "Schadstoffsammlung": "mdi:biohazard",
-    "altmetalle": "mdi:nail",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Gelber Sack/Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Papiertonne": Icons.PAPER,
+    "Bildschirm-/Kühlgeräte": Icons.ELECTRONICS,
+    "Schadstoffsammlung": Icons.HAZARDOUS,
+    "altmetalle": Icons.METAL,
 }
 
 LOGGER = logging.getLogger(__name__)

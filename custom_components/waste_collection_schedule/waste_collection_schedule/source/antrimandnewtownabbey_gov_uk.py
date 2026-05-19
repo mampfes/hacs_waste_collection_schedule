@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 import requests
 from bs4 import BeautifulSoup, Tag
 from dateutil.parser import parse
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 _LOGGER = logging.getLogger(__name__)
@@ -21,9 +21,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Black bins": "mdi:trash-can",
-    "Brown bins": "mdi:leaf",
-    "Kerbside Recycling": "mdi:recycle",
+    "Black bins": Icons.GENERAL_WASTE,
+    "Brown bins": Icons.BIO_KITCHEN,
+    "Kerbside Recycling": Icons.RECYCLING,
 }
 
 

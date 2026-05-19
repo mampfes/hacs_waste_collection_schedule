@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -19,10 +19,10 @@ TEST_CASES = {
     },
 }
 ICON_MAP = {
-    "bac_bleu": "mdi:recycle",
-    "bac_brun": "mdi:compost",
-    "bac_noir": "mdi:trash-can",
-    "encombrants": "mdi:sofa",
+    "bac_bleu": Icons.RECYCLING,
+    "bac_brun": Icons.BIO_KITCHEN,
+    "bac_noir": Icons.GENERAL_WASTE,
+    "encombrants": Icons.BULKY,
 }
 TYPE_MAP = {
     "bac_bleu": "Recycling",

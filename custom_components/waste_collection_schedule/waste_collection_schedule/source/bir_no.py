@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "BIR (Bergensområdets Interkommunale Renovasjonsselskap)"
 DESCRIPTION = "Askøy, Bergen, Bjørnafjorden, Eidfjord, Kvam, Osterøy, Samnanger, Ulvik, Vaksdal, Øygarden og Voss Kommune (Norway)."
@@ -27,9 +27,9 @@ TEST_CASES = {
 
 API_URL = "https://bir.no/api/search/AddressSearch"
 ICON_MAP = {
-    "restavfall": "mdi:trash-can",
-    "papir": "mdi:newspaper-variant-multiple",
-    "matavfall": "mdi:compost",
+    "restavfall": Icons.GENERAL_WASTE,
+    "papir": Icons.PAPER,
+    "matavfall": Icons.BIO_KITCHEN,
 }
 
 

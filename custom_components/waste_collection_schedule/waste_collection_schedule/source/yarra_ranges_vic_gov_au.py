@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Yarra Ranges Council"
 DESCRIPTION = "Source for Yarra Ranges Council rubbish collection."
@@ -21,9 +21,9 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "New weekly FOGO collection": "mdi:leaf",
-    "Rubbish Collection": "mdi:trash-can",
-    "Recycling Collection": "mdi:recycle",
+    "New weekly FOGO collection": Icons.BIO_KITCHEN,
+    "Rubbish Collection": Icons.GENERAL_WASTE,
+    "Recycling Collection": Icons.RECYCLING,
 }
 
 

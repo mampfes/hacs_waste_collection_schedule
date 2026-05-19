@@ -6,7 +6,7 @@ from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -54,9 +54,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Kehrichtabfuhr": "mdi:trash-can",
-    "Grüngutabfuhr": "mdi:leaf",
-    "Altpapier": "mdi:newspaper-variant-outline",
+    "Kehrichtabfuhr": Icons.GENERAL_WASTE,
+    "Grüngutabfuhr": Icons.ORGANIC,
+    "Altpapier": Icons.PAPER,
 }
 
 BUCHEGG_URL = "https://www.buchegg-so.ch/abfalldaten"

@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Region Gotland"
 DESCRIPTION = "Source for Region Gotland waste collection."
@@ -11,7 +11,10 @@ TEST_CASES = {
     "TestService": {"uprn": "16903059805"},
 }
 
-ICON_MAP = {"Restavfall": "mdi:trash-can", "Matavfall": "mdi:leaf"}
+ICON_MAP = {
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+}
 
 
 class Source:

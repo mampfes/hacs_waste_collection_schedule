@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from time import time_ns
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Dudley Metropolitan Borough Council"
 DESCRIPTION = "Source for Dudley Metropolitan Borough Council, UK."
@@ -15,9 +15,9 @@ TEST_CASES = {
     "Test_004": {"uprn": 90092621},
 }
 ICON_MAP = {
-    "RECYCLING": "mdi:recycle",
-    "FOOD": "mdi:food",
-    "REFUSE": "mdi:trash-can",
+    "RECYCLING": Icons.RECYCLING,
+    "FOOD": Icons.BIO_KITCHEN,
+    "REFUSE": Icons.GENERAL_WASTE,
 }
 
 LOOKUP_ID = "69a04ac70086b"

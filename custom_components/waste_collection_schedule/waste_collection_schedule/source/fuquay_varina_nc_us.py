@@ -3,7 +3,7 @@ from datetime import date, datetime
 from typing import Optional
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Fuquay-Varina, North Carolina"
@@ -17,8 +17,8 @@ TEST_CASES = {
 API_URL = "https://gis1.fuquay-varina.org/server/rest/services/Public/Solid_Waste_Information/MapServer/0/query"
 
 ICON_MAP = {
-    "GARBAGE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
+    "GARBAGE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
 }
 
 

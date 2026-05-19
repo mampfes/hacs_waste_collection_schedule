@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Northamptonshire and Wellingborough"
 DESCRIPTION = "Source for East Northamptonshire and Wellingborough"
@@ -15,8 +15,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "general": "mdi:trash-can",
-    "recycling": "mdi:recycle",
+    "general": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
 }
 
 

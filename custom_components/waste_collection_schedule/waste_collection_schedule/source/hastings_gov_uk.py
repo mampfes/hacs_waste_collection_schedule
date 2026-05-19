@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 import urllib3
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -22,8 +22,8 @@ TEST_CASES = {
     "Test_003": {"postcode": "TN37 7QH", "house_number": 5, "uprn": "100060041770"},
 }
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "Rubbish": "mdi:trash-can",
+    "Recycling": Icons.RECYCLING,
+    "Rubbish": Icons.GENERAL_WASTE,
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",

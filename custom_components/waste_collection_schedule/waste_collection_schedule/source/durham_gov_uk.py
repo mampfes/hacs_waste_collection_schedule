@@ -3,7 +3,7 @@ import re
 from datetime import date, datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Durham County Council"
 DESCRIPTION = "Source for Durham County Council, UK."
@@ -15,11 +15,11 @@ TEST_CASES = {
 
 API_URL = "https://www.durham.gov.uk/apiserver/ajaxlibrary/"
 ICON_MAP = {
-    "Rubbish bin": "mdi:trash-can",
-    "Recycle bin": "mdi:recycle",
-    "Garden waste bin": "mdi:leaf",
-    "Food waste bin": "mdi:food-apple",
-    "Clinical Waste": "mdi:medical-bag",
+    "Rubbish bin": Icons.GENERAL_WASTE,
+    "Recycle bin": Icons.RECYCLING,
+    "Garden waste bin": Icons.GARDEN,
+    "Food waste bin": Icons.BIO_KITCHEN,
+    "Clinical Waste": Icons.HAZARDOUS,
 }
 
 NAME_MAP = {

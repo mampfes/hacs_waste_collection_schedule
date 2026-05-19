@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Fife Council"
 DESCRIPTION = "Source for Fife Council."
@@ -13,11 +13,11 @@ TEST_CASES = {
     "CANMORE STREET, DUNFERMLINE": {"uprn": "320101510"},
 }
 ICON_MAP = {
-    "Blue": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Brown": "mdi:leaf",
-    "Grey": "mdi:package-variant",
-    "Green": "mdi:recycle",
+    "Blue": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Brown": Icons.ORGANIC,
+    "Grey": Icons.PAPER,
+    "Green": Icons.RECYCLING,
 }
 
 API_BASE_URL = "https://fife.form.uk.empro.verintcloudservices.com/api"

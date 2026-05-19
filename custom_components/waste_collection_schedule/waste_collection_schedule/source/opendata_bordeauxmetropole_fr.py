@@ -4,7 +4,7 @@ from datetime import date, datetime, timedelta
 from enum import Enum
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Bordeaux Métropole"
@@ -59,11 +59,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "omr": "mdi:trash-can",
-    "emb": "mdi:recycle",
-    "enc": "mdi:truck-remove",
-    "dv": "mdi:leaf",
-    "verre": "mdi:bottle-wine",
+    "omr": Icons.GENERAL_WASTE,
+    "emb": Icons.RECYCLING,
+    "enc": Icons.BULKY,
+    "dv": Icons.ORGANIC,
+    "verre": Icons.GLASS,
 }
 
 LABEL_MAP = {

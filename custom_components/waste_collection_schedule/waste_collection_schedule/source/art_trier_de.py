@@ -2,7 +2,7 @@ import logging
 from urllib.parse import quote
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "ART Trier (Depreciated)"
@@ -37,9 +37,9 @@ REMINDER_DAY = (
 )
 REMINDER_TIME = "0600"  # The calendar event should start on any hour of the correct day, so this does not matter much
 ICON_MAP = {
-    "Altpapier": "mdi:package-variant",
-    "Restmüll": "mdi:trash-can",
-    "Gelber Sack": "mdi:recycle",
+    "Altpapier": Icons.PAPER,
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
 }
 SPECIAL_CHARS = str.maketrans(
     {

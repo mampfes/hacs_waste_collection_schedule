@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Tonnenticker Pro"
@@ -23,15 +23,15 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "restabfall": "mdi:trash-can",
-    "bioabfall": "mdi:leaf",
-    "papiertonne": "mdi:recycle",
-    "altpapier": "mdi:recycle",
-    "gelbe tonne": "mdi:recycle",
-    "gelber sack": "mdi:recycle",
-    "sperr": "mdi:sofa",
-    "schadstoff": "mdi:delete-alert",
-    "wertstoff": "mdi:recycle",
+    "restabfall": Icons.GENERAL_WASTE,
+    "bioabfall": Icons.BIO_KITCHEN,
+    "papiertonne": Icons.PAPER,
+    "altpapier": Icons.PAPER,
+    "gelbe tonne": Icons.PLASTIC_PACKAGING,
+    "gelber sack": Icons.PLASTIC_PACKAGING,
+    "sperr": Icons.BULKY,
+    "schadstoff": Icons.HAZARDOUS,
+    "wertstoff": Icons.RECYCLING,
 }
 
 PARAM_DESCRIPTIONS = {

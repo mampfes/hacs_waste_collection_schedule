@@ -3,7 +3,7 @@ from typing import Optional
 
 from bs4 import BeautifulSoup
 from requests import Session
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Preston City Council"
 DESCRIPTION = "Source for preston.gov.uk services for Preston City Council, UK."
@@ -18,13 +18,13 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Commercial -  general waste:": "mdi:trash-can",
-    "Commercial -  cardboard and paper:": "mdi:note-text",
-    "Commercial - plastic cans and glass:": "mdi:recycle",
-    "Black/grey bin (general waste):": "mdi:trash-can",
-    "Yellow lidded recycling container (glass/cans/plastics):": "mdi:recycle",
-    "Red lidded recycling container (paper/card):": "mdi:note-text",
-    "Brown bin (garden waste):": "mdi:leaf",
+    "Commercial -  general waste:": Icons.COMMERCIAL,
+    "Commercial -  cardboard and paper:": Icons.PAPER,
+    "Commercial - plastic cans and glass:": Icons.PLASTIC_PACKAGING,
+    "Black/grey bin (general waste):": Icons.GENERAL_WASTE,
+    "Yellow lidded recycling container (glass/cans/plastics):": Icons.PLASTIC_PACKAGING,
+    "Red lidded recycling container (paper/card):": Icons.PAPER,
+    "Brown bin (garden waste):": Icons.BIO_KITCHEN,
 }
 
 HEADER_MAP = {

@@ -5,6 +5,7 @@ from datetime import datetime
 import requests
 
 from ..collection import Collection
+from ..icons import Icons
 from ..exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -22,27 +23,27 @@ CSV_URL = "https://data.public.lu/fr/datasets/r/c3805ec5-7836-49a4-9983-effaf819
 _ALL_STREETS = "Toutes les rues"
 
 ICON_MAP = {
-    "Biodéchets": "mdi:compost",
-    "Conteneur pour déchets ménagers": "mdi:trash-can",
-    "Déchets de verdure": "mdi:leaf",
-    "Déchets d'équipements électriques et électroniques": "mdi:television-classic",
-    "Déchets d’équipements électriques et électroniques": "mdi:television-classic",
-    "Déchets encombrants": "mdi:sofa",
-    "Déchets encombrants en vrac": "mdi:sofa",
-    "Déchets ménagers en mélange": "mdi:trash-can",
-    "Déchets recyclables": "mdi:recycle",
-    "Ferraille": "mdi:nail",
-    "Papier/Carton": "mdi:paper-roll",
-    "Papier/Carton (commerces)": "mdi:paper-roll",
-    "Papier/Carton – 40L": "mdi:paper-roll",
-    "PMC": "mdi:recycle-variant",
-    "SuperDrecksKëscht": "mdi:hazard-lights",
-    "Valorlux": "mdi:recycle",
-    "Verre": "mdi:bottle-wine",
-    "Verre (commerces)": "mdi:bottle-wine",
-    "Verre – 40L": "mdi:bottle-wine",
-    "Vieux bois": "mdi:pine-tree",
-    "Vieux vêtements": "mdi:hanger",
+    "Biodéchets": Icons.BIO_KITCHEN,
+    "Conteneur pour déchets ménagers": Icons.GENERAL_WASTE,
+    "Déchets de verdure": Icons.ORGANIC,
+    "Déchets d'équipements électriques et électroniques": Icons.ELECTRONICS,
+    "Déchets d’équipements électriques et électroniques": Icons.ELECTRONICS,
+    "Déchets encombrants": Icons.BULKY,
+    "Déchets encombrants en vrac": Icons.BULKY,
+    "Déchets ménagers en mélange": Icons.GENERAL_WASTE,
+    "Déchets recyclables": Icons.RECYCLING,
+    "Ferraille": Icons.METAL,
+    "Papier/Carton": Icons.PAPER,
+    "Papier/Carton (commerces)": Icons.PAPER,
+    "Papier/Carton – 40L": Icons.PAPER,
+    "PMC": Icons.PLASTIC_PACKAGING,
+    "SuperDrecksKëscht": Icons.HAZARDOUS,
+    "Valorlux": Icons.RECYCLING,
+    "Verre": Icons.GLASS,
+    "Verre (commerces)": Icons.GLASS,
+    "Verre – 40L": Icons.GLASS,
+    "Vieux bois": Icons.CHRISTMAS_TREE,
+    "Vieux vêtements": Icons.TEXTILE,
 }
 
 TEST_CASES = {

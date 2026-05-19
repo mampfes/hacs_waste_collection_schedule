@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Gmina Środa Śląska"
 DESCRIPTION = "Source for Gmina Środa Śląska, Poland"
@@ -11,12 +11,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Zmieszane komunalne": "mdi:trash-can",  # Mixed
-    "Tworzywa sztuczne": "mdi:recycle",  # Plastic
-    "Odpady kuchenne ulegające biodegradacji": "mdi:leaf",  # Organic
-    "Papier": "mdi:file-outline",  # Paper
-    "Szkło": "mdi:glass-fragile",  # Glass
-    "Odpady wielkogabarytowe": "mdi:sofa-single",
+    "Zmieszane komunalne": Icons.GENERAL_WASTE,
+    "Tworzywa sztuczne": Icons.RECYCLING,
+    "Odpady kuchenne ulegające biodegradacji": Icons.BIO_KITCHEN,
+    "Papier": Icons.PAPER,
+    "Szkło": Icons.GLASS,
+    "Odpady wielkogabarytowe": Icons.BULKY,
 }
 
 API_URL = "https://waste-collection.sciana.pro/api/v1/"

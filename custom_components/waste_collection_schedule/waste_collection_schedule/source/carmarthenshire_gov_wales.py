@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Carmarthenshire County Council"
 DESCRIPTION = "Source script for carmarthenshire.gov.wales"
@@ -19,10 +19,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "BLUE": "mdi:recycle",
-    "BLACK": "mdi:trash-can",
-    "GARDEN": "mdi:leaf",
-    "NAPPY": "mdi:biohazard",
+    "BLUE": Icons.RECYCLING,
+    "BLACK": Icons.GENERAL_WASTE,
+    "GARDEN": Icons.GARDEN,
+    "NAPPY": Icons.HAZARDOUS,
 }
 REMAP_WASTE = {  # Map websire containers to underlying waste types
     "BLUE": "BLUE BAG & GREEN FOOD BIN",

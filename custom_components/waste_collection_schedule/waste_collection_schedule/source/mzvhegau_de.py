@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "MZV Hegau"
@@ -16,12 +16,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Biomüll": "mdi:leaf",
-    "Gelber Sack": "mdi:recycle",
-    "Papier": "mdi:newspaper",
-    "Grünschnitt": "mdi:tree",
-    "Christbaum": "mdi:pine-tree",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Papier": Icons.PAPER,
+    "Grünschnitt": Icons.GARDEN,
+    "Christbaum": Icons.CHRISTMAS_TREE,
 }
 
 PARAM_TRANSLATIONS = {

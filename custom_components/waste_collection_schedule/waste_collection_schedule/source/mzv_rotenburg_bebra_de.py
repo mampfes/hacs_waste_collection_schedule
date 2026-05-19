@@ -4,7 +4,7 @@ from typing import Any
 import requests
 from bs4 import BeautifulSoup
 from icalendar import Calendar
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -23,13 +23,13 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Gelbe Tonne": "mdi:recycle",
-    "Bioabfall": "mdi:leaf",
-    "Restabfall": "mdi:trash-can",
-    "Papier": "mdi:package-variant",
-    "Sperrmüll": "mdi:sofa",
-    "Weiße Ware": "mdi:fridge",
-    "Kühlgeräte": "mdi:fridge-outline",
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Papier": Icons.PAPER,
+    "Sperrmüll": Icons.BULKY,
+    "Weiße Ware": Icons.ELECTRONICS,
+    "Kühlgeräte": Icons.ELECTRONICS,
 }
 
 PARAM_TRANSLATIONS = {

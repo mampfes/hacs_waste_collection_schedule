@@ -4,7 +4,7 @@ from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North Norfolk District Council"
 DESCRIPTION = "Source for waste collection services for North Norfolk District Council"
@@ -41,9 +41,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Grey bin": "mdi:trash-can",
-    "Green bin": "mdi:recycle",
-    "Brown bin": "mdi:leaf",
+    "Grey bin": Icons.GENERAL_WASTE,
+    "Green bin": Icons.RECYCLING,
+    "Brown bin": Icons.BIO_KITCHEN,
 }
 
 

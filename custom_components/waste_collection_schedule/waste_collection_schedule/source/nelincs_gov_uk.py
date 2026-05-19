@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup, Tag
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North East Lincolnshire Council"
 DESCRIPTION = "Source for North East Lincolnshire Council."
@@ -18,10 +18,10 @@ Another easy way to discover your Unique Property Reference Number (UPRN) is by 
 
 
 ICON_MAP = {
-    "household waste": "mdi:trash-can",
-    "garden": "mdi:leaf",
-    "paper": "mdi:package-variant",
-    "cans, plastic & glass": "mdi:recycle",
+    "household waste": Icons.GENERAL_WASTE,
+    "garden": Icons.GARDEN,
+    "paper": Icons.PAPER,
+    "cans, plastic & glass": Icons.PLASTIC_PACKAGING,
 }
 
 

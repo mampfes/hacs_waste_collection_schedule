@@ -4,7 +4,7 @@ import urllib.parse
 from datetime import date, datetime, timezone
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 _LOGGER = logging.getLogger(__name__)
@@ -86,16 +86,16 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Biomüll": "mdi:leaf",
-    "Biotonne": "mdi:leaf",
-    "Papiertonne": "mdi:package-variant",
-    "Papier": "mdi:package-variant",
-    "Gelbe Tonne": "mdi:recycle",
-    "Gelber Sack": "mdi:recycle",
-    "LVP": "mdi:recycle",
-    "Sperrmüll": "mdi:delete-circle",
-    "Schadstoffmobil": "mdi:biohazard",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Papiertonne": Icons.PAPER,
+    "Papier": Icons.PAPER,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "LVP": Icons.PLASTIC_PACKAGING,
+    "Sperrmüll": Icons.BULKY,
+    "Schadstoffmobil": Icons.HAZARDOUS,
 }
 
 BASE_URL = "https://buerger-portal-voelklingen.azurewebsites.net/api"

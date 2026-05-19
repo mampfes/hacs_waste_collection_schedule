@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.WhitespaceWRP import WhitespaceClient
 
 TITLE = "Allerdale Borough Council"
@@ -21,9 +21,9 @@ TEST_CASES = {
     },
 }
 ICON_MAP = {
-    "Domestic Waste": "mdi:trash-can",
-    "Glass Cans and Plastic Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
+    "Domestic Waste": Icons.GENERAL_WASTE,
+    "Glass Cans and Plastic Recycling": Icons.PLASTIC_PACKAGING,
+    "Garden Waste": Icons.GARDEN,
 }
 API_URL = "https://abc-wrp.whitespacews.com/"
 

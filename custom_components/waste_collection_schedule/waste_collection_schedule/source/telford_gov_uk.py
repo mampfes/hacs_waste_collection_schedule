@@ -3,7 +3,7 @@ import json
 import re
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -27,10 +27,10 @@ API_URLS = {
 
 # Map the names to icons
 ICON_MAP = {
-    "Red Top Container": "mdi:trash-can",
-    "Purple / Blue Containers": "mdi:recycle",
-    "Green Container": "mdi:leaf",
-    "Silver Containers": "mdi:food",
+    "Red Top Container": Icons.GENERAL_WASTE,
+    "Purple / Blue Containers": Icons.RECYCLING,
+    "Green Container": Icons.ORGANIC,
+    "Silver Containers": Icons.BIO_KITCHEN,
 }
 
 # Path to the images provided by the council for the containers

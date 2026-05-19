@@ -3,7 +3,7 @@ import urllib.parse
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Iris Salten"
 DESCRIPTION = "Fetches waste collection schedule from Iris Salten (based on address)."
@@ -13,11 +13,11 @@ URL = "https://www.iris-salten.no"
 TEST_CASES = {"My address": {"address": "Alsosgården 11", "kommune": "Bodø kommune"}}
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:food-apple",
-    "Papir": "mdi:package-variant",
-    "Plast": "mdi:recycle",
-    "Glass": "mdi:bottle-soda",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Papir": Icons.PAPER,
+    "Plast": Icons.PLASTIC_PACKAGING,
+    "Glass": Icons.GLASS,
 }
 
 MONTH_MAP = {

@@ -3,7 +3,7 @@ import json
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "City of Ryde (NSW)"
 DESCRIPTION = "Source for City of Ryde rubbish collection."
@@ -42,9 +42,9 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "General Waste": "trash-can",
-    "Recycling": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green Waste": Icons.GARDEN,
 }
 
 

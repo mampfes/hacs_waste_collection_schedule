@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Mansfield District Council"
 DESCRIPTION = "Source for mansfield.gov.uk services for Mansfield District, UK."
@@ -13,9 +13,9 @@ TEST_CASES = {
     "Test_003": {"uprn": 200000666900},
 }
 ICON_MAP = {
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
-    "General": "mdi:trash-can",
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
+    "General": Icons.GENERAL_WASTE,
 }
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0",

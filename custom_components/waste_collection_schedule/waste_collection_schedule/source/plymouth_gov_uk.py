@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Plymouth City Council"
@@ -25,8 +25,8 @@ AUTH_TEST = f"{BASE_URL}/apibroker/domain/{HOSTNAME}"
 API_URL = f"{BASE_URL}/apibroker/runLookup"
 
 ICON_MAP = {
-    "DO": "mdi:trash-can",
-    "RE": "mdi:recycle",
+    "DO": Icons.GENERAL_WASTE,
+    "RE": Icons.RECYCLING,
 }
 
 COLLECTION_TYPE = {

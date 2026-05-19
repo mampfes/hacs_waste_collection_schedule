@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from typing import List, Optional, TypedDict, Union, cast
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
@@ -178,14 +178,14 @@ TEST_CASES = {
 HEADERS = {"user-agent": "Mozilla/5.0"}
 
 ICON_MAP = {
-    "waste": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "organic": "mdi:leaf",
-    "greenwaste": "mdi:leaf",
-    "clean_up": "mdi-calendar-alert",
-    "special": "mdi-calendar-alert",
-    "glass": "mdi:glass-fragile",
-    "paper": "mdi:newspaper",
+    "waste": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "organic": Icons.ORGANIC,
+    "greenwaste": Icons.GARDEN,
+    "clean_up": Icons.EVENT,
+    "special": Icons.EVENT,
+    "glass": Icons.GLASS,
+    "paper": Icons.PAPER,
 }
 
 SERVICE_MAP = (

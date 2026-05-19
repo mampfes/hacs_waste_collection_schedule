@@ -3,7 +3,7 @@ from typing import Literal
 
 import requests
 import logging
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -46,12 +46,12 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Kehricht": "mdi:trash-can",
-    "Christbaum": "mdi:pine-tree",
-    "Grüngut": "mdi:leaf",
-    "Karton": "mdi:package-variant-closed",
-    "Papier": "mdi:newspaper",
-    "Alteisen/Metall": "mdi:screw-flat-top",
+    "Kehricht": Icons.GENERAL_WASTE,
+    "Christbaum": Icons.CHRISTMAS_TREE,
+    "Grüngut": Icons.ORGANIC,
+    "Karton": Icons.PAPER,
+    "Papier": Icons.PAPER,
+    "Alteisen/Metall": Icons.METAL,
 }
 
 SERVICES = {

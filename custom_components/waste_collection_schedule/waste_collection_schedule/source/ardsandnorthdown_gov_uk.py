@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Ards and North Down Borough Council"
 DESCRIPTION = "Source for Ards and North Down Borough Council."
@@ -15,10 +15,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "grey": "mdi:trash-can",
-    "glass": "mdi:bottle-soda",
-    "green": "mdi:leaf",
-    "blue": "mdi:recycle",
+    "grey": Icons.GENERAL_WASTE,
+    "glass": Icons.GLASS,
+    "green": Icons.ORGANIC,
+    "blue": Icons.RECYCLING,
 }
 
 

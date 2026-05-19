@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -43,11 +43,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "DOMESTIC FOOD WASTE SERVICE": "mdi:food-apple",
-    "DOMESTIC RECYCLING WASTE COLLECTION SERVICE": "mdi:recycle",
-    "DOMESTIC REFUSE WASTE COLLECTION SERVICE": "mdi:trash-can",
-    "DOMESTIC GARDEN WASTE SERVICE": "mdi:leaf",
-    # Add other types as needed
+    "DOMESTIC FOOD WASTE SERVICE": Icons.BIO_KITCHEN,
+    "DOMESTIC RECYCLING WASTE COLLECTION SERVICE": Icons.GENERAL_WASTE,
+    "DOMESTIC REFUSE WASTE COLLECTION SERVICE": Icons.GENERAL_WASTE,
+    "DOMESTIC GARDEN WASTE SERVICE": Icons.GARDEN,
 }
 
 # Arguments affecting the configuration GUI

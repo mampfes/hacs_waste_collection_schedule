@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Gwynedd"
@@ -16,9 +16,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "brown": "mdi:leaf",
-    "green": "mdi:trash-can",
-    "blue": "mdi:recycle",
+    "brown": Icons.ORGANIC,
+    "green": Icons.GENERAL_WASTE,
+    "blue": Icons.RECYCLING,
 }
 
 

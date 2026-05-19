@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Onkaparinga Council"
@@ -14,9 +14,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling Waste": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling Waste": Icons.RECYCLING,
+    "Green Waste": Icons.GARDEN,
 }
 
 API_URL = "https://www.onkaparingacity.com"

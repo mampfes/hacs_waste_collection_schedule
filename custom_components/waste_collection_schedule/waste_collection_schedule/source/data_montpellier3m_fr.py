@@ -3,7 +3,7 @@ import io
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Montpellier Méditerranée Métropole"
@@ -33,10 +33,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Ordures ménagères": "mdi:trash-can",
-    "Tri sélectif": "mdi:recycle",
-    "Biodéchets": "mdi:leaf",
-    "Encombrants": "mdi:truck-remove",
+    "Ordures ménagères": Icons.GENERAL_WASTE,
+    "Tri sélectif": Icons.RECYCLING,
+    "Biodéchets": Icons.ORGANIC,
+    "Encombrants": Icons.BULKY,
 }
 
 DAY_CODE_MAP = {

@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "London Borough of Camden"
@@ -13,10 +13,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "rubbish": "mdi:trash-can",
-    "garden waste": "mdi:leaf",
-    "food": "mdi:food",
-    "recycling": "mdi:recycle",
+    "rubbish": Icons.GENERAL_WASTE,
+    "garden waste": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
+    "recycling": Icons.RECYCLING,
 }
 
 

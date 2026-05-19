@@ -7,7 +7,7 @@ from io import BytesIO
 import requests
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LAParams, LTCurve, LTLayoutContainer, LTRect, LTTextBox
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Brimbank City Council"
 DESCRIPTION = "Source for Brimbank City Council waste collection."
@@ -35,9 +35,9 @@ PARAM_TRANSLATIONS = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food & Garden Organics": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food & Garden Organics": Icons.BIO_KITCHEN,
 }
 
 PDF_URL = (

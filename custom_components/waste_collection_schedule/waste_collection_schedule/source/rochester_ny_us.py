@@ -1,7 +1,7 @@
 import re
 from datetime import datetime, timedelta
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import (
     ArcGisError,
@@ -20,8 +20,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+    "Trash": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
 PARAM_DESCRIPTIONS = {

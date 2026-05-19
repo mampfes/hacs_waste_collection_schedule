@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Maroondah City Council"
 DESCRIPTION = "Source for Maroondah City Council. Finds both green waste and general recycling dates."
@@ -36,9 +36,9 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "Food and Garden organics": "mdi:leaf",
-    "Hard Waste": "mdi:sofa",
-    "Recycling": "mdi:recycle",
+    "Food and Garden organics": Icons.BIO_KITCHEN,
+    "Hard Waste": Icons.BULKY,
+    "Recycling": Icons.RECYCLING,
 }
 
 

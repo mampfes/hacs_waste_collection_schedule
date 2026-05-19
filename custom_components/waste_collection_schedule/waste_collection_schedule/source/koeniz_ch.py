@@ -1,4 +1,4 @@
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.A_region_ch import A_region_ch
 
@@ -19,12 +19,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Kehricht": "mdi:trash-can",
-    "Grünabfuhr": "mdi:leaf",
-    "Papier/Karton": "mdi:newspaper",
-    "Metall": "mdi:screw-flat-top",
-    "Schredderdienst": "mdi:shredder",
-    "Christbaum": "mdi:pine-tree",
+    "Kehricht": Icons.GENERAL_WASTE,
+    "Grünabfuhr": Icons.ORGANIC,
+    "Papier/Karton": Icons.PAPER,
+    "Metall": Icons.METAL,
+    "Schredderdienst": Icons.GARDEN,
+    "Christbaum": Icons.CHRISTMAS_TREE,
 }
 
 MUNICIPALITIES = {

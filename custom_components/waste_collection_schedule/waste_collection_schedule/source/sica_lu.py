@@ -2,7 +2,7 @@ import datetime
 from typing import TypedDict
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "SICA"
@@ -17,15 +17,15 @@ BASE_URL = "https://dashboard.sicaapp.lu"
 API_URL = f"{BASE_URL}/api/api/app"
 HEADERS = {"User-Agent": "SicaAPP", "Accept": "application/json"}
 ICON_MAP = {
-    "Residual waste": "mdi:trash-can",
-    "Valorlux - blue bag": "mdi:recycle",
-    "Organic waste": "mdi:leaf",
-    "Glass": "mdi:bottle-wine-outline",
-    "Paper /Carton": "mdi:newspaper",
-    "Scrap and electrical appliances": "mdi:washing-machine",
-    "Clothing and Shoes": "mdi:tshirt-crew",
-    "Hedges, Shrubs and Trees": "mdi:tree",
-    "Bulky waste": "mdi:sofa",
+    "Residual waste": Icons.GENERAL_WASTE,
+    "Valorlux - blue bag": Icons.RECYCLING,
+    "Organic waste": Icons.ORGANIC,
+    "Glass": Icons.GLASS,
+    "Paper /Carton": Icons.PAPER,
+    "Scrap and electrical appliances": Icons.METAL,
+    "Clothing and Shoes": Icons.TEXTILE,
+    "Hedges, Shrubs and Trees": Icons.GARDEN,
+    "Bulky waste": Icons.BULKY,
 }
 
 

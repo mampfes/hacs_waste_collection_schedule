@@ -2,7 +2,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import List
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.Pozi import PoziGeoJsonError, query_geojson_zones
 
@@ -46,7 +46,11 @@ _LOGGER = logging.getLogger(__name__)
 
 WASTE_NAMES = {"waste": "General Waste", "recycle": "Recycling", "green": "Green Waste"}
 
-ICON_MAP = {"waste": "mdi:trash-can", "recycle": "mdi:recycle", "green": "mdi:leaf"}
+ICON_MAP = {
+    "waste": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "green": Icons.ORGANIC,
+}
 
 COLLECTION_FREQUENCY = {"Weekly": 1, "Fortnightly": 2}
 

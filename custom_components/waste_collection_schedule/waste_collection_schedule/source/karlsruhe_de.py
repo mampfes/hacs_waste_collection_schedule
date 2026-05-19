@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 import urllib3
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
@@ -37,11 +37,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Bioabfall": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Wertstoff": "mdi:recycle",
-    "Sperrmüllabholung": "mdi:wardrobe",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Papier": Icons.PAPER,
+    "Wertstoff": Icons.RECYCLING,
+    "Sperrmüllabholung": Icons.BULKY,
 }
 
 

@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Affärsverken"
 DESCRIPTION = "Source for Affärsverken."
@@ -15,9 +15,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:leaf",
-    "Trädgårdsavfall": "mdi:tree",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Trädgårdsavfall": Icons.GARDEN,
 }
 
 API_URL = "https://kundapi.affarsverken.se/api/v1/open-api/"

@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Stockport Council"
 DESCRIPTION = "Source for bin collection services for Stockport Council, UK.\n Refactored with thanks from the Manchester equivalent"
@@ -14,10 +14,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Black bin": "mdi:trash-can",
-    "Blue bin": "mdi:recycle",
-    "Brown bin": "mdi:glass-fragile",
-    "Green bin": "mdi:leaf",
+    "Black bin": Icons.GENERAL_WASTE,
+    "Blue bin": Icons.RECYCLING,
+    "Brown bin": Icons.BIO_KITCHEN,
+    "Green bin": Icons.ORGANIC,
 }
 
 # Regex pattern to match dates like "Thursday, 14 May 2026" or "14 May 2026"

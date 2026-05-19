@@ -2,7 +2,7 @@ from datetime import date
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -19,10 +19,10 @@ TEST_CASES = {
 
 HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can-outline",
-    "Gelber Sack": "mdi:recycle",
-    "Papiertonne": "mdi:package-variant",
-    "Biotonne": "mdi:food-apple-outline",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Papiertonne": Icons.PAPER,
+    "Biotonne": Icons.BIO_KITCHEN,
 }
 
 

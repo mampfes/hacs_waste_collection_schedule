@@ -3,7 +3,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Poznań"
@@ -22,13 +22,13 @@ _LOGGER = logging.getLogger(__name__)
 API_URL = "https://www.poznan.pl/mim/odpady/harmonogramy.html"
 
 ICON_MAP = {
-    "Odpady zmieszane": "mdi:trash-can",
-    "Papier": "mdi:newspaper-variant-outline",
-    "Metale i tworzywa sztuczne": "mdi:bottle-soda-classic-outline",
-    "Szkło": "mdi:glass-fragile",
-    "Bioodpady": "mdi:recycle",
-    "Odpady wystawkowe": "mdi:cupboard",
-    "Drzewka świąteczne": "mdi:pine-tree",
+    "Odpady zmieszane": Icons.GENERAL_WASTE,
+    "Papier": Icons.PAPER,
+    "Metale i tworzywa sztuczne": Icons.METAL,
+    "Szkło": Icons.GLASS,
+    "Bioodpady": Icons.RECYCLING,
+    "Odpady wystawkowe": Icons.BULKY,
+    "Drzewka świąteczne": Icons.CHRISTMAS_TREE,
 }
 
 

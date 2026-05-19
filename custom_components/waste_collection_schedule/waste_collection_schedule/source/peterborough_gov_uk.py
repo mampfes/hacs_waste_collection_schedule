@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
@@ -15,9 +15,9 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "Empty Bin 240L Black": "mdi:trash-can",
-    "Empty Bin 240L Green": "mdi:recycle",
-    "Empty Bin 240L Brown": "mdi:leaf",
+    "Empty Bin 240L Black": Icons.GENERAL_WASTE,
+    "Empty Bin 240L Green": Icons.RECYCLING,
+    "Empty Bin 240L Brown": Icons.ORGANIC,
 }
 
 

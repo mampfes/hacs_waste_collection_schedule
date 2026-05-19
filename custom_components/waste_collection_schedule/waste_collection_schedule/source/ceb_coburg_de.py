@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -16,9 +16,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Schwarz": "mdi:trash-can",
-    "Grün": "mdi:package-variant",
-    "Gelb": "mdi:recycle",
+    "Schwarz": Icons.GENERAL_WASTE,
+    "Grün": Icons.PAPER,
+    "Gelb": Icons.RECYCLING,
 }
 
 API_URL = "https://abfuhrkalender.ceb-coburg.de/"

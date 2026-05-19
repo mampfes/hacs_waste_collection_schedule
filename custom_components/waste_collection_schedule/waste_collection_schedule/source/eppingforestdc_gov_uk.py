@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
@@ -33,12 +33,12 @@ API_URL = f"{BASE_URL}/apibroker/runLookup"
 LOOKUP_COLLECTIONS = "6651dfb99a74d"
 
 ICON_MAP = {
-    "food": "mdi:food",
-    "garden": "mdi:leaf",
-    "recycling": "mdi:recycle",
-    "refuse": "mdi:trash-can",
-    "general": "mdi:trash-can",
-    "clinical": "mdi:medical-bag",
+    "food": Icons.BIO_KITCHEN,
+    "garden": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
+    "refuse": Icons.GENERAL_WASTE,
+    "general": Icons.GENERAL_WASTE,
+    "clinical": Icons.HAZARDOUS,
 }
 
 SERVICES = [

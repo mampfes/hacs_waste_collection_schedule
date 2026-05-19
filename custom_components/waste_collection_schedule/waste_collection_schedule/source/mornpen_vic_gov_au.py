@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Mornington Peninsula Shire Council"
@@ -24,9 +24,9 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "Green waste bin": "mdi:leaf",
-    "Household rubbish bin": "mdi:trash-can",
-    "Recycling bin": "mdi:recycle",
+    "Green waste bin": Icons.GARDEN,
+    "Household rubbish bin": Icons.GENERAL_WASTE,
+    "Recycling bin": Icons.RECYCLING,
 }
 
 

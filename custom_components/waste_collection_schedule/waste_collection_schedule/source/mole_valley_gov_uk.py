@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 import urllib3
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,  # type: ignore[attr-defined]
 )
@@ -52,10 +52,10 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    "Refuse (black bin)": "mdi:trash-can",
-    "Recycling (green bin)": "mdi:recycle",
-    "Garden Waste (brown lid)": "mdi:leaf",
-    "Food Waste": "mdi:food-apple",
+    "Refuse (black bin)": Icons.GENERAL_WASTE,
+    "Recycling (green bin)": Icons.RECYCLING,
+    "Garden Waste (brown lid)": Icons.GARDEN,
+    "Food Waste": Icons.BIO_KITCHEN,
 }
 
 API_URL = "https://myproperty.molevalley.gov.uk/molevalley/api/live_addresses/"

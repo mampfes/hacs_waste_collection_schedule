@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 
 TITLE = "Fylde Council"
@@ -26,12 +26,12 @@ TEST_CASES = {
 
 REGEX_BIN_TYPE = r"(?i)(?P<bin_type>(?:GREY|GREEN|BROWN|BLUE)\s+(?:BIN|BAG|BOX))"
 ICON_MAP = {
-    "Grey Bin": "mdi:trash-can",
-    "Green Bin": "mdi:leaf",
-    "Brown Bin": "mdi:recycle",
-    "Blue Bin": "mdi:recycle",
-    "Blue Bag": "mdi:recycle",
-    "Green Box": "mdi:recycle",
+    "Grey Bin": Icons.GENERAL_WASTE,
+    "Green Bin": Icons.ORGANIC,
+    "Brown Bin": Icons.BIO_KITCHEN,
+    "Blue Bin": Icons.RECYCLING,
+    "Blue Bag": Icons.RECYCLING,
+    "Green Box": Icons.RECYCLING,
 }
 
 # ### Arguments affecting the configuration GUI ####

@@ -1,7 +1,7 @@
 from datetime import date
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Mittsverige Vatten & Avfall"
@@ -23,10 +23,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:leaf",
-    "Pappersförpackningar": "mdi:package-variant",
-    "Plastförpackningar": "mdi:recycle",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Pappersförpackningar": Icons.PAPER,
+    "Plastförpackningar": Icons.RECYCLING,
 }
 
 WASTE_TYPE_MAP = {

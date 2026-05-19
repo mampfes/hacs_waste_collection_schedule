@@ -3,7 +3,7 @@ from datetime import datetime
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Gore, Invercargill & Southland"
 DESCRIPTION = "Source for Wastenet.org.nz."
@@ -18,9 +18,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Glass": "mdi:glass-mug-variant",
-    "Rubbish": "mdi:delete-empty",
-    "Recycle": "mdi:recycle",
+    "Glass": Icons.GLASS,
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
 }
 
 

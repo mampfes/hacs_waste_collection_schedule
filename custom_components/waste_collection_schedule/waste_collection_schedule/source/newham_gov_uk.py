@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser as dateparser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "London Borough of Newham"
 DESCRIPTION = "Source for newham.gov.uk services for London Borough of Newham, UK."
@@ -12,7 +12,10 @@ TEST_CASES = {
     "Test_003": {"property": 46012509},
 }
 
-ICON_MAP = {"DOMESTIC": "mdi:trash-can", "RECYCLING": "mdi:glass-fragile"}
+ICON_MAP = {
+    "DOMESTIC": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.GLASS,
+}
 
 
 class Source:

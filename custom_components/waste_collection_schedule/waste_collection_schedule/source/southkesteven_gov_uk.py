@@ -3,7 +3,7 @@ from datetime import datetime
 
 import bs4
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.FirmstepSelfService import (
     get_hidden_form_inputs,
     lookup_addresses,
@@ -23,10 +23,10 @@ TEST_CASES = {
 }
 _LOGGER = logging.getLogger(__name__)
 ICON_MAP = {
-    "black": "mdi:trash-can",
-    "gray": "mdi:recycle",
-    "green": "mdi:leaf",
-    "purple": "mdi:newspaper",
+    "black": Icons.GENERAL_WASTE,
+    "gray": Icons.RECYCLING,
+    "green": Icons.ORGANIC,
+    "purple": Icons.NEWSPAPER,
 }
 
 

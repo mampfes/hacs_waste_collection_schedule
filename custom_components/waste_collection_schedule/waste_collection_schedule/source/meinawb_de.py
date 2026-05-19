@@ -6,7 +6,7 @@ import string
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -18,12 +18,12 @@ API_URL = (
 )
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Restabfall Plus": "mdi:trash-can",
-    "Bioabfall": "mdi:leaf",
-    "Altpapier": "mdi:package-variant",
-    "Verpackungen": "mdi:recycle",
-    "Grünabfall / Weihnachtsbäume": "mdi:forest",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Restabfall Plus": Icons.GENERAL_WASTE,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Altpapier": Icons.PAPER,
+    "Verpackungen": Icons.RECYCLING,
+    "Grünabfall / Weihnachtsbäume": Icons.CHRISTMAS_TREE,
 }
 TYPES = {
     "RM": "Restabfall",

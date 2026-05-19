@@ -2,7 +2,7 @@ import datetime
 import re
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Avfall Sør, Kristiansand"
@@ -27,12 +27,12 @@ FRAKSJON_ID_MAP = {
 }
 
 ICON_MAP = {
-    "Residual": "mdi:trash-can",
-    "Bio": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Plastic": "mdi:recycle",
-    "Glass": "mdi:bottle-soda",
-    "Metal": "mdi:bottle-soda",
+    "Residual": Icons.GENERAL_WASTE,
+    "Bio": Icons.ORGANIC,
+    "Paper": Icons.PAPER,
+    "Plastic": Icons.PLASTIC_PACKAGING,
+    "Glass": Icons.GLASS,
+    "Metal": Icons.METAL,
 }
 
 

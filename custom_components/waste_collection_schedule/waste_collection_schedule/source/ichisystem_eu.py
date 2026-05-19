@@ -6,7 +6,7 @@ from html.parser import HTMLParser
 from typing import List, Optional
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Hemar (ichisystem.eu)"
@@ -69,17 +69,17 @@ PARAM_TRANSLATIONS = {
 }
 
 ICON_MAP = {
-    "zmieszane": "mdi:trash-can",
-    "papier": "mdi:newspaper",
-    "metale": "mdi:recycle",
-    "tworzywa": "mdi:recycle",
-    "szk": "mdi:bottle-wine",
-    "bio": "mdi:leaf",
-    "drzewka": "mdi:pine-tree",
-    "wystawkow": "mdi:sofa",
-    "gabaryt": "mdi:sofa",
-    "popi": "mdi:fire",
-    "choink": "mdi:pine-tree",
+    "zmieszane": Icons.GENERAL_WASTE,
+    "papier": Icons.PAPER,
+    "metale": Icons.METAL,
+    "tworzywa": Icons.RECYCLING,
+    "szk": Icons.GLASS_COLORED,
+    "bio": Icons.ORGANIC,
+    "drzewka": Icons.CHRISTMAS_TREE,
+    "wystawkow": Icons.BULKY,
+    "gabaryt": Icons.BULKY,
+    "popi": Icons.GENERAL_WASTE,
+    "choink": Icons.CHRISTMAS_TREE,
 }
 
 API_BASE = "https://harmonogram.ichisystem.eu/hemar"

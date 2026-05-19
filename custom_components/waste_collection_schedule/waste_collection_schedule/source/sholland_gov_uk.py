@@ -2,7 +2,7 @@ import datetime
 import re
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "South Holland District Council"
 DESCRIPTION = "Source for South Holland District Council."
@@ -14,9 +14,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "garden": "mdi:leaf",
-    "recycling": "mdi:recycle",
+    "refuse": Icons.GENERAL_WASTE,
+    "garden": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
 }
 
 TYPE_LABELS = {

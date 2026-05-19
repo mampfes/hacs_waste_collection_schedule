@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timezone
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Prodnik"
@@ -27,10 +27,10 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    "m": "mdi:trash-can",
-    "b": "mdi:leaf",
-    "e": "mdi:recycle",
-    "k": "mdi:dump-truck",
+    "m": Icons.GENERAL_WASTE,
+    "b": Icons.ORGANIC,
+    "e": Icons.RECYCLING,
+    "k": Icons.BULKY,
 }
 
 BIN_TYPES = {

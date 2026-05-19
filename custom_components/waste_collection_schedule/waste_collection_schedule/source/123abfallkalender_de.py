@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from icalendar import Calendar
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "123abfallkalender"
@@ -137,13 +137,13 @@ TEST_CASES = {
 
 API_URL = "https://www.123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund"
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Biomüll": "mdi:leaf",
-    "Altpapier": "mdi:recycle",
-    "Gelbe Tonne": "mdi:recycle",
-    "MR Sondermüll": "mdi:delete",
-    "EBS Sondermüll": "mdi:delete",
-    "Praxis GmbH": "mdi:medical-bag",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Altpapier": Icons.PAPER,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "MR Sondermüll": Icons.HAZARDOUS,
+    "EBS Sondermüll": Icons.HAZARDOUS,
+    "Praxis GmbH": Icons.HAZARDOUS,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

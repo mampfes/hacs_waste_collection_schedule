@@ -5,7 +5,7 @@ import re
 import urllib.parse
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "London Borough of Tower Hamlets"
@@ -19,11 +19,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food/Garden Waste": "mdi:leaf",
-    "Food Waste": "mdi:food-apple",
-    "Garden Waste": "mdi:flower",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food/Garden Waste": Icons.BIO_KITCHEN,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Garden Waste": Icons.GARDEN,
 }
 
 PARAM_TRANSLATIONS = {

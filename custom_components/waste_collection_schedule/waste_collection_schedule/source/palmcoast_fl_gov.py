@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import requests
 
 from ..collection import Collection
+from ..icons import Icons
 from ..exceptions import SourceArgumentNotFound
 
 TITLE = "Palm Coast, FL"
@@ -39,9 +40,9 @@ WEEKDAYS = {
 }
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Yard Waste": "mdi:grass",
-    "Recycling": "mdi:recycle",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Yard Waste": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

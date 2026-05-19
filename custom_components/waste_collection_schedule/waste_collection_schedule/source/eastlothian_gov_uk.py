@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -30,10 +30,10 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "non recyclable waste": "mdi:trash-can",
-    "garden waste": "mdi:leaf",
-    "recycling": "mdi:recycle",
-    "food waste": "mdi:food",
+    "non recyclable waste": Icons.GENERAL_WASTE,
+    "garden waste": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
+    "food waste": Icons.BIO_KITCHEN,
 }
 
 BASE_URL = "https://collectiondates.eastlothian.gov.uk"

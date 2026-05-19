@@ -1,6 +1,6 @@
 import requests
 from dateutil.parser import parse
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "New York City"
 DESCRIPTION = "Source for New York City, US."
@@ -11,10 +11,10 @@ TEST_CASES = {
     "Test_002": {"address": "1 W 72nd St, New York, NY 10023"},
 }
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Composting": "mdi:food",
-    "Large items": "mdi:sofa",
+    "Trash": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Composting": Icons.BIO_KITCHEN,
+    "Large items": Icons.BULKY,
 }
 
 

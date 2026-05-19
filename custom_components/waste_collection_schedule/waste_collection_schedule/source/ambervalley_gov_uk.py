@@ -2,7 +2,7 @@ import json
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Amber Valley Borough Council"
 DESCRIPTION = (
@@ -16,11 +16,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GREEN": "mdi:leaf",
-    "COMMUNAL REFUSE": "mdi:trash-can",
-    "COMMUNAL RECYCLING": "mdi:recycle",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GREEN": Icons.ORGANIC,
+    "COMMUNAL REFUSE": Icons.GENERAL_WASTE,
+    "COMMUNAL RECYCLING": Icons.RECYCLING,
 }
 
 WASTE_TYPES_DATE_KEY = {

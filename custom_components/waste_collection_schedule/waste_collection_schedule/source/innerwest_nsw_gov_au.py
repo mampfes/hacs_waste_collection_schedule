@@ -2,7 +2,7 @@ import json
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Inner West Council (NSW)"
 DESCRIPTION = "Source for Inner West Council (NSW) rubbish collection."
@@ -35,9 +35,9 @@ APIS = [
 ]
 
 ICON_MAP = {
-    "waste": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "organic": "mdi:leaf",
+    "waste": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "organic": Icons.ORGANIC,
 }
 
 

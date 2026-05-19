@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -23,9 +23,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Hushållsavfall": "mdi:trash-can",
-    "Matavfall": "mdi:leaf",
-    "Kärl": "mdi:trash-can",
+    "Hushållsavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Kärl": Icons.GENERAL_WASTE,
 }
 
 

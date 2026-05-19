@@ -4,7 +4,7 @@ import ssl
 import urllib.parse
 import urllib.request
 
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Kiedy śmieci"
@@ -35,11 +35,11 @@ TEST_CASES = {
 API_URL = "https://cloud.fxsystems.com.pl:8078/odbiory_smieci/%s"
 
 ICON_MAP = {
-    "zmieszane": "mdi:trash-can",
-    "metale i tworzywa sztuczne": "mdi:recycle",
-    "papier i tektura": "mdi:file-outline",
-    "szkło": "mdi:glass-fragile",
-    "biodegradowalne": "mdi:leaf",
+    "zmieszane": Icons.GENERAL_WASTE,
+    "metale i tworzywa sztuczne": Icons.METAL,
+    "papier i tektura": Icons.PAPER,
+    "szkło": Icons.GLASS,
+    "biodegradowalne": Icons.BIO_KITCHEN,
 }
 
 

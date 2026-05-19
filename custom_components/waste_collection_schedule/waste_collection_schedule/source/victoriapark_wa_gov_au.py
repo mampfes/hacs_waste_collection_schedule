@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -17,9 +17,9 @@ TEST_CASES = {
 COUNTRY = "au"
 
 ICON_MAP = {
-    "FOGO": "mdi:leaf",
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+    "FOGO": Icons.BIO_KITCHEN,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
 # Reference date: Monday 30 June 2025 is a YELLOW week for Group 1 (FOGO + Recycling)

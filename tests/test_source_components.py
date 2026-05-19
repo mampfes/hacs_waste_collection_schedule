@@ -383,27 +383,32 @@ def test_ics_source_has_necessary_parameters():
 
 
 # Sources permitted to use raw `mdi:*` string literals in their ICON_MAP.
-# Most sources should use the `Icons` enum from `waste_collection_schedule`
-# (see issue #2813 / canonical icon catalogue). This allowlist is for sources
-# that build ICON_MAP dynamically and cannot be statically checked.
-SOURCES_ALLOWED_RAW_ICONS: set[str] = set()
+# Every other source must use the `Icons` enum from `waste_collection_schedule`
+# (see issue #2813 / canonical icon catalogue). The allowlist below is for
+# sources whose ICON_MAP isn't a simple ``str -> str`` static dict — they build
+# the mapping programmatically, use integer keys, nest dicts per region, etc.
+# and the canonical-icons test skips them. Future contributors of such sources
+# should add themselves here and explain why.
+SOURCES_ALLOWED_RAW_ICONS: set[str] = {
+    "api_golemio_cz",          # integer keys (Czech API trash-type IDs)
+    "cbcity_nsw_gov_au",       # dynamic ICON_MAP construction
+    "insert_it_de",            # nested {region: {waste_type: {icon, name}}} structure
+    "landkreis_helmstedt_de",  # computed keys
+    "potsdam_de",              # integer keys
+    "sepan_remondis_pl",       # dynamic ICON_MAP construction
+    "wermelskirchen_de",       # dynamic ICON_MAP construction
+    "woollahra_nsw_gov_au",    # dynamic ICON_MAP construction
+    "zys_harmonogram_pl",      # dynamic ICON_MAP construction
+}
 
 
 def test_icon_map_uses_canonical_icons() -> None:
     """ICON_MAP values must be ``Icons`` enum members, not raw ``mdi:*`` strings.
 
-    Skipped until the bulk migration (PR B) lands. The assertion exists now so
-    contributors can see what's expected and so the test infrastructure is in
-    place; enforcement flips on once every source has been migrated.
+    Sources in :data:`SOURCES_ALLOWED_RAW_ICONS` are exempt because they build
+    ICON_MAP dynamically and the runtime values can't be statically classified.
     """
-    import pytest
-
-    pytest.skip(
-        "Pending bulk migration of all sources to Icons enum — see issue #2813."
-    )
-
-    # Reachable once the skip above is removed:
-    from waste_collection_schedule import Icons  # noqa: F401
+    from waste_collection_schedule import Icons
 
     sources = _get_sources()
     for source in sources:
@@ -414,7 +419,7 @@ def test_icon_map_uses_canonical_icons() -> None:
         if icon_map is None:
             continue
         if not isinstance(icon_map, dict):
-            continue  # dynamically-built ICON_MAP — exempt via the allowlist if needed
+            continue
         for key, value in icon_map.items():
             assert isinstance(value, Icons), (
                 f"ICON_MAP value for {key!r} in source {source} is "

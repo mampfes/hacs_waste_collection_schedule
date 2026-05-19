@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 import requests
 from requests import RequestException
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentRequired,
@@ -22,9 +22,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "BLACK BIN": "mdi:trash-can",  # Regular trash
-    "BLUE BIN": "mdi:recycle",  # Recycling
-    "GREEN BIN": "mdi:leaf",  # Organics
+    "BLACK BIN": Icons.GENERAL_WASTE,
+    "BLUE BIN": Icons.RECYCLING,
+    "GREEN BIN": Icons.ORGANIC,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

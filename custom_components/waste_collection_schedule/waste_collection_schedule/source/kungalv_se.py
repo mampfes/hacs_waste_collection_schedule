@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Kungälvs kommun Avfallshantering"
@@ -16,10 +16,10 @@ TEST_CASES = {
 API_URL = "https://minasidor-va-avfall.kungalv.se/FutureWeb/SimpleWastePickup"
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:food-apple",
-    "Förpackningar": "mdi:package-variant",
-    "Metallförp.": "mdi:nail",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Förpackningar": Icons.PAPER,
+    "Metallförp.": Icons.METAL,
 }
 
 PARAM_DESCRIPTIONS = {

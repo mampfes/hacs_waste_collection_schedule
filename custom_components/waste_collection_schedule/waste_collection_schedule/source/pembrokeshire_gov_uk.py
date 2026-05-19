@@ -2,7 +2,7 @@ import ast
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Pembrokeshire County Council"  # Title will show up in README.md and info.md
@@ -23,13 +23,13 @@ TYPE_MAP = {  # Dict of waste formatted bin types
     "REDBAG": "RED BAG",
     "GREYBAG": "BLACK/GREY BAGS",
 }
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "FOODCAD": "mdi:food-apple",
-    "BLUEBOX": "mdi:note-multiple",
-    "GREENBOX": "mdi:glass-fragile",
-    "BLUEBAG": "mdi:recycle",
-    "REDBAG": "mdi:recycle",
-    "GREYBAG": "mdi:trash-can",
+ICON_MAP = {
+    "FOODCAD": Icons.BIO_KITCHEN,
+    "BLUEBOX": Icons.EVENT,
+    "GREENBOX": Icons.GLASS,
+    "BLUEBAG": Icons.RECYCLING,
+    "REDBAG": Icons.RECYCLING,
+    "GREYBAG": Icons.GENERAL_WASTE,
 }
 
 # ### Arguments affecting the configuration GUI ####

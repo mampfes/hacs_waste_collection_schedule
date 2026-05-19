@@ -2,7 +2,7 @@ import datetime
 import xml.etree.ElementTree as ET
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Cannock Chase Council"
@@ -17,10 +17,10 @@ TEST_CASES = {
 
 API_URL = "https://ccdc.opendata.onl/DynamicCall.dll"
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN WASTE": "mdi:leaf",
-    "FOOD WASTE": "mdi:food-apple",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN WASTE": Icons.GARDEN,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

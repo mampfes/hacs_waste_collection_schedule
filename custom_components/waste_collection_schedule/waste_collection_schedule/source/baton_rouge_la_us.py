@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import (
     ArcGisError,
@@ -43,9 +43,9 @@ TRASH_URL = f"{BASE_URL}/15"
 RECYCLING_URL = f"{BASE_URL}/16"
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Trash": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Trash": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
 DAY_FIELDS = [

@@ -3,7 +3,7 @@ import json
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "FKF Budaörs"
@@ -18,9 +18,9 @@ TEST_CASES = {
 
 API_URL = "https://www.mohubudapest.hu/hulladeknaptar-budaors"
 ICON_MAP = {
-    "COMMUNAL": "mdi:trash-can",
-    "SELECTIVE": "mdi:recycle",
-    "GREEN": "mdi:leaf",
+    "COMMUNAL": Icons.GENERAL_WASTE,
+    "SELECTIVE": Icons.RECYCLING,
+    "GREEN": Icons.ORGANIC,
 }
 
 

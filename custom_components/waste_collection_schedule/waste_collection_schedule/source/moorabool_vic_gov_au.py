@@ -7,7 +7,7 @@ from typing import TypedDict
 import requests
 from bs4 import BeautifulSoup
 from requests.utils import requote_uri
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
@@ -45,9 +45,9 @@ HEADERS = {
 
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green waste": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green waste": Icons.GARDEN,
 }
 
 

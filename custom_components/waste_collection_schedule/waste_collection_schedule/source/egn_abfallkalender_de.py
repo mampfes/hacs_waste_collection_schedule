@@ -3,7 +3,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "EGN Abfallkalender"
 DESCRIPTION = "Source for EGN Abfallkalender"
@@ -39,11 +39,11 @@ _LOGGER = logging.getLogger(__name__)
 
 API_URL = "https://www.egn-abfallkalender.de/kalender"
 ICON_MAP = {
-    "Grau": "mdi:trash-can",
-    "Gelb": "mdi:sack",
-    "Blau": "mdi:package-variant",
-    "Braun": "mdi:leaf",
-    "Bio": "mdi:leaf",
+    "Grau": Icons.GENERAL_WASTE,
+    "Gelb": Icons.PLASTIC_PACKAGING,
+    "Blau": Icons.PAPER,
+    "Braun": Icons.ORGANIC,
+    "Bio": Icons.ORGANIC,
 }
 
 PARAM_TRANSLATIONS = {

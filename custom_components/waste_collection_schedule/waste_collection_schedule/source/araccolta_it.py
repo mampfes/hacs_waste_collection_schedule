@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Taranto (araccolta.it)"
 DESCRIPTION = "Source for Taranto (araccolta.it)."
@@ -29,11 +29,11 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 }
 
 ICON_MAP = {
-    "Carta e cartone": "mdi:newspaper",
-    "Organico": "mdi:leaf",
-    "Secco residuo": "mdi:delete",
-    "Vetro": "mdi:bottle-wine",
-    "Plastica e metalli": "mdi:bottle-soda-classic",
+    "Carta e cartone": Icons.PAPER,
+    "Organico": Icons.BIO_KITCHEN,
+    "Secco residuo": Icons.GENERAL_WASTE,
+    "Vetro": Icons.GLASS,
+    "Plastica e metalli": Icons.METAL,
 }
 
 

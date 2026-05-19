@@ -3,7 +3,7 @@ from typing import Literal, TypedDict
 
 import requests
 from dateutil.parser import parse
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -25,10 +25,10 @@ COUNTRY = "sk"
 
 
 ICON_MAP = {
-    "Komunálny": "mdi:trash-can",
-    "Plasty": "mdi:recycle",
-    "Papier": "mdi:package-variant",
-    "Separovaný": "mdi:recycle",
+    "Komunálny": Icons.GENERAL_WASTE,
+    "Plasty": Icons.PLASTIC_PACKAGING,
+    "Papier": Icons.PAPER,
+    "Separovaný": Icons.RECYCLING,
 }
 
 

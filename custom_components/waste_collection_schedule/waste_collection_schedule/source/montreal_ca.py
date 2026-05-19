@@ -3,7 +3,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 # Currently, Montreal does not offer an iCal/Webcal subscription method.
 # The GeoJSON file provides sector-specific details.
@@ -54,11 +54,11 @@ API_URL = [
 ]
 
 ICON_MAP = {
-    "Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food": "mdi:food-apple",
-    "Green": "mdi:leaf",
-    "Bulky": "mdi:sofa",
+    "Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food": Icons.BIO_KITCHEN,
+    "Green": Icons.ORGANIC,
+    "Bulky": Icons.BULKY,
 }
 
 WEEKDAYS = {

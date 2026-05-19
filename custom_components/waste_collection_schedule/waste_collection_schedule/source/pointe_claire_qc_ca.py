@@ -2,7 +2,7 @@ import re
 from typing import Literal
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 
@@ -15,11 +15,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Organic Waste": "mdi:compost",
-    "Recyclables": "mdi:recycle",
-    "Household Waste": "mdi:trash-can",
-    "Bulky Items": "mdi:sofa",
-    "Christmas Tree Collection": "mdi:pine-tree",
+    "Organic Waste": Icons.ORGANIC,
+    "Recyclables": Icons.RECYCLING,
+    "Household Waste": Icons.GENERAL_WASTE,
+    "Bulky Items": Icons.BULKY,
+    "Christmas Tree Collection": Icons.CHRISTMAS_TREE,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

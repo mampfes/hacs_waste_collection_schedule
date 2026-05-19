@@ -4,7 +4,7 @@ from time import time_ns
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wrexham County Borough Council"
 DESCRIPTION = "Source for Wrexham County Borough Council."
@@ -22,10 +22,10 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "recycling": "mdi:recycle",
-    "food": "mdi:food-apple",
-    "general": "mdi:trash-can",
-    "garden": "mdi:leaf",
+    "recycling": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
+    "general": Icons.GENERAL_WASTE,
+    "garden": Icons.GARDEN,
 }
 
 TYPE_MAP = {

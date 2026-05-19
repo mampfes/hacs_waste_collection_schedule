@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Simbio"
@@ -17,9 +17,9 @@ BIN_TYPES = {
     "emb": "Embalaza",
 }
 ICON_MAP = {
-    "mko": "mdi:trash-can",
-    "bio": "mdi:leaf",
-    "emb": "mdi:recycle",
+    "mko": Icons.GENERAL_WASTE,
+    "bio": Icons.ORGANIC,
+    "emb": Icons.RECYCLING,
 }
 
 BASE_URL = "https://www.simbio.si/sl/moj-dan-odvoza-odpadkov"

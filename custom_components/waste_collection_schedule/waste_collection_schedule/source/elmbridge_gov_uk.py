@@ -2,7 +2,7 @@ from typing import TypedDict
 
 import requests
 from dateutil.parser import parse
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Elmbridge Borough Council"
@@ -25,10 +25,10 @@ API_URL = f"{BASE_URL}/apibroker/runLookup"
 
 
 ICON_MAP = {
-    "Domestic Waste": "mdi:trash-can",
-    "Domestic Recycling": "mdi:recycle",
-    "Food Waste": "mdi:food",
-    "Textiles and Small WEEE": "mdi:tshirt-crew",
+    "Domestic Waste": Icons.GENERAL_WASTE,
+    "Domestic Recycling": Icons.GENERAL_WASTE,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Textiles and Small WEEE": Icons.ELECTRONICS,
 }
 
 

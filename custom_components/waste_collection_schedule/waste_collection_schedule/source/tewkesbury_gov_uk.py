@@ -3,7 +3,7 @@ from datetime import datetime
 from urllib.parse import quote as urlquote
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 
 TITLE = "Tewkesbury Borough Council"
@@ -19,10 +19,10 @@ DEPRECATED_API_URL = "https://api-2.tewkesbury.gov.uk/general/rounds/%s/nextColl
 API_URL = "https://api-2.tewkesbury.gov.uk/incab/rounds/%s/next-collection"
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food": "mdi:silverware-fork-knife",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
+    "Food": Icons.BIO_KITCHEN,
 }
 
 LOGGER = logging.getLogger(__name__)

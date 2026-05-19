@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Chelmsford City Council"
 DESCRIPTION = "Source for Chelmsford City Council, UK"
@@ -14,13 +14,13 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "food waste": "mdi:food-apple",
-    "black bin": "mdi:trash-can",
-    "brown bin": "mdi:leaf",
-    "green box": "mdi:bottle-soda",
-    "paper sack": "mdi:newspaper",
-    "card sack": "mdi:package-variant",
-    "plastic and cartons bag": "mdi:recycle",
+    "food waste": Icons.BIO_KITCHEN,
+    "black bin": Icons.GENERAL_WASTE,
+    "brown bin": Icons.BIO_KITCHEN,
+    "green box": Icons.GLASS,
+    "paper sack": Icons.PAPER,
+    "card sack": Icons.PAPER,
+    "plastic and cartons bag": Icons.PLASTIC_PACKAGING,
 }
 
 # ### Arguments affecting the configuration GUI ####

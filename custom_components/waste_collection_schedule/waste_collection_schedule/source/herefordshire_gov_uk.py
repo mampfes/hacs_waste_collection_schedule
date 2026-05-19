@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -22,8 +22,8 @@ API_URLS = {
 }
 HEADER = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
-    "General": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+    "General": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
 _LOGGER = logging.getLogger(__name__)

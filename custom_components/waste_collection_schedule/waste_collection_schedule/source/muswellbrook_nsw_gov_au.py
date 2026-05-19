@@ -3,7 +3,7 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Muswellbrook Shire Council"
@@ -24,9 +24,9 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    "general waste": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "fogo": "mdi:leaf",
+    "general waste": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "fogo": Icons.BIO_KITCHEN,
 }
 
 COLLECTION_URL = "https://www.muswellbrook.nsw.gov.au/waste-collection/zone-{}/"

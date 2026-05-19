@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -19,9 +19,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Garden Waste": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

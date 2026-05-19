@@ -3,7 +3,7 @@ import datetime
 from typing import Literal
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
@@ -33,14 +33,14 @@ CITY_CODE_MAP = {"Rüsselsheim": 1, "Raunheim": 2}
 CITIES = Literal["Rüsselsheim", "Raunheim"]
 
 ICON_MAP = {
-    "restmüll": "mdi:trash-can",
-    "gelber sack": "mdi:recycle",
-    "gelbe tonne": "mdi:recycle",
-    "blaue tonne": "mdi:recycle",
-    "papier": "mdi:recycle",
-    "bio": "mdi:leaf",
-    "glas": "mdi:glass-fragile",
-    "schadstoffmobil": "mdi:car-battery",
+    "restmüll": Icons.GENERAL_WASTE,
+    "gelber sack": Icons.PLASTIC_PACKAGING,
+    "gelbe tonne": Icons.PLASTIC_PACKAGING,
+    "blaue tonne": Icons.RECYCLING,
+    "papier": Icons.PAPER,
+    "bio": Icons.ORGANIC,
+    "glas": Icons.GLASS,
+    "schadstoffmobil": Icons.HAZARDOUS,
 }
 
 

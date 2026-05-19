@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Renosyd"
 DESCRIPTION = "Renosyd collections for Skanderborg and Odder kommunes"
@@ -20,14 +20,14 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "RESTAFFALD": "mdi:trash-can",
-    "PAPIR": "mdi:newspaper",
-    "PAP": "mdi:archive",
-    "EMBALLAGE": "mdi:recycle",
-    "HAVEAFFALD": "mdi:leaf",  # Uncertain about this name, can't find an example
-    "GLAS": "mdi:bottle-wine",
-    "METAL": "mdi:wrench",
-    "HÅRD PLAST": "mdi:bottle-soda-classic",
+    "RESTAFFALD": Icons.GENERAL_WASTE,
+    "PAPIR": Icons.PAPER,
+    "PAP": Icons.PAPER,
+    "EMBALLAGE": Icons.RECYCLING,
+    "HAVEAFFALD": Icons.ORGANIC,
+    "GLAS": Icons.GLASS,
+    "METAL": Icons.METAL,
+    "HÅRD PLAST": Icons.PLASTIC_PACKAGING,
 }
 
 

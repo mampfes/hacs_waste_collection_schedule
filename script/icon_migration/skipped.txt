@@ -1,0 +1,9 @@
+api_golemio_cz	ICON_MAP is not a static dict literal we can read
+cbcity_nsw_gov_au	ICON_MAP is not a static dict literal we can read
+insert_it_de	ICON_MAP is not a static dict literal we can read
+landkreis_helmstedt_de	ICON_MAP is not a static dict literal we can read
+potsdam_de	ICON_MAP is not a static dict literal we can read
+sepan_remondis_pl	ICON_MAP is not a static dict literal we can read
+wermelskirchen_de	ICON_MAP is not a static dict literal we can read
+woollahra_nsw_gov_au	ICON_MAP is not a static dict literal we can read
+zys_harmonogram_pl	ICON_MAP is not a static dict literal we can read

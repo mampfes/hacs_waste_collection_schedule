@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Mairie de Mamirolle"
 DESCRIPTION = "Source script for mamirolle.info"
@@ -12,8 +12,8 @@ URL = "http://mamirolle.info/"
 TEST_CASES = {"TestSource": {}, "IgnoredArgument": {"_": ""}}
 
 ICON_MAP = {
-    "Poubelle grise": "mdi:trash-can",
-    "Poubelle jaune": "mdi:recycle",
+    "Poubelle grise": Icons.GENERAL_WASTE,
+    "Poubelle jaune": Icons.RECYCLING,
 }
 
 MONTH_NAMES = [

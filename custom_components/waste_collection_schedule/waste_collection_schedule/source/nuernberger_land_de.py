@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaft Nürnberger Land"
@@ -15,11 +15,11 @@ API_URL = "https://abfuhrkalender.nuernberger-land.de/waste_calendar"
 FILTER = "rm:bio:p:dsd:poison"
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Biotonne": "mdi:leaf",
-    "Gelber Sack": "mdi:recycle",
-    "Papier": "mdi:package-variant",
-    "Giftmobil": "mdi:biohazard",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Papier": Icons.PAPER,
+    "Giftmobil": Icons.HAZARDOUS,
 }
 
 

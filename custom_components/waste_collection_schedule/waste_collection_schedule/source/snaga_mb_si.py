@@ -1,7 +1,7 @@
 from datetime import date, datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Snaga Maribor"
@@ -20,11 +20,11 @@ BIN_TYPES = {
     "S": "Stek.",
 }
 ICON_MAP = {
-    "O": "mdi:trash-can",
-    "B": "mdi:leaf",
-    "U": "mdi:recycle",
-    "P": "mdi:newspaper",
-    "S": "mdi:glass-cocktail",
+    "O": Icons.GENERAL_WASTE,
+    "B": Icons.ORGANIC,
+    "U": Icons.RECYCLING,
+    "P": Icons.NEWSPAPER,
+    "S": Icons.GLASS,
 }
 
 BASE_URL = "https://arhiv.snaga-mb.si/mso"
