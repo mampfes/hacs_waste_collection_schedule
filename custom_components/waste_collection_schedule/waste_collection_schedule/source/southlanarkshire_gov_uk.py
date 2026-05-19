@@ -57,23 +57,6 @@ TEST_CASES = {
     },
 }
 
-# Default icon mapping as fallback. Icons are extracted from PDF when available.
-_DEFAULT_ICON_MAP = {
-    "black": "mdi:trash-can",
-    "green": "mdi:trash-can",
-    "burgundy": "mdi:leaf",
-    "blue": "mdi:file-document-outline",
-    "grey": "mdi:glass-fragile",
-}
-
-# Default sort order as fallback. Order is determined from PDF table sequence when available.
-_DEFAULT_SORT_ORDER = {
-    "blue": 1,
-    "grey": 2,
-    "burgundy": 3,
-    "black": 4,
-    "green": 4,
-}
 
 # Keywords to recognize color names in PDF text and web pages.
 COLOR_KEYWORDS = {
@@ -711,7 +694,7 @@ class Source:
     def _get_icon_for_color(self, color):
         """Get the MDI icon for a color, extracted from PDF when available."""
         # Use default mapping as fallback; icons are determined by the canonical color
-        return _DEFAULT_ICON_MAP.get(color, "mdi:trash-can")
+        return "mdi:trash-can"
 
     def _get_sort_order_for_color(self, color):
         """Get the sort priority for a color based on canonical ordering.
@@ -720,4 +703,4 @@ class Source:
         display order. The _bin_order_from_table tracks what bins exist but
         doesn't determine collection priority.
         """
-        return _DEFAULT_SORT_ORDER.get(color, 99)
+        return 99
