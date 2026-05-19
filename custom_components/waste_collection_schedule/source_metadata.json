@@ -5432,6 +5432,15 @@
     "howto": {},
     "urls": {}
   },
+  "southlanarkshire_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southlanarkshire_gov_uk.md",
+    "howto": {
+      "en": "Find your street on the South Lanarkshire website. The URL format is `.../directory_record/574605/clincarthill_road_rutherglen`. Record ID is `574605` and Street Name is `clincarthill_road_rutherglen`."
+    },
+    "urls": {
+      "url_www_southlanarkshire_gov_uk_downloads_download_791_bin_collection_calendars": "https://www.southlanarkshire.gov.uk/downloads/download/791/bin_collection_calendars"
+    }
+  },
   "southribble_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/southribble_gov_uk.md",
     "howto": {

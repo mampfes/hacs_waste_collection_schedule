@@ -23807,6 +23807,37 @@
         },
         "data_description": {}
       },
+      "args_southlanarkshire_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "pdf_url": "Collection Calendar PDF URL",
+          "record_id": "Directory Record ID",
+          "street_name": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "pdf_url": "REQUIRED: Full URL to council's bin collection calendar PDF. This is essential for determining your exact position in the 4-week collection cycle, as black bins appear twice per cycle. Find PDFs at {url_www_southlanarkshire_gov_uk_downloads_download_791_bin_collection_calendars}",
+          "record_id": "The 6-digit number in your URL (e.g., 574605).",
+          "street_name": "The text at the end of your URL (e.g., clincarthill_road_rutherglen)."
+        }
+      },
+      "reconfigure_southlanarkshire_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "pdf_url": "Collection Calendar PDF URL",
+          "record_id": "Directory Record ID",
+          "street_name": "Street Name"
+        },
+        "data_description": {
+          "pdf_url": "REQUIRED: Full URL to council's bin collection calendar PDF. This is essential for determining your exact position in the 4-week collection cycle, as black bins appear twice per cycle. Find PDFs at {url_www_southlanarkshire_gov_uk_downloads_download_791_bin_collection_calendars}",
+          "record_id": "The 6-digit number in your URL (e.g., 574605).",
+          "street_name": "The text at the end of your URL (e.g., clincarthill_road_rutherglen)."
+        }
+      },
       "args_southribble_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

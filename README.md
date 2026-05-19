@@ -2912,6 +2912,7 @@ If you already have enough information for your municipality/region, you are ver
 - [South Hams District Council](/doc/source/fccenvironment_co_uk.md) / southhams.gov.uk
 - [South Holland District Council](/doc/source/sholland_gov_uk.md) / sholland.gov.uk
 - [South Kesteven District Council](/doc/source/southkesteven_gov_uk.md) / southkesteven.gov.uk
+- [South Lanarkshire Council](/doc/source/southlanarkshire_gov_uk.md) / southlanarkshire.gov.uk
 - [South Norfolk Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / southnorfolkandbroadland.gov.uk
 - [South Oxfordshire District Council](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [South Ribble Borough Council](/doc/source/southribble_gov_uk.md) / southribble.gov.uk
