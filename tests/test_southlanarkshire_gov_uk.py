@@ -5,7 +5,6 @@ from datetime import date
 from unittest.mock import MagicMock, patch
 
 import pytest
-from bs4 import BeautifulSoup
 
 sys.path.append(
     os.path.abspath(

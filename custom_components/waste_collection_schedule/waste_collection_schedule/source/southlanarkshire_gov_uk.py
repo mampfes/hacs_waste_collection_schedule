@@ -19,10 +19,12 @@ REQUEST_TIMEOUT = 30
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
-        "Visit https://wasteservices.southlanarkshire.gov.uk, enter your full postcode, "
-        "then select your property from the dropdown. Your UPRN is the numeric value "
-        "shown in the property dropdown option — right-click the dropdown, choose "
-        "Inspect Element, and look at the value= attribute of the selected <option> tag."
+        "Find your UPRN using FindMyAddress (https://www.findmyaddress.co.uk/search) "
+        "or What is My UPRN? (https://www.whatismyuprn.com) — search for your address "
+        "and note the UPRN shown. Alternatively, visit "
+        "https://wasteservices.southlanarkshire.gov.uk/PublicDashboard, enter your "
+        "postcode, select your property, then inspect the dropdown option "
+        "(right-click → Inspect Element) and note the numeric value= attribute."
     ),
 }
 
