@@ -1,3 +1,4 @@
+import calendar
 import re
 from datetime import datetime, timedelta
 from io import BytesIO
@@ -76,6 +77,9 @@ class Source:
         import logging
 
         logger = logging.getLogger(__name__)
+        # Keep label discovery scoped to each fetch run.
+        self._known_labels = []
+
         soup = self._fetch_street_page_soup()
         self._validate_bin_details_present(soup)
 
@@ -121,7 +125,8 @@ class Source:
         s.headers.update({"User-Agent": USER_AGENT})
 
         r = s.get(
-            f"https://www.southlanarkshire.gov.uk/directory_record/{self._record_id}/{self._street_name}"
+            f"https://www.southlanarkshire.gov.uk/directory_record/{self._record_id}/{self._street_name}",
+            timeout=30,
         )
         r.raise_for_status()
         return BeautifulSoup(r.text, "html.parser")
@@ -162,16 +167,7 @@ class Source:
         if not collection_day:
             raise RuntimeError("Could not determine collection day")
 
-        day_map = {
-            "Monday": 0,
-            "Tuesday": 1,
-            "Wednesday": 2,
-            "Thursday": 3,
-            "Friday": 4,
-            "Saturday": 5,
-            "Sunday": 6,
-        }
-        collection_day_num = day_map[collection_day]
+        collection_day_num = list(calendar.day_name).index(collection_day)
 
         days_to_collection = (collection_day_num - current_week_start.weekday()) % 7
         current_collection_date = current_week_start + timedelta(
@@ -202,13 +198,20 @@ class Source:
         self, pdf_schedule, current_collection_date, bins_this_week, logger
     ):
         current_week_labels = self._extract_labels_from_texts(bins_this_week)
-        if current_week_labels and current_collection_date not in pdf_schedule:
-            pdf_schedule[current_collection_date] = current_week_labels
-            logger.debug(
-                "Merged current website week into PDF schedule: %s -> %s",
-                current_collection_date,
-                current_week_labels,
-            )
+        if not current_week_labels:
+            return
+
+        existing_labels = list(pdf_schedule.get(current_collection_date, ()))
+        for label in current_week_labels:
+            if label not in existing_labels:
+                existing_labels.append(label)
+
+        pdf_schedule[current_collection_date] = tuple(existing_labels)
+        logger.debug(
+            "Merged current website week into PDF schedule: %s -> %s",
+            current_collection_date,
+            pdf_schedule[current_collection_date],
+        )
 
     def _build_collections(self, pdf_schedule, current_collection_date, logger):
         collections = []
@@ -569,6 +572,10 @@ class Source:
             r"\b\d{1,2}\s+(January|February|March|April|May|June|July|August|September|October|November|December)\b",
             re.IGNORECASE,
         )
+        ignore_regex = re.compile(
+            r"\b(permit required|collection calendar|food waste collected)\b",
+            re.IGNORECASE,
+        )
 
         for raw_line in lines:
             line = " ".join(raw_line.split())
@@ -576,8 +583,12 @@ class Source:
                 continue
             if len(line) < 4 or len(line) > 140:
                 continue
+            if ignore_regex.search(line):
+                continue
 
             if "-" not in line and "(" not in line:
+                continue
+            if len(self._tokenize_label(line)) < 2:
                 continue
 
             if line not in self._known_labels:
@@ -618,7 +629,20 @@ class Source:
 
     def _get_icon_for_label(self, label):
         """Get the MDI icon for a label extracted from upstream content."""
-        # Use default mapping as fallback; icons are determined by the canonical color
+        label_lower = str(label).lower()
+
+        if "non recyclable" in label_lower or "general waste" in label_lower:
+            return "mdi:trash-can"
+        if "food" in label_lower:
+            return "mdi:food-apple"
+        if "garden" in label_lower or "green waste" in label_lower:
+            return "mdi:leaf"
+        if any(
+            token in label_lower
+            for token in ["recycl", "paper", "card", "glass", "cans", "plastic"]
+        ):
+            return "mdi:recycle"
+
         return "mdi:trash-can"
 
     def _get_sort_order_for_label(self, label):
