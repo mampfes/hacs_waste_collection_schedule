@@ -371,10 +371,14 @@ class Source:
     def _frequency_to_weeks(self, schedule_text):
         schedule_text_lower = str(schedule_text).lower()
 
-        if "weekly" in schedule_text_lower and "4 weekly" not in schedule_text_lower:
-            return 1
+        weekly_match = re.search(r"\b(\d+)\s*weekly\b", schedule_text_lower)
+        if weekly_match:
+            return int(weekly_match.group(1))
+
         if "fortnightly" in schedule_text_lower:
             return 2
+        if "weekly" in schedule_text_lower:
+            return 1
         if "4 weekly" in schedule_text_lower:
             return 4
 

@@ -4,6 +4,7 @@ from datetime import date
 from unittest.mock import Mock, patch
 
 import pytest
+from bs4 import BeautifulSoup
 
 sys.path.append(
     os.path.abspath(
@@ -256,3 +257,56 @@ def test_fetch_raises_for_missing_bin_info(mock_session, source):
 
     with pytest.raises(SourceArgumentNotFound):
         source.fetch()
+
+
+def test_frequency_to_weeks_supports_three_weekly(source):
+    assert source._frequency_to_weeks("Friday (3 Weekly)") == 3
+    assert source._frequency_to_weeks("Friday (Fortnightly)") == 2
+    assert source._frequency_to_weeks("Friday (Weekly)") == 1
+
+
+def test_augment_schedule_supports_three_weekly_recurrence(source):
+    table_html = """
+    <table>
+      <tr><th>Black/Green - Non Recyclable Waste</th><td>Friday (3 Weekly)</td></tr>
+      <tr><th>Burgundy - Food and garden</th><td>Friday (3 Weekly)</td></tr>
+      <tr><th>Blue (paper and card)</th><td>Friday (3 Weekly)</td></tr>
+      <tr><th>Light Grey - Glass, cans and plastics</th><td>Friday (3 Weekly)</td></tr>
+    </table>
+    """
+    rows = BeautifulSoup(table_html, "html.parser").find_all("tr")
+
+    source._known_labels = [
+        "Black/Green - Non Recyclable Waste",
+        "Burgundy - Food and garden",
+        "Blue (paper and card)",
+        "Light Grey - Glass, cans and plastics",
+    ]
+
+    pdf_schedule = {}
+    current_collection_date = date(2026, 1, 9)  # Friday
+    bins_this_week = {"black/green bin - non-recyclable waste"}
+
+    source._augment_schedule_from_table_frequencies(
+        rows,
+        pdf_schedule,
+        current_collection_date,
+        bins_this_week,
+        Mock(),
+    )
+
+    labels_to_check = {
+        "Black/Green - Non Recyclable Waste",
+        "Burgundy - Food and garden",
+        "Blue (paper and card)",
+        "Light Grey - Glass, cans and plastics",
+    }
+
+    for label in labels_to_check:
+        dates_for_label = sorted(
+            collection_date
+            for collection_date, labels in pdf_schedule.items()
+            if label in labels
+        )
+        assert len(dates_for_label) >= 2
+        assert (dates_for_label[1] - dates_for_label[0]).days == 21
