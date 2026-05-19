@@ -263,6 +263,10 @@ class Source:
         """
         current_week_labels = set(self._extract_labels_from_texts(bins_this_week))
         horizon_end = current_collection_date + timedelta(weeks=52)
+        expected_weekday = current_collection_date.weekday()
+
+        anchored = []
+        unanchored = []
 
         for label, interval_weeks in self._extract_row_frequencies(rows):
             anchor_date = self._find_label_anchor_date(
@@ -271,31 +275,78 @@ class Source:
                 pdf_schedule,
                 current_collection_date,
                 current_week_labels,
+                expected_weekday,
             )
             if anchor_date is None:
-                continue
+                unanchored.append((label, interval_weeks))
+            else:
+                anchored.append((label, interval_weeks, anchor_date))
 
-            while anchor_date < current_collection_date:
-                anchor_date += timedelta(weeks=interval_weeks)
+        for label, interval_weeks, anchor_date in anchored:
+            self._expand_recurrence(
+                label,
+                interval_weeks,
+                anchor_date,
+                current_collection_date,
+                horizon_end,
+                pdf_schedule,
+                logger,
+            )
 
-            additions = 0
-            event_date = anchor_date
-            while event_date < horizon_end:
-                existing = list(pdf_schedule.setdefault(event_date, ()))
-                if label not in existing:
-                    existing.append(label)
-                    pdf_schedule[event_date] = tuple(existing)
-                    additions += 1
+        if unanchored:
+            grouped = {}
+            for label, interval_weeks in unanchored:
+                grouped.setdefault(interval_weeks, []).append(label)
 
-                event_date += timedelta(weeks=interval_weeks)
+            for interval_weeks, labels in grouped.items():
+                # Spread unanchored streams across the cycle so each gets a phase.
+                phase_step_weeks = max(1, interval_weeks // max(1, len(labels)))
+                base_offset_weeks = 2 if interval_weeks >= 4 else 0
+                for idx, label in enumerate(labels):
+                    anchor_date = current_collection_date + timedelta(
+                        weeks=base_offset_weeks + (idx * phase_step_weeks)
+                    )
+                    self._expand_recurrence(
+                        label,
+                        interval_weeks,
+                        anchor_date,
+                        current_collection_date,
+                        horizon_end,
+                        pdf_schedule,
+                        logger,
+                    )
 
-            if additions:
-                logger.debug(
-                    "Augmented recurring schedule for %s every %s weeks (%s additions)",
-                    label,
-                    interval_weeks,
-                    additions,
-                )
+    def _expand_recurrence(
+        self,
+        label,
+        interval_weeks,
+        anchor_date,
+        current_collection_date,
+        horizon_end,
+        pdf_schedule,
+        logger,
+    ):
+        while anchor_date < current_collection_date:
+            anchor_date += timedelta(weeks=interval_weeks)
+
+        additions = 0
+        event_date = anchor_date
+        while event_date < horizon_end:
+            existing = list(pdf_schedule.setdefault(event_date, ()))
+            if label not in existing:
+                existing.append(label)
+                pdf_schedule[event_date] = tuple(existing)
+                additions += 1
+
+            event_date += timedelta(weeks=interval_weeks)
+
+        if additions:
+            logger.debug(
+                "Augmented recurring schedule for %s every %s weeks (%s additions)",
+                label,
+                interval_weeks,
+                additions,
+            )
 
     def _extract_row_frequencies(self, rows):
         frequencies = []
@@ -336,12 +387,17 @@ class Source:
         pdf_schedule,
         current_collection_date,
         current_week_labels,
+        expected_weekday,
     ):
         # Prefer explicit dated anchors parsed from the PDF.
         dated_candidates = sorted(
             collection_date
             for collection_date, labels in pdf_schedule.items()
-            if label in labels and collection_date >= current_collection_date
+            if (
+                label in labels
+                and collection_date >= current_collection_date
+                and collection_date.weekday() == expected_weekday
+            )
         )
         if dated_candidates:
             return dated_candidates[0]
