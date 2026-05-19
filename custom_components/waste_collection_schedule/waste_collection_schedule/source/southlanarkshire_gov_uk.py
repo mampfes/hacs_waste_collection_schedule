@@ -4,7 +4,10 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "South Lanarkshire Council"
 DESCRIPTION = "Source for South Lanarkshire Council waste collection."
@@ -37,7 +40,8 @@ PARAM_DESCRIPTIONS = {
 }
 
 TEST_CASES = {
-    "Rutherglen": {"postcode": "G73 1UR", "uprn": 484000600},
+    "1 Clincarthill Road, Glasgow, G73 2LF": {"postcode": "G73 2LF", "uprn": 484129473},
+    "55 Chapel Court, Glasgow, G73 1UR": {"postcode": "G73 1UR", "uprn": 484000600},
     "Hamilton": {"postcode": "ML3 6QP", "uprn": 484073020},
     "Lanark": {"postcode": "ML11 9AB", "uprn": 484118513},
 }
@@ -60,6 +64,7 @@ class Source:
         if not token_input:
             raise RuntimeError("Could not find CSRF token on dashboard page")
         token = token_input["value"]
+        premises = self._extract_premises(resp.text)
 
         # Step 2: POST to SelectPrem to retrieve the collection schedule
         resp = session.post(
@@ -76,6 +81,17 @@ class Source:
         # Step 3: Extract the appointments JSON embedded in the response HTML
         appointments = self._extract_appointments(resp.text)
         if not appointments:
+            suggestions = [
+                f"{premise['Premises']} (UPRN {premise['UPRN']})"
+                for premise in premises
+                if isinstance(premise, dict)
+                and premise.get("Premises")
+                and premise.get("UPRN") is not None
+            ]
+            if suggestions:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "uprn", self._uprn, suggestions
+                )
             raise SourceArgumentNotFound("uprn", self._uprn)
 
         seen: set[tuple] = set()
@@ -101,8 +117,23 @@ class Source:
         and one for the scheduler appointments. The appointments block is
         identified by containing a "Subject" key in each entry.
         """
+        for data in Source._extract_data_sources(html):
+            if data and isinstance(data[0], dict) and "Subject" in data[0]:
+                return data
+        return []
+
+    @staticmethod
+    def _extract_premises(html: str) -> list:
+        for data in Source._extract_data_sources(html):
+            if data and isinstance(data[0], dict) and "Premises" in data[0]:
+                return data
+        return []
+
+    @staticmethod
+    def _extract_data_sources(html: str) -> list:
         marker = '"dataSource": ejs.data.DataUtil.parse.isJson('
         search_from = 0
+        data_sources = []
         while True:
             idx = html.find(marker, search_from)
             if idx == -1:
@@ -120,9 +151,9 @@ class Source:
                         break
             try:
                 data = json.loads(html[start:end])
-                if data and isinstance(data[0], dict) and "Subject" in data[0]:
-                    return data
+                if isinstance(data, list):
+                    data_sources.append(data)
             except (json.JSONDecodeError, IndexError):
                 pass
             search_from = idx + 1
-        return []
+        return data_sources

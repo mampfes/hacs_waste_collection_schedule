@@ -17,11 +17,20 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule.exceptions import SourceArgumentNotFound  # noqa: E402
+from waste_collection_schedule.exceptions import (  # noqa: E402
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.source import southlanarkshire_gov_uk  # noqa: E402
 
 _PREMISES_JSON = json.dumps(
-    [{"id": 576, "UPRN": 484000578, "Premises": "11 Chapel Court, Glasgow, G73 1UR"}]
+    [
+        {"id": 576, "UPRN": 484000600, "Premises": "55 Chapel Court, Glasgow, G73 1UR"},
+        {
+            "id": 577,
+            "UPRN": 484129473,
+            "Premises": "1 Clincarthill Road, Glasgow, G73 2LF",
+        },
+    ]
 )
 _APPOINTMENTS_JSON = json.dumps(
     [
@@ -61,6 +70,16 @@ SAMPLE_HTML = (
     + ")});"
     'new ejs.Schedule({"dataSource": ejs.data.DataUtil.parse.isJson('
     + _APPOINTMENTS_JSON
+    + ")});"
+    "</script></body></html>"
+)
+
+PREMISES_ONLY_HTML = (
+    "<!DOCTYPE html><html><head><title>Public Dashboard</title></head><body>"
+    '<input name="__RequestVerificationToken" value="test-csrf-token" type="hidden" />'
+    "<script>"
+    'new ejs.dropdowns.DropDownList({"dataSource": ejs.data.DataUtil.parse.isJson('
+    + _PREMISES_JSON
     + ")});"
     "</script></body></html>"
 )
@@ -145,13 +164,14 @@ def test_fetch_uses_correct_date(mock_session_cls, source):
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
 def test_fetch_raises_when_no_appointments_found(mock_session_cls, source):
-    empty_html = '<html><body><input name="__RequestVerificationToken" value="tok" /></body></html>'
     session = MagicMock()
-    session.get.return_value = MockResponse(text=empty_html)
-    session.post.return_value = MockResponse(text=empty_html)
+    session.get.return_value = MockResponse(text=PREMISES_ONLY_HTML)
+    session.post.return_value = MockResponse(text=PREMISES_ONLY_HTML)
     mock_session_cls.return_value = session
-    with pytest.raises(SourceArgumentNotFound):
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions) as excinfo:
         source.fetch()
+    assert "55 Chapel Court, Glasgow, G73 1UR" in str(excinfo.value)
+    assert "1 Clincarthill Road, Glasgow, G73 2LF" in str(excinfo.value)
 
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
