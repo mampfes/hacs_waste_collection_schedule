@@ -93,6 +93,7 @@ class Source:
         current_collection_date, bins_this_week = self._extract_current_week_context(
             soup, rows
         )
+        expected_weekday = current_collection_date.weekday()
 
         logger.debug(f"Bins this week from website: {bins_this_week}")
 
@@ -106,6 +107,9 @@ class Source:
         self._augment_schedule_from_table_frequencies(
             rows, pdf_schedule, current_collection_date, bins_this_week, logger
         )
+        pdf_schedule = self._filter_schedule_by_weekday(
+            pdf_schedule, expected_weekday, logger
+        )
 
         if not pdf_schedule:
             raise RuntimeError(
@@ -113,6 +117,23 @@ class Source:
             )
 
         return self._build_collections(pdf_schedule, current_collection_date, logger)
+
+    def _filter_schedule_by_weekday(self, schedule, expected_weekday, logger):
+        filtered = {
+            collection_date: labels
+            for collection_date, labels in schedule.items()
+            if collection_date.weekday() == expected_weekday
+        }
+
+        dropped = len(schedule) - len(filtered)
+        if dropped:
+            logger.debug(
+                "Dropped %s schedule date(s) that did not match collection weekday %s",
+                dropped,
+                expected_weekday,
+            )
+
+        return filtered
 
     def _validate_bin_details_present(self, soup):
         if soup.find("div", {"class": "bin-dir-snip"}):
