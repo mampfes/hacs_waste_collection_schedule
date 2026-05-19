@@ -63,7 +63,7 @@ class Source:
         soup = BeautifulSoup(resp.text, "html.parser")
         token_input = soup.find("input", {"name": "__RequestVerificationToken"})
         if not token_input:
-            raise RuntimeError("Could not find CSRF token on dashboard page")
+            raise ValueError("Could not find CSRF token on dashboard page")
         token = token_input["value"]
         # Step 2: POST to SelectPrem to retrieve the collection schedule
         resp = session.post(

@@ -5,6 +5,7 @@ from datetime import date
 from unittest.mock import MagicMock, patch
 
 import pytest
+from bs4 import BeautifulSoup
 
 sys.path.append(
     os.path.abspath(
@@ -18,6 +19,7 @@ sys.path.append(
 )
 
 from waste_collection_schedule.exceptions import (  # noqa: E402
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.source import southlanarkshire_gov_uk  # noqa: E402
@@ -211,3 +213,63 @@ def test_fetch_posts_to_select_prem_handler(mock_session_cls, source):
     assert call_kwargs[1]["data"]["SelectedPremises"] == "484000600"
     assert call_kwargs[1]["data"]["__RequestVerificationToken"] == "test-csrf-token"
     assert call_kwargs[1]["timeout"] == 30
+
+
+# =============================================================================
+# Negative-path tests (error handling)
+# =============================================================================
+
+
+@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
+def test_fetch_raises_when_csrf_token_missing(mock_session_cls, source):
+    """Test that ValueError is raised when CSRF token is missing from dashboard."""
+    session = MagicMock()
+    html_no_token = """
+    <html>
+    <body>
+        <form></form>
+    </body>
+    </html>
+    """
+    session.get.return_value = MockResponse(text=html_no_token)
+    mock_session_cls.return_value = session
+
+    with pytest.raises(ValueError, match="Could not find CSRF token"):
+        source.fetch()
+
+
+@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
+def test_fetch_raises_when_no_datasources_in_response(mock_session_cls, source):
+    """Test that SourceArgumentNotFound is raised when no dataSource blocks are found."""
+    session = MagicMock()
+    session.get.return_value = MockResponse(text=SAMPLE_HTML)
+    html_no_data = """
+    <html>
+    <body>
+        <form><input name="__RequestVerificationToken" value="token" /></form>
+    </body>
+    </html>
+    """
+    session.post.return_value = MockResponse(text=html_no_data)
+    mock_session_cls.return_value = session
+
+    with pytest.raises(SourceArgumentNotFound):
+        source.fetch()
+
+
+@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
+def test_fetch_raises_when_empty_appointments_with_suggestions(
+    mock_session_cls, source
+):
+    """Test that suggestions are provided when appointments are empty but premises exist."""
+    session = MagicMock()
+    session.get.return_value = MockResponse(text=SAMPLE_HTML)
+    session.post.return_value = MockResponse(text=PREMISES_ONLY_HTML)
+    mock_session_cls.return_value = session
+
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions) as exc_info:
+        source.fetch()
+
+    assert exc_info.value.argument == "uprn"
+    assert len(exc_info.value.suggestions) > 0
+    assert any("Chapel Court" in s for s in exc_info.value.suggestions)
