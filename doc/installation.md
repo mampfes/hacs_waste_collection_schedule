@@ -124,7 +124,7 @@ waste_collection_schedule:
 | type | string | required | The identity of the waste type as returned from the source  |
 | alias | string | optional | A more readable, or user-friendly, name for the type of waste being collected. Default is `None` |
 | show | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
-| icon | string | optional | Icon to use for this specific waste type. Icons from the Home Assistant mdi icon set can be used. Default is `None`. |
+| icon | string | optional | Icon to use for this specific waste type. Any [Material Design Icon](https://pictogrammers.com/library/mdi/) name in the form `mdi:icon-name` is accepted (e.g. `mdi:bottle-soda`). When omitted, the source's default icon is used — defaults follow the canonical [`Icons`](../custom_components/waste_collection_schedule/waste_collection_schedule/icons.py) catalogue so the same logical category looks consistent across sources. Set this to override the default for any single waste type. |
 | picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
 | use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
 | dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |

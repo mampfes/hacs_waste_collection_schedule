@@ -380,3 +380,46 @@ def test_ics_source_has_necessary_parameters():
             _test_source_has_necessary_parameters_extra_info(
                 data["extra_info"], f"ICS:{source}", init_params_names
             )
+
+
+# Sources permitted to use raw `mdi:*` string literals in their ICON_MAP.
+# Most sources should use the `Icons` enum from `waste_collection_schedule`
+# (see issue #2813 / canonical icon catalogue). This allowlist is for sources
+# that build ICON_MAP dynamically and cannot be statically checked.
+SOURCES_ALLOWED_RAW_ICONS: set[str] = set()
+
+
+def test_icon_map_uses_canonical_icons() -> None:
+    """ICON_MAP values must be ``Icons`` enum members, not raw ``mdi:*`` strings.
+
+    Skipped until the bulk migration (PR B) lands. The assertion exists now so
+    contributors can see what's expected and so the test infrastructure is in
+    place; enforcement flips on once every source has been migrated.
+    """
+    import pytest
+
+    pytest.skip(
+        "Pending bulk migration of all sources to Icons enum — see issue #2813."
+    )
+
+    # Reachable once the skip above is removed:
+    from waste_collection_schedule import Icons  # noqa: F401
+
+    sources = _get_sources()
+    for source in sources:
+        if source in SOURCES_ALLOWED_RAW_ICONS:
+            continue
+        module = _get_module(source)
+        icon_map = getattr(module, "ICON_MAP", None)
+        if icon_map is None:
+            continue
+        if not isinstance(icon_map, dict):
+            continue  # dynamically-built ICON_MAP — exempt via the allowlist if needed
+        for key, value in icon_map.items():
+            assert isinstance(value, Icons), (
+                f"ICON_MAP value for {key!r} in source {source} is "
+                f"{value!r}, expected an Icons enum member. "
+                "Use `from waste_collection_schedule import Icons` and "
+                "reference e.g. Icons.GENERAL_WASTE — see "
+                "custom_components/waste_collection_schedule/waste_collection_schedule/icons.py"
+            )
