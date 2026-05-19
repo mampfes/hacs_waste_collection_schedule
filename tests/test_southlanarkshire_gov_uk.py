@@ -51,6 +51,14 @@ _APPOINTMENTS_JSON = json.dumps(
             "IsAllDay": True,
         },
         {
+            "Id": 4,
+            "UPRN": 484000600,
+            "Subject": "Blue Bin",
+            "StartTime": "2026-04-27T00:00:00",
+            "EndTime": "2026-04-27T00:00:00",
+            "IsAllDay": True,
+        },
+        {
             "Id": 3,
             "UPRN": 484000600,
             "Subject": "Grey Bin",
@@ -112,7 +120,7 @@ def test_init_coerces_uprn_to_int():
 
 def test_extract_appointments_returns_appointments_block():
     appts = southlanarkshire_gov_uk.Source._extract_appointments(SAMPLE_HTML)
-    assert len(appts) == 3
+    assert len(appts) == 4
     assert appts[0]["Subject"] == "Black Bin"
 
 
@@ -135,9 +143,9 @@ def test_fetch_returns_collection_entries(mock_session_cls, source):
     session.post.return_value = MockResponse(text=SAMPLE_HTML)
     mock_session_cls.return_value = session
     entries = source.fetch()
-    assert len(entries) == 2
+    assert len(entries) == 3
     subjects = {e.type for e in entries}
-    assert subjects == {"Black Bin", "Grey Bin"}
+    assert subjects == {"Black Bin", "Grey Bin", "Blue Bin"}
 
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
@@ -163,6 +171,20 @@ def test_fetch_uses_correct_date(mock_session_cls, source):
 
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
+def test_fetch_sorts_entries_by_date_and_type(mock_session_cls, source):
+    session = MagicMock()
+    session.get.return_value = MockResponse(text=SAMPLE_HTML)
+    session.post.return_value = MockResponse(text=SAMPLE_HTML)
+    mock_session_cls.return_value = session
+    entries = source.fetch()
+    assert [(entry.date, entry.type) for entry in entries] == [
+        (date(2026, 4, 27), "Blue Bin"),
+        (date(2026, 4, 27), "Grey Bin"),
+        (date(2026, 5, 4), "Black Bin"),
+    ]
+
+
+@patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
 def test_fetch_raises_when_no_appointments_found(mock_session_cls, source):
     session = MagicMock()
     session.get.return_value = MockResponse(text=PREMISES_ONLY_HTML)
@@ -181,8 +203,11 @@ def test_fetch_posts_to_select_prem_handler(mock_session_cls, source):
     session.post.return_value = MockResponse(text=SAMPLE_HTML)
     mock_session_cls.return_value = session
     source.fetch()
+    get_call_kwargs = session.get.call_args
+    assert get_call_kwargs[1]["timeout"] == 30
     call_kwargs = session.post.call_args
     assert call_kwargs[1]["params"] == {"handler": "SelectPrem"}
     assert call_kwargs[1]["data"]["SelectedPostcode"] == "G73 1UR"
     assert call_kwargs[1]["data"]["SelectedPremises"] == "484000600"
     assert call_kwargs[1]["data"]["__RequestVerificationToken"] == "test-csrf-token"
+    assert call_kwargs[1]["timeout"] == 30

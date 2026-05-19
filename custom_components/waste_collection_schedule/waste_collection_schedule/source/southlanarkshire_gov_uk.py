@@ -15,6 +15,7 @@ URL = "https://wasteservices.southlanarkshire.gov.uk"
 COUNTRY = "uk"
 
 DASHBOARD_URL = "https://wasteservices.southlanarkshire.gov.uk/PublicDashboard"
+REQUEST_TIMEOUT = 30
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
@@ -56,7 +57,7 @@ class Source:
         session = requests.Session(impersonate="chrome")
 
         # Step 1: GET the dashboard to obtain the CSRF token
-        resp = session.get(DASHBOARD_URL)
+        resp = session.get(DASHBOARD_URL, timeout=REQUEST_TIMEOUT)
         resp.raise_for_status()
 
         soup = BeautifulSoup(resp.text, "html.parser")
@@ -64,8 +65,6 @@ class Source:
         if not token_input:
             raise RuntimeError("Could not find CSRF token on dashboard page")
         token = token_input["value"]
-        premises = self._extract_premises(resp.text)
-
         # Step 2: POST to SelectPrem to retrieve the collection schedule
         resp = session.post(
             DASHBOARD_URL,
@@ -75,8 +74,10 @@ class Source:
                 "SelectedPremises": str(self._uprn),
                 "__RequestVerificationToken": token,
             },
+            timeout=REQUEST_TIMEOUT,
         )
         resp.raise_for_status()
+        premises = self._extract_premises(resp.text)
 
         # Step 3: Extract the appointments JSON embedded in the response HTML
         appointments = self._extract_appointments(resp.text)
@@ -107,6 +108,7 @@ class Source:
                 seen.add(key)
                 entries.append(Collection(date=date, t=subject))
 
+        entries.sort(key=lambda entry: (entry.date, entry.type))
         return entries
 
     @staticmethod
