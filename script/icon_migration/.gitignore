@@ -1,5 +1,0 @@
-# Intermediate migration artefacts — regeneratable by re-running the scripts.
-# The review/classifications.tsv (committed) is the human audit trail.
-extracted/
-classified/
-needs_review/
