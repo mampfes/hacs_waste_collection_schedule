@@ -66,7 +66,11 @@ class Source:
         soup = BeautifulSoup(resp.text, "html.parser")
         token_input = soup.find("input", {"name": "__RequestVerificationToken"})
         if not token_input:
-            raise ValueError("Could not find CSRF token on dashboard page")
+            raise SourceArgumentNotFound(
+                "postcode",
+                self._postcode,
+                "could not load the South Lanarkshire dashboard form; the council site may have changed.",
+            )
         token = token_input["value"]
         # Step 2: POST to SelectPrem to retrieve the collection schedule
         resp = session.post(
@@ -123,7 +127,12 @@ class Source:
         identified by containing a "Subject" key in each entry.
         """
         for data in Source._extract_data_sources(html):
-            if data and isinstance(data[0], dict) and "Subject" in data[0]:
+            if (
+                data
+                and isinstance(data[0], dict)
+                and "Subject" in data[0]
+                and "StartTime" in data[0]
+            ):
                 return data
         return []
 
@@ -144,21 +153,12 @@ class Source:
             if idx == -1:
                 break
             start = idx + len(marker)
-            depth = 0
-            end = start
-            for i in range(start, len(html)):
-                if html[i] == "[":
-                    depth += 1
-                elif html[i] == "]":
-                    depth -= 1
-                    if depth == 0:
-                        end = i + 1
-                        break
             try:
-                data = json.loads(html[start:end])
+                decoder = json.JSONDecoder()
+                data, idx_after = decoder.raw_decode(html, idx=start)
                 if isinstance(data, list):
                     data_sources.append(data)
-            except (json.JSONDecodeError, IndexError):
+            except (json.JSONDecodeError, ValueError):
                 pass
             search_from = idx + 1
         return data_sources

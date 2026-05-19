@@ -222,7 +222,7 @@ def test_fetch_posts_to_select_prem_handler(mock_session_cls, source):
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
 def test_fetch_raises_when_csrf_token_missing(mock_session_cls, source):
-    """Test that ValueError is raised when CSRF token is missing from dashboard."""
+    """Test that SourceArgumentNotFound is raised when CSRF token is missing from dashboard."""
     session = MagicMock()
     html_no_token = """
     <html>
@@ -234,8 +234,9 @@ def test_fetch_raises_when_csrf_token_missing(mock_session_cls, source):
     session.get.return_value = MockResponse(text=html_no_token)
     mock_session_cls.return_value = session
 
-    with pytest.raises(ValueError, match="Could not find CSRF token"):
+    with pytest.raises(SourceArgumentNotFound) as exc_info:
         source.fetch()
+    assert exc_info.value.argument == "postcode"
 
 
 @patch("waste_collection_schedule.source.southlanarkshire_gov_uk.requests.Session")
@@ -273,3 +274,45 @@ def test_fetch_raises_when_empty_appointments_with_suggestions(
     assert exc_info.value.argument == "uprn"
     assert len(exc_info.value.suggestions) > 0
     assert any("Chapel Court" in s for s in exc_info.value.suggestions)
+
+
+def test_extract_data_sources_handles_brackets_in_strings():
+    """Test that JSON parsing handles brackets embedded in string values."""
+    html_with_embedded_brackets = (
+        "<!DOCTYPE html><html><body>"
+        '<script>"dataSource": ejs.data.DataUtil.parse.isJson('
+        "["
+        '{"id": 1, "name": "Street [Main]", "Subject": "Black Bin", "StartTime": "2026-05-04T00:00:00"}'
+        "]"
+        ");</script>"
+        "</body></html>"
+    )
+    data_sources = southlanarkshire_gov_uk.Source._extract_data_sources(
+        html_with_embedded_brackets
+    )
+    assert len(data_sources) == 1
+    assert data_sources[0][0]["name"] == "Street [Main]"
+
+
+def test_extract_appointments_requires_both_subject_and_starttime():
+    """Test that appointments must have both Subject and StartTime to be detected."""
+    # Create JSON with object that has Subject but no StartTime
+    incomplete_json = json.dumps(
+        [
+            {
+                "Id": 1,
+                "Subject": "Black Bin",
+                # Missing StartTime
+            }
+        ]
+    )
+    html_incomplete = (
+        "<!DOCTYPE html><html><body>"
+        '<script>"dataSource": ejs.data.DataUtil.parse.isJson('
+        + incomplete_json
+        + ")</script>"
+        "</body></html>"
+    )
+    appts = southlanarkshire_gov_uk.Source._extract_appointments(html_incomplete)
+    # Should return empty list because Subject alone is not enough
+    assert appts == []
