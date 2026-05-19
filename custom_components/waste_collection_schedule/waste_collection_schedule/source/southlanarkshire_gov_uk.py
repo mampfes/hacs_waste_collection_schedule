@@ -103,6 +103,9 @@ class Source:
         self._merge_current_week_if_missing(
             pdf_schedule, current_collection_date, bins_this_week, logger
         )
+        self._augment_schedule_from_table_frequencies(
+            rows, pdf_schedule, current_collection_date, bins_this_week, logger
+        )
 
         if not pdf_schedule:
             raise RuntimeError(
@@ -243,6 +246,115 @@ class Source:
             )
 
         return collections
+
+    def _augment_schedule_from_table_frequencies(
+        self,
+        rows,
+        pdf_schedule,
+        current_collection_date,
+        bins_this_week,
+        logger,
+    ):
+        """Backfill recurring dates from live table frequencies.
+
+        South Lanarkshire PDFs can expose date grids without reliably extractable
+        label context. Use table frequencies plus current-week labels (and any
+        dated PDF anchors) to maintain a complete forward schedule.
+        """
+        current_week_labels = set(self._extract_labels_from_texts(bins_this_week))
+        horizon_end = current_collection_date + timedelta(weeks=52)
+
+        for label, interval_weeks in self._extract_row_frequencies(rows):
+            anchor_date = self._find_label_anchor_date(
+                label,
+                interval_weeks,
+                pdf_schedule,
+                current_collection_date,
+                current_week_labels,
+            )
+            if anchor_date is None:
+                continue
+
+            while anchor_date < current_collection_date:
+                anchor_date += timedelta(weeks=interval_weeks)
+
+            additions = 0
+            event_date = anchor_date
+            while event_date < horizon_end:
+                existing = list(pdf_schedule.setdefault(event_date, ()))
+                if label not in existing:
+                    existing.append(label)
+                    pdf_schedule[event_date] = tuple(existing)
+                    additions += 1
+
+                event_date += timedelta(weeks=interval_weeks)
+
+            if additions:
+                logger.debug(
+                    "Augmented recurring schedule for %s every %s weeks (%s additions)",
+                    label,
+                    interval_weeks,
+                    additions,
+                )
+
+    def _extract_row_frequencies(self, rows):
+        frequencies = []
+
+        for row in rows:
+            th = row.find("th")
+            td = row.find("td")
+            if not th or not td:
+                continue
+
+            label = th.get_text(" ", strip=True)
+            schedule_text = td.get_text(" ", strip=True)
+
+            interval_weeks = self._frequency_to_weeks(schedule_text)
+            if interval_weeks is None:
+                continue
+
+            frequencies.append((label, interval_weeks))
+
+        return frequencies
+
+    def _frequency_to_weeks(self, schedule_text):
+        schedule_text_lower = str(schedule_text).lower()
+
+        if "weekly" in schedule_text_lower and "4 weekly" not in schedule_text_lower:
+            return 1
+        if "fortnightly" in schedule_text_lower:
+            return 2
+        if "4 weekly" in schedule_text_lower:
+            return 4
+
+        return None
+
+    def _find_label_anchor_date(
+        self,
+        label,
+        interval_weeks,
+        pdf_schedule,
+        current_collection_date,
+        current_week_labels,
+    ):
+        # Prefer explicit dated anchors parsed from the PDF.
+        dated_candidates = sorted(
+            collection_date
+            for collection_date, labels in pdf_schedule.items()
+            if label in labels and collection_date >= current_collection_date
+        )
+        if dated_candidates:
+            return dated_candidates[0]
+
+        # Otherwise anchor from current week if this stream is listed this week.
+        if label in current_week_labels:
+            return current_collection_date
+
+        # For alternating fortnightly streams, the opposite phase is next week.
+        if interval_weeks == 2:
+            return current_collection_date + timedelta(days=7)
+
+        return None
 
     def _resolve_pdf_url(self, logger):
         """Return a currently valid PDF URL for the selected calendar.
