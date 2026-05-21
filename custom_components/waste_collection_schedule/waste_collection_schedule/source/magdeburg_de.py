@@ -1,7 +1,7 @@
 import re
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -31,10 +31,10 @@ EXTRA_INFO = [
 ]
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Altpapier": "mdi:package-variant",
-    "Gelbe Tonne": "mdi:recycle",
-    "Bioabfall": "mdi:leaf",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Altpapier": Icons.PAPER,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Bioabfall": Icons.BIO_KITCHEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

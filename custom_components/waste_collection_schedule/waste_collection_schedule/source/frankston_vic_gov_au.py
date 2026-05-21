@@ -2,7 +2,7 @@ import time
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.Pozi import PoziGeoJsonError, query_geojson_zones
 
 TITLE = "Frankston City Council"  # Title will show up in README.md and info.md
@@ -21,10 +21,10 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 
 API_URL = "https://www.frankston.vic.gov.au/My-Property/Waste-and-recycling/My-bins/Bin-collections"
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
-    "Glass": "mdl:glass-fragile",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green Waste": Icons.GARDEN,
+    "Glass": Icons.GLASS,
 }
 
 

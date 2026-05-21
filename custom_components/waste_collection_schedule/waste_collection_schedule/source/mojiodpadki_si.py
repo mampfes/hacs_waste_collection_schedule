@@ -3,7 +3,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Moji odpadki, Ljubljana"
 DESCRIPTION = "Source script for mojiodpadki.si"
@@ -14,10 +14,10 @@ TEST_CASES = {
 
 API_URL = "https://www.mojiodpadki.si/urniki/urniki-odvoza-odpadkov"
 ICON_MAP = {
-    "MKO": "mdi:trash-can",  # unsorted waste
-    "EMB": "mdi:recycle",  # packaging waste
-    "BIO": "mdi:leaf",  # biodegradable waste
-    "PAP": "mdi:newspaper",  # paper waste
+    "MKO": Icons.GENERAL_WASTE,
+    "EMB": Icons.RECYCLING,
+    "BIO": Icons.ORGANIC,
+    "PAP": Icons.PAPER,
 }
 
 # month names from mojiodpadki.si (sl_SI)

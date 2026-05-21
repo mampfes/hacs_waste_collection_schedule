@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North Kesteven District Council"
 DESCRIPTION = (
@@ -17,10 +17,10 @@ TEST_CASES = {
     "Test_005": {"uprn": 10006507163},
 }
 ICON_MAP = {
-    "BLACK": "mdi:trash-can",
-    "GREEN": "mdi:recycle",
-    "PURPLE": "mdi:newspaper",
-    "BROWN": "mdi:leaf",
+    "BLACK": Icons.GENERAL_WASTE,
+    "GREEN": Icons.RECYCLING,
+    "PURPLE": Icons.NEWSPAPER,
+    "BROWN": Icons.ORGANIC,
 }
 
 

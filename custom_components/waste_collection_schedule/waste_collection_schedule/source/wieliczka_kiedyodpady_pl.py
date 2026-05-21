@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Wieliczka Kiedy Odpady"
@@ -22,15 +22,15 @@ ORIGIN = "https://wieliczka.kiedyodpady.pl"
 DEFAULT_DAYS = 35
 
 ICON_MAP = {
-    "bio": "mdi:leaf",
-    "papier": "mdi:package-variant",
-    "metale": "mdi:recycle",
-    "tworzywa": "mdi:recycle",
-    "szkło": "mdi:bottle-soda",
-    "zmieszane": "mdi:trash-can",
-    "gabaryt": "mdi:sofa",
-    "choinka": "mdi:pine-tree",
-    "odpady zielone": "mdi:leaf",
+    "bio": Icons.ORGANIC,
+    "papier": Icons.PAPER,
+    "metale": Icons.METAL,
+    "tworzywa": Icons.RECYCLING,
+    "szkło": Icons.GLASS,
+    "zmieszane": Icons.GENERAL_WASTE,
+    "gabaryt": Icons.BULKY,
+    "choinka": Icons.CHRISTMAS_TREE,
+    "odpady zielone": Icons.GARDEN,
 }
 
 PARAM_TRANSLATIONS = {

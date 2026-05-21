@@ -3,7 +3,7 @@ import logging
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Manchester City Council"
 DESCRIPTION = "Source for bin collection services for Manchester City Council, UK."
@@ -21,10 +21,10 @@ AUTH_URL = "https://manchester.form.uk.empro.verintcloudservices.com/api/citizen
 AUTH_KEY = "Authorization"
 
 ICON_MAP = {
-    "ahtm_dates_black_bin": "mdi:trash-can",
-    "ahtm_dates_blue_pulpable_bin": "package-variant",
-    "ahtm_dates_brown_commingled_bin": "mdi:recycle",
-    "ahtm_dates_green_organic_bin": "mdi:leaf",
+    "ahtm_dates_black_bin": Icons.GENERAL_WASTE,
+    "ahtm_dates_blue_pulpable_bin": Icons.PAPER,
+    "ahtm_dates_brown_commingled_bin": Icons.RECYCLING,
+    "ahtm_dates_green_organic_bin": Icons.ORGANIC,
 }
 
 COLLECTION_MAP = {

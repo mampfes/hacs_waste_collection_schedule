@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Müllabfuhr Deutschland"
@@ -26,10 +26,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "gelbe Tonne/Leichtverpackungen": "mdi:recycle",
-    "Papier": "mdi:package-variant",
-    "Biomüll": "mdi:leaf",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "gelbe Tonne/Leichtverpackungen": Icons.PLASTIC_PACKAGING,
+    "Papier": Icons.PAPER,
+    "Biomüll": Icons.BIO_KITCHEN,
 }
 
 PARAM_TRANSLATIONS = {

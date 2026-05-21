@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Shire of Harvey"
@@ -25,9 +25,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "FOGO": "mdi:leaf",
-    "Recycling": "mdi:recycle",
-    "General Waste": "mdi:trash-can",
+    "FOGO": Icons.BIO_KITCHEN,
+    "Recycling": Icons.RECYCLING,
+    "General Waste": Icons.GENERAL_WASTE,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

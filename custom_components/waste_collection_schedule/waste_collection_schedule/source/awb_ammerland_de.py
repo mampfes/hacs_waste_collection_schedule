@@ -3,7 +3,7 @@ import json
 from typing import Optional
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -30,12 +30,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Bioabfall": "mdi:leaf",
-    "Gelber Sack": "mdi:recycle",
-    "Papier": "mdi:package-variant",
-    "Ast- und Strauchwerk": "mdi:tree",
-    "Problemstoffe": "mdi:biohazard",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Papier": Icons.PAPER,
+    "Ast- und Strauchwerk": Icons.GARDEN,
+    "Problemstoffe": Icons.HAZARDOUS,
 }
 
 PARAM_TRANSLATIONS = {

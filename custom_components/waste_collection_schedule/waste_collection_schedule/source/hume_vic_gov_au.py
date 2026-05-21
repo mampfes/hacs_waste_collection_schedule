@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Hume City Council"
@@ -34,9 +34,9 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food and garden": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food and garden": Icons.BIO_KITCHEN,
 }
 
 

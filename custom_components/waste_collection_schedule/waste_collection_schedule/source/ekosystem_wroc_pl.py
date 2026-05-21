@@ -5,7 +5,7 @@ import re
 from urllib.parse import parse_qsl, urlencode, urlparse
 from urllib.request import Request, urlopen
 
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Wrocław"
 DESCRIPTION = "Source for ekosystem.wroc.pl for Wrocław, Poland"
@@ -16,11 +16,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "zmieszane": "mdi:trash-can",  # Mixed
-    "tworzywa": "mdi:recycle",  # Plastic
-    "BIO": "mdi:leaf",  # Organic
-    "papier": "mdi:file-outline",  # Paper
-    "szkło": "mdi:glass-fragile",  # Glass
+    "zmieszane": Icons.GENERAL_WASTE,
+    "tworzywa": Icons.RECYCLING,
+    "BIO": Icons.ORGANIC,
+    "papier": Icons.PAPER,
+    "szkło": Icons.GLASS,
 }
 
 API_URL = "https://ekosystem.wroc.pl/wp-admin/admin-ajax.php"

@@ -2,7 +2,7 @@ import datetime
 from typing import Any, Dict, List, Tuple
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
@@ -37,22 +37,22 @@ BASE_URL = "https://www.apricaspa.it"
 API_URL = BASE_URL + "/it?popup=services&serviceType=sdz"
 
 ICON_MAP = {
-    "indifferenziato": "mdi:trash-can",
-    "organico": "mdi:leaf",
-    "carta e cartone": "mdi:package-variant",
-    "carta": "mdi:package-variant",
-    "plastica": "mdi:recycle",
-    "plastica e metallo": "mdi:recycle",
-    "imballaggi in plastica e metallo": "mdi:recycle",
-    "imballaggi in plastica": "mdi:recycle",
-    "vetro": "mdi:bottle-soda",
-    "vetro e metallo": "mdi:bottle-soda",
-    "vetro e metalli": "mdi:bottle-soda",
-    "vetro e lattine": "mdi:bottle-soda",
-    "sfalci e potature": "mdi:tree",
-    "verde": "mdi:tree",
-    "tessili sanitari": "mdi:baby-carriage",
-    "pannolini": "mdi:baby-carriage",
+    "indifferenziato": Icons.GENERAL_WASTE,
+    "organico": Icons.BIO_KITCHEN,
+    "carta e cartone": Icons.PAPER,
+    "carta": Icons.PAPER,
+    "plastica": Icons.RECYCLING,
+    "plastica e metallo": Icons.METAL,
+    "imballaggi in plastica e metallo": Icons.METAL,
+    "imballaggi in plastica": Icons.RECYCLING,
+    "vetro": Icons.GLASS,
+    "vetro e metallo": Icons.GLASS,
+    "vetro e metalli": Icons.GLASS,
+    "vetro e lattine": Icons.GLASS,
+    "sfalci e potature": Icons.GARDEN,
+    "verde": Icons.GARDEN,
+    "tessili sanitari": Icons.TEXTILE,
+    "pannolini": Icons.GENERAL_WASTE,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

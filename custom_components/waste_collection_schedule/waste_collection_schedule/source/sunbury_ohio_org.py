@@ -4,14 +4,14 @@ from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Village of Sunbury, Ohio"
 DESCRIPTION = "Source for Village of Sunbury, Ohio"
 URL = "https://www.sunburyohio.org"
 TEST_CASES: dict[str, dict] = {"TEST": {}}
 ICON_MAP = {
-    "Waste": "mdi:trash-can",
+    "Waste": Icons.GENERAL_WASTE,
 }
 COUNTRY = "us"
 DAYS = {

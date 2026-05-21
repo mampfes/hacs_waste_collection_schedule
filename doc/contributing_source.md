@@ -24,7 +24,7 @@ The script should have the following general structure
 
 ```py
 import datetime
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "My Council" # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for abc.com"  # Describe your source
@@ -36,10 +36,10 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 }
 
 API_URL = "https://abc.com/search/"
-ICON_MAP = {   # Optional: Dict of waste types and suitable mdi icons
-    "DOMESTIC": "mdi:trash-can",
-    "RECYCLE": "mdi:recycle",
-    "ORGANIC": "mdi:leaf",
+ICON_MAP = {   # Optional: Dict of waste types mapped to canonical Icons
+    "DOMESTIC": Icons.GENERAL_WASTE,
+    "RECYCLE": Icons.RECYCLING,
+    "ORGANIC": Icons.ORGANIC,
 }
 
 #### Arguments affecting the configuration GUI ####
@@ -126,6 +126,55 @@ Filtering of data for waste types or time periods is a functionality of the fram
 - A source script should  **not** provide options to limit the returned waste types.
 - A source script should return all data for the entire time period available (including past dates if they are returned).
 - A source script should  **not** provide a configuration option to limit the requested time frame.
+
+### Icons
+
+The integration ships with a **canonical icon catalogue** so the same logical waste category looks the same across all ~600 sources. The catalogue lives at [`custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`](../custom_components/waste_collection_schedule/waste_collection_schedule/icons.py) and is exposed as the `Icons` enum.
+
+**Use the enum for `ICON_MAP` values:**
+
+```py
+from waste_collection_schedule import Collection, Icons
+
+ICON_MAP = {
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Papier":   Icons.PAPER,
+    "Bio":      Icons.BIO_KITCHEN,
+}
+```
+
+Members are `StrEnum` values, so `Icons.GENERAL_WASTE == "mdi:trash-can"` and `str(Icons.GENERAL_WASTE) == "mdi:trash-can"` — anywhere the framework expects a raw MDI string, an `Icons` member also works.
+
+**Why standardise?** Before the catalogue, contributors picked their own MDI icon per source. Glass ended up as `mdi:bottle-soda` in some sources and `mdi:glass-fragile` in others; food as `mdi:food`, `mdi:food-apple`, or `mdi:leaf`. A user who has two sources configured would see the same logical category rendered differently in HA. Issue [#2813](https://github.com/mampfes/hacs_waste_collection_schedule/issues/2813) tracks the standardisation.
+
+**When can I add a new entry to the catalogue?**
+
+Only when **both** of these are true:
+
+1. Your provider returns a waste category that genuinely doesn't fit **any** existing member.
+2. The category is general enough that other sources are likely to use it too (not a one-off).
+
+The process:
+
+1. Open an issue first — propose the new member name, the MDI icon, and 2-3 example providers that would use it. Don't write the code yet.
+2. Wait for maintainer agreement on the name and the icon — the catalogue is deliberately small, and a quick design discussion avoids near-duplicate entries (e.g. `KITCHEN_FOOD` vs `BIO_KITCHEN`).
+3. Once agreed, the maintainer (or you, with their go-ahead) adds the member to `icons.py` in a small, separate PR. Then your source PR can land using the new member.
+
+**Do not add a raw `"mdi:..."` string to `ICON_MAP`** just to skip this conversation. The pytest assertion will fail it.
+
+**Personal preference is not a reason to add to the catalogue.** If you'd just rather see `mdi:tree-outline` than `mdi:leaf` for garden waste, that's what the per-user override is for — see [Attributes for _customize_](installation.md#attributes-for-customize) in the installation docs. Any user can override the icon for any waste type without touching source code:
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: my_source
+      args: { ... }
+      customize:
+        - type: "Garden waste"
+          icon: mdi:tree-outline
+```
+
+GUI users get a Home Assistant icon picker that does the same thing. So if it's only your taste, override it on your own install — don't change every user's defaults.
 
 ### Exceptions
 

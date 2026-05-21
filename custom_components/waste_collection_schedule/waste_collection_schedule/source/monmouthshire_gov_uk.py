@@ -4,7 +4,7 @@ from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
@@ -24,12 +24,12 @@ TEST_CASES = {
 API_URL = "https://maps.monmouthshire.gov.uk/localinfo.aspx"
 
 ICON_MAP = {
-    "Blue food bin": "mdi:food",
-    "Garden Waste Bins": "mdi:leaf",
-    "Green Glass Box": "mdi:glass-fragile",
-    "Household rubbish bag": "mdi:trash-can",
-    "Red & purple recycling bags": "mdi:recycling",
-    "Yellow nappy & hygiene waste bag": "mdi:diaper-outline",
+    "Blue food bin": Icons.BIO_KITCHEN,
+    "Garden Waste Bins": Icons.GARDEN,
+    "Green Glass Box": Icons.GLASS,
+    "Household rubbish bag": Icons.GENERAL_WASTE,
+    "Red & purple recycling bags": Icons.RECYCLING,
+    "Yellow nappy & hygiene waste bag": Icons.GENERAL_WASTE,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

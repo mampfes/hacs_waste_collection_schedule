@@ -3,7 +3,7 @@ from datetime import date
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -30,10 +30,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Grey bin": "mdi:trash-can",
-    "Red bin": "mdi:recycle",
-    "Green bin": "mdi:leaf",
-    "Food waste": "mdi:food",
+    "Grey bin": Icons.GENERAL_WASTE,
+    "Red bin": Icons.RECYCLING,
+    "Green bin": Icons.ORGANIC,
+    "Food waste": Icons.BIO_KITCHEN,
 }
 
 PARAM_TRANSLATIONS = {

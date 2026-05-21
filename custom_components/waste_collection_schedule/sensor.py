@@ -33,7 +33,7 @@ from .const import (
     UPDATE_SENSORS_SIGNAL,
 )
 from .waste_collection_api import WasteCollectionApi
-from .waste_collection_schedule import Collection, CollectionGroup
+from .waste_collection_schedule import Collection, CollectionGroup, Icons
 from .wcs_coordinator import WCSCoordinator
 
 # fmt: on
@@ -291,7 +291,7 @@ class ScheduleSensor(SensorEntity):
         """Set entity state with default format."""
         if len(upcoming) == 0:
             self._value = None
-            self._attr_icon = "mdi:trash-can"
+            self._attr_icon = Icons.GENERAL_WASTE
             self._attr_entity_picture = None
             return
 
@@ -307,7 +307,7 @@ class ScheduleSensor(SensorEntity):
                 f"{self._separator.join(collection.types)} in {collection.daysTo} days"
             )
 
-        self._attr_icon = collection.icon or "mdi:trash-can"
+        self._attr_icon = collection.icon or Icons.GENERAL_WASTE
         self._attr_entity_picture = collection.picture
 
     def _render_date(self, collection: Collection):

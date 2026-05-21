@@ -3,7 +3,7 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Chichester District Council"
 DESCRIPTION = "Source for chichester.gov.uk services for Chichester"
@@ -16,9 +16,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Recycling": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Recycling": Icons.GARDEN,
 }
 
 

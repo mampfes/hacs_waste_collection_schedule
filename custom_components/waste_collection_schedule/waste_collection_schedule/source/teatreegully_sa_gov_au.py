@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Tea Tree Gully"
@@ -15,9 +15,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Organics": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Organics": Icons.ORGANIC,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

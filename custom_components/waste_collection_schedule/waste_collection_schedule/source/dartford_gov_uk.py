@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Dartford Borough Council"
 DESCRIPTION = "Source for Dartford Borough Council."
@@ -13,9 +13,9 @@ TEST_CASES: dict = {
     "Test_003": {"uprn": "200000540020"},
 }
 HEADERS: dict = {"user-agent": "Mozilla/5.0"}
-ICON_MAP: dict = {
-    "RECYCLING": "mdi:recycle",
-    "REFUSE": "mdi:trash-can",
+ICON_MAP = {
+    "RECYCLING": Icons.RECYCLING,
+    "REFUSE": Icons.GENERAL_WASTE,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {

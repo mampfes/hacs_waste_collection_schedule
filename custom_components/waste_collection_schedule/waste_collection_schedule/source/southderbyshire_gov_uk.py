@@ -3,7 +3,7 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "South Derbyshire District Council"
@@ -17,10 +17,10 @@ TEST_CASES = {
 API_URL = "https://maps.southderbyshire.gov.uk/iShareLIVE.web/getdata.aspx?RequestType=LocalInfo&ms=mapsources/MyHouse&format=JSON&group=Recycling%20Bins%20and%20Waste|Next%20Bin%20Collections&uid="
 
 ICON_MAP = {
-    "Black": "mdi:trash-can",
-    "Green": "mdi:recycle",
-    "Brown": "mdi:leaf",
-    "Podback": "mdi:coffee",
+    "Black": Icons.GENERAL_WASTE,
+    "Green": Icons.RECYCLING,
+    "Brown": Icons.ORGANIC,
+    "Podback": Icons.BIO_KITCHEN,
 }
 
 

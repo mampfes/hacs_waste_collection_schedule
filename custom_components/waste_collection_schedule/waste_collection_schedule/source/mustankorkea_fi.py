@@ -2,7 +2,7 @@ from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule import exceptions as exc
 
 TITLE = "Mustankorkea"
@@ -20,13 +20,8 @@ TEST_CASES = {
     },
 }
 ICON_MAP = {
-    "SEKA": "mdi:trash-can",
-    "BIO": "mdi:leaf",
-    # Unsure about these
-    # "MUO": "mdi:delete-variant",
-    # "KAR": "mdi:package-variant",
-    # "LAS": "mdi:glass-wine",
-    # "MET": "mdi:tools",
+    "SEKA": Icons.GENERAL_WASTE,
+    "BIO": Icons.ORGANIC,
 }
 
 API_URL = "https://oma.mustankorkea.fi/api"

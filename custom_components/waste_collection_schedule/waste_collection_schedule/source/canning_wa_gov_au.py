@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of Canning (WA)"
 DESCRIPTION = "Source for City of Canning, Western Australia"
@@ -14,9 +14,9 @@ TEST_CASES = {
 }
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 ICON_MAP = {
-    "Rubbish": "trash-can",
-    "Recycling": "mdi:recycle",
-    "Green": "mdi:leaf",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green": Icons.ORGANIC,
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
     "en": "Your address, as it is displayed on the website when showing your collection schedule. Note: There are usually two whitespace characters between the suburb and postal code.",

@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Ballarat"
@@ -26,9 +26,9 @@ WASTE_NAMES = {
 }
 
 ICON_MAP = {
-    "waste": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "green": "mdi:leaf",
+    "waste": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "green": Icons.ORGANIC,
 }
 
 

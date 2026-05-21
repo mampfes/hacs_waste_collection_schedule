@@ -4,7 +4,7 @@ from urllib.parse import quote
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Campbelltown City Council (NSW)"
 DESCRIPTION = "Source for Campbelltown City Council rubbish collection."
@@ -36,9 +36,9 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green Waste": Icons.GARDEN,
 }
 
 

@@ -6,7 +6,7 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Gateshead Council"
 DESCRIPTION = "Source for gateshead.gov.uk services for Gateshead"
@@ -19,9 +19,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Household": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
+    "Household": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
 }
 
 

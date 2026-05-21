@@ -4,7 +4,7 @@ from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Vale of Glamorgan Council"
 DESCRIPTION = "Source for Vale of Glamorgan Council."
@@ -16,11 +16,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Food": "mdi:food",
-    "Garden": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Recycle": "mdi:recycle",
+    "Trash": Icons.GENERAL_WASTE,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
+    "Paper": Icons.PAPER,
+    "Recycle": Icons.RECYCLING,
 }
 
 WEEKDAYS = [

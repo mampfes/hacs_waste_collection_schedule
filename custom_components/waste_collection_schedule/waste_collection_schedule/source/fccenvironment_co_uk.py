@@ -5,7 +5,7 @@ import requests
 import urllib3
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -54,9 +54,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
 }
 
 

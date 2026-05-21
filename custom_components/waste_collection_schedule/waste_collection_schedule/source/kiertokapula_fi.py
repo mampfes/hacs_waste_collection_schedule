@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Kiertokapula Finland"
 DESCRIPTION = "Schedule for kiertokapula FI"
@@ -14,12 +14,12 @@ TEST_CASES = {
     }
 }
 ICON_MAP = {
-    "SEK": "mdi:trash-can",
-    "MUO": "mdi:delete-variant",
-    "KAR": "mdi:package-variant",
-    "LAS": "mdi:glass-wine",
-    "MET": "mdi:tools",
-    "BIO": "mdi:leaf",
+    "SEK": Icons.GENERAL_WASTE,
+    "MUO": Icons.GENERAL_WASTE,
+    "KAR": Icons.PAPER,
+    "LAS": Icons.GLASS_COLORED,
+    "MET": Icons.METAL,
+    "BIO": Icons.ORGANIC,
 }
 NAME_DEF = {
     "SEK": "Sekajäte",

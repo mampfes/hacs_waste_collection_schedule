@@ -3,7 +3,7 @@ import re
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of Doncaster Council"
 DESCRIPTION = (
@@ -18,11 +18,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "GREEN": "mdi:leaf",
-    "RECYCLING": "mdi:recycle",
-    "BLACK": "mdi:trash-can",
-    "BULKY": "mdi:fridge",
-    "RE-USE": "mdi:sofa",
+    "GREEN": Icons.ORGANIC,
+    "RECYCLING": Icons.RECYCLING,
+    "BLACK": Icons.GENERAL_WASTE,
+    "BULKY": Icons.BULKY,
+    "RE-USE": Icons.BULKY,
 }
 
 REGEX_DATE = r"\(([0-9]{10})"

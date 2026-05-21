@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Wollongong City Council"
 DESCRIPTION = "Source script for wollongongwaste.com.au"
@@ -12,9 +12,9 @@ TEST_CASES = {"TestName1": {"propertyID": "21444"}}
 API_URL = "https://wollongong.waste-info.com.au/api/v1/properties/"
 
 ICON_MAP = {
-    "waste": "mdi:trash-can",
-    "organic": "mdi:leaf",
-    "recycle": "mdi:recycle",
+    "waste": Icons.GENERAL_WASTE,
+    "organic": Icons.ORGANIC,
+    "recycle": Icons.RECYCLING,
 }
 
 

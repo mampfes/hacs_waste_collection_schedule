@@ -6,7 +6,7 @@ from typing import List
 from xml.etree import ElementTree
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -51,12 +51,12 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    "Hauskehricht": "mdi:trash-can",
-    "Grünabfuhr/Bioabfall": "mdi:leaf",
-    "Häckseldienst": "mdi:chainsaw",
-    "Papier": "mdi:newspaper-variant-outline",
-    "Karton": "mdi:package-variant",
-    "Metalle": "mdi:nail",
+    "Hauskehricht": Icons.GENERAL_WASTE,
+    "Grünabfuhr/Bioabfall": Icons.BIO_KITCHEN,
+    "Häckseldienst": Icons.GARDEN,
+    "Papier": Icons.PAPER,
+    "Karton": Icons.PAPER,
+    "Metalle": Icons.METAL,
 }
 
 

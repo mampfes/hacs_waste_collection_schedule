@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Rhondda Cynon Taf County Borough Council"
 DESCRIPTION = "Source for rctcbc.gov.uk services for Rhondda Cynon Taf County Borough Council, Wales, UK"
@@ -13,10 +13,10 @@ TEST_CASES = {
     "Test_003": {"uprn": 100100733093},
 }
 ICON_MAP = {
-    "BLACK BAGS": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "FOOD WASTE": "mdi:food",
-    "GARDEN WASTE": "mdi:leaf",
+    "BLACK BAGS": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
+    "GARDEN WASTE": Icons.GARDEN,
 }
 
 

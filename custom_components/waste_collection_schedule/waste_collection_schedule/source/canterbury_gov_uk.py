@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -30,10 +30,10 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "General": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food": "mdi:food-apple",
-    "Garden": "mdi:shovel",
+    "General": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
 }
 
 _LOGGER = logging.getLogger(__name__)

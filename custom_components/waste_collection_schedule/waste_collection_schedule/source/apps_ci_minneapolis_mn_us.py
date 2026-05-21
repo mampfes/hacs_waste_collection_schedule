@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
@@ -20,10 +20,10 @@ TEST_CASES = {
 
 # https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx?AppID=RecycleFinderApp&apn=0902824440154
 API_URL = "https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx"
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "DOMESTIC": "mdi:trash-can",
-    "RECYCLE": "mdi:recycle",
-    "ORGANIC": "mdi:leaf",
+ICON_MAP = {
+    "DOMESTIC": Icons.GENERAL_WASTE,
+    "RECYCLE": Icons.RECYCLING,
+    "ORGANIC": Icons.ORGANIC,
 }
 
 

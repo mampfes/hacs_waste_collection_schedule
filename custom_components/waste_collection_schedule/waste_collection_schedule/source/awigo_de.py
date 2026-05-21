@@ -3,7 +3,7 @@ import urllib
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -21,11 +21,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restmülltonne": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bio-Tonne": "mdi:leaf",
-    "Papiermülltonne": "mdi:package-variant",
-    "Gelbe Tonne/Gelben Sack": "mdi:recycle",
+    "Restmülltonne": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bio-Tonne": Icons.ORGANIC,
+    "Papiermülltonne": Icons.PAPER,
+    "Gelbe Tonne/Gelben Sack": Icons.PLASTIC_PACKAGING,
 }
 
 

@@ -2,7 +2,7 @@ import re
 from datetime import date
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Darlington Borough Council"
 DESCRIPTION = "Source for Darlington Borough Council."
@@ -16,9 +16,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Recycle": "mdi:recycle",
-    "Refuse": "mdi:trash-can",
-    "GARDEN": "mdi:leaf",
+    "Recycle": Icons.RECYCLING,
+    "Refuse": Icons.GENERAL_WASTE,
+    "GARDEN": Icons.GARDEN,
 }
 
 

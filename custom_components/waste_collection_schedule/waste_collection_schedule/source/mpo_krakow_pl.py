@@ -5,7 +5,7 @@ from io import BytesIO
 
 import requests
 from pypdf import PdfReader
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentRequired,
@@ -29,13 +29,13 @@ API_URL = "https://kiedywywoz.pl/API/harmo_img/"
 TOKEN = "OkkxhC6b9etJBAq7WTHJ0LhIglO18sip"
 
 ICON_MAP = {
-    "Zmieszane": "mdi:trash-can",
-    "Szkło": "mdi:bottle-wine",
-    "Papier": "mdi:package-variant",
-    "Tworzywa sztuczne": "mdi:recycle",
-    "Bio": "mdi:bio",
-    "Zielone": "mdi:leaf",
-    "Choinki": "mdi:pine-tree",
+    "Zmieszane": Icons.GENERAL_WASTE,
+    "Szkło": Icons.GLASS,
+    "Papier": Icons.PAPER,
+    "Tworzywa sztuczne": Icons.RECYCLING,
+    "Bio": Icons.ORGANIC,
+    "Zielone": Icons.GARDEN,
+    "Choinki": Icons.CHRISTMAS_TREE,
 }
 
 

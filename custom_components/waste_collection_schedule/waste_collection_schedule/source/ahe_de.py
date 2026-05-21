@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -17,10 +17,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Bioabfall": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Gelber Sack": "mdi:recycle",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Papier": Icons.PAPER,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

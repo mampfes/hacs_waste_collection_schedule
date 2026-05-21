@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "East Cambridgeshire District Council"
 DESCRIPTION = "Source for eastcambs.gov.uk, East Cambridgeshire District Council, UK"
@@ -14,9 +14,9 @@ TEST_CASES = {
 API_URL = "https://eastcambs-self.achieveservice.com/appshost/firmstep/self/apps/custompage/bincollections?uprn={uprn}"
 
 ICON_MAP = {
-    "Black Bag": "mdi:trash-can",
-    "Blue Bin": "mdi:recycle",
-    "Green or Brown Bin": "mdi:leaf",
+    "Black Bag": Icons.GENERAL_WASTE,
+    "Blue Bin": Icons.RECYCLING,
+    "Green or Brown Bin": Icons.BIO_KITCHEN,
 }
 
 

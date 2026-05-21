@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "ASM Pavia"
@@ -22,17 +22,17 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "umido": "mdi:leaf",
-    "carta": "mdi:paper-roll",
-    "cartone": "mdi:paper-roll",
-    "secco": "mdi:trash-can",
-    "indifferenziato": "mdi:trash-can",
-    "vetro": "mdi:bottle-soda",
-    "plastica": "mdi:recycle",
-    "multimateriale": "mdi:recycle",
-    "verde": "mdi:tree",
-    "sfalci": "mdi:tree",
-    "ingombranti": "mdi:sofa",
+    "umido": Icons.BIO_KITCHEN,
+    "carta": Icons.PAPER,
+    "cartone": Icons.PAPER,
+    "secco": Icons.GENERAL_WASTE,
+    "indifferenziato": Icons.GENERAL_WASTE,
+    "vetro": Icons.GLASS,
+    "plastica": Icons.RECYCLING,
+    "multimateriale": Icons.RECYCLING,
+    "verde": Icons.GARDEN,
+    "sfalci": Icons.GARDEN,
+    "ingombranti": Icons.BULKY,
 }
 
 PARAM_DESCRIPTIONS = {

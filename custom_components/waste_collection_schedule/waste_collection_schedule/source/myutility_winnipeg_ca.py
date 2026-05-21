@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 # Constants for the Winnipeg Utility Billing Service
@@ -17,9 +17,9 @@ API_URL = "https://myutility.winnipeg.ca/UtilityBillingService/CollectionManagem
 
 # Mapping icons to different waste types for visual representation
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "Garbage": "mdi:trash-can",
-    "Yard Waste": "mdi:leaf",  # Icon for "Yard Waste"
+    "Recycling": Icons.RECYCLING,
+    "Garbage": Icons.GENERAL_WASTE,
+    "Yard Waste": Icons.GARDEN,
 }
 
 

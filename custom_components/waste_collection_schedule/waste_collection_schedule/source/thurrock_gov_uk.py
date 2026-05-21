@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 # import rrule
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, weekday
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
@@ -33,11 +33,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Brown": "mdi:leaf",
-    "Blue": "mdi:package-variant",
-    "Green": "mdi:recycle",
-    "Grey": "mdi:recycle",
-    "Green/Grey": "mdi:recycle",
+    "Brown": Icons.ORGANIC,
+    "Blue": Icons.PAPER,
+    "Green": Icons.RECYCLING,
+    "Grey": Icons.RECYCLING,
+    "Green/Grey": Icons.RECYCLING,
 }
 
 

@@ -7,14 +7,15 @@ import inspect
 import json
 import re
 import site
+import sys
 from functools import lru_cache
 from pathlib import Path
 from types import ModuleType
 from typing import Any, Callable, Tuple, TypedDict, TypeVar
 
-try:
+if sys.version_info >= (3, 11):
     from typing import NotRequired
-except ImportError:
+else:
     from typing_extensions import NotRequired
 
 import yaml

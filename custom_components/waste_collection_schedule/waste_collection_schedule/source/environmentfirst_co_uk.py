@@ -3,7 +3,7 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Environment First"
 URL = "https://environmentfirst.co.uk"
@@ -22,9 +22,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "RUBBISH": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN WASTE": "mdi:leaf",
+    "RUBBISH": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN WASTE": Icons.GARDEN,
 }
 
 

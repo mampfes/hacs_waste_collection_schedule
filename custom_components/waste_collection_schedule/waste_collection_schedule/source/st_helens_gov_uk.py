@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,8 +19,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "BROWN BIN": "mdi:delete",
-    "GREEN BIN": "mdi:recycle",
+    "BROWN BIN": Icons.BIO_KITCHEN,
+    "GREEN BIN": Icons.RECYCLING,
 }
 
 WASTE_TYPE_MAP = {

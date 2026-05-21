@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 
 import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of Philadelphia, PA"
 DESCRIPTION = "City of Philadelphia, PA, USA"
@@ -25,8 +25,8 @@ DAYS = {
     "SUN": SU,
 }
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

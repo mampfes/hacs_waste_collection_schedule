@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "London Borough of Merton (Old)"
@@ -23,13 +23,13 @@ WASTE_CLASSES: list = [
     "garden",
 ]
 ICON_MAP = {
-    "Food waste": "mdi:food",
-    "Paper and card": "mdi:newspaper",
-    "Plastics, glass, cans and cartons": "mdi:glass-fragile",
-    "Rubbish": "mdi:trash-can",
-    "Textiles": "mdi:hanger",
-    "Household batteries": "mdi:battery",
-    "Garden waste": "mdi:leaf",
+    "Food waste": Icons.BIO_KITCHEN,
+    "Paper and card": Icons.PAPER,
+    "Plastics, glass, cans and cartons": Icons.PLASTIC_PACKAGING,
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Textiles": Icons.TEXTILE,
+    "Household batteries": Icons.BATTERY,
+    "Garden waste": Icons.GARDEN,
 }
 
 

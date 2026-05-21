@@ -3,7 +3,7 @@ from typing import TypedDict
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "City of Hobart "
@@ -20,9 +20,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "rubbish": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "fogo": "mdi:leaf",
+    "rubbish": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "fogo": Icons.BIO_KITCHEN,
 }
 
 SEARCH_URL = "https://www.hobartcity.com.au/api/v1/myarea/search"

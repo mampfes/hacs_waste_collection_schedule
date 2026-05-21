@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentRequiredWithSuggestions,
 )
@@ -19,11 +19,11 @@ TEST_CASES = {
 
 API_URL = "https://www.sidec.lu/fr/Collectes/Calendrier"
 ICON_MAP = {
-    "BULKY": "mdi:wardrobe",
-    "GLASS": "mdi:bottle-wine",
-    "ORGANIC": "mdi:leaf",
-    "PAPER": "mdi:newspaper-variant-multiple-outline",
-    "RESIDUAL": "mdi:trash-can",
+    "BULKY": Icons.BULKY,
+    "GLASS": Icons.GLASS,
+    "ORGANIC": Icons.ORGANIC,
+    "PAPER": Icons.PAPER,
+    "RESIDUAL": Icons.GENERAL_WASTE,
 }
 
 WASTE_MAPPING = {

@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Norrtalje Vatten & Avfall"
 DESCRIPTION = "Source for Norrtalje Vatten & Avfall waste collection services, Sweden."
@@ -23,9 +23,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:food-apple",
-    "Slam": "mdi:valve",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Slam": Icons.HAZARDOUS,
 }
 
 

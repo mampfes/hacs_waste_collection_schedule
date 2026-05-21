@@ -2,7 +2,7 @@ import json
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -33,9 +33,9 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 API = "https://redland.waste-info.com.au/api/v1"
 
 ICON_MAP = {
-    "waste": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "organic": "mdi:leaf",
+    "waste": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "organic": Icons.ORGANIC,
 }
 
 

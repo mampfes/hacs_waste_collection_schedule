@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -46,9 +46,9 @@ PARAM_TRANSLATIONS = {
 }
 
 ICON_MAP = {
-    "PAPIR": "mdi:newspaper-variant",
-    "PLAST": "mdi:recycle",
-    "KO": "mdi:trash-can",
+    "PAPIR": Icons.PAPER,
+    "PLAST": Icons.PLASTIC_PACKAGING,
+    "KO": Icons.GENERAL_WASTE,
 }
 
 HEADERS = {"user-agent": "Mozilla/5.0"}

@@ -4,7 +4,7 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Warrnambool City Council"
@@ -26,10 +26,10 @@ _LOGGER = logging.getLogger(__name__)
 BASE_URL = "https://wcdm-public.warrnambool.vic.gov.au"
 
 ICON_MAP = {
-    "Landfill": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "FOGO": "mdi:leaf",
-    "Glass": "mdi:glass-fragile",
+    "Landfill": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "FOGO": Icons.BIO_KITCHEN,
+    "Glass": Icons.GLASS,
 }
 
 

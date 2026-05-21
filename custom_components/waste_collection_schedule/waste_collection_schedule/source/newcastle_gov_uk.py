@@ -3,7 +3,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,9 +16,9 @@ TEST_CASES = {"Test_001": {"uprn": "004510053797"}, "Test_002": {"uprn": 4510053
 API_URL = "https://community.newcastle.gov.uk/my-neighbourhood/ajax/getBinsNew.php"
 REGEX = r"[Green|Blue|Brown] [Bb]in \(([A-Za-z]+)( Waste)?\) .*? ([0-9]{2}-[A-Za-z]+-[0-9]{4})"
 ICON_MAP = {
-    "DOMESTIC": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
+    "DOMESTIC": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
 }
 
 

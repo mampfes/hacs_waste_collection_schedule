@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import requests
 from dateutil import rrule
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Sunshine Coast Queensland (QLD)"
 DESCRIPTION = "Source script for Sunshine Coast Queensland (QLD)."
@@ -15,9 +15,9 @@ TEST_CASES = {
 
 API_URL = "https://www.sunshinecoast.qld.gov.au/__server__/api/v1"
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
-    "Organic": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
+    "Organic": Icons.ORGANIC,
 }
 
 """

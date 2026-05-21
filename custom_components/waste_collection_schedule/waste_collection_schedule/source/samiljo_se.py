@@ -3,7 +3,7 @@ import urllib.parse
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Samverkan Återvinning Miljö (SÅM)"
 DESCRIPTION = "Source script for samiljo.se"
@@ -24,34 +24,34 @@ API_URLS = {
 MAX_PARENT_TRAVERSAL_STEPS = 10
 
 ICON_MAP = {
-    "HKARL1": "mdi:trash-can",
-    "HKARL1-H": "mdi:trash-can",
-    "HKARL2": "mdi:recycle",
-    "HKARL2-H": "mdi:recycle",
-    "HMAT": "mdi:food-apple",
-    "HMAT-H": "mdi:food-apple",
-    "HREST": "mdi:trash-can",
-    "HREST-H": "mdi:trash-can",
-    "HOSORT": "mdi:trash-can",
-    "HOSORT-H": "mdi:trash-can",
-    "FKARL1": "mdi:trash-can",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    "FKARL2": "mdi:recycle",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    "FKARL1-H": "mdi:trash-can",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    "FKARL2-H": "mdi:recycle",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    "FOSORT": "mdi:trash-can",
-    "FOSORT-H": "mdi:trash-can",
-    "HREST-HK": "mdi:trash-can",
-    "HREST-HK-H": "mdi:trash-can",
-    "HKARL1-HK": "mdi:trash-can",  # Restavfall, Tidningar & Färgat glas
-    "HKARL1-HK-H": "mdi:trash-can",  # Restavfall, Tidningar & Färgat glas
-    "TRG": "mdi:leaf",
-    "TRG-H": "mdi:leaf",
-    "FREST-HK": "mdi:trash-can",
-    "FREST-HK-H": "mdi:trash-can",
-    "FKARL1-HK-H": "mdi:trash-can",
-    "FKARL1-HK": "mdi:trash-can",
-    "FREST": "mdi:trash-can",
-    "FREST-H": "mdi:trash-can",
+    "HKARL1": Icons.GENERAL_WASTE,
+    "HKARL1-H": Icons.GENERAL_WASTE,
+    "HKARL2": Icons.RECYCLING,
+    "HKARL2-H": Icons.RECYCLING,
+    "HMAT": Icons.BIO_KITCHEN,
+    "HMAT-H": Icons.BIO_KITCHEN,
+    "HREST": Icons.GENERAL_WASTE,
+    "HREST-H": Icons.GENERAL_WASTE,
+    "HOSORT": Icons.GENERAL_WASTE,
+    "HOSORT-H": Icons.GENERAL_WASTE,
+    "FKARL1": Icons.GENERAL_WASTE,
+    "FKARL2": Icons.RECYCLING,
+    "FKARL1-H": Icons.GENERAL_WASTE,
+    "FKARL2-H": Icons.RECYCLING,
+    "FOSORT": Icons.GENERAL_WASTE,
+    "FOSORT-H": Icons.GENERAL_WASTE,
+    "HREST-HK": Icons.GENERAL_WASTE,
+    "HREST-HK-H": Icons.GENERAL_WASTE,
+    "HKARL1-HK": Icons.GENERAL_WASTE,
+    "HKARL1-HK-H": Icons.GENERAL_WASTE,
+    "TRG": Icons.ORGANIC,
+    "TRG-H": Icons.ORGANIC,
+    "FREST-HK": Icons.GENERAL_WASTE,
+    "FREST-HK-H": Icons.GENERAL_WASTE,
+    "FKARL1-HK-H": Icons.GENERAL_WASTE,
+    "FKARL1-HK": Icons.GENERAL_WASTE,
+    "FREST": Icons.GENERAL_WASTE,
+    "FREST-H": Icons.GENERAL_WASTE,
 }
 
 NAME_MAP = {

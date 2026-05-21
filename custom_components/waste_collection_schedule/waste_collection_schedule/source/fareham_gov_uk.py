@@ -5,7 +5,7 @@ from typing import Iterable
 
 import requests
 from dateutil.parser import parse as date_parse
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentRequired,
@@ -25,9 +25,9 @@ API_URL = "https://www.fareham.gov.uk/internetlookups/search_data.aspx"
 API_LIST = "DomesticBinCollections2025on"
 DEFAULT_ICON = "mdi:trash-can"
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
 }
 
 

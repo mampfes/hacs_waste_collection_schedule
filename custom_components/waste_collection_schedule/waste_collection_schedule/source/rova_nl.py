@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Rova"
@@ -22,14 +22,14 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Gft": "mdi:leaf",
-    "Pmd": "mdi:recycle",
-    "Restafval": "mdi:trash-can",
-    "Papier": "mdi:newspaper-variant",
-    "Glas": "mdi:bottle-soda",
-    "Textiel": "mdi:hanger",
-    "Kerstboom": "mdi:pine-tree",
-    "Snoeiafval": "mdi:tree",
+    "Gft": Icons.BIO_KITCHEN,
+    "Pmd": Icons.RECYCLING,
+    "Restafval": Icons.GENERAL_WASTE,
+    "Papier": Icons.PAPER,
+    "Glas": Icons.GLASS,
+    "Textiel": Icons.TEXTILE,
+    "Kerstboom": Icons.CHRISTMAS_TREE,
+    "Snoeiafval": Icons.GARDEN,
 }
 
 PARAM_TRANSLATIONS = {

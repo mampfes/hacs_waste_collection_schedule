@@ -5,7 +5,7 @@ from typing import TypedDict
 
 import requests
 from dateutil.rrule import rrulestr
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -60,15 +60,15 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
 DTSTART_REGEX = re.compile(r"DTSTART=\d*T\d*Z?;?")
 
 ICON_MAP = {
-    "Carta": "mdi:package-variant",
-    "Cartone": "mdi:package-variant",
-    "Rifiuto residuo indifferenziato": "mdi:trash-can",
-    "Rifiuti Organici": "mdi:leaf",
-    "Imballaggi in plastica": "mdi:recycle",
-    "Vetro e lattine": "mdi:bottle-soda",
-    "Vetro": "mdi:bottle-soda",
-    "Imballaggi in plastica e barattolame": "mdi:recycle",
-    "Alluminio": "mdi:recycle",
+    "Carta": Icons.PAPER,
+    "Cartone": Icons.PAPER,
+    "Rifiuto residuo indifferenziato": Icons.GENERAL_WASTE,
+    "Rifiuti Organici": Icons.ORGANIC,
+    "Imballaggi in plastica": Icons.RECYCLING,
+    "Vetro e lattine": Icons.GLASS,
+    "Vetro": Icons.GLASS,
+    "Imballaggi in plastica e barattolame": Icons.RECYCLING,
+    "Alluminio": Icons.RECYCLING,
 }
 
 

@@ -79,9 +79,7 @@ class Source:
         waste_collection_dates = get_next_n_dates(
             next_collection_date, 52, timedelta(days=7)
         )
-        street_sweeping_dates = get_next_n_dates(
-            street_sweeping, 1, timedelta(weeks=6)
-        )
+        street_sweeping_dates = get_next_n_dates(street_sweeping, 1, timedelta(weeks=6))
 
         entries = []
 

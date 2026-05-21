@@ -2,7 +2,7 @@ import logging
 
 import requests
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import ArcGisGeocodeError, geocode
 
@@ -40,10 +40,10 @@ PARAM_TRANSLATIONS = {
 }
 
 ICON_MAP = {
-    "red": "mdi:trash-can",
-    "green": "mdi:leaf",
-    "greenverge": "mdi:pine-tree",
-    "yellow": "mdi:recycle",
+    "red": Icons.GENERAL_WASTE,
+    "green": Icons.ORGANIC,
+    "greenverge": Icons.CHRISTMAS_TREE,
+    "yellow": Icons.RECYCLING,
 }
 
 API_PATH = "/bincollectioncheck/getresult"

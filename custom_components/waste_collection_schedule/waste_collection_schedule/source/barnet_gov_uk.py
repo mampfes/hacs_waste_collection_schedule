@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "London Borough of Barnet"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for barnet.gov.uk"  # Describe your source
@@ -9,9 +9,9 @@ URL = "https://www.barnet.gov.uk/"  # Insert url to service homepage. URL will s
 TEST_CASES = {"Test_001": {"uprn": "200062903"}, "Test_002": {"uprn": "200072958"}}
 HEADERS = {"user-agent": "Mozilla/5.0"}
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling Bin": "mdi:recycle",
-    "Food Waste": "mdi:food-apple",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling Bin": Icons.RECYCLING,
+    "Food Waste": Icons.BIO_KITCHEN,
 }
 
 PARAM_DESCRIPTIONS = {

@@ -4,7 +4,7 @@ from datetime import date, datetime, timedelta
 import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from requests.utils import requote_uri
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of Joondalup"
 DESCRIPTION = "Source for City of Joondalup (WA) waste collection."
@@ -32,12 +32,12 @@ DAYS: dict = {
     "SATURDAY": SA,
     "SUNDAY": SU,
 }
-ICON_MAP: dict = {
-    "Recycling": "mdi:recycle",
-    "Bulk Put Out": "mdi:tree",
-    "Bulk Pick Up": "mdi:tree",
-    "General Waste": "mdi:trash-can",
-    "Green Waste": "mdi:leaf",
+ICON_MAP = {
+    "Recycling": Icons.RECYCLING,
+    "Bulk Put Out": Icons.GARDEN,
+    "Bulk Pick Up": Icons.GARDEN,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Green Waste": Icons.GARDEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages

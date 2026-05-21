@@ -175,6 +175,7 @@ These are the issues that come up most often in PR review. Avoid them and your P
 8. **Login-required**. Not supported — the project only consumes public endpoints.
 9. **Running `update_docu_links.py` in a PR branch**. Don't — CI handles it post-merge.
 10. **Editing translations directly**. The `config.step.args_*` sections are generated. Hand-edit only `options.step.init` (in the outer `translations/*.json`).
+11. **Raw `mdi:*` strings in `ICON_MAP`**. Use the `Icons` enum from `waste_collection_schedule` (catalogue at `waste_collection_schedule/icons.py`). This keeps icons consistent across sources for the same logical waste category — see #2813.
 
 ---
 

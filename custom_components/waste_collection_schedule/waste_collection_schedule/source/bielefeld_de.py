@@ -2,7 +2,7 @@ import re
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
@@ -17,10 +17,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restabfallbehaelter": "mdi:delete",
-    "Bioabfallbehaelter": "mdi:leaf",
-    "Papierbehaelter": "mdi:newspaper",
-    "Wertstofftonne": "mdi:recycle",
+    "Restabfallbehaelter": Icons.GENERAL_WASTE,
+    "Bioabfallbehaelter": Icons.BIO_KITCHEN,
+    "Papierbehaelter": Icons.PAPER,
+    "Wertstofftonne": Icons.RECYCLING,
 }
 
 SERVLET = "https://anwendungen.bielefeld.de/WasteManagementBielefeldTest/WasteManagementServlet"  # Actual Production URL changed from ORIGINAL_SERVLET

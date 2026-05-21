@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Rohrbach an der Lafnitz"
@@ -30,10 +30,10 @@ ICS_CALENDARS = {
 }
 
 ICON_MAP = {
-    "Biomüll": "mdi:leaf",
-    "Leichtverpackungen": "mdi:recycle",
-    "Restmüll": "mdi:trash-can",
-    "Sperrmüll": "mdi:sofa",
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Leichtverpackungen": Icons.RECYCLING,
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Sperrmüll": Icons.BULKY,
 }
 
 

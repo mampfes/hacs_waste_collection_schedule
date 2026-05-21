@@ -4,7 +4,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -26,10 +26,10 @@ DATE_REGEX = r"(\d{2}/\d{2}/\d{4})"
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "food": "mdi:food-apple",
-    "garden": "mdi:leaf",
+    "refuse": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
+    "garden": Icons.GARDEN,
 }
 
 ID_SEPERATOR = "-----------------------------{rand_id}"

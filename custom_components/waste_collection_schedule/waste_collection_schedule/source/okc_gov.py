@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 from urllib.parse import quote
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "City of Oklahoma City"
 DESCRIPTION = (
@@ -39,9 +39,9 @@ WEEKDAY_INDEX = {
     "sunday": 6,
 }
 ICON_MAP = {
-    "TRASH": "mdi:trash-can",
-    "RECYCLE": "mdi:recycle",
-    "BULKY": "mdi:sofa",
+    "TRASH": Icons.GENERAL_WASTE,
+    "RECYCLE": Icons.RECYCLING,
+    "BULKY": Icons.BULKY,
 }
 
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field

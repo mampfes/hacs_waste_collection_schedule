@@ -2,11 +2,11 @@ import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
     SourceArgumentRequired,
 )
 
@@ -34,11 +34,11 @@ TEST_CASES = {
 
 API_URL = URL + "/servizi/raccolta-differenziata?popup=services&serviceType=sdz"
 ICON_MAP = {
-    "indifferenziato": "mdi:trash-can",
-    "organico": "mdi:leaf",
-    "carta e cartone": "mdi:package-variant",
-    "plastica e metallo": "mdi:recycle",
-    "vetro": "mdi:bottle-soda",
+    "indifferenziato": Icons.GENERAL_WASTE,
+    "organico": Icons.BIO_KITCHEN,
+    "carta e cartone": Icons.PAPER,
+    "plastica e metallo": Icons.METAL,
+    "vetro": Icons.GLASS,
 }
 
 

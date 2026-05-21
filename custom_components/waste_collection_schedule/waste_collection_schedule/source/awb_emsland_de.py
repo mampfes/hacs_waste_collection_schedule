@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaftsbetrieb Emsland"
@@ -31,10 +31,10 @@ TEST_CASES = {
 SERVLET = "https://portal.awb-emsland.de/WasteManagementEmsland/WasteManagementServlet"
 
 ICON_MAP = {
-    "Restabfallbehaelter": "mdi:trash-can",
-    "Papierbehaelter": "mdi:package-variant",
-    "Wertstoffbehaelter": "mdi:recycle",
-    "Bioabfallbehaelter": "mdi:leaf",
+    "Restabfallbehaelter": Icons.GENERAL_WASTE,
+    "Papierbehaelter": Icons.PAPER,
+    "Wertstoffbehaelter": Icons.RECYCLING,
+    "Bioabfallbehaelter": Icons.BIO_KITCHEN,
 }
 
 

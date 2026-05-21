@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Literal, get_args
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -21,13 +21,13 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 }
 
 API_URL = "https://info-collectes.ca/wp/wp-admin/admin-ajax.php"
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "organic": "mdi:compost",
-    "recycling": "mdi:recycle",
-    "greenWaste": "mdi:leaf",
-    "cardboard": "mdi:package-variant",
-    "bulky": "mdi:sofa",
-    "garbage": "mdi:truck-remove",
+ICON_MAP = {
+    "organic": Icons.ORGANIC,
+    "recycling": Icons.RECYCLING,
+    "greenWaste": Icons.GARDEN,
+    "cardboard": Icons.PAPER,
+    "bulky": Icons.BULKY,
+    "garbage": Icons.GENERAL_WASTE,
 }
 
 MUNICIPALITY_LITERAL = Literal[

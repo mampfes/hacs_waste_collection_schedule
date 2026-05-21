@@ -380,3 +380,51 @@ def test_ics_source_has_necessary_parameters():
             _test_source_has_necessary_parameters_extra_info(
                 data["extra_info"], f"ICS:{source}", init_params_names
             )
+
+
+# Sources permitted to use raw `mdi:*` string literals in their ICON_MAP.
+# Every other source must use the `Icons` enum from `waste_collection_schedule`
+# (see issue #2813 / canonical icon catalogue). The allowlist below is for
+# sources whose ICON_MAP isn't a simple ``str -> str`` static dict — they build
+# the mapping programmatically, use integer keys, nest dicts per region, etc.
+# and the canonical-icons test skips them. Future contributors of such sources
+# should add themselves here and explain why.
+SOURCES_ALLOWED_RAW_ICONS: set[str] = {
+    "api_golemio_cz",  # integer keys (Czech API trash-type IDs)
+    "cbcity_nsw_gov_au",  # dynamic ICON_MAP construction
+    "insert_it_de",  # nested {region: {waste_type: {icon, name}}} structure
+    "landkreis_helmstedt_de",  # computed keys
+    "potsdam_de",  # integer keys
+    "sepan_remondis_pl",  # dynamic ICON_MAP construction
+    "wermelskirchen_de",  # dynamic ICON_MAP construction
+    "woollahra_nsw_gov_au",  # dynamic ICON_MAP construction
+    "zys_harmonogram_pl",  # dynamic ICON_MAP construction
+}
+
+
+def test_icon_map_uses_canonical_icons() -> None:
+    """ICON_MAP values must be ``Icons`` enum members, not raw ``mdi:*`` strings.
+
+    Sources in :data:`SOURCES_ALLOWED_RAW_ICONS` are exempt because they build
+    ICON_MAP dynamically and the runtime values can't be statically classified.
+    """
+    from waste_collection_schedule import Icons
+
+    sources = _get_sources()
+    for source in sources:
+        if source in SOURCES_ALLOWED_RAW_ICONS:
+            continue
+        module = _get_module(source)
+        icon_map = getattr(module, "ICON_MAP", None)
+        if icon_map is None:
+            continue
+        if not isinstance(icon_map, dict):
+            continue
+        for key, value in icon_map.items():
+            assert isinstance(value, Icons), (
+                f"ICON_MAP value for {key!r} in source {source} is "
+                f"{value!r}, expected an Icons enum member. "
+                "Use `from waste_collection_schedule import Icons` and "
+                "reference e.g. Icons.GENERAL_WASTE — see "
+                "custom_components/waste_collection_schedule/waste_collection_schedule/icons.py"
+            )

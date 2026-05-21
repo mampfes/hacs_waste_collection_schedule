@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Colchester City Council"
 DESCRIPTION = "Source for Colchester.gov.uk services for the borough of Colchester, UK."
@@ -14,14 +14,14 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Black bags": "mdi:trash-can",
-    "Glass": "mdi:glass-fragile",
-    "Cans": "mdi:trash-can",
-    "Textiles": "mdi:hanger",
-    "Paper/card": "mdi:recycle",
-    "Plastics": "mdi:recycle",
-    "Garden waste": "mdi:leaf",
-    "Food waste": "mdi:food",
+    "Black bags": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Cans": Icons.METAL,
+    "Textiles": Icons.TEXTILE,
+    "Paper/card": Icons.PAPER,
+    "Plastics": Icons.PLASTIC_PACKAGING,
+    "Garden waste": Icons.GARDEN,
+    "Food waste": Icons.BIO_KITCHEN,
 }
 
 

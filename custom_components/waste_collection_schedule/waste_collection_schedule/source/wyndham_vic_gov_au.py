@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wyndham City Council, Melbourne"
 DESCRIPTION = "Source for Wyndham City Council rubbish collection."
@@ -23,9 +23,9 @@ TEST_CASES = {
 
 API_URL = "https://digital.wyndham.vic.gov.au/myWyndham/"
 ICON_MAP = {
-    "Green Waste": "mdi:leaf",
-    "Garbage": "mdi:trash-can-outline",
-    "Recycling": "mdi:recycle",
+    "Green Waste": Icons.GARDEN,
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
 _LOGGER = logging.getLogger(__name__)

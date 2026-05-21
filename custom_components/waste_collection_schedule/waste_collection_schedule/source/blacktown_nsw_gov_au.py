@@ -3,7 +3,7 @@ import json
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Blacktown City Council (NSW)"
 DESCRIPTION = "Source for Blacktown City Council rubbish collection."
@@ -55,8 +55,8 @@ HEADERS = {
 
 
 ICON_MAP = {
-    "General Waste": "trash-can",
-    "Recycling": "mdi:recycle",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
 

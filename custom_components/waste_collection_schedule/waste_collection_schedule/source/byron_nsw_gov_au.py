@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Byron Shire Council"
@@ -35,15 +35,15 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "garbage": "mdi:trash-can",
-    "landfill": "mdi:trash-can",
-    "trash": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "recycle": "mdi:recycle",
-    "food": "mdi:food",
-    "organics": "mdi:leaf",
-    "garden": "mdi:leaf",
-    "green": "mdi:leaf",
+    "garbage": Icons.GENERAL_WASTE,
+    "landfill": Icons.GENERAL_WASTE,
+    "trash": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "recycle": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
+    "organics": Icons.ORGANIC,
+    "garden": Icons.GARDEN,
+    "green": Icons.ORGANIC,
 }
 
 ZONE_ID_PATTERN = re.compile(r"(?:zone-)?z[\w-]+", re.IGNORECASE)

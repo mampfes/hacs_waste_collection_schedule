@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Verden"
@@ -25,11 +25,11 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "Gelber": "mdi:recycle",
-    "Restabfallbehaelter": "mdi:trash-can",
-    "Papierbehaelter": "mdi:newspaper",
-    "Kompostbehaelter": "mdi:leaf",
-    "Weihnachtsbaum": "mdi:pine-tree",
+    "Gelber": Icons.RECYCLING,
+    "Restabfallbehaelter": Icons.GENERAL_WASTE,
+    "Papierbehaelter": Icons.PAPER,
+    "Kompostbehaelter": Icons.ORGANIC,
+    "Weihnachtsbaum": Icons.CHRISTMAS_TREE,
 }
 
 PARAM_TRANSLATIONS = {

@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Bromsgrove City Council"
 DESCRIPTION = "Source for bromsgrove.gov.uk services for Bromsgrove, UK."
@@ -22,9 +22,9 @@ API_URLS = {
     "collection": "https://bincollections.bromsgrove.gov.uk/BinCollections/Details/",
 }
 ICON_MAP = {
-    "Grey": "mdi:trash-can",
-    "Green": "mdi:recycle",
-    "Brown": "mdi:leaf",
+    "Grey": Icons.GENERAL_WASTE,
+    "Green": Icons.RECYCLING,
+    "Brown": Icons.ORGANIC,
 }
 
 

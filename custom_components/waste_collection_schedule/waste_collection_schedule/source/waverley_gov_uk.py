@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.WhitespaceWRP import WhitespaceClient
 
 TITLE = "Waverley Borough Council"
@@ -19,10 +19,10 @@ TEST_CASES = {
     },
 }
 ICON_MAP = {
-    "Domestic Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
-    "Food Waste": "mdi:food-apple",
+    "Domestic Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
+    "Food Waste": Icons.BIO_KITCHEN,
 }
 
 API_URL = "https://wav-wrp.whitespacews.com/"

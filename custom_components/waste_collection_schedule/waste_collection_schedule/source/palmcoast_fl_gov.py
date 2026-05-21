@@ -4,6 +4,7 @@ import requests
 
 from ..collection import Collection
 from ..exceptions import SourceArgumentNotFound
+from ..icons import Icons
 
 TITLE = "Palm Coast, FL"
 DESCRIPTION = "Source for Palm Coast, FL waste collection."
@@ -39,9 +40,9 @@ WEEKDAYS = {
 }
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Yard Waste": "mdi:grass",
-    "Recycling": "mdi:recycle",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Yard Waste": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

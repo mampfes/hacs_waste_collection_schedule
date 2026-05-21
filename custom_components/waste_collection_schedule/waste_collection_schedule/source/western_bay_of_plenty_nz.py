@@ -4,7 +4,7 @@ from typing import List
 from xml.etree import ElementTree
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Western Bay of Plenty District Council"
 DESCRIPTION = "Source script for Western Bay of Plenty District Council kerbside collections via kerbsidecollective.co.nz"
@@ -17,11 +17,11 @@ TEST_CASES = {
 API_URL = "https://kerbsidecollective.co.nz/wp-json/wbop/v1"
 REQUEST_TIMEOUT = 10
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Mixed Recycling": "mdi:recycle",
-    "Glass": "mdi:glass-fragile",
-    "Food": "mdi:food-apple",
-    "Garden": "mdi:leaf",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Mixed Recycling": Icons.RECYCLING,
+    "Glass": Icons.GLASS,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
 }
 
 # XML namespace used in the SOAP responses

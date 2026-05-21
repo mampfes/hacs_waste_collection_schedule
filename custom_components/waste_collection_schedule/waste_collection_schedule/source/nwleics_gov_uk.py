@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North West Leicestershire District Council"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source for www.nwleics.gov.uk services for the city of North West Leicestershire District Council, UK"  # Describe your source
@@ -23,11 +23,11 @@ API_URL = "https://my.nwleics.gov.uk/location?put=nwl{uprn}&rememberme=0&redirec
 
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Garden Waste": "mdi:leaf",
-    "Yellow Bag": "mdi:recycle",
-    "Blue Bag": "mdi:recycle",
-    "Red Box": "mdi:recycle",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Yellow Bag": Icons.PLASTIC_PACKAGING,
+    "Blue Bag": Icons.RECYCLING,
+    "Red Box": Icons.RECYCLING,
 }
 
 

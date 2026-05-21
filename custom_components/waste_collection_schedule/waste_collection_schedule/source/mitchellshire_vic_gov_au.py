@@ -2,7 +2,7 @@ import datetime
 import logging
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Mitchell Shire Council"
 URL = "https://www.mitchellshire.vic.gov.au"
@@ -29,10 +29,10 @@ API_URL = "https://www.mitchellshire.vic.gov.au/simple-gov-app/api/resources/bin
 # Map bin title to an MDI icon. The API also provides a `color` field
 # (red/yellow/green/purple) which matches the physical bin lid colours.
 ICON_MAP = {
-    "General Rubbish": "mdi:trash-can",
-    "Mixed Recycling": "mdi:recycle",
-    "Food and Garden Organics": "mdi:leaf",
-    "Glass Recycling": "mdi:bottle-wine",
+    "General Rubbish": Icons.GENERAL_WASTE,
+    "Mixed Recycling": Icons.RECYCLING,
+    "Food and Garden Organics": Icons.BIO_KITCHEN,
+    "Glass Recycling": Icons.GLASS,
 }
 
 

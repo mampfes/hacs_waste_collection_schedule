@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Oslo Kommune"
 DESCRIPTION = "Oslo Kommune (Norway)."
@@ -35,9 +35,9 @@ API_URL = (
     "https://www.oslo.kommune.no/actions/snap-lib-waste-complaint/search-by-address"
 )
 ICON_MAP = {
-    "": "mdi:trash-can",
-    "restavfall": "mdi:trash-can",
-    "papir": "mdi:newspaper-variant-multiple",
+    "": Icons.GENERAL_WASTE,
+    "restavfall": Icons.GENERAL_WASTE,
+    "papir": Icons.PAPER,
 }
 
 # Map Hyppighet.Faktor to interval in days

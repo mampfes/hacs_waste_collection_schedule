@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 
@@ -14,9 +14,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Papiertonne": "mdi:package-variant",
-    "Gelber Sack": "mdi:recycle",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Papiertonne": Icons.PAPER,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
 }
 
 

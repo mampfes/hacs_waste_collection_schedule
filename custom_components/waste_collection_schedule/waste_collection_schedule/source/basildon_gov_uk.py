@@ -5,7 +5,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
@@ -24,12 +24,12 @@ TEST_CASES = {
     "Test_UPRN_003": {"uprn": "10090455610"},
 }
 ICON_MAP = {
-    "green_waste": "mdi:leaf",
-    "general_waste": "mdi:trash-can",
-    "food_waste": "mdi:food",
-    "glass_waste": "mdi:bottle-wine",
-    "papercard_waste": "mdi:package-variant",
-    "plasticcans_waste": "mdi:bottle-soda-classic",
+    "green_waste": Icons.ORGANIC,
+    "general_waste": Icons.GENERAL_WASTE,
+    "food_waste": Icons.BIO_KITCHEN,
+    "glass_waste": Icons.GLASS_COLORED,
+    "papercard_waste": Icons.PAPER,
+    "plasticcans_waste": Icons.GLASS,
 }
 NAME_MAP = {
     "green_waste": "Garden",

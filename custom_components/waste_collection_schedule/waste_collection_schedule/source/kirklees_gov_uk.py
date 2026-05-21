@@ -3,7 +3,7 @@ from time import time_ns
 from typing import Any
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Kirklees Council"
@@ -37,13 +37,13 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "recycling": "mdi:recycle",
-    "domestic": "mdi:trash-can",
-    "garden": "mdi:leaf",
-    "green": "mdi:recycle",
-    "grey": "mdi:trash-can",
-    "brown": "mdi:leaf",
-    "blue": "mdi:recycle",
+    "recycling": Icons.RECYCLING,
+    "domestic": Icons.GENERAL_WASTE,
+    "garden": Icons.GARDEN,
+    "green": Icons.RECYCLING,
+    "grey": Icons.GENERAL_WASTE,
+    "brown": Icons.ORGANIC,
+    "blue": Icons.RECYCLING,
 }
 
 

@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Sjöbo kommun"
 DESCRIPTION = "Source for Sjöbo kommun waste collection."
@@ -13,32 +13,32 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "FF1": "mdi:trash-can",
-    "FF1-H": "mdi:trash-can",
-    "FF2": "mdi:trash-can",
-    "FF2-H": "mdi:trash-can",
-    "MoR": "mdi:trash-can",
-    "MoR-H": "mdi:trash-can",
-    "FG": "mdi:bottle-soda",
-    "FG-H": "mdi:bottle-soda",
-    "OFG": "mdi:bottle-soda",
-    "OFG-H": "mdi:bottle-soda",
-    "RST": "mdi:trash-can",
-    "RST-H": "mdi:trash-can",
-    "KOM": "mdi:compost",
-    "KOM-H": "mdi:compost",
-    "MAT": "mdi:compost",
-    "MAT-H": "mdi:compost",
-    "MEF": "mdi:recycle",
-    "MEF-H": "mdi:recycle",
-    "PAF": "mdi:package",
-    "PAF-H": "mdi:package",
-    "PLF": "mdi:recycle",
-    "PLF-H": "mdi:recycle",
-    "ToP": "mdi:newspaper",
-    "ToP-H": "mdi:newspaper",
-    "TRG": "mdi:leaf",
-    "TRG-H": "mdi:leaf",
+    "FF1": Icons.GENERAL_WASTE,
+    "FF1-H": Icons.GENERAL_WASTE,
+    "FF2": Icons.GENERAL_WASTE,
+    "FF2-H": Icons.GENERAL_WASTE,
+    "MoR": Icons.GENERAL_WASTE,
+    "MoR-H": Icons.GENERAL_WASTE,
+    "FG": Icons.GLASS,
+    "FG-H": Icons.GLASS,
+    "OFG": Icons.GLASS,
+    "OFG-H": Icons.GLASS,
+    "RST": Icons.GENERAL_WASTE,
+    "RST-H": Icons.GENERAL_WASTE,
+    "KOM": Icons.BIO_KITCHEN,
+    "KOM-H": Icons.BIO_KITCHEN,
+    "MAT": Icons.BIO_KITCHEN,
+    "MAT-H": Icons.BIO_KITCHEN,
+    "MEF": Icons.RECYCLING,
+    "MEF-H": Icons.RECYCLING,
+    "PAF": Icons.PAPER,
+    "PAF-H": Icons.PAPER,
+    "PLF": Icons.RECYCLING,
+    "PLF-H": Icons.RECYCLING,
+    "ToP": Icons.NEWSPAPER,
+    "ToP-H": Icons.NEWSPAPER,
+    "TRG": Icons.ORGANIC,
+    "TRG-H": Icons.ORGANIC,
 }
 
 MONTH_MAP = {

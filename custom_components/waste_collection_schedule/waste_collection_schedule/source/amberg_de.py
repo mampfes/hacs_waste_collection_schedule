@@ -5,7 +5,7 @@ from datetime import date, timedelta
 from io import BytesIO
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
@@ -44,12 +44,12 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 }
 
 ICON_MAP = {
-    "Rest- und Biomüll": "mdi:trash-can",
-    "Papiertonne": "mdi:package-variant",
-    "Gelber Sack": "mdi:recycle",
-    "Sperrmüll": "mdi:sofa",
-    "Häckselgut": "mdi:leaf",
-    "Problemmüll": "mdi:biohazard",
+    "Rest- und Biomüll": Icons.BIO_KITCHEN,
+    "Papiertonne": Icons.PAPER,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Sperrmüll": Icons.BULKY,
+    "Häckselgut": Icons.GARDEN,
+    "Problemmüll": Icons.HAZARDOUS,
 }
 
 # All valid zone codes (letter A–E, sub-number 1–4)

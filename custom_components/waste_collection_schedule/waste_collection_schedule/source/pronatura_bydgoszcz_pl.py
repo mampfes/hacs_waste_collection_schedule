@@ -3,7 +3,7 @@ import json
 import logging
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -36,12 +36,12 @@ NAME_MAP = {
 }
 
 ICON_MAP = {
-    "odpady zmieszane": "mdi:trash-can",
-    "papier": "mdi:recycle",
-    "plastik": "mdi:recycle",
-    "szkło": "mdi:recycle",
-    "odpady bio": "mdi:leaf",
-    "odpady wielkogabarytowe": "mdi:wardrobe",
+    "odpady zmieszane": Icons.GENERAL_WASTE,
+    "papier": Icons.PAPER,
+    "plastik": Icons.PLASTIC_PACKAGING,
+    "szkło": Icons.GLASS,
+    "odpady bio": Icons.ORGANIC,
+    "odpady wielkogabarytowe": Icons.BULKY,
 }
 
 

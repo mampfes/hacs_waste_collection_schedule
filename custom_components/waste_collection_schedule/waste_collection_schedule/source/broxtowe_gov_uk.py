@@ -3,7 +3,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup, NavigableString, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
@@ -20,9 +20,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "BLACK": "mdi:trash-can",
-    "GLASS": "mdi:bottle-soda",
-    "GREEN": "mdi:leaf",
+    "BLACK": Icons.GENERAL_WASTE,
+    "GLASS": Icons.GLASS,
+    "GREEN": Icons.ORGANIC,
 }
 
 

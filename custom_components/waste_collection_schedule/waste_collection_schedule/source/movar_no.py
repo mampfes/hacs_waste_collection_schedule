@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Movar IKS"
 DESCRIPTION = "Source script for movar.no"
@@ -15,16 +15,16 @@ TEST_CASES = {
 
 API_URL = "https://movar.no/kalender.html"
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",  # residual waste
-    "Papp og papir": "mdi:newspaper-variant-multiple",  # cardboard and paper
-    "Våtorganisk": "mdi:leaf",  # wet organic
-    "Glass og metallemballasje": "mdi:recycle",  # glass and metal packaging
-    "Drikkekartonger": "mdi:recycle",  # drink cartons
-    "Spesialavfall": "mdi:recycle",  # special waste
-    "Plastemballasje": "mdi:recycle",  # plastic packaging
-    "Hageavfall": "mdi:tree",  # yard waste
-    "Metaller": "mdi:recycle",  # metals
-    "Papp": "mdi:newspaper-variant-multiple",  # cardboard
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Papp og papir": Icons.PAPER,
+    "Våtorganisk": Icons.ORGANIC,
+    "Glass og metallemballasje": Icons.GLASS,
+    "Drikkekartonger": Icons.RECYCLING,
+    "Spesialavfall": Icons.RECYCLING,
+    "Plastemballasje": Icons.RECYCLING,
+    "Hageavfall": Icons.GARDEN,
+    "Metaller": Icons.METAL,
+    "Papp": Icons.NEWSPAPER,
 }
 
 

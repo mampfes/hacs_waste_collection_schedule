@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup, Tag
 from dateutil.parser import parse
 from dateutil.rrule import WEEKLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -25,9 +25,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "General Waste": "mdi:trash-can",
-    "Garden Organics": "mdi:leaf",
+    "Recycling": Icons.RECYCLING,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Garden Organics": Icons.GARDEN,
 }
 
 API_URL = "https://www.wanneroo.wa.gov.au/bincollections"

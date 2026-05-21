@@ -2,7 +2,7 @@ import datetime
 import json
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -39,10 +39,10 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "general": "mdi:trash-can",
-    "special": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "organic": "mdi:leaf",
+    "general": Icons.GENERAL_WASTE,
+    "special": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "organic": Icons.ORGANIC,
 }
 
 ROUNDS = {

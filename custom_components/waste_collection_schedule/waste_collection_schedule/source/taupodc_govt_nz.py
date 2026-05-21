@@ -2,7 +2,7 @@ import datetime
 import json
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -44,7 +44,7 @@ WEEKDAYS = {
 }
 
 ICON_MAP = {
-    "Kerbside Collection": "mdi:trash-can",
+    "Kerbside Collection": Icons.GENERAL_WASTE,
 }
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (waste-collection-schedule)"}

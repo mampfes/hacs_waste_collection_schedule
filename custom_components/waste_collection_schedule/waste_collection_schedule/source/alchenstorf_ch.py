@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Alchenstorf"
 DESCRIPTION = " Source for 'Alchenstorf, CH'"
@@ -11,11 +11,11 @@ URL = "https://www.alchenstorf.ch"
 TEST_CASES: dict[str, dict] = {"TEST": {}}
 
 ICON_MAP = {
-    "Grünabfuhr Alchenstorf": "mdi:leaf",
-    "Kehrichtabfuhr Alchenstorf": "mdi:trash-can-outline",
-    "Kartonsammlung Alchenstorf": "mdi:recycle",
-    "Papiersammlung Alchenstorf": "mdi:newspaper-variant-multiple-outline",
-    "Alteisenabfuhr Alchenstorf": "mdi:desktop-classic",
+    "Grünabfuhr Alchenstorf": Icons.ORGANIC,
+    "Kehrichtabfuhr Alchenstorf": Icons.GENERAL_WASTE,
+    "Kartonsammlung Alchenstorf": Icons.PAPER,
+    "Papiersammlung Alchenstorf": Icons.PAPER,
+    "Alteisenabfuhr Alchenstorf": Icons.ELECTRONICS,
 }
 
 

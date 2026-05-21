@@ -3,7 +3,7 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Lichfield District Council"
 DESCRIPTION = "Source for Lichfield District Council, UK."
@@ -15,12 +15,12 @@ TEST_CASES = {
     "Test_004": {"uprn": "100031699855"},
 }
 ICON_MAP = {
-    "Black Bin": "mdi:trash-can",
-    "Blue Bin": "mdi:recycle",
-    "Blue Sack": "mdi:recycle",
-    "Purple Bin": "mdi:recycle",
-    "Garden Bin": "mdi:leaf",
-    "Brown Bin": "mdi:leaf",
+    "Black Bin": Icons.GENERAL_WASTE,
+    "Blue Bin": Icons.RECYCLING,
+    "Blue Sack": Icons.RECYCLING,
+    "Purple Bin": Icons.RECYCLING,
+    "Garden Bin": Icons.GARDEN,
+    "Brown Bin": Icons.BIO_KITCHEN,
 }
 
 

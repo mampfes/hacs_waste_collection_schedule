@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
@@ -46,12 +46,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Biotonne": "mdi:leaf",
-    "Gelbe Tonne": "mdi:recycle",
-    "Restmülltonne": "mdi:trash-can",
-    "Restmülltonne 4-wl.": "mdi:trash-can",
-    "Papiertonne": "mdi:package-variant",
-    "Schadstoffsammlung": "mdi:bottle-tonic-skull",
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Restmülltonne": Icons.GENERAL_WASTE,
+    "Restmülltonne 4-wl.": Icons.GENERAL_WASTE,
+    "Papiertonne": Icons.PAPER,
+    "Schadstoffsammlung": Icons.HAZARDOUS,
 }
 
 PARAM_TRANSLATIONS = {

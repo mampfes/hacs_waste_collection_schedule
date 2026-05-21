@@ -2,6 +2,8 @@
 
 from typing import Final
 
+from .waste_collection_schedule.icons import Icons  # noqa: F401
+
 # Component domain, used to store component data in hass data.
 DOMAIN: Final = "waste_collection_schedule"
 

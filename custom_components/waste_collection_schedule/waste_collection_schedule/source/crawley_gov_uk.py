@@ -6,7 +6,7 @@ from datetime import datetime
 
 import requests
 from dateutil.parser import parse
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Crawley Borough Council (myCrawley)"
@@ -19,11 +19,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Rubbish and Small Electricals Collection": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "GREENbin Garden Waste Collection": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Recycling and Textiles Collection": "mdi:recycle",
+    "Rubbish and Small Electricals Collection": Icons.ELECTRONICS,
+    "Glass": Icons.GLASS,
+    "GREENbin Garden Waste Collection": Icons.GARDEN,
+    "Paper": Icons.PAPER,
+    "Recycling and Textiles Collection": Icons.TEXTILE,
 }
 
 
@@ -59,7 +59,9 @@ class Source:
             }
         }
 
-    def get_collections(self, session_key: str, session: requests.Session) -> list[Collection]:
+    def get_collections(
+        self, session_key: str, session: requests.Session
+    ) -> list[Collection]:
         result = run_lookup(
             session,
             API_URL,

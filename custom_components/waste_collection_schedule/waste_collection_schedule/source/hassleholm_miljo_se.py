@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Hässleholm Miljö"
@@ -16,10 +16,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Kärl1": "mdi:trash-can",
-    "Kärl2": "mdi:recycle",
-    "Trädgårdsavfall": "mdi:leaf",
-    "Budad hämtning": "mdi:truck",
+    "Kärl1": Icons.GENERAL_WASTE,
+    "Kärl2": Icons.RECYCLING,
+    "Trädgårdsavfall": Icons.GARDEN,
+    "Budad hämtning": Icons.GENERAL_WASTE,
 }
 
 BASE_URL = "https://hassleholmmiljo.se/privat/sophamtning/tomningskalender"

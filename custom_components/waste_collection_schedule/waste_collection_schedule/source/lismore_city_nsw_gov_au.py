@@ -6,7 +6,7 @@ from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -42,15 +42,15 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "waste bin": "mdi:trash-can",
-    "general waste": "mdi:trash-can",
-    "red bin": "mdi:trash-can",
-    "recycle bin": "mdi:recycle",
-    "recycling": "mdi:recycle",
-    "yellow bin": "mdi:recycle",
-    "green bin": "mdi:leaf",
-    "green waste": "mdi:leaf",
-    "garden organics": "mdi:leaf",
+    "waste bin": Icons.GENERAL_WASTE,
+    "general waste": Icons.GENERAL_WASTE,
+    "red bin": Icons.GENERAL_WASTE,
+    "recycle bin": Icons.RECYCLING,
+    "recycling": Icons.RECYCLING,
+    "yellow bin": Icons.PLASTIC_PACKAGING,
+    "green bin": Icons.ORGANIC,
+    "green waste": Icons.GARDEN,
+    "garden organics": Icons.GARDEN,
 }
 
 STATE_MAP = {

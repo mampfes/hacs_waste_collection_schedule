@@ -7,7 +7,7 @@ from dataclasses import dataclass
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Neath Port Talbot Council"
 DESCRIPTION = "Source for waste collection services for Neath Port Talbot Council"
@@ -52,13 +52,13 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Plastic / Tins / Cans": "mdi:bottle-soda",
-    "Cardboard, Cartons and Paper": "mdi:package-variant",
-    "Glass": "mdi:glass-fragile",
-    "Food Waste": "mdi:leaf",
-    "Batteries": "mdi:battery",
-    "General Household Rubbish": "mdi:trash-can",
-    "Garden Waste": "mdi:flower",
+    "Plastic / Tins / Cans": Icons.PLASTIC_PACKAGING,
+    "Cardboard, Cartons and Paper": Icons.PAPER,
+    "Glass": Icons.GLASS,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Batteries": Icons.BATTERY,
+    "General Household Rubbish": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
 }
 
 

@@ -5,7 +5,7 @@ from urllib.parse import quote, urlencode
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Tauranga City Council"
@@ -19,11 +19,11 @@ TEST_CASES = {
 
 API_URL = "https://www.tauranga.govt.nz/services/rubbish-and-recycling/kerbside-collections/when-to-put-your-bins-out"
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Glass": "mdi:glass-fragile",
-    "Garden waste": "mdi:leaf",
-    "Food scraps": "mdi:food-apple",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Glass": Icons.GLASS,
+    "Garden waste": Icons.GARDEN,
+    "Food scraps": Icons.METAL,
 }
 
 

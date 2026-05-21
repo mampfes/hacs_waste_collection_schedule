@@ -1,7 +1,7 @@
 import time
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "London Borough of Bexley"
@@ -15,12 +15,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Green Wheelie": "mdi:trash-can",
-    "Brown Caddy": "mdi:food",
-    "Brown Wheelie": "mdi:leaf",
-    "Blue Lidded Wheelie": "mdi:newspaper",
-    "White Lidded Wheelie": "mdi:glass-fragile",
-    "Recycling Box": "mdi:recycle",
+    "Green Wheelie": Icons.GENERAL_WASTE,
+    "Brown Caddy": Icons.BIO_KITCHEN,
+    "Brown Wheelie": Icons.ORGANIC,
+    "Blue Lidded Wheelie": Icons.NEWSPAPER,
+    "White Lidded Wheelie": Icons.GLASS,
+    "Recycling Box": Icons.RECYCLING,
 }
 
 MAX_COUNT = 15

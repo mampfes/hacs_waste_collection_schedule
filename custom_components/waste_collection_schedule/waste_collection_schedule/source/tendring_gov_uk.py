@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
@@ -41,11 +41,11 @@ HOSTNAME = "tendring-self.achieveservice.com"
 LOOKUP_COLLECTIONS = "6347acbadc425"
 
 ICON_MAP = {
-    "residual": "mdi:trash-can",
-    "green": "mdi:recycle",
-    "red": "mdi:recycle",
-    "food": "mdi:food",
-    "garden": "mdi:leaf",
+    "residual": Icons.GENERAL_WASTE,
+    "green": Icons.RECYCLING,
+    "red": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
+    "garden": Icons.GARDEN,
 }
 
 # (api_field, waste_type_label, icon_key, conditional_field)
