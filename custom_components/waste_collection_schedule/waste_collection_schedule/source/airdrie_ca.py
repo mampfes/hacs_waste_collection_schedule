@@ -6,7 +6,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 
-TITLE = "Airdrie (CA)"
+TITLE = "Airdrie (AB)"
 DESCRIPTION = "City of Airdrie waste collection"
 URL = "https://www.airdrie.ca"
 COUNTRY = "ca"
@@ -19,7 +19,7 @@ ICON_MAP = {
     "Black garbage cart collection": "mdi:trash-can",
     "Recycling collection": "mdi:recycle",
     "Blue recycling cart collection": "mdi:recycle",
-    "Organics Collection": "mdi:leaf",
+    "Organics collection": "mdi:leaf",
     "Green organics cart collection": "mdi:leaf",
 }
 
