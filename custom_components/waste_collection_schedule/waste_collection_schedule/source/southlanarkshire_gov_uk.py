@@ -3,7 +3,7 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -18,11 +18,11 @@ DASHBOARD_URL = "https://wasteservices.southlanarkshire.gov.uk/PublicDashboard"
 REQUEST_TIMEOUT = 30
 
 ICON_MAP = {
-    "food": "mdi:food-apple",
-    "blue": "mdi:recycle",
-    "grey": "mdi:bottle-wine",
-    "burgundy": "mdi:food-apple",
-    "black": "mdi:trash-can",
+    "food": Icons.BIO_KITCHEN,
+    "blue": Icons.RECYCLING,
+    "grey": Icons.GLASS_COLORED,
+    "burgundy": Icons.BIO_KITCHEN,
+    "black": Icons.GENERAL_WASTE,
 }
 
 
