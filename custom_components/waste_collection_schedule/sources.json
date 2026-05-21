@@ -16796,6 +16796,14 @@
       "id": "telge_se"
     },
     {
+      "title": "Upplands-Bro",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "upplands-bro"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "Uppsala Vatten",
       "module": "edpevent_se",
       "default_params": {
