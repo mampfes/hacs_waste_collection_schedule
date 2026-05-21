@@ -11274,6 +11274,12 @@
       "id": "muellmax_de"
     },
     {
+      "title": "Stadt Hilchenbach",
+      "module": "hilchenbach_de",
+      "default_params": {},
+      "id": "hilchenbach_de"
+    },
+    {
       "title": "Stadt Kaufbeuren",
       "module": "awido_de",
       "default_params": {
