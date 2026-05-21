@@ -4370,6 +4370,29 @@
         },
         "data_description": {}
       },
+      "args_airdrie_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "community": "Community"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "community": "Select your community from the list"
+        }
+      },
+      "reconfigure_airdrie_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "community": "Community"
+        },
+        "data_description": {
+          "community": "Select your community from the list"
+        }
+      },
       "args_ics_brossard_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

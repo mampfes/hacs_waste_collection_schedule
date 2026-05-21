@@ -774,6 +774,7 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>Canada</summary>
 
+- [Airdrie (AB)](/doc/source/airdrie_ca.md) / airdrie.ca
 - [Aurora (ON)](/doc/source/recyclecoach_com.md) / aurora.ca
 - [Brampton (ON)](/doc/source/recyclecoach_com.md) / brampton.ca
 - [Brantford (ON)](/doc/source/recyclecoach_com.md) / brantford.ca

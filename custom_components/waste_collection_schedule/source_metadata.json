@@ -1000,6 +1000,13 @@
     "howto": {},
     "urls": {}
   },
+  "airdrie_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/airdrie_ca.md",
+    "howto": {
+      "en": "Select your community from the dropdown list."
+    },
+    "urls": {}
+  },
   "ics_brossard_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/brossard_ca.md",
     "howto": {

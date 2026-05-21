@@ -4470,6 +4470,12 @@
   ],
   "Canada": [
     {
+      "title": "Airdrie (AB)",
+      "module": "airdrie_ca",
+      "default_params": {},
+      "id": "airdrie_ca"
+    },
+    {
       "title": "Aurora (ON)",
       "module": "recyclecoach_com",
       "default_params": {
