@@ -91,6 +91,14 @@ SERVICE_PROVIDERS = {
         "requires_token": True,
         "app_version": "3.0.0.0",
     },
+    "upplands-bro": {
+        "title": "Upplands-Bro",
+        "url": "https://www.upplands-bro.se/",
+        "api_url": "https://upplands-bro.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+        "app_version": "2.1.3",
+    },
 }
 
 EXTRA_INFO = [
