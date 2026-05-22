@@ -2874,6 +2874,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Monmouthshire Council](/doc/source/monmouthshire_gov_uk.md) / monmouthshire.gov.uk
 - [Moray Council](/doc/source/moray_gov_uk.md) / moray.gov.uk
 - [Neath Port Talbot Council](/doc/source/neath_port_talbot_gov_uk.md) / npt.gov.uk
+- [New Forest District Council](/doc/source/newforest_gov_uk.md) / newforest.gov.uk
 - [Newark & Sherwood District Council](/doc/source/newark_sherwooddc_gov_uk.md) / newark-sherwooddc.gov.uk
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
