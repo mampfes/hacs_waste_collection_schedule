@@ -4253,6 +4253,13 @@
       "url_www_chelmsford_gov_uk_bins_and_recycling_check_your_collection_day": "https://www.chelmsford.gov.uk/bins-and-recycling/check-your-collection-day"
     }
   },
+  "cheltenham_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cheltenham_gov_uk.md",
+    "howto": {
+      "en": "Visit https://cheltenham-host01.oncreate.app/w/webpage/collection-lookup, enter your postcode, select your address, then note the numeric property ID shown in the page."
+    },
+    "urls": {}
+  },
   "cherwell_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cherwell_gov_uk.md",
     "howto": {},

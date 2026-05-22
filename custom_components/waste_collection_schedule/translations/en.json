@@ -19629,6 +19629,29 @@
           "collection_round": "Collection round identifier (e.g. Tuesday A). You can find yours by going to {url_www_chelmsford_gov_uk_bins_and_recycling_check_your_collection_day} and entering in your address details."
         }
       },
+      "args_cheltenham_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "property_id": "Property ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "property_id": "Internal numeric property identifier from Cheltenham's bin checker (e.g. 56299)"
+        }
+      },
+      "reconfigure_cheltenham_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "property_id": "Property ID"
+        },
+        "data_description": {
+          "property_id": "Internal numeric property identifier from Cheltenham's bin checker (e.g. 56299)"
+        }
+      },
       "args_cherwell_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

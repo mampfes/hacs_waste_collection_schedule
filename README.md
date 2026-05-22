@@ -2745,6 +2745,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Central Bedfordshire Council](/doc/source/centralbedfordshire_gov_uk.md) / centralbedfordshire.gov.uk
 - [Charnwood](/doc/source/charnwood_gov_uk.md) / charnwood.gov.uk
 - [Chelmsford City Council](/doc/source/chelmsford_gov_uk.md) / chelmsford.gov.uk
+- [Cheltenham Borough Council](/doc/source/cheltenham_gov_uk.md) / cheltenham.gov.uk
 - [Cherwell District Council](/doc/source/cherwell_gov_uk.md) / cherwell.gov.uk
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
 - [Cheshire West and Chester Council](/doc/source/cheshire_west_and_chester_gov_uk.md) / cheshirewestandchester.gov.uk
