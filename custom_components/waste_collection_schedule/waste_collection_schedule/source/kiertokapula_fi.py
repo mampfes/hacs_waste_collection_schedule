@@ -20,7 +20,6 @@ TENANT_ID = "493c3a57-70d8-4515-aa94-05dd1185b986"
 
 PARAM_TRANSLATIONS = {
     "en": {"username": "Username", "password": "Password"},
-    "fi": {"username": "Käyttäjätunnus", "password": "Salasana"},
 }
 
 PARAM_DESCRIPTIONS = {
