@@ -18244,6 +18244,12 @@
       "id": "gosport_gov_uk"
     },
     {
+      "title": "Great Yarmouth Borough Council",
+      "module": "great_yarmouth_gov_uk",
+      "default_params": {},
+      "id": "great_yarmouth_gov_uk"
+    },
+    {
       "title": "Greater Cambridge Waste, UK",
       "module": "greater_cambridge_waste_org",
       "default_params": {},

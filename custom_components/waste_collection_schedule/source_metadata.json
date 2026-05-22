@@ -4660,6 +4660,13 @@
     },
     "urls": {}
   },
+  "great_yarmouth_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/great_yarmouth_gov_uk.md",
+    "howto": {
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering your address details."
+    },
+    "urls": {}
+  },
   "guildford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/guildford_gov_uk.md",
     "howto": {},
