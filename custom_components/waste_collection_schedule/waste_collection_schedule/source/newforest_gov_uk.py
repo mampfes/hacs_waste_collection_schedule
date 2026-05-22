@@ -262,8 +262,8 @@ class Source:
             thead = table.find("thead")
             if not thead:
                 continue
-            ths = thead.find_all("th")
-            header_texts = [th.get_text(strip=True) for th in ths]
+            th_tags = thead.find_all("th")
+            header_texts = [th.get_text(strip=True) for th in th_tags]
             if header_texts == ["Collection date", "Container type"]:
                 collection_table = table
                 break
