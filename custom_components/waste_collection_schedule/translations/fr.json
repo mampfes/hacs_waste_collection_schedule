@@ -5435,7 +5435,8 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "bill_number": "Numéro de facture",
-          "password": "Mot de passe"
+          "password": "Mot de passe",
+          "username": "Nom d'utilisateur"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -5447,7 +5448,8 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "bill_number": "Numéro de facture",
-          "password": "Mot de passe"
+          "password": "Mot de passe",
+          "username": "Nom d'utilisateur"
         },
         "data_description": {}
       },
