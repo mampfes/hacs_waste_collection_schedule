@@ -18010,6 +18010,12 @@
       "id": "derby_gov_uk"
     },
     {
+      "title": "Derbyshire Dales District Council",
+      "module": "derbyshiredales_gov_uk",
+      "default_params": {},
+      "id": "derbyshiredales_gov_uk"
+    },
+    {
       "title": "Dorset Council",
       "module": "dorset_gov_uk",
       "default_params": {},

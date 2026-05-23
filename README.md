@@ -2768,6 +2768,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Denbighshire County Council](/doc/source/denbighshire_gov_uk.md) / denbighshire.gov.uk
 - [Deprecated: Buckinghamshire](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
+- [Derbyshire Dales District Council](/doc/source/derbyshiredales_gov_uk.md) / derbyshiredales.gov.uk
 - [Dorset Council](/doc/source/dorset_gov_uk.md) / dorsetcouncil.gov.uk
 - [Dover District Council](/doc/source/dover_gov_uk.md) / dover.gov.uk
 - [Dudley Metropolitan Borough Council](/doc/source/dudley_gov_uk.md) / dudley.gov.uk

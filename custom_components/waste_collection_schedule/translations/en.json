@@ -20184,6 +20184,29 @@
           "post_code": "LEAVE EMPTY is not used anymore."
         }
       },
+      "args_derbyshiredales_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_id": "A Unique Property Reference Number (UPRN) or Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address_id": "Your property's UPRN, find it at {url_www_findmyaddress_co_uk} You can also use a Postcode"
+        }
+      },
+      "reconfigure_derbyshiredales_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_id": "A Unique Property Reference Number (UPRN) or Postcode"
+        },
+        "data_description": {
+          "address_id": "Your property's UPRN, find it at {url_www_findmyaddress_co_uk} You can also use a Postcode"
+        }
+      },
       "args_dorset_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
