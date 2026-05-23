@@ -5229,6 +5229,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "northumberland_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northumberland_gov_uk.md",
+    "howto": {
+      "en": "Visit https://bincollection.northumberland.gov.uk/postcode, enter your postcode and select your address. The UPRN is the number shown in the address dropdown value, or find it at https://www.findmyaddress.co.uk/."
+    },
+    "urls": {}
+  },
   "norwich_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/norwich_gov_uk.md",
     "howto": {},

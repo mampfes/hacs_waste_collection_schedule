@@ -2900,6 +2900,7 @@ If you already have enough information for your municipality/region, you are ver
 - [North Yorkshire Council - Ryedale](/doc/source/northyorks_ryedale_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Scarborough](/doc/source/northyorks_scarborough_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Selby](/doc/source/northyorks_selby_gov_uk.md) / northyorks.gov.uk
+- [Northumberland County Council](/doc/source/northumberland_gov_uk.md) / northumberland.gov.uk
 - [Norwich City Council](/doc/source/norwich_gov_uk.md) / norwich.gov.uk/bins-and-recycling
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
 - [Oadby and Wigston Council](/doc/source/oadby_wigston_gov_uk.md) / oadby-wigston.gov.uk
