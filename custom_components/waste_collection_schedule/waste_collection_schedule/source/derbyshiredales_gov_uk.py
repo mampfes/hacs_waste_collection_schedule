@@ -46,6 +46,7 @@ PARAM_DESCRIPTIONS = {
     }
 }
 
+
 class Source:
     def __init__(self, address_id):
         self._address_id = str(address_id)
@@ -53,7 +54,12 @@ class Source:
     def fetch(self):
         session = requests.Session()
         form_inputs = get_hidden_form_inputs(session, FORM_URL)
-        required = {"__RequestVerificationToken", "FormGuid", "ObjectTemplateID", "CurrentSectionID"}
+        required = {
+            "__RequestVerificationToken",
+            "FormGuid",
+            "ObjectTemplateID",
+            "CurrentSectionID",
+        }
         if not required.issubset(form_inputs.keys()):
             raise ValueError("Unable to read Derbyshire Dales form metadata")
 
@@ -65,7 +71,7 @@ class Source:
             "CurrentSectionID": form_inputs["CurrentSectionID"],
             "FF2924": self._address_id,
             "FF2924lbltxt": "Collection Address",
-            "FF2924-text": "False"
+            "FF2924-text": "False",
         }
         data_resp = session.post(RENDER_URL, data=payload, timeout=30)
         data_resp.raise_for_status()
