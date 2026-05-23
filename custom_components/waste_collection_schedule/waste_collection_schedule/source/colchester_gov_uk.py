@@ -17,7 +17,6 @@ ICON_MAP = {
     "Black bags": Icons.GENERAL_WASTE,
     "Glass": Icons.GLASS,
     "Cans": Icons.METAL,
-    "Textiles": Icons.TEXTILE,
     "Paper/card": Icons.PAPER,
     "Plastics": Icons.PLASTIC_PACKAGING,
     "Garden waste": Icons.GARDEN,
