@@ -19,19 +19,20 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "BROWN BIN": Icons.BIO_KITCHEN,
-    "GREEN BIN": Icons.RECYCLING,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
 }
 
 WASTE_TYPE_MAP = {
     "General non-recyclable waste": "General Waste",
     "Recycling": "Recycling",
+    "Garden waste": "Garden Waste",
 }
 
 
 class Source:
     def __init__(self, postcode: str, uprn: str):
-
         if not postcode:
             raise SourceArgumentException("postcode", "Postcode is required")
         if not uprn.isdigit():
