@@ -4,6 +4,57 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.25.0] - 2026-05-24
+
+### Added Sources
+
+- added Northumberland County Council, UK (#6418)
+- added Derbyshire Dales, UK (thanks @moonthug) (#6415)
+- added Great Yarmouth Borough Council, UK (#6414)
+- added Cheltenham Borough Council, UK (#6413)
+- added New Forest District Council, UK (#6411)
+- added Tendring District Council, UK (#6379)
+- added South Lanarkshire Council, UK (thanks @campbellcopeland) (#6375)
+- added Hilchenbach, DE (#6407)
+- added Eilenburg, DE (#6382)
+- added Heimat-Info (heimat-info.de), DE (#6381)
+- added Amberg, DE (#6363)
+- added Landkreis Mecklenburgische Seenplatte, DE (#6361)
+- added Aspang Markt (ICS), AT (#6372)
+- added Rova (rova.nl), NL (#6360)
+- added Aprica S.p.A. (apricaspa.it), IT (thanks @nu00) (#6357)
+- added Airdrie, AB, CA (thanks @lit-af) (#6406)
+- added Mid-Western Regional Council (OpenCities), NSW, AU (thanks @rodgrech) (#6350)
+- added City of Mandurah, WA, AU (thanks @Pheoxy) (#6370)
+- added Taupō District Council, NZ (#6380)
+
+### Fixed Sources
+
+- fixed colchester_gov_uk: drop textiles and combine recycling streams (thanks @Canis-L-Sapien) (#6420)
+- fixed preston_gov_uk: WAF bypass + two-step address flow (#6419)
+- fixed AppAbfallplusDe: append subtitle to disambiguate same-named waste types (#6412)
+- fixed kiertokapula_fi: update for Vingo 2.0 portal migration (#6408)
+- fixed staffsmoorlands_gov_uk: disable SSL certificate verification (#6376)
+- fixed innerwest_nsw_gov_au: expand recurring weekly collections (#6373)
+- fixed uk_cloud9_apps service: switch to curl_cffi to resolve SSL hostname verification failure (#6371)
+- fixed boroondara_vic_gov_au: FOGO is weekly with Recycling, not fortnightly with General Waste (#6364)
+- fixed mzvhegau_de: switch to admin-post text endpoint (#6362)
+- fixed localcities_ch: make zone optional to support zoneless municipalities (#6358)
+- fixed south_tyneside_gov_uk: UPRN lookup (thanks @CartesianJohn) (#6356)
+
+### Added Features
+
+- added canonical Icons enum + migrated all sources (#6384)
+- added "Ignore Duplicate Entries per Day" option to UI (thanks @christianh87) (#6368)
+- added date-range support to static `excludes` parameter (#6377)
+- skip creating default calendar if all of them are dedicated (thanks @nurtext) (#6387)
+
+### Added Provider to existing source
+
+- added Upplands-Bro to avfallsapp_se (thanks @ragonline) (#6388)
+- added ROAF (Romerike Avfallsforedling) to minrenovasjon_no (#6366)
+- added Lakeshore, ON to recyclecoach_com (#6359)
+
 ## [2.24.0] - 2026-05-17
 
 ### Added Sources
