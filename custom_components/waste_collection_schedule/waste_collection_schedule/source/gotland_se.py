@@ -14,6 +14,8 @@ TEST_CASES = {
 ICON_MAP = {
     "Restavfall": Icons.GENERAL_WASTE,
     "Matavfall": Icons.BIO_KITCHEN,
+    "Fyrfack 1": Icons.GENERAL_WASTE,
+    "Fyrfack 2": Icons.RECYCLING,
 }
 
 
@@ -31,7 +33,12 @@ class Source:
 
         entries = []
         for item in data["RhServices"]:
-            if item["WasteType"] != "Restavfall" and item["WasteType"] != "Matavfall":
+            if item["WasteType"] not in {
+                "Restavfall",
+                "Matavfall",
+                "Fyrfack 1",
+                "Fyrfack 2",
+            }:
                 continue
 
             next_pickup = item["NextWastePickup"]
