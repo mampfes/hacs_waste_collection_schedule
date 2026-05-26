@@ -10375,6 +10375,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Monheim am Rhein",
+      "module": "monheim_de",
+      "default_params": {},
+      "id": "monheim_de"
+    },
+    {
       "title": "Monschau",
       "module": "app_abfallplus_de",
       "default_params": {
