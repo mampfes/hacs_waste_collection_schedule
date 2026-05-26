@@ -3,8 +3,8 @@ import json
 import re
 from datetime import date, datetime, timedelta
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Great Yarmouth Borough Council"
@@ -68,7 +68,7 @@ class Source:
             return None
 
     def fetch(self) -> list[Collection]:
-        session = requests.Session()
+        session = requests.Session(impersonate="chrome")
         session.headers.update(_HEADERS)
 
         # Step 1: GET the form page and extract session tokens.
