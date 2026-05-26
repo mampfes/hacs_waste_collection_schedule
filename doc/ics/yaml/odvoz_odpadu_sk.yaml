@@ -10,4 +10,4 @@ howto:
     - Use this URL as the `url` parameter in your Home Assistant configuration.
 test_cases:
   Dolna_Ves:
-    url: "https://odvoz-odpadu.eu/miesto/1400/kalendar.ics"
+    url: https://odvoz-odpadu.eu/miesto/1400/kalendar.ics
