@@ -16400,6 +16400,12 @@
       "id": "fcc_group_eu"
     },
     {
+      "title": "Odvoz Odpadu",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_odvoz_odpadu_sk"
+    },
+    {
       "title": "OLO",
       "module": "olo_sk",
       "default_params": {},

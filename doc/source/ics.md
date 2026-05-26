@@ -417,6 +417,10 @@ This source has been successfully tested with the following service providers:
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
 
+### Slovakia
+
+- [Odvoz Odpadu](/doc/ics/odvoz_odpadu_sk.md) / odvoz-odpadu.eu
+
 ### Slovenia
 
 - [Kamnik](/doc/ics/publicus_si.md) / kamnik.si
