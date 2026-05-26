@@ -128,6 +128,7 @@ def _probe_data_fetcher(session: requests.Session, fn_id: str) -> bool:
             headers={
                 "Accept": "application/json",
                 "x-tsr-serverFn": "true",
+                "Sec-Fetch-Site": "same-origin",
             },
             timeout=8,
         )
@@ -233,6 +234,9 @@ class Source:
             headers={
                 "Accept": "application/json, application/x-tss-framed, application/x-ndjson",
                 "x-tsr-serverFn": "true",
+                # Upstream enforces Sec-Fetch-Site: same-origin on _serverFn
+                # calls — without it the edge returns 403 Forbidden.
+                "Sec-Fetch-Site": "same-origin",
             },
             timeout=20,
         )
