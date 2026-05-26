@@ -18,6 +18,7 @@ ICON_MAP = {
     "Fyrfack 2": Icons.RECYCLING,
 }
 
+
 class Source:
     def __init__(self, uprn):
         self._uprn = uprn
@@ -32,7 +33,12 @@ class Source:
 
         entries = []
         for item in data["RhServices"]:
-            if item["WasteType"] not in {"Restavfall", "Matavfall", "Fyrfack 1", "Fyrfack 2"}:
+            if item["WasteType"] not in {
+                "Restavfall",
+                "Matavfall",
+                "Fyrfack 1",
+                "Fyrfack 2",
+            }:
                 continue
 
             next_pickup = item["NextWastePickup"]
