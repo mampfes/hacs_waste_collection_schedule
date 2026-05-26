@@ -3904,6 +3904,13 @@
     "howto": {},
     "urls": {}
   },
+  "aberdeencity_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aberdeencity_gov_uk.md",
+    "howto": {
+      "en": "Find your UPRN (Unique Property Reference Number) for your address using https://www.findmyaddress.co.uk/ or your council documents."
+    },
+    "urls": {}
+  },
   "aberdeenshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aberdeenshire_gov_uk.md",
     "howto": {},
