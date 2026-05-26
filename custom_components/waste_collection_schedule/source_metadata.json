@@ -3021,6 +3021,14 @@
     },
     "urls": {}
   },
+  "gruppoveritas_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gruppoveritas_it.md",
+    "howto": {
+      "en": "Open https://www.gruppoveritas.it, navigate to your municipality's waste collection page, locate the PDF calendar download link, and paste its URL into the pdf_url field.",
+      "it": "Apri https://www.gruppoveritas.it, vai alla pagina del tuo Comune, trova il link al calendario PDF e incolla l'URL nel campo pdf_url."
+    },
+    "urls": {}
+  },
   "ilrifiutologo_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ilrifiutologo_it.md",
     "howto": {},
