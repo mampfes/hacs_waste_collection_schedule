@@ -12,7 +12,7 @@ import os
 import sys
 from datetime import date as real_date
 from datetime import timedelta
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -109,7 +109,9 @@ def test_strip_suffix_removes_expiry():
 
 
 def test_strip_suffix_no_op_on_clean_name():
-    assert hillingdon_gov_uk._strip_suffix("Dry mixed recycling") == "Dry mixed recycling"
+    assert (
+        hillingdon_gov_uk._strip_suffix("Dry mixed recycling") == "Dry mixed recycling"
+    )
 
 
 def test_strip_suffix_handles_empty_parenthetical():
@@ -147,7 +149,9 @@ def test_get_icon_household_waste():
 
 
 def test_get_icon_residual_waste():
-    assert hillingdon_gov_uk._get_icon("Residual Household Waste") == Icons.GENERAL_WASTE
+    assert (
+        hillingdon_gov_uk._get_icon("Residual Household Waste") == Icons.GENERAL_WASTE
+    )
 
 
 def test_get_icon_trade_commercial():
@@ -220,9 +224,9 @@ def test_fetch_all_dates_on_correct_weekday(mock_requests, mock_bh):
 
     assert len(entries) == 8
     for entry in entries:
-        assert entry.date.weekday() == 2, (
-            f"Expected Wednesday (weekday 2), got {entry.date} (weekday {entry.date.weekday()})"
-        )
+        assert (
+            entry.date.weekday() == 2
+        ), f"Expected Wednesday (weekday 2), got {entry.date} (weekday {entry.date.weekday()})"
 
 
 @patch(
@@ -261,9 +265,9 @@ def test_fetch_strips_subscription_expiry_suffix(mock_requests, mock_bh):
 
     waste_types = {e.type for e in entries}
     assert "Garden Waste" in waste_types
-    assert not any("( -" in t for t in waste_types), (
-        "Raw suffix should have been stripped from waste type"
-    )
+    assert not any(
+        "( -" in t for t in waste_types
+    ), "Raw suffix should have been stripped from waste type"
 
 
 @patch(

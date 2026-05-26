@@ -14,7 +14,9 @@ URL = "https://www.hillingdon.gov.uk"
 COUNTRY = "uk"
 
 TEST_CASES = {
-    "Property with garden waste subscription, UB10 (Wednesday)": {"uprn": "100021484600"},
+    "Property with garden waste subscription, UB10 (Wednesday)": {
+        "uprn": "100021484600"
+    },
     "Property with food waste, UB10 (Wednesday)": {"uprn": "100021484628"},
     "Property with residual waste suffix, UB10 (Tuesday)": {"uprn": "100021484620"},
 }
