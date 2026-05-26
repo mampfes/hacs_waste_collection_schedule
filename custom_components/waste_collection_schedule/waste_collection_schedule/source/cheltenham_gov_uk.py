@@ -13,6 +13,7 @@ URL = "https://www.cheltenham.gov.uk"
 COUNTRY = "uk"
 TEST_CASES = {
     "282 Hatherley Road GL51 6HR": {"property_id": 56299},
+    "Second property": {"property_id": 55297},
 }
 
 LOGGER = logging.getLogger(__name__)
@@ -24,6 +25,11 @@ CELL_ID = "PCL0005127GBCNH1"
 FRAGMENT_ID = "PCF0019732GBCNH1"
 WIDGET_GROUP_ID = "PWG0002596GBCNH1"
 SUBMIT_FRAGMENT_ID = "PCF0016614GBCNH1"
+
+# Identifiers within the schedule response
+SCHEDULE_OBJECT_ID = "OBJ0000370GBCNH1"
+FRAGMENT_BIN_TYPE = "PCF0019703GBCNH1"
+FRAGMENT_NEXT_DATE = "PCF0019810GBCNH1"
 
 ICON_MAP = {
     "Refuse": Icons.GENERAL_WASTE,
@@ -66,18 +72,10 @@ class Source:
 
         page_url = f"{BASE_URL}/w/webpage/collection-lookup?webpage_subpage_id={SUBPAGE_ID}&webpage_token={WEBPAGE_TOKEN}"
 
-        # Establish session cookie
-        session.get(f"{BASE_URL}/w/webpage/collection-lookup")
-
-        # Step 1: Retrieve form to get CSRF token and collection key
-        r1 = session.post(
-            page_url,
-            data={
-                "webpage_cell_id": CELL_ID,
-                "webpage_fragment_id": FRAGMENT_ID,
-                "webpage_widget_group_id": WIDGET_GROUP_ID,
-            },
-        )
+        # Step 1: GET the form page (returns JSON with embedded HTML containing
+        # CSRF token and collection key). The XMLHttpRequest header is what
+        # makes the server return the JSON fragment rather than the full page.
+        r1 = session.get(page_url)
         r1.raise_for_status()
         data1 = r1.json().get("data", "")
 
@@ -111,28 +109,26 @@ class Source:
 
     def _parse_schedule(self, html: str) -> list[Collection]:
         soup = BeautifulSoup(html, "html.parser")
-        rows = soup.find_all("tr", class_="page_fragment_collection")
-
-        if not rows:
-            raise SourceArgumentNotFound(
-                "property_id",
-                self._property_id,
-                "no collection data found — please check your property_id is correct",
-            )
+        # Restrict to bin-schedule rows; the same response also embeds
+        # address-listing rows that would otherwise confuse the parser.
+        rows = soup.find_all("tr", attrs={"data-base_object_id": SCHEDULE_OBJECT_ID})
 
         entries = []
         for row in rows:
-            current_value = row.get("data-current_value", "")
-            if not current_value:
+            bin_type_div = row.find(
+                "div", attrs={"data-fragment_id": FRAGMENT_BIN_TYPE}
+            )
+            next_date_div = row.find(
+                "div", attrs={"data-fragment_id": FRAGMENT_NEXT_DATE}
+            )
+            if not bin_type_div or not next_date_div:
                 continue
-            # Format: bin_size_detail|bin_type_name|id|last_date_dd/mm/yyyy|next_date_dd/mm/yyyy|schedule
-            parts = current_value.split("|")
-            if len(parts) < 5:
+
+            bin_type = bin_type_div.get("data-current_value", "").strip()
+            next_date_str = next_date_div.get("data-current_value", "").strip()
+            if not bin_type or not next_date_str or next_date_str == "N/A":
                 continue
-            bin_type = parts[1].strip()
-            next_date_str = parts[4].strip()
-            if not next_date_str or next_date_str == "N/A":
-                continue
+
             try:
                 next_date = datetime.strptime(next_date_str, "%d/%m/%Y").date()
             except ValueError:
@@ -148,5 +144,12 @@ class Source:
                     break
 
             entries.append(Collection(date=next_date, t=bin_type, icon=icon))
+
+        if not entries:
+            raise SourceArgumentNotFound(
+                "property_id",
+                self._property_id,
+                "no collection data found — please check your property_id is correct",
+            )
 
         return entries
