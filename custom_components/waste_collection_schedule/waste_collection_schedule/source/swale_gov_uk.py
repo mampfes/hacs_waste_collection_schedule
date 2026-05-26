@@ -2,8 +2,8 @@ import logging
 from datetime import date, datetime, timedelta
 from time import sleep
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
@@ -11,9 +11,6 @@ _LOGGER = logging.getLogger(__name__)
 TITLE = "Swale Borough Council"
 DESCRIPTION = "Source for swale.gov.uk services for Swale, UK."
 URL = "https://swale.gov.uk"
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-}
 API_URL = (
     "https://swale.gov.uk/bins-littering-and-the-environment/bins/my-collection-day"
 )
@@ -60,7 +57,7 @@ class Source:
         return dt
 
     def fetch(self) -> list[Collection]:
-        s = requests.Session()
+        s = requests.Session(impersonate="chrome")
 
         # mimic postcode search
         payload: dict = {
@@ -71,7 +68,6 @@ class Source:
         }
         r = s.post(
             "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
-            headers=HEADERS,
             data=payload,
         )
         r.raise_for_status()
@@ -86,7 +82,6 @@ class Source:
         }
         r = s.post(
             "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
-            headers=HEADERS,
             data=payload,
         )
         r.raise_for_status()
