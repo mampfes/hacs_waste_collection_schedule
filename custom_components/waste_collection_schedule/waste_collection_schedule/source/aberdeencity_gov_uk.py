@@ -134,7 +134,9 @@ class Source:
         )
         token_resp.raise_for_status()
         try:
-            token_row = token_resp.json()["integration"]["transformed"]["rows_data"]["0"]
+            token_row = token_resp.json()["integration"]["transformed"]["rows_data"][
+                "0"
+            ]
             token = token_row["token"]
         except (ValueError, KeyError, TypeError) as err:
             raise SourceArgumentException(
