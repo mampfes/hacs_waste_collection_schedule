@@ -2,8 +2,8 @@ import logging
 import re
 from datetime import datetime
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
@@ -54,12 +54,7 @@ class Source:
         self._uprn = str(uprn)
 
     def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-            }
-        )
+        session = requests.Session(impersonate="chrome")
 
         # Step 1: GET the postcode page to establish a session and retrieve the CSRF token
         r1 = session.get(f"{BASE_URL}/postcode")
