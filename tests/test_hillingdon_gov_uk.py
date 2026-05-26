@@ -252,7 +252,7 @@ def test_fetch_all_dates_today_or_future(mock_requests, mock_bh):
 )
 @patch("waste_collection_schedule.source.hillingdon_gov_uk.requests")
 def test_fetch_strips_subscription_expiry_suffix(mock_requests, mock_bh):
-    """'Garden Waste ( - 31/05/2026 23:59)' should appear as 'Garden Waste'."""
+    """Garden waste with the ``( - DD/MM/YYYY HH:MM)`` suffix is stripped to ``Garden Waste``."""
     mock_bh.return_value = {}
     mock_requests.post.return_value = MockResponse(
         json_data=_api_response(
