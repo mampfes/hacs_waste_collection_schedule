@@ -3766,6 +3766,11 @@
     "howto": {},
     "urls": {}
   },
+  "zab_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zab_ch.md",
+    "howto": {},
+    "urls": {}
+  },
   "alchenstorf_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alchenstorf_ch.md",
     "howto": {},

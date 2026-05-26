@@ -16920,6 +16920,14 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Aadorf",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Aadorf"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Alchenstorf",
       "module": "alchenstorf_ch",
       "default_params": {},
@@ -16965,6 +16973,30 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Bettwiesen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Bettwiesen"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Bichelsee-Balterswil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Bichelsee-Balterswil"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Braunau",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Braunau"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Buchegg",
       "module": "buchegg_so_ch",
       "default_params": {},
@@ -16988,6 +17020,14 @@
       "id": "localcities_ch"
     },
     {
+      "title": "B\u00fctschwil-Ganterschwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "B\u00fctschwil-Ganterschwil"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Canton of Z\u00fcrich",
       "module": "ics",
       "default_params": {
@@ -17001,12 +17041,52 @@
       "id": "ics_openerz_metaodi_ch"
     },
     {
+      "title": "Degersheim",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Degersheim"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Ebnat-Kappel",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Ebnat-Kappel"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Eggersriet",
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Eggersriet"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Eschlikon",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Eschlikon"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Fischingen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Fischingen"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Flawil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Flawil"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Gais",
@@ -17045,6 +17125,14 @@
         "municipality": "Goldach"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Gossau",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Gossau"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Gossau ZH",
@@ -17122,6 +17210,22 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Jonschwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Jonschwil"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Kirchberg",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Kirchberg"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "K\u00f6niz",
       "module": "koeniz_ch",
       "default_params": {},
@@ -17134,6 +17238,14 @@
         "municipality": "K\u00f6niz"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Lichtensteig",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Lichtensteig"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Liebefeld",
@@ -17173,6 +17285,14 @@
       "id": "a_region_ch"
     },
     {
+      "title": "L\u00fctisburg",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "L\u00fctisburg"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Mittelh\u00e4usern",
       "module": "koeniz_ch",
       "default_params": {
@@ -17185,6 +17305,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mopage_ch"
+    },
+    {
+      "title": "Mosnang",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Mosnang"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Muolen",
@@ -17209,10 +17337,34 @@
       "id": "muenchenstein_ch"
     },
     {
+      "title": "M\u00fcnchwilen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "M\u00fcnchwilen"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "M\u00fcnsingen BE, Switzerland",
       "module": "ics",
       "default_params": {},
       "id": "ics_muensingen_ch"
+    },
+    {
+      "title": "Neckertal",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Neckertal"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Nesslau",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Nesslau"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Nieder-/Oberscherli",
@@ -17223,12 +17375,44 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Niederb\u00fcren",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Niederb\u00fcren"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Niederhelfenschwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Niederhelfenschwil"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Niederwangen",
       "module": "koeniz_ch",
       "default_params": {
         "municipality": "Niederwangen"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Oberb\u00fcren",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Oberb\u00fcren"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Oberuzwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Oberuzwil"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Oberwangen",
@@ -17271,6 +17455,14 @@
       "module": "reinach_bl_ch",
       "default_params": {},
       "id": "reinach_bl_ch"
+    },
+    {
+      "title": "Rickenbach",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Rickenbach"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Rorschach",
@@ -17323,6 +17515,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_seon_ch"
+    },
+    {
+      "title": "Sirnach",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Sirnach"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Speicher",
@@ -17396,6 +17596,14 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Tobel-T\u00e4gerschen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Tobel-T\u00e4gerschen"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Trogen",
       "module": "a_region_ch",
       "default_params": {
@@ -17426,6 +17634,14 @@
         "municipality": "Urn\u00e4sch"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Uzwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Uzwil"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Volketswil",
@@ -17478,10 +17694,34 @@
       "id": "localcities_ch"
     },
     {
+      "title": "Wattwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Wattwil"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Wiedlisbach",
       "module": "ics",
       "default_params": {},
       "id": "ics_mopage_ch"
+    },
+    {
+      "title": "Wil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Wil"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Wilen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Wilen"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Winterthur",
@@ -17506,6 +17746,28 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Wuppenau",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Wuppenau"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "W\u00e4ngi",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "W\u00e4ngi"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "ZAB Bazenheid",
+      "module": "zab_ch",
+      "default_params": {},
+      "id": "zab_ch"
+    },
+    {
       "title": "ZAKU Entsorgung",
       "module": "sammelkalender_ch",
       "default_params": {
@@ -17528,6 +17790,14 @@
         "service_provider": "zkri"
       },
       "id": "sammelkalender_ch"
+    },
+    {
+      "title": "Zuzwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Zuzwil"
+      },
+      "id": "zab_ch"
     }
   ],
   "United Kingdom": [

@@ -2605,22 +2605,33 @@ If you already have enough information for your municipality/region, you are ver
 <summary>Switzerland</summary>
 
 - [A-Region](/doc/source/a_region_ch.md) / a-region.ch
+- [Aadorf](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Alchenstorf](/doc/source/alchenstorf_ch.md) / alchenstorf.ch
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
 - [Basel-Stadt](/doc/source/data_bs_ch.md) / data.bs.ch
 - [Beinwil am See](/doc/source/localcities_ch.md) / beinwil-am-see.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
+- [Bettwiesen](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Bichelsee-Balterswil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Braunau](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
 - [Bühler](/doc/source/a_region_ch.md) / a-region.ch
 - [Büren an der Aare](/doc/source/localcities_ch.md) / bueren.ch
+- [Bütschwil-Ganterschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
+- [Degersheim](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Ebnat-Kappel](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
+- [Eschlikon](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Fischingen](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Flawil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Gemeinde Würenlos](/doc/ics/wuerenlos_ch.md) / wuerenlos.ch
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
+- [Gossau](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
 - [Grenchen](/doc/source/localcities_ch.md) / grenchen.ch
 - [Grenchen (CH)](/doc/source/grenchen_ch.md) / grenchen.ch
@@ -2631,27 +2642,40 @@ If you already have enough information for your municipality/region, you are ver
 - [Horn](/doc/source/a_region_ch.md) / a-region.ch
 - [Hundwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Jonschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Kirchberg](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Lichtensteig](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Liebefeld](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Liestal](/doc/source/localcities_ch.md) / liestal.ch
 - [Lindau](/doc/source/lindau_ch.md) / lindau.ch
 - [localcities.ch](/doc/source/localcities_ch.md) / localcities.ch
 - [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Lütisburg](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Mittelhäusern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
+- [Mosnang](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
 - [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Münchenstein](/doc/source/muenchenstein_ch.md) / muenchenstein.ch
+- [Münchwilen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
+- [Neckertal](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Nesslau](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Nieder-/Oberscherli](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Niederbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Niederhelfenschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Niederwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Oberbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Oberuzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Oberwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Rapperswil](/doc/source/rapperswil_be_ch.md) / rapperswil-be.ch
 - [Real Luzern](/doc/source/real_luzern_ch.md) / real-luzern.ch
 - [Real Luzern](/doc/source/sammelkalender_ch.md) / realluzern.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
 - [Reinach BL](/doc/source/reinach_bl_ch.md) / reinach-bl.ch
+- [Rickenbach](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
 - [Sammelkalender.ch](/doc/source/sammelkalender_ch.md) / info.sammelkalender.ch
@@ -2659,6 +2683,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
 - [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
 - [Seon](/doc/ics/seon_ch.md) / seon.ch
+- [Sirnach](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
 - [Spiegel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
@@ -2668,23 +2693,32 @@ If you already have enough information for your municipality/region, you are ver
 - [Thal](/doc/source/a_region_ch.md) / a-region.ch
 - [Therwil](/doc/source/localcities_ch.md) / therwil.ch
 - [Thörishaus](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Tobel-Tägerschen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Trogen](/doc/source/a_region_ch.md) / a-region.ch
 - [Tübach](/doc/source/a_region_ch.md) / a-region.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
 - [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
+- [Uzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Volketswil](/doc/source/localcities_ch.md) / volketswil.ch
 - [Wabern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Wald](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
 - [Wangen bei Olten](/doc/source/localcities_ch.md) / wangen-bei-olten.ch
+- [Wattwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Wiedlisbach](/doc/ics/mopage_ch.md) / wiedlisbach.mopage.ch
+- [Wil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Wilen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Winterthur](/doc/source/winterthur_ch.md) / winterthur.ch
 - [Wittenbach](/doc/source/a_region_ch.md) / a-region.ch
 - [Wolfhalden](/doc/source/a_region_ch.md) / a-region.ch
+- [Wuppenau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Wängi](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [ZAB Bazenheid](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [ZAKU Entsorgung](/doc/source/sammelkalender_ch.md) / zaku.ch
 - [Zeba](/doc/source/sammelkalender_ch.md) / zebazug.ch
 - [ZKRI](/doc/source/sammelkalender_ch.md) / zkri.ch
+- [Zuzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 </details>
 
 <details>
