@@ -5,7 +5,7 @@ from os import getcwd
 from pathlib import Path
 from typing import Literal
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -209,14 +209,31 @@ class Source:
             return self.fetch_file(self._file)
 
     def fetch_url(self, url, params=None):
-        # get ics file
+        # curl_cffi stringifies list-valued params as Python repr instead of
+        # repeating the key like `requests` does; flatten to (key, value) pairs.
+        flat_params = (
+            [
+                (k, item)
+                for k, v in params.items()
+                for item in (v if isinstance(v, list) else [v])
+            ]
+            if params
+            else None
+        )
+
         if self._method == "GET":
             r = requests.get(
-                url, params=params, headers=self._headers, verify=self._verify_ssl
+                url,
+                params=flat_params,
+                headers=self._headers,
+                verify=self._verify_ssl,
             )
         elif self._method == "POST":
             r = requests.post(
-                url, data=params, headers=self._headers, verify=self._verify_ssl
+                url,
+                data=flat_params,
+                headers=self._headers,
+                verify=self._verify_ssl,
             )
         else:
             raise SourceArgumentNotFoundWithSuggestions(
@@ -227,10 +244,10 @@ class Source:
 
         r.raise_for_status()
 
-        if r.apparent_encoding == "UTF-8-SIG":
+        if r.content.startswith(b"\xef\xbb\xbf"):
             r.encoding = "UTF-8-SIG"
         else:
-            r.encoding = "utf-8"  # requests doesn't guess the encoding correctly
+            r.encoding = "utf-8"
 
         return self._convert(r.text)
 
