@@ -13247,6 +13247,12 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Gruppo Veritas",
+      "module": "gruppoveritas_it",
+      "default_params": {},
+      "id": "gruppoveritas_it"
+    },
+    {
       "title": "Guardistallo",
       "module": "junker_app",
       "default_params": {},
