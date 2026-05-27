@@ -14053,33 +14053,6 @@
         },
         "data_description": {}
       },
-      "args_gruppoveritas_it": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "pdf_url": "URL Calendario PDF",
-          "year": "Anno"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "pdf_url": "URL diretto del calendario PDF pubblicato sul sito di Gruppo Veritas.",
-          "year": "Anno del calendario da estrarre (deve corrispondere all'anno nel PDF)."
-        }
-      },
-      "reconfigure_gruppoveritas_it": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "pdf_url": "URL Calendario PDF",
-          "year": "Anno"
-        },
-        "data_description": {
-          "pdf_url": "URL diretto del calendario PDF pubblicato sul sito di Gruppo Veritas.",
-          "year": "Anno del calendario da estrarre (deve corrispondere all'anno nel PDF)."
-        }
-      },
       "args_ilrifiutologo_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

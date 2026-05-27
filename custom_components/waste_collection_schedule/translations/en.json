@@ -14482,33 +14482,6 @@
         },
         "data_description": {}
       },
-      "args_gruppoveritas_it": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "pdf_url": "PDF Calendar URL",
-          "year": "Year"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "pdf_url": "Direct URL to the PDF calendar published on the Gruppo Veritas website.",
-          "year": "Calendar year to extract (must match the year inside the PDF)."
-        }
-      },
-      "reconfigure_gruppoveritas_it": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "pdf_url": "PDF Calendar URL",
-          "year": "Year"
-        },
-        "data_description": {
-          "pdf_url": "Direct URL to the PDF calendar published on the Gruppo Veritas website.",
-          "year": "Calendar year to extract (must match the year inside the PDF)."
-        }
-      },
       "args_ilrifiutologo_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

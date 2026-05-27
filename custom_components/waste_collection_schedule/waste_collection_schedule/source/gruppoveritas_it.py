@@ -5,8 +5,7 @@ from io import BytesIO
 
 import requests
 from pypdf import PdfReader
-
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 _LOGGER = logging.getLogger(__name__)
@@ -68,11 +67,11 @@ PARAM_TRANSLATIONS = {
 }
 
 ICON_MAP = {
-    "Carta/Cartone": "mdi:package-variant",
-    "Vetro/Plastica/Lattine": "mdi:bottle-soda",
-    "Secco": "mdi:trash-can",
-    "Umido/Organico": "mdi:leaf",
-    "Verde/Ramaglie": "mdi:tree",
+    "Carta/Cartone": Icons.PAPER,
+    "Vetro/Plastica/Lattine": Icons.GLASS,
+    "Secco": Icons.GENERAL_WASTE,
+    "Umido/Organico": Icons.ORGANIC,
+    "Verde/Ramaglie": Icons.GARDEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -121,9 +120,7 @@ _MONTH_NAME_RE = re.compile(
 # Matches the start of a calendar day row: optional leading whitespace,
 # a 1-2 digit day number, then an Italian weekday abbreviation.
 # Everything after the weekday is captured as optional trailing text.
-_DAY_RE = re.compile(
-    r"^\s*(\d{1,2})\s+(?:LUN|MAR|MER|GIO|VEN|SAB|DOM)(.*?)$"
-)
+_DAY_RE = re.compile(r"^\s*(\d{1,2})\s+(?:LUN|MAR|MER|GIO|VEN|SAB|DOM)(.*?)$")
 
 _CODES_RE = re.compile(r"\b(VPL|UO|VR|S|C)\b")
 _SUSPEND_RE = re.compile(r"\bSOSPESA\b", re.IGNORECASE)
@@ -168,9 +165,7 @@ _FOOTER_MARKERS = (
 #   [row]  "2  MAR  RACCOLTA SOSPESA"
 #
 # Without this guard, day 1 would get both VR and UO.
-_ONLY_CODES_RE = re.compile(
-    r"^\s*(VPL|UO|VR|S|C)(\s+(VPL|UO|VR|S|C))*\s*$"
-)
+_ONLY_CODES_RE = re.compile(r"^\s*(VPL|UO|VR|S|C)(\s+(VPL|UO|VR|S|C))*\s*$")
 
 
 # ── PDF download ──────────────────────────────────────────────────────────────
@@ -237,9 +232,7 @@ def _parse_column(col_lines, month, year):
             # If the explicit target month is earlier than current, it crosses
             # into the next year (e.g. a December postponement to January).
             target_year = (
-                year + 1
-                if target_month_raw and target_month < month
-                else year
+                year + 1 if target_month_raw and target_month < month else year
             )
             try:
                 dt = date(target_year, target_month, target_day)
@@ -322,9 +315,7 @@ def _parse_page(page, fallback_year):
         return []  # Not a calendar page.
 
     left_col = [line[:_COL_SPLIT] for line in lines]
-    right_col = [
-        line[_COL_SPLIT:] if len(line) > _COL_SPLIT else "" for line in lines
-    ]
+    right_col = [line[_COL_SPLIT:] if len(line) > _COL_SPLIT else "" for line in lines]
 
     events = _parse_column(left_col, left_month, year)
     if right_month:
@@ -380,7 +371,5 @@ class Source:
                 "and that year matches."
             )
 
-        _LOGGER.debug(
-            "Fetched %d collection events for %d.", len(events), self._year
-        )
+        _LOGGER.debug("Fetched %d collection events for %d.", len(events), self._year)
         return [Collection(date=dt, t=wt, icon=ICON_MAP.get(wt)) for dt, wt in events]
