@@ -38,6 +38,7 @@ HEADERS = {
     "X-Requested-With": "XMLHttpRequest",
 }
 
+
 class Source:
     def __init__(self, address: str):
         self._address = re.sub(r"\s+", " ", address).strip()
