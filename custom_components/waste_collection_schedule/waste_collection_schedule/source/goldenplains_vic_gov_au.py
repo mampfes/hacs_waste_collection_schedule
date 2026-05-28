@@ -27,6 +27,16 @@ CARD_TYPES = {
     "fogo": ("Glass", "mdi:bottle-wine"),
 }
 
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/136.0.0.0 Safari/537.36"
+    ),
+    "Accept": "application/json, text/javascript, */*; q=0.01",
+    "Referer": "https://www.goldenplains.vic.gov.au/address-search",
+    "X-Requested-With": "XMLHttpRequest",
+}
 
 class Source:
     def __init__(self, address: str):
@@ -34,7 +44,9 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         # Step 1: validate address against autocomplete and get canonical form
-        r = requests.get(
+        session = requests.Session()
+        session.headers.update(HEADERS)
+        r = session.get(
             AUTOCOMPLETE_URL,
             params={"q": self._address},
             timeout=30,
@@ -64,7 +76,11 @@ class Source:
             )
 
         # Step 2: fetch the schedule page using the canonical address
-        r = requests.get(SCHEDULE_URL, params={"address": canonical}, timeout=30)
+        r = session.get(
+            SCHEDULE_URL,
+            params={"address": canonical},
+            timeout=30,
+        )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
