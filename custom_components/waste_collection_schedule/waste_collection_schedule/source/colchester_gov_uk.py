@@ -1,17 +1,52 @@
 import json
 from datetime import datetime, timedelta
+from typing import Optional
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
+)
 
 TITLE = "Colchester City Council"
 DESCRIPTION = "Source for Colchester.gov.uk services for the borough of Colchester, UK."
 URL = "https://colchester.gov.uk"
 COUNTRY = "uk"
 TEST_CASES = {
-    # "High Street, Colchester": {"llpgid": "1197e725-3c27-e711-80fa-5065f38b5681"},  # Should be 0
-    "Church Road, Colchester": {"llpgid": "30213e07-6027-e711-80fa-5065f38b56d1"},
-    "The Lane, Colchester": {"llpgid": "7cd96a3d-6027-e711-80fa-5065f38b56d1"},
+    "Church Road, Colchester (llpgid)": {
+        "llpgid": "30213e07-6027-e711-80fa-5065f38b56d1"
+    },
+    "The Lane, Colchester (llpgid)": {"llpgid": "7cd96a3d-6027-e711-80fa-5065f38b56d1"},
+    "16 The Lane, CO5 8NT": {"postcode": "CO5 8NT", "house": "16"},
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "postcode": "Postcode",
+        "house": "House number or name",
+        "llpgid": "LLPG ID",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "postcode": "UK postcode for the address, e.g. 'CO5 8NT'.",
+        "house": "House number or name as shown in the council's address picker, e.g. '16' or 'The Old Forge'.",
+        "llpgid": "(Advanced) Direct LLPG GUID taken from the recycling calendar URL. Provide this OR postcode + house.",
+    },
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": (
+        "Enter your UK postcode and the house number or name as it appears in the "
+        "Colchester recycling calendar address picker at "
+        "https://www.colchester.gov.uk/your-recycling-calendar/. "
+        "Advanced users may instead supply 'llpgid' (the GUID from the calendar URL "
+        "after selecting an address)."
+    ),
 }
 
 # Colchester's API still emits "Paper/card" for the combined mixed-recycling
@@ -29,18 +64,48 @@ ICON_MAP = {
     "Food waste": Icons.BIO_KITCHEN,
 }
 
+CALENDAR_API = "https://new-llpg-app.azurewebsites.net/api/calendar/{llpgid}"
+ADDRESS_API = "https://www.colchester.gov.uk/_api/new_llpgs"
+
+
+def _normalise_postcode(postcode: str) -> str:
+    # The address API matches on the postcode in "OUTWARD INWARD" form (single
+    # space before the last three characters). Any other spacing returns no
+    # results, even though the picker on the website tolerates it.
+    compact = "".join(str(postcode).split()).upper()
+    if len(compact) < 4:
+        return compact
+    return f"{compact[:-3]} {compact[-3:]}"
+
 
 class Source:
-    def __init__(self, llpgid):
-        self._llpgid = llpgid
+    def __init__(
+        self,
+        llpgid: Optional[str] = None,
+        postcode: Optional[str] = None,
+        house: Optional[str] = None,
+    ):
+        if llpgid:
+            self._llpgid: Optional[str] = llpgid
+            self._postcode: Optional[str] = None
+            self._house: Optional[str] = None
+        elif postcode and house is not None and str(house).strip():
+            self._llpgid = None
+            self._postcode = _normalise_postcode(postcode)
+            self._house = str(house).strip()
+        else:
+            raise SourceArgumentRequired(
+                "postcode/house",
+                "Provide either 'llpgid', or both 'postcode' and 'house'.",
+            )
 
     def fetch(self):
-        # get json file
-        r = requests.get(
-            f"https://new-llpg-app.azurewebsites.net/api/calendar/{self._llpgid}"
-        )
+        if self._llpgid is None:
+            # Resolve once and cache so subsequent polls only hit the calendar API.
+            self._llpgid = self._resolve_llpgid()
 
-        # extract data from json
+        r = requests.get(CALENDAR_API.format(llpgid=self._llpgid))
+        r.raise_for_status()
         data = json.loads(r.text)
 
         entries = []
@@ -87,3 +152,55 @@ class Source:
                         pass  # ignore date conversion failure for not scheduled collections
 
         return entries
+
+    def _resolve_llpgid(self) -> str:
+        assert self._postcode is not None and self._house is not None
+        r = requests.get(
+            ADDRESS_API,
+            params={
+                "$select": "new_llpgid,new_paon,new_street,new_postcoide,new_name",
+                "$filter": f"(new_postcoide eq '{self._postcode}')",
+            },
+            headers={"Accept": "application/json"},
+            timeout=30,
+        )
+        r.raise_for_status()
+        addresses = r.json().get("value", [])
+        if not addresses:
+            raise SourceArgumentNotFound("postcode", self._postcode)
+
+        target = self._house.casefold()
+
+        exact = [
+            a
+            for a in addresses
+            if (a.get("new_paon") or "").strip().casefold() == target
+        ]
+        if len(exact) == 1:
+            return exact[0]["new_llpgid"]
+        if len(exact) > 1:
+            raise SourceArgAmbiguousWithSuggestions(
+                "house",
+                self._house,
+                sorted({(a.get("new_name") or "").strip() for a in exact}),
+            )
+
+        substr = [
+            a
+            for a in addresses
+            if target in (a.get("new_paon") or "").casefold()
+            or target in (a.get("new_name") or "").casefold()
+        ]
+        if len(substr) == 1:
+            return substr[0]["new_llpgid"]
+        if len(substr) > 1:
+            raise SourceArgAmbiguousWithSuggestions(
+                "house",
+                self._house,
+                sorted({(a.get("new_name") or "").strip() for a in substr}),
+            )
+
+        suggestions = sorted(
+            {(a.get("new_name") or "").strip() for a in addresses if a.get("new_name")}
+        )
+        raise SourceArgumentNotFoundWithSuggestions("house", self._house, suggestions)
