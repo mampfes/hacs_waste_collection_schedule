@@ -7,6 +7,7 @@ from waste_collection_schedule import Collection, Icons  # type: ignore[attr-def
 TITLE = "Colchester City Council"
 DESCRIPTION = "Source for Colchester.gov.uk services for the borough of Colchester, UK."
 URL = "https://colchester.gov.uk"
+COUNTRY = "uk"
 TEST_CASES = {
     # "High Street, Colchester": {"llpgid": "1197e725-3c27-e711-80fa-5065f38b5681"},  # Should be 0
     "Church Road, Colchester": {"llpgid": "30213e07-6027-e711-80fa-5065f38b56d1"},
