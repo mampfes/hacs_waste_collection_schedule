@@ -504,6 +504,8 @@ class AppAbfallplusDe:
             headers["User-Agent"] = USER_AGENT.format(
                 MAP_APP_USERAGENTS.get(self._app_id, "%")
             )
+            headers["x-abfallplus-client"] = self._client
+            headers["x-abfallplus-appid"] = self._app_id
 
         if "config.xml" in url_ending:
             headers["Accept-Encoding"] = "gzip, deflate, br"
