@@ -105,14 +105,15 @@ waste_collection_schedule:
   sources:
     - name: south_norfolk_and_broadland_gov_uk
       args:
-        "address_payload": {
-          "Uprn": "002630130840",
-          "Address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
-          "X": "619142.00000",
-          "Y": "300585.00000",
-          "Ward": "Mulbarton And Stoke Holy Cross",
-          "Parish": "Mulbarton",
-          "Village": "Mulbarton",
-          "Street": "Brindle Drive",
-          "Authority": "2630",
+        address_payload: {
+            "Uprn": "002630130840",
+            "Address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
+            "X": "619142.00000",
+            "Y": "300585.00000",
+            "Ward": "Mulbarton And Stoke Holy Cross",
+            "Parish": "Mulbarton",
+            "Village": "Mulbarton",
+            "Street": "Brindle Drive",
+            "Authority": "2630"
+          }
 ```
