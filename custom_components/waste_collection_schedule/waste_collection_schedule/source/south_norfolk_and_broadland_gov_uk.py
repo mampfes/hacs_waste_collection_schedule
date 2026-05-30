@@ -1,9 +1,12 @@
+import calendar
 import json
 import re
 from datetime import date
+from html import unescape
 from time import strptime
 from typing import List
 from urllib.parse import quote
+from xml.etree import ElementTree as ET
 
 import requests
 from bs4 import BeautifulSoup as soup
@@ -81,6 +84,26 @@ ICON_MAP = {
     "Food": Icons.BIO_KITCHEN,
 }
 
+# South Norfolk dedicated calendar endpoint (present on My Area page for SNC addresses only)
+_SNC_CALENDAR_HOST = "collections-southnorfolk.azurewebsites.net"
+_SNC_SOAP_URL = f"https://{_SNC_CALENDAR_HOST}/WSCollExternal.asmx"
+_SNC_SOAP_NS = "http://webaspx-collections.azurewebsites.net/"
+_SNC_SOAP_ACTION = (
+    '"http://webaspx-collections.azurewebsites.net/getRoundCalendarForUPRN"'
+)
+
+# SVG <title> prefixes -> waste-type display names used by this source
+_SNC_BIN_TYPE_PREFIXES = {
+    "Ref": "Rubbish",
+    "Rec": "Recycling",
+    "Foo": "Food",
+    "Grn": "Garden",
+    "Gar": "Garden",
+}
+
+# CSS classes that mark non-calendar (padding) cells in the SNC SOAP calendar grid
+_SNC_NON_CALENDAR_CLASSES = {"tdWhiteLightGrey", "colourWhite", "tdWhiteDarkGrey"}
+
 matcher = re.compile(r"^([A-Z][a-z]+) (\d{1,2}) ([A-Z][a-z]+) (\d{4})$")
 
 
@@ -98,6 +121,118 @@ def parse_date(date_str: str) -> date:
 
 def comparable(data: str) -> str:
     return data.replace(",", "").replace(" ", "").lower()
+
+
+def _parse_snc_svg_title(title_text: str) -> List[str]:
+    """Extract waste-type names from the SVG <title> inside a calendar cell.
+
+    Each line of the title looks like 'Rec date based on Round Name' or
+    'Foo affected by start date of container'.  We match by prefix.
+    """
+    bin_types: List[str] = []
+    for line in title_text.strip().split("\n"):
+        line = line.strip()
+        for prefix, name in _SNC_BIN_TYPE_PREFIXES.items():
+            if line.startswith(prefix) and name not in bin_types:
+                bin_types.append(name)
+                break
+    return bin_types
+
+
+def _fetch_snc_soap_calendar(uprn: str) -> List[Collection]:
+    """Fetch and parse the South Norfolk SOAP calendar for a given UPRN.
+
+    The SOAP endpoint returns an HTML calendar where each collection day that
+    applies to this property contains an SVG pie-chart icon.  The SVG's
+    <title> element identifies which bin type(s) are collected on that day.
+
+    This bypasses the My Area summary page which incorrectly reports the next
+    upcoming date for each bin type (making Rubbish and Recycling appear on the
+    same day when they actually alternate fortnightly).
+    """
+    soap_body = (
+        '<?xml version="1.0" encoding="utf-8"?>'
+        '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
+        ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"'
+        ' xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
+        "<soap:Body>"
+        f'<getRoundCalendarForUPRN xmlns="{_SNC_SOAP_NS}">'
+        "<council>SNO</council>"
+        "<webServicePassword></webServicePassword>"
+        "<username></username>"
+        "<usernamePassword></usernamePassword>"
+        f"<UPRN>{uprn}</UPRN>"
+        "<from>Chtml</from>"
+        "</getRoundCalendarForUPRN>"
+        "</soap:Body>"
+        "</soap:Envelope>"
+    )
+
+    r = requests.post(
+        _SNC_SOAP_URL,
+        headers={
+            "Content-Type": "text/xml; charset=utf-8",
+            "SOAPAction": _SNC_SOAP_ACTION,
+        },
+        data=soap_body.encode("utf-8"),
+    )
+    r.raise_for_status()
+
+    root = ET.fromstring(r.text)
+    ns = f"{{{_SNC_SOAP_NS}}}"
+    result_el = root.find(f".//{ns}getRoundCalendarForUPRNResult")
+    if result_el is None or not result_el.text:
+        return []
+
+    html = unescape(result_el.text)
+    page = soup(html, "html.parser")
+
+    results: List[Collection] = []
+    seen: set = set()
+
+    for table in page.find_all("table", id=lambda x: x and x.startswith("CalTab")):
+        th = table.find("th", class_="thMidHC")
+        if not th:
+            continue
+        month_str = th.get_text(strip=True)
+        try:
+            month_name_str, year_str = month_str.split(" ")
+            year = int(year_str)
+            month_num = list(calendar.month_name).index(month_name_str)
+        except (ValueError, IndexError):
+            continue
+
+        day = 0
+        for row in table.find_all("tr")[2:]:  # skip month-header and day-name rows
+            for cell in row.find_all("td")[1:]:  # skip leading empty td
+                cls_set = set(cell.get("class", []))
+                if cls_set & _SNC_NON_CALENDAR_CLASSES:
+                    continue  # padding / out-of-month cell
+
+                # Valid calendar cell — advance the day counter
+                day += 1
+
+                svg = cell.find("svg")
+                if not svg:
+                    continue  # other rounds collect today, not this property
+
+                title_el = svg.find("title")
+                if not title_el:
+                    continue
+
+                bin_types = _parse_snc_svg_title(title_el.get_text())
+                try:
+                    d = date(year, month_num, day)
+                except ValueError:
+                    continue
+
+                for bt in bin_types:
+                    key = (d, bt)
+                    if key not in seen:
+                        seen.add(key)
+                        results.append(Collection(d, bt, icon=ICON_MAP.get(bt)))
+
+    return results
 
 
 class Source:
@@ -190,7 +325,21 @@ class Source:
 
     def __get_data(self, r: requests.Response) -> List[Collection]:
         page = soup(r.text, "html.parser")
-        bins_card = page.find("h3", text="Bins").parent
+        bins_card = page.find("h3", string="Bins").parent
+
+        # South Norfolk addresses show a "View your bin calendar" link pointing to
+        # collections-southnorfolk.azurewebsites.net.  The My Area summary page
+        # only shows the next upcoming date per bin type which causes Rubbish and
+        # Recycling to appear on the same day for addresses on an alternating
+        # fortnightly schedule.  When the link is present we use the dedicated
+        # SOAP calendar endpoint which returns the correct per-type dates.
+        snc_link = bins_card.find("a", href=lambda h: h and _SNC_CALENDAR_HOST in h)
+        if snc_link:
+            m = re.search(r"UPRN=(\d+)", snc_link["href"])
+            if m:
+                return _fetch_snc_soap_calendar(m.group(1))
+
+        # Broadland (and any SNC address without the calendar link): use My Area data.
         bin_categories = bins_card.find_all("div", {"class": "card-text"})
         return [
             Collection(
