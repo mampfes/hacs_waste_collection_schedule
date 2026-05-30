@@ -4587,6 +4587,14 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Coquitlam, BC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of Edmonton, AB",
       "module": "ics",
       "default_params": {

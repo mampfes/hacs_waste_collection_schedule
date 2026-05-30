@@ -789,6 +789,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Chatham-Kent (ON)](/doc/source/recyclecoach_com.md) / chatham-kent.ca
 - [City of Barrie](/doc/source/barrie_ca.md) / barrie.ca/services-payments/garbage-recycling-organics/curbside-collection/collection-schedules
 - [City of Beaumont, AB](/doc/ics/recollect.md) / beaumont.ab.ca
+- [City of Coquitlam, BC](/doc/ics/recollect.md) / coquitlam.ca/157/Collection-Calendar-and-Guidelines
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Guelph, ON](/doc/ics/recollect.md) / guelph.ca

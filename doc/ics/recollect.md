@@ -54,6 +54,7 @@ known to work with:
 |City of Beaumont, AB|Canada|[beaumont.ab.ca](https://www.beaumont.ab.ca/1159/Waste-and-Recycling)|
 |Bassetlaw District Council|UK|[bassetlaw.gov.uk](https://www.bassetlaw.gov.uk/bins-recycling-and-waste/bins-for-recycling-and-waste/bin-collection-days/)|
 |Oxford County, ON|Canada|[oxfordcounty.ca](https://www.oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection/)|
+|City of Coquitlam, BC|Canada|[coquitlam.ca](https://www.coquitlam.ca/157/Collection-Calendar-and-Guidelines)|
 
 and probably a lot more.
 
@@ -226,4 +227,14 @@ waste_collection_schedule:
       args:
         split_at: '\, (?:and )?|(?: and )'
         url: https://recollect-us.global.ssl.fastly.net/api/places/464342A6-3CBF-11E5-9D27-D51A47A8A7C0/services/248/events.en-US.ics
+```
+### 1402 Lansdowne Dr, Coquitlam, BC, Canada
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        split_at: '\, (?:and )?|(?: and )'
+        url: https://recollect-us.global.ssl.fastly.net/api/places/60B07F16-912F-11E2-91C6-912BB3DE4739/services/202/events.en.ics
 ```
