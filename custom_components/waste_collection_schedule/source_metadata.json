@@ -4526,10 +4526,10 @@
   },
   "eastcambs_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastcambs_gov_uk.md",
-    "howto": {},
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "howto": {
+      "en": "Find your UPRN by visiting https://eastcambs-self.achieveservice.com/service/Check_your_waste_collection_day and searching for your address. Your UPRN can also be found at https://www.findmyaddress.co.uk/."
+    },
+    "urls": {}
   },
   "eastdevon_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eastdevon_gov_uk.md",
