@@ -1,7 +1,7 @@
 import logging
 from datetime import date, datetime
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 TITLE = "Kiertokapula Finland"
@@ -16,6 +16,7 @@ TEST_CASES = {
 }
 
 API_URL = "https://asiakasnetti.kiertokapula.fi/api/customers"
+PORTAL_URL = "https://asiakasnetti.kiertokapula.fi/e-services/kiertokapula/login"
 TENANT_ID = "493c3a57-70d8-4515-aa94-05dd1185b986"
 
 PARAM_TRANSLATIONS = {
@@ -39,18 +40,25 @@ class Source:
         self._password = password
 
     def fetch(self) -> list[Collection]:
-        session = requests.Session()
+        session = requests.Session(impersonate="chrome")
+
+        # Prime Azure Application Gateway affinity cookies by visiting the portal first.
+        # Without this the gateway returns 403 on the login POST.
+        session.get(PORTAL_URL, timeout=30)
 
         # Authenticate against new Vingo 2.0 API
         login_headers = {
             "Content-Type": "application/json;charset=utf-8",
             "Accept-Language": "fi",
             "Tenant-Id": TENANT_ID,
+            "Origin": "https://asiakasnetti.kiertokapula.fi",
+            "Referer": PORTAL_URL,
         }
         r = session.post(
             f"{API_URL}/Users/login",
             json={"userName": self._username, "password": self._password},
             headers=login_headers,
+            timeout=30,
         )
         r.raise_for_status()
         token_data = r.json()
@@ -67,6 +75,7 @@ class Source:
         r = session.get(
             f"{API_URL}/Customers/emptying-infos",
             headers=auth_headers,
+            timeout=30,
         )
         r.raise_for_status()
         emptying_infos = r.json() or []
@@ -82,6 +91,7 @@ class Source:
             r = session.get(
                 f"{API_URL}/Customers/emptying-infos/{emptying_id}/contracts",
                 headers=auth_headers,
+                timeout=30,
             )
             r.raise_for_status()
             contracts = r.json() or []
