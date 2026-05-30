@@ -19815,6 +19815,33 @@
           "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to {url_www_findmyaddress_co_uk} and entering in your address details."
         }
       },
+      "args_castlepoint_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "roadID": "Road ID",
+          "street_name": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "roadID": "Your roadID retrieved from the URL after selecting your street.",
+          "street_name": "The name of your street (only needed if you don't provide roadID)."
+        }
+      },
+      "reconfigure_castlepoint_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "roadID": "Road ID",
+          "street_name": "Street Name"
+        },
+        "data_description": {
+          "roadID": "Your roadID retrieved from the URL after selecting your street.",
+          "street_name": "The name of your street (only needed if you don't provide roadID)."
+        }
+      },
       "args_centralbedfordshire_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
