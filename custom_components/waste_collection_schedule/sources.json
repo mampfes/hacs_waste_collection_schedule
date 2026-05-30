@@ -16514,6 +16514,14 @@
       "id": "avfallsapp_se"
     },
     {
+      "title": "Berg",
+      "module": "vattenmiljoresurs_se",
+      "default_params": {
+        "municipality": "berg"
+      },
+      "id": "vattenmiljoresurs_se"
+    },
+    {
       "title": "Boden",
       "module": "edpevent_se",
       "default_params": {
@@ -16534,6 +16542,14 @@
         "service_provider": "boras"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Br\u00e4cke",
+      "module": "vattenmiljoresurs_se",
+      "default_params": {
+        "municipality": "bracke"
+      },
+      "id": "vattenmiljoresurs_se"
     },
     {
       "title": "EDPEvent - Multi Source",
@@ -16568,6 +16584,14 @@
       "module": "hudiksvall_se",
       "default_params": {},
       "id": "hudiksvall_se"
+    },
+    {
+      "title": "H\u00e4rjedalen",
+      "module": "vattenmiljoresurs_se",
+      "default_params": {
+        "municipality": "harjedalen"
+      },
+      "id": "vattenmiljoresurs_se"
     },
     {
       "title": "H\u00e4ssleholm Milj\u00f6",
@@ -16874,6 +16898,12 @@
         "service_provider": "vafabmiljo"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Vatten och Milj\u00f6resurs",
+      "module": "vattenmiljoresurs_se",
+      "default_params": {},
+      "id": "vattenmiljoresurs_se"
     },
     {
       "title": "Vaxholm",

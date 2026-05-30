@@ -3596,6 +3596,13 @@
     },
     "urls": {}
   },
+  "vattenmiljoresurs_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vattenmiljoresurs_se.md",
+    "howto": {
+      "en": "Find your address on the provider website for your municipality and enter it exactly as shown (street name and number)."
+    },
+    "urls": {}
+  },
   "edpevent_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edpevent_se.md",
     "howto": {},

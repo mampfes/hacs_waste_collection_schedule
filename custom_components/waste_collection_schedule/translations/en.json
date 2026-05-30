@@ -17061,6 +17061,33 @@
           "token": "Bearer token required by some providers."
         }
       },
+      "args_vattenmiljoresurs_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "street_address": "Street address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "One of: bracke, berg, harjedalen",
+          "street_address": "Street address as listed on the provider website (e.g. 'Hantverksgatan 25')"
+        }
+      },
+      "reconfigure_vattenmiljoresurs_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "street_address": "Street address"
+        },
+        "data_description": {
+          "municipality": "One of: bracke, berg, harjedalen",
+          "street_address": "Street address as listed on the provider website (e.g. 'Hantverksgatan 25')"
+        }
+      },
       "args_edpevent_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
