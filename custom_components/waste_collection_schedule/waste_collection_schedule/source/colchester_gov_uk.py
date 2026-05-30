@@ -13,17 +13,25 @@ TEST_CASES = {
     "The Lane, Colchester": {"llpgid": "7cd96a3d-6027-e711-80fa-5065f38b56d1"},
 }
 
-# Colchester's API still emits "Paper/card" for the combined mixed-recycling
-# stream (paper/card, plastics, tins and cans) that replaced the separate
-# rounds.
+# The provider's calendar feed renamed two streams in mid-2026:
+#   "Black bags" -> "Non-recyclable rubbish"
+#   "Paper/card" -> "Mixed recycling"
+# Map both legacy and current names to a single canonical label so the source
+# is stable across the rollout, and (for the two renamed streams) bypass the
+# default .title() casing so labels match the provider's sentence-case feed.
 NAME_MAP = {
+    "Black bags": "Non-recyclable rubbish",
+    "Non-recyclable rubbish": "Non-recyclable rubbish",
     "Paper/card": "Mixed recycling",
+    "Mixed recycling": "Mixed recycling",
 }
 
 ICON_MAP = {
     "Black bags": Icons.GENERAL_WASTE,
+    "Non-recyclable rubbish": Icons.GENERAL_WASTE,
     "Glass": Icons.GLASS,
     "Paper/card": Icons.RECYCLING,
+    "Mixed recycling": Icons.RECYCLING,
     "Garden waste": Icons.GARDEN,
     "Food waste": Icons.BIO_KITCHEN,
 }
