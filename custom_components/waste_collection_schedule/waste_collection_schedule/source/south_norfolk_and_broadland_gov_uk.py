@@ -24,7 +24,7 @@ EXTRA_INFO = [
     },
 ]
 TEST_CASES = {
-    "Random address": {
+    "Random Broadland address": {
         "address_payload": {
             "Uprn": "010014355477",
             "Address": "29 Mallard Way, Sprowston, Norwich, Norfolk, NR7 8DN",
@@ -37,9 +37,26 @@ TEST_CASES = {
             "Authority": "2610",
         }
     },
-    "Random address new Method": {
+    "Random Broadland address new Method": {
         "postcode": "NR7 8DN",
         "address": "29 Mallard Way, Sprowston, Norfolk, NR7 8DN",
+    },
+    "Random South Norfolk address": {
+        "address_payload": {
+            "Uprn": "002630130840",
+            "Address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
+            "X": "619142.00000",
+            "Y": "300585.00000",
+            "Ward": "Mulbarton And Stoke Holy Cross",
+            "Parish": "Mulbarton",
+            "Village": "Mulbarton",
+            "Street": "Brindle Drive",
+            "Authority": "2630",
+        }
+    },
+    "Random South Norfolk address new Method": {
+        "postcode": "NR14 8BX",
+        "address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
     },
     "Big Tesco": {
         "address_payload": {
@@ -60,6 +77,8 @@ ICON_MAP = {
     "Rubbish": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
     "Garden (if applicable)": Icons.GARDEN,
+    "Garden": Icons.GARDEN,
+    "Food": Icons.BIO_KITCHEN,
 }
 
 matcher = re.compile(r"^([A-Z][a-z]+) (\d{1,2}) ([A-Z][a-z]+) (\d{4})$")
