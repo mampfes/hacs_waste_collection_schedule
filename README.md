@@ -2293,6 +2293,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeente Utrecht](/doc/source/burgerportaal_nl.md) / utrecht.nl
 - [Gemeente Venlo](/doc/source/ximmio_nl.md) / venlo.nl
 - [Gemeente Venray](/doc/ics/afvalkalender_venray_nl.md) / venray.nl
+- [Gemeente Venray](/doc/ics/venray_nl.md) / venray.nl
 - [Gemeente Venray](/doc/source/hvcgroep_nl.md) / venray.nl
 - [Gemeente Voorschoten](/doc/source/hvcgroep_nl.md) / voorschoten.nl
 - [Gemeente Waalre](/doc/source/hvcgroep_nl.md) / waalre.nl
