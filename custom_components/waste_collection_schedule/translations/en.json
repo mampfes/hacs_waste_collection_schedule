@@ -17261,6 +17261,29 @@
         },
         "data_description": {}
       },
+      "args_kungsbacka_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Street address and house number, e.g. 'Lundaväg 14' or 'Lundaväg 14 Särö'."
+        }
+      },
+      "reconfigure_kungsbacka_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street address"
+        },
+        "data_description": {
+          "street_address": "Street address and house number, e.g. 'Lundaväg 14' or 'Lundaväg 14 Särö'."
+        }
+      },
       "args_kungalv_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

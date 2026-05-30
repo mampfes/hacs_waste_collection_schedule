@@ -16628,6 +16628,12 @@
       "id": "renhallningen_kristianstad_se"
     },
     {
+      "title": "Kungsbacka kommun",
+      "module": "kungsbacka_se",
+      "default_params": {},
+      "id": "kungsbacka_se"
+    },
+    {
       "title": "Kung\u00e4lvs kommun Avfallshantering",
       "module": "kungalv_se",
       "default_params": {},
