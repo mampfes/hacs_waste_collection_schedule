@@ -652,7 +652,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         return schema, module
 
     async def __validate_args_user_input(
-        self, source: str, args_input: dict[str, Any], module: types.ModuleType
+        self,
+        source: str,
+        args_input: dict[str, Any],
+        module: types.ModuleType,
+        is_reconfigure: bool = False,
     ) -> Tuple[dict[str, str], dict[str, str], dict[str, Any]]:
         """Validate user input for source arguments.
 
@@ -660,6 +664,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             source (str): source name
             args_input (dict[str, Any]): user input
             module (types.ModuleType): the module of the source
+            is_reconfigure (bool): when True, skip the unique_id collision check
+                because the existing entry legitimately owns that unique_id.
 
         Returns:
             Tuple[dict, dict, dict]: errors, description_placeholders, options
@@ -678,7 +684,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             )
 
         await self.async_set_unique_id(source + json.dumps(args_input))
-        self._abort_if_unique_id_configured()
+        if not is_reconfigure:
+            # During reconfigure the existing entry already owns this unique_id;
+            # skipping the check prevents HA from aborting and creating a duplicate.
+            self._abort_if_unique_id_configured()
 
         try:
             instance = await self.hass.async_add_executor_job(
@@ -951,7 +960,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 errors,
                 validation_placeholders,
                 options,
-            ) = await self.__validate_args_user_input(source, args_input, module)
+            ) = await self.__validate_args_user_input(
+                source, args_input, module, is_reconfigure=True
+            )
             # Update placeholders with validation errors
             description_placeholders.update(validation_placeholders)
             if len(errors) == 0:
