@@ -2979,6 +2979,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Scottish Borders Council](/doc/source/scotborders_gov_uk.md) / scotborders-live-portal.bartecmunicipal.com/Embeddable/CollectionCalendar
 - [Sedgemoor District Council](/doc/source/iapp_itouchvision_com.md) / sedgemoor.gov.uk
 - [Sefton Council](/doc/source/sefton_gov_uk.md) / sefton.gov.uk
+- [Sevenoaks District Council](/doc/source/sevenoaks_gov_uk.md) / sevenoaks.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [Shropshire Council](/doc/source/shropshire_gov_uk.md) / shropshire.gov.uk
 - [Slough Borough Council](/doc/source/slough_gov_uk.md) / slough.gov.uk

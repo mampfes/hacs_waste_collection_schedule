@@ -5496,6 +5496,13 @@
     },
     "urls": {}
   },
+  "sevenoaks_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sevenoaks_gov_uk.md",
+    "howto": {
+      "en": "Visit https://sevenoaks-dc-host01.oncreate.app/w/webpage/waste-collection-day, enter your postcode (with the space), select your address; the numeric property id is the `id=` value in the resulting page URL."
+    },
+    "urls": {}
+  },
   "sheffield_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sheffield_gov_uk.md",
     "howto": {},

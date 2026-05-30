@@ -24045,6 +24045,29 @@
           "streetname": "Street name"
         }
       },
+      "args_sevenoaks_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "property_id": "Property ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "property_id": "Internal numeric property identifier from Sevenoaks' waste collection day lookup (e.g. 51621)"
+        }
+      },
+      "reconfigure_sevenoaks_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "property_id": "Property ID"
+        },
+        "data_description": {
+          "property_id": "Internal numeric property identifier from Sevenoaks' waste collection day lookup (e.g. 51621)"
+        }
+      },
       "args_sheffield_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
