@@ -131,6 +131,7 @@ If you already have enough information for your municipality/region, you are ver
 - [District Council of Robe](/doc/source/app_my_local_services_au.md) / robe.sa.gov.au
 - [District Council of Streaky Bay](/doc/source/app_my_local_services_au.md) / streakybay.sa.gov.au
 - [District Council of Yankalilla](/doc/source/frwa_com_au.md) / yankalilla.sa.gov.au
+- [Fairfield City Council](/doc/source/fairfieldcity_nsw_gov_au.md) / kerbside.fairfieldcity.nsw.gov.au/kerbside
 - [Fleurieu Regional Waste Authority](/doc/source/app_my_local_services_au.md) / fleurieuregionalwasteauthority.com.au
 - [Fleurieu Regional Waste Authority](/doc/source/frwa_com_au.md) / fleurieuregionalwasteauthority.com.au
 - [Forbes Shire Council](/doc/source/impactapps_com_au.md) / forbes.nsw.gov.au

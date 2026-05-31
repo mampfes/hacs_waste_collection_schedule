@@ -311,6 +311,13 @@
     "howto": {},
     "urls": {}
   },
+  "fairfieldcity_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fairfieldcity_nsw_gov_au.md",
+    "howto": {
+      "en": "Visit https://kerbside.fairfieldcity.nsw.gov.au/kerbside/ and start typing your street name and suburb into the 'Street name & Suburb' field. Use the autocomplete suggestion (e.g. 'Dawson ST, FAIRFIELD HEIGHTS') as the value for street_and_suburb, and enter just your street number for street_number."
+    },
+    "urls": {}
+  },
   "frankston_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frankston_vic_gov_au.md",
     "howto": {},

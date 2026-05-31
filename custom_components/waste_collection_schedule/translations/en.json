@@ -1346,6 +1346,33 @@
         },
         "data_description": {}
       },
+      "args_fairfieldcity_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_and_suburb": "Street Name & Suburb",
+          "street_number": "Street Number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_and_suburb": "Street name and suburb as shown in the autocomplete list (e.g. 'Dawson ST, FAIRFIELD HEIGHTS').",
+          "street_number": "Your street number (e.g. 1, 7A, 7/10)."
+        }
+      },
+      "reconfigure_fairfieldcity_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_and_suburb": "Street Name & Suburb",
+          "street_number": "Street Number"
+        },
+        "data_description": {
+          "street_and_suburb": "Street name and suburb as shown in the autocomplete list (e.g. 'Dawson ST, FAIRFIELD HEIGHTS').",
+          "street_number": "Your street number (e.g. 1, 7A, 7/10)."
+        }
+      },
       "args_frankston_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
