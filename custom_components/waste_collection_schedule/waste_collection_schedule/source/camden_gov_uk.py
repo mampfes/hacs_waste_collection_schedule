@@ -45,7 +45,9 @@ class Source:
 
         data = response.json()
         if data.get("message") != "OK":
-            raise ValueError(f"API advised error: {data.get('message')}")
+            raise ValueError(
+                f"API advised error (HTTP {response.status_code}, UPRN {self._uprn}): {data.get('message')}"
+            )
 
         entries = []
         today = date.today()
