@@ -1,64 +1,71 @@
-import requests
-from bs4 import BeautifulSoup
+from datetime import date, datetime
+
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "London Borough of Camden"
 DESCRIPTION = "Source for London Borough of Camden."
 URL = "https://www.camden.gov.uk/"
+COUNTRY = "uk"
 TEST_CASES = {
-    "Cannon Place": {"uprn": "5061647"},
     "Red Lion Street": {"uprn": 5121151},
 }
 
 
 ICON_MAP = {
-    "rubbish": Icons.GENERAL_WASTE,
-    "garden waste": Icons.GARDEN,
-    "food": Icons.BIO_KITCHEN,
-    "recycling": Icons.RECYCLING,
+    "rubbish collection": Icons.GENERAL_WASTE,
+    "domestic refuse collection": Icons.GENERAL_WASTE,
+    "garden waste collection": Icons.GARDEN,
+    "domestic garden collection": Icons.GARDEN,
+    "food collection": Icons.BIO_KITCHEN,
+    "domestic food collection": Icons.BIO_KITCHEN,
+    "recycling collection": Icons.RECYCLING,
+    "domestic dmr collection": Icons.RECYCLING,
 }
 
 
-API_URL = "https://environmentservices.camden.gov.uk/property/{uprn}"
-ICS_URL = "https://environmentservices.camden.gov.uk{href}"
+BASE_URL = "https://recyclingandrubbishcollections.camden.gov.uk"
+API_CALENDAR_DATA = f"{BASE_URL}/api/getCalendarData"
+COUNCIL_ID = "27"
 
 
 class Source:
     def __init__(self, uprn: str | int):
         self._uprn: str = str(uprn)
-        self._ics = ICS()
+        self._session = requests.Session(impersonate="chrome")
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
+        response = self._session.post(
+            API_CALENDAR_DATA,
+            json={"councilId": COUNCIL_ID, "uprn": self._uprn},
+            headers={"content-type": "application/json", "x-recaptcha-token": ""},
+            timeout=30,
+        )
+        response.raise_for_status()
 
-        # get collection overview page
-        r = requests.get(API_URL.format(uprn=self._uprn))
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # get all ICS links (Add to my calendar)
-        ics_urls = []
-        for a in soup.find_all("a"):
-            if a["href"].startswith("/ical/"):
-                ics_urls.append(ICS_URL.format(href=a["href"]))
-
-        # get all collections from ICS files
-        collections = []
-        for ics_url in ics_urls:
-            r = requests.get(ics_url)
-            r.raise_for_status()
-            collections.extend(self._ics.convert(r.text))
+        data = response.json()
+        if data.get("message") != "OK":
+            raise ValueError(
+                f"API advised error (HTTP {response.status_code}, UPRN {self._uprn}): {data.get('message')}"
+            )
 
         entries = []
-        for d in collections:
-            bin_type = d[1].replace("Reminder", "").replace(" - ", "").strip()
-            icon = ICON_MAP.get(
-                bin_type.lower()
-                .replace("domestic", "")
-                .replace("collection", "")
-                .strip()
-            )
-            entries.append(Collection(date=d[0], t=bin_type, icon=icon))
+        today = date.today()
+
+        for data_item in data.get("data", []):
+            for record in data_item.get("records", []):
+                scheduled_date = record.get("actual_scheduled_date")
+                service = record.get("service", "").strip()
+                if not scheduled_date or not service:
+                    continue
+
+                collection_date = datetime.fromisoformat(
+                    scheduled_date.replace("Z", "+00:00")
+                ).date()
+                if collection_date < today:
+                    continue
+
+                icon = ICON_MAP.get(service.lower())
+                entries.append(Collection(date=collection_date, t=service, icon=icon))
 
         return entries
