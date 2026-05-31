@@ -1317,6 +1317,7 @@ If you already have enough information for your municipality/region, you are ver
 - [GFA Lüneburg](/doc/source/gfa_lueneburg_de.md) / gfa-lueneburg.de
 - [Ginsheim-Gustavsburg](/doc/ics/gigu_de.md) / gigu.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
+- [Glashütten (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Glonn](/doc/source/awido_de.md) / lra-ebe.de
 - [Grafing](/doc/source/awido_de.md) / lra-ebe.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de

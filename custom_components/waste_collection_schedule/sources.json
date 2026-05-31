@@ -8341,6 +8341,14 @@
       "id": "ics_gipsprojekt_de"
     },
     {
+      "title": "Glash\u00fctten (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      },
+      "id": "jumomind_de"
+    },
+    {
       "title": "Glonn",
       "module": "awido_de",
       "default_params": {
