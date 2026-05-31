@@ -6,6 +6,7 @@ from enum import Enum
 from typing import Any
 
 import homeassistant.helpers.config_validation as cv
+import homeassistant.util.dt as dt_util
 import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from homeassistant.config_entries import ConfigEntry
@@ -276,9 +277,9 @@ class ScheduleSensor(SensorEntity):
     def _include_today(self):
         """Return true if collections for today shall be included in the results."""
         if self._api:
-            return datetime.datetime.now().time() < self._api._day_switch_time
+            return dt_util.now().time() < self._api._day_switch_time
         else:
-            return datetime.datetime.now().time() < self._coordinator.day_switch_time
+            return dt_util.now().time() < self._coordinator.day_switch_time
 
     def _add_refreshtime(self):
         """Add refresh-time (= last fetch time) to device-state-attributes."""
