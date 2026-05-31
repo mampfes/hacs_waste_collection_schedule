@@ -3177,7 +3177,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [Shropshire Council](/doc/source/shropshire_gov_uk.md) / shropshire.gov.uk
 - [Slough Borough Council](/doc/source/slough_gov_uk.md) / slough.gov.uk
-- [Solihull Council](/doc/source/solihull_gov_uk.md) / solihul.gov.uk
+- [Solihull Council](/doc/source/solihull_gov_uk.md) / solihull.gov.uk
 - [Somerset Council](/doc/source/iapp_itouchvision_com.md) / somerset.gov.uk
 - [Somerset County Council](/doc/source/iapp_itouchvision_com.md) / somerset.gov.uk
 - [Somerset West & Taunton District Council](/doc/source/iapp_itouchvision_com.md) / somersetwestandtaunton.gov.uk
