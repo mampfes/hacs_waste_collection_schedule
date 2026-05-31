@@ -2349,11 +2349,6 @@
     "howto": {},
     "urls": {}
   },
-  "abfallkalender_gifhorn_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_gifhorn_de.md",
-    "howto": {},
-    "urls": {}
-  },
   "ics_hameln_pyrmont_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/hameln_pyrmont_de.md",
     "howto": {

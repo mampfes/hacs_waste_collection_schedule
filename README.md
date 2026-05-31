@@ -1476,7 +1476,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Fulda](/doc/source/awido_de.md) / landkreis-fulda.de
 - [Landkreis Gießen](/doc/source/awido_de.md) / lkgi.de
 - [Landkreis Gießen](/doc/source/muellmax_de.md) / lkgi.de
-- [Landkreis Gifhorn](/doc/source/abfallkalender_gifhorn_de.md) / abfallkalender-gifhorn.de
 - [Landkreis Gifhorn](/doc/source/awido_de.md) / gifhorn.de
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
 - [Landkreis Grafschaft](/doc/source/jumomind_de.md) / awb.grafschaft-bentheim.de
