@@ -15178,8 +15178,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Adresse",
-          "entry_id": "Entry Id"
+          "address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -15190,8 +15189,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Adresse",
-          "entry_id": "Entry Id"
+          "address": "Adresse"
         },
         "data_description": {}
       },
