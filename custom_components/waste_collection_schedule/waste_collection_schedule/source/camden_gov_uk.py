@@ -53,7 +53,7 @@ class Source:
         for data_item in data.get("data", []):
             for record in data_item.get("records", []):
                 scheduled_date = record.get("actual_scheduled_date")
-                service = record.get("service", "")
+                service = record.get("service", "").strip()
                 if not scheduled_date or not service:
                     continue
 
