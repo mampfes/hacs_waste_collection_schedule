@@ -20838,6 +20838,12 @@
       "id": "rochdale_gov_uk"
     },
     {
+      "title": "Rochford District Council",
+      "module": "rochford_gov_uk",
+      "default_params": {},
+      "id": "rochford_gov_uk"
+    },
+    {
       "title": "Rother District Council",
       "module": "rother_gov_uk",
       "default_params": {},
