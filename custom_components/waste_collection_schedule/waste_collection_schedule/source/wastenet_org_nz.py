@@ -1,107 +1,101 @@
-import re
 from datetime import datetime
-from html.parser import HTMLParser
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Gore, Invercargill & Southland"
 DESCRIPTION = "Source for Wastenet.org.nz."
-URL = "http://www.wastenet.org.nz"
+URL = "https://www.wastenet.org.nz"
 TEST_CASES = {
-    "166 Lewis Street": {"address": "166 Lewis Street"},
-    "Old Format: 199 Crawford Street": {"address": "199 Crawford Street INVERCARGILL"},
-    "Old Format: 156 Tay Street": {"address": "156 Tay Street INVERCARGILL"},
-    "entry_id glass only": {"entry_id": "23571"},
-    # "31 Conyers Street": {"address": "31 Conyers Street INVERCARGILL"},  # Thursday
-    # "67 Chesney Street": {"address": "67 Chesney Street INVERCARGILL"},  # Friday
+    "166 Lewis Street, Invercargill": {"address": "166 Lewis Street, Invercargill"},
+    "Old Format: 199 Crawford Street INVERCARGILL": {
+        "address": "199 Crawford Street INVERCARGILL"
+    },
+    "Old Format: 156 Tay Street INVERCARGILL": {
+        "address": "156 Tay Street INVERCARGILL"
+    },
+    "Gore: 1 Anderson Place": {"address": "1 Anderson Place, Gore"},
 }
 
 ICON_MAP = {
-    "Glass": Icons.GLASS,
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Recycle": Icons.RECYCLING,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://www.wastenet.org.nz/3-bin-day-finder",
+}
 
-class WasteSearchResultsParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._entries = []
-        self._wasteType = None
-        self._withinCollectionDay = False
-        self._withinType = False
+ADDRESS_LIST_URL = "https://www.wastenet.org.nz/client-api/icc/rubbish/address-list"
+SEARCH_URL = "https://www.wastenet.org.nz/client-api/icc/rubbish/search"
 
-    @property
-    def entries(self):
-        return self._entries
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "span":
-            d = dict(attrs)
-            if d.get("class", "").startswith("badge"):
-                self._withinType = True
-
-    def handle_data(self, data):
-        if self._withinType:
-            self._withinType = False
-            self._wasteType = data
-        elif data.startswith("Next Service Date:"):
-            self._withinCollectionDay = True
-        elif self._withinCollectionDay:
-            date = datetime.strptime(data, "%d/%m/%y").date()
-            if self._wasteType is not None:
-                self._entries.append(Collection(date, self._wasteType))
-            self._withinCollectionDay = False
-
-
-HEADER = {"User-Agent": "Mozilla/5.0"}
-
-SITE_URL = "https://www.wastenet.org.nz/bin-day/"
-ADDRESS_URL = "https://www.wastenet.org.nz/wp-admin/admin-ajax.php"
+# Council identifier returned by the API
+COUNCIL_ICC = 1  # Invercargill City Council
 
 
 class Source:
-    def __init__(self, address: str | None = None, entry_id=None):
-        if not address and not entry_id:
-            raise ValueError("Address or entry_id must be provided")
+    def __init__(self, address: str):
+        # Normalise old-style "STREET INVERCARGILL" format to "STREET, Invercargill"
+        self._address = address.replace(" INVERCARGILL", ", Invercargill").strip()
 
-        self._address = address.replace(" INVERCARGILL", "") if address else None
-        self._entry_id = entry_id
-
-    def get_entry_id(self, s):
-        r = s.get(SITE_URL)
+    def _resolve_address(self, session: requests.Session) -> str:
+        """Look up the canonical address from the provider's address list."""
+        r = session.get(ADDRESS_LIST_URL)
         r.raise_for_status()
-        # regex find security: 'KEY'
-        match = re.search(r"security: '(\w+)'", r.text)
-        if not match:
-            raise ValueError("Security key not found")
-        security_key = match.group(1)
+        candidates: list[dict] = r.json()
 
-        # get token
-        params = {
-            "action": "we_data_autocomplete",
-            "term": self._address,
-            "security": security_key,
-        }
+        # Exact match (case-insensitive)
+        for candidate in candidates:
+            if candidate["address"].lower() == self._address.lower():
+                return candidate["address"]
 
-        r = s.get(
-            ADDRESS_URL,
-            params=params,
+        # Partial match: find entries that contain the search string
+        partial = [
+            c["address"]
+            for c in candidates
+            if self._address.lower() in c["address"].lower()
+        ]
+        if len(partial) == 1:
+            return partial[0]
+        if len(partial) > 1:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address", self._address, partial[:10]
+            )
+
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address",
+            self._address,
+            [c["address"] for c in candidates[:5]],
         )
+
+    def fetch(self) -> list[Collection]:
+        session = requests.Session()
+        session.headers.update(HEADERS)
+
+        canonical_address = self._resolve_address(session)
+
+        r = session.get(SEARCH_URL, params={"address": canonical_address})
         r.raise_for_status()
 
-        return r.json()["data"][0]["url"].split("=")[1]
+        data = r.json()
+        council: int = data.get("Council", COUNCIL_ICC)
+        entries: list[Collection] = []
 
-    def fetch(self):
-        s = requests.Session()
-        s.headers.update(HEADER)
+        for item in data.get("NextDates", []):
+            date = datetime.fromisoformat(item["Date"]).date()
+            week = item["Week"]  # "Red Week" or "Yellow Week"
 
-        if self._entry_id is None:
-            self._entry_id = self.get_entry_id(s)
+            if week == "Red Week":
+                entries.append(
+                    Collection(date, "General Waste", ICON_MAP["General Waste"])
+                )
+            elif week == "Yellow Week":
+                if council == COUNCIL_ICC:
+                    entries.append(
+                        Collection(date, "General Waste", ICON_MAP["General Waste"])
+                    )
+                entries.append(Collection(date, "Recycling", ICON_MAP["Recycling"]))
 
-        r = s.get(SITE_URL, params={"entry_id": self._entry_id})
-        r.raise_for_status()
-        p = WasteSearchResultsParser()
-        p.feed(r.text)
-        return p.entries
+        return entries
