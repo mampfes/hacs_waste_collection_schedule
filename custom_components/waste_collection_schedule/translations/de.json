@@ -12741,10 +12741,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "standort": "Standort"
+          "standort": "Standort-ID"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "standort": "Numerische Standort-ID aus der URL des Dresdner Abfallkalenders (z.B. 80542 für Neumarkt 6)."
         }
       },
       "reconfigure_stadtreinigung_dresden_de": {
@@ -12752,9 +12753,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "standort": "Standort"
+          "standort": "Standort-ID"
         },
-        "data_description": {}
+        "data_description": {
+          "standort": "Numerische Standort-ID aus der URL des Dresdner Abfallkalenders (z.B. 80542 für Neumarkt 6)."
+        }
       },
       "args_stadtreinigung_giessen_de": {
         "title": "Quelle konfigurieren",

@@ -13001,10 +13001,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "standort": "Standort"
+          "standort": "Location ID"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "standort": "Numeric location ID from the Dresden waste calendar URL (e.g. 80542 for Neumarkt 6)."
         }
       },
       "reconfigure_stadtreinigung_dresden_de": {
@@ -13012,9 +13013,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "standort": "Standort"
+          "standort": "Location ID"
         },
-        "data_description": {}
+        "data_description": {
+          "standort": "Numeric location ID from the Dresden waste calendar URL (e.g. 80542 for Neumarkt 6)."
+        }
       },
       "args_stadtreinigung_giessen_de": {
         "title": "Configure Source",

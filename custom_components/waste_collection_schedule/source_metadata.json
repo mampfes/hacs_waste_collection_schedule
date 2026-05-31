@@ -2719,7 +2719,10 @@
   },
   "stadtreinigung_dresden_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtreinigung_dresden_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Öffne https://www.dresden.de/apps_ext/AbfallApp/wastebins und suche deine Adresse. Lade den PDF-Kalender herunter — die URL enthält '?STANDORT=<Zahl>'. Diese Zahl ist die Standort-ID.",
+      "en": "Open https://www.dresden.de/apps_ext/AbfallApp/wastebins and search for your address. Then download the PDF calendar — the URL will contain '?STANDORT=<number>'. Use that number as the Location ID."
+    },
     "urls": {}
   },
   "stadtreinigung_giessen_de": {
