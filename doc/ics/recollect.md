@@ -55,6 +55,7 @@ known to work with:
 |Bassetlaw District Council|UK|[bassetlaw.gov.uk](https://www.bassetlaw.gov.uk/bins-recycling-and-waste/bins-for-recycling-and-waste/bin-collection-days/)|
 |Oxford County, ON|Canada|[oxfordcounty.ca](https://www.oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection/)|
 |City of Coquitlam, BC|Canada|[coquitlam.ca](https://www.coquitlam.ca/157/Collection-Calendar-and-Guidelines)|
+|Atlantic Waste Services, GA|USA|[atlanticwaste.com](https://atlanticwaste.com)|
 
 and probably a lot more.
 

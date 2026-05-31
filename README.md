@@ -3081,6 +3081,7 @@ If you already have enough information for your municipality/region, you are ver
 <summary>United States of America</summary>
 
 - [Albuquerque, New Mexico, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-nm-city-of-albuquerque
+- [Atlantic Waste Services, GA](/doc/ics/recollect.md) / atlanticwaste.com
 - [Baton Rouge, LA](/doc/source/baton_rouge_la_us.md) / brla.gov/337/Garbage-Collection
 - [Chesapeake, VA](/doc/source/chesapeake_va_us.md) / cityofchesapeake.net
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov

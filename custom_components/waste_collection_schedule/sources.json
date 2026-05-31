@@ -19987,6 +19987,14 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Atlantic Waste Services, GA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Baton Rouge, LA",
       "module": "baton_rouge_la_us",
       "default_params": {},
