@@ -1,6 +1,5 @@
 """Sensor platform support for Waste Collection Schedule."""
 
-import datetime
 import logging
 from enum import Enum
 from typing import Any
