@@ -142,6 +142,7 @@ SERVICE_MAP = {
             "Esens",
             "Flensburg",
             "Gelnhausen",
+            "Glashütten",
             "Grävenwiesbach",
             "Großkrotzenburg",
             "Hainburg",
