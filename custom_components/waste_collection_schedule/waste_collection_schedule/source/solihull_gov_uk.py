@@ -9,7 +9,7 @@ _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Solihull Council"
 DESCRIPTION = "Source for Solihull Council."
-URL = "https://www.solihul.gov.uk/"
+URL = "https://www.solihull.gov.uk/"
 TEST_CASES = {
     "100070994046": {"uprn": 100070994046},
     "200003821723, Predict": {"uprn": 200003821723, "predict": True},
