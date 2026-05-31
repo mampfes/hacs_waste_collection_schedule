@@ -1,4 +1,5 @@
 import datetime
+import logging
 import re
 from typing import cast
 
@@ -20,6 +21,8 @@ from ..service.EcoHarmonogramPL import (
     StreetResponse,
     Town,
 )
+
+_LOGGER = logging.getLogger(__name__)
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Fill in Town, Street, Housenumber and District and press confirm. If any other field is required, it will tell you with a dropdown menu of suggestions. If your Town is not found, you might need to provide the App argument. (take a look in the linked documentation below, there is a list of towns with their corresponding App argument)",
@@ -496,7 +499,20 @@ class Source:
                         month = sch["month"]
                         year = sch["year"]
                         for d in days:
-                            dmy = datetime.date(int(year), int(month), int(d))
+                            d = d.strip()
+                            if not d:
+                                continue
+                            try:
+                                dmy = datetime.date(int(year), int(month), int(d))
+                            except ValueError:
+                                _LOGGER.warning(
+                                    "ecoharmonogram_pl: skipping invalid date %s-%s-%s for %s",
+                                    year,
+                                    month,
+                                    d,
+                                    sch["name"],
+                                )
+                                continue
                             name = sch["name"]
                             if not self._entry_exists(dmy, name, entries):
                                 entries.append(Collection(dmy, name))
