@@ -616,7 +616,7 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     output: dict[str, list[dict[str, str | dict[str, Any]]]] = {}
     source_metadata_by_module: dict[str, dict[str, Any]] = {}
 
-    for country in sorted(countries):
+    for country in ["Generic"] + sorted(c for c in countries if c != "Generic"):
         output[country] = []
         for e in sorted(
             countries[country],

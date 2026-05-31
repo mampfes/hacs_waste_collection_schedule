@@ -384,9 +384,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             {
                 vol.Required(CONF_COUNTRY_NAME): SelectSelector(
                     SelectSelectorConfig(
-                        options=[""] + list(self._sources.keys()),
+                        options=[""]
+                        + (["Generic"] if "Generic" in self._sources else [])
+                        + sorted(k for k in self._sources if k != "Generic"),
                         mode=SelectSelectorMode.DROPDOWN,
-                        sort=True,
+                        sort=False,
                     )
                 )
             }
