@@ -59,7 +59,9 @@ class Source:
                 if not scheduled_date or not service:
                     continue
 
-                collection_date = datetime.fromisoformat(scheduled_date.replace("Z", "+00:00")).date()
+                collection_date = datetime.fromisoformat(
+                    scheduled_date.replace("Z", "+00:00")
+                ).date()
                 if collection_date < today:
                     continue
 
