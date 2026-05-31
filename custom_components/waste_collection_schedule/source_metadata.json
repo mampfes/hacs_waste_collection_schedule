@@ -1,4 +1,14 @@
 {
+  "ics": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ics.md",
+    "howto": {},
+    "urls": {}
+  },
+  "static": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/static.md",
+    "howto": {},
+    "urls": {}
+  },
   "1coast_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/1coast_com_au.md",
     "howto": {},
@@ -1399,16 +1409,6 @@
   },
   "sivom_rivedroite_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
-    "howto": {},
-    "urls": {}
-  },
-  "ics": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ics.md",
-    "howto": {},
-    "urls": {}
-  },
-  "static": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/static.md",
     "howto": {},
     "urls": {}
   },

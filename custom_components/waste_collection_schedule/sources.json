@@ -1,4 +1,18 @@
 {
+  "Generic": [
+    {
+      "title": "ICS",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics"
+    },
+    {
+      "title": "Static Source",
+      "module": "static",
+      "default_params": {},
+      "id": "static"
+    }
+  ],
   "Australia": [
     {
       "title": "1Coast - Central Coast",
@@ -6216,20 +6230,6 @@
         "commune": "Zimmersheim"
       },
       "id": "mulhouse_alsace_fr"
-    }
-  ],
-  "Generic": [
-    {
-      "title": "ICS",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics"
-    },
-    {
-      "title": "Static Source",
-      "module": "static",
-      "default_params": {},
-      "id": "static"
     }
   ],
   "Germany": [
