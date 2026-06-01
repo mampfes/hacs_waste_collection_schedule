@@ -6,10 +6,8 @@ import requests
 from waste_collection_schedule import Collection, Icons
 
 TITLE = "City of Oklahoma City"
-DESCRIPTION = (
-    "Source for data.okc.gov and okc.schizo.dev services for City of Oklahoma City"
-)
-URL = "https://data.okc.gov"
+DESCRIPTION = "Source for OKC Open Data Portal and okc.schizo.dev services for City of Oklahoma City"
+URL = "https://www.okc.gov"
 COUNTRY = "us"
 TEST_CASES = {
     "Test_001": {"objectID": "1781151"},
@@ -22,12 +20,18 @@ HEADERS = {
     "Accept-Language": "en,en-GB;q=0.7,en-US;q=0.3",
     "Upgrade-Insecure-Requests": "1",
 }
-API_BASE_URL = "https://data.okc.gov/services/portal/api/data/records"
+# OKC Open Data Portal ArcGIS endpoints (accessible)
+TRASH_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1"
+RECYCLE_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3"
+BULKY_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/c4455716f4bf4d1dafe6806e0e619de8/rest/services/OpenData/Utilities/FeatureServer/2"
+
 UNOFFICIAL_URL = "https://okc.schizo.dev/trash"
-DATASET_BY_TYPE = {
-    "TRASH": "trash zones",
-    "BULKY": "bulky waste zones",
-    "RECYCLE": "recycle zones",
+
+# Waste layer mapping for official API
+WASTE_LAYERS = {
+    "TRASH": TRASH_ZONES_URL,
+    "RECYCLE": RECYCLE_ZONES_URL,
+    "BULKY": BULKY_ZONES_URL,
 }
 WEEKDAY_INDEX = {
     "monday": 0,
@@ -47,20 +51,19 @@ ICON_MAP = {
 PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
     "en": {
         "objectID": "Object ID for unofficial source (okc.schizo.dev).",
-        "try_official": "If checked, use official data.okc.gov zone datasets and the three Object IDs below.",
-        "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
-        "recycleObjectID": "Object ID from 'Recycle Zones'.",
-        "trashObjectID": "Object ID from 'Trash Zones'.",
+        "try_official": "Enable official OKC Open Data Portal services (requires Object IDs).",
+        "bulkyObjectID": "Object ID for bulky waste zone from OKC Open Data Portal.",
+        "recycleObjectID": "Object ID for recycling zone from OKC Open Data Portal.",
+        "trashObjectID": "Object ID for trash collection zone from OKC Open Data Portal.",
         "recycle_reference_date": "Known recycling pickup date (e.g., '2025-06-05'). Use to fix every other week schedule when dates are incorrect.",
     },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Using your browser, go to https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map and search for your address. "
-    "Go to the table tab and filter by address. Find your Object ID. "
-    "Next use the dropdown in the top right hand side of the screen to change the dataset from Bulky Waste Zones to Recycle Zones. "
-    "Once again Filter by Map to find your Object ID. Do this once more for your Trash Zone. "
-    "Once you have these three Object IDs, enter them in bulkyObjectID, recycleObjectID, and trashObjectID and enable try_official. "
+    "en": "For official mode with try_official=true, provide specific Object IDs from OKC Open Data Portal "
+    "(bulkyObjectID, recycleObjectID, trashObjectID). "
+    "Object IDs can be found by exploring the OKC waste collection datasets at "
+    "https://utility.arcgis.com/usrsvcs/servers. "
     "If try_official is disabled, provide objectID for the unofficial source."
 }
 
@@ -109,60 +112,80 @@ class Source:
                 "objectID is required when try_official is disabled (unofficial source mode)."
             )
 
-    def _fetch_rows(self, dataset_name: str, params: dict[str, str]):
-        dataset_path = quote(dataset_name, safe="")
-        response = requests.get(
-            f"{API_BASE_URL}/{dataset_path}",
-            params=params,
-            headers=HEADERS,
-        )
-        response.raise_for_status()
-
-        content_type = response.headers.get("content-type", "").lower()
-        if "html" in content_type:
-            raise Exception(
-                f"Official source blocked or returned HTML instead of JSON for dataset '{dataset_name}'. "
-                "This endpoint is protected in some environments."
-            )
-
+    def _query_object_id(self, layer_url: str, object_id: str) -> dict:
+        """Query a waste layer for a specific Object ID using ArcGIS FeatureServer."""
+        params = {
+            "where": f"OBJECTID={object_id}",
+            "outFields": "*",
+            "returnGeometry": "false",
+            "f": "json",
+        }
+        
         try:
+            response = requests.get(
+                f"{layer_url}/query",
+                params=params,
+                headers=HEADERS,
+                timeout=10,
+            )
+            response.raise_for_status()
+            
             json_data = response.json()
+            features = json_data.get("features", [])
+            if features:
+                return features[0].get("attributes", {})
+            else:
+                raise Exception(f"No record found with OBJECTID={object_id}")
+                        
         except Exception as e:
-            raise Exception(
-                f"Invalid response returned from source: {API_BASE_URL}/{dataset_path}"
-            ) from e
-
-        records = json_data.get("Records")
-        if records is None:
-            records = json_data.get("records")
-
-        fields = json_data.get("Fields")
-        if fields is None:
-            fields = json_data.get("fields", [])
-
-        if not isinstance(records, list):
-            return []
-
-        rows = []
-        for record in records:
-            if len(record) != len(fields):
-                continue
-            rows.append(
-                {
-                    str(field.get("FieldName", "")): value
-                    for field, value in zip(fields, record)
-                }
-            )
-
-        return rows
-
-    def _fetch_record(self, dataset_name: str, record_id: str):
-        rows = self._fetch_rows(dataset_name, {"recordID": record_id})
-        if not rows:
-            raise Exception(
-                f"No records found for Object ID {record_id} in dataset '{dataset_name}'."
-            )
-        return rows[0]
+            raise Exception(f"Unable to query Object ID {object_id}: {str(e)}")
+    
+    def _parse_arcgis_pickup_dates(self, attributes: dict, waste_type: str) -> list:
+        """Parse pickup dates from ArcGIS attributes."""
+        today = datetime.now().date()
+        entries = []
+        
+        # Check for specific pickup dates (NextPick1, NextPick2, NextPick3)
+        for i in range(1, 4):
+            pickup_date_key = f"NextPick{i}"
+            if pickup_date_key in attributes and attributes[pickup_date_key]:
+                try:
+                    timestamp_ms = attributes[pickup_date_key]
+                    if isinstance(timestamp_ms, (int, float)):
+                        pickup_date = datetime.fromtimestamp(timestamp_ms / 1000).date()
+                        if pickup_date >= today:
+                            entries.append(
+                                Collection(
+                                    date=pickup_date,
+                                    t=waste_type,
+                                    icon=ICON_MAP.get(waste_type),
+                                )
+                            )
+                except Exception:
+                    pass
+        
+        if not entries:
+            # Handle PickupDay field variations
+            pickup_day = None
+            for field_name in ["PickupDay", "PickUpDay", "PICKUPDAY"]:
+                if field_name in attributes and attributes[field_name]:
+                    pickup_day = str(attributes[field_name]).strip()
+                    break
+            
+            if pickup_day:
+                try:
+                    next_date = self._resolve_pickup_date(pickup_day, today, waste_type)
+                    entries.append(
+                        Collection(
+                            date=next_date,
+                            t=waste_type,
+                            icon=ICON_MAP.get(waste_type),
+                        )
+                    )
+                except Exception:
+                    pass
+        
+        return entries
 
     def _next_weekday(self, weekday_name: str, today: date) -> date:
         target_weekday = WEEKDAY_INDEX[weekday_name.lower()]
@@ -401,26 +424,25 @@ class Source:
         today = datetime.now().date()
         entries = []
 
-        for waste_type, dataset_name in DATASET_BY_TYPE.items():
-            field_values = self._fetch_record(
-                dataset_name, self._record_ids[waste_type]
-            )
-            pickup_rule = field_values.get("Pickup_Day", "")
-
-            if not isinstance(pickup_rule, str) or pickup_rule.strip() == "":
-                raise Exception(
-                    f"Missing Pickup_Day for dataset '{dataset_name}' and Object ID {self._record_ids[waste_type]}"
-                )
-
-            entries.append(
-                Collection(
-                    date=self._resolve_pickup_date(pickup_rule, today, waste_type),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
+        for waste_type, object_id in self._record_ids.items():
+            if not object_id:
+                continue
+            try:
+                layer_url = WASTE_LAYERS[waste_type]
+                attributes = self._query_object_id(layer_url, object_id)
+                layer_entries = self._parse_arcgis_pickup_dates(attributes, waste_type)
+                if layer_entries:
+                    entries.extend(layer_entries)
+            except Exception:
+                continue
+        
+        if entries:
+            return entries
+        
+        raise Exception(
+            "No waste collection data found for the provided Object IDs. "
+            "Verify the Object IDs are correct and correspond to the appropriate waste types."
+        )
 
     def fetch(self):
         if self._try_official:
