@@ -1,4 +1,4 @@
-m# City of Oklahoma City
+# City of Oklahoma City
 
 Support for schedules provided by [City of Oklahoma City](https://www.okc.gov/), serving City of Oklahoma City.
 
@@ -19,7 +19,7 @@ waste_collection_schedule:
 
 **try_official**  
 *(boolean) (optional, default=false)*  
-When `true`, uses the official `data.okc.gov` datasets and requires the 3 zone IDs below.
+When `true`, uses the official OKC Open Data Portal (ArcGIS) services and requires the 3 zone IDs below.
 
 **bulkyObjectID**  
 *(string) (required when `try_official=true`)*
@@ -65,13 +65,10 @@ waste_collection_schedule:
 
 ## How to find official Object IDs
 
-Using your browser, go to https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map and search for your address.
-Go to the table tab and filter by address. Find your Object ID.
+The official source uses ArcGIS FeatureServer endpoints from the OKC Open Data Portal:
 
-Next use the dropdown in the top right hand side of the screen to change the dataset from Bulky Waste Zones to Recycle Zones. Once again Filter by Map to find your Object ID. Do this once more for your Trash Zone.
+- [Trash Zones](https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1)
+- [Bulky Waste Zones](https://utility.arcgis.com/usrsvcs/servers/c4455716f4bf4d1dafe6806e0e619de8/rest/services/OpenData/Utilities/FeatureServer/2)
+- [Recycle Zones](https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3)
 
-Once you have these three Object IDs, enter them in `bulkyObjectID`, `recycleObjectID`, and `trashObjectID` and enable `try_official`.
-
-- [trash zones](https://data.okc.gov/portal/page/viewer?datasetName=trash%20zones)
-- [bulky waste zones](https://data.okc.gov/portal/page/viewer?datasetName=bulky%20waste%20zones)
-- [recycle zones](https://data.okc.gov/portal/page/viewer?datasetName=recycle%20zones)
+Visit each link above, click "Query" and explore the data to find your zone's OBJECTID based on your address location. Enter these IDs in the corresponding configuration fields.
