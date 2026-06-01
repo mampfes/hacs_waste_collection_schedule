@@ -14146,6 +14146,37 @@
         },
         "data_description": {}
       },
+      "args_montecospa_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "municipality": "Comune",
+          "user_type": "Tipo utenza",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "municipality": "Nome del comune esattamente come indicato sul sito Monteco (es. 'Lecce').",
+          "user_type": "Utenza domestica o non domestica. Uno tra 'Domestica' (default) o 'Non domestica'.",
+          "zone": "Nome della zona come indicato nell'URL/mappa del sito Monteco (es. 'zona_centro_storico')."
+        }
+      },
+      "reconfigure_montecospa_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "municipality": "Comune",
+          "user_type": "Tipo utenza",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "municipality": "Nome del comune esattamente come indicato sul sito Monteco (es. 'Lecce').",
+          "user_type": "Utenza domestica o non domestica. Uno tra 'Domestica' (default) o 'Non domestica'.",
+          "zone": "Nome della zona come indicato nell'URL/mappa del sito Monteco (es. 'zona_centro_storico')."
+        }
+      },
       "args_seab_biella_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

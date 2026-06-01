@@ -2268,6 +2268,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Monte Urano - Eco Elpidiense Srl](/doc/source/junker_app.md) / junker.app
 - [Montecassiano](/doc/source/junker_app.md) / junker.app
 - [Montecatini Terme](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Monteco Spa](/doc/source/montecospa_it.md) / montecospa.it
 - [Montefiascone - Viterbo Ambiente](/doc/source/junker_app.md) / junker.app
 - [Monteflavio, Montorio Romano, Moricone - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Montelongo - Rotello - San Giuliano di Puglia - Impregico Srl](/doc/source/junker_app.md) / junker.app

@@ -15197,6 +15197,12 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Monteco Spa",
+      "module": "montecospa_it",
+      "default_params": {},
+      "id": "montecospa_it"
+    },
+    {
       "title": "Montefiascone - Viterbo Ambiente",
       "module": "junker_app",
       "default_params": {},

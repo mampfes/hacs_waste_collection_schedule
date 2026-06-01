@@ -14589,6 +14589,37 @@
         },
         "data_description": {}
       },
+      "args_montecospa_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "user_type": "User type",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Name of the municipality exactly as listed on the Monteco website (e.g. 'Lecce').",
+          "user_type": "Domestic or non-domestic user. One of 'Domestica' (default) or 'Non domestica'.",
+          "zone": "Zone name as shown in the URL/map on the Monteco website (e.g. 'zona_centro_storico')."
+        }
+      },
+      "reconfigure_montecospa_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "user_type": "User type",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "municipality": "Name of the municipality exactly as listed on the Monteco website (e.g. 'Lecce').",
+          "user_type": "Domestic or non-domestic user. One of 'Domestica' (default) or 'Non domestica'.",
+          "zone": "Zone name as shown in the URL/map on the Monteco website (e.g. 'zona_centro_storico')."
+        }
+      },
       "args_seab_biella_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
