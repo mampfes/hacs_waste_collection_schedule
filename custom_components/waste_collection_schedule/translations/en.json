@@ -3120,6 +3120,34 @@
           "town": "(New Website only) Not needed in most cases leave empty and only use if you get an error without it"
         }
       },
+      "args_infeo_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "customer": "Customer",
+          "housenumber": "House Number",
+          "street": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_infeo_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "customer": "Customer",
+          "housenumber": "House Number",
+          "street": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_ics_st-poelten_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -3722,34 +3750,6 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title"
-        },
-        "data_description": {}
-      },
-      "args_infeo_at": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "city": "City",
-          "customer": "Customer",
-          "housenumber": "House Number",
-          "street": "Street",
-          "zone": "Zone"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_infeo_at": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "city": "City",
-          "customer": "Customer",
-          "housenumber": "House Number",
-          "street": "Street",
-          "zone": "Zone"
         },
         "data_description": {}
       },

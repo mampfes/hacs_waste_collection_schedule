@@ -1374,6 +1374,14 @@
       "id": "umweltverbaende_at"
     },
     {
+      "title": "Abfallverband Schwechat",
+      "module": "infeo_at",
+      "default_params": {
+        "customer": "av-schwechat"
+      },
+      "id": "infeo_at"
+    },
+    {
       "title": "Abfallwirtschaft der Stadt St. P\u00f6lten",
       "module": "ics",
       "default_params": {

@@ -753,6 +753,11 @@
     },
     "urls": {}
   },
+  "infeo_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/infeo_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "ics_st-poelten_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/st-poelten_at.md",
     "howto": {
@@ -870,11 +875,6 @@
   },
   "hausmannstaetten_gv_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hausmannstaetten_gv_at.md",
-    "howto": {},
-    "urls": {}
-  },
-  "infeo_at": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/infeo_at.md",
     "howto": {},
     "urls": {}
   },
