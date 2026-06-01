@@ -3118,6 +3118,11 @@
     "howto": {},
     "urls": {}
   },
+  "berdorf_lu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/berdorf_lu.md",
+    "howto": {},
+    "urls": {}
+  },
   "luxembourg_lu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/luxembourg_lu.md",
     "howto": {},

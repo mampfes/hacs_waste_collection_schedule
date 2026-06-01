@@ -2439,6 +2439,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bettembourg](/doc/ics/bettembourg_lu.md) / bettembourg.lu
 - [Betzdorf](/doc/source/betzdorf_lu.md) / betzdorf.lu
 - [Esch-sur-Alzette](/doc/source/esch_lu.md) / esch.lu
+- [Gemeng Bäertref](/doc/source/berdorf_lu.md) / berdorf.lu
 - [Luxembourg](/doc/source/luxembourg_lu.md) / data.public.lu
 - [SICA](/doc/source/sica_lu.md) / sica.lu
 - [SIDEC](/doc/source/sidec_lu.md) / sidec.lu

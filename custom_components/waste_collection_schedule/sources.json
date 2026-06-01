@@ -16217,6 +16217,12 @@
       "id": "esch_lu"
     },
     {
+      "title": "Gemeng B\u00e4ertref",
+      "module": "berdorf_lu",
+      "default_params": {},
+      "id": "berdorf_lu"
+    },
+    {
       "title": "Luxembourg",
       "module": "luxembourg_lu",
       "default_params": {},
