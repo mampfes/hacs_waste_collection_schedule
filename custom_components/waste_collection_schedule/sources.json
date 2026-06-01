@@ -15305,6 +15305,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Novara",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Noventa di Piave",
       "module": "junker_app",
       "default_params": {},
