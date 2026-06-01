@@ -4708,6 +4708,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "forest_of_dean_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/forest_of_dean_gov_uk.md",
+    "howto": {
+      "en": "Go to the Forest of Dean waste collection enquiry page and type your postcode into the address lookup. Use the full address string exactly as it is returned by the autocomplete (e.g. '8 SOUTHFIELD ROAD, COLEFORD, GL16 8BZ')."
+    },
+    "urls": {}
+  },
   "fylde_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fylde_gov_uk.md",
     "howto": {
