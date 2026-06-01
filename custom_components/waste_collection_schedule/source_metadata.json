@@ -2893,6 +2893,13 @@
     "howto": {},
     "urls": {}
   },
+  "zaw_sr_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zaw_sr_de.md",
+    "howto": {},
+    "urls": {
+      "url_www_zaw_sr_de_abfuhrkalender": "https://www.zaw-sr.de/abfuhrkalender"
+    }
+  },
   "ics_zb_gladbeck_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/zb_gladbeck_de.md",
     "howto": {

@@ -13826,6 +13826,41 @@
         },
         "data_description": {}
       },
+      "args_zaw_sr_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addition": "House number suffix",
+          "city": "City",
+          "hnr": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "addition": "Optional house number suffix (e.g. 'A').",
+          "city": "Name of your city or town exactly as shown in the dropdown at {url_www_zaw_sr_de_abfuhrkalender} (e.g. 'Straubing').",
+          "hnr": "Your house number.",
+          "street": "Your street name exactly as shown in the dropdown (e.g. 'Theresienplatz')."
+        }
+      },
+      "reconfigure_zaw_sr_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "addition": "House number suffix",
+          "city": "City",
+          "hnr": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "addition": "Optional house number suffix (e.g. 'A').",
+          "city": "Name of your city or town exactly as shown in the dropdown at {url_www_zaw_sr_de_abfuhrkalender} (e.g. 'Straubing').",
+          "hnr": "Your house number.",
+          "street": "Your street name exactly as shown in the dropdown (e.g. 'Theresienplatz')."
+        }
+      },
       "args_ics_zb_gladbeck_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

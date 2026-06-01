@@ -13628,6 +13628,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "ZAW-SR Straubing",
+      "module": "zaw_sr_de",
+      "default_params": {},
+      "id": "zaw_sr_de"
+    },
+    {
       "title": "ZBG Gladbeck",
       "module": "ics",
       "default_params": {},

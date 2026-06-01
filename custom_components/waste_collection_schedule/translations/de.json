@@ -13563,6 +13563,41 @@
         },
         "data_description": {}
       },
+      "args_zaw_sr_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "addition": "Hausnummerzusatz",
+          "city": "Ort",
+          "hnr": "Hausnummer",
+          "street": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "addition": "Optionaler Hausnummernzusatz (z.B. 'A').",
+          "city": "Name Ihrer Stadt oder Gemeinde genau wie in der Auswahl auf {url_www_zaw_sr_de_abfuhrkalender} (z.B. 'Straubing').",
+          "hnr": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname genau wie in der Auswahl (z.B. 'Theresienplatz')."
+        }
+      },
+      "reconfigure_zaw_sr_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "addition": "Hausnummerzusatz",
+          "city": "Ort",
+          "hnr": "Hausnummer",
+          "street": "Strasse"
+        },
+        "data_description": {
+          "addition": "Optionaler Hausnummernzusatz (z.B. 'A').",
+          "city": "Name Ihrer Stadt oder Gemeinde genau wie in der Auswahl auf {url_www_zaw_sr_de_abfuhrkalender} (z.B. 'Straubing').",
+          "hnr": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname genau wie in der Auswahl (z.B. 'Theresienplatz')."
+        }
+      },
       "args_ics_zb_gladbeck_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

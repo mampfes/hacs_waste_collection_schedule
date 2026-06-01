@@ -2006,6 +2006,7 @@ If you already have enough information for your municipality/region, you are ver
 - [zav Zweckverband Abfallwirtschaft Vogelsbergkres](/doc/ics/mein_abfallkalender_online.md) / zav-online.de
 - [ZAW Donau-Wald](/doc/source/awg_de.md) / awg.de
 - [ZAW-SR](/doc/source/app_abfallplus_de.md) / Abfall+ App: zawsr
+- [ZAW-SR Straubing](/doc/source/zaw_sr_de.md) / zaw-sr.de
 - [ZBG Gladbeck](/doc/ics/zb_gladbeck_de.md) / zb-gladbeck.de
 - [ZEW Zweckverband Entsorgungsregion West](/doc/source/abfallnavi_de.md) / zew-entsorgung.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
