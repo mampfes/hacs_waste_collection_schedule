@@ -100,6 +100,11 @@
     "howto": {},
     "urls": {}
   },
+  "albany_wa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/albany_wa_gov_au.md",
+    "howto": {},
+    "urls": {}
+  },
   "ballarat_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ballarat_vic_gov_au.md",
     "howto": {},

@@ -211,6 +211,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of Albany",
+      "module": "albany_wa_gov_au",
+      "default_params": {},
+      "id": "albany_wa_gov_au"
+    },
+    {
       "title": "City of Ballarat",
       "module": "ballarat_vic_gov_au",
       "default_params": {},
