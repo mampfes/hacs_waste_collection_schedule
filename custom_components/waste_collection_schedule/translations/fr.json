@@ -25386,6 +25386,7 @@
           "bulkyObjectID": "Bulky Object Id",
           "objectID": "Object Id",
           "recycleObjectID": "Recycle Object Id",
+          "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id",
           "try_official": "Try Official"
         },
@@ -25401,6 +25402,7 @@
           "bulkyObjectID": "Bulky Object Id",
           "objectID": "Object Id",
           "recycleObjectID": "Recycle Object Id",
+          "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id",
           "try_official": "Try Official"
         },

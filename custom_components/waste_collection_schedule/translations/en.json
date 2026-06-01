@@ -26278,16 +26278,18 @@
           "bulkyObjectID": "Bulky Object Id",
           "objectID": "Object Id",
           "recycleObjectID": "Recycle Object Id",
+          "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id",
           "try_official": "Try Official"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
+          "bulkyObjectID": "Object ID for bulky waste zone from OKC Open Data Portal.",
           "objectID": "Object ID for unofficial source (okc.schizo.dev).",
-          "recycleObjectID": "Object ID from 'Recycle Zones'.",
-          "trashObjectID": "Object ID from 'Trash Zones'.",
-          "try_official": "If checked, use official data.okc.gov zone datasets and the three Object IDs below."
+          "recycleObjectID": "Object ID for recycling zone from OKC Open Data Portal.",
+          "recycle_reference_date": "Known recycling pickup date (e.g., '2025-06-05'). Use to fix every other week schedule when dates are incorrect.",
+          "trashObjectID": "Object ID for trash collection zone from OKC Open Data Portal.",
+          "try_official": "Enable official OKC Open Data Portal services (requires Object IDs)."
         }
       },
       "reconfigure_okc_gov": {
@@ -26298,15 +26300,17 @@
           "bulkyObjectID": "Bulky Object Id",
           "objectID": "Object Id",
           "recycleObjectID": "Recycle Object Id",
+          "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id",
           "try_official": "Try Official"
         },
         "data_description": {
-          "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
+          "bulkyObjectID": "Object ID for bulky waste zone from OKC Open Data Portal.",
           "objectID": "Object ID for unofficial source (okc.schizo.dev).",
-          "recycleObjectID": "Object ID from 'Recycle Zones'.",
-          "trashObjectID": "Object ID from 'Trash Zones'.",
-          "try_official": "If checked, use official data.okc.gov zone datasets and the three Object IDs below."
+          "recycleObjectID": "Object ID for recycling zone from OKC Open Data Portal.",
+          "recycle_reference_date": "Known recycling pickup date (e.g., '2025-06-05'). Use to fix every other week schedule when dates are incorrect.",
+          "trashObjectID": "Object ID for trash collection zone from OKC Open Data Portal.",
+          "try_official": "Enable official OKC Open Data Portal services (requires Object IDs)."
         }
       },
       "args_phila_gov": {
