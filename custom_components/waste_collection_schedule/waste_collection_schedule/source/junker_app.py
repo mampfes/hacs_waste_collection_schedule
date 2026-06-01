@@ -274,6 +274,7 @@ SERVICE_PROVIDERS = {
     "Cooperativa Trasforma",
     "Patti - Pizzo Pippo",
     "Noventa di Piave",
+    "Novara",
     "Palata",
     "Monte di Procida - DM Technology Srl",
     "Tricase",
