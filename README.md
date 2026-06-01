@@ -3325,6 +3325,7 @@ If you already have enough information for your municipality/region, you are ver
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
 - [Village of Sunbury, Ohio](/doc/source/sunbury_ohio_org.md) / sunburyohio.org
 - [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
+- [Waste Management (WM)](/doc/source/wm_com.md) / wm.com
 </details>
 
 <!--End of country section-->

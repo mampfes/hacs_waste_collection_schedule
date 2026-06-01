@@ -21887,6 +21887,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Waste Management (WM)",
+      "module": "wm_com",
+      "default_params": {},
+      "id": "wm_com"
     }
   ]
 }

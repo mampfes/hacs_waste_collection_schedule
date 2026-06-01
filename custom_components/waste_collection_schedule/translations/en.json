@@ -26571,6 +26571,45 @@
           "calendar_title": "Calendar Title"
         },
         "data_description": {}
+      },
+      "args_wm_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "country": "Country",
+          "state": "State",
+          "street": "Street Address",
+          "zip_code": "ZIP Code"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "City name",
+          "country": "Country code — 'US' or 'CA' (default: US)",
+          "state": "Two-letter state code (e.g. 'MI')",
+          "street": "Street address (e.g. '123 Main St')",
+          "zip_code": "5-digit ZIP code"
+        }
+      },
+      "reconfigure_wm_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "country": "Country",
+          "state": "State",
+          "street": "Street Address",
+          "zip_code": "ZIP Code"
+        },
+        "data_description": {
+          "city": "City name",
+          "country": "Country code — 'US' or 'CA' (default: US)",
+          "state": "Two-letter state code (e.g. 'MI')",
+          "street": "Street address (e.g. '123 Main St')",
+          "zip_code": "5-digit ZIP code"
+        }
       }
     },
     "error": {
