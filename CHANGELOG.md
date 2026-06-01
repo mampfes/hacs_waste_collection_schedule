@@ -4,6 +4,83 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.26.0] - 2026-06-01
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release —
+@adbsmith, @ben-willis, @Cikkajes, @danielcolquitt, @frantisektalapka-create, @iSpartak,
+@jordanbrock, @Matt-Hadley, @MikevanBreePXL, @nnams and @rafiksheikh. 🎉
+Thanks as well to our returning contributors (@Canis-L-Sapien, @CRZTFR, @marsdeat, @oskarannas, @sanis)
+for the fixes and new sources below.
+
+### Added Sources
+
+- added Berdorf, LU (thanks @rafiksheikh) (#6503)
+- added Waste Management (wm.com), US (thanks @adbsmith) (#6504)
+- added Castle Point Borough Council, UK (thanks @nnams) (#6480)
+- added London Borough of Hillingdon, UK (thanks @Matt-Hadley) (#6428)
+- added Aberdeen City Council, UK (thanks @CRZTFR) (#6433)
+- added Gemeente Venray (ICS), NL (thanks @MikevanBreePXL) (#4122)
+- added Gruppo Veritas, IT (thanks @Cikkajes) (#6456)
+- added Odvoz odpadu (odvoz-odpadu.sk) ICS provider, SK (thanks @frantisektalapka-create) (#6446)
+- added Town of Cambridge, WA, AU (thanks @jordanbrock) (#6423)
+- added Forest of Dean District Council, UK (#6507)
+- added Rochford District Council, UK (#6501)
+- added City of Albany, WA, AU (#6511)
+- added Stadt Verl, DE (#6509)
+- added ZAW-SR (Straubing Stadt und Land), DE (#6512)
+- added Monteco Spa (26 municipalities in Puglia), IT (#6510)
+- added Monheim am Rhein, DE (#6449)
+- added Kungsbacka kommun, SE (#6476)
+- added Vatten och Miljöresurs (Bräcke, Berg, Härjedalen), SE (#6475)
+- added ZAB Bazenheid (zab_ch), CH (#6445)
+- added Fairfield City Council, NSW, AU (#6493)
+- added Atlantic Waste Services, GA, US (ReCollect) (#6494)
+- added Abfallverband Schwechat to the infeo_at source, AT (#6502)
+- added Novara to the junker_app source, IT (#6508)
+
+### Fixed Sources
+
+- fixed camden_gov_uk: migrate to the live getCalendarData API (thanks @ben-willis) (#6498)
+- fixed sevenoaks_gov_uk: rewrite to use the live OnCreate API (thanks @iSpartak) (#6429)
+- fixed colchester_gov_uk: handle renamed waste types in the calendar feed (thanks @Canis-L-Sapien) (#6467)
+- fixed south_norfolk_and_broadland_gov_uk: add food collections and adjust entries (thanks @marsdeat) (#6460)
+- fixed st_helens_gov_uk: update collection parsing (thanks @danielcolquitt) (#6424)
+- fixed grafikai_svara_lt: send Sec-Fetch-Site header (thanks @sanis) (#6437)
+- fixed gotland_se: add 'Fyrfack 1' and 'Fyrfack 2' bin types (thanks @oskarannas) (#6438)
+- fixed ecoharmonogram_pl: guard against invalid collection dates (#6500)
+- fixed solihull_gov_uk: correct typo in display URL (#6499)
+- fixed nerdbridge_de: replace broken ICS entry with a dedicated JSON source (#6497)
+- fixed c_trace_de: extend default abfall ID range from 99 to 300 (#6496)
+- fixed stadtreinigung_dresden_de: improve UI metadata and error handling (#6495)
+- fixed republicservices_com: apply holiday delay to all service types (#6492)
+- fixed avfallsor_no: accept addresses entered without a city suffix (#6491)
+- fixed newcastle_gov_uk: pick the rescheduled date on bank-holiday substitutions (#6490)
+- fixed abfalltermine_forchheim_de: use the HTTPS endpoint directly (#6485)
+- fixed jumomind_de: add Glashütten to the mymuell service list (#6484)
+- fixed wastenet_org_nz: rewrite for the new WasteNet API (#6483)
+- fixed south_norfolk_and_broadland_gov_uk: use the SOAP calendar for South Norfolk addresses (#6478)
+- fixed eastcambs_gov_uk: migrate to the new AchieveForms API (#6477)
+- fixed kiertokapula_fi: switch to curl_cffi to bypass the Azure WAF (#6474)
+- fixed recollect: add Coquitlam, BC (#6473)
+- fixed valeofglamorgan_gov_uk: switch to curl_cffi to bypass the WAF (#6471)
+- fixed app_abfallplus_de: send client/app_id as HTTP headers (#6469)
+- fixed northumberland_gov_uk: switch to curl_cffi to bypass the Barracuda WAF (#6454)
+- fixed great_yarmouth_gov_uk: switch to curl_cffi to bypass the Cloudflare WAF (#6453)
+- fixed cheltenham_gov_uk: single GET and narrower row selector (#6450)
+- fixed swale_gov_uk: switch to curl_cffi to bypass the Cloudflare WAF (#6448)
+- fixed opendata_bordeauxmetropole_fr: correct lon/lat coordinate swap (#6447)
+
+### Other Changes
+
+- fixed YAML setup: await the initial fetch before calendar platform setup, so dedicated-calendar configs no longer come up with missing entities (#6470)
+- bumped icalevents minimum to >=0.2.1 to resolve the icalendar v6 `windows_to_olson` import error (#6486)
+- fixed the ICS service: switch to curl_cffi to handle stricter Python 3.14 SSL validation (#6444)
+- fixed sensor `day_switch_time` timezone handling (#6489)
+- changed config flow: list the Generic country first in the dropdown (#6488)
+- changed config flow: skip the unique_id collision check during reconfigure (#6472)
+- removed the deprecated abfallkalender_gifhorn_de source (#6487)
+- docs: removed the outdated "Known Issues" section from the README (#6481)
+
 ## [2.25.0] - 2026-05-24
 
 ### Added Sources
