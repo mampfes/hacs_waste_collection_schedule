@@ -17,9 +17,9 @@ TEST_CASES = {
         "postcode": "IP14 2SA",
         "uprn": "10012168792",
     },
-    "2 School Meadow Stowmarket": {
-        "postcode": "IP14 2SA",
-        "uprn": "10012168793",
+    "1 Laurel Way Claydon": {
+        "postcode": "IP6 0DD",
+        "uprn": "200003809007",
     },
 }
 
