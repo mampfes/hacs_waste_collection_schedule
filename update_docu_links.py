@@ -131,6 +131,7 @@ class SourceInfo:
         custom_param_translation: dict[str, dict[str, str]] = {},
         custom_param_description: dict[str, dict[str, str]] = {},
         custom_howto: dict[str, str] = {},
+        source_owners: list[str] | None = None,
     ):
         self._filename = filename
         self._module = module
@@ -191,6 +192,7 @@ class SourceInfo:
         )
 
         self._custom_howto = sort_param_dict(custom_howto)
+        self._source_owners = sorted(set(source_owners or []))
 
         for k, v in custom_param_translation.items():
             if k not in LANGUAGES:
@@ -262,6 +264,10 @@ class SourceInfo:
     @property
     def url_placeholders(self):
         return self._url_placeholders
+
+    @property
+    def source_owners(self):
+        return self._source_owners
 
 
 class IcsSourceInfo(SourceInfo):
@@ -429,6 +435,7 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     param_translations = getattr(module, "PARAM_TRANSLATIONS", {})
     param_descriptions = getattr(module, "PARAM_DESCRIPTIONS", {})
     howto = getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
+    source_owners = getattr(module, "SOURCE_CODEOWNERS", [])
 
     filename = f"/doc/source/{file}.md"
     sources = []
@@ -444,6 +451,7 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
                 custom_param_translation=param_translations,
                 custom_param_description=param_descriptions,
                 custom_howto=howto,
+                source_owners=source_owners,
             )
         )
 
@@ -465,6 +473,7 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
                 custom_param_description=param_descriptions,
                 extra_info_default_params=e.get("default_params", {}),
                 custom_howto=howto,
+                source_owners=source_owners,
             )
         )
     return module, sources
@@ -615,6 +624,7 @@ def beautify_url(url):
 def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     output: dict[str, list[dict[str, str | dict[str, Any]]]] = {}
     source_metadata_by_module: dict[str, dict[str, Any]] = {}
+    source_owners_by_module: dict[str, list[str]] = {}
 
     for country in ["Generic"] + sorted(c for c in countries if c != "Generic"):
         output[country] = []
@@ -645,6 +655,11 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
                     "urls": e.url_placeholders,
                 }
 
+            source_owners_by_module.setdefault(module, [])
+            source_owners_by_module[module] = sorted(
+                set(source_owners_by_module[module]) | set(e.source_owners)
+            )
+
     with open(
         "custom_components/waste_collection_schedule/sources.json",
         "w",
@@ -657,6 +672,18 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     metadata_file = "custom_components/waste_collection_schedule/source_metadata.json"
     with open(metadata_file, "w", encoding="utf-8", newline="\n") as f:
         json.dump(source_metadata_by_module, f, indent=2, ensure_ascii=False)
+
+    source_owner_file = ".github/source_owners.json"
+    source_owner_output = {
+        "default": [],
+        "sources": {
+            module: owners
+            for module, owners in sorted(source_owners_by_module.items())
+            if owners
+        },
+    }
+    with open(source_owner_file, "w", encoding="utf-8") as f:
+        json.dump(source_owner_output, f, indent=2, ensure_ascii=False)
 
 
 def get_custom_translations(
