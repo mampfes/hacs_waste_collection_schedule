@@ -51,6 +51,7 @@ PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown
         "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
         "recycleObjectID": "Object ID from 'Recycle Zones'.",
         "trashObjectID": "Object ID from 'Trash Zones'.",
+        "recycle_reference_date": "Known recycling pickup date (e.g., '2025-06-05'). Use to fix every other week schedule when dates are incorrect.",
     },
 }
 
@@ -72,6 +73,7 @@ class Source:
         bulkyObjectID: str = "",
         recycleObjectID: str = "",
         trashObjectID: str = "",
+        recycle_reference_date: str = "",
     ):
         if isinstance(try_official, bool):
             self._try_official = try_official
@@ -83,6 +85,7 @@ class Source:
                 "on",
             }
         self._object_id = str(objectID).strip()
+        self._recycle_reference_date = str(recycle_reference_date).strip()
         self._record_ids = {
             "BULKY": str(bulkyObjectID).strip(),
             "RECYCLE": str(recycleObjectID).strip(),
@@ -195,9 +198,45 @@ class Source:
             f"Unable to calculate next '{nth}' '{weekday_name}' date from {today}."
         )
 
-    def _resolve_pickup_date(self, pickup_rule: str, today: date) -> date:
+    def _resolve_pickup_date(self, pickup_rule: str, today: date, waste_type: str = "") -> date:
         normalized_rule = pickup_rule.strip()
         normalized_rule_lower = normalized_rule.lower()
+
+        # If this is RECYCLE and we have a reference date, use it for every-other-week calculation
+        if waste_type.upper() == "RECYCLE" and self._recycle_reference_date:
+            try:
+                # Parse reference date (try different formats)
+                ref_date = None
+                for fmt in ["%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y"]:
+                    try:
+                        ref_date = datetime.strptime(self._recycle_reference_date, fmt).date()
+                        break
+                    except ValueError:
+                        continue
+                
+                # Check if the pickup_rule is a weekday (like "friday") and we parsed a valid ref_date
+                if ref_date and normalized_rule_lower in WEEKDAY_INDEX:
+                    # Use reference date as starting point for pattern
+                    if ref_date >= today:
+                        return ref_date
+                    
+                    # Calculate weeks difference
+                    weeks_diff = (today - ref_date).days // 7
+                    
+                    # Determine next date based on parity
+                    if weeks_diff % 2 == 0:
+                        next_date = ref_date + timedelta(weeks=2)
+                    else:
+                        next_date = ref_date + timedelta(weeks=1)
+                    
+                    # Make sure date is after today
+                    while next_date <= today:
+                        next_date += timedelta(weeks=2)
+                    
+                    return next_date
+            except Exception:
+                # Fall through to normal logic on any error
+                pass
 
         if normalized_rule_lower in WEEKDAY_INDEX:
             return self._next_weekday(normalized_rule_lower, today)
@@ -270,7 +309,7 @@ class Source:
                         trash_date = None
                 if trash_date is None and trash_data.get("day"):
                     trash_date = self._resolve_pickup_date(
-                        str(trash_data["day"]), today
+                        str(trash_data["day"]), today, "TRASH"
                     )
 
             if trash_date is not None:
@@ -286,7 +325,7 @@ class Source:
                 )
                 if recycle_date is None and recycling_data.get("day"):
                     recycle_date = self._resolve_pickup_date(
-                        str(recycling_data["day"]), today
+                        str(recycling_data["day"]), today, "RECYCLE"
                     )
 
             if recycle_date is not None:
@@ -304,7 +343,7 @@ class Source:
                 bulky_date = _first_upcoming_pickup_date(bulky_data.get("pickups"))
                 if bulky_date is None and bulky_data.get("schedule"):
                     bulky_date = self._resolve_pickup_date(
-                        str(bulky_data["schedule"]), today
+                        str(bulky_data["schedule"]), today, "BULKY"
                     )
 
             if bulky_date is not None:
@@ -350,7 +389,7 @@ class Source:
             waste_type = field_name.replace("Next_", "").split("_")[0].upper()
             entries.append(
                 Collection(
-                    date=self._resolve_pickup_date(value, today),
+                    date=self._resolve_pickup_date(value, today, waste_type),
                     t=waste_type,
                     icon=ICON_MAP.get(waste_type),
                 )
@@ -375,7 +414,7 @@ class Source:
 
             entries.append(
                 Collection(
-                    date=self._resolve_pickup_date(pickup_rule, today),
+                    date=self._resolve_pickup_date(pickup_rule, today, waste_type),
                     t=waste_type,
                     icon=ICON_MAP.get(waste_type),
                 )

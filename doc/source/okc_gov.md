@@ -1,4 +1,4 @@
-# City of Oklahoma City
+m# City of Oklahoma City
 
 Support for schedules provided by [City of Oklahoma City](https://www.okc.gov/), serving City of Oklahoma City.
 
@@ -30,6 +30,10 @@ When `true`, uses the official `data.okc.gov` datasets and requires the 3 zone I
 **trashObjectID**  
 *(string) (required when `try_official=true`)*
 
+**recycle_reference_date**  
+*(string) (optional)*  
+A known recycling pickup date (e.g., '2025-06-05') to synchronize every other week schedule. Use if your recycling dates appear to be out of sync.
+
 **objectID**  
 *(string) (required when `try_official=false`)*  
 Object ID for the unofficial source (`okc.schizo.dev`).
@@ -45,6 +49,7 @@ waste_collection_schedule:
         bulkyObjectID: "14"
         recycleObjectID: "1366"
         trashObjectID: "315"
+        recycle_reference_date: "2025-06-05"  # Optional: fix every other week sync
 ```
 
 ## Unofficial example
