@@ -2,8 +2,8 @@ import re
 from datetime import date
 from io import BytesIO
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from pypdf import PdfReader
 from waste_collection_schedule import Collection, Icons
 
@@ -124,7 +124,9 @@ class Source:
         pass
 
     def fetch(self) -> list[Collection]:
-        response = requests.get(_DATA_URL, timeout=30)
+        session = requests.Session(impersonate="chrome")
+
+        response = session.get(_DATA_URL, timeout=30)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
 
@@ -147,7 +149,7 @@ class Source:
         if best_url.startswith("/"):
             best_url = "https://www.berdorf.lu" + best_url
 
-        pdf_response = requests.get(best_url, timeout=30)
+        pdf_response = session.get(best_url, timeout=30)
         pdf_response.raise_for_status()
 
         reader = PdfReader(BytesIO(pdf_response.content))
