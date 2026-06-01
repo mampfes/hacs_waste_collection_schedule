@@ -2698,6 +2698,13 @@
     },
     "urls": {}
   },
+  "verl_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/verl_de.md",
+    "howto": {},
+    "urls": {
+      "url_www_verl_de_rathaus_aktuelles_digitaler_umweltkalender_abfallbezirke": "https://www.verl.de/rathaus/aktuelles/digitaler-umweltkalender/abfallbezirke"
+    }
+  },
   "ics_wetzlar_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wetzlar_de.md",
     "howto": {

@@ -12851,6 +12851,29 @@
         },
         "data_description": {}
       },
+      "args_verl_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "bezirk": "Collection district"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "bezirk": "Your collection district number (1-5). Find yours at {url_www_verl_de_rathaus_aktuelles_digitaler_umweltkalender_abfallbezirke}"
+        }
+      },
+      "reconfigure_verl_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "bezirk": "Collection district"
+        },
+        "data_description": {
+          "bezirk": "Your collection district number (1-5). Find yours at {url_www_verl_de_rathaus_aktuelles_digitaler_umweltkalender_abfallbezirke}"
+        }
+      },
       "args_ics_wetzlar_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
