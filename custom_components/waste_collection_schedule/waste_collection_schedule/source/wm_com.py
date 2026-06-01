@@ -23,6 +23,7 @@ import requests
 
 from ..collection import Collection
 from ..exceptions import SourceArgumentNotFound
+from ..icons import Icons
 
 # ---------------------------------------------------------------------------
 # Module-level metadata
@@ -36,9 +37,6 @@ DESCRIPTION = (
 URL = "https://www.wm.com"
 COUNTRY = "us"
 
-# TEST_CASES requires a real service address. Fill in your own before running
-# test_sources.py locally, confirm dates appear, then comment it out again
-# before committing. Paste the test output into the PR description.
 TEST_CASES: dict[str, dict] = {
     "Example Address": {
         "street": "245 Emerson Ave",
@@ -64,14 +62,14 @@ _API_KEY_HOLIDAYS = "C2068E03CB6B73D4FEBA"  # holidays endpoint
 _HOLIDAY_DATE_RE = re.compile(r"\d{1,2}/\d{1,2}(?:/\d{2,4})?")
 _DELAY_RE = re.compile(r"(\d+)(?: day)? delay", re.IGNORECASE)
 
-# WM wasteStreamGroupCode values → MDI icons
-WASTE_STREAM_ICONS: dict[str, str] = {
-    "GARBAGE": "mdi:trash-can",
-    "RECYCLABLE": "mdi:recycle",
-    "YARD_WASTE": "mdi:leaf",
-    "ORGANIC": "mdi:compost",
-    "BULK": "mdi:sofa",
-    "HAZARDOUS": "mdi:biohazard",
+# WM wasteStreamGroupCode values → canonical Icons enum
+ICON_MAP: dict[str, Icons] = {
+    "GARBAGE": Icons.GENERAL_WASTE,
+    "RECYCLABLE": Icons.RECYCLING,
+    "YARD_WASTE": Icons.GARDEN,
+    "ORGANIC": Icons.ORGANIC,
+    "BULK": Icons.BULKY,
+    "HAZARDOUS": Icons.HAZARDOUS,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -357,7 +355,7 @@ class Source:
                 Collection(
                     date=final_date,
                     t=name,
-                    icon=WASTE_STREAM_ICONS.get(stream_code, "mdi:trash-can"),
+                    icon=ICON_MAP.get(stream_code, Icons.GENERAL_WASTE),
                 )
             )
 
