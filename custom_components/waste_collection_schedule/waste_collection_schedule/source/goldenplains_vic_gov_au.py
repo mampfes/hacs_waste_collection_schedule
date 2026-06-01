@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 
-import requests
+from curl_cffi import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
@@ -27,17 +27,6 @@ CARD_TYPES = {
     "fogo": ("Glass", "mdi:bottle-wine"),
 }
 
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/136.0.0.0 Safari/537.36"
-    ),
-    "Accept": "application/json, text/javascript, */*; q=0.01",
-    "Referer": "https://www.goldenplains.vic.gov.au/address-search",
-    "X-Requested-With": "XMLHttpRequest",
-}
-
 
 class Source:
     def __init__(self, address: str):
@@ -45,8 +34,7 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         # Step 1: validate address against autocomplete and get canonical form
-        session = requests.Session()
-        session.headers.update(HEADERS)
+        session = requests.Session(impersonate="chrome")
         r = session.get(
             AUTOCOMPLETE_URL,
             params={"q": self._address},
