@@ -335,6 +335,9 @@ DEFAULT_PARAM_DESCRIPTIONS = {
     },
 }
 
+DEFAULT_PARAM_TRANSLATIONS["nl"] = dict(DEFAULT_PARAM_TRANSLATIONS["en"])
+DEFAULT_PARAM_DESCRIPTIONS["nl"] = dict(DEFAULT_PARAM_DESCRIPTIONS["en"])
+
 
 def default_translations(args: Iterable[str]) -> dict[str, dict[str, str]]:
     translation: dict[str, dict[str, str]] = {}
