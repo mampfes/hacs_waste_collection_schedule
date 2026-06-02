@@ -1,13 +1,12 @@
 import datetime
 import re
 import time
+
 import requests
 from bs4 import BeautifulSoup
+
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Mid Suffolk District Council"
 DESCRIPTION = "Source for Mid Suffolk District Council waste collection."
@@ -17,9 +16,9 @@ TEST_CASES = {
         "postcode": "IP14 2SA",
         "uprn": "10012168792",
     },
-    "1 Laurel Way Claydon": {
-        "postcode": "IP6 0DD",
-        "uprn": "200003809007",
+    "2 School Meadow Stowmarket": {
+        "postcode": "IP14 2SA",
+        "uprn": "10012168793",
     },
 }
 
@@ -124,9 +123,10 @@ class Source:
                 )
 
         if not entries:
-            raise Exception(
+            raise SourceArgumentExceptionMultiple(
+                ["postcode", "uprn"],
                 "No collection dates found. Check your UPRN and postcode are correct. "
-                f"postcode={self._postcode}, uprn={self._uprn}"
+                f"postcode={self._postcode}, uprn={self._uprn}",
             )
 
         return entries
