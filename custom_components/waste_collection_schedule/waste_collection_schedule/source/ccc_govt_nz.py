@@ -2,7 +2,7 @@ import datetime
 import logging
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Christchurch City Council"
 DESCRIPTION = "Source for Christchurch City Council."
@@ -10,9 +10,9 @@ URL = "https://ccc.govt.nz"
 TEST_CASES = {"53 Hereford Street": {"address": "53 Hereford Street"}}
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
-    "Organic": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
+    "Organic": Icons.ORGANIC,
 }
 
 ADDRESS_SUGGEST_URL = "https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest"

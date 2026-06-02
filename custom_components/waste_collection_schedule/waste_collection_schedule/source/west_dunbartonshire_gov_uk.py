@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "West Dunbartonshire Council"
 DESCRIPTION = "Source for waste collection services from West Dunbartonshire Council"
@@ -43,9 +43,9 @@ TEST_CASES = {
 
 API_URL = "https://www.west-dunbarton.gov.uk/recycling-and-waste/bin-collection-day"
 ICON_MAP = {
-    "BLACK": "mdi:trash-can",
-    "BLUE": "mdi:recycle",
-    "BROWN": "mdi:leaf",
+    "BLACK": Icons.GENERAL_WASTE,
+    "BLUE": Icons.RECYCLING,
+    "BROWN": Icons.ORGANIC,
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",

@@ -4,7 +4,7 @@ import urllib.parse
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 _LOGGER = logging.getLogger(__name__)
@@ -18,10 +18,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:food-apple-outline",
-    "Papp og plast": "mdi:recycle",
-    "Glass og metall": "mdi:glass-fragile",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Papp og plast": Icons.PLASTIC_PACKAGING,
+    "Glass og metall": Icons.GLASS,
 }
 
 # Typer fra nettsiden som skal slås sammen til én felles type

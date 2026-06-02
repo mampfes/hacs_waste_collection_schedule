@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "South Ayrshire Council"
 DESCRIPTION = "Source for south-ayrshire.gov.uk services for South Ayrshire."
@@ -18,12 +18,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Blue": "mdi:recycle",
-    "Brown": "mdi:leaf",
-    "Green": "mdi:trash-can",
-    "Grey": "mdi:package-variant",
-    "Purple": "mdi:glass-fragile",
-    "Food": "mdi:food-apple",
+    "Blue": Icons.RECYCLING,
+    "Brown": Icons.ORGANIC,
+    "Green": Icons.GENERAL_WASTE,
+    "Grey": Icons.PAPER,
+    "Purple": Icons.GLASS,
+    "Food": Icons.BIO_KITCHEN,
 }
 
 

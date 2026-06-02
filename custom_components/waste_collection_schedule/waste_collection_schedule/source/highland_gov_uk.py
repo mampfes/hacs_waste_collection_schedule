@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Highland"
@@ -16,11 +16,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food",
-    "containers": "mdi:package",
+    "refuse": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
+    "containers": Icons.PAPER,
 }
 
 BASE_URL = "https://highland-self.achieveservice.com"

@@ -4,7 +4,7 @@ from datetime import date, datetime, timezone
 from typing import List, Literal, Optional, TypedDict, Union
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Bürgerportal"
@@ -47,18 +47,18 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "mobil": "mdi:truck",
-    "bio": "mdi:leaf",
-    "papier": "mdi:package-variant",
-    "verpackung": "mdi:recycle",
-    "gelb": "mdi:recycle",
-    "lvp": "mdi:recycle",
-    "rest": "mdi:trash-can",
-    "gruen": "mdi:forest",
-    "grün": "mdi:forest",
-    "baum": "mdi:forest",
-    "schnitt": "mdi:forest",
-    "schad": "mdi:biohazard",
+    "mobil": Icons.GENERAL_WASTE,
+    "bio": Icons.ORGANIC,
+    "papier": Icons.PAPER,
+    "verpackung": Icons.RECYCLING,
+    "gelb": Icons.RECYCLING,
+    "lvp": Icons.PLASTIC_PACKAGING,
+    "rest": Icons.GENERAL_WASTE,
+    "gruen": Icons.GARDEN,
+    "grün": Icons.GARDEN,
+    "baum": Icons.GARDEN,
+    "schnitt": Icons.GARDEN,
+    "schad": Icons.HAZARDOUS,
 }
 API_HEADERS = {
     "Accept": "application/json, text/plain;q=0.5",
@@ -221,8 +221,9 @@ class Source:
                         icon = tested_icon
 
                 if self.show_volume:
+                    vol_key = "VolumenObj" if self.new_params else "Volumen"
                     volume = int(
-                        collection["Abfuhrplan"]["GefaesstarifArt"]["Volumen"][
+                        collection["Abfuhrplan"]["GefaesstarifArt"][vol_key][
                             "VolumenWert"
                         ]
                     )

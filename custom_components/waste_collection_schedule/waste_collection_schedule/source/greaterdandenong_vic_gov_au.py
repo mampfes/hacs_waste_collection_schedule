@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.IntraMaps import (
     IntegrationClient,
@@ -19,10 +19,10 @@ TEST_CASES = {
 COUNTRY = "au"
 
 ICON_MAP = {
-    "Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Street Sweep": "mdi:broom",
+    "Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
+    "Street Sweep": Icons.GENERAL_WASTE,
 }
 
 INTRAMAPS_CONFIG = IntegrationClientConfig(

@@ -1,4 +1,4 @@
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
 
@@ -29,12 +29,12 @@ PARAM_DESCRIPTIONS = {
     }
 }
 ICON_MAP = {
-    "garden": "mdi:leaf",
-    "food": "mdi:food-apple",
-    "recycl": "mdi:recycle",
-    "waste": "mdi:trash-can",
-    "rubbish": "mdi:trash-can",
-    "refuse": "mdi:trash-can",
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
+    "recycl": Icons.RECYCLING,
+    "waste": Icons.GENERAL_WASTE,
+    "rubbish": Icons.GENERAL_WASTE,
+    "refuse": Icons.GENERAL_WASTE,
 }
 
 

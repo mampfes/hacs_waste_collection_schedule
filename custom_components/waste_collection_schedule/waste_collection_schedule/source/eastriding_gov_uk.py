@@ -3,7 +3,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Riding of Yorkshire Council"
 DESCRIPTION = "Source for East Riding of Yorkshire Council, UK."
@@ -15,9 +15,9 @@ TEST_CASES = {
     "Test_004": {"uprn": 10002364380, "postcode": " DN146BJ "},
 }
 ICON_MAP = {
-    "BlueDate": "mdi:recycle",
-    "GreenDate": "mdi:trash-can",
-    "BrownDate": "mdi:leaf",
+    "BlueDate": Icons.RECYCLING,
+    "GreenDate": Icons.GENERAL_WASTE,
+    "BrownDate": Icons.ORGANIC,
 }
 REGEX = {
     "API_KEY": r"APIKey=(.+)&L",

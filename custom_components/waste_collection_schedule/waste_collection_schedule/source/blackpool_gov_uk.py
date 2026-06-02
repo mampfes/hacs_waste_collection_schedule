@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Blackpool Council"
 DESCRIPTION = "Source for blackpool.gov.uk services for Blackpool Council, UK."
@@ -22,12 +22,12 @@ NAME_MAP = {
     "Food Caddy": "Food Caddy",
 }
 ICON_MAP = {
-    "Domestic Refuse": "mdi:trash-can",
-    "Dry Recycling": "mdi:recycle",
-    "Brown Sack": "mdi:newspaper",
-    "Paper & Card": "mdi:newspaper",
-    "Green Waste": "mdi:leaf",
-    "Food Caddy": "mdi:food-apple",
+    "Domestic Refuse": Icons.GENERAL_WASTE,
+    "Dry Recycling": Icons.RECYCLING,
+    "Brown Sack": Icons.NEWSPAPER,
+    "Paper & Card": Icons.PAPER,
+    "Green Waste": Icons.GARDEN,
+    "Food Caddy": Icons.BIO_KITCHEN,
 }
 
 

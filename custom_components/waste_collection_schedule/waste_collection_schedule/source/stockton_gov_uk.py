@@ -5,7 +5,7 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 # Source code based on gateshead_gov_uk
 
@@ -21,9 +21,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Waste": "mdi:trash-can",
-    "Garden Waste": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Waste": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

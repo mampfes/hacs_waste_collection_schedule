@@ -2,7 +2,7 @@ from datetime import date
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -19,9 +19,9 @@ TEST_CASES = {
     "Library Ockelbo": {"street": "Södra Åsgatan 30D", "city": "Ockelbo"},
 }
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:leaf",
-    "Blandat": "mdi:trash-can",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Blandat": Icons.GENERAL_WASTE,
 }
 
 

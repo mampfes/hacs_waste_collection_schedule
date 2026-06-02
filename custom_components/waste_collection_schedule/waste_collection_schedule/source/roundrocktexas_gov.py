@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, YEARLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Round Rock Texas"
 DESCRIPTION = "Source for bin collection services for Round Rock, Texas"
@@ -15,8 +15,8 @@ TEST_CASES = {
     "Windy Park": {"neighborhood": "Windy Park"},
 }
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "Trash": "mdi:trash-can",
+    "Recycling": Icons.RECYCLING,
+    "Trash": Icons.GENERAL_WASTE,
 }
 DAYS = {
     "Monday": MO,

@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "West Lindsey District Council"
 DESCRIPTION = "Source for West Lindsey District Council, Lincolnshire, UK."
@@ -19,11 +19,11 @@ TEST_CASES = {
     "Test_003": {"x": 482566, "y": 390375, "id": 16636},
 }
 ICON_MAP = {
-    "BLACK": "mdi:trash-can",
-    "BLUE": "mdi:recycle",
-    "PURPLE": "mdi:newspaper",
-    "GREEN": "mdi:leaf",
-    "ORANGE": "mdi:food",
+    "BLACK": Icons.GENERAL_WASTE,
+    "BLUE": Icons.RECYCLING,
+    "PURPLE": Icons.NEWSPAPER,
+    "GREEN": Icons.ORGANIC,
+    "ORANGE": Icons.BIO_KITCHEN,
 }
 REGEX = r"(BLACK|BLUE|PURPLE|GREEN|ORANGE).+,\s(\d+\/\d+).+\s(\d+\/\d+)"
 

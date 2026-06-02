@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Colchester City Council"
 DESCRIPTION = "Source for Colchester.gov.uk services for the borough of Colchester, UK."
@@ -13,15 +13,27 @@ TEST_CASES = {
     "The Lane, Colchester": {"llpgid": "7cd96a3d-6027-e711-80fa-5065f38b56d1"},
 }
 
+# The provider's calendar feed renamed two streams in mid-2026:
+#   "Black bags" -> "Non-recyclable rubbish"
+#   "Paper/card" -> "Mixed recycling"
+# Map both legacy and current names to a single canonical label so the source
+# is stable across the rollout, and (for the two renamed streams) bypass the
+# default .title() casing so labels match the provider's sentence-case feed.
+NAME_MAP = {
+    "Black bags": "Non-recyclable rubbish",
+    "Non-recyclable rubbish": "Non-recyclable rubbish",
+    "Paper/card": "Mixed recycling",
+    "Mixed recycling": "Mixed recycling",
+}
+
 ICON_MAP = {
-    "Black bags": "mdi:trash-can",
-    "Glass": "mdi:glass-fragile",
-    "Cans": "mdi:trash-can",
-    "Textiles": "mdi:hanger",
-    "Paper/card": "mdi:recycle",
-    "Plastics": "mdi:recycle",
-    "Garden waste": "mdi:leaf",
-    "Food waste": "mdi:food",
+    "Black bags": Icons.GENERAL_WASTE,
+    "Non-recyclable rubbish": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Paper/card": Icons.RECYCLING,
+    "Mixed recycling": Icons.RECYCLING,
+    "Garden waste": Icons.GARDEN,
+    "Food waste": Icons.BIO_KITCHEN,
 }
 
 
@@ -58,12 +70,14 @@ class Source:
                         )
                         if not weeks["WeekOne"]:
                             date = date + timedelta(days=7)
+                        name = NAME_MAP.get(day["Name"], day["Name"].title())
+                        icon = ICON_MAP.get(day["Name"])
                         if date > datetime.now():
                             entries.append(
                                 Collection(
                                     date=date.date(),
-                                    t=day["Name"].title(),
-                                    icon=ICON_MAP.get(day["Name"]),
+                                    t=name,
+                                    icon=icon,
                                 )
                             )
                         # As Colchester.gov.uk only provides the current collection cycle, the next must be extrapolated
@@ -72,8 +86,8 @@ class Source:
                         entries.append(
                             Collection(
                                 date=date.date() + timedelta(days=14),
-                                t=day["Name"].title(),
-                                icon=ICON_MAP.get(day["Name"]),
+                                t=name,
+                                icon=icon,
                             )
                         )
                     except ValueError:

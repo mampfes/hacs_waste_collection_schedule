@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,10 +19,10 @@ TEST_CASES = {
 BIN_TYPE_SPLIT_REGEX = re.compile(r"\b and \b|\b with \b|\b \& \b")
 
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food": "mdi:food",
-    "Garden": "mdi:leaf",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
 }
 
 

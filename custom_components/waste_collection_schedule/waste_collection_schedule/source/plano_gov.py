@@ -3,7 +3,7 @@ import logging
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "City of Plano"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for plano.gov"  # Describe your source
@@ -30,10 +30,10 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 }
 
 API_URL = "https://maps.planogis.org/arcgiswad/rest/services/Sustainability/ServicedAddresses/MapServer/0/query?"
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "TRASH": "mdi:trash-can",
-    "RECYCLE": "mdi:recycle",
-    "BULKY": "mdi:size-xl",
+ICON_MAP = {
+    "TRASH": Icons.GENERAL_WASTE,
+    "RECYCLE": Icons.RECYCLING,
+    "BULKY": Icons.BULKY,
 }
 WEEKDAYMAP = {
     "Monday": 0,

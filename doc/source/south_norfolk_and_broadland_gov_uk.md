@@ -27,7 +27,7 @@ Full examples for both council areas are given at the bottom of the documentatio
 **address_payload**  
 *(dict) (optional) (deprecated)*  
 
-Either address_payload or postcode and address are needed (address_payload will be used if both are present).
+Either address_payload alone or both postcode and address are needed (address_payload will be used if both are present).
 
 ## Get the arguments
 
@@ -94,8 +94,8 @@ waste_collection_schedule:
   sources:
     - name: south_norfolk_and_broadland_gov_uk
       args:
-        address: 14 Fairland Street, Wymondham, Norfolk, NR18 0AW
-        postcode: NR18 0AW
+        address: 1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX
+        postcode: NR14 8BX
 ```
 
 or
@@ -106,14 +106,14 @@ waste_collection_schedule:
     - name: south_norfolk_and_broadland_gov_uk
       args:
         address_payload: {
-            "Uprn": "002630148121",
-            "Address": "14 Fairland Street, Wymondham, Norfolk, NR18 0AW",
-            "X": "611129.00000",
-            "Y": "301398.00000",
-            "Ward": "Central Wymondham",
-            "Parish": "Wymondham",
-            "Village": "Wymondham",
-            "Street": "Fairland Street",
+            "Uprn": "002630130840",
+            "Address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
+            "X": "619142.00000",
+            "Y": "300585.00000",
+            "Ward": "Mulbarton And Stoke Holy Cross",
+            "Parish": "Mulbarton",
+            "Village": "Mulbarton",
+            "Street": "Brindle Drive",
             "Authority": "2630"
           }
 ```

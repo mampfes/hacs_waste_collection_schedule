@@ -4,7 +4,7 @@ from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Saalfelden am Steinernen Meer"
@@ -19,16 +19,16 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Biomüll": "mdi:leaf",
-    "Gelbe Tonne": "mdi:recycle",
-    "Gelber Sack": "mdi:recycle",
-    "Altpapier": "mdi:package-variant",
-    "Papier": "mdi:package-variant",
-    "Sperrmüll": "mdi:sofa",
-    "Christbaum": "mdi:pine-tree",
-    "Weihnachtsbaum": "mdi:pine-tree",
-    "Problemstoff": "mdi:bottle-tonic-skull",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Altpapier": Icons.PAPER,
+    "Papier": Icons.PAPER,
+    "Sperrmüll": Icons.BULKY,
+    "Christbaum": Icons.CHRISTMAS_TREE,
+    "Weihnachtsbaum": Icons.CHRISTMAS_TREE,
+    "Problemstoff": Icons.HAZARDOUS,
 }
 
 PARAM_DESCRIPTIONS = {

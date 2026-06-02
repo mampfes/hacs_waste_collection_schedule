@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.CitiesAppsCom import SERVICE_MAP, CitiesApps
 
 EXTRA_INFO = SERVICE_MAP
@@ -41,18 +41,18 @@ COUNTRY = "at"
 
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Biomüll": "mdi:leaf",
-    "Altpapier": "mdi:package-variant",
-    "Papier": "mdi:package-variant",
-    "Leichtfraktion": "mdi:recycle",
-    "Leichtverpackung": "mdi:recycle",
-    "Leicht-": "mdi:recycle",
-    "Gelber": "mdi:recycle",
-    "Sonder-": "mdi:dump-truck",
-    "Abfallwirtschaftszentrum": "mdi:house",
-    "Strauchschnitt": "mdi:tree",
-    "Metallverpackung": "mdi:can",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Altpapier": Icons.PAPER,
+    "Papier": Icons.PAPER,
+    "Leichtfraktion": Icons.RECYCLING,
+    "Leichtverpackung": Icons.PLASTIC_PACKAGING,
+    "Leicht-": Icons.RECYCLING,
+    "Gelber": Icons.RECYCLING,
+    "Sonder-": Icons.BULKY,
+    "Abfallwirtschaftszentrum": Icons.GENERAL_WASTE,
+    "Strauchschnitt": Icons.GARDEN,
+    "Metallverpackung": Icons.METAL,
 }
 
 

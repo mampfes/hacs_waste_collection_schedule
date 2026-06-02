@@ -2,7 +2,7 @@ import re
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Maitland City Council"
@@ -20,9 +20,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green Waste": Icons.GARDEN,
 }
 
 PARAM_DESCRIPTIONS = {

@@ -2,7 +2,7 @@ import datetime
 import json
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentException,
@@ -20,9 +20,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Rubbish Collection": "mdi:trash-can",
-    "Glass crate": "mdi:glass-fragile",
-    "Wheelie bin or recycling bags": "mdi:recycle",
+    "Rubbish Collection": Icons.GENERAL_WASTE,
+    "Glass crate": Icons.GLASS,
+    "Wheelie bin or recycling bags": Icons.RECYCLING,
 }
 
 PICTURE_MAP = {

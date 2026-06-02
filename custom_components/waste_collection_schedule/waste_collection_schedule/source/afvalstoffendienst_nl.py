@@ -4,7 +4,7 @@ import logging
 from datetime import date
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
@@ -46,12 +46,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Groente-Fruit-Tuinafval-etensresten": "mdi:apple",
-    "Plastic-Blik-Drankkartons": "mdi:recycle",
-    "Papier": "mdi:package-variant",
-    "Restafval": "mdi:trash-can",
-    "Glas": "mdi:glass-fragile",
-    "Kerstboom": "mdi:pine-tree",
+    "Groente-Fruit-Tuinafval-etensresten": Icons.BIO_KITCHEN,
+    "Plastic-Blik-Drankkartons": Icons.PLASTIC_PACKAGING,
+    "Papier": Icons.PAPER,
+    "Restafval": Icons.GENERAL_WASTE,
+    "Glas": Icons.GLASS,
+    "Kerstboom": Icons.CHRISTMAS_TREE,
 }
 
 API_URL = "https://www.afvalstoffendienst.nl"
@@ -78,7 +78,9 @@ class Source:
         addresses = response.json()
 
         if len(addresses) == 0:
-            raise SourceArgumentException("postcode", "Address is not within service area. Please check.")
+            raise SourceArgumentException(
+                "postcode", "Address is not within service area. Please check."
+            )
 
         if self._addition:
             for address in addresses:

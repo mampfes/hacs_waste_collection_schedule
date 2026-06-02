@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from pypdf import PdfReader
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Communauté de Communes de Montesquieu"  # Title will show up in README.md and info.md
@@ -56,10 +56,10 @@ EXTRA_INFO = [
 TEST_CASES = {commune: {"commune": commune} for commune in COMMUNES}
 
 ICON_MAP = {
-    "Bac d'ordures ménagères": "mdi:trash-can",
-    "Bac jaune": "mdi:recycle",
-    "Déchets verts": "mdi:leaf",
-    "Encombrants": "mdi:dump-truck",
+    "Bac d'ordures ménagères": Icons.GENERAL_WASTE,
+    "Bac jaune": Icons.RECYCLING,
+    "Déchets verts": Icons.GARDEN,
+    "Encombrants": Icons.BULKY,
 }
 
 WEEKDAY_MAP = {

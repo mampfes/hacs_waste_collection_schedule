@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Australian Capital Territory (ACT)"
 DESCRIPTION = "Source script for Australian Capital Territory (ACT)."
@@ -17,9 +17,9 @@ TEST_CASES = {
 
 API_URL = "https://www.data.act.gov.au/resource/jzzy-44un.json"
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
-    "Organic": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
+    "Organic": Icons.ORGANIC,
 }
 
 

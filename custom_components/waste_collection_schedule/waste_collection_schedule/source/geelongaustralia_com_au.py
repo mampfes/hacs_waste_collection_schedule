@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of Greater Geelong"
 DESCRIPTION = "Source City of Greater Geelong rubbish collection"
@@ -18,9 +18,9 @@ TEST_CASES = {
 
 API_URL = "https://www.geelongaustralia.com.au/recycling/calendar/default.aspx"
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green waste": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green waste": Icons.GARDEN,
 }
 
 SUBMIT_ARGS = {

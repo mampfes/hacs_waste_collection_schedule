@@ -5,7 +5,7 @@ import logging
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -20,9 +20,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "general waste": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "green waste": "mdi:leaf",
+    "general waste": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "green waste": Icons.GARDEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

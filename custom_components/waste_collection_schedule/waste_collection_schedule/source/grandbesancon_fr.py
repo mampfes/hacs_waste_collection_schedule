@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -29,8 +29,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Ordures ménagères": "mdi:trash-can",
-    "Tri sélectif": "mdi:recycle",
+    "Ordures ménagères": Icons.GENERAL_WASTE,
+    "Tri sélectif": Icons.RECYCLING,
 }
 
 WASTE_TYPE_MAP = {

@@ -3,7 +3,7 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Blaby District Council"
 DESCRIPTION = "Recycling and refuse collection dates for Blaby District Council, UK."
@@ -18,10 +18,10 @@ TEST_CASES = {
 REGEX = r"\d{2}/\d{2}/\d{4}"
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food waste": "mdi:food-apple",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
+    "Food waste": Icons.BIO_KITCHEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

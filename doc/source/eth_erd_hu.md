@@ -1,6 +1,6 @@
-# ÉTH (Érd, Diósd, Nagytarcsa, Sóskút, Tárnok)
+# ÉTH (Érd, Diósd, Ráckeresztúr, Sóskút, Tárnok)
 
-Support for schedules provided by [ÉTH](https://www.eth-erd.hu/hulladeknaptar), serving Diósd, Érd, Nagytarcsa, Sóskút, Tárnok, HU.
+Support for schedules provided by [ÉTH](https://www.eth-erd.hu/hulladeknaptar), serving Diósd, Érd, Ráckeresztúr, Sóskút, Tárnok, HU.
 
 ## Configuration via configuration.yaml
 
@@ -11,22 +11,19 @@ waste_collection_schedule:
       args:
         city: CITY_NAME
         street: FULL_STREET_NAME
-        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**CITY**
+**city**
 *(string) (required)*
 
-**STREET**
-*(string) (required)*
-without "utca", "út", etc.
-not required in Sóskút
+One of: `Érd`, `Diósd`, `Sóskút`, `Tárnok`, `Ráckeresztúr`
 
-**HOUSE_NUMBER**
-*(number) (required)*
-not required in Sóskút
+**street**
+*(string) (required)*
+
+Full street name including type suffix (e.g. `Hordó utca`, `Amur utca`).
 
 ## Example
 
@@ -35,7 +32,15 @@ waste_collection_schedule:
   sources:
     - name: eth_erd_hu
       args:
+        city: Érd
+        street: Hordó utca
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: eth_erd_hu
+      args:
         city: Diósd
-        street: Diófasor
-        house_number: 10
+        street: Diófasor utca
 ```

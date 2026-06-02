@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Armagh City Banbridge & Craigavon"
 DESCRIPTION = "Source for Armagh City Banbridge & Craigavon."
@@ -13,9 +13,9 @@ TEST_CASES = {
     "BT63 5GY": {"address_id": "187318004"},
 }
 ICON_MAP = {
-    "Domestic": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden & Food": "mdi:leaf",
+    "Domestic": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden & Food": Icons.BIO_KITCHEN,
 }
 API_URL = "https://www.armaghbanbridgecraigavon.gov.uk/resident/binday-result/"
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentRequired,
@@ -21,8 +21,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Ordures Ménagères": "mdi:trash-can",
-    "Collecte Sélective": "mdi:recycle",
+    "Ordures Ménagères": Icons.GENERAL_WASTE,
+    "Collecte Sélective": Icons.RECYCLING,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

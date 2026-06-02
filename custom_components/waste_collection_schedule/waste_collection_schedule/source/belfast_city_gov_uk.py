@@ -6,7 +6,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,9 +19,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Recycling bin": "mdi:recycle",
-    "Compost bin": "mdi:flower",
-    "General waste bin": "mdi:trash-can",
+    "Recycling bin": Icons.RECYCLING,
+    "Compost bin": Icons.GARDEN,
+    "General waste bin": Icons.GENERAL_WASTE,
 }
 
 API_URL = URL + "/Default.aspx"

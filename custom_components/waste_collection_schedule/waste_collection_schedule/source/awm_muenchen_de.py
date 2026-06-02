@@ -6,7 +6,7 @@ from typing import Tuple
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentRequiredWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 
@@ -38,10 +38,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restmülltonne": "mdi:delete",
-    "Biotonne": "mdi:leaf",
-    "Papiertonne": "mdi:newspaper",
-    "Wertstofftonne": "mdi:recycle",
+    "Restmülltonne": Icons.GENERAL_WASTE,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Papiertonne": Icons.PAPER,
+    "Wertstofftonne": Icons.RECYCLING,
 }
 
 BASE_URL = "https://www.awm-muenchen.de"

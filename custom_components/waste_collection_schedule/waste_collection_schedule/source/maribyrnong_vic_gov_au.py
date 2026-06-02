@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -20,8 +20,8 @@ TEST_CASES = {
 HEADERS = {"user-agent": "Mozilla/5.0"}
 
 ICON_MAP = {
-    "recycle": "mdi:recycle",
-    "organic": "mdi:leaf",
+    "recycle": Icons.RECYCLING,
+    "organic": Icons.ORGANIC,
 }
 
 

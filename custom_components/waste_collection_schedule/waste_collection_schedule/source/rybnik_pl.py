@@ -26,24 +26,117 @@ _BASE_URL = (
     "odpady_komunalne/Harmonogramy_{year}/"
 )
 
-# Mapping from friendly district name to URL slug.
-# Slugs use double-underscores for multi-part names and ASCII transliteration.
-DISTRICT_MAP: dict[str, str] = {
-    "Boguszowice Stare": "Boguszowice_Stare",
-    "Chwalowice / Boguszowice Os. / Klokocin": "Chwalowice__Boguszowice_Os.__Klokocin",
-    "Gotartowice": "Gotartowice",
-    "Grabownia / Golejow / Ochojec": "Grabownia__Golejow__Ochojec",
-    "Ligota": "Ligota",
-    "Maroko-Nowiny": "Maroko-Nowiny",
-    "Niedobczyce": "Niedobczyce",
-    "Niewiadom": "Niewiadom",
-    "Orzepowice / Stodoly / Chwalecice": "Orzepowice__Stodoly__Chwalecice",
-    "Paruszowiec / Kamien": "Paruszowiec__Kamien",
-    "Polnoc": "Polnoc",
-    "Radziejow / Popielow": "Radziejow__Popielow",
-    "Smolna / Zamyslow / Meksyk": "Smolna__Zamyslow__Meksyk",
-    "Srodmiescie / Wielopole / Kuznia": "Srodmiescie__Wielopole__Kuznia",
-    "Zebrzydowice": "Zebrzydowice",
+# Each district maps to:
+#   slug          — the URL-slug used in the PDF filename
+#   zones         — the canonical Rejon (zone) names that appear in the cover-page
+#                   table on page 1. The order MUST match the visual top-to-bottom
+#                   order of the schedule blocks on page 2.
+#   zone_aliases  — optional dict of {canonical_name: [extra strings]} for cases
+#                   where the page-2 footer abbreviates a zone name (e.g.
+#                   "Kuźnia" on page 2 vs "Kuźnia Rybnicka" on page 1).
+DISTRICT_MAP: dict[str, dict] = {
+    "Boguszowice Stare": {
+        "slug": "Boguszowice_Stare",
+        "zones": [f"Boguszowice Stare {i}" for i in range(1, 6)],
+    },
+    "Chwalowice / Boguszowice Os. / Klokocin": {
+        "slug": "Chwalowice__Boguszowice_Os.__Klokocin",
+        "zones": [
+            "Chwałowice 1",
+            "Chwałowice 2",
+            "Boguszowice Osiedle",
+            "Kłokocin 1",
+            "Kłokocin 2",
+        ],
+    },
+    "Gotartowice": {
+        "slug": "Gotartowice",
+        "zones": [f"Gotartowice {i}" for i in range(1, 5)],
+    },
+    "Grabownia / Golejow / Ochojec": {
+        "slug": "Grabownia__Golejow__Ochojec",
+        "zones": [
+            "Grabownia",
+            "Golejów 1",
+            "Golejów 2",
+            "Ochojec 1",
+            "Ochojec 2",
+        ],
+    },
+    "Ligota": {
+        "slug": "Ligota",
+        "zones": [f"Ligota-Ligocka Kuźnia {i}" for i in range(1, 5)],
+    },
+    "Maroko-Nowiny": {
+        "slug": "Maroko-Nowiny",
+        "zones": [f"Maroko-Nowiny {i}" for i in range(1, 7)],
+    },
+    "Niedobczyce": {
+        "slug": "Niedobczyce",
+        "zones": [f"Niedobczyce {i}" for i in range(1, 8)],
+    },
+    "Niewiadom": {
+        "slug": "Niewiadom",
+        "zones": [f"Niewiadom {i}" for i in range(1, 5)],
+    },
+    "Orzepowice / Stodoly / Chwalecice": {
+        "slug": "Orzepowice__Stodoly__Chwalecice",
+        "zones": [
+            "Orzepowice 1",
+            "Orzepowice 2",
+            "Stodoły",
+            "Chwałęcice 1",
+            "Chwałęcice 2",
+        ],
+    },
+    "Paruszowiec / Kamien": {
+        "slug": "Paruszowiec__Kamien",
+        "zones": [
+            "Paruszowiec-Piaski",
+            "Kamień 1",
+            "Kamień 2",
+        ],
+    },
+    "Polnoc": {
+        "slug": "Polnoc",
+        "zones": [f"Rybnik-Północ {i}" for i in range(1, 6)],
+    },
+    "Radziejow / Popielow": {
+        "slug": "Radziejow__Popielow",
+        "zones": [
+            "Radziejów",
+            "Popielów 1",
+            "Popielów 2",
+            "Popielów 3",
+        ],
+    },
+    "Smolna / Zamyslow / Meksyk": {
+        "slug": "Smolna__Zamyslow__Meksyk",
+        "zones": [
+            "Smolna 1",
+            "Smolna 2",
+            "Zamysłów 1",
+            "Zamysłów 2",
+            "Zamysłów 3",
+            "Meksyk",
+        ],
+    },
+    "Srodmiescie / Wielopole / Kuznia": {
+        "slug": "Srodmiescie__Wielopole__Kuznia",
+        "zones": [
+            "Śródmieście 1",
+            "Śródmieście 2",
+            "Wielopole 1",
+            "Wielopole 2",
+            "Kuźnia Rybnicka",
+        ],
+        # Page-2 footer abbreviates "Kuźnia Rybnicka" to just "Kuźnia".
+        "zone_aliases": {"Kuźnia Rybnicka": ["Kuźnia"]},
+    },
+    "Zebrzydowice": {
+        "slug": "Zebrzydowice",
+        "zones": [f"Zebrzydowice {i}" for i in range(1, 5)],
+    },
 }
 
 PROPERTY_TYPES = ("residential", "commercial")
@@ -53,6 +146,8 @@ WASTE_TYPE_MAP: dict[str, tuple[str, str]] = {
     "ZMIESZANE": ("Mixed waste", "mdi:trash-can"),
     "SEGREGOWANE": ("Recyclables", "mdi:recycle"),
     "BIODEGRADOWALNE": ("Bio / organic", "mdi:leaf"),
+    "POPIOŁY/ŻUŻEL": ("Ash", "mdi:fireplace"),
+    "GABARYTY": ("Bulky waste", "mdi:sofa"),
 }
 
 TEST_CASES = {
@@ -69,6 +164,11 @@ TEST_CASES = {
         "district": "Niedobczyce",
         "property_type": "commercial",
     },
+    "Zebrzydowice 1 residential": {
+        "district": "Zebrzydowice",
+        "sub_district": "Zebrzydowice 1",
+        "property_type": "residential",
+    },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -76,8 +176,8 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
         "Download the current schedule PDF for your district from the "
         "Rybnik city website: https://www.rybnik.eu/dla-mieszkancow/odpady-komunalne/ "
         "(navigate to the current year's schedules). "
-        "Open page 2 of the PDF and note your Rejon (sub-district zone) name "
-        "from the leftmost column of the schedule table."
+        "Open page 1 of the PDF and find your Rejon (sub-district zone) name "
+        "in the left column of the table."
     ),
 }
 
@@ -88,8 +188,8 @@ PARAM_DESCRIPTIONS = {
             f"Must be one of: {', '.join(DISTRICT_MAP.keys())}."
         ),
         "sub_district": (
-            "The Rejon (zone) name as shown in the leftmost column of the PDF schedule table "
-            "(e.g. 'Paruszowiec-Piaski', 'Kamień 1', 'Kamień 2'). "
+            "The Rejon (zone) name as shown in the left column of the PDF cover-page table "
+            "(e.g. 'Zebrzydowice 1', 'Paruszowiec-Piaski', 'Kamień 1'). "
             "Leave blank to return all zones in the district."
         ),
         "property_type": (
@@ -100,10 +200,16 @@ PARAM_DESCRIPTIONS = {
 }
 
 # Matches a waste-type row: keyword followed by exactly 12 month columns of digits/semicolons.
-_ROW_RE = re.compile(r"(ZMIESZANE|SEGREGOWANE|BIODEGRADOWALNE)" r"((?:\s+[\d;]+){12})")
+# ZMIESZANE / SEGREGOWANE / BIODEGRADOWALNE always carry 12 columns; POPIOŁY/ŻUŻEL is included
+# so we can skip it cleanly when grouping rows into per-zone blocks (it can contain '-' dashes
+# for summer months and is not currently returned as a Collection).
+# GABARYTY is read separately from the page-2 footer (see _extract_gabaryty_map).
+_ROW_RE = re.compile(
+    r"(ZMIESZANE|SEGREGOWANE|BIODEGRADOWALNE|POPIOŁY/ŻUŻEL)"
+    r"((?:\s+(?:[\d;]+|-)){12})"
+)
 
-# Matches a street-name initial like "A.Szewczyka" or "H.Groborza".
-_STREET_INITIAL_RE = re.compile(r"^[A-ZĄĆĘŁŃÓŚŹŻ]\.[A-Za-ząćęłńóśźż]")
+_DATE_RE = re.compile(r"(\d{2}\.\d{2}\.\d{4})")
 
 
 def _normalize_rejon(name: str) -> str:
@@ -117,77 +223,36 @@ def _normalize_rejon(name: str) -> str:
     return re.sub(r"[\s\-_]+", "", normalized).casefold()
 
 
-def _extract_rejon_order(reader: PdfReader) -> list[str]:
-    """Extract the ordered list of Rejon names from the cover page.
+def _make_zone_regex(name: str) -> re.Pattern:
+    """Build a regex that matches `name` allowing flexible whitespace.
 
-    The cover page (first page containing 'Rejony') has a table like:
-
-        Rejony         Nazwy ulic
-        Paruszowiec-Piaski
-        H.Groborza, Konopnickiej, ...
-        Kamień 1   A.Szewczyka, Gminna, ...
-        Kamień 2   A.Bożka, Falista, ...
-
-    Rejon names appear either on their own line or at the start of a line
-    before the first street initial (X.YYY pattern).
-    The order here matches the top-to-bottom visual order of data blocks on page 2.
+    Internal spaces match any whitespace run (including newlines), so a zone
+    name that pypdf splits across two lines (e.g. "Boguszowice Stare\\n1")
+    still matches. The lookbehind rejects letter prefixes (so "Niedobczyce"
+    doesn't match inside "ABCNiedobczyce") but allows digit prefixes (so
+    matching survives concatenations like "27.07.2026Niedobczyce 7"). The
+    lookahead rejects trailing digits (so "Smolna 1" doesn't match
+    "Smolna 14").
     """
+    escaped = re.escape(name)
+    # Allow hyphen to be followed by optional whitespace (handles
+    # "Paruszowiec- Piaski" produced by pypdf for wrapped cells).
+    escaped = escaped.replace(r"\-", r"-\s*")
+    # Treat any run of escaped spaces as flexible whitespace.
+    escaped = re.sub(r"\\\ +", lambda _m: r"\s+", escaped)
+    return re.compile(r"(?<![A-Za-z])" + escaped + r"(?!\d)", re.IGNORECASE)
+
+
+def _find_cover_page_text(reader: PdfReader) -> str:
+    """Return the text of the first page that contains the Rejon table header."""
     for page in reader.pages:
         text = page.extract_text() or ""
-        if "Rejony" not in text:
-            continue
-
-        names: list[str] = []
-        in_table = False
-
-        for line in text.splitlines():
-            line = line.strip()
-
-            # Detect the start of the Rejon table
-            if "Rejony" in line and "Nazwy" in line:
-                in_table = True
-                continue
-
-            if not in_table or not line:
-                continue
-
-            # Stop at EKO footer
-            if any(
-                marker in line
-                for marker in ("EKO Sp.", "ul. Kościuszki", "Internet:", "Facebook:")
-            ):
-                break
-
-            # Skip street-initial lines (e.g. "H.Groborza, Konopnickiej,...")
-            if _STREET_INITIAL_RE.match(line):
-                continue
-
-            # Skip street continuation lines (contain Polish range markers)
-            if re.search(r"\bdo\s+\d+\b|\bnp\.\b|\bparz\.\b|\bZakątek\b", line):
-                continue
-
-            # Extract candidate name: everything before the first street initial
-            parts = line.split()
-            name_parts: list[str] = []
-            for part in parts:
-                if _STREET_INITIAL_RE.match(part):
-                    break
-                name_parts.append(part)
-
-            candidate = " ".join(name_parts).rstrip(",").strip()
-
-            if candidate and len(candidate) < 50:
-                names.append(candidate)
-
-        if names:
-            _LOGGER.debug("Extracted Rejon order from cover page: %s", names)
-            return names
-
-    _LOGGER.warning("Could not extract Rejon order from cover page.")
-    return []
+        if "Rejony" in text and "Nazwy" in text:
+            return text
+    return ""
 
 
-def _find_schedule_text(reader: PdfReader) -> str:
+def _find_schedule_page_text(reader: PdfReader) -> str:
     """Return text from the first page that contains 'ZMIESZANE'."""
     for page in reader.pages:
         text = page.extract_text() or ""
@@ -199,8 +264,42 @@ def _find_schedule_text(reader: PdfReader) -> str:
     )
 
 
+def _extract_rejon_order(cover_text: str, expected_zones: list[str]) -> list[str]:
+    """Return the cover-page zones in the order they appear on page 1.
+
+    Uses the district-specific `expected_zones` list as a search index, since the
+    cover-page text often wraps zone names across lines or interleaves them with
+    long street-name lists. The returned list preserves the order of first
+    occurrence in the cover text.
+    """
+    if not cover_text:
+        return []
+
+    # Restrict search to the area after the "Rejony Nazwy ulic" header
+    # (some footer markers contain similar words).
+    header_idx = cover_text.find("Rejony")
+    haystack = cover_text[header_idx:] if header_idx >= 0 else cover_text
+
+    matches: list[tuple[int, str]] = []
+    for zone in expected_zones:
+        rx = _make_zone_regex(zone)
+        m = rx.search(haystack)
+        if m:
+            matches.append((m.start(), zone))
+
+    matches.sort()
+    return [name for _, name in matches]
+
+
 def _extract_blocks(text: str) -> list[list[tuple[str, list[str]]]]:
-    """Extract data blocks (groups of 3 waste-type rows) from the schedule page text."""
+    """Extract data blocks (groups of waste-type rows) from the schedule page text.
+
+    Each block always starts with ZMIESZANE. POPIOŁY/ŻUŻEL is optional (residential
+    only). The block always includes a SEGREGOWANE and a BIODEGRADOWALNE row in that
+    sequence. POPIOŁY rows are currently dropped (the project does not yet surface an
+    "ash" waste type), but recognising them is required so the parser can keep its
+    block boundaries straight.
+    """
     all_rows: list[tuple[str, list[str]]] = []
 
     for m in _ROW_RE.finditer(text):
@@ -220,37 +319,132 @@ def _extract_blocks(text: str) -> list[list[tuple[str, list[str]]]]:
             "No waste-type rows found in PDF text. The PDF format may have changed."
         )
 
-    blocks: list[list[tuple[str, list[str]]]] = []
-    i = 0
-    while i < len(all_rows):
-        if (
-            i + 2 < len(all_rows)
-            and all_rows[i][0] == "ZMIESZANE"
-            and all_rows[i + 1][0] == "SEGREGOWANE"
-            and all_rows[i + 2][0] == "BIODEGRADOWALNE"
-        ):
-            blocks.append(all_rows[i : i + 3])
-            i += 3
-        else:
-            _LOGGER.warning(
-                "Unexpected row order at index %d (%s) — skipping.",
-                i,
-                all_rows[i][0],
-            )
-            i += 1
-
-    if not blocks:
+    # A block starts at each ZMIESZANE row. Slice between ZMIESZANE markers.
+    block_starts = [i for i, (k, _) in enumerate(all_rows) if k == "ZMIESZANE"]
+    if not block_starts:
         raise ValueError(
             "No complete schedule blocks found in PDF text. "
             "The PDF format may have changed."
         )
 
+    blocks: list[list[tuple[str, list[str]]]] = []
+    for idx, start in enumerate(block_starts):
+        end = block_starts[idx + 1] if idx + 1 < len(block_starts) else len(all_rows)
+        blocks.append(all_rows[start:end])
+
     return blocks
+
+
+def _extract_gabaryty_map(
+    schedule_text: str, zones: list[str], zone_aliases: dict[str, list[str]]
+) -> dict[str, list[str]]:
+    """Parse the Gabaryty (bulky waste) section that follows the schedule table.
+
+    The page-2 footer lists each Rejon zone alongside two pickup dates per year. It
+    is rendered as a 2-column table whose text-extraction order is unreliable (zones
+    and dates can appear in any order, sometimes flanking each other). The algorithm
+    groups consecutive same-type tokens into "runs" and pairs each zones-run with
+    its flanking dates-runs positionally:
+      - Leading dates-run (immediately before a zones-run) fills the first zones
+        in that run, two dates per zone.
+      - Trailing dates-run (immediately after) fills any remaining zones.
+    Unused dates from a leading run carry over to the next zones-run, so the same
+    pool of dates can serve multiple consecutive zones-runs.
+
+    Returns a dict mapping the canonical zone name to a list of date strings
+    ("DD.MM.YYYY"). Zones with no Gabaryty info simply don't appear in the map.
+    """
+    last_bio = schedule_text.rfind("BIODEGRADOWALNE")
+    if last_bio < 0:
+        return {}
+    eol = schedule_text.find("\n", last_bio)
+    footer = schedule_text[eol if eol >= 0 else last_bio :]
+    # Collapse all whitespace to single spaces — makes multi-line zone names match.
+    flat = re.sub(r"\s+", " ", footer).strip()
+    if not flat:
+        return {}
+
+    # Build the list of (kind, value, pos) tokens.
+    tokens: list[tuple[str, object, int]] = []
+    for m in _DATE_RE.finditer(flat):
+        tokens.append(("date", m.group(1), m.start()))
+
+    # Build an alias-aware lookup: each searchable string maps back to its canonical zone.
+    alias_to_canonical: dict[str, str] = {}
+    for zone in zones:
+        alias_to_canonical[zone] = zone
+        for alias in zone_aliases.get(zone, []):
+            alias_to_canonical[alias] = zone
+
+    # Prefer matching longer aliases first so we don't shadow ("Kuźnia Rybnicka" before "Kuźnia").
+    seen_canonical: set[str] = set()
+    for alias in sorted(alias_to_canonical.keys(), key=len, reverse=True):
+        canonical = alias_to_canonical[alias]
+        if canonical in seen_canonical:
+            continue
+        rx = _make_zone_regex(alias)
+        m = rx.search(flat)
+        if m:
+            tokens.append(("zone", canonical, m.start()))
+            seen_canonical.add(canonical)
+
+    tokens.sort(key=lambda t: t[2])
+    if not tokens:
+        return {}
+
+    # Group consecutive same-kind tokens into runs.
+    runs: list[list[tuple[str, object, int]]] = []
+    current = [tokens[0]]
+    for t in tokens[1:]:
+        if t[0] == current[-1][0]:
+            current.append(t)
+        else:
+            runs.append(current)
+            current = [t]
+    runs.append(current)
+
+    # Mutable pool of remaining dates per dates-run, indexed by run position.
+    run_dates: dict[int, list[str]] = {
+        i: [t[1] for t in r] for i, r in enumerate(runs) if r[0][0] == "date"
+    }
+
+    result: dict[str, list[str]] = {}
+    for run_idx, run in enumerate(runs):
+        if run[0][0] != "zone":
+            continue
+        leading_idx = (
+            run_idx - 1 if run_idx > 0 and (run_idx - 1) in run_dates else None
+        )
+        trailing_idx = (
+            run_idx + 1
+            if run_idx + 1 < len(runs) and (run_idx + 1) in run_dates
+            else None
+        )
+        leading = run_dates.get(leading_idx, []) if leading_idx is not None else []
+        trailing = run_dates.get(trailing_idx, []) if trailing_idx is not None else []
+
+        n_leading_pairs = min(len(leading) // 2, len(run))
+        for k in range(n_leading_pairs):
+            canonical = run[k][1]
+            result[canonical] = [leading[k * 2], leading[k * 2 + 1]]
+        if leading_idx is not None:
+            run_dates[leading_idx] = leading[n_leading_pairs * 2 :]
+
+        remaining = run[n_leading_pairs:]
+        n_trailing_pairs = min(len(trailing) // 2, len(remaining))
+        for k in range(n_trailing_pairs):
+            canonical = remaining[k][1]
+            result[canonical] = [trailing[k * 2], trailing[k * 2 + 1]]
+        if trailing_idx is not None:
+            run_dates[trailing_idx] = trailing[n_trailing_pairs * 2 :]
+
+    return result
 
 
 def _build_entries(
     blocks: list[list[tuple[str, list[str]]]],
     rejon_order: list[str],
+    gabaryty_map: dict[str, list[str]],
     year: int,
     sub_district_filter: str,
 ) -> list[Collection]:
@@ -271,6 +465,12 @@ def _build_entries(
             matched_filter = True
 
         for waste_key, month_tokens in block:
+            if waste_key not in WASTE_TYPE_MAP:
+                continue
+            # POPIOŁY/ŻUŻEL (ash) is parsed but not surfaced as a Collection — its
+            # dashes-for-summer-months format is currently noise in HA calendars.
+            if waste_key == "POPIOŁY/ŻUŻEL":
+                continue
             friendly_name, icon = WASTE_TYPE_MAP[waste_key]
             for month_idx, token in enumerate(month_tokens):
                 month_num = month_idx + 1
@@ -291,6 +491,19 @@ def _build_entries(
                     entries.append(
                         Collection(date=collection_date, t=friendly_name, icon=icon)
                     )
+
+        # Add Gabaryty (bulky waste) dates for this Rejon, if any.
+        for date_str in gabaryty_map.get(rejon_name, []):
+            try:
+                day, month, yr = (int(x) for x in date_str.split("."))
+                collection_date = date(yr, month, day)
+            except ValueError:
+                _LOGGER.warning(
+                    "Invalid Gabaryty date %r for %s — skipping.", date_str, rejon_name
+                )
+                continue
+            friendly_name, icon = WASTE_TYPE_MAP["GABARYTY"]
+            entries.append(Collection(date=collection_date, t=friendly_name, icon=icon))
 
     if sub_district_filter and not matched_filter:
         raise SourceArgumentNotFoundWithSuggestions(
@@ -330,26 +543,47 @@ class Source:
                 "district", district, list(DISTRICT_MAP.keys())
             )
         self._district = district
-        self._slug = DISTRICT_MAP[district]
+        cfg = DISTRICT_MAP[district]
+        self._slug = cfg["slug"]
+        self._expected_zones: list[str] = cfg["zones"]
+        self._zone_aliases: dict[str, list[str]] = cfg.get("zone_aliases", {})
 
     def fetch(self) -> list[Collection]:
         year = datetime.now().year
         pdf_bytes, actual_year = self._fetch_pdf(year)
 
         reader = PdfReader(BytesIO(pdf_bytes))
-        rejon_order = _extract_rejon_order(reader)
-        schedule_text = _find_schedule_text(reader)
+        cover_text = _find_cover_page_text(reader)
+        schedule_text = _find_schedule_page_text(reader)
+
+        rejon_order = _extract_rejon_order(cover_text, self._expected_zones)
+        if not rejon_order:
+            # Fall back to the declared zone list if cover parsing fails — the
+            # page-2 schedule blocks themselves are still in cover-page order.
+            _LOGGER.warning(
+                "Cover-page Rejon extraction failed for %s — falling back to "
+                "the declared zone list.",
+                self._district,
+            )
+            rejon_order = list(self._expected_zones)
+
         blocks = _extract_blocks(schedule_text)
+        gabaryty_map = _extract_gabaryty_map(
+            schedule_text, self._expected_zones, self._zone_aliases
+        )
 
         _LOGGER.debug(
-            "District '%s': %d blocks, %d Rejon names from cover: %s",
+            "District '%s': %d blocks, %d Rejon names: %s; gabaryty zones: %s",
             self._district,
             len(blocks),
             len(rejon_order),
             rejon_order,
+            list(gabaryty_map.keys()),
         )
 
-        return _build_entries(blocks, rejon_order, actual_year, self._sub_district)
+        return _build_entries(
+            blocks, rejon_order, gabaryty_map, actual_year, self._sub_district
+        )
 
     def _build_url(self, year: int) -> str:
         base = _BASE_URL.format(year=year)

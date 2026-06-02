@@ -3,7 +3,7 @@ from datetime import datetime
 from uuid import uuid4
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
@@ -56,16 +56,16 @@ PARAM_DESCRIPTIONS = {
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "Tunna 1": "mdi:recycle",
-    "Tunna 2": "mdi:recycle",
-    "Hushållsavfall": "mdi:trash-can",
-    "Färgat glas": "mdi:bottle-wine",
-    "Ofärgat glas": "mdi:bottle-wine-outline",
-    "Metall": "mdi:nail",
-    "Papper": "mdi:package",
-    "Plast": "mdi:bottle-soda-classic-outline",
-    "Tidning": "mdi:newspaper",
-    "Deponi": "mdi:delete",
+    "Tunna 1": Icons.RECYCLING,
+    "Tunna 2": Icons.RECYCLING,
+    "Hushållsavfall": Icons.GENERAL_WASTE,
+    "Färgat glas": Icons.GLASS,
+    "Ofärgat glas": Icons.GLASS,
+    "Metall": Icons.METAL,
+    "Papper": Icons.PAPER,
+    "Plast": Icons.PLASTIC_PACKAGING,
+    "Tidning": Icons.NEWSPAPER,
+    "Deponi": Icons.GENERAL_WASTE,
 }
 
 SERVICE_PROVIDERS = {
@@ -90,6 +90,14 @@ SERVICE_PROVIDERS = {
         "supports_registration": False,
         "requires_token": True,
         "app_version": "3.0.0.0",
+    },
+    "upplands-bro": {
+        "title": "Upplands-Bro",
+        "url": "https://www.upplands-bro.se/",
+        "api_url": "https://upplands-bro.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+        "app_version": "2.1.3",
     },
 }
 

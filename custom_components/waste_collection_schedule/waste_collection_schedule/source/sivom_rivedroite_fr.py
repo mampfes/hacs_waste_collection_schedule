@@ -4,7 +4,7 @@ from datetime import date
 
 import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 FRENSH_WEEKDAYS = {
     "lundi": MO,
@@ -26,8 +26,8 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Ménagères": "mdi:trash-can",
-    "Recyclables": "mdi:recycle",
+    "Ménagères": Icons.GENERAL_WASTE,
+    "Recyclables": Icons.RECYCLING,
 }
 
 

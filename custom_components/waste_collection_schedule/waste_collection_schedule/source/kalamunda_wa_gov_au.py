@@ -2,7 +2,7 @@ import re
 from datetime import date, datetime, timedelta
 from typing import Literal, get_args
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -37,9 +37,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Red Lid Bin ( General Waste ) : Alternate Fortnight": "mdi:trash-can",
-    "Yellow Lid Bin ( Recycling ) : Alternate Fortnight": "mdi:recycle",
-    "Lime Green Lid Bin ( Green Waste FOGO ) : Every Week": "mdi:leaf",
+    "Red Lid Bin ( General Waste ) : Alternate Fortnight": Icons.GENERAL_WASTE,
+    "Yellow Lid Bin ( Recycling ) : Alternate Fortnight": Icons.RECYCLING,
+    "Lime Green Lid Bin ( Green Waste FOGO ) : Every Week": Icons.BIO_KITCHEN,
 }
 
 SubUrbLiteral = Literal[

@@ -4,7 +4,7 @@ from datetime import datetime
 from urllib.parse import quote, urlencode
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Kauno švara"
@@ -25,10 +25,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "mišrių atliekų": "mdi:trash-can",
-    "antrinių žaliavų (popierius/plastikas)": "mdi:recycle",
-    "antrinių žaliavų (stiklas)": "mdi:glass-fragile",
-    "žaliųjų atliekų": "mdi:leaf",
+    "mišrių atliekų": Icons.GENERAL_WASTE,
+    "antrinių žaliavų (popierius/plastikas)": Icons.RECYCLING,
+    "antrinių žaliavų (stiklas)": Icons.GLASS,
+    "žaliųjų atliekų": Icons.ORGANIC,
 }
 
 # In late April 2026 grafikai.svara.lt was rewritten as a TanStack Start
@@ -128,6 +128,7 @@ def _probe_data_fetcher(session: requests.Session, fn_id: str) -> bool:
             headers={
                 "Accept": "application/json",
                 "x-tsr-serverFn": "true",
+                "Sec-Fetch-Site": "same-origin",
             },
             timeout=8,
         )
@@ -233,6 +234,9 @@ class Source:
             headers={
                 "Accept": "application/json, application/x-tss-framed, application/x-ndjson",
                 "x-tsr-serverFn": "true",
+                # Upstream enforces Sec-Fetch-Site: same-origin on _serverFn
+                # calls — without it the edge returns 403 Forbidden.
+                "Sec-Fetch-Site": "same-origin",
             },
             timeout=20,
         )

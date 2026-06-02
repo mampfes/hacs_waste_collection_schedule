@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Oxford City Council"
 DESCRIPTION = "Source for oxford.gov.uk services for Oxford, UK."
@@ -16,10 +16,10 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 API_URL = "https://www.oxford.gov.uk/xfp/form/142"
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food": "mdi:food-apple",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
+    "Food": Icons.BIO_KITCHEN,
 }
 
 

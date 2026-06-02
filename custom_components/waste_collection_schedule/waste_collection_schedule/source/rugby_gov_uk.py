@@ -1,4 +1,4 @@
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
 
 TITLE = "Rugby Borough Council"
@@ -23,10 +23,10 @@ PARAM_DESCRIPTIONS = {
     }
 }
 ICON_MAP = {
-    "recycl": "mdi:recycle",
-    "rubbish": "mdi:trash-can",
-    "garden": "mdi:leaf",
-    "refuse": "mdi:trash-can",
+    "recycl": Icons.RECYCLING,
+    "rubbish": Icons.GENERAL_WASTE,
+    "garden": Icons.GARDEN,
+    "refuse": Icons.GENERAL_WASTE,
 }
 
 

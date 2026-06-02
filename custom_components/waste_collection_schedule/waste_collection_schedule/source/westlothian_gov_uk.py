@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule.collection import (
     Collection,  # type: ignore[attr-defined]
 )
+from waste_collection_schedule.icons import Icons
 from waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defined]
 
 TITLE = "West Lothian Council"
@@ -24,10 +25,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Grey": "mdi:trash-can",
-    "Brown": "mdi:leaf",
-    "Green": "mdi:glass-fragile",
-    "Blue": "mdi:note",
+    "Grey": Icons.GENERAL_WASTE,
+    "Brown": Icons.ORGANIC,
+    "Green": Icons.GLASS,
+    "Blue": Icons.EVENT,
 }
 
 

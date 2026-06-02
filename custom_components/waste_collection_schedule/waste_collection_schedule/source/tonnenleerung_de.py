@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen"
 DESCRIPTION = (
@@ -22,11 +22,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "grau4": "mdi:trash-can",
-    "grau": "mdi:trash-can",
-    "Bio": "mdi:leaf",
-    "blau": "mdi:package-variant",
-    "gelb": "mdi:recycle",
+    "grau4": Icons.GENERAL_WASTE,
+    "grau": Icons.GENERAL_WASTE,
+    "Bio": Icons.ORGANIC,
+    "blau": Icons.PAPER,
+    "gelb": Icons.RECYCLING,
 }
 
 

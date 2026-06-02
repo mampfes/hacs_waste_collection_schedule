@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
 )
@@ -18,10 +18,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "pakuotė": "mdi:recycle",
-    "stiklas": "mdi:glass-fragile",
-    "komunalinės atliekos": "mdi:trash-can",
-    "žaliosios atliekos": "mdi:leaf",
+    "pakuotė": Icons.RECYCLING,
+    "stiklas": Icons.GLASS,
+    "komunalinės atliekos": Icons.GENERAL_WASTE,
+    "žaliosios atliekos": Icons.ORGANIC,
 }
 
 PARAM_DESCRIPTIONS = {

@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Cheshire West and Chester Council"
 DESCRIPTION = (
@@ -23,10 +23,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Domestic": "mdi:trash-can",
-    "Food": "mdi:food-apple",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
+    "Domestic": Icons.GENERAL_WASTE,
+    "Food": Icons.BIO_KITCHEN,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
 }
 
 API_URLS = {

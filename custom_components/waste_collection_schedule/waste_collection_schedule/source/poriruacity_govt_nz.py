@@ -3,7 +3,7 @@ import re
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Porirua City"
@@ -23,9 +23,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "rubbish": "mdi:trash-can",
-    "glass": "mdi:bottle-soda",
-    "mixed": "mdi:recycle",
+    "rubbish": Icons.GENERAL_WASTE,
+    "glass": Icons.GLASS,
+    "mixed": Icons.RECYCLING,
 }
 
 JS_URL = "https://storage.googleapis.com/pcc-static-v6/pccapp/dist/assets/index.js?v=fd27232ae8d640d2a7ab8eb0a8658fe9"

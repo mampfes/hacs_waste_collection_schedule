@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -23,18 +23,18 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "BRÄNN": "mdi:fire",
-    "GLOF": "mdi:bottle-wine-outline",
-    "HEMSORT": "mdi:recycle",
-    "HUSHSORT": "mdi:trash-can",
-    "LATRIN": "mdi:toilet",
-    "MATAVF": "mdi:food-apple",
-    "METFÖRP": "mdi:can",
-    "PLASTFÖRP": "mdi:bottle-soda-outline",
-    "RETURPAPP": "mdi:newspaper",
-    "SLAM": "mdi:water-pump",
-    "TRÄDGÅRD": "mdi:leaf",
-    "WELLPAPP": "mdi:package-variant",
+    "BRÄNN": Icons.GENERAL_WASTE,
+    "GLOF": Icons.GLASS_COLORED,
+    "HEMSORT": Icons.RECYCLING,
+    "HUSHSORT": Icons.GENERAL_WASTE,
+    "LATRIN": Icons.HAZARDOUS,
+    "MATAVF": Icons.BIO_KITCHEN,
+    "METFÖRP": Icons.METAL,
+    "PLASTFÖRP": Icons.GLASS,
+    "RETURPAPP": Icons.NEWSPAPER,
+    "SLAM": Icons.HAZARDOUS,
+    "TRÄDGÅRD": Icons.GARDEN,
+    "WELLPAPP": Icons.PAPER,
 }
 DEFAULT_ICON = "mdi:trash-can"
 

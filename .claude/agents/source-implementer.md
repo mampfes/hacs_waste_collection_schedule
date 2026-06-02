@@ -37,7 +37,7 @@ from datetime import datetime
 from typing import List
 
 import requests  # or `from curl_cffi import requests` if the site is Cloudflare-protected
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "<Provider Name>"
@@ -64,11 +64,12 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    # Map provider's bin descriptions to MDI icon names.
-    "general": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food-apple",
+    # Map provider's bin descriptions to canonical Icons members.
+    # Full catalogue: custom_components/waste_collection_schedule/waste_collection_schedule/icons.py
+    "general": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
 }
 
 
@@ -91,6 +92,9 @@ class Source:
 - No hardcoded dates or schedules. Fetch live from the provider.
 - No dummy parameters (e.g. `_`) just to satisfy the config GUI.
 - Type hints on `__init__` signature and `fetch` return type are expected by the test suite's static checks.
+- Use the `Icons` enum (`from waste_collection_schedule import Icons`) for `ICON_MAP` values, never raw `"mdi:..."` strings. The canonical catalogue lives at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`.
+- **Do not edit `icons.py` to add a new member yourself.** If the provider returns a category that genuinely doesn't fit any existing member, pick the nearest sensible existing one (often `Icons.GENERAL_WASTE`) and flag the gap in the **Open questions for the contributor** section of your report. The contributor then opens an issue proposing the new member; only after maintainer agreement does the catalogue gain it.
+- If the contributor (or a user) "just prefers" a different MDI icon for a waste type, they should use the per-user `customize.icon` override in YAML — not change the canonical default. Don't pick a non-canonical icon to satisfy a stated preference.
 
 ## Doc-page template (`doc/source/<module>.md`)
 
@@ -134,7 +138,7 @@ waste_collection_schedule:
 
 | Provider description | Returned type | Icon |
 |---------------------|--------------|------|
-| <provider's label>  | <your `t`>   | `mdi:...` |
+| <provider's label>  | <your `t`>   | `Icons.GENERAL_WASTE` |
 ```
 
 ## Step-by-step
@@ -179,7 +183,7 @@ Return a structured report:
 - `test_sources.py -s <module> -l`: <count of collections per test case, or first error>
 
 ### Open questions for the contributor
-[Any decisions deferred — e.g. "couldn't determine the bin-icon mapping for 'Brown bin' — left as generic mdi:trash-can"]
+[Any decisions deferred — e.g. "couldn't determine the canonical Icons mapping for 'Brown bin' — left as Icons.GENERAL_WASTE"]
 
 ### Next steps for the contributor
 1. Eyeball the diff: `git diff`

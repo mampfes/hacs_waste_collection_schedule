@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 import urllib3
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
@@ -30,9 +30,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Mixed Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Mixed Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
 }
 
 

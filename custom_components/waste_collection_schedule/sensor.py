@@ -6,13 +6,14 @@ from enum import Enum
 from typing import Any
 
 import homeassistant.helpers.config_validation as cv
+import homeassistant.util.dt as dt_util
 import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.device_registry import DeviceInfo
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.template import Template
 
 # fmt: off
@@ -41,7 +42,7 @@ from .sensor_config_helpers import (
 )
 from .sensor_template_presets import format_default_state_text
 from .waste_collection_api import WasteCollectionApi
-from .waste_collection_schedule import Collection, CollectionGroup
+from .waste_collection_schedule import Collection, CollectionGroup, Icons
 from .wcs_coordinator import WCSCoordinator
 
 # fmt: on
@@ -425,9 +426,9 @@ class ScheduleSensor(SensorEntity):
     def _include_today(self):
         """Return true if collections for today shall be included in the results."""
         if self._api:
-            return datetime.datetime.now().time() < self._api._day_switch_time
+            return dt_util.now().time() < self._api._day_switch_time
         else:
-            return datetime.datetime.now().time() < self._coordinator.day_switch_time
+            return dt_util.now().time() < self._coordinator.day_switch_time
 
     def _add_refreshtime(self):
         """Add refresh-time (= last fetch time) to device-state-attributes."""
@@ -440,7 +441,7 @@ class ScheduleSensor(SensorEntity):
         """Set entity state with default format."""
         if len(upcoming) == 0:
             self._value = None
-            self._attr_icon = "mdi:trash-can"
+            self._attr_icon = Icons.GENERAL_WASTE
             self._attr_entity_picture = None
             return
 
@@ -459,7 +460,7 @@ class ScheduleSensor(SensorEntity):
                 self._preset_language,
             )
 
-        self._attr_icon = collection.icon or "mdi:trash-can"
+        self._attr_icon = collection.icon or Icons.GENERAL_WASTE
         self._attr_entity_picture = collection.picture
 
     def _render_date(self, collection: Collection):
@@ -486,9 +487,11 @@ class ScheduleSensor(SensorEntity):
         ) = render_sensor_preview(
             aggregator=self._aggregator,
             separator=self._separator,
-            day_switch_time=self._api._day_switch_time
-            if self._api
-            else self._coordinator.day_switch_time,
+            day_switch_time=(
+                self._api._day_switch_time
+                if self._api
+                else self._coordinator.day_switch_time
+            ),
             details_format=self._details_format,
             count=self._count,
             leadtime=self._leadtime,

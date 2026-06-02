@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -23,9 +23,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Indiferenciado": "mdi:trash-can",
-    "Papel e Cartão": "mdi:newspaper-variant-outline",
-    "Embalagens": "mdi:recycle",
+    "Indiferenciado": Icons.GENERAL_WASTE,
+    "Papel e Cartão": Icons.PAPER,
+    "Embalagens": Icons.RECYCLING,
 }
 
 PARAM_DESCRIPTIONS = {

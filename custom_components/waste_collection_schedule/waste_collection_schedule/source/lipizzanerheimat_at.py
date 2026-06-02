@@ -3,7 +3,7 @@ import hashlib
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
@@ -156,35 +156,35 @@ PARAM_TRANSLATIONS = {
     },
 }
 ICON_MAP = {
-    "Müll": "mdi:trash-can",
-    "Restmüll": "mdi:trash-can",
-    "Restmüll - 8-wöchentlich": "mdi:trash-can",
-    "Restmüll - 4-wöchentlich": "mdi:trash-can",
-    "Restmüll - 2-wöchentlich": "mdi:trash-can",
-    "Bioabfall": "mdi:fruit-watermelon",
-    "Biomüll - wöchentlich": "mdi:fruit-watermelon",
-    "Biomüll": "mdi:fruit-watermelon",
-    "Biotonne": "mdi:fruit-watermelon",
-    "Gefäßreinigung Bioabfall": "mdi:vacuum",
-    "Behälterreinigung Bioabfall": "mdi:vacuum",
-    "Sperrmüll": "mdi:sofa",
-    "Glas": "mdi:glass-wine",
-    "Spermüll - Alteisenabfuhr": "mdi:pot-mix-outline",
-    "Altpapier": "mdi:package-variant",
-    "Zwischenabfuhr Altpapier": "mdi:package-variant",
-    "Problemstoffe": "mdi:chemical-weapon",
-    "Problemstoffübernahme": "mdi:chemical-weapon",
-    "Metallverpackung": "mdi:iron-outline",
-    "Metall": "mdi:iron-outline",
-    "Wirtschaftshof": "mdi:box-cutter",
-    "Kunststoffverpackung": "mdi:recycle",
-    "Leichtverpackung": "mdi:recycle",
-    "Kunststoff": "mdi:recycle",
-    "Gelber Sack": "mdi:recycle",
-    "Gelber Sack - 6-wöchentlich": "mdi:recycle",
-    "Silofoliensammlung": "mdi:silo",
-    "MET KKG": "mdi:iron-outline",  # no idea...
-    "ASZ": "mdi:recycle",  # no idea...
+    "Müll": Icons.GENERAL_WASTE,
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Restmüll - 8-wöchentlich": Icons.GENERAL_WASTE,
+    "Restmüll - 4-wöchentlich": Icons.GENERAL_WASTE,
+    "Restmüll - 2-wöchentlich": Icons.GENERAL_WASTE,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Biomüll - wöchentlich": Icons.BIO_KITCHEN,
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Gefäßreinigung Bioabfall": Icons.BIO_KITCHEN,
+    "Behälterreinigung Bioabfall": Icons.BIO_KITCHEN,
+    "Sperrmüll": Icons.BULKY,
+    "Glas": Icons.GLASS,
+    "Spermüll - Alteisenabfuhr": Icons.BULKY,
+    "Altpapier": Icons.PAPER,
+    "Zwischenabfuhr Altpapier": Icons.PAPER,
+    "Problemstoffe": Icons.HAZARDOUS,
+    "Problemstoffübernahme": Icons.HAZARDOUS,
+    "Metallverpackung": Icons.METAL,
+    "Metall": Icons.METAL,
+    "Wirtschaftshof": Icons.GENERAL_WASTE,
+    "Kunststoffverpackung": Icons.RECYCLING,
+    "Leichtverpackung": Icons.PLASTIC_PACKAGING,
+    "Kunststoff": Icons.PLASTIC_PACKAGING,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Gelber Sack - 6-wöchentlich": Icons.PLASTIC_PACKAGING,
+    "Silofoliensammlung": Icons.PLASTIC_PACKAGING,
+    "MET KKG": Icons.ELECTRONICS,
+    "ASZ": Icons.RECYCLING,
 }
 
 
@@ -347,7 +347,10 @@ class Source:
         ).json()["data"]
 
         if len(data) == 0:
-            raise SourceArgumentExceptionMultiple(["garbage_calendar_id", "street", "town", "map_name"], "No data found for the provided arguments.")
+            raise SourceArgumentExceptionMultiple(
+                ["garbage_calendar_id", "street", "town", "map_name"],
+                "No data found for the provided arguments.",
+            )
 
         self.icons = {
             label["garbage_label_id"]: label["garbage_label_title"]

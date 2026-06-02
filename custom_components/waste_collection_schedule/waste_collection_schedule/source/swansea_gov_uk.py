@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Swansea Council"
 DESCRIPTION = "Source script for swansea.gov.uk"
@@ -17,8 +17,8 @@ TEST_CASES = {
 
 API_URL = "https://www1.swansea.gov.uk/recyclingsearch/"
 ICON_MAP = {
-    "PINK": "mdi:trash-can",
-    "GREEN": "mdi:recycle",
+    "PINK": Icons.GENERAL_WASTE,
+    "GREEN": Icons.RECYCLING,
 }
 
 COLOR_MAP = [  # HTML Colour, Bin Type, Icon Mapping

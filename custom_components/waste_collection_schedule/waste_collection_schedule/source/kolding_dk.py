@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Kolding Kommune"
 DESCRIPTION = "Source for Kolding Kommune waste collection schedule"
@@ -13,13 +13,13 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "REST-MAD": "mdi:trash-can",
-    "PAP-PAPIR": "mdi:newspaper",
-    "PLAST-GLAS-METAL": "mdi:recycle",
-    "TEKSTIL": "mdi:recycle",
-    "MADAFFALD": "mdi:food",
-    "RESTAFFALD": "mdi:trash-can",
-    "FARLIGT-AFFALD": "mdi:biohazard",
+    "REST-MAD": Icons.GENERAL_WASTE,
+    "PAP-PAPIR": Icons.PAPER,
+    "PLAST-GLAS-METAL": Icons.PLASTIC_PACKAGING,
+    "TEKSTIL": Icons.RECYCLING,
+    "MADAFFALD": Icons.BIO_KITCHEN,
+    "RESTAFFALD": Icons.GENERAL_WASTE,
+    "FARLIGT-AFFALD": Icons.HAZARDOUS,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

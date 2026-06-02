@@ -3,7 +3,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "TBV Velbert"
 DESCRIPTION = "Source script for tbv-velbert.de, germany"
@@ -17,10 +17,10 @@ API_BASE = "https://www.tbv-velbert.de"
 API_URL = f"{API_BASE}/abfall"
 HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 ICON_MAP = {
-    "Restmüll-Gefäß": "mdi:trash-can",
-    "Gelbe Tonne": "mdi:recycle",
-    "Bio-Tonne": "mdi:leaf",
-    "Papier-Tonne": "mdi:package-variant",
+    "Restmüll-Gefäß": Icons.GENERAL_WASTE,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Bio-Tonne": Icons.ORGANIC,
+    "Papier-Tonne": Icons.PAPER,
 }
 
 _LOGGER = logging.getLogger(__name__)

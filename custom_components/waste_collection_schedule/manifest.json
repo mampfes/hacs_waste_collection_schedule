@@ -10,12 +10,12 @@
   "requirements": [
     "pdfminer.six",
     "icalendar",
-    "icalevents>=0.1.26,!=0.1.28",
+    "icalevents>=0.2.1",
     "beautifulsoup4",
     "lxml",
     "pycryptodome",
     "pypdf",
     "curl_cffi>=0.7.0"
   ],
-  "version": "2.23.0"
+  "version": "2.26.0"
 }

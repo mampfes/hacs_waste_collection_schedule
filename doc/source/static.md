@@ -62,7 +62,19 @@ Defines the (maximum) number of returned dates. Only used if `until` is not spec
 **EXCLUDES**  
 *(list) (optional)*
 
-A list of dates in format `YYYY-MM-DD` which should be excluded from the recurrence.
+A list of dates and/or date ranges to exclude from the recurrence. Each entry may be:
+
+- A single date string in format `YYYY-MM-DD`, or
+- A range dict with `start` and `end` keys (both in `YYYY-MM-DD` format), which excludes every date in that range (inclusive).
+
+Example with mixed individual dates and a range:
+
+```yaml
+excludes:
+  - '2022-07-15'
+  - start: '2022-08-01'
+    end: '2022-08-31'
+```
 
 **WEEKDAYS**  
 *(weekday | dictionary of weekday and occurrence) (optional)*

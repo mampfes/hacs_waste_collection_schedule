@@ -1,7 +1,7 @@
 import dateutil.parser as parser
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Welwyn Hatfield Borough Council"
 DESCRIPTION = (
@@ -14,10 +14,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "food": "mdi:apple",
-    "garden": "mdi:tree",
-    "refuse": "mdi:trash-can",
-    "recycling": "mdi:recycle",
+    "food": Icons.BIO_KITCHEN,
+    "garden": Icons.GARDEN,
+    "refuse": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
 }
 
 

@@ -2,7 +2,7 @@ from datetime import date
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Ville de Saint-Basile-le-Grand"
 DESCRIPTION = "Source for villesblg.ca waste collection calendar"
@@ -13,11 +13,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Ordures": "mdi:trash-can",
-    "Recyclage": "mdi:recycle",
-    "Résidus verts": "mdi:leaf",
-    "Résidus alimentaires": "mdi:food-apple",
-    "Encombrants": "mdi:sofa",
+    "Ordures": Icons.GENERAL_WASTE,
+    "Recyclage": Icons.RECYCLING,
+    "Résidus verts": Icons.ORGANIC,
+    "Résidus alimentaires": Icons.BIO_KITCHEN,
+    "Encombrants": Icons.BULKY,
 }
 
 FEED_URL = "https://www.villesblg.ca/calendrier-categories/collectes-et-depots/feed/"

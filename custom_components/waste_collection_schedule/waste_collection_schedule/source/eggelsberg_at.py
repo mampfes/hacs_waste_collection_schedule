@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Marktgemeinde Eggelsberg"
@@ -16,12 +16,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Bioabfall": "mdi:leaf",
-    "Altpapier": "mdi:package-variant",
-    "Gelber Sack": "mdi:recycle",
-    "Restabfall 2-wöchentlich": "mdi:trash-can",
-    "Restabfall 4-wöchentlich": "mdi:trash-can",
-    "Restabfall 6-wöchentlich": "mdi:trash-can",
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Altpapier": Icons.PAPER,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Restabfall 2-wöchentlich": Icons.GENERAL_WASTE,
+    "Restabfall 4-wöchentlich": Icons.GENERAL_WASTE,
+    "Restabfall 6-wöchentlich": Icons.GENERAL_WASTE,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

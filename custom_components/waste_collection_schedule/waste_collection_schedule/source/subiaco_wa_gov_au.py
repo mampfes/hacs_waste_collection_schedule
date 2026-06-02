@@ -1,7 +1,7 @@
 import datetime
 
 from dateutil.easter import easter
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "City of Subiaco"
 DESCRIPTION = "Source for City of Subiaco, WA waste collection using Area and Weekday."
@@ -16,9 +16,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "FOGO": "mdi:leaf",
-    "Recycling": "mdi:recycle",
-    "General Waste": "mdi:trash-can",
+    "FOGO": Icons.BIO_KITCHEN,
+    "Recycling": Icons.RECYCLING,
+    "General Waste": Icons.GENERAL_WASTE,
 }
 
 

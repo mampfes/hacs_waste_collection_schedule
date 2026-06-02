@@ -4,7 +4,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from requests.utils import requote_uri
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Horowhenua District Council"
 DESCRIPTION = "Source for Horowhenua District Council Rubbish & Recycling collection."
@@ -41,8 +41,8 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
 # _LOGGER = logging.getLogger(__name__)

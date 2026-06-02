@@ -3,7 +3,7 @@ from datetime import date
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Bolsover District Council"
@@ -26,9 +26,9 @@ DAY_COLUMNS = {
 }
 
 ICON_MAP = {
-    "Black": "mdi:trash-can",
-    "Burgundy": "mdi:recycle",
-    "Green": "mdi:leaf",
+    "Black": Icons.GENERAL_WASTE,
+    "Burgundy": Icons.RECYCLING,
+    "Green": Icons.ORGANIC,
 }
 
 MONTHS = {

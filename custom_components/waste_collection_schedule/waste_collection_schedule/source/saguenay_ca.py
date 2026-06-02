@@ -2,7 +2,7 @@ from datetime import date
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Ville de Saguenay"
@@ -13,9 +13,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Ordures": "mdi:trash-can",
-    "Recyclage": "mdi:recycle",
-    "Compostage": "mdi:leaf",
+    "Ordures": Icons.GENERAL_WASTE,
+    "Recyclage": Icons.RECYCLING,
+    "Compostage": Icons.ORGANIC,
 }
 
 PARAM_TRANSLATIONS = {

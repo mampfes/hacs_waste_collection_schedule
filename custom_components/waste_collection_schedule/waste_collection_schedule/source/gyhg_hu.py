@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Győri Hulladékgazdálkodási Nonprofit Kft."
 DESCRIPTION = "Source script using GYHG API at https://gyhg.bluespot.hu/api"
@@ -21,9 +21,9 @@ TEST_CASES = {
 API_URL = "https://gyhg.bluespot.hu/api/"
 
 ICON_MAP = {
-    "leftover": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "bio": "mdi:compost",
+    "leftover": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "bio": Icons.ORGANIC,
 }
 
 NAME_MAP = {

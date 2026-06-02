@@ -3,7 +3,7 @@ from datetime import datetime
 from time import time_ns
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Maidstone Borough Council"
 DESCRIPTION = "Source for maidstone.gov.uk services for Maidstone Borough Council."
@@ -18,12 +18,12 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "clinical": "mdi:medical-bag",
-    "bulky": "mdi:sofa",
-    "residual": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food",
+    "clinical": Icons.HAZARDOUS,
+    "bulky": Icons.BULKY,
+    "residual": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
 }
 
 

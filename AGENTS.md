@@ -31,7 +31,7 @@ Optional but recommended:
 - `EXTRA_INFO: list[dict]` for sources that cover multiple municipalities.
 - `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, `HOW_TO_GET_ARGUMENTS_DESCRIPTION` keyed by language code. **Only `en`, `de`, `it`, `fr` are supported** — other codes (e.g. `lt`, `pl`, `nl`) will fail `test_source_has_necessary_parameters`. See the [HOW_TO_GET_ARGUMENTS_DESCRIPTION rules](#how_to_get_arguments_description-rules) section below.
 
-`Collection(date, t, icon=None, picture=None)` is the data model. Return one per collection event.
+`Collection(date, t, icon=None, picture=None)` is the data model. Return one per collection event. For `icon`, use a member of the canonical `Icons` enum (`from waste_collection_schedule import Icons` — full catalogue at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`) rather than a raw `"mdi:..."` string.
 
 ## Files you must NOT hand-edit
 
@@ -44,6 +44,35 @@ The following are regenerated automatically by CI after every merge to `master`.
 - `doc/ics/*.md` (generated from `doc/ics/yaml/*.yaml`)
 
 `doc/source/*.md` is **not** generated — you must create one manually for each new source.
+
+## Icons
+
+The integration ships with a canonical icon catalogue (`Icons` enum at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`). Use it for all `ICON_MAP` values:
+
+```py
+from waste_collection_schedule import Collection, Icons
+
+ICON_MAP = {
+    "Glass": Icons.GLASS,
+    "Paper": Icons.PAPER,
+}
+```
+
+**Adding a new catalogue member is gated.** Only propose a new `Icons.*` member when (a) your provider returns a category that doesn't fit any existing member, AND (b) the category is general enough to expect other sources to use it. Open an issue first — propose name + MDI icon + example providers — and wait for maintainer agreement. Then a small separate PR adds the member, after which your source PR can use it. Do not add raw `"mdi:..."` strings to `ICON_MAP` to skip this conversation.
+
+**Personal taste is not a catalogue concern.** If a user just prefers a different MDI icon for a waste category, they override it locally via `customize.icon` in their YAML (or via the GUI's icon picker). No source change needed:
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: my_source
+      args: { ... }
+      customize:
+        - type: "Glass"
+          icon: mdi:bottle-wine
+```
+
+See `doc/contributing_source.md` for the full version of these rules.
 
 ## ICS providers
 
@@ -61,6 +90,7 @@ Things the maintainers consistently bounce in code review — avoid these from t
 - **Editing files in the "must not hand-edit" list above** — they get overwritten by CI after merge.
 - **Suppressing failures silently.** Returning `[]` on an HTTP error masks problems as "no upcoming collections".
 - **Unformatted code.** Run `black` and `isort` before committing (see Commands below).
+- **Raw `mdi:*` strings in `ICON_MAP`.** Use the canonical `Icons` enum (`from waste_collection_schedule import Icons`) so icons stay consistent across sources for the same logical waste category. See `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`.
 
 ## HOW_TO_GET_ARGUMENTS_DESCRIPTION rules
 

@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Reno Djurs"
 DESCRIPTION = "Reno Djurs collections for Djursland"
@@ -23,9 +23,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "REST-MAD": "mdi:trash-can",
-    "PAP-PAPIR": "mdi:newspaper",
-    "PLAST-GLAS-METAL": "mdi:bottle-wine",
+    "REST-MAD": Icons.GENERAL_WASTE,
+    "PAP-PAPIR": Icons.PAPER,
+    "PLAST-GLAS-METAL": Icons.PLASTIC_PACKAGING,
 }
 
 

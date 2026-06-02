@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Rapperswil"
@@ -12,9 +12,9 @@ TEST_CASES: dict[str, dict[str, str]] = {
 
 
 ICON_MAP = {
-    "Hauskehricht": "mdi:trash-can",
-    "Grüngut": "mdi:leaf",
-    "Papier und Karton": "mdi:package-variant",
+    "Hauskehricht": Icons.GENERAL_WASTE,
+    "Grüngut": Icons.ORGANIC,
+    "Papier und Karton": Icons.PAPER,
 }
 
 BASE_URL = "https://www.rapperswil-be.ch"

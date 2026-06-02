@@ -28,8 +28,9 @@ SERVICES = {
     "winterthur": "https://m.winterthur.ch",
     "a_region": "https://www.a-region.ch",
     "koeniz": "https://koeniz.citymobile.ch",
+    "zab": "https://zab.citymobile.ch",
 }
-SERVICES_LITERALS = Literal["winterthur", "a_region", "koeniz"]
+SERVICES_LITERALS = Literal["winterthur", "a_region", "koeniz", "zab"]
 
 
 class A_region_ch:
@@ -163,7 +164,9 @@ class A_region_ch:
                 return self.get_ICS_sources(list(districts.values())[0], tour)
             if self._district is None:
                 raise SourceArgumentRequiredWithSuggestions(
-                    "district", districts.keys()
+                    "district",
+                    "Multiple districts found; specify which one to use.",
+                    districts.keys(),
                 )
 
             if self._district not in districts:

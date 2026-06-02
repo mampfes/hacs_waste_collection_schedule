@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -25,11 +25,11 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "Grey Bin": "mdi:trash-can",
-    "Beige Bin": "mdi:newspaper-variant",
-    "Burgundy Bin": "mdi:bottle-soda",
-    "Green Bin": "mdi:leaf",
-    "Food container": "mdi:food",
+    "Grey Bin": Icons.GENERAL_WASTE,
+    "Beige Bin": Icons.NEWSPAPER,
+    "Burgundy Bin": Icons.GLASS,
+    "Green Bin": Icons.ORGANIC,
+    "Food container": Icons.BIO_KITCHEN,
 }
 
 TEST_CASES = {

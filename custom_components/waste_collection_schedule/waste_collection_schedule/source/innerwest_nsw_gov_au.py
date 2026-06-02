@@ -2,7 +2,7 @@ import json
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Inner West Council (NSW)"
 DESCRIPTION = "Source for Inner West Council (NSW) rubbish collection."
@@ -11,12 +11,12 @@ TEST_CASES = {
     "Random Marrickville address": {
         "suburb": "Tempe",
         "street_name": "Princes Highway",
-        "street_number": "810",
+        "street_number": "813",
     },
     "Random Leichhardt address": {
         "suburb": "Rozelle",
         "street_name": "Darling Street",
-        "street_number": "599",
+        "street_number": "597",
     },
     "Random Ashfield address": {
         "suburb": "Summer Hill",
@@ -35,9 +35,9 @@ APIS = [
 ]
 
 ICON_MAP = {
-    "waste": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "organic": "mdi:leaf",
+    "waste": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "organic": Icons.ORGANIC,
 }
 
 
@@ -114,21 +114,48 @@ class Source:
         entries = []
 
         for item in data:
-            if "start" not in item and "start_date" not in item:
+            event_type = item.get("event_type")
+            if not event_type:
                 continue
-            key = (
-                "start"
-                if "start" in item
-                else "start_date" if "start_date" in item else ""
-            )
-            collection_date = date.fromisoformat(item[key])
-            if (collection_date - today).days >= 0:
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=item["event_type"],
-                        icon=ICON_MAP.get(item["event_type"]),
+
+            icon = ICON_MAP.get(event_type)
+
+            if "dow" in item or "daysOfWeek" in item:
+                # Recurring weekly collection: the API returns a single entry with a
+                # start_date and day-of-week info rather than listing each occurrence.
+                # Expand it into individual weekly entries across the window.
+                if "start_date" not in item:
+                    continue
+                collection_date = date.fromisoformat(item["start_date"])
+                # Ensure we start from today or later
+                if collection_date < today:
+                    collection_date = today
+                while collection_date <= nextmonth:
+                    entries.append(
+                        Collection(
+                            date=collection_date,
+                            t=event_type,
+                            icon=icon,
+                        )
                     )
+                    collection_date += timedelta(7)
+            else:
+                # Single-occurrence collection: use the explicit start date
+                key = (
+                    "start"
+                    if "start" in item
+                    else "start_date" if "start_date" in item else None
                 )
+                if key is None:
+                    continue
+                collection_date = date.fromisoformat(item[key])
+                if (collection_date - today).days >= 0:
+                    entries.append(
+                        Collection(
+                            date=collection_date,
+                            t=event_type,
+                            icon=icon,
+                        )
+                    )
 
         return entries

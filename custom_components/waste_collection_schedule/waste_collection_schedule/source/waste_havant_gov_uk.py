@@ -4,7 +4,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, exceptions
+from waste_collection_schedule import Collection, Icons, exceptions
 
 TITLE = "Havant Borough Council"
 DESCRIPTION = "Source for Havant Borough Council waste collection."
@@ -17,8 +17,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Residual 240L": "mdi:trash-can",
-    "Recycling 240L": "mdi:recycle",
+    "Residual 240L": Icons.GENERAL_WASTE,
+    "Recycling 240L": Icons.RECYCLING,
 }
 
 EVENTS_REGEX = re.compile(

@@ -3,7 +3,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -14,8 +14,8 @@ API_URL = (
     "https://gis.rdc.govt.nz/server/rest/services/Core/RdcServices/MapServer/125/query"
 )
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 HEADERS = {"User-Agent": "waste-collection-schedule"}
 

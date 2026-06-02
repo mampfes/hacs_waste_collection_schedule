@@ -2,7 +2,7 @@ import logging
 
 import requests
 from dateutil import parser
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Sheffield City Council"
 DESCRIPTION = "Source for waste collection services from Sheffield City Council (SCC)"
@@ -27,10 +27,10 @@ HEADERS = {
 
 # Icons for the different bin types
 ICON_MAP = {
-    "BLACK": "mdi:delete-empty",  # General Waste
-    "BROWN": "mdi:glass-fragile",  # Glass, Tins, Cans & Plastics
-    "BLUE": "mdi:newspaper",  # Paper & Cardboard
-    "GREEN": "mdi:leaf",  # Garden Waste
+    "BLACK": Icons.GENERAL_WASTE,
+    "BROWN": Icons.GLASS,
+    "BLUE": Icons.NEWSPAPER,
+    "GREEN": Icons.ORGANIC,
 }
 
 _LOGGER = logging.getLogger(__name__)

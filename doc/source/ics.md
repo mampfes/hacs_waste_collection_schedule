@@ -41,6 +41,7 @@ This source has been successfully tested with the following service providers:
 - [Frauenstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
 - [gem2go (Abfallverband)](/doc/ics/gem2go_dev.md) / gem2go.dev
+- [Gemeinde Aspang-Markt](/doc/ics/aspangmarkt_at.md) / aspangmarkt.at
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gmünd in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
@@ -156,9 +157,11 @@ This source has been successfully tested with the following service providers:
 
 ### Canada
 
+- [Brossard, Québec](/doc/ics/brossard_ca.md) / brossard.ca
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [Castlegar, BC](/doc/ics/recollect.md) / castlegar.ca
 - [City of Beaumont, AB](/doc/ics/recollect.md) / beaumont.ab.ca
+- [City of Coquitlam, BC](/doc/ics/recollect.md) / coquitlam.ca/157/Collection-Calendar-and-Guidelines
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Guelph, ON](/doc/ics/recollect.md) / guelph.ca
@@ -318,7 +321,6 @@ This source has been successfully tested with the following service providers:
 - [Landkreis Holzminden](/doc/ics/abfall_app_net.md) / landkreis-holzminden.de
 - [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
-- [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
 - [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
@@ -351,6 +353,7 @@ This source has been successfully tested with the following service providers:
 - [Rodgau](/doc/ics/mein_abfallkalender_online.md) / stadtwerke-rodgau.de
 - [Rödermark](/doc/ics/mein_abfallkalender_online.md) / roedermark.de
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
+- [Schwalbach am Taunus](/doc/ics/schwalbach_am_taunus_de.md) / schwalbach.de
 - [sds Schwerin](/doc/ics/sds_schwerin_de.md) / sds-schwerin.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [St Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
@@ -407,12 +410,17 @@ This source has been successfully tested with the following service providers:
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
 - [Gemeente Borsele](/doc/ics/afvalkalender_borsele_nl.md) / borsele.nl
 - [Gemeente Venray](/doc/ics/afvalkalender_venray_nl.md) / venray.nl
+- [Gemeente Venray](/doc/ics/venray_nl.md) / venray.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [Ôffalkalinder van Noardeast-Fryslân & Dantumadiel](/doc/ics/offalkalinder_nl.md) / offalkalinder.nl
 
 ### Norway
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
+
+### Slovakia
+
+- [Odvoz Odpadu](/doc/ics/odvoz_odpadu_sk.md) / odvoz-odpadu.eu
 
 ### Slovenia
 
@@ -452,6 +460,7 @@ This source has been successfully tested with the following service providers:
 
 ### United States of America
 
+- [Atlantic Waste Services, GA](/doc/ics/recollect.md) / atlanticwaste.com
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov

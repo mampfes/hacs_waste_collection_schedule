@@ -3,7 +3,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -13,8 +13,8 @@ URL = "https://www.napier.govt.nz/"
 COUNTRY = "nz"
 API_URL = "https://data.napier.govt.nz/regional/ncc/widgets/collectiondays/do_collectiondays.php"
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 HEADERS = {"User-Agent": "waste-collection-schedule"}
 

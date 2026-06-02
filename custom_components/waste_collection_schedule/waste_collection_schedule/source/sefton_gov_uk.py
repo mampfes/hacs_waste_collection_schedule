@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Sefton Council"  # Title will show up in README.md and info.md
@@ -27,10 +27,10 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 }
 
 API_URL = "https://www.sefton.gov.uk/bins-and-recycling/bins-and-recycling/when-is-my-bin-collection-day/"
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "RESIDUAL": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GREEN": "mdi:leaf",
+ICON_MAP = {
+    "RESIDUAL": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GREEN": Icons.ORGANIC,
 }
 
 # ### Arguments affecting the configuration GUI ####

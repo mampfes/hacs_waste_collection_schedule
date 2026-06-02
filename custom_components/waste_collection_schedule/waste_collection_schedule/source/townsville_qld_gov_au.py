@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Townsville"
 DESCRIPTION = "Source for Townsville."
@@ -16,8 +16,8 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
 }
 
 

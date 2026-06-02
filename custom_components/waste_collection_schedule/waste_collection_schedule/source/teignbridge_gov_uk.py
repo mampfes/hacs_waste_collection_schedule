@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from curl_cffi import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from curl_cffi import requests
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Teignbridge District Council"
 DESCRIPTION = "Source for teignbridge.gov.uk waste collection."
@@ -15,11 +15,11 @@ TEST_CASES = {
 COUNTRY = "uk"
 
 ICON_MAP = {
-    "Food waste container": "mdi:food-apple",
-    "Black box": "mdi:recycle",
-    "Green box": "mdi:glass-fragile",
-    "Sack for paper": "mdi:newspaper",
-    "Refuse - black bin": "mdi:trash-can",
+    "Food waste container": Icons.BIO_KITCHEN,
+    "Black box": Icons.RECYCLING,
+    "Green box": Icons.GLASS,
+    "Sack for paper": Icons.PAPER,
+    "Refuse - black bin": Icons.GENERAL_WASTE,
 }
 
 ADDRESS_URL = "https://www.teignbridge.gov.uk/repositories/hidden-pages/address-finder"

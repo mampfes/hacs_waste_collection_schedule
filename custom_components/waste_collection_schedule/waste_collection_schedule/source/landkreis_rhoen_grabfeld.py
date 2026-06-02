@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Landkreis Rhön Grabfeld"
@@ -26,11 +26,11 @@ EVENT_BLACKLIST = [
 ]
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Bio": "mdi:leaf",
-    "Gelbe Tonne": "mdi:recycle-variant",
-    "Papier": "mdi:package-variant",
-    "Problemmüll": "mdi:biohazard",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Bio": Icons.ORGANIC,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Papier": Icons.PAPER,
+    "Problemmüll": Icons.HAZARDOUS,
 }
 
 

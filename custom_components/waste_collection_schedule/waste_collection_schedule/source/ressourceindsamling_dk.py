@@ -5,7 +5,7 @@ import urllib.parse
 import zoneinfo
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -23,15 +23,15 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 API_URL = (
     "https://selfserviceapi.waste2x.dk/api/Services/Services/GetServicesForCustomer"
 )
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "Haveaffald": "mdi:leaf",
-    "Storskrald": "mdi:recycle",
-    "Mad/Rest affald": "mdi:food",
-    "Pap": "mdi:archive",
-    "Papir/Plast \u0026 MDK": "mdi:bottle-soda",
-    "Metal/Glas affald": "mdi:wrench",
-    "Juletræer": "mdi:pine-tree",
-    "Farligt affald": "mdi:biohazard",
+ICON_MAP = {
+    "Haveaffald": Icons.ORGANIC,
+    "Storskrald": Icons.RECYCLING,
+    "Mad/Rest affald": Icons.BIO_KITCHEN,
+    "Pap": Icons.PAPER,
+    "Papir/Plast & MDK": Icons.PLASTIC_PACKAGING,
+    "Metal/Glas affald": Icons.GLASS,
+    "Juletræer": Icons.CHRISTMAS_TREE,
+    "Farligt affald": Icons.HAZARDOUS,
 }
 
 ADDRESS_LOOKUP_URL = (
@@ -50,19 +50,14 @@ TEST_DATE = [
         "binTypeId": 56,
         "binTypePublicName": "240 L tokammer",
         "startTime": "2026-04-15T22:00:00Z",
-        "stopTime": "2026-04-16T22:00:00Z", # Use this for the date of the schedule
+        "stopTime": "2026-04-16T22:00:00Z",  # Use this for the date of the schedule
         "originalStartTime": "2026-04-15T22:00:00Z",
         "originalStopTime": "2026-04-16T22:00:00Z",
-        "coordinate": {
-            "lat": 55.713405,
-            "lon": 12.390497,
-            "z": None,
-            "srid": 4326
-        },
+        "coordinate": {"lat": 55.713405, "lon": 12.390497, "z": None, "srid": 4326},
         "serviceSchemeId": 257318,
         "schemeTypePublicName": "Enfamilie",
         "frequencyTypeId": 1,
-        "serviceScheme_ServiceSchemeChangeBin_Mandatory": True
+        "serviceScheme_ServiceSchemeChangeBin_Mandatory": True,
     }
 ]
 

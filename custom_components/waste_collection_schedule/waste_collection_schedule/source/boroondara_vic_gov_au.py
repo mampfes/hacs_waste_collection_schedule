@@ -4,7 +4,7 @@ import re
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import ArcGisError, geocode
 
@@ -20,9 +20,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "FOGO": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "General Waste": Icons.GENERAL_WASTE,
+    "FOGO": Icons.BIO_KITCHEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 PARAM_DESCRIPTIONS = {
@@ -145,9 +145,9 @@ class Source:
 
         for d in _next_weekly(day):
             entries.append(Collection(d, "Recycling", ICON_MAP["Recycling"]))
+            entries.append(Collection(d, "FOGO", ICON_MAP["FOGO"]))
 
         for d in _next_fortnightly(day, week):
             entries.append(Collection(d, "General Waste", ICON_MAP["General Waste"]))
-            entries.append(Collection(d, "FOGO", ICON_MAP["FOGO"]))
 
         return entries

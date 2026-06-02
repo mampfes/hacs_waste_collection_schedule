@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Bremerhavener Entsorgungsgesellschaft mbH"
@@ -19,9 +19,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Graue tonne": "mdi:trash-can",
-    "Gelber sack": "mdi:recycle",
-    "Gelbe tonne" "Tannenbaum": "mdi:pine-tree",
+    "Graue tonne": Icons.GENERAL_WASTE,
+    "Gelber sack": Icons.PLASTIC_PACKAGING,
+    "Gelbe tonneTannenbaum": Icons.CHRISTMAS_TREE,
 }
 
 

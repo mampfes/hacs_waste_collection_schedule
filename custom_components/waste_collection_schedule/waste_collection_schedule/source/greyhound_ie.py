@@ -5,7 +5,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 
 TITLE = "Greyhound Recycling"
@@ -19,9 +19,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "BLACK": "mdi:trash-can",
-    "BROWN": "mdi:leaf",
-    "GREEN": "mdi:recycle",
+    "BLACK": Icons.GENERAL_WASTE,
+    "BROWN": Icons.ORGANIC,
+    "GREEN": Icons.RECYCLING,
 }
 
 

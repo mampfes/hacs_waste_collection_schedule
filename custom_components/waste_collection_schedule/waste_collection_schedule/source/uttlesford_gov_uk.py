@@ -3,7 +3,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Uttlesford District Council"
 DESCRIPTION = "Source for uttlesford.gov.uk, Uttlesford District Council, UK"
@@ -15,7 +15,11 @@ TEST_CASES = {
 
 API_URL = "http://bins.uttlesford.gov.uk/collections.php?house={house}"
 
-ICON_MAP = {"black": "mdi:trash-can", "green": "mdi:recycle", "brown": "mdi:food-apple"}
+ICON_MAP = {
+    "black": Icons.GENERAL_WASTE,
+    "green": Icons.RECYCLING,
+    "brown": Icons.BIO_KITCHEN,
+}
 
 PICTURE_MAP = {
     "black": "https://bins.uttlesford.gov.uk/img/result-black.png",

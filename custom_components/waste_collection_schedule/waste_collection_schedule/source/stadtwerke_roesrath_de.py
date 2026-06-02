@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Stadtwerke Rösrath"
@@ -13,11 +13,11 @@ TEST_CASES = {"Ahornweg": {"street": "Ahornweg"}}
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "Biotonne": "mdi:leaf",
-    "Restmülltonne": "mdi:trash-can",
-    "Restmülltonne 60l": "mdi:trash-can",
-    "Gelbe Tonne": "mdi:recycle",
-    "Papiertonne": "mdi:package-variant",
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Restmülltonne": Icons.GENERAL_WASTE,
+    "Restmülltonne 60l": Icons.GENERAL_WASTE,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Papiertonne": Icons.PAPER,
 }
 
 

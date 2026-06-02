@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentRequired,
@@ -34,10 +34,10 @@ MONTHS = {
 }
 
 ICON_MAP = {
-    "Matavfall": "mdi:food-apple",
-    "Restavfall": "mdi:trash-can",
-    "Pappersförpackningar": "mdi:package-variant",
-    "Plastförpackningar": "mdi:bottle-soda-outline",
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Pappersförpackningar": Icons.PAPER,
+    "Plastförpackningar": Icons.GLASS,
 }
 
 

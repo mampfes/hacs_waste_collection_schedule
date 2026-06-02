@@ -4,7 +4,7 @@ import json
 import re
 
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "East Lindsey District Council"
@@ -22,10 +22,10 @@ PARAM_DESCRIPTIONS = {"en": {"uprn": "Unique Property Reference Number (UPRN)"}}
 PARAM_TRANSLATIONS = {"en": {"uprn": "UPRN"}}
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
-    "Purple Bin": "mdi:recycle",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
+    "Purple Bin": Icons.RECYCLING,
 }
 
 _PAGE_URL = "https://www.e-lindsey.gov.uk/mywastecollections"

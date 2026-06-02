@@ -2,7 +2,7 @@ import re
 from datetime import date, datetime
 from typing import Any, Optional, Sequence, cast
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -165,7 +165,7 @@ class Cloud9Client:
         self._authority = authority
         self._icon_keywords: dict[str, str] = icon_keywords or {}
         self._base_url = f"{API_DOMAIN}/{authority}{API_BASE}"
-        self._session = requests.Session()
+        self._session = requests.Session(impersonate="chrome")
         self._session.headers.update(BASE_HEADERS)
 
     def _resolve_icon(self, label: str) -> Optional[str]:

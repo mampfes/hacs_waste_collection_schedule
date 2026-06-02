@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "hausmüll.info"
@@ -79,28 +79,28 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "hausmüll": "mdi:trash-can",
-    "restabfall": "mdi:trash-can",
-    "restmüll": "mdi:trash-can",
-    "glass": "mdi:bottle-soda",
-    "biomüll": "mdi:leaf",
-    "biomüll mit reinigung": "mdi:leaf",
-    "bioabfall mit reinigung": "mdi:leaf",
-    "bioabfall": "mdi:leaf",
-    "papier": "mdi:package-variant",
-    "papier, pappe, karton": "mdi:package-variant",
-    "papier, pappe & kart.": "mdi:package-variant",
-    "pappe, papier & kart.": "mdi:package-variant",
-    "altpapier": "mdi:package-variant",
-    "gelbe tonne": "mdi:recycle",
-    "gelber sack": "mdi:recycle",
-    "gelber sack / gelbe tonne": "mdi:recycle",
-    "leichtverpackungen": "mdi:recycle",
-    "leichtstoffverpackungen": "mdi:recycle",
-    "grünschnitt": "mdi:tree",
-    "schadstoffe": "mdi:biohazard",
-    "schadstoffmobil": "mdi:biohazard",
-    "problemmüll": "mdi:biohazard",
+    "hausmüll": Icons.GENERAL_WASTE,
+    "restabfall": Icons.GENERAL_WASTE,
+    "restmüll": Icons.GENERAL_WASTE,
+    "glass": Icons.GLASS,
+    "biomüll": Icons.BIO_KITCHEN,
+    "biomüll mit reinigung": Icons.BIO_KITCHEN,
+    "bioabfall mit reinigung": Icons.BIO_KITCHEN,
+    "bioabfall": Icons.BIO_KITCHEN,
+    "papier": Icons.PAPER,
+    "papier, pappe, karton": Icons.PAPER,
+    "papier, pappe & kart.": Icons.PAPER,
+    "pappe, papier & kart.": Icons.PAPER,
+    "altpapier": Icons.PAPER,
+    "gelbe tonne": Icons.PLASTIC_PACKAGING,
+    "gelber sack": Icons.PLASTIC_PACKAGING,
+    "gelber sack / gelbe tonne": Icons.PLASTIC_PACKAGING,
+    "leichtverpackungen": Icons.RECYCLING,
+    "leichtstoffverpackungen": Icons.RECYCLING,
+    "grünschnitt": Icons.GARDEN,
+    "schadstoffe": Icons.HAZARDOUS,
+    "schadstoffmobil": Icons.HAZARDOUS,
+    "problemmüll": Icons.HAZARDOUS,
 }
 
 SUPPORTED_PROVIDERS = [

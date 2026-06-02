@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import requests
 
 from ..collection import Collection
+from ..icons import Icons
 
 TITLE = "Toronto (ON)"
 DESCRIPTION = "Source for Toronto waste collection"
@@ -21,11 +22,11 @@ SCHEDULE_LOOKUP_URL = (
 )
 
 ICON_MAP = {
-    "GreenBin": "mdi:compost",
-    "Garbage": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "YardWaste": "mdi:grass",
-    "ChristmasTree": "mdi:pine-tree",
+    "GreenBin": Icons.BIO_KITCHEN,
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "YardWaste": Icons.GARDEN,
+    "ChristmasTree": Icons.CHRISTMAS_TREE,
 }
 
 PICTURE_MAP = {

@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Exeter City Council"
 DESCRIPTION = "Source for Exeter City services for Exeter City Council, UK."
@@ -16,10 +16,10 @@ TEST_CASES = {
     "Test_004": {"uprn": 100040241022},
 }
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN WASTE": "mdi:leaf",
-    "FOOD WASTE": "mdi:food",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN WASTE": Icons.GARDEN,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
 }
 REGEX_ORDINALS = r"(?<=[0-9])(?:st|nd|rd|th)"
 

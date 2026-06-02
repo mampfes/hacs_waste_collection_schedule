@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Rueil-Malmaison"
 DESCRIPTION = "Source for waste collection schedule in Rueil-Malmaison, France."
@@ -28,11 +28,11 @@ DAYS_FR = {
 }
 
 ICON_MAP = {
-    "Ordures Ménagères": "mdi:trash-can",
-    "Emballages": "mdi:recycle",
-    "Verre": "mdi:glass-fragile",
-    "Déchets Végétaux": "mdi:leaf",
-    "Encombrants": "mdi:sofa",
+    "Ordures Ménagères": Icons.GENERAL_WASTE,
+    "Emballages": Icons.RECYCLING,
+    "Verre": Icons.GLASS,
+    "Déchets Végétaux": Icons.ORGANIC,
+    "Encombrants": Icons.BULKY,
 }
 
 TEST_CASES = {
