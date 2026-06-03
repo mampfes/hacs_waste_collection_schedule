@@ -1,0 +1,16 @@
+title: Shropshire Council
+url: https://bins.shropshire.gov.uk
+country: gb
+howto:
+  en: |
+    - Go to <https://bins.shropshire.gov.uk> and search for your address.
+    - Your UPRN is the number at the end of the URL, e.g. `https://bins.shropshire.gov.uk/property/100070014355`.
+    - Find the service ID from the iCal link on the page: right-click the calendar icon next to each service and copy the link.
+    - The URL format is `https://bins.shropshire.gov.uk/ical/{SERVICE_ID}/property/{UPRN}`.
+    - Common service IDs: `465` = General Waste, `467` = Recycling, `468` = Garden Waste (may vary by area).
+    - Use this URL as the `url` parameter.
+test_cases:
+  5 Annefield Close, Market Drayton - General Waste:
+    url: "https://bins.shropshire.gov.uk/ical/465/property/100070014355"
+  5 Annefield Close, Market Drayton - Recycling:
+    url: "https://bins.shropshire.gov.uk/ical/467/property/100070014355"
