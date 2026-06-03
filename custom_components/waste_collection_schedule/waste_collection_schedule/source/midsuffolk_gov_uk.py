@@ -4,7 +4,6 @@ import time
 
 import requests
 from bs4 import BeautifulSoup
-
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
@@ -45,14 +44,14 @@ PARAM_DESCRIPTIONS = {
 }
 
 _BASE_URL = "https://www.midsuffolk.gov.uk/check-your-collection-day"
-_PORTLET  = "_com_placecube_digitalplace_local_waste_portlet_CollectionDayFinderPortlet_"
+_PORTLET = "_com_placecube_digitalplace_local_waste_portlet_CollectionDayFinderPortlet_"
 
 ICON_MAP = {
-    "refuse":    "mdi:trash-can",
+    "refuse": "mdi:trash-can",
     "recycling": "mdi:recycle",
-    "paper":     "mdi:newspaper",
-    "food":      "mdi:food-apple",
-    "garden":    "mdi:leaf",
+    "paper": "mdi:newspaper",
+    "food": "mdi:food-apple",
+    "garden": "mdi:leaf",
 }
 
 
@@ -84,9 +83,9 @@ class Source:
 
         # Form data fields
         data = {
-            _PORTLET + "formDate":    str(int(time.time() * 1000)),
-            _PORTLET + "postcode":    self._postcode,
-            _PORTLET + "uprn":        self._uprn,
+            _PORTLET + "formDate": str(int(time.time() * 1000)),
+            _PORTLET + "postcode": self._postcode,
+            _PORTLET + "uprn": self._uprn,
             _PORTLET + "fullAddress": "",
         }
 
@@ -107,7 +106,7 @@ class Source:
                 continue
 
             waste_type = cells[0].get_text(strip=True)
-            date_text  = cells[1].get_text(strip=True)
+            date_text = cells[1].get_text(strip=True)
 
             if not waste_type or not date_text:
                 continue
@@ -133,8 +132,8 @@ class Source:
 
 
 _DATE_FORMATS = (
-    "%A %d %B %Y",   # Thursday 04 Jun 2026 — note: need %b not %B for abbrev
-    "%A %d %b %Y",   # Thursday 04 Jun 2026
+    "%A %d %B %Y",   # Thursday 04 June 2026 (full month name)
+    "%A %d %b %Y",   # Thursday 04 Jun 2026 (abbreviated month name)
     "%d %B %Y",
     "%d %b %Y",
     "%d/%m/%Y",
