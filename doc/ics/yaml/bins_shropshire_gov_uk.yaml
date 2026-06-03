@@ -12,5 +12,7 @@ howto:
 test_cases:
   5 Annefield Close, Market Drayton - General Waste:
     url: "https://bins.shropshire.gov.uk/ical/465/property/100070014355"
+    regex: "Reminder - (.*)"
   5 Annefield Close, Market Drayton - Recycling:
     url: "https://bins.shropshire.gov.uk/ical/467/property/100070014355"
+    regex: "Reminder - (.*)"
