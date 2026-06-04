@@ -9,7 +9,7 @@ DESCRIPTION = "Waste collection schedule for Dienten am Hochkönig, Austria."
 URL = "https://www.dienten.gv.at"
 
 TEST_CASES = {
-    #no input required as the waste collectoin site (dienten.gv.at) does not have any address specific requirement
+    # no input required as the waste collectoin site (dienten.gv.at) does not have any address specific requirement
     "Dorf 53": {"address": "Dorf 53"},
 }
 
@@ -17,9 +17,7 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0",
 }
 
-BASE_URL = (
-    "https://www.dienten.gv.at/system/web/kalender.aspx?bdatum=31.12.9999&blnr=&gnr_search=0&menuonr=218643352"
-)
+BASE_URL = "https://www.dienten.gv.at/system/web/kalender.aspx?bdatum=31.12.9999&blnr=&gnr_search=0&menuonr=218643352"
 
 MAX_PAGES = 3
 
@@ -100,9 +98,7 @@ class Source:
                 )
 
         if not entries:
-            raise ValueError(
-                "Could not find any collection events."
-            )
+            raise ValueError("Could not find any collection events.")
 
         # Remove duplicates
         unique_entries = {}
