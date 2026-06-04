@@ -1,4 +1,3 @@
-import json
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -6,9 +5,9 @@ import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
+    SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
 )
 
 TITLE = "Colchester City Council"
@@ -94,8 +93,8 @@ class Source:
             self._postcode = _normalise_postcode(postcode)
             self._house = str(house).strip()
         else:
-            raise SourceArgumentRequired(
-                "postcode/house",
+            raise SourceArgumentExceptionMultiple(
+                ["postcode", "house"],
                 "Provide either 'llpgid', or both 'postcode' and 'house'.",
             )
 
@@ -104,9 +103,9 @@ class Source:
             # Resolve once and cache so subsequent polls only hit the calendar API.
             self._llpgid = self._resolve_llpgid()
 
-        r = requests.get(CALENDAR_API.format(llpgid=self._llpgid))
+        r = requests.get(CALENDAR_API.format(llpgid=self._llpgid), timeout=30)
         r.raise_for_status()
-        data = json.loads(r.text)
+        data = r.json()
 
         entries = []
 
@@ -175,6 +174,7 @@ class Source:
             a
             for a in addresses
             if (a.get("new_paon") or "").strip().casefold() == target
+            or (a.get("new_name") or "").strip().casefold() == target
         ]
         if len(exact) == 1:
             return exact[0]["new_llpgid"]
