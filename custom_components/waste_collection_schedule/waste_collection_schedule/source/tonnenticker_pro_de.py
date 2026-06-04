@@ -63,7 +63,9 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         orte = requests.get(f"{API_BASE}/orte", timeout=30).json()
-        ort = next((o for o in orte if o["name"].lower() == self._city.lower()), None)
+        ort = next(
+            (o for o in orte if o["name"].casefold() == self._city.casefold()), None
+        )
         if ort is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "city", self._city, [o["name"] for o in orte]
@@ -73,7 +75,8 @@ class Source:
             f"{API_BASE}/orte/{ort['id']}/strassen", timeout=30
         ).json()
         strasse = next(
-            (s for s in strassen if s["name"].lower() == self._street.lower()), None
+            (s for s in strassen if s["name"].casefold() == self._street.casefold()),
+            None,
         )
         if strasse is None:
             raise SourceArgumentNotFoundWithSuggestions(
@@ -96,7 +99,7 @@ class Source:
             waste_type = fraktion_map.get(fraktion_id, f"Fraktion {fraktion_id}")
             icon = next(
                 (v for k, v in ICON_MAP.items() if k in waste_type.lower()),
-                "mdi:trash-can",
+                Icons.GENERAL_WASTE,
             )
             entries.append(Collection(date=date, t=waste_type, icon=icon))
 
