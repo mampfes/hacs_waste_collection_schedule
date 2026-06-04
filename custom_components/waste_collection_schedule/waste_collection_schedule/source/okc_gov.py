@@ -1,18 +1,23 @@
 import re
 from datetime import date, datetime, timedelta
-from urllib.parse import quote
 
 import requests
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Oklahoma City"
-DESCRIPTION = "Source for OKC Open Data Portal and okc.schizo.dev services for City of Oklahoma City"
+DESCRIPTION = "Source for the City of Oklahoma City Open Data Portal (ArcGIS) waste collection zones."
 URL = "https://www.okc.gov"
 COUNTRY = "us"
 TEST_CASES = {
-    "Test_001": {"objectID": "1781151"},
-    "Test_002": {"objectID": "2002902"},
-    "Test_003": {"objectID": 1935340},
+    "Trash Fri / Recycle Mon / Bulky 4th Mon": {
+        "trashObjectID": 1,
+        "recycleObjectID": 1215,
+        "bulkyObjectID": 1,
+    },
+    "Trash only": {
+        "trashObjectID": 2,
+    },
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:118.0) Gecko/20100101 Firefox/118.0",
@@ -20,18 +25,16 @@ HEADERS = {
     "Accept-Language": "en,en-GB;q=0.7,en-US;q=0.3",
     "Upgrade-Insecure-Requests": "1",
 }
-# OKC Open Data Portal ArcGIS endpoints (accessible)
+# OKC Open Data Portal ArcGIS FeatureServer endpoints
 TRASH_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1"
 RECYCLE_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3"
 BULKY_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/c4455716f4bf4d1dafe6806e0e619de8/rest/services/OpenData/Utilities/FeatureServer/2"
 
-UNOFFICIAL_URL = "https://okc.schizo.dev/trash"
-
-# Waste layer mapping for official API
+# Waste type -> (FeatureServer layer URL, constructor argument name)
 WASTE_LAYERS = {
-    "TRASH": TRASH_ZONES_URL,
-    "RECYCLE": RECYCLE_ZONES_URL,
-    "BULKY": BULKY_ZONES_URL,
+    "TRASH": (TRASH_ZONES_URL, "trashObjectID"),
+    "RECYCLE": (RECYCLE_ZONES_URL, "recycleObjectID"),
+    "BULKY": (BULKY_ZONES_URL, "bulkyObjectID"),
 }
 WEEKDAY_INDEX = {
     "monday": 0,
@@ -48,143 +51,91 @@ ICON_MAP = {
     "BULKY": Icons.BULKY,
 }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+PARAM_DESCRIPTIONS = {
     "en": {
-        "objectID": "Object ID for unofficial source (okc.schizo.dev).",
-        "try_official": "Enable official OKC Open Data Portal services (requires Object IDs).",
-        "bulkyObjectID": "Object ID for bulky waste zone from OKC Open Data Portal.",
-        "recycleObjectID": "Object ID for recycling zone from OKC Open Data Portal.",
-        "trashObjectID": "Object ID for trash collection zone from OKC Open Data Portal.",
-        "recycle_reference_date": "Known recycling pickup date (e.g., '2025-06-05'). Use to fix every other week schedule when dates are incorrect.",
+        "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal.",
+        "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
+        "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
     },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "For official mode with try_official=true, provide specific Object IDs from OKC Open Data Portal "
-    "(bulkyObjectID, recycleObjectID, trashObjectID). "
-    "Object IDs can be found by exploring the OKC waste collection datasets at "
-    "https://utility.arcgis.com/usrsvcs/servers. "
-    "If try_official is disabled, provide objectID for the unofficial source."
+    "en": "Provide the OBJECTID of one or more of your collection zones from the OKC Open "
+    "Data Portal (trashObjectID, recycleObjectID, bulkyObjectID). At least one is required. "
+    "Open the FeatureServer layers linked in the documentation, use the Query page to locate "
+    "the zone that covers your address, and read its OBJECTID."
 }
 
 
 class Source:
     def __init__(
         self,
-        objectID: str = "",
-        try_official: bool = False,
-        bulkyObjectID: str = "",
-        recycleObjectID: str = "",
-        trashObjectID: str = "",
-        recycle_reference_date: str = "",
+        trashObjectID: str | int = "",
+        recycleObjectID: str | int = "",
+        bulkyObjectID: str | int = "",
     ):
-        if isinstance(try_official, bool):
-            self._try_official = try_official
-        else:
-            self._try_official = str(try_official).strip().lower() in {
-                "1",
-                "true",
-                "yes",
-                "on",
-            }
-        self._object_id = str(objectID).strip()
-        self._recycle_reference_date = str(recycle_reference_date).strip()
         self._record_ids = {
-            "BULKY": str(bulkyObjectID).strip(),
-            "RECYCLE": str(recycleObjectID).strip(),
             "TRASH": str(trashObjectID).strip(),
+            "RECYCLE": str(recycleObjectID).strip(),
+            "BULKY": str(bulkyObjectID).strip(),
         }
 
-        if self._try_official:
-            missing = [
-                waste_type
-                for waste_type, record_id in self._record_ids.items()
-                if record_id == ""
-            ]
-            if missing:
-                raise Exception(
-                    "Missing official Object IDs for: "
-                    + ", ".join(missing)
-                    + ". Provide bulkyObjectID, recycleObjectID, trashObjectID."
-                )
-        elif self._object_id == "":
-            raise Exception(
-                "objectID is required when try_official is disabled (unofficial source mode)."
+        if not any(self._record_ids.values()):
+            raise SourceArgumentNotFound(
+                "trashObjectID",
+                "",
+                "provide at least one of trashObjectID, recycleObjectID or bulkyObjectID.",
             )
 
-    def _query_object_id(self, layer_url: str, object_id: str) -> dict:
-        """Query a waste layer for a specific Object ID using ArcGIS FeatureServer."""
+    def _query_object_id(self, layer_url: str, object_id: str, argument: str) -> dict:
+        """Query a waste layer for a specific OBJECTID using the ArcGIS FeatureServer."""
         params = {
             "where": f"OBJECTID={object_id}",
             "outFields": "*",
             "returnGeometry": "false",
             "f": "json",
         }
-        
-        try:
-            response = requests.get(
-                f"{layer_url}/query",
-                params=params,
-                headers=HEADERS,
-                timeout=10,
+
+        response = requests.get(
+            f"{layer_url}/query",
+            params=params,
+            headers=HEADERS,
+            timeout=30,
+        )
+        response.raise_for_status()
+
+        json_data = response.json()
+        features = json_data.get("features", [])
+        if not features:
+            raise SourceArgumentNotFound(
+                argument,
+                object_id,
+                "no zone found with this OBJECTID in the OKC Open Data Portal.",
             )
-            response.raise_for_status()
-            
-            json_data = response.json()
-            features = json_data.get("features", [])
-            if features:
-                return features[0].get("attributes", {})
-            else:
-                raise Exception(f"No record found with OBJECTID={object_id}")
-                        
-        except Exception as e:
-            raise Exception(f"Unable to query Object ID {object_id}: {str(e)}")
-    
-    def _parse_arcgis_pickup_dates(self, attributes: dict, waste_type: str) -> list:
-        """Parse pickup dates from ArcGIS attributes."""
+        return features[0].get("attributes", {})
+
+    def _parse_pickup_dates(self, attributes: dict, waste_type: str) -> list:
+        """Parse the pickup schedule from ArcGIS attributes into Collections."""
         today = datetime.now().date()
-        entries = []
-        
-        # Check for specific pickup dates (NextPick1, NextPick2, NextPick3)
-        for i in range(1, 4):
-            pickup_date_key = f"NextPick{i}"
-            if pickup_date_key in attributes and attributes[pickup_date_key]:
-                try:
-                    timestamp_ms = attributes[pickup_date_key]
-                    if isinstance(timestamp_ms, (int, float)):
-                        pickup_date = datetime.fromtimestamp(timestamp_ms / 1000).date()
-                        if pickup_date >= today:
-                            entries.append(
-                                Collection(
-                                    date=pickup_date,
-                                    t=waste_type,
-                                    icon=ICON_MAP.get(waste_type),
-                                )
-                            )
-                except Exception:
-                    pass
-        
-        if not entries:
-            # Handle PickupDay field variations
-            pickup_day = None
-            for field_name in ["PickupDay", "PickUpDay", "PICKUPDAY"]:
-                if field_name in attributes and attributes[field_name]:
-                    pickup_day = str(attributes[field_name]).strip()
-                    break
-            
-            if pickup_day:
-                try:
-                    next_date = self._resolve_pickup_date(pickup_day, today, waste_type)
-                    entries.append(
-                        Collection(
-                            date=next_date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type),
-                        )
-                    )
-                except Exception:
-                    pass
-        
+        entries: list = []
+
+        pickup_day = None
+        for field_name in ("PickupDay", "PickUpDay", "PICKUPDAY"):
+            value = attributes.get(field_name)
+            if value:
+                pickup_day = str(value).strip()
+                break
+
+        if pickup_day:
+            next_date = self._resolve_pickup_date(pickup_day, today)
+            entries.append(
+                Collection(
+                    date=next_date,
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type),
+                )
+            )
+
         return entries
 
     def _next_weekday(self, weekday_name: str, today: date) -> date:
@@ -217,49 +168,13 @@ class Source:
                 month = 1
                 year += 1
 
-        raise Exception(
+        raise ValueError(
             f"Unable to calculate next '{nth}' '{weekday_name}' date from {today}."
         )
 
-    def _resolve_pickup_date(self, pickup_rule: str, today: date, waste_type: str = "") -> date:
+    def _resolve_pickup_date(self, pickup_rule: str, today: date) -> date:
         normalized_rule = pickup_rule.strip()
         normalized_rule_lower = normalized_rule.lower()
-
-        # If this is RECYCLE and we have a reference date, use it for every-other-week calculation
-        if waste_type.upper() == "RECYCLE" and self._recycle_reference_date:
-            try:
-                # Parse reference date (try different formats)
-                ref_date = None
-                for fmt in ["%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y"]:
-                    try:
-                        ref_date = datetime.strptime(self._recycle_reference_date, fmt).date()
-                        break
-                    except ValueError:
-                        continue
-                
-                # Check if the pickup_rule is a weekday (like "friday") and we parsed a valid ref_date
-                if ref_date and normalized_rule_lower in WEEKDAY_INDEX:
-                    # Use reference date as starting point for pattern
-                    if ref_date >= today:
-                        return ref_date
-                    
-                    # Calculate weeks difference
-                    weeks_diff = (today - ref_date).days // 7
-                    
-                    # Determine next date based on parity
-                    if weeks_diff % 2 == 0:
-                        next_date = ref_date + timedelta(weeks=2)
-                    else:
-                        next_date = ref_date + timedelta(weeks=1)
-                    
-                    # Make sure date is after today
-                    while next_date <= today:
-                        next_date += timedelta(weeks=2)
-                    
-                    return next_date
-            except Exception:
-                # Fall through to normal logic on any error
-                pass
 
         if normalized_rule_lower in WEEKDAY_INDEX:
             return self._next_weekday(normalized_rule_lower, today)
@@ -279,173 +194,16 @@ class Source:
             except ValueError:
                 continue
 
-        raise Exception(f"Unsupported pickup rule returned by API: '{pickup_rule}'")
+        raise ValueError(f"Unsupported pickup rule returned by API: '{pickup_rule}'")
 
-    def _fetch_unofficial(self):
-        response = requests.get(
-            UNOFFICIAL_URL,
-            params={"recordID": self._object_id},
-            headers=HEADERS,
-        )
-        response.raise_for_status()
-
-        try:
-            json_data = response.json()
-        except Exception as e:
-            raise Exception(
-                f"Invalid response returned from source: {UNOFFICIAL_URL}"
-            ) from e
-
-        # Current unofficial endpoint returns nested objects with explicit pickup dates.
-        if isinstance(json_data, dict) and any(
-            key in json_data for key in ("trash", "recycling", "bulkyWaste")
-        ):
-            today = datetime.now().date()
-            entries = []
-
-            def _first_upcoming_pickup_date(pickups):
-                for pickup in pickups or []:
-                    pickup_date = (
-                        pickup.get("date") if isinstance(pickup, dict) else None
-                    )
-                    if not pickup_date:
-                        continue
-                    try:
-                        parsed_date = datetime.strptime(pickup_date, "%Y-%m-%d").date()
-                    except ValueError:
-                        continue
-                    if parsed_date >= today:
-                        return parsed_date
-
-                return None
-
-            trash_data = json_data.get("trash", {})
-            trash_date = None
-            if isinstance(trash_data, dict):
-                next_date = trash_data.get("next", {}).get("date")
-                if next_date:
-                    try:
-                        trash_date = datetime.strptime(next_date, "%Y-%m-%d").date()
-                        if trash_date < today:
-                            trash_date = None
-                    except ValueError:
-                        trash_date = None
-                if trash_date is None and trash_data.get("day"):
-                    trash_date = self._resolve_pickup_date(
-                        str(trash_data["day"]), today, "TRASH"
-                    )
-
-            if trash_date is not None:
-                entries.append(
-                    Collection(date=trash_date, t="TRASH", icon=ICON_MAP.get("TRASH"))
-                )
-
-            recycling_data = json_data.get("recycling", {})
-            recycle_date = None
-            if isinstance(recycling_data, dict):
-                recycle_date = _first_upcoming_pickup_date(
-                    recycling_data.get("pickups")
-                )
-                if recycle_date is None and recycling_data.get("day"):
-                    recycle_date = self._resolve_pickup_date(
-                        str(recycling_data["day"]), today, "RECYCLE"
-                    )
-
-            if recycle_date is not None:
-                entries.append(
-                    Collection(
-                        date=recycle_date,
-                        t="RECYCLE",
-                        icon=ICON_MAP.get("RECYCLE"),
-                    )
-                )
-
-            bulky_data = json_data.get("bulkyWaste", {})
-            bulky_date = None
-            if isinstance(bulky_data, dict):
-                bulky_date = _first_upcoming_pickup_date(bulky_data.get("pickups"))
-                if bulky_date is None and bulky_data.get("schedule"):
-                    bulky_date = self._resolve_pickup_date(
-                        str(bulky_data["schedule"]), today, "BULKY"
-                    )
-
-            if bulky_date is not None:
-                entries.append(
-                    Collection(date=bulky_date, t="BULKY", icon=ICON_MAP.get("BULKY"))
-                )
-
-            if entries:
-                return entries
-
-        records = json_data.get("Records")
-        if records is None:
-            records = json_data.get("records")
-        if not records:
-            raise Exception(
-                "No records found for objectID in unofficial source. Please verify your objectID."
-            )
-
-        fields = json_data.get("Fields")
-        if fields is None:
-            fields = json_data.get("fields", [])
-
-        record = records[0]
-        if len(record) != len(fields):
-            raise Exception("Invalid record format returned from unofficial source")
-
-        today = datetime.now().date()
-        entries = []
-
-        for field, raw_value in zip(fields, record):
-            field_name = str(field.get("FieldName", ""))
-
-            if field_name in {"Notice", "Shape"} or not field_name.startswith("Next_"):
-                continue
-
-            if raw_value is None:
-                continue
-
-            value = str(raw_value).strip()
-            if value == "" or value.lower() == "not available":
-                continue
-
-            waste_type = field_name.replace("Next_", "").split("_")[0].upper()
-            entries.append(
-                Collection(
-                    date=self._resolve_pickup_date(value, today, waste_type),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
-
-    def _fetch_official(self):
-        today = datetime.now().date()
-        entries = []
+    def fetch(self):
+        entries: list = []
 
         for waste_type, object_id in self._record_ids.items():
             if not object_id:
                 continue
-            try:
-                layer_url = WASTE_LAYERS[waste_type]
-                attributes = self._query_object_id(layer_url, object_id)
-                layer_entries = self._parse_arcgis_pickup_dates(attributes, waste_type)
-                if layer_entries:
-                    entries.extend(layer_entries)
-            except Exception:
-                continue
-        
-        if entries:
-            return entries
-        
-        raise Exception(
-            "No waste collection data found for the provided Object IDs. "
-            "Verify the Object IDs are correct and correspond to the appropriate waste types."
-        )
+            layer_url, argument = WASTE_LAYERS[waste_type]
+            attributes = self._query_object_id(layer_url, object_id, argument)
+            entries.extend(self._parse_pickup_dates(attributes, waste_type))
 
-    def fetch(self):
-        if self._try_official:
-            return self._fetch_official()
-
-        return self._fetch_unofficial()
+        return entries
