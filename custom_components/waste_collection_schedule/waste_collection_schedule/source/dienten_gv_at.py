@@ -18,7 +18,7 @@ HEADERS = {
 }
 
 BASE_URL = (
-    "https://www.dienten.gv.at/system/web/kalender.aspx"
+    "https://www.dienten.gv.at/system/web/kalender.aspx?bdatum=31.12.9999&blnr=&gnr_search=0&menuonr=218643352"
 )
 
 MAX_PAGES = 3
