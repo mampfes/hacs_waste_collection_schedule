@@ -20271,10 +20271,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "llpgid": "Llpgid"
+          "house": "House number or name",
+          "llpgid": "LLPG ID",
+          "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house": "House number or name as shown in the council's address picker, e.g. '16' or 'The Old Forge'.",
+          "llpgid": "(Advanced) Direct LLPG GUID taken from the recycling calendar URL. Provide this OR postcode + house.",
+          "postcode": "UK postcode for the address, e.g. 'CO5 8NT'."
         }
       },
       "reconfigure_colchester_gov_uk": {
@@ -20282,9 +20287,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "llpgid": "Llpgid"
+          "house": "House number or name",
+          "llpgid": "LLPG ID",
+          "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "house": "House number or name as shown in the council's address picker, e.g. '16' or 'The Old Forge'.",
+          "llpgid": "(Advanced) Direct LLPG GUID taken from the recycling calendar URL. Provide this OR postcode + house.",
+          "postcode": "UK postcode for the address, e.g. 'CO5 8NT'."
+        }
       },
       "args_conwy_gov_uk": {
         "title": "Configure Source",

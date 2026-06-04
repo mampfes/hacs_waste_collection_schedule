@@ -4433,7 +4433,9 @@
   },
   "colchester_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/colchester_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your UK postcode and the house number or name as it appears in the Colchester recycling calendar address picker at https://www.colchester.gov.uk/your-recycling-calendar/. Advanced users may instead supply 'llpgid' (the GUID from the calendar URL after selecting an address)."
+    },
     "urls": {}
   },
   "conwy_gov_uk": {
