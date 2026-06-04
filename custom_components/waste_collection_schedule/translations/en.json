@@ -8129,6 +8129,28 @@
           "commune": "The URL slug of the commune on heimat-info.de (e.g. 'gruendau'). Find it in the URL {url_www_heimat_info_de_gemeinden__slug__abfallkalender}"
         }
       },
+      "args_ajl_mbh_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street (only needed for towns with multiple collection zones)",
+          "town": "Town"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ajl_mbh_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street (only needed for towns with multiple collection zones)",
+          "town": "Town"
+        },
+        "data_description": {}
+      },
       "args_ics_alba_bs_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -25292,6 +25314,29 @@
           "post_code": "Postcode"
         },
         "data_description": {}
+      },
+      "args_torbay_council_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "uprn": "Your Unique Property Reference Number (UPRN). Find yours at {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "reconfigure_torbay_council_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "uprn": "Your Unique Property Reference Number (UPRN). Find yours at {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_torridge_gov_uk": {
         "title": "Configure Source",

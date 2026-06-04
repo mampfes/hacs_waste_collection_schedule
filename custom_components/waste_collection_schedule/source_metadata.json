@@ -1791,6 +1791,11 @@
       "url_www_heimat_info_de_gemeinden__slug__abfallkalender": "https://www.heimat-info.de/gemeinden/<slug>/abfallkalender."
     }
   },
+  "ajl_mbh_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ajl_mbh_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "ics_alba_bs_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/alba_bs_de.md",
     "howto": {
@@ -5840,6 +5845,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tmbc_gov_uk.md",
     "howto": {},
     "urls": {}
+  },
+  "torbay_council_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/torbay_council_gov_uk.md",
+    "howto": {},
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "torridge_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/torridge_gov_uk.md",

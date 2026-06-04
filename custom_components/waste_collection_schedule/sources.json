@@ -6837,6 +6837,12 @@
       "id": "heimat_info_de"
     },
     {
+      "title": "AJL - Abfallwirtschaftsgesellschaft Jerichower Land mbH",
+      "module": "ajl_mbh_de",
+      "default_params": {},
+      "id": "ajl_mbh_de"
+    },
+    {
       "title": "ALBA Berlin",
       "module": "abfall_io",
       "default_params": {
@@ -18450,6 +18456,14 @@
       "id": "avfallsapp_se"
     },
     {
+      "title": "Teknik i V\u00e4st (Arvika/Eda)",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "teknikivast"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "Telge \u00c5tervinning",
       "module": "telge_se",
       "default_params": {},
@@ -21302,6 +21316,12 @@
       "module": "tmbc_gov_uk",
       "default_params": {},
       "id": "tmbc_gov_uk"
+    },
+    {
+      "title": "Torbay Council",
+      "module": "torbay_council_gov_uk",
+      "default_params": {},
+      "id": "torbay_council_gov_uk"
     },
     {
       "title": "Torridge Council",

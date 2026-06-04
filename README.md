@@ -1117,6 +1117,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ahlbershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Ahlshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Aholfing](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/aholfing/abfallkalender
+- [AJL - Abfallwirtschaftsgesellschaft Jerichower Land mbH](/doc/source/ajl_mbh_de.md) / ajl-mbh.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
 - [Albrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2792,6 +2793,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stenungsunds kommun](/doc/source/edpevent_se.md) / stenungsund.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
 - [Söderköping](/doc/source/avfallsapp_se.md) / soderkoping.se
+- [Teknik i Väst (Arvika/Eda)](/doc/source/avfallsapp_se.md) / teknikivast.se
 - [Telge Återvinning](/doc/source/telge_se.md) / telge.se
 - [Upplands-Bro](/doc/source/avfallsapp_se.md) / upplands-bro.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
@@ -3234,6 +3236,7 @@ If you already have enough information for your municipality/region, you are ver
 - [The Royal Borough of Kingston Council](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
 - [Thurrock](/doc/source/thurrock_gov_uk.md) / thurrock.gov.uk
 - [Tonbridge and Malling Borough Council](/doc/source/tmbc_gov_uk.md) / tmbc.gov.uk
+- [Torbay Council](/doc/source/torbay_council_gov_uk.md) / torbay.gov.uk
 - [Torridge Council](/doc/source/torridge_gov_uk.md) / torridge.gov.uk
 - [Tunbridge Wells](/doc/source/tunbridgewells_gov_uk.md) / tunbridgewells.gov.uk
 - [UK Bin Collection Schedule (UKBCD) project](/doc/source/ukbcd.md) / github.com/robbrad/UKBinCollectionData
