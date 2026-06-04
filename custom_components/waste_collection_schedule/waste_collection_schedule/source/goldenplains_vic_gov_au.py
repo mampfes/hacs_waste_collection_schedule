@@ -1,8 +1,8 @@
 import re
 from datetime import datetime
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
@@ -34,7 +34,8 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         # Step 1: validate address against autocomplete and get canonical form
-        r = requests.get(
+        session = requests.Session(impersonate="chrome")
+        r = session.get(
             AUTOCOMPLETE_URL,
             params={"q": self._address},
             timeout=30,
@@ -64,7 +65,11 @@ class Source:
             )
 
         # Step 2: fetch the schedule page using the canonical address
-        r = requests.get(SCHEDULE_URL, params={"address": canonical}, timeout=30)
+        r = session.get(
+            SCHEDULE_URL,
+            params={"address": canonical},
+            timeout=30,
+        )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
