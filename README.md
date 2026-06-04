@@ -2950,6 +2950,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Ashford Borough Council](/doc/source/ashford_gov_uk.md) / ashford.gov.uk
 - [Aylesbury Vale District Council](/doc/source/iapp_itouchvision_com.md) / aylesburyvaledc.gov.uk
+- [Babergh and Mid Suffolk District Councils](/doc/source/babergh_midsuffolk_gov_uk.md) / midsuffolk.gov.uk
+- [Babergh District Council](/doc/source/babergh_midsuffolk_gov_uk.md) / babergh.gov.uk/check-your-collection-day
 - [Barnsley Metropolitan Borough Council](/doc/source/barnsley_gov_uk.md) / barnsley.gov.uk
 - [Basildon Council](/doc/source/basildon_gov_uk.md) / basildon.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
@@ -3119,6 +3121,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mendip District Council](/doc/source/iapp_itouchvision_com.md) / mendip.gov.uk
 - [Mid and East Antrim](/doc/source/midandeastantrim_gov_uk.md) / midandeastantrim.gov.uk
 - [Mid Devon District Council](/doc/source/mid_devon_gov_uk.md) / middevon.gov.uk
+- [Mid Suffolk District Council](/doc/source/babergh_midsuffolk_gov_uk.md) / midsuffolk.gov.uk/check-your-collection-day
 - [Mid Sussex District Council (Whitespace WRP)](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk/waste-and-recycling
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
 - [Midlothian Council](/doc/source/midlothian_gov_uk.md) / my.midlothian.gov.uk

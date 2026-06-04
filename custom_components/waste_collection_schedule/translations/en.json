@@ -19093,6 +19093,33 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
         }
       },
+      "args_babergh_midsuffolk_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "council": "Council",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "council": "Which council area you are in: 'midsuffolk' or 'babergh'.",
+          "uprn": "Your Unique Property Reference Number (UPRN). Use findmyaddress.co.uk to look this up."
+        }
+      },
+      "reconfigure_babergh_midsuffolk_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "council": "Council",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "council": "Which council area you are in: 'midsuffolk' or 'babergh'.",
+          "uprn": "Your Unique Property Reference Number (UPRN). Use findmyaddress.co.uk to look this up."
+        }
+      },
       "args_barnsley_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
