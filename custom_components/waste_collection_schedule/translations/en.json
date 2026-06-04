@@ -26287,18 +26287,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
-          "objectID": "Object Id",
           "recycleObjectID": "Recycle Object Id",
-          "trashObjectID": "Trash Object Id",
-          "try_official": "Try Official"
+          "trashObjectID": "Trash Object Id"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
-          "objectID": "Object ID for unofficial source (okc.schizo.dev).",
-          "recycleObjectID": "Object ID from 'Recycle Zones'.",
-          "trashObjectID": "Object ID from 'Trash Zones'.",
-          "try_official": "If checked, use official data.okc.gov zone datasets and the three Object IDs below."
+          "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
+          "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
+          "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
         }
       },
       "reconfigure_okc_gov": {
@@ -26307,17 +26303,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
-          "objectID": "Object Id",
           "recycleObjectID": "Recycle Object Id",
-          "trashObjectID": "Trash Object Id",
-          "try_official": "Try Official"
+          "trashObjectID": "Trash Object Id"
         },
         "data_description": {
-          "bulkyObjectID": "Object ID from 'Bulky Waste Zones'.",
-          "objectID": "Object ID for unofficial source (okc.schizo.dev).",
-          "recycleObjectID": "Object ID from 'Recycle Zones'.",
-          "trashObjectID": "Object ID from 'Trash Zones'.",
-          "try_official": "If checked, use official data.okc.gov zone datasets and the three Object IDs below."
+          "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
+          "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
+          "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
         }
       },
       "args_phila_gov": {
