@@ -32,7 +32,7 @@ class Source:
 
         s = requests.Session()
         r = s.get(
-            f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35",
+            f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}",
             headers=HEADERS,
         )
         json_data = json.loads(r.text)["BinCollections"]
