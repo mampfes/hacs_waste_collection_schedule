@@ -25384,11 +25384,8 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "bulkyObjectID": "Bulky Object Id",
-          "objectID": "Object Id",
           "recycleObjectID": "Recycle Object Id",
-          "recycle_reference_date": "Recycle Reference Date",
-          "trashObjectID": "Trash Object Id",
-          "try_official": "Try Official"
+          "trashObjectID": "Trash Object Id"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -25400,11 +25397,8 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "bulkyObjectID": "Bulky Object Id",
-          "objectID": "Object Id",
           "recycleObjectID": "Recycle Object Id",
-          "recycle_reference_date": "Recycle Reference Date",
-          "trashObjectID": "Trash Object Id",
-          "try_official": "Try Official"
+          "trashObjectID": "Trash Object Id"
         },
         "data_description": {}
       },

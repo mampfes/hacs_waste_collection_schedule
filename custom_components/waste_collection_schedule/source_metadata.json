@@ -6099,7 +6099,7 @@
   "okc_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md",
     "howto": {
-      "en": "For official mode with try_official=true, provide specific Object IDs from OKC Open Data Portal (bulkyObjectID, recycleObjectID, trashObjectID). Object IDs can be found by exploring the OKC waste collection datasets at https://utility.arcgis.com/usrsvcs/servers. If try_official is disabled, provide objectID for the unofficial source."
+      "en": "Provide the OBJECTID of one or more of your collection zones from the OKC Open Data Portal (trashObjectID, recycleObjectID, bulkyObjectID). At least one is required. Open the FeatureServer layers linked in the documentation, use the Query page to locate the zone that covers your address, and read its OBJECTID."
     },
     "urls": {}
   },
