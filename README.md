@@ -322,6 +322,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Draßmarkt](/doc/source/citiesapps_com.md) / drassmarkt.at
 - [Ebenthal in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Eberau](/doc/source/citiesapps_com.md) / eberau.riskommunal.net
+- [Ebergassing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Eberndorf](/doc/source/citiesapps_com.md) / eberndorf.at
 - [Ebersdorf](/doc/source/citiesapps_com.md) / ebersdorf.eu
 - [Eberstein](/doc/source/citiesapps_com.md) / eberstein.at
@@ -338,6 +339,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Feistritz im Rosental](/doc/ics/muellapp_com.md) / muellapp.com
 - [Feistritz ob Bleiburg](/doc/source/citiesapps_com.md) / feistritz-bleiburg.gv.at
 - [Feistritztal](/doc/source/citiesapps_com.md) / feistritztal.at
+- [Feld am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Feldbach](/doc/source/citiesapps_com.md) / feldbach.gv.at
 - [Feldkirch](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Feldkirchen in Kärnten](/doc/source/citiesapps_com.md) / feldkirchen.at
@@ -346,6 +348,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Ferndorf](/doc/source/citiesapps_com.md) / ferndorf.gv.at
 - [Ferndorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Finkenstein am Faaker See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Fischamend](/doc/ics/muellapp_com.md) / muellapp.com
+- [Flattach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Frankenau-Unterpullendorf](/doc/source/citiesapps_com.md) / frankenau-unterpullendorf.gv.at
 - [Frankenfels](/doc/source/citiesapps_com.md) / frankenfels.at
 - [Frantschach - Sankt Gertraud](/doc/source/citiesapps_com.md) / frantschach.gv.at
@@ -355,6 +359,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Fraxern](/doc/source/citiesapps_com.md) / fraxern.at
 - [Freistadt](/doc/source/citiesapps_com.md) / freistadt.at
 - [Fresach](/doc/source/citiesapps_com.md) / fresach.gv.at
+- [Fresach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Friedberg](/doc/source/citiesapps_com.md) / friedberg.gv.at
 - [Friesach](/doc/source/citiesapps_com.md) / friesach.gv.at
 - [Frohnleiten](/doc/source/citiesapps_com.md) / frohnleiten.com
@@ -371,6 +376,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Sulz](/doc/source/citiesapps_com.md) / gemeinde-sulz.at
 - [Gemeinde24](/doc/source/gemeinde24_at.md) / gemeinde24.at
 - [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
+- [Gerasdorf bei Wien](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gersdorf an der Feistritz](/doc/source/citiesapps_com.md) / gersdorf.gv.at
 - [Gitschtal](/doc/source/citiesapps_com.md) / gitschtal.gv.at
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
@@ -384,6 +390,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Grafenstein](/doc/source/citiesapps_com.md) / grafenstein.gv.at
 - [Grafenstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [Grafenwörth](/doc/source/citiesapps_com.md) / grafenwoerth.at
+- [Gramatneusiedl](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gratkorn](/doc/source/citiesapps_com.md) / gratkorn.gv.at
 - [Gratwein-Straßengel](/doc/source/citiesapps_com.md) / gratwein-strassengel.gv.at
 - [Greifenburg](/doc/ics/muellapp_com.md) / muellapp.com
@@ -416,6 +423,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hagenberg im Mühlkreis](/doc/source/citiesapps_com.md) / hagenberg.at
 - [Hannersdorf](/doc/source/citiesapps_com.md) / hannersdorf.at
 - [Hartberg](/doc/source/citiesapps_com.md) / hartberg.at
+- [Haslau-Maria Ellend](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hausmannstätten](/doc/source/hausmannstaetten_gv_at.md) / hausmannstaetten.gv.at
 - [Heiligenblut am Großglockner](/doc/ics/muellapp_com.md) / muellapp.com
 - [Heiligenkreuz](/doc/source/citiesapps_com.md) / heiligenkreuz.at
@@ -426,6 +434,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Henndorf am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hermagor-Pressegger See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Heugraben](/doc/source/citiesapps_com.md) / heugraben.at
+- [Himberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hirm](/doc/source/citiesapps_com.md) / hirm.gv.at
 - [Hirschegg-Pack](/doc/source/lipizzanerheimat_at.md) / hirschegg-pack.gv.at
 - [Hochwolkersdorf](/doc/source/citiesapps_com.md) / hochwolkersdorf.at
@@ -462,6 +471,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Klagenfurt am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Klaus](/doc/source/citiesapps_com.md) / klaus.at
 - [Kleblach-Lind](/doc/ics/muellapp_com.md) / muellapp.com
+- [Klein-Neusiedl](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kleinmürbisch](/doc/source/citiesapps_com.md) / kleinmürbisch.at
 - [Klingenbach](/doc/source/citiesapps_com.md) / klingenbach.at
 - [Klöch](/doc/source/citiesapps_com.md) / kloech.com
@@ -488,11 +498,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Langau](/doc/source/citiesapps_com.md) / langau.at
 - [Langenrohr](/doc/source/citiesapps_com.md) / langenrohr.gv.at
 - [Langenzersdorf](/doc/source/citiesapps_com.md) / langenzersdorf.gv.at
+- [Lanzendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leibnitz](/doc/source/citiesapps_com.md) / leibnitz.at
 - [Leithaprodersdorf](/doc/source/citiesapps_com.md) / leithaprodersdorf.at
 - [Lendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leoben](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leonding](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
+- [Leopoldsdorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Lesachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leutschach an der Weinstraße](/doc/source/citiesapps_com.md) / leutschach-weinstrasse.gv.at
 - [Lieboch](/doc/source/citiesapps_com.md) / lieboch.gv.at
@@ -509,6 +521,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mallnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Malta](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Lankowitz](/doc/source/lipizzanerheimat_at.md) / maria-lankowitz.at
+- [Maria Lanzendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Rain](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
@@ -535,6 +548,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mischendorf](/doc/source/citiesapps_com.md) / mischendorf.at
 - [Mistelbach](/doc/source/citiesapps_com.md) / mistelbach.at
 - [Mitterdorf an der Raab](/doc/source/citiesapps_com.md) / mitterdorf-raab.at
+- [Moosbrunn](/doc/ics/muellapp_com.md) / muellapp.com
 - [Moosburg](/doc/source/citiesapps_com.md) / moosburg.gv.at
 - [Moosburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mooskirchen](/doc/source/lipizzanerheimat_at.md) / mooskirchen.at
@@ -560,6 +574,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Oberpullendorf](/doc/source/citiesapps_com.md) / oberpullendorf.gv.at
 - [Oberschützen](/doc/source/citiesapps_com.md) / oberschuetzen.at
 - [Obertrum am See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Obervellach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Oberwart](/doc/source/citiesapps_com.md) / oberwart.gv.at
 - [Oslip](/doc/source/citiesapps_com.md) / oslip.at
 - [Ottendorf an der Rittschein](/doc/source/citiesapps_com.md) / ottendorf-rittschein.steiermark.at
@@ -600,6 +615,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Raiding](/doc/source/citiesapps_com.md) / raiding-online.at
 - [Ramsau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Rangersdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Rauchenwarth](/doc/ics/muellapp_com.md) / muellapp.com
 - [Rechnitz](/doc/source/citiesapps_com.md) / rechnitz.at/de
 - [Reichenau](/doc/source/citiesapps_com.md) / reichenau.gv.at
 - [Reichenau an der Rax](/doc/source/citiesapps_com.md) / reichenau.at
@@ -627,9 +643,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Schleedorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schlins](/doc/source/citiesapps_com.md) / schlins.at
 - [Schrattenberg](/doc/source/citiesapps_com.md) / schrattenberg.gv.at
+- [Schwadorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schwadorf](/doc/source/citiesapps_com.md) / schwadorf.gv.at
 - [Schwarzenbach an der Pielach](/doc/source/citiesapps_com.md) / schwarzenbach-pielach.at
 - [Schwaz](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schwechat](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schwoich](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schäffern](/doc/source/citiesapps_com.md) / schaeffern.gv.at
 - [Schützen am Gebirge](/doc/source/citiesapps_com.md) / schuetzen-am-gebirge.at
@@ -637,6 +655,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Seeham](/doc/ics/muellapp_com.md) / muellapp.com
 - [Seekirchen am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Seiersberg-Pirka](/doc/source/citiesapps_com.md) / gemeindekurier.at
+- [Seyring](/doc/ics/muellapp_com.md) / muellapp.com
 - [Siegendorf](/doc/source/citiesapps_com.md) / siegendorf.gv.at
 - [Sieggraben](/doc/source/citiesapps_com.md) / sieggraben.at
 - [Sigleß](/doc/source/citiesapps_com.md) / sigless.at
@@ -663,6 +682,7 @@ If you already have enough information for your municipality/region, you are ver
 - [St. Martin im Innkreis](/doc/source/citiesapps_com.md) / st-martin-innkreis.ooe.gv.at
 - [St. Peter - Freienstein](/doc/source/citiesapps_com.md) / st-peter-freienstein.gv.at
 - [St. Peter am Ottersbach](/doc/source/citiesapps_com.md) / st-peter-ottersbach.gv.at
+- [St. Pölten](/doc/ics/muellapp_com.md) / muellapp.com
 - [St. Radegund bei Graz](/doc/source/citiesapps_com.md) / radegund.info
 - [St. Ruprecht an der Raab](/doc/source/citiesapps_com.md) / st.ruprecht.at
 - [St. Symvaro](/doc/ics/muellapp_com.md) / muellapp.com
@@ -763,6 +783,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Zillingtal](/doc/source/citiesapps_com.md) / zillingtal.eu
 - [Zurndorf](/doc/source/citiesapps_com.md) / zurndorf.at
 - [Zwischenwasser](/doc/source/citiesapps_com.md) / zwischenwasser.at
+- [Zwölfaxing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Übelbach](/doc/source/citiesapps_com.md) / uebelbach.gv.at
 </details>
 

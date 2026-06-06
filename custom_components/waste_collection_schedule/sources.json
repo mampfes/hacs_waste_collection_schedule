@@ -1798,6 +1798,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Ebergassing",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Eberndorf",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1894,6 +1900,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Feld am See",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Feldbach",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1937,6 +1949,18 @@
     },
     {
       "title": "Finkenstein am Faaker See",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Fischamend",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Flattach",
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
@@ -1994,6 +2018,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Fresach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Friedberg",
@@ -2098,6 +2128,12 @@
       "id": "umweltverbaende_at"
     },
     {
+      "title": "Gerasdorf bei Wien",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Gersdorf an der Feistritz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2174,6 +2210,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Gramatneusiedl",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Gratkorn",
@@ -2390,6 +2432,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Haslau-Maria Ellend",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Hausmannst\u00e4tten",
       "module": "hausmannstaetten_gv_at",
       "default_params": {},
@@ -2448,6 +2496,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Himberg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Hirm",
@@ -2670,6 +2724,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Klein-Neusiedl",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Kleinm\u00fcrbisch",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2826,6 +2886,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Lanzendorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Leibnitz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2854,6 +2920,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gem2go_dev"
+    },
+    {
+      "title": "Leopoldsdorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Lesachtal",
@@ -2950,6 +3022,12 @@
       "module": "lipizzanerheimat_at",
       "default_params": {},
       "id": "lipizzanerheimat_at"
+    },
+    {
+      "title": "Maria Lanzendorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Maria Rain",
@@ -3108,6 +3186,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Moosbrunn",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Moosburg",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3253,6 +3337,12 @@
     },
     {
       "title": "Obertrum am See",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Obervellach",
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
@@ -3498,6 +3588,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Rauchenwarth",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Rechnitz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3661,6 +3757,12 @@
     },
     {
       "title": "Schwadorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Schwadorf",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -3673,6 +3775,12 @@
     },
     {
       "title": "Schwaz",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Schwechat",
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
@@ -3718,6 +3826,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Seyring",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Siegendorf",
@@ -3874,6 +3988,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "St. P\u00f6lten",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "St. Radegund bei Graz",
@@ -4476,6 +4596,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Zw\u00f6lfaxing",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "\u00dcbelbach",
