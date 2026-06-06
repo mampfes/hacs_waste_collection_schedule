@@ -31,14 +31,17 @@ query Query($idHouseNumber: ID!, $wasteTypes: [ID], $dateMin: Date, $dateMax: Da
 
 
 def EXTRA_INFO():
-    return [
-        {
+    result = []
+    for s in SERVICE_MAP:
+        entry = {
             "title": s["title"],
             "url": s["url"],
             "default_params": {"key": s["service_id"]},
         }
-        for s in SERVICE_MAP
-    ]
+        if "country" in s:
+            entry["country"] = s["country"]
+        result.append(entry)
+    return result
 
 
 TEST_CASES = {
@@ -49,6 +52,10 @@ TEST_CASES = {
     "Strausberg": {
         "key": "efb75cbd1f08fae1d4e47ae72a85c655",
         "idHouseNumber": 5985,
+    },
+    "Graz (Rudersdorfer Straße 60)": {
+        "key": "1c230a689579b6d3ddb9ceb5a56c6072",
+        "idHouseNumber": 31972,
     },
 }
 
