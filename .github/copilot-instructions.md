@@ -37,3 +37,21 @@ pre-commit install                                               # activate git 
 ```
 
 PRs target `master` of `mampfes/hacs_waste_collection_schedule`.
+
+## Copilot commands and agents
+
+Copilot now mirrors the Claude command/agent setup through repository-scoped prompt and chatmode files:
+
+- Commands (`.github/prompts/`):
+  - `new-source.prompt.md`
+  - `review-pr.prompt.md`
+  - `review-issue.prompt.md`
+  - `cleanup.prompt.md`
+- Agent equivalents (`.github/chatmodes/`):
+  - `source-investigator.chatmode.md`
+  - `source-implementer.chatmode.md`
+  - `pr-reviewer.chatmode.md`
+  - `pr-executor.chatmode.md`
+  - `issue-triager.chatmode.md`
+  - `issue-executor.chatmode.md`
+  - `repo-cleanup.chatmode.md`
