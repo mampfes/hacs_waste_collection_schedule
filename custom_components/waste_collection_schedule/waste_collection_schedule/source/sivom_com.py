@@ -5,7 +5,7 @@ import unicodedata
 from typing import Optional
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -44,9 +44,9 @@ COMMUNES = [
 ]
 
 ICON_MAP = {
-    "Bac vert (Résiduels)": "mdi:trash-can",
-    "Bac jaune (Emballages)": "mdi:recycle",
-    "Bac marron (Végétaux)": "mdi:leaf",
+    "Bac vert (Résiduels)": Icons.GENERAL_WASTE,
+    "Bac jaune (Emballages)": Icons.RECYCLING,
+    "Bac marron (Végétaux)": Icons.ORGANIC,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
