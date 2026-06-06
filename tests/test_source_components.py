@@ -5,6 +5,7 @@ from importlib import import_module
 from inspect import Parameter, signature
 from types import GeneratorType, ModuleType
 from typing import Any, Iterable, Type
+from unittest.mock import patch
 
 import yaml
 
@@ -476,3 +477,49 @@ def test_uk_cloud9_client_requires_api_domains() -> None:
         assert False, "Expected ValueError when no API domains are configured"
     except ValueError as err:
         assert "At least one API domain" in str(err)
+
+
+def test_mzv_rotenburg_route_filter_without_location() -> None:
+    module = _get_module("mzv_rotenburg_bebra_de")
+
+    ics_text = """BEGIN:VCALENDAR
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260101
+SUMMARY:Entsorgung Gelbe Tonne Route 1
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260102
+SUMMARY:Entsorgung Gelbe Tonne Route 2
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260103
+SUMMARY:Entsorgung Papier Route West
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260104
+SUMMARY:Entsorgung Papier Route Ost
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260105
+SUMMARY:Entsorgung Restabfall
+END:VEVENT
+END:VCALENDAR
+"""
+
+    class _Response:
+        text = ics_text
+
+        @staticmethod
+        def raise_for_status() -> None:
+            return None
+
+    with patch.object(module.requests, "get", return_value=_Response()):
+        entries = module.Source(
+            city="rote", yellow_route="2", paper_route="Ost"
+        ).fetch()
+
+    assert [(entry.date.isoformat(), entry.type) for entry in entries] == [
+        ("2026-01-02", "Gelbe Tonne"),
+        ("2026-01-04", "Papier"),
+        ("2026-01-05", "Restabfall"),
+    ]
