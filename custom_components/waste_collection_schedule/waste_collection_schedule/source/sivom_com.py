@@ -1,19 +1,15 @@
 import datetime
 import logging
 import re
+import unicodedata
 from typing import Optional
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
-try:
-    from waste_collection_schedule.exceptions import (
-        SourceArgumentNotFoundWithSuggestions,
-        SourceArgumentRequiredWithSuggestions,
-    )
-except ImportError:
-    SourceArgumentNotFoundWithSuggestions = None
-    SourceArgumentRequiredWithSuggestions = None
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -103,22 +99,17 @@ DAY_MAP_PLURAL = {
 }
 
 
+def _strip_accents(s: str) -> str:
+    return unicodedata.normalize("NFD", s).encode("ascii", "ignore").decode("ascii")
+
+
 def _get_iso_week_parity(d: datetime.date) -> str:
-    """Return 'odd' or 'even' based on ISO week number."""
     return "odd" if d.isocalendar()[1] % 2 == 1 else "even"
 
 
-def _parse_schedule(text: str, start: datetime.date, days_ahead: int = 365) -> list[datetime.date]:
-    """Parse a SIVOM schedule string into a list of collection dates.
-
-    Supported patterns:
-    - "Jeudi" -> every Thursday
-    - "Mardi - Vendredi" -> every Tuesday and Friday
-    - "Tous les mercredis" -> every Wednesday
-    - "Vendredi des semaines IMPAIRES" -> Friday on odd ISO weeks
-    - "Jeudi des semaines PAIRES" -> Thursday on even ISO weeks
-    - Patterns with parenthetical notes are stripped before parsing
-    """
+def _parse_schedule(
+    text: str, start: datetime.date, days_ahead: int = 365
+) -> list[datetime.date]:
     if not text:
         return []
 
@@ -188,18 +179,13 @@ def _parse_schedule(text: str, start: datetime.date, days_ahead: int = 365) -> l
 
 class Source:
     def __init__(self, commune: str, street: str):
-        self._commune = commune.upper().strip()
+        self._commune = _strip_accents(commune.upper().strip())
         self._street = street.strip()
 
     def fetch(self) -> list[Collection]:
-        # Validate commune
         if self._commune not in COMMUNES:
-            if SourceArgumentNotFoundWithSuggestions:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "commune", self._commune, COMMUNES
-                )
-            raise Exception(
-                f"Commune '{self._commune}' not found. Valid: {', '.join(COMMUNES)}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "commune", self._commune, COMMUNES
             )
 
         _LOGGER.debug("Fetching collection data for %s", self._commune)
@@ -213,22 +199,15 @@ class Source:
         data = response.json()
 
         if not data.get("success") or not data.get("data"):
-            raise Exception(
-                f"No collection data found for commune '{self._commune}'"
-            )
+            raise Exception(f"No collection data found for commune '{self._commune}'")
 
         all_streets = [entry.get("rue", "") for entry in data["data"]]
 
-        # Empty street: suggest all streets
         if not self._street:
-            if SourceArgumentRequiredWithSuggestions:
-                raise SourceArgumentRequiredWithSuggestions(
-                    "street",
-                    f"Please select a street in {self._commune}",
-                    sorted(all_streets),
-                )
-            raise Exception(
-                f"Street is required. Check https://www.sivom.com/mesjoursdecollectes/?v={self._commune}"
+            raise SourceArgumentRequiredWithSuggestions(
+                "street",
+                f"Please select a street in {self._commune}",
+                sorted(all_streets),
             )
 
         # Find matching street (case-insensitive exact match first)
@@ -250,13 +229,8 @@ class Source:
             suggestions = [s for s in all_streets if street_lower in s.lower()]
             if not suggestions:
                 suggestions = sorted(all_streets)
-            if SourceArgumentNotFoundWithSuggestions:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "street", self._street, suggestions
-                )
-            raise Exception(
-                f"Street '{self._street}' not found in {self._commune}. "
-                f"Check https://www.sivom.com/mesjoursdecollectes/?v={self._commune}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, suggestions
             )
 
         today = datetime.date.today()
@@ -270,24 +244,33 @@ class Source:
             match.get("bac_marron"),
         )
 
-        # Bac vert = Déchets résiduels
         for d in _parse_schedule(match.get("bac_vert"), today):
             entries.append(
-                Collection(d, "Bac vert (Résiduels)", icon=ICON_MAP["Bac vert (Résiduels)"])
+                Collection(
+                    d, "Bac vert (Résiduels)", icon=ICON_MAP["Bac vert (Résiduels)"]
+                )
             )
 
-        # Bac jaune = Emballages / recyclables
         for d in _parse_schedule(match.get("bac_jaune"), today):
             entries.append(
-                Collection(d, "Bac jaune (Emballages)", icon=ICON_MAP["Bac jaune (Emballages)"])
+                Collection(
+                    d, "Bac jaune (Emballages)", icon=ICON_MAP["Bac jaune (Emballages)"]
+                )
             )
 
-        # Bac marron = Végétaux (collectés ~9 mois/an, mi-mars à mi-décembre)
         for d in _parse_schedule(match.get("bac_marron"), today):
             # Exclude mid-December to mid-March (no green waste collection)
-            if not (d.month == 12 and d.day >= 15) and not (d.month in (1, 2)) and not (d.month == 3 and d.day < 15):
+            if (
+                not (d.month == 12 and d.day >= 15)
+                and not (d.month in (1, 2))
+                and not (d.month == 3 and d.day < 15)
+            ):
                 entries.append(
-                    Collection(d, "Bac marron (Végétaux)", icon=ICON_MAP["Bac marron (Végétaux)"])
+                    Collection(
+                        d,
+                        "Bac marron (Végétaux)",
+                        icon=ICON_MAP["Bac marron (Végétaux)"],
+                    )
                 )
 
         return entries
