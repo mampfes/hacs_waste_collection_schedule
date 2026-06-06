@@ -72,7 +72,7 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-1. Visit [https://www.sivom.com/mesjoursdecollectes/?v=YOUR_COMMUNE](https://www.sivom.com/mesjoursdecollectes/) (replace `YOUR_COMMUNE` with the upper-case name of your commune, e.g. `VILLECRESNES`).
+1. Visit [https://www.sivom.com/mesjoursdecollectes/?v=YOUR_COMMUNE](https://www.sivom.com/mesjoursdecollectes/?v=YOUR_COMMUNE) (replace `YOUR_COMMUNE` with the upper-case name of your commune, e.g. `VILLECRESNES`).
 2. Find your street in the list displayed on the page.
 3. Use the commune name and street name exactly as shown on the site.
 
