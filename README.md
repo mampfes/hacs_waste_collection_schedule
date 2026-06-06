@@ -1880,6 +1880,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Messstetten](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Norderstedt](/doc/source/abfallnavi_de.md) / betriebsamt-norderstedt.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
+- [Stadt Porta Westfalica](/doc/source/abfallnavi_de.md) / portawestfalica.de
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Saarlouis](/doc/ics/mein_abfallkalender_online.md) / saarlouis.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de

@@ -12672,6 +12672,14 @@
       "id": "ics_osnabrueck_de"
     },
     {
+      "title": "Stadt Porta Westfalica",
+      "module": "abfallnavi_de",
+      "default_params": {
+        "service": "portawestfalica"
+      },
+      "id": "abfallnavi_de"
+    },
+    {
       "title": "Stadt Regensburg",
       "module": "awido_de",
       "default_params": {
