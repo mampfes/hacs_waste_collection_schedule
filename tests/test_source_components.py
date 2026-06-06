@@ -428,3 +428,41 @@ def test_icon_map_uses_canonical_icons() -> None:
                 "reference e.g. Icons.GENERAL_WASTE — see "
                 "custom_components/waste_collection_schedule/waste_collection_schedule/icons.py"
             )
+
+
+def test_uk_cloud9_client_falls_back_to_secondary_domain(monkeypatch) -> None:
+    module = import_module("waste_collection_schedule.service.uk_cloud9_apps")
+    requested_urls: list[str] = []
+
+    class _Response:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict[str, dict]:
+            return {"wasteCollectionDates": {}}
+
+    class _Session:
+        def __init__(self) -> None:
+            self.headers: dict[str, str] = {}
+
+        def get(self, url: str, **kwargs) -> _Response:
+            requested_urls.append(url)
+            if "primary.example.invalid" in url:
+                raise module.requests.exceptions.CertificateVerifyError(
+                    "SSL host mismatch", 60, None
+                )
+            return _Response()
+
+    monkeypatch.setattr(module.requests, "Session", lambda **kwargs: _Session())
+
+    client = module.Cloud9Client(
+        "rugby",
+        api_domains=("https://primary.example.invalid", "https://secondary.example"),
+    )
+    payload = client._fetch_waste_json("100070200377")
+
+    assert payload == {"wasteCollectionDates": {}}
+    assert requested_urls == [
+        "https://primary.example.invalid/rugby/citizenmobile/mobileapi/wastecollections/100070200377",
+        "https://secondary.example/rugby/citizenmobile/mobileapi/wastecollections/100070200377",
+    ]
