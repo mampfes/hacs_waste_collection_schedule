@@ -168,10 +168,14 @@ class Cloud9Client:
     ):
         self._authority = authority
         self._icon_keywords: dict[str, str] = icon_keywords or {}
+        configured_domains = API_DOMAINS if api_domains is None else api_domains
         self._base_urls = [
             f"{domain.rstrip('/')}/{authority}{API_BASE}"
-            for domain in (api_domains or API_DOMAINS)
+            for domain in configured_domains
+            if domain and domain.strip()
         ]
+        if not self._base_urls:
+            raise ValueError("At least one API domain must be configured.")
         self._session = requests.Session(impersonate="chrome")
         self._session.headers.update(BASE_HEADERS)
 
@@ -196,9 +200,8 @@ class Cloud9Client:
                 requests.exceptions.Timeout,
             ) as err:
                 last_error = err
-        if last_error is not None:
-            raise last_error
-        raise ValueError("No API domains configured for Cloud9 client.")
+        assert last_error is not None
+        raise last_error
 
     def _resolve_icon(self, label: str) -> Optional[str]:
         lowered = label.lower()

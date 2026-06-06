@@ -466,3 +466,13 @@ def test_uk_cloud9_client_falls_back_to_secondary_domain(monkeypatch) -> None:
         "https://primary.example.invalid/rugby/citizenmobile/mobileapi/wastecollections/100070200377",
         "https://secondary.example/rugby/citizenmobile/mobileapi/wastecollections/100070200377",
     ]
+
+
+def test_uk_cloud9_client_requires_api_domains() -> None:
+    module = import_module("waste_collection_schedule.service.uk_cloud9_apps")
+
+    try:
+        module.Cloud9Client("rugby", api_domains=())
+        assert False, "Expected ValueError when no API domains are configured"
+    except ValueError as err:
+        assert "At least one API domain" in str(err)
