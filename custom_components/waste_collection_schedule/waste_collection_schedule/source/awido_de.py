@@ -454,6 +454,16 @@ TEST_CASES = {
         "street": "Karwendelweg",
     },
     "Gießen": {"customer": "lkgi", "city": "Langgöns", "street": "Hauptstraße"},
+    "Gotha, Ahornweg": {
+        "customer": "gotha",
+        "city": "Gotha",
+        "street": "Ahornweg",
+    },
+    "Gotha, Drei Gleichen OT Günthersleben, Mittelstr": {
+        "customer": "gotha",
+        "city": "Drei Gleichen OT Günthersleben",
+        "street": "Mittelstr",
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
