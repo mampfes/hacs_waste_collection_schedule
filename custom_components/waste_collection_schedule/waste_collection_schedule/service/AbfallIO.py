@@ -162,4 +162,9 @@ SERVICE_MAP = [
         "url": "https://www.avr-kommunal.de/",
         "service_id": "914fb9d000a9a05af4fd54cfba478860",
     },
+    {
+        "title": "AWG Abfallwirtschaft Landkreis Calw",
+        "url": "https://www.awg-info.de/",
+        "service_id": "0813ea99f520c462373386564a99a51e",
+    },
 ]
