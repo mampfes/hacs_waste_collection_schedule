@@ -60,10 +60,16 @@ extra_info:
   - title: Ebenthal in Kärnten
     url: https://muellapp.com
     country: at
+  - title: Ebergassing
+    url: https://muellapp.com
+    country: at
   - title: Eugendorf
     url: https://muellapp.com
     country: at
   - title: Feistritz im Rosental
+    url: https://muellapp.com
+    country: at
+  - title: Feld am See
     url: https://muellapp.com
     country: at
   - title: Feldkirchen in Kärnten
@@ -78,7 +84,19 @@ extra_info:
   - title: Finkenstein am Faaker See
     url: https://muellapp.com
     country: at
+  - title: Fischamend
+    url: https://muellapp.com
+    country: at
+  - title: Flattach
+    url: https://muellapp.com
+    country: at
   - title: Frauenstein
+    url: https://muellapp.com
+    country: at
+  - title: Fresach
+    url: https://muellapp.com
+    country: at
+  - title: Gerasdorf bei Wien
     url: https://muellapp.com
     country: at
   - title: Gitschtal
@@ -93,6 +111,9 @@ extra_info:
   - title: Grafenstein
     url: https://muellapp.com
     country: at
+  - title: Gramatneusiedl
+    url: https://muellapp.com
+    country: at
   - title: Greifenburg
     url: https://muellapp.com
     country: at
@@ -102,6 +123,9 @@ extra_info:
   - title: Guttaring
     url: https://muellapp.com
     country: at
+  - title: Haslau-Maria Ellend
+    url: https://muellapp.com
+    country: at
   - title: Heiligenblut am Großglockner
     url: https://muellapp.com
     country: at
@@ -109,6 +133,9 @@ extra_info:
     url: https://muellapp.com
     country: at
   - title: Hermagor-Pressegger See
+    url: https://muellapp.com
+    country: at
+  - title: Himberg
     url: https://muellapp.com
     country: at
   - title: Hopfgarten im Brixental
@@ -135,6 +162,9 @@ extra_info:
   - title: Kleblach-Lind
     url: https://muellapp.com
     country: at
+  - title: Klein-Neusiedl
+    url: https://muellapp.com
+    country: at
   - title: Kössen
     url: https://muellapp.com
     country: at
@@ -156,10 +186,16 @@ extra_info:
   - title: Kundl
     url: https://muellapp.com
     country: at
+  - title: Lanzendorf
+    url: https://muellapp.com
+    country: at
   - title: Lendorf
     url: https://muellapp.com
     country: at
   - title: Leoben
+    url: https://muellapp.com
+    country: at
+  - title: Leopoldsdorf
     url: https://muellapp.com
     country: at
   - title: Lesachtal
@@ -180,6 +216,9 @@ extra_info:
   - title: Malta
     url: https://muellapp.com
     country: at
+  - title: Maria Lanzendorf
+    url: https://muellapp.com
+    country: at
   - title: Maria Rain
     url: https://muellapp.com
     country: at
@@ -193,6 +232,9 @@ extra_info:
     url: https://muellapp.com
     country: at
   - title: Millstatt
+    url: https://muellapp.com
+    country: at
+  - title: Moosbrunn
     url: https://muellapp.com
     country: at
   - title: Moosburg
@@ -219,6 +261,9 @@ extra_info:
   - title: Obertrum am See
     url: https://muellapp.com
     country: at
+  - title: Obervellach
+    url: https://muellapp.com
+    country: at
   - title: Ottobrunn
     url: https://muellapp.com
     country: at
@@ -243,6 +288,9 @@ extra_info:
   - title: Rangersdorf
     url: https://muellapp.com
     country: at
+  - title: Rauchenwarth
+    url: https://muellapp.com
+    country: at
   - title: Reichenfels
     url: https://muellapp.com
     country: at
@@ -264,7 +312,13 @@ extra_info:
   - title: Schleedorf
     url: https://muellapp.com
     country: at
+  - title: Schwadorf
+    url: https://muellapp.com
+    country: at
   - title: Schwaz
+    url: https://muellapp.com
+    country: at
+  - title: Schwechat
     url: https://muellapp.com
     country: at
   - title: Schwoich
@@ -277,6 +331,9 @@ extra_info:
     url: https://muellapp.com
     country: at
   - title: Seekirchen am Wallersee
+    url: https://muellapp.com
+    country: at
+  - title: Seyring
     url: https://muellapp.com
     country: at
   - title: Söll
@@ -295,6 +352,9 @@ extra_info:
     url: https://muellapp.com
     country: at
   - title: St. Margareten im Rosental
+    url: https://muellapp.com
+    country: at
+  - title: St. Pölten
     url: https://muellapp.com
     country: at
   - title: St. Symvaro
@@ -352,5 +412,8 @@ extra_info:
     url: https://muellapp.com
     country: at
   - title: Zellberg
+    url: https://muellapp.com
+    country: at
+  - title: Zwölfaxing
     url: https://muellapp.com
     country: at
