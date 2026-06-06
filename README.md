@@ -1169,6 +1169,7 @@ If you already have enough information for your municipality/region, you are ver
 - [AWB Oldenburg](/doc/source/awb_oldenburg_de.md) / oldenburg.de
 - [AWB Westerwaldkreis](/doc/source/abfall_io.md) / wab.rlp.de
 - [awb-wetterau.de (not all municipalities)](/doc/ics/mein_abfallkalender_online.md) / awb-wetterau.de
+- [AWG Abfallwirtschaft Landkreis Calw](/doc/source/abfall_io.md) / awg-info.de
 - [AWG Bassum](/doc/ics/awg_bassum_de.md) / awg-bassum.de
 - [AWG Donau-Wald](/doc/source/app_abfallplus_de.md) / Abfall+ App: zawdw
 - [AWG Kreis Warendorf](/doc/source/abfallnavi_de.md) / awg-waf.de

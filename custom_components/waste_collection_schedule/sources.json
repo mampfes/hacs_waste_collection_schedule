@@ -7219,6 +7219,14 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "AWG Abfallwirtschaft Landkreis Calw",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "0813ea99f520c462373386564a99a51e"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "AWG Bassum",
       "module": "ics",
       "default_params": {},
