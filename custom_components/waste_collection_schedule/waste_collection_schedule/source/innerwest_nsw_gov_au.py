@@ -127,9 +127,11 @@ class Source:
                 if "start_date" not in item:
                     continue
                 collection_date = date.fromisoformat(item["start_date"])
-                # Ensure we start from today or later
-                if collection_date < today:
-                    collection_date = today
+                # Advance weekly until we reach today or later, preserving the
+                # correct day-of-week (simple clamping to today would shift the
+                # weekday and produce wrong dates).
+                while collection_date < today:
+                    collection_date += timedelta(7)
                 while collection_date <= nextmonth:
                     entries.append(
                         Collection(
