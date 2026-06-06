@@ -316,6 +316,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Deutsch Kaltenbrunn](/doc/source/citiesapps_com.md) / deutschkaltenbrunn.eu
 - [Deutschkreutz](/doc/source/citiesapps_com.md) / deutschkreutz.at
 - [Die NÖ Umweltverbände](/doc/source/umweltverbaende_at.md) / umweltverbaende.at
+- [Dienten am Hochkönig](/doc/source/dienten_gv_at.md) / dienten.gv.at
 - [Dobl-Zwaring](/doc/source/citiesapps_com.md) / dobl-zwaring.gv.at
 - [Drasenhofen](/doc/source/citiesapps_com.md) / drasenhofen.at
 - [Draßmarkt](/doc/source/citiesapps_com.md) / drassmarkt.at

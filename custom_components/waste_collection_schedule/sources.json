@@ -1762,6 +1762,12 @@
       "id": "umweltverbaende_at"
     },
     {
+      "title": "Dienten am Hochk\u00f6nig",
+      "module": "dienten_gv_at",
+      "default_params": {},
+      "id": "dienten_gv_at"
+    },
+    {
       "title": "Dobl-Zwaring",
       "module": "citiesapps_com",
       "default_params": {},

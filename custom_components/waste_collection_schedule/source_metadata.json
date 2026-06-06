@@ -831,6 +831,11 @@
     },
     "urls": {}
   },
+  "dienten_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dienten_gv_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "bad_eisenkappel_info": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bad_eisenkappel_info.md",
     "howto": {},
