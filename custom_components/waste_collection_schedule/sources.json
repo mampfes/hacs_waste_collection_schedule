@@ -21626,6 +21626,12 @@
   ],
   "United States of America": [
     {
+      "title": "Abilene, TX",
+      "module": "abilene_tx_us",
+      "default_params": {},
+      "id": "abilene_tx_us"
+    },
+    {
       "title": "Albuquerque, New Mexico, USA",
       "module": "recyclecoach_com",
       "default_params": {
