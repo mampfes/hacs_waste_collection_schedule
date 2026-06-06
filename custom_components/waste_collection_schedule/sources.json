@@ -12316,6 +12316,12 @@
       "id": "123abfallkalender_de"
     },
     {
+      "title": "RSAG Rhein-Sieg Abfallwirtschaftsgesellschaft",
+      "module": "rsag_de",
+      "default_params": {},
+      "id": "rsag_de"
+    },
+    {
       "title": "RSAG Rhein-Sieg-Kreis",
       "module": "muellmax_de",
       "default_params": {
