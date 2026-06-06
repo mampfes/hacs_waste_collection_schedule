@@ -2480,6 +2480,14 @@
       "id": "ics_abfallv_zerowaste_io"
     },
     {
+      "title": "Holding Graz",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "1c230a689579b6d3ddb9ceb5a56c6072"
+      },
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Hopfgarten im Brixental",
       "module": "ics",
       "default_params": {},

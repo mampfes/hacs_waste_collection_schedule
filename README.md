@@ -431,6 +431,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hochwolkersdorf](/doc/source/citiesapps_com.md) / hochwolkersdorf.at
 - [Hofstätten an der Raab](/doc/source/citiesapps_com.md) / hofstaetten.at
 - [Hohenems](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
+- [Holding Graz](/doc/source/abfall_io_graphql.md) / holding-graz.at
 - [Hopfgarten im Brixental](/doc/ics/muellapp_com.md) / muellapp.com
 - [Horitschon](/doc/source/citiesapps_com.md) / horitschon.at
 - [Horn](/doc/source/citiesapps_com.md) / horn.gv.at
