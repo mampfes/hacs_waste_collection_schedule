@@ -16939,6 +16939,12 @@
       "id": "napier_govt_nz"
     },
     {
+      "title": "New Plymouth District Council",
+      "module": "npdc_govt_nz",
+      "default_params": {},
+      "id": "npdc_govt_nz"
+    },
+    {
       "title": "Porirua City",
       "module": "poriruacity_govt_nz",
       "default_params": {},

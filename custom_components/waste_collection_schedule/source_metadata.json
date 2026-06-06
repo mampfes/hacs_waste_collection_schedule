@@ -3328,6 +3328,11 @@
     "howto": {},
     "urls": {}
   },
+  "npdc_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/npdc_govt_nz.md",
+    "howto": {},
+    "urls": {}
+  },
   "poriruacity_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poriruacity_govt_nz.md",
     "howto": {},

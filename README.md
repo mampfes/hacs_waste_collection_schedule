@@ -2558,6 +2558,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
 - [Hutt City Council](/doc/source/toogoodtowaste_co_nz.md) / toogoodtowaste.co.nz
 - [Napier City Council](/doc/source/napier_govt_nz.md) / napier.govt.nz
+- [New Plymouth District Council](/doc/source/npdc_govt_nz.md) / npdc.govt.nz
 - [Porirua City](/doc/source/poriruacity_govt_nz.md) / poriruacity.govt.nz
 - [Rotorua Lakes Council](/doc/source/rotorua_lakes_council_nz.md) / rotorualakescouncil.nz
 - [Taupō District Council](/doc/source/taupodc_govt_nz.md) / taupodc.govt.nz
