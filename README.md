@@ -3400,7 +3400,7 @@ There are several ways of contributing to this project, they include:
 
 - Adding new service providers
 - Updating or improving the documentation
-- Helping answer/fix any issues raised
+- Helping answer/fix any issues raised (**Tip:** you can automatically self-assign an issue you are actively working on by commenting `/assign` on it to prevent duplicate work)
 - Join in with the Home Assistant Community discussion
 
 For further details see [contributing](/CONTRIBUTING.md) guidelines, or take a look at our [online](/doc/online.md) mentions.
