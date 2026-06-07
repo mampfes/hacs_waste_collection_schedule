@@ -4,6 +4,50 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.27.0] - 2026-06-07
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release —
+@anuj-dangi, @lurimax-north, @Moulbi, @thenoakes and @zaolin. 🎉
+Thanks as well to our returning contributors (@bbr111, @Canis-L-Sapien, @jan-tdy, @smaurer3, @totallydifferent)
+for the fixes and improvements below.
+
+### Added Sources
+
+- added SIVOM, FR (thanks @Moulbi) (#6533)
+- added Comune.Digital municipalities, IT (#6559)
+- added RSAG Rhein-Sieg Abfallwirtschaftsgesellschaft, DE (#6553)
+- added New Plymouth District Council, NZ (#6552)
+- added City of Abilene, TX, US (#6548)
+- added Dienten am Hochkönig, AT (thanks @anuj-dangi) (#6538)
+- added Babergh and Mid Suffolk District Councils, UK (#6532)
+- added Torbay Council, UK (#6530)
+- added AJL Abfallwirtschaftsgesellschaft Jerichower Land mbH, DE (#6529)
+
+### Fixed Sources
+
+- fixed darlington_gov_uk: improve data parsing and accuracy (thanks @bbr111) (#6540)
+- fixed colchester_gov_uk: add postcode lookup (thanks @Canis-L-Sapien) (#6514)
+- fixed plymouth_gov_uk: fix 403 by updating form URI (thanks @thenoakes) (#6537)
+- fixed okc: migrate to new ArcGIS REST API (thanks @totallydifferent) (#6421)
+- fixed golden_plains_shire: fix HTTP 403 (thanks @smaurer3) (#6459)
+- fixed sector27_de: resolve streets whose distinctive word is not the first token (thanks @zaolin) (#6524)
+- fixed bedford_gov_uk: updated API endpoint (thanks @anuj-dangi) (#6525)
+- fixed wigan_gov_uk: update data parsing (thanks @lurimax-north) (#6527)
+- fixed uk_cloud9_apps: add domain failover for Rugby source SSL hostname mismatch (#6542)
+- fixed innerwest_nsw_gov_au: preserve weekday alignment when recurring start_date is in the past (#6544)
+- fixed muellapp_com: add Schwechat and 20 other missing Austrian municipalities (#6551)
+- fixed awido_de: add Gotha test cases for new OT city naming format (#6550)
+- fixed abfall_io_graphql: add Holding Graz (Austria) to service map (#6549)
+- fixed abfall_io: add AWG Abfallwirtschaft Landkreis Calw (#6547)
+- fixed abfallnavi_de: add Porta Westfalica (#6546)
+- fixed tonnenticker_pro_de: casefold for ß/ss city and street matching, fix icon fallback (#6531)
+- fixed avfallsapp_se: add Teknik i Väst (Arvika/Eda) provider (#6528)
+
+### Other
+
+- added Dutch (`nl`) to the translation/howto generation pipeline (#6519)
+- added `CODE_OF_CONDUCT.md`, `SECURITY.md`, and `PULL_REQUEST_TEMPLATE.md`; moved `CONTRIBUTING.md` to repo root (thanks @jan-tdy) (#6557)
+
 ## [2.26.0] - 2026-06-01
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release —
