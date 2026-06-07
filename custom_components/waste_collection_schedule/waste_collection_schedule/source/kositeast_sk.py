@@ -117,14 +117,13 @@ def _nearest_cluster_idx(value: float, centres: list[float]) -> int:
     """Return the 0-based index of the cluster centre closest to *value*."""
     return min(range(len(centres)), key=lambda i: abs(centres[i] - value))
 
-
 def _extract_year(page: LTPage) -> int | None:
     """Scan *page* for a 'ROK YYYY' header and return the year, or None."""
     for element in page:
         if isinstance(element, LTTextContainer):
             for text_line in element:
                 if isinstance(text_line, LTTextLine):
-                    m = re.search(r"ROK\s+(\d{4})", text_line.get_text())
+                    m = re.search(r"ROK\s+(\d{4})", text_line.get_text(), re.IGNORECASE)
                     if m:
                         return int(m.group(1))
     return None
@@ -310,8 +309,10 @@ class Source:
                 lcx = (lx0 + lx1) / 2
                 if _nearest_cluster_idx(lcx, x_clusters) != col:  # wrong column
                     continue
+                
+                # UPDATED REGEX: Added uppercase slovak characters and general uppercase support
                 m = re.search(
-                    r"(?:^|[A-Za-zžščťďňľĺáéíóúäô]+\s+)(\d+)\b", line["text"]
+                    r"(?:^|[A-ZŽŠČŤĎŇĽĹÁÉÍÓÚÄÔa-zžščťďňľĺáéíóúäô]+\s+)(\d+)\b", line["text"]
                 )
                 if m:
                     day = int(m.group(1))
