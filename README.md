@@ -18,7 +18,7 @@ If your service provider is not listed, feel free to open a [source request issu
 
 Source requests are always welcome. At the moment, however, only a small number of contributors are actively implementing new requests, while the available maintainers are mainly busy reviewing pull requests and fixing critical issues.
 
-If you already have enough information for your municipality/region, you are very welcome to implement the source and open a pull request yourself. A step-by-step guide is available in [How to contribute](/doc/contributing.md). Community help with implementation, testing, documentation, and reviews is greatly appreciated.
+If you already have enough information for your municipality/region, you are very welcome to implement the source and open a pull request yourself. A step-by-step guide is available in [How to contribute](/CONTRIBUTING.md). Community help with implementation, testing, documentation, and reviews is greatly appreciated.
 
 <details>
 <summary>ICS/iCal and User-Specified</summary>
@@ -3401,7 +3401,7 @@ There are several ways of contributing to this project, they include:
 - Helping answer/fix any issues raised
 - Join in with the Home Assistant Community discussion
 
-For further details see [contributing](/doc/contributing.md) guidelines, or take a look at our [online](/doc/online.md) mentions.
+For further details see [contributing](/CONTRIBUTING.md) guidelines, or take a look at our [online](/doc/online.md) mentions.
 
 <!--
 # Development Roadmap

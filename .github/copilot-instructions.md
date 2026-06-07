@@ -2,7 +2,7 @@
 
 These are project-specific instructions for GitHub Copilot when assisting contributors. The full set of contributor guidance lives in [`AGENTS.md`](../AGENTS.md) at the repo root — that file applies equally here.
 
-For the human-facing guide, see [`doc/contributing.md`](../doc/contributing.md).
+For the human-facing guide, see [`CONTRIBUTING.md`](../CONTRIBUTING.md).
 
 ## Quick reference
 
