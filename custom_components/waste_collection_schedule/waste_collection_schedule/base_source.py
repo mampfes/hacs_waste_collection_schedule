@@ -30,7 +30,23 @@ class BaseSource:
     HOWTO: dict[str, str] = {}  # {"en": "How to find your args...", ...}
 
     # --- Waste types this source produces ---
+    # Auto-derived from TYPE_MAP values if not explicitly declared.
+    # Explicit declaration takes precedence (e.g. for sources whose classify()
+    # produces types not listed in TYPE_MAP).
     WASTE_TYPES: list[WasteType] = []
+
+    def __init_subclass__(cls, **kwargs):
+        """Auto-derive WASTE_TYPES from TYPE_MAP when not explicitly declared."""
+        super().__init_subclass__(**kwargs)
+        if "WASTE_TYPES" not in cls.__dict__ and "TYPE_MAP" in cls.__dict__:
+            # Derive unique WasteTypes from TYPE_MAP values, preserving order
+            seen_ids: set[str] = set()
+            unique: list[WasteType] = []
+            for wt in cls.TYPE_MAP.values():
+                if wt.id not in seen_ids:
+                    seen_ids.add(wt.id)
+                    unique.append(wt)
+            cls.WASTE_TYPES = unique
 
     # --- Type classification ---
     TYPE_MAP: dict[str, WasteType] = {}

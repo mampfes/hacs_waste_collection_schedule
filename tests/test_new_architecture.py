@@ -751,6 +751,41 @@ class TestBaseSourcePipeline:
         source = BaseSource()
         assert source._classify_type("anything") is OTHER
 
+    def test_waste_types_derived_from_type_map(self):
+        """WASTE_TYPES is auto-derived from TYPE_MAP when not explicitly declared."""
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+
+        class TestSource(BaseSource):
+            TYPE_MAP = {"general": GENERAL_WASTE, "recycling": RECYCLABLES}
+
+        assert TestSource.WASTE_TYPES == [GENERAL_WASTE, RECYCLABLES]
+
+    def test_waste_types_deduplicates_type_map_values(self):
+        """WASTE_TYPES contains each WasteType once even if repeated in TYPE_MAP."""
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        class TestSource(BaseSource):
+            TYPE_MAP = {"black": GENERAL_WASTE, "grey": GENERAL_WASTE}
+
+        assert TestSource.WASTE_TYPES == [GENERAL_WASTE]
+
+    def test_waste_types_explicit_overrides_type_map(self):
+        """Explicit WASTE_TYPES declaration takes precedence over TYPE_MAP derivation."""
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.waste_types import (
+            GENERAL_WASTE,
+            OTHER,
+            RECYCLABLES,
+        )
+
+        class TestSource(BaseSource):
+            TYPE_MAP = {"general": GENERAL_WASTE}
+            WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, OTHER]
+
+        assert TestSource.WASTE_TYPES == [GENERAL_WASTE, RECYCLABLES, OTHER]
+
 
 # =====================================================================
 # 5. Customisation (source_shell)

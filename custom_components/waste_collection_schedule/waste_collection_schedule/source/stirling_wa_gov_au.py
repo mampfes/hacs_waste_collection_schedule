@@ -21,8 +21,6 @@ class Source(BaseSource):
         "-31.878331, 115.815553": {"lat": "-31.8783052", "lon": "115.8157741"},
     }
 
-    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, ORGANIC, GARDEN_WASTE]
-
     PARAMS = [
         coords(lat="lat", lon="lon"),
     ]
@@ -50,11 +48,7 @@ class Source(BaseSource):
         }
 
     def classify(self, record) -> Collection | None:
-        fields = {
-            arg["name"]: arg["value"]
-            for arg in record
-            if "name" in arg
-        }
+        fields = {arg["name"]: arg["value"] for arg in record if "name" in arg}
         date_str = fields.get("date", "")
         if not date_str or not isinstance(date_str, str):
             return None
