@@ -1,0 +1,46 @@
+# Baltimore County
+
+Support for schedules provided by [Baltimore County](https://www.baltimorecountymd.gov/departments/public-works/solid-waste/collection-schedule), Maryland, USA.
+
+## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: baltimorecountymd_us
+      args:
+        address: ADDRESS
+```
+
+### Configuration Variables
+
+**address**
+*(string) (optional)*
+
+Street address selected from the county suggestions, for example: 309 W CHESAPEAKE AVE, TOWSON, MD, 21204.
+
+## How to find your arguments
+
+1. Open the Baltimore County collection schedule page.
+2. Enter house number and street name in the Address field.
+3. Select your full address from the dropdown suggestions.
+4. Click Find.
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: baltimorecountymd_us
+      args:
+        address: "309 W Chesapeake Ave"
+```
+
+## Bin types returned
+
+| Provider description | Returned type | Icon |
+|---------------------|--------------|------|
+| Trash | Trash | Icons.GENERAL_WASTE |
+| Recycling | Recycling | Icons.RECYCLING |
+| Yard Materials | Yard Materials | Icons.GARDEN |
+| Bulk Pickup | Bulk Pickup | Icons.BULKY |
