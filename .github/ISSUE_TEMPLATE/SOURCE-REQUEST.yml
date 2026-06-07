@@ -20,7 +20,7 @@ body:
 
         **The good news:** you don't need to be a programmer. Free AI coding agents (Claude, Copilot, Cursor, Codex, etc.) can often implement a new source in under an hour — even if you've never written Python before. This repository includes a dedicated guide for exactly this:
 
-        👉 **[AGENTS.md](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/AGENTS.md)** — step-by-step instructions written for AI assistants. Point your coding agent at this file and describe your waste provider. Then open a [pull request](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/contributing.md).
+        👉 **[AGENTS.md](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/AGENTS.md)** — step-by-step instructions written for AI assistants. Point your coding agent at this file and describe your waste provider. Then open a [pull request](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/CONTRIBUTING.md).
 
         If your attempt didn't work out, that's absolutely fine — paste what you tried in the Additional Information field below and it will help whoever picks this up.
   - type: input
