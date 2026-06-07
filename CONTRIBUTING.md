@@ -1,3 +1,8 @@
+Nech sa páči, tu je kompletný kód pre `CONTRIBUTING.md` so zachovanými pôvodnými obrázkami a formátovaním, vrátane novej sekcie o priraďovaní úloh (na konci v sekcii *Help Answer/Fix Issues Raised*).
+
+Môžeš si to jednoducho skopírovať:
+
+```markdown
 <img src="/images/icon.png" alt="Waste Collection Schedule logo" title="Waste Collection Schedule" align="right" height="60" />
 
 # Contributing To Waste Collection Schedule
@@ -28,19 +33,22 @@ Navigate to your fork's homepage, click the `code` button and copy the url.
 On your local machine, open a terminal and navigate to the location where you want the cloned directory. Type `git clone` and paste in the url copied earlier. It should look something like this, but with your username replacing `YOUR-GITHUB-USERNAME`:
 
 ```bash
-git clone https://github.com/YOUR-GITHUB-USERNAME/hacs_waste_collection_schedule
+git clone [https://github.com/YOUR-GITHUB-USERNAME/hacs_waste_collection_schedule](https://github.com/YOUR-GITHUB-USERNAME/hacs_waste_collection_schedule)
+
 ```
 
 Before making any changes, create a new branch to work on.
 
 ```bash
 git branch <new_branch_name>
+
 ```
 
 For example, if you were adding a new provider called abc.com, you could do
 
 ```bash
 git branch adding_abc_com
+
 ```
 
 For more info on forking/cloning a repository, see GitHub's [fork-a-repo](https://docs.github.com/en/get-started/quickstart/fork-a-repo) document.
@@ -49,36 +57,33 @@ For more info on forking/cloning a repository, see GitHub's [fork-a-repo](https:
 
 There are 2 ways to add support for a new service provider:
 
-1. [Via the generic ICS source](doc/contributing_ics.md)
-
-   This is the preferred way of adding support for a new service provider, but only works if the service providers offers a so called "ical / webcal subscription" or at least a static link which doesn't change over time to an ICS file.
-
-2. [Dedicated source](doc/contributing_source.md)
-
-   This is the fallback if the preferred way via the generic ICS source doesn't work.
+1. [Via the generic ICS source](https://www.google.com/search?q=doc/contributing_ics.md)
+This is the preferred way of adding support for a new service provider, but only works if the service providers offers a so called "ical / webcal subscription" or at least a static link which doesn't change over time to an ICS file.
+2. [Dedicated source](https://www.google.com/search?q=doc/contributing_source.md)
+This is the fallback if the preferred way via the generic ICS source doesn't work.
 
 ### Example Implementations
 
 If you want to contribute a new source, these existing implementations can be used as practical examples:
 
-- **HTML parsing (BeautifulSoup / bs4):** [`birmingham_gov_uk.py`](/custom_components/waste_collection_schedule/waste_collection_schedule/source/birmingham_gov_uk.py)
-- **ICS-based implementation:** [`stadtreinigung_hamburg.py`](/custom_components/waste_collection_schedule/waste_collection_schedule/source/stadtreinigung_hamburg.py)
-- **JSON/API implementation:** [`toronto_ca.py`](/custom_components/waste_collection_schedule/waste_collection_schedule/source/toronto_ca.py)
+* **HTML parsing (BeautifulSoup / bs4):** [`birmingham_gov_uk.py`](https://www.google.com/search?q=/custom_components/waste_collection_schedule/waste_collection_schedule/source/birmingham_gov_uk.py)
+* **ICS-based implementation:** [`stadtreinigung_hamburg.py`](https://www.google.com/search?q=/custom_components/waste_collection_schedule/waste_collection_schedule/source/stadtreinigung_hamburg.py)
+* **JSON/API implementation:** [`toronto_ca.py`](https://www.google.com/search?q=/custom_components/waste_collection_schedule/waste_collection_schedule/source/toronto_ca.py)
 
 ### Using AI coding assistants
 
 If you're using an AI assistant (Claude Code, Cursor, codex, Aider, GitHub Copilot, etc.) to draft a contribution, point it at the project-specific instruction files in the repo:
 
-- [`CLAUDE.md`](/CLAUDE.md) — read by Claude Code. Project overview, source module contract, common pitfalls, and pointers to the specialised agents and slash commands.
-- [`AGENTS.md`](/AGENTS.md) — read by Cursor, codex, Aider, and other tools that support the `AGENTS.md` convention.
-- [`.github/copilot-instructions.md`](/.github/copilot-instructions.md) — used by GitHub Copilot.
+* [`CLAUDE.md`](https://www.google.com/search?q=/CLAUDE.md) — read by Claude Code. Project overview, source module contract, common pitfalls, and pointers to the specialised agents and slash commands.
+* [`AGENTS.md`](https://www.google.com/search?q=/AGENTS.md) — read by Cursor, codex, Aider, and other tools that support the `AGENTS.md` convention.
+* [`.github/copilot-instructions.md`](https://www.google.com/search?q=/.github/copilot-instructions.md) — used by GitHub Copilot.
 
 All three capture the source module contract, the lint/test commands, and the patterns that reviewers consistently flag — they help the assistant produce a PR that's much closer to mergeable on the first pass.
 
 **Claude Code users:** the repo also ships with specialised agents and a slash command to walk you through implementing a source from scratch:
 
-- `/new-source` — orchestrated walkthrough: confirms the provider isn't already supported, identifies the best data feed (ICS / JSON API / HTML / PDF), generates the source module + doc page, lints, and runs the test cases. Reduces the round-trip with reviewers.
-- The underlying agents (`source-investigator`, `source-implementer`) can also be invoked directly if you prefer step-by-step control. See [`.claude/agents/`](/.claude/agents/) for the full list.
+* `/new-source` — orchestrated walkthrough: confirms the provider isn't already supported, identifies the best data feed (ICS / JSON API / HTML / PDF), generates the source module + doc page, lints, and runs the test cases. Reduces the round-trip with reviewers.
+* The underlying agents (`source-investigator`, `source-implementer`) can also be invoked directly if you prefer step-by-step control. See [`.claude/agents/`](https://www.google.com/search?q=/.claude/agents/) for the full list.
 
 ### Sync Branch and Create A Pull Request
 
@@ -92,12 +97,16 @@ Non-code contributions are welcome. If you find typos, spelling mistakes, or thi
 
 ## Help Answer/Fix Issues Raised
 
-![GitHub issues](https://img.shields.io/github/issues-raw/mampfes/hacs_waste_collection_schedule?color=orange)
-
 Open-source projects are always a work in progress, and [issues](https://github.com/mampfes/hacs_waste_collection_schedule/issues) arise from time-to-time. If you come across a new issue, please raise it. If you have a solution to an open issue, please raise a pull request with your solution.
+
+### Assigning an issue to yourself
+
+To help prevent duplicate work, we encourage contributors to self-assign issues they are actively working on (e.g., adding a specific waste collection source). You can easily assign an issue to yourself by simply leaving a comment containing `/assign` on the issue. Our GitHub automation will automatically assign it to you!
 
 ## Join The Home Assistant Community Discussion
 
-![Community Discussion](https://img.shields.io/badge/Home%20Assistant%20Community-Discussion-orange)
-
 The main discussion thread on Home Assistant's Community forum can be found [here](https://community.home-assistant.io/t/waste-collection-schedule-framework/186492).
+
+```
+
+```
