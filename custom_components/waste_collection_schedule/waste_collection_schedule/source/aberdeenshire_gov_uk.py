@@ -1,55 +1,45 @@
-from datetime import datetime
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import HtmlTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, OTHER, RECYCLABLES
 
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-# Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
-from waste_collection_schedule.service.SSLError import get_legacy_session
-
-TITLE = "Aberdeenshire Council"
-DESCRIPTION = "Source for Aberdeenshire Council, UK."
-URL = "https://aberdeenshire.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "000151124612"},
-    "Test_002": {"uprn": "000151004105"},
-    "Test_003": {"uprn": "0151035884"},
-    "Test_004": {"uprn": 151170625},
-}
-ICON_MAP = {
-    "Mixed recycling and food waste": "mdi:recycle",
-    "Refuse and food waste": "mdi:trash-can",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-    },
-    "de": {
-        "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
-    },
-}
+# Demonstrates: HtmlTransformer + parsers.html(selector) + legacy_ssl_http_get
+# No custom methods needed — retrieve and parse are declarative class attributes.
 
 
-class Source:
+class Source(BaseSource):
+    TITLE = "Aberdeenshire Council"
+    DESCRIPTION = "Source for Aberdeenshire Council, UK."
+    URL = "https://aberdeenshire.gov.uk"
+    COUNTRY = "gb"
+
+    TEST_CASES = {
+        "Test_001": {"uprn": "000151124612"},
+        "Test_002": {"uprn": "000151004105"},
+        "Test_003": {"uprn": "0151035884"},
+        "Test_004": {"uprn": 151170625},
+    }
+
+    PARAMS = [uprn()]
+
+    retrieve = retrievers.legacy_ssl_http_get
+    parse = parsers.html("tr", skip=1)  # table rows, skip header
+
+    # Explicit WASTE_TYPES: OTHER covers any bin types not in the map below.
+    WASTE_TYPES = [RECYCLABLES, GENERAL_WASTE, OTHER]
+
+    transformer = HtmlTransformer(
+        date_getter=lambda el: el.select_one("td:nth-child(1)").text.split(" ")[0],
+        type_getter=lambda el: el.select_one("td:nth-child(2)").text,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map={
+            "Mixed recycling and food waste": RECYCLABLES,
+            "Refuse and food waste": GENERAL_WASTE,
+        },
+    )
+
     def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
-
-    def fetch(self):
-        response = get_legacy_session().get(
-            f"https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes/Route/{self._uprn}"
+        self.API_URL = (
+            f"https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes/Route/{str(uprn).zfill(12)}"
         )
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        entries = []
-
-        tr = soup.findAll("tr")
-        for item in tr[1:]:  # Ignore table header row
-            td = item.findAll("td")
-            entries.append(
-                Collection(
-                    date=datetime.strptime(td[0].text.split(" ")[0], "%d/%m/%Y").date(),
-                    t=td[1].text,
-                    icon=ICON_MAP.get(td[1].text),
-                )
-            )
-
-        return entries

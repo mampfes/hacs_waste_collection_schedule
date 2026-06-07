@@ -346,13 +346,26 @@ class TestParsers:
         resp.json.return_value = json_data
         return resp
 
-    def test_json_parser(self):
+    def test_json_parser_top_level(self):
         from waste_collection_schedule.parsers import json
 
         data = [{"date": "2026-01-01", "type": "bin"}]
         resp = self._mock_response("", json_data=data)
-        # Parsers take (self, response) — when called standalone, pass a dummy self
-        assert json(None, resp) == data
+        assert json()(None, resp) == data
+
+    def test_json_parser_nested_key(self):
+        from waste_collection_schedule.parsers import json
+
+        data = {"collections": [{"date": "2026-01-01", "type": "bin"}]}
+        resp = self._mock_response("", json_data=data)
+        assert json("collections")(None, resp) == data["collections"]
+
+    def test_json_parser_deep_key_path(self):
+        from waste_collection_schedule.parsers import json
+
+        data = {"data": {"items": [{"date": "2026-01-01"}]}}
+        resp = self._mock_response("", json_data=data)
+        assert json("data", "items")(None, resp) == data["data"]["items"]
 
     def test_text_parser(self):
         from waste_collection_schedule.parsers import text
@@ -360,12 +373,25 @@ class TestParsers:
         resp = self._mock_response("hello world")
         assert text(None, resp) == "hello world"
 
-    def test_html_parser(self):
+    def test_html_parser_with_selector(self):
         from waste_collection_schedule.parsers import html
 
-        resp = self._mock_response("<html><body><p>test</p></body></html>")
-        soup = html(None, resp)
-        assert soup.find("p").text == "test"
+        resp = self._mock_response(
+            "<table><tr><th>H</th></tr><tr><td>2024-01-15</td></tr></table>"
+        )
+        parser = html("tr", skip=1)
+        rows = parser(None, resp)
+        assert len(rows) == 1
+        assert rows[0].select_one("td").text == "2024-01-15"
+
+    def test_html_parser_skip(self):
+        from waste_collection_schedule.parsers import html
+
+        resp = self._mock_response("<ul><li>a</li><li>b</li><li>c</li></ul>")
+        parser = html("li", skip=1)
+        items = parser(None, resp)
+        assert len(items) == 2
+        assert items[0].text == "b"
 
     def test_ics_parser_returns_date_summary_tuples(self):
         from waste_collection_schedule.parsers import ics
@@ -826,12 +852,16 @@ class TestTransformers:
         assert result is not None
         assert result.waste_type is OTHER
 
-    def test_json_transformer_date_format(self):
+    def test_json_transformer_parse_date(self):
+        from waste_collection_schedule import date_parsers
         from waste_collection_schedule.transformers import JsonTransformer
         from waste_collection_schedule.waste_types import GENERAL_WASTE
 
         t = JsonTransformer(
-            "date", "bin", {"refuse": GENERAL_WASTE}, date_format="%d/%m/%Y"
+            "date",
+            "bin",
+            {"refuse": GENERAL_WASTE},
+            parse_date=date_parsers.for_format("%d/%m/%Y"),
         )
         result = t.transform({"date": "15/01/2026", "bin": "refuse"})
         assert result.date == datetime.date(2026, 1, 15)

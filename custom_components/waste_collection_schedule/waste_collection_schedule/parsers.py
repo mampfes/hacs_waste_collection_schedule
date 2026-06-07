@@ -1,7 +1,16 @@
 """Standard response parsers for waste collection sources.
 
-Each parser is a function that takes a raw HTTP response and returns
-parsed data in a format suitable for the source's classify() method.
+Each parser is a function (or factory) that integrates with the
+retrieve → parse → transform pipeline in BaseSource.
+
+Simple parsers (assign directly):
+
+    parse = parsers.json    # response.json() — list or dict of records
+    parse = parsers.ics     # list of (date, summary) tuples
+
+Factory parsers (call to configure, then assign):
+
+    parse = parsers.html("tr", skip=1)  # list of <tr> elements, header skipped
 """
 
 import datetime
@@ -11,9 +20,28 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def json(self, response: requests.Response):
-    """Parse response as JSON."""
-    return response.json()
+def json(*keys):
+    """Parse response as JSON, optionally drilling into a nested key path.
+
+    With no arguments, returns the top-level parsed value::
+
+        parse = parsers.json()          # response.json()
+
+    With one or more keys, walks the parsed value before returning::
+
+        parse = parsers.json("collections")          # response.json()["collections"]
+        parse = parsers.json("data", "items")        # response.json()["data"]["items"]
+
+    If the response is already a list at the top level, omit keys entirely.
+    """
+
+    def _parse(self, response: requests.Response):
+        data = response.json()
+        for key in keys:
+            data = data[key]
+        return data
+
+    return _parse
 
 
 def text(self, response: requests.Response) -> str:
@@ -21,9 +49,28 @@ def text(self, response: requests.Response) -> str:
     return response.text
 
 
-def html(self, response: requests.Response) -> BeautifulSoup:
-    """Parse response as HTML."""
-    return BeautifulSoup(response.text, "html.parser")
+def html(selector: str, skip: int = 0):
+    """Return a parser that extracts matching elements from HTML.
+
+    Use with HtmlTransformer. The returned parser selects all elements
+    matching ``selector`` (CSS selector syntax) and skips the first ``skip``
+    results (handy for stripping header rows)::
+
+        parse = parsers.html("tr", skip=1)   # all rows, skip header
+        parse = parsers.html("ul.bins > li") # list items
+
+    Each element is passed individually to the transformer.
+
+    Args:
+        selector: CSS selector string passed to BeautifulSoup.select().
+        skip:     Number of leading elements to drop (default 0).
+    """
+
+    def _parse(self, response: requests.Response) -> list:
+        soup = BeautifulSoup(response.text, "html.parser")
+        return soup.select(selector)[skip:]
+
+    return _parse
 
 
 def ics(self, response: requests.Response) -> List[Tuple[datetime.date, str]]:

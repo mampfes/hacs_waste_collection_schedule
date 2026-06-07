@@ -77,16 +77,18 @@ class BaseSource:
         retrieve = retrievers.http_post    # POST instead of GET
     """
 
-    parse = parsers.json
+    parse = parsers.json()
     """Convert the raw response into an iterable of records.
 
     Default: parse as JSON (response.json()).
-    Alternatives: parsers.html (BeautifulSoup), parsers.ics, parsers.text,
-    or a custom method.
+    Alternatives: parsers.json("key"), parsers.ics, parsers.html(selector).
 
     Each record is passed individually to the transformer (or classify())::
 
-        parse = parsers.html    # parse HTML with BeautifulSoup
+        parse = parsers.json("collections")      # {"collections": [...]}
+        parse = parsers.json("data", "items")    # {"data": {"items": [...]}}
+        parse = parsers.html("tr", skip=1)       # HTML table rows
+        parse = parsers.ics                      # iCalendar (date, summary) tuples
     """
 
     transformer = None

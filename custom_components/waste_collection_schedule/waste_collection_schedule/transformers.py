@@ -27,8 +27,7 @@ import datetime
 import logging
 from typing import Callable, Optional
 
-from dateutil import parser as dateutil_parser
-
+from . import date_parsers
 from .collection import Collection
 from .waste_types import OTHER, WasteType
 
@@ -41,14 +40,14 @@ class BaseTransformer:
     def __init__(
         self,
         type_value_map: Optional[dict[str, WasteType]] = None,
-        date_format: Optional[str] = None,
+        parse_date=None,
     ):
         self._type_value_map = (
             {k.strip().lower(): v for k, v in type_value_map.items()}
             if type_value_map
             else {}
         )
-        self._date_format = date_format
+        self._parse_date_fn = parse_date or date_parsers.auto
 
     @property
     def waste_types(self) -> list[WasteType]:
@@ -62,10 +61,7 @@ class BaseTransformer:
         return unique
 
     def _parse_date(self, date_str: str) -> datetime.date:
-        date_str = " ".join(date_str.split())  # normalise whitespace
-        if self._date_format:
-            return datetime.datetime.strptime(date_str, self._date_format).date()
-        return dateutil_parser.parse(date_str).date()
+        return self._parse_date_fn(date_str)
 
     def _resolve_type(self, raw_type: str) -> Optional[WasteType]:
         """Map raw type string to WasteType. Returns OTHER if no map; None to skip."""
@@ -96,7 +92,8 @@ class JsonTransformer(BaseTransformer):
         type_key:      Key in the record dict containing the waste type string.
         type_value_map: Maps raw type strings (case-insensitive) to WasteTypes.
                        If omitted, all records are classified as OTHER.
-        date_format:   strptime format string. If omitted, dateutil auto-detects.
+        parse_date:    A ``date_parsers`` callable. Defaults to ``date_parsers.auto``.
+                       Use ``date_parsers.for_format("%d/%m/%Y")`` for a known format.
     """
 
     def __init__(
@@ -104,9 +101,9 @@ class JsonTransformer(BaseTransformer):
         date_key: str,
         type_key: str,
         type_value_map: Optional[dict[str, WasteType]] = None,
-        date_format: Optional[str] = None,
+        parse_date=None,
     ):
-        super().__init__(type_value_map, date_format)
+        super().__init__(type_value_map, parse_date)
         self._date_key = date_key
         self._type_key = type_key
 
@@ -137,7 +134,7 @@ class KeyValueTransformer(BaseTransformer):
         date_key:      The ``name`` whose ``value`` contains the date string.
         type_key:      The ``name`` whose ``value`` contains the waste type.
         type_value_map: Maps raw type strings (case-insensitive) to WasteTypes.
-        date_format:   strptime format string. If omitted, dateutil auto-detects.
+        parse_date:    A ``date_parsers`` callable. Defaults to ``date_parsers.auto``.
         name_field:    Field name for the key in each pair (default: ``"name"``).
         value_field:   Field name for the value in each pair (default: ``"value"``).
     """
@@ -147,11 +144,11 @@ class KeyValueTransformer(BaseTransformer):
         date_key: str,
         type_key: str,
         type_value_map: Optional[dict[str, WasteType]] = None,
-        date_format: Optional[str] = None,
+        parse_date=None,
         name_field: str = "name",
         value_field: str = "value",
     ):
-        super().__init__(type_value_map, date_format)
+        super().__init__(type_value_map, parse_date)
         self._date_key = date_key
         self._type_key = type_key
         self._name_field = name_field
@@ -191,7 +188,7 @@ class ICSTransformer(BaseTransformer):
     """
 
     def __init__(self, type_value_map: Optional[dict[str, WasteType]] = None):
-        super().__init__(type_value_map, date_format=None)
+        super().__init__(type_value_map)
 
     def transform(self, record) -> Optional[Collection]:
         date, summary = record
@@ -218,7 +215,7 @@ class HtmlTransformer(BaseTransformer):
         date_getter:   Callable(element) → date string (or datetime.date directly).
         type_getter:   Callable(element) → type string.
         type_value_map: Maps raw type strings (case-insensitive) to WasteTypes.
-        date_format:   strptime format string. If omitted, dateutil auto-detects.
+        parse_date:    A ``date_parsers`` callable. Defaults to ``date_parsers.auto``.
     """
 
     def __init__(
@@ -226,9 +223,9 @@ class HtmlTransformer(BaseTransformer):
         date_getter: Callable,
         type_getter: Callable,
         type_value_map: Optional[dict[str, WasteType]] = None,
-        date_format: Optional[str] = None,
+        parse_date=None,
     ):
-        super().__init__(type_value_map, date_format)
+        super().__init__(type_value_map, parse_date)
         self._date_getter = date_getter
         self._type_getter = type_getter
 
