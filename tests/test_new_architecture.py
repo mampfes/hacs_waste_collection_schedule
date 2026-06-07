@@ -216,9 +216,7 @@ class TestCollectionFactory:
 
     def test_new_style_dispatch(self):
         from waste_collection_schedule import Collection
-        from waste_collection_schedule.collection import (
-            Collection as RealCollection,
-        )
+        from waste_collection_schedule.collection import Collection as RealCollection
         from waste_collection_schedule.waste_types import GENERAL_WASTE
 
         c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
@@ -227,14 +225,12 @@ class TestCollectionFactory:
 
     def test_legacy_dispatch(self):
         from waste_collection_schedule import Collection
+        from waste_collection_schedule.collection import Collection as RealCollection
         from waste_collection_schedule.collection import (
-            Collection as RealCollection,
             LegacyCollection,
         )
 
-        c = Collection(
-            date=datetime.date(2026, 1, 1), t="Refuse", icon="mdi:trash-can"
-        )
+        c = Collection(date=datetime.date(2026, 1, 1), t="Refuse", icon="mdi:trash-can")
         assert isinstance(c, LegacyCollection)
         assert isinstance(c, RealCollection)
 
@@ -246,9 +242,7 @@ class TestCollectionFactory:
 
     def test_isinstance_check(self):
         from waste_collection_schedule import Collection
-        from waste_collection_schedule.collection import (
-            Collection as RealCollection,
-        )
+        from waste_collection_schedule.collection import Collection as RealCollection
         from waste_collection_schedule.waste_types import GENERAL_WASTE
 
         c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
@@ -373,30 +367,47 @@ class TestParsers:
         soup = html(None, resp)
         assert soup.find("p").text == "test"
 
+    def test_ics_parser_returns_date_summary_tuples(self):
+        from waste_collection_schedule.parsers import ics
+
+        resp = MagicMock()
+        resp.text = "BEGIN:VCALENDAR\nEND:VCALENDAR"
+        expected = [(datetime.date(2026, 1, 15), "General Waste")]
+
+        with patch(
+            "waste_collection_schedule.service.ICS.ICS.convert", return_value=expected
+        ):
+            result = ics(None, resp)
+            assert result == expected
+
 
 class TestRetrievers:
-    """retrievers.http_get and retrievers.http_post."""
+    """retrievers.http_get/post (curl_cffi) and legacy_http_get/post (plain requests)."""
 
-    def test_http_get_calls_requests(self):
+    def test_http_get_uses_cffi_session(self):
         from waste_collection_schedule.retrievers import http_get
 
-        # Pipeline functions take self (the source instance) as first arg
         source = MagicMock()
         source.API_URL = "https://example.com/api"
         source._params = {"key": "val"}
         source._headers = {"X-Custom": "yes"}
         source.TIMEOUT = 15
 
-        with patch("waste_collection_schedule.retrievers.requests") as mock_req:
+        mock_session = MagicMock()
+        with patch(
+            "waste_collection_schedule.retrievers._cffi_requests.Session",
+            return_value=mock_session,
+        ) as mock_session_cls:
             http_get(source)
-            mock_req.get.assert_called_once_with(
+            mock_session_cls.assert_called_once_with(impersonate="chrome")
+            mock_session.get.assert_called_once_with(
                 "https://example.com/api",
                 params={"key": "val"},
                 headers={"X-Custom": "yes"},
                 timeout=15,
             )
 
-    def test_http_post_calls_requests(self):
+    def test_http_post_uses_cffi_session(self):
         from waste_collection_schedule.retrievers import http_post
 
         source = MagicMock()
@@ -407,8 +418,53 @@ class TestRetrievers:
         source._headers = None
         source.TIMEOUT = 30
 
-        with patch("waste_collection_schedule.retrievers.requests") as mock_req:
+        mock_session = MagicMock()
+        with patch(
+            "waste_collection_schedule.retrievers._cffi_requests.Session",
+            return_value=mock_session,
+        ) as mock_session_cls:
             http_post(source)
+            mock_session_cls.assert_called_once_with(impersonate="chrome")
+            mock_session.post.assert_called_once_with(
+                "https://example.com/api",
+                params=None,
+                data="body",
+                json=None,
+                headers=None,
+                timeout=30,
+            )
+
+    def test_legacy_http_get_uses_plain_requests(self):
+        from waste_collection_schedule.retrievers import legacy_http_get
+
+        source = MagicMock()
+        source.API_URL = "https://example.com/api"
+        source._params = {"key": "val"}
+        source._headers = None
+        source.TIMEOUT = 30
+
+        with patch("waste_collection_schedule.retrievers._plain_requests") as mock_req:
+            legacy_http_get(source)
+            mock_req.get.assert_called_once_with(
+                "https://example.com/api",
+                params={"key": "val"},
+                headers=None,
+                timeout=30,
+            )
+
+    def test_legacy_http_post_uses_plain_requests(self):
+        from waste_collection_schedule.retrievers import legacy_http_post
+
+        source = MagicMock()
+        source.API_URL = "https://example.com/api"
+        source._params = None
+        source._data = "body"
+        source._json = None
+        source._headers = None
+        source.TIMEOUT = 30
+
+        with patch("waste_collection_schedule.retrievers._plain_requests") as mock_req:
+            legacy_http_post(source)
             mock_req.post.assert_called_once_with(
                 "https://example.com/api",
                 params=None,
@@ -542,9 +598,7 @@ class TestBaseSourcePipeline:
                 waste_type=GENERAL_WASTE,
             )
 
-        Source = self._make_source_class(
-            [{"day": "1"}, {"day": "15"}], classify
-        )
+        Source = self._make_source_class([{"day": "1"}, {"day": "15"}], classify)
         results = Source().fetch()
         assert len(results) == 2
         assert all(isinstance(r, Collection) for r in results)
@@ -558,13 +612,9 @@ class TestBaseSourcePipeline:
             from waste_collection_schedule.collection import Collection
             from waste_collection_schedule.waste_types import GENERAL_WASTE
 
-            return Collection(
-                date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE
-            )
+            return Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
 
-        Source = self._make_source_class(
-            [{"skip": True}, {"skip": False}], classify
-        )
+        Source = self._make_source_class([{"skip": True}, {"skip": False}], classify)
         results = Source().fetch()
         assert len(results) == 1
 
@@ -669,6 +719,38 @@ class TestBaseSourcePipeline:
         results = CustomSource().fetch()
         assert results[0].date == datetime.date(2026, 4, 10)
 
+    def test_classify_type_matches_type_map(self):
+        """_classify_type does case-insensitive TYPE_MAP lookup."""
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+
+        class TestSource(BaseSource):
+            TYPE_MAP = {"general": GENERAL_WASTE, "recycling": RECYCLABLES}
+
+        source = TestSource()
+        assert source._classify_type("general") is GENERAL_WASTE
+        assert source._classify_type("General") is GENERAL_WASTE
+        assert source._classify_type("  RECYCLING  ") is RECYCLABLES
+
+    def test_classify_type_falls_back_to_other(self):
+        """_classify_type returns OTHER for unrecognised strings."""
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.waste_types import OTHER
+
+        class TestSource(BaseSource):
+            TYPE_MAP = {"general": OTHER}
+
+        source = TestSource()
+        assert source._classify_type("unknown bin") is OTHER
+
+    def test_classify_type_empty_type_map(self):
+        """_classify_type returns OTHER when TYPE_MAP is empty."""
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.waste_types import OTHER
+
+        source = BaseSource()
+        assert source._classify_type("anything") is OTHER
+
 
 # =====================================================================
 # 5. Customisation (source_shell)
@@ -741,9 +823,7 @@ class TestSourceShellCustomize:
         from waste_collection_schedule.waste_types import GENERAL_WASTE
 
         c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
-        customize = {
-            "general_waste": Customize("general_waste", icon="mdi:custom-bin")
-        }
+        customize = {"general_waste": Customize("general_waste", icon="mdi:custom-bin")}
         customize_function(c, customize)
         assert c.icon == "mdi:custom-bin"
 
@@ -962,9 +1042,9 @@ class TestNewStyleSourceMetadata:
         from waste_collection_schedule.base_source import BaseSource
 
         name, cls = source_info
-        assert cls.classify is not BaseSource.classify, (
-            f"{name}: classify() not implemented"
-        )
+        assert (
+            cls.classify is not BaseSource.classify
+        ), f"{name}: classify() not implemented"
 
 
 @pytest.mark.skipif(
@@ -988,9 +1068,7 @@ class TestNewStyleSourceTestCases:
 
     _CASES = _get_test_cases()
 
-    @pytest.fixture(
-        params=_CASES, ids=[f"{c[0]}::{c[2]}" for c in _CASES]
-    )
+    @pytest.fixture(params=_CASES, ids=[f"{c[0]}::{c[2]}" for c in _CASES])
     def test_case(self, request):
         return request.param
 
@@ -1009,14 +1087,14 @@ class TestNewStyleSourceTestCases:
                 f"{name}::{tc_name}: result[{i}] is {type(r).__name__}, "
                 f"expected Collection"
             )
-            assert isinstance(r.date, datetime.date), (
-                f"{name}::{tc_name}: result[{i}].date is {type(r.date).__name__}"
-            )
+            assert isinstance(
+                r.date, datetime.date
+            ), f"{name}::{tc_name}: result[{i}].date is {type(r.date).__name__}"
             assert r.type, f"{name}::{tc_name}: result[{i}].type is empty"
             assert r.icon, f"{name}::{tc_name}: result[{i}].icon is empty"
-            assert r.waste_type is not None, (
-                f"{name}::{tc_name}: result[{i}].waste_type is None"
-            )
+            assert (
+                r.waste_type is not None
+            ), f"{name}::{tc_name}: result[{i}].waste_type is None"
 
     def test_fetch_returns_non_empty(self, test_case):
         """Test cases should return at least one collection."""
@@ -1039,6 +1117,6 @@ class TestNewStyleSourceTestCases:
         results = source.fetch()
         returned = set(r.waste_type.id for r in results)
         undeclared = returned - declared
-        assert not undeclared, (
-            f"{name}::{tc_name}: returned undeclared waste types: {undeclared}"
-        )
+        assert (
+            not undeclared
+        ), f"{name}::{tc_name}: returned undeclared waste types: {undeclared}"

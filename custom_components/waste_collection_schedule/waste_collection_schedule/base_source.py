@@ -11,9 +11,9 @@ record means.
 
 import logging
 
+from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.waste_types import WasteType
-from waste_collection_schedule import retrievers, parsers, date_parsers
+from waste_collection_schedule.waste_types import OTHER, WasteType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,6 +31,19 @@ class BaseSource:
 
     # --- Waste types this source produces ---
     WASTE_TYPES: list[WasteType] = []
+
+    # --- Type classification ---
+    TYPE_MAP: dict[str, WasteType] = {}
+    """Map local waste type strings to canonical WasteTypes.
+
+    Keys are matched case-insensitively. Records not matched fall back to OTHER::
+
+        TYPE_MAP = {
+            "general": GENERAL_WASTE,
+            "recycling": RECYCLABLES,
+            "green bin": ORGANIC,
+        }
+    """
 
     # --- Pipeline config ---
     API_URL: str = ""
@@ -73,6 +86,15 @@ class BaseSource:
     """
 
     # --- Pipeline orchestration ---
+
+    def _classify_type(self, raw_type: str) -> WasteType:
+        """Case-insensitive TYPE_MAP lookup with fallback to OTHER.
+
+        Sources use this inside classify()::
+
+            waste_type = self._classify_type(record["bin_type"])
+        """
+        return self.TYPE_MAP.get(raw_type.strip().lower(), OTHER)
 
     def fetch(self) -> list[Collection]:
         """Orchestrate the pipeline: retrieve → parse → classify.
