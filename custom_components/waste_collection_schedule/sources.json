@@ -6266,6 +6266,12 @@
       "id": "sictom_lons_le_saunier_fr"
     },
     {
+      "title": "SIVOM de la Vall\u00e9e de l'Yerres et des S\u00e9narts",
+      "module": "sivom_com",
+      "default_params": {},
+      "id": "sivom_com"
+    },
+    {
       "title": "SIVOM Rive Droite",
       "module": "publidata_fr",
       "default_params": {

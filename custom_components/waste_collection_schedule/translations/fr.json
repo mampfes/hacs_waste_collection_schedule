@@ -5907,6 +5907,33 @@
           "commune": "Le slug de votre commune (ex: 'courbouzon'). Cherchez votre commune sur {url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html}"
         }
       },
+      "args_sivom_com": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "commune": "Nom de la commune (ex: VILLECRESNES, BRUNOY, YERRES)",
+          "street": "Nom de la rue tel qu'affiché sur le site du SIVOM"
+        }
+      },
+      "reconfigure_sivom_com": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune",
+          "street": "Rue"
+        },
+        "data_description": {
+          "commune": "Nom de la commune (ex: VILLECRESNES, BRUNOY, YERRES)",
+          "street": "Nom de la rue tel qu'affiché sur le site du SIVOM"
+        }
+      },
       "args_sivom_rivedroite_fr": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

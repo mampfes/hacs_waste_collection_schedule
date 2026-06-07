@@ -1429,6 +1429,14 @@
       "url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html": "https://sictom-lons-le-saunier.fr/quand-passe-le-camion-benne.html."
     }
   },
+  "sivom_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_com.md",
+    "howto": {
+      "en": "Go to https://www.sivom.com/mesjoursdecollectes/?v=YOUR_COMMUNE to find your commune name and street name.",
+      "fr": "Allez sur https://www.sivom.com/mesjoursdecollectes/?v=VOTRE_COMMUNE pour trouver le nom de votre commune et de votre rue."
+    },
+    "urls": {}
+  },
   "sivom_rivedroite_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
     "howto": {},

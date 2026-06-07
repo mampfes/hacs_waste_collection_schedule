@@ -6183,6 +6183,33 @@
           "commune": "The slug of your commune (e.g. 'courbouzon'). Search on {url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html} to find your commune name, then convert to lowercase with hyphens."
         }
       },
+      "args_sivom_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Commune",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "Name of the commune (e.g. VILLECRESNES, BRUNOY, YERRES)",
+          "street": "Name of the street as shown on the SIVOM website"
+        }
+      },
+      "reconfigure_sivom_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Commune",
+          "street": "Street"
+        },
+        "data_description": {
+          "commune": "Name of the commune (e.g. VILLECRESNES, BRUNOY, YERRES)",
+          "street": "Name of the street as shown on the SIVOM website"
+        }
+      },
       "args_sivom_rivedroite_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
