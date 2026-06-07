@@ -14655,6 +14655,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Comune.Digital",
+      "module": "comune_digital_it",
+      "default_params": {},
+      "id": "comune_digital_it"
+    },
+    {
       "title": "Comuni della Convenzione di Sesto Calende - Econord",
       "module": "junker_app",
       "default_params": {},
