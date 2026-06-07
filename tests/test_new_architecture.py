@@ -719,61 +719,52 @@ class TestBaseSourcePipeline:
         results = CustomSource().fetch()
         assert results[0].date == datetime.date(2026, 4, 10)
 
-    def test_classify_type_matches_type_map(self):
-        """_classify_type does case-insensitive TYPE_MAP lookup."""
+    def test_transformer_used_when_set(self):
+        """When transformer is declared, fetch() uses it instead of classify()."""
         from waste_collection_schedule.base_source import BaseSource
-        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
-
-        class TestSource(BaseSource):
-            TYPE_MAP = {"general": GENERAL_WASTE, "recycling": RECYCLABLES}
-
-        source = TestSource()
-        assert source._classify_type("general") is GENERAL_WASTE
-        assert source._classify_type("General") is GENERAL_WASTE
-        assert source._classify_type("  RECYCLING  ") is RECYCLABLES
-
-    def test_classify_type_falls_back_to_other(self):
-        """_classify_type returns OTHER for unrecognised strings."""
-        from waste_collection_schedule.base_source import BaseSource
-        from waste_collection_schedule.waste_types import OTHER
-
-        class TestSource(BaseSource):
-            TYPE_MAP = {"general": OTHER}
-
-        source = TestSource()
-        assert source._classify_type("unknown bin") is OTHER
-
-    def test_classify_type_empty_type_map(self):
-        """_classify_type returns OTHER when TYPE_MAP is empty."""
-        from waste_collection_schedule.base_source import BaseSource
-        from waste_collection_schedule.waste_types import OTHER
-
-        source = BaseSource()
-        assert source._classify_type("anything") is OTHER
-
-    def test_waste_types_derived_from_type_map(self):
-        """WASTE_TYPES is auto-derived from TYPE_MAP when not explicitly declared."""
-        from waste_collection_schedule.base_source import BaseSource
-        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
-
-        class TestSource(BaseSource):
-            TYPE_MAP = {"general": GENERAL_WASTE, "recycling": RECYCLABLES}
-
-        assert TestSource.WASTE_TYPES == [GENERAL_WASTE, RECYCLABLES]
-
-    def test_waste_types_deduplicates_type_map_values(self):
-        """WASTE_TYPES contains each WasteType once even if repeated in TYPE_MAP."""
-        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.transformers import JsonTransformer
         from waste_collection_schedule.waste_types import GENERAL_WASTE
 
         class TestSource(BaseSource):
-            TYPE_MAP = {"black": GENERAL_WASTE, "grey": GENERAL_WASTE}
+            transformer = JsonTransformer(
+                date_key="date",
+                type_key="bin",
+                type_value_map={"refuse": GENERAL_WASTE},
+            )
 
-        assert TestSource.WASTE_TYPES == [GENERAL_WASTE]
+            def __init__(self):
+                pass
 
-    def test_waste_types_explicit_overrides_type_map(self):
-        """Explicit WASTE_TYPES declaration takes precedence over TYPE_MAP derivation."""
+            def retrieve(self):
+                return MagicMock()
+
+            def parse(self, response):
+                return [{"date": "2026-03-01", "bin": "refuse"}]
+
+        results = TestSource().fetch()
+        assert len(results) == 1
+        assert results[0].date == datetime.date(2026, 3, 1)
+        assert results[0].waste_type is GENERAL_WASTE
+
+    def test_waste_types_derived_from_transformer(self):
+        """WASTE_TYPES is auto-derived from transformer.waste_types."""
         from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+
+        class TestSource(BaseSource):
+            transformer = JsonTransformer(
+                date_key="date",
+                type_key="bin",
+                type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
+            )
+
+        assert TestSource.WASTE_TYPES == [GENERAL_WASTE, RECYCLABLES]
+
+    def test_waste_types_explicit_overrides_transformer(self):
+        """Explicit WASTE_TYPES declaration takes precedence over transformer derivation."""
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.transformers import JsonTransformer
         from waste_collection_schedule.waste_types import (
             GENERAL_WASTE,
             OTHER,
@@ -781,10 +772,168 @@ class TestBaseSourcePipeline:
         )
 
         class TestSource(BaseSource):
-            TYPE_MAP = {"general": GENERAL_WASTE}
+            transformer = JsonTransformer(
+                date_key="date",
+                type_key="bin",
+                type_value_map={"refuse": GENERAL_WASTE},
+            )
             WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, OTHER]
 
         assert TestSource.WASTE_TYPES == [GENERAL_WASTE, RECYCLABLES, OTHER]
+
+
+# =====================================================================
+# 4b. Transformers
+# =====================================================================
+
+
+class TestTransformers:
+    """JsonTransformer, KeyValueTransformer, ICSTransformer, HtmlTransformer."""
+
+    def test_json_transformer_basic(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
+        record = {"date": "2026-01-15", "bin": "refuse"}
+        result = t.transform(record)
+        assert result is not None
+        assert result.date == datetime.date(2026, 1, 15)
+        assert result.waste_type is GENERAL_WASTE
+
+    def test_json_transformer_case_insensitive(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer("date", "bin", {"Refuse": GENERAL_WASTE})
+        result = t.transform({"date": "2026-01-15", "bin": "REFUSE"})
+        assert result is not None
+        assert result.waste_type is GENERAL_WASTE
+
+    def test_json_transformer_missing_date_returns_none(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
+        assert t.transform({"bin": "refuse"}) is None
+
+    def test_json_transformer_unknown_type_returns_other(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, OTHER
+
+        t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
+        result = t.transform({"date": "2026-01-15", "bin": "unknown"})
+        assert result is not None
+        assert result.waste_type is OTHER
+
+    def test_json_transformer_date_format(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer(
+            "date", "bin", {"refuse": GENERAL_WASTE}, date_format="%d/%m/%Y"
+        )
+        result = t.transform({"date": "15/01/2026", "bin": "refuse"})
+        assert result.date == datetime.date(2026, 1, 15)
+
+    def test_json_transformer_waste_types_property(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+
+        t = JsonTransformer(
+            "date", "bin", {"refuse": GENERAL_WASTE, "recycling": RECYCLABLES}
+        )
+        assert t.waste_types == [GENERAL_WASTE, RECYCLABLES]
+
+    def test_json_transformer_waste_types_deduplicated(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer(
+            "date", "bin", {"black": GENERAL_WASTE, "grey": GENERAL_WASTE}
+        )
+        assert t.waste_types == [GENERAL_WASTE]
+
+    def test_key_value_transformer_basic(self):
+        from waste_collection_schedule.transformers import KeyValueTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = KeyValueTransformer("date", "type", {"red": GENERAL_WASTE})
+        record = [
+            {"name": "date", "value": "2026-01-15"},
+            {"name": "type", "value": "red"},
+        ]
+        result = t.transform(record)
+        assert result is not None
+        assert result.date == datetime.date(2026, 1, 15)
+        assert result.waste_type is GENERAL_WASTE
+
+    def test_key_value_transformer_normalises_whitespace(self):
+        from waste_collection_schedule.transformers import KeyValueTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = KeyValueTransformer("date", "type", {"red": GENERAL_WASTE})
+        record = [
+            {"name": "date", "value": "15  Jan  2026"},
+            {"name": "type", "value": "red"},
+        ]
+        result = t.transform(record)
+        assert result is not None
+        assert result.date == datetime.date(2026, 1, 15)
+
+    def test_key_value_transformer_missing_date_returns_none(self):
+        from waste_collection_schedule.transformers import KeyValueTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = KeyValueTransformer("date", "type", {"red": GENERAL_WASTE})
+        assert t.transform([{"name": "type", "value": "red"}]) is None
+
+    def test_ics_transformer_basic(self):
+        from waste_collection_schedule.transformers import ICSTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = ICSTransformer({"general waste": GENERAL_WASTE})
+        record = (datetime.date(2026, 3, 1), "General Waste")
+        result = t.transform(record)
+        assert result is not None
+        assert result.date == datetime.date(2026, 3, 1)
+        assert result.waste_type is GENERAL_WASTE
+
+    def test_html_transformer_basic(self):
+        from waste_collection_schedule.transformers import HtmlTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = HtmlTransformer(
+            date_getter=lambda el: el["date"],
+            type_getter=lambda el: el["type"],
+            type_value_map={"refuse": GENERAL_WASTE},
+        )
+        result = t.transform({"date": "2026-01-15", "type": "refuse"})
+        assert result is not None
+        assert result.date == datetime.date(2026, 1, 15)
+
+    def test_html_transformer_getter_exception_returns_none(self):
+        from waste_collection_schedule.transformers import HtmlTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = HtmlTransformer(
+            date_getter=lambda el: el["missing_key"],
+            type_getter=lambda el: "refuse",
+            type_value_map={"refuse": GENERAL_WASTE},
+        )
+        assert t.transform({}) is None
+
+    def test_html_transformer_accepts_date_object_directly(self):
+        from waste_collection_schedule.transformers import HtmlTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = HtmlTransformer(
+            date_getter=lambda el: datetime.date(2026, 6, 1),
+            type_getter=lambda el: "refuse",
+            type_value_map={"refuse": GENERAL_WASTE},
+        )
+        result = t.transform({})
+        assert result.date == datetime.date(2026, 6, 1)
 
 
 # =====================================================================
@@ -1072,14 +1221,16 @@ class TestNewStyleSourceMetadata:
         tc = getattr(cls, "TEST_CASES", {})
         assert len(tc) > 0, f"{name}: no TEST_CASES defined"
 
-    def test_classify_is_implemented(self, source_info):
-        """Source must override classify()."""
+    def test_classify_or_transformer_is_implemented(self, source_info):
+        """Source must either declare a transformer or override classify()."""
         from waste_collection_schedule.base_source import BaseSource
 
         name, cls = source_info
+        has_transformer = getattr(cls, "transformer", None) is not None
+        has_classify = cls.classify is not BaseSource.classify
         assert (
-            cls.classify is not BaseSource.classify
-        ), f"{name}: classify() not implemented"
+            has_transformer or has_classify
+        ), f"{name}: must declare a transformer or implement classify()"
 
 
 @pytest.mark.skipif(

@@ -1,19 +1,39 @@
 """Base class for waste collection sources.
 
-A source is a composition of standard pipeline steps:
-  retrieve (how to fetch raw data) → parse (how to interpret the response)
-  → classify (how to extract date + waste type from each record)
+A source is a composition of three standard pipeline steps:
 
-Sources configure which standard steps to use and only write custom
-code for classify() — the source-specific knowledge of what each
-record means.
+    retrieve  →  parse  →  transform
+
+  retrieve:  fetch raw data from the remote service
+  parse:     convert the response into an iterable of records
+  transform: convert each record into a Collection
+
+Sources declare which standard steps to use. For most sources, the only
+source-specific code is ``__init__`` (storing constructor args as instance
+attributes for the retriever to use). Everything else is declarative::
+
+    class Source(BaseSource):
+        TITLE = "Example Council"
+        API_URL = "https://api.example.com/collections"
+        PARAMS = [config_params.uprn()]
+        transformer = JsonTransformer(
+            date_key="date",
+            type_key="bin",
+            type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
+        )
+
+        def __init__(self, uprn: str):
+            self._params = {"uprn": uprn}
+
+For complex sources that don't fit the standard transformers, implement
+``classify()`` instead of declaring a transformer.
 """
 
 import logging
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.waste_types import OTHER, WasteType
+from waste_collection_schedule.waste_types import WasteType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,36 +50,15 @@ class BaseSource:
     HOWTO: dict[str, str] = {}  # {"en": "How to find your args...", ...}
 
     # --- Waste types this source produces ---
-    # Auto-derived from TYPE_MAP values if not explicitly declared.
-    # Explicit declaration takes precedence (e.g. for sources whose classify()
-    # produces types not listed in TYPE_MAP).
+    # Auto-derived from transformer.waste_types when not explicitly declared.
+    # Explicit declaration takes precedence for sources using classify().
     WASTE_TYPES: list[WasteType] = []
 
     def __init_subclass__(cls, **kwargs):
-        """Auto-derive WASTE_TYPES from TYPE_MAP when not explicitly declared."""
+        """Auto-derive WASTE_TYPES from transformer when not explicitly declared."""
         super().__init_subclass__(**kwargs)
-        if "WASTE_TYPES" not in cls.__dict__ and "TYPE_MAP" in cls.__dict__:
-            # Derive unique WasteTypes from TYPE_MAP values, preserving order
-            seen_ids: set[str] = set()
-            unique: list[WasteType] = []
-            for wt in cls.TYPE_MAP.values():
-                if wt.id not in seen_ids:
-                    seen_ids.add(wt.id)
-                    unique.append(wt)
-            cls.WASTE_TYPES = unique
-
-    # --- Type classification ---
-    TYPE_MAP: dict[str, WasteType] = {}
-    """Map local waste type strings to canonical WasteTypes.
-
-    Keys are matched case-insensitively. Records not matched fall back to OTHER::
-
-        TYPE_MAP = {
-            "general": GENERAL_WASTE,
-            "recycling": RECYCLABLES,
-            "green bin": ORGANIC,
-        }
-    """
+        if "WASTE_TYPES" not in cls.__dict__ and "transformer" in cls.__dict__:
+            cls.WASTE_TYPES = cls.__dict__["transformer"].waste_types
 
     # --- Pipeline config ---
     API_URL: str = ""
@@ -82,41 +81,42 @@ class BaseSource:
     """Convert the raw response into an iterable of records.
 
     Default: parse as JSON (response.json()).
-    Alternatives: parsers.html (BeautifulSoup), parsers.text (plain str),
+    Alternatives: parsers.html (BeautifulSoup), parsers.ics, parsers.text,
     or a custom method.
 
-    Each record is passed individually to classify()::
+    Each record is passed individually to the transformer (or classify())::
 
         parse = parsers.html    # parse HTML with BeautifulSoup
     """
 
+    transformer = None
+    """Convert each record into a Collection.
+
+    Set to a typed transformer instance instead of implementing classify()::
+
+        transformer = JsonTransformer(
+            date_key="date",
+            type_key="bin",
+            type_value_map={"refuse": GENERAL_WASTE},
+        )
+
+    Available transformers: JsonTransformer, KeyValueTransformer,
+    ICSTransformer, HtmlTransformer. See waste_collection_schedule.transformers.
+    """
+
     parse_date = date_parsers.auto
-    """Parse a date string into a datetime.date.
+    """Parse a date string into a datetime.date. Used inside classify().
 
     Default: auto-detect format via dateutil.
-    Alternative: date_parsers.for_format("%d/%m/%Y") for a known format.
-
-    Called by sources inside classify() when the date is a string::
+    Alternative: date_parsers.for_format("%d/%m/%Y") for a known format::
 
         parse_date = date_parsers.for_format("%d %B %Y")
     """
 
     # --- Pipeline orchestration ---
 
-    def _classify_type(self, raw_type: str) -> WasteType:
-        """Case-insensitive TYPE_MAP lookup with fallback to OTHER.
-
-        Sources use this inside classify()::
-
-            waste_type = self._classify_type(record["bin_type"])
-        """
-        return self.TYPE_MAP.get(raw_type.strip().lower(), OTHER)
-
     def fetch(self) -> list[Collection]:
-        """Orchestrate the pipeline: retrieve → parse → classify.
-
-        Generally not overridden. Override the individual steps instead.
-        """
+        """Orchestrate the pipeline: retrieve → parse → transform/classify."""
         response = self.retrieve()
         records = self.parse(response)
 
@@ -128,7 +128,10 @@ class BaseSource:
 
         entries = []
         for record in records:
-            collection = self.classify(record)
+            if self.transformer is not None:
+                collection = self.transformer.transform(record)
+            else:
+                collection = self.classify(record)
             if collection is not None:
                 entries.append(collection)
 
@@ -137,17 +140,16 @@ class BaseSource:
     def classify(self, record) -> Collection | None:
         """Extract a Collection from a single parsed record.
 
-        This is the only method most sources need to implement. Receives
-        one record (a dict, HTML element, etc. depending on the parser)
-        and returns a Collection, or None to skip the record.
+        Escape hatch for sources too complex for a standard transformer.
+        Receives one record (dict, HTML element, etc.) and returns a
+        Collection or None to skip the record.
 
-        Use self.parse_date() to convert date strings::
+        Use self.parse_date() to parse date strings::
 
             def classify(self, record) -> Collection | None:
                 date = self.parse_date(record["date"])
-                waste_type = self.TYPE_MAP.get(record["bin"])
-                if not waste_type:
-                    return None
-                return Collection(date=date, waste_type=waste_type)
+                return Collection(date=date, waste_type=GENERAL_WASTE)
         """
-        raise NotImplementedError("Source must implement classify()")
+        raise NotImplementedError(
+            "Source must either declare a transformer or implement classify()"
+        )

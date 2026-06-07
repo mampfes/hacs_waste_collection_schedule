@@ -1,6 +1,6 @@
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import coords
+from waste_collection_schedule.transformers import KeyValueTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
     GENERAL_WASTE,
@@ -21,16 +21,18 @@ class Source(BaseSource):
         "-31.878331, 115.815553": {"lat": "-31.8783052", "lon": "115.8157741"},
     }
 
-    PARAMS = [
-        coords(lat="lat", lon="lon"),
-    ]
+    PARAMS = [coords(lat="lat", lon="lon")]
 
-    TYPE_MAP = {
-        "red": GENERAL_WASTE,
-        "green": ORGANIC,
-        "greenverge": GARDEN_WASTE,
-        "yellow": RECYCLABLES,
-    }
+    transformer = KeyValueTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "red": GENERAL_WASTE,
+            "green": ORGANIC,
+            "greenverge": GARDEN_WASTE,
+            "yellow": RECYCLABLES,
+        },
+    )
 
     def __init__(self, lat: float, lon: float):
         if isinstance(lat, str):
@@ -46,17 +48,3 @@ class Source(BaseSource):
             "Origin": self.URL,
             "Referer": f"{self.URL}/waste-and-environment/waste-and-recycling/bin-collections",
         }
-
-    def classify(self, record) -> Collection | None:
-        fields = {arg["name"]: arg["value"] for arg in record if "name" in arg}
-        date_str = fields.get("date", "")
-        if not date_str or not isinstance(date_str, str):
-            return None
-
-        bin_type = fields.get("type", "").lower()
-        waste_type = self.TYPE_MAP.get(bin_type)
-        if not waste_type:
-            return None
-
-        date = self.parse_date(date_str.replace("  ", " ").strip())
-        return Collection(date=date, waste_type=waste_type)
