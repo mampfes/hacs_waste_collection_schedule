@@ -3,7 +3,7 @@ import html
 import re
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Notre-Dame-du-Bon-Conseil (Village)"
 DESCRIPTION = "Source for villagebonconseil.ca waste collection calendar"
@@ -12,12 +12,12 @@ COUNTRY = "ca"
 TEST_CASES = {"Village": {}}
 
 ICON_MAP = {
-    "Ordures ménagères": "mdi:trash-can",
-    "Matières organiques": "mdi:leaf",
-    "Matières recyclables": "mdi:recycle",
-    "Conteneur en métal – Déchets": "mdi:dumpster",
-    "Conteneur en métal – Recyclage": "mdi:recycle",
-    "Encombrants": "mdi:sofa",
+    "Ordures ménagères": Icons.GENERAL_WASTE,
+    "Matières organiques": Icons.ORGANIC,
+    "Matières recyclables": Icons.RECYCLING,
+    "Conteneur en métal – Déchets": Icons.COMMERCIAL,
+    "Conteneur en métal – Recyclage": Icons.RECYCLING,
+    "Encombrants": Icons.BULKY,
 }
 
 WASTE_TYPE_MAP = {
