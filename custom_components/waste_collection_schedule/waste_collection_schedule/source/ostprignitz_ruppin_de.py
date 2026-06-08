@@ -3,6 +3,7 @@ from difflib import get_close_matches
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Ostprignitz-Ruppin"
@@ -66,7 +67,9 @@ class Source:
                 "NavID": "3039.138",
                 "kuo": "1",
             },
+            timeout=30,
         )
+        r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "lxml")
 
@@ -101,12 +104,14 @@ class Source:
         )
 
         if not match:
-            raise ValueError(f"Location '{self._location}' not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "location", self._location, list(locations.keys())
+            )
 
         return locations[match[0]]
 
     def _get_pois(self, locid):
-        data = session.get(
+        r = session.get(
             AUTOCOMPLETE_URL,
             params={
                 "out": "json",
@@ -120,7 +125,10 @@ class Source:
                 "Referer": MAIN_PAGE,
                 "X-Requested-With": "XMLHttpRequest",
             },
-        ).json()
+            timeout=30,
+        )
+        r.raise_for_status()
+        data = r.json()
 
         streets = {street_name: pois for pois, street_name in data}
 
@@ -132,7 +140,9 @@ class Source:
         )
 
         if not match:
-            raise ValueError(f"Street '{self._street}' not found")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, list(streets.keys())
+            )
 
         return streets[match[0]]
 
@@ -150,9 +160,8 @@ class Source:
     def fetch(self):
         url = self._build_ics_url()
 
-        r = session.get(url)
+        r = session.get(url, timeout=30)
         r.raise_for_status()
-
         dates = self._ics.convert(r.text)
 
         entries = []

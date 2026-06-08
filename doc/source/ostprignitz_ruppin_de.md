@@ -23,7 +23,7 @@ The name of your municipality (Ort).
 **street**<br>
 *(string)*
 
-The name of your street (Straße).
+The street / address entry shown in the "Straße" dropdown.
 
 ## Example
 ```yaml
