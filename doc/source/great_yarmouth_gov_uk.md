@@ -3,7 +3,7 @@
 Support for schedules provided by [Great Yarmouth Borough Council](https://myaccount.great-yarmouth.gov.uk), serving the Borough of Great Yarmouth, Norfolk, UK.
 
 ## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new West Norfolk, Greater Norwich, and East Norfolk councils are not expected to be live until at least April 2028, when the councils themselves officially come into being.
+During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new East Norfolk council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 
