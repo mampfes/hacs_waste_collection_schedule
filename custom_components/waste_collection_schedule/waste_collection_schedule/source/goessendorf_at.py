@@ -2,20 +2,20 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Marktgemeinde Gössendorf"
 DESCRIPTION = "Source for Marktgemeinde Gössendorf, AT"
 URL = "https://www.goessendorf.com/"
 TEST_CASES: dict[str, dict[str, str]] = {"TestSource": {}}
 ICON_MAP = {
-    "Bioabfall": "mdi:food",
-    "Altpapier P1": "mdi:newspaper",
-    "Altpapier P2": "mdi:newspaper",
-    "Sperrmüll S1": "mdi:factory",
-    "Sperrmüll S2": "mdi:factory",
-    "Restmüll R1": "mdi:trash-can",
-    "Restmüll R2": "mdi:trash-can",
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Altpapier P1": Icons.PAPER,
+    "Altpapier P2": Icons.PAPER,
+    "Sperrmüll S1": Icons.BULKY,
+    "Sperrmüll S2": Icons.BULKY,
+    "Restmüll R1": Icons.GENERAL_WASTE,
+    "Restmüll R2": Icons.GENERAL_WASTE,
 }
 
 

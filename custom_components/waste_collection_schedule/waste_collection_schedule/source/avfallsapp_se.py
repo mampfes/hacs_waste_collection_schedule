@@ -3,7 +3,7 @@ from datetime import datetime
 from uuid import uuid4
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
@@ -24,6 +24,11 @@ TEST_CASES = {
     "Söderköping - Söderköping Kommun": {
         "api_key": "!secret avfallsapp_se_api_key",
         "service_provider": "soderkoping",
+    },
+    "Teknik i Väst - Arvika/Eda": {
+        "api_key": "!secret avfallsapp_se_teknikivast_api_key",
+        "token": "!secret avfallsapp_se_teknikivast_token",
+        "service_provider": "teknikivast",
     },
 }
 
@@ -56,16 +61,19 @@ PARAM_DESCRIPTIONS = {
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "Tunna 1": "mdi:recycle",
-    "Tunna 2": "mdi:recycle",
-    "Hushållsavfall": "mdi:trash-can",
-    "Färgat glas": "mdi:bottle-wine",
-    "Ofärgat glas": "mdi:bottle-wine-outline",
-    "Metall": "mdi:nail",
-    "Papper": "mdi:package",
-    "Plast": "mdi:bottle-soda-classic-outline",
-    "Tidning": "mdi:newspaper",
-    "Deponi": "mdi:delete",
+    "Tunna 1": Icons.RECYCLING,
+    "Tunna 2": Icons.RECYCLING,
+    "Hushållsavfall": Icons.GENERAL_WASTE,
+    "Färgat glas": Icons.GLASS,
+    "Ofärgat glas": Icons.GLASS,
+    "Metall": Icons.METAL,
+    "Papper": Icons.PAPER,
+    "Plast": Icons.PLASTIC_PACKAGING,
+    "Tidning": Icons.NEWSPAPER,
+    "Deponi": Icons.GENERAL_WASTE,
+    # Teknik i Väst (Arvika/Eda)
+    "Mat- och restavfall": Icons.GENERAL_WASTE,
+    "Papp och plast": Icons.RECYCLING,
 }
 
 SERVICE_PROVIDERS = {
@@ -90,6 +98,22 @@ SERVICE_PROVIDERS = {
         "supports_registration": False,
         "requires_token": True,
         "app_version": "3.0.0.0",
+    },
+    "upplands-bro": {
+        "title": "Upplands-Bro",
+        "url": "https://www.upplands-bro.se/",
+        "api_url": "https://upplands-bro.avfallsapp.se/wp-json/nova/v1/",
+        "supports_registration": True,
+        "requires_token": False,
+        "app_version": "2.1.3",
+    },
+    "teknikivast": {
+        "title": "Teknik i Väst (Arvika/Eda)",
+        "url": "https://teknikivast.se",
+        "api_url": "https://teknikivast.avfallsapp.se/api/nova/v1/",
+        "supports_registration": False,
+        "requires_token": True,
+        "app_version": "1.0.1.0",
     },
 }
 
@@ -358,7 +382,7 @@ class Source:
                     )
                     continue
 
-                icon = ICON_MAP.get(waste_type, "mdi:trash-can")
+                icon = ICON_MAP.get(waste_type, Icons.GENERAL_WASTE)
 
                 if multi_config and address:
                     waste_type = f"{address} {waste_type}"

@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Lund Waste Collection"
 DESCRIPTION = "Source for Lund waste collection services, Sweden."
@@ -16,13 +16,13 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Plastförpacknin": "mdi:recycle",
-    "Tidningar": "mdi:newspaper",
-    "Metallförpackni": "mdi:recycle",
-    "Matavfall": "mdi:food-apple",
-    "Ofärgat Glas": "mdi:glass-wine",
-    "Färgat Glas": "mdi:glass-wine",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Plastförpacknin": Icons.RECYCLING,
+    "Tidningar": Icons.NEWSPAPER,
+    "Metallförpackni": Icons.METAL,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Ofärgat Glas": Icons.GLASS,
+    "Färgat Glas": Icons.GLASS,
 }
 
 

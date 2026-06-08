@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Newcastle Under Lyme Borough Council"
 DESCRIPTION = (
@@ -17,10 +17,10 @@ TEST_CASES = {
     "Test_004": {"uprn": "200004602766"},
 }
 ICON_MAP = {
-    "Household Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food Waste": "mdi:food",
-    "Garden Waste": "mdi:leaf",
+    "Household Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Garden Waste": Icons.GARDEN,
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",

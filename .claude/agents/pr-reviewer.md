@@ -27,6 +27,13 @@ Revert these with `git checkout upstream/master -- <file>` if found:
 - Every new source needs a `doc/source/<id>.md` file (create it if missing)
 - `COUNTRY` must be a lowercase code from `update_docu_links.py`'s `COUNTRYCODES` list. Common gotchas: UK sources use `"uk"` NOT `"gb"`; Canada uses `"ca"` NOT `"CA"`. The legacy test only validated COUNTRY when the filename suffix was invalid, so case/synonym mismatches used to slip through and silently orphan the source out of README.md / info.md / sources.json. Always grep the actual value.
 
+### CI-enforced structural invariants (`tests/test_source_components.py`)
+
+These cause CI failure if violated. Check the diff for each:
+
+1. **Language allowlist:** `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS` keys must be in `{"en", "de", "it", "fr"}`. **If a contributor's PR includes another language (e.g. `fi`, `es`, `nl`):** strip that language block from the source's translation dicts as part of the local fix, and surface in the Phase 1 report that a separate follow-up issue should be opened (`Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist`) so contributors can help with the full pipeline (allowlist + `update_docu_links.py` + `translations/<xx>.json`). Never approve a PR that retains an unsupported language.
+2. **Icons enum:** `ICON_MAP` values must be members of the `Icons` enum (`from waste_collection_schedule import Icons`). Migrate any raw `"mdi:..."` strings to the matching enum member (catalogue at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`) as part of the local fix.
+
 ### Review philosophy
 - **Minor issues** (fix automatically): style, whitespace, small bugs, missing doc files, lint
 - **Substantive issues** (escalate — do NOT attempt to fix): hardcoded data, missing API integration, security issues, fundamentally wrong approach, no TEST_CASES
@@ -67,7 +74,13 @@ Revert these with `git checkout upstream/master -- <file>` if found:
    python -m isort --profile black <file>
    ```
 
-8. Return your Phase 1 report in this exact structure, then STOP — do NOT commit, push, or post anything:
+8. **Run the structural test suite against the post-fix state** — do not skip even if live-test is impossible:
+   ```bash
+   python -m pytest tests/test_source_components.py -q
+   ```
+   If anything fails, fix it locally before producing the report. Include the result ("6 passed") in your "Fixes applied locally" section.
+
+9. Return your Phase 1 report in this exact structure, then STOP — do NOT commit, push, or post anything:
 
 ---
 ## PR Review Report
@@ -110,11 +123,12 @@ Revert these with `git checkout upstream/master -- <file>` if found:
    ```
    (Repeat per file. Omit this step if no edits or new files.)
 4. [format commands: `python -m black <file>` and/or `python -m isort --profile black <file>`]
-5. `git add <files>`
-6. `git commit -m "<exact commit message>"`
-7. `git push https://github.com/<HEAD_OWNER>/hacs_waste_collection_schedule.git HEAD:<HEAD_BRANCH>`
-8. `gh api repos/mampfes/hacs_waste_collection_schedule/pulls/<PR_NUMBER>/reviews -f body="<exact review text>" -f event="<APPROVE or REQUEST_CHANGES>"`
-[If no local changes: omit steps 3–7 and go straight to step 8]
+5. **Mandatory structural test (do not skip):** `python -m pytest tests/test_source_components.py -q` — must pass before commit.
+6. `git add <files>`
+7. `git commit -m "<exact commit message>"`
+8. `git push https://github.com/<HEAD_OWNER>/hacs_waste_collection_schedule.git HEAD:<HEAD_BRANCH>`
+9. `gh api repos/mampfes/hacs_waste_collection_schedule/pulls/<PR_NUMBER>/reviews -f body="<exact review text>" -f event="<APPROVE or REQUEST_CHANGES>"`
+[If no local changes: omit steps 3–8 and go straight to step 9]
 ---
 
 ### Phase 2 — Execute approved actions (only when continued via SendMessage)

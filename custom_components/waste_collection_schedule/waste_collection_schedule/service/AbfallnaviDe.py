@@ -159,6 +159,11 @@ SERVICE_DOMAINS = [
         "url": "https://www.kranenburg.de/",
         "service_id": "kranenburg",
     },
+    {
+        "title": "Stadt Porta Westfalica",
+        "url": "https://www.portawestfalica.de/",
+        "service_id": "portawestfalica",
+    },
 ]
 
 DEFAULT_TIMEOUT = 20

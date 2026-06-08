@@ -2,7 +2,7 @@ import json
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
 TITLE = "London Borough of Hounslow"
@@ -14,10 +14,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Residual": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food": "mdi:food",
-    "Garden": "mdi:leaf",
+    "Residual": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
 }
 
 BASE_URL = "https://my.hounslow.gov.uk"

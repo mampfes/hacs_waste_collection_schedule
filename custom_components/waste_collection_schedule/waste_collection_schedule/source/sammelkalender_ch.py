@@ -1,9 +1,9 @@
+import logging
 from datetime import datetime
 from typing import Literal
 
 import requests
-import logging
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -46,12 +46,12 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Kehricht": "mdi:trash-can",
-    "Christbaum": "mdi:pine-tree",
-    "Grüngut": "mdi:leaf",
-    "Karton": "mdi:package-variant-closed",
-    "Papier": "mdi:newspaper",
-    "Alteisen/Metall": "mdi:screw-flat-top",
+    "Kehricht": Icons.GENERAL_WASTE,
+    "Christbaum": Icons.CHRISTMAS_TREE,
+    "Grüngut": Icons.ORGANIC,
+    "Karton": Icons.PAPER,
+    "Papier": Icons.PAPER,
+    "Alteisen/Metall": Icons.METAL,
 }
 
 SERVICES = {
@@ -166,15 +166,14 @@ class Source:
             return
         # check: street parameter defined?
         if not self._street:
-            sage_names = list(
-                {s.get("STRname") or s.get("SAGEname") for s in sages}
-            )
-            # by default use first Sammelgebiet and log a Warning 
+            sage_names = list({s.get("STRname") or s.get("SAGEname") for s in sages})
+            # by default use first Sammelgebiet and log a Warning
             # (prevents breaking changes: existing users may have no street configured, because it was not mandatory previously)
             self._address_id = sages[0]["SAGEid"]
             _LOGGER.warning(
                 "No Sammelgebiet configured for this municipality. Using default Sammelgebiet '%s'. To configure, insert for the parameter 'street': %s",
-                sages[0]["SAGEname"], ", ".join(sage_names),
+                sages[0]["SAGEname"],
+                ", ".join(sage_names),
             )
             return
         # otherwise find correct sage

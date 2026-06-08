@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Münchenstein"
 DESCRIPTION = "Source for Muenchenstein waste collection."
@@ -17,12 +17,12 @@ API_URL = "https://www.muenchenstein.ch/abfuhrdaten"
 
 
 ICON_MAP = {
-    "kehricht-und-kleinsperrgut-brennbar": "mdi:trash-can-outline",
-    "hackseldienst": "mdi:leaf",
-    "papierabfuhr": "mdi:newspaper-variant-multiple-outline",
-    "kartonabfuhr": "mdi:package-variant",
-    "metallabfuhr": "mdi:nail",
-    "grobsperrgut (brennbar)": "mdi:sofa-single-outline",
+    "kehricht-und-kleinsperrgut-brennbar": Icons.GENERAL_WASTE,
+    "hackseldienst": Icons.GARDEN,
+    "papierabfuhr": Icons.PAPER,
+    "kartonabfuhr": Icons.PAPER,
+    "metallabfuhr": Icons.METAL,
+    "grobsperrgut (brennbar)": Icons.GENERAL_WASTE,
 }
 
 

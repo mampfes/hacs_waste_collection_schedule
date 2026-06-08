@@ -3,7 +3,7 @@ from typing import Literal
 
 import requests
 from bs4 import BeautifulSoup, NavigableString, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 
@@ -37,10 +37,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Schwarze": "mdi:trash-can",
-    "Grüne": "mdi:leaf",
-    "Blaue": "mdi:package-variant",
-    "Gelbe": "mdi:recycle",
+    "Schwarze": Icons.GENERAL_WASTE,
+    "Grüne": Icons.ORGANIC,
+    "Blaue": Icons.PAPER,
+    "Gelbe": Icons.RECYCLING,
 }
 
 

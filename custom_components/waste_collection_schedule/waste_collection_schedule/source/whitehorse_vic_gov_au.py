@@ -3,7 +3,7 @@ import re
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -19,9 +19,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Household": "mdi:trash-can",
-    "GOBS": "mdi:leaf",
-    "Recycle": "mdi:recycle",
+    "Household": Icons.GENERAL_WASTE,
+    "GOBS": Icons.ORGANIC,
+    "Recycle": Icons.RECYCLING,
 }
 
 

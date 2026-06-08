@@ -5,6 +5,7 @@ from importlib import import_module
 from inspect import Parameter, signature
 from types import GeneratorType, ModuleType
 from typing import Any, Iterable, Type
+from unittest.mock import patch
 
 import yaml
 
@@ -380,3 +381,145 @@ def test_ics_source_has_necessary_parameters():
             _test_source_has_necessary_parameters_extra_info(
                 data["extra_info"], f"ICS:{source}", init_params_names
             )
+
+
+# Sources permitted to use raw `mdi:*` string literals in their ICON_MAP.
+# Every other source must use the `Icons` enum from `waste_collection_schedule`
+# (see issue #2813 / canonical icon catalogue). The allowlist below is for
+# sources whose ICON_MAP isn't a simple ``str -> str`` static dict — they build
+# the mapping programmatically, use integer keys, nest dicts per region, etc.
+# and the canonical-icons test skips them. Future contributors of such sources
+# should add themselves here and explain why.
+SOURCES_ALLOWED_RAW_ICONS: set[str] = {
+    "api_golemio_cz",  # integer keys (Czech API trash-type IDs)
+    "cbcity_nsw_gov_au",  # dynamic ICON_MAP construction
+    "insert_it_de",  # nested {region: {waste_type: {icon, name}}} structure
+    "landkreis_helmstedt_de",  # computed keys
+    "potsdam_de",  # integer keys
+    "sepan_remondis_pl",  # dynamic ICON_MAP construction
+    "wermelskirchen_de",  # dynamic ICON_MAP construction
+    "woollahra_nsw_gov_au",  # dynamic ICON_MAP construction
+    "zys_harmonogram_pl",  # dynamic ICON_MAP construction
+}
+
+
+def test_icon_map_uses_canonical_icons() -> None:
+    """ICON_MAP values must be ``Icons`` enum members, not raw ``mdi:*`` strings.
+
+    Sources in :data:`SOURCES_ALLOWED_RAW_ICONS` are exempt because they build
+    ICON_MAP dynamically and the runtime values can't be statically classified.
+    """
+    from waste_collection_schedule import Icons
+
+    sources = _get_sources()
+    for source in sources:
+        if source in SOURCES_ALLOWED_RAW_ICONS:
+            continue
+        module = _get_module(source)
+        icon_map = getattr(module, "ICON_MAP", None)
+        if icon_map is None:
+            continue
+        if not isinstance(icon_map, dict):
+            continue
+        for key, value in icon_map.items():
+            assert isinstance(value, Icons), (
+                f"ICON_MAP value for {key!r} in source {source} is "
+                f"{value!r}, expected an Icons enum member. "
+                "Use `from waste_collection_schedule import Icons` and "
+                "reference e.g. Icons.GENERAL_WASTE — see "
+                "custom_components/waste_collection_schedule/waste_collection_schedule/icons.py"
+            )
+
+
+def test_uk_cloud9_client_falls_back_to_secondary_domain(monkeypatch) -> None:
+    module = import_module("waste_collection_schedule.service.uk_cloud9_apps")
+    requested_urls: list[str] = []
+
+    class _Response:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict[str, dict]:
+            return {"wasteCollectionDates": {}}
+
+    class _Session:
+        def __init__(self) -> None:
+            self.headers: dict[str, str] = {}
+
+        def get(self, url: str, **kwargs) -> _Response:
+            requested_urls.append(url)
+            if "primary.example.invalid" in url:
+                raise module.requests.exceptions.CertificateVerifyError(
+                    "SSL host mismatch", 60, None
+                )
+            return _Response()
+
+    monkeypatch.setattr(module.requests, "Session", lambda **kwargs: _Session())
+
+    client = module.Cloud9Client(
+        "rugby",
+        api_domains=("https://primary.example.invalid", "https://secondary.example"),
+    )
+    payload = client._fetch_waste_json("100070200377")
+
+    assert payload == {"wasteCollectionDates": {}}
+    assert requested_urls == [
+        "https://primary.example.invalid/rugby/citizenmobile/mobileapi/wastecollections/100070200377",
+        "https://secondary.example/rugby/citizenmobile/mobileapi/wastecollections/100070200377",
+    ]
+
+
+def test_uk_cloud9_client_requires_api_domains() -> None:
+    module = import_module("waste_collection_schedule.service.uk_cloud9_apps")
+
+    try:
+        module.Cloud9Client("rugby", api_domains=())
+        assert False, "Expected ValueError when no API domains are configured"
+    except ValueError as err:
+        assert "At least one API domain" in str(err)
+
+
+def test_mzv_rotenburg_route_filter_without_location() -> None:
+    module = _get_module("mzv_rotenburg_bebra_de")
+
+    ics_text = """BEGIN:VCALENDAR
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260101
+SUMMARY:Entsorgung Gelbe Tonne Route 1
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260102
+SUMMARY:Entsorgung Gelbe Tonne Route 2
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260103
+SUMMARY:Entsorgung Papier Route West
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260104
+SUMMARY:Entsorgung Papier Route Ost
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20260105
+SUMMARY:Entsorgung Restabfall
+END:VEVENT
+END:VCALENDAR
+"""
+
+    class _Response:
+        text = ics_text
+
+        @staticmethod
+        def raise_for_status() -> None:
+            return None
+
+    with patch.object(module.requests, "get", return_value=_Response()):
+        entries = module.Source(
+            city="rote", yellow_route="2", paper_route="Ost"
+        ).fetch()
+
+    assert [(entry.date.isoformat(), entry.type) for entry in entries] == [
+        ("2026-01-02", "Gelbe Tonne"),
+        ("2026-01-04", "Papier"),
+        ("2026-01-05", "Restabfall"),
+    ]

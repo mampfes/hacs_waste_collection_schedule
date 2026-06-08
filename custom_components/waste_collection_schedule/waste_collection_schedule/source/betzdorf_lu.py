@@ -8,7 +8,7 @@ https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Betzdorf"
 DESCRIPTION = "Source for Betzdorf, Luxembourg waste collection."
@@ -18,11 +18,11 @@ TEST_CASES: dict[str, dict] = {
 }
 
 ICON_MAP = {
-    "centre-de-ressources-recyclingpark-superdreckskescht": "mdi:recycle",
-    "dechets-menagers-hausmull-exception": "mdi:trash-can",
-    "dechets-biodegradables-biomull-exception": "mdi:leaf",
-    "valorlux": "mdi:package-variant",
-    "verre-papiers-altglas-altpapier": "mdi:bottle-wine",
+    "centre-de-ressources-recyclingpark-superdreckskescht": Icons.RECYCLING,
+    "dechets-menagers-hausmull-exception": Icons.GENERAL_WASTE,
+    "dechets-biodegradables-biomull-exception": Icons.BIO_KITCHEN,
+    "valorlux": Icons.PAPER,
+    "verre-papiers-altglas-altpapier": Icons.PAPER,
 }
 
 API_URL = "https://www.betzdorf.lu/fr/waste"

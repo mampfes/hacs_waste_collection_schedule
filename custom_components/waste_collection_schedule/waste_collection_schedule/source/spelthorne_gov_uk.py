@@ -2,7 +2,7 @@ import datetime
 import time
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.AchieveForms import init_session
 
@@ -37,9 +37,9 @@ TOKEN_LOOKUP_ID = "5f97e6e09fedd"
 COLLECTION_LOOKUP_ID = "66042a164c9a5"
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
 }
 
 _WASTE_FIELDS = [

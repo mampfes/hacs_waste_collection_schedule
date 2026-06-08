@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 TITLE = "CIDIU S.p.A."
@@ -31,13 +31,13 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "INDIFFERENZIATO": "mdi:trash-can",
-    "ORGANICO": "mdi:food-apple",
-    "VETRO E LATTINE": "mdi:bottle-wine",
-    "CARTA": "mdi:newspaper-variant-multiple",
-    "PLASTICA": "mdi:recycle",
-    "SFALCI ABBONAMENTO NORMALE": "mdi:leaf-cricle",
-    "SFALCI ABBONAMENTO RIDOTTO": "mdi:leaf-circle-outline",
+    "INDIFFERENZIATO": Icons.GENERAL_WASTE,
+    "ORGANICO": Icons.BIO_KITCHEN,
+    "VETRO E LATTINE": Icons.GLASS,
+    "CARTA": Icons.PAPER,
+    "PLASTICA": Icons.RECYCLING,
+    "SFALCI ABBONAMENTO NORMALE": Icons.GARDEN,
+    "SFALCI ABBONAMENTO RIDOTTO": Icons.GARDEN,
 }
 
 API_URL = "https://cidiu.it/wp-content/themes/icelander/integrazione-lista/cidiu-processer.php"

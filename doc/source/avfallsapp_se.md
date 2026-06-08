@@ -7,6 +7,8 @@ This is a waste collection schedule integration for the Avfallsapp API. Avfallsa
 - `soderkoping`: Söderköping
 - `motala`: Motala
 - `vanersborg`: Vänersborg
+- `upplands-bro`: Upplands-Bro
+- `teknikivast`: Teknik i Väst (Arvika/Eda)
 <!--End of service section-->
 
 ## Current un-supported service providers (Cities)
@@ -41,7 +43,6 @@ Could be possible to add by some minor additions
 `nodra`: Nodra
 `rambo`: Rambo
 `sysav`: Sysav
-`upplands-bro`: Upplands Bro
 `vafab`: Vafab
 <!--End of service section-->
 

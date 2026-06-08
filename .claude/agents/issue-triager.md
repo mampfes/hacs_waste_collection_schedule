@@ -26,6 +26,16 @@ You are a specialised issue triager for mampfes/hacs_waste_collection_schedule, 
 - Lint: `python -m black <file> && python -m isort --profile black <file>`
 - Test: `cd custom_components/waste_collection_schedule/waste_collection_schedule/test && python test_sources.py -s <id> -l`
 
+### CI-enforced structural invariants — must validate at design time
+
+`tests/test_source_components.py` runs in CI on every PR and rejects:
+
+1. **Languages outside `{"en", "de", "it", "fr"}` in `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS`.** Default behaviour when the natural fit is a non-allowlisted language (e.g. `fi`, `es`, `nl`, `pl`): **strip the unsupported language from this source's translation dicts**, and add a `### Follow-up issue` section to the Phase 1 report describing a separate issue to open titled `Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist`, linked back to this issue, asking for contributors to help with the full translation pipeline (allowlist + `update_docu_links.py` + `translations/<xx>.json`). Never silently include an unsupported language — CI will reject the PR.
+2. **Raw `"mdi:..."` strings in `ICON_MAP`.** Values MUST be members of the `Icons` enum: `from waste_collection_schedule import Icons` then e.g. `Icons.GENERAL_WASTE`. Catalogue at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`.
+3. **`COUNTRY` not in the lowercase allowlist** (as already noted above).
+
+After writing any source file, run `python -m pytest tests/test_source_components.py -q` against your worktree before producing the Phase 1 report — and add it as an explicit step in the Execution Plan you hand to the executor.
+
 ## Workflow
 
 ### Phase 1 — Analysis and local implementation (runs automatically on invocation)
@@ -120,11 +130,12 @@ Prepare an appropriate info-request or "not planned" comment.
    (Repeat for each file the executor must create or overwrite.)
 3. [format commands: `python -m black <file>` and/or `python -m isort --profile black <file>`]
 4. [optional live test: `cd custom_components/waste_collection_schedule/waste_collection_schedule/test && python test_sources.py -s <id> -l`]
-5. `git add <files>`
-6. `git commit -m "<exact commit message>"`
-7. `git push origin HEAD:<branch-name>`
-8. `gh pr create --repo mampfes/hacs_waste_collection_schedule --title "<title>" --body "<exact body>"`
-9. `gh issue comment <ISSUE_NUMBER> --repo mampfes/hacs_waste_collection_schedule --body "<exact comment text>"`
+5. **Mandatory structural test (do not skip even if live-test was blocked or impossible):** `python -m pytest tests/test_source_components.py -q` — must pass before commit.
+6. `git add <files>`
+7. `git commit -m "<exact commit message>"`
+8. `git push origin HEAD:<branch-name>`
+9. `gh pr create --repo mampfes/hacs_waste_collection_schedule --title "<title>" --body "<exact body>"`
+10. `gh issue comment <ISSUE_NUMBER> --repo mampfes/hacs_waste_collection_schedule --body "<exact comment text>"`
 [For Category D/E/F (comment only):]
 1. `gh issue comment <ISSUE_NUMBER> --repo mampfes/hacs_waste_collection_schedule --body "<exact comment text>"`
 [Add close/label steps as needed]

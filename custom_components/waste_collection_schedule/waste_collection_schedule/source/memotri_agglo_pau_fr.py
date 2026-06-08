@@ -17,7 +17,7 @@ from dateutil.rrule import (
     rrule,
 )
 from dateutil.rrule import weekday as RRuleWeekday
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentRequired,
@@ -41,9 +41,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Ordures ménagères": "mdi:trash-can",
-    "Emballages et papiers": "mdi:recycle",
-    "Matières compostables": "mdi:leaf",
+    "Ordures ménagères": Icons.GENERAL_WASTE,
+    "Emballages et papiers": Icons.PAPER,
+    "Matières compostables": Icons.ORGANIC,
 }
 
 WEEKDAY_MAP = {

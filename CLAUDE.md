@@ -113,6 +113,16 @@ Optional:
 - `HOW_TO_GET_ARGUMENTS_DESCRIPTION` — per-language guidance shown in the config wizard.
 - `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` — per-language argument labels and descriptions. Currently still required on master (read by `update_docu_links.py` to generate `translations/en.json`). A future i18n YAML migration will replace these but is not yet merged — keep them.
 
+### CI-enforced structural rules
+
+`tests/test_source_components.py` runs in CI on every PR and enforces:
+
+1. **Language allowlist:** `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS` keys MUST be in `{"en", "de", "it", "fr"}`. **Default behaviour when a contributor / agent wants to use any other language** (e.g. `fi`, `es`, `nl`, `pl`): strip the unsupported-language block from the source's translation dicts in the current PR, and open a *separate* issue titled `Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist` linked back to the original PR/issue, asking for contributors to help with the full translation pipeline (allowlist + `update_docu_links.py` + `translations/<xx>.json`). Never silently include an unsupported language — CI will reject the PR.
+2. **Icons enum:** `ICON_MAP` values MUST be members of the `Icons` enum (`from waste_collection_schedule import Icons`). Raw `"mdi:..."` strings fail the `test_icon_map_uses_canonical_icons` check. The canonical catalogue is at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py` — pick the nearest sensible member; do not extend the enum in a source PR.
+3. **COUNTRY allowlist** as already noted above.
+
+Run `python -m pytest tests/test_source_components.py -q` locally after any source-module change and before committing; do not rely on CI to catch these.
+
 ### Exception handling
 
 Use `SourceArgumentNotFound` / `SourceArgumentNotFoundWithSuggestions` from `waste_collection_schedule.exceptions`, not generic `Exception`. The HA UI surfaces these to the user with helpful context.
@@ -175,6 +185,7 @@ These are the issues that come up most often in PR review. Avoid them and your P
 8. **Login-required**. Not supported — the project only consumes public endpoints.
 9. **Running `update_docu_links.py` in a PR branch**. Don't — CI handles it post-merge.
 10. **Editing translations directly**. The `config.step.args_*` sections are generated. Hand-edit only `options.step.init` (in the outer `translations/*.json`).
+11. **Raw `mdi:*` strings in `ICON_MAP`**. Use the `Icons` enum from `waste_collection_schedule` (catalogue at `waste_collection_schedule/icons.py`). This keeps icons consistent across sources for the same logical waste category — see #2813.
 
 ---
 

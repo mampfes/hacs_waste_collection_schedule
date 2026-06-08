@@ -2,7 +2,7 @@ import logging
 import re
 from datetime import datetime, timedelta
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.IntraMaps import (
     IntraMapsSearchError,
@@ -20,8 +20,8 @@ TEST_CASES = {
     "Roebuck Drive": {"address": "13 Roebuck Drive"},
 }
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 PARAM_DESCRIPTIONS = {
     "en": {

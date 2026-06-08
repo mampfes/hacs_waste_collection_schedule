@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Staffordshire Borough Council"
 DESCRIPTION = "Source for East Staffordshire Borough Council"
@@ -13,11 +13,11 @@ TEST_CASES = {
     "Church Lane": {"uid": "103281"},
 }
 ICON_MAP = {
-    "Blue Bin": "mdi:recycle",
-    "Brown Bin": "mdi:leaf",
-    "Weekly Food Waste": "mdi:food",
-    "Blue Bag": "mdi:newspaper",
-    "Grey Bin": "mdi:trash-can",
+    "Blue Bin": Icons.RECYCLING,
+    "Brown Bin": Icons.BIO_KITCHEN,
+    "Weekly Food Waste": Icons.BIO_KITCHEN,
+    "Blue Bag": Icons.NEWSPAPER,
+    "Grey Bin": Icons.GENERAL_WASTE,
 }
 API_URL = "https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates"
 

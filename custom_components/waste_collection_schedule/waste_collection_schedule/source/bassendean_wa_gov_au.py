@@ -1,6 +1,6 @@
 from datetime import date, datetime, timedelta
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import (
     ArcGisError,
@@ -19,9 +19,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "FOGO": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "FOGO": Icons.BIO_KITCHEN,
 }
 
 PARAM_DESCRIPTIONS = {
@@ -50,19 +50,19 @@ WEEKDAYS = {
 # expressions in the web map config. General Waste and Recycling alternate
 # on opposite fortnights.
 GENERAL_WASTE_BASE: dict[str, date] = {
-    "Monday": date(2025, 3, 28),
-    "Tuesday": date(2025, 3, 29),
-    "Wednesday": date(2025, 3, 30),
-    "Thursday": date(2025, 4, 1),
-    "Friday": date(2025, 4, 2),
+    "Monday": date(2025, 3, 31),
+    "Tuesday": date(2025, 4, 1),
+    "Wednesday": date(2025, 4, 2),
+    "Thursday": date(2025, 4, 3),
+    "Friday": date(2025, 4, 4),
 }
 
 RECYCLING_BASE: dict[str, date] = {
-    "Monday": date(2025, 3, 21),
-    "Tuesday": date(2025, 3, 22),
-    "Wednesday": date(2025, 3, 23),
-    "Thursday": date(2025, 3, 24),
-    "Friday": date(2025, 3, 25),
+    "Monday": date(2025, 3, 24),
+    "Tuesday": date(2025, 3, 25),
+    "Wednesday": date(2025, 3, 26),
+    "Thursday": date(2025, 3, 27),
+    "Friday": date(2025, 3, 28),
 }
 
 

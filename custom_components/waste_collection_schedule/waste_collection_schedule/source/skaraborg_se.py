@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Avfall & Återvinning Skaraborg"
@@ -13,11 +13,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Matavfall": "mdi:leaf",
-    "Brännbart": "mdi:fire",
-    "Matavfall/Restavfall": "mdi:trash-can",
-    "Plast/Kartong": "mdi:package",
-    "Färgat glas/Ofärgat glas": "mdi:bottle-soda",
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Brännbart": Icons.GENERAL_WASTE,
+    "Matavfall/Restavfall": Icons.BIO_KITCHEN,
+    "Plast/Kartong": Icons.PLASTIC_PACKAGING,
+    "Färgat glas/Ofärgat glas": Icons.GLASS,
 }
 
 SEARCH_URL = "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/search"

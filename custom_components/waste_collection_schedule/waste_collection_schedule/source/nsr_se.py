@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -29,9 +29,9 @@ EXTRA_INFO = [
 ]
 
 ICON_MAP = {
-    "KÄRL 1": "mdi:trash-can",
-    "KÄRL 2": "mdi:recycle",
-    "Trädgårdsavfall": "mdi:leaf",
+    "KÄRL 1": Icons.GENERAL_WASTE,
+    "KÄRL 2": Icons.RECYCLING,
+    "Trädgårdsavfall": Icons.GARDEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

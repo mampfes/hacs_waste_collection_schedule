@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "RMR Lac-Saint-Jean (QC)"
@@ -26,9 +26,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "trash": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "compost": "mdi:leaf",
+    "trash": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "compost": Icons.ORGANIC,
 }
 
 TYPE_MAP = {

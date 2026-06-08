@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Birmingham City Council"
 DESCRIPTION = "Source for birmingham.gov.uk services for Birmingham, UK."
@@ -23,9 +23,9 @@ API_URLS = {
     "collection": "https://www.birmingham.gov.uk/xfp/form/619",
 }
 ICON_MAP = {
-    "Household Collection": "mdi:trash-can",
-    "Recycling Collection": "mdi:recycle",
-    "Green Recycling Chargeable Collections": "mdi:leaf",
+    "Household Collection": Icons.GENERAL_WASTE,
+    "Recycling Collection": Icons.RECYCLING,
+    "Green Recycling Chargeable Collections": Icons.ORGANIC,
 }
 
 

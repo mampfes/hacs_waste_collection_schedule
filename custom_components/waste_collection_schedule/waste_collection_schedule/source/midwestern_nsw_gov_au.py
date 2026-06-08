@@ -3,7 +3,7 @@ import json
 from datetime import date
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Mid-Western Regional Council"
@@ -38,10 +38,10 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    "waste": "mdi:trash-can-outline",
-    "organic": "mdi:leaf",
-    "recycle": "mdi:recycle",
-    "paper": "mdi:newspaper",
+    "waste": Icons.GENERAL_WASTE,
+    "organic": Icons.ORGANIC,
+    "recycle": Icons.RECYCLING,
+    "paper": Icons.PAPER,
 }
 
 LABEL_MAP = {

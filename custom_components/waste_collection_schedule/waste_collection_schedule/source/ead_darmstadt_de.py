@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "EAD Darmstadt"  # Title will show up in README.md and info.md
@@ -17,13 +17,13 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 }
 
 API_URL = "https://ead.darmstadt.de/unser-angebot/privathaushalte/abfallkalender/singleStreet/"
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "RM1": "mdi:trash-can",
-    "RM2": "mdi:trash-can",
-    "RM4": "mdi:trash-can",
-    "WET": "mdi:recycle",
-    "BIO": "mdi:leaf",
-    "PPK": "mdi:package-variant",
+ICON_MAP = {
+    "RM1": Icons.GENERAL_WASTE,
+    "RM2": Icons.GENERAL_WASTE,
+    "RM4": Icons.GENERAL_WASTE,
+    "WET": Icons.RECYCLING,
+    "BIO": Icons.ORGANIC,
+    "PPK": Icons.PAPER,
 }
 
 PARAM_TRANSLATIONS = {

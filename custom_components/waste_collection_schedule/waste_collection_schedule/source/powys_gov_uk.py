@@ -7,7 +7,7 @@ from urllib.parse import parse_qs, urlparse
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser as dateutil_parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Powys County Council"
 DESCRIPTION = "Source for en.powys.gov.uk services for Powys"
@@ -41,9 +41,9 @@ PARAM_DESCRIPTIONS = {
 }
 
 ICON_MAP = {
-    "bdl-card--refuse": "mdi:trash-can",
-    "bdl-card--recycling": "mdi:recycle",
-    "bdl-card--garden": "mdi:leaf",
+    "bdl-card--refuse": Icons.GENERAL_WASTE,
+    "bdl-card--recycling": Icons.RECYCLING,
+    "bdl-card--garden": Icons.GARDEN,
 }
 
 WASTE_TYPE_MAP = {

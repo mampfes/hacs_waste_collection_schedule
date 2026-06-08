@@ -3,7 +3,7 @@ import json
 import logging
 
 import requests as request
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 _LOGGER = logging.getLogger(__name__)
@@ -16,14 +16,14 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 }
 
 API_URL = "https://selvbetjening.vestfor.dk/Adresse/ToemmeDates"
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "Haveaffald": "mdi:leaf",
-    "Storskrald": "mdi:recycle",
-    "Mad/Rest affald": "mdi:food",
-    "Pap": "mdi:archive",
-    "Papir/Plast \u0026 MDK": "mdi:bottle-soda",
-    "Metal/Glas affald": "mdi:wrench",
-    "Juletræer": "mdi:pine-tree",
+ICON_MAP = {
+    "Haveaffald": Icons.ORGANIC,
+    "Storskrald": Icons.RECYCLING,
+    "Mad/Rest affald": Icons.BIO_KITCHEN,
+    "Pap": Icons.PAPER,
+    "Papir/Plast & MDK": Icons.PLASTIC_PACKAGING,
+    "Metal/Glas affald": Icons.GLASS,
+    "Juletræer": Icons.CHRISTMAS_TREE,
 }
 
 ADRESS_LOOKUP_URL = "https://selvbetjening.vestfor.dk/Adresse/AddressByName"

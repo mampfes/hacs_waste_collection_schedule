@@ -9,7 +9,10 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 
-API_DOMAIN = "https://apps.cloud9technologies.com"
+API_DOMAINS = (
+    "https://apps.cloud9apps.com",
+    "https://apps.cloud9technologies.com",
+)
 API_BASE = "/citizenmobile/mobileapi"
 ADDRESSES_PATH = "/addresses"
 WASTE_PATH = "/wastecollections"
@@ -161,12 +164,44 @@ class Cloud9Client:
         self,
         authority: str,
         icon_keywords: Optional[dict[str, str]] = None,
+        api_domains: Optional[Sequence[str]] = None,
     ):
         self._authority = authority
         self._icon_keywords: dict[str, str] = icon_keywords or {}
-        self._base_url = f"{API_DOMAIN}/{authority}{API_BASE}"
+        configured_domains = API_DOMAINS if api_domains is None else api_domains
+        self._base_urls = [
+            f"{domain.rstrip('/')}/{authority}{API_BASE}"
+            for domain in configured_domains
+            if domain and domain.strip()
+        ]
+        if not self._base_urls:
+            raise ValueError("At least one API domain must be configured.")
         self._session = requests.Session(impersonate="chrome")
         self._session.headers.update(BASE_HEADERS)
+
+    def _request_json(
+        self, path: str, params: Optional[dict[str, str]] = None
+    ) -> JSONDict:
+        last_error: Optional[Exception] = None
+        for base_url in self._base_urls:
+            try:
+                response = self._session.get(
+                    f"{base_url}{path}",
+                    params=params,
+                    timeout=REQUEST_TIMEOUT,
+                )
+                response.raise_for_status()
+                return cast(JSONDict, response.json())
+            except (
+                requests.exceptions.CertificateVerifyError,
+                requests.exceptions.ConnectionError,
+                requests.exceptions.DNSError,
+                requests.exceptions.SSLError,
+                requests.exceptions.Timeout,
+            ) as err:
+                last_error = err
+        assert last_error is not None
+        raise last_error
 
     def _resolve_icon(self, label: str) -> Optional[str]:
         lowered = label.lower()
@@ -209,10 +244,7 @@ class Cloud9Client:
         return entries
 
     def _fetch_waste_json(self, uprn: str) -> JSONDict:
-        url = f"{self._base_url}{WASTE_PATH}/{uprn}"
-        response = self._session.get(url, timeout=REQUEST_TIMEOUT)
-        response.raise_for_status()
-        return cast(JSONDict, response.json())
+        return self._request_json(f"{WASTE_PATH}/{uprn}")
 
     def fetch_by_uprn(self, uprn: str) -> list[Collection]:
         payload = self._fetch_waste_json(uprn)
@@ -264,8 +296,6 @@ class Cloud9Client:
         address_street: Optional[str],
         address_string: str,
     ) -> list[Address]:
-        url = f"{self._base_url}{ADDRESSES_PATH}"
-
         address_line = " ".join(
             part.strip()
             for part in (address_name_number, address_street)
@@ -290,13 +320,10 @@ class Cloud9Client:
             if key in seen:
                 continue
             seen.add(key)
-            response = self._session.get(
-                url,
+            payload_json = self._request_json(
+                ADDRESSES_PATH,
                 params={param: cleaned},
-                timeout=REQUEST_TIMEOUT,
             )
-            response.raise_for_status()
-            payload_json = cast(JSONDict, response.json())
             addresses_data = cast(
                 Optional[list[Address]], payload_json.get("addresses")
             )

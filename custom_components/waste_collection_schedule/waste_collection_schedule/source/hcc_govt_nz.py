@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Hamilton City Council"
 DESCRIPTION = "Source script for Hamilton City Council"
@@ -12,7 +12,10 @@ TEST_CASES = {
 }
 
 API_URL = "https://api.hcc.govt.nz/FightTheLandFill/get_Collection_Dates"
-ICON_MAP = {"Rubbish": "mdi:trash-can", "Recycling": "mdi:recycle"}
+ICON_MAP = {
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+}
 
 
 class Source:

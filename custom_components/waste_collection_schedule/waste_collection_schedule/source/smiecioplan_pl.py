@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
@@ -26,12 +26,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "zmieszane": "mdi:trash-can",
-    "bio": "mdi:leaf",
-    "papier": "mdi:package-variant",
-    "szk": "mdi:bottle-wine",
-    "metal": "mdi:recycle",
-    "wielkogabaryt": "mdi:sofa",
+    "zmieszane": Icons.GENERAL_WASTE,
+    "bio": Icons.ORGANIC,
+    "papier": Icons.PAPER,
+    "szk": Icons.GLASS_COLORED,
+    "metal": Icons.METAL,
+    "wielkogabaryt": Icons.BULKY,
 }
 
 EXTRA_INFO = [

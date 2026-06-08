@@ -5,7 +5,7 @@ from datetime import datetime
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
 )
@@ -25,7 +25,10 @@ TEST_CASES = {
 
 _LOGGER = logging.getLogger(__name__)
 
-ICON_MAP = {"green waste": "mdi:leaf", "recycling": "mdi:recycle"}
+ICON_MAP = {
+    "green waste": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
+}
 
 
 class SourceConfigurationError(ValueError):

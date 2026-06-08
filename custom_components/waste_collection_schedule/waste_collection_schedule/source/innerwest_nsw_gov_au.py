@@ -2,7 +2,7 @@ import json
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Inner West Council (NSW)"
 DESCRIPTION = "Source for Inner West Council (NSW) rubbish collection."
@@ -35,9 +35,9 @@ APIS = [
 ]
 
 ICON_MAP = {
-    "waste": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "organic": "mdi:leaf",
+    "waste": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "organic": Icons.ORGANIC,
 }
 
 
@@ -127,9 +127,11 @@ class Source:
                 if "start_date" not in item:
                     continue
                 collection_date = date.fromisoformat(item["start_date"])
-                # Ensure we start from today or later
-                if collection_date < today:
-                    collection_date = today
+                # Advance weekly until we reach today or later, preserving the
+                # correct day-of-week (simple clamping to today would shift the
+                # weekday and produce wrong dates).
+                while collection_date < today:
+                    collection_date += timedelta(7)
                 while collection_date <= nextmonth:
                     entries.append(
                         Collection(

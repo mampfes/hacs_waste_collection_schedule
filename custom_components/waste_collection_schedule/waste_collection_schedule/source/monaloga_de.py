@@ -2,7 +2,7 @@ from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "AWISTA LOGISTIK Stadt Remscheid"
 DESCRIPTION = "Source for AWISTA LOGISTIK Stadt Remscheid."
@@ -17,7 +17,7 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Leichtverpackungen": "mdi:recycle",
+    "Leichtverpackungen": Icons.RECYCLING,
 }
 
 GERMAN_MONTHS = {

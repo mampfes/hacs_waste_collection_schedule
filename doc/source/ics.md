@@ -31,27 +31,36 @@ This source has been successfully tested with the following service providers:
 - [Dellach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Dellach im Drautal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ebenthal in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
+- [Ebergassing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Eugendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Feistritz im Rosental](/doc/ics/muellapp_com.md) / muellapp.com
+- [Feld am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Feldkirch](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Feldkirchen in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ferlach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ferndorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Finkenstein am Faaker See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Fischamend](/doc/ics/muellapp_com.md) / muellapp.com
+- [Flattach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Frauenstein](/doc/ics/muellapp_com.md) / muellapp.com
+- [Fresach](/doc/ics/muellapp_com.md) / muellapp.com
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
 - [gem2go (Abfallverband)](/doc/ics/gem2go_dev.md) / gem2go.dev
 - [Gemeinde Aspang-Markt](/doc/ics/aspangmarkt_at.md) / aspangmarkt.at
+- [Gerasdorf bei Wien](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gmünd in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Grafenstein](/doc/ics/muellapp_com.md) / muellapp.com
+- [Gramatneusiedl](/doc/ics/muellapp_com.md) / muellapp.com
 - [Greifenburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Großkirchheim](/doc/ics/muellapp_com.md) / muellapp.com
 - [Guttaring](/doc/ics/muellapp_com.md) / muellapp.com
+- [Haslau-Maria Ellend](/doc/ics/muellapp_com.md) / muellapp.com
 - [Heiligenblut am Großglockner](/doc/ics/muellapp_com.md) / muellapp.com
 - [Henndorf am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hermagor-Pressegger See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Himberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hohenems](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Hopfgarten im Brixental](/doc/ics/muellapp_com.md) / muellapp.com
 - [Irschen](/doc/ics/muellapp_com.md) / muellapp.com
@@ -61,6 +70,7 @@ This source has been successfully tested with the following service providers:
 - [Kirchdorf in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
 - [Klagenfurt am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kleblach-Lind](/doc/ics/muellapp_com.md) / muellapp.com
+- [Klein-Neusiedl](/doc/ics/muellapp_com.md) / muellapp.com
 - [Krems in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Krumpendorf am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kundl](/doc/ics/muellapp_com.md) / muellapp.com
@@ -68,9 +78,11 @@ This source has been successfully tested with the following service providers:
 - [Köstendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kötschach-Mauthen](/doc/ics/muellapp_com.md) / muellapp.com
 - [Köttmannsdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Lanzendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Lendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leoben](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leonding](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
+- [Leopoldsdorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Lesachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Linz AG](/doc/ics/linzag_at.md) / linzag.at
 - [Ludmannsdorf](/doc/ics/muellapp_com.md) / muellapp.com
@@ -78,6 +90,7 @@ This source has been successfully tested with the following service providers:
 - [Magdalensberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mallnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Malta](/doc/ics/muellapp_com.md) / muellapp.com
+- [Maria Lanzendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Rain](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
@@ -85,6 +98,7 @@ This source has been successfully tested with the following service providers:
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mayer Recycling](/doc/ics/mayer_recycling_at.md) / mayer-recycling.at
 - [Millstatt](/doc/ics/muellapp_com.md) / muellapp.com
+- [Moosbrunn](/doc/ics/muellapp_com.md) / muellapp.com
 - [Moosburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mörtschach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mühldorf](/doc/ics/muellapp_com.md) / muellapp.com
@@ -94,6 +108,7 @@ This source has been successfully tested with the following service providers:
 - [Oberdrauburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Oberndorf in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
 - [Obertrum am See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Obervellach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ottobrunn](/doc/ics/muellapp_com.md) / muellapp.com
 - [Paternion](/doc/ics/muellapp_com.md) / muellapp.com
 - [Pichl bei Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
@@ -103,6 +118,7 @@ This source has been successfully tested with the following service providers:
 - [Radfeld](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ramsau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Rangersdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Rauchenwarth](/doc/ics/muellapp_com.md) / muellapp.com
 - [Reichenfels](/doc/ics/muellapp_com.md) / muellapp.com
 - [Reith im Alpbachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Reißeck](/doc/ics/muellapp_com.md) / muellapp.com
@@ -111,16 +127,20 @@ This source has been successfully tested with the following service providers:
 - [Schalchen](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Schiefling am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schleedorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schwadorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schwaz](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schwechat](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schwoich](/doc/ics/muellapp_com.md) / muellapp.com
 - [Seeboden](/doc/ics/muellapp_com.md) / muellapp.com
 - [Seeham](/doc/ics/muellapp_com.md) / muellapp.com
 - [Seekirchen am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Seyring](/doc/ics/muellapp_com.md) / muellapp.com
 - [Spittal an der Drau](/doc/ics/muellapp_com.md) / muellapp.com
 - [St. Andrä](/doc/ics/muellapp_com.md) / muellapp.com
 - [St. Jakob im Rosental](/doc/ics/muellapp_com.md) / muellapp.com
 - [St. Johann in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
 - [St. Margareten im Rosental](/doc/ics/muellapp_com.md) / muellapp.com
+- [St. Pölten](/doc/ics/muellapp_com.md) / muellapp.com
 - [St. Symvaro](/doc/ics/muellapp_com.md) / muellapp.com
 - [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
 - [Stall](/doc/ics/muellapp_com.md) / muellapp.com
@@ -149,6 +169,7 @@ This source has been successfully tested with the following service providers:
 - [Zell](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zell am Ziller](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zellberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Zwölfaxing](/doc/ics/muellapp_com.md) / muellapp.com
 
 ### Belgium
 
@@ -161,6 +182,7 @@ This source has been successfully tested with the following service providers:
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [Castlegar, BC](/doc/ics/recollect.md) / castlegar.ca
 - [City of Beaumont, AB](/doc/ics/recollect.md) / beaumont.ab.ca
+- [City of Coquitlam, BC](/doc/ics/recollect.md) / coquitlam.ca/157/Collection-Calendar-and-Guidelines
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Guelph, ON](/doc/ics/recollect.md) / guelph.ca
@@ -320,7 +342,6 @@ This source has been successfully tested with the following service providers:
 - [Landkreis Holzminden](/doc/ics/abfall_app_net.md) / landkreis-holzminden.de
 - [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
-- [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
 - [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
@@ -410,12 +431,17 @@ This source has been successfully tested with the following service providers:
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
 - [Gemeente Borsele](/doc/ics/afvalkalender_borsele_nl.md) / borsele.nl
 - [Gemeente Venray](/doc/ics/afvalkalender_venray_nl.md) / venray.nl
+- [Gemeente Venray](/doc/ics/venray_nl.md) / venray.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [Ôffalkalinder van Noardeast-Fryslân & Dantumadiel](/doc/ics/offalkalinder_nl.md) / offalkalinder.nl
 
 ### Norway
 
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
+
+### Slovakia
+
+- [Odvoz Odpadu](/doc/ics/odvoz_odpadu_sk.md) / odvoz-odpadu.eu
 
 ### Slovenia
 
@@ -455,6 +481,7 @@ This source has been successfully tested with the following service providers:
 
 ### United States of America
 
+- [Atlantic Waste Services, GA](/doc/ics/recollect.md) / atlanticwaste.com
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov

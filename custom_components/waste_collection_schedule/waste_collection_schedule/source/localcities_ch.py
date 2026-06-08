@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "localcities.ch"
@@ -120,11 +120,11 @@ EXTRA_INFO = [
 ]
 
 ICON_MAP = {
-    "Altpapier": "mdi:newspaper",
-    "Grünabfälle": "mdi:leaf",
-    "Karton": "mdi:package-variant",
-    "Altglas": "mdi:glass-fragile",
-    "Altmetall": "mdi:nail",
+    "Altpapier": Icons.PAPER,
+    "Grünabfälle": Icons.ORGANIC,
+    "Karton": Icons.PAPER,
+    "Altglas": Icons.GLASS,
+    "Altmetall": Icons.METAL,
 }
 
 BASE_URL = "https://www.localcities.ch/de/entsorgung"

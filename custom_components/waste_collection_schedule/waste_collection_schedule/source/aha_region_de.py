@@ -2,7 +2,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -43,11 +43,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bioabfall": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Leichtverpackungen": "mdi:recycle",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Papier": Icons.PAPER,
+    "Leichtverpackungen": Icons.RECYCLING,
 }
 
 API_URL = "https://www.aha-region.de/abholtermine/abfuhrkalender"

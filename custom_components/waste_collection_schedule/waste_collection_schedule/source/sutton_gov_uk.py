@@ -1,7 +1,7 @@
 from time import sleep
 
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Sutton Council, London"
@@ -11,10 +11,10 @@ TEST_CASES = {"4721996": {"id": 4721996}, "4499298": {"id": "4499298"}}
 
 
 ICON_MAP = {
-    "non-recyclable": "mdi:trash-can",
-    "paper": "mdi:package-variant",
-    "mixed": "mdi:recycle",
-    "food": "mdi:food",
+    "non-recyclable": Icons.GENERAL_WASTE,
+    "paper": Icons.PAPER,
+    "mixed": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
 }
 
 

@@ -4,6 +4,7 @@ from datetime import datetime
 import requests
 
 from ..collection import Collection
+from ..icons import Icons
 
 TITLE = "Rudna u Prahy"
 DESCRIPTION = "Source for Rudna u Prahy waste collection"
@@ -21,26 +22,26 @@ WASTE_TYPES_URL = (
 WASTE_DATES_URL = "https://mesto-rudna.cz/odpadovy-kalendar/permanent/data_calendar.csv"
 
 ICON_MAP = {
-    "B": "mdi:compost",
-    "TKOS": "mdi:trash-can",
-    "TKOJ": "mdi:trash-can",
-    "BS": "mdi:pine-tree",
-    "SHK": "mdi:pot",
-    "SHPA": "mdi:note-text-outline",
-    "SHPL": "mdi:recycle-variant",
-    "SHS": "mdi:glass-fragile",
-    "NO": "mdi:skull-scan",
-    "SKOL": "mdi:trash-can",
-    "SKOS": "mdi:trash-can",
-    "BIOJ": "mdi:compost",
-    "BIOS": "mdi:compost",
-    "BIOL": "mdi:compost",
-    "BIOSU": "mdi:compost",
-    "D2DPLAST": "mdi:recycle-variant",
-    "D2DPLASTL": "mdi:recycle-variant",
-    "D2DPLASTS": "mdi:recycle-variant",
-    "D2DPAPIR": "mdi:note-text-outline",
-    "PET": "mdi:bottle-soda-outline",
+    "B": Icons.BIO_KITCHEN,
+    "TKOS": Icons.GENERAL_WASTE,
+    "TKOJ": Icons.GENERAL_WASTE,
+    "BS": Icons.CHRISTMAS_TREE,
+    "SHK": Icons.BIO_KITCHEN,
+    "SHPA": Icons.PAPER,
+    "SHPL": Icons.PLASTIC_PACKAGING,
+    "SHS": Icons.GLASS,
+    "NO": Icons.HAZARDOUS,
+    "SKOL": Icons.GENERAL_WASTE,
+    "SKOS": Icons.GENERAL_WASTE,
+    "BIOJ": Icons.BIO_KITCHEN,
+    "BIOS": Icons.BIO_KITCHEN,
+    "BIOL": Icons.BIO_KITCHEN,
+    "BIOSU": Icons.BIO_KITCHEN,
+    "D2DPLAST": Icons.PLASTIC_PACKAGING,
+    "D2DPLASTL": Icons.PLASTIC_PACKAGING,
+    "D2DPLASTS": Icons.PLASTIC_PACKAGING,
+    "D2DPAPIR": Icons.PAPER,
+    "PET": Icons.GLASS,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

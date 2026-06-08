@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Guildford Borough Council"
 DESCRIPTION = "Source for guildford.gov.uk services for Guildford, UK."
@@ -14,10 +14,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Food": "mdi:food-apple",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Food": Icons.BIO_KITCHEN,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
 }
 
 API_URL = "https://my.guildford.gov.uk/customers/s/sfsites/aura?r=10&other.BinScheduleDisplayCmp.GetBinSchedules=1"

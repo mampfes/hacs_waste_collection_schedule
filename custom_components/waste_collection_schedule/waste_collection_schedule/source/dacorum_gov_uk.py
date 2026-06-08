@@ -4,7 +4,7 @@ from typing import Dict
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -21,12 +21,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "grey bin": "mdi:trash-can",
-    "grey bin and kerbside caddy": "mdi:trash-can",
-    "kerbside caddy": "mdi:food",
-    "blue bin": "mdi:recycle",
-    "blue bin and kerbside caddy": "mdi:recycle",
-    "green bin": "mdi:leaf",
+    "grey bin": Icons.GENERAL_WASTE,
+    "grey bin and kerbside caddy": Icons.GENERAL_WASTE,
+    "kerbside caddy": Icons.BIO_KITCHEN,
+    "blue bin": Icons.RECYCLING,
+    "blue bin and kerbside caddy": Icons.RECYCLING,
+    "green bin": Icons.ORGANIC,
 }
 
 API_URL = "https://webapps.dacorum.gov.uk/bincollections/"

@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
@@ -12,14 +12,14 @@ URL = "https://www.neunkirchen-siegerland.de"
 TEST_CASES = {"Waldstraße": {"strasse": "Waldstr"}}
 
 ICON_MAP = {
-    "Biotonne": "mdi:leaf",
-    "Papiertonne / Papiercontainer": "mdi:newspaper",
-    "Restmülltonne": "mdi:trash-can",
-    "Spartonne Restmüll": "mdi:trash-can-outline",
-    "Container Restmüll": "mdi:dump-truck",
-    "Gelbe Tonne": "mdi:recycle",
-    "Astschnittsammlung": "mdi:tree",
-    "Schadstoffsammlung": "mdi:skull-crossbones",
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Papiertonne / Papiercontainer": Icons.PAPER,
+    "Restmülltonne": Icons.GENERAL_WASTE,
+    "Spartonne Restmüll": Icons.GENERAL_WASTE,
+    "Container Restmüll": Icons.GENERAL_WASTE,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Astschnittsammlung": Icons.GARDEN,
+    "Schadstoffsammlung": Icons.HAZARDOUS,
 }
 
 

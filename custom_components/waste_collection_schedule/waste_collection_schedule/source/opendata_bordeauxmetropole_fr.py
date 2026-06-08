@@ -4,7 +4,7 @@ from datetime import date, datetime, timedelta
 from enum import Enum
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Bordeaux Métropole"
@@ -59,11 +59,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "omr": "mdi:trash-can",
-    "emb": "mdi:recycle",
-    "enc": "mdi:truck-remove",
-    "dv": "mdi:leaf",
-    "verre": "mdi:bottle-wine",
+    "omr": Icons.GENERAL_WASTE,
+    "emb": Icons.RECYCLING,
+    "enc": Icons.BULKY,
+    "dv": Icons.ORGANIC,
+    "verre": Icons.GLASS,
 }
 
 LABEL_MAP = {
@@ -262,7 +262,8 @@ class Source:
                 "address", "No results found for the given address and INSEE code"
             )
 
-        lat, lon = data[0]["geometry"]["coordinates"]
+        # GeoJSON coordinates are [longitude, latitude]
+        lon, lat = data[0]["geometry"]["coordinates"]
         return {
             "lat": lat,
             "lon": lon,
@@ -278,9 +279,10 @@ class Source:
             x, y = point
             n = len(polygon)
             inside = False
-            p1y, p1x = polygon[0]
+            # Polygon vertices are [longitude, latitude]; unpack as (x=lon, y=lat)
+            p1x, p1y = polygon[0]
             for i in range(n + 1):
-                p2y, p2x = polygon[i % n]
+                p2x, p2y = polygon[i % n]
                 if y > min(p1y, p2y):
                     if y <= max(p1y, p2y):
                         if x <= max(p1x, p2x):

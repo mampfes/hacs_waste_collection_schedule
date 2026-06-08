@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 from dateutil.rrule import DAILY, FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, rruleset
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Publidata (Canada) generic source"
@@ -34,13 +34,13 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "omr": "mdi:trash-can",
-    "emb": "mdi:recycle",
-    "enc": "mdi:truck-remove",
-    "dv": "mdi:leaf",
-    "bio": "mdi:compost",
-    "verre": "mdi:bottle-wine",
-    "sapin": "mdi:pine-tree-variant",
+    "omr": Icons.GENERAL_WASTE,
+    "emb": Icons.RECYCLING,
+    "enc": Icons.BULKY,
+    "dv": Icons.ORGANIC,
+    "bio": Icons.ORGANIC,
+    "verre": Icons.GLASS,
+    "sapin": Icons.CHRISTMAS_TREE,
 }
 
 LABEL_MAP = {

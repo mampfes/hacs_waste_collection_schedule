@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
@@ -18,10 +18,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Verge Collection - Green waste": "mdi:leaf",
-    "Verge Collection - Hard waste": "mdi:dump-truck",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Verge Collection - Green waste": Icons.GARDEN,
+    "Verge Collection - Hard waste": Icons.BULKY,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

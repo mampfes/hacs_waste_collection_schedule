@@ -3,7 +3,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
@@ -23,9 +23,9 @@ TEST_CASES = {
 
 # French collection type to icon mapping
 ICON_MAP = {
-    "Ordures et résidus alimentaires": "mdi:trash-can",
-    "Recyclage": "mdi:recycle",
-    "Feuilles": "mdi:leaf",
+    "Ordures et résidus alimentaires": Icons.BIO_KITCHEN,
+    "Recyclage": Icons.RECYCLING,
+    "Feuilles": Icons.ORGANIC,
 }
 
 # French to English collection type mapping

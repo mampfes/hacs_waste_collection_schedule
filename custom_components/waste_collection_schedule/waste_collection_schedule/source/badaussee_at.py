@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Bad Aussee"
@@ -54,10 +54,10 @@ ICS_ZONE_MAPPING = {
 }
 
 ICON_MAP = {
-    "Gelber Sack": "mdi:sack",
-    "Restmüll": "mdi:trash-can",
-    "Biomüll": "mdi:leaf",
-    "Altpapier": "mdi:package-variant",
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Altpapier": Icons.PAPER,
 }
 
 PARAM_DESCRIPTIONS = {

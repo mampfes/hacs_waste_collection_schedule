@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Dunedin District Council"
 DESCRIPTION = "Source for Dunedin District Council Rubbish & Recycling collection."
@@ -26,10 +26,10 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "RED BIN": "mdi:trash-can",
-    "BLUE BIN": "mdi:bottle-soda",
-    "YELLOW BIN": "mdi:recycle",
-    "GREEN BIN": "mdi:leaf",
+    "RED BIN": Icons.GENERAL_WASTE,
+    "BLUE BIN": Icons.GLASS,
+    "YELLOW BIN": Icons.PLASTIC_PACKAGING,
+    "GREEN BIN": Icons.ORGANIC,
 }
 
 # To keep compatibility with the old version of this source and not break existing sensors

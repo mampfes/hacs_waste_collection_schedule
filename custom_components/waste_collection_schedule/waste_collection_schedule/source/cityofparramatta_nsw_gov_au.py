@@ -2,7 +2,7 @@ import urllib.parse
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Parramatta"
@@ -31,9 +31,9 @@ API_MAP_URL = "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/service
 GEOCODE_URL = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates"
 
 ICON_MAP = {
-    "General Waste (Red Bin)": "mdi:trash-can",
-    "Recycling (Yellow Bin)": "mdi:recycle",
-    "Garden Organics (Green Bin)": "mdi:leaf",
+    "General Waste (Red Bin)": Icons.GENERAL_WASTE,
+    "Recycling (Yellow Bin)": Icons.PLASTIC_PACKAGING,
+    "Garden Organics (Green Bin)": Icons.GARDEN,
 }
 
 # The reference date points to a known Monday for an "Area 1" Recycling week.

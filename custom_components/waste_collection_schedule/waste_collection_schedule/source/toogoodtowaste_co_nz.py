@@ -3,7 +3,7 @@ import json
 import time
 
 from curl_cffi import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Hutt City Council"
@@ -22,10 +22,10 @@ WASTE_TYPE_MAP = {
 }
 
 ICON_MAP = {
-    "red": "mdi:trash-can",
-    "yellow": "mdi:recycle",
-    "blue": "mdi:glass-fragile",
-    "green": "mdi:tree",
+    "red": Icons.GENERAL_WASTE,
+    "yellow": Icons.RECYCLING,
+    "blue": Icons.GLASS,
+    "green": Icons.GARDEN,
 }
 
 PICTURE_MAP = {

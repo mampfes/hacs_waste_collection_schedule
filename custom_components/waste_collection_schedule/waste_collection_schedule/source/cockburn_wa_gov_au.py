@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 from typing import TypedDict
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Cockburn"  # Title will show up in README.md and info.md
@@ -23,11 +23,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Junk Waste": "mdi:microwave",
-    "Green Waste": "mdi:tree",
-    "Green Bin": "mdi:leaf",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Junk Waste": Icons.BULKY,
+    "Green Waste": Icons.GARDEN,
+    "Green Bin": Icons.ORGANIC,
 }
 
 HEADERS = {

@@ -1,7 +1,7 @@
 import re
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Kommunalservice Landkreis Börde AöR"
@@ -29,11 +29,11 @@ TEST_CASES = {
 DATA_URL = "https://www.ks-boerde.de/_aturis/eko/proxy.php"
 CALENDAR_URL = "https://boerde.hausmuell.info/ics/ics.php"
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Bioabfall": "mdi:leaf",
-    "Leichtverpackungen": "mdi:recycle",
-    "Papier, Pappe, Karton": "mdi:package-variant",
-    "Schadstoffmobil": "mdi:biohazard",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Leichtverpackungen": Icons.RECYCLING,
+    "Papier, Pappe, Karton": Icons.PAPER,
+    "Schadstoffmobil": Icons.HAZARDOUS,
 }
 
 

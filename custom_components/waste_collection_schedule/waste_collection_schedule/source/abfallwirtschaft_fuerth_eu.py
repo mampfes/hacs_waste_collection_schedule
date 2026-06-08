@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaft Stadt Fürth"
@@ -14,10 +14,10 @@ TEST_CASES = {
 API_URL = "https://abfallwirtschaft.fuerth.eu/termine.php"
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Biotonne": "mdi:leaf",
-    "Gelber Sack": "mdi:recycle",
-    "Altpapier": "mdi:package-variant",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Altpapier": Icons.PAPER,
 }
 
 

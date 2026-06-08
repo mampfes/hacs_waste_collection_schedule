@@ -1,11 +1,11 @@
 """Sensor platform support for Waste Collection Schedule."""
 
-import datetime
 import logging
 from enum import Enum
 from typing import Any
 
 import homeassistant.helpers.config_validation as cv
+import homeassistant.util.dt as dt_util
 import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from homeassistant.config_entries import ConfigEntry
@@ -33,7 +33,7 @@ from .const import (
     UPDATE_SENSORS_SIGNAL,
 )
 from .waste_collection_api import WasteCollectionApi
-from .waste_collection_schedule import Collection, CollectionGroup
+from .waste_collection_schedule import Collection, CollectionGroup, Icons
 from .wcs_coordinator import WCSCoordinator
 
 # fmt: on
@@ -276,9 +276,9 @@ class ScheduleSensor(SensorEntity):
     def _include_today(self):
         """Return true if collections for today shall be included in the results."""
         if self._api:
-            return datetime.datetime.now().time() < self._api._day_switch_time
+            return dt_util.now().time() < self._api._day_switch_time
         else:
-            return datetime.datetime.now().time() < self._coordinator.day_switch_time
+            return dt_util.now().time() < self._coordinator.day_switch_time
 
     def _add_refreshtime(self):
         """Add refresh-time (= last fetch time) to device-state-attributes."""
@@ -291,7 +291,7 @@ class ScheduleSensor(SensorEntity):
         """Set entity state with default format."""
         if len(upcoming) == 0:
             self._value = None
-            self._attr_icon = "mdi:trash-can"
+            self._attr_icon = Icons.GENERAL_WASTE
             self._attr_entity_picture = None
             return
 
@@ -307,7 +307,7 @@ class ScheduleSensor(SensorEntity):
                 f"{self._separator.join(collection.types)} in {collection.daysTo} days"
             )
 
-        self._attr_icon = collection.icon or "mdi:trash-can"
+        self._attr_icon = collection.icon or Icons.GENERAL_WASTE
         self._attr_entity_picture = collection.picture
 
     def _render_date(self, collection: Collection):

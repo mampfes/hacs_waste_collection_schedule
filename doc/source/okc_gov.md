@@ -2,6 +2,8 @@
 
 Support for schedules provided by [City of Oklahoma City](https://www.okc.gov/), serving City of Oklahoma City.
 
+This source uses the official City of Oklahoma City Open Data Portal (ArcGIS FeatureServer) waste collection zone layers.
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -9,30 +11,26 @@ waste_collection_schedule:
     sources:
     - name: okc_gov
       args:
-        try_official: true
-        bulkyObjectID: BULKY_WASTE_ZONE_OBJECT_ID
-        recycleObjectID: RECYCLE_ZONE_OBJECT_ID
         trashObjectID: TRASH_ZONE_OBJECT_ID
+        recycleObjectID: RECYCLE_ZONE_OBJECT_ID
+        bulkyObjectID: BULKY_WASTE_ZONE_OBJECT_ID
 ```
 
 ### Configuration Variables
 
-**try_official**  
-*(boolean) (optional, default=false)*  
-When `true`, uses the official `data.okc.gov` datasets and requires the 3 zone IDs below.
-
-**bulkyObjectID**  
-*(string) (required when `try_official=true`)*
+**trashObjectID**  
+*(string|integer) (optional)*  
+OBJECTID of your trash collection zone.
 
 **recycleObjectID**  
-*(string) (required when `try_official=true`)*
+*(string|integer) (optional)*  
+OBJECTID of your recycling zone.
 
-**trashObjectID**  
-*(string) (required when `try_official=true`)*
+**bulkyObjectID**  
+*(string|integer) (optional)*  
+OBJECTID of your bulky waste zone.
 
-**objectID**  
-*(string) (required when `try_official=false`)*  
-Object ID for the unofficial source (`okc.schizo.dev`).
+At least one of the three Object IDs must be provided.
 
 ## Example
 
@@ -41,32 +39,17 @@ waste_collection_schedule:
     sources:
     - name: okc_gov
       args:
-        try_official: true
-        bulkyObjectID: "14"
-        recycleObjectID: "1366"
-        trashObjectID: "315"
+        trashObjectID: 1
+        recycleObjectID: 1215
+        bulkyObjectID: 1
 ```
 
-## Unofficial example
+## How to find your Object IDs
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: okc_gov
-      args:
-        try_official: false
-        objectID: "1781151"
-```
+The source reads the following ArcGIS FeatureServer layers from the OKC Open Data Portal:
 
-## How to find official Object IDs
+- [Trash Collection Zones](https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1)
+- [Recycle Zones](https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3)
+- [Bulky Waste Zones](https://utility.arcgis.com/usrsvcs/servers/c4455716f4bf4d1dafe6806e0e619de8/rest/services/OpenData/Utilities/FeatureServer/2)
 
-Using your browser, go to https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map and search for your address.
-Go to the table tab and filter by address. Find your Object ID.
-
-Next use the dropdown in the top right hand side of the screen to change the dataset from Bulky Waste Zones to Recycle Zones. Once again Filter by Map to find your Object ID. Do this once more for your Trash Zone.
-
-Once you have these three Object IDs, enter them in `bulkyObjectID`, `recycleObjectID`, and `trashObjectID` and enable `try_official`.
-
-- [trash zones](https://data.okc.gov/portal/page/viewer?datasetName=trash%20zones)
-- [bulky waste zones](https://data.okc.gov/portal/page/viewer?datasetName=bulky%20waste%20zones)
-- [recycle zones](https://data.okc.gov/portal/page/viewer?datasetName=recycle%20zones)
+Open each link above, use the "Query" page to locate the zone polygon that covers your address, and read its `OBJECTID`. Enter those IDs in the corresponding configuration fields.

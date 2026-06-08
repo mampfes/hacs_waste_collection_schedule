@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -26,10 +26,10 @@ API_URLS = {
 }
 
 ICON_MAP = {
-    "Residual Waste Collection Service": "mdi:trash-can",
-    "Domestic Recycling Collection Service": "mdi:recycle",
-    "Domestic Glass Collection Service": "mdi:glass-fragile",
-    "Garden Waste Collection Service": "mdi:leaf",
+    "Residual Waste Collection Service": Icons.GENERAL_WASTE,
+    "Domestic Recycling Collection Service": Icons.GENERAL_WASTE,
+    "Domestic Glass Collection Service": Icons.GLASS,
+    "Garden Waste Collection Service": Icons.GARDEN,
 }
 
 NAMES = {

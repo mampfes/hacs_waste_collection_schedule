@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Gosport Borough Council"
 DESCRIPTION = "Source for Gosport Borough Council waste collection."
@@ -28,9 +28,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Domestic Waste Collection Service": "mdi:trash-can",
-    "Recycling Waste Collection Service": "mdi:recycle",
-    "Garden Waste Collection Service": "mdi:leaf",
+    "Domestic Waste Collection Service": Icons.GENERAL_WASTE,
+    "Recycling Waste Collection Service": Icons.RECYCLING,
+    "Garden Waste Collection Service": Icons.GARDEN,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

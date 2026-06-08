@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Shellharbour City Council"
 DESCRIPTION = "Source script for shellharbourwaste.com.au"
@@ -13,9 +13,9 @@ TEST_CASES = {"TestName1": {"zoneID": "Monday A"}, "TestName2": {"zoneID": "Frid
 API_URL = "https://www.shellharbourwaste.com.au/waste-collection"
 
 ICON_MAP = {
-    "Waste": "mdi:trash-can",
-    "FOGO": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Waste": Icons.GENERAL_WASTE,
+    "FOGO": Icons.BIO_KITCHEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

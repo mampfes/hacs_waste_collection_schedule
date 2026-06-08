@@ -1,0 +1,13 @@
+---
+title: Odvoz Odpadu
+url: https://odvoz-odpadu.eu
+country: sk
+howto:
+  en: |
+    - Go to <https://odvoz-odpadu.eu/> and search for your municipality.
+    - Copy the link address of the "Google / Apple Kalendár" button (or the ICS icon).
+    - The URL will look like `https://odvoz-odpadu.eu/miesto/XXXX/kalendar.ics` (where XXXX is your municipality ID).
+    - Use this URL as the `url` parameter in your Home Assistant configuration.
+test_cases:
+  Dolna_Ves:
+    url: https://odvoz-odpadu.eu/miesto/1400/kalendar.ics

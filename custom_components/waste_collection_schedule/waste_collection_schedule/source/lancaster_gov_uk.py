@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 from typing import Union
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.WhitespaceWRP import WhitespaceClient
 
 TITLE = "Lancaster City Council"
@@ -13,12 +13,12 @@ TEST_CASES = {
 }
 API_URL = "https://lcc-wrp.whitespacews.com"
 ICON_MAP = {
-    "Domestic Waste": "mdi:trash-can",
-    "Garden Waste": "mdi:leaf",
-    "Recycling Red": "mdi:recycle",
-    "Recycling Yellow": "mdi:recycle",
-    "Recycling": "mdi:recycle",
-    "Food Waste": "mdi:food",
+    "Domestic Waste": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Recycling Red": Icons.RECYCLING,
+    "Recycling Yellow": Icons.RECYCLING,
+    "Recycling": Icons.RECYCLING,
+    "Food Waste": Icons.BIO_KITCHEN,
 }
 SUFFIXES = (
     " Collection Service",

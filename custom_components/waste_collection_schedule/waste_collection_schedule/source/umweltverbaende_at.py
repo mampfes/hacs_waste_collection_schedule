@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -363,19 +363,19 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Gelber Sack": "mdi:sack",
-    "Gelbe Tonne": "mdi:trash-can",
-    "Altpapier": "mdi:package-variant",
-    "Papier": "mdi:package-variant",
-    "Biotonne": "mdi:leaf",
-    "Bio": "mdi:leaf",
-    "Windeltonne": "mdi:baby",
-    "Christbaum": "mdi:pine-tree",
-    "Problemstoff": "mdi:chemical-weapon",
-    "Strauchschnitt": "mdi:tree",
-    "Verpackung": "mdi:package-variant",
-    "LVP": "mdi:package-variant",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Altpapier": Icons.PAPER,
+    "Papier": Icons.PAPER,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Bio": Icons.ORGANIC,
+    "Windeltonne": Icons.GENERAL_WASTE,
+    "Christbaum": Icons.CHRISTMAS_TREE,
+    "Problemstoff": Icons.HAZARDOUS,
+    "Strauchschnitt": Icons.GARDEN,
+    "Verpackung": Icons.PAPER,
+    "LVP": Icons.PLASTIC_PACKAGING,
 }
 
 PARAM_TRANSLATIONS = {

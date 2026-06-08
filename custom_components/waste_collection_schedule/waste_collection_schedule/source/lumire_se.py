@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Luleå"
 DESCRIPTION = "Source for Luleå."
@@ -14,17 +14,17 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:leaf",
-    "Porslin": "mdi:coffee",
-    "Returpapper": "mdi:package-variant",
-    "Pappersförpackningar": "mdi:package-variant",
-    "Plastförpackningar": "mdi:recycle",
-    "Metallförpackningar": "mdi:recycle",
-    "Färgade": "mdi:bottle-soda",
-    "Ofärgade": "mdi:bottle-soda",
-    "Ljuskällor": "mdi:lightbulb",
-    "Småbatterier": "mdi:battery",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Porslin": Icons.BIO_KITCHEN,
+    "Returpapper": Icons.PAPER,
+    "Pappersförpackningar": Icons.PAPER,
+    "Plastförpackningar": Icons.RECYCLING,
+    "Metallförpackningar": Icons.METAL,
+    "Färgade": Icons.GLASS,
+    "Ofärgade": Icons.GLASS,
+    "Ljuskällor": Icons.ELECTRONICS,
+    "Småbatterier": Icons.BATTERY,
 }
 
 API_URL = "https://lumire.se/api/waste-pickup"

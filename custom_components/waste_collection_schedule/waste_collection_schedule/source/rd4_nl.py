@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Rd4"
 DESCRIPTION = "Source for Rd4."
@@ -10,13 +10,13 @@ TEST_CASES = {"6417 AT 32": {"postal_code": "6417 AT", "house_number": 32}}
 
 
 ICON_MAP = {
-    "pmd": "mdi:recycle",
-    "gft": "mdi:leaf",
-    "residual_waste": "mdi:trash-can",
-    "paper": "mdi:newspaper",
-    "pruning_waste": "mdi:leaf",
-    "best_bag": "mdi:bag-personal",
-    "christmas_trees": "mdi:christmas-tree",
+    "pmd": Icons.RECYCLING,
+    "gft": Icons.BIO_KITCHEN,
+    "residual_waste": Icons.GENERAL_WASTE,
+    "paper": Icons.PAPER,
+    "pruning_waste": Icons.ORGANIC,
+    "best_bag": Icons.GENERAL_WASTE,
+    "christmas_trees": Icons.CHRISTMAS_TREE,
 }
 
 

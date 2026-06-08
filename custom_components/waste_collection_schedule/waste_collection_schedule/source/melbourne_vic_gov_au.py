@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "City of Melbourne"
@@ -31,8 +31,8 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+    "General waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 
 WEEKDAY_MAP = {

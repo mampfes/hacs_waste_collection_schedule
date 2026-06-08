@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -55,12 +55,12 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 }
 
 ICON_MAP = {
-    "Residual": "mdi:trash-can",
-    "Organic": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Recyclable": "mdi:recycle",
-    "BulkyWaste": "mdi:sofa",
-    "HazardousWaste": "mdi:biohazard",
+    "Residual": Icons.GENERAL_WASTE,
+    "Organic": Icons.ORGANIC,
+    "Paper": Icons.PAPER,
+    "Recyclable": Icons.RECYCLING,
+    "BulkyWaste": Icons.BULKY,
+    "HazardousWaste": Icons.HAZARDOUS,
 }
 
 API_BASE = "https://heimatinfo-api-platform.azurewebsites.net"

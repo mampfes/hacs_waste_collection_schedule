@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 
@@ -11,12 +11,12 @@ TEST_CASES = {"Hauptstraße": {"street": "Hauptstraße"}}
 
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Gelb": "mdi:recycle",
-    "Bio": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Sperrmüll": "mdi:sofa",
-    "Weihnachtsbaumabholung": "mdi:pine-tree",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Gelb": Icons.RECYCLING,
+    "Bio": Icons.ORGANIC,
+    "Papier": Icons.PAPER,
+    "Sperrmüll": Icons.BULKY,
+    "Weihnachtsbaumabholung": Icons.CHRISTMAS_TREE,
 }
 
 BASE_URL = "https://awg-wuppertal.de"

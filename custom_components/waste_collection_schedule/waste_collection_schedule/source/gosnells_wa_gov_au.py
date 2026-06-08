@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from dateutil.rrule import DAILY, FR, MO, SA, SU, TH, TU, WE, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of Gosnells"
 DESCRIPTION = "Source for City of Gosnells, Western Australia."
@@ -15,10 +15,10 @@ TEST_CASES = {
 }
 HEADERS = {"user-agent": "Mozilla/5.0", "accept": "application/json"}
 ICON_MAP = {
-    "rubbish": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "green": "mdi:sprout",
-    "junk": "mdi:television-classic",
+    "rubbish": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "green": Icons.ORGANIC,
+    "junk": Icons.ELECTRONICS,
 }
 DAYS = {
     "MONDAY": MO,

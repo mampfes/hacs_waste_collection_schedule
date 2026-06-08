@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Basel-Stadt"
@@ -15,13 +15,13 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Kehrichtabfuhr": "mdi:trash-can",
-    "Grünabfuhr": "mdi:leaf",
-    "Papierabfuhr": "mdi:package-variant",
-    "Grobsperrgut": "mdi:sofa",
-    "Metallabfuhr": "mdi:iron-outline",
-    "Häckseldienst": "mdi:tree",
-    "Unbrennbares": "mdi:fire-off",
+    "Kehrichtabfuhr": Icons.GENERAL_WASTE,
+    "Grünabfuhr": Icons.ORGANIC,
+    "Papierabfuhr": Icons.PAPER,
+    "Grobsperrgut": Icons.BULKY,
+    "Metallabfuhr": Icons.METAL,
+    "Häckseldienst": Icons.GARDEN,
+    "Unbrennbares": Icons.GENERAL_WASTE,
 }
 
 VALID_ZONES = ["A", "B", "C", "D", "E", "F", "G", "H", "GUF"]

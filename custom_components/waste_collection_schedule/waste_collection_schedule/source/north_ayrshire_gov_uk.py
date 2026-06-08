@@ -1,6 +1,6 @@
 import requests
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North Ayrshire Council"
 DESCRIPTION = "Source for north-ayrshire.gov.uk services for North Ayrshire"
@@ -15,10 +15,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Grey": "mdi:trash-can",
-    "Brown": "mdi:leaf",
-    "Purple": "mdi:glass-fragile",
-    "Blue": "mdi:recycle",
+    "Grey": Icons.GENERAL_WASTE,
+    "Brown": Icons.ORGANIC,
+    "Purple": Icons.GLASS,
+    "Blue": Icons.RECYCLING,
 }
 
 BIN_TEXTS = [

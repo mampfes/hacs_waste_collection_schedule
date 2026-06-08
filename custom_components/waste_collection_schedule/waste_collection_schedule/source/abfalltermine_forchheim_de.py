@@ -26,7 +26,7 @@ class Source:
     def fetch(self):
         place = urllib.parse.quote(self._city + " - " + self._area)
         r = requests.get(
-            f"http://www.abfalltermine-forchheim.de/Forchheim/Landkreis/{place}/ics?RESTMUELL=true&RESTMUELL_SINGLE=true&BIO=true&YELLOW_SACK=true&PAPER=true"
+            f"https://www.abfalltermine-forchheim.de/Forchheim/Landkreis/{place}/ics?RESTMUELL=true&RESTMUELL_SINGLE=true&BIO=true&YELLOW_SACK=true&PAPER=true"
         )
         r.encoding = "utf-8"
         dates = self._ics.convert(r.text)

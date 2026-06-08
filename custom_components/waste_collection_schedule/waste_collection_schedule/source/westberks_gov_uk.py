@@ -3,7 +3,7 @@ import time
 from datetime import date, datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "West Berkshire Council"
 DESCRIPTION = "Source for westberks.gov.uk services for West Berkshire Council"
@@ -20,9 +20,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "RUBBISH": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "FOODWASTE": "mdi:food-apple",
+    "RUBBISH": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "FOODWASTE": Icons.BIO_KITCHEN,
 }
 
 SEARCH_URLS = {

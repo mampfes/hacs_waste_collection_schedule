@@ -2,7 +2,7 @@ import datetime
 import re
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -37,10 +37,10 @@ HTML_BASE_URL = "https://www.eth-erd.hu/storage/uploads/{slug}.html"
 # week<N>   = green (garden) waste, biweekly/monthly route N
 # uvegszin  = glass waste (Diósd, Tárnok)
 ICON_MAP = {
-    "Communal": "mdi:trash-can",
-    "Selective": "mdi:recycle",
-    "Green": "mdi:leaf",
-    "Glass": "mdi:glass-fragile",
+    "Communal": Icons.GENERAL_WASTE,
+    "Selective": Icons.RECYCLING,
+    "Green": Icons.ORGANIC,
+    "Glass": Icons.GLASS,
 }
 
 

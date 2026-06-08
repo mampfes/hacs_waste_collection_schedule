@@ -49,11 +49,11 @@ For more info on forking/cloning a repository, see GitHub's [fork-a-repo](https:
 
 There are 2 ways to add support for a new service provider:
 
-1. [Via the generic ICS source](contributing_ics.md)
+1. [Via the generic ICS source](doc/contributing_ics.md)
 
    This is the preferred way of adding support for a new service provider, but only works if the service providers offers a so called "ical / webcal subscription" or at least a static link which doesn't change over time to an ICS file.
 
-2. [Dedicated source](contributing_source.md)
+2. [Dedicated source](doc/contributing_source.md)
 
    This is the fallback if the preferred way via the generic ICS source doesn't work.
 

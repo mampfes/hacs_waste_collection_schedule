@@ -1,7 +1,7 @@
 import datetime
 
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 # Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
 from waste_collection_schedule.service.SSLError import get_legacy_session
@@ -12,14 +12,14 @@ URL = "https://esch.lu"
 TEST_CASES = {"Zone A": {"zone": "A"}, "Zone B": {"zone": "B"}}
 
 API_URL = "https://administration.esch.lu/dechets/?street=0&tour="
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "Poubelle ménage": "mdi:trash-can",
-    "Papier": "mdi:newspaper",
-    "Organique": "mdi:leaf",
-    "Verre": "mdi:bottle-wine-outline",
-    "Valorlux": "mdi:recycle",
-    "Déchets toxiques": "mdi:skull-crossbones",
-    "Container ménage": "train-car-container",
+ICON_MAP = {
+    "Poubelle ménage": Icons.GENERAL_WASTE,
+    "Papier": Icons.PAPER,
+    "Organique": Icons.ORGANIC,
+    "Verre": Icons.GLASS,
+    "Valorlux": Icons.RECYCLING,
+    "Déchets toxiques": Icons.HAZARDOUS,
+    "Container ménage": Icons.GENERAL_WASTE,
 }
 
 MONTH_NAMES = [

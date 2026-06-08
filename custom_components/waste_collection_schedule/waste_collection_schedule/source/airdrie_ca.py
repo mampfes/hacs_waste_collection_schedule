@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 
-TITLE = "Airdrie (CA)"
+TITLE = "Airdrie (AB)"
 DESCRIPTION = "City of Airdrie waste collection"
 URL = "https://www.airdrie.ca"
 COUNTRY = "ca"
@@ -15,12 +15,12 @@ API_URL = "https://www.airdrie.ca/functions/calendar.cfc"
 CALENDAR_ID = 10
 
 ICON_MAP = {
-    "Garbage collection": "mdi:trash-can",
-    "Black garbage cart collection": "mdi:trash-can",
-    "Recycling collection": "mdi:recycle",
-    "Blue recycling cart collection": "mdi:recycle",
-    "Organics Collection": "mdi:leaf",
-    "Green organics cart collection": "mdi:leaf",
+    "Garbage collection": Icons.GENERAL_WASTE,
+    "Black garbage cart collection": Icons.GENERAL_WASTE,
+    "Recycling collection": Icons.RECYCLING,
+    "Blue recycling cart collection": Icons.RECYCLING,
+    "Organics collection": Icons.ORGANIC,
+    "Green organics cart collection": Icons.ORGANIC,
 }
 
 CITIES = {

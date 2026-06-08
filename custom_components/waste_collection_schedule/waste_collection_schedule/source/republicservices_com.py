@@ -86,7 +86,7 @@ class Source:
                 "Contact Republic Services directly for your collection schedule.",
             )
 
-        service = ""
+        services: set = set()
         schedule = []
         today = date.today()
         end_date = today + timedelta(days=182)
@@ -97,6 +97,7 @@ class Source:
                     period_length = item.get("numberOfPickupsPeriodLength", 1)
                     period_unit = item.get("numberOfPickupsPeriodUnit", "")
                     service = item["containerCategory"]
+                    services.add(service)
 
                     if (
                         period_unit
@@ -137,10 +138,10 @@ class Source:
             params={"latitude": latitude, "longitude": longitude},
         )
         r2_data = r2.json().get("data", [])
-        day_offset = 0
         holidays = []
         for item in r2_data:
-            if item and item["serviceImpacted"] is True and item["LOB"] == service:
+            if item and item["serviceImpacted"] is True and item["LOB"] in services:
+                day_offset = 0
                 for delay in DELAYS:
                     if delay in item["description"]:
                         day_offset = DELAYS[delay]

@@ -3,7 +3,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Afval Wijzer"
 DESCRIPTION = "Source for all cities regions supported in mijnafvalwijzer.nl"
@@ -16,16 +16,16 @@ TEST_CASES = {
     "Rotterdam": {"postcode": "3067AL", "number": "53"},
 }
 
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "Restafval": "mdi:trash-can",
-    "Papier en karton": "mdi:paper-roll",
-    "Groente, Fruit en Tuinafval": "mdi:leaf",
-    "PMD": "mdi:bottle-soda-classic-outline",
-    "Plastic, Metalen en Drankkartons": "mdi:bottle-soda-classic-outline",
-    "papier": "mdi:paper-roll",
-    "GFT": "mdi:leaf",
-    "GFT ": "mdi:leaf",
-    "restafval": "mdi:trash-can",
+ICON_MAP = {
+    "Restafval": Icons.GENERAL_WASTE,
+    "Papier en karton": Icons.PAPER,
+    "Groente, Fruit en Tuinafval": Icons.ORGANIC,
+    "PMD": Icons.GLASS,
+    "Plastic, Metalen en Drankkartons": Icons.PLASTIC_PACKAGING,
+    "papier": Icons.PAPER,
+    "GFT": Icons.BIO_KITCHEN,
+    "GFT ": Icons.BIO_KITCHEN,
+    "restafval": Icons.GENERAL_WASTE,
 }
 
 # ### Arguments affecting the configuration GUI ####

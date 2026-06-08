@@ -3,7 +3,7 @@ import urllib
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -21,9 +21,9 @@ TEST_CASES = {
 
 API_URL = "https://www.cardinia.vic.gov.au/info/20002/rubbish_and_recycling/385/bin_collection_days_and_putting_your_bins_out/2#section-2-check-your-bin-collection-days-online"
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green Waste": Icons.GARDEN,
 }
 
 

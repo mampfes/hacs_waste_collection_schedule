@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Stoke-on-Trent"
 DESCRIPTION = "Source for Stoke-on-Trent"
@@ -13,7 +13,11 @@ TEST_CASES = {
     "Test2": {"uprn": 3455011391},
 }
 
-ICON_MAP = {"ORG": "mdi:leaf", "RES": "mdi:trash-can", "REC": "mdi:recycle"}
+ICON_MAP = {
+    "ORG": Icons.ORGANIC,
+    "RES": Icons.GENERAL_WASTE,
+    "REC": Icons.RECYCLING,
+}
 
 API_URL = "https://www.stoke.gov.uk/jadu/custom/webserviceLookUps/BarTecWebServices_missed_bin_calendar.php?UPRN="
 

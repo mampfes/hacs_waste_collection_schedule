@@ -5,7 +5,7 @@ from time import time_ns
 
 import bs4
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Reigate & Banstead Borough Council"
 DESCRIPTION = "Source for reigate-banstead.gov.uk services for the Reigate & Banstead Borough, UK."
@@ -20,16 +20,16 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "FOOD WASTE": "mdi:food",
-    "MIXED RECYCLING": "mdi:recycle",
-    "GLASS": "mdi:recycle",  # commercial
-    "MIXED CANS": "mdi:recycle",  # commercial
-    "PLASTIC": "mdi:recycle",  # commercial
-    "PAPER AND CARDBOARD": "mdi:newspaper",
-    "TRADE - PAPER AND CARDBOARD": "mdi:newspaper",  # commercial
-    "REFUSE": "mdi:trash-can",
-    "TRADE - REFUSE": "mdi:trash-can",  # commercial
-    "GARDEN WASTE": "mdi:leaf",
+    "FOOD WASTE": Icons.BIO_KITCHEN,
+    "MIXED RECYCLING": Icons.RECYCLING,
+    "GLASS": Icons.GLASS,
+    "MIXED CANS": Icons.METAL,
+    "PLASTIC": Icons.PLASTIC_PACKAGING,
+    "PAPER AND CARDBOARD": Icons.PAPER,
+    "TRADE - PAPER AND CARDBOARD": Icons.PAPER,
+    "REFUSE": Icons.GENERAL_WASTE,
+    "TRADE - REFUSE": Icons.GENERAL_WASTE,
+    "GARDEN WASTE": Icons.GARDEN,
 }
 
 

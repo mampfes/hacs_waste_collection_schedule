@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
@@ -15,11 +15,11 @@ TEST_CASES = {
 COUNTRY = "de"
 
 ICON_MAP = {
-    "Gelber Sack": "mdi:recycle",
-    "Grüngut": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Rest- und Biomüll": "mdi:trash-can",
-    "Wertstoffhof geschlossen": "mdi:factory",
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Grüngut": Icons.ORGANIC,
+    "Papier": Icons.PAPER,
+    "Rest- und Biomüll": Icons.BIO_KITCHEN,
+    "Wertstoffhof geschlossen": Icons.COMMERCIAL,
 }
 
 

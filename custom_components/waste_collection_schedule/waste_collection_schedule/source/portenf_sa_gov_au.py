@@ -5,7 +5,7 @@ from datetime import datetime
 import requests
 import urllib3
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -44,9 +44,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "general-waste bin": "mdi:trash-can",
-    "organics bin": "mdi:leaf",
-    "recycling bin": "mdi:recycle",
+    "general-waste bin": Icons.GENERAL_WASTE,
+    "organics bin": Icons.ORGANIC,
+    "recycling bin": Icons.RECYCLING,
 }
 
 LOGGER = logging.getLogger(__name__)

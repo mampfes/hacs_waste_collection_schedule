@@ -1,7 +1,7 @@
 from datetime import date, datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -22,16 +22,16 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "GFT": "mdi:leaf",
-    "Restafval": "mdi:trash-can",
-    "PBD": "mdi:recycle",
-    "PMD": "mdi:recycle",
-    "Plastic": "mdi:recycle",
-    "Papier": "mdi:paper-roll",
-    "Glas": "mdi:bottle-soda",
-    "Textiel": "mdi:hanger",
-    "Kerstboom": "mdi:pine-tree",
-    "Snoeiafval": "mdi:tree",
+    "GFT": Icons.BIO_KITCHEN,
+    "Restafval": Icons.GENERAL_WASTE,
+    "PBD": Icons.RECYCLING,
+    "PMD": Icons.RECYCLING,
+    "Plastic": Icons.PLASTIC_PACKAGING,
+    "Papier": Icons.PAPER,
+    "Glas": Icons.GLASS,
+    "Textiel": Icons.TEXTILE,
+    "Kerstboom": Icons.CHRISTMAS_TREE,
+    "Snoeiafval": Icons.GARDEN,
 }
 
 PARAM_DESCRIPTIONS = {

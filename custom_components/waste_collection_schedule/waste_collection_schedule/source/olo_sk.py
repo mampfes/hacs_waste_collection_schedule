@@ -6,7 +6,10 @@ from typing import Any
 import requests
 from dateutil.rrule import WEEKLY, rrule, weekday
 from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple, SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+)
 
 _LOGGER = logging.getLogger(__name__)
 

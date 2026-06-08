@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Warrington Borough Council"
 DESCRIPTION = (
@@ -20,9 +20,9 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "BLACK BIN": "mdi:trash-can",
-    "BLUE BIN": "mdi:recycle",
-    "GREEN BIN": "mdi:leaf",
+    "BLACK BIN": Icons.GENERAL_WASTE,
+    "BLUE BIN": Icons.RECYCLING,
+    "GREEN BIN": Icons.ORGANIC,
 }
 
 

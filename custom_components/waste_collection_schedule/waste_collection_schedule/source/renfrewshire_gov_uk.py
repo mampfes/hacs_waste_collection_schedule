@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Renfrewshire Council"
 DESCRIPTION = "Source for renfrewshire.gov.uk services for Renfrewshire"
@@ -17,10 +17,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Grey": "mdi:trash-can",
-    "Brown": "mdi:leaf",
-    "Green": "mdi:glass-fragile",
-    "Blue": "mdi:note",
+    "Grey": Icons.GENERAL_WASTE,
+    "Brown": Icons.ORGANIC,
+    "Green": Icons.GLASS,
+    "Blue": Icons.EVENT,
 }
 
 

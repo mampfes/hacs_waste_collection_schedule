@@ -2,7 +2,7 @@ from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Wiltshire Council"
 DESCRIPTION = "Source for wiltshire.gov.uk services for Wiltshire Council"
@@ -23,10 +23,10 @@ COLLECTIONS = {
     "Chargeable garden waste",  # some addresses also have a chargeable garden waste collection
 }
 ICON_MAP = {
-    "Household waste": "mdi:trash-can",
-    "Mixed dry recycling (blue lidded bin)": "mdi:recycle",
-    "Mixed dry recycling (blue lidded bin) and glass (black box or basket)": "mdi:recycle",
-    "Chargeable garden waste": "mdi:leaf",
+    "Household waste": Icons.GENERAL_WASTE,
+    "Mixed dry recycling (blue lidded bin)": Icons.RECYCLING,
+    "Mixed dry recycling (blue lidded bin) and glass (black box or basket)": Icons.GLASS,
+    "Chargeable garden waste": Icons.GARDEN,
 }
 
 

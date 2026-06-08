@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Bedford Borough Council"
 DESCRIPTION = "Source for bradford.gov.uk services for Bedford Borough Council, UK."
@@ -17,10 +17,10 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "BLACK BIN": "mdi:trash-can",
-    "ORANGE BIN": "mdi:recycle",
-    "GREEN BIN": "mdi:leaf",
-    "CADDY BIN": "mdi:food",
+    "BLACK BIN": Icons.GENERAL_WASTE,
+    "ORANGE BIN": Icons.RECYCLING,
+    "GREEN BIN": Icons.ORGANIC,
+    "CADDY BIN": Icons.BIO_KITCHEN,
 }
 
 
@@ -32,7 +32,7 @@ class Source:
 
         s = requests.Session()
         r = s.get(
-            f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}/35",
+            f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}",
             headers=HEADERS,
         )
         json_data = json.loads(r.text)["BinCollections"]

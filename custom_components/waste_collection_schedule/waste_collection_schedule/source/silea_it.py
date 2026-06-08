@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Silea"
@@ -15,12 +15,12 @@ TEST_CASES = {
     "Test_002": {"municipality": "Cesana", "address": "via foscolo"},
 }
 ICON_MAP = {
-    "INDIFFERENZIATO": "mdi:trash-can",
-    "PLASTICA, LATTINE E TETRAPAK": "mdi:recycle",
-    "VETRO": "mdi:bottle-wine",
-    "CARTA E CARTONE": "mdi:newspaper-variant-multiple",
-    "SPAZZAMENTO MECCANIZZATO": "mdi:tanker-truck",
-    "UMIDO": "mdi:leaf",
+    "INDIFFERENZIATO": Icons.GENERAL_WASTE,
+    "PLASTICA, LATTINE E TETRAPAK": Icons.RECYCLING,
+    "VETRO": Icons.GLASS,
+    "CARTA E CARTONE": Icons.PAPER,
+    "SPAZZAMENTO MECCANIZZATO": Icons.GENERAL_WASTE,
+    "UMIDO": Icons.BIO_KITCHEN,
 }
 
 

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Chiemgau Recycling - Landkreis Rosenheim"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for paper waste collection in Landkreis Rosenheim area"  # Describe your source
@@ -11,8 +11,8 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
     "Bruckmühl 1": {"district": "Bruckmühl 1"}
 }
 
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "Papier": "mdi:package-variant",
+ICON_MAP = {
+    "Papier": Icons.PAPER,
 }
 
 API_URL = "https://blauetonne.stkn.org/lk_rosenheim"

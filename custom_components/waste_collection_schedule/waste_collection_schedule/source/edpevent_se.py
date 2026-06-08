@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
@@ -125,13 +125,13 @@ _LOGGER = logging.getLogger(__name__)
 
 # This maps the icon based on the waste type
 ICON_MAP = {
-    "Brännbart": "mdi:trash-can",
-    "Matavfall tätt": "mdi:food",
-    "Deponi": "mdi:recycle",
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:food-apple",
-    "Slam": "mdi:emoticon-poop",
-    "Trädgårdsavfall": "mdi:leaf",
+    "Brännbart": Icons.GENERAL_WASTE,
+    "Matavfall tätt": Icons.BIO_KITCHEN,
+    "Deponi": Icons.RECYCLING,
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Slam": Icons.GENERAL_WASTE,
+    "Trädgårdsavfall": Icons.GARDEN,
 }
 
 # This can be used to rename the waste types to something more user friendly

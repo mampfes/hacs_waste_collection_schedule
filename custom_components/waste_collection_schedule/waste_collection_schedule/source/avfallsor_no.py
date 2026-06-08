@@ -2,13 +2,16 @@ import datetime
 import re
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Avfall Sør, Kristiansand"
 DESCRIPTION = "Source for Avfall Sør, Kristiansand."
 URL = "https://avfallsor.no/"
-TEST_CASES = {"Auglandslia 1, Kristiansand": {"address": "Auglandslia 1, Kristiansand"}}
+TEST_CASES = {
+    "Auglandslia 1, Kristiansand": {"address": "Auglandslia 1, Kristiansand"},
+    "Auglandslia 1 (without city)": {"address": "Auglandslia 1"},
+}
 
 # Maps fraksjonId to English waste type names
 # fraksjonId is the stable provider identifier
@@ -27,16 +30,20 @@ FRAKSJON_ID_MAP = {
 }
 
 ICON_MAP = {
-    "Residual": "mdi:trash-can",
-    "Bio": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Plastic": "mdi:recycle",
-    "Glass": "mdi:bottle-soda",
-    "Metal": "mdi:bottle-soda",
+    "Residual": Icons.GENERAL_WASTE,
+    "Bio": Icons.ORGANIC,
+    "Paper": Icons.PAPER,
+    "Plastic": Icons.PLASTIC_PACKAGING,
+    "Glass": Icons.GLASS,
+    "Metal": Icons.METAL,
 }
 
 
 API_URL = "https://avfallsor.no/wp-json/addresses/v1/address"
+
+
+def _normalize(s: str) -> str:
+    return s.lower().replace(" ", "").replace(",", "").replace(".", "").casefold()
 
 
 class Source:
@@ -44,27 +51,27 @@ class Source:
         self._address: str = address
 
     def fetch(self) -> list[Collection]:
-        args = {"lookup_term": self._address.split(",")[0].strip()}
+        # The API does prefix matching on the street+number part; strip any city suffix
+        # before the first comma so the lookup works regardless of whether the user
+        # included a city name (e.g. "Auglandslia 1" vs "Auglandslia 1, Kristiansand").
+        lookup_term = self._address.split(",")[0].strip()
+        args = {"lookup_term": lookup_term}
 
         r = requests.get(API_URL, params=args)
         r.raise_for_status()
         matches = r.json()
         href: str | None = None
 
+        addr_norm = _normalize(self._address)
         for match in matches:
-            if (
-                match["label"]
-                .lower()
-                .replace(" ", "")
-                .replace(",", "")
-                .replace(".", "")
-                .casefold()
-                == self._address.lower()
-                .replace(" ", "")
-                .replace(",", "")
-                .replace(".", "")
-                .casefold()
-            ):
+            # Primary: exact match on the full label (includes city) — handles the case
+            # where the user supplied the city in their address string.
+            if _normalize(match["label"]) == addr_norm:
+                href = match["href"]
+                break
+            # Fallback: match on the value field (street + number only, no city) —
+            # handles the case where the user omitted the city name.
+            if _normalize(match.get("value", "")) == addr_norm:
                 href = match["href"]
                 break
 
@@ -76,7 +83,7 @@ class Source:
             )
 
         # Extract propertyId from href
-        match = re.search(r'/([0-9a-f-]{36})/?$', href)
+        match = re.search(r"/([0-9a-f-]{36})/?$", href)
         if not match:
             raise ValueError(f"Could not extract propertyId from href: {href}")
         property_id = match.group(1)
@@ -101,10 +108,10 @@ class Source:
             for item in collection.get("items", []):
                 fraksjon_id = item.get("fraksjonId")
                 fraksjon = item.get("fraksjon")
-                
+
                 # Look up English waste type name using fraksjonId
                 mapping = FRAKSJON_ID_MAP.get(fraksjon_id)
-                
+
                 # Handle nested mappings for fraksjonIds with multiple waste types
                 if isinstance(mapping, dict):
                     # Lookup by both fraksjonId and fraksjon name
@@ -116,7 +123,7 @@ class Source:
                 else:
                     # Single waste type for this fraksjonId
                     waste_types = [mapping] if mapping else []
-                
+
                 # Create collection entries for each waste type
                 for waste_type in waste_types:
                     if waste_type:

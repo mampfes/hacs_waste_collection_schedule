@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -19,9 +19,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Organic": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Organic": Icons.ORGANIC,
 }
 
 API_URL = "https://data.liverpool.nsw.gov.au/api/explore/v2.1/catalog/datasets/bin-collection-days/records"

@@ -4,7 +4,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFoundWithSuggestions,
@@ -45,10 +45,10 @@ EXTRA_INFO = [
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:food-apple",
-    "Rest- matavfall": "mdi:trash-can",
-    "Slam": "mdi:emoticon-poop",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Rest- matavfall": Icons.BIO_KITCHEN,
+    "Slam": Icons.GENERAL_WASTE,
 }
 
 PARAM_DESCRIPTIONS = {

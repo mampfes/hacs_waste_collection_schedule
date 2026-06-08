@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
 
 TITLE = "Plymouth City Council"
@@ -19,14 +19,14 @@ TEST_CASES = {
 FORM_ID = "5c99439d85f83"
 HOSTNAME = "plymouth-self.achieveservice.com"
 BASE_URL = f"https://{HOSTNAME}"
-INITIAL_URL = f"{BASE_URL}/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-31283f9a-3ae7-4225-af71-bf3884e0ac1b/AF-Stagedba4a7d5-e916-46b6-abdb-643d38bec875/definition.json&redirectlink=%2Fen&cancelRedirectLink=%2Fen&consentMessage=yes"
+INITIAL_URL = f"{BASE_URL}/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-084d6742-3572-41ba-ac1a-430750451f9d/AF-Stage-67ba684d-0a5b-48f8-9c50-1c01cc43c396/definition.json&redirectlink=%2Fen&cancelRedirectLink=%2Fen&consentMessage=yes"
 AUTH_URL = f"{BASE_URL}/authapi/isauthenticated"
 AUTH_TEST = f"{BASE_URL}/apibroker/domain/{HOSTNAME}"
 API_URL = f"{BASE_URL}/apibroker/runLookup"
 
 ICON_MAP = {
-    "DO": "mdi:trash-can",
-    "RE": "mdi:recycle",
+    "DO": Icons.GENERAL_WASTE,
+    "RE": Icons.RECYCLING,
 }
 
 COLLECTION_TYPE = {
@@ -39,7 +39,9 @@ class Source:
     def __init__(self, uprn: str | int):
         self._uprn = str(uprn).strip()
 
-    def get_collections(self, session_key: str, session: requests.Session) -> list[Collection]:
+    def get_collections(
+        self, session_key: str, session: requests.Session
+    ) -> list[Collection]:
         result = run_lookup(
             session,
             API_URL,

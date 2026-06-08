@@ -3,7 +3,7 @@ from typing import Optional
 import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Windsor and Maidenhead"
@@ -18,9 +18,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "garden waste": "mdi:leaf",
-    "recycling": "mdi:recycle",
+    "refuse": Icons.GENERAL_WASTE,
+    "garden waste": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
 }
 
 PARAM_TRANSLATIONS = {

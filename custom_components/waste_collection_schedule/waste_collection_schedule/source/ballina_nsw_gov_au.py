@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Ballina Shire Council"
@@ -34,11 +34,11 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "general waste": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "green organics": "mdi:leaf",
-    "food organics": "mdi:leaf",
-    "garden organics": "mdi:leaf",
+    "general waste": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "green organics": Icons.ORGANIC,
+    "food organics": Icons.BIO_KITCHEN,
+    "garden organics": Icons.GARDEN,
 }
 
 

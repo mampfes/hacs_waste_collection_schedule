@@ -4,7 +4,7 @@ import logging
 import re
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "The Hawkesbury City Council, Sydney"
@@ -32,10 +32,10 @@ TEST_CASES = {
 }
 API_URL = "https://data.hawkesbury.nsw.gov.au/api"
 _LOGGER = logging.getLogger(__name__)
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "DOMESTIC": "mdi:trash-can",
-    "RECYCLE": "mdi:recycle",
-    "ORGANIC": "mdi:leaf",
+ICON_MAP = {
+    "DOMESTIC": Icons.GENERAL_WASTE,
+    "RECYCLE": Icons.RECYCLING,
+    "ORGANIC": Icons.ORGANIC,
 }
 STREETNAMES = {
     "Av": "Avenue",

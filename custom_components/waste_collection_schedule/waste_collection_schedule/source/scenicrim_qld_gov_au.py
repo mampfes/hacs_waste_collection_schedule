@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 import requests
 from dateutil.rrule import FR, MO, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Scenic Rim Regional Council"
 DESCRIPTION = "Source for scenicrim.qld.gov.au services for Scenic Rim Regional Council"
@@ -19,8 +19,8 @@ TEST_CASES = {
 }
 API_URL = "https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv"
 ICON_MAP = {
-    "GENERAL WASTE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
+    "GENERAL WASTE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
 }
 DAYS: dict = {
     "MONDAY": MO,

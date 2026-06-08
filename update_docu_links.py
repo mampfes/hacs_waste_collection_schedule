@@ -7,14 +7,15 @@ import inspect
 import json
 import re
 import site
+import sys
 from functools import lru_cache
 from pathlib import Path
 from types import ModuleType
 from typing import Any, Callable, Tuple, TypedDict, TypeVar
 
-try:
+if sys.version_info >= (3, 11):
     from typing import NotRequired
-except ImportError:
+else:
     from typing_extensions import NotRequired
 
 import yaml
@@ -42,7 +43,7 @@ END_COUNTRY_SECTION = "<!--End of country section-->"
 START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
 
-LANGUAGES = ["en", "de", "it", "fr"]
+LANGUAGES = ["en", "de", "it", "fr", "nl"]
 ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
 ARG_DESCRIPTIONS_TO_KEEP = ["calendar_title"]
 ARG_GENERAL_KEYS_TO_KEEP = ["title", "description"]
@@ -615,7 +616,7 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     output: dict[str, list[dict[str, str | dict[str, Any]]]] = {}
     source_metadata_by_module: dict[str, dict[str, Any]] = {}
 
-    for country in sorted(countries):
+    for country in ["Generic"] + sorted(c for c in countries if c != "Generic"):
         output[country] = []
         for e in sorted(
             countries[country],

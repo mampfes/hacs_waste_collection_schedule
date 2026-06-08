@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "North Yorkshire Council - Scarborough"
@@ -15,9 +15,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Household waste": "mdi:trash-can",
-    "Garden": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Household waste": Icons.GENERAL_WASTE,
+    "Garden": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

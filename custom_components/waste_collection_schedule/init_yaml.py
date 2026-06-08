@@ -144,6 +144,9 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     # store api object
     hass.data.setdefault(const.DOMAIN, {})["YAML_CONFIG"] = api
 
+    # perform initial fetch so collection types are known before platform setup
+    await hass.async_add_executor_job(api._fetch)
+
     # load calendar platform
     await async_load_platform(hass, "calendar", const.DOMAIN, {"api": api}, config)
 
@@ -156,9 +159,6 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
             {"api": api, "sensor_config": sensor_config},
             config,
         )
-
-    # initial fetch of all data
-    hass.add_job(api._fetch)
 
     # Register new Service fetch_data
     hass.services.async_register(

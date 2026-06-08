@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Region Gotland"
 DESCRIPTION = "Source for Region Gotland waste collection."
@@ -11,7 +11,12 @@ TEST_CASES = {
     "TestService": {"uprn": "16903059805"},
 }
 
-ICON_MAP = {"Restavfall": "mdi:trash-can", "Matavfall": "mdi:leaf"}
+ICON_MAP = {
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Fyrfack 1": Icons.GENERAL_WASTE,
+    "Fyrfack 2": Icons.RECYCLING,
+}
 
 
 class Source:
@@ -28,7 +33,12 @@ class Source:
 
         entries = []
         for item in data["RhServices"]:
-            if item["WasteType"] != "Restavfall" and item["WasteType"] != "Matavfall":
+            if item["WasteType"] not in {
+                "Restavfall",
+                "Matavfall",
+                "Fyrfack 1",
+                "Fyrfack 2",
+            }:
                 continue
 
             next_pickup = item["NextWastePickup"]
