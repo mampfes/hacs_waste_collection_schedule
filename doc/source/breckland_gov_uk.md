@@ -1,6 +1,6 @@
 # Breckland Council
 
-Support for schedules provided by [Breckland Council](https://www.breckland.gov.uk/mybreckland), serving the district of Breckland, UK.
+Support for schedules provided by [Breckland Council](https://www.breckland.gov.uk/mybreckland), serving the district of Breckland, in Norfolk, UK.
 
 ## Local Government Reorganisation note
 During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new West Norfolk council are not expected to be live until at least April 2028, when the council itself officially comes into being.
