@@ -1,6 +1,16 @@
-# South Norfolk and Broadland Council
+# South Norfolk Council and Broadland District Council
 
-Support for schedules provided by [South Norfolk and Broadland Council](https://www.southnorfolkandbroadland.gov.uk/rubbish/find-bin-collection-day) (the joint operations of South Norfolk Council and Broadland District Council).
+Support for schedules provided by [South Norfolk and Broadland District Councils](https://www.southnorfolkandbroadland.gov.uk/rubbish/find-bin-collection-day) (the joint operations of South Norfolk Council and Broadland District Council).
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new West Norfolk, Greater Norwich, and East Norfolk councils are not expected to be live until at least April 2028, when the councils themselves officially come into being.
+
+## Bin calendar information
+This source uses different methods to fetch information for areas in the two districts, and as a result gives different levels of detail:
+
+For addresses in Broadland, this source only fetches the next collection day for each type of bin, as that is all the information provided by the councils' website.
+
+For addresses in South Norfolk, this source fetches a full list of future collection days, as the councils' website provides access to a full dynamic calendar for future collections.
 
 ## Configuration via configuration.yaml
 
