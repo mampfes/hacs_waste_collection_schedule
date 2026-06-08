@@ -1,12 +1,11 @@
 """Source for Geovest, Italy."""
 
 import re
+import uuid
 from datetime import datetime, timedelta
 from typing import Any, List, Optional
 
 import requests
-import uuid
-
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -62,7 +61,7 @@ EXTRA_INFO = [
     {
         "title": "Sant'Agata Bolognese",
         "default_params": {"town_id": "13"},
-    }
+    },
 ]
 
 TEST_CASES = {
@@ -196,8 +195,12 @@ class Source:
         self._town_id = self._normalize_town_id(town_id)
         self._numbers = str(numbers or "1").strip()
         self._calendar_type_id = str(calendar_type_id).strip()
-        self._device_id = str(device_id).strip() if device_id else self._generate_device_id()
-        self._authorization = str(authorization).strip() if authorization else AUTHORIZATION
+        self._device_id = (
+            str(device_id).strip() if device_id else self._generate_device_id()
+        )
+        self._authorization = (
+            str(authorization).strip() if authorization else AUTHORIZATION
+        )
         try:
             self._days = int(days)
         except (TypeError, ValueError):
@@ -249,7 +252,9 @@ class Source:
             "filter[town_id]": self._town_id,
         }
 
-        response = requests.get(url, params=params, headers=self._get_headers(), timeout=30)
+        response = requests.get(
+            url, params=params, headers=self._get_headers(), timeout=30
+        )
         response.raise_for_status()
 
         data = response.json()
@@ -264,14 +269,18 @@ class Source:
         return addresses
 
     def _choose_address_id(self, addresses: list[dict[str, Any]]) -> int:
-        suggestions = [address.get("label") for address in addresses if address.get("label")]
+        suggestions = [
+            address.get("label") for address in addresses if address.get("label")
+        ]
         if len(addresses) == 1:
             return int(addresses[0]["value"])
 
         normalized_number = self._numbers.strip()
         for address in addresses:
             label = (address.get("label") or "").lower()
-            if normalized_number and re.search(rf"\b{re.escape(normalized_number)}\b", label):
+            if normalized_number and re.search(
+                rf"\b{re.escape(normalized_number)}\b", label
+            ):
                 return int(address["value"])
 
         raise SourceArgAmbiguousWithSuggestions(
@@ -502,6 +511,10 @@ class Source:
             current_date += timedelta(days=7)
 
         return sorted(
-            [collection for collection in collections if collection.date <= end_date_date],
+            [
+                collection
+                for collection in collections
+                if collection.date <= end_date_date
+            ],
             key=lambda item: item.date,
         )
