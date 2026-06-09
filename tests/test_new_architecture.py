@@ -166,6 +166,44 @@ class TestCollection:
         c = Collection(date=tomorrow, waste_type=GENERAL_WASTE)
         assert c.daysTo == 1
 
+    def test_location_and_description(self):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        assert c.location is None
+        assert c.description is None
+        c.set_location("Zone A")
+        c.set_description("Fortnightly")
+        assert c.location == "Zone A"
+        assert c.description == "Fortnightly"
+
+    def test_location_in_as_dict(self):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        assert "location" not in c.as_dict()
+        c.set_location("Block 3")
+        assert c.as_dict()["location"] == "Block 3"
+
+    def test_set_location_strips_whitespace(self):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        c.set_location("  Zone B  ")
+        assert c.location == "Zone B"
+
+    def test_set_location_none_clears(self):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        c.set_location("Zone A")
+        c.set_location(None)
+        assert c.location is None
+
 
 class TestLegacyCollection:
     """LegacyCollection — adapter for old-style sources using t= and icon=."""
@@ -209,6 +247,19 @@ class TestLegacyCollection:
         c = LegacyCollection(date=datetime.date(2026, 1, 1), t="Refuse")
         assert c.waste_type.id == "legacy_Refuse"
         assert c.waste_type.names["en"] == "Refuse"
+
+    def test_location_and_description(self):
+        from waste_collection_schedule.collection import LegacyCollection
+
+        c = LegacyCollection(
+            date=datetime.date(2026, 1, 1),
+            t="Refuse",
+            location="Bin bay 2",
+            description="Every other week",
+        )
+        assert c.location == "Bin bay 2"
+        assert c.description == "Every other week"
+        assert c.as_dict()["location"] == "Bin bay 2"
 
 
 class TestCollectionFactory:
@@ -292,6 +343,39 @@ class TestCollectionGroup:
         assert len(g.types) == 2
         assert "General Waste" in g.types
         assert "Bulky Waste" in g.types
+
+    def test_location_aggregation(self):
+        from waste_collection_schedule.collection import Collection, CollectionGroup
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+
+        c1 = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        c1.set_location("Zone A")
+        c2 = Collection(date=datetime.date(2026, 1, 1), waste_type=RECYCLABLES)
+        c2.set_location("Zone B")
+        g = CollectionGroup.create([c1, c2])
+        assert g.locations == ["Zone A", "Zone B"]
+        assert g.location == "Zone A, Zone B"
+        assert g.as_dict()["location"] == "Zone A, Zone B"
+
+    def test_location_deduplication(self):
+        from waste_collection_schedule.collection import Collection, CollectionGroup
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+
+        c1 = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        c1.set_location("Zone A")
+        c2 = Collection(date=datetime.date(2026, 1, 1), waste_type=RECYCLABLES)
+        c2.set_location("Zone A")
+        g = CollectionGroup.create([c1, c2])
+        assert g.locations == ["Zone A"]
+
+    def test_no_location_omitted_from_as_dict(self):
+        from waste_collection_schedule.collection import Collection, CollectionGroup
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        g = CollectionGroup.create([c])
+        assert "location" not in g.as_dict()
+        assert g.locations is None
 
 
 # =====================================================================
@@ -851,6 +935,29 @@ class TestTransformers:
         result = t.transform({"date": "2026-01-15", "bin": "unknown"})
         assert result is not None
         assert result.waste_type is OTHER
+
+    def test_json_transformer_unknown_type_emits_warning(self, caplog):
+        import logging
+
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
+        with caplog.at_level(logging.WARNING):
+            t.transform({"date": "2026-01-15", "bin": "mystery_bin"})
+        assert any("mystery_bin" in r.message for r in caplog.records)
+        assert any("type_value_map" in r.message for r in caplog.records)
+
+    def test_known_type_does_not_warn(self, caplog):
+        import logging
+
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
+        with caplog.at_level(logging.WARNING):
+            t.transform({"date": "2026-01-15", "bin": "refuse"})
+        assert not any("type_value_map" in r.message for r in caplog.records)
 
     def test_json_transformer_parse_date(self):
         from waste_collection_schedule import date_parsers

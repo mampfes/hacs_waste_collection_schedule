@@ -46,7 +46,9 @@ class Collection:
 
     @property
     def type(self) -> str:
-        return self._type_override or self._waste_type.names.get("en", self._waste_type.id)
+        return self._type_override or self._waste_type.names.get(
+            "en", self._waste_type.id
+        )
 
     @property
     def icon(self) -> str:
@@ -106,7 +108,9 @@ class Collection:
         elif key == "picture":
             self.set_picture(value)
         elif key == "date":
-            self._date = datetime.date.fromisoformat(value) if isinstance(value, str) else value
+            self._date = (
+                datetime.date.fromisoformat(value) if isinstance(value, str) else value
+            )
         elif key == "location":
             self.set_location(value)
         elif key == "description":
@@ -180,8 +184,12 @@ def _collection_factory(
         return c
     if t is not None:
         return LegacyCollection(
-            date=date, t=t, icon=icon, picture=picture,
-            location=location, description=description,
+            date=date,
+            t=t,
+            icon=icon,
+            picture=picture,
+            location=location,
+            description=description,
         )
     raise ValueError("Collection requires either waste_type or t parameter")
 

@@ -167,6 +167,78 @@ def dropdown(
     )
 
 
+def dependent_select(
+    parent_field: str,
+    child_field: str,
+    label: str | None = None,
+    child_label: str | None = None,
+) -> ConfigParam:
+    """Cascading two-level dropdown (e.g. municipality → district).
+
+    The framework fetches child options at config-flow time by calling
+    Source.get_choices(parent_value) with the value from the parent field.
+    The parent value is collected first; the child selector is then shown
+    with the options returned by get_choices().
+
+    Sources that use this param MUST implement a class method::
+
+        @classmethod
+        def get_choices(cls, parent_value: str) -> list[str]:
+            ...
+
+    Demonstrates: dependent-dropdown PARAM flow (see issue #6561 design discussion).
+    """
+    parent_display = label or parent_field.replace("_", " ").title()
+    child_display = child_label or child_field.replace("_", " ").title()
+    return ConfigParam(
+        fields={parent_field: parent_display, child_field: child_display},
+        widget="dependent_select",
+        labels={
+            "en": {parent_field: parent_display, child_field: child_display},
+        },
+        descriptions={
+            "en": {
+                parent_field: f"Select your {parent_display.lower()}.",
+                child_field: f"Select your {child_display.lower()} (depends on {parent_display}).",
+            },
+        },
+    )
+
+
+def multi_value_lookup(
+    lookup_field: str,
+    result_fields: list[str],
+    label: str | None = None,
+) -> ConfigParam:
+    """A single user input that the source resolves to multiple internal params.
+
+    Example: the user enters a postcode, the source looks it up and stores
+    both an area_id and a district_id internally.  The framework collects the
+    single lookup_field value; the Source.__init__ is responsible for the
+    resolution logic that populates the internal state.
+
+    Unlike address(), this does NOT pass the result fields to Source.__init__
+    as kwargs — only lookup_field is passed.  The source handles the mapping
+    internally (e.g. by calling an API in __init__).
+
+    Demonstrates: one-user-value → many-internal-params flow
+    (see issue #6561 design discussion).
+    """
+    display = label or lookup_field.replace("_", " ").title()
+    return ConfigParam(
+        fields={lookup_field: display},
+        widget="text",
+        labels={
+            "en": {lookup_field: display},
+        },
+        descriptions={
+            "en": {
+                lookup_field: f"Enter your {display.lower()}. The source will resolve it to the required internal parameters.",
+            },
+        },
+    )
+
+
 def text_field(
     field_name: str,
     label: str | None = None,

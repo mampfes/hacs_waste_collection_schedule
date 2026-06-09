@@ -64,11 +64,19 @@ class BaseTransformer:
         return self._parse_date_fn(date_str)
 
     def _resolve_type(self, raw_type: str) -> Optional[WasteType]:
-        """Map raw type string to WasteType. Returns OTHER if no map; None to skip."""
+        """Map raw type string to WasteType. Returns OTHER if unmapped; None to skip."""
         key = raw_type.strip().lower()
         if self._type_value_map:
-            return self._type_value_map.get(key, OTHER)
-        # No map declared — return OTHER rather than skipping
+            wt = self._type_value_map.get(key)
+            if wt is not None:
+                return wt
+            _LOGGER.warning(
+                "Unknown waste type %r — no entry in type_value_map; "
+                "falling back to OTHER. Add it to suppress this warning.",
+                raw_type,
+            )
+            return OTHER
+        # No map declared — everything becomes OTHER (no warning: that was intentional)
         return OTHER
 
     def transform(self, record) -> Optional[Collection]:
