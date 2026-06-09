@@ -7,7 +7,7 @@ Support for schedules provided by [Baltimore County](https://www.baltimorecounty
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: baltimorecountymd_us
+    - name: baltimore_county_md_us
       args:
         address: ADDRESS
 ```
@@ -31,7 +31,7 @@ Street address selected from the county suggestions, for example: 309 W CHESAPEA
 ```yaml
 waste_collection_schedule:
   sources:
-    - name: baltimorecountymd_us
+    - name: baltimore_county_md_us
       args:
         address: "309 W Chesapeake Ave"
 ```
