@@ -52,7 +52,7 @@ class Source:
             for bin_data in day:
                 bin_type = bin_data.get("BinType", "")
                 job_start = bin_data.get("JobScheduledStart")
-                
+
                 if not job_start or not bin_type:
                     continue
 
