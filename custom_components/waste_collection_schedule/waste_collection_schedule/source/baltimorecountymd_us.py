@@ -202,10 +202,121 @@ class Source:
                         {"date": event_date, "type": waste_type, "icon": icon}
                     )
 
+        events = self._apply_holiday_shifts(events, page_html)
+
         deduped: dict[tuple[date, str], dict[str, Any]] = {}
         for event in events:
             deduped[(event["date"], event["type"])] = event
         return list(deduped.values())
+
+    def _apply_holiday_shifts(
+        self, events: list[dict[str, Any]], page_html: str
+    ) -> list[dict[str, Any]]:
+        holiday_rules = self._holiday_shift_rules(page_html)
+        if not holiday_rules:
+            return events
+
+        shifted: list[dict[str, Any]] = []
+        for event in events:
+            event_type = str(event["type"]).casefold()
+            # Bulk dates are already explicit and should not be shifted.
+            if "bulk" in event_type:
+                shifted.append(event)
+                continue
+
+            event_date = event["date"]
+            new_date = event_date
+
+            for holiday_date, rules in holiday_rules:
+                if event_date.isocalendar()[:2] != holiday_date.isocalendar()[:2]:
+                    continue
+
+                shifted_weekday = rules.get(event_date.weekday())
+                if shifted_weekday is None:
+                    continue
+
+                day_delta = shifted_weekday - event_date.weekday()
+                new_date = event_date + timedelta(days=day_delta)
+                break
+
+            shifted.append(
+                {
+                    "date": new_date,
+                    "type": event["type"],
+                    "icon": event["icon"],
+                }
+            )
+
+        return shifted
+
+    def _holiday_shift_rules(self, page_html: str) -> list[tuple[date, dict[int, int]]]:
+        soup = BeautifulSoup(page_html, "html.parser")
+        heading = soup.find(
+            lambda tag: tag.name in ["h2", "h3", "h4"]
+            and "holiday collection schedule"
+            in tag.get_text(" ", strip=True).casefold()
+        )
+        if heading is None:
+            return []
+
+        table = heading.find_next("table")
+        if table is None:
+            return []
+
+        rules: list[tuple[date, dict[int, int]]] = []
+        default_year = date.today().year
+
+        for row in table.find_all("tr"):
+            cells = row.find_all("td")
+            if len(cells) < 3:
+                continue
+
+            date_text = cells[1].get_text(" ", strip=True)
+            shift_text = cells[2].get_text(" ", strip=True)
+            holiday_date = self._parse_holiday_date(date_text, default_year)
+            if holiday_date is None:
+                continue
+
+            day_map = self._parse_shift_map(shift_text)
+            if day_map:
+                rules.append((holiday_date, day_map))
+
+        return rules
+
+    @staticmethod
+    def _parse_holiday_date(text: str, default_year: int) -> date | None:
+        match = re.search(
+            rf"({MONTH_PATTERN}\s+\d{{1,2}}(?:,\s*\d{{4}})?)",
+            text,
+            flags=re.IGNORECASE,
+        )
+        if not match:
+            return None
+
+        date_text = match.group(1)
+        if not re.search(r"\d{4}", date_text):
+            date_text = f"{date_text}, {default_year}"
+
+        try:
+            return parse(date_text).date()
+        except (TypeError, ValueError, OverflowError):
+            return None
+
+    @staticmethod
+    def _parse_shift_map(text: str) -> dict[int, int]:
+        mapping: dict[int, int] = {}
+        for source, target in re.findall(
+            r"(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+shifts\s+to\s+"
+            r"(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)",
+            text,
+            flags=re.IGNORECASE,
+        ):
+            source_idx = WEEKDAY_INDEX.get(source.casefold())
+            target_idx = WEEKDAY_INDEX.get(target.casefold())
+            if source_idx is None or target_idx is None:
+                continue
+            mapping[source_idx] = target_idx
+        return mapping
 
     def _yard_schedule_dates(
         self, page_html: str, schedule_id: str, target_weekday: int
