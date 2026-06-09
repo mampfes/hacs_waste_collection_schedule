@@ -18,10 +18,11 @@ TITLE = "City of Wanneroo"
 DESCRIPTION = "Source for City of Wanneroo."
 URL = "https://www.wanneroo.wa.gov.au/"
 TEST_CASES = {
-    "23 Bakana Loop LANDSDALE": {"address": "23 Bakana Loop LANDSDALE"},
-    "13/26 Princeton Circle ALEXANDER HEIGHTS": {
-        "address": "13/26 Princeton Circle ALEXANDER HEIGHTS"
+    "23 Bakana LP LANDSDALE": {"address": "23 Bakana LP LANDSDALE"},
+    "13/26 Princeton CIR ALEXANDER HEIGHTS": {
+        "address": "13/26 Princeton CIR ALEXANDER HEIGHTS"
     },
+    "1 Atlanta DR TWO ROCKS": {"address": "1 Atlanta DR TWO ROCKS"},
 }
 
 ICON_MAP = {
@@ -82,6 +83,26 @@ def _parse_rythm_description(rythm_description: str, bin_type: str) -> list[date
         return [
             d.date()
             for d in rrule(WEEKLY, interval=interval, dtstart=target_datetime, count=10)
+        ]
+
+    match_week_after_next = re.search(
+        r"(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\s+week\s+after\s+next",
+        rythm_description_lower,
+    )
+    if match_week_after_next:
+        weekday_str = match_week_after_next.group(1)
+
+        today = datetime.now().date()
+        current_week_start = today - timedelta(days=today.weekday())
+        target_weekday_idx = WEEKDAYS.index(weekday_str)
+        target_date = (
+            current_week_start + timedelta(days=target_weekday_idx) + timedelta(days=14)
+        )
+
+        target_datetime = datetime.combine(target_date, datetime.min.time())
+        return [
+            d.date()
+            for d in rrule(WEEKLY, interval=2, dtstart=target_datetime, count=10)
         ]
 
     if rythm_description_lower in WEEKDAYS:
@@ -214,7 +235,6 @@ class Source:
             "datasetCode": "",
         }
 
-        # Go straight to the Projects API to grab the required session headers
         r = self._session.get(MAP_SESSION_URL, params=params)
         if r.status_code != 200:
             raise Exception(
