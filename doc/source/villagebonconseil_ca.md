@@ -24,6 +24,6 @@ No arguments required - the calendar is the same for all residents.
 - **Ordures ménagères** (Household waste) - `mdi:trash-can`
 - **Matières organiques** (Organic waste) - `mdi:leaf`
 - **Matières recyclables** (Recyclables) - `mdi:recycle`
-- **Conteneur en métal – Déchets** (Metal container waste) - `mdi:dumpster`
+- **Conteneur en métal – Déchets** (Metal container waste) - `mdi:factory`
 - **Conteneur en métal – Recyclage** (Metal container recycling) - `mdi:recycle`
 - **Encombrants** (Bulky items) - `mdi:sofa`
