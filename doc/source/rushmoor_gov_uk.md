@@ -1,6 +1,9 @@
 # Rushmoor Borough Council
 
-Support for schedules provided by [Rushmoor Borough Council](https://www.rushmoor.gov.uk/recycling-rubbish-and-environment/bins-and-recycling/bin-collection-day-finder/), serving Rushmoor, UK.
+Support for schedules provided by [Rushmoor Borough Council](https://www.rushmoor.gov.uk/recycling-rubbish-and-environment/bins-and-recycling/bin-collection-day-finder/), serving Rushmoor, Hampshire, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Hampshire, please continue to use the source for your current area as long as it's still working. New sources for the new North Hampshire Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 
