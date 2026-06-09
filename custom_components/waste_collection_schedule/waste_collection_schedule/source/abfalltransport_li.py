@@ -166,15 +166,17 @@ class Source:
                 url = f"https://www.abfalltransport.li/abfallkalender/{self._municipality}/{month_slug}/{selected_type}"
                 resp = requests.get(url, timeout=30)
                 if resp.status_code != 200 and month_slug == "mai":
+                    # Keep compatibility if upstream uses capitalized May slug.
                     fallback_url = f"https://www.abfalltransport.li/abfallkalender/{self._municipality}/Mai/{selected_type}"
                     resp = requests.get(fallback_url, timeout=30)
                 if resp.status_code != 200:
                     continue
 
                 soup = BeautifulSoup(resp.text, "html.parser")
+                year_str = str(year)
 
                 for tag in soup.find_all(
-                    string=lambda t: t and "." in t and str(year) in t
+                    string=lambda t: t and "." in t and year_str in t
                 ):
                     text = tag.strip()
                     parts = text.split()

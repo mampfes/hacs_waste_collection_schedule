@@ -27,7 +27,7 @@ Name of the municipality in lower case. Supported values:
 Type of waste collection. Supported values:
 - `kehricht` — household waste (Kehricht)
 - `gruenabfuhr` — green waste (Grünabfuhr)
-- `all` — both waste types
+- `all` or `both` — both waste types
 
 ## Examples
 
