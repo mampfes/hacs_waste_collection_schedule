@@ -63,6 +63,10 @@ WEEKDAYS = {
     "sunday": 6,
 }
 
+# Reference date for the council's two-weekly recycling cycle: a "week 1" Sunday.
+# Matches the anchor used by the council's own collection-day look-up widget.
+RECYCLING_ANCHOR = date(2024, 3, 17)
+
 
 def _label_for_charge(charge_type: str) -> str:
     """Map a raw ``ChargeType`` value to a collapsed waste-type label.
@@ -79,15 +83,15 @@ def _label_for_charge(charge_type: str) -> str:
     return RUBBISH
 
 
-def _fortnight_parity(d: date) -> int:
-    """Return a stable, Monday-aligned fortnight parity (0/1) for a date.
+def _recycling_week(d: date) -> int:
+    """Return the council's recycling-cycle week number (1 or 2) for a date.
 
-    Anchored to the proleptic-Gregorian epoch (ordinal 1 is a Monday), so the
-    parity is continuous across year boundaries. This avoids the off-by-one that
-    raw ISO week numbers introduce in 53-week ISO years (e.g. 2026), where the
-    week number would otherwise repeat its parity across the New Year.
+    Rubbish and organics are collected weekly; only recycling is fortnightly. A
+    property's recycling is collected in the weeks whose number equals its
+    ``COLLECTION_SCHEDULE``. The week number alternates every 7 days from
+    ``RECYCLING_ANCHOR`` -- the same calculation the council's website performs.
     """
-    return ((d.toordinal() - 1) // 7) % 2
+    return ((d - RECYCLING_ANCHOR).days // 7) % 2 + 1
 
 
 class Source:
@@ -101,8 +105,7 @@ class Source:
         params = {
             "f": "json",
             "where": f"LOWER(Address_full) LIKE '{escaped}%'",
-            "outFields": "ChargeType,COLLECTION_FREQUENCY,COLLECTION_SCHEDULE,"
-            "COLLECTION_DAY,Address_full",
+            "outFields": "ChargeType,COLLECTION_SCHEDULE,COLLECTION_DAY,Address_full",
             "returnGeometry": "false",
         }
 
@@ -119,7 +122,8 @@ class Source:
             f for f in features if f["attributes"].get("Address_full") == target
         ]
 
-        # Collapse the feature rows into one entry per waste-type label.
+        # Collapse the feature rows into one entry per waste-type label. Each
+        # property has at most one rubbish, one recycling and one organics charge.
         bins: dict[str, dict] = {}
         for feature in features:
             attrs = feature["attributes"]
@@ -127,13 +131,11 @@ class Source:
             if day not in WEEKDAYS:
                 continue
             label = _label_for_charge(attrs.get("ChargeType", ""))
-            frequency = (attrs.get("COLLECTION_FREQUENCY") or "").strip().lower()
             schedule = (attrs.get("COLLECTION_SCHEDULE") or "").strip()
-            bins[label] = {
-                "weekday": WEEKDAYS[day],
-                "fortnightly": frequency.startswith("fortnight"),
-                "schedule": schedule,
-            }
+            info = bins.setdefault(label, {"weekday": WEEKDAYS[day], "schedule": ""})
+            # Only the recycling row carries a meaningful schedule ("1"/"2").
+            if schedule in ("1", "2"):
+                info["schedule"] = schedule
 
         if not bins:
             raise SourceArgumentNotFound("address", self._address)
@@ -145,26 +147,14 @@ class Source:
             for label, info in bins.items():
                 if day.weekday() != info["weekday"]:
                     continue
-                if info["fortnightly"]:
-                    if not self._collected_this_fortnight(label, info["schedule"], day):
+                # Rubbish and organics are weekly; recycling is fortnightly and
+                # only falls in the weeks matching the property's schedule.
+                if label == RECYCLING:
+                    schedule = info["schedule"]
+                    if schedule not in ("1", "2"):
+                        continue
+                    if _recycling_week(day) != int(schedule):
                         continue
                 entries.append(Collection(day, label, ICON_MAP[label]))
 
         return entries
-
-    @staticmethod
-    def _collected_this_fortnight(label: str, schedule: str, day: date) -> bool:
-        """Resolve whether a fortnightly bin is collected on ``day``.
-
-        Recycling and organics alternate on the same weekday. ``COLLECTION_SCHEDULE``
-        ("1" or "2") selects which of the two master calendars a property follows;
-        the absolute phase is anchored from the council's published calendar
-        (verified: a schedule-"2" property collects organics in even fortnights).
-        """
-        if schedule not in ("1", "2"):
-            # Phase cannot be determined for this property; emit nothing rather
-            # than guess. (Residential properties always carry "1" or "2".)
-            return False
-        even = _fortnight_parity(day) == 0
-        organics_week = even if schedule == "2" else not even
-        return organics_week if label == ORGANIC else not organics_week
