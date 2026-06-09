@@ -2,11 +2,11 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of Greater Geelong"
 DESCRIPTION = "Source City of Greater Geelong rubbish collection"
-URL = "https://www.geelongaustralia.com.au/"
+URL = "https://www.geelongcity.vic.gov.au/"
 TEST_CASES = {
     "155 Mercer Street Geelong 3220": {"address": "155 Mercer Street Geelong 3220"},
     "1/271 Roslyn Road Highton 3216": {"address": "1/271 Roslyn Road Highton 3216"},
@@ -18,9 +18,9 @@ TEST_CASES = {
 
 API_URL = "https://www.geelongaustralia.com.au/recycling/calendar/default.aspx"
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green waste": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green waste": Icons.GARDEN,
 }
 
 SUBMIT_ARGS = {
@@ -42,6 +42,7 @@ class Source:
         s = requests.Session()
         r = s.get(API_URL)
         r.raise_for_status()
+        post_url = r.url
 
         soup: BeautifulSoup = BeautifulSoup(r.text, "html.parser")
 
@@ -60,7 +61,7 @@ class Source:
 
         self._submit_args["__EVENTVALIDATION"] = str(eventvalidation["value"])
 
-        r = requests.post(API_URL, data=self._submit_args)
+        r = s.post(post_url, data=self._submit_args)
         r.raise_for_status()
 
         if "We couldn't find a match for" in r.text:
@@ -85,7 +86,7 @@ class Source:
                 entries.append(
                     Collection(
                         date=datetime.datetime.strptime(
-                            date.text, "%A, %d %B %Y"
+                            date.text.strip(), "%A, %d %B %Y"
                         ).date(),
                         t=t,  # Collection type
                         icon=ICON_MAP.get(t),  # Collection icon

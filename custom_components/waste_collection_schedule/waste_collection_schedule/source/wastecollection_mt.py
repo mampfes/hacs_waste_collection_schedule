@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup, Tag
 from dateutil.rrule import FR, MO, MONTHLY, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,10 +16,10 @@ TEST_CASES: dict[str, dict] = {"test": {}}
 
 
 ICON_MAP = {
-    "Mixed": "mdi:trash-can",
-    "Recycled": "mdi:recycle",
-    "Organic": "mdi:leaf",
-    "glass": "mdi:bottle-soda",
+    "Mixed": Icons.GENERAL_WASTE,
+    "Recycled": Icons.RECYCLING,
+    "Organic": Icons.ORGANIC,
+    "glass": Icons.GLASS,
 }
 
 

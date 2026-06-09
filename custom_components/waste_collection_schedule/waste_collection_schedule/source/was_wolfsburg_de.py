@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wolfsburger Abfallwirtschaft und Straßenreinigung"
 DESCRIPTION = "Source for waste collections for WAS-Wolfsburg, Germany."
@@ -13,10 +13,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Wertstofftonne": "mdi:recycle",
-    "Bioabfall": "mdi:leaf",
-    "Restabfall": "mdi:trash-can",
-    "Altpapier": "mdi:file-document-outline",
+    "Wertstofftonne": Icons.RECYCLING,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Altpapier": Icons.PAPER,
 }
 
 PARAM_TRANSLATIONS = {

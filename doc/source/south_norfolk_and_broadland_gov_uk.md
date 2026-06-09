@@ -1,6 +1,16 @@
-# South Norfolk and Broadland Council
+# South Norfolk Council and Broadland District Council
 
-Support for schedules provided by [South Norfolk and Broadland Council](https://www.southnorfolkandbroadland.gov.uk/rubbish/find-bin-collection-day) (the joint operations of South Norfolk Council and Broadland District Council).
+Support for schedules provided by [South Norfolk and Broadland District Councils](https://www.southnorfolkandbroadland.gov.uk/rubbish/find-bin-collection-day) (the joint operations of South Norfolk Council and Broadland District Council).
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new West Norfolk, Greater Norwich, and East Norfolk councils are not expected to be live until at least April 2028, when the councils themselves officially come into being.
+
+## Bin calendar information
+This source uses different methods to fetch information for areas in the two districts, and as a result gives different levels of detail:
+
+For addresses in Broadland, this source only fetches the next collection day for each type of bin, as that is all the information provided by the councils' website.
+
+For addresses in South Norfolk, this source fetches a full list of future collection days, as the councils' website provides access to a full dynamic calendar for future collections.
 
 ## Configuration via configuration.yaml
 
@@ -25,9 +35,9 @@ Full examples for both council areas are given at the bottom of the documentatio
 *(String) (optional)  
 
 **address_payload**  
-*(dict) (optional) (depreated)*  
+*(dict) (optional) (deprecated)*  
 
-Either address_payload or postcode and address are needed (address_payload will be used if both are present).
+Either address_payload alone or both postcode and address are needed (address_payload will be used if both are present).
 
 ## Get the arguments
 
@@ -37,7 +47,7 @@ Either address_payload or postcode and address are needed (address_payload will 
 - Enter your postcode and also use it as postcode variable.
 - Select your address and use it as address variable. The configured string should exactly match the text of your selection in the dropdown.
 
-### address_payload (depricated)
+### address_payload (deprecated)
 
 This argument is the old way of configuring this source, and using it overrides any arguments given for postcode and address. It is easy to fetch by capturing the data from a cookie using Google Chrome or a Chromium-based browser (e.g. Edge). If you are using another browser (such as Firefox or Safari), please use the postcode and address arguments instead as this method will not work.
 1. Go to https://area.southnorfolkandbroadland.gov.uk/
@@ -94,8 +104,8 @@ waste_collection_schedule:
   sources:
     - name: south_norfolk_and_broadland_gov_uk
       args:
-        address: 14 Fairland Street, Wymondham, Norfolk, NR18 0AW
-        postcode: NR18 0AW
+        address: 1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX
+        postcode: NR14 8BX
 ```
 
 or
@@ -106,14 +116,14 @@ waste_collection_schedule:
     - name: south_norfolk_and_broadland_gov_uk
       args:
         address_payload: {
-            "Uprn": "002630148121",
-            "Address": "14 Fairland Street, Wymondham, Norfolk, NR18 0AW",
-            "X": "611129.00000",
-            "Y": "301398.00000",
-            "Ward": "Central Wymondham",
-            "Parish": "Wymondham",
-            "Village": "Wymondham",
-            "Street": "Fairland Street",
+            "Uprn": "002630130840",
+            "Address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
+            "X": "619142.00000",
+            "Y": "300585.00000",
+            "Ward": "Mulbarton And Stoke Holy Cross",
+            "Parish": "Mulbarton",
+            "Village": "Mulbarton",
+            "Street": "Brindle Drive",
             "Authority": "2630"
           }
 ```

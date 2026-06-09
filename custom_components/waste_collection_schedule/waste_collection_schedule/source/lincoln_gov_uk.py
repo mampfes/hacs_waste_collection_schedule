@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from time import time_ns
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City Of Lincoln Council"
 DESCRIPTION = "Source for City Of Lincoln Council."
@@ -16,9 +16,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Garden": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Garden": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

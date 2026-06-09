@@ -43,6 +43,8 @@ extra_info:
   - title: awb-wetterau.de (not all municipalities)
     url: https://awb-wetterau.de
     # Altenstadt, Bad Nauheim, Büdingen, Butzbach, Echzell, Florstadt, Friedberg, Gedern, Glauburg, Hirzenhain, Karben, Kefenrod, Limeshain, Ober-Mörlen, Ortenberg, Ranstadt, Reichelsheim, Rockenberg, Rosbach v.d.H., Wölfersheim, Wöllstadt
+  - title: Karben
+    url: https://www.karben.de
   - title: Petershagen
     url: https://www.petershagen.de/
   - title: Witzenhausen
@@ -70,8 +72,6 @@ extra_info:
     url: https://www.eschborn.de/
   - title: Friedrichsdorf
     url: https://www.friedrichsdorf.de/
-  - title: Gelnhausen
-    url: https://www.gelnhausen.de
   - title: Heusenstamm
     url: https://www.heusenstamm.de/
   - title: Hochheim

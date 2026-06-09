@@ -5,8 +5,19 @@ from urllib.parse import quote
 
 import requests
 from bs4 import BeautifulSoup
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, weekday as RRuleWeekday
-from waste_collection_schedule import Collection
+from dateutil.rrule import (
+    FR,
+    MO,
+    SA,
+    SU,
+    TH,
+    TU,
+    WE,
+    WEEKLY,
+    rrule,
+)
+from dateutil.rrule import weekday as RRuleWeekday
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentRequired,
@@ -30,9 +41,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Ordures ménagères": "mdi:trash-can",
-    "Emballages et papiers": "mdi:recycle",
-    "Matières compostables": "mdi:leaf",
+    "Ordures ménagères": Icons.GENERAL_WASTE,
+    "Emballages et papiers": Icons.PAPER,
+    "Matières compostables": Icons.ORGANIC,
 }
 
 WEEKDAY_MAP = {
@@ -73,12 +84,12 @@ class Source:
     def __init__(self, address: str):
         normalized_address = address.strip() if isinstance(address, str) else address
         if not normalized_address:
-            raise SourceArgumentRequired("address")
+            raise SourceArgumentRequired("address", "A non-empty address is required")
         self._address = normalized_address
 
     def _resolve_address(self) -> tuple[str, str]:
         """Resolve address to BAN ID (UUID) and label using French gov API."""
-        params = {
+        params: dict[str, str | float | int] = {
             "q": self._address,
             "lat": 43.294,
             "lon": -0.370,
@@ -117,9 +128,7 @@ class Source:
                 return
 
         # Extract nonce from challenge JavaScript
-        nonce_match = re.search(
-            r'digestMessage\("([^"]+)"\+a\.toString\(\)\)', r.text
-        )
+        nonce_match = re.search(r'digestMessage\("([^"]+)"\+a\.toString\(\)\)', r.text)
         if not nonce_match:
             return  # No challenge found, proceed
 
@@ -157,7 +166,9 @@ class Source:
         if "Bot Detection" in response.text:
             raise RuntimeError("Proof-of-work challenge was not accepted by the server")
 
-    def _parse_schedule(self, schedule_text: str) -> list[tuple[RRuleWeekday, bool, bool]]:
+    def _parse_schedule(
+        self, schedule_text: str
+    ) -> list[tuple[RRuleWeekday, bool, bool]]:
         """Parse schedule text into list of (weekday, is_biweekly, is_biweekly_odd) tuples.
 
         Returns a dateutil.rrule weekday constant, a flag indicating whether it's

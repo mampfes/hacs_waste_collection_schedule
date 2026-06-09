@@ -2,12 +2,18 @@ import re
 from datetime import date, datetime, timedelta
 from typing import Literal, get_args
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
 )
-from waste_collection_schedule.service import IntraMapsSaaSAPI
+from waste_collection_schedule.service.IntraMaps import (
+    IntraMapsError,
+    IntraMapsSearchError,
+    MapsClient,
+    MapsClientConfig,
+)
 
 TITLE = "City of Kalamunda"
 DESCRIPTION = "Source for the City of Kalamunda rubbish collection."
@@ -31,9 +37,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Red Lid Bin ( General Waste ) : Alternate Fortnight": "mdi:trash-can",
-    "Yellow Lid Bin ( Recycling ) : Alternate Fortnight": "mdi:recycle",
-    "Lime Green Lid Bin ( Green Waste FOGO ) : Every Week": "mdi:leaf",
+    "Red Lid Bin ( General Waste ) : Alternate Fortnight": Icons.GENERAL_WASTE,
+    "Yellow Lid Bin ( Recycling ) : Alternate Fortnight": Icons.RECYCLING,
+    "Lime Green Lid Bin ( Green Waste FOGO ) : Every Week": Icons.BIO_KITCHEN,
 }
 
 SubUrbLiteral = Literal[
@@ -114,8 +120,7 @@ class Source:
 
     def fetch(self):
 
-        # Initialize config for Kalamunda council (intramaps SaaS)
-        config = IntraMapsSaaSAPI.MapsClientConfig(
+        config = MapsClientConfig(
             base_url="https://kalamunda.spatial.t1cloud.com",
             instance="spatial/intramaps",
             config_id="38999f30-1676-4524-b501-0130581a2ba2",
@@ -127,8 +132,7 @@ class Source:
         today = date.today()
 
         if suburb_upper not in SUBURBS:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "suburb", self.suburb, SUBURBS)
+            raise SourceArgumentNotFoundWithSuggestions("suburb", self.suburb, SUBURBS)
 
         if self.street_number is None:
             raise SourceArgumentRequired(
@@ -146,13 +150,14 @@ class Source:
         entries = []
 
         try:
-            with IntraMapsSaaSAPI.MapsClientSaaS(config) as client:
+            with MapsClient(config) as client:
                 data_dict = client.select_address(address, self.suburb)
                 infoPanel = data_dict["response"]
 
                 if not isinstance(infoPanel, dict):
-                    raise IntraMapsSaaSAPI.IntraMapsSearchError(
-                        f"Expected dict type in response field from address search but got {type(infoPanel)}")
+                    raise IntraMapsSearchError(
+                        f"Expected dict type in response field from address search but got {type(infoPanel)}"
+                    )
 
                 for waste_name, icon in ICON_MAP.items():
                     # Safely navigate the tree; if any key is missing, it returns an empty list []
@@ -193,8 +198,7 @@ class Source:
                             # Calculate at least (two * interval) past events to ensure the Home Assistant calendar aligns correctly.
                             # This is necessary because the IntraMaps API only returns upcoming collection days, and Home Assistant
                             # may expect to see previous events to properly display recurring schedules and avoid gaps in the calendar.
-                            current_date = start_date - \
-                                timedelta(days=interval * 2)
+                            current_date = start_date - timedelta(days=interval * 2)
                             # End date is 1 year from today
                             end_date = today + timedelta(days=365)
 
@@ -202,8 +206,7 @@ class Source:
                                 entries.append(
                                     Collection(
                                         date=current_date,
-                                        t=self._extract_human_waste_name(
-                                            waste_name),
+                                        t=self._extract_human_waste_name(waste_name),
                                         icon=icon,
                                     )
                                 )
@@ -213,15 +216,14 @@ class Source:
                             entries.append(
                                 Collection(
                                     date=start_date,
-                                    t=self._extract_human_waste_name(
-                                        waste_name),
+                                    t=self._extract_human_waste_name(waste_name),
                                     icon=icon,
                                 )
                             )
 
-        except IntraMapsSaaSAPI.IntraMapsSearchError as e:
-            raise Exception(f"No results found for address: {address}") from e
-        except IntraMapsSaaSAPI.IntraMapsError as e:
+        except IntraMapsSearchError as e:
+            raise SourceArgumentNotFound("street_name", self.street_name) from e
+        except IntraMapsError as e:
             raise Exception(f"IntraMaps Operation Failed: {e}") from e
         except Exception as e:
             raise Exception(f"Unexpected System Error: {e}") from e

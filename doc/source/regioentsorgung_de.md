@@ -41,4 +41,6 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Go to <https://regioentsorgung.de/service/abfallkalender/>, to get the correct values for the three address arguments.
+Go to <https://regioentsorgung.de/service/abholservice/abfallkalender>, to get the correct values for the three address arguments.
+
+Street names from the provider may contain non-breaking spaces. The source normalizes whitespace during address matching, so entering regular spaces in Home Assistant works as expected.

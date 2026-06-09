@@ -1,10 +1,10 @@
-from datetime import date, datetime
 import logging
 import re
+from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 _LOGGER = logging.getLogger(__name__)
@@ -24,12 +24,12 @@ TEST_CASES = {
 API_URL = "https://maps.monmouthshire.gov.uk/localinfo.aspx"
 
 ICON_MAP = {
-    "Blue food bin": "mdi:food",
-    "Garden Waste Bins": "mdi:leaf",
-    "Green Glass Box": "mdi:glass-fragile",
-    "Household rubbish bag": "mdi:trash-can",
-    "Red & purple recycling bags": "mdi:recycling",
-    "Yellow nappy & hygiene waste bag": "mdi:diaper-outline",
+    "Blue food bin": Icons.BIO_KITCHEN,
+    "Garden Waste Bins": Icons.GARDEN,
+    "Green Glass Box": Icons.GLASS,
+    "Household rubbish bag": Icons.GENERAL_WASTE,
+    "Red & purple recycling bags": Icons.RECYCLING,
+    "Yellow nappy & hygiene waste bag": Icons.GENERAL_WASTE,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -60,13 +60,12 @@ class Source:
         self._uprn = str(uprn)
 
         if not self._uprn.isdigit():
-            raise SourceArgumentException(self._uprn, "UPRN must be numeric")
+            raise SourceArgumentException("uprn", "UPRN must be numeric")
 
     def _parse_collection_date(self, collection_date_str: str) -> date | None:
         """Convert a date string without a year into the next valid future date."""
-
         cleaned_date = " ".join(
-            re.sub(r'(\d+)(st|nd|rd|th)', r'\1', collection_date_str).split()
+            re.sub(r"(\d+)(st|nd|rd|th)", r"\1", collection_date_str).split()
         )
 
         # Find Date & Month in String
@@ -88,7 +87,7 @@ class Source:
         for year in (today.year, today.year + 1):
             try:
                 date_temp = date(year, month, day)
-                
+
                 # Handles 29 Feb on non-leap year
                 if date_temp >= today:
                     return date_temp
@@ -101,17 +100,22 @@ class Source:
     def fetch(self) -> list[Collection]:
         try:
             r = requests.get(
-                API_URL, 
-                params={"action":"SetAddress", "UniqueId":self._uprn,}, 
+                API_URL,
+                params={
+                    "action": "SetAddress",
+                    "UniqueId": self._uprn,
+                },
                 headers=HEADERS,
-                timeout=30
-                )
+                timeout=30,
+            )
 
             r.raise_for_status()
 
         # Check for Website Errors
         except requests.RequestException as e:
-            raise SourceArgumentException(self._uprn, "Monmouthshire Council website unreachable") from e
+            raise SourceArgumentException(
+                "uprn", "Monmouthshire Council website unreachable"
+            ) from e
 
         soup = BeautifulSoup(r.text, "html.parser")
 
@@ -120,15 +124,14 @@ class Source:
         # Check to see if UPRN text is on page
         if not uprn_check or not uprn_check.next_sibling:
             raise SourceArgumentException(
-                self._uprn,
-                f"UPRN {self._uprn} is invalid or outside the Monmouthshire Council area. Make sure your address returns entries on the council website: {API_URL}"
+                "uprn",
+                f"UPRN {self._uprn} is invalid or outside the Monmouthshire Council area. Make sure your address returns entries on the council website: {API_URL}",
             )
 
         # Check UPRN provided & UPRN on page match
         if uprn_check.next_sibling.strip() != str(self._uprn):
             raise SourceArgumentException(
-                self._uprn,
-                f"UPRN {self._uprn} does not match UPRN provided."
+                "uprn", f"UPRN {self._uprn} does not match UPRN provided."
             )
 
         entries = []
@@ -164,13 +167,15 @@ class Source:
 
                     entries.append(
                         Collection(
-                            date = collection_date,
-                            t = waste_type,
-                            icon = ICON_MAP.get(waste_type, "mdi:trash-can"),
+                            date=collection_date,
+                            t=waste_type,
+                            icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
                         )
                     )
 
         if not entries:
-            raise SourceArgumentException(self._uprn, "No collection dates found in response.")
+            raise SourceArgumentException(
+                "uprn", "No collection dates found in response."
+            )
 
         return entries

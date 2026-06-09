@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup, Tag
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "West Suffolk Council"
 DESCRIPTION = "Source for West Suffolk Council."
@@ -15,9 +15,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Black bin": "mdi:trash-can",
-    "Brown bin": "mdi:leaf",
-    "Blue bin": "mdi:recycle",
+    "Black bin": Icons.GENERAL_WASTE,
+    "Brown bin": Icons.BIO_KITCHEN,
+    "Blue bin": Icons.RECYCLING,
 }
 
 
@@ -30,6 +30,11 @@ class Source:
 
     def fetch(self):
         session = requests.session()
+        session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)"
+            }
+        )
         args = {"UniqueId": self._uprn, "action": "SetAddress"}
 
         # get json file

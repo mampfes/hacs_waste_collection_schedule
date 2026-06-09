@@ -112,6 +112,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Bischofshofen",
+        "url": "https://www.bischofshofen.at",
+        "country": "at",
+    },
+    {
         "title": "Blindenmarkt",
         "url": "blindenmarkt.gv.at/",
         "country": "at",
@@ -129,6 +134,11 @@ SERVICE_MAP = [
     {
         "title": "Bromberg",
         "url": "http://www.bromberg.at",
+        "country": "at",
+    },
+    {
+        "title": "Bruck an der Mur",
+        "url": "https://www.bruckmur.at",
         "country": "at",
     },
     {
@@ -1092,11 +1102,6 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
-        "title": "Saalfelden am Steinernen Meer",
-        "url": "www.stadtmarketing-saalfelden.at/de",
-        "country": "at",
-    },
-    {
         "title": "Sankt Georgen an der Stiefing",
         "url": "https://www.st-georgen-stiefing.gv.at",
         "country": "at",
@@ -1459,6 +1464,11 @@ SERVICE_MAP = [
     {
         "title": "Weitersfeld",
         "url": "https://www.weitersfeld.gv.at",
+        "country": "at",
+    },
+    {
+        "title": "Weinitzen",
+        "url": "https://www.weinitzen.gv.at",
         "country": "at",
     },
     {

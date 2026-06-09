@@ -14,6 +14,11 @@ DESCRIPTION = "RegioEntsorgung Städteregion Aachen"
 URL = "https://regioentsorgung.de"
 TEST_CASES = {
     "Merzbrück": {"city": "Würselen", "street": "Merzbrück", "house_number": 200},
+    "Krefelder Straße": {
+        "city": "Würselen",
+        "street": "Krefelder Straße",
+        "house_number": 10,
+    },
 }
 
 API_URL = "https://tonnen.regioentsorgung.de/WasteManagementRegioentsorgung/WasteManagementServlet"
@@ -92,9 +97,20 @@ def parse_form_state(content):
     return parser
 
 
-def validate_option(field_name, value, options):
+def normalize_option_value(value):
+    return " ".join(str(value).split()).casefold()
+
+
+def resolve_option(field_name, value, options):
     if value in options:
-        return
+        return value
+
+    normalized_options = {normalize_option_value(option): option for option in options}
+    normalized_value = normalize_option_value(value)
+
+    if normalized_value in normalized_options:
+        return normalized_options[normalized_value]
+
     if options:
         raise SourceArgumentNotFoundWithSuggestions(field_name, value, options)
     raise SourceArgumentNotFound(
@@ -131,12 +147,12 @@ class Source:
         r.encoding = "utf-8"
 
         form_state = parse_form_state(r.text)
-        validate_option("city", self.city, form_state.get_options("Ort"))
+        city = resolve_option("city", self.city, form_state.get_options("Ort"))
 
         payload = {
             "ApplicationName": "com.athos.kd.regioentsorgung.CheckAbfuhrtermineModel",
             "SubmitAction": "CITYCHANGED",
-            "Ort": self.city,
+            "Ort": city,
             "Strasse": "",
             "Hausnummer": "",
         }
@@ -145,13 +161,15 @@ class Source:
         r.encoding = "utf-8"
 
         form_state = parse_form_state(r.text)
-        validate_option("street", self.street, form_state.get_options("Strasse"))
+        street = resolve_option(
+            "street", self.street, form_state.get_options("Strasse")
+        )
 
         payload = {
             "ApplicationName": "com.athos.kd.regioentsorgung.CheckAbfuhrtermineModel",
             "SubmitAction": "STREETCHANGED",
-            "Ort": self.city,
-            "Strasse": self.street,
+            "Ort": city,
+            "Strasse": street,
             "Hausnummer": "",
         }
         r = session.post(API_URL, headers=HEADERS, data=payload)
@@ -159,16 +177,16 @@ class Source:
         r.encoding = "utf-8"
 
         form_state = parse_form_state(r.text)
-        validate_option(
+        house_number = resolve_option(
             "house_number", str(self.house_number), form_state.get_options("Hausnummer")
         )
 
         payload = {
             "ApplicationName": "com.athos.kd.regioentsorgung.CheckAbfuhrtermineModel",
             "SubmitAction": "forward",
-            "Ort": self.city,
-            "Strasse": self.street,
-            "Hausnummer": self.house_number,
+            "Ort": city,
+            "Strasse": street,
+            "Hausnummer": house_number,
             "Zeitraum": f"Jahresübersicht {year}",
         }
         r = session.post(API_URL, headers=HEADERS, data=payload)

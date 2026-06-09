@@ -5,7 +5,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Horsham District Council"
 DESCRIPTION = "Source script for Horsham District Council"
@@ -17,10 +17,10 @@ TEST_CASES = {
 API_URL = "https://satellite.horsham.gov.uk/environment/refuse/cal_details.asp"
 # Updated 1st April 2026 as Food Waste was added, and the names for the refuse bins had been updated
 ICON_MAP = {
-    "Green Bin for Refuse and Non-Recycling": "mdi:trash-can",
-    "Blue-Top Bin for Recycling": "mdi:recycle",
-    "Brown-Top Bin for Garden Waste": "mdi:leaf",
-    "Orange-Top Bin for Food Waste": "mdi:food",
+    "Green Bin for Refuse and Non-Recycling": Icons.GENERAL_WASTE,
+    "Blue-Top Bin for Recycling": Icons.RECYCLING,
+    "Brown-Top Bin for Garden Waste": Icons.GARDEN,
+    "Orange-Top Bin for Food Waste": Icons.BIO_KITCHEN,
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",
@@ -74,9 +74,7 @@ class Source:
 
                 # The website now uses <li> elements for each bin type
                 list_items = result_row[2].find_all("li")
-                collection_items = [
-                    li.get_text(strip=True) for li in list_items
-                ]
+                collection_items = [li.get_text(strip=True) for li in list_items]
                 for collection_type in collection_items:
                     if not collection_type:
                         continue

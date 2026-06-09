@@ -7,7 +7,7 @@ from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Barnsley Metropolitan Borough Council"
 DESCRIPTION = "Source for Barnsley Metropolitan Borough Council."
@@ -20,10 +20,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "grey": "mdi:trash-can",
-    "green": "mdi:leaf",
-    "blue": "mdi:package-variant",
-    "brown": "mdi:recycle",
+    "grey": Icons.GENERAL_WASTE,
+    "green": Icons.ORGANIC,
+    "blue": Icons.PAPER,
+    "brown": Icons.RECYCLING,
 }
 
 

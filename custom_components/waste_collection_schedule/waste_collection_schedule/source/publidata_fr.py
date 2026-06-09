@@ -5,7 +5,6 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 from dateutil.rrule import (
-    DAILY,
     FR,
     MO,
     MONTHLY,
@@ -18,7 +17,7 @@ from dateutil.rrule import (
     rrule,
     rruleset,
 )
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Publidata generic source"
@@ -115,13 +114,13 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "omr": "mdi:trash-can",
-    "emb": "mdi:recycle",
-    "enc": "mdi:truck-remove",
-    "dv": "mdi:leaf",
-    "verre": "mdi:bottle-wine",
-    "bio": "mdi:food-apple",
-    "sapin": "mdi:pine-tree",
+    "omr": Icons.GENERAL_WASTE,
+    "emb": Icons.RECYCLING,
+    "enc": Icons.BULKY,
+    "dv": Icons.ORGANIC,
+    "verre": Icons.GLASS,
+    "bio": Icons.ORGANIC,
+    "sapin": Icons.CHRISTMAS_TREE,
 }
 
 LABEL_MAP = {
@@ -135,28 +134,28 @@ LABEL_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "The INSEE code of your commune is easily found on google. instance_id can be found through a network inspecter from the official widget",
-    "de": "Der INSEE-Code Ihrer Gemeinde kann leicht über Google gefunden werden. Die instance_id kann durch einen Netzwerk-Inspektor vom offiziellen Widget ermittelt werden",
-    "it": "Il codice INSEE del tuo comune si trova facilmente su Google. L'instance_id può essere trovato attraverso un ispettore di rete dal widget ufficiale",
+    "en": "Enter your street address (number and street name only, without city or postcode). Find your commune's current INSEE code at https://www.insee.fr/fr/recherche/recherche-geographique — note that merged communes (communes nouvelles) have a new code. The instance_id is pre-filled when you select a known service provider.",
+    "de": "Geben Sie Ihre Straßenadresse ein (nur Hausnummer und Straßenname, ohne Stadt oder Postleitzahl). Den aktuellen INSEE-Code Ihrer Gemeinde finden Sie unter https://www.insee.fr/fr/recherche/recherche-geographique — fusionierte Gemeinden (communes nouvelles) haben einen neuen Code. Die instance_id wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister auswählen.",
+    "it": "Inserisci il tuo indirizzo (solo numero civico e nome della via, senza città o codice postale). Trova il codice INSEE aggiornato del tuo comune su https://www.insee.fr/fr/recherche/recherche-geographique — i comuni uniti (communes nouvelles) hanno un nuovo codice. L'instance_id viene precompilato quando selezioni un fornitore noto.",
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "address": "Your full address",
-        "insee_code": "The 5-digit INSEE code of your commune",
-        "instance_id": "An identifier of your waste collection service. For example GPSEO's is 1292 and found by inspecting the network calls on https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002",
+        "address": "Street address only (e.g. '4 rue de Paris'). Do not include city name or postcode.",
+        "insee_code": "The 5-digit INSEE code of your commune. Check https://www.insee.fr if your commune has merged (communes nouvelles have a new code).",
+        "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
         "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type.",
     },
     "de": {
-        "address": "Ihre vollständige Adresse",
-        "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde",
-        "instance_id": "Eine Kennung Ihres Abfallsammeldienstes. Zum Beispiel ist die von GPSEO 1292 und kann durch Inspektion der Netzwerkaufrufe auf https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002 gefunden werden",
+        "address": "Nur Straßenadresse (z.B. '4 rue de Paris'). Keine Stadt oder Postleitzahl angeben.",
+        "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde. Prüfen Sie https://www.insee.fr, ob Ihre Gemeinde fusioniert wurde (neuer Code).",
+        "instance_id": "Wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister wählen. Nur für nicht gelistete Anbieter nötig.",
         "public_type": "Wohnungstyp-Filter (optional). Verwenden Sie 'individual_housing' für Häuser oder 'collective_housing' für Wohnungen, wenn Ihr Gebiet unterschiedliche Abholpläne je Wohnungstyp hat.",
     },
     "it": {
-        "address": "Il tuo indirizzo completo",
-        "insee_code": "Il codice INSEE a 5 cifre del tuo comune",
-        "instance_id": "Un identificatore del tuo servizio di raccolta rifiuti. Ad esempio, quello di GPSEO è 1292 e si trova ispezionando le chiamate di rete su https://infos-dechets.gpseo.fr/4E79YtZv7M/list/?addressId=78005_0073_00002",
+        "address": "Solo indirizzo stradale (es. '4 rue de Paris'). Non includere città o codice postale.",
+        "insee_code": "Il codice INSEE a 5 cifre del tuo comune. Verifica su https://www.insee.fr se il tuo comune è stato unito (nuovo codice).",
+        "instance_id": "Precompilato quando selezioni un fornitore noto. Necessario solo per fornitori non elencati (trovato tramite ispettore di rete sul widget rifiuti del fornitore).",
         "public_type": "Filtro tipo abitazione (opzionale). Usare 'individual_housing' per case o 'collective_housing' per appartamenti se la zona ha calendari diversi per tipo di abitazione.",
     },
 }
@@ -268,6 +267,16 @@ EXTRA_INFO = [
         "url": "https://dechets.valcobreizh.fr",
         "default_params": {"instance_id": 1003},
     },
+    {
+        "title": "SIVOM Rive Droite",
+        "url": "https://www.sivom-rivedroite.fr/",
+        "default_params": {"instance_id": 1027},
+    },
+    {
+        "title": "Le Havre Seine Métropole",
+        "url": "https://tripratik.lehavreseinemetropole.fr/",
+        "default_params": {"instance_id": 1408},
+    },
 ]
 
 _CALENDAR_DAY_VERY_ABBR = {
@@ -288,10 +297,16 @@ _LOGGER = logging.getLogger(__name__)
 class Source:
     geocoder_url = "https://api.publidata.io/v2/geocoder"
 
-    def __init__(self, address, insee_code, instance_id, public_type: str | None = None):
+    def __init__(
+        self,
+        address: str,
+        insee_code: str,
+        instance_id: int | str,
+        public_type: str | None = None,
+    ):
         self.address = address
         self.insee_code = insee_code
-        self.instance_id = instance_id
+        self.instance_id = int(instance_id)
         self._public_type = public_type
 
     def _get_address_params(self, address, insee_code):
@@ -306,7 +321,14 @@ class Source:
         if response.status_code != 200:
             raise SourceArgumentException("address", "Error response from geocoder")
 
-        data = response.json()[0]["data"]["features"]
+        results = response.json()
+        if not results:
+            raise SourceArgumentException(
+                "address",
+                "No results found for the given address and INSEE code",
+            )
+
+        data = results[0].get("data", {}).get("features", [])
         if not data:
             raise SourceArgumentException(
                 "address", "No results found for the given address and INSEE code"
@@ -523,9 +545,9 @@ class Source:
         )
 
     def _extract_date_range(self, input_string):
-        """Split a string containing a date range such as "2024 Jan 01-2024 May 12" or "Jan 01-Mar 14" and return:
-        - the date range
-        - the remaining string
+        """Split a string containing a date range and return the range and remaining string.
+
+        Handles formats like "2024 Jan 01-2024 May 12" or "Jan 01-Mar 14".
         """
         # Try to match format with year: "2024 Jan 01-2024 May 12"
         match = re.search(r"^(\d{4} \w+ \d{1,2}-\d{4} \w+ \d{1,2})(.*)", input_string)
@@ -568,10 +590,9 @@ class Source:
         return {"dtstart": start_date, "until": end_date}
 
     def _parse_explicit_multi_dates(self, opening_hours):
-        """
-        Handle malformed Publidata format such as:
-        "2025 Jan 17,2026 Jan 16,2027 Jan 15 06:00-23:59"
-        and return a list of explicit UTC datetimes.
+        """Handle malformed Publidata format and return a list of explicit UTC datetimes.
+
+        Parses formats like "2025 Jan 17,2026 Jan 16,2027 Jan 15 06:00-23:59".
         """
         if not opening_hours:
             return []

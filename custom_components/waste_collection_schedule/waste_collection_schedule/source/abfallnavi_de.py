@@ -27,9 +27,14 @@ TEST_CASES = {
         "hausnummer": "7",
     },
     "Lindlar, Aggerweg": {
-        "service": "lindlar",
-        "ort": "bav",
+        "service": "bav",
+        "ort": "Lindlar",
         "strasse": "Aggerweg",
+    },
+    "Overath, Hauptstraße": {
+        "service": "bav",
+        "ort": "Overath",
+        "strasse": "Hauptstraße",
     },
     "Roetgen, Am Sportplatz 2": {
         "service": "zew2",

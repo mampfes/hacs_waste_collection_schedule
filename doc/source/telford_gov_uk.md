@@ -62,7 +62,7 @@ waste_collection_schedule:
         post_code: "TF2 3NR"
         name_number: "Abbey House"
 ```
-## Returned collectons
+## Returned collections
 The API will return the next collection date for each container type. This will typically be the collections for the next 2 weeks but may vary over holiday periods
 
 ## Returned collection types

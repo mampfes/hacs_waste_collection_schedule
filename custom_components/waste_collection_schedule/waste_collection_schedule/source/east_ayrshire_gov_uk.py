@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Ayrshire Council"
 DESCRIPTION = "Source for east-ayrshire.gov.uk services for East Ayrshire"
@@ -15,9 +15,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General waste bin": "mdi:trash-can",
-    "Garden waste bin": "mdi:leaf",
-    "Recycling trolley": "mdi:recycle",
+    "General waste bin": Icons.GENERAL_WASTE,
+    "Garden waste bin": Icons.GARDEN,
+    "Recycling trolley": Icons.RECYCLING,
 }
 
 

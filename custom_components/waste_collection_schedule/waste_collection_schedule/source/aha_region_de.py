@@ -2,7 +2,7 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -43,11 +43,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bioabfall": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Leichtverpackungen": "mdi:recycle",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Papier": Icons.PAPER,
+    "Leichtverpackungen": Icons.RECYCLING,
 }
 
 API_URL = "https://www.aha-region.de/abholtermine/abfuhrkalender"
@@ -76,7 +76,8 @@ class Source:
 
         # find strassen_id
         r = requests.get(
-            API_URL, params={"gemeinde": self._gemeinde, "von": self._strasse.upper()[0]}
+            API_URL,
+            params={"gemeinde": self._gemeinde, "von": self._strasse.upper()[0]},
         )
         r.raise_for_status()
 
@@ -112,7 +113,9 @@ class Source:
         r = requests.post(API_URL, data=args)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
-        ladeort_single = soup.find("input", {"name": "ladeort", "class" : "form-control"})
+        ladeort_single = soup.find(
+            "input", {"name": "ladeort", "class": "form-control"}
+        )
 
         if not ladeort_single:
             ladeort_select = soup.find("select", {"name": "ladeort"})
@@ -151,7 +154,7 @@ class Source:
             raise Exception("got invalid ics file") from e
         entries = []
         for d in dates:
-            bin_type = d[1].replace("Abfuhr", "").strip().replace(' *', '')
+            bin_type = d[1].replace("Abfuhr", "").strip().replace(" *", "")
             entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
 
         return entries

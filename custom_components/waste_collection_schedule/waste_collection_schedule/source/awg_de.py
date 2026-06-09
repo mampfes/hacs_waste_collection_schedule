@@ -8,7 +8,7 @@ import string
 
 import requests
 import urllib3
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.ICS import ICS
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
@@ -43,11 +43,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Biotonne": "mdi:leaf",
-    "Papiertonne": "mdi:package-variant",
-    "Restmuelltonne": "mdi:trash-can",
-    "Restmüllcontainer": "mdi:trash-can",
-    "Papiercontainer": "mdi:package-variant",
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Papiertonne": Icons.PAPER,
+    "Restmuelltonne": Icons.GENERAL_WASTE,
+    "Restmüllcontainer": Icons.GENERAL_WASTE,
+    "Papiercontainer": Icons.PAPER,
 }
 
 

@@ -6,7 +6,7 @@ from typing import Literal, TypedDict
 import requests
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 
 class Municipality(TypedDict):
@@ -40,33 +40,33 @@ TEST_CASES = {
 }
 COUNTRY = "uk"
 ICON_MAP = {
-    "Food waste": "mdi:food",
-    "Food Waste": "mdi:food",
-    "FOOD WASTE": "mdi:food",
-    "General waste": "mdi:trash-can",
-    "Mixed recycling": "mdi:recycle",
-    "Paper and cardboard": "mdi:newspaper",
-    "Textiles/Batteries/Electricals": "mdi:battery",
-    "GARDEN WASTE": "mdi:flower",
-    "Garden waste": "mdi:flower",
-    "HOUSEHOLD WASTE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "Recycling collection": "mdi:recycle",
-    "Refuse Bin": "mdi:trash-can",
-    "Garden Waste Collection": "mdi:flower",
-    "General Waste Collection": "mdi:trash-can",
-    "Glass Collection": "mdi:bottle-wine",
-    "Recycling Collection": "mdi:recycle",
-    "Garden": "mdi:flower",
-    "Recycling": "mdi:recycle",
-    "Rubbish": "mdi:trash-can",
-    "Garden Waste": "mdi:flower",
-    "Household Waste": "mdi:trash-can",
-    "RECYCLING - BLUE": "mdi:recycle",
-    "RECYCLING - BROWN": "mdi:newspaper",
-    "RECYCLING - GREEN": "mdi:leaf",
-    "REFUSE": "mdi:trash-can",
-    "Green Garden Waste": "mdi:leaf",
+    "Food waste": Icons.BIO_KITCHEN,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
+    "General waste": Icons.GENERAL_WASTE,
+    "Mixed recycling": Icons.RECYCLING,
+    "Paper and cardboard": Icons.PAPER,
+    "Textiles/Batteries/Electricals": Icons.BATTERY,
+    "GARDEN WASTE": Icons.GARDEN,
+    "Garden waste": Icons.GARDEN,
+    "HOUSEHOLD WASTE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "Recycling collection": Icons.RECYCLING,
+    "Refuse Bin": Icons.GENERAL_WASTE,
+    "Garden Waste Collection": Icons.GARDEN,
+    "General Waste Collection": Icons.GENERAL_WASTE,
+    "Glass Collection": Icons.GLASS,
+    "Recycling Collection": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
+    "Household Waste": Icons.GENERAL_WASTE,
+    "RECYCLING - BLUE": Icons.RECYCLING,
+    "RECYCLING - BROWN": Icons.NEWSPAPER,
+    "RECYCLING - GREEN": Icons.ORGANIC,
+    "REFUSE": Icons.GENERAL_WASTE,
+    "Green Garden Waste": Icons.GARDEN,
 }
 
 # Global variables for encryption key and IV

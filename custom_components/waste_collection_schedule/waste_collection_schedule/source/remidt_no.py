@@ -2,7 +2,7 @@ import datetime
 import urllib
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "ReMidt Orkland muni"
 DESCRIPTION = "Source for Orkland muni."
@@ -16,12 +16,12 @@ TEST_CASES = {
 
 API_URL = "https://kalender.renovasjonsportal.no/api/address/"  # or station"
 
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "Restavfall": "mdi:trash-can",
-    "Glass og metallemballasje": "mdi:bottle-soda",
-    "Matavfall": "mdi:leaf",
-    "Papir": "mdi:package-variant",
-    "Plastemballasje": "mdi:recycle",
+ICON_MAP = {
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Glass og metallemballasje": Icons.GLASS,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Papir": Icons.PAPER,
+    "Plastemballasje": Icons.RECYCLING,
 }
 
 

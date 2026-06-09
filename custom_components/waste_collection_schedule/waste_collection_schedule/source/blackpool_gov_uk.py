@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Blackpool Council"
 DESCRIPTION = "Source for blackpool.gov.uk services for Blackpool Council, UK."
@@ -14,18 +14,20 @@ TEST_CASES = {
 }
 
 API_URL = "https://api.blackpool.gov.uk/api/bartec"
-REGEX_JOB_NAME = r"^Empty(?: Bin)? ([A-Za-z &]+?)( \d+\w)?$"
+REGEX_JOB_NAME = r"^Empty(?: Bin)?(?: \d+\w+)? ([A-Za-z &]+?)( \d+\w)?$"
 NAME_MAP = {
     "Domestic Refuse": "Grey bin or Red sack",
     "Dry Recycling": "Blue bin",
     "Paper & Card": "Paper & Card",
+    "Food Caddy": "Food Caddy",
 }
 ICON_MAP = {
-    "Domestic Refuse": "mdi:trash-can",
-    "Dry Recycling": "mdi:recycle",
-    "Brown Sack": "mdi:newspaper",
-    "Paper & Card": "mdi:newspaper",
-    "Green Waste": "mdi:leaf",
+    "Domestic Refuse": Icons.GENERAL_WASTE,
+    "Dry Recycling": Icons.RECYCLING,
+    "Brown Sack": Icons.NEWSPAPER,
+    "Paper & Card": Icons.PAPER,
+    "Green Waste": Icons.GARDEN,
+    "Food Caddy": Icons.BIO_KITCHEN,
 }
 
 
@@ -58,13 +60,16 @@ class Source:
         entries = []
         for job in r1.json()["jobsField"]:
             # "Empty Domestic Refuse 240L" -> "Domestic Refuse"
-            jobName = (
-                re.search(REGEX_JOB_NAME, job["jobField"]["nameField"]).group(1).strip()
-            )
+            name_field = job["jobField"]["nameField"]
+            match = re.search(REGEX_JOB_NAME, name_field)
+            if not match:
+                continue
+            jobName = match.group(1).strip()
             entries.append(
                 Collection(
                     date=datetime.strptime(
-                        job["jobField"]["scheduledStartField"], "%Y-%m-%dT%H:%M:%S"
+                        job["jobField"]["scheduledStartField"],
+                        "%Y-%m-%dT%H:%M:%S",
                     ).date(),
                     t=NAME_MAP.get(jobName, jobName),
                     icon=ICON_MAP.get(jobName),

@@ -2,6 +2,9 @@
 
 Support for schedules provided by [North Norfolk District Council](https://forms.north-norfolk.gov.uk/xforms/Address/Show/CollectionAddress), serving North Norfolk, UK.
 
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new East Norfolk council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+
 ## Configuration via configuration.yaml
 
 ```yaml

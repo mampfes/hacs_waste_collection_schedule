@@ -2,18 +2,35 @@ from typing import Literal
 
 import requests
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
 from waste_collection_schedule.source.ics import Source as ICS
 
+
+def _session() -> requests.Session:
+    s = requests.Session()
+    retry = Retry(
+        total=3,
+        backoff_factor=2,
+        status_forcelist=[429, 500, 502, 503, 504],
+        respect_retry_after_header=True,
+    )
+    s.mount("https://", HTTPAdapter(max_retries=retry))
+    s.mount("http://", HTTPAdapter(max_retries=retry))
+    return s
+
+
 SERVICES = {
     "winterthur": "https://m.winterthur.ch",
     "a_region": "https://www.a-region.ch",
     "koeniz": "https://koeniz.citymobile.ch",
+    "zab": "https://zab.citymobile.ch",
 }
-SERVICES_LITERALS = Literal["winterthur", "a_region", "koeniz"]
+SERVICES_LITERALS = Literal["winterthur", "a_region", "koeniz", "zab"]
 
 
 class A_region_ch:
@@ -23,6 +40,7 @@ class A_region_ch:
         region_url: str,
         district: str | None = None,
         regex: str | None = None,
+        session: requests.Session | None = None,
     ):
         if service not in SERVICES:
             raise Exception(f"service '{service}' not found")
@@ -32,6 +50,7 @@ class A_region_ch:
 
         self._municipality_url = region_url
         self._district = district
+        self._session = session or _session()
 
     def fetch(self) -> list[ICS]:
         waste_types = self.get_waste_types(self._municipality_url)
@@ -46,7 +65,7 @@ class A_region_ch:
         municipalities: dict[str, str] = {}
 
         # get PHPSESSID
-        session = requests.session()
+        session = _session()
         r = session.get(f"{self._base_url}")
         r.raise_for_status()
 
@@ -91,7 +110,7 @@ class A_region_ch:
     def get_waste_types(self, link: str) -> dict[str, str]:
         if not link.startswith("http"):
             link = f"{self._base_url}{link}"
-        r = requests.get(link)
+        r = self._session.get(link)
         r.raise_for_status()
 
         waste_types = {}
@@ -101,8 +120,10 @@ class A_region_ch:
         for download in downloads:
             # href ::= "/index.php?apid=12731252&amp;apparentid=5011362"
             href = download.get("href")
-            if download.find("div", class_="badgeIcon") or download.find(
-                "img", class_="rowImg"
+            if (
+                download.find("div", class_="badgeIcon")
+                or download.find("img", class_="rowImg")
+                or download.find("img", class_="svgIconImg")
             ):
                 titles = download.find_all("div", class_="title")
                 if "PDF" in titles:
@@ -119,7 +140,7 @@ class A_region_ch:
     def get_ICS_sources(self, link: str, tour: str) -> list[ICS]:
         if not link.startswith("http"):
             link = f"{self._base_url}{link}"
-        r = requests.get(link)
+        r = self._session.get(link)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
@@ -143,7 +164,9 @@ class A_region_ch:
                 return self.get_ICS_sources(list(districts.values())[0], tour)
             if self._district is None:
                 raise SourceArgumentRequiredWithSuggestions(
-                    "district", districts.keys()
+                    "district",
+                    "Multiple districts found; specify which one to use.",
+                    districts.keys(),
                 )
 
             if self._district not in districts:
@@ -172,7 +195,8 @@ def get_region_url_by_street(
     district: str | None = None,
     regex: str | None = None,
 ) -> A_region_ch:
-    r = requests.get(search_url, params={"q": street})
+    session = _session()
+    r = session.get(search_url, params={"q": street})
     r.raise_for_status()
 
     soup = BeautifulSoup(r.text, features="html.parser")
@@ -189,6 +213,6 @@ def get_region_url_by_street(
         if a.get_text(strip=True).lower().replace(" ", "") == street.lower().replace(
             " ", ""
         ):
-            return A_region_ch(service, href, district, regex)
+            return A_region_ch(service, href, district, regex, session=session)
 
     raise SourceArgumentNotFoundWithSuggestions("street", street, streets)

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
@@ -26,19 +26,35 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "zmieszane": "mdi:trash-can",
-    "bio": "mdi:leaf",
-    "papier": "mdi:package-variant",
-    "szk": "mdi:bottle-wine",
-    "metal": "mdi:recycle",
-    "wielkogabaryt": "mdi:sofa",
+    "zmieszane": Icons.GENERAL_WASTE,
+    "bio": Icons.ORGANIC,
+    "papier": Icons.PAPER,
+    "szk": Icons.GLASS_COLORED,
+    "metal": Icons.METAL,
+    "wielkogabaryt": Icons.BULKY,
 }
 
 EXTRA_INFO = [
-    {"title": "Szczecin", "url": "https://smiecioplan.pl", "default_params": {"city": "szczecin"}},
-    {"title": "Gdańsk", "url": "https://smiecioplan.pl", "default_params": {"city": "gdansk"}},
-    {"title": "Gdynia", "url": "https://smiecioplan.pl", "default_params": {"city": "gdynia"}},
-    {"title": "Sopot", "url": "https://smiecioplan.pl", "default_params": {"city": "sopot"}},
+    {
+        "title": "Szczecin",
+        "url": "https://smiecioplan.pl",
+        "default_params": {"city": "szczecin"},
+    },
+    {
+        "title": "Gdańsk",
+        "url": "https://smiecioplan.pl",
+        "default_params": {"city": "gdansk"},
+    },
+    {
+        "title": "Gdynia",
+        "url": "https://smiecioplan.pl",
+        "default_params": {"city": "gdynia"},
+    },
+    {
+        "title": "Sopot",
+        "url": "https://smiecioplan.pl",
+        "default_params": {"city": "sopot"},
+    },
 ]
 
 API_URL = "https://smiecioplan.pl/wp-json/smiecioplan/v1"
@@ -93,9 +109,14 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         # Validate street exists
+        search_params: dict[str, str | int] = {
+            "q": self._street,
+            "city": self._city,
+            "limit": 50,
+        }
         r = requests.get(
             f"{API_URL}/search",
-            params={"q": self._street, "city": self._city, "limit": 50},
+            params=search_params,
             timeout=30,
         )
         r.raise_for_status()
@@ -109,13 +130,14 @@ class Source:
             )
 
         # Validate house number exists
+        houses_params: dict[str, str | int] = {
+            "street": self._street,
+            "city": self._city,
+            "limit": 500,
+        }
         r = requests.get(
             f"{API_URL}/houses",
-            params={
-                "street": self._street,
-                "city": self._city,
-                "limit": 500,
-            },
+            params=houses_params,
             timeout=30,
         )
         r.raise_for_status()

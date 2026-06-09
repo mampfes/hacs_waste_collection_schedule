@@ -4,7 +4,7 @@ from datetime import datetime as dt
 import requests
 from dateutil import parser as date_parser
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule, rruleset
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -76,11 +76,11 @@ SCHEDULE_TYPES = {
 }
 
 ICON_MAP = {
-    "bio": "mdi:bio",
-    "dsd": "mdi:recycle",
-    "paper": "mdi:package-variant",
-    "rest": "mdi:trash-can",
-    "christmas": "mdi:pine-tree",
+    "bio": Icons.ORGANIC,
+    "dsd": Icons.RECYCLING,
+    "paper": Icons.PAPER,
+    "rest": Icons.GENERAL_WASTE,
+    "christmas": Icons.CHRISTMAS_TREE,
 }
 
 WEEKDAY_MAP = {

@@ -2,7 +2,7 @@ from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule import exceptions as exc
 
 TITLE = "Mustankorkea"
@@ -20,13 +20,8 @@ TEST_CASES = {
     },
 }
 ICON_MAP = {
-    "SEKA": "mdi:trash-can",
-    "BIO": "mdi:leaf",
-    # Unsure about these
-    # "MUO": "mdi:delete-variant",
-    # "KAR": "mdi:package-variant",
-    # "LAS": "mdi:glass-wine",
-    # "MET": "mdi:tools",
+    "SEKA": Icons.GENERAL_WASTE,
+    "BIO": Icons.ORGANIC,
 }
 
 API_URL = "https://oma.mustankorkea.fi/api"
@@ -75,7 +70,8 @@ class Source:
         try:
             if not self._token or (
                 self._token_expires
-                and self._token_expires <= (datetime.now(timezone.utc) + timedelta(minutes=2))
+                and self._token_expires
+                <= (datetime.now(timezone.utc) + timedelta(minutes=2))
             ):
                 try:
                     r = ses.post(
@@ -121,14 +117,20 @@ class Source:
                         raise ValueError("No contracts found")
                     if len(data) > 1:
                         raise exc.SourceArgumentRequiredWithSuggestions(
-                            "contract_id", "Multiple contracts found", [c["id"] for c in data]
+                            "contract_id",
+                            "Multiple contracts found",
+                            [c["id"] for c in data],
                         )
                     self._contract_id = data[0]["id"]
-                except (exc.SourceArgumentException, exc.SourceArgumentExceptionMultiple):
+                except (
+                    exc.SourceArgumentException,
+                    exc.SourceArgumentExceptionMultiple,
+                ):
                     raise
                 except Exception as e:
                     raise exc.SourceArgumentException(
-                        "contract_id", "Failed to get contract ID, please specify it manually"
+                        "contract_id",
+                        "Failed to get contract ID, please specify it manually",
                     ) from e
             yield ses
         finally:
@@ -145,10 +147,13 @@ class Source:
                 r.raise_for_status()
                 data = r.json()
                 if not isinstance(data, list):
-                    raise TypeError(f"Expected contracts response to be a list, not {type(data)}")
+                    raise TypeError(
+                        f"Expected contracts response to be a list, not {type(data)}"
+                    )
             except Exception as e:
                 raise exc.SourceArgumentException(
-                    "contract_id", "Failed to get collection data, please check contract ID"
+                    "contract_id",
+                    "Failed to get collection data, please check contract ID",
                 ) from e
 
             for contract in data:
@@ -184,7 +189,9 @@ class Source:
                     # Full schedule not available for some reason, fall back to nextEmptying only
                     entries.append(
                         Collection(
-                            date=datetime.fromisoformat(contract["nextEmptying"]).date(),
+                            date=datetime.fromisoformat(
+                                contract["nextEmptying"]
+                            ).date(),
                             t=t,
                             icon=icon,
                         )

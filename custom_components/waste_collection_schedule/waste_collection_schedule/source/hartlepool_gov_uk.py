@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Hartlepool Borough Council"
 DESCRIPTION = (
@@ -26,9 +26,9 @@ HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
 ICON_MAP = {
-    "Green": "mdi:trash-can",
-    "Grey": "mdi:recycle",
-    "Brown": "mdi:leaf",
+    "Green": Icons.GENERAL_WASTE,
+    "Grey": Icons.RECYCLING,
+    "Brown": Icons.ORGANIC,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages

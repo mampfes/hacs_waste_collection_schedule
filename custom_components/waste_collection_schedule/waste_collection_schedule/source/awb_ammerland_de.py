@@ -3,7 +3,7 @@ import json
 from typing import Optional
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -30,12 +30,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Bioabfall": "mdi:leaf",
-    "Gelber Sack": "mdi:recycle",
-    "Papier": "mdi:package-variant",
-    "Ast- und Strauchwerk": "mdi:tree",
-    "Problemstoffe": "mdi:biohazard",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Papier": Icons.PAPER,
+    "Ast- und Strauchwerk": Icons.GARDEN,
+    "Problemstoffe": Icons.HAZARDOUS,
 }
 
 PARAM_TRANSLATIONS = {
@@ -68,10 +68,10 @@ PARAM_DESCRIPTIONS = {
 API_URL = "https://firebasestorage.googleapis.com/v0/b/abfall-ammerland.appspot.com/o/and%2F7%2Fawbapp.json?alt=media"
 
 # Waste type bitmask constants (from GUtil.java)
-_MART_RES = 1   # Restabfall
-_MART_BIO = 2   # Bioabfall
-_MART_WER = 4   # Gelber Sack
-_MART_PAP = 8   # Papier
+_MART_RES = 1  # Restabfall
+_MART_BIO = 2  # Bioabfall
+_MART_WER = 4  # Gelber Sack
+_MART_PAP = 8  # Papier
 _MART_AST = 16  # Sperrmüll / Ast- und Strauchwerk
 _MART_PRO = 32  # Problemstoffe
 
@@ -165,7 +165,8 @@ class Source:
             year = current_year - year_offset
             jahr = year - 2000
             candidates = [
-                e for e in strdat
+                e
+                for e in strdat
                 if e["strid"] == street_id
                 and e["strgrid"] == strgrid
                 and e["jahr"] == jahr
@@ -176,13 +177,16 @@ class Source:
         if sd is None:
             # Fallback: any entry for this street/section
             candidates = [
-                e for e in strdat
-                if e["strid"] == street_id and e["strgrid"] == strgrid
+                e for e in strdat if e["strid"] == street_id and e["strgrid"] == strgrid
             ]
             if not candidates:
                 raise ValueError(
                     f"No schedule found for street '{self._street}'"
-                    + (f" section '{self._street_section}'" if self._street_section else "")
+                    + (
+                        f" section '{self._street_section}'"
+                        if self._street_section
+                        else ""
+                    )
                 )
             # Use the most recent year available
             sd = max(candidates, key=lambda e: e["jahr"])
@@ -287,10 +291,14 @@ def _emit_collections(
 ) -> None:
     """Append one Collection entry per waste type in the bitmask."""
     if mart & _MART_RES:
-        entries.append(Collection(date=date, t="Restabfall", icon=ICON_MAP["Restabfall"]))
+        entries.append(
+            Collection(date=date, t="Restabfall", icon=ICON_MAP["Restabfall"])
+        )
     if mart & _MART_BIO:
         entries.append(Collection(date=date, t="Bioabfall", icon=ICON_MAP["Bioabfall"]))
     if mart & _MART_WER:
-        entries.append(Collection(date=date, t="Gelber Sack", icon=ICON_MAP["Gelber Sack"]))
+        entries.append(
+            Collection(date=date, t="Gelber Sack", icon=ICON_MAP["Gelber Sack"])
+        )
     if mart & _MART_PAP:
         entries.append(Collection(date=date, t="Papier", icon=ICON_MAP["Papier"]))

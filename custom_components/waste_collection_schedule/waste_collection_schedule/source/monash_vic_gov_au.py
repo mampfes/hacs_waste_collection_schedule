@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "City of Monash"
 DESCRIPTION = "Source for City of Monash rubbish collection."
@@ -15,9 +15,9 @@ TEST_CASES = {
 
 SEARCH_PAGE_URL = f"{URL}Waste-Sustainability/Bin-Collection/When-we-collect-your-bins"
 ICON_MAP = {
-    "Landfill Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food and Garden Waste": "mdi:leaf",
+    "Landfill Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food and Garden Waste": Icons.BIO_KITCHEN,
 }
 
 # ### Arguments affecting the configuration GUI ####

@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "isontina ambiente: Ronchi dei legionari"
 DESCRIPTION = "Source for isontina ambiente, serving Ronchi dei legionari."
@@ -20,10 +20,10 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 
 ICON_MAP = {
-    "Plastica e lattine": "mdi:recycle",
-    "Organico umido": "mdi:leaf",
-    "Carta e cartone": "mdi:package-variant",
-    "Secco residuo": "mdi:trash-can",
+    "Plastica e lattine": Icons.RECYCLING,
+    "Organico umido": Icons.BIO_KITCHEN,
+    "Carta e cartone": Icons.PAPER,
+    "Secco residuo": Icons.GENERAL_WASTE,
 }
 
 ITALIAN_MONTHS = {

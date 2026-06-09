@@ -3,7 +3,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Cederbaum Braunschweig"
 DESCRIPTION = "Cederbaum Braunschweig Paperimüll"
@@ -16,7 +16,7 @@ TEST_CASES = {
 
 API_URL = "https://www.cederbaum.de/blaue-tonne/"
 ICON_MAP = {
-    "PAPER": "mdi:newspaper",
+    "PAPER": Icons.PAPER,
 }
 
 PARAM_TRANSLATIONS = {

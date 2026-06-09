@@ -10,7 +10,7 @@ Cham Landkreis is supported by the generic [ICS](/doc/source/ics.md) source. For
 - Copy the download link address.
 - Use this link as the `url` parameter. 
 - Replace the year argument with `{%Y}`, so the source will work for all years.
-- For easier automations and source configurations you probably want to add the `regex` argument like in the examle below. This will remove the date from the event title.
+- For easier automations and source configurations you probably want to add the `regex` argument like in the example below. This will remove the date from the event title.
 
 ## Examples
 

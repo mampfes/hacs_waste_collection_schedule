@@ -3,7 +3,8 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "West Lancashire Council"
 DESCRIPTION = "Source for West Lancashire Council waste collection schedule."
@@ -14,9 +15,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "garden": "mdi:leaf",
+    "refuse": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
 }
 
 API_URL = "https://your.westlancs.gov.uk/yourwestlancs.aspx"
@@ -37,14 +38,14 @@ class Source:
         r.raise_for_status()
 
         if "no properties found" in r.text.lower():
-            raise Exception(f"No properties found for postcode {self._postcode}")
+            raise SourceArgumentNotFound("postcode", self._postcode)
 
         soup = BeautifulSoup(r.text, "html.parser")
 
         # Find the GridView table
         gridview = soup.find("table", {"id": re.compile("GridView")})
         if not gridview:
-            raise Exception(f"No address table found for postcode {self._postcode}")
+            raise SourceArgumentNotFound("postcode", self._postcode)
 
         # Find all rows in the table
         rows = gridview.find_all("tr")

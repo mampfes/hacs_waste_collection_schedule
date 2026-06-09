@@ -7,7 +7,7 @@ from typing import TypedDict
 import requests
 from bs4 import BeautifulSoup
 from requests.utils import requote_uri
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
@@ -23,8 +23,11 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 }
 
 TEST_CASES = {
-    "Workers Blacktown": {
-        "address": "18 Campbell Street, Blacktown, NSW 2148",
+    "Border Inn Hotel": {
+        "address": "139 Main Street Bacchus Marsh 3340",
+    },
+    "Bendigo Bank": {
+        "address": "191 Main Street Bacchus Marsh 3340",
     },
 }
 
@@ -34,15 +37,17 @@ API_URLS = {
 }
 
 HEADERS = {
-    "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0",
-    "accept": "application/json, text/javascript, */*; q=0.01",
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+    "Accept": "text/plain, */*; q=0.01",
     "Referer": "https://www.moorabool.vic.gov.au/Waste-and-environment/Household-bins/Find-your-bin-collection-day",
+    "X-Requested-With": "XMLHttpRequest",
 }
 
 
 ICON_MAP = {
-    "Garbage": "trash-can",
-    "Recycling": "mdi:recycle",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green waste": Icons.GARDEN,
 }
 
 

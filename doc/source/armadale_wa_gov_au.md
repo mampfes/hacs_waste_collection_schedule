@@ -1,6 +1,6 @@
 # Armadale (Western Australia)
 
-Support for schedules provided by [Armadale (Western Australia)](https://www.armadale.wa.gov.au), serving Armadale (Western Australia), Australia.
+Support for schedules provided by [Armadale (Western Australia)](https://my.armadale.wa.gov.au), serving Armadale (Western Australia), Australia.
 
 ## Configuration via configuration.yaml
 
@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Find the parameter of your address using [https://www.armadale.wa.gov.au/my-waste-collection](https://www.armadale.wa.gov.au/my-waste-collection) and write them exactly like on the web page.
+Find the parameter of your address using [https://my.armadale.wa.gov.au/service/waste-and-recycling/find-your-bin-collection-day/](https://my.armadale.wa.gov.au/service/waste-and-recycling/find-your-bin-collection-day/) and write them exactly like on the web page.

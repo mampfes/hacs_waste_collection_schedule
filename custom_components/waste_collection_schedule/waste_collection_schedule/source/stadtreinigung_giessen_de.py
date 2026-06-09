@@ -1,7 +1,7 @@
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -26,12 +26,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Biotonne": "mdi:leaf",
-    "Altpapier": "mdi:package-variant",
-    "Gelbe": "mdi:recycle",
-    "Astwerk": "mdi:tree",
-    "Weihnachtsbaum": "mdi:pine-tree",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Altpapier": Icons.PAPER,
+    "Gelbe": Icons.RECYCLING,
+    "Astwerk": Icons.GARDEN,
+    "Weihnachtsbaum": Icons.CHRISTMAS_TREE,
 }
 
 PARAM_TRANSLATIONS = {

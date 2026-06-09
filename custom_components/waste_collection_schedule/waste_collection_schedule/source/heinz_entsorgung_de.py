@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Heinz-Entsorgung (Landkreis Freising)"
 DESCRIPTION = "Source for Heinz-Entsorgung (Landkreis Freising) waste collection."
@@ -39,13 +39,13 @@ Hinweis: Der Parameter ist verschlüsselt und spezifisch für Ihre Orts- und Str
 }
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Gelber Sack": "mdi:recycle",
-    "Bioabfall": "mdi:leaf",
-    "BIO": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Problemmüll": "mdi:flask",
-    "Sperrmüll": "mdi:sofa",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "BIO": Icons.ORGANIC,
+    "Papier": Icons.PAPER,
+    "Problemmüll": Icons.HAZARDOUS,
+    "Sperrmüll": Icons.BULKY,
 }
 
 API_URL = "https://api-enttermine.heinz-entsorgung.net/termine"
@@ -73,7 +73,7 @@ class Source:
 
             # Get waste type
             waste_type = item.get("fraktion", "Unknown")
-            
+
             # Get additional info if available
             zusatz = item.get("zusatz", "")
             if zusatz:

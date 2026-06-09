@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Hull City Council"
 DESCRIPTION = "Source for Hull City Council."
@@ -13,16 +13,18 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "black": "mdi:trash-can",
-    "blue": "mdi:package-variant",
-    "brown": "mdi:food-apple",
-    "bulky": "mdi:sofa",
+    "black": Icons.GENERAL_WASTE,
+    "blue": Icons.PAPER,
+    "brown": Icons.BIO_KITCHEN,
+    "bulky": Icons.BULKY,
 }
 
 
 API_URL = "https://www.hull.gov.uk/ajax/bin-collection"
 REFERER = "https://www.hull.gov.uk"
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0"
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0"
+)
 
 
 class Source:

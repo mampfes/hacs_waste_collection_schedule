@@ -64,6 +64,12 @@ AFFALDONLINE_MUNICIPALITIES = {
         "parser": "pdf",
         "values": "Nørre Klit|5||||6720|Fanø|2582|1747246|0",
     },
+    "ffv": {
+        "title": "Faaborg Forsynings Virksomhed",
+        "url": "https://www.ffv.dk/",
+        "parser": "pdf",
+        "values": "Marsk Billesvej|18||||5672|Broby|36193544|576846|0",
+    },
     "fredericia": {
         "title": "Fredericia Kommune Affald & Genbrug",
         "url": "https://affaldgenbrug-fredericia.dk/",

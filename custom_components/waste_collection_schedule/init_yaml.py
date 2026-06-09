@@ -76,6 +76,10 @@ CONFIG_SCHEMA = vol.Schema(
                     const.CONF_FETCH_TIME, default=const.CONF_FETCH_TIME_DEFAULT
                 ): cv.time,
                 vol.Optional(
+                    const.CONF_FETCH_INTERVAL_DAYS,
+                    default=const.CONF_FETCH_INTERVAL_DAYS_DEFAULT,
+                ): cv.positive_int,
+                vol.Optional(
                     const.CONF_RANDOM_FETCH_TIME_OFFSET,
                     default=const.CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
                 ): cv.positive_int,
@@ -104,6 +108,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
         hass,
         separator=config[const.DOMAIN][const.CONF_SEPARATOR],
         fetch_time=config[const.DOMAIN][const.CONF_FETCH_TIME],
+        fetch_interval_days=config[const.DOMAIN][const.CONF_FETCH_INTERVAL_DAYS],
         random_fetch_time_offset=config[const.DOMAIN][
             const.CONF_RANDOM_FETCH_TIME_OFFSET
         ],
@@ -139,6 +144,9 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     # store api object
     hass.data.setdefault(const.DOMAIN, {})["YAML_CONFIG"] = api
 
+    # perform initial fetch so collection types are known before platform setup
+    await hass.async_add_executor_job(api._fetch)
+
     # load calendar platform
     await async_load_platform(hass, "calendar", const.DOMAIN, {"api": api}, config)
 
@@ -151,9 +159,6 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
             {"api": api, "sensor_config": sensor_config},
             config,
         )
-
-    # initial fetch of all data
-    hass.add_job(api._fetch)
 
     # Register new Service fetch_data
     hass.services.async_register(

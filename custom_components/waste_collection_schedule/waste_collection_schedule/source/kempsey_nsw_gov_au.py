@@ -3,7 +3,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Kempsey Shire Council"
@@ -23,9 +23,9 @@ API_WASTE_PAGE_LINK = "/$b9015858-988c-48a4-9473-7c193df083e4$/Residents/Waste-r
 SCHEDULE_WEEKS = 26
 
 ICON_MAP = {
-    "Green Organics Bin": "mdi:leaf",
-    "Red Rubbish Bin": "mdi:trash-can",
-    "Yellow Recycling Bin": "mdi:recycle",
+    "Green Organics Bin": Icons.ORGANIC,
+    "Red Rubbish Bin": Icons.GENERAL_WASTE,
+    "Yellow Recycling Bin": Icons.RECYCLING,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -132,6 +132,8 @@ class Source:
         # Week A (anchor) = General Waste + Green Waste
         # Week B = Recycling + Green Waste
         anchor_date = general_waste_date or recycling_date
+        if anchor_date is None:
+            return []
         entries = []
 
         for week in range(SCHEDULE_WEEKS):

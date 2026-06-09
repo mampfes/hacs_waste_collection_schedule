@@ -2,7 +2,8 @@ import re
 from datetime import date, datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Clarence City Council"
 COUNTRY = "au"
@@ -10,9 +11,9 @@ DESCRIPTION = "The greater Eastern Shore of Hobart"
 
 URL = "https://www.ccc.tas.gov.au/wp-json/waste-collection"
 ICON_MAP = {
-    "RUBBISH": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GREENWASTE": "mdi:leaf",
+    "RUBBISH": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GREENWASTE": Icons.GARDEN,
 }
 
 PARAM_DESCRIPTIONS = {"en": {"address": "The address of the collection"}}
@@ -95,7 +96,7 @@ def _query_api(address: str) -> dict:
     address_data = address_result.json()
 
     if not address_data["success"]:
-        raise Exception("Could not find address")
+        raise SourceArgumentNotFound("address", address)
 
     ccc_formatted_address = address_data["results"][0]
 

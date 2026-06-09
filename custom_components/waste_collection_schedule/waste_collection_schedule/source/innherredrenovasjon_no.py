@@ -1,8 +1,8 @@
 import json
 from datetime import datetime
 
-import requests
-from waste_collection_schedule import Collection
+from curl_cffi import requests
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Innherred Renovasjon"
 DESCRIPTION = (
@@ -11,7 +11,7 @@ DESCRIPTION = (
 URL = "https://innherredrenovasjon.no/"
 
 TEST_CASES = {
-    "Test_001": {"address": "Geving%C3%A5sen 206"},
+    "Test_001": {"address": "Gevingåsen 206"},
     "Test_002": {"address": "Bollgardssletta 211 A"},
     "Test_003": {"address": "Nordregata 2"},
 }
@@ -21,16 +21,14 @@ API_URL = (
 )
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Bioavfall": "mdi:leaf",
-    "Papp/papir": "mdi:package-variant",
-    "Plastemballasje": "mdi:recycle",
-    "Glass- og metallemballasje": "mdi:bottle-soda",
-    "Matavfall": "mdi:trash-can",
-    "Restavfall mini": "mdi:trash-can",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Bioavfall": Icons.ORGANIC,
+    "Papp/papir": Icons.PAPER,
+    "Plastemballasje": Icons.RECYCLING,
+    "Glass- og metallemballasje": Icons.GLASS,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Restavfall mini": Icons.GENERAL_WASTE,
 }
-
-HEADERS = {"user-agent": "Mozilla/5.0"}
 
 
 class Source:
@@ -40,7 +38,7 @@ class Source:
     def fetch(self):
         args = {"address": self._address}
 
-        r = requests.get(API_URL, params=args, headers=HEADERS)
+        r = requests.get(API_URL, params=args, impersonate="chrome")
         r.raise_for_status()
 
         data = json.loads(r.content)

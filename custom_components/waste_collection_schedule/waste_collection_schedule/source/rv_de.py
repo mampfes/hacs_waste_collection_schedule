@@ -2,7 +2,7 @@
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Ravensburg"
@@ -31,10 +31,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restmuelltonne": "mdi:trash-can",
-    "Biotonne": "mdi:leaf",
-    "Papiertonne": "mdi:package-variant",
-    "Gelbe": "mdi:recycle",
+    "Restmuelltonne": Icons.GENERAL_WASTE,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Papiertonne": Icons.PAPER,
+    "Gelbe": Icons.RECYCLING,
 }
 
 

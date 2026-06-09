@@ -4,7 +4,8 @@ from datetime import datetime, timedelta
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Hume City Council"
 DESCRIPTION = "Source for hume.vic.gov.au Waste Collection Services"
@@ -33,9 +34,9 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food and garden": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food and garden": Icons.BIO_KITCHEN,
 }
 
 
@@ -78,7 +79,7 @@ class Source:
             break
 
         if locationId == 0:
-            raise Exception(f"Could not find address: {self.address}")
+            raise SourceArgumentNotFound("address", self.address)
 
         # Retrieve the upcoming collections for our property
         r = session.get(

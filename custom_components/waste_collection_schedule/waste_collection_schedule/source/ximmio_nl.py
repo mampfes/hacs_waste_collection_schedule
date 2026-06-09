@@ -23,6 +23,11 @@ TEST_CASES = {
     "ACV Group": {"company": "acv", "post_code": "6721MH", "house_number": 1},
     "Meerlanden": {"company": "meerlanden", "post_code": "1435BX", "house_number": 650},
     "Almere": {"company": "almere", "post_code": "1318NG", "house_number": 15},
+    "Woerden": {
+        "company": "woerdenoudewater",
+        "post_code": "3441AX",
+        "house_number": 1,
+    },
 }
 
 
@@ -32,6 +37,7 @@ SERVICE_URLS = {
     "mijnblink": "https://wasteprod2api.ximmio.com",
     "rad": "https://wasteprod2api.ximmio.com",
     "westland": "https://wasteprod2api.ximmio.com",
+    "woerdenoudewater": "https://wasteprod2api.ximmio.com",
 }
 
 SERVICE_MAP = [
@@ -102,12 +108,6 @@ SERVICE_MAP = [
         "company": "rad",
     },
     {
-        "title": "Reinis",
-        "url": "https://www.reinis.nl/",
-        "uuid": "9dc25c8a-175a-4a41-b7a1-83f237a80b77",
-        "company": "reinis",
-    },
-    {
         "title": "Twente Milieu",
         "url": "https://www.twentemilieu.nl/",
         "uuid": "8d97bb56-5afd-4cbc-a651-b4f7314264b4",
@@ -130,6 +130,12 @@ SERVICE_MAP = [
         "url": "https://www.venlo.nl/",
         "uuid": "280affe9-1428-443b-895a-b90431b8ca31",
         "company": "venlo",
+    },
+    {
+        "title": "Woerden / Oudewater",
+        "url": "https://www.woerden.nl/",
+        "uuid": "06856f74-6826-4c6a-aabf-69bc9d20b5a6",
+        "company": "woerdenoudewater",
     },
 ]
 

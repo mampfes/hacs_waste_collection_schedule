@@ -5,9 +5,10 @@ Landkreis Heidenheim is supported by the generic [ICS](/doc/source/ics.md) sourc
 
 ## How to get the configuration arguments
 
-- Go to <https://www.abfall-hdh.de/internet/inhalt/inhalt.php?seite=98> and select your location.  
-- Replace the `gemeinde`, `ortsteil` and `strasse` in the example configuration with the names you selected (leave `strasse` as is if you do not selected one on the website).
-- You may also want to set the `bio`, `garten`, `gs`, `rest`, `papier` and `papiertonne` parameters to `"0"` if you do not want to see the corresponding waste types in the calendar.
+- Go to <https://www.abfall-hdh.de/internet/inhalt/inhalt.php?seite=98> and select your location.
+- Most fields are pre-filled. In the **Params** field, add your `gemeinde`, `ortsteil` and `strasse` to the existing JSON, e.g.: `{"gemeinde": "Dischingen", "ortsteil": "Hofen", "strasse": "", "bio": "1", ...}`
+- Set `split_at` to `\+` if events contain combined waste types.
+- Set waste type toggles (`bio`, `garten`, `gs`, `rest`, `papier`, `papiertonne`) to `"0"` to hide unwanted types.
 
 ## Examples
 

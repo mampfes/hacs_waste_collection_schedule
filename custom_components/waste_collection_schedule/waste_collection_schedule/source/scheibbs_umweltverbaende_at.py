@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -17,10 +17,10 @@ TEST_CASES = {
     "Test_004": {"region": "Wieselburg"},
 }
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Gelber Sack": "mdi:sack",
-    "Altpapier": "mdi:package-variant",
-    "Biotonne": "mdi:leaf",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Altpapier": Icons.PAPER,
+    "Biotonne": Icons.BIO_KITCHEN,
 }
 
 

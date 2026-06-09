@@ -1,5 +1,5 @@
 import waste_collection_schedule.service.AppAbfallplusDe as AppAbfallplusDe
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 SUPPORTED_SERVICES = AppAbfallplusDe.SUPPORTED_SERVICES
 EXTRA_INFO = AppAbfallplusDe.get_extra_info
@@ -140,17 +140,17 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "restmüll": "mdi:trash-can",
-    "schwarz": "mdi:trash-can",
-    "grau": "mdi:trash-can",
-    "glass": "mdi:bottle-soda",
-    "bio": "mdi:leaf",
-    "braun": "mdi:leaf",
-    "pappier": "mdi:package-variant",
-    "blaue tonne": "mdi:package-variant",
-    "plastik": "mdi:recycle",
-    "wertstoff": "mdi:recycle",
-    "gelber sack": "mdi:recycle",
+    "restmüll": Icons.GENERAL_WASTE,
+    "schwarz": Icons.GENERAL_WASTE,
+    "grau": Icons.GENERAL_WASTE,
+    "glass": Icons.GLASS,
+    "bio": Icons.ORGANIC,
+    "braun": Icons.ORGANIC,
+    "pappier": Icons.PAPER,
+    "blaue tonne": Icons.PAPER,
+    "plastik": Icons.PLASTIC_PACKAGING,
+    "wertstoff": Icons.RECYCLING,
+    "gelber sack": Icons.PLASTIC_PACKAGING,
 }
 
 

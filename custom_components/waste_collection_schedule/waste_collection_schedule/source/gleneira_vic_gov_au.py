@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentRequired,
@@ -29,9 +29,9 @@ API_URL = SEARCH_PAGE_URL
 
 # Define waste type icons
 ICON_MAP = {
-    "Next organic collection": "mdi:leaf",
-    "Next rubbish collection": "mdi:trash-can",
-    "Next recycling collection": "mdi:recycle",
+    "Next organic collection": Icons.ORGANIC,
+    "Next rubbish collection": Icons.GENERAL_WASTE,
+    "Next recycling collection": Icons.RECYCLING,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

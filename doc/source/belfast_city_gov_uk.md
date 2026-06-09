@@ -65,30 +65,28 @@ The UPRN is `123456789`.
 ## Example Sensor Configuration
 
 ```yaml
-sensor:
-  - platform: waste_collection_schedule
-    name: Belfast Recycling Bin
-    source_index: 0
-    details_format: "next_3_items"
-    value_template: '{{ value.types|join(", ") }}'
-    types:
-      - Recycling bin
+waste_collection_schedule:
+  sensors:
+    - name: Belfast Recycling Bin
+      source_index: 0
+      details_format: "next_3_items"
+      value_template: '{{ value.types|join(", ") }}'
+      types:
+        - Recycling bin
 
-  - platform: waste_collection_schedule
-    name: Belfast Compost Bin
-    source_index: 0
-    details_format: "next_3_items"
-    value_template: '{{ value.types|join(", ") }}'
-    types:
-      - Compost bin
+    - name: Belfast Compost Bin
+      source_index: 0
+      details_format: "next_3_items"
+      value_template: '{{ value.types|join(", ") }}'
+      types:
+        - Compost bin
 
-  - platform: waste_collection_schedule
-    name: Belfast General Waste
-    source_index: 0
-    details_format: "next_3_items"
-    value_template: '{{ value.types|join(", ") }}'
-    types:
-      - General waste bin
+    - name: Belfast General Waste
+      source_index: 0
+      details_format: "next_3_items"
+      value_template: '{{ value.types|join(", ") }}'
+      types:
+        - General waste bin
 ```
 
 ## How It Works

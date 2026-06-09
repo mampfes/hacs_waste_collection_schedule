@@ -28,12 +28,6 @@ def EXTRA_INFO():
 
 
 TEST_CASES = {
-    "Waldenbuch": {
-        "key": "8215c62763967916979e0e8566b6172e",
-        "f_id_kommune": 2999,
-        "f_id_strasse": 1087,
-        # "f_abfallarten": [50, 53, 31, 299, 328, 325]
-    },
     "Landshut": {
         "key": "bd0c2d0177a0849a905cded5cb734a6f",
         "f_id_kommune": 2655,
@@ -48,22 +42,11 @@ TEST_CASES = {
         "f_id_strasse_hnr": "20417",
         # "f_abfallarten": [691,692,696,695,694,701,700,693,703,704,697,699],
     },
-    "Freudenstadt": {
-        "key": "595f903540a36fe8610ec39aa3a06f6a",
-        "f_id_kommune": 3447,
-        "f_id_bezirk": 22017,
-        "f_id_strasse": 22155,
-    },
     "Ludwigshafen am Rhein": {
         "key": "6efba91e69a5b454ac0ae3497978fe1d",
         "f_id_kommune": "5916",
         "f_id_strasse": "5916abteistrasse",
         "f_id_strasse_hnr": 33,
-    },
-    "Traunstein": {
-        "key": "279cc5db4db838d1cfbf42f6f0176a90",
-        "f_id_kommune": "2911",
-        "f_id_strasse": "2374",
     },
     "AWB Limburg-Weilburg": {
         "key": "0ff491ffdf614d6f34870659c0c8d917",
@@ -72,17 +55,13 @@ TEST_CASES = {
         "f_id_strasse_hnr": 872,
         "f_abfallarten": [27, 28, 17, 67],
     },
-    "ALBA Berlin": {
-        "key": "9583a2fa1df97ed95363382c73b41b1b",
-        "f_id_kommune": 3227,
-        "f_id_strasse": 3475,
-        "f_id_strasse_hnr": 185575,
-    },
 }
 _LOGGER = logging.getLogger(__name__)
 
 MODUS_KEY = "d6c5855a62cf32a4dadbc2831f0f295f"
-HEADERS = {"user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0"}
+HEADERS = {
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0"
+}
 
 
 # Parser for HTML input (hidden) text
@@ -125,6 +104,13 @@ class Source:
         params = {"key": self._key, "modus": MODUS_KEY, "waction": "init"}
 
         r = requests.post("https://api.abfall.io", params=params, headers=HEADERS)
+        if r.status_code == 401:
+            raise ValueError(
+                f"API key '{self._key}' is no longer valid for the legacy abfall.io API. "
+                "This provider may have migrated to the new abfall.io v3 API, which is not yet supported. "
+                "See https://github.com/mampfes/hacs_waste_collection_schedule/issues/3788"
+            )
+        r.raise_for_status()
 
         # add all hidden input fields to form data
         # There is one hidden field which acts as a token:
@@ -174,9 +160,14 @@ class Source:
             ics_file = re.sub(r"\<br.*|\<b.*", "\\r", ics_file)
             # _LOGGER.warning("Html tags removed from ics file: " + ', '.join(html_warnings))
 
-        dates = self._ics.convert(ics_file)
-
         entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
+        for ev in self._ics.convert_events(ics_file):
+            entries.append(
+                Collection(
+                    ev.date,
+                    ev.title,
+                    location=ev.location,
+                    description=ev.description,
+                )
+            )
         return entries

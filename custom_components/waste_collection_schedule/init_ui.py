@@ -60,6 +60,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data[const.CONF_SOURCE_ARGS],
         options.get(const.CONF_SOURCE_CALENDAR_TITLE),
         options.get(const.CONF_DAY_OFFSET, const.CONF_DAY_OFFSET_DEFAULT),
+        options.get(const.CONF_IGNORE_DUPLICATES, const.CONF_IGNORE_DUPLICATES_DEFAULT),
     )
 
     coordinator = WCSCoordinator(
@@ -68,6 +69,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         separator=options.get(const.CONF_SEPARATOR, const.CONF_SEPARATOR_DEFAULT),
         fetch_time=cv.time(
             options.get(const.CONF_FETCH_TIME, const.CONF_FETCH_TIME_DEFAULT)
+        ),
+        fetch_interval_days=options.get(
+            const.CONF_FETCH_INTERVAL_DAYS, const.CONF_FETCH_INTERVAL_DAYS_DEFAULT
         ),
         random_fetch_time_offset=options.get(
             const.CONF_RANDOM_FETCH_TIME_OFFSET,

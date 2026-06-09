@@ -3,7 +3,8 @@ import json
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "FKF Budaörs"
 DESCRIPTION = "Source script for www.fkf.hu"
@@ -17,9 +18,9 @@ TEST_CASES = {
 
 API_URL = "https://www.mohubudapest.hu/hulladeknaptar-budaors"
 ICON_MAP = {
-    "COMMUNAL": "mdi:trash-can",
-    "SELECTIVE": "mdi:recycle",
-    "GREEN": "mdi:leaf",
+    "COMMUNAL": Icons.GENERAL_WASTE,
+    "SELECTIVE": Icons.RECYCLING,
+    "GREEN": Icons.ORGANIC,
 }
 
 
@@ -48,7 +49,7 @@ class Source:
         )
 
         if soup.find("div", attrs={"class": "alert"}) is not None:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("street", self._street)
 
         entries = []
         communal_divs = soup.find_all("div", attrs={"class": "communal"})

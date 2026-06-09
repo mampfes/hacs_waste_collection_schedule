@@ -1,0 +1,15 @@
+---
+title: Gossau ZH
+url: https://www.gossau-zh.ch
+howto:
+  en: |
+    Use the URL below. All areas of Gossau ZH are included in a single calendar.
+    Use the `types` filter in your sensor configuration to show only your area
+    (e.g. "Kehricht und Sperrgut (Gossau-Dorf, Grüt, Ober-Ottikon, Hellberg)").
+  de: |
+    Verwenden Sie die untenstehende URL. Alle Gebiete von Gossau ZH sind in einem Kalender enthalten.
+    Verwenden Sie den `types`-Filter in Ihrer Sensorkonfiguration, um nur Ihr Gebiet anzuzeigen.
+
+test_cases:
+  Gossau ZH:
+    url: https://www.gossau-zh.ch/evt-kategorie/entsorgungskalender/?ical=1

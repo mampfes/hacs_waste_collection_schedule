@@ -1,0 +1,14 @@
+---
+title: Abfallkalender Erkelenz
+url: https://www.abfallkalender-erkelenz.de
+howto:
+  en: |
+    - Go to <https://www.abfallkalender-erkelenz.de> and select your district (Bezirk).
+    - Find your district number and use it in the `url` parameter below, replacing `BEZIRK` with your number.
+  de: |
+    - Gehen Sie zu <https://www.abfallkalender-erkelenz.de> und wählen Sie Ihren Bezirk aus.
+    - Ermitteln Sie Ihre Bezirksnummer und verwenden Sie diese im `url`-Parameter unten, indem Sie `BEZIRK` durch Ihre Nummer ersetzen.
+
+test_cases:
+  Holzweiler (Bezirk 10):
+    url: https://www.abfallkalender-erkelenz.de/ical?bezirk=10

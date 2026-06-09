@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Basel-Stadt"
@@ -15,13 +15,13 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Kehrichtabfuhr": "mdi:trash-can",
-    "Grünabfuhr": "mdi:leaf",
-    "Papierabfuhr": "mdi:package-variant",
-    "Grobsperrgut": "mdi:sofa",
-    "Metallabfuhr": "mdi:iron-outline",
-    "Häckseldienst": "mdi:tree",
-    "Unbrennbares": "mdi:fire-off",
+    "Kehrichtabfuhr": Icons.GENERAL_WASTE,
+    "Grünabfuhr": Icons.ORGANIC,
+    "Papierabfuhr": Icons.PAPER,
+    "Grobsperrgut": Icons.BULKY,
+    "Metallabfuhr": Icons.METAL,
+    "Häckseldienst": Icons.GARDEN,
+    "Unbrennbares": Icons.GENERAL_WASTE,
 }
 
 VALID_ZONES = ["A", "B", "C", "D", "E", "F", "G", "H", "GUF"]
@@ -59,15 +59,16 @@ class Source:
         entries: list[Collection] = []
 
         for year in [now.year, now.year + 1] if now.month == 12 else [now.year]:
+            params: dict[str, str | int] = {
+                "dataset": DATASET,
+                "rows": 500,
+                "refine.zone": self._zone,
+                "q": f"termin>={year}-01-01 AND termin<={year}-12-31",
+                "sort": "termin",
+            }
             r = requests.get(
                 API_URL,
-                params={
-                    "dataset": DATASET,
-                    "rows": 500,
-                    "refine.zone": self._zone,
-                    "q": f"termin>={year}-01-01 AND termin<={year}-12-31",
-                    "sort": "termin",
-                },
+                params=params,
                 timeout=30,
             )
             r.raise_for_status()

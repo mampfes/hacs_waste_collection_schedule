@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Folkestone and Hythe District Councol"
 DESCRIPTION = "Source for Folkestone and Hythe District Council, United Kingdom."
@@ -13,8 +13,8 @@ TEST_CASES = {
     "Hythe_Test": {"uprn": "50019287"},
 }
 ICON_MAP = {
-    "Non-Recyclables (Green Lid) and Food Waste": "mdi:trash-can",
-    "Recycling (Purple Lid / Black Box and Food Waste)": "mdi:recycle",
+    "Non-Recyclables (Green Lid) and Food Waste": Icons.BIO_KITCHEN,
+    "Recycling (Purple Lid / Black Box and Food Waste)": Icons.BIO_KITCHEN,
 }
 REGEX_ORDINALS = r"(?<=\d)(st|nd|rd|th)"
 

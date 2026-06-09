@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wokingham Borough Council"
 DESCRIPTION = "Source for wokingham.gov.uk services for Wokingham, UK."
@@ -17,10 +17,10 @@ TEST_CASES = {
     "No-Collection Test": {"postcode": "RG10 0EU", "address": "39 Broadwater Road"},
 }
 ICON_MAP = {
-    "HOUSEHOLD WASTE": "mdi:trash-can",
-    "GARDEN WASTE": "mdi:leaf",
-    "RECYCLING": "mdi:recycle",
-    "FOOD WASTE": "mdi:food",
+    "HOUSEHOLD WASTE": Icons.GENERAL_WASTE,
+    "GARDEN WASTE": Icons.GARDEN,
+    "RECYCLING": Icons.RECYCLING,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
 }
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/117.0",

@@ -3,13 +3,13 @@ from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
 TITLE = "Solihull Council"
 DESCRIPTION = "Source for Solihull Council."
-URL = "https://www.solihul.gov.uk/"
+URL = "https://www.solihull.gov.uk/"
 TEST_CASES = {
     "100070994046": {"uprn": 100070994046},
     "200003821723, Predict": {"uprn": 200003821723, "predict": True},
@@ -17,10 +17,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "garden waste": "mdi:leaf",
-    "garden waste - subscribed": "mdi:leaf",
-    "household waste": "mdi:trash-can",
-    "mixed recycling": "mdi:recycle",
+    "garden waste": Icons.GARDEN,
+    "garden waste - subscribed": Icons.GARDEN,
+    "household waste": Icons.GENERAL_WASTE,
+    "mixed recycling": Icons.RECYCLING,
 }
 
 API_URL = "https://digital.solihull.gov.uk/BinCollectionCalendar/Calendar.aspx"

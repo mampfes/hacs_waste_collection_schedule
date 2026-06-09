@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Luleå"
 DESCRIPTION = "Source for Luleå."
@@ -14,21 +14,22 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:leaf",
-    "Porslin": "mdi:coffee",
-    "Returpapper": "mdi:package-variant",
-    "Pappersförpackningar": "mdi:package-variant",
-    "Plastförpackningar": "mdi:recycle",
-    "Metallförpackningar": "mdi:recycle",
-    "Färgade": "mdi:bottle-soda",
-    "Ofärgade": "mdi:bottle-soda",
-    "Ljuskällor": "mdi:lightbulb",
-    "Småbatterier": "mdi:battery",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Porslin": Icons.BIO_KITCHEN,
+    "Returpapper": Icons.PAPER,
+    "Pappersförpackningar": Icons.PAPER,
+    "Plastförpackningar": Icons.RECYCLING,
+    "Metallförpackningar": Icons.METAL,
+    "Färgade": Icons.GLASS,
+    "Ofärgade": Icons.GLASS,
+    "Ljuskällor": Icons.ELECTRONICS,
+    "Småbatterier": Icons.BATTERY,
 }
 
 API_URL = "https://lumire.se/api/waste-pickup"
 HEADERS = {"User-Agent": "Mozilla/5.0"}
+
 
 class Source:
     def __init__(self, address: str):
@@ -44,7 +45,7 @@ class Source:
             raise ValueError(f"Address '{self._address}' not found")
 
         building_id = search_results[0].get("buildingId")
-        
+
         # mha buildingId får man sitt faktiska schema
         r = requests.get(f"{API_URL}/{building_id}", headers=HEADERS)
         r.raise_for_status()
@@ -53,8 +54,10 @@ class Source:
         entries = []
         for item in pickup_data:
             date_str = item.get("nextPickup")
-            waste_type = item.get("fee", {}).get("waste_type") or item.get("description", "")
-            
+            waste_type = item.get("fee", {}).get("waste_type") or item.get(
+                "description", ""
+            )
+
             if date_str:
                 date_ = datetime.strptime(date_str, "%Y-%m-%d").date()
 
@@ -63,7 +66,7 @@ class Source:
                     if key.lower() in waste_type.lower():
                         icon = val
                         break
-                
+
                 entries.append(Collection(date_, waste_type, icon))
 
         return entries

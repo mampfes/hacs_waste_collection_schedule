@@ -9,20 +9,37 @@ waste_collection_schedule:
     sources:
     - name: stirling_wa_gov_au
       args:
-        lat: LATITUDE
-        lon: LONGITUDE
+        address: ADDRESS
         
 ```
 
 ### Configuration Variables
 
+**address**  
+*(String) (optional)*
+
 **lat**  
-*(Float) (required)*
+*(Float) (optional)*
 
 **lon**  
-*(Float) (required)*
+*(Float) (optional)*
 
-## Example
+Either `address` or both `lat` and `lon` must be provided.
+
+## Examples
+
+### Using address (recommended)
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: stirling_wa_gov_au
+      args:
+        address: "100 Cedric Street, Stirling, WA, Australia"
+        
+```
+
+### Using coordinates
 
 ```yaml
 waste_collection_schedule:
@@ -36,11 +53,15 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-### Using your address coordinates
+### Using your address (recommended)
 
-1. Find the coordinates of your address using any map service like Google Maps. (the coordinates should be in decimal format with 7 decimal places)
-2. Write the coordinates in the configuration file.
+Enter your full street address including suburb and state (e.g. `100 Cedric Street, Stirling, WA, Australia`). The address will be geocoded automatically.
 
-### Inspecting network requests of the Stirling website
+### Using coordinates
 
-Visit <https://www.stirling.wa.gov.au/waste-and-environment/waste-and-recycling/residential-bin-collections> and open the developer tools of your browser. Go to the network tab and filter. search for your address in the websites search bar and click on you address. In your network tab look for a GET request to https://www.stirling.wa.gov.au/aapi/map. Click on that request and look for the Request Headers. The `fields` value of the Request Headers is latitude and longitude **in inverse order!!!** (longitude,latitude). Write the coordinates in the configuration file.
+If address lookup does not work for your location, you can provide coordinates instead:
+
+1. Visit <https://www.stirling.wa.gov.au/waste-and-environment/waste-and-recycling/bin-collections> and search for your address.
+2. Open your browser's developer tools (Network tab) and look for the request to `/bincollectioncheck/getresult`.
+3. The `fields` header contains the coordinates as `longitude,latitude`. Note the **inverse order**.
+4. Enter the latitude and longitude values in the configuration file.

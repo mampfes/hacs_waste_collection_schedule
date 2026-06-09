@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Hausmannstätten"
 DESCRIPTION = "Source for Hausmannstätten."
@@ -12,14 +12,14 @@ COUNTRY = "at"
 
 
 ICON_MAP = {
-    "restmüll i": "mdi:trash-can",
-    "restmüll ii": "mdi:trash-can",
-    "restmüll ii + 1100": "mdi:trash-can",
-    "bioabfall": "mdi:leaf",
-    "altpapier i": "mdi:package-variant",
-    "altpapier ii": "mdi:package-variant",
-    "sperrmüll asz-fernitz": "mdi:factory",
-    "leicht- und metallverpackungen": "mdi:recycle",
+    "restmüll i": Icons.GENERAL_WASTE,
+    "restmüll ii": Icons.GENERAL_WASTE,
+    "restmüll ii + 1100": Icons.GENERAL_WASTE,
+    "bioabfall": Icons.BIO_KITCHEN,
+    "altpapier i": Icons.PAPER,
+    "altpapier ii": Icons.PAPER,
+    "sperrmüll asz-fernitz": Icons.BULKY,
+    "leicht- und metallverpackungen": Icons.METAL,
 }
 
 API_URL = "https://hausmannstaetten.gv.at/terminkalender"

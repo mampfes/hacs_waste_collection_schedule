@@ -92,6 +92,7 @@ waste_collection_schedule:
       day_offset: DAY_OFFSET
       calendar_title: CALENDAR_TITLE
   fetch_time: FETCH_TIME
+  fetch_interval_days: FETCH_INTERVAL_DAYS
   random_fetch_time_offset: RANDOM_FETCH_TIME_OFFSET
   day_switch_time: DAY_SWITCH_TIME
   separator: SEPARATOR
@@ -101,6 +102,7 @@ waste_collection_schedule:
 |-----|-----|-----|-----|
 | sources | list | required | Contains information for the service provider being used. For details see [Attributes for sources](#attributes-for-sources) |
 | fetch_time | time | optional | representation of the time of day in "HH:MM" that Home Assistant polls service provider for latest collection schedule. If no time is provided, the default of "01:00" is used |
+| fetch_interval_days | int | optional | fetch interval in days. If set to `1` (default), behavior stays unchanged and fetching happens daily at `fetch_time` (plus optional random offset). If set to `>1`, data is fetched every _n_ days. |
 | random_fetch_time_offset | int | optional | randomly offsets the `fetch_time` by up to _int_ minutes. Can be used to distribute Home Assistant fetch commands over a longer time frame to avoid peak loads at service providers |
 | day_switch_time | time | optional | time of the day in "HH:MM" that Home Assistant dismisses the current entry and moves to the next entry. If no time if provided, the default of "10:00" is used. |
 | separator | string | optional | Used to join entries if the multiple values for a single day are returned by the source. If no value is entered, the default of ", " is used |
@@ -122,7 +124,7 @@ waste_collection_schedule:
 | type | string | required | The identity of the waste type as returned from the source  |
 | alias | string | optional | A more readable, or user-friendly, name for the type of waste being collected. Default is `None` |
 | show | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
-| icon | string | optional | Icon to use for this specific waste type. Icons from the Home Assistant mdi icon set can be used. Default is `None`. |
+| icon | string | optional | Icon to use for this specific waste type. Any [Material Design Icon](https://pictogrammers.com/library/mdi/) name in the form `mdi:icon-name` is accepted (e.g. `mdi:bottle-soda`). When omitted, the source's default icon is used — defaults follow the canonical [`Icons`](../custom_components/waste_collection_schedule/waste_collection_schedule/icons.py) catalogue so the same logical category looks consistent across sources. Set this to override the default for any single waste type. |
 | picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
 | use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
 | dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
@@ -132,25 +134,24 @@ waste_collection_schedule:
 Add the following lines to your `configuration.yaml` file:
 
 ```yaml
-sensor:
-  - platform: waste_collection_schedule
-    source_index: SOURCE_INDEX # (YAML only)
-    name: NAME
-    details_format: DETAILS_FORMAT
-    count: COUNT
-    leadtime: LEADTIME
-    value_template: VALUE_TEMPLATE
-    date_template: DATE_TEMPLATE
-    add_days_to: ADD_DAYS_TO
-    event_index: EVENT_INDEX
-    types:
-      - Waste Type 1
-      - Waste Type 2
+waste_collection_schedule:
+  sensors:
+    - source_index: SOURCE_INDEX # (YAML only)
+      name: NAME
+      details_format: DETAILS_FORMAT
+      count: COUNT
+      leadtime: LEADTIME
+      value_template: VALUE_TEMPLATE
+      date_template: DATE_TEMPLATE
+      add_days_to: ADD_DAYS_TO
+      event_index: EVENT_INDEX
+      types:
+        - Waste Type 1
+        - Waste Type 2
 ```
 
 | Parameter | Type | Requirement | Description |
 |--|--|--|--|
-| platform |  | required | waste_collection_schedule |
 | source_index *(YAML ONLY)* | int | optional | Used to assign a sensor to a specific source. Only needed if multiple sources are defined. The first source defined is source_index 0, the second source_index 1, etc. If no value is supplied, the default of 0 is used.<br><br>If you want to have a sensor which combines the data from multiple sources, just add a list of sources here. [Example](#combine-data-from-multiple-sources). This parameter is not available when using GUI configuration, as you're adding sensors directly to sources |
 | name | string | required | The name Home Assistant used for this sensor |
 | details_format | string | optional | Specifies the format used to display info in Home Assistant's _more info_ pop-up. Valid values are: `upcoming`, `appointment_types`, `generic` and `hidden`. If no value is supplied, the default of "upcoming" is used. See [options for details_format](#options-for-details_format-parameter) for more details |
@@ -214,6 +215,10 @@ If you want to trigger a manual update of the sources, you can call the service:
 `waste_collection_schedule.fetch_data`
 
 Normally the configuration option 'fetch_time' is used to do this periodically.
+
+You can also configure `fetch_interval_days` in the Home Assistant UI:
+`Settings` → `Devices & Services` → `Waste Collection Schedule` → `Configure`.
+This option defaults to `1` to preserve current behavior.
 
 ## Further Help
 

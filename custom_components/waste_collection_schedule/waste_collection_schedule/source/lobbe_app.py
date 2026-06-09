@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Literal
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -31,12 +31,12 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "restabfall": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "bioabfall": "mdi:leaf",
-    "altpapier": "mdi:package-variant",
-    "gelber": "mdi:recycle",
-    "elektroschrott": "mdi:power-plug",
+    "restabfall": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "bioabfall": Icons.BIO_KITCHEN,
+    "altpapier": Icons.PAPER,
+    "gelber": Icons.RECYCLING,
+    "elektroschrott": Icons.ELECTRONICS,
 }
 
 STATES = Literal["Hessen", "Nordrhein-Westfalen"]

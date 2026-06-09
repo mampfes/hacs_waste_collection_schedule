@@ -10,8 +10,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Fetchable(Protocol):
-    def fetch(self) -> list[Collection]:
-        ...
+    def fetch(self) -> list[Collection]: ...  # noqa: E704
 
 
 class SourceModule(Protocol):
@@ -121,6 +120,7 @@ class SourceShell:
         calendar_title: Optional[str],
         unique_id: str,
         day_offset: int,
+        ignore_duplicates: bool = False,
     ):
         self._source = source
         self._customize = customize
@@ -132,6 +132,7 @@ class SourceShell:
         self._refreshtime: datetime.datetime | None = None
         self._entries: List[Collection] = []
         self._day_offset = day_offset
+        self._ignore_duplicates = ignore_duplicates
 
     @property
     def refreshtime(self):
@@ -187,7 +188,20 @@ class SourceShell:
         if self._day_offset != 0:
             entries = map(lambda x: apply_day_offset(x, self._day_offset), entries)
 
-        self._entries = list(entries)
+        result = list(entries)
+
+        # remove duplicate (date, type) pairs, keeping first occurrence
+        if self._ignore_duplicates:
+            seen: set[tuple] = set()
+            unique: List[Collection] = []
+            for e in result:
+                key = (e.date, e.type)
+                if key not in seen:
+                    seen.add(key)
+                    unique.append(e)
+            result = unique
+
+        self._entries = result
 
     def get_dedicated_calendar_types(self) -> set[str]:
         """Return set of waste types with a dedicated calendar."""
@@ -221,6 +235,7 @@ class SourceShell:
         source_args,
         calendar_title: Optional[str] = None,
         day_offset: int = 0,
+        ignore_duplicates: bool = False,
     ) -> "SourceShell | None":
         # load source module
         try:
@@ -263,6 +278,7 @@ class SourceShell:
             calendar_title=calendar_title,
             unique_id=calc_unique_source_id(source_name, source_args),
             day_offset=day_offset,
+            ignore_duplicates=ignore_duplicates,
         )
 
         return g

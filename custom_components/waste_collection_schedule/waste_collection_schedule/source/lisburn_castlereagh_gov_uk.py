@@ -3,7 +3,7 @@ from datetime import datetime
 
 import bs4
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
@@ -25,10 +25,10 @@ TEST_CASES = {
 }
 
 API_URL = "https://lisburn.isl-fusion.com"
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "ResidualBin": "mdi:trash-can",
-    "RecycleBin": "mdi:recycle",
-    "BrownBin": "mdi:leaf",
+ICON_MAP = {
+    "ResidualBin": Icons.GENERAL_WASTE,
+    "RecycleBin": Icons.RECYCLING,
+    "BrownBin": Icons.BIO_KITCHEN,
 }
 NICE_NAMES = {
     "ResidualBin": "Refuse",
@@ -67,7 +67,7 @@ class Source:
             response.raise_for_status()
             try:
                 address_list = response.json().get("html")
-            except:
+            except Exception:
                 raise SourceArgumentNotFound("postcode", self._postcode)
 
             soup = bs4.BeautifulSoup(address_list, features="html.parser")
@@ -106,7 +106,7 @@ class Source:
 
         try:
             next_collections = response.json().get("nextCollections")
-        except:
+        except Exception:
             raise ValueError("No collection data in response")
 
         entries = []  # List that holds collection schedule

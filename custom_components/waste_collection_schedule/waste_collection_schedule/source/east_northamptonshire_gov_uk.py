@@ -1,8 +1,7 @@
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Northamptonshire and Wellingborough"
 DESCRIPTION = "Source for East Northamptonshire and Wellingborough"
@@ -16,20 +15,14 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "general": "mdi:trash-can",
-    "recycling": "mdi:recycle",
+    "general": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
 }
 
 
 API_URL = "https://api.northnorthants.gov.uk/test/wc-info/{uprn}"
 
-DAYS = {
-    'MON': 0,
-    'TUE': 1,
-    'WED': 2,
-    'THU': 3,
-    'FRI': 4
-}
+DAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4}
 
 
 class Source:
@@ -57,8 +50,11 @@ class Source:
             else:
                 bin_type = "recycling" if data["schedule"] == "B" else "general"
 
-            entries.append(Collection(date=process_day.date(),
-                           t=bin_type, icon=ICON_MAP.get(bin_type)))
+            entries.append(
+                Collection(
+                    date=process_day.date(), t=bin_type, icon=ICON_MAP.get(bin_type)
+                )
+            )
 
             process_day = process_day + timedelta(days=7)
 

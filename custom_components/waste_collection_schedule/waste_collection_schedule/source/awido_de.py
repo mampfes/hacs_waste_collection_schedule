@@ -396,7 +396,6 @@ SERVICE_MAP = [
         "service_id": "ebe",
         "default_params": {"city": "Zorneding"},
     },
-
 ]
 
 TEST_CASES = {
@@ -437,7 +436,7 @@ TEST_CASES = {
     },
     "Daaden-Herdorf": {
         "customer": "awb-ak",
-        "city": "VG Daaden-Herdorf - Kernstadt Herdorf",
+        "city": "VG Daaden-Herdorf",
     },
     "Mühldorf": {
         "customer": "lra-mue",
@@ -455,6 +454,16 @@ TEST_CASES = {
         "street": "Karwendelweg",
     },
     "Gießen": {"customer": "lkgi", "city": "Langgöns", "street": "Hauptstraße"},
+    "Gotha, Ahornweg": {
+        "customer": "gotha",
+        "city": "Gotha",
+        "street": "Ahornweg",
+    },
+    "Gotha, Drei Gleichen OT Günthersleben, Mittelstr": {
+        "customer": "gotha",
+        "city": "Drei Gleichen OT Günthersleben",
+        "street": "Mittelstr",
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -671,17 +680,16 @@ class Source:
         for calitem in calendar:
             date = datetime.datetime.strptime(calitem["dt"], "%Y%m%d").date()
 
-            # Extract extra attributes from calendar item
-            # 'ad' contains the location/address for the collection event
-            # (None for public holidays, which are already filtered above)
-            extra: dict = {}
-            ad = calitem.get("ad")
-            if ad and isinstance(ad, str):
-                extra["description"] = ad
+            # 'ad' is a list of addresses, one per fraction entry in 'fr'
+            ad_list = calitem.get("ad") or []
+            fr_list = calitem.get("fr") or []
 
             # Add all fractions for this date
-            for fracitem in calitem["fr"]:
+            for i, fracitem in enumerate(fr_list):
                 waste_type = fractions[fracitem]
+                extra: dict = {}
+                if i < len(ad_list) and ad_list[i]:
+                    extra["description"] = ad_list[i]
                 c = Collection(date, waste_type)
                 c.update(extra)
                 entries.append(c)

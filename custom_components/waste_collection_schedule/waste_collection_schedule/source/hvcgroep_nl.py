@@ -3,6 +3,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = None
 DESCRIPTION = "Source for the Dutch HVCGroep waste management."
@@ -46,10 +47,13 @@ TEST_CASES = {
         "house_number": "1",
         "service": "hvcgroep",
     },
-    "ZRD": {
-        "postal_code": "4691DH", 
-        "house_number": "4", 
-        "service": "zrd"},
+    "Reinis": {"postal_code": "3201AA", "house_number": "1", "service": "reinis"},
+    "ZRD": {"postal_code": "4691DH", "house_number": "4", "service": "zrd"},
+    "Hoorn": {"postal_code": "1628XA", "house_number": "1", "service": "hvcgroep"},
+    "Uitgeest": {
+        "postal_code": "1911LB",
+        "house_number": "14",
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -248,13 +252,33 @@ SERVICE_MAP = [
         },
     },
     {
+        "title": "Mijn Afval Zaken - BUCH",
+        "api_url": "https://www.mijnafvalzaken.nl",
+        "icons": {
+            "plastic-blik-drinkpak": "mdi:recycle",
+            "gft": "mdi:leaf",
+            "papier-en-karton": "mdi:archive",
+            "restafval": "mdi:trash-can",
+        },
+    },
+    {
+        "title": "Reinis",
+        "api_url": "https://reinis.nl",
+        "icons": {
+            "appel-gft": "mdi:leaf",
+            "plastic-pak-blik": "mdi:recycle",
+            "doos-karton-papier": "mdi:archive",
+            "kliko-grijs-zak-grijs-rest": "mdi:trash-can",
+        },
+    },
+    {
         "title": "ZRD",
         "api_url": "https://www.zrd.nl",
         "icons": {
-            "appel en blad": "mdi:leaf",         # GFT-afval
-            "pet pak blik": "mdi:recycle",       # PMD
-            "zak rest rest": "mdi:trash-can",    # Restafval
-            "karton": "mdi:archive",             # Papier en karton
+            "appel en blad": "mdi:leaf",  # GFT-afval
+            "pet pak blik": "mdi:recycle",  # PMD
+            "zak rest rest": "mdi:trash-can",  # Restafval
+            "karton": "mdi:archive",  # Papier en karton
         },
     },
 ]
@@ -285,7 +309,7 @@ class Source:
     ):
         self.postal_code = postal_code
         self.house_number = house_number
-        self.house_letter = postal_code
+        self.house_letter = house_letter
         self.suffix = suffix
         self._url, self._icons = get_service_name_map()[service]
 
@@ -297,14 +321,14 @@ class Source:
 
         # Something must be wrong, maybe the address isn't valid? No need to do the extra requests so just return here.
         if len(data) == 0:
-            raise Exception("no data found for this address")
+            raise SourceArgumentNotFound("postal_code", self.postal_code)
 
         bag_id = data[0]["bagid"]
-        if len(data) > 1 and self.house_letter and self.suffix:
+        if len(data) > 1 and (self.house_letter or self.suffix):
             _LOGGER.info(f"Checking {self.house_letter} {self.suffix}")
             for address in data:
                 if (
-                    address["huisletter"] == self.house_letter
+                    address["huisletter"].lower() == self.house_letter.lower()
                     and address["toevoeging"] == self.suffix
                 ):
                     bag_id = address["bagid"]

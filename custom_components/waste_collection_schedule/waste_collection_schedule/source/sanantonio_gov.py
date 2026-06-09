@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 from urllib.parse import quote
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentRequired,
 )
@@ -28,11 +28,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
-    "Organics": "mdi:leaf",
-    "Brush": "mdi:tree",
-    "Bulky": "mdi:sofa",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
+    "Organics": Icons.ORGANIC,
+    "Brush": Icons.GARDEN,
+    "Bulky": Icons.BULKY,
 }
 
 DAY_OF_WEEK = {

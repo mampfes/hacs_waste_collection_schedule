@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Eisenkappel-Vellach"
@@ -12,13 +12,13 @@ TEST_CASES = {"Leppen": {"region": "Leppen"}}
 COUNTRY = "at"
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Glasbehälter": "mdi:bottle-soda",
-    "Biomüll": "mdi:leaf",
-    "Altpapiertonne": "mdi:package-variant",
-    "Recycle": "mdi:recycle",
-    "Recyclinghof": "mdi:factory",
-    "Gelbe": "mdi:recycle",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Glasbehälter": Icons.GLASS,
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Altpapiertonne": Icons.PAPER,
+    "Recycle": Icons.RECYCLING,
+    "Recyclinghof": Icons.COMMERCIAL,
+    "Gelbe": Icons.RECYCLING,
 }
 
 

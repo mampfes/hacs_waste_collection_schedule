@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Kiama City Council"
 DESCRIPTION = "Source script for kiama.nsw.gov.au"
@@ -16,9 +16,9 @@ TEST_CASES = {
 API_URL = "https://www.kiama.nsw.gov.au/ocapi/Public/myarea/wasteservices"
 
 ICON_MAP = {
-    "Urban garbage": "mdi:trash-can",
-    "Urban food & garden organics": "mdi:leaf",
-    "Urban recycling": "mdi:recycle",
+    "Urban garbage": Icons.GENERAL_WASTE,
+    "Urban food & garden organics": Icons.BIO_KITCHEN,
+    "Urban recycling": Icons.RECYCLING,
 }
 
 

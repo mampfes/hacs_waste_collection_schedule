@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Melton City Council"
 DESCRIPTION = "Source for Melton City Council rubbish collection."
@@ -19,9 +19,9 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
-    "Food and Green Waste": "mdi:leaf",
-    "Hard Waste": "mdi:sofa",
-    "Recycling": "mdi:recycle",
+    "Food and Green Waste": Icons.BIO_KITCHEN,
+    "Hard Waste": Icons.BULKY,
+    "Recycling": Icons.RECYCLING,
 }
 
 
@@ -31,11 +31,9 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
-        headers = {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        }
+        headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "}
         session.headers.update(headers)
-        
+
         response = session.get("https://www.melton.vic.gov.au/Home")
         response = session.get("https://www.melton.vic.gov.au/Home")
         response.raise_for_status()
@@ -79,14 +77,14 @@ class Source:
             waste_type = article.h3.string
             icon = ICON_MAP.get(waste_type)
             next_pickup = article.find(class_="next-service").getText().strip()
-            
+
             if not re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 pattern = r"\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[0-2])/\d{4}\b"
                 date_match = re.search(pattern, next_pickup, re.IGNORECASE)
-        
+
                 if date_match:
                     next_pickup = date_match.group(0) if date_match else None
-                
+
             if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 next_pickup_date = datetime.strptime(
                     next_pickup.split(sep=" ")[1], "%d/%m/%Y"

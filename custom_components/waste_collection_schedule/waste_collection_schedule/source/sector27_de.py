@@ -1,6 +1,5 @@
 import datetime
 import json
-import logging
 import re
 
 import requests
@@ -15,11 +14,14 @@ DESCRIPTION = "Source for Muellkalender in Kreis RE."
 URL = "https://muellkalender.sector27.de"
 TEST_CASES = {
     "Datteln": {"city": "Datteln", "street": "Am Bahnhof"},
+    "Datteln Im Overkamp": {"city": "Datteln", "street": "Im Overkamp"},
+    "Datteln range street": {
+        "city": "Datteln",
+        "street": "Ahsener Straße 113 - 161 (ungerade)",
+    },
     "Marl": {"city": "Marl", "street": "Ahornweg"},
     "Oer-Erkenschick": {"city": "Oer-Erkenschwick", "street": "An der Zechenbahn"},
 }
-
-_LOGGER = logging.getLogger(__name__)
 
 CITIES = {
     "Datteln": {"idCity": 9, "licenseKey": "DTTLN20137REKE382EHSE"},
@@ -61,6 +63,62 @@ class Source:
 
         return yRange
 
+    def _lookup_street_id(self, city):
+        """Resolve a street name to its sector27 street id.
+
+        The upstream ``searchForStreets`` endpoint appears to truncate the
+        result list after a handful of matches, so searching with the first
+        whitespace-separated token of the street name fails when the street
+        starts with a generic German article/preposition such as ``Im``,
+        ``Am``, ``An``, ``Auf``, ``Zum`` and the distinctive word is the
+        second one (e.g. ``"Im Overkamp"``).
+
+        To be robust we try each distinct token of the configured street and
+        look for an exact, case-insensitive, whitespace-stripped match in
+        any of the responses. The first match wins. Only if no token yields
+        a match do we surface a ``SourceArgumentNotFound(WithSuggestions)``
+        error.
+        """
+        if not self._street:
+            raise SourceArgumentNotFound("street", self._street)
+
+        target = self._street.strip().casefold()
+        # Preserve first-occurrence order while dropping duplicates.
+        tokens: list[str] = []
+        for token in self._street.split():
+            if token and token not in tokens:
+                tokens.append(token)
+
+        suggestions: dict[str, None] = {}
+
+        for token in tokens:
+            params = {
+                "idCity": city["idCity"],
+                "licenseKey": city["licenseKey"],
+                "searchFor": token,
+            }
+            r = requests.get(
+                "https://muellkalender.sector27.de/web/searchForStreets",
+                params=params,
+                headers=HEADERS,
+            )
+            r.raise_for_status()
+            entries = json.loads(extractJson(r.text))
+
+            for entry in entries:
+                name = entry.get("name", "").strip()
+                if not name:
+                    continue
+                suggestions[name] = None
+                if name.casefold() == target:
+                    return entry["id"]
+
+        if suggestions:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, list(suggestions.keys())
+            )
+        raise SourceArgumentNotFound("street", self._street)
+
     def fetch(self):
         city = CITIES.get(self._city)
         if city is None:
@@ -68,30 +126,12 @@ class Source:
                 "city", self._city, [x for x in CITIES.keys()]
             )
 
-        args = city
-        args["searchFor"] = self._street
-
-        r = requests.get(
-            "https://muellkalender.sector27.de/web/searchForStreets",
-            params=args,
-            headers=HEADERS,
-        )
-        r.raise_for_status()
-        streets = {
-            e["name"].strip(): e["id"] for (e) in json.loads(extractJson(r.text))
-        }
-
-        if self._street not in streets:
-            if streets:
-                SourceArgumentNotFoundWithSuggestions(
-                    "street", self._street, [x for x in streets.keys()]
-                )
-            raise SourceArgumentNotFound("street", self._street)
+        street_id = self._lookup_street_id(city)
 
         args = {
             "licenseKey": city["licenseKey"],
             "cityId": city["idCity"],
-            "streetId": streets[self._street],
+            "streetId": street_id,
             "viewrange": "yearRange",
         }
 

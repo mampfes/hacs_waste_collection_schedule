@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
@@ -21,10 +21,10 @@ TEST_CASES = {
     "Test_ID_002": {"id": "593456"},
 }
 ICON_MAP = {
-    "brown": "mdi:leaf",
-    "grey": "mdi:trash-can",
-    "green": "mdi:package-variant",
-    "blue": "mdi:bottle-soda-classic",
+    "brown": Icons.ORGANIC,
+    "grey": Icons.GENERAL_WASTE,
+    "green": Icons.PAPER,
+    "blue": Icons.GLASS,
 }
 NAME_MAP = {
     "brown": "Garden",

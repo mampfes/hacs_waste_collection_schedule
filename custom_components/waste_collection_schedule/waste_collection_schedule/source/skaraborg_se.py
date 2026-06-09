@@ -1,7 +1,8 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Avfall & Återvinning Skaraborg"
 DESCRIPTION = "Source for Skaraborg."
@@ -12,11 +13,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Matavfall": "mdi:leaf",
-    "Brännbart": "mdi:fire",
-    "Matavfall/Restavfall": "mdi:trash-can",
-    "Plast/Kartong": "mdi:package",
-    "Färgat glas/Ofärgat glas": "mdi:bottle-soda",
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Brännbart": Icons.GENERAL_WASTE,
+    "Matavfall/Restavfall": Icons.BIO_KITCHEN,
+    "Plast/Kartong": Icons.PLASTIC_PACKAGING,
+    "Färgat glas/Ofärgat glas": Icons.GLASS,
 }
 
 SEARCH_URL = "https://gullspang.avfallsapp.se/api/nova/v1/next-pickup/search"
@@ -39,7 +40,7 @@ class Source:
 
         search_results = search_request.json()
         if not search_results:
-            raise Exception("No addresses found")
+            raise SourceArgumentNotFound("address", self._address)
 
         data = {"plant_id": self._find_plant_id(search_results)}
         data_request = requests.post(DATA_URL, data, headers=headers)
@@ -66,4 +67,4 @@ class Source:
                 if x["zip_city"] == self._city and x["address"] == self._address
             )
         except StopIteration:
-            raise Exception("Can't find plant id for address")
+            raise SourceArgumentNotFound("address", self._address)

@@ -1,4 +1,5 @@
 import datetime
+import logging
 import re
 from typing import cast
 
@@ -20,6 +21,8 @@ from ..service.EcoHarmonogramPL import (
     StreetResponse,
     Town,
 )
+
+_LOGGER = logging.getLogger(__name__)
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Fill in Town, Street, Housenumber and District and press confirm. If any other field is required, it will tell you with a dropdown menu of suggestions. If your Town is not found, you might need to provide the App argument. (take a look in the linked documentation below, there is a list of towns with their corresponding App argument)",
@@ -187,6 +190,18 @@ TEST_CASES = {
         "house_number": "1",
         "additional_sides_matcher": "Заміська забудова",
         "language": "uk",
+    },
+    "Sławków (mixed sides: empty + non-empty, no matcher)": {
+        "town": "Sławków",
+        "street": "Jagiellońska",
+        "house_number": "32",
+        "additional_sides_matcher": "",  # Available sides are "Zabudowa wysoka" and "" (empty string)
+    },
+    "Tarnowskie Góry, Gliwicka 1": {
+        "town": "Tarnowskie Góry",
+        "street": "Gliwicka",
+        "house_number": "1",
+        "additional_sides_matcher": "Zabudowa jednorodzinna",
     },
 }
 
@@ -374,26 +389,26 @@ class Source:
         for street in streets["streets"]:
             if street["sides"] == "":
                 to_return.append(street)
-            elif self.additional_sides_matcher_input == "":
-                raise SourceArgumentRequiredWithSuggestions(
-                    "additional_sides_matcher",
-                    self.additional_sides_matcher_input,
-                    {x["sides"] for x in streets["streets"]},
-                )
-            elif (
+            elif self.additional_sides_matcher_input != "" and (
                 street["sides"].lower().casefold()
                 == self.additional_sides_matcher_input.lower().casefold()
             ):
                 to_return.append(street)
 
         if len(to_return) == 0:
+            if self.additional_sides_matcher_input == "":
+                raise SourceArgumentRequiredWithSuggestions(
+                    "additional_sides_matcher",
+                    self.additional_sides_matcher_input,
+                    {x["sides"] for x in streets["streets"]},
+                )
             raise SourceArgumentNotFoundWithSuggestions(
                 "additional_sides_matcher",
                 self.additional_sides_matcher_input,
                 {x["sides"] for x in streets["streets"]},
             )
 
-        return streets
+        return {**streets, "streets": to_return}
 
     @staticmethod
     def _extract_number(value: str) -> int | None:
@@ -484,7 +499,20 @@ class Source:
                         month = sch["month"]
                         year = sch["year"]
                         for d in days:
-                            dmy = datetime.date(int(year), int(month), int(d))
+                            d = d.strip()
+                            if not d:
+                                continue
+                            try:
+                                dmy = datetime.date(int(year), int(month), int(d))
+                            except ValueError:
+                                _LOGGER.warning(
+                                    "ecoharmonogram_pl: skipping invalid date %s-%s-%s for %s",
+                                    year,
+                                    month,
+                                    d,
+                                    sch["name"],
+                                )
+                                continue
                             name = sch["name"]
                             if not self._entry_exists(dmy, name, entries):
                                 entries.append(Collection(dmy, name))

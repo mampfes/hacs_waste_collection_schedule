@@ -104,7 +104,11 @@ class WasteCollectionCalendar(CalendarEntity):
         ):
             event = self._convert(collection)
 
-            if start_date <= event.start_datetime_local <= end_date:
+            if (
+                start_date.date()
+                <= event.start_datetime_local.date()
+                <= end_date.date()
+            ):
                 events.append(event)
 
         return events
@@ -125,33 +129,38 @@ def create_calendar_entries(
     coordinator: WCSCoordinator | None = None,
 ) -> list[WasteCollectionCalendar]:
     entities: list[WasteCollectionCalendar] = []
+
     for shell in shells:
-        dedicated_calendar_types = shell.get_dedicated_calendar_types()
-        for type in dedicated_calendar_types:
+        aggregator = CollectionAggregator([shell])
+        dedicated_types = shell.get_dedicated_calendar_types()
+        dedicated_calendar_types = {
+            shell.get_collection_type_name(type) for type in dedicated_types
+        }
+
+        for type in dedicated_types:
             entities.append(
                 WasteCollectionCalendar(
                     api=api,
                     coordinator=coordinator,
-                    aggregator=CollectionAggregator([shell]),
+                    aggregator=aggregator,
                     name=shell.get_calendar_title_for_type(type),
                     include_types={shell.get_collection_type_name(type)},
                     unique_id=calc_unique_calendar_id(shell, type),
                 )
             )
 
-        entities.append(
-            WasteCollectionCalendar(
-                api=api,
-                coordinator=coordinator,
-                aggregator=CollectionAggregator([shell]),
-                name=shell.calendar_title,
-                exclude_types={
-                    shell.get_collection_type_name(type)
-                    for type in dedicated_calendar_types
-                },
-                unique_id=calc_unique_calendar_id(shell),
+        if aggregator.types != dedicated_calendar_types:
+            entities.append(
+                WasteCollectionCalendar(
+                    api=api,
+                    coordinator=coordinator,
+                    aggregator=aggregator,
+                    name=shell.calendar_title,
+                    exclude_types=dedicated_calendar_types,
+                    unique_id=calc_unique_calendar_id(shell),
+                )
             )
-        )
+
     return entities
 
 

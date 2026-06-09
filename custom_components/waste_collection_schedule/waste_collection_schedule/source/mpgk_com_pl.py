@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "MPGK Katowice"
@@ -12,11 +12,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "tworzyw": "mdi:recycle",
-    "papier": "mdi:newspaper",
-    "szklane": "mdi:glass-wine",
-    "komunalne": "mdi:trash-can",
-    "wielkogabarytowe": "mdi:truck",
+    "tworzyw": Icons.RECYCLING,
+    "papier": Icons.PAPER,
+    "szklane": Icons.GLASS_COLORED,
+    "komunalne": Icons.GENERAL_WASTE,
+    "wielkogabarytowe": Icons.BULKY,
 }
 
 

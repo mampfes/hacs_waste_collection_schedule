@@ -7,14 +7,15 @@ import inspect
 import json
 import re
 import site
+import sys
 from functools import lru_cache
 from pathlib import Path
 from types import ModuleType
 from typing import Any, Callable, Tuple, TypedDict, TypeVar
 
-try:
+if sys.version_info >= (3, 11):
     from typing import NotRequired
-except ImportError:
+else:
     from typing_extensions import NotRequired
 
 import yaml
@@ -42,7 +43,7 @@ END_COUNTRY_SECTION = "<!--End of country section-->"
 START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
 
-LANGUAGES = ["en", "de", "it", "fr"]
+LANGUAGES = ["en", "de", "it", "fr", "nl"]
 ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
 ARG_DESCRIPTIONS_TO_KEEP = ["calendar_title"]
 ARG_GENERAL_KEYS_TO_KEEP = ["title", "description"]
@@ -593,7 +594,7 @@ def write_ics_md_file(filename: Path, data: IcsSourceData) -> None:
         md += multiline_indent(yaml.dump(tc).rstrip("\n"), 8) + "\n"
         md += "```\n"
         # md += "\n"
-    with open(filename, "w", encoding="utf-8") as f:
+    with open(filename, "w", encoding="utf-8", newline="\n") as f:
         f.write(md)
 
 
@@ -646,7 +647,7 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     output: dict[str, list[dict[str, str | dict[str, Any]]]] = {}
     source_metadata_by_module: dict[str, dict[str, Any]] = {}
 
-    for country in sorted(countries):
+    for country in ["Generic"] + sorted(c for c in countries if c != "Generic"):
         output[country] = []
         for e in sorted(
             countries[country],
@@ -666,10 +667,10 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
                 }
             )
 
-            # Build metadata for each module (store once per module)
-            if module not in source_metadata_by_module:
+            # Build metadata for each source (keyed by id for per-source docs)
+            if id not in source_metadata_by_module:
                 doc_url = DOC_URL_BASE + e.filename
-                source_metadata_by_module[module] = {
+                source_metadata_by_module[id] = {
                     "docs_url": doc_url,
                     "howto": e.custom_howto,
                     "urls": e.url_placeholders,
@@ -679,12 +680,13 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
         "custom_components/waste_collection_schedule/sources.json",
         "w",
         encoding="utf-8",
+        newline="\n",
     ) as f:
         f.write(json.dumps(output, indent=2))
 
     # Save metadata separately (for runtime use)
     metadata_file = "custom_components/waste_collection_schedule/source_metadata.json"
-    with open(metadata_file, "w", encoding="utf-8") as f:
+    with open(metadata_file, "w", encoding="utf-8", newline="\n") as f:
         json.dump(source_metadata_by_module, f, indent=2, ensure_ascii=False)
 
 
@@ -869,6 +871,7 @@ def update_json(
             tranlation_file,
             "w",
             encoding="utf-8",
+            newline="\n",
         ) as f:
             json.dump(translations, f, indent=2, ensure_ascii=False)
 
@@ -1043,7 +1046,7 @@ def _patch_file(filename, section_id, str):
     md = md[:start_pos] + str + md[end_pos:]
 
     # write entire file
-    with open(filename, "w", encoding="utf-8") as f:
+    with open(filename, "w", encoding="utf-8", newline="\n") as f:
         f.write(md)
 
 
@@ -1125,6 +1128,10 @@ COUNTRYCODES = [
         "name": "Poland",
     },
     {
+        "code": "pt",
+        "name": "Portugal",
+    },
+    {
         "code": "se",
         "name": "Sweden",
     },
@@ -1141,6 +1148,10 @@ COUNTRYCODES = [
         "name": "Switzerland",
     },
     {
+        "code": "li",
+        "name": "Liechtenstein",
+    },
+    {
         "code": "us",
         "name": "United States of America",
     },
@@ -1155,6 +1166,10 @@ COUNTRYCODES = [
     {
         "code": "fi",
         "name": "Finland",
+    },
+    {
+        "code": "pt",
+        "name": "Portugal",
     },
 ]
 

@@ -1,7 +1,9 @@
 import logging
 
-from waste_collection_schedule.source.roundlookup_uk import \
-    Source as Roundlookup  # type: ignore[attr-defined]
+from waste_collection_schedule import Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.source.roundlookup_uk import (
+    Source as Roundlookup,  # type: ignore[attr-defined]
+)
 
 _LOGGER = logging.getLogger(__name__)
 TITLE = "Wychavon District Council (Deprecated)"
@@ -15,9 +17,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Non-recyclable": "mdi:trash-can",
-    "Garden": "mdi:leaf",
-    "Recycling": "mdi:recycle",
+    "Non-recyclable": Icons.GENERAL_WASTE,
+    "Garden": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
 }
 
 

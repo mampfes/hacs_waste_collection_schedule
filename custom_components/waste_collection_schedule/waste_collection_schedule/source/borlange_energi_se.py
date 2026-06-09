@@ -1,16 +1,21 @@
-import requests
 import re
-from datetime import date
 from datetime import datetime
-from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentRequired, SourceArgumentNotFound
+
+import requests
+from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentRequired,
+)
 
 TITLE = "Borlänge Energi"
 DESCRIPTION = "Waste collection schedule for Borlänge, Sweden"
 URL = "https://www.borlange-energi.se/appresource/4.534bcbed17430db9cdb1e5c2/12.3a9c9b4b19a7bbdffe85a22/getcontainerdata"
 COUNTRY = "se"
-TEST_CASES = {"Mats Knuts Väg": {"pickup_address": "Mats Knuts Väg 100"},
-              "Rorsmans Väg 7": {"pickup_address": "Rorsmans Väg 7"}}
+TEST_CASES = {
+    "Mats Knuts Väg": {"pickup_address": "Mats Knuts Väg 100"},
+    "Rorsmans Väg 7": {"pickup_address": "Rorsmans Väg 7"},
+}
 
 DEFAULT_ICON = "mdi:trash-can"
 MONTHS = {
@@ -29,17 +34,17 @@ MONTHS = {
 }
 
 ICON_MAP = {
-    "Matavfall": "mdi:food-apple",
-    "Restavfall": "mdi:trash-can",
-    "Pappersförpackningar": "mdi:package-variant",
-    "Plastförpackningar": "mdi:bottle-soda-outline",
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Pappersförpackningar": Icons.PAPER,
+    "Plastförpackningar": Icons.GLASS,
 }
 
 
 def parse_swedish_date(text: str) -> datetime:
-    """
-    Extract date from Swedish text like:
-    'Nästa tömning sker torsdag den 15 januari'
+    """Extract date from Swedish text.
+
+    Handles formats like 'Nästa tömning sker torsdag den 15 januari'.
     """
     match = re.search(r"(\d{1,2})\s+([a-zåäö]+)", text.lower())
     if not match:
@@ -69,8 +74,7 @@ class Source:
         self._pickup_address = pickup_address
 
     def fetch(self):
-        params = {"svAjaxReqParam": "ajax",
-                  "pickupAddress": self._pickup_address}
+        params = {"svAjaxReqParam": "ajax", "pickupAddress": self._pickup_address}
 
         r = requests.get(URL, params=params, timeout=30)
         r.raise_for_status()

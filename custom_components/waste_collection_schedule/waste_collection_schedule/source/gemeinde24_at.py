@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Any
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
@@ -32,18 +32,18 @@ SEARCH_LATITUDE = "47.5000"
 SEARCH_LONGITUDE = "14.5000"
 
 ICON_MAP = {
-    "rm": "mdi:trash-can",
-    "bm": "mdi:leaf",
-    "lf": "mdi:recycle",
-    "ap": "mdi:package-variant",
-    "ag": "mdi:glass-wine",
-    "am": "mdi:iron-outline",
-    "sp": "mdi:sofa",
-    "gs": "mdi:tree",
-    "ps": "mdi:chemical-weapon",
-    "el": "mdi:flash",
-    "frei1": "mdi:chemical-weapon",
-    "frei2": "mdi:recycle-variant",
+    "rm": Icons.GENERAL_WASTE,
+    "bm": Icons.ORGANIC,
+    "lf": Icons.RECYCLING,
+    "ap": Icons.PAPER,
+    "ag": Icons.GLASS_COLORED,
+    "am": Icons.ELECTRONICS,
+    "sp": Icons.BULKY,
+    "gs": Icons.GARDEN,
+    "ps": Icons.HAZARDOUS,
+    "el": Icons.ELECTRONICS,
+    "frei1": Icons.HAZARDOUS,
+    "frei2": Icons.PLASTIC_PACKAGING,
 }
 
 TITLE_ICON_MAP = {
@@ -89,8 +89,7 @@ PARAM_DESCRIPTIONS = {
             "(optional statt des Gemeinde-Feldes)."
         ),
         "street_id": (
-            "Numerische streetID aus Gemeinde24 "
-            "(optional statt des Straßen-Feldes)."
+            "Numerische streetID aus Gemeinde24 " "(optional statt des Straßen-Feldes)."
         ),
     },
 }
@@ -200,7 +199,9 @@ class Source:
 
         reports = payload.get("reports")
         if not isinstance(reports, list):
-            raise Exception("Unexpected response from gemeinden.php: missing 'reports'.")
+            raise Exception(
+                "Unexpected response from gemeinden.php: missing 'reports'."
+            )
 
         exact_matches_with_id: list[tuple[str, str, str]] = []
         all_names_with_id = []
@@ -308,9 +309,7 @@ class Source:
         raise SourceArgumentNotFoundWithSuggestions(
             "strasse",
             self._strasse,
-            self._build_suggestions(
-                self._strasse, [name for name, _ in street_pairs]
-            ),
+            self._build_suggestions(self._strasse, [name for name, _ in street_pairs]),
         )
 
     def _request_json(
@@ -398,9 +397,7 @@ class Source:
         return ordered[:20]
 
     @staticmethod
-    def _format_gemeinde_suggestion(
-        gemeinde_id: str, name: str, zip_code: str
-    ) -> str:
+    def _format_gemeinde_suggestion(gemeinde_id: str, name: str, zip_code: str) -> str:
         if zip_code:
             return f"{name} ({zip_code}, GemeindeID={gemeinde_id})"
         return f"{name} (GemeindeID={gemeinde_id})"

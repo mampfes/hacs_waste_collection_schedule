@@ -92,7 +92,7 @@ class Source:
         # Sometimes there is no garbage calendar available
         if "Es sind keine Abfuhrbezirke hinterlegt." in r.text:
             raise Exception(
-                f'Error: "Es sind keine Abfuhrbezirke hinterlegt." for "{self._districts[3-1]}". Please use different input data.'
+                f'Error: "Es sind keine Abfuhrbezirke hinterlegt." for "{self._districts[3 - 1]}". Please use different input data.'
             )
 
         soup = BeautifulSoup(r.text, features="html.parser")

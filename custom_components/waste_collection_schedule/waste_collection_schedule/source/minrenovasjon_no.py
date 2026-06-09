@@ -4,7 +4,7 @@ import re
 from urllib.parse import urlencode
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Min Renovasjon"
 DESCRIPTION = "Source for Norkart Komtek MinRenovasjon (Norway)."
@@ -25,8 +25,28 @@ TEST_CASES = {
         "house_number": 2,
         "street_code": 2469,
         "county_id": 3024,
-    }
+    },
+    "Lillehammer Åsmarkvegen 111": {
+        "street_name": "Åsmarkvegen",
+        "house_number": 111,
+        "street_code": 6530,
+        "county_id": 3405,
+    },
 }
+
+EXTRA_INFO = [
+    {
+        "title": "ROAF (Romerike Avfallsforedling IKS)",
+        "url": "https://www.roaf.no",
+        "country": "no",
+        "default_params": {
+            "street_name": "Solvangen",
+            "house_number": 2,
+            "street_code": 12950,
+            "county_id": 3205,
+        },
+    },
+]
 
 API_URL = (
     "https://norkartrenovasjon.azurewebsites.net/proxyserver.ashx?server="
@@ -34,24 +54,24 @@ API_URL = (
 )
 APP_KEY = "AE13DEEC-804F-4615-A74E-B4FAC11F0A30"
 ICON_MAP = {
-    "": "mdi:trash-can",
-    "brush": "mdi:trash-can",
-    "elektriskogelektronisk": "mdi:chip",
-    "farligavfall": "mdi:trash-can",
-    "glassogmetallemballasje": "mdi:trash-can",
-    "hageavfall": "mdi:leaf",
-    "klaerogsko": "mdi:hanger",
-    "matavfall": "mdi:trash-can",
-    "matrestavfall": "mdi:trash-can",
-    "matrestavfallplast": "mdi:trash-can",
-    "metall": "mdi:trash-can",
-    "papir": "mdi:newspaper-variant-multiple",
-    "pappogkartong": "mdi:archive",
-    "plastemballasje": "mdi:trash-can",
-    "restavfall": "mdi:trash-can",
-    "drikkekartong": "mdi:newspaper-variant-multiple",
-    "papppapirdrikkekartong": "mdi:newspaper-variant-multiple",
-    "trevirke": "mdi:trash-can",
+    "": Icons.GENERAL_WASTE,
+    "brush": Icons.GENERAL_WASTE,
+    "elektriskogelektronisk": Icons.ELECTRONICS,
+    "farligavfall": Icons.GENERAL_WASTE,
+    "glassogmetallemballasje": Icons.GENERAL_WASTE,
+    "hageavfall": Icons.ORGANIC,
+    "klaerogsko": Icons.TEXTILE,
+    "matavfall": Icons.BIO_KITCHEN,
+    "matrestavfall": Icons.GENERAL_WASTE,
+    "matrestavfallplast": Icons.GENERAL_WASTE,
+    "metall": Icons.METAL,
+    "papir": Icons.PAPER,
+    "pappogkartong": Icons.PAPER,
+    "plastemballasje": Icons.GENERAL_WASTE,
+    "restavfall": Icons.GENERAL_WASTE,
+    "drikkekartong": Icons.NEWSPAPER,
+    "papppapirdrikkekartong": Icons.NEWSPAPER,
+    "trevirke": Icons.GENERAL_WASTE,
 }
 
 

@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 
 import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of Philadelphia, PA"
 DESCRIPTION = "City of Philadelphia, PA, USA"
@@ -25,8 +25,8 @@ DAYS = {
     "SUN": SU,
 }
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -59,17 +59,6 @@ class Source:
             for dt in occurrences:
                 all_pickups.append({"date": dt.date(), "weekly_pickup_num": index + 1})
         return sorted(all_pickups, key=lambda x: x["date"])
-
-    def check_holidays(self, hols: list[date], dt: date, pickup_number: int) -> date:
-        if pickup_number > 1:
-            # Secondary pickups: if any observed holiday falls in the same Monday–Friday
-            # week as `dt`, cancel secondary pickup
-            week_monday = dt - timedelta(days=dt.weekday())  # Monday of this week
-            week_friday = week_monday + timedelta(days=4)
-            holiday_in_week = any(week_monday <= h <= week_friday for h in hols)
-            if holiday_in_week:
-                return None
-            return dt
 
     def check_holidays(self, hols: list[date], dt: date, pickup_number: int) -> date:
         """

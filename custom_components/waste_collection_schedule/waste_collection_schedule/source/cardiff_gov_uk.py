@@ -3,7 +3,7 @@ import json
 import xml.etree.ElementTree as ET
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Cardiff Council"
 DESCRIPTION = "Source script for cardiff.gov.uk"
@@ -14,11 +14,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food": "mdi:food",
-    "Glass": "mdi:glass-fragile",
+    "General": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
+    "Food": Icons.BIO_KITCHEN,
+    "Glass": Icons.GLASS,
 }
 
 PAYLOAD_GET_JWT = (
@@ -58,7 +58,7 @@ def get_token() -> str:
     r = requests.post(URL_GET_JWT, headers=headers, data=PAYLOAD_GET_JWT)
     r.raise_for_status()
 
-    tree = ET.fromstring(r.text)
+    tree = ET.fromstring(r.text)  # nosec B314
 
     jwt_result_element = tree.find(
         ".//GetJWTResult", namespaces={"": "http://tempuri.org/"}

@@ -2,7 +2,7 @@ from datetime import date
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -11,17 +11,25 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Gästrike Återvinnare"
 DESCRIPTION = "Source for Gästrike Återvinnare waste collection"
 URL = "https://gastrikeatervinnare.se/"
+COUNTRY = "se"
 API_URL = "https://gastrikeatervinnare.se/wp-admin/admin-ajax.php"
 TEST_CASES = {
     "Groceries Årsunda": {"street": "Nedre Vägen 52", "city": "Årsunda"},
     "Police Sandviken": {"street": "Bryggargatan 6", "city": "Sandviken"},
     "Police Gävle": {"street": "Södra Centralgatan 1", "city": "Gävle"},
     "Library Ockelbo": {"street": "Södra Åsgatan 30D", "city": "Ockelbo"},
+    "Storgatan Gävle (plastic and paper bins)": {
+        "street": "Storgatan 10",
+        "city": "Gävle",
+    },
 }
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:leaf",
-    "Blandat": "mdi:trash-can",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Blandat": Icons.GENERAL_WASTE,
+    "Pappersförpackningar": Icons.PAPER,
+    "Plastförpackningar": Icons.PLASTIC_PACKAGING,
+    "Trädgårdsavfall": Icons.GARDEN,
 }
 
 

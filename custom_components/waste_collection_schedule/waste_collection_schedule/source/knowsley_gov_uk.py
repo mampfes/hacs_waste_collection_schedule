@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Knowsley Council"
@@ -18,9 +18,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 ICON_MAP = {
-    "Maroon": "mdi:trash-can",
-    "Grey": "mdi:recycle",
-    "Blue": "mdi:leaf",
+    "Maroon": Icons.GENERAL_WASTE,
+    "Grey": Icons.RECYCLING,
+    "Blue": Icons.ORGANIC,
 }
 
 BASE_URL = "https://knowsleytransaction.mendixcloud.com/"

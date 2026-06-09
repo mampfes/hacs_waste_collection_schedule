@@ -1,9 +1,8 @@
-import requests
 import json
-
 from datetime import datetime
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+import requests
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wealden District Council"
 DESCRIPTION = "Source for Wealden City services for Wealden District Council, UK."
@@ -17,17 +16,17 @@ TEST_CASES = {
 
 API_URL = "https://www.wealden.gov.uk/wp-admin/admin-ajax.php"
 ICON_MAP = {
-    "refuseCollectionDate": "mdi:trash-can",
-    "recyclingCollectionDate": "mdi:recycle",
-    "gardenCollectionDate": "mdi:leaf",
-    "foodCollectionDate": "mdi:food-apple"
+    "refuseCollectionDate": Icons.GENERAL_WASTE,
+    "recyclingCollectionDate": Icons.RECYCLING,
+    "gardenCollectionDate": Icons.GARDEN,
+    "foodCollectionDate": Icons.BIO_KITCHEN,
 }
 
 COLLECTIONS = {
     "refuseCollectionDate": "Rubbish",
     "recyclingCollectionDate": "Recycling",
     "gardenCollectionDate": "Garden",
-    "foodCollectionDate": "Food"
+    "foodCollectionDate": "Food",
 }
 
 HEADERS = {

@@ -3,7 +3,7 @@ from datetime import date, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Värmdö Sophämtning"
@@ -20,7 +20,7 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
+    "Trash": Icons.GENERAL_WASTE,
 }
 
 WEEKDAY_MAP = {

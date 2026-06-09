@@ -1,8 +1,8 @@
-from datetime import datetime
 import json
+from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Győri Hulladékgazdálkodási Nonprofit Kft."
 DESCRIPTION = "Source script using GYHG API at https://gyhg.bluespot.hu/api"
@@ -10,16 +10,20 @@ URL = "https://www.gyhg.hu"
 COUNTRY = "hu"
 TEST_CASES = {
     "Test_1": {"city": "Écs", "street": "Ady Endre utca", "house_number": "1/A"},
-    "Test_2": {"city": "Mosonszentmiklós-Mosonújhely", "street": "Radnóti Miklós utca", "house_number": 25},
+    "Test_2": {
+        "city": "Mosonszentmiklós-Mosonújhely",
+        "street": "Radnóti Miklós utca",
+        "house_number": 25,
+    },
     "Test_3": {"city": "Veszprémvarsány", "street": "Zrínyi utca", "house_number": 34},
 }
 
 API_URL = "https://gyhg.bluespot.hu/api/"
 
 ICON_MAP = {
-    "leftover": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "bio": "mdi:compost",
+    "leftover": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "bio": Icons.ORGANIC,
 }
 
 NAME_MAP = {
@@ -36,7 +40,7 @@ PARAM_DESCRIPTIONS = {
     "en": {
         "city": "City name",
         "street": "Street name",
-        "house_number": "House number"
+        "house_number": "House number",
     },
 }
 
@@ -44,11 +48,11 @@ PARAM_TRANSLATIONS = {
     "en": {
         "city": "City name",
         "street": "Street name",
-        "house_number": "House number"
+        "house_number": "House number",
     },
 }
 
-#### End of arguments affecting the configuration GUI ####
+# End of arguments affecting the configuration GUI
 
 
 class Source:
@@ -79,8 +83,7 @@ class Source:
                 for date_str in date_list:
                     entries.append(
                         Collection(
-                            date=datetime.strptime(
-                                date_str, "%Y-%m-%d").date(),
+                            date=datetime.strptime(date_str, "%Y-%m-%d").date(),
                             t=NAME_MAP.get(waste, waste),
                             icon=ICON_MAP.get(waste, "mdi:trash-can"),
                         )

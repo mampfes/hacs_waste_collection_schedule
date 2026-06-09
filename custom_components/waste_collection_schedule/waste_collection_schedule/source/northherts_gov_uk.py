@@ -1,4 +1,4 @@
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
 
 TITLE = "North Herts Council"
@@ -20,16 +20,21 @@ TEST_CASES = {
         "address_name_numer": "4",
         "address_street": "Wilbury Road",
     },
+    "Example garden waste": {
+        "address_postcode": "SG8 5BN",
+        "address_name_numer": "37",
+        "address_street": "Heathfield",
+    },
 }
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "residual": "mdi:trash-can",
-    "recycle": "mdi:recycle",
-    "recycling": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food-apple",
-    "paper": "mdi:package-variant",
-    "card": "mdi:package-variant",
+    "refuse": Icons.GENERAL_WASTE,
+    "residual": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
+    "recycling": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
+    "paper": Icons.PAPER,
+    "card": Icons.PAPER,
 }
 
 

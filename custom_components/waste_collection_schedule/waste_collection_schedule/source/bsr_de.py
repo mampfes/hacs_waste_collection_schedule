@@ -1,6 +1,7 @@
-import requests
 from dataclasses import dataclass
 from datetime import datetime
+
+import requests
 from waste_collection_schedule import Collection
 
 TITLE = "Berliner Stadtreinigungsbetriebe"
@@ -16,15 +17,18 @@ TEST_CASES = {
 }
 
 ENDPOINT_PICKUPS = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/abfuhrEvents"
-FILTERTEMPLATE_PICKUPS = \
-    "AddrKey eq '{id}' and " + \
-    "DateFrom eq datetime'{year_from}-{month:02d}-01T00:00:00' and " + \
-    "DateTo eq datetime'{year_to}-{month:02d}-01T00:00:00'"
+FILTERTEMPLATE_PICKUPS = (
+    "AddrKey eq '{id}' and "
+    + "DateFrom eq datetime'{year_from}-{month:02d}-01T00:00:00' and "
+    + "DateTo eq datetime'{year_to}-{month:02d}-01T00:00:00'"
+)
+
 
 @dataclass(frozen=True)
 class WasteInfo:
     text: str
     icon: str
+
 
 WASTE_CATEGORY_MAP: dict[str, WasteInfo] = {
     "BI": WasteInfo("Biogut", "mdi:bio"),
@@ -36,7 +40,10 @@ WASTE_CATEGORY_MAP: dict[str, WasteInfo] = {
 
 
 def get_waste_info(waste_category: str) -> WasteInfo:
-    return WASTE_CATEGORY_MAP.get(waste_category, WasteInfo(f"Unbekannter Müll ({waste_category})", "mdi:help-circle"))
+    return WASTE_CATEGORY_MAP.get(
+        waste_category,
+        WasteInfo(f"Unbekannter Müll ({waste_category})", "mdi:help-circle"),
+    )
 
 
 class Source:
@@ -46,7 +53,12 @@ class Source:
     def fetch(self) -> list[Collection]:
         now = datetime.now()
         args = {
-            "filter": FILTERTEMPLATE_PICKUPS.format(id=self._schedule_id, year_from=now.year, month=now.month, year_to=now.year+1),
+            "filter": FILTERTEMPLATE_PICKUPS.format(
+                id=self._schedule_id,
+                year_from=now.year,
+                month=now.month,
+                year_to=now.year + 1,
+            ),
         }
         with requests.Session() as pickups_session:
             response_raw = pickups_session.get(ENDPOINT_PICKUPS, params=args)
@@ -70,9 +82,17 @@ class Source:
         """
         for date_entry in response["dates"].values():
             for pickup_entry in date_entry:
-                pickup_date = datetime.strptime(pickup_entry["serviceDate_actual"], "%d.%m.%Y").date()
+                pickup_date = datetime.strptime(
+                    pickup_entry["serviceDate_actual"], "%d.%m.%Y"
+                ).date()
                 waste_info = get_waste_info(pickup_entry["category"])
-                pickup_text = waste_info.text if pickup_entry["disposalComp"] == "BSR" else f"{waste_info.text} ({pickup_entry['disposalComp']})"
-                pickups.append(Collection(date=pickup_date, t=pickup_text, icon=waste_info.icon))
+                pickup_text = (
+                    waste_info.text
+                    if pickup_entry["disposalComp"] == "BSR"
+                    else f"{waste_info.text} ({pickup_entry['disposalComp']})"
+                )
+                pickups.append(
+                    Collection(date=pickup_date, t=pickup_text, icon=waste_info.icon)
+                )
 
         return pickups

@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Lindau"
 DESCRIPTION = "Source for Lindau waste collection."
@@ -15,11 +15,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "kehricht": "mdi:trash-can",
-    "grungut": "mdi:leaf",
-    "hackseldienst": "mdi:leaf",
-    "papier und karton": "mdi:package-variant",
-    "altmetalle": "mdi:nail",
+    "kehricht": Icons.GENERAL_WASTE,
+    "grungut": Icons.ORGANIC,
+    "hackseldienst": Icons.GARDEN,
+    "papier und karton": Icons.PAPER,
+    "altmetalle": Icons.METAL,
 }
 
 PARAM_TRANSLATIONS = {

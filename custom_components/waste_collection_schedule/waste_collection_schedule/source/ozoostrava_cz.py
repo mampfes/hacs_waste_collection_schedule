@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "OZO Ostrava"
 DESCRIPTION = "Waste collection schedules for Ostrava and nearby municipalities"
@@ -23,12 +23,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "bio": "mdi:leaf",
-    "papír": "mdi:package-variant",
-    "plasty": "mdi:recycle",
-    "směsný odpad": "mdi:trash-can",
-    "sklo": "mdi:bottle-soda",
-    "singlestream": "mdi:recycle-variant",
+    "bio": Icons.ORGANIC,
+    "papír": Icons.PAPER,
+    "plasty": Icons.PLASTIC_PACKAGING,
+    "směsný odpad": Icons.GENERAL_WASTE,
+    "sklo": Icons.GLASS,
+    "singlestream": Icons.PLASTIC_PACKAGING,
 }
 
 

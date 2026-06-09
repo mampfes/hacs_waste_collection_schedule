@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
@@ -18,10 +18,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Verge Collection - Green waste": "mdi:leaf",
-    "Verge Collection - Hard waste": "mdi:dump-truck",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Verge Collection - Green waste": Icons.GARDEN,
+    "Verge Collection - Hard waste": Icons.BULKY,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -45,7 +45,9 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         # Step 1: Look up the address to get a GUID
-        r = requests.get(ADDRESS_URL, params={"addressQuery": self._address}, timeout=30)
+        r = requests.get(
+            ADDRESS_URL, params={"addressQuery": self._address}, timeout=30
+        )
         r.raise_for_status()
         addresses = r.json()
 

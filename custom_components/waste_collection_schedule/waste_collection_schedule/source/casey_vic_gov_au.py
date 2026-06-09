@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
@@ -32,9 +32,9 @@ API_URL = "https://www.casey.vic.gov.au/coc-properties/api/search-address"
 
 # Define waste type icons
 ICON_MAP = {
-    "Garden": "mdi:leaf",
-    "Garbage": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
+    "Garden": Icons.GARDEN,
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {

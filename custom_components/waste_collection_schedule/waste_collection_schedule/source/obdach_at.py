@@ -2,18 +2,18 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Marktgemeinde Obdach"
 DESCRIPTION = "Source for Marktgeneinde Obdach, AT"
 URL = "https://www.obdach.gv.at/"
-TEST_CASES = {"TestSource": {}}
+TEST_CASES: dict[str, dict[str, str]] = {"TestSource": {}}
 ICON_MAP = {
-    "Biomüll": "mdi:food",
-    "Altstoffsammelzentrum": "mdi:newspaper",
-    "Gelber Sack/Tonne": "mdi:recycle-variant",
-    "Restmüll Abfuhrbereich 1": "mdi:trash-can",
-    "Restmüll Abfuhrbereich 2": "mdi:trash-can",
+    "Biomüll": Icons.BIO_KITCHEN,
+    "Altstoffsammelzentrum": Icons.NEWSPAPER,
+    "Gelber Sack/Tonne": Icons.PLASTIC_PACKAGING,
+    "Restmüll Abfuhrbereich 1": Icons.GENERAL_WASTE,
+    "Restmüll Abfuhrbereich 2": Icons.GENERAL_WASTE,
 }
 
 

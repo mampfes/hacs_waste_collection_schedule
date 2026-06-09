@@ -29,6 +29,12 @@ EXTRA_INFO = [
         "country": "at",
         "default_params": {"customer": "salzburg"},
     },
+    {
+        "title": "Abfallverband Schwechat",
+        "url": "https://schwechat.umweltverbaende.at/",
+        "country": "at",
+        "default_params": {"customer": "av-schwechat"},
+    },
 ]
 TEST_CASES = {
     "Bogeschütz": {"customer": "bogenschütz", "zone": "Dettenhausen"},
@@ -43,6 +49,12 @@ TEST_CASES = {
         "city": "Salzburg",
         "street": "Adolf-Schemel-Straße",
         "housenumber": "13",
+    },
+    "Schwechat": {
+        "customer": "av-schwechat",
+        "city": "Fischamend",
+        "street": "Am Damm",
+        "housenumber": "2",
     },
 }
 
@@ -102,7 +114,7 @@ class Source:
                 "calendarId": calendarYearId,
             }
 
-            if self._zone != None:
+            if self._zone is not None:
                 # get available zones for calendar year
                 url = f"{baseUrl}/zones"
                 response = requests.get(url, params=params)

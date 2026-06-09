@@ -2,7 +2,7 @@ import re
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.service.SSLError import get_legacy_session
 
@@ -17,10 +17,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restabfallbehaelter": "mdi:delete",
-    "Bioabfallbehaelter": "mdi:leaf",
-    "Papierbehaelter": "mdi:newspaper",
-    "Wertstofftonne": "mdi:recycle",
+    "Restabfallbehaelter": Icons.GENERAL_WASTE,
+    "Bioabfallbehaelter": Icons.BIO_KITCHEN,
+    "Papierbehaelter": Icons.PAPER,
+    "Wertstofftonne": Icons.RECYCLING,
 }
 
 SERVLET = "https://anwendungen.bielefeld.de/WasteManagementBielefeldTest/WasteManagementServlet"  # Actual Production URL changed from ORIGINAL_SERVLET
@@ -133,9 +133,9 @@ class Source:
         args["Hausnummer"] = str(self._hnr)
         args["Hausnummerzusatz"] = self._suffix
         args["SubmitAction"] = "CITYCHANGED"
-        args[
-            "ApplicationName"
-        ] = "com.athos.kd.bielefeld.abfuhrtermine.CheckAbfuhrTermineParameterBusinessCase"
+        args["ApplicationName"] = (
+            "com.athos.kd.bielefeld.abfuhrtermine.CheckAbfuhrTermineParameterBusinessCase"
+        )
         args["ContainerGewaehlt_1"] = "on"
         args["ContainerGewaehlt_2"] = "on"
         args["ContainerGewaehlt_3"] = "on"
@@ -159,9 +159,9 @@ class Source:
         reminder_day = "keine Erinnerung"  # "keine Erinnerung", "am Vortag", "2 Tage vorher", "3 Tage vorher"
         reminder_time = "18:00 Uhr"  # "XX:00 Uhr"
 
-        args[
-            "ApplicationName"
-        ] = "com.athos.kd.bielefeld.abfuhrtermine.AbfuhrTerminModel"
+        args["ApplicationName"] = (
+            "com.athos.kd.bielefeld.abfuhrtermine.AbfuhrTerminModel"
+        )
         args["SubmitAction"] = "filedownload_ICAL"
         args["ICalErinnerung"] = reminder_day
         args["ICalZeit"] = reminder_time

@@ -2,7 +2,7 @@ import datetime
 import time
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
@@ -22,12 +22,12 @@ DOMAIN_URL = "https://my.midlothian.gov.uk/apibroker/domain/my.midlothian.gov.uk
 RUN_LOOKUP_URL = "https://my.midlothian.gov.uk/apibroker/runLookup"
 
 ICON_MAP = {
-    "Food Collection Service": "mdi:food-apple",
-    "Glass Collection Service": "mdi:glass-fragile",
-    "Residual Collection Service": "mdi:trash-can",
-    "Garden Collection Service": "mdi:leaf",
-    "Recycling Collection Service": "mdi:recycle",
-    "Card Collection Service": "mdi:archive",
+    "Food Collection Service": Icons.BIO_KITCHEN,
+    "Glass Collection Service": Icons.GLASS,
+    "Residual Collection Service": Icons.GENERAL_WASTE,
+    "Garden Collection Service": Icons.GARDEN,
+    "Recycling Collection Service": Icons.RECYCLING,
+    "Card Collection Service": Icons.PAPER,
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -47,6 +47,7 @@ PARAM_TRANSLATIONS = {
         "postcode": "Postcode",
     },
 }
+
 
 class Source:
     def __init__(self, uprn: str, postcode: str):
@@ -95,7 +96,7 @@ class Source:
                     "fromDate": {"value": from_date},
                     "toDate": {"value": to_date},
                 }
-            }
+            },
         }
         params = {
             "id": LOOKUP_ID_BIN_COLLECTION_SERVICE,
@@ -120,11 +121,7 @@ class Source:
             raise SourceArgumentException(
                 "uprn", "Session expired while querying collection data."
             )
-        rows = (
-            data.get("integration", {})
-            .get("transformed", {})
-            .get("rows_data", {})
-        )
+        rows = data.get("integration", {}).get("transformed", {}).get("rows_data", {})
         if not rows:
             raise SourceArgumentNotFound(
                 "uprn", self._uprn, "No collection data returned for this address."
@@ -154,7 +151,7 @@ class Source:
             raise SourceArgumentException(
                 "uprn",
                 f"Failed to parse any collection dates from {len(rows)} rows. "
-                f"API format may have changed. Failures: {failed_rows[:3]}"
+                f"API format may have changed. Failures: {failed_rows[:3]}",
             )
 
         return entries

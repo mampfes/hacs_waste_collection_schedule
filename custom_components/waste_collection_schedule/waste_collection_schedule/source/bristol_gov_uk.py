@@ -5,7 +5,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Bristol City Council"
 DESCRIPTION = "Source for bristol.gov.uk services for Bristol City Council, UK."
@@ -17,18 +17,18 @@ TEST_CASES = {
     "Test_003": {"uprn": 17929},
 }
 ICON_MAP = {
-    "90L BLUE SACK": "mdi:recycle",
-    "240L GARDEN WASTE BIN": "mdi:leaf",
-    "180L GENERAL WASTE": "mdi:trash-can",
-    "45L BLACK RECYCLING BOX": "mdi:recycle",
-    "23L FOOD WASTE BIN": "mdi:food",
-    "55L GREEN RECYCLING BOX": "mdi:recycle",
-    "140L FOOD WASTE BIN": "mdi:food",
-    "240L RECYCLING MIXED GLASS": "mdi:bottle-wine",
-    "240L RECYCLING PAPER": "mdi:newspaper",
-    "1100L GENERAL WASTE": "mdi:trash-can",
-    "1100L RECYCLING CARD": "mdi:package-variant",
-    "360L RECYCLING PLASTIC/CANS": "mdi:bottle-soda-classic",
+    "90L BLUE SACK": Icons.RECYCLING,
+    "240L GARDEN WASTE BIN": Icons.GARDEN,
+    "180L GENERAL WASTE": Icons.GENERAL_WASTE,
+    "45L BLACK RECYCLING BOX": Icons.RECYCLING,
+    "23L FOOD WASTE BIN": Icons.BIO_KITCHEN,
+    "55L GREEN RECYCLING BOX": Icons.RECYCLING,
+    "140L FOOD WASTE BIN": Icons.BIO_KITCHEN,
+    "240L RECYCLING MIXED GLASS": Icons.GLASS,
+    "240L RECYCLING PAPER": Icons.PAPER,
+    "1100L GENERAL WASTE": Icons.GENERAL_WASTE,
+    "1100L RECYCLING CARD": Icons.PAPER,
+    "360L RECYCLING PLASTIC/CANS": Icons.PLASTIC_PACKAGING,
 }
 HEADERS = {
     "Accept": "*/*",

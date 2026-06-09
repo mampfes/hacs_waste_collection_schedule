@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Erewash Borough Council"
 DESCRIPTION = "Source for erewash.gov.uk services for Erewash Borough Council, UK."
@@ -12,9 +12,9 @@ TEST_CASES = {
     "Test_003": {"uprn": "100030118783"},
 }
 ICON_MAP = {
-    "recycling-collection-service": "mdi:recycle",
-    "garden-waste-collection-service": "mdi:leaf",
-    "domestic-waste-collection-service": "mdi:trash-can",
+    "recycling-collection-service": Icons.RECYCLING,
+    "garden-waste-collection-service": Icons.GARDEN,
+    "domestic-waste-collection-service": Icons.GENERAL_WASTE,
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
     "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",

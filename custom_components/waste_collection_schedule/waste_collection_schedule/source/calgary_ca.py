@@ -3,7 +3,7 @@ import logging
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Calgary (AB)"
 DESCRIPTION = "Source for Calgary waste collection"
@@ -15,9 +15,9 @@ TEST_CASES = {"42 AUBURN SHORES WY SE": {"street_address": "42 AUBURN SHORES WY 
 SCHEDULE_LOOKUP_URL = "https://data.calgary.ca/resource/jq4t-b745.json"
 
 ICON_MAP = {
-    "Green": "mdi:leaf",
-    "Black": "mdi:trash-can",
-    "Blue": "mdi:recycle",
+    "Green": Icons.ORGANIC,
+    "Black": Icons.GENERAL_WASTE,
+    "Blue": Icons.RECYCLING,
 }
 
 WEEKDAYS = [
@@ -52,7 +52,7 @@ class Source:
             week = single_date.isocalendar()[1]
             week_modulus = week % 2
 
-            # return true if the week moduls corresponds to the collection interval
+            # return true if the week modulus corresponds to the collection interval
             if (interval == "EVEN") and (week_modulus == 0):
                 return True
             elif (interval == "ODD") and (week_modulus == 1):

@@ -4,7 +4,7 @@ import json
 import requests
 import urllib3
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -42,9 +42,9 @@ TEST_CASES = {
 
 API_URL = "https://mohubudapest.hu/hulladeknaptar"
 ICON_MAP = {
-    "COMMUNAL": "mdi:trash-can",
-    "SELECTIVE": "mdi:recycle",
-    "GREEN": "mdi:leaf",
+    "COMMUNAL": Icons.GENERAL_WASTE,
+    "SELECTIVE": Icons.RECYCLING,
+    "GREEN": Icons.ORGANIC,
 }
 
 
@@ -75,7 +75,7 @@ class Source:
         )
 
         if soup.find("div", attrs={"class": "alert"}) is not None:
-            raise SourceArgumentNotFound("district")
+            raise SourceArgumentNotFound("district", self._district)
 
         available_streets = []
         for opt in soup.find_all("option")[1:]:

@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,9 +16,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "general_waste": "mdi:trash-can",
-    "recycling_waste": "mdi:recycle",
-    "garden_waste": "mdi:leaf",
+    "general_waste": Icons.GENERAL_WASTE,
+    "recycling_waste": Icons.RECYCLING,
+    "garden_waste": Icons.GARDEN,
 }
 
 HEADERS = {

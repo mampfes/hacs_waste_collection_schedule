@@ -1,0 +1,10 @@
+---
+title: Ecolan - Lanciano
+url: https://www.ecolan.it
+country: it
+howto:
+  en: |
+    Use the Google Calendar ICS feed URL below. This calendar covers the Lanciano area served by Ecolan.
+test_cases:
+  Lanciano:
+    url: "https://www.google.com/calendar/ical/3vthrt88quqepasgt6hkn7dkc8%40group.calendar.google.com/public/basic.ics"

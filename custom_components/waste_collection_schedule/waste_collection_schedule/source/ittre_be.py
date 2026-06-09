@@ -4,7 +4,7 @@ from datetime import date, datetime
 import requests
 from bs4 import BeautifulSoup
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Ittre"
 DESCRIPTION = "Source for Ittre."
@@ -13,11 +13,11 @@ TEST_CASES: dict[str, dict] = {"Ittre": {}}
 
 
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bio": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Recycle": "mdi:recycle",
+    "Trash": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bio": Icons.ORGANIC,
+    "Paper": Icons.PAPER,
+    "Recycle": Icons.RECYCLING,
 }
 
 
@@ -44,8 +44,7 @@ def clean_string(text: str) -> str:
 
 
 class Source:
-    def __init__(self):
-        ...
+    def __init__(self): ...  # noqa: E704
 
     def fetch(self) -> list[Collection]:
         r = requests.get(API_URL)

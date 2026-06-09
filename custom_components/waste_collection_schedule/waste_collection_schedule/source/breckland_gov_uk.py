@@ -2,9 +2,8 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
     SourceArgumentExceptionMultiple,
 )
 
@@ -18,9 +17,9 @@ TEST_CASES = {
 
 API_URL = "https://www.breckland.gov.uk/apiserver/ajaxlibrary"
 ICON_MAP = {
-    "Refuse Collection Service": "mdi:trash-can",
-    "Recycling Collection Service": "mdi:recycle",
-    "Garden Waste Service": "mdi:leaf",
+    "Refuse Collection Service": Icons.GENERAL_WASTE,
+    "Recycling Collection Service": Icons.RECYCLING,
+    "Garden Waste Service": Icons.GARDEN,
 }
 
 _LOGGER = logging.getLogger(__name__)

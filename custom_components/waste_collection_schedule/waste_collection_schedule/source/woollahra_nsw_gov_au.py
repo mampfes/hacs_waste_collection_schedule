@@ -59,25 +59,29 @@ class Source:
     def __init__(self, address: str):
         self.address = address.strip()
 
-    def _make_request_with_retry(self, session, url, headers, max_retries=3, timeout=30):
-        """Make HTTP request with retry logic and exponential backoff"""
+    def _make_request_with_retry(
+        self, session, url, headers, max_retries=3, timeout=30
+    ):
+        """Make HTTP request with retry logic and exponential backoff."""
         for attempt in range(max_retries):
             try:
                 r = session.get(url, headers=headers, timeout=timeout)
-                
+
                 if r.status_code == 200:
                     return r
                 elif r.status_code == 403 and attempt < max_retries - 1:
-                    time.sleep(2 ** attempt)  # Exponential backoff
+                    time.sleep(2**attempt)  # Exponential backoff
                     continue
                 else:
-                    raise Exception(f"Failed to fetch: {r.status_code} (attempt {attempt + 1})")
-                    
+                    raise Exception(
+                        f"Failed to fetch: {r.status_code} (attempt {attempt + 1})"
+                    )
+
             except requests.RequestException as e:
                 if attempt == max_retries - 1:
                     raise Exception(f"Network error: {str(e)}")
-                time.sleep(2 ** attempt)
-        
+                time.sleep(2**attempt)
+
         raise requests.exceptions.RequestException(
             "Max retries exceeded while fetching URL"
         )
@@ -94,8 +98,8 @@ class Source:
         # First, visit the main page to establish a session and get cookies
         try:
             main_page_response = session.get(
-                "https://www.woollahra.nsw.gov.au/Services/Rubbish-and-recycling/Find-your-rubbish-and-scheduled-clean-up-service-dates", 
-                timeout=30
+                "https://www.woollahra.nsw.gov.au/Services/Rubbish-and-recycling/Find-your-rubbish-and-scheduled-clean-up-service-dates",
+                timeout=30,
             )
             if main_page_response.status_code not in [200, 403]:
                 time.sleep(2)  # Wait a bit if we get an unexpected response
@@ -105,14 +109,16 @@ class Source:
 
         # Update headers for the API calls
         api_headers = HEADERS.copy()
-        api_headers.update({
-            "Accept": "application/json, text/javascript, */*; q=0.01",
-            "Referer": "https://www.woollahra.nsw.gov.au/Services/Rubbish-and-recycling/Find-your-rubbish-and-scheduled-clean-up-service-dates",
-            "X-Requested-With": "XMLHttpRequest",
-            "Sec-Fetch-Dest": "empty",
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "same-origin",
-        })
+        api_headers.update(
+            {
+                "Accept": "application/json, text/javascript, */*; q=0.01",
+                "Referer": "https://www.woollahra.nsw.gov.au/Services/Rubbish-and-recycling/Find-your-rubbish-and-scheduled-clean-up-service-dates",
+                "X-Requested-With": "XMLHttpRequest",
+                "Sec-Fetch-Dest": "empty",
+                "Sec-Fetch-Mode": "cors",
+                "Sec-Fetch-Site": "same-origin",
+            }
+        )
 
         q = requote_uri(str(API_URLS["address_search"]).format(address))
 
@@ -121,21 +127,25 @@ class Source:
 
         # Handle potential bot protection response
         if r.status_code != 200:
-            raise Exception(f"Unable to access Woollahra API (status: {r.status_code}). This may be due to bot protection. Please try again later or contact support.")
+            raise Exception(
+                f"Unable to access Woollahra API (status: {r.status_code}). This may be due to bot protection. Please try again later or contact support."
+            )
 
         try:
             data = json.loads(r.text)
         except json.JSONDecodeError:
             # Check if we got an HTML error page instead of JSON
             if "Access Denied" in r.text:
-                raise Exception("Access denied by Woollahra website. This may be due to bot protection measures. Please try again later.")
+                raise Exception(
+                    "Access denied by Woollahra website. This may be due to bot protection measures. Please try again later."
+                )
             else:
                 raise Exception("Invalid JSON response from address search API")
 
         # Find the ID for our address
         if data.get("Items") and len(data["Items"]) > 0:
             location_id = data["Items"][0]["Id"]
-        
+
         if not location_id:
             raise ValueError(
                 f"Unable to find location ID for {address}. Please check your address details are correct."
@@ -150,13 +160,17 @@ class Source:
         r = self._make_request_with_retry(session, q, api_headers)
 
         if r.status_code != 200:
-            raise Exception(f"Unable to access Woollahra waste services API (status: {r.status_code})")
+            raise Exception(
+                f"Unable to access Woollahra waste services API (status: {r.status_code})"
+            )
 
         try:
             data = json.loads(r.text)
         except json.JSONDecodeError:
             if "Access Denied" in r.text:
-                raise Exception("Access denied by Woollahra website during waste services fetch.")
+                raise Exception(
+                    "Access denied by Woollahra website during waste services fetch."
+                )
             else:
                 raise Exception("Invalid JSON response from waste services API")
 
@@ -175,9 +189,9 @@ class Source:
             waste_type_element = item.find("h3")
             if not waste_type_element:
                 continue
-                
+
             waste_type = waste_type_element.text.strip()
-            
+
             # Normalize seasonal cleanup names
             if "spring" in waste_type.lower() and "clean" in waste_type.lower():
                 waste_type = "Spring Clean-Up"
@@ -185,17 +199,17 @@ class Source:
                 waste_type = "Summer Clean-Up"
             elif "winter" in waste_type.lower() and "clean" in waste_type.lower():
                 waste_type = "Winter Clean-Up"
-            
+
             # Find the date information
             date_element = item.find("div", attrs={"class": "next-service"})
             if not date_element:
                 continue
-                
+
             date_text = date_element.text.strip()
-            
+
             # Parse different date formats
             date = self._parse_date(date_text)
-            
+
             if date:
                 entries.append(
                     Collection(
@@ -208,8 +222,8 @@ class Source:
         return entries
 
     def _parse_date(self, date_text: str) -> datetime.date | None:
-        """Parse various date formats found in the response"""
+        """Parse various date formats found in the response."""
         try:
             return dateutil.parser.parse(date_text, dayfirst=True, fuzzy=True).date()
-        except (dateutil.parser.ParserError, OverflowError) as e:
+        except (dateutil.parser.ParserError, OverflowError):
             return None

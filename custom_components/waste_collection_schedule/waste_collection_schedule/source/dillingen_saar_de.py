@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Dillingen Saar"  # Title will show up in README.md and info.md
@@ -27,10 +27,10 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 API_URL = "https://service-dillingen-saar.fbo.de/date/"
 
 ICON_MAP = {
-    "Papier Entsorgung": "mdi:package-variant",
-    "Restmüll Abfuhr": "mdi:trash-can",
-    "Tonnen Abfuhr": "mdi:trash-can",
-    "Gelbesäcke Abholung": "mdi:recycle",
+    "Papier Entsorgung": Icons.PAPER,
+    "Restmüll Abfuhr": Icons.GENERAL_WASTE,
+    "Tonnen Abfuhr": Icons.GENERAL_WASTE,
+    "Gelbesäcke Abholung": Icons.RECYCLING,
 }
 
 PARAM_TRANSLATIONS = {

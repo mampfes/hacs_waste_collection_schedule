@@ -16,6 +16,10 @@ Waste collection schedules in the following formats and countries are supported.
 
 If your service provider is not listed, feel free to open a [source request issue](https://github.com/mampfes/hacs_waste_collection_schedule/issues/new?assignees=&labels=source+request&projects=&template=SOURCE-REQUEST.yml&title=%5BSource+Request%5D%3A+) (please first check the [Issues section](https://github.com/mampfes/hacs_waste_collection_schedule/issues) if there already is an open issue for your service provider.).
 
+Source requests are always welcome. At the moment, however, only a small number of contributors are actively implementing new requests, while the available maintainers are mainly busy reviewing pull requests and fixing critical issues.
+
+If you already have enough information for your municipality/region, you are very welcome to implement the source and open a pull request yourself. A step-by-step guide is available in [How to contribute](/CONTRIBUTING.md). Community help with implementation, testing, documentation, and reviews is greatly appreciated.
+
 <details>
 <summary>ICS/iCal and User-Specified</summary>
 
@@ -35,8 +39,9 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Alexandrina Council](/doc/source/app_my_local_services_au.md) / alexandrina.sa.gov.au
 - [Alexandrina Council](/doc/source/frwa_com_au.md) / alexandrina.sa.gov.au
 - [App Backend of My Local Services](/doc/source/app_my_local_services_au.md) / localcouncils.sa.gov.au
-- [Armadale (Western Australia)](/doc/source/armadale_wa_gov_au.md) / armadale.wa.gov.au
+- [Armadale (Western Australia)](/doc/source/armadale_wa_gov_au.md) / my.armadale.wa.gov.au
 - [Australian Capital Territory (ACT)](/doc/source/act_gov_au.md) / cityservices.act.gov.au/recycling-and-waste
+- [Ballina Shire Council](/doc/source/ballina_nsw_gov_au.md) / ballina.nsw.gov.au/Residents/Waste-and-Recycling/Bin-Collection-Day
 - [Banyule City Council](/doc/source/banyule_vic_gov_au.md) / banyule.vic.gov.au
 - [Baw Baw Shire Council](/doc/source/impactapps_com_au.md) / bawbawshire.vic.gov.au
 - [Bayside Council](/doc/source/impactapps_com_au.md) / bayside.nsw.gov.au
@@ -47,16 +52,22 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Berri Barmera Council](/doc/source/app_my_local_services_au.md) / berribarmera.sa.gov.au
 - [Blacktown City Council (NSW)](/doc/source/blacktown_nsw_gov_au.md) / blacktown.nsw.gov.au
 - [Blue Mountains City Council](/doc/source/impactapps_com_au.md) / bmcc.nsw.gov.au
+- [Brimbank City Council](/doc/source/brimbank_vic_gov_au.md) / brimbank.vic.gov.au
 - [Brisbane City Council](/doc/source/impactapps_com_au.md) / brisbane.nsw.gov.au
 - [Brisbane City Council](/doc/source/brisbane_qld_gov_au.md) / brisbane.qld.gov.au
+- [Bundaberg Regional Council](/doc/source/bundaberg_qld_gov_au.md) / bundaberg.qld.gov.au
 - [Burwood City Council](/doc/source/impactapps_com_au.md) / burwood.nsw.gov.au
+- [Byron Shire Council](/doc/source/byron_nsw_gov_au.md) / byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules
 - [Campbelltown City Council](/doc/source/app_my_local_services_au.md) / campbelltown.sa.gov.au
 - [Campbelltown City Council (NSW)](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
 - [Campbeltown City Council](/doc/source/impactapps_com_au.md) / campbelltown.vic.gov.au
 - [Cardinia Shire Council](/doc/source/cardinia_vic_gov_au.md) / cardinia.vic.gov.au
 - [City of Adelaide](/doc/source/app_my_local_services_au.md) / adelaidecitycouncil.com
+- [City of Albany](/doc/source/albany_wa_gov_au.md) / albany.wa.gov.au
 - [City of Ballarat](/doc/source/ballarat_vic_gov_au.md) / ballarat.vic.gov.au
 - [City of Ballarat](/doc/source/impactapps_com_au.md) / ballarat.vic.gov.au
+- [City of Bayswater](/doc/source/bayswater_wa_gov_au.md) / bayswater.wa.gov.au
+- [City of Boroondara](/doc/source/boroondara_vic_gov_au.md) / boroondara.vic.gov.au
 - [City of Burnside](/doc/source/app_my_local_services_au.md) / burnside.sa.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
 - [City of Canada Bay Council](/doc/source/impactapps_com_au.md) / canadabay.vic.gov.au
@@ -69,30 +80,42 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Glen Eira](/doc/source/gleneira_vic_gov_au.md) / gleneira.vic.gov.a
 - [City of Gosnells](/doc/source/gosnells_wa_gov_au.md) / gosnells.wa.gov.au
 - [City of Greater Bendigo](/doc/source/bendigo_vic_gov_au.md) / bendigo.vic.gov.au
-- [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongaustralia.com.au
+- [City of Greater Geelong](/doc/source/geelongaustralia_com_au.md) / geelongcity.vic.gov.au
 - [City of Hobart ](/doc/source/hobartcity_com_au.md) / hobartcity.com.au
 - [City of Joondalup](/doc/source/joondalup_wa_gov_au.md) / joondalup.wa.gov.au
 - [City of Kalamunda](/doc/source/kalamunda_wa_gov_au.md) / kalamunda.wa.gov.au/kerbside-3-bin-system/collection-days/bin-day
 - [City of Kingston](/doc/source/kingston_vic_gov_au.md) / kingston.vic.gov.au
+- [City of Kwinana](/doc/source/kwinana_wa_gov_au.md) / kwinana.wa.gov.au
+- [City of Mandurah](/doc/source/mandurah_wa_gov_au.md) / mandurah.wa.gov.au/live/waste-and-recycling/bin-collections
+- [City of Manningham](/doc/source/manningham_vic_gov_au.md) / manningham.vic.gov.au
+- [City of Melbourne](/doc/source/melbourne_vic_gov_au.md) / melbourne.vic.gov.au
+- [City of Melville](/doc/source/melvillecity_com_au.md) / melvillecity.com.au
 - [City of Mitcham](/doc/source/app_my_local_services_au.md) / mitchamcouncil.sa.gov.au
 - [City of Monash](/doc/source/monash_vic_gov_au.md) / monash.vic.gov.au
 - [City of Moonee Valley](/doc/source/moonee_valley_vic_gov_au.md) / mvcc.vic.gov.au
 - [City of Mount Gambier](/doc/source/app_my_local_services_au.md) / mountgambier.sa.gov.au
+- [City of Newcastle](/doc/source/newcastle_nsw_gov_au.md) / newcastle.nsw.gov.au
 - [City of Norwood Payneham and St Peters](/doc/source/app_my_local_services_au.md) / npsp.sa.gov.au
 - [City of Onkaparinga](/doc/source/app_my_local_services_au.md) / onkaparingacity.com
 - [City of Onkaparinga Council](/doc/source/onkaparingacity_com.md) / onkaparingacity.com
+- [City of Parramatta](/doc/source/cityofparramatta_nsw_gov_au.md) / cityofparramatta.nsw.gov.au
 - [City of Port Adelaide Enfield](/doc/source/app_my_local_services_au.md) / cityofpae.sa.gov.au
 - [City of Prospect](/doc/source/app_my_local_services_au.md) / prospect.sa.gov.au
 - [City of Rockingham](/doc/source/rockingham_wa_gov_au.md) / rockingham.wa.gov.au/your-services/waste-and-recycling/bin-collection
 - [City of Ryde (NSW)](/doc/source/ryde_nsw_gov_au.md) / ryde.nsw.gov.au
 - [City of Salisbury](/doc/source/app_my_local_services_au.md) / salisbury.sa.gov.au
+- [City of South Perth](/doc/source/southperth_wa_gov_au.md) / southperth.wa.gov.au
 - [City of Subiaco](/doc/source/subiaco_wa_gov_au.md) / subiaco.wa.gov.au
+- [City of Swan](/doc/source/swan_wa_gov_au.md) / swan.wa.gov.au
+- [City of Tea Tree Gully](/doc/source/teatreegully_sa_gov_au.md) / teatreegully.sa.gov.au
 - [City of Victor Harbor](/doc/source/frwa_com_au.md) / victor.sa.gov.au
+- [City of Vincent](/doc/source/vincent_wa_gov_au.md) / vincent.wa.gov.au
 - [City of Wanneroo](/doc/source/wanneroo_wa_gov_au.md) / wanneroo.wa.gov.au
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
 - [Clare and Gilbert Valleys Council](/doc/source/app_my_local_services_au.md) / claregilbertvalleys.sa.gov.au
 - [Clarence City Council](/doc/source/ccc_tas_gov_au.md) / ccc.tas.gov.au/wp-json/waste-collection
+- [Clarence Valley Council](/doc/source/impactapps_com_au.md) / clarence.nsw.gov.au
 - [Coffs Coast Waste Services](/doc/source/impactapps_com_au.md) / coffsharbour.nsw.gov.au
 - [Coorong District Council](/doc/source/app_my_local_services_au.md) / coorong.sa.gov.au
 - [Council of Copper Coast](/doc/source/app_my_local_services_au.md) / coppercoast.sa.gov.au
@@ -109,11 +132,16 @@ If your service provider is not listed, feel free to open a [source request issu
 - [District Council of Robe](/doc/source/app_my_local_services_au.md) / robe.sa.gov.au
 - [District Council of Streaky Bay](/doc/source/app_my_local_services_au.md) / streakybay.sa.gov.au
 - [District Council of Yankalilla](/doc/source/frwa_com_au.md) / yankalilla.sa.gov.au
+- [Fairfield City Council](/doc/source/fairfieldcity_nsw_gov_au.md) / kerbside.fairfieldcity.nsw.gov.au/kerbside
 - [Fleurieu Regional Waste Authority](/doc/source/app_my_local_services_au.md) / fleurieuregionalwasteauthority.com.au
 - [Fleurieu Regional Waste Authority](/doc/source/frwa_com_au.md) / fleurieuregionalwasteauthority.com.au
 - [Forbes Shire Council](/doc/source/impactapps_com_au.md) / forbes.nsw.gov.au
 - [Frankston City Council](/doc/source/frankston_vic_gov_au.md) / frankston.gov.au
+- [Fraser Coast Regional Council](/doc/source/frasercoast_qld_gov_au.md) / frasercoast.qld.gov.au
+- [Glenorchy City Council (TAS)](/doc/source/recyclecoach_com.md) / gcc.tas.gov.au
 - [Gold Coast City Council](/doc/source/goldcoast_qld_gov_au.md) / goldcoast.qld.gov.au
+- [Golden Plains Shire Council](/doc/source/goldenplains_vic_gov_au.md) / goldenplains.vic.gov.au
+- [Greater Dandenong City Council](/doc/source/greaterdandenong_vic_gov_au.md) / greaterdandenong.vic.gov.au
 - [Gwydir Shire Council](/doc/source/impactapps_com_au.md) / gwydir.nsw.gov.au
 - [Gympie Regional Council](/doc/source/impactapps_com_au.md) / gympie.qld.gov.au
 - [Hobsons Bay City Council](/doc/source/hobsonsbay_vic_gov_au.md) / hobsonsbay.vic.gov.au
@@ -129,32 +157,41 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Knox City Council](/doc/source/knox_vic_gov_au.md) / knox.vic.gov.au
 - [Ku-ring-gai Council](/doc/source/impactapps_com_au.md) / krg.nsw.gov.au
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
+- [Lane Cove Council](/doc/source/lanecove_nsw_gov_au.md) / lanecove.nsw.gov.au
+- [Launceston City Council](/doc/source/launceston_tas_gov_au.md) / launceston.tas.gov.au
 - [Light Regional Council](/doc/source/app_my_local_services_au.md) / light.sa.gov.au
+- [Lismore City Council](/doc/source/lismore_city_nsw_gov_au.md) / lismore.nsw.gov.au/Households/Waste-and-recycling/Whats-My-Bin-Day1
 - [Lithgow City Council](/doc/source/impactapps_com_au.md) / lithgow.nsw.gov.au
 - [Liverpool City Council (NSW)](/doc/source/liverpool_nsw_gov_au.md) / liverpool.nsw.gov.au
 - [Livingstone Shire Council](/doc/source/impactapps_com_au.md) / livingstone.qld.gov.au
 - [Logan City Council](/doc/source/logan_qld_gov_au.md) / logan.qld.gov.au
 - [Macedon Ranges Shire Council](/doc/source/mrsc_vic_gov_au.md) / mrsc.vic.gov.au
+- [Maitland City Council](/doc/source/maitland_nsw_gov_au.md) / maitland.nsw.gov.au
 - [Mansfield Shire Council](/doc/source/mansfield_vic_gov_au.md) / mansfield.vic.gov.au
 - [Maribyrnong Council](/doc/source/maribyrnong_vic_gov_au.md) / maribyrnong.vic.gov.au/Residents/Bins-and-recycling
 - [Maroondah City Council](/doc/source/maroondah_vic_gov_au.md) / maroondah.vic.gov.au
 - [Melton City Council](/doc/source/melton_vic_gov_au.md) / melton.vic.gov.au
 - [Merri-bek City Council](/doc/source/merri_bek_vic_gov_au.md) / merri-bek.vic.gov.au
 - [Mid Murray Council](/doc/source/app_my_local_services_au.md) / mid-murray.sa.gov.au
+- [Mid-Western Regional Council](/doc/source/midwestern_nsw_gov_au.md) / midwestern.nsw.gov.au
 - [MidCoast Council](/doc/source/midcoast_nsw_gov_au.md) / midcoast.nsw.gov.au
+- [Mitchell Shire Council](/doc/source/mitchellshire_vic_gov_au.md) / mitchellshire.vic.gov.au
 - [Moira Shire Council](/doc/source/impactapps_com_au.md) / moira.vic.gov.au
 - [Moorabool Shire Council](/doc/source/moorabool_vic_gov_au.md) / moorabool.vic.gov.au
 - [Moree Plains Shire Council](/doc/source/impactapps_com_au.md) / mpsc.nsw.gov.au
 - [Moreton Bay](/doc/ics/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
 - [Mornington Peninsula Shire Council](/doc/source/mornpen_vic_gov_au.md) / mornpen.vic.gov.au
 - [Mosman Council](/doc/source/mosman_nsw_gov_au.md) / mosman.nsw.gov.au
+- [Mount Alexander Shire Council](/doc/source/mount_alexander_vic_gov_au.md) / mountalexander.vic.gov.au
 - [Moyne Shire Council](/doc/source/moyne_vic_gov_au.md) / moyne.vic.gov.au
 - [Murrindindi Shire Counci](/doc/source/impactapps_com_au.md) / murrindindi.vic.gov.au
+- [Muswellbrook Shire Council](/doc/source/muswellbrook_nsw_gov_au.md) / muswellbrook.nsw.gov.au
 - [Naracoorte Lucindale Council](/doc/source/app_my_local_services_au.md) / naracoortelucindale.sa.gov.au
 - [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
 - [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
 - [Northern Areas Council](/doc/source/app_my_local_services_au.md) / nacouncil.sa.gov.au/page.aspx
 - [Northern Beaches Council (NSW)](/doc/source/northernbeaches_nsw_gov_au.md) / northernbeaches.nsw.gov.au
+- [Orange City Council](/doc/source/orange_nsw_gov_au.md) / orange.nsw.gov.au
 - [Penrith City Council](/doc/source/impactapps_com_au.md) / penrithcity.nsw.gov.au
 - [Port Adelaide Enfield, South Australia](/doc/source/portenf_sa_gov_au.md) / ecouncil.portenf.sa.gov.au
 - [Port Augusta City Council](/doc/source/app_my_local_services_au.md) / portaugusta.sa.gov.au
@@ -172,6 +209,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rural City of Wangaratta](/doc/source/wangaratta_vic_gov_au.md) / wangaratta.vic.gov.au
 - [Scenic Rim Regional Council](/doc/source/scenicrim_qld_gov_au.md) / scenicrim.qld.gov.au
 - [Shellharbour City Council](/doc/source/shellharbourwaste_com_au.md) / shellharbourwaste.com.au
+- [Shire of Dardanup](/doc/source/dardanup_wa_gov_au.md) / dardanup.wa.gov.au
+- [Shire of Harvey](/doc/source/harvey_wa_gov_au.md) / harvey.wa.gov.au
 - [Shire of Mundaring](/doc/source/mundaring_wa_gov_au.md) / mundaring.wa.gov.au
 - [Shire of Murray](/doc/source/murray_wa_gov_au.md) / murray.wa.gov.au
 - [Shire of Serpentine Jarrahdale](/doc/source/sjshire_wa_gov_au.md) / sjshire.wa.gov.au
@@ -181,18 +220,24 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Southern Mallee District Council](/doc/source/app_my_local_services_au.md) / southernmallee.sa.gov.au
 - [Stirling](/doc/source/stirling_wa_gov_au.md) / stirling.wa.gov.au
 - [Stonnington City Council](/doc/source/stonnington_vic_gov_au.md) / stonnington.vic.gov.au
+- [Strathfield Council](/doc/source/strathfield_nsw_gov_au.md) / strathfield.nsw.gov.au
 - [Sunshine Coast Queensland (QLD)](/doc/source/sunshinecoast_qld_gov_au.md) / sunshinecoast.qld.gov.au/living-and-community/waste-and-recycling/bin-collection-days
+- [Sutherland Shire Council](/doc/source/sutherlandshire_nsw_gov_au.md) / sutherlandshire.nsw.gov.au
 - [The Flinders Ranges Council](/doc/source/app_my_local_services_au.md) / frc.sa.gov.au/page.aspx
 - [The Hawkesbury City Council, Sydney](/doc/source/hawkesbury_nsw_gov_au.md) / hawkesbury.nsw.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
+- [Town of Bassendean](/doc/source/bassendean_wa_gov_au.md) / bassendean.wa.gov.au
+- [Town of Cambridge (WA)](/doc/source/cambridge_wa_gov_au.md) / cambridge.wa.gov.au
 - [Town of Victoria Park](/doc/source/victoriapark_wa_gov_au.md) / victoriapark.wa.gov.au
 - [Town of Walkerville](/doc/source/app_my_local_services_au.md) / walkerville.sa.gov.au
 - [Townsville](/doc/source/townsville_qld_gov_au.md) / townsville.qld.gov.au
 - [Unley City Council (SA)](/doc/source/unley_sa_gov_au.md) / unley.sa.gov.au
 - [Wakefield Regional Council](/doc/source/app_my_local_services_au.md) / wakefieldrc.sa.gov.au
+- [Warrnambool City Council](/doc/source/warrnambool_vic_gov_au.md) / warrnambool.vic.gov.au
 - [Wellington Shire Council](/doc/source/impactapps_com_au.md) / wellington.vic.gov.au
 - [Whitehorse City Counfil](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
+- [Willoughby City Council](/doc/source/willoughby_nsw_gov_au.md) / willoughby.nsw.gov.au
 - [Wollondilly Shire Council](/doc/source/wollondilly_nsw_gov_au.md) / wollondilly.nsw.gov.au
 - [Wollongong City Council](/doc/source/impactapps_com_au.md) / wollongong.vic.gov.au
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
@@ -208,7 +253,7 @@ If your service provider is not listed, feel free to open a [source request issu
 
 - [Abfallverband Hollabrunn](/doc/source/umweltverbaende_at.md) / hollabrunn.umweltverbaende.at
 - [Abfallverband Korneuburg](/doc/source/umweltverbaende_at.md) / korneuburg.umweltverbaende.at
-- [Abfallverband Schwechat](/doc/source/umweltverbaende_at.md) / schwechat.umweltverbaende.at
+- [Abfallverband Schwechat](/doc/source/infeo_at.md) / schwechat.umweltverbaende.at
 - [Abfallwirtschaft der Stadt St. Pölten](/doc/ics/st-poelten_at.md) / st-poelten.at/sonstiges/17653-abfallkalender
 - [Abfallwirtschaft Wiener Neustadt](/doc/source/abfall_wiener_neustadt_at.md) / abfall.wiener-neustadt.at
 - [Absdorf](/doc/source/citiesapps_com.md) / absdorf.gv.at
@@ -244,12 +289,16 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bernstein](/doc/source/citiesapps_com.md) / bernstein.gv.at
 - [Bildein](/doc/source/citiesapps_com.md) / bildein.at
 - [Birkfeld](/doc/source/citiesapps_com.md) / birkfeld.at
+- [Bischofshofen](/doc/source/citiesapps_com.md) / bischofshofen.at
 - [Blindenmarkt](/doc/source/citiesapps_com.md) / blindenmarkt.gv.at
 - [Brandenberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Braunau am Inn](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
+- [Bregenz](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Breitenbach am Inn](/doc/ics/muellapp_com.md) / muellapp.com
 - [Breitenbrunn am Neusiedler See](/doc/source/citiesapps_com.md) / breitenbrunn.at
 - [Breitenstein](/doc/source/citiesapps_com.md) / breitenstein.at
 - [Bromberg](/doc/source/citiesapps_com.md) / bromberg.at
+- [Bruck an der Mur](/doc/source/citiesapps_com.md) / bruckmur.at
 - [Bruckneudorf](/doc/source/citiesapps_com.md) / bruckneudorf.eu
 - [Buch - St. Magdalena](/doc/source/citiesapps_com.md) / buch-stmagdalena.at
 - [Burgau](/doc/source/citiesapps_com.md) / burgau.info
@@ -267,11 +316,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Deutsch Kaltenbrunn](/doc/source/citiesapps_com.md) / deutschkaltenbrunn.eu
 - [Deutschkreutz](/doc/source/citiesapps_com.md) / deutschkreutz.at
 - [Die NÖ Umweltverbände](/doc/source/umweltverbaende_at.md) / umweltverbaende.at
+- [Dienten am Hochkönig](/doc/source/dienten_gv_at.md) / dienten.gv.at
 - [Dobl-Zwaring](/doc/source/citiesapps_com.md) / dobl-zwaring.gv.at
 - [Drasenhofen](/doc/source/citiesapps_com.md) / drasenhofen.at
 - [Draßmarkt](/doc/source/citiesapps_com.md) / drassmarkt.at
 - [Ebenthal in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Eberau](/doc/source/citiesapps_com.md) / eberau.riskommunal.net
+- [Ebergassing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Eberndorf](/doc/source/citiesapps_com.md) / eberndorf.at
 - [Ebersdorf](/doc/source/citiesapps_com.md) / ebersdorf.eu
 - [Eberstein](/doc/source/citiesapps_com.md) / eberstein.at
@@ -288,13 +339,17 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Feistritz im Rosental](/doc/ics/muellapp_com.md) / muellapp.com
 - [Feistritz ob Bleiburg](/doc/source/citiesapps_com.md) / feistritz-bleiburg.gv.at
 - [Feistritztal](/doc/source/citiesapps_com.md) / feistritztal.at
+- [Feld am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Feldbach](/doc/source/citiesapps_com.md) / feldbach.gv.at
+- [Feldkirch](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Feldkirchen in Kärnten](/doc/source/citiesapps_com.md) / feldkirchen.at
 - [Feldkirchen in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ferlach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Ferndorf](/doc/source/citiesapps_com.md) / ferndorf.gv.at
 - [Ferndorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Finkenstein am Faaker See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Fischamend](/doc/ics/muellapp_com.md) / muellapp.com
+- [Flattach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Frankenau-Unterpullendorf](/doc/source/citiesapps_com.md) / frankenau-unterpullendorf.gv.at
 - [Frankenfels](/doc/source/citiesapps_com.md) / frankenfels.at
 - [Frantschach - Sankt Gertraud](/doc/source/citiesapps_com.md) / frantschach.gv.at
@@ -304,6 +359,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Fraxern](/doc/source/citiesapps_com.md) / fraxern.at
 - [Freistadt](/doc/source/citiesapps_com.md) / freistadt.at
 - [Fresach](/doc/source/citiesapps_com.md) / fresach.gv.at
+- [Fresach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Friedberg](/doc/source/citiesapps_com.md) / friedberg.gv.at
 - [Friesach](/doc/source/citiesapps_com.md) / friesach.gv.at
 - [Frohnleiten](/doc/source/citiesapps_com.md) / frohnleiten.com
@@ -316,9 +372,11 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
 - [Geistthal-Södingberg](/doc/source/lipizzanerheimat_at.md) / geistthal-soedingberg.at
 - [gem2go (Abfallverband)](/doc/ics/gem2go_dev.md) / gem2go.dev
+- [Gemeinde Aspang-Markt](/doc/ics/aspangmarkt_at.md) / aspangmarkt.at
 - [Gemeinde Sulz](/doc/source/citiesapps_com.md) / gemeinde-sulz.at
 - [Gemeinde24](/doc/source/gemeinde24_at.md) / gemeinde24.at
 - [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at
+- [Gerasdorf bei Wien](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gersdorf an der Feistritz](/doc/source/citiesapps_com.md) / gersdorf.gv.at
 - [Gitschtal](/doc/source/citiesapps_com.md) / gitschtal.gv.at
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
@@ -332,6 +390,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Grafenstein](/doc/source/citiesapps_com.md) / grafenstein.gv.at
 - [Grafenstein](/doc/ics/muellapp_com.md) / muellapp.com
 - [Grafenwörth](/doc/source/citiesapps_com.md) / grafenwoerth.at
+- [Gramatneusiedl](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gratkorn](/doc/source/citiesapps_com.md) / gratkorn.gv.at
 - [Gratwein-Straßengel](/doc/source/citiesapps_com.md) / gratwein-strassengel.gv.at
 - [Greifenburg](/doc/ics/muellapp_com.md) / muellapp.com
@@ -356,12 +415,15 @@ If your service provider is not listed, feel free to open a [source request issu
 - [GVU Scheibbs](/doc/source/scheibbs_umweltverbaende_at.md) / scheibbs.umweltverbaende.at
 - [GVU Scheibbs](/doc/source/umweltverbaende_at.md) / scheibbs.umweltverbaende.at
 - [GVU St. Pölten](/doc/source/umweltverbaende_at.md) / stpoeltenland.umweltverbaende.at
+- [Gänserndorf](/doc/source/gaenserndorf_city_at.md) / gaenserndorf.at
+- [Gänserndorf City / Gänserndorf App](/doc/source/gaenserndorf_city_at.md) / gaenserndorf.at
 - [Güssing](/doc/source/citiesapps_com.md) / guessing.co.at
 - [Güttenbach](/doc/source/citiesapps_com.md) / guettenbach.at
 - [Haag am Hausruck](/doc/source/citiesapps_com.md) / haag-hausruck.at
 - [Hagenberg im Mühlkreis](/doc/source/citiesapps_com.md) / hagenberg.at
 - [Hannersdorf](/doc/source/citiesapps_com.md) / hannersdorf.at
 - [Hartberg](/doc/source/citiesapps_com.md) / hartberg.at
+- [Haslau-Maria Ellend](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hausmannstätten](/doc/source/hausmannstaetten_gv_at.md) / hausmannstaetten.gv.at
 - [Heiligenblut am Großglockner](/doc/ics/muellapp_com.md) / muellapp.com
 - [Heiligenkreuz](/doc/source/citiesapps_com.md) / heiligenkreuz.at
@@ -372,10 +434,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Henndorf am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hermagor-Pressegger See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Heugraben](/doc/source/citiesapps_com.md) / heugraben.at
+- [Himberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hirm](/doc/source/citiesapps_com.md) / hirm.gv.at
 - [Hirschegg-Pack](/doc/source/lipizzanerheimat_at.md) / hirschegg-pack.gv.at
 - [Hochwolkersdorf](/doc/source/citiesapps_com.md) / hochwolkersdorf.at
 - [Hofstätten an der Raab](/doc/source/citiesapps_com.md) / hofstaetten.at
+- [Hohenems](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
+- [Holding Graz](/doc/source/abfall_io_graphql.md) / holding-graz.at
 - [Hopfgarten im Brixental](/doc/ics/muellapp_com.md) / muellapp.com
 - [Horitschon](/doc/source/citiesapps_com.md) / horitschon.at
 - [Horn](/doc/source/citiesapps_com.md) / horn.gv.at
@@ -406,6 +471,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Klagenfurt am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Klaus](/doc/source/citiesapps_com.md) / klaus.at
 - [Kleblach-Lind](/doc/ics/muellapp_com.md) / muellapp.com
+- [Klein-Neusiedl](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kleinmürbisch](/doc/source/citiesapps_com.md) / kleinmürbisch.at
 - [Klingenbach](/doc/source/citiesapps_com.md) / klingenbach.at
 - [Klöch](/doc/source/citiesapps_com.md) / kloech.com
@@ -432,10 +498,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Langau](/doc/source/citiesapps_com.md) / langau.at
 - [Langenrohr](/doc/source/citiesapps_com.md) / langenrohr.gv.at
 - [Langenzersdorf](/doc/source/citiesapps_com.md) / langenzersdorf.gv.at
+- [Lanzendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leibnitz](/doc/source/citiesapps_com.md) / leibnitz.at
 - [Leithaprodersdorf](/doc/source/citiesapps_com.md) / leithaprodersdorf.at
 - [Lendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leoben](/doc/ics/muellapp_com.md) / muellapp.com
+- [Leonding](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
+- [Leopoldsdorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Lesachtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Leutschach an der Weinstraße](/doc/source/citiesapps_com.md) / leutschach-weinstrasse.gv.at
 - [Lieboch](/doc/source/citiesapps_com.md) / lieboch.gv.at
@@ -452,6 +521,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Mallnitz](/doc/ics/muellapp_com.md) / muellapp.com
 - [Malta](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Lankowitz](/doc/source/lipizzanerheimat_at.md) / maria-lankowitz.at
+- [Maria Lanzendorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Rain](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
@@ -462,6 +532,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Markt Piesting Dreistetten](/doc/ics/piesting_at.md) / piesting.at
 - [Markt Piesting-Dreistetten](/doc/source/citiesapps_com.md) / piesting.at
 - [Marktgemeinde Edlitz](/doc/source/edlitz_at.md) / edlitz.at
+- [Marktgemeinde Eggelsberg](/doc/source/eggelsberg_at.md) / eggelsberg.at
 - [Marktgemeinde Gössendorf](/doc/source/goessendorf_at.md) / goessendorf.com
 - [Marktgemeinde Obdach](/doc/source/obdach_at.md) / obdach.gv.at
 - [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
@@ -477,6 +548,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Mischendorf](/doc/source/citiesapps_com.md) / mischendorf.at
 - [Mistelbach](/doc/source/citiesapps_com.md) / mistelbach.at
 - [Mitterdorf an der Raab](/doc/source/citiesapps_com.md) / mitterdorf-raab.at
+- [Moosbrunn](/doc/ics/muellapp_com.md) / muellapp.com
 - [Moosburg](/doc/source/citiesapps_com.md) / moosburg.gv.at
 - [Moosburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mooskirchen](/doc/source/lipizzanerheimat_at.md) / mooskirchen.at
@@ -502,6 +574,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Oberpullendorf](/doc/source/citiesapps_com.md) / oberpullendorf.gv.at
 - [Oberschützen](/doc/source/citiesapps_com.md) / oberschuetzen.at
 - [Obertrum am See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Obervellach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Oberwart](/doc/source/citiesapps_com.md) / oberwart.gv.at
 - [Oslip](/doc/source/citiesapps_com.md) / oslip.at
 - [Ottendorf an der Rittschein](/doc/source/citiesapps_com.md) / ottendorf-rittschein.steiermark.at
@@ -517,6 +590,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Pernegg im Waldviertel](/doc/source/citiesapps_com.md) / pernegg.info
 - [Perschling](/doc/source/citiesapps_com.md) / perschling.at
 - [Pfarrwerfen](/doc/source/citiesapps_com.md) / gemeinde.pfarrwerfen.at
+- [Pichl bei Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Pilgersdorf](/doc/source/citiesapps_com.md) / pilgersdorf.at
 - [Pinggau](/doc/source/citiesapps_com.md) / pinggau.gv.at
 - [Pinkafeld](/doc/source/citiesapps_com.md) / pinkafeld.gv.at
@@ -541,6 +615,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Raiding](/doc/source/citiesapps_com.md) / raiding-online.at
 - [Ramsau im Zillertal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Rangersdorf](/doc/ics/muellapp_com.md) / muellapp.com
+- [Rauchenwarth](/doc/ics/muellapp_com.md) / muellapp.com
 - [Rechnitz](/doc/source/citiesapps_com.md) / rechnitz.at/de
 - [Reichenau](/doc/source/citiesapps_com.md) / reichenau.gv.at
 - [Reichenau an der Rax](/doc/source/citiesapps_com.md) / reichenau.at
@@ -551,24 +626,28 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rettenegg](/doc/source/citiesapps_com.md) / rettenegg.at
 - [Rohr bei Hartberg](/doc/source/citiesapps_com.md) / rohr-bei-hartberg.at
 - [Rohr im Burgenland](/doc/source/citiesapps_com.md) / rohr-bgld.at
+- [Rohrbach an der Lafnitz](/doc/source/rohrbach_lafnitz_at.md) / rohrbach-lafnitz.at
 - [Rosental a.d Kainach](/doc/source/lipizzanerheimat_at.md) / rosental-kainach.at
 - [Rottenbach](/doc/source/citiesapps_com.md) / rottenbach.gv.at
 - [Rudersdorf](/doc/source/citiesapps_com.md) / rudersdorf.at
 - [Rust](/doc/source/citiesapps_com.md) / freistadt-rust.at
 - [Röthis](/doc/source/citiesapps_com.md) / roethis.at
-- [Saalfelden am Steinernen Meer](/doc/source/citiesapps_com.md) / stadtmarketing-saalfelden.at/de
+- [Saalfelden am Steinernen Meer](/doc/source/saalfelden_at.md) / saalfelden.at
 - [Sachsenburg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Sankt Georgen an der Stiefing](/doc/source/citiesapps_com.md) / st-georgen-stiefing.gv.at
 - [Sankt Gilgen](/doc/source/citiesapps_com.md) / gemgilgen.at
 - [Sankt Martin am Wöllmißberg](/doc/source/lipizzanerheimat_at.md) / st-martin-woellmissberg.gv.at
 - [Sankt Oswald bei Plankenwarth](/doc/source/citiesapps_com.md) / sanktoswald.net
+- [Schalchen](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Schiefling am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schleedorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schlins](/doc/source/citiesapps_com.md) / schlins.at
 - [Schrattenberg](/doc/source/citiesapps_com.md) / schrattenberg.gv.at
+- [Schwadorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schwadorf](/doc/source/citiesapps_com.md) / schwadorf.gv.at
 - [Schwarzenbach an der Pielach](/doc/source/citiesapps_com.md) / schwarzenbach-pielach.at
 - [Schwaz](/doc/ics/muellapp_com.md) / muellapp.com
+- [Schwechat](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schwoich](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schäffern](/doc/source/citiesapps_com.md) / schaeffern.gv.at
 - [Schützen am Gebirge](/doc/source/citiesapps_com.md) / schuetzen-am-gebirge.at
@@ -576,6 +655,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Seeham](/doc/ics/muellapp_com.md) / muellapp.com
 - [Seekirchen am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Seiersberg-Pirka](/doc/source/citiesapps_com.md) / gemeindekurier.at
+- [Seyring](/doc/ics/muellapp_com.md) / muellapp.com
 - [Siegendorf](/doc/source/citiesapps_com.md) / siegendorf.gv.at
 - [Sieggraben](/doc/source/citiesapps_com.md) / sieggraben.at
 - [Sigleß](/doc/source/citiesapps_com.md) / sigless.at
@@ -602,12 +682,14 @@ If your service provider is not listed, feel free to open a [source request issu
 - [St. Martin im Innkreis](/doc/source/citiesapps_com.md) / st-martin-innkreis.ooe.gv.at
 - [St. Peter - Freienstein](/doc/source/citiesapps_com.md) / st-peter-freienstein.gv.at
 - [St. Peter am Ottersbach](/doc/source/citiesapps_com.md) / st-peter-ottersbach.gv.at
+- [St. Pölten](/doc/ics/muellapp_com.md) / muellapp.com
 - [St. Radegund bei Graz](/doc/source/citiesapps_com.md) / radegund.info
 - [St. Ruprecht an der Raab](/doc/source/citiesapps_com.md) / st.ruprecht.at
 - [St. Symvaro](/doc/ics/muellapp_com.md) / muellapp.com
 - [St. Urban](/doc/source/citiesapps_com.md) / sturban.at
 - [St. Veit in der Südsteiermark](/doc/source/citiesapps_com.md) / st-veit-suedsteiermark.gv.at
 - [Stadt Salzburg](/doc/source/infeo_at.md) / stadt-salzburg.at
+- [Stadtgemeinde Klosterneuburg](/doc/source/klosterneuburg_at.md) / klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender
 - [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
 - [Stadtservice Korneuburg](/doc/source/korneuburg_stadtservice_at.md) / korneuburg.gv.at
 - [Stall](/doc/ics/muellapp_com.md) / muellapp.com
@@ -639,6 +721,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Tieschen](/doc/source/citiesapps_com.md) / tieschen.gv.at
 - [Tobaj](/doc/source/citiesapps_com.md) / tobaj.gv.at
 - [Tragöß - St. Katharein](/doc/source/citiesapps_com.md) / tragoess-st-katharein.gv.at
+- [Traun](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Trebesing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Treffen am Ossiacher See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Trofaiach](/doc/source/citiesapps_com.md) / trofaiach.gv.at
@@ -649,12 +732,14 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Unterkohlstätten](/doc/source/citiesapps_com.md) / unterkohlstaetten.at
 - [Unterlamm](/doc/source/citiesapps_com.md) / unterlamm.gv.at
 - [Unterwart](/doc/source/citiesapps_com.md) / unterwart.at
+- [Upper Austria (Oberösterreich)](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Vasoldsberg](/doc/source/citiesapps_com.md) / vasoldsberg.gv.at
 - [Velden am Wörther See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Viktorsberg](/doc/source/citiesapps_com.md) / viktorsberg.at
 - [Villach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Villach](/doc/source/citiesapps_com.md) / villach.at
 - [Voitsberg](/doc/source/lipizzanerheimat_at.md) / voitsberg.gv.at
+- [Vorarlberg](/doc/ics/abfallv_zerowaste_io.md) / abfallv.zerowaste.io
 - [Vordernberg](/doc/source/citiesapps_com.md) / vordernberg.steiermark.at
 - [Vorderstoder](/doc/source/citiesapps_com.md) / vorderstoder.ooe.gv.at
 - [Völkermarkt](/doc/ics/muellapp_com.md) / muellapp.com
@@ -665,10 +750,12 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Wartberg ob der Aist](/doc/source/citiesapps_com.md) / wartberg-aist.at
 - [Wattens](/doc/ics/muellapp_com.md) / muellapp.com
 - [Weiden am See](/doc/source/citiesapps_com.md) / weiden-see.at
+- [Weinitzen](/doc/source/citiesapps_com.md) / weinitzen.gv.at
 - [Weitersfeld](/doc/source/citiesapps_com.md) / weitersfeld.gv.at
 - [Weiz](/doc/source/citiesapps_com.md) / weiz.at
 - [Weißenkirchen in der Wachau](/doc/source/citiesapps_com.md) / weissenkirchen-wachau.at
 - [Weißensee](/doc/ics/muellapp_com.md) / muellapp.com
+- [Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Weppersdorf](/doc/source/citiesapps_com.md) / weppersdorf.at
 - [Werfenweng](/doc/source/citiesapps_com.md) / gemeinde-werfenweng.at
 - [Werndorf](/doc/source/citiesapps_com.md) / werndorf.gv.at
@@ -696,6 +783,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Zillingtal](/doc/source/citiesapps_com.md) / zillingtal.eu
 - [Zurndorf](/doc/source/citiesapps_com.md) / zurndorf.at
 - [Zwischenwasser](/doc/source/citiesapps_com.md) / zwischenwasser.at
+- [Zwölfaxing](/doc/ics/muellapp_com.md) / muellapp.com
 - [Übelbach](/doc/source/citiesapps_com.md) / uebelbach.gv.at
 </details>
 
@@ -713,12 +801,21 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>Canada</summary>
 
+- [Airdrie (AB)](/doc/source/airdrie_ca.md) / airdrie.ca
 - [Aurora (ON)](/doc/source/recyclecoach_com.md) / aurora.ca
+- [Brampton (ON)](/doc/source/recyclecoach_com.md) / brampton.ca
+- [Brantford (ON)](/doc/source/recyclecoach_com.md) / brantford.ca
+- [Brossard, Québec](/doc/ics/brossard_ca.md) / brossard.ca
+- [Burlington (ON)](/doc/source/recyclecoach_com.md) / burlington.ca
 - [Burnaby (BC)](/doc/source/recyclecoach_com.md) / burnaby.ca
+- [Caledon (ON)](/doc/source/recyclecoach_com.md) / caledon.ca
 - [Calgary (AB)](/doc/source/calgary_ca.md) / calgary.ca
 - [Calgary, AB](/doc/ics/recollect.md) / calgary.ca
 - [Castlegar, BC](/doc/ics/recollect.md) / castlegar.ca
 - [Chatham-Kent (ON)](/doc/source/recyclecoach_com.md) / chatham-kent.ca
+- [City of Barrie](/doc/source/barrie_ca.md) / barrie.ca/services-payments/garbage-recycling-organics/curbside-collection/collection-schedules
+- [City of Beaumont, AB](/doc/ics/recollect.md) / beaumont.ab.ca
+- [City of Coquitlam, BC](/doc/ics/recollect.md) / coquitlam.ca/157/Collection-Calendar-and-Guidelines
 - [City of Edmonton, AB](/doc/ics/recollect.md) / edmonton.ca
 - [City of Greater Sudbury, ON](/doc/ics/recollect.md) / greatersudbury.ca
 - [City of Guelph, ON](/doc/ics/recollect.md) / guelph.ca
@@ -730,28 +827,50 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Regina](/doc/ics/recollect.md) / regina.ca
 - [City of Vancouver](/doc/ics/recollect.md) / vancouver.ca
 - [City of Windsor](/doc/ics/citywindsor_ca.md) / citywindsor.ca
+- [Colchester, NS](/doc/ics/recollect.md) / colchester.ca
+- [Community Recycling (Lunenburg, NS)](/doc/ics/recollect.md) / communityrecycling.ca
 - [County of Simcoe, ON](/doc/ics/recollect.md) / simcoe.ca
 - [CURBit St. John's](/doc/ics/recollect.md) / curbitstjohns.ca
 - [Delta (BC)](/doc/source/recyclecoach_com.md) / delta.ca
 - [District of Saanich, BC](/doc/ics/recollect.md) / saanich.ca
 - [Durham Region, ON](/doc/ics/recollect.md) / durham.ca
+- [East Gwillimbury (ON)](/doc/source/recyclecoach_com.md) / eastgwillimbury.ca
+- [Eco360 (Greater Moncton, NB)](/doc/ics/recollect.md) / eco360.ca
+- [Gatineau, QC](/doc/ics/recollect.md) / gatineau.ca
+- [Georgina (ON)](/doc/ics/georgina_ca.md) / georgina.ca
+- [Grey Highlands, ON](/doc/ics/recollect.md) / greyhighlands.ca
+- [Guelph (ON)](/doc/source/recyclecoach_com.md) / guelph.ca
 - [Halifax, NS](/doc/ics/recollect.md) / halifax.ca
+- [Halton Hills (ON)](/doc/source/recyclecoach_com.md) / haltonhills.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
+- [Kelowna (BC)](/doc/source/recyclecoach_com.md) / rdco.com
+- [Lakeshore (ON)](/doc/source/recyclecoach_com.md) / lakeshore.ca
+- [LaSalle (ON)](/doc/source/recyclecoach_com.md) / lasalle.ca
+- [Laval (QC)](/doc/ics/laval_ca.md) / laval.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
 - [Longueuil (QC)](/doc/ics/longueuil_quebec.md) / longueuil.quebec
 - [Lévis / Québec](/doc/ics/ville_levis_qc_ca.md) / ville.levis.qc.ca
 - [Markham, ON](/doc/ics/recollect.md) / markham.ca
+- [Medicine Hat (AB)](/doc/source/recyclecoach_com.md) / medicinehat.ca
+- [Milton (ON)](/doc/source/recyclecoach_com.md) / milton.ca
+- [Mississauga (ON)](/doc/source/recyclecoach_com.md) / mississauga.ca
 - [Montreal (QC)](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
 - [MRC de Roussillon (QC)](/doc/source/info_collectes_ca.md) / info-collectes.ca
+- [MRC Joliette (QC)](/doc/source/mrcjoliette_qc_ca.md) / mrcjoliette.qc.ca
 - [MRC Marguerite-D'Youville](/doc/source/publidata_ca.md) / margueritedyouville.ca
+- [MRC Matawinie (QC)](/doc/source/gmrmatawinie_qc_ca.md) / gmrmatawinie.org
 - [Muskoka District (Huntsville, ON)](/doc/ics/recollect.md) / muskoka.on.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Norfolk County (ON)](/doc/source/recyclecoach_com.md) / norfolkcounty.ca
+- [Notre-Dame-du-Bon-Conseil (Village)](/doc/source/villagebonconseil_ca.md) / villagebonconseil.ca
 - [Oak Bay (BC)](/doc/source/recyclecoach_com.md) / oakbay.ca
-- [Orillia, Ontario](/doc/source/orillia_ca.md) / orillia.ca
+- [Oakville (ON)](/doc/source/recyclecoach_com.md) / oakville.ca
+- [Orillia (ON)](/doc/source/recyclecoach_com.md) / orillia.ca
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
+- [Oxford County, ON](/doc/ics/recollect.md) / oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
+- [Pointe-Claire (QC)](/doc/source/pointe_claire_qc_ca.md) / pointe-claire.ca
 - [Prince George (BC)](/doc/source/recyclecoach_com.md) / princegeorge.ca
 - [Publidata (Canada) generic source](/doc/source/publidata_ca.md) / publidata.ca
 - [Québec (QC)](/doc/source/ville_quebec_qc_ca.md) / ville.quebec.qc.ca/services/info-collecte
@@ -760,13 +879,24 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Richmond, BC, Canada](/doc/ics/recollect.md) / richmond.ca
 - [Rivière-Beaudette](/doc/ics/riviere_beaudette_com.md) / riviere-beaudette.com
 - [RM of Morris, MB](/doc/ics/recollect.md) / mwmenviro.ca
+- [RMR Lac-Saint-Jean (QC)](/doc/source/rmrlac_qc_ca.md) / calendrier.rmrlac.qc.ca
+- [Saint-Jean-Sur-Richelieu, QC](/doc/ics/recollect.md) / compo.qc.ca
 - [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
+- [Saskatoon, SK](/doc/ics/recollect.md) / saskatoon.ca
+- [Shawinigan](/doc/source/shawinigan_ca.md) / geoweb.shawinigan.ca/CollecteMatieresResiduelles
+- [Sherbrooke (QC)](/doc/ics/sherbrooke_ca.md) / sherbrooke.ca
+- [Spruce Grove, AB](/doc/ics/recollect.md) / sprucegrove.org
 - [St Clair Township, ON](/doc/ics/recollect.md) / stclairtownship.ca
 - [Strathcona County, ON](/doc/ics/recollect.md) / strathcona.ca
 - [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca
+- [Toronto (ON) - Circular Materials](/doc/source/recyclecoach_com.md) / toronto.ca
+- [Township of Langley (BC)](/doc/source/recyclecoach_com.md) / tol.ca
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Vaughan (ON)](/doc/source/recyclecoach_com.md) / vaughan.ca
+- [Ville de Saguenay](/doc/source/saguenay_ca.md) / ville.saguenay.ca
+- [Ville de Saint-Basile-le-Grand](/doc/source/villesblg_ca.md) / villesblg.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
+- [Whitby, ON](/doc/ics/recollect.md) / whitby.ca
 - [Winnipeg (MB)](/doc/source/myutility_winnipeg_ca.md) / myutility.winnipeg.ca
 </details>
 
@@ -820,53 +950,116 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Ambès](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Angers Loire Métropole](/doc/source/data_angers_fr.md) / data.angers.fr
 - [Ardenne Métropole](/doc/source/publidata_fr.md) / ardenne-metropole.fr
+- [Ayguemorte-les-Graves](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Baldersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Bantzenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Battenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Beautiran](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Berrwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Blanquefort](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Bollwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Bordeaux](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bordeaux Métropole](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Bruebach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Bruges](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Brunstatt-Didenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Bègles](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [CA Saint Germain Boucles de Seine](/doc/source/publidata_fr.md) / saintgermainbouclesdeseine.fr
+- [Cabanac-et-Villagrains](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Cadaujac](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Castres-Gironde](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Chalampé](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Châteauroux Métropole](/doc/source/publidata_fr.md) / chateauroux-metropole.fr
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Dietwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Dreux Agglomération](/doc/source/publidata_fr.md) / dreux-agglomeration.fr
 - [Dunkerque Grand Littoral](/doc/source/publidata_fr.md) / mesinfosdechets.cud.fr
+- [Eschentzwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Eysines](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Feldkirch](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Flaxlanden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Galfingue](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Gradignan](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Grand Besançon Métropole](/doc/source/grandbesancon_fr.md) / grandbesancon.fr
 - [Grand Calais Terres et Mers](/doc/source/publidata_fr.md) / grandcalais.fr
 - [Grand Paris Seine et Oise](/doc/source/publidata_fr.md) / infos-dechets.gpseo.fr
 - [Grand Paris Seine Ouest](/doc/source/publidata_fr.md) / dechets.seineouest.fr
+- [Habsheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Heimsbrunn](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Hombourg](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Illzach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Isle Saint-Georges](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Kingersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [La Brède](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Le Bouscat](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Le Haillan](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Le Havre Seine Métropole](/doc/source/publidata_fr.md) / tripratik.lehavreseinemetropole.fr
 - [Le Taillan-Médoc](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Lutterbach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Léognan](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
 - [Martignas-sur-Jalle](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Martillac](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Montpellier Méditerranée Métropole](/doc/source/data_montpellier3m_fr.md) / data.montpellier3m.fr
+- [Morschwiller-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Mulhouse](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Mulhouse Alsace Agglomération (m2A)](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Mémotri - Agglomération Pau Béarn Pyrénées](/doc/source/memotri_agglo_pau_fr.md) / memotri.agglo-pau.fr
 - [Mérignac](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Métropole de Lyon](/doc/source/data_grandlyon_com.md) / data.grandlyon.com
 - [Métropole Européenne de Lille](/doc/source/publidata_fr.md) / lillemetropole.fr
+- [Niffer](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Orléans Métropole](/doc/source/publidata_fr.md) / triermondechet.orleans-metropole.fr
+- [Ottmarsheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Parempuyre](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Pessac](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Petit-Landau](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Pfastatt](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Publidata generic source](/doc/source/publidata_fr.md) / publidata.io/fr
+- [Pulversheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Reiningue](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Richwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Riedisheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Rixheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Rueil-Malmaison](/doc/source/rueil_malmaison_fr.md) / rueil-malmaison.fr
+- [Ruelisheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Saint Quentin en Yvelines](/doc/source/publidata_fr.md) / saint-quentin-en-yvelines.fr
 - [Saint-Aubin-de-Médoc](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Saint-Louis-de-Montferrand](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saint-Morillon](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Saint-Médard-d'Eyrans](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Médard-en-Jalles](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saint-Selve](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Vincent-de-Paul](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saucats](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saumur Val de Loire](/doc/source/publidata_fr.md) / saumurvaldeloire.fr
+- [Sausheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [SICTOM de Lons-le-Saunier](/doc/source/sictom_lons_le_saunier_fr.md) / sictom-lons-le-saunier.fr
+- [SIVOM de la Vallée de l'Yerres et des Sénarts](/doc/source/sivom_com.md) / sivom.com
+- [SIVOM Rive Droite](/doc/source/publidata_fr.md) / sivom-rivedroite.fr
 - [Sivom Rive Droite - Bassens](/doc/source/sivom_rivedroite_fr.md) / sivom-rivedroite.fr
+- [Staffelfelden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Steinbrunn-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Talence](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Tours Métropole](/doc/source/publidata_fr.md) / tours-metropole.fr
+- [Ungersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Valcobreizh](/doc/source/publidata_fr.md) / dechets.valcobreizh.fr
 - [ValDem](/doc/source/publidata_fr.md) / valdem.fr
 - [ValEco](/doc/source/publidata_fr.md) / valeco41.fr
 - [Versailles Grand Parc](/doc/source/publidata_fr.md) / versaillesgrandparc.fr
 - [Villenave-d'Ornon](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Wittelsheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Wittenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Zillisheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Zimmersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 </details>
 
 <details>
 <summary>Germany</summary>
 
+- [123abfallkalender](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
+- [Abbecke](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
 - [Abfall Export (vCal)](/doc/ics/abfall_export_vcal.md) / example.com
 - [Abfall IO ICS Version](/doc/ics/abfall_io_ics.md) / abfallplus.de
@@ -874,10 +1067,12 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfall Stuttgart](/doc/source/stuttgart_de.md) / service.stuttgart.de
 - [Abfall-Wirtschafts-Verband Nordschwaben](/doc/source/awido_de.md) / awv-nordschwaben.de
 - [Abfall.IO / AbfallPlus](/doc/source/abfall_io.md) / abfallplus.de
+- [Abfall.IO / AbfallPlus (GraphQL)](/doc/source/abfall_io_graphql.md) / abfallplus.de
 - [Abfallbehandlungsgesellschaft Havelland mbH (abh)](/doc/source/abfall_havelland_de.md) / abfall-havelland.de
 - [Abfallbewirtschaftung Ostalbkreis](/doc/source/abfall_io.md) / goa-online.de
 - [Abfallentsorgung Kreis Kassel](/doc/ics/abfall_kreis_kassel_de.md) / abfall-kreis-kassel.de
 - [Abfallkalender Delmenhorst](/doc/ics/delmenhorst_de.md) / delmenhorst.de
+- [Abfallkalender Erkelenz](/doc/ics/abfallkalender_erkelenz_de.md) / abfallkalender-erkelenz.de
 - [Abfallkalender Hattingen](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderHattingen
 - [Abfallkalender Herne](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderHerne
 - [Abfallkalender Kassel](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderKassel
@@ -893,7 +1088,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / abfallwirtschaft-enzkreis.de
-- [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfall-eglz.de
+- [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfallwirtschaft-freiburg.de
 - [Abfallwirtschaft Germersheim](/doc/source/abfallwirtschaft_germersheim_de.md) / abfallwirtschaft-germersheim.de
 - [Abfallwirtschaft Isar-Inn](/doc/source/awido_de.md) / awv-isar-inn.de
 - [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / kreis-ploen.de
@@ -908,8 +1103,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallwirtschaft Landkreis Nordhausen](/doc/ics/abfallportal_nordhausen_de.md) / abfall-nordhausen.de
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
 - [Abfallwirtschaft Nürnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
-- [Abfallwirtschaft Ortenaukreis](/doc/ics/abfall_io_ics.md) / abfallwirtschaft-ortenaukreis.de
-- [Abfallwirtschaft Ortenaukreis](/doc/source/abfall_io.md) / abfallwirtschaft-ortenaukreis.de
 - [Abfallwirtschaft Pforzheim](/doc/source/abfallwirtschaft_pforzheim_de.md) / abfallwirtschaft-pforzheim.de
 - [Abfallwirtschaft Potsdam-Mittelmark (APM)](/doc/ics/apm_de.md) / apm-niemegk.de
 - [Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version](/doc/source/awido_de.md) / abfallwirtschaft-rems-murr.de
@@ -943,27 +1136,41 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Abfallwirtschaftszweckverband Wartburgkreis (AZV)](/doc/source/hausmuell_info.md) / azv-wak-ea.de
 - [Abfallzweckverband Rhein-Mosel-Eifel (Landkreis Mayen-Koblenz)](/doc/source/abfall_io.md) / azv-rme.de
 - [Abfuhrtermine.info](/doc/ics/abfuhrtermine_info.md) / abfuhrtermine.info
+- [Ackenhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [AHE Ennepe-Ruhr-Kreis](/doc/source/ahe_de.md) / ahe.de
 - [AHK Heidekreis](/doc/source/ahk_heidekreis_de.md) / ahk-heidekreis.de
+- [Ahlbershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Ahlshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Aholfing](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/aholfing/abfallkalender
+- [AJL - Abfallwirtschaftsgesellschaft Jerichower Land mbH](/doc/source/ajl_mbh_de.md) / ajl-mbh.de
 - [ALBA Berlin](/doc/source/abfall_io.md) / berlin.alba.info
 - [ALBA Braunschweig](/doc/ics/alba_bs_de.md) / alba-bs.de
+- [Albrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [ALF Lahn-Fulda](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallhr
 - [Allendorf](/doc/source/lobbe_app.md) / lobbe.app
 - [Allensbach am Bodensee](/doc/ics/gemeinde_allensbach_de.md) / gemeinde-allensbach.de
+- [Allershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Alsdorf](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Altena](/doc/source/lobbe_app.md) / lobbe.app
 - [Altenbeken](/doc/source/lobbe_app.md) / lobbe.app
+- [Altgandersheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Altmarkkreis Salzwedel](/doc/ics/abfall_app_net.md) / altmarkkreis-salzwedel.de
 - [Altötting (LK)](/doc/source/jumomind_de.md) / lra-aoe.de
 - [ALW Wolfenbüttel](/doc/source/jumomind_de.md) / alw-wf.de
 - [Alzey-Worms](/doc/ics/kreis_alzey_worms_de.md) / kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine
+- [Amberg](/doc/source/amberg_de.md) / amberg.de
 - [AMBnet](/doc/ics/ambnet_biz.md) / ambnet.biz
+- [Amelith](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Amelsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Andershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Angerstein](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Anzing](/doc/source/awido_de.md) / lra-ebe.de
 - [Apps by Abfall+](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Arnsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
 - [ART Trier (Depreciated)](/doc/source/art_trier_de.md) / art-trier.de
 - [Aschaffenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Asche](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [ASG Nordsachsen](/doc/source/abfall_io.md) / asg-nordsachsen.de
 - [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
@@ -973,6 +1180,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Attendorn](/doc/ics/abfuhrtermine_info.md) / attendorn.de
 - [Augsburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: awa
 - [Aurich (MKW)](/doc/source/jumomind_de.md) / mkw-grossefehn.de
+- [Avendshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH](/doc/ics/avl_ludwigsburg_de.md) / avl-ludwigsburg.de
 - [AVR Kommunal, Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / avr-kommunal.de
 - [AWA Entsorgungs GmbH](/doc/source/abfallnavi_de.md) / awa-gmbh.de
@@ -985,6 +1193,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [AWB Oldenburg](/doc/source/awb_oldenburg_de.md) / oldenburg.de
 - [AWB Westerwaldkreis](/doc/source/abfall_io.md) / wab.rlp.de
 - [awb-wetterau.de (not all municipalities)](/doc/ics/mein_abfallkalender_online.md) / awb-wetterau.de
+- [AWG Abfallwirtschaft Landkreis Calw](/doc/source/abfall_io.md) / awg-info.de
 - [AWG Bassum](/doc/ics/awg_bassum_de.md) / awg-bassum.de
 - [AWG Donau-Wald](/doc/source/app_abfallplus_de.md) / Abfall+ App: zawdw
 - [AWG Kreis Warendorf](/doc/source/abfallnavi_de.md) / awg-waf.de
@@ -1003,6 +1212,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bad Arolsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Bad Berleburg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bad Driburg](/doc/source/lobbe_app.md) / lobbe.app
+- [Bad Gandersheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bad Homburg vdH](/doc/source/jumomind_de.md) / bad-homburg.de
 - [Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbk
 - [Bad Oeynhausen](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network/bad-oeynhausen
@@ -1017,24 +1227,38 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bamberg (City/Stadt)](/doc/source/stadt_bamberg_de.md) / stadt.bamberg.de
 - [Bamberg (Landkreis)](/doc/ics/abfalltermine_bamberg_de.md) / abfalltermine-bamberg.de
 - [Barnim](/doc/source/jumomind_de.md) / kreiswerke-barnim.de
+- [Bartshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Battenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Bau & Service Oberursel](/doc/source/c_trace_de.md) / bso-oberursel.de
 - [Bau- und Entsorgungsbetrieb Emden](/doc/ics/bee_emden_de.md) / bee-emden.de
+- [Behrensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Bellenberg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/bellenberg/abfallkalender
+- [Beltershausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/1-beltershausen
+- [Bentierode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bergischer Abfallwirtschaftverbund](/doc/source/abfallnavi_de.md) / bavweb.de
+- [Berka](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Berlin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Berlin Recycling](/doc/source/berlin_recycling_de.md) / berlin-recycling.de
 - [Berliner Stadtreinigungsbetriebe](/doc/source/bsr_de.md) / bsr.de
+- [Berwartshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [BEST - Bottrop](/doc/ics/best_bottrop_de.md) / best-bottrop.de
 - [Bestwig](/doc/source/lobbe_app.md) / lobbe.app
+- [Beulshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Beverungen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Biebergemünd](/doc/ics/mein_abfallkalender_online.md) / biebergemuend.de
 - [Bielefeld](/doc/source/bielefeld_de.md) / bielefeld.de
+- [Billerbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Bishausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Blankenhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
+- [Bodenfelde](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
+- [Bollensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bonn](/doc/source/app_abfallplus_de.md) / Abfall+ App: bonnorange
 - [Borchen](/doc/source/lobbe_app.md) / lobbe.app
 - [Borgentreich](/doc/source/lobbe_app.md) / lobbe.app
 - [Brakel](/doc/source/lobbe_app.md) / lobbe.app
+- [Brandenburg an der Havel](/doc/ics/brandenburg_an_der_havel.md) / stadt-brandenburg.de
 - [Braunschweig](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Breckerfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [Bremer Stadtreinigung](/doc/source/c_trace_de.md) / die-bremer-stadtreinigung.de
@@ -1044,10 +1268,16 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Brilon](/doc/source/lobbe_app.md) / lobbe.app
 - [Brombachtal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Bromskirchen](/doc/source/lobbe_app.md) / lobbe.app
+- [Bruchhof](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bruck](/doc/source/awido_de.md) / lra-ebe.de
+- [Brunsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Brunstein](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Buch](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/buch/abfallkalender
+- [Buensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Burgenland (Landkreis)](/doc/source/app_abfallplus_de.md) / Abfall+ App: udb
 - [Burgenlandkreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Burgwald](/doc/source/lobbe_app.md) / lobbe.app
+- [Bühle](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Büren](/doc/source/lobbe_app.md) / lobbe.app
 - [Bürgerportal](/doc/source/buergerportal_de.md) / c-trace.de
 - [Bürgerportal Bedburg](/doc/source/buergerportal_de.md) / bedburg.de
@@ -1058,27 +1288,46 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Chemnitz (ASR)](/doc/source/hausmuell_info.md) / asr-chemnitz.de
 - [Chiemgau Recycling - Landkreis Rosenheim](/doc/source/chiemgau_recycling_lk_rosenheim.md) / chiemgau-recycling.de
 - [City of Karlsruhe](/doc/source/karlsruhe_de.md) / karlsruhe.de
+- [Clus](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Coburg Entsorgungs- und Baubetrieb CEB](/doc/source/ceb_coburg_de.md) / ceb-coburg.de
+- [Dankelsheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Dannhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Darmstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Darmstadt-Dieburg (ZAW)](/doc/source/jumomind_de.md) / zaw-online.de
+- [Dassel](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Dassensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Deitersen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Delbrück](/doc/source/lobbe_app.md) / lobbe.app
+- [Delliehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Denkershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Dessau-Rosslau](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Diemelsee](/doc/source/lobbe_app.md) / lobbe.app
 - [Diemelstadt](/doc/source/lobbe_app.md) / lobbe.app
 - [Dienstleistungsbetrieb Dreieich und Neu-Isenburg AöR](/doc/ics/mein_abfallkalender_online.md) / dlb-aoer.de
 - [Dillingen Saar](/doc/source/dillingen_saar_de.md) / dillingen-saar.de
+- [Dinkelhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Dinslaken](/doc/source/abfallnavi_de.md) / dinslaken.de
 - [Dormagen](/doc/ics/mein_abfallkalender_online.md) / dormagen.de
+- [Dreihausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/2-dreihausen
 - [Drekopf](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallplaner
 - [Drolshagen](/doc/ics/abfuhrtermine_info.md) / drolshagen.de
+- [Drüber](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Duisburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwbd
+- [Dögerode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Dörrigsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Düderode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [EAD Darmstadt](/doc/source/ead_darmstadt_de.md) / ead.darmstadt.de
 - [EAW Rheingau-Taunus-Kreis](/doc/ics/eaw_rheingau_taunus_de.md) / eaw-rheingau-taunus.de
 - [EAW Sangerhausen (Gemos)](/doc/ics/eaw_wastebox_gemos_de.md) / eaw.wastebox.gemos-management.de
 - [Ebersberg](/doc/source/awido_de.md) / lra-ebe.de
+- [Eboldshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Ebsdorf](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/3-ebsdorf
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
+- [Echte](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Edemissen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Edertal](/doc/source/lobbe_app.md) / lobbe.app
+- [Edesheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [EDG Entsorgung Dortmund](/doc/ics/edg_de.md) / edg.de
 - [Egelsbach](/doc/ics/mein_abfallkalender_online.md) / egelsbach.de
 - [Egmating](/doc/source/awido_de.md) / lra-ebe.de
@@ -1088,32 +1337,49 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Eichsfeldwerke GmbH](/doc/source/hausmuell_info.md) / eichsfeldwerke.de
 - [Eigenbetrieb Abfallwirtschaft Landkreis Spree-Neiße](/doc/source/eigenbetrieb_abfallwirtschaft_de.md) / eigenbetrieb-abfallwirtschaft.de
 - [Eigenbetrieb Kommunalwirtschaftliche Dienstleistungen Suhl](/doc/source/hausmuell_info.md) / ebkds.de
+- [Eilenburg](/doc/source/eilenburg_de.md) / eilenburg.de
+- [Eilensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Einbeck (Bezirk 1)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Einbeck (Bezirk 2)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Eisingen](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/eisingen/abfallkalender
 - [EKM Mittelsachsen GmbH](/doc/ics/ekm_mittelsachsen_de.md) / ekm-mittelsachsen.de
+- [Ellensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Ellierode (Bad Gandersheim)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Ellierode (Hardegsen)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Elvershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Elvese](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden](/doc/ics/elw_de.md) / elw.de
 - [Emmering](/doc/source/awido_de.md) / lra-ebe.de
+- [ENNI Energie & Umwelt Niederrhein (Moers)](/doc/ics/abfallkalender_enni_de.md) / abfallkalender.enni.de
 - [Entsorgung Dortmund GmbH (EDG)](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapp
 - [Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz](/doc/source/c_trace_de.md) / ew-landau.de
 - [Entsorgungsbetrieb Märkisch-Oderland](/doc/ics/entsorgungsbetrieb_mol_de.md) / entsorgungsbetrieb-mol.de
 - [Entsorgungsbetrieb Stadt Mainz](/doc/source/muellmax_de.md) / eb-mainz.de
 - [Entsorgungsbetriebe Essen](/doc/source/abfall_io.md) / ebe-essen.de
-- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / abfall-eglz.de
+- [Entsorgungsgesellschaft Görlitz-Löbau-Zittau](/doc/ics/abfall_eglz_de.md) / eglz-abfall.de
 - [Entsorgungstermine Jena](/doc/ics/entsorgungstermine_jena_de.md) / entsorgungstermine.jena.de
 - [Entsorgungsverband Völklingen (EVV)](/doc/source/evv_voelklingen_de.md) / evv-voelklingen.de
 - [Eppstein](/doc/ics/mein_abfallkalender_online.md) / eppstein.de
 - [Erbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Erftstadt (inoffical)](/doc/ics/abfallkalender_erftstadt_de.md) / abfallkalender-erftstadt.de
+- [Erichsburg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Erlangen](/doc/ics/mein_abfallkalender_online.md) / erlangen.de
+- [Ertinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Erzhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Eschborn](/doc/ics/mein_abfallkalender_online.md) / eschborn.de
+- [Eschershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Eschwege](/doc/ics/mein_abfallkalender_online.md) / eschwege.de
 - [Eschweiler](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Esens (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [ESG Soest - Entsorgungswirtschaft Soest GmbH](/doc/ics/esg_soest_de.md) / esg-soest.de
 - [Eslohe](/doc/source/lobbe_app.md) / lobbe.app
+- [Espol](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Essen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallebe
 - [EUV Stadtbetrieb Castrop-Rauxel](/doc/ics/euv_stadtbetrieb_de.md) / euv-stadtbetrieb.de
 - [EVA Abfallentsorgung](/doc/ics/eva_abfallentsorgung_de.md) / eva-abfallentsorgung.de
 - [EVS Entsorgungsverband Saar](/doc/source/muellmax_de.md) / evs.de
-- [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / fes-frankfurt.de
+- [Feichten a. d. Alz](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/feichten-alz/abfallkalender
+- [FES Frankfurter Entsorgungs- und Service GmbH](/doc/ics/fes_frankfurt_de.md) / frankfurtplus.de
 - [Finnentrop](/doc/ics/abfuhrtermine_info.md) / finnentrop.info
 - [Flensburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Flörsheim Am Main](/doc/ics/floersheim_umweltkalender_de.md) / floersheim-umweltkalender.de
@@ -1121,76 +1387,132 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Frankenau](/doc/source/lobbe_app.md) / lobbe.app
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Frankfurt (Oder)](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
+- [Frauenberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/4-frauenberg
 - [Frauenneuharting](/doc/source/awido_de.md) / lra-ebe.de
+- [Fredelsloh](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Freiburg im Breisgau](/doc/source/app_abfallplus_de.md) / Abfall+ App: asf
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Fränkisch-Crumbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Fürstenhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Gaimersheim](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/gaimersheim/abfallkalender
+- [Garlebsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Gehrenrode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
-- [Gelnhausen](/doc/ics/mein_abfallkalender_online.md) / gelnhausen.de
+- [Gelnhausen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
 - [Gemeinde Blankenheim](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Deggenhausertal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
+- [Gemeinde Gründau](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/gruendau/abfallkalender
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Kranenburg](/doc/source/abfallnavi_de.md) / kranenburg.de
 - [Gemeinde Roetgen](/doc/source/abfallnavi_de.md) / roetgen.de
 - [Gemeinde Schutterwald](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Unterhaching](/doc/source/awido_de.md) / unterhaching.de
 - [GFA Lüneburg](/doc/source/gfa_lueneburg_de.md) / gfa-lueneburg.de
+- [Gierswalde](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Gillersheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Ginsheim-Gustavsburg](/doc/ics/gigu_de.md) / gigu.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
+- [Gladebeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Glashütten (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Glonn](/doc/source/awido_de.md) / lra-ebe.de
+- [Goseplack](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Grafing](/doc/source/awido_de.md) / lra-ebe.de
+- [Greene](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Gremsheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Großenrode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Gräfelfing](/doc/ics/mein_abfallkalender_online.md) / graefelfing.de
 - [Grävenwiesbach (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [GSAK APP / Krefeld](/doc/source/insert_it_de.md) / insert-it.de/BmsAbfallkalenderKrefeld
+- [Gut Pinkler](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [GWA - Kreis Unna mbH](/doc/source/abfallnavi_de.md) / gwa-online.de
 - [Göttinger Entsorgungsbetriebe](/doc/source/abfall_io.md) / geb-goettingen.de
-- [Gütersloh (Stadt)](/doc/source/abfallnavi_de.md) / guetersloh.de
+- [Hachborn](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/5-hachborn
+- [Hachenhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hagen](/doc/source/app_abfallplus_de.md) / Abfall+ App: hebhagen
+- [Haieshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hainburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Hallenberg](/doc/source/lobbe_app.md) / lobbe.app
+- [Hallensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hallesche Wasser und Stadtwirtschaft GmbH](/doc/ics/hws_halle_de.md) / hws-halle.de
+- [Halsbach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/halsbach/abfallkalender
 - [Halver](/doc/source/abfallnavi_de.md) / halver.de
 - [Halver](/doc/source/lobbe_app.md) / lobbe.app
+- [Hammenstedt](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Hardegsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Harriehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hattersheim am Main](/doc/source/jumomind_de.md) / hattersheim.de
 - [Hatzfeld](/doc/source/lobbe_app.md) / lobbe.app
 - [hausmüll.info](/doc/source/hausmuell_info.md) / hausmuell.info
 - [Havelland](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
+- [Heckenbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Heidelberg](/doc/source/heidelberg_de.md) / heidelberg.de/abfall
 - [Heilbronn Entsorgungsbetriebe](/doc/source/heilbronn_de.md) / heilbronn.de
+- [Heimat-Info](/doc/source/heimat_info_de.md) / heimat-info.de
 - [Heimbach](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / abfallkalender.heinz-entsorgung.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/source/heinz_entsorgung_de.md) / abfallkalender.heinz-entsorgung.de
+- [Helmscherode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hemer](/doc/source/lobbe_app.md) / lobbe.app
 - [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
 - [Herzogenrath](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Heskem](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/6-heskem
+- [Hettensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Heusenstamm](/doc/ics/mein_abfallkalender_online.md) / heusenstamm.de
+- [Hevensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Hillerse](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Hilprechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Hilwartshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
 - [Hohenlinden](/doc/source/awido_de.md) / lra-ebe.de
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
+- [Hohnstedt](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Hollenstedt](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Holtensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Holtershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Hoppensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [HubertSchmid Recycling und Umweltschutz GmbH](/doc/source/api_hubert_schmid_de.md) / hschmid24.de/BlaueTonne
+- [Hullersen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Hunnesrück](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Höchst](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Höckelheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Höxter](/doc/source/jumomind_de.md) / abfallservice.kreis-hoexter.de
+- [Hürtgenwald](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/hurtgenwald/abfallkalender
+- [Iber](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Ilm-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappik
+- [Ilschhausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/7-ilschhausen
+- [Imbshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Immensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Inden](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Ingelsberg (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
 - [Ingolstadt](/doc/source/jumomind_de.md) / in-kb.de
 - [Insert IT Apps](/doc/source/insert_it_de.md) / insert-infotech.de
+- [Ippensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Iserlohn](/doc/source/lobbe_app.md) / lobbe.app
+- [Juliusmühle](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
+- [Kalefeld](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Kammerborn](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kamp-Lintfort (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Karben](/doc/ics/mein_abfallkalender_online.md) / karben.de
+- [Kastl (Lkr. AÖ)](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kastl/abfallkalender
+- [Katlenburg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
 - [Kierspe](/doc/source/lobbe_app.md) / lobbe.app
+- [Kirchberg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kirchdorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
 - [Kirchseeon](/doc/source/awido_de.md) / lra-ebe.de
+- [Kirchweidach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kirchweidach/abfallkalender
 - [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
+- [Kohnsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kommunalservice Landkreis Börde AöR](/doc/source/ks_boerde_de.md) / ks-boerde.de
 - [Korbach](/doc/source/lobbe_app.md) / lobbe.app
+- [Kreiensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kreis Ahrweiler](/doc/source/app_abfallplus_de.md) / Abfall+ App: meinawb
 - [Kreis Augsburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallapp
 - [Kreis Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallscout
@@ -1262,9 +1584,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Kreiswerke Schmalkalden-Meiningen GmbH](/doc/source/hausmuell_info.md) / kwsm.de
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
 - [Kreuztal](/doc/ics/abfuhrtermine_info.md) / kreuztal.de
+- [Krimmensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kronberg im Taunus](/doc/source/abfallnavi_de.md) / kronberg.de
+- [Kupferberg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kupferberg/abfallkalender
+- [Kuventhal](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [KV Cochem-Zell](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [KWU Entsorgung Landkreis Oder-Spree](/doc/source/kwu_de.md) / kwu-entsorgung.de
+- [Lagershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Landkreis Amberg-Sulzbach](/doc/ics/landkreis_as_de.md) / landkreis-as.de
 - [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
 - [Landkreis Ansbach](/doc/source/awido_de.md) / landkreis-ansbach.de
@@ -1287,7 +1613,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Fulda](/doc/source/awido_de.md) / landkreis-fulda.de
 - [Landkreis Gießen](/doc/source/awido_de.md) / lkgi.de
 - [Landkreis Gießen](/doc/source/muellmax_de.md) / lkgi.de
-- [Landkreis Gifhorn](/doc/source/abfallkalender_gifhorn_de.md) / abfallkalender-gifhorn.de
 - [Landkreis Gifhorn](/doc/source/awido_de.md) / gifhorn.de
 - [Landkreis Gotha](/doc/source/awido_de.md) / landkreis-gotha.de
 - [Landkreis Grafschaft](/doc/source/jumomind_de.md) / awb.grafschaft-bentheim.de
@@ -1311,11 +1636,14 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landkreis Limburg-Weilburg](/doc/source/abfall_io.md) / awb-lm.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
 - [Landkreis Main-Spessart](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallmsp
+- [Landkreis Mecklenburgische Seenplatte](/doc/source/lk_mecklenburgische_seenplatte_de.md) / lk-mecklenburgische-seenplatte.de
 - [Landkreis Mettmann (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Landkreis Märkisch-Oderland](/doc/source/abfall_io_graphql.md) / maerkisch-oderland.de
 - [Landkreis Mühldorf a. Inn](/doc/source/awido_de.md) / lra-mue.de
 - [Landkreis Neumarkt](/doc/source/abfuhrplan_landkreis_neumarkt_de.md) / abfuhrplan-landkreis-neumarkt.de
 - [Landkreis Nordwestmecklenburg](/doc/source/geoport_nwm_de.md) / geoport-nwm.de
-- [Landkreis Northeim (unofficial)](/doc/ics/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Landkreis Northeim (unofficial)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Landkreis Oldenburg](/doc/source/abfall_io.md) / oldenburg-kreis.de
 - [Landkreis Ostallgäu](/doc/source/abfall_io.md) / buerger-ostallgaeu.de
 - [Landkreis Paderborn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
@@ -1357,26 +1685,41 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Landshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappla
 - [Langen](/doc/source/jumomind_de.md) / kbl-langen.de
 - [Langen](/doc/ics/mein_abfallkalender_online.md) / langen.de
+- [Langenholtensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Langerwehe](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Lauenberg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lebacher Abfallzweckverband (LAZ)](/doc/ics/lebach_de.md) / lebach.de
+- [Leidenhofen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/8-leidenhofen
+- [Leinetal](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lennestadt](/doc/ics/abfuhrtermine_info.md) / lennestadt.de
 - [Leverkusen](/doc/source/app_abfallplus_de.md) / Abfall+ App: avea
+- [Levershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lichtenau](/doc/source/lobbe_app.md) / lobbe.app
+- [Lichtenborn](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lichtenfels](/doc/source/lobbe_app.md) / lobbe.app
+- [Lindau](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Linnich](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Linsengericht](/doc/ics/mein_abfallkalender_online.md) / linsengericht.de
 - [LK Schwandorf](/doc/ics/entsorgung_sad_de.md) / entsorgung-sad.de
 - [Lobbe App](/doc/source/lobbe_app.md) / lobbe.app
+- [Loiching](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/loiching/abfallkalender
 - [Ludwigshafen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfalllu
 - [Ludwigshafen am Rhein](/doc/source/abfall_io.md) / ludwigshafen.de
+- [Lutterbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Lutterhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lübbecke (Jumomind)](/doc/source/jumomind_de.md) / luebbecke.de
 - [Lübeck Entsorgungsbetriebe](/doc/ics/luebeck_de.md) / luebeck.de
+- [Lütgenrode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Lüthorst](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Lützelbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Mackensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [mags Mönchengladbacher Abfall-, Grün- und Straßenbetriebe AöR](/doc/source/mags_de.md) / mags.de
 - [Main-Kinzig-Kreis](/doc/source/jumomind_de.md) / abfall-mkk.de
 - [Main-Kinzig-Kreis (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Marburg](/doc/ics/mein_abfallkalender_online.md) / marburg.de
 - [Marienmünster](/doc/source/lobbe_app.md) / lobbe.app
+- [Markoldendorf](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Markt Kastl (Lauterachtal)](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kastl-lauterachtal/abfallkalender
 - [Markt Schwaben](/doc/source/awido_de.md) / lra-ebe.de
 - [Marsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Mechernich und Kommunen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
@@ -1390,19 +1733,26 @@ If your service provider is not listed, feel free to open a [source request issu
 - [MHEG Mülheim an der Ruhr](/doc/source/abfallnavi_de.md) / mheg.de
 - [Michelstadt](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Minden](/doc/source/jumomind_de.md) / minden.de
+- [Monheim am Rhein](/doc/source/monheim_de.md) / monheim.de
 - [Monschau](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Moosach](/doc/source/awido_de.md) / lra-ebe.de
+- [Moringen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Mossautal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [MZV Biedenkopf](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
+- [MZV Hegau](/doc/source/mzvhegau_de.md) / mzvhegau.de
 - [MZV Rotenburg](/doc/source/mzv_rotenburg_bebra_de.md) / mzv-rotenburg-bebra.de
+- [Mölln](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/9-molln
 - [Mörfelden-Walldorf](/doc/ics/moerfelden_walldorf_de.md) / moerfelden-walldorf.de
 - [Mühlheim am Main (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Müllabfuhr Deutschland](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [MüllALARM / Schönmackers](/doc/source/abfall_io.md) / schoenmackers.de
+- [Müllershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
 - [München Landkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkmabfallplus
 - [Nachrodt-Wiblingwerde](/doc/source/lobbe_app.md) / lobbe.app
+- [Naensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Neckar-Odenwald-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappno
+- [Negenborn](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Nenndorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Neu-Anspach](/doc/ics/mein_abfallkalender_online.md) / neu-anspach.de
 - [Neu-Ulm](/doc/source/neu_ulm_de.md) / nu.neu-ulm.de/buerger-service/leben-in-neu-ulm/abfall-sauberkeit/abfallkalender
@@ -1414,26 +1764,47 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Nidderau](/doc/ics/mein_abfallkalender_online.md) / nidderau.de
 - [Nideggen](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Niederzier](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Nienhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Nienover](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Nordsachsen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
+- [Northeim (Bezirk 1)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Northeim (Bezirk 2)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Nörten-Hardenberg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Nörvenich](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Oberhavel](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Oberhavel AWU](/doc/ics/awu_oberhavel_de.md) / awu-oberhavel.de
 - [Oberpframmern](/doc/source/awido_de.md) / lra-ebe.de
+- [Oberrieden](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/oberrieden/abfallkalender
+- [Oberroth](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/oberroth/abfallkalender
 - [Obertshausen](/doc/ics/mein_abfallkalender_online.md) / obertshausen.de
 - [Oberzent](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Odagsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Offensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Oldenburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappol
+- [Oldenrode (Kalefeld)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Oldenrode (Moringen)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Oldershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Olpe](/doc/ics/abfuhrtermine_info.md) / olpe.de
 - [Olsberg](/doc/source/lobbe_app.md) / lobbe.app
+- [Olxheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Opperhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Ortenaukreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappog
+- [Orxhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Osterbruch](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Osterode am Harz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
-- [Ostholstein](/doc/source/jumomind_de.md) / zvo.com
 - [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
+- [Ostprignitz-Ruppin](/doc/source/ostprignitz_ruppin_de.md) / ostprignitz-ruppin.de
+- [Parensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Pastetten](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/pastetten/abfallkalender
 - [Petershagen](/doc/ics/mein_abfallkalender_online.md) / petershagen.de
+- [Pfaffenhausen](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/pfaffenhausen/abfallkalender
 - [Pirmasens](/doc/ics/mein_abfallkalender_online.md) / pirmasens.de
 - [Planegg](/doc/ics/mein_abfallkalender_online.md) / planegg.de
 - [Plettenberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Pliening](/doc/source/awido_de.md) / lra-ebe.de
 - [Poing](/doc/source/awido_de.md) / lra-ebe.de
+- [Polier](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Portenhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Potsdam](/doc/source/potsdam_de.md) / potsdam.de
 - [PreZero](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
@@ -1441,10 +1812,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
 - [Pöring (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
+- [Rauischholzhausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/10-rauischholzhausen
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Reichelsheim](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Relliehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Remondis Rheinland](/doc/source/app_abfallplus_de.md) / Abfall+ App: rheinland
+- [Rengershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [RESO](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Reutlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: tbrapp
 - [Rhein-Hunsrück (Jumomind)](/doc/source/jumomind_de.md) / rh-entsorgung.de
@@ -1453,32 +1827,55 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rhein-Neckar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallavr
 - [Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / rhein-neckar-kreis.de
 - [Rhein-Pfalz-Kreis](/doc/ics/abfall_app_net.md) / rhein-pfalz-kreis.de
+- [Rimmerode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Rittierode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Rodenbach](/doc/ics/mein_abfallkalender_online.md) / rodenbach.de
 - [Rodgau](/doc/ics/mein_abfallkalender_online.md) / stadtwerke-rodgau.de
 - [Roetgen](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Roggenburg](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/roggenburg/abfallkalender
 - [Rosbach Vor Der Höhe](/doc/source/jumomind_de.md) / rosbach-hessen.de
+- [Rosenplänter](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Rosenthal](/doc/source/lobbe_app.md) / lobbe.app
+- [Rotenkirchen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Rottweil](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
+- [Roßberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/11-rossberg
+- [RSAG Rhein-Sieg Abfallwirtschaftsgesellschaft](/doc/source/rsag_de.md) / rsag.de
 - [RSAG Rhein-Sieg-Kreis](/doc/source/muellmax_de.md) / rsag.de
 - [Rödermark](/doc/ics/mein_abfallkalender_online.md) / roedermark.de
+- [Röttenbach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/rottenbach/abfallkalender
 - [Rüthen](/doc/source/lobbe_app.md) / lobbe.app
 - [Saalekreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
+- [SAB Magdeburg Abfuhrkalender](/doc/source/magdeburg_de.md) / sab.ssl.metageneric.de/app/sab_i_tp/index.php
+- [Salgen](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/salgen/abfallkalender
+- [Salzderhelden](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Salzgitter (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Salzlandkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallslk
+- [Schachtenbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Schalksmühle](/doc/source/lobbe_app.md) / lobbe.app
+- [Schlarpe](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
 - [Schmitten im Taunus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schnedinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Schoningen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Schwabach](/doc/source/abfuhrplan_schwabach_de.md) / abfuhrplan-schwabach.de
+- [Schwalbach am Taunus](/doc/ics/schwalbach_am_taunus_de.md) / schwalbach.de
 - [Schwarze Elster](/doc/source/app_abfallplus_de.md) / Abfall+ App: aevapp
 - [Schwarzwald-Baar-Kreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallsbk
+- [Schäftlarn](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/schaftlarn/abfallkalender
 - [Schöneck (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Schönhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Schönmackers](/doc/source/app_abfallplus_de.md) / Abfall+ App: muellalarm
 - [sds Schwerin](/doc/ics/sds_schwerin_de.md) / sds-schwerin.de
+- [Sebexen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Seboldshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Sector 27 - Datteln, Marl, Oer-Erkenschwick](/doc/source/sector27_de.md) / muellkalender.sector27.de
 - [Seligenstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
+- [Sievershausen (Dassel)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Sievershausen (Einbeck)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Simmerath](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Sohlingen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [St Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [St. Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
@@ -1498,6 +1895,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Haltern am See](/doc/source/muellmax_de.md) / haltern-am-see.de
 - [Stadt Hamm](/doc/source/muellmax_de.md) / hamm.de
 - [Stadt Hanau](/doc/source/muellmax_de.md) / hanau.de
+- [Stadt Hilchenbach](/doc/source/hilchenbach_de.md) / hilchenbach.de
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Königstein im Taunus](/doc/source/awido_de.md) / koenigstein.de
@@ -1509,12 +1907,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stadt Messstetten](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Stadt Norderstedt](/doc/source/abfallnavi_de.md) / betriebsamt-norderstedt.de
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
-- [Stadt Overath](/doc/source/c_trace_de.md) / overath.de
+- [Stadt Porta Westfalica](/doc/source/abfallnavi_de.md) / portawestfalica.de
 - [Stadt Regensburg](/doc/source/awido_de.md) / regensburg.de
 - [Stadt Saarlouis](/doc/ics/mein_abfallkalender_online.md) / saarlouis.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
 - [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
+- [Stadt Verl](/doc/source/verl_de.md) / verl.de
 - [Stadt Wetzlar](/doc/ics/wetzlar_de.md) / wetzlar.de
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtbildpflege Kaiserslautern](/doc/source/muellmax_de.md) / stadtbildpflege-kl.de
@@ -1534,60 +1933,101 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Steinhöring](/doc/source/awido_de.md) / lra-ebe.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
 - [Stolberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Strodthagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Stroit](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Städteservice Raunheim Rüsselsheim](/doc/source/staedteservice_de.md) / staedteservice.de
+- [Städtischer Abfallwirtschaftsbetrieb Magdeburg](/doc/source/magdeburg_de.md) / magdeburg.de
+- [Stöckheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Sudershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Sudheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Sulzbach](/doc/ics/mein_abfallkalender_online.md) / sulzbach-taunus.de
 - [Sundern](/doc/source/lobbe_app.md) / lobbe.app
+- [Suterode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/ics/sbazv_de.md) / sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume
+- [Sülbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [TBR Remscheid](/doc/source/muellmax_de.md) / tbr-info.de
 - [TBV Velbert](/doc/source/tbv_velbert_de.md) / tbv-velbert.de
 - [Team Orange (Landkreis Würzburg)](/doc/source/abfall_io.md) / team-orange.info
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
+- [Thüdinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen](/doc/source/tonnenleerung_de.md) / tonnenleerung.de
+- [Tonnenticker Pro](/doc/source/tonnenticker_pro_de.md) / regioit.de
+- [Trausnitz](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/trausnitz/abfallkalender
+- [Trögen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Tuttlingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [Twistetal](/doc/source/lobbe_app.md) / lobbe.app
+- [Tönnieshof](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Tübingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
 - [Uckermark](/doc/source/jumomind_de.md) / udg-uckermark.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Umweltbetriebe USK Kleve](/doc/source/buergerportal_de.md) / buerger-app-klevestadt.azurewebsites.net/calendar
+- [Unterroth](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/unterroth/abfallkalender
 - [USB Bochum](/doc/source/muellmax_de.md) / usb-bochum.de
 - [Usingen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Uslar](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Vahle](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Vardeilsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Vaterstetten](/doc/source/awido_de.md) / lra-ebe.de
+- [Verliehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Vettweiß](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Vlotho](/doc/ics/vlotho_de.md) / vlotho.de
+- [Vogelbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Voldagsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Volkmarsen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Volksen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Volpriehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Vorwerk Holtensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [VUE Waltrop](/doc/ics/vue_waltrop_de.md) / vue-waltrop.de
 - [Vöhl](/doc/source/lobbe_app.md) / lobbe.app
 - [Vöhringen (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Wachenhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Wahmbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: unterallgaeu
 - [Waldshut](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [Warburg](/doc/source/lobbe_app.md) / lobbe.app
 - [Warstein](/doc/source/lobbe_app.md) / lobbe.app
 - [Wasserburg](/doc/ics/mein_abfallkalender_online.md) / wasserburg.de
+- [WBL Lünen](/doc/ics/wbl_luenen_de.md) / wbl.de
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
+- [Weddehagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Weilrod](/doc/ics/mein_abfallkalender_online.md) / weilrod.de
 - [Weimarer Land](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
+- [Wellersen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Wenden](/doc/ics/abfuhrtermine_info.md) / gemeinde-wenden.de
+- [Wenzen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Werdohl](/doc/source/lobbe_app.md) / lobbe.app
-- [Wermelskirchen (Service Down)](/doc/source/wermelskirchen_de.md) / wermelskirchen.de
+- [Wermelskirchen](/doc/source/wermelskirchen_de.md) / bavweb.de/Bergischer-Abfallwirtschaftsverband/Abfuhrkalender-Service/Wermelskirchen
+- [Wermertshausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/12-wermertshausen
+- [Westerhof](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Westerholt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Westerwaldkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: wabapp
 - [Wetter](/doc/ics/mein_abfallkalender_online.md) / stadtbetrieb-wetter.de
+- [Wetze](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [WGV Recycling GmbH](/doc/source/awido_de.md) / wgv-quarzbichl.de
+- [Wiebrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Wiensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Wiershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Wilhelmshaven (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Willebadessen](/doc/source/lobbe_app.md) / lobbe.app
+- [Willershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Willich](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network/willich
 - [Willingen](/doc/source/lobbe_app.md) / lobbe.app
 - [Wilnsdorf](/doc/ics/wilnsdorf_de.md) / wilnsdorf.de
 - [Winterberg](/doc/source/lobbe_app.md) / lobbe.app
+- [Wittelsberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/13-wittelsberg
 - [Witzenhausen](/doc/ics/mein_abfallkalender_online.md) / witzenhausen.eu
+- [Wolbrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Wolfesing (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
 - [Wolfsburger Abfallwirtschaft und Straßenreinigung](/doc/source/was_wolfsburg_de.md) / was-wolfsburg.de
+- [Wolperode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Wrescherode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Wutach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/wutach/abfallkalender
 - [WZV Kreis Segeberg](/doc/source/c_trace_de.md) / wzv.de
 - [Würselen](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: wuerzburg
@@ -1596,6 +2036,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [zav Zweckverband Abfallwirtschaft Vogelsbergkres](/doc/ics/mein_abfallkalender_online.md) / zav-online.de
 - [ZAW Donau-Wald](/doc/source/awg_de.md) / awg.de
 - [ZAW-SR](/doc/source/app_abfallplus_de.md) / Abfall+ App: zawsr
+- [ZAW-SR Straubing](/doc/source/zaw_sr_de.md) / zaw-sr.de
 - [ZBG Gladbeck](/doc/ics/zb_gladbeck_de.md) / zb-gladbeck.de
 - [ZEW Zweckverband Entsorgungsregion West](/doc/source/abfallnavi_de.md) / zew-entsorgung.de
 - [ZfA Iserlohn](/doc/ics/zfa_iserlohn_de.md) / zfa-iserlohn.de
@@ -1603,6 +2044,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Zollernalbkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallzak
 - [Zollernalbkreis](/doc/ics/abfall_io_ics.md) / zollernalbkreis.de
 - [Zorneding](/doc/source/awido_de.md) / lra-ebe.de
+- [ZVO Abfuhrkalender](/doc/source/zvo_com.md) / zvo.com/abfuhrkalender2026
+- [ZVO Entsorgung - Zweckverband Ostholstein](/doc/source/zvo_com.md) / zvo.com
 - [Zweckverband Abfallwirtschaft Kreis Bergstraße](/doc/source/zakb_de.md) / zakb.de
 - [Zweckverband Abfallwirtschaft Oberes Elbtal](/doc/ics/zaoe_de.md) / zaoe.de
 - [Zweckverband Abfallwirtschaft Region Hannover](/doc/source/aha_region_de.md) / aha-region.de
@@ -1610,6 +2053,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis](/doc/source/zva_sek_de.md) / zva-sek.de
 - [Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)](/doc/ics/za_sws_de.md) / za-sws.de
 - [Zweckverband München-Südost](/doc/source/awido_de.md) / zvmso.de
+- [Üssinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 </details>
 
 <details>
@@ -1618,7 +2062,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
 - [Győri Hulladékgazdálkodási Nonprofit Kft.](/doc/source/gyhg_hu.md) / gyhg.hu
 - [MOHU Budapest](/doc/source/mohu_bp_hu.md) / mohubudapest.hu
-- [ÉTH (Érd, Diósd, Nagytarcsa, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
+- [ÉTH (Érd, Diósd, Ráckeresztúr, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
 </details>
 
 <details>
@@ -1648,13 +2092,17 @@ If your service provider is not listed, feel free to open a [source request issu
 - [AnconAmbiente](/doc/source/junker_app.md) / junker.app
 - [Andora](/doc/source/junker_app.md) / junker.app
 - [Anguillara Sabazia - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
+- [Anzola dell'Emilia](/doc/source/geovest_it.md) / geovest.bluemilk.dev
+- [Aprica S.p.A.](/doc/source/apricaspa_it.md) / apricaspa.it
 - [Aprilia - Progetto Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Ardea - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Argelato](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [ARO Figulinas - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Arosio - Service 24 Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Artena](/doc/source/junker_app.md) / junker.app
 - [Aset S.p.A](/doc/source/junker_app.md) / junker.app
 - [ASIA Azienda Speciale per l'Igiene Ambientale](/doc/source/junker_app.md) / junker.app
+- [ASM Pavia](/doc/source/asm_pv_it.md) / asm.pv.it
 - [Asm Terni](/doc/source/junker_app.md) / junker.app
 - [Assago - San Germano - Gruppo Iren](/doc/source/junker_app.md) / junker.app
 - [Assisi - ECE Srl](/doc/source/junker_app.md) / junker.app
@@ -1682,6 +2130,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Brandizzo](/doc/source/junker_app.md) / junker.app
 - [Brembate](/doc/source/junker_app.md) / junker.app
 - [Brixen/Bressanone - Stadtwerke Brixen AG/ASM Bressanone SpA](/doc/source/junker_app.md) / junker.app
+- [Broni](/doc/source/junker_app.md) / junker.app
 - [Bubbiano](/doc/source/junker_app.md) / junker.app
 - [Budoni - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Buggiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -1689,6 +2138,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [C.C.S. - Consorzio Campale Stabile](/doc/source/junker_app.md) / junker.app
 - [Cabras](/doc/source/junker_app.md) / junker.app
 - [Calatafimi Segesta](/doc/source/junker_app.md) / junker.app
+- [Calderara di Reno](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Calenzano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Calvi Risorta - Isola Verde Ecologia](/doc/source/junker_app.md) / junker.app
 - [Camerino](/doc/source/junker_app.md) / junker.app
@@ -1709,6 +2159,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Casale Marittimo](/doc/source/junker_app.md) / junker.app
 - [Casavatore - Ecology Srl](/doc/source/junker_app.md) / junker.app
 - [Castel Gandolfo - Coop 134](/doc/source/junker_app.md) / junker.app
+- [Castel Maggiore](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Castel Volturno - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
 - [Castelbuono - Castelbuono Ambiente srl](/doc/source/junker_app.md) / junker.app
 - [Castelfiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -1738,6 +2189,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Co.S.R.A.B](/doc/source/junker_app.md) / junker.app
 - [Collinas](/doc/source/junker_app.md) / junker.app
 - [Cologno Monzese - CEM Ambiente](/doc/source/junker_app.md) / junker.app
+- [Comune.Digital](/doc/source/comune_digital_it.md) / comune.digital
 - [Comuni della Convenzione di Sesto Calende - Econord](/doc/source/junker_app.md) / junker.app
 - [Comunità della Vallagarina - Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Comunità delle Giudicarie](/doc/source/junker_app.md) / junker.app
@@ -1752,6 +2204,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
 - [Cosvega](/doc/source/junker_app.md) / junker.app
 - [Covar14](/doc/source/junker_app.md) / junker.app
+- [Crevalcore](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Cupello - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Curti - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
 - [Decimoputzu - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
@@ -1759,6 +2212,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Ecoambiente Srl](/doc/source/junker_app.md) / junker.app
 - [EcoInnova Srl](/doc/source/junker_app.md) / junker.app
+- [Ecolan - Lanciano](/doc/ics/ecolan_it.md) / ecolan.it
 - [Econova Srl](/doc/source/junker_app.md) / junker.app
 - [Empoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Enna - Eco Enna Servizi](/doc/source/junker_app.md) / junker.app
@@ -1767,6 +2221,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Fiemme Servizi](/doc/source/junker_app.md) / junker.app
 - [Fiesole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Figline e Incisa Valdarno](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Finale Emilia](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Firenze](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Fiuggi](/doc/source/junker_app.md) / junker.app
 - [Floridia - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
@@ -1782,6 +2237,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Garfagnana Ecologia Ambiente - GEA](/doc/source/junker_app.md) / junker.app
 - [Gavorrano](/doc/source/junker_app.md) / junker.app
 - [GEA Srl](/doc/source/junker_app.md) / junker.app
+- [Geovest](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [GESENU  Gestione Servizi Nettezza Urbana S.P.A](/doc/source/junker_app.md) / junker.app
 - [Gestione Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Giarre - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
@@ -1790,6 +2246,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gioiosa Marea - Pizzo Pippo](/doc/source/junker_app.md) / junker.app
 - [Gonnesa - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Greve in Chianti](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Gruppo Veritas](/doc/source/gruppoveritas_it.md) / gruppoveritas.it
 - [Guardistallo](/doc/source/junker_app.md) / junker.app
 - [Iglesias](/doc/source/junker_app.md) / junker.app
 - [Il Rifiutologo](/doc/source/ilrifiutologo_it.md) / ilrifiutologo.it
@@ -1851,6 +2308,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Monte Urano - Eco Elpidiense Srl](/doc/source/junker_app.md) / junker.app
 - [Montecassiano](/doc/source/junker_app.md) / junker.app
 - [Montecatini Terme](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Monteco Spa](/doc/source/montecospa_it.md) / montecospa.it
 - [Montefiascone - Viterbo Ambiente](/doc/source/junker_app.md) / junker.app
 - [Monteflavio, Montorio Romano, Moricone - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Montelongo - Rotello - San Giuliano di Puglia - Impregico Srl](/doc/source/junker_app.md) / junker.app
@@ -1867,7 +2325,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Mosciano Sant'Angelo - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Mottola e Laterza - Meridionale Servizi Ambientali Srl](/doc/source/junker_app.md) / junker.app
 - [Muraca Srl](/doc/source/junker_app.md) / junker.app
+- [NET SpA - Udine](/doc/source/junker_app.md) / junker.app
 - [Nicosia - Leukosia](/doc/source/junker_app.md) / junker.app
+- [Nonantola](/doc/source/geovest_it.md) / geovest.bluemilk.dev
+- [Novara](/doc/source/junker_app.md) / junker.app
 - [Noventa di Piave](/doc/source/junker_app.md) / junker.app
 - [Nuoro - È-Comune srl](/doc/source/junker_app.md) / junker.app
 - [Orciano Pisano](/doc/source/junker_app.md) / junker.app
@@ -1900,6 +2361,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Pulsano - Al.ma. Ecologia Srl](/doc/source/junker_app.md) / junker.app
 - [Quarrata](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Quarto - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Ravarino](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Ravello](/doc/source/junker_app.md) / junker.app
 - [Rescaldina](/doc/source/junker_app.md) / junker.app
 - [Rho - A.Se.R SpA](/doc/source/junker_app.md) / junker.app
@@ -1917,14 +2379,18 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Rosora](/doc/source/junker_app.md) / junker.app
 - [Rovellasca](/doc/source/junker_app.md) / junker.app
 - [Sabaudia - Del Prete Srl](/doc/source/junker_app.md) / junker.app
+- [Sala Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Sala Consilina - SuperEco SRL](/doc/source/junker_app.md) / junker.app
 - [Salerno - Salerno Pulita Spa](/doc/source/junker_app.md) / junker.app
 - [Saluggia](/doc/source/junker_app.md) / junker.app
 - [Sambuca Pistoiese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sammichele di Bari e Casamassima - Meridionale Servizi Ambientali srl](/doc/source/junker_app.md) / junker.app
 - [San Casciano in Val di Pesa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [San Cipriano Po](/doc/source/junker_app.md) / junker.app
+- [San Giovanni in Persiceto](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [San Marcello Piteglio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sanremo - Amaie Energia e Servizi Srl](/doc/source/junker_app.md) / junker.app
+- [Sant'Agata Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Santa Lucia del Mela](/doc/source/junker_app.md) / junker.app
 - [Santa Maria a Vico](/doc/source/junker_app.md) / junker.app
 - [Santa Maria Capua Vetere - DHI](/doc/source/junker_app.md) / junker.app
@@ -1936,6 +2402,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Scandicci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Scanzorosciate](/doc/source/junker_app.md) / junker.app
 - [Scarperia e San Piero](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [SEAB Biella](/doc/source/seab_biella_it.md) / seab.biella.it
 - [Seab SPA Bolzano](/doc/source/junker_app.md) / junker.app
 - [Sennori e Sorso - Gesenu Spa](/doc/source/junker_app.md) / junker.app
 - [Sermoneta - Del Prete Srl](/doc/source/junker_app.md) / junker.app
@@ -1953,6 +2420,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Spoltore - Rieco](/doc/source/junker_app.md) / junker.app
 - [Squillace - Sieco Spa](/doc/source/junker_app.md) / junker.app
 - [Stefanaconi](/doc/source/junker_app.md) / junker.app
+- [Stradella](/doc/source/junker_app.md) / junker.app
 - [Suno](/doc/source/junker_app.md) / junker.app
 - [Taranto (araccolta.it)](/doc/source/araccolta_it.md) / araccolta.it
 - [Termoli - Rieco Sud Scarl](/doc/source/junker_app.md) / junker.app
@@ -1985,7 +2453,6 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Valle Camonica Servizi Srl](/doc/source/junker_app.md) / junker.app
 - [Valle Umbra Servizi S.p.A.](/doc/source/junker_app.md) / junker.app
 - [Vasto - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
-- [Veritas Spa](/doc/source/junker_app.md) / junker.app
 - [Vernio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vezzano sul Crostolo](/doc/source/junker_app.md) / junker.app
 - [Viagrande](/doc/source/junker_app.md) / junker.app
@@ -2006,9 +2473,27 @@ If your service provider is not listed, feel free to open a [source request issu
 </details>
 
 <details>
+<summary>Liechtenstein</summary>
+
+- [Balzers](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Eschen Nendeln](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [FL Abfalltransport AG](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Gamprin Bendern](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Mauren Schaanwald](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Planken](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Ruggell](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Schaan](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Schellenberg](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Triesen](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Triesenberg](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Vaduz](/doc/source/abfalltransport_li.md) / abfalltransport.li
+</details>
+
+<details>
 <summary>Lithuania</summary>
 
 - [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt
+- [Ekonovus](/doc/source/ekonovus_lt.md) / ekonovus.lt
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
 - [Telšių keliai](/doc/source/tkeliai_lt.md) / tkeliai.lt
 </details>
@@ -2019,6 +2504,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Bettembourg](/doc/ics/bettembourg_lu.md) / bettembourg.lu
 - [Betzdorf](/doc/source/betzdorf_lu.md) / betzdorf.lu
 - [Esch-sur-Alzette](/doc/source/esch_lu.md) / esch.lu
+- [Gemeng Bäertref](/doc/source/berdorf_lu.md) / berdorf.lu
+- [Luxembourg](/doc/source/luxembourg_lu.md) / data.public.lu
 - [SICA](/doc/source/sica_lu.md) / sica.lu
 - [SIDEC](/doc/source/sidec_lu.md) / sidec.lu
 - [Valorlux](/doc/source/valorlux_lu.md) / valorlux.lu
@@ -2065,6 +2552,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gemeente Utrecht](/doc/source/burgerportaal_nl.md) / utrecht.nl
 - [Gemeente Venlo](/doc/source/ximmio_nl.md) / venlo.nl
 - [Gemeente Venray](/doc/ics/afvalkalender_venray_nl.md) / venray.nl
+- [Gemeente Venray](/doc/ics/venray_nl.md) / venray.nl
 - [Gemeente Venray](/doc/source/hvcgroep_nl.md) / venray.nl
 - [Gemeente Voorschoten](/doc/source/hvcgroep_nl.md) / voorschoten.nl
 - [Gemeente Waalre](/doc/source/hvcgroep_nl.md) / waalre.nl
@@ -2072,16 +2560,20 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
 - [Meerlanden](/doc/source/ximmio_nl.md) / meerlanden.nl
+- [Mijn Afval Zaken - BUCH](/doc/source/hvcgroep_nl.md) / mijnafvalzaken.nl
 - [Mijn Blink](/doc/source/ximmio_nl.md) / mijnblink.nl
 - [PreZero](/doc/source/hvcgroep_nl.md) / prezero.nl
 - [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
 - [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
 - [Rd4](/doc/source/rd4_nl.md) / rd4.nl
 - [Reinigingsdienst Midden Nederland](/doc/source/burgerportaal_nl.md) / rmn.nl
-- [Reinis](/doc/source/ximmio_nl.md) / reinis.nl
+- [Reinis](/doc/source/hvcgroep_nl.md) / reinis.nl
+- [Rova](/doc/source/rova_nl.md) / rova.nl
+- [Saver](/doc/source/saver_nl.md) / saver.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
 - [Waardlanden](/doc/source/ximmio_nl.md) / waardlanden.nl
+- [Woerden / Oudewater](/doc/source/ximmio_nl.md) / woerden.nl
 - [Ximmio](/doc/source/ximmio_nl.md) / ximmio.nl
 - [ZRD](/doc/source/hvcgroep_nl.md) / zrd.nl
 - [Ôffalkalinder van Noardeast-Fryslân & Dantumadiel](/doc/ics/offalkalinder_nl.md) / offalkalinder.nl
@@ -2100,8 +2592,10 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Horowhenua District Council](/doc/source/horowhenua_govt_nz.md) / horowhenua.govt.nz
 - [Hutt City Council](/doc/source/toogoodtowaste_co_nz.md) / toogoodtowaste.co.nz
 - [Napier City Council](/doc/source/napier_govt_nz.md) / napier.govt.nz
+- [New Plymouth District Council](/doc/source/npdc_govt_nz.md) / npdc.govt.nz
 - [Porirua City](/doc/source/poriruacity_govt_nz.md) / poriruacity.govt.nz
 - [Rotorua Lakes Council](/doc/source/rotorua_lakes_council_nz.md) / rotorualakescouncil.nz
+- [Taupō District Council](/doc/source/taupodc_govt_nz.md) / taupodc.govt.nz
 - [Tauranga City Council](/doc/source/tauranga_govt_nz.md) / tauranga.govt.nz
 - [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
 - [Wellington City Council](/doc/source/wellington_govt_nz.md) / wellington.govt.nz
@@ -2114,14 +2608,18 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Avfall Sør, Kristiansand](/doc/source/avfallsor_no.md) / avfallsor.no
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
+- [Fredrikstad kommune](/doc/source/fredrikstad_no.md) / fredrikstad.kommune.no
 - [Innherred Renovasjon](/doc/source/innherredrenovasjon_no.md) / innherredrenovasjon.no
-- [IRiS](/doc/source/iris_salten_no.md) / iris-salten.no
+- [Iris Salten](/doc/source/iris_salten_no.md) / iris-salten.no
 - [Min Renovasjon](/doc/source/minrenovasjon_no.md) / norkart.no
 - [Movar IKS](/doc/source/movar_no.md) / movar.no
 - [Oslo Kommune](/doc/source/oslokommune_no.md) / oslo.kommune.no
 - [ReMidt Orkland muni](/doc/source/remidt_no.md) / remidt.no
+- [Renovasjonsselskapet for Drammensregionen IKS (RfD)](/doc/source/rfd_no.md) / rfd.no
+- [ROAF (Romerike Avfallsforedling IKS)](/doc/source/minrenovasjon_no.md) / roaf.no
 - [Sandnes Kommune](/doc/source/sandnes_no.md) / sandnes.kommune.no
 - [Stavanger Kommune](/doc/source/stavanger_no.md) / stavanger.kommune.no
+- [SUM Avfall (Sunnfjord og Ytre Sogn Miljøverk IKS)](/doc/source/sumavfall_no.md) / sumavfall.no
 - [Trondheim](/doc/ics/trv_no.md) / trv.no
 </details>
 
@@ -2232,10 +2730,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Gminne Przedsiębiorstwo Komunalne Sp. z o.o. w Skarszewach](/doc/source/sims_pl.md) / sisms.pl
 - [Gospodarka Odpadami - Pelplin](/doc/source/sims_pl.md) / sisms.pl
 - [Gospodarka Odpadami - Starogard Gdański](/doc/source/sims_pl.md) / sisms.pl
+- [Hemar (ichisystem.eu)](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Kiedy śmieci](/doc/source/kiedysmieci_info.md) / kiedysmieci.info
+- [Kiszkowo](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Kleszczewo/Kostrzyn](/doc/source/zys_harmonogram_pl.md) / puk-zys.pl/index.php
 - [Klient Szablonowy - Ekostrażnik](/doc/source/sims_pl.md) / sisms.pl
 - [Klient Szablonowy - Karty Usług](/doc/source/sims_pl.md) / sisms.pl
+- [KOM-LUB (Luboń, PL)](/doc/source/kom_lub_com_pl.md) / kom-lub.com.pl/aktualny-harmonogram-wywozow
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Miasto i Gmina Morawica](/doc/source/sims_pl.md) / sisms.pl
@@ -2248,25 +2749,36 @@ If your service provider is not listed, feel free to open a [source request issu
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl
 - [MPO Kraków](/doc/source/mpo_krakow_pl.md) / harmonogram.mpo.krakow.pl
 - [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
+- [Pobiedziska](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Polkowice](/doc/source/sims_pl.md) / sisms.pl
 - [Poznań](/doc/source/poznan_pl.md) / poznan.pl/mim/odpady
 - [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
 - [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
+- [Rybnik](/doc/source/rybnik_pl.md) / rybnik.eu
 - [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl
 - [SmiecioPlan](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Sopot](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Strzelce Krajeńskie](/doc/source/sims_pl.md) / sisms.pl
 - [Szczecin](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
+- [Wieliczka Kiedy Odpady](/doc/source/wieliczka_kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl
 - [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
 - [ZGPD-7](/doc/source/sims_pl.md) / sisms.pl
 - [Łódź](/doc/source/lodz_pl.md) / kartalodzianina.pl
 </details>
 
 <details>
+<summary>Portugal</summary>
+
+- [Câmara Municipal de Lisboa](/doc/source/cm_lisboa_pt.md) / informacoeseservicos.lisboa.pt/servicos/dias-do-lixo
+</details>
+
+<details>
 <summary>Slovakia</summary>
 
 - [fcc Environment](/doc/source/fcc_group_eu.md) / fcc-group.eu
+- [KOSIT EAST](/doc/source/kositeast_sk.md) / kositeast.sk
+- [Odvoz Odpadu](/doc/ics/odvoz_odpadu_sk.md) / odvoz-odpadu.eu
 - [OLO](/doc/source/olo_sk.md) / olo.sk
 </details>
 
@@ -2292,33 +2804,40 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Affärsverken](/doc/source/affarsverken_se.md) / affarsverken.se
 - [Avfall & Återvinning Skaraborg](/doc/source/skaraborg_se.md) / avfallskaraborg.se
 - [Avfallsapp.se - Multi Source](/doc/source/avfallsapp_se.md) / avfallsapp.se
+- [Berg](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se/berg/avfall-och-atervinning/avfallshamtning/nar-kommer-sopbilen
 - [Boden](/doc/source/edpevent_se.md) / boden.se
 - [Borlänge Energi](/doc/source/borlange_energi_se.md) / borlange-energi.se/appresource/4.534bcbed17430db9cdb1e5c2/12.3a9c9b4b19a7bbdffe85a22/getcontainerdata
 - [Borås Energi och Miljö](/doc/source/edpevent_se.md) / borasem.se
+- [Bräcke](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se/bracke/avfall-och-atervinning/avfallshamtning/nar-kommer-sopbilen
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
 - [Ekerö](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
 - [Herrljunga & Vårgårda kommun](/doc/source/edpevent_se.md) / remondisrecycling.se/hushallsavfall/herrljunga-vargarda
 - [Hudiksvall](/doc/source/hudiksvall_se.md) / hudiksvall.se
+- [Härjedalen](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se/harjedalen/avfall-och-atervinning/avfallshamtning/nar-kommer-sopbilen
+- [Hässleholm Miljö](/doc/source/hassleholm_miljo_se.md) / hassleholmmiljo.se
 - [Jönköping - June Avfall & Miljö](/doc/source/juneavfall_se.md) / juneavfall.se
 - [Kiruna - Tekniska Verken](/doc/source/edpevent_se.md) / tekniskaverkenikiruna.se
 - [Kretslopp Sydost](/doc/source/edpevent_se.md) / kretsloppsydost.se
 - [Kristianstad Renhållning](/doc/source/renhallningen_kristianstad_se.md) / renhallningen-kristianstad.se
+- [Kungsbacka kommun](/doc/source/kungsbacka_se.md) / sjalvservice.kungsbacka.se
 - [Kungälvs kommun Avfallshantering](/doc/source/kungalv_se.md) / kungalv.se/Bygga--bo--miljo/avfall-och-atervinning/avfall-fran-hushall
 - [Landskrona - Svalövs Renhållning](/doc/source/lsr_nu.md) / lsr.nu
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
 - [Lidköpings kommun](/doc/source/edpevent_se.md) / lidkoping.se
-- [Linköping - Tekniska Verken](/doc/source/tekniskaverken_se.md) / tekniskaverken.se
 - [Ljungby kommun](/doc/source/edpevent_se.md) / ljungby.se
 - [Luleå](/doc/source/lumire_se.md) / lumire.se
 - [Lund Waste Collection](/doc/source/lund_se.md) / eservice431601.lund.se
 - [Lycksele Kommun](/doc/source/edpevent_se.md) / lycksele.se
 - [Marks kommun](/doc/source/edpevent_se.md) / mark.se
+- [Mittsverige Vatten & Avfall](/doc/source/msva_se.md) / msva.se
 - [Motala](/doc/source/avfallsapp_se.md) / motala.se
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
-- [Nodra](/doc/source/edpevent_se.md) / nodra.se
 - [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
+- [NSR - Nordvästra Skånes Renhållnings AB](/doc/source/nsr_se.md) / nsr.se
+- [NSR Tömningskalender](/doc/source/nsr_se.md) / nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender
+- [NVOA - Nacka Vatten och Avfall](/doc/source/edpevent_se.md) / nacka.se/nackavattenavfall/avfall/sophamtning/tomningsdag
 - [Nårab - Norra Åsbo Renhållnings AB](/doc/source/narab_se.md) / narab.se
 - [Orust kommun](/doc/source/edpevent_se.md) / orust.se
 - [Pireva](/doc/source/pireva_se.md) / pireva.se
@@ -2335,11 +2854,18 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Stenungsunds kommun](/doc/source/edpevent_se.md) / stenungsund.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
 - [Söderköping](/doc/source/avfallsapp_se.md) / soderkoping.se
+- [Teknik i Väst (Arvika/Eda)](/doc/source/avfallsapp_se.md) / teknikivast.se
+- [Telge Återvinning](/doc/source/telge_se.md) / telge.se
+- [Upplands-Bro](/doc/source/avfallsapp_se.md) / upplands-bro.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
+- [Vafab Miljö](/doc/source/edpevent_se.md) / vafabmiljo.se
+- [Vatten och Miljöresurs](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se
 - [Vaxholm](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
+- [VMAB](/doc/source/vmab_se.md) / vmab.se
+- [Vänersborg](/doc/source/avfallsapp_se.md) / vanersborg.se
 - [Värmdö Sophämtning](/doc/source/varmdo_se.md) / varmdo.se
 - [Västervik Miljö & Energi](/doc/source/vmeab_se.md) / vmeab.se
 - [Ökrab Sophämntning](/doc/source/okrab_se.md) / okrab.se
@@ -2351,19 +2877,36 @@ If your service provider is not listed, feel free to open a [source request issu
 <summary>Switzerland</summary>
 
 - [A-Region](/doc/source/a_region_ch.md) / a-region.ch
+- [Aadorf](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Alchenstorf](/doc/source/alchenstorf_ch.md) / alchenstorf.ch
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch
 - [Basel-Stadt](/doc/source/data_bs_ch.md) / data.bs.ch
+- [Beinwil am See](/doc/source/localcities_ch.md) / beinwil-am-see.ch
 - [Berg](/doc/source/a_region_ch.md) / a-region.ch
+- [Bettwiesen](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Bichelsee-Balterswil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Braunau](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
 - [Bühler](/doc/source/a_region_ch.md) / a-region.ch
+- [Büren an der Aare](/doc/source/localcities_ch.md) / bueren.ch
+- [Bütschwil-Ganterschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
+- [Degersheim](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Ebnat-Kappel](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Eggersriet](/doc/source/a_region_ch.md) / a-region.ch
+- [Eschlikon](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Fischingen](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Flawil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Gemeinde Würenlos](/doc/ics/wuerenlos_ch.md) / wuerenlos.ch
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
+- [Gossau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
+- [Grenchen](/doc/source/localcities_ch.md) / grenchen.ch
+- [Grenchen (CH)](/doc/source/grenchen_ch.md) / grenchen.ch
 - [Grosswangen](/doc/source/grosswangen_ch.md) / grosswangen.ch
 - [Grub](/doc/source/a_region_ch.md) / a-region.ch
 - [Heiden](/doc/source/a_region_ch.md) / a-region.ch
@@ -2371,24 +2914,40 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Horn](/doc/source/a_region_ch.md) / a-region.ch
 - [Hundwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
+- [Jonschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Kirchberg](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Köniz](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Lichtensteig](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Liebefeld](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Liestal](/doc/source/localcities_ch.md) / liestal.ch
 - [Lindau](/doc/source/lindau_ch.md) / lindau.ch
+- [localcities.ch](/doc/source/localcities_ch.md) / localcities.ch
 - [Lutzenberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Lütisburg](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Mittelhäusern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch
+- [Mosnang](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Muolen](/doc/source/a_region_ch.md) / a-region.ch
 - [Mörschwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Münchenstein](/doc/source/muenchenstein_ch.md) / muenchenstein.ch
+- [Münchwilen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Münsingen BE, Switzerland](/doc/ics/muensingen_ch.md) / muensingen.ch
+- [Neckertal](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Nesslau](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Nieder-/Oberscherli](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Niederbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Niederhelfenschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Niederwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Oberbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Oberuzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Oberwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Rapperswil](/doc/source/rapperswil_be_ch.md) / rapperswil-be.ch
 - [Real Luzern](/doc/source/real_luzern_ch.md) / real-luzern.ch
 - [Real Luzern](/doc/source/sammelkalender_ch.md) / realluzern.ch
 - [Rehetobel](/doc/source/a_region_ch.md) / a-region.ch
+- [Reinach BL](/doc/source/reinach_bl_ch.md) / reinach-bl.ch
+- [Rickenbach](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
 - [Sammelkalender.ch](/doc/source/sammelkalender_ch.md) / info.sammelkalender.ch
@@ -2396,6 +2955,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
 - [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
 - [Seon](/doc/ics/seon_ch.md) / seon.ch
+- [Sirnach](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
 - [Spiegel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
@@ -2403,27 +2963,40 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Steinach](/doc/source/a_region_ch.md) / a-region.ch
 - [Teufen](/doc/source/a_region_ch.md) / a-region.ch
 - [Thal](/doc/source/a_region_ch.md) / a-region.ch
+- [Therwil](/doc/source/localcities_ch.md) / therwil.ch
 - [Thörishaus](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Tobel-Tägerschen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Trogen](/doc/source/a_region_ch.md) / a-region.ch
 - [Tübach](/doc/source/a_region_ch.md) / a-region.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
 - [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
+- [Uzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Volketswil](/doc/source/localcities_ch.md) / volketswil.ch
 - [Wabern](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Wald](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldkirch](/doc/source/a_region_ch.md) / a-region.ch
 - [Waldstatt](/doc/source/a_region_ch.md) / a-region.ch
+- [Wangen bei Olten](/doc/source/localcities_ch.md) / wangen-bei-olten.ch
+- [Wattwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Wiedlisbach](/doc/ics/mopage_ch.md) / wiedlisbach.mopage.ch
+- [Wil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Wilen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Winterthur](/doc/source/winterthur_ch.md) / winterthur.ch
 - [Wittenbach](/doc/source/a_region_ch.md) / a-region.ch
 - [Wolfhalden](/doc/source/a_region_ch.md) / a-region.ch
+- [Wuppenau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Wängi](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [ZAB Bazenheid](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [ZAKU Entsorgung](/doc/source/sammelkalender_ch.md) / zaku.ch
 - [Zeba](/doc/source/sammelkalender_ch.md) / zebazug.ch
 - [ZKRI](/doc/source/sammelkalender_ch.md) / zkri.ch
+- [Zuzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 </details>
 
 <details>
 <summary>United Kingdom</summary>
 
+- [Aberdeen City Council](/doc/source/aberdeencity_gov_uk.md) / aberdeencity.gov.uk
 - [Aberdeenshire Council](/doc/source/aberdeenshire_gov_uk.md) / aberdeenshire.gov.uk
 - [Adur & Worthing Councils](/doc/source/adur_worthing_gov_uk.md) / adur-worthing.gov.uk
 - [Allerdale Borough Council](/doc/source/allerdale_gov_uk.md) / allerdale.gov.uk
@@ -2438,22 +3011,27 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Ashfield District Council](/doc/source/ashfield_gov_uk.md) / ashfield.gov.uk
 - [Ashford Borough Council](/doc/source/ashford_gov_uk.md) / ashford.gov.uk
 - [Aylesbury Vale District Council](/doc/source/iapp_itouchvision_com.md) / aylesburyvaledc.gov.uk
+- [Babergh and Mid Suffolk District Councils](/doc/source/babergh_midsuffolk_gov_uk.md) / midsuffolk.gov.uk
+- [Babergh District Council](/doc/source/babergh_midsuffolk_gov_uk.md) / babergh.gov.uk/check-your-collection-day
 - [Barnsley Metropolitan Borough Council](/doc/source/barnsley_gov_uk.md) / barnsley.gov.uk
 - [Basildon Council](/doc/source/basildon_gov_uk.md) / basildon.gov.uk
 - [Basingstoke and Deane Borough Council](/doc/source/basingstoke_gov_uk.md) / basingstoke.gov.uk
+- [Bassetlaw District Council](/doc/ics/recollect.md) / bassetlaw.gov.uk
 - [Bath & North East Somerset Council](/doc/source/bathnes_gov_uk.md) / bathnes.gov.uk
 - [BCP Council](/doc/source/bcp_gov_uk.md) / bcpportal.bcpcouncil.gov.uk
 - [Bedford Borough Council](/doc/source/bedford_gov_uk.md) / bedford.gov.uk
 - [Belfast City Council](/doc/source/belfast_city_gov_uk.md) / online.belfastcity.gov.uk/find-bin-collection-day
-- [Binzone](/doc/source/binzone_uk.md) / southoxon.gov.uk
+- [BinDay (South & Vale)](/doc/source/binzone_uk.md) / southoxon.gov.uk
 - [Birmingham City Council](/doc/source/birmingham_gov_uk.md) / birmingham.gov.uk
 - [Blaby District Council](/doc/source/blaby_gov_uk.md) / my.blaby.gov.uk/collections
 - [Blackburn with Darwen Borough Council](/doc/source/blackburn_gov_uk.md) / blackburn.gov.uk
 - [Blackpool Council](/doc/source/blackpool_gov_uk.md) / blackpool.gov.uk
 - [Blaenau Gwent County Borough Council](/doc/source/iapp_itouchvision_com.md) / blaenau-gwent.gov.uk
+- [Bolsover District Council](/doc/source/bolsover_gov_uk.md) / bolsover.gov.uk
 - [Bolton Council](/doc/source/bolton_gov_uk.md) / bolton.gov.uk
 - [Borough Council of King's Lynn & West Norfolk](/doc/source/west_norfolk_gov_uk.md) / west-norfolk.gov.uk
 - [Borough of Broxbourne Council](/doc/source/broxbourne_gov_uk.md) / broxbourne.gov.uk
+- [Boston Borough Council](/doc/source/boston_gov_uk.md) / boston.gov.uk
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
@@ -2475,14 +3053,17 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Canterbury City Council](/doc/source/canterbury_gov_uk.md) / canterbury.gov.uk
 - [Cardiff Council](/doc/source/cardiff_gov_uk.md) / cardiff.gov.uk
 - [Carmarthenshire County Council](/doc/source/carmarthenshire_gov_wales.md) / carmarthenshire.gov.wales
+- [Castle Point Borough Council](/doc/source/castlepoint_gov_uk.md) / castlepoint.gov.uk
 - [Central Bedfordshire Council](/doc/source/centralbedfordshire_gov_uk.md) / centralbedfordshire.gov.uk
 - [Charnwood](/doc/source/charnwood_gov_uk.md) / charnwood.gov.uk
 - [Chelmsford City Council](/doc/source/chelmsford_gov_uk.md) / chelmsford.gov.uk
+- [Cheltenham Borough Council](/doc/source/cheltenham_gov_uk.md) / cheltenham.gov.uk
 - [Cherwell District Council](/doc/source/cherwell_gov_uk.md) / cherwell.gov.uk
 - [Cheshire East Council](/doc/source/cheshire_east_gov_uk.md) / cheshireeast.gov.uk
 - [Cheshire West and Chester Council](/doc/source/cheshire_west_and_chester_gov_uk.md) / cheshirewestandchester.gov.uk
 - [Chesterfield Borough Council](/doc/source/chesterfield_gov_uk.md) / chesterfield.gov.uk
 - [Chichester District Council](/doc/source/chichester_gov_uk.md) / chichester.gov.uk
+- [Chorley Council](/doc/source/chorley_gov_uk.md) / chorley.gov.uk
 - [City of Doncaster Council](/doc/source/doncaster_gov_uk.md) / doncaster.gov.uk
 - [City Of Lincoln Council](/doc/source/lincoln_gov_uk.md) / lincoln.gov.uk
 - [City of York Council](/doc/source/york_gov_uk.md) / york.gov.uk
@@ -2499,6 +3080,7 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Denbighshire County Council](/doc/source/denbighshire_gov_uk.md) / denbighshire.gov.uk
 - [Deprecated: Buckinghamshire](/doc/source/chiltern_gov_uk.md) / chiltern.gov.uk
 - [Derby City Council](/doc/source/derby_gov_uk.md) / derby.gov.uk
+- [Derbyshire Dales District Council](/doc/source/derbyshiredales_gov_uk.md) / derbyshiredales.gov.uk
 - [Dorset Council](/doc/source/dorset_gov_uk.md) / dorsetcouncil.gov.uk
 - [Dover District Council](/doc/source/dover_gov_uk.md) / dover.gov.uk
 - [Dudley Metropolitan Borough Council](/doc/source/dudley_gov_uk.md) / dudley.gov.uk
@@ -2511,14 +3093,18 @@ If your service provider is not listed, feel free to open a [source request issu
 - [East Devon District Council](/doc/source/eastdevon_gov_uk.md) / eastdevon.gov.uk
 - [East Dunbartonshire Council](/doc/source/eastdunbarton_gov_uk.md) / eastdunbarton.gov.uk
 - [East Herts Council](/doc/source/eastherts_gov_uk.md) / eastherts.gov.uk
+- [East Lindsey District Council](/doc/source/e_lindsey_gov_uk.md) / e-lindsey.gov.uk
 - [East Lothian](/doc/source/eastlothian_gov_uk.md) / eastlothian.gov.uk
 - [East Northamptonshire and Wellingborough](/doc/source/east_northamptonshire_gov_uk.md) / east-northamptonshire.gov.uk
 - [East Renfrewshire Council](/doc/source/east_renfrewshire_gov_uk.md) / eastrenfrewshire.gov.uk
 - [East Riding of Yorkshire Council](/doc/source/eastriding_gov_uk.md) / eastriding.gov.uk
+- [East Staffordshire Borough Council](/doc/source/eaststaffsbc_gov_uk.md) / eaststaffsbc.gov.uk
 - [Eastbourne Borough Council](/doc/source/environmentfirst_co_uk.md) / lewes-eastbourne.gov.uk
 - [Eastleigh Borough Council](/doc/source/eastleigh_gov_uk.md) / eastleigh.gov.uk
 - [Elmbridge Borough Council](/doc/source/elmbridge_gov_uk.md) / elmbridge.gov.uk
+- [Enfield Council](/doc/source/enfield_gov_uk.md) / enfield.gov.uk/services/rubbish-and-recycling/find-my-collection-day
 - [Environment First](/doc/source/environmentfirst_co_uk.md) / environmentfirst.co.uk
+- [Epping Forest District Council](/doc/source/eppingforestdc_gov_uk.md) / eppingforestdc.gov.uk
 - [Erewash Borough Council](/doc/source/erewash_gov_uk.md) / erewash.gov.uk
 - [Exeter City Council](/doc/source/exeter_gov_uk.md) / exeter.gov.uk
 - [Falkirk](/doc/ics/falkirk_gov_uk.md) / falkirk.gov.uk
@@ -2529,10 +3115,13 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
 - [Flintshire](/doc/source/flintshire_gov_uk.md) / flintshire.gov.uk
 - [Folkestone and Hythe District Councol](/doc/source/folkestone_hythe_gov_uk.md) / folkestone-hythe.gov.uk
+- [Forest of Dean District Council](/doc/source/forest_of_dean_gov_uk.md) / fdean.gov.uk
 - [Fylde Council](/doc/source/fylde_gov_uk.md) / waste.fylde.gov.uk
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
 - [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk
+- [Gosport Borough Council](/doc/source/gosport_gov_uk.md) / gosport.gov.uk
+- [Great Yarmouth Borough Council](/doc/source/great_yarmouth_gov_uk.md) / myaccount.great-yarmouth.gov.uk
 - [Greater Cambridge Waste, UK](/doc/source/greater_cambridge_waste_org.md) / greatercambridgewaste.org
 - [Guildford Borough Council](/doc/source/guildford_gov_uk.md) / guildford.gov.uk
 - [Gwynedd](/doc/source/gwynedd_gov_uk.md) / gwynedd.gov.uk
@@ -2542,13 +3131,16 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Hart District Council](/doc/source/hart_gov_uk.md) / hart.gov.uk
 - [Hartlepool Borough Council](/doc/source/hartlepool_gov_uk.md) / hartlepool.gov.uk
 - [Hastings Borough Council](/doc/source/hastings_gov_uk.md) / hastings.gov.uk
+- [Havant Borough Council](/doc/source/waste_havant_gov_uk.md) / waste.havant.gov.uk
 - [Herefordshire City Council](/doc/source/herefordshire_gov_uk.md) / herefordshire.gov.uk
 - [High Peak Borough Council](/doc/source/highpeak_gov_uk.md) / highpeak.gov.uk
 - [Highland](/doc/source/highland_gov_uk.md) / highland.gov.uk
+- [Hinckley & Bosworth Borough Council](/doc/source/hinckley_bosworth_gov_uk.md) / hinckley-bosworth.gov.uk
 - [Horsham District Council](/doc/source/horsham_gov_uk.md) / horsham.gov.uk
 - [Hull City Council](/doc/source/hull_gov_uk.md) / hull.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
 - [Hyndburn Borough Council](/doc/source/iapp_itouchvision_com.md) / hyndburnbc.gov.uk
+- [Ipswich Borough Council](/doc/source/ipswich_gov_uk.md) / ipswich.gov.uk
 - [Islington Council](/doc/source/islington_gov_uk.md) / islington.gov.uk
 - [iTouchVision Source using the encrypted API](/doc/source/iapp_itouchvision_com.md) / itouchvision.com
 - [Joint Waste Solutions](/doc/source/jointwastesolutions_org.md) / jointwastesolutions.org
@@ -2562,16 +3154,23 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Lisburn and Castlereagh City Council](/doc/source/lisburn_castlereagh_gov_uk.md) / lisburncastlereagh.gov.uk
 - [Liverpool City Council](/doc/source/liverpool_gov_uk.md) / liverpool.gov.uk
 - [London Borough of Barking and Dagenham](/doc/source/lbbd_gov_uk.md) / lbbd.gov.uk
+- [London Borough of Barnet](/doc/source/barnet_gov_uk.md) / barnet.gov.uk
 - [London Borough of Bexley](/doc/source/bexley_gov_uk.md) / bexley.gov.uk
 - [London Borough of Bromley](/doc/source/bromley_gov_uk.md) / bromley.gov.uk
 - [London Borough of Camden](/doc/source/camden_gov_uk.md) / camden.gov.uk
+- [London Borough of Hackney](/doc/source/hackney_gov_uk.md) / hackney.gov.uk
 - [London Borough of Harrow](/doc/source/harrow_gov_uk.md) / harrow.gov.uk
 - [London Borough of Havering](/doc/source/havering_gov_uk.md) / havering.gov.uk
+- [London Borough of Hillingdon](/doc/source/hillingdon_gov_uk.md) / hillingdon.gov.uk
 - [London Borough of Hounslow](/doc/source/hounslow_gov_uk.md) / hounslow.gov.uk
+- [London Borough of Lambeth](/doc/source/lambeth_gov_uk.md) / lambeth.gov.uk
 - [London Borough of Lewisham](/doc/source/lewisham_gov_uk.md) / lewisham.gov.uk
 - [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
 - [London Borough of Merton (Old)](/doc/source/merton_gov_uk.md) / merton.gov.uk
 - [London Borough of Newham](/doc/source/newham_gov_uk.md) / newham.gov.uk
+- [London Borough of Richmond upon Thames](/doc/source/richmond_gov_uk.md) / richmond.gov.uk
+- [London Borough of Southwark](/doc/source/southwark_gov_uk.md) / southwark.gov.uk
+- [London Borough of Tower Hamlets](/doc/source/tower_hamlets_gov_uk.md) / towerhamlets.gov.uk
 - [Luton](/doc/source/apps_imactivate_com.md) / luton.gov.uk
 - [Maidstone Borough Council](/doc/source/maidstone_gov_uk.md) / maidstone.gov.uk
 - [Maldon District Council](/doc/source/maldon_gov_uk.md) / maldon.gov.uk
@@ -2579,17 +3178,21 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Malvern Hills District Council](/doc/source/roundlookup_uk.md) / malvernhills.gov.uk
 - [Manchester City Council](/doc/source/manchester_uk.md) / manchester.gov.uk
 - [Mansfield District Council](/doc/source/mansfield_gov_uk.md) / mansfield.gov.uk
+- [Medway Council](/doc/source/medway_gov_uk.md) / medway.gov.uk
 - [Melton Borough Council](/doc/source/melton_gov_uk.md) / melton.gov.uk
 - [Mendip District Council](/doc/source/iapp_itouchvision_com.md) / mendip.gov.uk
 - [Mid and East Antrim](/doc/source/midandeastantrim_gov_uk.md) / midandeastantrim.gov.uk
 - [Mid Devon District Council](/doc/source/mid_devon_gov_uk.md) / middevon.gov.uk
+- [Mid Suffolk District Council](/doc/source/babergh_midsuffolk_gov_uk.md) / midsuffolk.gov.uk/check-your-collection-day
 - [Mid Sussex District Council (Whitespace WRP)](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk/waste-and-recycling
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
 - [Midlothian Council](/doc/source/midlothian_gov_uk.md) / my.midlothian.gov.uk
 - [Milton Keynes council](/doc/source/milton_keynes_gov_uk.md) / milton-keynes.gov.uk
+- [Mole Valley District Council](/doc/source/mole_valley_gov_uk.md) / molevalley.gov.uk
 - [Monmouthshire Council](/doc/source/monmouthshire_gov_uk.md) / monmouthshire.gov.uk
 - [Moray Council](/doc/source/moray_gov_uk.md) / moray.gov.uk
 - [Neath Port Talbot Council](/doc/source/neath_port_talbot_gov_uk.md) / npt.gov.uk
+- [New Forest District Council](/doc/source/newforest_gov_uk.md) / newforest.gov.uk
 - [Newark & Sherwood District Council](/doc/source/newark_sherwooddc_gov_uk.md) / newark-sherwooddc.gov.uk
 - [Newcastle City Council](/doc/source/newcastle_gov_uk.md) / community.newcastle.gov.uk
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
@@ -2608,18 +3211,22 @@ If your service provider is not listed, feel free to open a [source request issu
 - [North Yorkshire Council - Craven](/doc/source/northyorks_craven_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Hambleton](/doc/source/northyorks_hambleton_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Harrogate](/doc/source/northyorks_harrogate_gov_uk.md) / secure.harrogate.gov.uk
+- [North Yorkshire Council - Richmondshire](/doc/source/richmondshire_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Ryedale](/doc/source/northyorks_ryedale_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Scarborough](/doc/source/northyorks_scarborough_gov_uk.md) / northyorks.gov.uk
 - [North Yorkshire Council - Selby](/doc/source/northyorks_selby_gov_uk.md) / northyorks.gov.uk
+- [Northumberland County Council](/doc/source/northumberland_gov_uk.md) / northumberland.gov.uk
 - [Norwich City Council](/doc/source/norwich_gov_uk.md) / norwich.gov.uk/bins-and-recycling
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
 - [Oadby and Wigston Council](/doc/source/oadby_wigston_gov_uk.md) / oadby-wigston.gov.uk
 - [Oldham Council](/doc/source/oldham_gov_uk.md) / oldham.gov.uk
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
 - [Pembrokeshire County Council](/doc/source/pembrokeshire_gov_uk.md) / pembrokeshire.gov.uk
+- [Pendle Borough Council](/doc/source/pendle_gov_uk.md) / pendle.gov.uk/binday
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Plymouth City Council](/doc/source/plymouth_gov_uk.md) / plymouth.gov.uk
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
+- [Powys County Council](/doc/source/powys_gov_uk.md) / en.powys.gov.uk
 - [Preston City Council](/doc/source/preston_gov_uk.md) / preston.gov.uk
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
 - [Redbridge Council](/doc/source/redbridge_gov_uk.md) / redbridge.gov.uk
@@ -2627,8 +3234,8 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Reigate & Banstead Borough Council](/doc/source/reigatebanstead_gov_uk.md) / reigate-banstead.gov.uk
 - [Renfrewshire Council](/doc/source/renfrewshire_gov_uk.md) / renfrewshire.gov.uk
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
-- [Richmondshire District Council](/doc/source/richmondshire_gov_uk.md) / richmondshire.gov.uk
 - [Rochdale Borough Council](/doc/source/rochdale_gov_uk.md) / rochdale.gov.uk
+- [Rochford District Council](/doc/source/rochford_gov_uk.md) / rochford.gov.uk
 - [Rother District Council](/doc/source/rother_gov_uk.md) / rother.gov.uk
 - [Rotherham](/doc/source/apps_imactivate_com.md) / rotherham.gov.uk
 - [Rotherham Metropolitan Borough Council](/doc/source/rotherham_gov_uk.md) / rotherham.gov.uk
@@ -2642,12 +3249,15 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Scottish Borders Council](/doc/source/scotborders_gov_uk.md) / scotborders-live-portal.bartecmunicipal.com/Embeddable/CollectionCalendar
 - [Sedgemoor District Council](/doc/source/iapp_itouchvision_com.md) / sedgemoor.gov.uk
 - [Sefton Council](/doc/source/sefton_gov_uk.md) / sefton.gov.uk
+- [Sevenoaks District Council](/doc/source/sevenoaks_gov_uk.md) / sevenoaks.gov.uk
 - [Sheffield City Council](/doc/source/sheffield_gov_uk.md) / sheffield.gov.uk
 - [Shropshire Council](/doc/source/shropshire_gov_uk.md) / shropshire.gov.uk
-- [Solihull Council](/doc/source/solihull_gov_uk.md) / solihul.gov.uk
+- [Slough Borough Council](/doc/source/slough_gov_uk.md) / slough.gov.uk
+- [Solihull Council](/doc/source/solihull_gov_uk.md) / solihull.gov.uk
 - [Somerset Council](/doc/source/iapp_itouchvision_com.md) / somerset.gov.uk
 - [Somerset County Council](/doc/source/iapp_itouchvision_com.md) / somerset.gov.uk
 - [Somerset West & Taunton District Council](/doc/source/iapp_itouchvision_com.md) / somersetwestandtaunton.gov.uk
+- [South Ayrshire Council](/doc/source/south_ayrshire_gov_uk.md) / south-ayrshire.gov.uk
 - [South Cambridgeshire District Council](/doc/source/greater_cambridge_waste_org.md) / scambs.gov.uk
 - [South Cambridgeshire District Council (Deprecated)](/doc/source/scambs_gov_uk.md) / scambs.gov.uk
 - [South Derbyshire District Council](/doc/source/southderbyshire_gov_uk.md) / southderbyshire.gov.uk
@@ -2655,17 +3265,21 @@ If your service provider is not listed, feel free to open a [source request issu
 - [South Hams District Council](/doc/source/fccenvironment_co_uk.md) / southhams.gov.uk
 - [South Holland District Council](/doc/source/sholland_gov_uk.md) / sholland.gov.uk
 - [South Kesteven District Council](/doc/source/southkesteven_gov_uk.md) / southkesteven.gov.uk
+- [South Lanarkshire Council](/doc/source/southlanarkshire_gov_uk.md) / wasteservices.southlanarkshire.gov.uk
 - [South Norfolk Council](/doc/source/south_norfolk_and_broadland_gov_uk.md) / southnorfolkandbroadland.gov.uk
 - [South Oxfordshire District Council](/doc/source/binzone_uk.md) / southoxon.gov.uk
+- [South Ribble Borough Council](/doc/source/southribble_gov_uk.md) / southribble.gov.uk
 - [South Somerset District Council](/doc/source/iapp_itouchvision_com.md) / southsomerset.gov.uk
 - [South Staffordshire Council](/doc/source/sstaffs_gov_uk.md) / sstaffs.gov.uk
 - [South Tyneside Council](/doc/source/southtyneside_gov_uk.md) / southtyneside.gov.uk
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
+- [Spelthorne Borough Council](/doc/source/spelthorne_gov_uk.md) / spelthorne.gov.uk
 - [St Albans City & District Council](/doc/source/stalbans_gov_uk.md) / stalbans.gov.uk
 - [St Helens Council](/doc/source/st_helens_gov_uk.md) / sthelens.gov.uk
 - [Stafford Borough Council](/doc/source/staffordbc_gov_uk.md) / staffordbc.gov.uk
+- [Staffordshire Moorlands District Council](/doc/source/staffsmoorlands_gov_uk.md) / staffsmoorlands.gov.uk
 - [Stevenage Borough Council](/doc/source/stevenage_gov_uk.md) / stevenage.gov.uk
-- [Stirling.gov.uk](/doc/source/stirling_uk.md) / stirling.gov.uk
+- [Stirling Council, UK](/doc/ics/recollect.md) / stirling.gov.uk
 - [Stockport Council](/doc/source/stockport_gov_uk.md) / stockport.gov.uk
 - [Stockton-on-Tees Borough Council](/doc/source/stockton_gov_uk.md) / stockton.gov.uk
 - [Stoke-on-Trent](/doc/source/stoke_gov_uk.md) / stoke.gov.uk
@@ -2678,13 +3292,16 @@ If your service provider is not listed, feel free to open a [source request issu
 - [Swansea Council](/doc/source/swansea_gov_uk.md) / swansea.gov.uk
 - [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
 - [Tameside Metropolitan Borough Council](/doc/source/tameside_gov_uk.md) / tameside.gov.uk
+- [Teignbridge District Council](/doc/source/teignbridge_gov_uk.md) / teignbridge.gov.uk
 - [Telford and Wrekin Council](/doc/source/telford_gov_uk.md) / telford.gov.uk
+- [Tendring District Council](/doc/source/tendring_gov_uk.md) / tendringdc.gov.uk
 - [Test Valley Borough Council](/doc/source/iapp_itouchvision_com.md) / testvalley.gov.uk
 - [Tewkesbury Borough Council](/doc/source/tewkesbury_gov_uk.md) / tewkesbury.gov.uk
 - [Thanet District Council](/doc/source/thanet_gov_uk.md) / thanet.gov.uk
 - [The Royal Borough of Kingston Council](/doc/ics/kingston_gov_uk.md) / kingston.gov.uk
 - [Thurrock](/doc/source/thurrock_gov_uk.md) / thurrock.gov.uk
 - [Tonbridge and Malling Borough Council](/doc/source/tmbc_gov_uk.md) / tmbc.gov.uk
+- [Torbay Council](/doc/source/torbay_council_gov_uk.md) / torbay.gov.uk
 - [Torridge Council](/doc/source/torridge_gov_uk.md) / torridge.gov.uk
 - [Tunbridge Wells](/doc/source/tunbridgewells_gov_uk.md) / tunbridgewells.gov.uk
 - [UK Bin Collection Schedule (UKBCD) project](/doc/source/ukbcd.md) / github.com/robbrad/UKBinCollectionData
@@ -2731,7 +3348,11 @@ If your service provider is not listed, feel free to open a [source request issu
 <details>
 <summary>United States of America</summary>
 
+- [Abilene, TX](/doc/source/abilene_tx_us.md) / abilenetx.gov/426/Solid-Waste-Recycling
 - [Albuquerque, New Mexico, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-nm-city-of-albuquerque
+- [Atlantic Waste Services, GA](/doc/ics/recollect.md) / atlanticwaste.com
+- [Baton Rouge, LA](/doc/source/baton_rouge_la_us.md) / brla.gov/337/Garbage-Collection
+- [Chesapeake, VA](/doc/source/chesapeake_va_us.md) / cityofchesapeake.net
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
@@ -2740,34 +3361,46 @@ If your service provider is not listed, feel free to open a [source request issu
 - [City of Flagstaff, AZ](/doc/ics/recyclebycity_com.md) / flagstaff.az.gov
 - [City of Gastonia, NC](/doc/ics/recollect.md) / gastonianc.gov
 - [City of Georgetown, TX](/doc/ics/recollect.md) / texasdisposal.com/waste-wizard
+- [City of Houston, TX](/doc/ics/recollect.md) / houstontx.gov
 - [City of Los Angeles, CA](/doc/source/lacity_gov.md) / lacitysan.org
+- [City of Lowell, MA](/doc/ics/recollect.md) / lowellma.gov
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
-- [City of Oklahoma City](/doc/source/okc_gov.md) / data.okc.gov
+- [City of Oklahoma City](/doc/source/okc_gov.md) / okc.gov
 - [City of Philadelphia, PA](/doc/source/phila_gov.md) / phila.gov
 - [City of Pittsburgh](/doc/source/pgh_st.md) / pgh.st
 - [City of Plano](/doc/source/plano_gov.md) / plano.gov/630/Residential-Collection-Schedules
 - [City of San Antonio](/doc/source/sanantonio_gov.md) / sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
+- [Community Waste Disposal (CWD)](/doc/source/communitywastedisposal_com.md) / communitywastedisposal.com
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Fuquay-Varina, North Carolina](/doc/source/fuquay_varina_nc_us.md) / gis1.fuquay-varina.org
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
+- [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
 - [New York City](/doc/source/nyc_gov.md) / nyc.gov
 - [Newark, Delaware, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-de-city-of-newark
+- [Northville Township, MI](/doc/source/northville_township_mi_us.md) / twp.northville.mi.us
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
+- [Palm Coast, FL](/doc/source/palmcoast_fl_gov.md) / palmcoast.gov
+- [Plainville (CT)](/doc/source/recyclecoach_com.md) / plainvillect.com
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 - [Recology San Francisco](/doc/ics/recollect.md) / recology.com/recology-san-francisco
 - [Recycle By City](/doc/ics/recyclebycity_com.md) / recyclebycity.com
 - [Recycle Coach](/doc/source/recyclecoach_com.md) / recyclecoach.com
+- [Red Bank, Tennessee](/doc/source/red_bank_tn_us.md) / redbanktn.gov/257/Solid-Waste
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
+- [Rochester, NY](/doc/source/rochester_ny_us.md) / cityofrochester.gov
+- [Rogue Disposal & Recycling (Medford, OR)](/doc/ics/recollect.md) / roguedisposal.com
 - [Round Rock Texas](/doc/source/roundrocktexas_gov.md) / roundrocktexas.gov
 - [Sacramento County, CA](/doc/ics/recollect.md) / wmr.saccounty.gov
 - [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
 - [Tacoma, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-tacoma
 - [Tucson, Arizona, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-az-city-of-tucson
 - [University Park, TX](/doc/ics/recollect.md) / uptexas.org
+- [Village of Sunbury, Ohio](/doc/source/sunbury_ohio_org.md) / sunburyohio.org
 - [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
+- [Waste Management (WM)](/doc/source/wm_com.md) / wm.com
 </details>
 
 <!--End of country section-->
@@ -2801,10 +3434,10 @@ There are several ways of contributing to this project, they include:
 
 - Adding new service providers
 - Updating or improving the documentation
-- Helping answer/fix any issues raised
+- Helping answer/fix any issues raised (**Tip:** you can automatically self-assign an issue you are actively working on by commenting `/assign-me` on it to prevent duplicate work)
 - Join in with the Home Assistant Community discussion
 
-For further details see [contributing](/doc/contributing.md) guidelines, or take a look at our [online](/doc/online.md) mentions.
+For further details see [contributing](/CONTRIBUTING.md) guidelines, or take a look at our [online](/doc/online.md) mentions.
 
 <!--
 # Development Roadmap
@@ -2820,35 +3453,6 @@ If you'd like to help with any of these, please raise an [issue](https://github.
 # Code of Conduct
  Not sure if this is relevant for this project.
 -->
-
-# Known Issues
-
-The following waste service providers return errors when running the test_source script:
-
-- `banyule_vic_gov_au`: JSONDecodeError, caused by not supported Captcha wall
-- `awn_de`: all tests return 0 entries
-
-If you can fix any of these, please raise a Pull Request with the updates.
-
----
-
-## Home Assistant Hangs
-
-**Problem:** Home Assistant hangs during restart or configuration check. This occurs typically after Waste Collection Schedule has been added to the configuration.
-
-**Root Cause:** Home Assistant tries to install the required Python packages and fails somehow. This is not an issue of Waste Collection Schedule.
-
-**Solution:** Try to reinstall Waste Collection Schedule (if you are using HACS) or install the required Python packages manually. This list of required packages can be found in [manifest.json](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/manifest.json#L9).
-
-The actual procedure depends on your Home Assistant installation type.
-
-Example:
-
-```bash
-sudo docker exec -it homeassistant /bin/bash
-pip list
-pip install icalevents  # in case icalevents is missing
-```
 
 # License
 

@@ -1,4 +1,18 @@
 {
+  "Generic": [
+    {
+      "title": "ICS",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics"
+    },
+    {
+      "title": "Static Source",
+      "module": "static",
+      "default_params": {},
+      "id": "static"
+    }
+  ],
   "Australia": [
     {
       "title": "1Coast - Central Coast",
@@ -47,6 +61,12 @@
       "module": "act_gov_au",
       "default_params": {},
       "id": "act_gov_au"
+    },
+    {
+      "title": "Ballina Shire Council",
+      "module": "ballina_nsw_gov_au",
+      "default_params": {},
+      "id": "ballina_nsw_gov_au"
     },
     {
       "title": "Banyule City Council",
@@ -119,6 +139,12 @@
       "id": "impactapps_com_au"
     },
     {
+      "title": "Brimbank City Council",
+      "module": "brimbank_vic_gov_au",
+      "default_params": {},
+      "id": "brimbank_vic_gov_au"
+    },
+    {
       "title": "Brisbane City Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -133,12 +159,24 @@
       "id": "brisbane_qld_gov_au"
     },
     {
+      "title": "Bundaberg Regional Council",
+      "module": "bundaberg_qld_gov_au",
+      "default_params": {},
+      "id": "bundaberg_qld_gov_au"
+    },
+    {
       "title": "Burwood City Council",
       "module": "impactapps_com_au",
       "default_params": {
         "service": "Burwood City Council"
       },
       "id": "impactapps_com_au"
+    },
+    {
+      "title": "Byron Shire Council",
+      "module": "byron_nsw_gov_au",
+      "default_params": {},
+      "id": "byron_nsw_gov_au"
     },
     {
       "title": "Campbelltown City Council",
@@ -173,6 +211,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of Albany",
+      "module": "albany_wa_gov_au",
+      "default_params": {},
+      "id": "albany_wa_gov_au"
+    },
+    {
       "title": "City of Ballarat",
       "module": "ballarat_vic_gov_au",
       "default_params": {},
@@ -185,6 +229,18 @@
         "service": "City of Ballarat"
       },
       "id": "impactapps_com_au"
+    },
+    {
+      "title": "City of Bayswater",
+      "module": "bayswater_wa_gov_au",
+      "default_params": {},
+      "id": "bayswater_wa_gov_au"
+    },
+    {
+      "title": "City of Boroondara",
+      "module": "boroondara_vic_gov_au",
+      "default_params": {},
+      "id": "boroondara_vic_gov_au"
     },
     {
       "title": "City of Burnside",
@@ -291,6 +347,36 @@
       "id": "kingston_vic_gov_au"
     },
     {
+      "title": "City of Kwinana",
+      "module": "kwinana_wa_gov_au",
+      "default_params": {},
+      "id": "kwinana_wa_gov_au"
+    },
+    {
+      "title": "City of Mandurah",
+      "module": "mandurah_wa_gov_au",
+      "default_params": {},
+      "id": "mandurah_wa_gov_au"
+    },
+    {
+      "title": "City of Manningham",
+      "module": "manningham_vic_gov_au",
+      "default_params": {},
+      "id": "manningham_vic_gov_au"
+    },
+    {
+      "title": "City of Melbourne",
+      "module": "melbourne_vic_gov_au",
+      "default_params": {},
+      "id": "melbourne_vic_gov_au"
+    },
+    {
+      "title": "City of Melville",
+      "module": "melvillecity_com_au",
+      "default_params": {},
+      "id": "melvillecity_com_au"
+    },
+    {
       "title": "City of Mitcham",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -315,6 +401,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of Newcastle",
+      "module": "newcastle_nsw_gov_au",
+      "default_params": {},
+      "id": "newcastle_nsw_gov_au"
+    },
+    {
       "title": "City of Norwood Payneham and St Peters",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -331,6 +423,12 @@
       "module": "onkaparingacity_com",
       "default_params": {},
       "id": "onkaparingacity_com"
+    },
+    {
+      "title": "City of Parramatta",
+      "module": "cityofparramatta_nsw_gov_au",
+      "default_params": {},
+      "id": "cityofparramatta_nsw_gov_au"
     },
     {
       "title": "City of Port Adelaide Enfield",
@@ -363,16 +461,40 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of South Perth",
+      "module": "southperth_wa_gov_au",
+      "default_params": {},
+      "id": "southperth_wa_gov_au"
+    },
+    {
       "title": "City of Subiaco",
       "module": "subiaco_wa_gov_au",
       "default_params": {},
       "id": "subiaco_wa_gov_au"
     },
     {
+      "title": "City of Swan",
+      "module": "swan_wa_gov_au",
+      "default_params": {},
+      "id": "swan_wa_gov_au"
+    },
+    {
+      "title": "City of Tea Tree Gully",
+      "module": "teatreegully_sa_gov_au",
+      "default_params": {},
+      "id": "teatreegully_sa_gov_au"
+    },
+    {
       "title": "City of Victor Harbor",
       "module": "frwa_com_au",
       "default_params": {},
       "id": "frwa_com_au"
+    },
+    {
+      "title": "City of Vincent",
+      "module": "vincent_wa_gov_au",
+      "default_params": {},
+      "id": "vincent_wa_gov_au"
     },
     {
       "title": "City of Wanneroo",
@@ -403,6 +525,14 @@
       "module": "ccc_tas_gov_au",
       "default_params": {},
       "id": "ccc_tas_gov_au"
+    },
+    {
+      "title": "Clarence Valley Council",
+      "module": "impactapps_com_au",
+      "default_params": {
+        "service": "Clarence Valley Council"
+      },
+      "id": "impactapps_com_au"
     },
     {
       "title": "Coffs Coast Waste Services",
@@ -507,6 +637,12 @@
       "id": "frwa_com_au"
     },
     {
+      "title": "Fairfield City Council",
+      "module": "fairfieldcity_nsw_gov_au",
+      "default_params": {},
+      "id": "fairfieldcity_nsw_gov_au"
+    },
+    {
       "title": "Fleurieu Regional Waste Authority",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -533,10 +669,37 @@
       "id": "frankston_vic_gov_au"
     },
     {
+      "title": "Fraser Coast Regional Council",
+      "module": "frasercoast_qld_gov_au",
+      "default_params": {},
+      "id": "frasercoast_qld_gov_au"
+    },
+    {
+      "title": "Glenorchy City Council (TAS)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "GLENORCHY",
+        "project_id": "657"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Gold Coast City Council",
       "module": "goldcoast_qld_gov_au",
       "default_params": {},
       "id": "goldcoast_qld_gov_au"
+    },
+    {
+      "title": "Golden Plains Shire Council",
+      "module": "goldenplains_vic_gov_au",
+      "default_params": {},
+      "id": "goldenplains_vic_gov_au"
+    },
+    {
+      "title": "Greater Dandenong City Council",
+      "module": "greaterdandenong_vic_gov_au",
+      "default_params": {},
+      "id": "greaterdandenong_vic_gov_au"
     },
     {
       "title": "Gwydir Shire Council",
@@ -637,10 +800,28 @@
       "id": "lakemac_nsw_gov_au"
     },
     {
+      "title": "Lane Cove Council",
+      "module": "lanecove_nsw_gov_au",
+      "default_params": {},
+      "id": "lanecove_nsw_gov_au"
+    },
+    {
+      "title": "Launceston City Council",
+      "module": "launceston_tas_gov_au",
+      "default_params": {},
+      "id": "launceston_tas_gov_au"
+    },
+    {
       "title": "Light Regional Council",
       "module": "app_my_local_services_au",
       "default_params": {},
       "id": "app_my_local_services_au"
+    },
+    {
+      "title": "Lismore City Council",
+      "module": "lismore_city_nsw_gov_au",
+      "default_params": {},
+      "id": "lismore_city_nsw_gov_au"
     },
     {
       "title": "Lithgow City Council",
@@ -675,6 +856,12 @@
       "module": "mrsc_vic_gov_au",
       "default_params": {},
       "id": "mrsc_vic_gov_au"
+    },
+    {
+      "title": "Maitland City Council",
+      "module": "maitland_nsw_gov_au",
+      "default_params": {},
+      "id": "maitland_nsw_gov_au"
     },
     {
       "title": "Mansfield Shire Council",
@@ -713,10 +900,22 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Mid-Western Regional Council",
+      "module": "midwestern_nsw_gov_au",
+      "default_params": {},
+      "id": "midwestern_nsw_gov_au"
+    },
+    {
       "title": "MidCoast Council",
       "module": "midcoast_nsw_gov_au",
       "default_params": {},
       "id": "midcoast_nsw_gov_au"
+    },
+    {
+      "title": "Mitchell Shire Council",
+      "module": "mitchellshire_vic_gov_au",
+      "default_params": {},
+      "id": "mitchellshire_vic_gov_au"
     },
     {
       "title": "Moira Shire Council",
@@ -759,6 +958,12 @@
       "id": "mosman_nsw_gov_au"
     },
     {
+      "title": "Mount Alexander Shire Council",
+      "module": "mount_alexander_vic_gov_au",
+      "default_params": {},
+      "id": "mount_alexander_vic_gov_au"
+    },
+    {
       "title": "Moyne Shire Council",
       "module": "moyne_vic_gov_au",
       "default_params": {},
@@ -771,6 +976,12 @@
         "service": "Murrindindi Shire Counci"
       },
       "id": "impactapps_com_au"
+    },
+    {
+      "title": "Muswellbrook Shire Council",
+      "module": "muswellbrook_nsw_gov_au",
+      "default_params": {},
+      "id": "muswellbrook_nsw_gov_au"
     },
     {
       "title": "Naracoorte Lucindale Council",
@@ -801,6 +1012,12 @@
       "module": "northernbeaches_nsw_gov_au",
       "default_params": {},
       "id": "northernbeaches_nsw_gov_au"
+    },
+    {
+      "title": "Orange City Council",
+      "module": "orange_nsw_gov_au",
+      "default_params": {},
+      "id": "orange_nsw_gov_au"
     },
     {
       "title": "Penrith City Council",
@@ -915,6 +1132,18 @@
       "id": "shellharbourwaste_com_au"
     },
     {
+      "title": "Shire of Dardanup",
+      "module": "dardanup_wa_gov_au",
+      "default_params": {},
+      "id": "dardanup_wa_gov_au"
+    },
+    {
+      "title": "Shire of Harvey",
+      "module": "harvey_wa_gov_au",
+      "default_params": {},
+      "id": "harvey_wa_gov_au"
+    },
+    {
       "title": "Shire of Mundaring",
       "module": "mundaring_wa_gov_au",
       "default_params": {},
@@ -973,10 +1202,22 @@
       "id": "stonnington_vic_gov_au"
     },
     {
+      "title": "Strathfield Council",
+      "module": "strathfield_nsw_gov_au",
+      "default_params": {},
+      "id": "strathfield_nsw_gov_au"
+    },
+    {
       "title": "Sunshine Coast Queensland (QLD)",
       "module": "sunshinecoast_qld_gov_au",
       "default_params": {},
       "id": "sunshinecoast_qld_gov_au"
+    },
+    {
+      "title": "Sutherland Shire Council",
+      "module": "sutherlandshire_nsw_gov_au",
+      "default_params": {},
+      "id": "sutherlandshire_nsw_gov_au"
     },
     {
       "title": "The Flinders Ranges Council",
@@ -995,6 +1236,18 @@
       "module": "thehills_nsw_gov_au",
       "default_params": {},
       "id": "thehills_nsw_gov_au"
+    },
+    {
+      "title": "Town of Bassendean",
+      "module": "bassendean_wa_gov_au",
+      "default_params": {},
+      "id": "bassendean_wa_gov_au"
+    },
+    {
+      "title": "Town of Cambridge (WA)",
+      "module": "cambridge_wa_gov_au",
+      "default_params": {},
+      "id": "cambridge_wa_gov_au"
     },
     {
       "title": "Town of Victoria Park",
@@ -1027,6 +1280,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "Warrnambool City Council",
+      "module": "warrnambool_vic_gov_au",
+      "default_params": {},
+      "id": "warrnambool_vic_gov_au"
+    },
+    {
       "title": "Wellington Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -1045,6 +1304,12 @@
       "module": "whittlesea_vic_gov_au",
       "default_params": {},
       "id": "whittlesea_vic_gov_au"
+    },
+    {
+      "title": "Willoughby City Council",
+      "module": "willoughby_nsw_gov_au",
+      "default_params": {},
+      "id": "willoughby_nsw_gov_au"
     },
     {
       "title": "Wollondilly Shire Council",
@@ -1116,11 +1381,11 @@
     },
     {
       "title": "Abfallverband Schwechat",
-      "module": "umweltverbaende_at",
+      "module": "infeo_at",
       "default_params": {
-        "district": "schwechat"
+        "customer": "av-schwechat"
       },
-      "id": "umweltverbaende_at"
+      "id": "infeo_at"
     },
     {
       "title": "Abfallwirtschaft der Stadt St. P\u00f6lten",
@@ -1335,6 +1600,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Bischofshofen",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Blindenmarkt",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1345,6 +1616,18 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Braunau am Inn",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gem2go_dev"
+    },
+    {
+      "title": "Bregenz",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallv_zerowaste_io"
     },
     {
       "title": "Breitenbach am Inn",
@@ -1366,6 +1649,12 @@
     },
     {
       "title": "Bromberg",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
+      "title": "Bruck an der Mur",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -1473,6 +1762,12 @@
       "id": "umweltverbaende_at"
     },
     {
+      "title": "Dienten am Hochk\u00f6nig",
+      "module": "dienten_gv_at",
+      "default_params": {},
+      "id": "dienten_gv_at"
+    },
+    {
       "title": "Dobl-Zwaring",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1501,6 +1796,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Ebergassing",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Eberndorf",
@@ -1599,10 +1900,22 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Feld am See",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Feldbach",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Feldkirch",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallv_zerowaste_io"
     },
     {
       "title": "Feldkirchen in K\u00e4rnten",
@@ -1636,6 +1949,18 @@
     },
     {
       "title": "Finkenstein am Faaker See",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Fischamend",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Flattach",
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
@@ -1693,6 +2018,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Fresach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Friedberg",
@@ -1771,6 +2102,12 @@
       "id": "ics_gem2go_dev"
     },
     {
+      "title": "Gemeinde Aspang-Markt",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_aspangmarkt_at"
+    },
+    {
       "title": "Gemeinde Sulz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1789,6 +2126,12 @@
         "district": "horn"
       },
       "id": "umweltverbaende_at"
+    },
+    {
+      "title": "Gerasdorf bei Wien",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Gersdorf an der Feistritz",
@@ -1867,6 +2210,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Gramatneusiedl",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Gratkorn",
@@ -2035,6 +2384,18 @@
       "id": "umweltverbaende_at"
     },
     {
+      "title": "G\u00e4nserndorf",
+      "module": "gaenserndorf_city_at",
+      "default_params": {},
+      "id": "gaenserndorf_city_at"
+    },
+    {
+      "title": "G\u00e4nserndorf City / G\u00e4nserndorf App",
+      "module": "gaenserndorf_city_at",
+      "default_params": {},
+      "id": "gaenserndorf_city_at"
+    },
+    {
       "title": "G\u00fcssing",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2069,6 +2430,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Haslau-Maria Ellend",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Hausmannst\u00e4tten",
@@ -2131,6 +2498,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Himberg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Hirm",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2153,6 +2526,20 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Hohenems",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallv_zerowaste_io"
+    },
+    {
+      "title": "Holding Graz",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "1c230a689579b6d3ddb9ceb5a56c6072"
+      },
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Hopfgarten im Brixental",
@@ -2337,6 +2724,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Klein-Neusiedl",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Kleinm\u00fcrbisch",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2493,6 +2886,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Lanzendorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Leibnitz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2512,6 +2911,18 @@
     },
     {
       "title": "Leoben",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Leonding",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gem2go_dev"
+    },
+    {
+      "title": "Leopoldsdorf",
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
@@ -2613,6 +3024,12 @@
       "id": "lipizzanerheimat_at"
     },
     {
+      "title": "Maria Lanzendorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Maria Rain",
       "module": "ics",
       "default_params": {},
@@ -2671,6 +3088,12 @@
       "module": "edlitz_at",
       "default_params": {},
       "id": "edlitz_at"
+    },
+    {
+      "title": "Marktgemeinde Eggelsberg",
+      "module": "eggelsberg_at",
+      "default_params": {},
+      "id": "eggelsberg_at"
     },
     {
       "title": "Marktgemeinde G\u00f6ssendorf",
@@ -2761,6 +3184,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Moosbrunn",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Moosburg",
@@ -2913,6 +3342,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Obervellach",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Oberwart",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3001,6 +3436,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Pichl bei Wels",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gem2go_dev"
     },
     {
       "title": "Pilgersdorf",
@@ -3147,6 +3588,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Rauchenwarth",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "Rechnitz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3207,6 +3654,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Rohrbach an der Lafnitz",
+      "module": "rohrbach_lafnitz_at",
+      "default_params": {},
+      "id": "rohrbach_lafnitz_at"
+    },
+    {
       "title": "Rosental a.d Kainach",
       "module": "lipizzanerheimat_at",
       "default_params": {},
@@ -3238,9 +3691,9 @@
     },
     {
       "title": "Saalfelden am Steinernen Meer",
-      "module": "citiesapps_com",
+      "module": "saalfelden_at",
       "default_params": {},
-      "id": "citiesapps_com"
+      "id": "saalfelden_at"
     },
     {
       "title": "Sachsenburg",
@@ -3273,6 +3726,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Schalchen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gem2go_dev"
+    },
+    {
       "title": "Schiefling am W\u00f6rthersee",
       "module": "ics",
       "default_params": {},
@@ -3298,6 +3757,12 @@
     },
     {
       "title": "Schwadorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Schwadorf",
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
@@ -3310,6 +3775,12 @@
     },
     {
       "title": "Schwaz",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Schwechat",
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
@@ -3355,6 +3826,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Seyring",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
     },
     {
       "title": "Siegendorf",
@@ -3513,6 +3990,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "St. P\u00f6lten",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "St. Radegund bei Graz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3549,6 +4032,12 @@
         "customer": "salzburg"
       },
       "id": "infeo_at"
+    },
+    {
+      "title": "Stadtgemeinde Klosterneuburg",
+      "module": "klosterneuburg_at",
+      "default_params": {},
+      "id": "klosterneuburg_at"
     },
     {
       "title": "Stadtgemeinde Traiskirchen",
@@ -3737,6 +4226,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Traun",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gem2go_dev"
+    },
+    {
       "title": "Trebesing",
       "module": "ics",
       "default_params": {},
@@ -3797,6 +4292,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Upper Austria (Ober\u00f6sterreich)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gem2go_dev"
+    },
+    {
       "title": "Vasoldsberg",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3831,6 +4332,12 @@
       "module": "lipizzanerheimat_at",
       "default_params": {},
       "id": "lipizzanerheimat_at"
+    },
+    {
+      "title": "Vorarlberg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallv_zerowaste_io"
     },
     {
       "title": "Vordernberg",
@@ -3893,6 +4400,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Weinitzen",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
+    },
+    {
       "title": "Weitersfeld",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3915,6 +4428,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Wels",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gem2go_dev"
     },
     {
       "title": "Weppersdorf",
@@ -4079,6 +4598,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Zw\u00f6lfaxing",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellapp_com"
+    },
+    {
       "title": "\u00dcbelbach",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4125,6 +4650,12 @@
   ],
   "Canada": [
     {
+      "title": "Airdrie (AB)",
+      "module": "airdrie_ca",
+      "default_params": {},
+      "id": "airdrie_ca"
+    },
+    {
       "title": "Aurora (ON)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -4134,11 +4665,53 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Brampton (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "BRAMP",
+        "project_id": "3179"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Brantford (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "BRAN",
+        "project_id": "3195"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Brossard, Qu\u00e9bec",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_brossard_ca"
+    },
+    {
+      "title": "Burlington (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "BURL",
+        "project_id": "3169"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Burnaby (BC)",
       "module": "recyclecoach_com",
       "default_params": {
         "city": "Burnaby",
         "state": "British Columbia"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Caledon (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "CALED",
+        "project_id": "3179"
       },
       "id": "recyclecoach_com"
     },
@@ -4172,6 +4745,28 @@
         "state": "Ontario"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "City of Barrie",
+      "module": "barrie_ca",
+      "default_params": {},
+      "id": "barrie_ca"
+    },
+    {
+      "title": "City of Beaumont, AB",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "City of Coquitlam, BC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "City of Edmonton, AB",
@@ -4258,6 +4853,22 @@
       "id": "ics_citywindsor_ca"
     },
     {
+      "title": "Colchester, NS",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Community Recycling (Lunenburg, NS)",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "County of Simcoe, ON",
       "module": "ics",
       "default_params": {
@@ -4299,12 +4910,71 @@
       "id": "ics_recollect"
     },
     {
+      "title": "East Gwillimbury (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "EASTG",
+        "project_id": "586"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Eco360 (Greater Moncton, NB)",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Gatineau, QC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Georgina (ON)",
+      "module": "ics",
+      "default_params": {
+        "split_at": ", "
+      },
+      "id": "ics_georgina_ca"
+    },
+    {
+      "title": "Grey Highlands, ON",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Guelph (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "GUEL",
+        "project_id": "3194"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Halifax, NS",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Halton Hills (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "HALT",
+        "project_id": "3169"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "Halton Region, ON",
@@ -4322,6 +4992,41 @@
         "state": "Ontario"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Kelowna (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "Kelowna",
+        "project_id": "502"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Lakeshore (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "LAK",
+        "project_id": "583"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "LaSalle (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "LAS",
+        "project_id": "583"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Laval (QC)",
+      "module": "ics",
+      "default_params": {
+        "regex": "Collecte\\s*-\\s(\\w+)"
+      },
+      "id": "ics_laval_ca"
     },
     {
       "title": "London (ON)",
@@ -4353,6 +5058,34 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Medicine Hat (AB)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "MEDHAT",
+        "project_id": "500",
+        "zone_id": "zone-z196"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Milton (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "MILT",
+        "project_id": "3169"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Mississauga (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "MISS",
+        "project_id": "3179"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Montreal (QC)",
       "module": "montreal_ca",
       "default_params": {},
@@ -4365,10 +5098,22 @@
       "id": "info_collectes_ca"
     },
     {
+      "title": "MRC Joliette (QC)",
+      "module": "mrcjoliette_qc_ca",
+      "default_params": {},
+      "id": "mrcjoliette_qc_ca"
+    },
+    {
       "title": "MRC Marguerite-D'Youville",
       "module": "publidata_ca",
       "default_params": {},
       "id": "publidata_ca"
+    },
+    {
+      "title": "MRC Matawinie (QC)",
+      "module": "gmrmatawinie_qc_ca",
+      "default_params": {},
+      "id": "gmrmatawinie_qc_ca"
     },
     {
       "title": "Muskoka District (Huntsville, ON)",
@@ -4393,19 +5138,45 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Notre-Dame-du-Bon-Conseil (Village)",
+      "module": "villagebonconseil_ca",
+      "default_params": {},
+      "id": "villagebonconseil_ca"
+    },
+    {
       "title": "Oak Bay (BC)",
       "module": "recyclecoach_com",
       "default_params": {},
       "id": "recyclecoach_com"
     },
     {
-      "title": "Orillia, Ontario",
-      "module": "orillia_ca",
-      "default_params": {},
-      "id": "orillia_ca"
+      "title": "Oakville (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "OAKV",
+        "project_id": "3169"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Orillia (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "city": "Orillia",
+        "state": "Ontario"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "Ottawa, Canada",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Oxford County, ON",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"
@@ -4419,6 +5190,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Pointe-Claire (QC)",
+      "module": "pointe_claire_qc_ca",
+      "default_params": {},
+      "id": "pointe_claire_qc_ca"
     },
     {
       "title": "Prince George (BC)",
@@ -4475,10 +5252,52 @@
       "id": "ics_recollect"
     },
     {
+      "title": "RMR Lac-Saint-Jean (QC)",
+      "module": "rmrlac_qc_ca",
+      "default_params": {},
+      "id": "rmrlac_qc_ca"
+    },
+    {
+      "title": "Saint-Jean-Sur-Richelieu, QC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "Saint-J\u00e9rome (QC)",
       "module": "ics",
       "default_params": {},
       "id": "ics_vsj_ca"
+    },
+    {
+      "title": "Saskatoon, SK",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Shawinigan",
+      "module": "shawinigan_ca",
+      "default_params": {},
+      "id": "shawinigan_ca"
+    },
+    {
+      "title": "Sherbrooke (QC)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_sherbrooke_ca"
+    },
+    {
+      "title": "Spruce Grove, AB",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "St Clair Township, ON",
@@ -4503,6 +5322,24 @@
       "id": "toronto_ca"
     },
     {
+      "title": "Toronto (ON) - Circular Materials",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "TORONTO",
+        "project_id": "CIRCMATONT"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Township of Langley (BC)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "LANGL",
+        "project_id": "521"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Valleyfield, Qu\u00e9bec",
       "module": "ics",
       "default_params": {},
@@ -4518,7 +5355,27 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Ville de Saguenay",
+      "module": "saguenay_ca",
+      "default_params": {},
+      "id": "saguenay_ca"
+    },
+    {
+      "title": "Ville de Saint-Basile-le-Grand",
+      "module": "villesblg_ca",
+      "default_params": {},
+      "id": "villesblg_ca"
+    },
+    {
       "title": "Waste Wise APPS",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Whitby, ON",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"
@@ -4756,12 +5613,68 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Ayguemorte-les-Graves",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Ayguemorte-les-Graves"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Baldersheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Baldersheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Bantzenheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Bantzenheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Battenheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Battenheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Beautiran",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Beautiran"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Berrwiller",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Berrwiller"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
       "title": "Blanquefort",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Blanquefort"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Bollwiller",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Bollwiller"
+      },
+      "id": "mulhouse_alsace_fr"
     },
     {
       "title": "Bordeaux",
@@ -4778,12 +5691,28 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Bruebach",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Bruebach"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
       "title": "Bruges",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Bruges"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Brunstatt-Didenheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Brunstatt-Didenheim"
+      },
+      "id": "mulhouse_alsace_fr"
     },
     {
       "title": "B\u00e8gles",
@@ -4802,6 +5731,38 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Cabanac-et-Villagrains",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Cabanac-et-Villagrains"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Cadaujac",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Cadaujac"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Castres-Gironde",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Castres-Gironde"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Chalamp\u00e9",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Chalamp\u00e9"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
       "title": "Ch\u00e2teauroux M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
@@ -4814,6 +5775,14 @@
       "module": "cc-montesquieu_fr",
       "default_params": {},
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Dietwiller",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Dietwiller"
+      },
+      "id": "mulhouse_alsace_fr"
     },
     {
       "title": "Dreux Agglom\u00e9ration",
@@ -4832,6 +5801,14 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Eschentzwiller",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Eschentzwiller"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
       "title": "Eysines",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -4840,12 +5817,42 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Feldkirch",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Feldkirch"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Flaxlanden",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Flaxlanden"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Galfingue",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Galfingue"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
       "title": "Gradignan",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Gradignan"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Grand Besan\u00e7on M\u00e9tropole",
+      "module": "grandbesancon_fr",
+      "default_params": {},
+      "id": "grandbesancon_fr"
     },
     {
       "title": "Grand Calais Terres et Mers",
@@ -4872,6 +5879,62 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Habsheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Habsheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Heimsbrunn",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Heimsbrunn"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Hombourg",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Hombourg"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Illzach",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Illzach"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Isle Saint-Georges",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Isle Saint-Georges"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Kingersheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Kingersheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "La Br\u00e8de",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "La Br\u00e8de"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Le Bouscat",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -4888,12 +5951,36 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Le Havre Seine M\u00e9tropole",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1408
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Le Taillan-M\u00e9doc",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Le Taillan-M\u00e9doc"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Lutterbach",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Lutterbach"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "L\u00e9ognan",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "L\u00e9ognan"
+      },
+      "id": "cc-montesquieu_fr"
     },
     {
       "title": "Mairie de Mamirolle",
@@ -4910,6 +5997,43 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Martillac",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Martillac"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Montpellier M\u00e9diterran\u00e9e M\u00e9tropole",
+      "module": "data_montpellier3m_fr",
+      "default_params": {},
+      "id": "data_montpellier3m_fr"
+    },
+    {
+      "title": "Morschwiller-le-Bas",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Morschwiller-le-Bas"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Mulhouse",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Mulhouse",
+        "quartier": "Centre Ville"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Mulhouse Alsace Agglom\u00e9ration (m2A)",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {},
+      "id": "mulhouse_alsace_fr"
+    },
+    {
       "title": "M\u00e9motri - Agglom\u00e9ration Pau B\u00e9arn Pyr\u00e9n\u00e9es",
       "module": "memotri_agglo_pau_fr",
       "default_params": {},
@@ -4924,6 +6048,12 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "M\u00e9tropole de Lyon",
+      "module": "data_grandlyon_com",
+      "default_params": {},
+      "id": "data_grandlyon_com"
+    },
+    {
       "title": "M\u00e9tropole Europ\u00e9enne de Lille",
       "module": "publidata_fr",
       "default_params": {
@@ -4932,12 +6062,28 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Niffer",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Niffer"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
       "title": "Orl\u00e9ans M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 100
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Ottmarsheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Ottmarsheim"
+      },
+      "id": "mulhouse_alsace_fr"
     },
     {
       "title": "Parempuyre",
@@ -4956,10 +6102,80 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Petit-Landau",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Petit-Landau"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Pfastatt",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Pfastatt"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
       "title": "Publidata generic source",
       "module": "publidata_fr",
       "default_params": {},
       "id": "publidata_fr"
+    },
+    {
+      "title": "Pulversheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Pulversheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Reiningue",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Reiningue"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Richwiller",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Richwiller"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Riedisheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Riedisheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Rixheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Rixheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Rueil-Malmaison",
+      "module": "rueil_malmaison_fr",
+      "default_params": {},
+      "id": "rueil_malmaison_fr"
+    },
+    {
+      "title": "Ruelisheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Ruelisheim"
+      },
+      "id": "mulhouse_alsace_fr"
     },
     {
       "title": "Saint Quentin en Yvelines",
@@ -4986,12 +6202,36 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Saint-Morillon",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Saint-Morillon"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Saint-M\u00e9dard-d'Eyrans",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Saint-M\u00e9dard-d'Eyrans"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Saint-M\u00e9dard-en-Jalles",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Saint-M\u00e9dard-en-Jalles"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Saint-Selve",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Saint-Selve"
+      },
+      "id": "cc-montesquieu_fr"
     },
     {
       "title": "Saint-Vincent-de-Paul",
@@ -5002,6 +6242,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Saucats",
+      "module": "cc-montesquieu_fr",
+      "default_params": {
+        "commune": "Saucats"
+      },
+      "id": "cc-montesquieu_fr"
+    },
+    {
       "title": "Saumur Val de Loire",
       "module": "publidata_fr",
       "default_params": {
@@ -5010,10 +6258,54 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Sausheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Sausheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "SICTOM de Lons-le-Saunier",
+      "module": "sictom_lons_le_saunier_fr",
+      "default_params": {},
+      "id": "sictom_lons_le_saunier_fr"
+    },
+    {
+      "title": "SIVOM de la Vall\u00e9e de l'Yerres et des S\u00e9narts",
+      "module": "sivom_com",
+      "default_params": {},
+      "id": "sivom_com"
+    },
+    {
+      "title": "SIVOM Rive Droite",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1027
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Sivom Rive Droite - Bassens",
       "module": "sivom_rivedroite_fr",
       "default_params": {},
       "id": "sivom_rivedroite_fr"
+    },
+    {
+      "title": "Staffelfelden",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Staffelfelden"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Steinbrunn-le-Bas",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Steinbrunn-le-Bas"
+      },
+      "id": "mulhouse_alsace_fr"
     },
     {
       "title": "Talence",
@@ -5030,6 +6322,14 @@
         "instance_id": 65
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Ungersheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Ungersheim"
+      },
+      "id": "mulhouse_alsace_fr"
     },
     {
       "title": "Valcobreizh",
@@ -5070,28 +6370,60 @@
         "city": "Villenave-d'Ornon"
       },
       "id": "opendata_bordeauxmetropole_fr"
-    }
-  ],
-  "Generic": [
-    {
-      "title": "ICS",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics"
     },
     {
-      "title": "Static Source",
-      "module": "static",
-      "default_params": {},
-      "id": "static"
+      "title": "Wittelsheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Wittelsheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Wittenheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Wittenheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Zillisheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Zillisheim"
+      },
+      "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Zimmersheim",
+      "module": "mulhouse_alsace_fr",
+      "default_params": {
+        "commune": "Zimmersheim"
+      },
+      "id": "mulhouse_alsace_fr"
     }
   ],
   "Germany": [
+    {
+      "title": "123abfallkalender",
+      "module": "123abfallkalender_de",
+      "default_params": {},
+      "id": "123abfallkalender_de"
+    },
     {
       "title": "Aballwirtschaft Ludwigslust-Parchim A\u00f6R",
       "module": "ics",
       "default_params": {},
       "id": "ics_alp_lup_de"
+    },
+    {
+      "title": "Abbecke",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Abbecke"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Abfall App",
@@ -5138,6 +6470,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "Abfall.IO / AbfallPlus (GraphQL)",
+      "module": "abfall_io_graphql",
+      "default_params": {},
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Abfallbehandlungsgesellschaft Havelland mbH (abh)",
       "module": "abfall_havelland_de",
       "default_params": {},
@@ -5164,6 +6502,12 @@
         "split_at": " und "
       },
       "id": "ics_delmenhorst_de"
+    },
+    {
+      "title": "Abfallkalender Erkelenz",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallkalender_erkelenz_de"
     },
     {
       "title": "Abfallkalender Hattingen",
@@ -5361,20 +6705,6 @@
       "module": "nuernberger_land_de",
       "default_params": {},
       "id": "nuernberger_land_de"
-    },
-    {
-      "title": "Abfallwirtschaft Ortenaukreis",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_abfall_io_ics"
-    },
-    {
-      "title": "Abfallwirtschaft Ortenaukreis",
-      "module": "abfall_io",
-      "default_params": {
-        "key": "bb296b78763112266a391990f803f032"
-      },
-      "id": "abfall_io"
     },
     {
       "title": "Abfallwirtschaft Pforzheim",
@@ -5615,6 +6945,14 @@
       "id": "ics_abfuhrtermine_info"
     },
     {
+      "title": "Ackenhausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Ackenhausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "AHE Ennepe-Ruhr-Kreis",
       "module": "ahe_de",
       "default_params": {},
@@ -5625,6 +6963,36 @@
       "module": "ahk_heidekreis_de",
       "default_params": {},
       "id": "ahk_heidekreis_de"
+    },
+    {
+      "title": "Ahlbershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Ahlbershausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Ahlshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Ahlshausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Aholfing",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "aholfing"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "AJL - Abfallwirtschaftsgesellschaft Jerichower Land mbH",
+      "module": "ajl_mbh_de",
+      "default_params": {},
+      "id": "ajl_mbh_de"
     },
     {
       "title": "ALBA Berlin",
@@ -5639,6 +7007,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_alba_bs_de"
+    },
+    {
+      "title": "Albrechtshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Albrechtshausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "ALF Lahn-Fulda",
@@ -5662,6 +7038,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gemeinde_allensbach_de"
+    },
+    {
+      "title": "Allershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Allershausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Alsdorf",
@@ -5688,6 +7072,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Altgandersheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Altgandersheim"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Altmarkkreis Salzwedel",
@@ -5718,10 +7110,48 @@
       "id": "ics_kreis_alzey_worms_de"
     },
     {
+      "title": "Amberg",
+      "module": "amberg_de",
+      "default_params": {},
+      "id": "amberg_de"
+    },
+    {
       "title": "AMBnet",
       "module": "ics",
       "default_params": {},
       "id": "ics_ambnet_biz"
+    },
+    {
+      "title": "Amelith",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Amelith"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Amelsen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Amelsen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Andershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Andershausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Angerstein",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Angerstein"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Anzing",
@@ -5769,6 +7199,14 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Asche",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Asche"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "ASG Nordsachsen",
@@ -5835,6 +7273,14 @@
         "service_id": "lka"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Avendshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Avendshausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH",
@@ -5917,6 +7363,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "AWG Abfallwirtschaft Landkreis Calw",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "0813ea99f520c462373386564a99a51e"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "AWG Bassum",
@@ -6049,6 +7503,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Bad Gandersheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Bad Gandersheim"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Bad Homburg vdH",
       "module": "jumomind_de",
       "default_params": {
@@ -6159,6 +7621,14 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Bartshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Bartshausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Battenberg",
       "module": "lobbe_app",
       "default_params": {
@@ -6184,12 +7654,52 @@
       "id": "ics_bee_emden_de"
     },
     {
+      "title": "Behrensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Behrensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Bellenberg",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "bellenberg"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Beltershausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Beltershausen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Bentierode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Bentierode"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Bergischer Abfallwirtschaftverbund",
       "module": "abfallnavi_de",
       "default_params": {
         "service": "bav"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Berka",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Berka"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Berlin",
@@ -6212,6 +7722,14 @@
       "id": "bsr_de"
     },
     {
+      "title": "Berwartshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Berwartshausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "BEST - Bottrop",
       "module": "ics",
       "default_params": {},
@@ -6225,6 +7743,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Beulshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Beulshausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Beverungen (MyMuell App)",
@@ -6247,10 +7773,42 @@
       "id": "bielefeld_de"
     },
     {
+      "title": "Billerbeck",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Billerbeck"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Bishausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Bishausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Blankenhagen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Blankenhagen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Blaue Tonne - Schlaue Tonne",
       "module": "ics",
       "default_params": {},
       "id": "ics_blauetonne_schlauetonne_de"
+    },
+    {
+      "title": "Bodenfelde",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Bodenfelde"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Bogensch\u00fctz Entsorgung",
@@ -6259,6 +7817,14 @@
         "customer": "bogensch\u00fctz"
       },
       "id": "infeo_at"
+    },
+    {
+      "title": "Bollensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Bollensen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Bonn",
@@ -6294,6 +7860,12 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Brandenburg an der Havel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_brandenburg_an_der_havel"
     },
     {
       "title": "Braunschweig",
@@ -6369,6 +7941,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Bruchhof",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Bruchhof"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Bruck",
       "module": "awido_de",
       "default_params": {
@@ -6376,6 +7956,38 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Brunsen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Brunsen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Brunstein",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Brunstein"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Buch",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "buch"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Buensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Buensen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Burgenland (Landkreis)",
@@ -6401,6 +8013,14 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "B\u00fchle",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "B\u00fchle"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "B\u00fcren",
@@ -6474,6 +8094,14 @@
       "id": "karlsruhe_de"
     },
     {
+      "title": "Clus",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Clus"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "CM City Media - M\u00fcllkalender",
       "module": "cmcitymedia_de",
       "default_params": {},
@@ -6484,6 +8112,22 @@
       "module": "ceb_coburg_de",
       "default_params": {},
       "id": "ceb_coburg_de"
+    },
+    {
+      "title": "Dankelsheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Dankelsheim"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Dannhausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Dannhausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Darmstadt (MyMuell App)",
@@ -6502,6 +8146,30 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Dassel",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Dassel"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Dassensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Dassensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Deitersen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Deitersen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Delbr\u00fcck",
       "module": "lobbe_app",
       "default_params": {
@@ -6509,6 +8177,22 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Delliehausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Delliehausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Denkershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Denkershausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Dessau-Rosslau",
@@ -6549,6 +8233,14 @@
       "id": "dillingen_saar_de"
     },
     {
+      "title": "Dinkelhausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Dinkelhausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Dinslaken",
       "module": "abfallnavi_de",
       "default_params": {
@@ -6561,6 +8253,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Dreihausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Dreihausen"
+      },
+      "id": "123abfallkalender_de"
     },
     {
       "title": "Drekopf",
@@ -6577,12 +8277,44 @@
       "id": "ics_abfuhrtermine_info"
     },
     {
+      "title": "Dr\u00fcber",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Dr\u00fcber"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Duisburg",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.idcontor.abfallwbd"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "D\u00f6gerode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "D\u00f6gerode"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "D\u00f6rrigsen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "D\u00f6rrigsen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "D\u00fcderode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "D\u00fcderode"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "EAD Darmstadt",
@@ -6612,10 +8344,42 @@
       "id": "awido_de"
     },
     {
+      "title": "Eboldshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Eboldshausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Ebsdorf",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Ebsdorf"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "ebwo - Entsorgungs- und Baubetrieb Anstalt des \u00f6ffentlichen Rechts der Stadt Worms",
       "module": "ics",
       "default_params": {},
       "id": "ics_worms_de"
+    },
+    {
+      "title": "Echte",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Echte"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Edemissen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Edemissen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Edertal",
@@ -6625,6 +8389,14 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Edesheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Edesheim"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "EDG Entsorgung Dortmund",
@@ -6694,10 +8466,88 @@
       "id": "hausmuell_info"
     },
     {
+      "title": "Eilenburg",
+      "module": "eilenburg_de",
+      "default_params": {},
+      "id": "eilenburg_de"
+    },
+    {
+      "title": "Eilensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Eilensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Einbeck (Bezirk 1)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Einbeck (Bezirk 1)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Einbeck (Bezirk 2)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Einbeck (Bezirk 2)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Eisingen",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "eisingen"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "EKM Mittelsachsen GmbH",
       "module": "ics",
       "default_params": {},
       "id": "ics_ekm_mittelsachsen_de"
+    },
+    {
+      "title": "Ellensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Ellensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Ellierode (Bad Gandersheim)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Ellierode (Bad Gandersheim)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Ellierode (Hardegsen)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Ellierode (Hardegsen)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Elvershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Elvershausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Elvese",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Elvese"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "ELW - Entsorgungsbetriebe der Landeshauptstadt Wiesbaden",
@@ -6715,6 +8565,12 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "ENNI Energie & Umwelt Niederrhein (Moers)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfallkalender_enni_de"
     },
     {
       "title": "Entsorgung Dortmund GmbH (EDG)",
@@ -6795,16 +8651,48 @@
       "id": "ics_abfallkalender_erftstadt_de"
     },
     {
+      "title": "Erichsburg",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Erichsburg"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Erlangen",
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Ertinghausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Ertinghausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Erzhausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Erzhausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Eschborn",
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Eschershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Eschershausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Eschwege",
@@ -6844,6 +8732,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Espol",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Espol"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Essen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -6874,11 +8770,18 @@
       "id": "muellmax_de"
     },
     {
+      "title": "Feichten a. d. Alz",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "feichten-alz"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "FES Frankfurter Entsorgungs- und Service GmbH",
       "module": "ics",
       "default_params": {
-        "regex": "(.*)\\s+\\|",
-        "split_at": " / "
+        "regex": "[^:]+:\\s*(.*)"
       },
       "id": "ics_fes_frankfurt_de"
     },
@@ -6937,6 +8840,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Frauenberg",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Frauenberg"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Frauenneuharting",
       "module": "awido_de",
       "default_params": {
@@ -6944,6 +8855,14 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Fredelsloh",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Fredelsloh"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Freiburg im Breisgau",
@@ -6968,16 +8887,50 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "F\u00fcrstenhagen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "F\u00fcrstenhagen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Gaimersheim",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "gaimersheim"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Garlebsen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Garlebsen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Gehrenrode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Gehrenrode"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Gelber Sack Stuttgart",
       "module": "ics",
       "default_params": {},
       "id": "ics_gelbersack_stuttgart_de"
     },
     {
-      "title": "Gelnhausen",
-      "module": "ics",
-      "default_params": {},
-      "id": "ics_mein_abfallkalender_online"
+      "title": "Gelnhausen (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      },
+      "id": "jumomind_de"
     },
     {
       "title": "Gelsendienste Gelsenkirchen",
@@ -7000,6 +8953,14 @@
         "hpid": 225
       },
       "id": "cmcitymedia_de"
+    },
+    {
+      "title": "Gemeinde Gr\u00fcndau",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "gruendau"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Gemeinde Kalletal",
@@ -7048,9 +9009,43 @@
       "id": "gfa_lueneburg_de"
     },
     {
+      "title": "Gierswalde",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Gierswalde"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Gillersheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Gillersheim"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Ginsheim-Gustavsburg",
       "module": "ics",
-      "default_params": {},
+      "default_params": {
+        "method": "POST",
+        "params": {
+          "dateFrom": "2026-01-01",
+          "dateTo": "2026-12-31",
+          "category": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ]
+        },
+        "url": "https://abfallkalender.gigu.de/export"
+      },
       "id": "ics_gigu_de"
     },
     {
@@ -7058,6 +9053,22 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gipsprojekt_de"
+    },
+    {
+      "title": "Gladebeck",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Gladebeck"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Glash\u00fctten (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      },
+      "id": "jumomind_de"
     },
     {
       "title": "Glonn",
@@ -7069,6 +9080,14 @@
       "id": "awido_de"
     },
     {
+      "title": "Goseplack",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Goseplack"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Grafing",
       "module": "awido_de",
       "default_params": {
@@ -7076,6 +9095,30 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Greene",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Greene"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Gremsheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Gremsheim"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Gro\u00dfenrode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Gro\u00dfenrode"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Gro\u00dfkrotzenburg (MyMuell App)",
@@ -7106,6 +9149,14 @@
       "id": "insert_it_de"
     },
     {
+      "title": "Gut Pinkler",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Gut Pinkler"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "GWA - Kreis Unna mbH",
       "module": "abfallnavi_de",
       "default_params": {
@@ -7122,12 +9173,20 @@
       "id": "abfall_io"
     },
     {
-      "title": "G\u00fctersloh (Stadt)",
-      "module": "abfallnavi_de",
+      "title": "Hachborn",
+      "module": "123abfallkalender_de",
       "default_params": {
-        "service": "gt2"
+        "district": "Hachborn"
       },
-      "id": "abfallnavi_de"
+      "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Hachenhausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hachenhausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Hagen",
@@ -7136,6 +9195,14 @@
         "app_id": "de.k4systems.hebhagen"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Haieshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Haieshausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Hainburg (MyMuell App)",
@@ -7155,10 +9222,26 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Hallensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hallensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Hallesche Wasser und Stadtwirtschaft GmbH",
       "module": "ics",
       "default_params": {},
       "id": "ics_hws_halle_de"
+    },
+    {
+      "title": "Halsbach",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "halsbach"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Halver",
@@ -7176,6 +9259,30 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Hammenstedt",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hammenstedt"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Hardegsen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hardegsen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Harriehausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Harriehausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Hattersheim am Main",
@@ -7209,6 +9316,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Heckenbeck",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Heckenbeck"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Heidelberg",
       "module": "heidelberg_de",
       "default_params": {},
@@ -7219,6 +9334,12 @@
       "module": "heilbronn_de",
       "default_params": {},
       "id": "heilbronn_de"
+    },
+    {
+      "title": "Heimat-Info",
+      "module": "heimat_info_de",
+      "default_params": {},
+      "id": "heimat_info_de"
     },
     {
       "title": "Heimbach",
@@ -7239,6 +9360,14 @@
       "module": "heinz_entsorgung_de",
       "default_params": {},
       "id": "heinz_entsorgung_de"
+    },
+    {
+      "title": "Helmscherode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Helmscherode"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Hemer",
@@ -7264,10 +9393,58 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Heskem",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Heskem"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Hettensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hettensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Heusenstamm",
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Hevensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hevensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Hillerse",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hillerse"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Hilprechtshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hilprechtshausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Hilwartshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hilwartshausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Hochheim",
@@ -7299,6 +9476,38 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Hohnstedt",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hohnstedt"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Hollenstedt",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hollenstedt"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Holtensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Holtensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Holtershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Holtershausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Holtgast (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -7307,10 +9516,34 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Hoppensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hoppensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "HubertSchmid Recycling und Umweltschutz GmbH",
       "module": "api_hubert_schmid_de",
       "default_params": {},
       "id": "api_hubert_schmid_de"
+    },
+    {
+      "title": "Hullersen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hullersen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Hunnesr\u00fcck",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Hunnesr\u00fcck"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "H\u00f6chst",
@@ -7321,6 +9554,14 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "H\u00f6ckelheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "H\u00f6ckelheim"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "H\u00f6xter",
       "module": "jumomind_de",
       "default_params": {
@@ -7329,12 +9570,52 @@
       "id": "jumomind_de"
     },
     {
+      "title": "H\u00fcrtgenwald",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "hurtgenwald"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Iber",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Iber"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Ilm-Kreis",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.abfallappik"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Ilschhausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Ilschhausen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Imbshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Imbshausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Immensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Immensen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Inden",
@@ -7368,6 +9649,14 @@
       "id": "insert_it_de"
     },
     {
+      "title": "Ippensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Ippensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Iserlohn",
       "module": "lobbe_app",
       "default_params": {
@@ -7375,6 +9664,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Juliusm\u00fchle",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Juliusm\u00fchle"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Jumomind",
@@ -7389,12 +9686,50 @@
       "id": "kaev_niederlausitz"
     },
     {
+      "title": "Kalefeld",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Kalefeld"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Kammerborn",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Kammerborn"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Kamp-Lintfort (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Karben",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Kastl (Lkr. A\u00d6)",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "kastl"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Katlenburg",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Katlenburg"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "KECL Kommunalentsorgung Chemnitzer Land",
@@ -7410,6 +9745,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Kirchberg",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Kirchberg"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Kirchdorf (MyMuell App)",
@@ -7435,10 +9778,26 @@
       "id": "awido_de"
     },
     {
+      "title": "Kirchweidach",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "kirchweidach"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Knittel Entsorgung",
       "module": "ics",
       "default_params": {},
       "id": "ics_knittel_entsorgung_com"
+    },
+    {
+      "title": "Kohnsen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Kohnsen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Kommunalservice Landkreis B\u00f6rde A\u00f6R",
@@ -7454,6 +9813,14 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Kreiensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Kreiensen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Kreis Ahrweiler",
@@ -8016,12 +10383,36 @@
       "id": "ics_abfuhrtermine_info"
     },
     {
+      "title": "Krimmensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Krimmensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Kronberg im Taunus",
       "module": "abfallnavi_de",
       "default_params": {
         "service": "kronberg"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Kupferberg",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "kupferberg"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Kuventhal",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Kuventhal"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "KV Cochem-Zell",
@@ -8036,6 +10427,14 @@
       "module": "kwu_de",
       "default_params": {},
       "id": "kwu_de"
+    },
+    {
+      "title": "Lagershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Lagershausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Landkreis Amberg-Sulzbach",
@@ -8207,12 +10606,6 @@
     },
     {
       "title": "Landkreis Gifhorn",
-      "module": "abfallkalender_gifhorn_de",
-      "default_params": {},
-      "id": "abfallkalender_gifhorn_de"
-    },
-    {
-      "title": "Landkreis Gifhorn",
       "module": "awido_de",
       "default_params": {
         "customer": "gifhorn"
@@ -8282,6 +10675,7 @@
           "papier": "1",
           "papiertonne": "1"
         },
+        "split_at": "\\+",
         "url": "https://mobil.abfallwirtschaft-heidenheim.de/icalendar/download.php",
         "year_field": "jahr"
       },
@@ -8398,12 +10792,26 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Landkreis Mecklenburgische Seenplatte",
+      "module": "lk_mecklenburgische_seenplatte_de",
+      "default_params": {},
+      "id": "lk_mecklenburgische_seenplatte_de"
+    },
+    {
       "title": "Landkreis Mettmann (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Landkreis M\u00e4rkisch-Oderland",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "efb75cbd1f08fae1d4e47ae72a85c655"
+      },
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Landkreis M\u00fchldorf a. Inn",
@@ -8427,9 +10835,17 @@
     },
     {
       "title": "Landkreis Northeim (unofficial)",
-      "module": "ics",
+      "module": "nerdbridge_de",
       "default_params": {},
-      "id": "ics_nerdbridge_de"
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Landkreis Oldenburg",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "27708a019a2e35de7eb4bbe7c851609f"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Landkreis Ostallg\u00e4u",
@@ -8732,6 +11148,14 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Langenholtensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Langenholtensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Langerwehe",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -8740,10 +11164,34 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Lauenberg",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Lauenberg"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Lebacher Abfallzweckverband (LAZ)",
       "module": "ics",
       "default_params": {},
       "id": "ics_lebach_de"
+    },
+    {
+      "title": "Leidenhofen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Leidenhofen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Leinetal",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Leinetal"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Lennestadt",
@@ -8760,6 +11208,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Levershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Levershausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Lichtenau",
       "module": "lobbe_app",
       "default_params": {
@@ -8769,6 +11225,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Lichtenborn",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Lichtenborn"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Lichtenfels",
       "module": "lobbe_app",
       "default_params": {
@@ -8776,6 +11240,14 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Lindau",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Lindau"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Linnich",
@@ -8806,6 +11278,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Loiching",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "loiching"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Ludwigshafen",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -8822,6 +11302,22 @@
       "id": "abfall_io"
     },
     {
+      "title": "Lutterbeck",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Lutterbeck"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Lutterhausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Lutterhausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "L\u00fcbbecke (Jumomind)",
       "module": "jumomind_de",
       "default_params": {
@@ -8836,12 +11332,36 @@
       "id": "ics_luebeck_de"
     },
     {
+      "title": "L\u00fctgenrode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "L\u00fctgenrode"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "L\u00fcthorst",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "L\u00fcthorst"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "L\u00fctzelbach",
       "module": "reso_gmbh_de",
       "default_params": {
         "ort": "L\u00fctzelbach"
       },
       "id": "reso_gmbh_de"
+    },
+    {
+      "title": "Mackensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Mackensen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "mags M\u00f6nchengladbacher Abfall-, Gr\u00fcn- und Stra\u00dfenbetriebe A\u00f6R",
@@ -8879,6 +11399,22 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Markoldendorf",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Markoldendorf"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Markt Kastl (Lauterachtal)",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "kastl-lauterachtal"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Markt Schwaben",
@@ -8987,6 +11523,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Monheim am Rhein",
+      "module": "monheim_de",
+      "default_params": {},
+      "id": "monheim_de"
+    },
+    {
       "title": "Monschau",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -9002,6 +11544,14 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Moringen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Moringen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Mossautal",
@@ -9020,10 +11570,24 @@
       "id": "buergerportal_de"
     },
     {
+      "title": "MZV Hegau",
+      "module": "mzvhegau_de",
+      "default_params": {},
+      "id": "mzvhegau_de"
+    },
+    {
       "title": "MZV Rotenburg",
       "module": "mzv_rotenburg_bebra_de",
       "default_params": {},
       "id": "mzv_rotenburg_bebra_de"
+    },
+    {
+      "title": "M\u00f6lln",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "M\u00f6lln"
+      },
+      "id": "123abfallkalender_de"
     },
     {
       "title": "M\u00f6rfelden-Walldorf",
@@ -9054,6 +11618,14 @@
       "id": "abfall_io"
     },
     {
+      "title": "M\u00fcllershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "M\u00fcllershausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "M\u00fcllmax",
       "module": "muellmax_de",
       "default_params": {},
@@ -9077,12 +11649,28 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Naensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Naensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Neckar-Odenwald-Kreis",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.abfallappno"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Negenborn",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Negenborn"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Nenndorf (MyMuell App)",
@@ -9163,12 +11751,52 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Nienhagen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Nienhagen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Nienover",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Nienover"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Nordsachsen",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.abfallwecker"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Northeim (Bezirk 1)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Northeim (Bezirk 1)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Northeim (Bezirk 2)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Northeim (Bezirk 2)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "N\u00f6rten-Hardenberg",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "N\u00f6rten-Hardenberg"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "N\u00f6rvenich",
@@ -9202,6 +11830,22 @@
       "id": "awido_de"
     },
     {
+      "title": "Oberrieden",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "oberrieden"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Oberroth",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "oberroth"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Obertshausen",
       "module": "ics",
       "default_params": {},
@@ -9216,12 +11860,52 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "Odagsen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Odagsen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Offensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Offensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Oldenburg",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.abfallappol"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Oldenrode (Kalefeld)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Oldenrode (Kalefeld)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Oldenrode (Moringen)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Oldenrode (Moringen)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Oldershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Oldershausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Olpe",
@@ -9239,12 +11923,44 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Olxheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Olxheim"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Opperhausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Opperhausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Ortenaukreis",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.abfallappog"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Orxhausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Orxhausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Osterbruch",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Osterbruch"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Osterode am Harz",
@@ -9255,14 +11971,6 @@
       "id": "app_abfallplus_de"
     },
     {
-      "title": "Ostholstein",
-      "module": "jumomind_de",
-      "default_params": {
-        "service_id": "zvo"
-      },
-      "id": "jumomind_de"
-    },
-    {
       "title": "Ostprignitz-Ruppin",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -9271,10 +11979,40 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Ostprignitz-Ruppin",
+      "module": "ostprignitz_ruppin_de",
+      "default_params": {},
+      "id": "ostprignitz_ruppin_de"
+    },
+    {
+      "title": "Parensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Parensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Pastetten",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "pastetten"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Petershagen",
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Pfaffenhausen",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "pfaffenhausen"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "Pirmasens",
@@ -9314,6 +12052,22 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Polier",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Polier"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Portenhagen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Portenhagen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Potsdam",
@@ -9369,6 +12123,14 @@
       "id": "awido_de"
     },
     {
+      "title": "Rauischholzhausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Rauischholzhausen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Recklinghausen",
       "module": "jumomind_de",
       "default_params": {
@@ -9391,12 +12153,28 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "Relliehausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Relliehausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Remondis Rheinland",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.remondis.rheinland"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Rengershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Rengershausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "RESO",
@@ -9455,6 +12233,22 @@
       "id": "ics_abfall_app_net"
     },
     {
+      "title": "Rimmerode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Rimmerode"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Rittierode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Rittierode"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Rodenbach",
       "module": "ics",
       "default_params": {},
@@ -9475,12 +12269,28 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Roggenburg",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "roggenburg"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Rosbach Vor Der H\u00f6he",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "ros"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Rosenpl\u00e4nter",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Rosenpl\u00e4nter"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Rosenthal",
@@ -9490,6 +12300,14 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Rotenkirchen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Rotenkirchen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Rottweil",
@@ -9508,6 +12326,20 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Ro\u00dfberg",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Ro\u00dfberg"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
+      "title": "RSAG Rhein-Sieg Abfallwirtschaftsgesellschaft",
+      "module": "rsag_de",
+      "default_params": {},
+      "id": "rsag_de"
+    },
+    {
       "title": "RSAG Rhein-Sieg-Kreis",
       "module": "muellmax_de",
       "default_params": {
@@ -9520,6 +12352,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "R\u00f6ttenbach",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "rottenbach"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "R\u00fcthen",
@@ -9539,6 +12379,28 @@
       "id": "muellabfuhr_de"
     },
     {
+      "title": "SAB Magdeburg Abfuhrkalender",
+      "module": "magdeburg_de",
+      "default_params": {},
+      "id": "magdeburg_de"
+    },
+    {
+      "title": "Salgen",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "salgen"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Salzderhelden",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Salzderhelden"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Salzgitter (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -9555,6 +12417,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Schachtenbeck",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Schachtenbeck"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Schalksm\u00fchle",
       "module": "lobbe_app",
       "default_params": {
@@ -9562,6 +12432,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Schlarpe",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Schlarpe"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Schleswig-Flensburg (ASF)",
@@ -9578,10 +12456,32 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Schnedinghausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Schnedinghausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Schoningen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Schoningen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Schwabach",
       "module": "abfuhrplan_schwabach_de",
       "default_params": {},
       "id": "abfuhrplan_schwabach_de"
+    },
+    {
+      "title": "Schwalbach am Taunus",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_schwalbach_am_taunus_de"
     },
     {
       "title": "Schwarze Elster",
@@ -9600,12 +12500,28 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Sch\u00e4ftlarn",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "schaftlarn"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "Sch\u00f6neck (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Sch\u00f6nhagen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Sch\u00f6nhagen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Sch\u00f6nmackers",
@@ -9620,6 +12536,22 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_sds_schwerin_de"
+    },
+    {
+      "title": "Sebexen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Sebexen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Seboldshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Seboldshausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Sector 27 - Datteln, Marl, Oer-Erkenschwick",
@@ -9642,12 +12574,36 @@
       "id": "ics_siegen_stadt_de"
     },
     {
+      "title": "Sievershausen (Dassel)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Sievershausen (Dassel)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Sievershausen (Einbeck)",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Sievershausen (Einbeck)"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Simmerath",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Sohlingen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Sohlingen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "St Ingbert",
@@ -9794,6 +12750,12 @@
       "id": "muellmax_de"
     },
     {
+      "title": "Stadt Hilchenbach",
+      "module": "hilchenbach_de",
+      "default_params": {},
+      "id": "hilchenbach_de"
+    },
+    {
       "title": "Stadt Kaufbeuren",
       "module": "awido_de",
       "default_params": {
@@ -9876,12 +12838,12 @@
       "id": "ics_osnabrueck_de"
     },
     {
-      "title": "Stadt Overath",
-      "module": "c_trace_de",
+      "title": "Stadt Porta Westfalica",
+      "module": "abfallnavi_de",
       "default_params": {
-        "service": "overathabfallkalender"
+        "service": "portawestfalica"
       },
-      "id": "c_trace_de"
+      "id": "abfallnavi_de"
     },
     {
       "title": "Stadt Regensburg",
@@ -9920,6 +12882,12 @@
         "customer": "unterschleissheim"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Stadt Verl",
+      "module": "verl_de",
+      "default_params": {},
+      "id": "verl_de"
     },
     {
       "title": "Stadt Wetzlar",
@@ -10052,10 +13020,56 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Strodthagen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Strodthagen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Stroit",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Stroit"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "St\u00e4dteservice Raunheim R\u00fcsselsheim",
       "module": "staedteservice_de",
       "default_params": {},
       "id": "staedteservice_de"
+    },
+    {
+      "title": "St\u00e4dtischer Abfallwirtschaftsbetrieb Magdeburg",
+      "module": "magdeburg_de",
+      "default_params": {},
+      "id": "magdeburg_de"
+    },
+    {
+      "title": "St\u00f6ckheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "St\u00f6ckheim"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Sudershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Sudershausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Sudheim",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Sudheim"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Sulzbach",
@@ -10073,6 +13087,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Suterode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Suterode"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "SWK Herford",
       "module": "ics",
       "default_params": {
@@ -10085,6 +13107,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_sbazv_de"
+    },
+    {
+      "title": "S\u00fclbeck",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "S\u00fclbeck"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "TBR Remscheid",
@@ -10115,10 +13145,40 @@
       "id": "ics_tbr_reutlingen_de"
     },
     {
+      "title": "Th\u00fcdinghausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Th\u00fcdinghausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "tonnenleerung.de LK Aichach-Friedberg + Neuburg-Schrobenhausen",
       "module": "tonnenleerung_de",
       "default_params": {},
       "id": "tonnenleerung_de"
+    },
+    {
+      "title": "Tonnenticker Pro",
+      "module": "tonnenticker_pro_de",
+      "default_params": {},
+      "id": "tonnenticker_pro_de"
+    },
+    {
+      "title": "Trausnitz",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "trausnitz"
+      },
+      "id": "heimat_info_de"
+    },
+    {
+      "title": "Tr\u00f6gen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Tr\u00f6gen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Tuttlingen",
@@ -10152,6 +13212,14 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "T\u00f6nnieshof",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "T\u00f6nnieshof"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "T\u00fcbingen",
@@ -10192,6 +13260,14 @@
       "id": "buergerportal_de"
     },
     {
+      "title": "Unterroth",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "unterroth"
+      },
+      "id": "heimat_info_de"
+    },
+    {
       "title": "USB Bochum",
       "module": "muellmax_de",
       "default_params": {
@@ -10208,6 +13284,30 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Uslar",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Uslar"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Vahle",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Vahle"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Vardeilsen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Vardeilsen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Vaterstetten",
       "module": "awido_de",
       "default_params": {
@@ -10215,6 +13315,14 @@
         "customer": "ebe"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Verliehausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Verliehausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Vettwei\u00df",
@@ -10239,12 +13347,52 @@
       "id": "ics_vlotho_de"
     },
     {
+      "title": "Vogelbeck",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Vogelbeck"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Voldagsen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Voldagsen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Volkmarsen (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Volksen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Volksen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Volpriehausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Volpriehausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Vorwerk Holtensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Vorwerk Holtensen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "VUE Waltrop",
@@ -10268,6 +13416,22 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Wachenhausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wachenhausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Wahmbeck",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wahmbeck"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Waldshut",
@@ -10310,12 +13474,26 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "WBL L\u00fcnen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_wbl_luenen_de"
+    },
+    {
       "title": "WBO Wirtschaftsbetriebe Oberhausen",
       "module": "abfallnavi_de",
       "default_params": {
         "service": "oberhausen"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Weddehagen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Weddehagen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Wegberg (MyMuell App)",
@@ -10340,10 +13518,26 @@
       "id": "muellabfuhr_de"
     },
     {
+      "title": "Wellersen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wellersen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "Wenden",
       "module": "ics",
       "default_params": {},
       "id": "ics_abfuhrtermine_info"
+    },
+    {
+      "title": "Wenzen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wenzen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Werdohl",
@@ -10355,10 +13549,26 @@
       "id": "lobbe_app"
     },
     {
-      "title": "Wermelskirchen (Service Down)",
+      "title": "Wermelskirchen",
       "module": "wermelskirchen_de",
       "default_params": {},
       "id": "wermelskirchen_de"
+    },
+    {
+      "title": "Wermertshausen",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Wermertshausen"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Westerhof",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Westerhof"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Westerholt (MyMuell App)",
@@ -10383,12 +13593,44 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Wetze",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wetze"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
       "title": "WGV Recycling GmbH",
       "module": "awido_de",
       "default_params": {
         "customer": "wgv"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Wiebrechtshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wiebrechtshausen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Wiensen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wiensen"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Wiershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wiershausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Wilhelmshaven (MyMuell App)",
@@ -10406,6 +13648,14 @@
         "state": "Nordrhein-Westfalen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Willershausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Willershausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Willich",
@@ -10443,10 +13693,26 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Wittelsberg",
+      "module": "123abfallkalender_de",
+      "default_params": {
+        "district": "Wittelsberg"
+      },
+      "id": "123abfallkalender_de"
+    },
+    {
       "title": "Witzenhausen",
       "module": "ics",
       "default_params": {},
       "id": "ics_mein_abfallkalender_online"
+    },
+    {
+      "title": "Wolbrechtshausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wolbrechtshausen"
+      },
+      "id": "nerdbridge_de"
     },
     {
       "title": "Wolfesing (Zorneding)",
@@ -10462,6 +13728,30 @@
       "module": "was_wolfsburg_de",
       "default_params": {},
       "id": "was_wolfsburg_de"
+    },
+    {
+      "title": "Wolperode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wolperode"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Wrescherode",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "Wrescherode"
+      },
+      "id": "nerdbridge_de"
+    },
+    {
+      "title": "Wutach",
+      "module": "heimat_info_de",
+      "default_params": {
+        "commune": "wutach"
+      },
+      "id": "heimat_info_de"
     },
     {
       "title": "WZV Kreis Segeberg",
@@ -10524,6 +13814,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "ZAW-SR Straubing",
+      "module": "zaw_sr_de",
+      "default_params": {},
+      "id": "zaw_sr_de"
+    },
+    {
       "title": "ZBG Gladbeck",
       "module": "ics",
       "default_params": {},
@@ -10573,6 +13869,18 @@
       "id": "awido_de"
     },
     {
+      "title": "ZVO Abfuhrkalender",
+      "module": "zvo_com",
+      "default_params": {},
+      "id": "zvo_com"
+    },
+    {
+      "title": "ZVO Entsorgung - Zweckverband Ostholstein",
+      "module": "zvo_com",
+      "default_params": {},
+      "id": "zvo_com"
+    },
+    {
       "title": "Zweckverband Abfallwirtschaft Kreis Bergstra\u00dfe",
       "module": "zakb_de",
       "default_params": {},
@@ -10617,6 +13925,14 @@
         "customer": "zv-muc-so"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "\u00dcssinghausen",
+      "module": "nerdbridge_de",
+      "default_params": {
+        "municipality": "\u00dcssinghausen"
+      },
+      "id": "nerdbridge_de"
     }
   ],
   "Hungary": [
@@ -10639,7 +13955,7 @@
       "id": "mohu_bp_hu"
     },
     {
-      "title": "\u00c9TH (\u00c9rd, Di\u00f3sd, Nagytarcsa, S\u00f3sk\u00fat, T\u00e1rnok)",
+      "title": "\u00c9TH (\u00c9rd, Di\u00f3sd, R\u00e1ckereszt\u00far, S\u00f3sk\u00fat, T\u00e1rnok)",
       "module": "eth_erd_hu",
       "default_params": {},
       "id": "eth_erd_hu"
@@ -10765,6 +14081,20 @@
       "id": "junker_app"
     },
     {
+      "title": "Anzola dell'Emilia",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "7"
+      },
+      "id": "geovest_it"
+    },
+    {
+      "title": "Aprica S.p.A.",
+      "module": "apricaspa_it",
+      "default_params": {},
+      "id": "apricaspa_it"
+    },
+    {
       "title": "Aprilia - Progetto Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
@@ -10775,6 +14105,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Argelato",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "12"
+      },
+      "id": "geovest_it"
     },
     {
       "title": "ARO Figulinas - DLR Ambiente - Ciclat",
@@ -10805,6 +14143,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "ASM Pavia",
+      "module": "asm_pv_it",
+      "default_params": {},
+      "id": "asm_pv_it"
     },
     {
       "title": "Asm Terni",
@@ -10977,6 +14321,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Broni",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Bubbiano",
       "module": "junker_app",
       "default_params": {},
@@ -11019,6 +14369,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Calderara di Reno",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "8"
+      },
+      "id": "geovest_it"
     },
     {
       "title": "Calenzano",
@@ -11149,6 +14507,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castel Maggiore",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "10"
+      },
+      "id": "geovest_it"
     },
     {
       "title": "Castel Volturno - WM Magenta Srl",
@@ -11333,6 +14699,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Comune.Digital",
+      "module": "comune_digital_it",
+      "default_params": {},
+      "id": "comune_digital_it"
+    },
+    {
       "title": "Comuni della Convenzione di Sesto Calende - Econord",
       "module": "junker_app",
       "default_params": {},
@@ -11421,6 +14793,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Crevalcore",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "2"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Cupello - Pulchra Ambiente Srl",
       "module": "junker_app",
       "default_params": {},
@@ -11461,6 +14841,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Ecolan - Lanciano",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_ecolan_it"
     },
     {
       "title": "Econova Srl",
@@ -11515,6 +14901,14 @@
         "municipality": "Figline e Incisa Valdarno"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Finale Emilia",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "1"
+      },
+      "id": "geovest_it"
     },
     {
       "title": "Firenze",
@@ -11613,6 +15007,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Geovest",
+      "module": "geovest_it",
+      "default_params": {},
+      "id": "geovest_it"
+    },
+    {
       "title": "GESENU  Gestione Servizi Nettezza Urbana S.P.A",
       "module": "junker_app",
       "default_params": {},
@@ -11661,6 +15061,12 @@
         "municipality": "Greve in Chianti"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Gruppo Veritas",
+      "module": "gruppoveritas_it",
+      "default_params": {},
+      "id": "gruppoveritas_it"
     },
     {
       "title": "Guardistallo",
@@ -12049,6 +15455,12 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Monteco Spa",
+      "module": "montecospa_it",
+      "default_params": {},
+      "id": "montecospa_it"
+    },
+    {
       "title": "Montefiascone - Viterbo Ambiente",
       "module": "junker_app",
       "default_params": {},
@@ -12151,7 +15563,27 @@
       "id": "junker_app"
     },
     {
+      "title": "NET SpA - Udine",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Nicosia - Leukosia",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
+      "title": "Nonantola",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "6"
+      },
+      "id": "geovest_it"
+    },
+    {
+      "title": "Novara",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
@@ -12363,6 +15795,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Ravarino",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "9"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Ravello",
       "module": "junker_app",
       "default_params": {},
@@ -12467,6 +15907,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Sala Bolognese",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "4"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Sala Consilina - SuperEco SRL",
       "module": "junker_app",
       "default_params": {},
@@ -12507,6 +15955,20 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "San Cipriano Po",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
+      "title": "San Giovanni in Persiceto",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "5"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "San Marcello Piteglio",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -12519,6 +15981,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Sant'Agata Bolognese",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "13"
+      },
+      "id": "geovest_it"
     },
     {
       "title": "Santa Lucia del Mela",
@@ -12589,6 +16059,12 @@
         "municipality": "Scarperia e San Piero"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "SEAB Biella",
+      "module": "seab_biella_it",
+      "default_params": {},
+      "id": "seab_biella_it"
     },
     {
       "title": "Seab SPA Bolzano",
@@ -12694,6 +16170,12 @@
     },
     {
       "title": "Stefanaconi",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
+      "title": "Stradella",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
@@ -12897,12 +16379,6 @@
       "id": "junker_app"
     },
     {
-      "title": "Veritas Spa",
-      "module": "junker_app",
-      "default_params": {},
-      "id": "junker_app"
-    },
-    {
       "title": "Vernio",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -13011,12 +16487,114 @@
       "id": "junker_app"
     }
   ],
+  "Liechtenstein": [
+    {
+      "title": "Balzers",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "balzers"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Eschen Nendeln",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "eschen-nendeln"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "FL Abfalltransport AG",
+      "module": "abfalltransport_li",
+      "default_params": {},
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Gamprin Bendern",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "gamprin-bendern"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Mauren Schaanwald",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "mauren-schaanwald"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Planken",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "planken"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Ruggell",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "ruggell"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Schaan",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "schaan"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Schellenberg",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "schellenberg"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Triesen",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "triesen"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Triesenberg",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "triesenberg"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Vaduz",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "vaduz"
+      },
+      "id": "abfalltransport_li"
+    }
+  ],
   "Lithuania": [
     {
       "title": "Ecoservice atliekos",
       "module": "ecoapp_ecoservice_lt",
       "default_params": {},
       "id": "ecoapp_ecoservice_lt"
+    },
+    {
+      "title": "Ekonovus",
+      "module": "ekonovus_lt",
+      "default_params": {},
+      "id": "ekonovus_lt"
     },
     {
       "title": "Kauno \u0161vara",
@@ -13049,6 +16627,18 @@
       "module": "esch_lu",
       "default_params": {},
       "id": "esch_lu"
+    },
+    {
+      "title": "Gemeng B\u00e4ertref",
+      "module": "berdorf_lu",
+      "default_params": {},
+      "id": "berdorf_lu"
+    },
+    {
+      "title": "Luxembourg",
+      "module": "luxembourg_lu",
+      "default_params": {},
+      "id": "luxembourg_lu"
     },
     {
       "title": "SICA",
@@ -13322,6 +16912,12 @@
     },
     {
       "title": "Gemeente Venray",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_venray_nl"
+    },
+    {
+      "title": "Gemeente Venray",
       "module": "hvcgroep_nl",
       "default_params": {
         "service": "venray"
@@ -13375,6 +16971,14 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Mijn Afval Zaken - BUCH",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "mijnafvalzaken"
+      },
+      "id": "hvcgroep_nl"
+    },
+    {
       "title": "Mijn Blink",
       "module": "ximmio_nl",
       "default_params": {
@@ -13422,11 +17026,23 @@
     },
     {
       "title": "Reinis",
-      "module": "ximmio_nl",
+      "module": "hvcgroep_nl",
       "default_params": {
-        "company": "reinis"
+        "service": "reinis"
       },
-      "id": "ximmio_nl"
+      "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Rova",
+      "module": "rova_nl",
+      "default_params": {},
+      "id": "rova_nl"
+    },
+    {
+      "title": "Saver",
+      "module": "saver_nl",
+      "default_params": {},
+      "id": "saver_nl"
     },
     {
       "title": "Spaarnelanden",
@@ -13449,6 +17065,14 @@
       "module": "ximmio_nl",
       "default_params": {
         "company": "waardlanden"
+      },
+      "id": "ximmio_nl"
+    },
+    {
+      "title": "Woerden / Oudewater",
+      "module": "ximmio_nl",
+      "default_params": {
+        "company": "woerdenoudewater"
       },
       "id": "ximmio_nl"
     },
@@ -13535,6 +17159,12 @@
       "id": "napier_govt_nz"
     },
     {
+      "title": "New Plymouth District Council",
+      "module": "npdc_govt_nz",
+      "default_params": {},
+      "id": "npdc_govt_nz"
+    },
+    {
       "title": "Porirua City",
       "module": "poriruacity_govt_nz",
       "default_params": {},
@@ -13545,6 +17175,12 @@
       "module": "rotorua_lakes_council_nz",
       "default_params": {},
       "id": "rotorua_lakes_council_nz"
+    },
+    {
+      "title": "Taup\u014d District Council",
+      "module": "taupodc_govt_nz",
+      "default_params": {},
+      "id": "taupodc_govt_nz"
     },
     {
       "title": "Tauranga City Council",
@@ -13591,13 +17227,19 @@
       "id": "fosenrenovasjon_no"
     },
     {
+      "title": "Fredrikstad kommune",
+      "module": "fredrikstad_no",
+      "default_params": {},
+      "id": "fredrikstad_no"
+    },
+    {
       "title": "Innherred Renovasjon",
       "module": "innherredrenovasjon_no",
       "default_params": {},
       "id": "innherredrenovasjon_no"
     },
     {
-      "title": "IRiS",
+      "title": "Iris Salten",
       "module": "iris_salten_no",
       "default_params": {},
       "id": "iris_salten_no"
@@ -13627,6 +17269,23 @@
       "id": "remidt_no"
     },
     {
+      "title": "Renovasjonsselskapet for Drammensregionen IKS (RfD)",
+      "module": "rfd_no",
+      "default_params": {},
+      "id": "rfd_no"
+    },
+    {
+      "title": "ROAF (Romerike Avfallsforedling IKS)",
+      "module": "minrenovasjon_no",
+      "default_params": {
+        "county_id": 3205,
+        "house_number": 2,
+        "street_code": 12950,
+        "street_name": "Solvangen"
+      },
+      "id": "minrenovasjon_no"
+    },
+    {
       "title": "Sandnes Kommune",
       "module": "sandnes_no",
       "default_params": {},
@@ -13637,6 +17296,12 @@
       "module": "stavanger_no",
       "default_params": {},
       "id": "stavanger_no"
+    },
+    {
+      "title": "SUM Avfall (Sunnfjord og Ytre Sogn Milj\u00f8verk IKS)",
+      "module": "sumavfall_no",
+      "default_params": {},
+      "id": "sumavfall_no"
     },
     {
       "title": "Trondheim",
@@ -14465,10 +18130,24 @@
       "id": "sims_pl"
     },
     {
+      "title": "Hemar (ichisystem.eu)",
+      "module": "ichisystem_eu",
+      "default_params": {},
+      "id": "ichisystem_eu"
+    },
+    {
       "title": "Kiedy \u015bmieci",
       "module": "kiedysmieci_info",
       "default_params": {},
       "id": "kiedysmieci_info"
+    },
+    {
+      "title": "Kiszkowo",
+      "module": "ichisystem_eu",
+      "default_params": {
+        "city": "Kiszkowo"
+      },
+      "id": "ichisystem_eu"
     },
     {
       "title": "Kleszczewo/Kostrzyn",
@@ -14491,6 +18170,12 @@
         "owner": "Klient Szablonowy - Karty Us\u0142ug"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "KOM-LUB (Lubo\u0144, PL)",
+      "module": "kom_lub_com_pl",
+      "default_params": {},
+      "id": "kom_lub_com_pl"
     },
     {
       "title": "KOMUS",
@@ -14583,6 +18268,14 @@
       "id": "sims_pl"
     },
     {
+      "title": "Pobiedziska",
+      "module": "ichisystem_eu",
+      "default_params": {
+        "city": "Pobiedziska"
+      },
+      "id": "ichisystem_eu"
+    },
+    {
       "title": "Polkowice",
       "module": "sims_pl",
       "default_params": {
@@ -14609,6 +18302,12 @@
         "owner": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o."
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Rybnik",
+      "module": "rybnik_pl",
+      "default_params": {},
+      "id": "rybnik_pl"
     },
     {
       "title": "SISMS.pl / BLISKO",
@@ -14653,6 +18352,12 @@
       "id": "warszawa19115_pl"
     },
     {
+      "title": "Wieliczka Kiedy Odpady",
+      "module": "wieliczka_kiedyodpady_pl",
+      "default_params": {},
+      "id": "wieliczka_kiedyodpady_pl"
+    },
+    {
       "title": "Wroc\u0142aw",
       "module": "ekosystem_wroc_pl",
       "default_params": {},
@@ -14673,12 +18378,32 @@
       "id": "lodz_pl"
     }
   ],
+  "Portugal": [
+    {
+      "title": "C\u00e2mara Municipal de Lisboa",
+      "module": "cm_lisboa_pt",
+      "default_params": {},
+      "id": "cm_lisboa_pt"
+    }
+  ],
   "Slovakia": [
     {
       "title": "fcc Environment",
       "module": "fcc_group_eu",
       "default_params": {},
       "id": "fcc_group_eu"
+    },
+    {
+      "title": "KOSIT EAST",
+      "module": "kositeast_sk",
+      "default_params": {},
+      "id": "kositeast_sk"
+    },
+    {
+      "title": "Odvoz Odpadu",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_odvoz_odpadu_sk"
     },
     {
       "title": "OLO",
@@ -14775,6 +18500,14 @@
       "id": "avfallsapp_se"
     },
     {
+      "title": "Berg",
+      "module": "vattenmiljoresurs_se",
+      "default_params": {
+        "municipality": "berg"
+      },
+      "id": "vattenmiljoresurs_se"
+    },
+    {
       "title": "Boden",
       "module": "edpevent_se",
       "default_params": {
@@ -14795,6 +18528,14 @@
         "service_provider": "boras"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Br\u00e4cke",
+      "module": "vattenmiljoresurs_se",
+      "default_params": {
+        "municipality": "bracke"
+      },
+      "id": "vattenmiljoresurs_se"
     },
     {
       "title": "EDPEvent - Multi Source",
@@ -14831,6 +18572,20 @@
       "id": "hudiksvall_se"
     },
     {
+      "title": "H\u00e4rjedalen",
+      "module": "vattenmiljoresurs_se",
+      "default_params": {
+        "municipality": "harjedalen"
+      },
+      "id": "vattenmiljoresurs_se"
+    },
+    {
+      "title": "H\u00e4ssleholm Milj\u00f6",
+      "module": "hassleholm_miljo_se",
+      "default_params": {},
+      "id": "hassleholm_miljo_se"
+    },
+    {
       "title": "J\u00f6nk\u00f6ping - June Avfall & Milj\u00f6",
       "module": "juneavfall_se",
       "default_params": {},
@@ -14859,6 +18614,12 @@
       "id": "renhallningen_kristianstad_se"
     },
     {
+      "title": "Kungsbacka kommun",
+      "module": "kungsbacka_se",
+      "default_params": {},
+      "id": "kungsbacka_se"
+    },
+    {
       "title": "Kung\u00e4lvs kommun Avfallshantering",
       "module": "kungalv_se",
       "default_params": {},
@@ -14883,12 +18644,6 @@
         "service_provider": "lidkopings-kommun"
       },
       "id": "edpevent_se"
-    },
-    {
-      "title": "Link\u00f6ping - Tekniska Verken",
-      "module": "tekniskaverken_se",
-      "default_params": {},
-      "id": "tekniskaverken_se"
     },
     {
       "title": "Ljungby kommun",
@@ -14927,6 +18682,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Mittsverige Vatten & Avfall",
+      "module": "msva_se",
+      "default_params": {},
+      "id": "msva_se"
+    },
+    {
       "title": "Motala",
       "module": "avfallsapp_se",
       "default_params": {
@@ -14941,14 +18702,6 @@
       "id": "molndal_se"
     },
     {
-      "title": "Nodra",
-      "module": "edpevent_se",
-      "default_params": {
-        "service_provider": "nodra"
-      },
-      "id": "edpevent_se"
-    },
-    {
       "title": "Norrtalje Vatten & Avfall",
       "module": "nvaa_se",
       "default_params": {},
@@ -14959,6 +18712,26 @@
       "module": "rambo_se",
       "default_params": {},
       "id": "rambo_se"
+    },
+    {
+      "title": "NSR - Nordv\u00e4stra Sk\u00e5nes Renh\u00e5llnings AB",
+      "module": "nsr_se",
+      "default_params": {},
+      "id": "nsr_se"
+    },
+    {
+      "title": "NSR T\u00f6mningskalender",
+      "module": "nsr_se",
+      "default_params": {},
+      "id": "nsr_se"
+    },
+    {
+      "title": "NVOA - Nacka Vatten och Avfall",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "nvoa"
+      },
+      "id": "edpevent_se"
     },
     {
       "title": "N\u00e5rab - Norra \u00c5sbo Renh\u00e5llnings AB",
@@ -15069,6 +18842,28 @@
       "id": "avfallsapp_se"
     },
     {
+      "title": "Teknik i V\u00e4st (Arvika/Eda)",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "teknikivast"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
+      "title": "Telge \u00c5tervinning",
+      "module": "telge_se",
+      "default_params": {},
+      "id": "telge_se"
+    },
+    {
+      "title": "Upplands-Bro",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "upplands-bro"
+      },
+      "id": "avfallsapp_se"
+    },
+    {
       "title": "Uppsala Vatten",
       "module": "edpevent_se",
       "default_params": {
@@ -15089,6 +18884,20 @@
       "id": "vasyd_se"
     },
     {
+      "title": "Vafab Milj\u00f6",
+      "module": "edpevent_se",
+      "default_params": {
+        "service_provider": "vafabmiljo"
+      },
+      "id": "edpevent_se"
+    },
+    {
+      "title": "Vatten och Milj\u00f6resurs",
+      "module": "vattenmiljoresurs_se",
+      "default_params": {},
+      "id": "vattenmiljoresurs_se"
+    },
+    {
       "title": "Vaxholm",
       "module": "roslagsvatten_se",
       "default_params": {
@@ -15101,6 +18910,20 @@
       "module": "vivab_se",
       "default_params": {},
       "id": "vivab_se"
+    },
+    {
+      "title": "VMAB",
+      "module": "vmab_se",
+      "default_params": {},
+      "id": "vmab_se"
+    },
+    {
+      "title": "V\u00e4nersborg",
+      "module": "avfallsapp_se",
+      "default_params": {
+        "service_provider": "vanersborg"
+      },
+      "id": "avfallsapp_se"
     },
     {
       "title": "V\u00e4rmd\u00f6 Soph\u00e4mtning",
@@ -15145,6 +18968,14 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Aadorf",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Aadorf"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Alchenstorf",
       "module": "alchenstorf_ch",
       "default_params": {},
@@ -15173,12 +19004,45 @@
       "id": "data_bs_ch"
     },
     {
+      "title": "Beinwil am See",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "beinwil-am-see",
+        "municipality_id": "5313"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Berg",
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Berg"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Bettwiesen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Bettwiesen"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Bichelsee-Balterswil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Bichelsee-Balterswil"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Braunau",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Braunau"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Buchegg",
@@ -15195,6 +19059,23 @@
       "id": "a_region_ch"
     },
     {
+      "title": "B\u00fcren an der Aare",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "bueren-an-der-aare",
+        "municipality_id": "849"
+      },
+      "id": "localcities_ch"
+    },
+    {
+      "title": "B\u00fctschwil-Ganterschwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "B\u00fctschwil-Ganterschwil"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Canton of Z\u00fcrich",
       "module": "ics",
       "default_params": {
@@ -15208,12 +19089,52 @@
       "id": "ics_openerz_metaodi_ch"
     },
     {
+      "title": "Degersheim",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Degersheim"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Ebnat-Kappel",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Ebnat-Kappel"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Eggersriet",
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Eggersriet"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Eschlikon",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Eschlikon"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Fischingen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Fischingen"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Flawil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Flawil"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Gais",
@@ -15240,12 +19161,47 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Gemeinde W\u00fcrenlos",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_wuerenlos_ch"
+    },
+    {
       "title": "Goldach",
       "module": "a_region_ch",
       "default_params": {
         "municipality": "Goldach"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Gossau",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Gossau"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Gossau ZH",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gossau_zh_ch"
+    },
+    {
+      "title": "Grenchen",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "grenchen",
+        "municipality_id": "3533"
+      },
+      "id": "localcities_ch"
+    },
+    {
+      "title": "Grenchen (CH)",
+      "module": "grenchen_ch",
+      "default_params": {},
+      "id": "grenchen_ch"
     },
     {
       "title": "Grosswangen",
@@ -15302,6 +19258,22 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Jonschwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Jonschwil"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Kirchberg",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Kirchberg"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "K\u00f6niz",
       "module": "koeniz_ch",
       "default_params": {},
@@ -15316,6 +19288,14 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Lichtensteig",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Lichtensteig"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Liebefeld",
       "module": "koeniz_ch",
       "default_params": {
@@ -15324,10 +19304,25 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Liestal",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "liestal",
+        "municipality_id": "3833"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Lindau",
       "module": "lindau_ch",
       "default_params": {},
       "id": "lindau_ch"
+    },
+    {
+      "title": "localcities.ch",
+      "module": "localcities_ch",
+      "default_params": {},
+      "id": "localcities_ch"
     },
     {
       "title": "Lutzenberg",
@@ -15336,6 +19331,14 @@
         "municipality": "Lutzenberg"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "L\u00fctisburg",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "L\u00fctisburg"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Mittelh\u00e4usern",
@@ -15350,6 +19353,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_mopage_ch"
+    },
+    {
+      "title": "Mosnang",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Mosnang"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Muolen",
@@ -15374,10 +19385,34 @@
       "id": "muenchenstein_ch"
     },
     {
+      "title": "M\u00fcnchwilen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "M\u00fcnchwilen"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "M\u00fcnsingen BE, Switzerland",
       "module": "ics",
       "default_params": {},
       "id": "ics_muensingen_ch"
+    },
+    {
+      "title": "Neckertal",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Neckertal"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Nesslau",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Nesslau"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Nieder-/Oberscherli",
@@ -15388,12 +19423,44 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Niederb\u00fcren",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Niederb\u00fcren"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Niederhelfenschwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Niederhelfenschwil"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Niederwangen",
       "module": "koeniz_ch",
       "default_params": {
         "municipality": "Niederwangen"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Oberb\u00fcren",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Oberb\u00fcren"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Oberuzwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Oberuzwil"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Oberwangen",
@@ -15430,6 +19497,20 @@
         "municipality": "Rehetobel"
       },
       "id": "a_region_ch"
+    },
+    {
+      "title": "Reinach BL",
+      "module": "reinach_bl_ch",
+      "default_params": {},
+      "id": "reinach_bl_ch"
+    },
+    {
+      "title": "Rickenbach",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Rickenbach"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Rorschach",
@@ -15482,6 +19563,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_seon_ch"
+    },
+    {
+      "title": "Sirnach",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Sirnach"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Speicher",
@@ -15538,12 +19627,29 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Therwil",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "therwil",
+        "municipality_id": "3757"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Th\u00f6rishaus",
       "module": "koeniz_ch",
       "default_params": {
         "municipality": "Th\u00f6rishaus"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Tobel-T\u00e4gerschen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Tobel-T\u00e4gerschen"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Trogen",
@@ -15578,6 +19684,23 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Uzwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Uzwil"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Volketswil",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "volketswil",
+        "municipality_id": "529"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Wabern",
       "module": "koeniz_ch",
       "default_params": {
@@ -15610,10 +19733,43 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Wangen bei Olten",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "wangen-bei-olten",
+        "municipality_id": "3629"
+      },
+      "id": "localcities_ch"
+    },
+    {
+      "title": "Wattwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Wattwil"
+      },
+      "id": "zab_ch"
+    },
+    {
       "title": "Wiedlisbach",
       "module": "ics",
       "default_params": {},
       "id": "ics_mopage_ch"
+    },
+    {
+      "title": "Wil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Wil"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "Wilen",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Wilen"
+      },
+      "id": "zab_ch"
     },
     {
       "title": "Winterthur",
@@ -15638,6 +19794,28 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Wuppenau",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Wuppenau"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "W\u00e4ngi",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "W\u00e4ngi"
+      },
+      "id": "zab_ch"
+    },
+    {
+      "title": "ZAB Bazenheid",
+      "module": "zab_ch",
+      "default_params": {},
+      "id": "zab_ch"
+    },
+    {
       "title": "ZAKU Entsorgung",
       "module": "sammelkalender_ch",
       "default_params": {
@@ -15660,9 +19838,23 @@
         "service_provider": "zkri"
       },
       "id": "sammelkalender_ch"
+    },
+    {
+      "title": "Zuzwil",
+      "module": "zab_ch",
+      "default_params": {
+        "municipality": "Zuzwil"
+      },
+      "id": "zab_ch"
     }
   ],
   "United Kingdom": [
+    {
+      "title": "Aberdeen City Council",
+      "module": "aberdeencity_gov_uk",
+      "default_params": {},
+      "id": "aberdeencity_gov_uk"
+    },
     {
       "title": "Aberdeenshire Council",
       "module": "aberdeenshire_gov_uk",
@@ -15750,6 +19942,20 @@
       "id": "iapp_itouchvision_com"
     },
     {
+      "title": "Babergh and Mid Suffolk District Councils",
+      "module": "babergh_midsuffolk_gov_uk",
+      "default_params": {},
+      "id": "babergh_midsuffolk_gov_uk"
+    },
+    {
+      "title": "Babergh District Council",
+      "module": "babergh_midsuffolk_gov_uk",
+      "default_params": {
+        "council": "babergh"
+      },
+      "id": "babergh_midsuffolk_gov_uk"
+    },
+    {
       "title": "Barnsley Metropolitan Borough Council",
       "module": "barnsley_gov_uk",
       "default_params": {},
@@ -15766,6 +19972,14 @@
       "module": "basingstoke_gov_uk",
       "default_params": {},
       "id": "basingstoke_gov_uk"
+    },
+    {
+      "title": "Bassetlaw District Council",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Bath & North East Somerset Council",
@@ -15792,7 +20006,7 @@
       "id": "belfast_city_gov_uk"
     },
     {
-      "title": "Binzone",
+      "title": "BinDay (South & Vale)",
       "module": "binzone_uk",
       "default_params": {},
       "id": "binzone_uk"
@@ -15830,6 +20044,12 @@
       "id": "iapp_itouchvision_com"
     },
     {
+      "title": "Bolsover District Council",
+      "module": "bolsover_gov_uk",
+      "default_params": {},
+      "id": "bolsover_gov_uk"
+    },
+    {
       "title": "Bolton Council",
       "module": "bolton_gov_uk",
       "default_params": {},
@@ -15846,6 +20066,12 @@
       "module": "broxbourne_gov_uk",
       "default_params": {},
       "id": "broxbourne_gov_uk"
+    },
+    {
+      "title": "Boston Borough Council",
+      "module": "boston_gov_uk",
+      "default_params": {},
+      "id": "boston_gov_uk"
     },
     {
       "title": "Bracknell Forest Council",
@@ -15978,6 +20204,12 @@
       "id": "carmarthenshire_gov_wales"
     },
     {
+      "title": "Castle Point Borough Council",
+      "module": "castlepoint_gov_uk",
+      "default_params": {},
+      "id": "castlepoint_gov_uk"
+    },
+    {
       "title": "Central Bedfordshire Council",
       "module": "centralbedfordshire_gov_uk",
       "default_params": {},
@@ -15994,6 +20226,12 @@
       "module": "chelmsford_gov_uk",
       "default_params": {},
       "id": "chelmsford_gov_uk"
+    },
+    {
+      "title": "Cheltenham Borough Council",
+      "module": "cheltenham_gov_uk",
+      "default_params": {},
+      "id": "cheltenham_gov_uk"
     },
     {
       "title": "Cherwell District Council",
@@ -16024,6 +20262,12 @@
       "module": "chichester_gov_uk",
       "default_params": {},
       "id": "chichester_gov_uk"
+    },
+    {
+      "title": "Chorley Council",
+      "module": "chorley_gov_uk",
+      "default_params": {},
+      "id": "chorley_gov_uk"
     },
     {
       "title": "City of Doncaster Council",
@@ -16122,6 +20366,12 @@
       "id": "derby_gov_uk"
     },
     {
+      "title": "Derbyshire Dales District Council",
+      "module": "derbyshiredales_gov_uk",
+      "default_params": {},
+      "id": "derbyshiredales_gov_uk"
+    },
+    {
       "title": "Dorset Council",
       "module": "dorset_gov_uk",
       "default_params": {},
@@ -16194,6 +20444,12 @@
       "id": "eastherts_gov_uk"
     },
     {
+      "title": "East Lindsey District Council",
+      "module": "e_lindsey_gov_uk",
+      "default_params": {},
+      "id": "e_lindsey_gov_uk"
+    },
+    {
       "title": "East Lothian",
       "module": "eastlothian_gov_uk",
       "default_params": {},
@@ -16218,6 +20474,12 @@
       "id": "eastriding_gov_uk"
     },
     {
+      "title": "East Staffordshire Borough Council",
+      "module": "eaststaffsbc_gov_uk",
+      "default_params": {},
+      "id": "eaststaffsbc_gov_uk"
+    },
+    {
       "title": "Eastbourne Borough Council",
       "module": "environmentfirst_co_uk",
       "default_params": {},
@@ -16236,10 +20498,22 @@
       "id": "elmbridge_gov_uk"
     },
     {
+      "title": "Enfield Council",
+      "module": "enfield_gov_uk",
+      "default_params": {},
+      "id": "enfield_gov_uk"
+    },
+    {
       "title": "Environment First",
       "module": "environmentfirst_co_uk",
       "default_params": {},
       "id": "environmentfirst_co_uk"
+    },
+    {
+      "title": "Epping Forest District Council",
+      "module": "eppingforestdc_gov_uk",
+      "default_params": {},
+      "id": "eppingforestdc_gov_uk"
     },
     {
       "title": "Erewash Borough Council",
@@ -16302,6 +20576,12 @@
       "id": "folkestone_hythe_gov_uk"
     },
     {
+      "title": "Forest of Dean District Council",
+      "module": "forest_of_dean_gov_uk",
+      "default_params": {},
+      "id": "forest_of_dean_gov_uk"
+    },
+    {
       "title": "Fylde Council",
       "module": "fylde_gov_uk",
       "default_params": {},
@@ -16324,6 +20604,18 @@
       "module": "glasgow_gov_uk",
       "default_params": {},
       "id": "glasgow_gov_uk"
+    },
+    {
+      "title": "Gosport Borough Council",
+      "module": "gosport_gov_uk",
+      "default_params": {},
+      "id": "gosport_gov_uk"
+    },
+    {
+      "title": "Great Yarmouth Borough Council",
+      "module": "great_yarmouth_gov_uk",
+      "default_params": {},
+      "id": "great_yarmouth_gov_uk"
     },
     {
       "title": "Greater Cambridge Waste, UK",
@@ -16382,6 +20674,12 @@
       "id": "hastings_gov_uk"
     },
     {
+      "title": "Havant Borough Council",
+      "module": "waste_havant_gov_uk",
+      "default_params": {},
+      "id": "waste_havant_gov_uk"
+    },
+    {
       "title": "Herefordshire City Council",
       "module": "herefordshire_gov_uk",
       "default_params": {},
@@ -16398,6 +20696,12 @@
       "module": "highland_gov_uk",
       "default_params": {},
       "id": "highland_gov_uk"
+    },
+    {
+      "title": "Hinckley & Bosworth Borough Council",
+      "module": "hinckley_bosworth_gov_uk",
+      "default_params": {},
+      "id": "hinckley_bosworth_gov_uk"
     },
     {
       "title": "Horsham District Council",
@@ -16424,6 +20728,12 @@
         "municipality": "HYNDBURN"
       },
       "id": "iapp_itouchvision_com"
+    },
+    {
+      "title": "Ipswich Borough Council",
+      "module": "ipswich_gov_uk",
+      "default_params": {},
+      "id": "ipswich_gov_uk"
     },
     {
       "title": "Islington Council",
@@ -16506,6 +20816,12 @@
       "id": "lbbd_gov_uk"
     },
     {
+      "title": "London Borough of Barnet",
+      "module": "barnet_gov_uk",
+      "default_params": {},
+      "id": "barnet_gov_uk"
+    },
+    {
       "title": "London Borough of Bexley",
       "module": "bexley_gov_uk",
       "default_params": {},
@@ -16524,6 +20840,12 @@
       "id": "camden_gov_uk"
     },
     {
+      "title": "London Borough of Hackney",
+      "module": "hackney_gov_uk",
+      "default_params": {},
+      "id": "hackney_gov_uk"
+    },
+    {
       "title": "London Borough of Harrow",
       "module": "harrow_gov_uk",
       "default_params": {},
@@ -16536,10 +20858,22 @@
       "id": "havering_gov_uk"
     },
     {
+      "title": "London Borough of Hillingdon",
+      "module": "hillingdon_gov_uk",
+      "default_params": {},
+      "id": "hillingdon_gov_uk"
+    },
+    {
       "title": "London Borough of Hounslow",
       "module": "hounslow_gov_uk",
       "default_params": {},
       "id": "hounslow_gov_uk"
+    },
+    {
+      "title": "London Borough of Lambeth",
+      "module": "lambeth_gov_uk",
+      "default_params": {},
+      "id": "lambeth_gov_uk"
     },
     {
       "title": "London Borough of Lewisham",
@@ -16564,6 +20898,24 @@
       "module": "newham_gov_uk",
       "default_params": {},
       "id": "newham_gov_uk"
+    },
+    {
+      "title": "London Borough of Richmond upon Thames",
+      "module": "richmond_gov_uk",
+      "default_params": {},
+      "id": "richmond_gov_uk"
+    },
+    {
+      "title": "London Borough of Southwark",
+      "module": "southwark_gov_uk",
+      "default_params": {},
+      "id": "southwark_gov_uk"
+    },
+    {
+      "title": "London Borough of Tower Hamlets",
+      "module": "tower_hamlets_gov_uk",
+      "default_params": {},
+      "id": "tower_hamlets_gov_uk"
     },
     {
       "title": "Luton",
@@ -16612,6 +20964,12 @@
       "id": "mansfield_gov_uk"
     },
     {
+      "title": "Medway Council",
+      "module": "medway_gov_uk",
+      "default_params": {},
+      "id": "medway_gov_uk"
+    },
+    {
       "title": "Melton Borough Council",
       "module": "melton_gov_uk",
       "default_params": {},
@@ -16636,6 +20994,14 @@
       "module": "mid_devon_gov_uk",
       "default_params": {},
       "id": "mid_devon_gov_uk"
+    },
+    {
+      "title": "Mid Suffolk District Council",
+      "module": "babergh_midsuffolk_gov_uk",
+      "default_params": {
+        "council": "midsuffolk"
+      },
+      "id": "babergh_midsuffolk_gov_uk"
     },
     {
       "title": "Mid Sussex District Council (Whitespace WRP)",
@@ -16664,6 +21030,12 @@
       "id": "milton_keynes_gov_uk"
     },
     {
+      "title": "Mole Valley District Council",
+      "module": "mole_valley_gov_uk",
+      "default_params": {},
+      "id": "mole_valley_gov_uk"
+    },
+    {
       "title": "Monmouthshire Council",
       "module": "monmouthshire_gov_uk",
       "default_params": {},
@@ -16680,6 +21052,12 @@
       "module": "neath_port_talbot_gov_uk",
       "default_params": {},
       "id": "neath_port_talbot_gov_uk"
+    },
+    {
+      "title": "New Forest District Council",
+      "module": "newforest_gov_uk",
+      "default_params": {},
+      "id": "newforest_gov_uk"
     },
     {
       "title": "Newark & Sherwood District Council",
@@ -16792,6 +21170,12 @@
       "id": "northyorks_harrogate_gov_uk"
     },
     {
+      "title": "North Yorkshire Council - Richmondshire",
+      "module": "richmondshire_gov_uk",
+      "default_params": {},
+      "id": "richmondshire_gov_uk"
+    },
+    {
       "title": "North Yorkshire Council - Ryedale",
       "module": "northyorks_ryedale_gov_uk",
       "default_params": {},
@@ -16808,6 +21192,12 @@
       "module": "northyorks_selby_gov_uk",
       "default_params": {},
       "id": "northyorks_selby_gov_uk"
+    },
+    {
+      "title": "Northumberland County Council",
+      "module": "northumberland_gov_uk",
+      "default_params": {},
+      "id": "northumberland_gov_uk"
     },
     {
       "title": "Norwich City Council",
@@ -16846,6 +21236,12 @@
       "id": "pembrokeshire_gov_uk"
     },
     {
+      "title": "Pendle Borough Council",
+      "module": "pendle_gov_uk",
+      "default_params": {},
+      "id": "pendle_gov_uk"
+    },
+    {
       "title": "Peterborough City Council",
       "module": "peterborough_gov_uk",
       "default_params": {},
@@ -16862,6 +21258,12 @@
       "module": "portsmouth_gov_uk",
       "default_params": {},
       "id": "portsmouth_gov_uk"
+    },
+    {
+      "title": "Powys County Council",
+      "module": "powys_gov_uk",
+      "default_params": {},
+      "id": "powys_gov_uk"
     },
     {
       "title": "Preston City Council",
@@ -16908,16 +21310,16 @@
       "id": "rctcbc_gov_uk"
     },
     {
-      "title": "Richmondshire District Council",
-      "module": "richmondshire_gov_uk",
-      "default_params": {},
-      "id": "richmondshire_gov_uk"
-    },
-    {
       "title": "Rochdale Borough Council",
       "module": "rochdale_gov_uk",
       "default_params": {},
       "id": "rochdale_gov_uk"
+    },
+    {
+      "title": "Rochford District Council",
+      "module": "rochford_gov_uk",
+      "default_params": {},
+      "id": "rochford_gov_uk"
     },
     {
       "title": "Rother District Council",
@@ -17002,6 +21404,12 @@
       "id": "sefton_gov_uk"
     },
     {
+      "title": "Sevenoaks District Council",
+      "module": "sevenoaks_gov_uk",
+      "default_params": {},
+      "id": "sevenoaks_gov_uk"
+    },
+    {
       "title": "Sheffield City Council",
       "module": "sheffield_gov_uk",
       "default_params": {},
@@ -17012,6 +21420,12 @@
       "module": "shropshire_gov_uk",
       "default_params": {},
       "id": "shropshire_gov_uk"
+    },
+    {
+      "title": "Slough Borough Council",
+      "module": "slough_gov_uk",
+      "default_params": {},
+      "id": "slough_gov_uk"
     },
     {
       "title": "Solihull Council",
@@ -17042,6 +21456,12 @@
         "municipality": "SOMERSET WEST AND TAUNTON"
       },
       "id": "iapp_itouchvision_com"
+    },
+    {
+      "title": "South Ayrshire Council",
+      "module": "south_ayrshire_gov_uk",
+      "default_params": {},
+      "id": "south_ayrshire_gov_uk"
     },
     {
       "title": "South Cambridgeshire District Council",
@@ -17088,6 +21508,12 @@
       "id": "southkesteven_gov_uk"
     },
     {
+      "title": "South Lanarkshire Council",
+      "module": "southlanarkshire_gov_uk",
+      "default_params": {},
+      "id": "southlanarkshire_gov_uk"
+    },
+    {
       "title": "South Norfolk Council",
       "module": "south_norfolk_and_broadland_gov_uk",
       "default_params": {},
@@ -17098,6 +21524,12 @@
       "module": "binzone_uk",
       "default_params": {},
       "id": "binzone_uk"
+    },
+    {
+      "title": "South Ribble Borough Council",
+      "module": "southribble_gov_uk",
+      "default_params": {},
+      "id": "southribble_gov_uk"
     },
     {
       "title": "South Somerset District Council",
@@ -17126,6 +21558,12 @@
       "id": "southampton_gov_uk"
     },
     {
+      "title": "Spelthorne Borough Council",
+      "module": "spelthorne_gov_uk",
+      "default_params": {},
+      "id": "spelthorne_gov_uk"
+    },
+    {
       "title": "St Albans City & District Council",
       "module": "stalbans_gov_uk",
       "default_params": {},
@@ -17144,16 +21582,24 @@
       "id": "staffordbc_gov_uk"
     },
     {
+      "title": "Staffordshire Moorlands District Council",
+      "module": "staffsmoorlands_gov_uk",
+      "default_params": {},
+      "id": "staffsmoorlands_gov_uk"
+    },
+    {
       "title": "Stevenage Borough Council",
       "module": "stevenage_gov_uk",
       "default_params": {},
       "id": "stevenage_gov_uk"
     },
     {
-      "title": "Stirling.gov.uk",
-      "module": "stirling_uk",
-      "default_params": {},
-      "id": "stirling_uk"
+      "title": "Stirling Council, UK",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Stockport Council",
@@ -17230,10 +21676,22 @@
       "id": "tameside_gov_uk"
     },
     {
+      "title": "Teignbridge District Council",
+      "module": "teignbridge_gov_uk",
+      "default_params": {},
+      "id": "teignbridge_gov_uk"
+    },
+    {
       "title": "Telford and Wrekin Council",
       "module": "telford_gov_uk",
       "default_params": {},
       "id": "telford_gov_uk"
+    },
+    {
+      "title": "Tendring District Council",
+      "module": "tendring_gov_uk",
+      "default_params": {},
+      "id": "tendring_gov_uk"
     },
     {
       "title": "Test Valley Borough Council",
@@ -17272,6 +21730,12 @@
       "module": "tmbc_gov_uk",
       "default_params": {},
       "id": "tmbc_gov_uk"
+    },
+    {
+      "title": "Torbay Council",
+      "module": "torbay_council_gov_uk",
+      "default_params": {},
+      "id": "torbay_council_gov_uk"
     },
     {
       "title": "Torridge Council",
@@ -17532,6 +21996,12 @@
   ],
   "United States of America": [
     {
+      "title": "Abilene, TX",
+      "module": "abilene_tx_us",
+      "default_params": {},
+      "id": "abilene_tx_us"
+    },
+    {
       "title": "Albuquerque, New Mexico, USA",
       "module": "recyclecoach_com",
       "default_params": {
@@ -17539,6 +22009,26 @@
         "state": "New Mexico"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Atlantic Waste Services, GA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
+      "title": "Baton Rouge, LA",
+      "module": "baton_rouge_la_us",
+      "default_params": {},
+      "id": "baton_rouge_la_us"
+    },
+    {
+      "title": "Chesapeake, VA",
+      "module": "chesapeake_va_us",
+      "default_params": {},
+      "id": "chesapeake_va_us"
     },
     {
       "title": "City of Austin, TX",
@@ -17601,10 +22091,26 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Houston, TX",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of Los Angeles, CA",
       "module": "lacity_gov",
       "default_params": {},
       "id": "lacity_gov"
+    },
+    {
+      "title": "City of Lowell, MA",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "City of McKinney, TX",
@@ -17651,6 +22157,12 @@
       "id": "sandiego_gov"
     },
     {
+      "title": "Community Waste Disposal (CWD)",
+      "module": "communitywastedisposal_com",
+      "default_params": {},
+      "id": "communitywastedisposal_com"
+    },
+    {
       "title": "Davenport, Iowa, USA",
       "module": "ics",
       "default_params": {
@@ -17671,6 +22183,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Hoover, AL",
+      "module": "hoover_al_us",
+      "default_params": {},
+      "id": "hoover_al_us"
     },
     {
       "title": "Louisville, Kentucky, USA",
@@ -17703,11 +22221,32 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Northville Township, MI",
+      "module": "northville_township_mi_us",
+      "default_params": {},
+      "id": "northville_township_mi_us"
+    },
+    {
       "title": "Olympia, Washington, USA",
       "module": "recyclecoach_com",
       "default_params": {
         "city": "Olympia",
         "state": "Washington"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
+      "title": "Palm Coast, FL",
+      "module": "palmcoast_fl_gov",
+      "default_params": {},
+      "id": "palmcoast_fl_gov"
+    },
+    {
+      "title": "Plainville (CT)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "PLA",
+        "project_id": "3066"
       },
       "id": "recyclecoach_com"
     },
@@ -17740,10 +22279,30 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Red Bank, Tennessee",
+      "module": "red_bank_tn_us",
+      "default_params": {},
+      "id": "red_bank_tn_us"
+    },
+    {
       "title": "Republic Services",
       "module": "republicservices_com",
       "default_params": {},
       "id": "republicservices_com"
+    },
+    {
+      "title": "Rochester, NY",
+      "module": "rochester_ny_us",
+      "default_params": {},
+      "id": "rochester_ny_us"
+    },
+    {
+      "title": "Rogue Disposal & Recycling (Medford, OR)",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Round Rock Texas",
@@ -17792,12 +22351,24 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Village of Sunbury, Ohio",
+      "module": "sunbury_ohio_org",
+      "default_params": {},
+      "id": "sunbury_ohio_org"
+    },
+    {
       "title": "Waste Connections",
       "module": "ics",
       "default_params": {
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Waste Management (WM)",
+      "module": "wm_com",
+      "default_params": {},
+      "id": "wm_com"
     }
   ]
 }

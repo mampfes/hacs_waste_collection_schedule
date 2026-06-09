@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Any, Dict, List
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "PreZero Bielsko-Biała"
@@ -31,13 +31,13 @@ WASTE_TYPE_MAP = {
 }
 
 ICON_MAP = {
-    "kuchenne": "mdi:bio",
-    "resztkowe": "mdi:trash-can",
-    "makulatura": "mdi:newspaper",
-    "szklo": "mdi:glass-fragile",
-    "mix": "mdi:recycle",
-    "zielone": "mdi:flower-tulip",
-    "gabaryty": "mdi:table-furniture",
+    "kuchenne": Icons.BIO_KITCHEN,
+    "resztkowe": Icons.GENERAL_WASTE,
+    "makulatura": Icons.NEWSPAPER,
+    "szklo": Icons.GLASS,
+    "mix": Icons.RECYCLING,
+    "zielone": Icons.GARDEN,
+    "gabaryty": Icons.BULKY,
 }
 
 # ### Arguments affecting the configuration GUI ####

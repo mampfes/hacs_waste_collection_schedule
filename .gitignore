@@ -9,3 +9,11 @@ custom_components/waste_collection_schedule/waste_collection_schedule/test/secre
 .venv/
 .idea/
 .python-version
+
+# Per-user Claude Code state (personal permissions, personal hooks, internal worktree state).
+# Tracked agents, commands, and project-shared settings live under .claude/.
+.claude/settings.local.json
+.claude/worktrees/
+
+# Personal overrides on top of the tracked CLAUDE.md.
+CLAUDE.local.md

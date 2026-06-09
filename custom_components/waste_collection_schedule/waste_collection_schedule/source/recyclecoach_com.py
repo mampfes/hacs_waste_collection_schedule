@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -14,59 +14,66 @@ URL = "https://recyclecoach.com"
 COUNTRY = "us"
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Yard Waste": "mdi:leaf",
-    "Holiday": "mdi:calendar",
-    "Blue Zone Garbage": "mdi: trash-can",
-    "Waste Reduction Week": "mdi:calendar",
-    "Treecycle": "mdi:pine-tree",
-    "Leaf and Yard Waste": "mdi:leaf",
-    "Garbage Collection": "mdi:trash-can",
-    "Blue Box": "mdi:recycle",
-    "Green Bin": "mdi:food",
-    "Yard Waste Collection": "mdi:leaf",
-    "Curbside Giveaway Days": "mdi:calendar",
-    "Double-Up Days": "mdi:calendar",
-    "Christmas Tree Collection": "mdi:pine-tree",
-    "Blue Box (Container) Recycling": "mdi:recycle",
-    "Green Box (Fibre) Recycling": "mdi:recycle",
-    "Waste Collection": "mdi:trash-can",
-    "Textile Collection": "mdi:tshirt-crew",
-    "Garbage (Residual Waste)": "mdi:trash-can",
-    "Green Bin Organics": "mdi:food",
-    "Blue Box Recycling": "mdi:recycle",
-    "Curbside Giveaway": "mdi:calendar",
-    "Environment Round-Up Day": "mdi:calendar",
-    "Curbside Battery Collection": "mdi:battery-20",
-    "Blue Box Collection": "mdi:recycle",
-    "Green Bin Collection": "mdi:food",
-    "E-waste Event": "mdi:calendar",
-    "Additional EnviroDepot Hours": "mdi:calendar",
-    "Garbage Collection": "mdi:trash-can",
-    "Recycling Collection": "mdi:recycle",
-    "Yard Waste Collection Week": "mdi:leaf",
-    "3 Container Exemption Pick-up": "mdi:calendar",
-    "Holiday ": "mdi:calendar",
-    "Trash": "mdi:trash-can",
-    "Organics": "mdi:food",
-    "Saturday Drop-Off Site": "mdi:calendar",
-    "Christmas Trees": "mdi:pine-tree",
-    "Trash Collection": "mdi:trash-can",
-    "HHW Drop-off - Pima West Campus": "mdi:calendar",
-    "HHW Drop-off - Eastside Service Center": "mdi:calendar",
-    "HHW Drop-Off - Rodeo Grounds": "mdi:calendar",
-    "HHW Drop-off - Jacobs Park": "mdi:calendar",
-    "HHW Drop-off IBEW": "mdi:calendar",
-    "Christmas Tree Drop-off Depots Open": "mdi:pine-tree",
-    "Brush and Bulky Collection": "mdi:leaf",
-    "Pop-Up Drop-Off - Shawnee Park": "mdi:calendar",
-    "Pop-Up Drop-Off - UofL Shelby Campus": "mdi:calendar",
-    "Pop-Up Drop-Off - Sun Valley Park": "mdi:calendar",
-    "Pop-Up Drop-Off - Metro Fleet Services": "mdi:calendar",
-    "Pop-Up Drop-Off - Fern Creek HS": "mdi:calendar",
-    "Pop-Up Drop-Off Doss High": "mdi:calendar",
-    "Backyard Composting Class": "mdi:compost",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Yard Waste": Icons.GARDEN,
+    "Holiday": Icons.NO_COLLECTION,
+    "Blue Zone Garbage": Icons.GENERAL_WASTE,
+    "Waste Reduction Week": Icons.EVENT,
+    "Treecycle": Icons.CHRISTMAS_TREE,
+    "Leaf and Yard Waste": Icons.GARDEN,
+    "Garbage Collection": Icons.GENERAL_WASTE,
+    "Blue Box": Icons.RECYCLING,
+    "Green Bin": Icons.BIO_KITCHEN,
+    "Yard Waste Collection": Icons.GARDEN,
+    "Curbside Giveaway Days": Icons.EVENT,
+    "Double-Up Days": Icons.EVENT,
+    "Christmas Tree Collection": Icons.CHRISTMAS_TREE,
+    "Blue Box (Container) Recycling": Icons.RECYCLING,
+    "Green Box (Fibre) Recycling": Icons.RECYCLING,
+    "Waste Collection": Icons.GENERAL_WASTE,
+    "Textile Collection": Icons.TEXTILE,
+    "Garbage (Residual Waste)": Icons.GENERAL_WASTE,
+    "Green Bin Organics": Icons.ORGANIC,
+    "Blue Box Recycling": Icons.RECYCLING,
+    "Curbside Giveaway": Icons.EVENT,
+    "Environment Round-Up Day": Icons.EVENT,
+    "Curbside Battery Collection": Icons.BATTERY,
+    "Blue Box Collection": Icons.RECYCLING,
+    "Green Bin Collection": Icons.BIO_KITCHEN,
+    "E-waste Event": Icons.ELECTRONICS,
+    "Additional EnviroDepot Hours": Icons.EVENT,
+    "Garbage Collection": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Recycling Collection": Icons.RECYCLING,
+    "Waste": Icons.GENERAL_WASTE,
+    "FOGO": Icons.BIO_KITCHEN,
+    "Yard Waste Collection Week": Icons.GARDEN,
+    "3 Container Exemption Pick-up": Icons.EVENT,
+    "Holiday ": Icons.NO_COLLECTION,
+    "Trash": Icons.GENERAL_WASTE,
+    "Organics": Icons.ORGANIC,
+    "Saturday Drop-Off Site": Icons.EVENT,
+    "Christmas Trees": Icons.CHRISTMAS_TREE,
+    "Trash Collection": Icons.GENERAL_WASTE,
+    "HHW Drop-off - Pima West Campus": Icons.HAZARDOUS,
+    "HHW Drop-off - Eastside Service Center": Icons.HAZARDOUS,
+    "HHW Drop-Off - Rodeo Grounds": Icons.HAZARDOUS,
+    "HHW Drop-off - Jacobs Park": Icons.HAZARDOUS,
+    "HHW Drop-off IBEW": Icons.HAZARDOUS,
+    "Christmas Tree Drop-off Depots Open": Icons.CHRISTMAS_TREE,
+    "Brush and Bulky Collection": Icons.BULKY,
+    "Pop-Up Drop-Off - Shawnee Park": Icons.EVENT,
+    "Pop-Up Drop-Off - UofL Shelby Campus": Icons.EVENT,
+    "Pop-Up Drop-Off - Sun Valley Park": Icons.EVENT,
+    "Pop-Up Drop-Off - Metro Fleet Services": Icons.EVENT,
+    "Pop-Up Drop-Off - Fern Creek HS": Icons.EVENT,
+    "Pop-Up Drop-Off Doss High": Icons.EVENT,
+    "Backyard Composting Class": Icons.BIO_KITCHEN,
+    "Grey Household Waste Cart": Icons.GENERAL_WASTE,
+    "Blue Recycling Cart": Icons.RECYCLING,
+    "Green Organic Waste Cart": Icons.ORGANIC,
+    "No Collection Day": Icons.NO_COLLECTION,
 }
 
 EXTRA_INFO = [
@@ -167,6 +174,148 @@ EXTRA_INFO = [
         "country": "ca",
         "default_params": {"city": "Burnaby", "state": "British Columbia"},
     },
+    {
+        "title": "Orillia (ON)",
+        "url": "https://www.orillia.ca/",
+        "country": "ca",
+        "default_params": {"city": "Orillia", "state": "Ontario"},
+    },
+    {
+        "title": "Medicine Hat (AB)",
+        "url": "https://www.medicinehat.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "500",
+            "district_id": "MEDHAT",
+            "zone_id": "zone-z196",
+        },
+    },
+    {
+        "title": "Township of Langley (BC)",
+        "url": "https://www.tol.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "521",
+            "district_id": "LANGL",
+        },
+    },
+    {
+        "title": "East Gwillimbury (ON)",
+        "url": "https://www.eastgwillimbury.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "586",
+            "district_id": "EASTG",
+        },
+    },
+    {
+        "title": "Brantford (ON)",
+        "url": "https://www.brantford.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "3195",
+            "district_id": "BRAN",
+        },
+    },
+    {
+        "title": "Kelowna (BC)",
+        "url": "https://www.rdco.com/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "502",
+            "district_id": "Kelowna",
+        },
+    },
+    {
+        "title": "Plainville (CT)",
+        "url": "https://www.plainvillect.com/",
+        "country": "us",
+        "default_params": {
+            "project_id": "3066",
+            "district_id": "PLA",
+        },
+    },
+    {
+        "title": "LaSalle (ON)",
+        "url": "https://www.lasalle.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "583",
+            "district_id": "LAS",
+        },
+    },
+    {
+        "title": "Lakeshore (ON)",
+        "url": "https://www.lakeshore.ca/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "583",
+            "district_id": "LAK",
+        },
+    },
+    {
+        "title": "Glenorchy City Council (TAS)",
+        "url": "https://www.gcc.tas.gov.au/",
+        "country": "au",
+        "default_params": {
+            "project_id": "657",
+            "district_id": "GLENORCHY",
+        },
+    },
+    {
+        "title": "Toronto (ON) - Circular Materials",
+        "url": "https://www.toronto.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "CIRCMATONT", "district_id": "TORONTO"},
+    },
+    {
+        "title": "Mississauga (ON)",
+        "url": "https://www.mississauga.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3179", "district_id": "MISS"},
+    },
+    {
+        "title": "Brampton (ON)",
+        "url": "https://www.brampton.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3179", "district_id": "BRAMP"},
+    },
+    {
+        "title": "Caledon (ON)",
+        "url": "https://www.caledon.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3179", "district_id": "CALED"},
+    },
+    {
+        "title": "Burlington (ON)",
+        "url": "https://www.burlington.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "BURL"},
+    },
+    {
+        "title": "Oakville (ON)",
+        "url": "https://www.oakville.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "OAKV"},
+    },
+    {
+        "title": "Milton (ON)",
+        "url": "https://www.milton.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "MILT"},
+    },
+    {
+        "title": "Halton Hills (ON)",
+        "url": "https://www.haltonhills.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3169", "district_id": "HALT"},
+    },
+    {
+        "title": "Guelph (ON)",
+        "url": "https://guelph.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "3194", "district_id": "GUEL"},
+    },
 ]
 
 TEST_CASES = {
@@ -257,6 +406,21 @@ TEST_CASES = {
         "city": "Burnaby",
         "state": "British Columbia",
     },
+    "City of Medicine Hat, AB, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "MEDHAT",
+        "project_id": 500,
+        "zone_id": "zone-z196",
+    },
+    "Glenorchy City Council, TAS, Australia": {
+        "district_id": "GLENORCHY",
+        "project_id": 657,
+        "zone_id": "zone-z15322-z16165-z16823",
+    },
+    "Lakeshore, ON, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "LAK",
+        "project_id": 583,
+        "zone_id": "zone-z9942",
+    },
 }
 
 
@@ -285,7 +449,7 @@ class Source:
 
     def _lookup_city(self):
         city_finder = f"https://api-city.recyclecoach.com/city/search?term={self.city}, {self.state}"
-        res = requests.get(city_finder)
+        res = requests.get(city_finder, timeout=30)
         city_data = res.json()
 
         if len(city_data) == 1:
@@ -312,10 +476,23 @@ class Source:
         )
 
     def _lookup_zones_with_geo(self):
-        pos_finder = f"https://api-city.recyclecoach.com/geo/address?address={self.street}&project_id={self.project_id}&district_id={self.district_id}"
-        res = requests.get(pos_finder)
+        geo_address_urls = [
+            f"https://api-city.recyclecoach.com/geo/address?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/address/geo?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/geo?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
+        ]
         lat = None
-        pos_data = res.json()
+        pos_data = []
+        for pos_url in geo_address_urls:
+            try:
+                res = requests.get(pos_url, timeout=30)
+                res.raise_for_status()
+                pos_data = res.json()
+                if pos_data:
+                    break
+            except (requests.exceptions.RequestException, json.JSONDecodeError):
+                continue
+
         streets = []
         for pos_res in pos_data:
             streetpart = self._format_key(pos_res["address"]).split(",")[0]
@@ -337,17 +514,49 @@ class Source:
                 "street",
                 self.street,
             )
-        zone_finder = f"https://api-city.recyclecoach.com/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}"
-        res = requests.get(zone_finder)
-        zone_data = {z["prompt_id"]: "z" + z["zone_id"] for z in res.json()}
-        self.zone_id = self._build_zone_string(zone_data)
-        return self.zone_id
+
+        zone_finder_urls = [
+            f"https://api-city.recyclecoach.com/get_zones?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/address/geo/zone?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/geo/zone?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
+        ]
+        for zone_url in zone_finder_urls:
+            try:
+                res = requests.get(zone_url, timeout=30)
+                res.raise_for_status()
+                zone_data = {
+                    z["prompt_id"]: "z" + str(z["zone_id"]) for z in res.json()
+                }
+                if zone_data:
+                    self.zone_id = self._build_zone_string(zone_data)
+                    return self.zone_id
+            except (
+                requests.exceptions.RequestException,
+                json.JSONDecodeError,
+                KeyError,
+            ):
+                continue
+
+        raise SourceArgumentNotFound("street", self.street)
 
     def _lookup_zones(self):
-        zone_finder = f"https://api-city.recyclecoach.com/zone-setup/address?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}"
-        res = requests.get(zone_finder)
-        zone_data = res.json()
-        if "results" not in zone_data:
+        zone_lookup_urls = [
+            f"https://api-city.recyclecoach.com/zone-setup/address?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/address/single?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/single?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
+        ]
+        zone_data = None
+        for zone_url in zone_lookup_urls:
+            try:
+                res = requests.get(zone_url, timeout=30)
+                res.raise_for_status()
+                zone_data = res.json()
+                if "results" in zone_data:
+                    break
+            except (requests.exceptions.RequestException, json.JSONDecodeError):
+                continue
+
+        if not zone_data or "results" not in zone_data:
             return self._lookup_zones_with_geo()
         streets = []
         for zone_res in zone_data["results"]:
@@ -384,8 +593,11 @@ class Source:
         if not self.zone_id:
             self._lookup_zones()
 
-
-        collection_def_url = f"https://us-api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US"
+        collection_urls = [
+            f"https://api-city.recyclecoach.com/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
+            f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
+            f"https://ca-web.apigw.recyclecoach.com/zone-setup/zone/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
+        ]
 
         schedule_urls = [  # Some regions use different one of these should work
             f"https://api-city.recyclecoach.com/app_data_zone_schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
@@ -397,16 +609,27 @@ class Source:
         schedule_def = None
         collection_types = None
 
-        response = requests.get(collection_def_url)
-        collection_def = json.loads(response.text)
+        for collection_url in collection_urls:
+            try:
+                response = requests.get(collection_url, timeout=30)
+                response.raise_for_status()
+                collection_def = response.json()
+            except (requests.exceptions.RequestException, json.JSONDecodeError):
+                continue
+
+            if isinstance(collection_def, dict):
+                break  # retrieved correct schedule data
 
         for schedule_url in schedule_urls:
-            response = requests.get(schedule_url)
+            response = requests.get(schedule_url, timeout=30)
             schedule_def = json.loads(response.text)
             if isinstance(schedule_def, dict):
                 break  # retrieved correct schedule data
 
-        collection_types = collection_def["collection"]["types"]
+        coll_root = collection_def.get("collections") or collection_def.get(
+            "collection"
+        )
+        collection_types = coll_root["types"]
 
         entries = []
         date_format = "%Y-%m-%d"

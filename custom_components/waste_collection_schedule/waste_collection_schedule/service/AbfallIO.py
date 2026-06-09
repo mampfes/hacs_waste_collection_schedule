@@ -73,14 +73,14 @@ SERVICE_MAP = [
         "service_id": "e5543a3e190cb8d91c645660ad60965f",
     },
     {
-        "title": "Abfallwirtschaft Ortenaukreis",
-        "url": "https://www.abfallwirtschaft-ortenaukreis.de/",
-        "service_id": "bb296b78763112266a391990f803f032",
-    },
-    {
         "title": "Abfallbewirtschaftung Ostalbkreis",
         "url": "https://www.goa-online.de/",
         "service_id": "3ca331fb42d25e25f95014693ebcf855",
+    },
+    {
+        "title": "Landkreis Oldenburg",
+        "url": "https://www.oldenburg-kreis.de/",
+        "service_id": "27708a019a2e35de7eb4bbe7c851609f",
     },
     {
         "title": "Landkreis Ostallgäu",
@@ -161,5 +161,10 @@ SERVICE_MAP = [
         "title": "AVR Kommunal, Rhein-Neckar-Kreis",
         "url": "https://www.avr-kommunal.de/",
         "service_id": "914fb9d000a9a05af4fd54cfba478860",
+    },
+    {
+        "title": "AWG Abfallwirtschaft Landkreis Calw",
+        "url": "https://www.awg-info.de/",
+        "service_id": "0813ea99f520c462373386564a99a51e",
     },
 ]

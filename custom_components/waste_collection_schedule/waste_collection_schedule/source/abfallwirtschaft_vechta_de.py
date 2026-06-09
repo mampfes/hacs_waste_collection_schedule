@@ -3,7 +3,7 @@ import re
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWB Abfallwirtschaft Vechta"
@@ -24,13 +24,13 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bioabfall": "mdi:leaf",
-    "Altpapier": "mdi:package-variant",
-    "Altpapier Siemer": "mdi:package-variant",
-    "Altpapier Pamo": "mdi:package-variant",
-    "Gelbe Tonne": "mdi:recycle",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Altpapier": Icons.PAPER,
+    "Altpapier Siemer": Icons.PAPER,
+    "Altpapier Pamo": Icons.PAPER,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
 }
 
 
