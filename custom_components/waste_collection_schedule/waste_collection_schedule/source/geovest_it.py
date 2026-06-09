@@ -2,7 +2,7 @@
 
 import re
 import uuid
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any, List, Optional
 
 import requests
@@ -335,7 +335,11 @@ class Source:
 
         data = response.json()
         if data.get("status") != "ok":
-            raise Exception("Unable to create Geovest favourite entry.")
+            raise SourceArgumentNotFound(
+                "address_name",
+                self._address_name,
+                "Unable to create a Geovest schedule entry for this address.",
+            )
 
         return data
 
@@ -386,7 +390,11 @@ class Source:
             calendar_id = self._get_calendar_id_from_favs(favourite_data)
 
         if calendar_id is None:
-            raise Exception("Failed to determine Geovest calendar ID.")
+            raise SourceArgumentNotFound(
+                "address_name",
+                self._address_name,
+                "Could not determine a Geovest collection calendar for this address.",
+            )
 
         self._calendar_id = calendar_id
         return calendar_id
@@ -397,7 +405,7 @@ class Source:
         day_of_month: int,
         weekday_code: str,
         weekday_map: dict[str, int],
-    ) -> Optional[datetime.date]:
+    ) -> Optional[date]:
         possible_dates = []
         for month_offset in (-1, 0, 1):
             month = week_start.month + month_offset
@@ -418,7 +426,6 @@ class Source:
                 possible_dates.append(candidate.date())
 
         if not possible_dates:
-            # Fallback to weekday-based resolution within the same week
             weekday_target = weekday_map.get(weekday_code)
             if weekday_target is None:
                 return None

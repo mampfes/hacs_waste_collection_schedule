@@ -831,6 +831,11 @@
     },
     "urls": {}
   },
+  "dienten_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dienten_gv_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "bad_eisenkappel_info": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bad_eisenkappel_info.md",
     "howto": {},
@@ -880,6 +885,11 @@
   },
   "hausmannstaetten_gv_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hausmannstaetten_gv_at.md",
+    "howto": {},
+    "urls": {}
+  },
+  "abfall_io_graphql": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io_graphql.md",
     "howto": {},
     "urls": {}
   },
@@ -1419,6 +1429,14 @@
       "url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html": "https://sictom-lons-le-saunier.fr/quand-passe-le-camion-benne.html."
     }
   },
+  "sivom_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_com.md",
+    "howto": {
+      "en": "Go to https://www.sivom.com/mesjoursdecollectes/?v=YOUR_COMMUNE to find your commune name and street name.",
+      "fr": "Allez sur https://www.sivom.com/mesjoursdecollectes/?v=VOTRE_COMMUNE pour trouver le nom de votre commune et de votre rue."
+    },
+    "urls": {}
+  },
   "sivom_rivedroite_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
     "howto": {},
@@ -1489,11 +1507,6 @@
   },
   "abfall_io": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io.md",
-    "howto": {},
-    "urls": {}
-  },
-  "abfall_io_graphql": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_io_graphql.md",
     "howto": {},
     "urls": {}
   },
@@ -2598,6 +2611,14 @@
     },
     "urls": {}
   },
+  "rsag_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rsag_de.md",
+    "howto": {
+      "de": "Besuchen Sie [https://www.rsag.de/abfallkalender/abfuhrtermine](https://www.rsag.de/abfallkalender/abfuhrtermine) und wählen Sie Ihren Ort und Ihre Straße. Verwenden Sie die genauen Namen wie in der Auswahlliste.",
+      "en": "Visit [https://www.rsag.de/abfallkalender/abfuhrtermine](https://www.rsag.de/abfallkalender/abfuhrtermine) and select your city and street. Use the exact city and street names shown in the form."
+    },
+    "urls": {}
+  },
   "magdeburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/magdeburg_de.md",
     "howto": {
@@ -3039,6 +3060,14 @@
     "howto": {},
     "urls": {}
   },
+  "comune_digital_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/comune_digital_it.md",
+    "howto": {
+      "en": "The city identifier is the subdomain of your municipality's Comune.Digital website. For example, if the website is https://santostefanodicamastra.comune.digital, the city identifier is \"santostefanodicamastra\".",
+      "it": "L'identificatore della città è il sottodominio del sito web Comune.Digital del tuo comune. Ad esempio, se il sito è https://santostefanodicamastra.comune.digital, l'identificatore è \"santostefanodicamastra\"."
+    },
+    "urls": {}
+  },
   "ics_contarina_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/contarina_it.md",
     "howto": {
@@ -3050,14 +3079,6 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ecolan_it.md",
     "howto": {
       "en": "Use the Google Calendar ICS feed URL below. This calendar covers the Lanciano area served by Ecolan.\n"
-    },
-    "urls": {}
-  },
-  "geovest_it": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geovest_it.md",
-    "howto": {
-      "en": "Choose your town from the Geovest source menu, then search for your street name. `numbers` is optional and defaults to 1.",
-      "it": "Scegli il tuo comune dal menu di Geovest, poi cerca il tuo nome di strada. `numbers` è opzionale e assume il valore 1."
     },
     "urls": {}
   },
@@ -3331,6 +3352,11 @@
     "howto": {},
     "urls": {}
   },
+  "npdc_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/npdc_govt_nz.md",
+    "howto": {},
+    "urls": {}
+  },
   "poriruacity_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poriruacity_govt_nz.md",
     "howto": {},
@@ -3414,6 +3440,13 @@
   "remidt_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/remidt_no.md",
     "howto": {},
+    "urls": {}
+  },
+  "rfd_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rfd_no.md",
+    "howto": {
+      "en": "Search for your address at rfd.no/avfallshenting. Use the address exactly as shown in the result list, for example 'Grønland 1, Drammen'."
+    },
     "urls": {}
   },
   "sandnes_no": {
@@ -6098,6 +6131,11 @@
   },
   "wyreforestdc_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wyreforestdc_gov_uk.md",
+    "howto": {},
+    "urls": {}
+  },
+  "abilene_tx_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abilene_tx_us.md",
     "howto": {},
     "urls": {}
   },

@@ -9,11 +9,17 @@ waste_collection_schedule:
   sources:
     - name: geovest_it
       args:
+        town_id: "7"
         address_name: "via antonio gramsci"
-        calendar_type_id: "1"
+        numbers: "228"
 ```
 
 ### Configuration Variables
+
+**town_id**
+*(string) (required)*
+
+Identifier of the town. When configuring via the UI, this is set automatically by choosing your town from the source menu. For YAML, use the `town_id` listed for your town (see the Geovest source menu).
 
 **address_name**
 *(string) (required)*
@@ -26,9 +32,9 @@ Street name or address.
 Street number or house number. Defaults to `1` when omitted.
 
 **calendar_type_id**
-*(string) (required)*
+*(string) (optional)*
 
-Use `1` for private addresses or `2` for businesses.
+Use `1` for private addresses or `2` for businesses. Defaults to `1`.
 
 **days**
 *(integer) (optional)*
@@ -48,8 +54,9 @@ waste_collection_schedule:
   sources:
     - name: geovest_it
       args:
+        town_id: "7"
         address_name: "via oreste vancini"
-        calendar_type_id: "1"
+        numbers: "3"
         days: 30
 ```
 
