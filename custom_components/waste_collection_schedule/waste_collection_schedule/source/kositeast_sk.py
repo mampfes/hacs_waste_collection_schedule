@@ -100,7 +100,7 @@ def _cluster_values(values: list[float], n: int) -> list[float]:
     offsets or pitch values — so it adapts if the PDF is re-generated at a
     different scale.
     """
-    buckets = sorted(set(round(v, 1) for v in values))
+    buckets = sorted({round(v, 1) for v in values})
     merged: list[float] = []
     for v in buckets:
         if merged and v - merged[-1] < 5.0:
