@@ -2,6 +2,11 @@
 
 Support for schedules provided by [Mid Suffolk District Council](https://www.midsuffolk.gov.uk/) and [Babergh District Council](https://babergh.gov.uk/), serving Mid Suffolk and Babergh, UK.
 
+## Local Government Reorganisation note
+This source **only** serves the areas covered by the **existing** Barbergh District Council and Mid Suffolk District Council. It does not cover other areas that will be in the upcoming Central and Eastern Suffolk Council area.
+
+During the ongoing local government reorganisation (LGR) in Suffolk, please continue to use the source for your current area as long as it's still working. New sources for the new Western Suffolk, Central & Eastern Suffolk, and Ipswich & South Suffolk councils are not expected to be live until at least April 2028, when the councils themselves officially come into being.
+
 ## Configuration via configuration.yaml
 
 ```yaml
