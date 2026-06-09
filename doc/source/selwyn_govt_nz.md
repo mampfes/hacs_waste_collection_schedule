@@ -2,7 +2,7 @@
 
 Support for schedules provided by [Selwyn District Council](https://www.selwyn.govt.nz/), serving the Selwyn District, New Zealand.
 
-The source queries the council's public ArcGIS property service and returns the weekly rubbish and organics collections together with the fortnightly recycling collection for the next eight weeks.
+The source queries the council's public ArcGIS property service and returns the next eight weeks of collections for the property: weekly rubbish, fortnightly recycling, and (where the property has an organics service) weekly organics.
 
 ## Configuration via configuration.yaml
 
@@ -36,5 +36,5 @@ Visit the council's [collection days and routes](https://www.selwyn.govt.nz/serv
 
 ## Notes / Limitations
 
-- Rubbish and organics are collected weekly; recycling is collected fortnightly, on the weeks matching the property's recycling schedule. All bins share the same weekday.
+- Rubbish is collected weekly and recycling fortnightly (on the weeks matching the property's recycling schedule). Organics is collected weekly **where the property has an organics service** — some areas (e.g. a number of rural properties) have no kerbside organics, in which case no organics collections are returned. All of a property's bins share the same weekday.
 - The council's data does not encode public-holiday adjustments, so collections that are shifted around New Zealand public holidays are not reflected. This limitation is shared with other New Zealand sources.
