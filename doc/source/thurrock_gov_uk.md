@@ -1,6 +1,9 @@
 # Thurrock
 
-Support for schedules provided by [Thurrock](https://www.thurrock.gov.uk/), serving Thurrock, UK.
+Support for schedules provided by [Thurrock](https://www.thurrock.gov.uk/), serving Thurrock, Essex, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new South West Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 
