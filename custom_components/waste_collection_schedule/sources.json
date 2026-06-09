@@ -5138,6 +5138,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Notre-Dame-du-Bon-Conseil (Village)",
+      "module": "villagebonconseil_ca",
+      "default_params": {},
+      "id": "villagebonconseil_ca"
+    },
+    {
       "title": "Oak Bay (BC)",
       "module": "recyclecoach_com",
       "default_params": {},

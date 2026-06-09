@@ -863,6 +863,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Muskoka District (Huntsville, ON)](/doc/ics/recollect.md) / muskoka.on.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Norfolk County (ON)](/doc/source/recyclecoach_com.md) / norfolkcounty.ca
+- [Notre-Dame-du-Bon-Conseil (Village)](/doc/source/villagebonconseil_ca.md) / villagebonconseil.ca
 - [Oak Bay (BC)](/doc/source/recyclecoach_com.md) / oakbay.ca
 - [Oakville (ON)](/doc/source/recyclecoach_com.md) / oakville.ca
 - [Orillia (ON)](/doc/source/recyclecoach_com.md) / orillia.ca
