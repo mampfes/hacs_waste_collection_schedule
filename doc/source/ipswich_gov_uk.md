@@ -5,7 +5,7 @@ Support for waste collection schedules provided by [Ipswich Borough Council](htt
 ## Local Government Reorganisation note
 This source **only** serves the areas covered by the **existing** Ipswich Borough Council, and not the upcoming Ipswich & South Suffolk Council.
 
-During the ongoing local government reorganisation (LGR) in Suffolk, please continue to use the source for your current area as long as it's still working. New sources for the new Ipswich & South Suffolk council are not expected to be live until at least April 2028, when the councils themselves officially come into being.
+During the ongoing local government reorganisation (LGR) in Suffolk, please continue to use the source for your current area as long as it's still working. New sources for the new Ipswich & South Suffolk Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 
