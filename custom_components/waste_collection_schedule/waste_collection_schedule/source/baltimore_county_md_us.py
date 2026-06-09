@@ -78,6 +78,7 @@ MONTH_PATTERN = (
 
 class Source:
     def __init__(self, address: str | None = None) -> None:
+        """Initialize the source with a validated lookup address."""
         self._address = address.strip() if isinstance(address, str) else ""
         if not self._address:
             raise SourceArgumentRequired(
@@ -87,6 +88,7 @@ class Source:
         self._session = requests.Session(impersonate="chrome")
 
     def fetch(self) -> list[Collection]:
+        """Fetch upcoming collection events for the configured address."""
         page_html = self._load_page()
         form_state = self._extract_form_state(page_html)
         results_html = self._load_results_html(form_state)
@@ -103,11 +105,13 @@ class Source:
         return sorted(collections, key=lambda item: (item.date, item.type))
 
     def _load_page(self) -> str:
+        """Load the schedule page HTML used for form and holiday parsing."""
         response = self._session.get(URL, timeout=TIMEOUT)
         response.raise_for_status()
         return response.text
 
     def _extract_form_state(self, page_html: str) -> dict[str, str]:
+        """Extract Drupal AJAX form state values from the page HTML."""
         soup = BeautifulSoup(page_html, "html.parser")
         address_field = soup.find("input", attrs={"name": "bcg_address"})
         if address_field is None:
@@ -135,6 +139,7 @@ class Source:
         }
 
     def _load_results_html(self, form_state: dict[str, str]) -> str:
+        """Submit the address lookup form and return the injected results HTML."""
         payload = {
             "bcg_address": self._address,
             "form_build_id": form_state["form_build_id"],
@@ -161,6 +166,7 @@ class Source:
     def _extract_events(
         self, results_html: str, page_html: str
     ) -> list[dict[str, Any]]:
+        """Build event records from schedule tables and apply holiday shifts."""
         soup = BeautifulSoup(results_html, "html.parser")
         rows = soup.select("table tbody tr")
         events: list[dict[str, Any]] = []
@@ -213,6 +219,7 @@ class Source:
     def _apply_holiday_shifts(
         self, events: list[dict[str, Any]], page_html: str
     ) -> list[dict[str, Any]]:
+        """Shift event dates according to holiday week day-shift rules."""
         holiday_rules = self._holiday_shift_rules(page_html)
         if not holiday_rules:
             return events
@@ -251,6 +258,7 @@ class Source:
         return shifted
 
     def _holiday_shift_rules(self, page_html: str) -> list[tuple[date, dict[int, int]]]:
+        """Parse holiday-week weekday shift mappings from the holiday table."""
         soup = BeautifulSoup(page_html, "html.parser")
         heading = soup.find(
             lambda tag: tag.name in ["h2", "h3", "h4"]
@@ -286,6 +294,7 @@ class Source:
 
     @staticmethod
     def _parse_holiday_date(text: str, default_year: int) -> date | None:
+        """Parse a holiday date cell into a date object."""
         match = re.search(
             rf"({MONTH_PATTERN}\s+\d{{1,2}}(?:,\s*\d{{4}})?)",
             text,
@@ -305,6 +314,7 @@ class Source:
 
     @staticmethod
     def _parse_shift_map(text: str) -> dict[int, int]:
+        """Parse 'X shifts to Y' phrases into weekday index mappings."""
         mapping: dict[int, int] = {}
         for source, target in re.findall(
             r"(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+shifts\s+to\s+"
@@ -322,6 +332,7 @@ class Source:
     def _yard_schedule_dates(
         self, page_html: str, schedule_id: str, target_weekday: int
     ) -> list[date]:
+        """Return computed yard-material collection dates for a schedule table."""
         soup = BeautifulSoup(page_html, "html.parser")
         heading = soup.find(
             lambda tag: tag.name in ["h2", "h3", "h4"]
@@ -348,6 +359,7 @@ class Source:
 
     @staticmethod
     def _extract_dates(text: str, year: int | None = None) -> list[date]:
+        """Extract month-day date expressions from free text."""
         matches = re.findall(
             rf"({MONTH_PATTERN}\s+\d{{1,2}}(?:,\s*\d{{4}})?)",
             text,
@@ -368,6 +380,7 @@ class Source:
 
     @staticmethod
     def _next_weekly_dates(weekday: int, count: int) -> list[date]:
+        """Generate the next count occurrences of a weekday from today."""
         today = date.today()
         delta = (weekday - today.weekday()) % 7
         first_date = today + timedelta(days=delta)
@@ -375,6 +388,7 @@ class Source:
 
     @staticmethod
     def _weekday_from_text(text: str) -> int | None:
+        """Resolve a weekday index from text containing a weekday name."""
         lowered = text.casefold()
         for name, idx in WEEKDAY_INDEX.items():
             if name in lowered:
@@ -382,6 +396,7 @@ class Source:
         return None
 
     def _icon_for_type(self, waste_type: str) -> str:
+        """Map provider waste type text to the canonical icon enum value."""
         normalized = waste_type.casefold()
         for key, icon in ICON_MAP.items():
             if key in normalized:
