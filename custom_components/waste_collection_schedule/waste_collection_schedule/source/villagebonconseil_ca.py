@@ -70,13 +70,7 @@ class Source:
             raw_type = html.unescape(raw_type)
             raw_type = raw_type.strip()
 
-            waste_type = None
-            for key, value in WASTE_TYPE_MAP.items():
-                if raw_type == key:
-                    waste_type = value
-                    break
-            if waste_type is None:
-                waste_type = raw_type
+            waste_type = WASTE_TYPE_MAP.get(raw_type, raw_type)
 
             entries.append(
                 Collection(
