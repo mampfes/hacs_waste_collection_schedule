@@ -2,6 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
+from dateutil.relativedelta import relativedelta
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
@@ -130,11 +131,9 @@ class Source:
         today = datetime.date.today()
 
         for delta_month in range(3):
-            month = today.month + delta_month
-            year = today.year
-            if month > 12:
-                month -= 12
-                year += 1
+            target = today.replace(day=1) + relativedelta(months=delta_month)
+            month = target.month
+            year = target.year
 
             month_slug = MONTHS_URL[month]
             url = f"https://www.abfalltransport.li/abfallkalender/{self._municipality}/{month_slug}/{self._waste_type}"
