@@ -8,7 +8,7 @@ The city splits residential trash collection into five weekday zones (Monday–F
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: red_bank_tn_us
       args:
         street_address: STREET_ADDRESS
@@ -22,7 +22,7 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: red_bank_tn_us
       args:
         street_address: "1107 Ashmore Ave"
