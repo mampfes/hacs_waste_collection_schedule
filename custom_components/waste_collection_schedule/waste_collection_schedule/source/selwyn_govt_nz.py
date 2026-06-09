@@ -3,13 +3,17 @@ from datetime import date, timedelta
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule import Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFound,
+)
 
 TITLE = "Selwyn District Council"
 DESCRIPTION = (
     "Source for Selwyn District Council kerbside waste collection, New Zealand."
 )
 URL = "https://www.selwyn.govt.nz/"
+COUNTRY = "nz"
 TEST_CASES = {
     # schedule 1 (Friday), with organics
     "30 Tennyson Street Rolleston": {"address": "30 Tennyson Street Rolleston"},
@@ -83,7 +87,7 @@ def _label_for_charge(charge_type: str) -> str:
     "rubbish 80 litre", "rubbish 240 litre", ...). They are all the same weekly
     rubbish collection, so they collapse to a single label.
     """
-    charge = charge_type.lower()
+    charge = charge_type.strip().lower()
     if charge == "recycling":
         return RECYCLING
     if charge == "organic":
@@ -117,15 +121,20 @@ class Source:
             "returnGeometry": "false",
         }
 
-        r = requests.get(API_URL, params=params)
+        r = requests.get(API_URL, params=params, timeout=30)
         r.raise_for_status()
         features = r.json().get("features", [])
         if not features:
             raise SourceArgumentNotFound("address", self._address)
 
-        # A short fragment can match several properties; keep only the rows that
-        # belong to the first (closest) matched address.
-        target = features[0]["attributes"]["Address_full"]
+        # A short fragment can match several distinct properties. ArcGIS result
+        # ordering is not guaranteed, so don't silently pick one -- if the query
+        # is ambiguous, ask the user to disambiguate with the matching addresses.
+        matched = sorted({f["attributes"]["Address_full"] for f in features})
+        if len(matched) > 1:
+            raise SourceArgAmbiguousWithSuggestions("address", self._address, matched)
+
+        target = matched[0]
         features = [
             f for f in features if f["attributes"].get("Address_full") == target
         ]
