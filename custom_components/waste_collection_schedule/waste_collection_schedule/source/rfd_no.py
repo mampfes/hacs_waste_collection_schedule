@@ -114,7 +114,7 @@ class Source:
 
         if not entries:
             raise SourceArgumentNotFound(
-                "address", "No supported collection types found"
+                "address", self._address, "No supported collection types found"
             )
 
         return entries
