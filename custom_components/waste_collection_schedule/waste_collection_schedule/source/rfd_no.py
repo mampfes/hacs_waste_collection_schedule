@@ -89,11 +89,13 @@ class Source:
         data = response.json()
 
         if data.get("message"):
-            raise SourceArgumentNotFound("address", data["message"])
+            raise SourceArgumentNotFound("address", self._address, data["message"])
 
         fetch_days = data.get("fetchDays", [])
         if not fetch_days:
-            raise SourceArgumentNotFound("address", "No collection schedule found")
+            raise SourceArgumentNotFound(
+                "address", self._address, "No collection schedule found"
+            )
 
         entries = []
         for item in fetch_days:
