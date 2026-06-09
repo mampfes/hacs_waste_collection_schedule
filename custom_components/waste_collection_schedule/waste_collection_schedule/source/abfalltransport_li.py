@@ -36,7 +36,7 @@ MONTHS_URL = {
     2: "februar",
     3: "maerz",
     4: "april",
-    5: "Mai",
+    5: "mai",
     6: "juni",
     7: "juli",
     8: "august",
@@ -71,21 +71,22 @@ TEST_CASES = {
     "Balzers Kehricht": {"municipality": "balzers", "waste_type": "kehricht"},
     "Vaduz Grünabfuhr": {"municipality": "vaduz", "waste_type": "gruenabfuhr"},
     "Schaan Kehricht": {"municipality": "schaan", "waste_type": "kehricht"},
+    "Balzers Both": {"municipality": "balzers", "waste_type": "all"},
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Select your municipality from the list and choose a waste type ('kehricht' for household waste or 'gruenabfuhr' for green waste). Visit https://www.abfalltransport.li/abfallkalender to see the schedule.",
-    "de": "Wählen Sie Ihre Gemeinde aus der Liste und den Abfalltyp ('kehricht' für Kehricht oder 'gruenabfuhr' für Grünabfuhr). Besuchen Sie https://www.abfalltransport.li/abfallkalender für den Kalender.",
+    "en": "Select your municipality from the list and choose a waste type ('kehricht', 'gruenabfuhr', or 'all'). Visit https://www.abfalltransport.li/abfallkalender to see the schedule.",
+    "de": "Wählen Sie Ihre Gemeinde aus der Liste und den Abfalltyp ('kehricht', 'gruenabfuhr' oder 'all'). Besuchen Sie https://www.abfalltransport.li/abfallkalender für den Kalender.",
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
         "municipality": "Municipality name in lower case (e.g. 'balzers', 'vaduz', 'schaan')",
-        "waste_type": "Waste type: 'kehricht' (household waste) or 'gruenabfuhr' (green waste)",
+        "waste_type": "Waste type: 'kehricht', 'gruenabfuhr', 'all' (or comma-separated list)",
     },
     "de": {
         "municipality": "Gemeindename in Kleinbuchstaben (z.B. 'balzers', 'vaduz', 'schaan')",
-        "waste_type": "Abfalltyp: 'kehricht' (Kehricht) oder 'gruenabfuhr' (Grünabfuhr)",
+        "waste_type": "Abfalltyp: 'kehricht', 'gruenabfuhr', 'all' (oder komma-separierte Liste)",
     },
 }
 
@@ -114,17 +115,42 @@ def EXTRA_INFO():
 class Source:
     def __init__(self, municipality: str, waste_type: str = "kehricht"):
         self._municipality = municipality.lower().strip()
-        self._waste_type = waste_type.lower().strip()
 
         if self._municipality not in MUNICIPALITIES:
             raise SourceArgumentNotFoundWithSuggestions(
                 "municipality", self._municipality, MUNICIPALITIES
             )
 
-        if self._waste_type not in WASTE_TYPES:
+        self._waste_types = self._parse_waste_types(waste_type)
+
+    def _parse_waste_types(self, waste_type: str) -> list[str]:
+        requested_types = []
+        valid_types = list(WASTE_TYPES.keys())
+        accepted_types = valid_types + ["all", "both"]
+        for token in waste_type.lower().replace(";", ",").split(","):
+            selected_type = token.strip()
+            if not selected_type:
+                continue
+            if selected_type in ("all", "both"):
+                requested_types.extend(valid_types)
+                continue
+            if selected_type in valid_types:
+                requested_types.append(selected_type)
+                continue
             raise SourceArgumentNotFoundWithSuggestions(
-                "waste_type", self._waste_type, list(WASTE_TYPES.keys())
+                "waste_type", selected_type, accepted_types
             )
+
+        if not requested_types:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "waste_type", waste_type, accepted_types
+            )
+
+        deduplicated = []
+        for selected_type in requested_types:
+            if selected_type not in deduplicated:
+                deduplicated.append(selected_type)
+        return deduplicated
 
     def fetch(self) -> list[Collection]:
         entries = []
@@ -136,36 +162,40 @@ class Source:
             year = target.year
 
             month_slug = MONTHS_URL[month]
-            url = f"https://www.abfalltransport.li/abfallkalender/{self._municipality}/{month_slug}/{self._waste_type}"
-            resp = requests.get(url, timeout=30)
-            if resp.status_code != 200:
-                continue
+            for selected_type in self._waste_types:
+                url = f"https://www.abfalltransport.li/abfallkalender/{self._municipality}/{month_slug}/{selected_type}"
+                resp = requests.get(url, timeout=30)
+                if resp.status_code != 200 and month_slug == "mai":
+                    fallback_url = f"https://www.abfalltransport.li/abfallkalender/{self._municipality}/Mai/{selected_type}"
+                    resp = requests.get(fallback_url, timeout=30)
+                if resp.status_code != 200:
+                    continue
 
-            soup = BeautifulSoup(resp.text, "html.parser")
+                soup = BeautifulSoup(resp.text, "html.parser")
 
-            for tag in soup.find_all(
-                string=lambda t: t and "." in t and str(year) in t
-            ):
-                text = tag.strip()
-                parts = text.split()
-                if len(parts) == 3:
-                    try:
-                        day = int(parts[0].replace(".", ""))
-                        mon = MONTHS_DE.get(parts[1].lower())
-                        yr = int(parts[2])
-                        if mon:
-                            dt = datetime.date(yr, mon, day)
-                            label = WASTE_TYPES.get(
-                                self._waste_type, self._waste_type.capitalize()
-                            )
-                            entries.append(
-                                Collection(
-                                    dt,
-                                    label,
-                                    icon=ICON_MAP.get(label),
+                for tag in soup.find_all(
+                    string=lambda t: t and "." in t and str(year) in t
+                ):
+                    text = tag.strip()
+                    parts = text.split()
+                    if len(parts) == 3:
+                        try:
+                            day = int(parts[0].replace(".", ""))
+                            mon = MONTHS_DE.get(parts[1].lower())
+                            yr = int(parts[2])
+                            if mon:
+                                dt = datetime.date(yr, mon, day)
+                                label = WASTE_TYPES.get(
+                                    selected_type, selected_type.capitalize()
                                 )
-                            )
-                    except (ValueError, KeyError):
-                        pass
+                                entries.append(
+                                    Collection(
+                                        dt,
+                                        label,
+                                        icon=ICON_MAP.get(label),
+                                    )
+                                )
+                        except (ValueError, KeyError):
+                            pass
 
         return entries

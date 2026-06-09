@@ -27,6 +27,7 @@ Name of the municipality in lower case. Supported values:
 Type of waste collection. Supported values:
 - `kehricht` — household waste (Kehricht)
 - `gruenabfuhr` — green waste (Grünabfuhr)
+- `all` — both waste types
 
 ## Examples
 
@@ -52,7 +53,7 @@ waste_collection_schedule:
         waste_type: gruenabfuhr
 ```
 
-Both waste types in Schaan (use two source entries):
+Both waste types in Schaan (single source entry):
 
 ```yaml
 waste_collection_schedule:
@@ -60,11 +61,7 @@ waste_collection_schedule:
     - name: abfalltransport_li
       args:
         municipality: schaan
-        waste_type: kehricht
-    - name: abfalltransport_li
-      args:
-        municipality: schaan
-        waste_type: gruenabfuhr
+        waste_type: all
 ```
 
 ## How to get the source arguments
