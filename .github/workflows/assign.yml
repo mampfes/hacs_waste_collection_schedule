@@ -1,8 +1,6 @@
 name: Assign Issue
 
 on:
-  issues:
-    types: [opened]
   issue_comment:
     types: [created]
 
@@ -13,6 +11,7 @@ jobs:
       issues: write # Required permission for the action to assign users
     steps:
       - name: Assign Me Action
-        uses: takanome-dev/assign-issue-action@v3.1.0
+        # Pinned to the v3.1.0 commit SHA for supply-chain safety
+        uses: takanome-dev/assign-issue-action@c7086b052ac0039e7192085e82de2f9d74080f0b # v3.1.0
         with:
           github_token: "${{ github.token }}"
