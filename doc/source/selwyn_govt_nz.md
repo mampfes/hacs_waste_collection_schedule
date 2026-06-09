@@ -36,5 +36,5 @@ Visit the council's [collection days and routes](https://www.selwyn.govt.nz/serv
 
 ## Notes / Limitations
 
-- Rubbish is collected weekly and recycling fortnightly (on the weeks matching the property's recycling schedule). Organics is collected weekly **where the property has an organics service** — some areas (e.g. a number of rural properties) have no kerbside organics, in which case no organics collections are returned. All of a property's bins share the same weekday.
+- Rubbish is collected weekly and recycling fortnightly (on the weeks matching the property's recycling schedule). Organics is collected weekly **where the property has an organics service** — some areas (e.g. a number of rural properties) have no kerbside organics, in which case no organics collections are returned. See the council's [organic collection](https://www.selwyn.govt.nz/services/rubbish-recycling-And-organics/kerbside-collections/organic-collection) page for which areas are covered. All of a property's bins share the same weekday.
 - The council's data does not encode public-holiday adjustments, so collections that are shifted around New Zealand public holidays are not reflected. This limitation is shared with other New Zealand sources.
