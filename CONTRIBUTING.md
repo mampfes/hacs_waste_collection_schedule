@@ -96,6 +96,10 @@ Non-code contributions are welcome. If you find typos, spelling mistakes, or thi
 
 Open-source projects are always a work in progress, and [issues](https://github.com/mampfes/hacs_waste_collection_schedule/issues) arise from time-to-time. If you come across a new issue, please raise it. If you have a solution to an open issue, please raise a pull request with your solution.
 
+### Assigning an issue to yourself
+
+To help prevent duplicate work, we encourage contributors to self-assign issues they are actively working on (e.g. adding a specific waste collection source). To assign an open issue to yourself, simply leave a comment on the issue containing `/assign-me` — our GitHub automation will then assign it to you. Comment `/unassign-me` to release it again.
+
 ## Join The Home Assistant Community Discussion
 
 ![Community Discussion](https://img.shields.io/badge/Home%20Assistant%20Community-Discussion-orange)
