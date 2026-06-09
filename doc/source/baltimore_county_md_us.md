@@ -17,7 +17,7 @@ waste_collection_schedule:
 **address**
 *(string) (optional)*
 
-Street address selected from the county suggestions, for example: 309 W CHESAPEAKE AVE, TOWSON, MD, 21204.
+Street address selected from the county suggestions, for example: 610 Gifford Ln, Monkton, MD 21111
 
 ## How to find your arguments
 
@@ -33,7 +33,7 @@ waste_collection_schedule:
   sources:
     - name: baltimore_county_md_us
       args:
-        address: "309 W Chesapeake Ave"
+        address: "610 Gifford Ln"
 ```
 
 ## Bin types returned

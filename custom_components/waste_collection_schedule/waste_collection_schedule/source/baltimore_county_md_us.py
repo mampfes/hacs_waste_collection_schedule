@@ -22,6 +22,7 @@ URL = "https://www.baltimorecountymd.gov/departments/public-works/solid-waste/co
 COUNTRY = "us"
 
 TEST_CASES = {
+    "Monkton": {"address": "610 Gifford Ln, Monkton, MD 21111"},
     "Towson": {"address": "309 W CHESAPEAKE AVE, TOWSON, MD, 21204"},
 }
 
@@ -29,7 +30,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
         "Go to the Baltimore County collection schedule page, type your house number and "
         "street in the Address field, and select the full address from the dropdown (for "
-        "example: 309 W CHESAPEAKE AVE, TOWSON, MD, 21204)."
+        "example: 610 Gifford Ln)."
     )
 }
 
@@ -41,7 +42,7 @@ PARAM_TRANSLATIONS = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "address": "Complete address selected from county suggestions (for example: 309 W CHESAPEAKE AVE, TOWSON, MD, 21204)",
+        "address": "Complete address selected from county suggestions (for example: 610 Gifford Ln, Monkton, MD 21111)",
     }
 }
 
