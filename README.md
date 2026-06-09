@@ -2473,6 +2473,23 @@ If you already have enough information for your municipality/region, you are ver
 </details>
 
 <details>
+<summary>Liechtenstein</summary>
+
+- [Balzers](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Eschen Nendeln](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [FL Abfalltransport AG](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Gamprin Bendern](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Mauren Schaanwald](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Planken](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Ruggell](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Schaan](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Schellenberg](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Triesen](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Triesenberg](/doc/source/abfalltransport_li.md) / abfalltransport.li
+- [Vaduz](/doc/source/abfalltransport_li.md) / abfalltransport.li
+</details>
+
+<details>
 <summary>Lithuania</summary>
 
 - [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt

@@ -16487,6 +16487,102 @@
       "id": "junker_app"
     }
   ],
+  "Liechtenstein": [
+    {
+      "title": "Balzers",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "balzers"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Eschen Nendeln",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "eschen-nendeln"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "FL Abfalltransport AG",
+      "module": "abfalltransport_li",
+      "default_params": {},
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Gamprin Bendern",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "gamprin-bendern"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Mauren Schaanwald",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "mauren-schaanwald"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Planken",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "planken"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Ruggell",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "ruggell"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Schaan",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "schaan"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Schellenberg",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "schellenberg"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Triesen",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "triesen"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Triesenberg",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "triesenberg"
+      },
+      "id": "abfalltransport_li"
+    },
+    {
+      "title": "Vaduz",
+      "module": "abfalltransport_li",
+      "default_params": {
+        "municipality": "vaduz"
+      },
+      "id": "abfalltransport_li"
+    }
+  ],
   "Lithuania": [
     {
       "title": "Ecoservice atliekos",

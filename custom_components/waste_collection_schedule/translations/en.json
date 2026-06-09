@@ -14947,6 +14947,33 @@
         },
         "data_description": {}
       },
+      "args_abfalltransport_li": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "waste_type": "Waste type"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Municipality name in lower case (e.g. 'balzers', 'vaduz', 'schaan')",
+          "waste_type": "Waste type: 'kehricht', 'gruenabfuhr', 'all' (or comma-separated list)"
+        }
+      },
+      "reconfigure_abfalltransport_li": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "waste_type": "Waste type"
+        },
+        "data_description": {
+          "municipality": "Municipality name in lower case (e.g. 'balzers', 'vaduz', 'schaan')",
+          "waste_type": "Waste type: 'kehricht', 'gruenabfuhr', 'all' (or comma-separated list)"
+        }
+      },
       "args_ecoapp_ecoservice_lt": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
