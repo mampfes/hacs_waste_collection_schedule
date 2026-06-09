@@ -13,7 +13,7 @@ TEST_CASES = {
     "Test_004": {"uprn": "100080023672"},
 }
 
-# Extended headers to bypass WAF/CORS blocking
+# Extended headers to bypass upstream request blocking (e.g., WAF)
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
     "Accept": "application/json, text/plain, */*",
@@ -43,7 +43,7 @@ class Source:
         # Raise an exception if the server returns an error (e.g. 403 Forbidden)
         r.raise_for_status()
 
-        # Safely parse the JSON response
+        # Parse the JSON response
         json_data = r.json().get("BinCollections", [])
 
         entries = []
