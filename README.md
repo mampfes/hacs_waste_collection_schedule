@@ -3356,6 +3356,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Recology San Francisco](/doc/ics/recollect.md) / recology.com/recology-san-francisco
 - [Recycle By City](/doc/ics/recyclebycity_com.md) / recyclebycity.com
 - [Recycle Coach](/doc/source/recyclecoach_com.md) / recyclecoach.com
+- [Red Bank, Tennessee](/doc/source/red_bank_tn_us.md) / redbanktn.gov/257/Solid-Waste
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
 - [Rochester, NY](/doc/source/rochester_ny_us.md) / cityofrochester.gov
 - [Rogue Disposal & Recycling (Medford, OR)](/doc/ics/recollect.md) / roguedisposal.com

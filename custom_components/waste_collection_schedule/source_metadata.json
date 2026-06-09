@@ -6238,6 +6238,13 @@
     "howto": {},
     "urls": {}
   },
+  "red_bank_tn_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/red_bank_tn_us.md",
+    "howto": {
+      "en": "Enter your street address as it appears in Red Bank (e.g. '1107 Ashmore Ave'). The city/state/ZIP are optional. Your collection weekday is looked up from the city's official trash-day map."
+    },
+    "urls": {}
+  },
   "republicservices_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/republicservices_com.md",
     "howto": {},
