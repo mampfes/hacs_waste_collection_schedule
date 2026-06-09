@@ -101,8 +101,6 @@ _SNC_BIN_TYPE_PREFIXES = {
     "Gar": "Garden",
 }
 
-# CSS classes that mark non-calendar (padding) cells in the SNC SOAP calendar grid
-_SNC_NON_CALENDAR_CLASSES = {"tdWhiteLightGrey", "colourWhite", "tdWhiteDarkGrey"}
 
 matcher = re.compile(r"^([A-Z][a-z]+) (\d{1,2}) ([A-Z][a-z]+) (\d{4})$")
 
@@ -202,19 +200,23 @@ def _fetch_snc_soap_calendar(uprn: str) -> List[Collection]:
         except (ValueError, IndexError):
             continue
 
-        day = 0
-        for row in table.find_all("tr")[2:]:  # skip month-header and day-name rows
-            for cell in row.find_all("td")[1:]:  # skip leading empty td
-                cls_set = set(cell.get("class", []))
-                if cls_set & _SNC_NON_CALENDAR_CLASSES:
-                    continue  # padding / out-of-month cell
-
-                # Valid calendar cell — advance the day counter
-                day += 1
+        first_weekday, days_in_month = calendar.monthrange(year, month_num)
+        for row_idx, row in enumerate(
+            table.find_all("tr")[2:]
+        ):  # skip month-header and day-name rows
+            for col_idx, cell in enumerate(
+                row.find_all("td")[1:]
+            ):  # skip leading empty td
+                # Calculate the actual day-of-month from grid position.
+                # The calendar is a Mon-Sun grid; first_weekday (Mon=0) tells us
+                # how many leading padding cells appear before day 1.
+                day = row_idx * 7 + col_idx - first_weekday + 1
+                if day < 1 or day > days_in_month:
+                    continue  # padding cell before or after month
 
                 svg = cell.find("svg")
                 if not svg:
-                    continue  # other rounds collect today, not this property
+                    continue  # no collection for this property on this day
 
                 title_el = svg.find("title")
                 if not title_el:
