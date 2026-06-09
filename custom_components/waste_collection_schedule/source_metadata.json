@@ -2588,6 +2588,14 @@
     },
     "urls": {}
   },
+  "ostprignitz_ruppin_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ostprignitz_ruppin_de.md",
+    "howto": {
+      "de": "Öffnen Sie https://www.ostprignitz-ruppin.de/Verwaltung/Dezernate/Dezernat-Bauen-Ordnung-und-Umwelt/Bau-und-Umweltamt/Abfallwirtschaft-M%C3%BCllentsorgung/.\nWählen Sie Ihren Ort aus.\nWählen Sie Ihre Straße aus.\nVerwenden Sie den Ortsnamen als Parameter `location`.\nVerwenden Sie den Straßennamen als Parameter `street`.",
+      "en": "Go to https://www.ostprignitz-ruppin.de/Verwaltung/Dezernate/Dezernat-Bauen-Ordnung-und-Umwelt/Bau-und-Umweltamt/Abfallwirtschaft-M%C3%BCllentsorgung/.\nSelect your municipality (Ort).\nSelect your street (Straße).\nUse the municipality name as the `location` parameter.\nUse the street name as the `street` parameter."
+    },
+    "urls": {}
+  },
   "potsdam_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/potsdam_de.md",
     "howto": {},

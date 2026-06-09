@@ -1792,6 +1792,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Osterbruch](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Osterode am Harz](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallwecker
 - [Ostprignitz-Ruppin](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
+- [Ostprignitz-Ruppin](/doc/source/ostprignitz_ruppin_de.md) / ostprignitz-ruppin.de
 - [Parensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Pastetten](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/pastetten/abfallkalender
 - [Petershagen](/doc/ics/mein_abfallkalender_online.md) / petershagen.de

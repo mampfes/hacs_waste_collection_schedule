@@ -11973,6 +11973,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Ostprignitz-Ruppin",
+      "module": "ostprignitz_ruppin_de",
+      "default_params": {},
+      "id": "ostprignitz_ruppin_de"
+    },
+    {
       "title": "Parensen",
       "module": "nerdbridge_de",
       "default_params": {
