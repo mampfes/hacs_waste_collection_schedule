@@ -58,9 +58,7 @@ class Source:
 
                 entries.append(
                     Collection(
-                        date=datetime.strptime(
-                            job_start, "%Y-%m-%dT00:00:00"
-                        ).date(),
+                        date=datetime.strptime(job_start, "%Y-%m-%dT00:00:00").date(),
                         t=bin_type,
                         icon=ICON_MAP.get(bin_type.upper()),
                     )
