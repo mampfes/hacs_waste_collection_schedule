@@ -12,7 +12,10 @@ DESCRIPTION = "Source for Northumberland County Council waste collection schedul
 URL = "https://www.northumberland.gov.uk"
 COUNTRY = "uk"
 TEST_CASES = {
-    "30, NE46 1UF (UPRN 100110637553)": {"uprn": "100110637553"},
+    "30, NE46 1UF (UPRN 100110637553)": {
+        "uprn": "100110637553",
+        "postcode": "NE46 1UF",
+    },
 }
 
 ICON_MAP = {
@@ -35,28 +38,31 @@ BASE_URL = "https://bincollection.northumberland.gov.uk"
 PARAM_TRANSLATIONS = {
     "en": {
         "uprn": "UPRN",
+        "postcode": "Postcode",
     }
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
         "uprn": "Unique Property Reference Number (UPRN) for your address.",
+        "postcode": "Your property postcode (e.g. NE46 1UF).",
     }
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit https://bincollection.northumberland.gov.uk/postcode, enter your postcode and select your address. The UPRN is the number shown in the address dropdown value, or find it at https://www.findmyaddress.co.uk/.",
+    "en": "Visit https://bincollection.northumberland.gov.uk/postcode, enter your postcode and select your address. The UPRN is the number in the address dropdown (or find it at https://www.findmyaddress.co.uk/).",
 }
 
 
 class Source:
-    def __init__(self, uprn: str | int):
+    def __init__(self, uprn: str | int, postcode: str):
         self._uprn = str(uprn)
+        self._postcode = postcode.strip()
 
     def fetch(self) -> list[Collection]:
         session = requests.Session(impersonate="chrome")
 
-        # Step 1: GET the postcode page to establish a session and retrieve the CSRF token
+        # Step 1: GET the postcode page to establish a session and retrieve CSRF token #1
         r1 = session.get(f"{BASE_URL}/postcode")
         r1.raise_for_status()
 
@@ -66,34 +72,49 @@ class Source:
             raise ValueError(
                 "Could not find CSRF token on the postcode page. The site may have changed."
             )
-        csrf_token = csrf_input.get("value", "")
+        csrf_token1 = csrf_input.get("value", "")
 
-        # Step 2: POST to /address-select with the CSRF token and the UPRN
+        # Step 2: POST postcode to /postcode — this returns the address-select page
+        # which contains a fresh CSRF token for the next step.
         r2 = session.post(
-            f"{BASE_URL}/address-select",
+            f"{BASE_URL}/postcode",
             data={
-                "_csrf": csrf_token,
-                "address": self._uprn,
+                "_csrf": csrf_token1,
+                "postcode": self._postcode,
             },
             allow_redirects=True,
         )
         r2.raise_for_status()
 
-        return self._parse_schedule(r2.text)
+        soup2 = BeautifulSoup(r2.text, "html.parser")
+        csrf_input2 = soup2.find("input", {"name": "_csrf"})
+        if csrf_input2 is None:
+            raise ValueError(
+                "Could not find CSRF token on the address-select page. The site may have changed."
+            )
+        csrf_token2 = csrf_input2.get("value", "")
+
+        # Step 3: POST to /address-select with the CSRF token and the UPRN
+        r3 = session.post(
+            f"{BASE_URL}/address-select",
+            data={
+                "_csrf": csrf_token2,
+                "address": self._uprn,
+            },
+            allow_redirects=True,
+        )
+        r3.raise_for_status()
+
+        return self._parse_schedule(r3.text)
 
     def _parse_schedule(self, html: str) -> list[Collection]:
         soup = BeautifulSoup(html, "html.parser")
 
         entries = []
 
-        # The bincollection.* sites typically render bin cards as div.card or div.service-item
-        # containing a heading/title for bin type and a date element.
-        # Try multiple known patterns from this site family.
-
-        # Pattern A: card h-100 divs (same family as newham_gov_uk)
+        # Pattern A: card divs
         cards = soup.find_all("div", class_=re.compile(r"\bcard\b"))
         for card in cards:
-            # Extract bin type from header
             header = card.find(
                 ["h2", "h3", "h4", "h5", "b", "strong"],
             )
@@ -103,11 +124,9 @@ class Source:
             if not bin_type:
                 continue
 
-            # Extract date — look for <p>, <span>, <mark> or similar with a date
             date_text = None
             for tag in card.find_all(["p", "span", "mark", "td", "dd"]):
                 text = tag.get_text(strip=True)
-                # Match date patterns: "12 January 2025", "12/01/2025", "Monday 12 January 2025"
                 if re.search(r"\d{1,2}[\s/]\w+[\s/]\d{4}|\d{1,2}/\d{2}/\d{4}", text):
                     date_text = text
                     break
@@ -128,7 +147,7 @@ class Source:
         if entries:
             return entries
 
-        # Pattern B: table rows with bin type and date columns
+        # Pattern B: table rows
         rows = soup.find_all("tr")
         for row in rows:
             cells = row.find_all(["td", "th"])
@@ -145,7 +164,7 @@ class Source:
         if entries:
             return entries
 
-        # Pattern C: definition list (dt/dd pairs)
+        # Pattern C: definition list
         dts = soup.find_all("dt")
         for dt in dts:
             bin_type = dt.get_text(strip=True)
@@ -163,15 +182,13 @@ class Source:
             raise SourceArgumentNotFound(
                 "uprn",
                 self._uprn,
-                "No collection data found. Please check your UPRN is correct.",
+                "No collection data found. Please check your UPRN and postcode are correct.",
             )
 
         return entries
 
 
 def _parse_date(text: str):
-    """Attempt to parse a date from a string using common UK formats."""
-    # Strip leading day name if present: "Monday 12 January 2025"
     text = re.sub(
         r"^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+",
         "",
@@ -181,10 +198,10 @@ def _parse_date(text: str):
     text = text.strip()
 
     for fmt in (
-        "%d %B %Y",  # "12 January 2025"
-        "%d %b %Y",  # "12 Jan 2025"
-        "%d/%m/%Y",  # "12/01/2025"
-        "%Y-%m-%d",  # "2025-01-12"
+        "%d %B %Y",
+        "%d %b %Y",
+        "%d/%m/%Y",
+        "%Y-%m-%d",
     ):
         try:
             return datetime.strptime(text, fmt).date()
