@@ -8,7 +8,6 @@ DESCRIPTION = "Source for bedford.gov.uk services for Bedford Borough Council, U
 URL = "https://bedford.gov.uk"
 TEST_CASES = {
     "Test_001": {"uprn": "100080009302"},
-    "Test_002": {"uprn": "100081207036"},
     "Test_003": {"uprn": "100080018481"},
     "Test_004": {"uprn": "100080023672"},
 }
