@@ -3442,6 +3442,13 @@
     "howto": {},
     "urls": {}
   },
+  "rfd_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rfd_no.md",
+    "howto": {
+      "en": "Search for your address at rfd.no/avfallshenting. Use the address exactly as shown in the result list, for example 'Grønland 1, Drammen'."
+    },
+    "urls": {}
+  },
   "sandnes_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandnes_no.md",
     "howto": {},

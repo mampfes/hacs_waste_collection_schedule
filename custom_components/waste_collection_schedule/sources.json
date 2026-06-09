@@ -17067,6 +17067,12 @@
       "id": "remidt_no"
     },
     {
+      "title": "Renovasjonsselskapet for Drammensregionen IKS (RfD)",
+      "module": "rfd_no",
+      "default_params": {},
+      "id": "rfd_no"
+    },
+    {
       "title": "ROAF (Romerike Avfallsforedling IKS)",
       "module": "minrenovasjon_no",
       "default_params": {
