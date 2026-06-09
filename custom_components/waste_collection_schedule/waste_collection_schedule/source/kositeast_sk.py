@@ -1,11 +1,12 @@
 import io
+import logging
 import re
+from datetime import date
+
 import requests
 from bs4 import BeautifulSoup
 from pdfminer.high_level import extract_pages
-from pdfminer.layout import LTTextContainer, LTTextLine, LTRect, LTPage
-from datetime import date
-import logging
+from pdfminer.layout import LTPage, LTRect, LTTextContainer, LTTextLine
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
@@ -50,12 +51,12 @@ ICON_MAP = {
 # RGB colour tuples as they appear in KOSIT EAST PDFs (rounded to 3 d.p.).
 # Verified across multiple municipalities (Adidovce, Andrejová, ...).
 COLOR_MAP = {
-    (1.0, 1.0, 0.0):       "Plasty, VKM, Kovové obaly",
-    (0.451, 0.89, 0.008):  "Sklo",
-    (0.584, 0.729, 1.0):   "Papier",
-    (1.0, 0.702, 0.4):     "Jedlé oleje a tuky",
+    (1.0, 1.0, 0.0): "Plasty, VKM, Kovové obaly",
+    (0.451, 0.89, 0.008): "Sklo",
+    (0.584, 0.729, 1.0): "Papier",
+    (1.0, 0.702, 0.4): "Jedlé oleje a tuky",
     (0.741, 0.494, 0.984): "Nebezpečný odpad",
-    (0.0, 0.0, 0.0):       "Komunálny odpad",
+    (0.0, 0.0, 0.0): "Komunálny odpad",
 }
 
 # Maximum Euclidean RGB distance to accept as a colour match.
@@ -73,6 +74,7 @@ _N_MONTH_COLS = 6
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
 
 def _nearest_color(color: tuple) -> str | None:
     """Return the nearest waste-type name for *color*, or None if too far away."""
@@ -102,7 +104,7 @@ def _cluster_values(values: list[float], n: int) -> list[float]:
     merged: list[float] = []
     for v in buckets:
         if merged and v - merged[-1] < 5.0:
-            merged[-1] = (merged[-1] + v) / 2   # absorb into previous cluster
+            merged[-1] = (merged[-1] + v) / 2  # absorb into previous cluster
         else:
             merged.append(v)
     while len(merged) > n:
@@ -116,6 +118,7 @@ def _cluster_values(values: list[float], n: int) -> list[float]:
 def _nearest_cluster_idx(value: float, centres: list[float]) -> int:
     """Return the 0-based index of the cluster centre closest to *value*."""
     return min(range(len(centres)), key=lambda i: abs(centres[i] - value))
+
 
 def _extract_year(page: LTPage) -> int | None:
     """Scan *page* for a 'ROK YYYY' header and return the year, or None."""
@@ -132,6 +135,7 @@ def _extract_year(page: LTPage) -> int | None:
 # ---------------------------------------------------------------------------
 # Source
 # ---------------------------------------------------------------------------
+
 
 class Source:
     def __init__(self, town: str):
@@ -192,10 +196,9 @@ class Source:
 
         pdf_link: str | None = None
         for a in soup.find_all("a", href=True):
-            if (
-                a.get_text(strip=True).lower() == self._town.strip().lower()
-                and a["href"].endswith(".pdf")
-            ):
+            if a.get_text(strip=True).lower() == self._town.strip().lower() and a[
+                "href"
+            ].endswith(".pdf"):
                 pdf_link = a["href"]
                 break
 
@@ -263,7 +266,9 @@ class Source:
         y_ctrs = [(r["bbox"][1] + r["bbox"][3]) / 2 for r in rects]
 
         x_clusters = _cluster_values(x_ctrs, n=_N_MONTH_COLS)
-        y_clusters = _cluster_values(y_ctrs, n=2)  # top-half cluster / bottom-half cluster
+        y_clusters = _cluster_values(
+            y_ctrs, n=2
+        )  # top-half cluster / bottom-half cluster
 
         if len(x_clusters) != _N_MONTH_COLS:
             _LOGGER.warning(
@@ -278,9 +283,7 @@ class Source:
         #   y_clusters[0] ~= centre of bottom-half rects (Jul-Dec)
         #   y_clusters[1] ~= centre of top-half rects    (Jan-Jun)
         y_split = (
-            (y_clusters[0] + y_clusters[1]) / 2
-            if len(y_clusters) >= 2
-            else page_h / 2
+            (y_clusters[0] + y_clusters[1]) / 2 if len(y_clusters) >= 2 else page_h / 2
         )
 
         # --- Map each rect to a date + waste type ---
@@ -304,15 +307,16 @@ class Source:
             day: int | None = None
             for line in lines:
                 lx0, ly0, lx1, ly1 = line["bbox"]
-                if max(ry0, ly0) >= min(ry1, ly1):   # no vertical overlap
+                if max(ry0, ly0) >= min(ry1, ly1):  # no vertical overlap
                     continue
                 lcx = (lx0 + lx1) / 2
                 if _nearest_cluster_idx(lcx, x_clusters) != col:  # wrong column
                     continue
-                
+
                 # UPDATED REGEX: Added uppercase slovak characters and general uppercase support
                 m = re.search(
-                    r"(?:^|[A-ZŽŠČŤĎŇĽĹÁÉÍÓÚÄÔa-zžščťďňľĺáéíóúäô]+\s+)(\d+)\b", line["text"]
+                    r"(?:^|[A-ZŽŠČŤĎŇĽĹÁÉÍÓÚÄÔa-zžščťďňľĺáéíóúäô]+\s+)(\d+)\b",
+                    line["text"],
                 )
                 if m:
                     day = int(m.group(1))
