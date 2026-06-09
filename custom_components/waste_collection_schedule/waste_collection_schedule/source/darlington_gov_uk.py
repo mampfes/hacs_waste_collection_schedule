@@ -51,7 +51,6 @@ class Source:
                 date_str,
                 "%A %d %B %Y",
             ).date()
-
             waste_types = [
                 x.get_text(strip=True) for x in card.select(".collection-result-text")
             ]
