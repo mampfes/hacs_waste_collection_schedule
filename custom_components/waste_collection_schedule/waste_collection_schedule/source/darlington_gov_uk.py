@@ -48,10 +48,9 @@ class Source:
 
             date_str = date_element.get_text(strip=True).split("(")[0].strip()
             collection_date = datetime.strptime(
-            date_str,
-            "%A %d %B %Y",
+                date_str,
+                "%A %d %B %Y",
             ).date()
-
 
             waste_types = [
                 x.get_text(strip=True) for x in card.select(".collection-result-text")
