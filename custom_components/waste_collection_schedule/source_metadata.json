@@ -3636,6 +3636,13 @@
     "howto": {},
     "urls": {}
   },
+  "kositeast_sk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kositeast_sk.md",
+    "howto": {
+      "en": "Find your town on https://kositeast.sk/obyvatelia/harmonogram-zberu-odpadu-v-obciach/ and enter it exactly as it appears in the link."
+    },
+    "urls": {}
+  },
   "ics_odvoz_odpadu_sk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/odvoz_odpadu_sk.md",
     "howto": {

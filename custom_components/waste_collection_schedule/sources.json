@@ -18298,6 +18298,12 @@
       "id": "fcc_group_eu"
     },
     {
+      "title": "KOSIT EAST",
+      "module": "kositeast_sk",
+      "default_params": {},
+      "id": "kositeast_sk"
+    },
+    {
       "title": "Odvoz Odpadu",
       "module": "ics",
       "default_params": {},

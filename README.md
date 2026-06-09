@@ -2760,6 +2760,7 @@ If you already have enough information for your municipality/region, you are ver
 <summary>Slovakia</summary>
 
 - [fcc Environment](/doc/source/fcc_group_eu.md) / fcc-group.eu
+- [KOSIT EAST](/doc/source/kositeast_sk.md) / kositeast.sk
 - [Odvoz Odpadu](/doc/ics/odvoz_odpadu_sk.md) / odvoz-odpadu.eu
 - [OLO](/doc/source/olo_sk.md) / olo.sk
 </details>
