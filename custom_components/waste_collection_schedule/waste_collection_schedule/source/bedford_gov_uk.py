@@ -39,7 +39,6 @@ class Source:
             f"https://bbaz-as-prod-bartecapi.azurewebsites.net/api/bincollections/residential/getbyuprn/{self._uprn}",
             headers=HEADERS,
         )
-        
         # Raise an exception if the server returns an error (e.g. 403 Forbidden)
         r.raise_for_status()
 
