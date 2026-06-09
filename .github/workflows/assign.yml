@@ -1,3 +1,4 @@
+---
 name: Assign Issue
 
 on:
@@ -14,4 +15,4 @@ jobs:
         # Pinned to the v3.1.0 commit SHA for supply-chain safety
         uses: takanome-dev/assign-issue-action@c7086b052ac0039e7192085e82de2f9d74080f0b # v3.1.0
         with:
-          github_token: "${{ github.token }}"
+          github_token: ${{ github.token }}
