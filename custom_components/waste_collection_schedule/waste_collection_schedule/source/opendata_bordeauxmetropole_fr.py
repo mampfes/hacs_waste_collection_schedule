@@ -91,8 +91,8 @@ EXTRA_INFO = [
         "default_params": {"city": "Bordeaux"},
     },
     {
-        "title": "M\u00e9rignac",
-        "default_params": {"city": "M\u00e9rignac"},
+        "title": "Mérignac",
+        "default_params": {"city": "Mérignac"},
     },
     {
         "title": "Gradignan",
@@ -103,8 +103,8 @@ EXTRA_INFO = [
         "default_params": {"city": "Talence"},
     },
     {
-        "title": "Saint-M\u00e9dard-en-Jalles",
-        "default_params": {"city": "Saint-M\u00e9dard-en-Jalles"},
+        "title": "Saint-Médard-en-Jalles",
+        "default_params": {"city": "Saint-Médard-en-Jalles"},
     },
     {
         "title": "Villenave-d'Ornon",
@@ -115,8 +115,8 @@ EXTRA_INFO = [
         "default_params": {"city": "Bruges"},
     },
     {
-        "title": "B\u00e8gles",
-        "default_params": {"city": "B\u00e8gles"},
+        "title": "Bègles",
+        "default_params": {"city": "Bègles"},
     },
     {
         "title": "Le Bouscat",
@@ -127,12 +127,12 @@ EXTRA_INFO = [
         "default_params": {"city": "Pessac"},
     },
     {
-        "title": "Ambar\u00e8s-et-Lagrave",
-        "default_params": {"city": "Ambar\u00e8s-et-Lagrave"},
+        "title": "Ambarès-et-Lagrave",
+        "default_params": {"city": "Ambarès-et-Lagrave"},
     },
     {
-        "title": "Amb\u00e8s",
-        "default_params": {"city": "Amb\u00e8s"},
+        "title": "Ambès",
+        "default_params": {"city": "Ambès"},
     },
     {
         "title": "Blanquefort",
@@ -147,8 +147,8 @@ EXTRA_INFO = [
         "default_params": {"city": "Le Haillan"},
     },
     {
-        "title": "Le Taillan-M\u00e9doc",
-        "default_params": {"city": "Le Taillan-M\u00e9doc"},
+        "title": "Le Taillan-Médoc",
+        "default_params": {"city": "Le Taillan-Médoc"},
     },
     {
         "title": "Martignas-sur-Jalle",
@@ -159,8 +159,8 @@ EXTRA_INFO = [
         "default_params": {"city": "Parempuyre"},
     },
     {
-        "title": "Saint-Aubin-de-M\u00e9doc",
-        "default_params": {"city": "Saint-Aubin-de-M\u00e9doc"},
+        "title": "Saint-Aubin-de-Médoc",
+        "default_params": {"city": "Saint-Aubin-de-Médoc"},
     },
     {
         "title": "Saint-Louis-de-Montferrand",
@@ -228,20 +228,12 @@ class Source:
 
     @staticmethod
     def _get_next_weekday(source_date: date, target_day_name: DayNames) -> date:
-        # Get the current weekday number
         source_date_weekday = source_date.weekday()
-
-        # Get the target weekday number
         target_weekday = DAY_NAME_MAP[target_day_name]
-
-        # Calculate the number of days until the next target weekday
         days_until_target = (target_weekday - source_date_weekday + 7) % 7
-        if days_until_target == 0:  # It is source_date!
+        if days_until_target == 0:
             return source_date
-
-        # Calculate the date of the next target weekday
         next_target_date = source_date + timedelta(days=days_until_target)
-
         return next_target_date
 
     def _get_address_params(self, address: str) -> dict:
@@ -262,7 +254,6 @@ class Source:
                 "address", "No results found for the given address and INSEE code"
             )
 
-        # GeoJSON coordinates are [longitude, latitude]
         lon, lat = data[0]["geometry"]["coordinates"]
         return {
             "lat": lat,
@@ -279,7 +270,6 @@ class Source:
             x, y = point
             n = len(polygon)
             inside = False
-            # Polygon vertices are [longitude, latitude]; unpack as (x=lon, y=lat)
             p1x, p1y = polygon[0]
             for i in range(n + 1):
                 p2x, p2y = polygon[i % n]
@@ -291,7 +281,6 @@ class Source:
                             if p1x == p2x or x <= xinters:
                                 inside = not inside
                 p1x, p1y = p2x, p2y
-
             return inside
 
         if _type == "Polygon":
@@ -303,23 +292,21 @@ class Source:
         return False
 
     def fetch(self) -> list[Collection]:
-        # First we need to get the address parameters from the geocoder
         address_params = self._get_address_params(self.address)
 
         url = self.api_url.format(city=urllib.parse.quote(self.city))
-
         response = requests.get(url)
 
         if response.status_code != 200:
             raise SourceArgumentException("city", "Error response from API")
 
-        # Now we need to filter the response to only include the relevant information
+        # Records without a geo_shape have a broken geometry (geom_err) in the upstream
+        # dataset — they are not city-wide zones. Skip them to avoid spurious matches.
         list_of_infos = [
             i
             for i in json.loads(response.text)
-            # For the cities not having geo_shape, all the city is concerned
-            if not i["geo_shape"]
-            or self._is_within_geo_shape(i["geo_shape"], address_params)
+            if i["geo_shape"]
+            and self._is_within_geo_shape(i["geo_shape"], address_params)
         ]
 
         filtered_responses: dict[str, list[str]] = {}
@@ -334,15 +321,13 @@ class Source:
         for _collection_type, _dates in filtered_responses.items():
             for _day in _dates:
                 source_date = datetime.today().date()
-                for _ in range(4):  # Let's generate a month of schedule
+                for _ in range(4):
                     next_date = self._get_next_weekday(source_date, DayNames(_day))
                     entries.append(
                         Collection(
-                            date=next_date,  # Next collection date
-                            t=LABEL_MAP.get(
-                                _collection_type, _collection_type
-                            ),  # Collection type
-                            icon=ICON_MAP.get(_collection_type),  # Collection icon
+                            date=next_date,
+                            t=LABEL_MAP.get(_collection_type, _collection_type),
+                            icon=ICON_MAP.get(_collection_type),
                         )
                     )
                     source_date = next_date + timedelta(days=1)
