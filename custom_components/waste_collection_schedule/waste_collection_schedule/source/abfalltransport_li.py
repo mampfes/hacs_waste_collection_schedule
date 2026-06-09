@@ -175,9 +175,9 @@ class Source:
                 soup = BeautifulSoup(resp.text, "html.parser")
                 year_str = str(year)
 
-                for tag in soup.find_all(
-                    string=lambda t: t and "." in t and year_str in t
-                ):
+                for tag in soup.find_all(string=True):
+                    if not ("." in tag and year_str in tag):
+                        continue
                     text = tag.strip()
                     parts = text.split()
                     if len(parts) == 3:
