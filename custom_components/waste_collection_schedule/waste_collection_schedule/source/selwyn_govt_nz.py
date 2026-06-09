@@ -11,8 +11,16 @@ DESCRIPTION = (
 )
 URL = "https://www.selwyn.govt.nz/"
 TEST_CASES = {
+    # schedule 1 (Friday), with organics
     "30 Tennyson Street Rolleston": {"address": "30 Tennyson Street Rolleston"},
+    # schedule 2 (Monday), with organics
     "77 Gerald Street Lincoln": {"address": "77 Gerald Street Lincoln"},
+    # schedule 1 (Tuesday), with organics
+    "15 Meijer Drive Lincoln": {"address": "15 Meijer Drive Lincoln"},
+    # schedule 1 (Thursday), with organics
+    "22 Mclaughlins Road Darfield": {"address": "22 Mclaughlins Road Darfield"},
+    # schedule 2 (Monday), no organics service
+    "156 Leeston Road Springston": {"address": "156 Leeston Road Springston"},
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
