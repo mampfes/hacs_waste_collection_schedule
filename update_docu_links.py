@@ -1117,6 +1117,10 @@ COUNTRYCODES = [
         "name": "Switzerland",
     },
     {
+        "code": "li",
+        "name": "Liechtenstein",
+    },
+    {
         "code": "us",
         "name": "United States of America",
     },
