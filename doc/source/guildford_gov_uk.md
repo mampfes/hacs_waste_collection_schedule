@@ -1,6 +1,9 @@
 # Guildford Borough Council
 
-Support for schedules provided by [Guildord Borough Council](https://my.guildford.gov.uk/customers/s/view-bin-collections), serving Guildford, UK.
+Support for schedules provided by [Guildord Borough Council](https://my.guildford.gov.uk/customers/s/view-bin-collections), serving Guildford, Surrey, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Surrey, please continue to use the source for your current area as long as it's still working. New sources for the new West Surrey council are not expected to be live until at least April 2027, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 
