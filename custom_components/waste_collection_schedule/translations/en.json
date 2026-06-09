@@ -23882,10 +23882,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "postcode": "Your property postcode (e.g. NE46 1UF).",
           "uprn": "Unique Property Reference Number (UPRN) for your address."
         }
       },
@@ -23894,9 +23896,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "postcode": "Postcode",
           "uprn": "UPRN"
         },
         "data_description": {
+          "postcode": "Your property postcode (e.g. NE46 1UF).",
           "uprn": "Unique Property Reference Number (UPRN) for your address."
         }
       },
