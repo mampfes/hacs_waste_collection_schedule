@@ -84,7 +84,7 @@ class Source:
             try:
                 coll_day = parser.parse(collection_entry["firstDate"]["date"]).date()
             except (KeyError, TypeError):
-                # Záchyt KeyError pre chýbajúce kľúče a TypeError pre null/None hodnoty
+                # KeyError for missing keys, TypeError for null/None firstDate
                 continue
             entries.append(
                 Collection(
