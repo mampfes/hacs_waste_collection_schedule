@@ -4297,6 +4297,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "boston_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/boston_gov_uk.md",
+    "howto": {
+      "en": "Enter your postcode and property name or number as they appear on the Boston Borough Council website: https://www.boston.gov.uk/article/27449/Your-Waste-Collections"
+    },
+    "urls": {}
+  },
   "bracknell_forest_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bracknell_forest_gov_uk.md",
     "howto": {},

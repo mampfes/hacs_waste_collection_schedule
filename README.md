@@ -3031,6 +3031,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bolton Council](/doc/source/bolton_gov_uk.md) / bolton.gov.uk
 - [Borough Council of King's Lynn & West Norfolk](/doc/source/west_norfolk_gov_uk.md) / west-norfolk.gov.uk
 - [Borough of Broxbourne Council](/doc/source/broxbourne_gov_uk.md) / broxbourne.gov.uk
+- [Boston Borough Council](/doc/source/boston_gov_uk.md) / boston.gov.uk
 - [Bracknell Forest Council](/doc/source/bracknell_forest_gov_uk.md) / selfservice.mybfc.bracknell-forest.gov.uk
 - [Bradford Metropolitan District Council](/doc/source/bradford_gov_uk.md) / bradford.gov.uk
 - [Braintree District Council](/doc/source/braintree_gov_uk.md) / braintree.gov.uk
