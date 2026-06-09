@@ -14060,6 +14060,51 @@
           "house_number": "Il numero civico del tuo indirizzo a Milano (ad esempio, '91')."
         }
       },
+      "args_geovest_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address_name": "Nome Strada",
+          "authorization": "Token di autorizzazione (opzionale)",
+          "calendar_type_id": "Tipo di calendario",
+          "days": "Giorni da recuperare",
+          "device_id": "ID dispositivo (opzionale)",
+          "numbers": "Numero Civico",
+          "town_id": "Town Id"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address_name": "Nome della strada.",
+          "authorization": "Token Bearer opzionale. Usalo se il token predefinito smette di funzionare.",
+          "calendar_type_id": "1 per privati, 2 per aziende.",
+          "days": "Numero di giorni da recuperare. Il valore predefinito è 30.",
+          "device_id": "Identificatore dispositivo opzionale. Se omesso, viene generato un ID dispositivo casuale.",
+          "numbers": "Numero civico. Impostato su 1 per default."
+        }
+      },
+      "reconfigure_geovest_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address_name": "Nome Strada",
+          "authorization": "Token di autorizzazione (opzionale)",
+          "calendar_type_id": "Tipo di calendario",
+          "days": "Giorni da recuperare",
+          "device_id": "ID dispositivo (opzionale)",
+          "numbers": "Numero Civico",
+          "town_id": "Town Id"
+        },
+        "data_description": {
+          "address_name": "Nome della strada.",
+          "authorization": "Token Bearer opzionale. Usalo se il token predefinito smette di funzionare.",
+          "calendar_type_id": "1 per privati, 2 per aziende.",
+          "days": "Numero di giorni da recuperare. Il valore predefinito è 30.",
+          "device_id": "Identificatore dispositivo opzionale. Se omesso, viene generato un ID dispositivo casuale.",
+          "numbers": "Numero civico. Impostato su 1 per default."
+        }
+      },
       "args_apricaspa_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

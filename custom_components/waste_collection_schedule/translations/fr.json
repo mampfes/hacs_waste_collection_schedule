@@ -14099,6 +14099,51 @@
         },
         "data_description": {}
       },
+      "args_geovest_it": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address_name": "Nom de la rue",
+          "authorization": "Jeton d'autorisation (optionnel)",
+          "calendar_type_id": "Type de calendrier",
+          "days": "Jours à récupérer",
+          "device_id": "ID du dispositif (optionnel)",
+          "numbers": "Numéro de rue",
+          "town_id": "Town Id"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address_name": "Nom de la rue.",
+          "authorization": "Jeton Bearer optionnel. Utilisez-le si le jeton par défaut cesse de fonctionner.",
+          "calendar_type_id": "1 pour privé, 2 pour entreprise.",
+          "days": "Nombre de jours à récupérer. La valeur par défaut est 30.",
+          "device_id": "Identifiant d'appareil optionnel. Si omis, un identifiant aléatoire est généré.",
+          "numbers": "Numéro civique. Par défaut 1."
+        }
+      },
+      "reconfigure_geovest_it": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address_name": "Nom de la rue",
+          "authorization": "Jeton d'autorisation (optionnel)",
+          "calendar_type_id": "Type de calendrier",
+          "days": "Jours à récupérer",
+          "device_id": "ID du dispositif (optionnel)",
+          "numbers": "Numéro de rue",
+          "town_id": "Town Id"
+        },
+        "data_description": {
+          "address_name": "Nom de la rue.",
+          "authorization": "Jeton Bearer optionnel. Utilisez-le si le jeton par défaut cesse de fonctionner.",
+          "calendar_type_id": "1 pour privé, 2 pour entreprise.",
+          "days": "Nombre de jours à récupérer. La valeur par défaut est 30.",
+          "device_id": "Identifiant d'appareil optionnel. Si omis, un identifiant aléatoire est généré.",
+          "numbers": "Numéro civique. Par défaut 1."
+        }
+      },
       "args_apricaspa_it": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

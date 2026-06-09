@@ -14228,6 +14228,51 @@
         },
         "data_description": {}
       },
+      "args_geovest_it": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address_name": "Straßenname",
+          "authorization": "Autorisierungstoken (optional)",
+          "calendar_type_id": "Kalendertyp",
+          "days": "Tage zum Abrufen",
+          "device_id": "Geräte-ID (optional)",
+          "numbers": "Hausnummer",
+          "town_id": "Town Id"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address_name": "Straßenname.",
+          "authorization": "Optionales Bearer-Token. Verwenden Sie dies, wenn das Standard-Token nicht mehr funktioniert.",
+          "calendar_type_id": "1 für Privathaushalte, 2 für Unternehmen.",
+          "days": "Anzahl der Tage, die abgerufen werden sollen. Standard ist 30.",
+          "device_id": "Optionale Gerätekennung. Wenn sie fehlt, wird eine zufällige Geräte-ID generiert.",
+          "numbers": "Hausnummer. Standardmäßig 1."
+        }
+      },
+      "reconfigure_geovest_it": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address_name": "Straßenname",
+          "authorization": "Autorisierungstoken (optional)",
+          "calendar_type_id": "Kalendertyp",
+          "days": "Tage zum Abrufen",
+          "device_id": "Geräte-ID (optional)",
+          "numbers": "Hausnummer",
+          "town_id": "Town Id"
+        },
+        "data_description": {
+          "address_name": "Straßenname.",
+          "authorization": "Optionales Bearer-Token. Verwenden Sie dies, wenn das Standard-Token nicht mehr funktioniert.",
+          "calendar_type_id": "1 für Privathaushalte, 2 für Unternehmen.",
+          "days": "Anzahl der Tage, die abgerufen werden sollen. Standard ist 30.",
+          "device_id": "Optionale Gerätekennung. Wenn sie fehlt, wird eine zufällige Geräte-ID generiert.",
+          "numbers": "Hausnummer. Standardmäßig 1."
+        }
+      },
       "args_apricaspa_it": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

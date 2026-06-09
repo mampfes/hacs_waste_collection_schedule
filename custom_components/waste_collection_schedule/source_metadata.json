@@ -3053,6 +3053,14 @@
     },
     "urls": {}
   },
+  "geovest_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geovest_it.md",
+    "howto": {
+      "en": "Choose your town from the Geovest source menu, then search your street name. `numbers` is optional and defaults to 1 when not provided. A random `device_id` is generated automatically; enter `authorization` only if the default token stops working.",
+      "it": "Scegli il tuo comune dal menu di Geovest, poi cerca il nome della strada. `numbers` è opzionale e assume il valore 1 se non fornito. Un `device_id` casuale viene generato automaticamente; inserisci `authorization` solo se il token predefinito smette di funzionare."
+    },
+    "urls": {}
+  },
   "apricaspa_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apricaspa_it.md",
     "howto": {

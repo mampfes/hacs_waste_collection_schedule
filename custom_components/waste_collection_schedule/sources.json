@@ -14081,6 +14081,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Anzola dell'Emilia",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "7"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Aprica S.p.A.",
       "module": "apricaspa_it",
       "default_params": {},
@@ -14097,6 +14105,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Argelato",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "12"
+      },
+      "id": "geovest_it"
     },
     {
       "title": "ARO Figulinas - DLR Ambiente - Ciclat",
@@ -14355,6 +14371,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Calderara di Reno",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "8"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Calenzano",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -14483,6 +14507,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castel Maggiore",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "10"
+      },
+      "id": "geovest_it"
     },
     {
       "title": "Castel Volturno - WM Magenta Srl",
@@ -14761,6 +14793,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Crevalcore",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "2"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Cupello - Pulchra Ambiente Srl",
       "module": "junker_app",
       "default_params": {},
@@ -14863,6 +14903,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Finale Emilia",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "1"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Firenze",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -14957,6 +15005,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Geovest",
+      "module": "geovest_it",
+      "default_params": {},
+      "id": "geovest_it"
     },
     {
       "title": "GESENU  Gestione Servizi Nettezza Urbana S.P.A",
@@ -15521,6 +15575,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Nonantola",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "6"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Novara",
       "module": "junker_app",
       "default_params": {},
@@ -15733,6 +15795,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Ravarino",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "9"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Ravello",
       "module": "junker_app",
       "default_params": {},
@@ -15837,6 +15907,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Sala Bolognese",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "4"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "Sala Consilina - SuperEco SRL",
       "module": "junker_app",
       "default_params": {},
@@ -15883,6 +15961,14 @@
       "id": "junker_app"
     },
     {
+      "title": "San Giovanni in Persiceto",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "5"
+      },
+      "id": "geovest_it"
+    },
+    {
       "title": "San Marcello Piteglio",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -15895,6 +15981,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Sant'Agata Bolognese",
+      "module": "geovest_it",
+      "default_params": {
+        "town_id": "13"
+      },
+      "id": "geovest_it"
     },
     {
       "title": "Santa Lucia del Mela",

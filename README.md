@@ -2092,9 +2092,11 @@ If you already have enough information for your municipality/region, you are ver
 - [AnconAmbiente](/doc/source/junker_app.md) / junker.app
 - [Andora](/doc/source/junker_app.md) / junker.app
 - [Anguillara Sabazia - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
+- [Anzola dell'Emilia](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Aprica S.p.A.](/doc/source/apricaspa_it.md) / apricaspa.it
 - [Aprilia - Progetto Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Ardea - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Argelato](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [ARO Figulinas - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Arosio - Service 24 Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Artena](/doc/source/junker_app.md) / junker.app
@@ -2136,6 +2138,7 @@ If you already have enough information for your municipality/region, you are ver
 - [C.C.S. - Consorzio Campale Stabile](/doc/source/junker_app.md) / junker.app
 - [Cabras](/doc/source/junker_app.md) / junker.app
 - [Calatafimi Segesta](/doc/source/junker_app.md) / junker.app
+- [Calderara di Reno](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Calenzano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Calvi Risorta - Isola Verde Ecologia](/doc/source/junker_app.md) / junker.app
 - [Camerino](/doc/source/junker_app.md) / junker.app
@@ -2156,6 +2159,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Casale Marittimo](/doc/source/junker_app.md) / junker.app
 - [Casavatore - Ecology Srl](/doc/source/junker_app.md) / junker.app
 - [Castel Gandolfo - Coop 134](/doc/source/junker_app.md) / junker.app
+- [Castel Maggiore](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Castel Volturno - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
 - [Castelbuono - Castelbuono Ambiente srl](/doc/source/junker_app.md) / junker.app
 - [Castelfiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -2200,6 +2204,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
 - [Cosvega](/doc/source/junker_app.md) / junker.app
 - [Covar14](/doc/source/junker_app.md) / junker.app
+- [Crevalcore](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Cupello - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Curti - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
 - [Decimoputzu - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
@@ -2216,6 +2221,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Fiemme Servizi](/doc/source/junker_app.md) / junker.app
 - [Fiesole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Figline e Incisa Valdarno](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Finale Emilia](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Firenze](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Fiuggi](/doc/source/junker_app.md) / junker.app
 - [Floridia - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
@@ -2231,6 +2237,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Garfagnana Ecologia Ambiente - GEA](/doc/source/junker_app.md) / junker.app
 - [Gavorrano](/doc/source/junker_app.md) / junker.app
 - [GEA Srl](/doc/source/junker_app.md) / junker.app
+- [Geovest](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [GESENU  Gestione Servizi Nettezza Urbana S.P.A](/doc/source/junker_app.md) / junker.app
 - [Gestione Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Giarre - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
@@ -2320,6 +2327,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Muraca Srl](/doc/source/junker_app.md) / junker.app
 - [NET SpA - Udine](/doc/source/junker_app.md) / junker.app
 - [Nicosia - Leukosia](/doc/source/junker_app.md) / junker.app
+- [Nonantola](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Novara](/doc/source/junker_app.md) / junker.app
 - [Noventa di Piave](/doc/source/junker_app.md) / junker.app
 - [Nuoro - È-Comune srl](/doc/source/junker_app.md) / junker.app
@@ -2353,6 +2361,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Pulsano - Al.ma. Ecologia Srl](/doc/source/junker_app.md) / junker.app
 - [Quarrata](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Quarto - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Ravarino](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Ravello](/doc/source/junker_app.md) / junker.app
 - [Rescaldina](/doc/source/junker_app.md) / junker.app
 - [Rho - A.Se.R SpA](/doc/source/junker_app.md) / junker.app
@@ -2370,6 +2379,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Rosora](/doc/source/junker_app.md) / junker.app
 - [Rovellasca](/doc/source/junker_app.md) / junker.app
 - [Sabaudia - Del Prete Srl](/doc/source/junker_app.md) / junker.app
+- [Sala Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Sala Consilina - SuperEco SRL](/doc/source/junker_app.md) / junker.app
 - [Salerno - Salerno Pulita Spa](/doc/source/junker_app.md) / junker.app
 - [Saluggia](/doc/source/junker_app.md) / junker.app
@@ -2377,8 +2387,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Sammichele di Bari e Casamassima - Meridionale Servizi Ambientali srl](/doc/source/junker_app.md) / junker.app
 - [San Casciano in Val di Pesa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [San Cipriano Po](/doc/source/junker_app.md) / junker.app
+- [San Giovanni in Persiceto](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [San Marcello Piteglio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sanremo - Amaie Energia e Servizi Srl](/doc/source/junker_app.md) / junker.app
+- [Sant'Agata Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Santa Lucia del Mela](/doc/source/junker_app.md) / junker.app
 - [Santa Maria a Vico](/doc/source/junker_app.md) / junker.app
 - [Santa Maria Capua Vetere - DHI](/doc/source/junker_app.md) / junker.app

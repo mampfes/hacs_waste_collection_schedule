@@ -14520,6 +14520,51 @@
           "house_number": "The house number of your address in Milan (e.g., '91')."
         }
       },
+      "args_geovest_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_name": "Street Name",
+          "authorization": "Authorization token (optional)",
+          "calendar_type_id": "Calendar Type",
+          "days": "Days to fetch",
+          "device_id": "Device ID (optional)",
+          "numbers": "Street Number",
+          "town_id": "Town Id"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address_name": "Street name or address.",
+          "authorization": "Optional Bearer token. Use this if the default token stops working.",
+          "calendar_type_id": "1 for private addresses, 2 for businesses.",
+          "days": "Number of days ahead to fetch. Defaults to 30.",
+          "device_id": "Optional device identifier. If omitted, a random device id is generated.",
+          "numbers": "Street number or house number. Defaults to 1."
+        }
+      },
+      "reconfigure_geovest_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address_name": "Street Name",
+          "authorization": "Authorization token (optional)",
+          "calendar_type_id": "Calendar Type",
+          "days": "Days to fetch",
+          "device_id": "Device ID (optional)",
+          "numbers": "Street Number",
+          "town_id": "Town Id"
+        },
+        "data_description": {
+          "address_name": "Street name or address.",
+          "authorization": "Optional Bearer token. Use this if the default token stops working.",
+          "calendar_type_id": "1 for private addresses, 2 for businesses.",
+          "days": "Number of days ahead to fetch. Defaults to 30.",
+          "device_id": "Optional device identifier. If omitted, a random device id is generated.",
+          "numbers": "Street number or house number. Defaults to 1."
+        }
+      },
       "args_apricaspa_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
