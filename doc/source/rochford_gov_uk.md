@@ -1,6 +1,9 @@
 # Rochford District Council
 
-Support for waste collection schedules provided by [Rochford District Council](https://www.rochford.gov.uk), UK.
+Support for waste collection schedules provided by [Rochford District Council](https://www.rochford.gov.uk), Essex, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new South East Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 
