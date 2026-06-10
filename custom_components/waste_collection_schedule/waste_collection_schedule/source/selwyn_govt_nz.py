@@ -65,6 +65,9 @@ ICON_MAP = {
 # Number of weeks of collections to generate.
 WEEKS_AHEAD = 8
 
+# Cap the disambiguation suggestions: a prefix match can return many properties.
+MAX_SUGGESTIONS = 10
+
 WEEKDAYS = {
     "monday": 0,
     "tuesday": 1,
@@ -132,7 +135,9 @@ class Source:
         # is ambiguous, ask the user to disambiguate with the matching addresses.
         matched = sorted({f["attributes"]["Address_full"] for f in features})
         if len(matched) > 1:
-            raise SourceArgAmbiguousWithSuggestions("address", self._address, matched)
+            raise SourceArgAmbiguousWithSuggestions(
+                "address", self._address, matched[:MAX_SUGGESTIONS]
+            )
 
         target = matched[0]
         features = [
