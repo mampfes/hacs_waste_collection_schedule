@@ -119,6 +119,7 @@ class Source:
             params={"key": self._key, "modus": MODUS_KEY, "waction": waction},
             data=args,
             headers=HEADERS,
+            timeout=30,
         )
         r.raise_for_status()
         p = HiddenInputParser()
