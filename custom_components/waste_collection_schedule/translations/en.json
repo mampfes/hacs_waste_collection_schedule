@@ -12820,6 +12820,29 @@
         },
         "data_description": {}
       },
+      "args_gemuenden_wohra_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "tour": "Collection tour"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "tour": "Tour 1: Schiffelbach, Ellnrode, Grüsen, Sehlen, Herbelhausen, Lehnhausen and areas west of the former railway line. Tour 2: Rest of Gemünden town centre."
+        }
+      },
+      "reconfigure_gemuenden_wohra_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "tour": "Collection tour"
+        },
+        "data_description": {
+          "tour": "Tour 1: Schiffelbach, Ellnrode, Grüsen, Sehlen, Herbelhausen, Lehnhausen and areas west of the former railway line. Tour 2: Rest of Gemünden town centre."
+        }
+      },
       "args_hilchenbach_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

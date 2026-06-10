@@ -1892,6 +1892,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Frankenberg (Eder)](/doc/source/frankenberg_de.md) / frankenberg.de
 - [Stadt Frankenthal](/doc/source/abfallnavi_de.md) / frankenthal.de
 - [Stadt Fulda](/doc/source/awido_de.md) / fulda.de
+- [Stadt Gemünden (Wohra)](/doc/source/gemuenden_wohra_de.md) / gemuenden-wohra.de
 - [Stadt Haltern am See](/doc/source/muellmax_de.md) / haltern-am-see.de
 - [Stadt Hamm](/doc/source/muellmax_de.md) / hamm.de
 - [Stadt Hanau](/doc/source/muellmax_de.md) / hanau.de

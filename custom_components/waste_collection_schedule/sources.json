@@ -12726,6 +12726,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Stadt Gem\u00fcnden (Wohra)",
+      "module": "gemuenden_wohra_de",
+      "default_params": {},
+      "id": "gemuenden_wohra_de"
+    },
+    {
       "title": "Stadt Haltern am See",
       "module": "muellmax_de",
       "default_params": {

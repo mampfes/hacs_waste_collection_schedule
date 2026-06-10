@@ -12552,6 +12552,29 @@
         },
         "data_description": {}
       },
+      "args_gemuenden_wohra_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "tour": "Abfuhrtour"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "tour": "Tour 1: Schiffelbach, Ellnrode, Grüsen, Sehlen, Herbelhausen, Lehnhausen und alle Grundstücke westlich der ehemaligen Bahntrasse. Tour 2: Rest der Kernstadt Gemünden."
+        }
+      },
+      "reconfigure_gemuenden_wohra_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "tour": "Abfuhrtour"
+        },
+        "data_description": {
+          "tour": "Tour 1: Schiffelbach, Ellnrode, Grüsen, Sehlen, Herbelhausen, Lehnhausen und alle Grundstücke westlich der ehemaligen Bahntrasse. Tour 2: Rest der Kernstadt Gemünden."
+        }
+      },
       "args_hilchenbach_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
