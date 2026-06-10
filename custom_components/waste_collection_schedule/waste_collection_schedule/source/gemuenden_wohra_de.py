@@ -99,7 +99,7 @@ class Source:
             pdf_response = session.get(pdf_url, timeout=30)
             pdf_response.raise_for_status()
             reader = PdfReader(BytesIO(pdf_response.content))
-            layout_text = reader.pages[0].extract_text(extraction_mode="layout")
+            layout_text = reader.pages[0].extract_text(extraction_mode="layout") or ""
             entries.extend(self._parse_layout(layout_text, year))
 
         return entries
