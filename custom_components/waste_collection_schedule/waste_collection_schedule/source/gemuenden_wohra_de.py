@@ -1,4 +1,5 @@
 import re
+import urllib.parse
 from datetime import date
 from io import BytesIO
 
@@ -18,8 +19,7 @@ _SCHEDULE_URL = (
 )
 _PDF_YEAR_RE = re.compile(r"Abfallkalender[_-]?(\d{4})\.pdf", re.IGNORECASE)
 _WEEKDAY_RE = re.compile(r"(\d{2})\s+(Mo|Di|Mi|Do|Fr|Sa|So)")
-_COLLECTION_RE = re.compile(r"([BRGP])\s+([12])")
-_BOTH_TOURS_RE = re.compile(r"[BRGP]\s+1/2")
+_COLLECTION_RE = re.compile(r"([BRGP])\s+(1/2|[12])")
 _AR_RE = re.compile(r"\bAR\b")
 _SO_RE = re.compile(r"\bSO\b")
 
@@ -34,7 +34,7 @@ ICON_MAP = {
     "Bioabfall": Icons.ORGANIC,
     "Restmüll": Icons.GENERAL_WASTE,
     "Altpapier": Icons.PAPER,
-    "Gelbe Tonne": Icons.RECYCLING,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
     "Altreifensammlung": Icons.GENERAL_WASTE,
     "Sonderabfall": Icons.HAZARDOUS,
 }
@@ -92,7 +92,7 @@ class Source:
             if m:
                 year = int(m.group(1))
                 if year >= current_year:
-                    pdf_links[year] = href
+                    pdf_links[year] = urllib.parse.urljoin(_SCHEDULE_URL, href)
 
         entries: list[Collection] = []
         for year, pdf_url in sorted(pdf_links.items()):
@@ -155,7 +155,7 @@ class Source:
             ):
                 if col_start >= len(line):
                     continue
-                cell = line[col_start : min(col_end, len(line))]
+                cell = line[col_start:col_end]
                 month = month_idx + 1
 
                 cell_m = _WEEKDAY_RE.search(cell)
@@ -167,22 +167,17 @@ class Source:
                 except ValueError:
                     continue
 
-                # "R 1/2" means both tours collect Restmüll on this day
-                if _BOTH_TOURS_RE.search(cell):
-                    entries.append(
-                        Collection(date=d, t="Restmüll", icon=ICON_MAP.get("Restmüll"))
-                    )
-                else:
-                    for cm in _COLLECTION_RE.finditer(cell):
-                        if int(cm.group(2)) == self._tour:
-                            waste_type = _CODE_MAP.get(cm.group(1), cm.group(1))
-                            entries.append(
-                                Collection(
-                                    date=d,
-                                    t=waste_type,
-                                    icon=ICON_MAP.get(waste_type),
-                                )
+                for cm in _COLLECTION_RE.finditer(cell):
+                    tour_group = cm.group(2)
+                    if tour_group == "1/2" or int(tour_group) == self._tour:
+                        waste_type = _CODE_MAP.get(cm.group(1), cm.group(1))
+                        entries.append(
+                            Collection(
+                                date=d,
+                                t=waste_type,
+                                icon=ICON_MAP.get(waste_type),
                             )
+                        )
 
                 # AR and SO events are not tour-specific
                 if _AR_RE.search(cell):
