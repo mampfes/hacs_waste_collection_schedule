@@ -2708,6 +2708,11 @@
     "howto": {},
     "urls": {}
   },
+  "gemuenden_wohra_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gemuenden_wohra_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "hilchenbach_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hilchenbach_de.md",
     "howto": {},
