@@ -15,9 +15,9 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **address**
-*(string) (optional)*
+*(string) (required)*
 
-Street address selected from the county suggestions, for example: 610 Gifford Ln, Monkton, MD 21111
+Full street address selected from the county suggestions, for example: 610 Gifford Ln, Monkton, MD 21111
 
 ## How to find your arguments
 
@@ -33,14 +33,14 @@ waste_collection_schedule:
   sources:
     - name: baltimore_county_md_us
       args:
-        address: "610 Gifford Ln"
+        address: "610 Gifford Ln, Monkton, MD 21111"
 ```
 
 ## Bin types returned
 
 | Provider description | Returned type | Icon |
 |---------------------|--------------|------|
-| Trash | Trash | Icons.GENERAL_WASTE |
-| Recycling | Recycling | Icons.RECYCLING |
-| Yard Materials | Yard Materials | Icons.GARDEN |
-| Bulk Pickup | Bulk Pickup | Icons.BULKY |
+| Trash | Trash | `Icons.GENERAL_WASTE` |
+| Recycling | Recycling | `Icons.RECYCLING` |
+| Yard Materials | Yard Materials | `Icons.GARDEN` |
+| Bulk Pickup | Bulk Pickup | `Icons.BULKY` |
