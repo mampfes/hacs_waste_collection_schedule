@@ -159,7 +159,7 @@ class Source:
 
         today = date.today()
         entries: list[Collection] = []
-        for offset in range((WEEKS_AHEAD * 7) + 1):
+        for offset in range(WEEKS_AHEAD * 7):
             day = today + timedelta(days=offset)
             for label, info in bins.items():
                 if day.weekday() != info["weekday"]:

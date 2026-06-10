@@ -9,9 +9,9 @@ The source queries the council's public ArcGIS property service and returns the 
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: selwyn_govt_nz
-      args:
-        address: ADDRESS
+        - name: selwyn_govt_nz
+          args:
+            address: ADDRESS
 ```
 
 ### Configuration Variables
@@ -25,9 +25,9 @@ Your street address within the Selwyn District, including the town, exactly as i
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: selwyn_govt_nz
-      args:
-        address: 30 Tennyson Street Rolleston
+        - name: selwyn_govt_nz
+          args:
+            address: 30 Tennyson Street Rolleston
 ```
 
 ## How to get the source argument
