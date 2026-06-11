@@ -336,6 +336,20 @@ def test_source_has_necessary_parameters() -> None:
                 "PARAM_DESCRIPTIONS",
             )
 
+        if hasattr(module, "SOURCE_CODEOWNERS"):
+            owners = module.SOURCE_CODEOWNERS
+            assert isinstance(
+                owners, list
+            ), f"SOURCE_CODEOWNERS must be a list in {source}, got {type(owners).__name__}"
+            for i, handle in enumerate(owners):
+                assert (
+                    isinstance(handle, str) and handle.strip()
+                ), f"SOURCE_CODEOWNERS[{i}] in {source} must be a non-empty string"
+                assert handle.strip().startswith("@"), (
+                    f"SOURCE_CODEOWNERS[{i}] in {source} must start with '@' "
+                    f"(got {handle!r}). Use the canonical @handle format."
+                )
+
 
 def test_ics_source_has_necessary_parameters():
     sources = _get_ics_sources()
@@ -381,6 +395,20 @@ def test_ics_source_has_necessary_parameters():
             _test_source_has_necessary_parameters_extra_info(
                 data["extra_info"], f"ICS:{source}", init_params_names
             )
+
+        if "codeowners" in data:
+            ics_owners = data["codeowners"]
+            assert isinstance(
+                ics_owners, list
+            ), f"codeowners must be a list in ICS yaml {source}.yaml, got {type(ics_owners).__name__}"
+            for i, handle in enumerate(ics_owners):
+                assert (
+                    isinstance(handle, str) and handle.strip()
+                ), f"codeowners[{i}] in ICS yaml {source}.yaml must be a non-empty string"
+                assert handle.strip().startswith("@"), (
+                    f"codeowners[{i}] in ICS yaml {source}.yaml must start with '@' "
+                    f"(got {handle!r}). Use the canonical @handle format."
+                )
 
 
 # Sources permitted to use raw `mdi:*` string literals in their ICON_MAP.

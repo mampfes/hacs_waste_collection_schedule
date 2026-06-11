@@ -118,6 +118,32 @@ def extract_urls_from_text(text: str) -> Tuple[str, dict[str, str]]:
     return cleaned_text.strip(), urls
 
 
+def _normalize_owners(owners) -> list:
+    """Normalise a SOURCE_CODEOWNERS / codeowners value into a sorted list of @handles.
+
+    Accepts:
+    - None / falsy  -> []
+    - str            -> treated as a single handle (not iterated character-by-character)
+    - list           -> each element that is a non-empty str is kept; others are
+                       silently dropped (guards against accidentally mixed-type lists)
+
+    Every handle is normalised to start with '@'.
+    """
+    if not owners:
+        return []
+    if isinstance(owners, str):
+        owners = [owners]
+    result: list[str] = []
+    for entry in owners:
+        if not isinstance(entry, str) or not entry.strip():
+            continue
+        handle = entry.strip()
+        if not handle.startswith("@"):
+            handle = f"@{handle}"
+        result.append(handle)
+    return sorted(set(result))
+
+
 class SourceInfo:
     def __init__(
         self,
@@ -192,7 +218,7 @@ class SourceInfo:
         )
 
         self._custom_howto = sort_param_dict(custom_howto)
-        self._source_owners = sorted(set(source_owners or []))
+        self._source_owners = _normalize_owners(source_owners)
 
         for k, v in custom_param_translation.items():
             if k not in LANGUAGES:
@@ -280,6 +306,8 @@ class IcsSourceInfo(SourceInfo):
         limit_params: list[str],
         extra_info_default_params: dict[str, Any] = {},
         custom_howto: dict[str, str] = {},
+        source_owners: list | None = None,
+        ics_stem: str | None = None,
     ):
         _, ics_sources = get_source_by_file("ics")
         ics_source = ics_sources[0]
@@ -302,7 +330,16 @@ class IcsSourceInfo(SourceInfo):
             custom_param_translation=translations,
             custom_param_description=descriptions,
             custom_howto=custom_howto,
+            source_owners=source_owners,
         )
+        # ics_stem: the YAML file stem (e.g. "ab_peine_de") used as the key in
+        # source_owners.json so that the notify workflow can match what a bug reporter
+        # types in the "Source Name" field.
+        self._ics_stem = ics_stem
+
+    @property
+    def ics_stem(self) -> str | None:
+        return self._ics_stem
 
 
 class Section:
@@ -334,6 +371,7 @@ class IcsSourceData(TypedDict):
     default_params: NotRequired[dict[str, Any]]
     test_cases: dict[str, dict[str, Any]]
     extra_info: NotRequired[list[ExtraInfoDict]]
+    codeowners: NotRequired[list]
 
 
 def split_camel_and_snake_case(s: str) -> list[str]:
@@ -510,6 +548,7 @@ def browse_ics_yaml() -> list[SourceInfo]:
 
             country = data.get("country", f.stem.split("_")[-1])
             # extract country code
+            ics_owners = _normalize_owners(data.get("codeowners", []))
             sources.append(
                 IcsSourceInfo(
                     filename=f"/doc/ics/{filename.name}",
@@ -519,6 +558,8 @@ def browse_ics_yaml() -> list[SourceInfo]:
                     limit_params=[],
                     extra_info_default_params=data.get("default_params", {}),
                     custom_howto=howto,
+                    source_owners=ics_owners,
+                    ics_stem=f.stem,
                 )
             )
             if "extra_info" in data:
@@ -532,6 +573,8 @@ def browse_ics_yaml() -> list[SourceInfo]:
                             limit_params=[],
                             extra_info_default_params=data.get("default_params", {}),
                             custom_howto=howto,
+                            source_owners=ics_owners,
+                            ics_stem=f.stem,
                         )
                     )
 
@@ -655,9 +698,16 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
                     "urls": e.url_placeholders,
                 }
 
-            source_owners_by_module.setdefault(module, [])
-            source_owners_by_module[module] = sorted(
-                set(source_owners_by_module[module]) | set(e.source_owners)
+            # ICS providers are keyed by their YAML file stem (e.g. "ab_peine_de")
+            # so the notify workflow can match what a bug reporter types in the
+            # "Source Name" field (module == "ics" for all ICS providers).
+            if isinstance(e, IcsSourceInfo) and e.ics_stem is not None:
+                owner_key = e.ics_stem
+            else:
+                owner_key = module
+            source_owners_by_module.setdefault(owner_key, [])
+            source_owners_by_module[owner_key] = sorted(
+                set(source_owners_by_module[owner_key]) | set(e.source_owners)
             )
 
     with open(

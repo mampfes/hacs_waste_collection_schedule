@@ -112,6 +112,7 @@ Optional:
 - `TITLE_LANG` / `EXTRA_INFO_LANG` — non-English titles.
 - `HOW_TO_GET_ARGUMENTS_DESCRIPTION` — per-language guidance shown in the config wizard.
 - `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` — per-language argument labels and descriptions. Currently still required on master (read by `update_docu_links.py` to generate `translations/en.json`). A future i18n YAML migration will replace these but is not yet merged — keep them.
+- `SOURCE_CODEOWNERS` — `list[str]` of GitHub handles (e.g. `["@your-handle"]`) who maintain this source. Each entry must start with `@`. `update_docu_links.py` writes these into `.github/source_owners.json`; a GitHub Action pings+assigns the listed owners when a bug report names this source. **Strongly encouraged for all new sources.** ICS YAML providers use the equivalent `codeowners:` key in their `.yaml` file.
 
 ### CI-enforced structural rules
 

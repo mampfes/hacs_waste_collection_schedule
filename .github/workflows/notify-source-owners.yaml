@@ -71,9 +71,9 @@ jobs:
               body: commentBody,
             });
 
-            const assignees = owners
-              .filter((owner) => owner.startsWith('@'))
-              .map((owner) => owner.slice(1));
+            // All owners are stored as canonical @handles (normalized by update_docu_links.py).
+            // Ping uses the full @handle; assign strips the @ for the GitHub API.
+            const assignees = owners.map((owner) => owner.slice(1));
 
             if (assignees.length > 0) {
               try {
