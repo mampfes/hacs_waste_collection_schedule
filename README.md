@@ -971,6 +971,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Chalampé](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Châteauroux Métropole](/doc/source/publidata_fr.md) / chateauroux-metropole.fr
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Communauté de Communes Pévèle Carembault](/doc/source/publidata_fr.md) / pevelecarembault.fr
 - [Dietwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Dreux Agglomération](/doc/source/publidata_fr.md) / dreux-agglomeration.fr
 - [Dunkerque Grand Littoral](/doc/source/publidata_fr.md) / mesinfosdechets.cud.fr

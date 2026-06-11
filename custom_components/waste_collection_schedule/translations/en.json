@@ -24230,12 +24230,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street": "Street",
-          "uprn": "UPRN"
+          "street": "Street / Postcode",
+          "uprn": "UPRN (optional)"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "street": "Your street name or postcode (required). Used to search for your address.",
+          "uprn": "Your Unique Property Reference Number (optional). When provided alongside street/postcode, it picks the exact matching property from the search results. Leave blank if you are unsure."
         }
       },
       "reconfigure_preston_gov_uk": {
@@ -24243,11 +24244,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street": "Street",
-          "uprn": "UPRN"
+          "street": "Street / Postcode",
+          "uprn": "UPRN (optional)"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "street": "Your street name or postcode (required). Used to search for your address.",
+          "uprn": "Your Unique Property Reference Number (optional). When provided alongside street/postcode, it picks the exact matching property from the search results. Leave blank if you are unsure."
         }
       },
       "args_reading_gov_uk": {

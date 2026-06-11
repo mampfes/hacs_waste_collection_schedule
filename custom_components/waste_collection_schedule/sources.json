@@ -5777,6 +5777,14 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Communaut\u00e9 de Communes P\u00e9v\u00e8le Carembault",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1141
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Dietwiller",
       "module": "mulhouse_alsace_fr",
       "default_params": {
