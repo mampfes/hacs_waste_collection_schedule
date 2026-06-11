@@ -3401,6 +3401,13 @@
     "howto": {},
     "urls": {}
   },
+  "selwyn_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/selwyn_govt_nz.md",
+    "howto": {
+      "en": "Enter your address exactly as it appears in the address search on Selwyn District Council's collection days and routes page, e.g. '30 Tennyson Street Rolleston'."
+    },
+    "urls": {}
+  },
   "taupodc_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/taupodc_govt_nz.md",
     "howto": {},

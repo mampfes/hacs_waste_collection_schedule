@@ -2596,6 +2596,7 @@ If you already have enough information for your municipality/region, you are ver
 - [New Plymouth District Council](/doc/source/npdc_govt_nz.md) / npdc.govt.nz
 - [Porirua City](/doc/source/poriruacity_govt_nz.md) / poriruacity.govt.nz
 - [Rotorua Lakes Council](/doc/source/rotorua_lakes_council_nz.md) / rotorualakescouncil.nz
+- [Selwyn District Council](/doc/source/selwyn_govt_nz.md) / selwyn.govt.nz
 - [Taupō District Council](/doc/source/taupodc_govt_nz.md) / taupodc.govt.nz
 - [Tauranga City Council](/doc/source/tauranga_govt_nz.md) / tauranga.govt.nz
 - [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
