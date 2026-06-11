@@ -12412,14 +12412,6 @@
       "id": "rsag_de"
     },
     {
-      "title": "RSAG Rhein-Sieg-Kreis",
-      "module": "muellmax_de",
-      "default_params": {
-        "service": "Rsa"
-      },
-      "id": "muellmax_de"
-    },
-    {
       "title": "R\u00f6dermark",
       "module": "ics",
       "default_params": {},
