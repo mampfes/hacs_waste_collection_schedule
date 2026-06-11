@@ -1,6 +1,6 @@
 # threeR
 
-Support for schedules provided by [threeR](https://threer1.delight-system.com), the garbage collection app platform used by many municipalities across Japan (e.g. Shinjuku City, Chiba City).
+Support for schedules provided by [threeR](https://threer.delight-system.co.jp/), the garbage collection platform used by many municipalities across Japan (e.g. Shinjuku City, Chiba City).
 
 ## Configuration via configuration.yaml
 
@@ -16,17 +16,20 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**municipality**  
+**municipality**
 *(string) (required)*
 
-Municipality name or ID from the threeR app, e.g. `Shinjuku City` or `shinjukuku`.
+Municipality name in english, lowercase. For example
 
-**area_name**  
+* `akirunoshi` for あきる野市
+* `shinjukuku` for 新宿区
+
+**area_name**
 *(string) (required)*
 
-Neighbourhood/chōme name from the app, e.g. `Aizumi-cho`.
+Neighbourhood/chōme name from the app, `Aizumi-cho`.
 
-**language_code**  
+**language_code**
 *(string) (required)*
 
 Language for municipality, area, and waste type labels (`en`, `ja`, or `ko`).
@@ -45,6 +48,6 @@ waste_collection_schedule:
 
 ## Setup via the Home Assistant UI
 
-During integration setup, enter your municipality and area name as shown in the threeR app. If a value is not recognised, the form will show matching options fetched from the live API (the same pattern used by other sources such as RSAG in Germany).
+During integration setup, enter your municipality and area name as shown in threeR. If a value is not recognised, the form will show matching options fetched from the live API (the same pattern used by other sources such as RSAG in Germany).
 
 If you leave **area name** empty on the first attempt, the setup form will offer a dropdown of all collection areas for the selected municipality.
