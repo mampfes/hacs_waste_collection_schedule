@@ -11,6 +11,7 @@ waste_collection_schedule:
       args:
         municipality: MUNICIPALITY
         area_name: AREA_NAME
+        language_code: LANGUAGE_CODE
 ```
 
 ### Configuration Variables
@@ -26,9 +27,9 @@ Municipality name or ID from the threeR app, e.g. `Shinjuku City` or `shinjukuku
 Neighbourhood/chōme name from the app, e.g. `Aizumi-cho`.
 
 **language_code**  
-*(string) (optional)*
+*(string) (required)*
 
-Language for waste type names (`en`, `ja`, or `ko`). Defaults to `en`.
+Language for municipality, area, and waste type labels (`en`, `ja`, or `ko`).
 
 ## Example
 

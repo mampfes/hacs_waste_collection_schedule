@@ -17,14 +17,18 @@ DESCRIPTION = (
 URL = "https://threer1.delight-system.com"
 COUNTRY = "jp"
 
+LANGUAGE_CODES = ["en", "ja", "ko"]
+
 TEST_CASES = {
     "Shinjuku Aizumi-cho (by municipality id)": {
         "municipality": "shinjukuku",
         "area_name": "Aizumi-cho",
+        "language_code": "en",
     },
     "Shinjuku Aizumi-cho (by municipality name)": {
         "municipality": "Shinjuku City",
         "area_name": "Aizumi-cho",
+        "language_code": "en",
     },
 }
 
@@ -73,7 +77,7 @@ PARAM_DESCRIPTIONS = {
 CONFIG_FLOW_TYPES = {
     "language_code": {
         "type": "SELECT",
-        "values": ["en", "ja", "ko"],
+        "values": LANGUAGE_CODES,
     },
 }
 
@@ -260,12 +264,24 @@ def _icon_for_trash_kind(name: str) -> str | None:
 class Source:
     def __init__(
         self,
+        language_code: str,
         municipality: str = "",
         area_name: str = "",
-        language_code: str = "en",
     ) -> None:
-        self._language_code = language_code.strip() or "en"
         self._session = requests.Session()
+
+        language_code = language_code.strip()
+        if not language_code:
+            raise SourceArgumentRequiredWithSuggestions(
+                "language_code",
+                "Select the language for municipality, area, and waste type labels.",
+                LANGUAGE_CODES,
+            )
+        if language_code not in LANGUAGE_CODES:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "language_code", language_code, LANGUAGE_CODES
+            )
+        self._language_code = language_code
 
         municipality = municipality.strip()
         area_name = area_name.strip()
