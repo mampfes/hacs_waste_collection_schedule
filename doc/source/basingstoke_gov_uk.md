@@ -1,6 +1,9 @@
 # Basingstoke and Deane Borough Council
 
-Support for schedules provided by [Basingstoke and Deane Borough Council](https://www.basingstoke.gov.uk/bincollections), UK.
+Support for schedules provided by [Basingstoke and Deane Borough Council](https://www.basingstoke.gov.uk/bincollections), Hampshire, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Hampshire, please continue to use the source for your current area as long as it's still working. New sources for the new North Hampshire Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 

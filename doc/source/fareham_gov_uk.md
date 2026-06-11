@@ -1,8 +1,13 @@
 # Fareham Council
 
+Support for schedules provided by Fareham Council, serving Fareham, Hampshire, UK.
+
 The fareham gov uk website does not return all future collection dates, only the next upcoming one. You can test different addresses at <https://www.fareham.gov.uk/internetlookups/search.aspx?list=DomesticBinCollections2025on>.
 
 Credit to Fareham Borough Council for all data fetched from their API.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Hampshire, please continue to use the source for your current area as long as it's still working. New sources for the new South East Hampshire Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 

@@ -1,6 +1,9 @@
 # Mole Valley District Council
 
-Support for schedules provided by [Mole Valley District Council](https://www.molevalley.gov.uk/waste-recycling/calendar-collection-day/), UK.
+Support for schedules provided by [Mole Valley District Council](https://www.molevalley.gov.uk/waste-recycling/calendar-collection-day/), serving Mole Valley, Surrey, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Surrey, please continue to use the source for your current area as long as it's still working. New sources for the new East Surrey Council are not expected to be live until at least April 2027, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 

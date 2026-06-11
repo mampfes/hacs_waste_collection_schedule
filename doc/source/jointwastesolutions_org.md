@@ -1,6 +1,9 @@
 # Joint Waste Solutions
 
-Manages Waste and Recycling services Woking Borough Council and Surrey Heath Borough Council.
+Manages Waste and Recycling services for Woking Borough Council and Surrey Heath Borough Council, in Surrey, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Surrey, please continue to use the source for your current area as long as it's still working. New sources for the new West Surrey Council are not expected to be live until at least April 2027, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 
