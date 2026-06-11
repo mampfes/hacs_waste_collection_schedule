@@ -1,7 +1,10 @@
 import csv
 import io
+import os
+import tempfile
 from datetime import date, timedelta
 
+import certifi
 import requests
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
@@ -77,6 +80,47 @@ WASTE_TYPES = [
 
 CSV_URL = "https://data.montpellier3m.fr/sites/default/files/ressources/MMM_MMM_ReferentielCollecte.csv"
 
+# data.montpellier3m.fr serves an incomplete TLS chain: it sends only the leaf
+# certificate (CN=*.montpellier3m.fr) and omits the GlobalSign intermediate that
+# issued it. certifi (used by requests) ships the GlobalSign Root CA - R3 but not
+# this intermediate, so the default verification fails with
+# "unable to get local issuer certificate".
+#
+# To verify securely without disabling certificate checking, we bundle the missing
+# intermediate below and combine it with certifi's trust store at fetch time.
+# This is the "GlobalSign GCC R3 DV TLS CA 2020" intermediate
+# (http://secure.globalsign.com/cacert/gsgccr3dvtlsca2020.crt), itself chained to
+# the GlobalSign Root CA - R3 that certifi already trusts.
+GLOBALSIGN_GCC_R3_DV_TLS_CA_2020 = """-----BEGIN CERTIFICATE-----
+MIIEsDCCA5igAwIBAgIQd70OB0LV2enQSdd00CpvmjANBgkqhkiG9w0BAQsFADBM
+MSAwHgYDVQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMzETMBEGA1UEChMKR2xv
+YmFsU2lnbjETMBEGA1UEAxMKR2xvYmFsU2lnbjAeFw0yMDA3MjgwMDAwMDBaFw0y
+OTAzMTgwMDAwMDBaMFMxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWdu
+IG52LXNhMSkwJwYDVQQDEyBHbG9iYWxTaWduIEdDQyBSMyBEViBUTFMgQ0EgMjAy
+MDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKxnlJV/de+OpwyvCXAJ
+IcxPCqkFPh1lttW2oljS3oUqPKq8qX6m7K0OVKaKG3GXi4CJ4fHVUgZYE6HRdjqj
+hhnuHY6EBCBegcUFgPG0scB12Wi8BHm9zKjWxo3Y2bwhO8Fvr8R42pW0eINc6OTb
+QXC0VWFCMVzpcqgz6X49KMZowAMFV6XqtItcG0cMS//9dOJs4oBlpuqX9INxMTGp
+6EASAF9cnlAGy/RXkVS9nOLCCa7pCYV+WgDKLTF+OK2Vxw3RUJ/p8009lQeUARv2
+UCcNNPCifYX1xIspvarkdjzLwzOdLahDdQbJON58zN4V+lMj0msg+c0KnywPIRp3
+BMkCAwEAAaOCAYUwggGBMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEF
+BQcDAQYIKwYBBQUHAwIwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNVHQ4EFgQUDZjA
+c3+rvb3ZR0tJrQpKDKw+x3wwHwYDVR0jBBgwFoAUj/BLf6guRSSuTVD6Y5qL3uLd
+G7wwewYIKwYBBQUHAQEEbzBtMC4GCCsGAQUFBzABhiJodHRwOi8vb2NzcDIuZ2xv
+YmFsc2lnbi5jb20vcm9vdHIzMDsGCCsGAQUFBzAChi9odHRwOi8vc2VjdXJlLmds
+b2JhbHNpZ24uY29tL2NhY2VydC9yb290LXIzLmNydDA2BgNVHR8ELzAtMCugKaAn
+hiVodHRwOi8vY3JsLmdsb2JhbHNpZ24uY29tL3Jvb3QtcjMuY3JsMEcGA1UdIARA
+MD4wPAYEVR0gADA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3dy5nbG9iYWxzaWdu
+LmNvbS9yZXBvc2l0b3J5LzANBgkqhkiG9w0BAQsFAAOCAQEAy8j/c550ea86oCkf
+r2W+ptTCYe6iVzvo7H0V1vUEADJOWelTv07Obf+YkEatdN1Jg09ctgSNv2h+LMTk
+KRZdAXmsE3N5ve+z1Oa9kuiu7284LjeS09zHJQB4DJJJkvtIbjL/ylMK1fbMHhAW
+i0O194TWvH3XWZGXZ6ByxTUIv1+kAIql/Mt29PmKraTT5jrzcVzQ5A9jw16yysuR
+XRrLODlkS1hyBjsfyTNZrmL1h117IFgntBA5SQNVl9ckedq5r4RSAU85jV8XK5UL
+REjRZt2I6M9Po9QL7guFLu4sPFJpwR1sPJvubS2THeo7SxYoNDtdyBHs7euaGcMa
+D/fayQ==
+-----END CERTIFICATE-----
+"""
+
 PARAM_TRANSLATIONS = {
     "en": {
         "street_name": "Street name",
@@ -102,6 +146,32 @@ PARAM_DESCRIPTIONS = {
         "commune": "Nom de la commune en majuscules, ex : 'MONTPELLIER', 'LATTES'. Utile si la rue existe dans plusieurs communes.",
     },
 }
+
+
+_ca_bundle_path: str | None = None
+
+
+def _ca_bundle() -> str:
+    """Return a CA bundle file combining certifi's roots with the missing intermediate.
+
+    The bundle is written once to a temp file and reused for the process lifetime,
+    so concurrent fetches do not each create a new file.
+    """
+    global _ca_bundle_path
+    if _ca_bundle_path is not None and os.path.exists(_ca_bundle_path):
+        return _ca_bundle_path
+
+    with open(certifi.where(), encoding="ascii") as f:
+        roots = f.read()
+
+    fd, path = tempfile.mkstemp(prefix="montpellier3m_ca_", suffix=".pem")
+    with os.fdopen(fd, "w", encoding="ascii") as f:
+        f.write(roots)
+        f.write("\n")
+        f.write(GLOBALSIGN_GCC_R3_DV_TLS_CA_2020)
+
+    _ca_bundle_path = path
+    return path
 
 
 def _normalize_street(name: str) -> str:
@@ -141,7 +211,7 @@ class Source:
         self._commune = commune.strip().upper() if commune else None
 
     def fetch(self) -> list[Collection]:
-        response = requests.get(CSV_URL, timeout=120)
+        response = requests.get(CSV_URL, timeout=120, verify=_ca_bundle())
         response.raise_for_status()
 
         content = response.content.decode("utf-8-sig")
