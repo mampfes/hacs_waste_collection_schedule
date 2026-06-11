@@ -101,7 +101,7 @@ class Source:
 
                     if (
                         period_unit
-                        and period_unit.lower() == "week"
+                        and period_unit.lower() in ("w", "week")
                         and item.get("nextServiceDays")
                     ):
                         # Project recurring weekly/fortnightly schedule from seed date
@@ -204,7 +204,7 @@ class Source:
                     icon = "mdi:leaf"
                     waste_type = "Yard Waste"
                 elif "BULK SERVICE" in item["waste_description"]:
-                    icon = "mdi:leaf"
+                    icon = "mdi:sofa"
                     waste_type = "Bulk Waste"
                 elif "RECYCLE" in item["waste_description"]:
                     icon = "mdi:recycle"
