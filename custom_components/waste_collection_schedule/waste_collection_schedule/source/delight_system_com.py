@@ -32,7 +32,7 @@ TEST_CASES = {
     },
 }
 
-# Path segment is lowercase "threeR" — required by the live API.
+# Path segment is lowercase "threeR" as required by the live API.
 API_BASE = "https://threer1.delight-system.com/threeR/api"
 # Sent on every request; bump when the upstream app version changes.
 APP_VERSION = "a2.10.1"
