@@ -6194,6 +6194,13 @@
     "howto": {},
     "urls": {}
   },
+  "baltimore_county_md_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/baltimore_county_md_us.md",
+    "howto": {
+      "en": "Go to the Baltimore County collection schedule page, type your house number and street in the Address field, and select the full address from the dropdown (for example: 610 Gifford Ln)."
+    },
+    "urls": {}
+  },
   "baton_rouge_la_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/baton_rouge_la_us.md",
     "howto": {},
