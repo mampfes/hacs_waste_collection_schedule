@@ -7,6 +7,19 @@ howto:
     - Click on `Kalender Bo/Download` and copy the URL below `Adresse zum Abonnieren`.
     - Use this link as the `url` parameter.
 country: at
+extra_info:
+  - title: Vorarlberg
+    url: https://abfallv.zerowaste.io
+    country: at
+  - title: Bregenz
+    url: https://abfallv.zerowaste.io
+    country: at
+  - title: Feldkirch
+    url: https://abfallv.zerowaste.io
+    country: at
+  - title: Hohenems
+    url: https://abfallv.zerowaste.io
+    country: at
 test_cases:
   Bürs:
     url: https://abfallv.zerowaste.io/ical/3338?area_filter=324%2C325%2C326%2C327%2C328%2C329%2C1449%2C1512%2C2046%2C2822&reminder

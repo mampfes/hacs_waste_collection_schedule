@@ -4,7 +4,7 @@ from typing import List
 
 import bs4
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Pireva"
@@ -19,8 +19,8 @@ COUNTRY = "se"
 SEARCH_URL = "https://www.pireva.se/api/search/collection-address"
 DATA_URL_FORMAT = "https://www.pireva.se/tomningsschema/{SLUG}/"
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Matavfall": "mdi:food-apple",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
 }
 MONTH_MAP = {
     "Januari": 1,

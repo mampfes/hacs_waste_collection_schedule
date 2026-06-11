@@ -2,7 +2,7 @@ import datetime
 import logging
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -28,14 +28,14 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "Lattine": "mdi:bottle-soda-classic",
-    "Plastica": "mdi:bottle-soda-classic",
-    "Indifferenziato": "mdi:trash-can",
-    "Vetro": "mdi:glass-fragile",
-    "Organico": "mdi:apple",
-    "Sfalci e potature": "mdi:leaf",
-    "Pannolini/Pannoloni": "mdi:baby-carriage",
-    "Carta e cartone": "mdi:newspaper",
+    "Lattine": Icons.GLASS,
+    "Plastica": Icons.GLASS,
+    "Indifferenziato": Icons.GENERAL_WASTE,
+    "Vetro": Icons.GLASS,
+    "Organico": Icons.BIO_KITCHEN,
+    "Sfalci e potature": Icons.GARDEN,
+    "Pannolini/Pannoloni": Icons.GENERAL_WASTE,
+    "Carta e cartone": Icons.PAPER,
 }
 
 _LOGGER = logging.getLogger(__name__)

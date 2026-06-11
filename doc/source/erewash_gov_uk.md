@@ -1,4 +1,4 @@
-# Hart District Council
+# Erewash Borough Council
 
 Support for schedules provided by [Erewash Borough Council](https://www.erewash.gov.uk/bins-and-recycling/when-my-bin-day).
 

@@ -2,7 +2,7 @@ import datetime
 import json
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
@@ -29,11 +29,11 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
 
 API_URL = "https://buergerportal.awl-neuss.de/api/v1/calendar"
 ICON_MAP = {
-    "grau": "mdi:trash-can",
-    "pink": "mdi:trash-can",
-    "braun": "mdi:leaf",
-    "blau": "mdi:package-variant",
-    "gelb": "mdi:recycle",
+    "grau": Icons.GENERAL_WASTE,
+    "pink": Icons.GENERAL_WASTE,
+    "braun": Icons.ORGANIC,
+    "blau": Icons.PAPER,
+    "gelb": Icons.RECYCLING,
 }
 
 

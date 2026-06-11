@@ -1,13 +1,14 @@
 from datetime import datetime
+from typing import Any
+
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from icalendar import Calendar
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-from icalendar import Calendar
-from typing import Any
 
 TITLE = "MZV Rotenburg"
 DESCRIPTION = "Source for MZV Rotenburg."
@@ -22,13 +23,13 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Gelbe Tonne": "mdi:recycle",
-    "Bioabfall": "mdi:leaf",
-    "Restabfall": "mdi:trash-can",
-    "Papier": "mdi:package-variant",
-    "Sperrmüll": "mdi:sofa",
-    "Weiße Ware": "mdi:fridge",
-    "Kühlgeräte": "mdi:fridge-outline",
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Papier": Icons.PAPER,
+    "Sperrmüll": Icons.BULKY,
+    "Weiße Ware": Icons.ELECTRONICS,
+    "Kühlgeräte": Icons.ELECTRONICS,
 }
 
 PARAM_TRANSLATIONS = {
@@ -57,9 +58,9 @@ API_URL = "https://www.mzv-rotenburg-bebra.de/entsorgung.php"
 
 
 def ics_prop_to_str(value: Any) -> str:
-    """
-    Converts icalendar properties (vText, list[vText], None)
-    into a clean UTF-8 string.
+    """Convert icalendar properties to a clean UTF-8 string.
+
+    Handles vText, list[vText], and None values.
     """
     if not value:
         return ""
@@ -101,9 +102,7 @@ class Source:
         args = {
             "ort": self._city,
         }
-        r = requests.get(API_URL,
-                         params=args,
-                         headers={"User-Agent": "Mozilla/5.0"})
+        r = requests.get(API_URL, params=args, headers={"User-Agent": "Mozilla/5.0"})
         r.raise_for_status()
 
         try:
@@ -132,20 +131,30 @@ class Source:
 
             summary = component.get("SUMMARY")
             location = component.get("LOCATION")
+            description = component.get("DESCRIPTION")
 
             summary_text = ics_prop_to_str(summary).strip()
             location_text = ics_prop_to_str(location).strip()
+            description_text = ics_prop_to_str(description).strip()
+            route_context = " ".join(
+                part for part in (summary_text, location_text, description_text) if part
+            ).lower()
 
-            bin_type = summary_text.removeprefix("Entsorgung ").strip()
+            raw_bin_type = summary_text.removeprefix("Entsorgung ").strip()
+            raw_bin_type_lower = raw_bin_type.lower()
+            bin_type = raw_bin_type
+            if raw_bin_type_lower.startswith("gelbe tonne"):
+                bin_type = "Gelbe Tonne"
+            elif raw_bin_type_lower.startswith("papier"):
+                bin_type = "Papier"
             bin_type_cmp = bin_type.lower()
-            location_cmp = location_text.lower()
 
             if bin_type_cmp == "gelbe tonne" and self._yellow_route:
-                if self._yellow_route.lower() not in location_cmp:
+                if self._yellow_route.lower() not in route_context:
                     continue
 
             if bin_type_cmp == "papier" and self._paper_route:
-                if self._paper_route.lower() not in location_cmp:
+                if self._paper_route.lower() not in route_context:
                     continue
 
             entries.append(

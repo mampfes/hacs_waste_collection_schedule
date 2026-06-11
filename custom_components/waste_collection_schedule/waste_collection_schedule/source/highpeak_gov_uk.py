@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,10 +19,10 @@ TEST_CASES = {
 BIN_TYPE_SPLIT_REGEX = re.compile(r"\b and \b|\b with \b|\b \& \b")
 
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food": "mdi:food",
-    "Garden": "mdi:leaf",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
 }
 
 
@@ -34,7 +34,9 @@ class Source:
         self._postcode: str = postcode
         self._uprn: str = str(uprn)
 
-    def _extract_all_form_data(self, soup: BeautifulSoup) -> tuple[dict[str, str], str]:
+    def _extract_all_form_data(
+        self, soup: BeautifulSoup
+    ) -> tuple[dict[str, str | list[str]], str]:
         form_data = {}
         inputs = soup.select("input") + soup.select("select")
         for input in inputs:
@@ -53,7 +55,7 @@ class Source:
         form_url_tag = soup.find("form", id="FINDBINDAYSHIGHPEAK_FORM")
         form_url = form_url_tag.get("action") if isinstance(form_url_tag, Tag) else None
 
-        return form_data, form_url
+        return form_data, form_url  # type: ignore[return-value]
 
     def fetch(self) -> list[Collection]:
         s = requests.Session()
@@ -74,8 +76,10 @@ class Source:
 
         form_data, next_url = self._extract_all_form_data(soup)
 
-        form_data["FINDBINDAYSHIGHPEAK_FORMACTION_NEXT"] = "FINDBINDAYSHIGHPEAK_POSTCODESELECT_PAGE1NEXT"
-        
+        form_data["FINDBINDAYSHIGHPEAK_FORMACTION_NEXT"] = (
+            "FINDBINDAYSHIGHPEAK_POSTCODESELECT_PAGE1NEXT"
+        )
+
         if next_url.startswith("/"):
             next_url = BASE_URL + next_url
 
@@ -85,8 +89,10 @@ class Source:
 
         form_data, next_url = self._extract_all_form_data(soup)
 
-        form_data["FINDBINDAYSHIGHPEAK_FORMACTION_NEXT"] = "FINDBINDAYSHIGHPEAK_ADDRESSSELECT_ADDRESSSELECTNEXTBTN"
-        
+        form_data["FINDBINDAYSHIGHPEAK_FORMACTION_NEXT"] = (
+            "FINDBINDAYSHIGHPEAK_ADDRESSSELECT_ADDRESSSELECTNEXTBTN"
+        )
+
         if next_url.startswith("/"):
             next_url = BASE_URL + next_url
         r = s.post(next_url, data=form_data)

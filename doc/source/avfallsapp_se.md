@@ -5,7 +5,10 @@ This is a waste collection schedule integration for the Avfallsapp API. Avfallsa
 ## Current supported service providers (Cities)
 <!--Begin of service section-->
 - `soderkoping`: Söderköping
-  `motala`: Motala
+- `motala`: Motala
+- `vanersborg`: Vänersborg
+- `upplands-bro`: Upplands-Bro
+- `teknikivast`: Teknik i Väst (Arvika/Eda)
 <!--End of service section-->
 
 ## Current un-supported service providers (Cities)
@@ -26,7 +29,6 @@ Should be possible to add by some minor additions
 `soderhamn`: Söderhamn
 `ulricehamn`: Ulricehamn
 `vallentuna`: Vallentuna
-`vanersborg`: Vänerborg
 <!--End of service section-->
 
 ## Current un-supported generic service providers (Companies?)
@@ -41,7 +43,6 @@ Could be possible to add by some minor additions
 `nodra`: Nodra
 `rambo`: Rambo
 `sysav`: Sysav
-`upplands-bro`: Upplands Bro
 `vafab`: Vafab
 <!--End of service section-->
 
@@ -67,6 +68,11 @@ waste_collection_schedule:
 **api_key**
 *(string) (optional)*
 
+**token**
+*(string) (optional)*
+
+Bearer token required by providers that use token-based authentication (e.g. Vänersborg). Obtain it by inspecting the mobile app's network requests.
+
 ## Examples
 
 Support for Söderköping's municipality waste collection schedule.
@@ -78,6 +84,18 @@ waste_collection_schedule:
       args:
         api_key: <your api_key from app>
         service_provider: soderkoping
+```
+
+Support for Vänersborg's municipality waste collection schedule.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: avfallsapp_se
+      args:
+        service_provider: vanersborg
+        api_key: <your device ID from the app>
+        token: <your bearer token from the app>
 ```
 
 ## How to acquire a valid API_KEY

@@ -4,7 +4,7 @@ from io import BytesIO
 
 import requests
 from pypdf import PdfReader
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Redbridge Council"
 DESCRIPTION = "Source for redbridge.gov.uk services for Redbridge Council, UK."
@@ -15,10 +15,10 @@ TEST_CASES = {
     "a church vicarage, garden, recycling, refuse": {"uprn": 10034912354},
 }
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
-    "FOOD": "mdi:food-apple",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
+    "FOOD": Icons.BIO_KITCHEN,
 }
 
 KNOWN_SERVICES = {"REFUSE", "RECYCLING", "GARDEN", "FOOD"}
@@ -41,7 +41,9 @@ def _extract_collections_from_text(text: str) -> list[Collection]:
         r"^(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})$",
         re.I,
     )
-    weekday_header_regex = re.compile(r"^(Sun\s+Mon\s+Tue\s+Wed\s+Thu\s+Fri\s+Sat)$", re.I)
+    weekday_header_regex = re.compile(
+        r"^(Sun\s+Mon\s+Tue\s+Wed\s+Thu\s+Fri\s+Sat)$", re.I
+    )
 
     # A day row contains one or more day numbers separated by spaces, e.g. "1 2" or "3 4 5 6 7"
     day_group_regex = re.compile(r"^(?:\d{1,2})(?:\s+\d{1,2})*$")

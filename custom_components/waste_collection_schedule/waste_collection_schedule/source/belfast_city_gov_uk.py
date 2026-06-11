@@ -1,6 +1,4 @@
-"""
-Support for Belfast City Council waste collection schedule.
-"""
+"""Support for Belfast City Council waste collection schedule."""
 
 import logging
 import re
@@ -8,7 +6,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -21,9 +19,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Recycling bin": "mdi:recycle",
-    "Compost bin": "mdi:flower",
-    "General waste bin": "mdi:trash-can",
+    "Recycling bin": Icons.RECYCLING,
+    "Compost bin": Icons.GARDEN,
+    "General waste bin": Icons.GENERAL_WASTE,
 }
 
 API_URL = URL + "/Default.aspx"
@@ -33,7 +31,7 @@ REQUEST_TIMEOUT = 30
 class Source:
     """Belfast City Council waste collection source."""
 
-    def __init__(self, postcode: str, uprn: str = None):
+    def __init__(self, postcode: str, uprn: str | None = None):
         """
         Initialize the source.
 
@@ -47,7 +45,6 @@ class Source:
 
     def fetch(self):
         """Fetch waste collection schedule."""
-
         session = requests.Session()
 
         # Step 1: Get initial page to extract ASP.NET viewstate
@@ -148,7 +145,6 @@ class Source:
 
     def _parse_schedule(self, html: str):
         """Parse the bin collection schedule from HTML."""
-
         soup = BeautifulSoup(html, "html.parser")
 
         # Find the table with bin collection data
@@ -159,7 +155,7 @@ class Source:
         entries = []
 
         # Parse each row (skip header row)
-        rows = table.find_all("tr")[1:]  # Skip header
+        rows = table.find_all("tr")[1:]  # type: ignore[union-attr]  # Skip header
 
         for row in rows:
             cols = row.find_all("td")

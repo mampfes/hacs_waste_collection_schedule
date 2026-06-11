@@ -1,0 +1,21 @@
+---
+title: Rivière-Beaudette
+url: https://riviere-beaudette.com
+country: ca
+howto:
+  en: |
+    - Go to <https://riviere-beaudette.com/> and find the waste collection calendar under the "Calendriers" section.
+    - Download the ICS (.ics) calendar file.
+    - The ICS file URL typically follows the pattern: `https://riviere-beaudette.com/wp-content/uploads/{year}/01/CollectesRB{year}V2.ics`
+    - Use this URL as the `url` parameter, replacing the year with `{%Y}` for automatic year substitution.
+    - Use the `regex` parameter to extract waste types from event summaries.
+  fr: |
+    - Allez sur <https://riviere-beaudette.com/> et trouvez le calendrier de collecte sous la section "Calendriers".
+    - Téléchargez le fichier calendrier ICS (.ics).
+    - L'URL du fichier ICS suit généralement le format: `https://riviere-beaudette.com/wp-content/uploads/{année}/01/CollectesRB{année}V2.ics`
+    - Utilisez cette URL comme paramètre `url`, en remplaçant l'année par `{%Y}` pour la substitution automatique.
+    - Utilisez le paramètre `regex` pour extraire les types de collecte.
+test_cases:
+  Rivière-Beaudette:
+    url: "https://riviere-beaudette.com/wp-content/uploads/{%Y}/01/CollectesRB{%Y}V2.ics"
+    regex: '\s*Collecte (?:de la |du |des |de |la )?(.+?)\s*$'

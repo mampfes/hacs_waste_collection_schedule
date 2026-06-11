@@ -1,6 +1,6 @@
 # Australian Capital Territory (ACT)
 
-Support for schedules provided by [ACT Goverment City Services](https://www.cityservices.act.gov.au/).
+Support for schedules provided by [ACT Government City Services](https://www.cityservices.act.gov.au/).
 
 ## Configuration via configuration.yaml
 

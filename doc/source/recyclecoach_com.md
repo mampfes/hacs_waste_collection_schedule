@@ -1,7 +1,7 @@
 # Recycle Coach / recyclecoach.com
 
 Support for schedules provided by [Recycle Coach](https://recyclecoach.com/),
-serving several regions and municipalities in North America.
+serving several regions and municipalities in North America and Australia.
 
 ## Configuration via configuration.yaml
 

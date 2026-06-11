@@ -7,7 +7,7 @@ import json
 from datetime import datetime, timedelta, timezone
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North Northamptonshire council"
 DESCRIPTION = "Source for North Northamptonshire council."
@@ -23,10 +23,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "General": "mdi:trash-can",
-    "Food": "mdi:food",
-    "Garden": "mdi:recycle",
-    "Recycling": "mdi:package-variant",
+    "General": Icons.GENERAL_WASTE,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
+    "Recycling": Icons.PAPER,
 }
 
 

@@ -3,7 +3,7 @@ import urllib
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Ipswich City Council"
 DESCRIPTION = "Source for Ipswich City Council rubbish collection."
@@ -15,9 +15,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Waste Bin": "mdi:trash-can",
-    "Recycle Bin": "mdi:recycle",
-    "FOGO Bin": "mdi:leaf",
+    "Waste Bin": Icons.GENERAL_WASTE,
+    "Recycle Bin": Icons.RECYCLING,
+    "FOGO Bin": Icons.BIO_KITCHEN,
 }
 
 
@@ -90,9 +90,7 @@ class IpswichGovAuParser(HTMLParser):
             self._load_bin = False
 
             self._entries.append(
-                Collection(
-                    self._loaded_date, data, icon=ICON_MAP.get(data)
-                )
+                Collection(self._loaded_date, data, icon=ICON_MAP.get(data))
             )
 
 

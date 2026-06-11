@@ -2,7 +2,7 @@ from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
@@ -23,14 +23,14 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bio": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Recycle": "mdi:recycle",
-    "240L Yellow Lid Recycle Bin": "mdi:recycle",
-    "140L Red Lid General Waste Bin": "mdi:trash-can",
-    "240L Green Lid Garden Vegetation Bin": "mdi:leaf",
+    "Trash": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bio": Icons.ORGANIC,
+    "Paper": Icons.PAPER,
+    "Recycle": Icons.RECYCLING,
+    "240L Yellow Lid Recycle Bin": Icons.RECYCLING,
+    "140L Red Lid General Waste Bin": Icons.GENERAL_WASTE,
+    "240L Green Lid Garden Vegetation Bin": Icons.GARDEN,
 }
 
 

@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Walsall Council"
 DESCRIPTION = "Source for waste collection services from Walsall Council"
@@ -17,9 +17,9 @@ TEST_CASES = {
 
 API_URL = "https://cag.walsall.gov.uk"
 ICON_MAP = {
-    "GREY": "mdi:trash-can",
-    "GREEN": "mdi:recycle",
-    "BROWN": "mdi:leaf",
+    "GREY": Icons.GENERAL_WASTE,
+    "GREEN": Icons.RECYCLING,
+    "BROWN": Icons.ORGANIC,
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",

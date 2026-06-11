@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "GOJER"
@@ -22,12 +22,12 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Bioabfall": "mdi:leaf",
-    "Hausmüll": "mdi:trash-can",
-    "Plastikflaschen": "mdi:bottle-soda-classic",
-    "Altpapier": "mdi:package-variant",
-    "Metallverpackungen": "mdi:anvil",
-    "Altstoffsammelzentrum": "mdi:factory",
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Hausmüll": Icons.GENERAL_WASTE,
+    "Plastikflaschen": Icons.GLASS,
+    "Altpapier": Icons.PAPER,
+    "Metallverpackungen": Icons.METAL,
+    "Altstoffsammelzentrum": Icons.COMMERCIAL,
 }
 
 

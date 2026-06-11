@@ -3,7 +3,8 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Flintshire"
 DESCRIPTION = "Source for Flintshire, United Kingdom."
@@ -15,11 +16,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bio": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Recycle": "mdi:recycle",
+    "Trash": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bio": Icons.ORGANIC,
+    "Paper": Icons.PAPER,
+    "Recycle": Icons.RECYCLING,
 }
 
 
@@ -28,12 +29,17 @@ API_URL = "https://digital.flintshire.gov.uk/FCC_BinDay/Home/Details2/{UPRN}"
 
 class Source:
     def __init__(self, uprn: str | int):
+        self._uprn = uprn
         self._url = API_URL.format(UPRN=uprn)
 
     def fetch(self):
         r = requests.post(self._url)
         if r.status_code == 500:
-            raise Exception("web request failed: probably caused by an invalid UPRN")
+            raise SourceArgumentNotFound(
+                "uprn",
+                self._uprn,
+                "web request failed: probably caused by an invalid UPRN",
+            )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")

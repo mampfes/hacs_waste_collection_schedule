@@ -1,8 +1,8 @@
 beautifulsoup4>=4.12.2
-cloudscraper>=1.2.71
+curl_cffi
 DateTime>=4.9
 icalendar>=4.0.9
-icalevents>=0.1.29
+icalevents>=0.2.1
 python-dateutil>=2.8.2
 pytz>=2021.3
 PyYAML>=6.0.1
@@ -13,5 +13,5 @@ lxml>=4.9.4
 pycryptodome>=3.20.0
 typing_extensions>=4.12.2
 pypdf>=5.1.0
-pymupdf>=1.24.0
+pdfminer.six>=20221105
 homeassistant

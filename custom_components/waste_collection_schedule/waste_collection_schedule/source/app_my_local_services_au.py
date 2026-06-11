@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import requests
 from dateutil.rrule import WEEKLY, rrule, weekday
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "App Backend of My Local Services"
 DESCRIPTION = "Source for App Backend of My Local Services."
@@ -120,11 +120,11 @@ COUNTRY = "au"
 
 
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bio": "mdi:leaf",
-    "Paper": "mdi:package-variant",
-    "Recycle": "mdi:recycle",
+    "Trash": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bio": Icons.ORGANIC,
+    "Paper": Icons.PAPER,
+    "Recycle": Icons.RECYCLING,
 }
 
 

@@ -194,12 +194,10 @@ class Source:
                 if (
                     # Bio waste collected every week from April to November
                     (4 <= month <= 11)
-                    or
                     # Bio waste collected every even week in March
-                    (month == 3 and even_week)
-                    or
+                    or (month == 3 and even_week)
                     # Bio waste collected every first even week in month (from December to March)
-                    (even_week and current_date.day <= 14)
+                    or (even_week and current_date.day <= 14)
                 ):
                     entries.append(
                         Collection(current_date, "Biologický odpad", icon="mdi:leaf")

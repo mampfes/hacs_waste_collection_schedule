@@ -2,7 +2,7 @@ import json
 from datetime import date
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Mosman Council"
 DESCRIPTION = "Source for Mosman Council, NSW, Australia"
@@ -15,12 +15,12 @@ TEST_CASES = {
 
 API_URL = "https://apps.mosman.nsw.gov.au/test"
 ICON_MAP = {
-    "generalWaste": "mdi:trash-can",
-    "containersGlass": "mdi:recycle",
-    "paperCardboard": "mdi:recycle",
-    "vegetation": "mdi:leaf",
-    "generalCleanUp": "mdi:trash-can",
-    "ewaste": "mdi:battery-sync",
+    "generalWaste": Icons.GENERAL_WASTE,
+    "containersGlass": Icons.RECYCLING,
+    "paperCardboard": Icons.PAPER,
+    "vegetation": Icons.ORGANIC,
+    "generalCleanUp": Icons.GENERAL_WASTE,
+    "ewaste": Icons.ELECTRONICS,
 }
 
 COLLECTIONS_MAP = {

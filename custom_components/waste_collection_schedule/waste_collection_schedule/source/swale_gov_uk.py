@@ -1,24 +1,24 @@
+import logging
 from datetime import date, datetime, timedelta
-from time import sleep as sleep
+from time import sleep
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from curl_cffi import requests
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+
+_LOGGER = logging.getLogger(__name__)
 
 TITLE = "Swale Borough Council"
 DESCRIPTION = "Source for swale.gov.uk services for Swale, UK."
 URL = "https://swale.gov.uk"
-HEADERS = {
-    "User-Agent": "Mozilla/5.0",
-}
 API_URL = (
     "https://swale.gov.uk/bins-littering-and-the-environment/bins/my-collection-day"
 )
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food": "mdi:food-apple",
-    "Garden": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food": Icons.BIO_KITCHEN,
+    "Garden": Icons.GARDEN,
 }
 # swale.gov.uk has an aggressive limit of request frequency,
 # running test cases can result in the error: 429 Too Many Requests.
@@ -57,9 +57,9 @@ class Source:
         return dt
 
     def fetch(self) -> list[Collection]:
-        s = requests.Session()
+        s = requests.Session(impersonate="chrome")
 
-        # mimic postocde search
+        # mimic postcode search
         payload: dict = {
             "SQ_FORM_499078_PAGE": "1",
             "form_email_499078_referral_url": "https://swale.gov.uk/bins-littering-and-the-environment/bins",
@@ -68,10 +68,9 @@ class Source:
         }
         r = s.post(
             "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
-            headers=HEADERS,
             data=payload,
         )
-        r.raise_for_status
+        r.raise_for_status()
         sleep(5)
 
         # mimic address selection
@@ -83,25 +82,33 @@ class Source:
         }
         r = s.post(
             "https://swale.gov.uk/bins-littering-and-the-environment/bins/check-your-bin-day",
-            headers=HEADERS,
             data=payload,
         )
-        r.raise_for_status
+        r.raise_for_status()
         soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
         temp_list: list = []
 
         # Get details of next collection
         next_date = soup.find("strong", {"id": "SBC-YBD-collectionDate"})
+        if not next_date:
+            raise ValueError(
+                "Could not find next collection date — the page may have changed or returned an error."
+            )
+
         waste_list = soup.find("div", {"id": "SBCFirstBins"})
+        if not waste_list:
+            raise ValueError(
+                "Could not find waste list — the page may have changed or returned an error."
+            )
         waste_items = waste_list.find_all("li")
 
         # Determine actual date from the text
         raw_date = next_date.text.lower()
 
         if "today" in raw_date:
-            dt = datetime.today().strftime("%d %B")
+            dt = datetime.today().strftime("%d %B %Y")
         elif "tomorrow" in raw_date:
-            dt = (datetime.today() + timedelta(days=1)).strftime("%d %B")
+            dt = (datetime.today() + timedelta(days=1)).strftime("%d %B %Y")
         else:
             # Try to extract actual date from string like "Tuesday, 14 April 2025"
             try:
@@ -122,15 +129,30 @@ class Source:
 
         # get details of future collection
         future_collection = soup.find("div", {"id": "FutureCollections"})
+        if not future_collection:
+            raise ValueError(
+                "Could not find future collections — the page may have changed or returned an error."
+            )
+
         future_date = future_collection.find("p")
+        if not future_date:
+            raise ValueError(
+                "Could not find future collection date — the page may have changed or returned an error."
+            )
+
         future_list = soup.find("ul", {"id": "FirstFutureBins"})
+        if not future_list:
+            raise ValueError(
+                "Could not find future bins list — the page may have changed or returned an error."
+            )
+
         future_items = future_list.find_all("li")
         for item in future_items:
             dt = future_date.text.split("y, ")[-1]
             temp_list.append(
                 [
                     dt,
-                    item.text,
+                    item.text.strip(),
                 ],
             )
 
@@ -146,7 +168,11 @@ class Source:
         entries: list = []
         for pickup in temp_list:
             waste_date: date = self.append_year(pickup[0])
-            waste_type: str = remap_wastes[pickup[1]]
+            raw = pickup[1].strip().lower()
+            waste_type = remap_wastes.get(raw)
+            if waste_type is None:
+                _LOGGER.warning("Unknown waste type '%s' — skipping", raw)
+                continue
             entries.append(
                 Collection(
                     date=waste_date,

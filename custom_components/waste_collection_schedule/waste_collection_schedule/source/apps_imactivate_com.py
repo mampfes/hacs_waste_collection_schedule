@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -62,17 +62,17 @@ EXTRA_INFO = [
 
 
 ICON_MAP = {
-    "waste": "mdi:trash-can",
-    "black": "mdi:trash-can",
-    "pink bin": "mdi:trash-can",
-    "residual": "mdi:trash-can",
-    "glass": "mdi:bottle-wine",
-    "garden": "mdi:leaf",
-    "brown": "mdi:leaf",
-    "recycling": "mdi:recycle",
-    "green": "mdi:recycle",
-    "black bin": "mdi:recycle",
-    "green bin": "mdi:package-variant-closed",
+    "waste": Icons.GENERAL_WASTE,
+    "black": Icons.GENERAL_WASTE,
+    "pink bin": Icons.GENERAL_WASTE,
+    "residual": Icons.GENERAL_WASTE,
+    "glass": Icons.GLASS,
+    "garden": Icons.GARDEN,
+    "brown": Icons.ORGANIC,
+    "recycling": Icons.RECYCLING,
+    "green": Icons.RECYCLING,
+    "black bin": Icons.RECYCLING,
+    "green bin": Icons.PAPER,
 }
 
 

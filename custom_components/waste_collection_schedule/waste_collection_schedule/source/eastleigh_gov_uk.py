@@ -1,8 +1,8 @@
 from datetime import datetime
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from curl_cffi import requests
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Eastleigh Borough Council"
 DESCRIPTION = "Source for Eastleigh Borough Council."
@@ -14,12 +14,12 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Paper": "mdi:package-variant",
-    "household": "mdi:trash-can",
-    "recycling": "mdi:recycle",
-    "food": "mdi:food",
-    "glass": "mdi:bottle-soda",
-    "garden": "mdi:leaf",
+    "Paper": Icons.PAPER,
+    "household": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
+    "glass": Icons.GLASS,
+    "garden": Icons.GARDEN,
 }
 
 
@@ -31,10 +31,11 @@ class Source:
         self._uprn: str | int = uprn
 
     def fetch(self):
+        session = requests.Session(impersonate="chrome124")
         args = {"uprn": self._uprn}
 
         # get json file
-        r = requests.get(API_URL, params=args)
+        r = session.get(API_URL, params=args)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")

@@ -2,19 +2,19 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Marktgemeinde Edlitz"
 DESCRIPTION = "Source for Marktgeneinde Edlitz, AT"
 URL = "https://edlitz.at"
 TEST_CASES = {"TestSource": {}, "IgnoredArgument": {"_": ""}}
 ICON_MAP = {
-    "Biomüllabfuhr": "mdi:food",
-    "Papier Tonne": "mdi:newspaper",
-    "Grüne Tonne": "mdi:recycle",
-    "Gelber Sack": "mdi:recycle-variant",
-    "Restmüll": "mdi:trash-can",
-    "Restmüll mit Panoramastraße": "mdi:trash-can",
+    "Biomüllabfuhr": Icons.BIO_KITCHEN,
+    "Papier Tonne": Icons.PAPER,
+    "Grüne Tonne": Icons.RECYCLING,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Restmüll mit Panoramastraße": Icons.GENERAL_WASTE,
 }
 
 

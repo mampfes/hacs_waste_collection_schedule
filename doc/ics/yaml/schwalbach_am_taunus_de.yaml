@@ -1,0 +1,25 @@
+---
+title: Schwalbach am Taunus
+url: https://www.schwalbach.de
+howto:
+  en: |
+    - Go to <https://www.schwalbach.de/Rathaus-und-Buergerservice/Buergerservice/Abfallentsorgung/Digitaler-Abfallkalender.htm> and navigate to the digital waste calendar.
+    - Select your street from the dropdown. Note your **Abfuhrbezirk** number (1–4) shown next to the street.
+    - Right-click on the yellow calendar download button (e.g. "Termine mit wöchentlicher Restmüll-Abholung für den Abfuhrbezirk 1 - 2026") and copy the link address.
+    - The link will look like: `https://www.schwalbach.de/city_data/assets/431/ical/2026_Abfuhrbezirk-1_woechentlich.ics`
+    - Replace the year (`2026`) with `{%Y}` and add `version: 1` to your config so the year is updated automatically.
+    - Use this modified link as the `url` parameter.
+  de: |
+    - Öffnen Sie <https://www.schwalbach.de/Rathaus-und-Buergerservice/Buergerservice/Abfallentsorgung/Digitaler-Abfallkalender.htm> und navigieren Sie zum digitalen Abfallkalender.
+    - Wählen Sie Ihre Straße aus dem Dropdown-Menü. Notieren Sie Ihren **Abfuhrbezirk** (1–4), der neben der Straße angezeigt wird.
+    - Klicken Sie mit der rechten Maustaste auf den gelben Download-Button (z. B. "Termine mit wöchentlicher Restmüll-Abholung für den Abfuhrbezirk 1 - 2026") und kopieren Sie die Link-Adresse.
+    - Der Link sieht so aus: `https://www.schwalbach.de/city_data/assets/431/ical/2026_Abfuhrbezirk-1_woechentlich.ics`
+    - Ersetzen Sie die Jahreszahl (`2026`) durch `{%Y}` und fügen Sie `version: 1` zur Konfiguration hinzu, damit das Jahr automatisch aktualisiert wird.
+    - Verwenden Sie diesen angepassten Link als `url`-Parameter.
+test_cases:
+  Abfuhrbezirk 1 wöchentlich:
+    url: "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-1_woechentlich.ics"
+    version: 1
+  Abfuhrbezirk 2 14-täglich:
+    url: "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-2_14-taegig.ics"
+    version: 1

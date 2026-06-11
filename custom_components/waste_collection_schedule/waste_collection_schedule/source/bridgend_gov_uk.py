@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Bridgend County Borough Council"
 DESCRIPTION = "Source for bridgend.gov.uk"
@@ -12,9 +12,9 @@ TEST_CASES: dict = {
     "test_002": {"uprn": 10032996088},
     "test_003": {"uprn": "10090813443"},
 }
-ICON_MAP: dict = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
+ICON_MAP = {
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
 HEADERS: dict = {"user-agent": "Mozilla/5.0"}
 
@@ -28,7 +28,7 @@ PARAM_TRANSLATIONS: dict = {
 }
 PARAM_DESCRIPTIONS: dict = {
     "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
     }
 }
 

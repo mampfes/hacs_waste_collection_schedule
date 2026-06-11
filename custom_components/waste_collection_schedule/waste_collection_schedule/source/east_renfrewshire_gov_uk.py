@@ -1,9 +1,9 @@
 from urllib.parse import parse_qs, urlparse
 
-import cloudscraper
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Renfrewshire Council"
 DESCRIPTION = "Source for eastrenfrewshire.gov.uk services for East Renfrewshire"
@@ -17,10 +17,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Grey": "mdi:trash-can",
-    "Brown": "mdi:leaf",
-    "Green": "mdi:glass-fragile",
-    "Blue": "mdi:note",
+    "Grey": Icons.GENERAL_WASTE,
+    "Brown": Icons.ORGANIC,
+    "Green": Icons.GLASS,
+    "Blue": Icons.EVENT,
 }
 
 
@@ -33,9 +33,7 @@ class Source:
 
     def fetch(self):
         # Cloudflare-aware session
-        session = cloudscraper.create_scraper(
-            browser={"browser": "chrome", "platform": "windows", "mobile": False}
-        )
+        session = requests.Session(impersonate="chrome124")
         session.headers.update(
             {
                 "User-Agent": (

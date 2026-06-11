@@ -7,5 +7,5 @@ howto:
     - Click on `Als Kalenderdatei (.ics) herunterladen`, select no alarm. The ICS file will be doanloaded automatically, but one can grab the source URL. (inspecting the button (F12) reveals the URL (you need to add the prefix `https://www.gross-gerau.de`))
     - Use this link as the `url` parameter.
 test_cases:
-  Hagnau:
+  Groß-Gerau:
     url: https://www.gross-gerau.de/output/options.php?ModID=48&call=ical&pois=3411.298&alarm=8

@@ -1,0 +1,26 @@
+---
+title: Publicus d.o.o.
+url: https://beta.smetar.si
+country: si
+extra_info:
+  - title: Kamnik
+    url: https://www.kamnik.si
+    country: si
+  - title: Komenda
+    url: https://www.komenda.si
+    country: si
+  - title: Pivka
+    url: https://www.pivka.si
+    country: si
+  - title: Postojna
+    url: https://www.postojna.si
+    country: si
+howto:
+  en: |
+    - Go to <https://beta.smetar.si/admin/vsiUrniki.php> and search for "Publikus".
+    - Search for your street and house number.
+    - Right-click the webcal link and copy the URL.
+    - Replace `webcal://` with `https://` and use it as the `url` parameter.
+test_cases:
+  Kamnik Na jasi:
+    url: https://beta.smetar.si/admin/generateICS.php?id=158757

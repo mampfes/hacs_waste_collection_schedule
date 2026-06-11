@@ -3,7 +3,7 @@ import json
 import re
 import time
 import uuid
-from collections import OrderedDict
+from collections import Counter, OrderedDict
 from datetime import date, datetime
 
 import requests
@@ -504,6 +504,8 @@ class AppAbfallplusDe:
             headers["User-Agent"] = USER_AGENT.format(
                 MAP_APP_USERAGENTS.get(self._app_id, "%")
             )
+            headers["x-abfallplus-client"] = self._client
+            headers["x-abfallplus-appid"] = self._app_id
 
         if "config.xml" in url_ending:
             headers["Accept-Encoding"] = "gzip, deflate, br"
@@ -842,6 +844,13 @@ class AppAbfallplusDe:
                 if hnr["f_id_strasse"] is not None:
                     self._f_id_strasse = hnr["f_id_strasse"]
                 return
+        # fall back to "Alle Hausnummern" if the specific house number is not found
+        for hnr in hnrs:
+            if compare(hnr["name"], "Alle Hausnummern", remove_space=True):
+                self._hnr = hnr["id"]
+                if hnr["f_id_strasse"] is not None:
+                    self._f_id_strasse = hnr["f_id_strasse"]
+                return
         raise SourceArgumentNotFoundWithSuggestions(
             "hnr", self._hnr_search, [hnr["name"] for hnr in hnrs]
         )
@@ -952,10 +961,10 @@ class AppAbfallplusDe:
         if not soup_array or not isinstance(soup_array, Tag):
             raise Exception("No array found.")
 
-        categories = {}
-
+        # First pass: collect id, name, subtitle for all categories
+        raw_categories: list[tuple[str, str, str]] = []
         for category in soup_array.find_all("dict"):
-            id = category.find("key", text="id").find_next_sibling("string").text
+            cat_id = category.find("key", text="id").find_next_sibling("string").text
             name = (
                 category.find("key", text="name")
                 .find_next_sibling("string")
@@ -963,16 +972,27 @@ class AppAbfallplusDe:
                 .replace("]]", "")
                 .strip()
             )
-            if any(s_id in id for s_id in self._needs_subtitle):
-                subtitle = (
-                    category.find("key", text="subtitle")
-                    .find_next_sibling("string")
-                    .text.replace("![CDATA[", "")
-                    .replace("]]", "")
-                    .strip()
-                )
+            subtitle_tag = category.find("key", text="subtitle")
+            subtitle = (
+                subtitle_tag.find_next_sibling("string")
+                .text.replace("![CDATA[", "")
+                .replace("]]", "")
+                .strip()
+                if subtitle_tag
+                else ""
+            )
+            raw_categories.append((cat_id, name, subtitle))
+
+        # Detect names that appear more than once (need subtitle to distinguish)
+        name_counts = Counter(name for _, name, _ in raw_categories)
+
+        categories = {}
+        for cat_id, name, subtitle in raw_categories:
+            if any(s_id in cat_id for s_id in self._needs_subtitle) or (
+                name_counts[name] > 1 and subtitle
+            ):
                 name += " - " + subtitle
-            categories[id] = name
+            categories[cat_id] = name
 
         collections: list[dict] = []
         for collection in (

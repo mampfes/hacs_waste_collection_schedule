@@ -23,3 +23,13 @@ waste_collection_schedule:
         regex: (.*?) |.*
         url: https://outlook.office365.com/owa/calendar/a61946ab1cc04c3685fa33ec061275c0@ville.levis.qc.ca/ac1cf50f622c4ab288a11d76ef00b3ea17018323504597930208/calendar.ics
 ```
+### Mardi : Saint-Nicolas, Saint-Rédempteur
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        regex: (.*?) |.*
+        url: https://outlook.office365.com/owa/calendar/65da0cabd6bd4c09b72925e49f5d7b35@ville.levis.qc.ca/15e0c2c013844d908fab841f67be46c717628544337300073236/calendar.ics
+```

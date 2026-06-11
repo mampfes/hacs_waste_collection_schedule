@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Runnymede Borough Council"
 
@@ -21,10 +21,10 @@ API_URL = "https://www.runnymede.gov.uk/bin-collection-day"
 HEADERS = {"user-agent": "Mozilla/5.0"}
 
 ICON_MAP = {
-    "Food caddy": "mdi:food",
-    "Garden waste": "mdi:leaf",
-    "Recycling": "mdi:recycle",
-    "Refuse": "mdi:trash-can",
+    "Food caddy": Icons.BIO_KITCHEN,
+    "Garden waste": Icons.GARDEN,
+    "Recycling": Icons.RECYCLING,
+    "Refuse": Icons.GENERAL_WASTE,
 }
 
 

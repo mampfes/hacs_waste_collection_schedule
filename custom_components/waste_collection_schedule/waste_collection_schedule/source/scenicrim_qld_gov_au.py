@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 import requests
 from dateutil.rrule import FR, MO, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Scenic Rim Regional Council"
 DESCRIPTION = "Source for scenicrim.qld.gov.au services for Scenic Rim Regional Council"
@@ -19,8 +19,8 @@ TEST_CASES = {
 }
 API_URL = "https://srrcwastebinserviceday.blob.core.windows.net/wastebinservicedayexport/WasteBinServiceDay_SRRCWebsiteSearch.csv"
 ICON_MAP = {
-    "GENERAL WASTE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
+    "GENERAL WASTE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
 }
 DAYS: dict = {
     "MONDAY": MO,
@@ -30,10 +30,12 @@ DAYS: dict = {
     "FRIDAY": FR,
 }
 WEEKDAYS: list = [MO, TU, WE, TH, FR]
-START_DATES: dict = {  # taken from https://www.scenicrim.qld.gov.au/downloads/file/6551/your-waste-bins-and-facilities-guide
-    "BLUE": datetime(2024, 12, 2, 0, 0, 0),  # known Monday in a Red Week
-    "RED": datetime(2024, 12, 9, 0, 0, 0),  # known Monday in a Blue Week
-}
+START_DATES: dict = (
+    {  # taken from https://www.scenicrim.qld.gov.au/downloads/file/6551/your-waste-bins-and-facilities-guide
+        "BLUE": datetime(2024, 12, 2, 0, 0, 0),  # known Monday in a Red Week
+        "RED": datetime(2024, 12, 9, 0, 0, 0),  # known Monday in a Blue Week
+    }
+)
 
 # ### Arguments affecting the configuration GUI ####
 

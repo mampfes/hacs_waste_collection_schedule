@@ -1,0 +1,27 @@
+---
+title: Vlotho
+url: https://www.vlotho.de
+country: de
+howto:
+  en: |
+    - Go to <https://www.vlotho.de/Leben-in-Vlotho/Abfallkalender-online/> and select your street.
+    - Right-click the "Export in Kalenderanwendung" link and copy the URL.
+    - Find the `strasse` parameter value in the URL (e.g. `3136.93.1` for Burgstraße).
+    - Use this value as the `strasse` parameter below.
+  de: |
+    - Gehen Sie auf <https://www.vlotho.de/Leben-in-Vlotho/Abfallkalender-online/> und wählen Sie Ihre Straße.
+    - Klicken Sie mit der rechten Maustaste auf "Export in Kalenderanwendung" und kopieren Sie die URL.
+    - Finden Sie den `strasse`-Parameterwert in der URL (z.B. `3136.93.1` für Burgstraße).
+    - Verwenden Sie diesen Wert als `strasse`-Parameter.
+test_cases:
+  Burgstraße:
+    url: "https://www.vlotho.de/output/abfall_export.php"
+    params:
+      csv_export: "1"
+      mode: "vcal"
+      ort: "393.8"
+      strasse: "3136.93.1"
+      vtyp: "1"
+      vMo: "01"
+      bMo: "12"
+    year_field: "vJ"

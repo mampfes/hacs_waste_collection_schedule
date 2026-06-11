@@ -4,9 +4,9 @@ import json
 import re
 from datetime import datetime
 
-import cloudscraper
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from curl_cffi import requests
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Gateshead Council"
 DESCRIPTION = "Source for gateshead.gov.uk services for Gateshead"
@@ -19,9 +19,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Household": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
+    "Household": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
 }
 
 
@@ -30,7 +30,7 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        session = cloudscraper.create_scraper()
+        session = requests.Session(impersonate="chrome124")
 
         r = session.get(
             "https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker",

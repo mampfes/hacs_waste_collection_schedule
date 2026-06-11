@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Braintree District Council"
 DESCRIPTION = "Braintree District Council, UK - Waste Collection"
@@ -14,10 +14,10 @@ TEST_CASES = {
     "Causeway House": {"house_number": "Causeway House", "post_code": "CM7 9HB"},
 }
 ICON_MAP = {
-    "Grey Bin": "mdi:trash-can",
-    "Clear Sack": "mdi:recycle",
-    "Garden Bin": "mdi:leaf",
-    "Food Bin": "mdi:food-apple",
+    "Grey Bin": Icons.GENERAL_WASTE,
+    "Clear Sack": Icons.RECYCLING,
+    "Garden Bin": Icons.GARDEN,
+    "Food Bin": Icons.BIO_KITCHEN,
 }
 
 
@@ -34,7 +34,7 @@ class Source:
         }
 
     def fetch(self):
-        self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetchs fail
+        self.initialize_form_data()  # Re-initialize form data before each fetch otherwise subsequent fetches fail
         address_lookup = requests.post(self.url, files=self.form_data)
         address_lookup.raise_for_status()
         addresses = {}

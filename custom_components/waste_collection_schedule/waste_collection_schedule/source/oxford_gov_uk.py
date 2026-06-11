@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Oxford City Council"
 DESCRIPTION = "Source for oxford.gov.uk services for Oxford, UK."
@@ -16,10 +16,10 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 API_URL = "https://www.oxford.gov.uk/xfp/form/142"
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden": "mdi:leaf",
-    "Food": "mdi:food-apple",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden": Icons.GARDEN,
+    "Food": Icons.BIO_KITCHEN,
 }
 
 
@@ -52,7 +52,11 @@ class Source:
         collection_response = session.post(API_URL, data=form_data, headers=HEADERS)
 
         collection_soup = BeautifulSoup(collection_response.text, "html.parser")
-        for paragraph in collection_soup.find("div", class_="editor").find_all("p"):
+        for paragraph in (
+            collection_soup.find("div", class_="form__instructions")
+            .find("div", class_="editor")
+            .find_all("p")
+        ):
             matches = re.match(
                 r"^Your next (\w+) collections: (.*), (.*)", paragraph.text
             )

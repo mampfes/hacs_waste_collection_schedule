@@ -73,7 +73,7 @@ class Source:
         r = session.get(MAIN_URL.format(year=year, file=f"abfallkalender-{year}.html"))
         if r.status_code == 404:  # try last year URL if this year is not available
             r = session.get(
-                MAIN_URL.format(year=year, file=f"abfallkalender-{year-1}.html")
+                MAIN_URL.format(year=year, file=f"abfallkalender-{year - 1}.html")
             )
         r.raise_for_status()
 

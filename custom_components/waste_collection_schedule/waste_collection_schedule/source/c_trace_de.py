@@ -65,6 +65,13 @@ TEST_CASES = {
         "hausnummer": "2d/e",
         "service": "aurich-abfallkalender",
     },
+    "MainTauber 4-weekly": {
+        "ort": "Tauberbischofsheim",
+        "strasse": "Hauptstraße",
+        "hausnummer": 1,
+        "service": "maintauberkreis-abfallkalender",
+        "abfall": "0|1|2|5",
+    },
 }
 
 DEFAULT_SUBDOMAIN = "web"
@@ -112,10 +119,6 @@ SERVICE_MAP = {
         "title": "Stadt Arnsberg",
         "url": "https://www.arnsberg.de/",
     },
-    "overathabfallkalender": {
-        "title": "Stadt Overath",
-        "url": "https://www.overath.de/",
-    },
     "landau": {
         "title": "Entsorgungs- und Wirtschaftsbetrieb Landau in der Pfalz",
         "url": "https://www.ew-landau.de/",
@@ -159,6 +162,14 @@ SERVICE_MAP = {
 BASE_URL = "https://{subdomain}.c-trace.de"
 
 
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "abfall": "Pipe-separated waste type IDs to fetch (e.g. '0|1|2|5'). "
+        "Leave empty to fetch all types. Visit your provider's calendar page "
+        "to see which IDs correspond to which waste types.",
+    },
+}
+
 PARAM_TRANSLATIONS = {
     "en": {
         "strasse": "Street",
@@ -167,6 +178,7 @@ PARAM_TRANSLATIONS = {
         "ort": "District",
         "ortsteil": "Subdistrict",
         "service": "Operator",
+        "abfall": "Waste type IDs",
     }
 }
 
@@ -215,7 +227,7 @@ class Source:
         self.ical_url_file = ical_url_file
         self._ics = ICS(regex=r"Abfuhr: (.*)")
         if not abfall:
-            abfall = "|".join(str(i) for i in range(0, 99))
+            abfall = "|".join(str(i) for i in range(0, 300))
         self._abfall = abfall
 
     def fetch(self):

@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "East Devon District Council"
 DESCRIPTION = "Source for East Devon services for East Devon District Council, UK."
@@ -13,9 +13,9 @@ TEST_CASES = {
     "Test_002": {"uprn": 10000272679},
 }
 ICON_MAP = {
-    "RUBBISH": "mdi:trash-can",
-    "RECYCLING AND FOOD WASTE": "mdi:recycle",
-    "GREEN WASTE": "mdi:leaf",
+    "RUBBISH": Icons.GENERAL_WASTE,
+    "RECYCLING AND FOOD WASTE": Icons.BIO_KITCHEN,
+    "GREEN WASTE": Icons.GARDEN,
 }
 
 

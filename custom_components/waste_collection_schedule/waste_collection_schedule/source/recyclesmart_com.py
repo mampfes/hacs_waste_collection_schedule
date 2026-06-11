@@ -11,7 +11,7 @@ COUNTRY = "au"
 TEST_CASES = {
     "pickup": {
         "email": "!secret recyclesmart_email",
-        "password": "!secret recyclesmart_password"
+        "password": "!secret recyclesmart_password",
     },
 }
 
@@ -47,7 +47,7 @@ class Source:
             "https://www.app.recyclesmart.com/api/pickups",
             # retrieves future pickups (if scheduled), then past pickups, until per_page is reached
             # the average user is scheduled for monthly pickups
-            params={"page":"1", "per_page":"5"},
+            params={"page": "1", "per_page": "5"},
             headers={"Authorization": data["data"]["attributes"]["auth_token"]},
         )
 
@@ -55,6 +55,8 @@ class Source:
 
         entries = []
         for item in data["data"]:
-            collection_date = datetime.strptime(item["attributes"]["pickup_on"], "%Y-%m-%d")
+            collection_date = datetime.strptime(
+                item["attributes"]["pickup_on"], "%Y-%m-%d"
+            )
             entries.append(Collection(collection_date.date(), "Pickup"))
         return entries

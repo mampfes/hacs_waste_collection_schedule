@@ -1,7 +1,7 @@
 from time import sleep
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from curl_cffi import requests
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Sutton Council, London"
@@ -11,10 +11,10 @@ TEST_CASES = {"4721996": {"id": 4721996}, "4499298": {"id": "4499298"}}
 
 
 ICON_MAP = {
-    "non-recyclable": "mdi:trash-can",
-    "paper": "mdi:package-variant",
-    "mixed": "mdi:recycle",
-    "food": "mdi:food",
+    "non-recyclable": Icons.GENERAL_WASTE,
+    "paper": Icons.PAPER,
+    "mixed": Icons.RECYCLING,
+    "food": Icons.BIO_KITCHEN,
 }
 
 
@@ -28,15 +28,7 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        s = requests.Session()
-        s.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "en-GB,en;q=0.5",
-                "Referer": "https://sutton.gov.uk",
-            }
-        )
+        s = requests.Session(impersonate="chrome")
 
         api_url = API_URL.format(id=self._id)
         ical_url = ICAL_URL.format(id=self._id)

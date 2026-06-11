@@ -5,7 +5,7 @@ from datetime import date, datetime
 from typing import Any
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Sandwell Council"
 DESCRIPTION = "Bin collection dates via my.sandwell.gov.uk (APIBroker runLookup)"
@@ -45,10 +45,10 @@ LOOKUPS = [
 ]
 
 ICON_MAP = {
-    "Garden Waste (Green)": "mdi:leaf",
-    "Household Waste (Grey)": "mdi:trash-can",
-    "Food Waste (Brown)": "mdi:food-apple",
-    "Recycling (Blue)": "mdi:recycle",
+    "Garden Waste (Green)": Icons.GARDEN,
+    "Household Waste (Grey)": Icons.GENERAL_WASTE,
+    "Food Waste (Brown)": Icons.BIO_KITCHEN,
+    "Recycling (Blue)": Icons.RECYCLING,
 }
 
 

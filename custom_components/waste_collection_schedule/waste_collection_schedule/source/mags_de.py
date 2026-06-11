@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "mags Mönchengladbacher Abfall-, Grün- und Straßenbetriebe AöR"
@@ -16,13 +16,13 @@ TEST_CASES = {
 API_URL = "https://mags.de/ics/icscal.php"
 
 ICON_MAP = {
-    "Restmüll (Grau)": "mdi:trash-can",
-    "Bioabfall (Braun)": "mdi:leaf",
-    "Verpackungen (Gelb)": "mdi:recycle",
-    "Altpapier (Blau)": "mdi:package-variant",
-    "Papiermobil": "mdi:paper-roll",
-    "Grünschnitt": "mdi:tree-outline",
-    "Elektrokleingeräte-Sammlung": "mdi:radio",
+    "Restmüll (Grau)": Icons.GENERAL_WASTE,
+    "Bioabfall (Braun)": Icons.BIO_KITCHEN,
+    "Verpackungen (Gelb)": Icons.RECYCLING,
+    "Altpapier (Blau)": Icons.PAPER,
+    "Papiermobil": Icons.PAPER,
+    "Grünschnitt": Icons.GARDEN,
+    "Elektrokleingeräte-Sammlung": Icons.ELECTRONICS,
 }
 
 PARAM_TRANSLATIONS = {

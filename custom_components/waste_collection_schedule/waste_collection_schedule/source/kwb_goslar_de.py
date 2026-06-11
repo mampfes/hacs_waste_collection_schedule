@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Kreiswirtschaftsbetriebe Goslar"
@@ -11,12 +11,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Baum- und Strauchschnitt": "mdi:leaf",
-    "Biotonne": "mdi:bio",
-    "Blaue Tonne": "mdi:newspaper-variant-multiple",
-    "Gelber Sack": "mdi:recycle",
-    "Restmülltonne": "mdi:trash-can",
-    "Weihnachtsbäume": "mdi:pine-tree",
+    "Baum- und Strauchschnitt": Icons.ORGANIC,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Blaue Tonne": Icons.NEWSPAPER,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Restmülltonne": Icons.GENERAL_WASTE,
+    "Weihnachtsbäume": Icons.CHRISTMAS_TREE,
 }
 
 

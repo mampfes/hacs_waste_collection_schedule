@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Sunderland City Council"
 DESCRIPTION = "Source for sunderland.gov.uk services for Sunderland City Council, UK."
@@ -15,7 +15,11 @@ TEST_CASES = {
     "Test_002": {"postcode": "SR3 2DW", "address": "43 Hill Street"},
     "Test_003": {"postcode": "SR4 8RJ", "address": "17 Sutherland Drive"},
 }
-ICON_MAP = {"Recycle": "mdi:recycle", "House": "mdi:trash-can", "Garden": "mdi:leaf"}
+ICON_MAP = {
+    "Recycle": Icons.RECYCLING,
+    "House": Icons.GENERAL_WASTE,
+    "Garden": Icons.GARDEN,
+}
 
 
 class Source:

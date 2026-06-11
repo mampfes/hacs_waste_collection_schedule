@@ -1,10 +1,11 @@
 import re
 from datetime import datetime
 from typing import TypedDict
+from urllib.parse import urlparse
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -180,14 +181,14 @@ EXTRA_INFO: list[E_I_TYPE] = [
             "district": "scheibbs",
         },
     },
-    {
-        "title": "Abfallverband Schwechat",
-        "url": "https://schwechat.umweltverbaende.at/",
-        "country": "at",
-        "default_params": {
-            "district": "schwechat",
-        },
-    },
+    # { # Abfallverband Schwechat migrated to the Infeo platform; use infeo_at source with customer "av-schwechat"
+    #     "title": "Abfallverband Schwechat",
+    #     "url": "https://schwechat.umweltverbaende.at/",
+    #     "country": "at",
+    #     "default_params": {
+    #         "district": "schwechat",
+    #     },
+    # },
     # { No ICAL or API available anymore
     #     "title": "GVA Tulln",
     #     "url": "https://tulln.umweltverbaende.at/",
@@ -224,7 +225,7 @@ PARAM_TRANSLATIONS = {
         "hnr": "Hausnummer",
         "zusatz": "Zusatz",
         "calendar": "Kalender",
-        "calendar_title_separator": "Kalendertitel Seperator",
+        "calendar_title_separator": "Kalendertitel Separator",
         "calendar_splitter": "Kalendereintrag-Trenner",
     },
     "en": {
@@ -292,6 +293,12 @@ TEST_CASES = {
         "municipal": "Weitra",
     },  # old version (as of 29.12.2024)
     "Gänserndorf": {"district": "gaenserndorf", "municipal": "Auersthal"},
+    "Gänserndorf-New": {
+        "district": "gaenserndorf",
+        "municipal": "Deutsch-Wagram",
+        "street": "Johann Nestroy-Gasse",
+        "hnr": "63",
+    },
     "Hollabrunn": {
         "district": "hollabrunn",
         "municipal": "Retz",
@@ -301,7 +308,8 @@ TEST_CASES = {
     "Horn": {
         "district": "horn",
         "municipal": "Japons",
-    },  # old version (as of 29.12.2024)
+        "town": "Japons",
+    },  # new version (as of 2026); town required — Japons has multiple sub-locations
     # "Klosterneuburg": {
     #     "district": "klosterneuburg",
     #     "municipal": "Klosterneuburg",
@@ -338,11 +346,11 @@ TEST_CASES = {
     # "Neunkirchen": {"district": "neunkirchen", "municipal": "?"},  # No schedules listed on website
     "St. Pölten": {"district": "stpoeltenland", "municipal": "Pyhra"},
     "Scheibbs": {"district": "scheibbs", "municipal": "Wolfpassing"},
-    "Schwechat": {
-        "district": "schwechat",
-        "municipal": "Schwechat",
-        "town": "Kledering Einfamilienhaus",
-    },
+    # "Schwechat": {  # Migrated to Infeo platform; use infeo_at source with customer "av-schwechat"
+    #     "district": "schwechat",
+    #     "municipal": "Schwechat",
+    #     "town": "Kledering Einfamilienhaus",
+    # },
     # "Tulln": {
     #    "district": "tulln",
     #    "municipal": "Absdorf",
@@ -351,23 +359,23 @@ TEST_CASES = {
     "Zwettl": {
         "district": "zwettl",
         "municipal": "Martinsberg",
-    },  # old version (as of 29.12.2024)
+    },  # new version (as of 2026); site redirects to gvzwettl.at
 }
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Gelber Sack": "mdi:sack",
-    "Gelbe Tonne": "mdi:trash-can",
-    "Altpapier": "mdi:package-variant",
-    "Papier": "mdi:package-variant",
-    "Biotonne": "mdi:leaf",
-    "Bio": "mdi:leaf",
-    "Windeltonne": "mdi:baby",
-    "Christbaum": "mdi:pine-tree",
-    "Problemstoff": "mdi:chemical-weapon",
-    "Strauchschnitt": "mdi:tree",
-    "Verpackung": "mdi:package-variant",
-    "LVP": "mdi:package-variant",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Altpapier": Icons.PAPER,
+    "Papier": Icons.PAPER,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Bio": Icons.ORGANIC,
+    "Windeltonne": Icons.GENERAL_WASTE,
+    "Christbaum": Icons.CHRISTMAS_TREE,
+    "Problemstoff": Icons.HAZARDOUS,
+    "Strauchschnitt": Icons.GARDEN,
+    "Verpackung": Icons.PAPER,
+    "LVP": Icons.PLASTIC_PACKAGING,
 }
 
 PARAM_TRANSLATIONS = {
@@ -375,19 +383,27 @@ PARAM_TRANSLATIONS = {
         "district": "Gebiet",
         "municipal": "Gemeinde",
         "calendar": "Kalender",
-        "calendar_title_separator": "Kalendertitel Seperator",
+        "calendar_title_separator": "Kalendertitel Separator",
         "calendar_splitter": "Kalendereintrag-Trenner",
     }
 }
 
 POSSIBLE_COLLECTION_PATHS = (
-    "abholtermine-preview/", # Hollabrunn
+    "abholtermine-preview/",  # Hollabrunn
     "fuer-die-bevoelkerung/abholtermine/",
     "abfall-entsorgung/abfuhrtermine/",
     "fuer-die-bevoelkerung/abfuhrterminkalender/",
     "entsorgung-und-termine/abholtermine/",  # Scheibbs
-    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year + 1}/", # Zwettl
-    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year}/", # Zwettl
+    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year + 1}/",  # Zwettl
+    f"fuer-die-bevoelkerung/abholtermine-{datetime.now().year}/",  # Zwettl
+)
+
+LOCATION_FILTER_KEYS = (
+    "search[ort]",
+    "search[postleitzahl]",
+    "search[strasse]",
+    "search[hausnummer]",
+    "search[zusatz]",
 )
 
 
@@ -454,9 +470,8 @@ class Source:
             r = requests.get(f"{self._district_url}{scheibbs_path}")
             if r.status_code == 200:
                 self._district_collection_url = r.url
-                self._district_url = self._district_collection_url.split(scheibbs_path)[
-                    0
-                ]
+                parsed = urlparse(r.url)
+                self._district_url = f"{parsed.scheme}://{parsed.netloc}/"
                 self.use_new = True
 
         if not self.use_new:
@@ -465,9 +480,8 @@ class Source:
                     r := requests.get(f"{self._district_url}{col_path}")
                 ).status_code == 200:
                     self._district_collection_url = r.url
-                    self._district_url = self._district_collection_url.split(col_path)[
-                        0
-                    ]
+                    parsed = urlparse(r.url)
+                    self._district_url = f"{parsed.scheme}://{parsed.netloc}/"
                     self.use_new = True
                     break
 
@@ -598,7 +612,7 @@ class Source:
             options = soup.select("option")
             if len(options) == 1:
                 data[f"search[{element_name}]"] = options[0]["value"]
-                return self.get_hnr(s, data)
+                return newxt_stage(s, data)
             value: str | None = None
             for option in options:
                 if arg_value and self.compare(arg_value, option.text):
@@ -786,8 +800,9 @@ class Source:
                     "jahr": str(year),
                 },
             )
-            # Add additional parameters if they exist
-            for key in ["search[ort]", "search[postleitzahl]", "search[strasse]"]:
+            # Keep all location filters from the dropdown chain so the API can
+            # return the household-specific schedule instead of broad defaults.
+            for key in LOCATION_FILTER_KEYS:
                 if key in ort_data:
                     data[key] = ort_data[key]
         except Exception:
@@ -819,7 +834,7 @@ class Source:
                 "search[gemeinde]": mun_value,
             }
             # Add location data if we have it
-            for key in ["search[ort]", "search[postleitzahl]", "search[strasse]"]:
+            for key in LOCATION_FILTER_KEYS:
                 if key in data:
                     fraktionen_data[key] = data[key]
 
@@ -851,11 +866,7 @@ class Source:
                         ("search[gemeinde]", mun_value),
                     ]
                     # Add location data if we have it
-                    for key in [
-                        "search[ort]",
-                        "search[postleitzahl]",
-                        "search[strasse]",
-                    ]:
+                    for key in LOCATION_FILTER_KEYS:
                         if key in data:
                             post_data.append((key, data[key]))
                     # Add all fraktionen

@@ -3,7 +3,11 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 # mostly copied from braintree_gov_uk
 
@@ -22,10 +26,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Black domestic waste": "mdi:trash-can",
-    "Green recycling": "mdi:recycle",
-    "Brown garden waste": "mdi:leaf",
-    "Food waste": "mdi:food-apple",
+    "Black domestic waste": Icons.GENERAL_WASTE,
+    "Green recycling": Icons.RECYCLING,
+    "Brown garden waste": Icons.GARDEN,
+    "Food waste": Icons.BIO_KITCHEN,
 }
 
 
@@ -56,9 +60,9 @@ class Source:
             if addresses[address].startswith(self.address)
         ]
         if len(id) == 0:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("address", self.address)
         if len(id) > 1:
-            raise Exception("Address is not unique")
+            raise SourceArgumentException("address", "Address is not unique")
         id = id[0]
 
         self.form_data["q752eec300b2ffef2757e4536b77b07061842041a_1_0"] = (None, id)

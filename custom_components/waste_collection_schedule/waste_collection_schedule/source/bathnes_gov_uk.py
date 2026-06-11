@@ -1,12 +1,14 @@
 from datetime import datetime
-from typing import List
+from typing import Any, List, Mapping, Optional
 
+import requests
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-# Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
-from waste_collection_schedule.service.SSLError import get_legacy_session
 
 TITLE = "Bath & North East Somerset Council"
 DESCRIPTION = (
@@ -16,62 +18,109 @@ URL = "https://bathnes.gov.uk"
 TEST_CASES = {
     "uprn": {"uprn": "10001138699"},
     "houseNumber": {"postcode": "BA1 2LR", "housenameornumber": 1},
-    "houseName": {"postcode": "BA2 9AZ", "housenameornumber": "All Saints Church"},
+    "houseName": {"postcode": "BA1 5SX", "housenameornumber": "St Stephen's Church"},
 }
 
 TYPES = {
-    "residual": {"icon": "mdi:trash-can", "alias": "Rubbish"},
-    "recycling": {"icon": "mdi:recycle", "alias": "Recycling"},
-    "organic": {"icon": "mdi:leaf", "alias": "Garden Waste"},
+    "Residual": {"icon": "mdi:trash-can", "alias": "Rubbish"},
+    "Recycling": {"icon": "mdi:recycle", "alias": "Recycling"},
+    "Garden": {"icon": "mdi:leaf", "alias": "Garden Waste"},
 }
+
+API_BASE_URL = "https://api.bathnes.gov.uk/webapi/api/{}"
+API_COLLECTION_SUMMARY_URL = API_BASE_URL.format(
+    "BinsAPI/v2/BartecFeaturesandSchedules/CollectionSummary/{uprn}"
+)
+API_ADDRESSES_SEARCH_URL = API_BASE_URL.format(
+    "AddressesAPI/v2/search/{postcode}/150/true"
+)
+REQUEST_TIMEOUT = 10
 
 
 class Source:
     def __init__(self, uprn=None, postcode=None, housenameornumber=None):
-        self._postcode = postcode
-        self._housenameornumber = str(housenameornumber)
-        self._uprn = uprn
-
-    def fetch(self) -> List[Collection]:
-        session = get_legacy_session()
+        self._uprn = self._sanitise_uprn_val(uprn)
+        self._postcode = self._sanitise_search_val(postcode)
+        self._housenameornumber = self._sanitise_search_val(housenameornumber)
 
         if self._uprn is None:
-            self._uprn = self.get_uprn(session)
+            self._check_required_args(
+                "Postcode and house name or number are required if UPRN is not provided",
+                ("postcode", self._postcode),
+                ("housenameornumber", self._housenameornumber),
+            )
 
-        info = session.get(
-            f"https://www.bathnes.gov.uk/webapi/api/BinsAPI/v2/getbartecroute/{self._uprn}/true"
-        ).json()
+    def _sanitise_uprn_val(self, val: Optional[int | str]) -> Optional[int]:
+        if val is None:
+            return None
+        message = "UPRN must be a positive integer if provided"
+        try:
+            uprn = int(val)
+        except (ValueError, TypeError):
+            raise SourceArgumentException("uprn", message)
+        if uprn <= 0:
+            raise SourceArgumentException("uprn", message)
+        return uprn
 
-        entries = []
-        for type, props in TYPES.items():
-            for dateType in ["Previous", "Next"]:
-                if info.get(f"{type}Route", "NS") == "NS":
-                    continue
+    def _sanitise_search_val(self, val: Optional[str | int]) -> Optional[str]:
+        if val is None:
+            return None
+        stripped = str(val).strip()
+        return stripped or None
 
-                entries.append(
-                    Collection(
-                        date=datetime.fromisoformat(
-                            info[f"{type}{dateType}Date"]
-                        ).date(),
-                        t=props["alias"],
-                        icon=props["icon"],
-                    )
-                )
+    def _check_required_args(self, message, *args):
+        if missing := [name for name, val in args if not val]:
+            raise SourceArgumentExceptionMultiple(missing, message)
 
-        return entries
+    def fetch(self) -> List[Collection]:
+        if self._uprn is None:
+            self._uprn = self._get_uprn()
 
-    def get_uprn(self, session) -> str:
-        addresses = session.get(
-            f"https://www.bathnes.gov.uk/webapi/api/AddressesAPI/v2/search/{self._postcode}/150/true"
-        ).json()
-        address = next(filter(self.filter_addresses, addresses), None)
+        entries = self._call_api(API_COLLECTION_SUMMARY_URL.format(uprn=self._uprn))
+        return [
+            Collection(
+                date=datetime.fromisoformat(isodate).date(),
+                t=props["alias"],
+                icon=props["icon"],
+            )
+            for entry in entries
+            if (props := TYPES.get(entry.get("featureType")))
+            for date_type in ["previous", "next"]
+            if (isodate := entry.get(f"{date_type}CollectionDate"))
+        ]
+
+    def _get_uprn(self) -> int:
+        addresses = self._call_api(
+            API_ADDRESSES_SEARCH_URL.format(postcode=self._postcode)
+        )
+        if not addresses:
+            raise SourceArgumentNotFound("postcode", self._postcode)
+
+        address = next(filter(self._filter_address, addresses), None)
         if address is None:
             raise SourceArgumentNotFoundWithSuggestions(
                 "housenameornumber",
                 self._housenameornumber,
-                [a["payment_Address"] for a in addresses],
+                filter(None, [self._address_housenameornumber(a) for a in addresses]),
             )
-        return address["uprn"]
+        return int(address["uprn"])
 
-    def filter_addresses(self, address) -> bool:
-        return f"|{self._housenameornumber.upper()}|" in address["payment_Address"]
+    def _filter_address(self, address: Mapping[str, Any]) -> bool:
+        housenameornumber = self._address_housenameornumber(address)
+        return (
+            housenameornumber is not None
+            and housenameornumber.casefold() == self._housenameornumber.casefold()
+        )
+
+    def _address_housenameornumber(self, address: Mapping[str, Any]) -> Optional[str]:
+        parts = str(address.get("payment_Address", "")).split("|")
+        if len(parts) < 2:
+            return None
+        return parts[1].strip()
+
+    def _call_api(self, url: str):
+        r = requests.get(url, timeout=REQUEST_TIMEOUT)
+        r.raise_for_status()
+        if r.text.strip() == "":
+            raise Exception(f"Empty response from API for url: {url}")
+        return r.json()

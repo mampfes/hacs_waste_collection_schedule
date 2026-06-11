@@ -1,0 +1,14 @@
+---
+title: Gemeente Borsele
+url: https://www.borsele.nl
+country: nl
+howto:
+  en: |
+    - Go to <https://afvalkalender.borsele.nl> and search for your address.
+    - Find the iCal download link.
+    - The URL follows the pattern: `https://afvalkalender.borsele.nl/afval/afvalkalender/{year}/{postcode}-{number}.ics`
+    - Replace the year with `{%Y}` for automatic year substitution.
+    - Use this URL as the `url` parameter.
+test_cases:
+  Borsele 4451CM-12:
+    url: "https://afvalkalender.borsele.nl/afval/afvalkalender/{%Y}/4451CM-12.ics"

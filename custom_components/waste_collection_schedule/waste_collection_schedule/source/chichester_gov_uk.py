@@ -1,9 +1,9 @@
 import re
 from datetime import datetime
 
-import cloudscraper
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from curl_cffi import requests
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Chichester District Council"
 DESCRIPTION = "Source for chichester.gov.uk services for Chichester"
@@ -16,9 +16,9 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Recycling": "mdi:leaf",
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Recycling": Icons.GARDEN,
 }
 
 
@@ -27,7 +27,7 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
-        session = cloudscraper.create_scraper()
+        session = requests.Session(impersonate="chrome124")
         # Start a session
         r = session.get("https://www.chichester.gov.uk/checkyourbinday")
         r.raise_for_status()

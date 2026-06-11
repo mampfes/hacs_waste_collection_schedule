@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Stavanger Kommune"
 DESCRIPTION = "Source for Stavanger Kommune, Norway"
@@ -18,10 +18,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restavfall": "mdi:trash-can",
-    "Papp/papir": "mdi:recycle",
-    "Bio": "mdi:leaf",
-    "Juletre": "mdi:pine-tree",
+    "Restavfall": Icons.GENERAL_WASTE,
+    "Papp/papir": Icons.PAPER,
+    "Bio": Icons.ORGANIC,
+    "Juletre": Icons.CHRISTMAS_TREE,
 }
 
 

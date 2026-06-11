@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Circulus"
 DESCRIPTION = "Source for circulus.nl waste collection."
@@ -12,10 +12,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "REST": "mdi:trash-can",
-    "ZWAKRA": "mdi:recycle",
-    "GFT": "mdi:leaf",
-    "PAP": "mdi:newspaper-variant-multiple",
+    "REST": Icons.GENERAL_WASTE,
+    "ZWAKRA": Icons.RECYCLING,
+    "GFT": Icons.BIO_KITCHEN,
+    "PAP": Icons.PAPER,
 }
 
 WASTE_MAP = {

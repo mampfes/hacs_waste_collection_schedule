@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup, NavigableString
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -20,13 +20,13 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "restmüll": "mdi:trash-can",
-    "lvp-abfälle": "mdi:recycle",
-    "glas": "mdi:bottle-soda",
-    "bioabfall": "mdi:leaf",
-    "papier": "mdi:package-variant",
-    "wertstoffsäcke": "mdi:recycle",
-    "umweltmobil": "mdi:dump-truck",
+    "restmüll": Icons.GENERAL_WASTE,
+    "lvp-abfälle": Icons.PLASTIC_PACKAGING,
+    "glas": Icons.GLASS,
+    "bioabfall": Icons.BIO_KITCHEN,
+    "papier": Icons.PAPER,
+    "wertstoffsäcke": Icons.RECYCLING,
+    "umweltmobil": Icons.BULKY,
 }
 
 

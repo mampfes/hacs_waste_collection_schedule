@@ -3,7 +3,7 @@ import urllib.parse
 from typing import Literal, TypedDict
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Angers Loire Métropole"
@@ -27,11 +27,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "OM": "mdi:trash-can",
-    "TRI": "mdi:recycle",
-    "enc": "mdi:truck-remove",
-    "dv": "mdi:leaf",
-    "verre": "mdi:bottle-wine",
+    "OM": Icons.GENERAL_WASTE,
+    "TRI": Icons.RECYCLING,
+    "enc": Icons.BULKY,
+    "dv": Icons.ORGANIC,
+    "verre": Icons.GLASS,
 }
 
 LABEL_MAP = {

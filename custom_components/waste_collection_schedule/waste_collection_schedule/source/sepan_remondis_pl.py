@@ -109,7 +109,7 @@ class Source:
         r = requests.get(report["filePath"])
         r.raise_for_status()
         table = r.text[r.text.find("<table") : r.text.rfind("</table>") + 8]
-        tree = xml.etree.ElementTree.fromstring(table)
+        tree = xml.etree.ElementTree.fromstring(table)  # nosec B314
         year = datetime.date.today().year
 
         entries = []

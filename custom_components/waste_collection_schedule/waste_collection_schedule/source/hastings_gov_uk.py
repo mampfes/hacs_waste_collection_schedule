@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 import urllib3
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 # With verify=True the POST fails due to a SSLCertVerificationError.
 # Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
@@ -15,15 +15,15 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 TITLE = "Hastings Borough Council"
 DESCRIPTION = "Source for hastings.gov.uk services for Hastings Borough Council, UK."
 URL = "https://www.hastings.gov.uk/"
-API_URL = "https://el.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService"
+API_URL = "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService"
 TEST_CASES = {
     "Test_001": {"postcode": "TN34 1QF", "house_number": 36, "uprn": 100060038877},
     "Test_002": {"postcode": "TN34 2DL", "house_number": "28A", "uprn": "10070609836"},
     "Test_003": {"postcode": "TN37 7QH", "house_number": 5, "uprn": "100060041770"},
 }
 ICON_MAP = {
-    "Recycling": "mdi:recycle",
-    "Rubbish": "mdi:trash-can",
+    "Recycling": Icons.RECYCLING,
+    "Rubbish": Icons.GENERAL_WASTE,
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",

@@ -6,14 +6,13 @@ import requests
 ENDPOINT_STREET = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/streetNames"
 ENDPOINT_SCHEDID = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/plzSet/plzSet"
 
+
 def main():
 
     while True:
         questions = [inquirer.Text("street", message="Enter search string for street")]
         answers = inquirer.prompt(questions)
-        args = {
-            "searchQuery": answers["street"]
-        }
+        args = {"searchQuery": answers["street"]}
 
         with requests.Session() as street_session:
             response = street_session.get(ENDPOINT_STREET, params=args)
@@ -36,11 +35,9 @@ def main():
 
         questions = [inquirer.Text("number", message="Enter house number")]
         answers = inquirer.prompt(questions)
-        number = answers['number']
+        number = answers["number"]
         print(f"Selected number: {number}.")
-        args = {
-            "searchQuery": f"{street}:::{number}"
-        }
+        args = {"searchQuery": f"{street}:::{number}"}
         with requests.Session() as schedid_session:
             response = schedid_session.get(ENDPOINT_SCHEDID, params=args)
         schedid_list = response.json()
@@ -52,7 +49,11 @@ def main():
             address = schedid_list[0]["label"]
         if len(schedid_list) > 1:
             schedid_choices = [entry["label"] for entry in schedid_list]
-            questions = [inquirer.List("address", choices=schedid_choices, message="Select your address")]
+            questions = [
+                inquirer.List(
+                    "address", choices=schedid_choices, message="Select your address"
+                )
+            ]
             answers = inquirer.prompt(questions)
             address = answers["address"]
             for entry in schedid_list:
@@ -61,7 +62,9 @@ def main():
                     break
         print(f"Selected address: {address}.")
         print(f"Schedule id for this address: {schedid}.")
-        questions = [inquirer.Confirm("confirm", message="Is the address correct?", default=True)]
+        questions = [
+            inquirer.Confirm("confirm", message="Is the address correct?", default=True)
+        ]
         answers = inquirer.prompt(questions)
         if not answers["confirm"]:
             print("Please try again.")
@@ -74,7 +77,7 @@ def main():
     print("  sources:")
     print("    - name: bsr_de")
     print("      args:")
-    print(f"        schedule_id: \"{schedid}\"")
+    print(f'        schedule_id: "{schedid}"')
 
 
 if __name__ == "__main__":

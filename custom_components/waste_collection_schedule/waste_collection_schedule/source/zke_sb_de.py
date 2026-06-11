@@ -2,7 +2,7 @@ from datetime import datetime
 from html.parser import HTMLParser
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 # Source code based on ZKE Saarbrücken
@@ -25,10 +25,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restmuell:": "mdi:trash-can",
-    "Biomuell": "mdi:leaf",
-    "Papiertonne": "mdi:package-variant",
-    "Gelbe": "mdi:recycle",
+    "Restmuell:": Icons.GENERAL_WASTE,
+    "Biomuell": Icons.ORGANIC,
+    "Papiertonne": Icons.PAPER,
+    "Gelbe": Icons.RECYCLING,
 }
 
 API_URL = "https://info.zke-sb.de/WasteManagementSaarbruecken/WasteManagementServlet"
@@ -125,5 +125,8 @@ class Source:
 
         entries = []
         for d in dates:
-            entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1].split(" ")[0])))
+            bin_type = d[1].strip()
+            entries.append(
+                Collection(d[0], bin_type, ICON_MAP.get(bin_type.split(" ")[0]))
+            )
         return entries

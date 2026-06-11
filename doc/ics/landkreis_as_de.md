@@ -29,7 +29,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: (.*?)\s+\|.*
+        regex: (.*?)\s*\|.*
         url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_freudenberg.ics
 ```
 ### Ensdorf (regex also strip `! vorgefahren !`)
@@ -39,6 +39,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: (.*?)\s+(\||\!).*
+        regex: (.*?)\s*(\||\!).*
         url: https://landkreis-as.de/abfallwirtschaft/abfuhrtermine_kalender_ensdorf.ics
 ```

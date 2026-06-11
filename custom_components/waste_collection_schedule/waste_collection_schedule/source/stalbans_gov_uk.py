@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "St Albans City & District Council"
 DESCRIPTION = "Source for St Albans City & District Council."
@@ -13,10 +13,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "refuse": "mdi:trash-can",
-    "food": "mdi:food",
-    "garden": "mdi:leaf",
-    "recycling": "mdi:recycle",
+    "refuse": Icons.GENERAL_WASTE,
+    "food": Icons.BIO_KITCHEN,
+    "garden": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
 }
 
 

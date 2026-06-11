@@ -396,19 +396,19 @@ Optional title of the dedicated calendar. If not set, the waste type will be use
 Add the following lines to your `configuration.yaml` file:
 
 ```yaml
-sensor:
-  - platform: waste_collection_schedule
-    source_index: SOURCE_INDEX
-    name: NAME
-    details_format: DETAILS_FORMAT
-    count: COUNT
-    leadtime: LEADTIME
-    value_template: VALUE_TEMPLATE
-    date_template: DATE_TEMPLATE
-    add_days_to: ADD_DAYS_TO
-    types:
-      - Waste Type 1
-      - Waste Type 2
+waste_collection_schedule:
+  sensors:
+    - source_index: SOURCE_INDEX
+      name: NAME
+      details_format: DETAILS_FORMAT
+      count: COUNT
+      leadtime: LEADTIME
+      value_template: VALUE_TEMPLATE
+      date_template: DATE_TEMPLATE
+      add_days_to: ADD_DAYS_TO
+      types:
+        - Waste Type 1
+        - Waste Type 2
 ```
 
 ### Configuration Variables
@@ -596,16 +596,15 @@ value_template: '{{value.types|join(", ")}}'
 Set `types` within the sensor configuration:
 
 ```yaml
-sensor:
-  - platform: waste_collection_schedule
-    name: next_garbage_collection
-    types:
-      - Garbage
+waste_collection_schedule:
+  sensors:
+    - name: next_garbage_collection
+      types:
+        - Garbage
 
-  - platform: waste_collection_schedule
-    name: next_recycle_collection
-    types:
-      - Recycle
+    - name: next_recycle_collection
+      types:
+        - Recycle
 ```
 
 Note: If you have set an alias for a waste type, you must use the alias name.
@@ -646,10 +645,10 @@ You can use [Button Card](https://github.com/custom-cards/button-card) to create
 
 ```yaml
 # configuration.yaml
-sensor:
-  - platform: waste_collection_schedule
-    name: MyButtonCardSensor
-    value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'
+waste_collection_schedule:
+  sensors:
+    - name: MyButtonCardSensor
+      value_template: '{{value.types|join(", ")}}|{{value.daysTo}}|{{value.date.strftime("%d.%m.%Y")}}|{{value.date.strftime("%a")}}'
 ```
 
 ```yaml
@@ -689,14 +688,15 @@ Yes, the [Garbage Collection Card](https://github.com/amaximus/garbage-collectio
 
 ```yaml
 # configuration.yaml
-sensor:
-  - platform: waste_collection_schedule
-    name: garbage_days
-    details_format: appointment_types
-    value_template: "{{ value.daysTo }}"
-    types:
-      - Garbage
+waste_collection_schedule:
+  sensors:
+    - name: garbage_days
+      details_format: appointment_types
+      value_template: "{{ value.daysTo }}"
+      types:
+        - Garbage
 
+sensor:
   - platform: template
     sensors:
       garbage:

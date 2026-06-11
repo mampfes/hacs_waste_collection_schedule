@@ -4,7 +4,7 @@ from datetime import datetime
 import requests
 import urllib3
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Bradford Metropolitan District Council"
 DESCRIPTION = (
@@ -19,9 +19,9 @@ TEST_CASES = {
 
 API_URL = "https://onlineforms.bradford.gov.uk/ufs/"
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
 }
 
 

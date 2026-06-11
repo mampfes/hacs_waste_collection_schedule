@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Odense Renovation"
 DESCRIPTION = "Source for Odense Renovation"
@@ -14,13 +14,13 @@ TEST_CASES = {
 
 API_URL = "https://mit.odenserenovation.dk/api/Calendar/GetCalendarByAddress"
 ICON_MAP = {
-    "00": "mdi:trash-can",  # Mad- og restaffald
-    "10": "mdi:archive",  # Glas & metal og papir & småt pap
-    "20": "mdi:trash-can",  # Restaffald
-    "30": "mdi:food-apple",  # Madaffald
-    "40": "mdi:archive",  # Papir & småt pap
-    "50": "mdi:bottle-wine",  # Glas & Metal
-    "60": "mdi:bottle-soda",  # Plast og mad- & drikkekartoner
+    "00": Icons.GENERAL_WASTE,
+    "10": Icons.PAPER,
+    "20": Icons.GENERAL_WASTE,
+    "30": Icons.BIO_KITCHEN,
+    "40": Icons.PAPER,
+    "50": Icons.GLASS_COLORED,
+    "60": Icons.GLASS,
 }
 
 

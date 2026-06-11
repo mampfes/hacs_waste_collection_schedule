@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Guildford Borough Council"
 DESCRIPTION = "Source for guildford.gov.uk services for Guildford, UK."
@@ -14,10 +14,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Food": "mdi:food-apple",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Food": Icons.BIO_KITCHEN,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
 }
 
 API_URL = "https://my.guildford.gov.uk/customers/s/sfsites/aura?r=10&other.BinScheduleDisplayCmp.GetBinSchedules=1"
@@ -46,7 +46,7 @@ class Source:
             str = r.text.split(" ")
             current = 0
             while current < len(str):
-                # Having split the string in a space delimited list, walk through lookin for the cookie it was expecting
+                # Having split the string in a space delimited list, walk through looking for the cookie it was expecting
                 if str[current] == "Expected:":
                     framework = str[current + 1]
                     # Having updated the cookie, try the POST request again. It should work (As we're providing the cookie it told us to use !)

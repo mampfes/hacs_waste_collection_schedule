@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Gmina Miękinia"
 DESCRIPTION = "Source for Gmina Miękinia, Poland"
@@ -11,12 +11,12 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Zmieszane": "mdi:trash-can",  # Mixed
-    "Tworzywa sztuczne": "mdi:recycle",  # Plastic
-    "Bioodpady": "mdi:leaf",  # Organic
-    "Papier": "mdi:file-outline",  # Paper
-    "Szkło": "mdi:glass-fragile",  # Glass
-    "Wielkogabaryty": "mdi:sofa-single",
+    "Zmieszane": Icons.GENERAL_WASTE,
+    "Tworzywa sztuczne": Icons.RECYCLING,
+    "Bioodpady": Icons.ORGANIC,
+    "Papier": Icons.PAPER,
+    "Szkło": Icons.GLASS,
+    "Wielkogabaryty": Icons.BULKY,
 }
 
 API_URL = "https://api.skycms.com.pl/api/v1/rest/garbage/disposals/"

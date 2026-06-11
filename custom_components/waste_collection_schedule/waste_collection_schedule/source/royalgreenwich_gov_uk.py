@@ -4,7 +4,7 @@ from typing import Mapping, Optional
 import requests
 from bs4 import BeautifulSoup, Tag
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
@@ -25,9 +25,9 @@ ADDRESS_SEARCH_URL = "https://www.royalgreenwich.gov.uk/site/custom_scripts/apps
 
 DAYS = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 ICON_MAP = {
-    "recycling": "mdi:recycle",
-    "garden": "mdi:leaf",
-    "food": "mdi:food-apple",
+    "recycling": Icons.RECYCLING,
+    "garden": Icons.GARDEN,
+    "food": Icons.BIO_KITCHEN,
 }
 
 # ### Arguments affecting the configuration GUI ####
@@ -158,11 +158,11 @@ class Source:
             if len(row_dates) < 2:
                 continue
 
-            from_date = parser.parse(row_dates[0].text).date()
+            from_date = parser.parse(row_dates[0].text, fuzzy=True).date()
             to_date = (
                 from_date
-                if row_dates[1].text == "Collection as usual"
-                else parser.parse(row_dates[1].text).date()
+                if row_dates[1].text == "Collections as normal"
+                else parser.parse(row_dates[1].text, fuzzy=True).date()
             )
 
             result[from_date] = to_date
@@ -193,7 +193,7 @@ class Source:
         # e.g. for flats they explicitly mentioned to contact management company instead
         # so in this case address can be found in previous steps, but there is no data for it and this error is returned
         if r.text == "ADDRESS_NOT_FOUND":
-            raise Exception(f"No data found for address '{self._address}'")
+            raise SourceArgumentNotFound("address", self._address)
 
         data = r.json()
 

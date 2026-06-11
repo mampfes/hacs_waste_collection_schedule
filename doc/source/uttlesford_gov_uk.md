@@ -1,6 +1,9 @@
 # Uttlesford District Council
 
-Support for schedules provided by [Uttlesford District Council](http://bins.uttlesford.gov.uk/), serving Uttlesford, UK.
+Support for schedules provided by [Uttlesford District Council](http://bins.uttlesford.gov.uk/), serving Uttlesford, Essex, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new West Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 

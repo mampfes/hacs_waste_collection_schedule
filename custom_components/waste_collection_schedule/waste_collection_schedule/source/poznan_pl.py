@@ -3,7 +3,8 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
 
 TITLE = "Poznań"
 DESCRIPTION = "Source for Poznań city garbage collection"
@@ -21,13 +22,13 @@ _LOGGER = logging.getLogger(__name__)
 API_URL = "https://www.poznan.pl/mim/odpady/harmonogramy.html"
 
 ICON_MAP = {
-    "Odpady zmieszane": "mdi:trash-can",
-    "Papier": "mdi:newspaper-variant-outline",
-    "Metale i tworzywa sztuczne": "mdi:bottle-soda-classic-outline",
-    "Szkło": "mdi:glass-fragile",
-    "Bioodpady": "mdi:recycle",
-    "Odpady wystawkowe": "mdi:cupboard",
-    "Drzewka świąteczne": "mdi:pine-tree",
+    "Odpady zmieszane": Icons.GENERAL_WASTE,
+    "Papier": Icons.PAPER,
+    "Metale i tworzywa sztuczne": Icons.METAL,
+    "Szkło": Icons.GLASS,
+    "Bioodpady": Icons.RECYCLING,
+    "Odpady wystawkowe": Icons.BULKY,
+    "Drzewka świąteczne": Icons.CHRISTMAS_TREE,
 }
 
 
@@ -59,7 +60,9 @@ class Source:
 
         table = soup.find("table", id="schedule_0")
         if not isinstance(table, Tag):
-            raise Exception("Invalid address")
+            raise SourceArgumentExceptionMultiple(
+                ["street_name", "street_number"], "Invalid address"
+            )
 
         entries = []
         for formatted_date in formatted_dates:

@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,10 +19,10 @@ TEST_CASES = {
     "100062558476": {"uprn": "100062558476", "postcode": "TN233LX"},
 }
 ICON_MAP = {
-    "household refuse": "mdi:trash-can",
-    "food waste": "mdi:food",
-    "garden waste": "mdi:leaf",
-    "recycling": "mdi:recycle",
+    "household refuse": Icons.GENERAL_WASTE,
+    "food waste": Icons.BIO_KITCHEN,
+    "garden waste": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
 }
 API_URL = "https://secure.ashford.gov.uk/waste/collectiondaylookup/"
 

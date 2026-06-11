@@ -4,7 +4,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -24,9 +24,8 @@ TEST_CASES = {
 
 API_BASE_URL = "https://www.shoalhaven.nsw.gov.au/ocapi/Public/myarea/wasteservices"
 ICON_MAP = {
-    # Maps waste types (in uppercase) to Material Design Icons (mdi)
-    "GENERAL WASTE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
+    "GENERAL WASTE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
 }
 
 # ### Arguments affecting the configuration GUI ####

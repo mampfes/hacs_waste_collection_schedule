@@ -2,7 +2,7 @@ from datetime import datetime
 from urllib.parse import urlencode
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWV: Abfall Wirtschaftszweckverband Ostthüringen"
@@ -28,10 +28,10 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Hausmuelltonne": "mdi:trash-can",
-    "Biotonne": "mdi:leaf",
-    "Papiertonne": "mdi:package-variant",
-    "Gelbe Tonne": "mdi:recycle",
+    "Hausmuelltonne": Icons.GENERAL_WASTE,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Papiertonne": Icons.PAPER,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
 }
 
 

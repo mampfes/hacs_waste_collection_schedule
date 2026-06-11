@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.service.ICS import ICS
 
@@ -27,11 +27,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Weihnachtsbaum": "mdi:pine-tree",
-    "Bio": "mdi:leaf",
-    "Pappe, Papier & Kart.": "mdi:package-variant",
-    "Leichtstoffverpackungen": "mdi:recycle",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Weihnachtsbaum": Icons.CHRISTMAS_TREE,
+    "Bio": Icons.ORGANIC,
+    "Pappe, Papier & Kart.": Icons.PAPER,
+    "Leichtstoffverpackungen": Icons.RECYCLING,
 }
 
 
@@ -85,7 +85,9 @@ class Source:
 
         if egebiet_id == "0":
             if self._object_number == "":
-                raise SourceArgumentRequired("object_number")
+                raise SourceArgumentRequired(
+                    "object_number", "An object number is required for this address"
+                )
             args["input"] = self._object_number
             args["url"] = 7
             r = requests.post("https://asc.hausmuell.info/proxy.php", data=args)

@@ -1,5 +1,7 @@
 """Config flow setup logic."""
 
+import asyncio
+import importlib
 import logging
 from typing import Any
 
@@ -58,6 +60,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data[const.CONF_SOURCE_ARGS],
         options.get(const.CONF_SOURCE_CALENDAR_TITLE),
         options.get(const.CONF_DAY_OFFSET, const.CONF_DAY_OFFSET_DEFAULT),
+        options.get(const.CONF_IGNORE_DUPLICATES, const.CONF_IGNORE_DUPLICATES_DEFAULT),
     )
 
     coordinator = WCSCoordinator(
@@ -66,6 +69,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         separator=options.get(const.CONF_SEPARATOR, const.CONF_SEPARATOR_DEFAULT),
         fetch_time=cv.time(
             options.get(const.CONF_FETCH_TIME, const.CONF_FETCH_TIME_DEFAULT)
+        ),
+        fetch_interval_days=options.get(
+            const.CONF_FETCH_INTERVAL_DAYS, const.CONF_FETCH_INTERVAL_DAYS_DEFAULT
         ),
         random_fetch_time_offset=options.get(
             const.CONF_RANDOM_FETCH_TIME_OFFSET,
@@ -79,6 +85,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(const.DOMAIN, {})[entry.entry_id] = coordinator
+
+    # Pre-import platforms in parallel to avoid blocking I/O in the event loop
+    await asyncio.gather(
+        *[
+            hass.async_add_executor_job(
+                importlib.import_module,
+                f"custom_components.waste_collection_schedule.{platform}",
+            )
+            for platform in PLATFORMS
+        ]
+    )
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 

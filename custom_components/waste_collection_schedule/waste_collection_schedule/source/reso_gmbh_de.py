@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "RESO"
@@ -13,11 +13,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "restmüll": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "biotonne": "mdi:leaf",
-    "papiertonne": "mdi:package-variant",
-    "gelber-sack": "mdi:recycle",
+    "restmüll": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "biotonne": Icons.BIO_KITCHEN,
+    "papiertonne": Icons.PAPER,
+    "gelber-sack": Icons.RECYCLING,
 }
 
 

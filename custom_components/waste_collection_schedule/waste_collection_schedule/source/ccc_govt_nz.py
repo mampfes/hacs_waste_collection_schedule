@@ -2,7 +2,7 @@ import datetime
 import logging
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Christchurch City Council"
 DESCRIPTION = "Source for Christchurch City Council."
@@ -10,9 +10,9 @@ URL = "https://ccc.govt.nz"
 TEST_CASES = {"53 Hereford Street": {"address": "53 Hereford Street"}}
 
 ICON_MAP = {
-    "Garbage": "mdi:trash-can",
-    "Recycle": "mdi:recycle",
-    "Organic": "mdi:leaf",
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycle": Icons.RECYCLING,
+    "Organic": Icons.ORGANIC,
 }
 
 ADDRESS_SUGGEST_URL = "https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest"
@@ -88,24 +88,48 @@ class Source:
         )
         overrides = overridesResponse.json()
 
-        _LOGGER.debug("Processing overrides...")
+        _LOGGER.debug("Processing bins...")
+        today = datetime.date.today()
         for bin in bins:
+            if bin.get("pick_up_group") in ("Daily", "Not Collected"):
+                _LOGGER.debug(
+                    "Skipping bin %s with pick_up_group %s",
+                    bin["material"],
+                    bin.get("pick_up_group"),
+                )
+                continue
+
+            _LOGGER.debug("Processing bin %s", bin)
+            collection_date = datetime.datetime.strptime(
+                bin["next_planned_date_app"], "%Y-%m-%d"
+            ).date()
+
+            # The API can return stale dates. Advance past dates forward
+            # by the collection interval until they are no longer in the past
+            # (i.e., on or after today). Organic is collected weekly, all others fortnightly.
+            interval_weeks = 1 if bin["material"] == "Organic" else 2
+            max_iterations = 208  # safety limit
+            iterations = 0
+            while collection_date < today and iterations < max_iterations:
+                collection_date += datetime.timedelta(weeks=interval_weeks)
+                iterations += 1
+
+            # After the final advanced date is computed, apply any matching
+            # holiday/special-date override for that date.
+            date_str = collection_date.strftime("%Y-%m-%d")
             for override in overrides:
-                if override["OriginalDate"] == bin["next_planned_date_app"]:
+                if override["OriginalDate"] == date_str:
+                    collection_date = datetime.datetime.strptime(
+                        override["NewDate"], "%Y-%m-%d"
+                    ).date()
                     _LOGGER.debug(
                         "Processing overrides for %s", override["OriginalDate"]
                     )
-                    bin["next_planned_date_app"] = override["NewDate"]
-        _LOGGER.debug("Overrides processing complete")
+                    break
 
-        _LOGGER.debug("Processing bins...")
-        for bin in bins:
-            _LOGGER.debug("Processing bin %s", bin)
             entries.append(
                 Collection(
-                    date=datetime.datetime.strptime(
-                        bin["next_planned_date_app"], "%Y-%m-%d"
-                    ).date(),
+                    date=collection_date,
                     t=bin["material"],
                     icon=ICON_MAP.get(bin["material"]),
                 )

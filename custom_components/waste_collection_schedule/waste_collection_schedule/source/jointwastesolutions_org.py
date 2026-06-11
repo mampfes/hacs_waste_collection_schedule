@@ -7,7 +7,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Joint Waste Solutions"
 URL = "https://www.jointwastesolutions.org/"
@@ -53,11 +53,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "RUBBISH": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN": "mdi:leaf",
-    "BATTERIES-SMALL ELECTRICALS-TEXTILES": "mdi:battery",
-    "FOOD WASTE": "mdi:food",
+    "RUBBISH": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN": Icons.GARDEN,
+    "BATTERIES-SMALL ELECTRICALS-TEXTILES": Icons.BATTERY,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
 }
 REGEX = r"(\d+\/\d+\/\d+\/[\d\w]+)"
 

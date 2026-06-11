@@ -1,7 +1,7 @@
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from dateutil.parser import parse
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Islington Council"
 DESCRIPTION = "Source for Islington Council, UK."
@@ -12,17 +12,17 @@ TEST_CASES = {
     "Test_003": {"postcode": "N19 4TA", "uprn": "5300078702"},
 }
 ICON_MAP = {
-    "Green recycling box": "mdi:recycle",
-    "Dry recycling bin": "mdi:recycle",
-    "Communal dry recycling bin": "mdi:recycle",
-    "Small kitchen waste box": "mdi:food",
-    "Large brown kitchen waste box": "mdi:food",
-    "Reuseable garden waste sack": "mdi:leaf",
-    "Household refuse sack": "mdi:trash-can",
-    "Refuse skip": "mdi:trash-can",
-    "Food waste recycling": "mdi:food",
-    "Mixed dry recycling": "mdi:recycle",
-    "Non-recyclable rubbish": "mdi:recycle",
+    "Green recycling box": Icons.RECYCLING,
+    "Dry recycling bin": Icons.RECYCLING,
+    "Communal dry recycling bin": Icons.RECYCLING,
+    "Small kitchen waste box": Icons.BIO_KITCHEN,
+    "Large brown kitchen waste box": Icons.BIO_KITCHEN,
+    "Reuseable garden waste sack": Icons.GARDEN,
+    "Household refuse sack": Icons.GENERAL_WASTE,
+    "Refuse skip": Icons.COMMERCIAL,
+    "Food waste recycling": Icons.BIO_KITCHEN,
+    "Mixed dry recycling": Icons.RECYCLING,
+    "Non-recyclable rubbish": Icons.GENERAL_WASTE,
 }
 
 
@@ -30,7 +30,7 @@ class Source:
     def __init__(self, postcode, uprn):
         self._uprn = str(uprn)
         self._postcode = str(postcode)
-        self._session = requests.Session()
+        self._session = requests.Session(impersonate="chrome124")
 
     def fetch(self):
         url = f"https://www.islington.gov.uk/your-area?Postcode={self._postcode}&Uprn={self._uprn}"

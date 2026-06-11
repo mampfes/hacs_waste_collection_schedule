@@ -31,22 +31,55 @@ TEST_CASES = {
         "house_number": 2,
         "addition": "A",
     },
+    "BAT Tilburg": {
+        "organization": "bat",
+        "post_code": "5071EN",
+        "house_number": 122,
+    },
+    "Groningen": {
+        "organization": "groningen",
+        "post_code": "9733AH",
+        "house_number": 66,
+    },
+    "Utrecht": {
+        "organization": "utrecht",
+        "post_code": "3581GG",
+        "house_number": 7,
+    },
 }
 
-Organization = Literal["assen", "rmn"]
+Organization = Literal["assen", "bat", "groningen", "rmn", "utrecht"]
 
 SERVICE_MAP = [
     {
-        "title": "Assen",
+        "title": "Gemeente Assen",
         "url": "https://www.assen.nl/",
         "uuid": "138204213565303512",
         "organization": "assen",
+    },
+    {
+        "title": "BAT Tilburg",
+        "url": "https://www.batafvalbeheer.nl/",
+        "uuid": "452048812597339353",
+        "organization": "bat",
+    },
+    {
+        "title": "Gemeente Groningen",
+        "url": "https://gemeente.groningen.nl/",
+        "uuid": "452048812597326549",
+        "organization": "groningen",
     },
     {
         "title": "Reinigingsdienst Midden Nederland",
         "url": "https://www.rmn.nl/",
         "uuid": "138204213564933597",
         "organization": "rmn",
+    },
+    {
+        "title": "Gemeente Utrecht",
+        "url": "https://www.utrecht.nl/",
+        "uuid": "452048812597339479",
+        "organization": "utrecht",
     },
 ]
 

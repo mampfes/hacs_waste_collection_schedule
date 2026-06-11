@@ -9,16 +9,16 @@ waste_collection_schedule:
   sources:
     - name: valorlux_lu
       args:
-        city: CITY
+        commune: COMMUNE
         zone: ZONE
 ```
 
 ### Arguments
 
-**city**  
+**commune**  
 *(string) (required)*
 
-The name of your city or municipality. This will be a dropdown list in the UI.
+The name of your commune (municipality). This will be a dropdown list in the UI.
 
 **zone**  
 *(string) (optional)*

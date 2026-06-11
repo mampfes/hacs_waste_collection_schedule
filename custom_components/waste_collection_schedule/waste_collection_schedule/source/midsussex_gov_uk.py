@@ -1,9 +1,14 @@
 import datetime
 import logging
+from urllib.parse import urljoin
+
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentException, SourceArgumentNotFound
+from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -18,24 +23,33 @@ DATE_FORMAT = "%d/%m/%Y"
 # *** TEST CASES ***
 TEST_CASES = {
     # 1. Simple Numerical Address
-    "Test Case 1: 23 High Street": {"number": "23", "street": "HIGH STREET", "postcode": "RH17 6TB"},
-    
+    "Test Case 1: 23 High Street": {
+        "number": "23",
+        "street": "HIGH STREET",
+        "postcode": "RH17 6TB",
+    },
     # 2. Complex Named Property
-    "Test Case 2: Hapstead Hall": {"number": "HAPSTEAD HALL", "street": "HIGH STREET", "postcode": "RH17 6TB"},
-    
+    "Test Case 2: Hapstead Hall": {
+        "number": "HAPSTEAD HALL",
+        "street": "HIGH STREET",
+        "postcode": "RH17 6TB",
+    },
     # 3. Commercial/Pub Named Property
-    "Test Case 3: The Gardeners Arms": {"number": "THE GARDENERS ARMS", "street": "SELSFIELD ROAD", "postcode": "RH17 6TJ"},
+    "Test Case 3: The Gardeners Arms": {
+        "number": "THE GARDENERS ARMS",
+        "street": "SELSFIELD ROAD",
+        "postcode": "RH17 6TJ",
+    },
 }
 
 ICON_MAP = {
-    "DOMESTIC FOOD WASTE SERVICE": "mdi:food-apple",
-    "DOMESTIC RECYCLING WASTE COLLECTION SERVICE": "mdi:recycle",
-    "DOMESTIC REFUSE WASTE COLLECTION SERVICE": "mdi:trash-can",
-    "DOMESTIC GARDEN WASTE SERVICE": "mdi:leaf",
-    # Add other types as needed
+    "DOMESTIC FOOD WASTE SERVICE": Icons.BIO_KITCHEN,
+    "DOMESTIC RECYCLING WASTE COLLECTION SERVICE": Icons.GENERAL_WASTE,
+    "DOMESTIC REFUSE WASTE COLLECTION SERVICE": Icons.GENERAL_WASTE,
+    "DOMESTIC GARDEN WASTE SERVICE": Icons.GARDEN,
 }
 
-#### Arguments affecting the configuration GUI ####
+# Arguments affecting the configuration GUI
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Enter your property's exact Postcode, Street Name, and House Name/Number (or business name) as they appear on the council's website's collection search tool.",
@@ -57,39 +71,59 @@ PARAM_TRANSLATIONS = {
     },
 }
 
-#### End of arguments affecting the configuration GUI ####
+# End of arguments affecting the configuration GUI
 
 # --- SOURCE CLASS ---
 
+
 class Source:
-    def __init__(self, number: str = None, street: str = "", postcode: str = "", house_number: str = None):
+    def __init__(
+        self,
+        number: str | None = None,
+        street: str = "",
+        postcode: str = "",
+        house_number: str | None = None,
+    ):
         # Support legacy 'house_number' parameter for backwards compatibility
         if number is None and house_number is None:
-            raise SourceArgumentException("Either 'number' or 'house_number' must be provided.", argument="number")
-        self._number = (number or house_number).strip()
+            raise SourceArgumentException(
+                "Either 'number' or 'house_number' must be provided.", argument="number"
+            )
+        resolved = number or house_number
+        assert resolved is not None
+        self._number = resolved.strip()
         self._street = street.strip()
-        self._postcode = postcode.strip().replace(" ", "+") # URL-encode space
+        self._postcode = postcode.strip().replace(" ", "+")  # URL-encode space
 
     def fetch(self) -> list[Collection]:
         entries = []
-        BASE_URL = "https://sms-wrp.whitespacews.com"
+        BASE_URL = "https://waste.services.midsussex.gov.uk"
 
         with requests.Session() as session:
+            session.headers.update(
+                {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                    "Accept-Language": "en-GB,en;q=0.5",
+                }
+            )
             # --- STEP 1: Get the Dynamic Track Token ---
             r1 = session.get(f"{BASE_URL}/mop.php", timeout=30)
             r1.raise_for_status()
 
-            soup = BeautifulSoup(r1.text, 'html.parser')
+            soup = BeautifulSoup(r1.text, "html.parser")
 
-            next_link_element = soup.find('a', href=lambda href: href and 'Track=' in href)
+            next_link_element = soup.find(
+                "a", href=lambda href: href and "Track=" in href
+            )
 
             if not next_link_element:
                 raise ValueError("Could not find dynamic Track token link in Step 1.")
 
-            dynamic_link = next_link_element.get('href')
+            dynamic_link = next_link_element.get("href")  # type: ignore[union-attr]
 
             try:
-                track_token = dynamic_link.split('Track=')[1].split('&')[0]
+                track_token = dynamic_link.split("Track=")[1].split("&")[0]  # type: ignore[union-attr]
             except IndexError:
                 raise ValueError("Could not parse dynamic Track token in Step 1.")
 
@@ -97,45 +131,53 @@ class Source:
             post_url = f"{BASE_URL}/mop.php?serviceID=A&Track={track_token}&seq=2"
 
             payload = {
-                'address_name_number': self._number,
-                'address_street': self._street,
-                'street_town': '',
-                'address_postcode': self._postcode.replace('+', ' '), # Send post data un-encoded
+                "address_name_number": self._number,
+                "address_street": self._street,
+                "street_town": "",
+                "address_postcode": self._postcode.replace(
+                    "+", " "
+                ),  # Send post data un-encoded
             }
 
             r2 = session.post(post_url, data=payload, timeout=30)
             r2.raise_for_status()
 
             # --- STEP 3: Select the Specific Address (Get pIndex) ---
-            soup2 = BeautifulSoup(r2.text, 'html.parser')
+            soup2 = BeautifulSoup(r2.text, "html.parser")
 
             search_text = self._number.upper()
 
-            address_link = soup2.find(
-                'a',
-                class_='app-subnav__link',
-                string=lambda t: t and search_text in t.upper()
+            all_address_links = soup2.find_all("a", class_="app-subnav__link")
+            address_link = next(
+                (
+                    link
+                    for link in all_address_links
+                    if search_text in link.get_text(strip=True).upper()
+                ),
+                None,
             )
 
             if not address_link:
                 raise SourceArgumentNotFound("number", self._number)
 
-            final_link_path = address_link['href']
-            final_schedule_url = f"{BASE_URL}/{final_link_path}"
+            final_link_path = address_link["href"]  # type: ignore[index]
+            final_schedule_url = urljoin(BASE_URL + "/", final_link_path)
 
             # --- STEP 4: Scrape the Final Schedule ---
             r3 = session.get(final_schedule_url, timeout=30)
             r3.raise_for_status()
 
-            soup3 = BeautifulSoup(r3.text, 'html.parser')
+            soup3 = BeautifulSoup(r3.text, "html.parser")
 
-            collection_entries = soup3.find_all('ul', class_='displayinlineblock')
+            collection_entries = soup3.find_all("ul", class_="displayinlineblock")
 
             if not collection_entries:
-                raise ValueError("Could not find any collection entries on the schedule page.")
+                raise ValueError(
+                    "Could not find any collection entries on the schedule page."
+                )
 
             for ul in collection_entries:
-                list_items = ul.find_all('li')
+                list_items = ul.find_all("li")
 
                 if len(list_items) < 3:
                     continue
@@ -144,9 +186,13 @@ class Source:
                 waste_type = list_items[2].p.text.strip().upper()
 
                 try:
-                    collection_date = datetime.datetime.strptime(date_str, DATE_FORMAT).date()
+                    collection_date = datetime.datetime.strptime(
+                        date_str, DATE_FORMAT
+                    ).date()
                 except ValueError:
-                    _LOGGER.warning(f"Skipping entry with unparsable date format: {date_str}")
+                    _LOGGER.warning(
+                        f"Skipping entry with unparsable date format: {date_str}"
+                    )
                     continue
 
                 entries.append(

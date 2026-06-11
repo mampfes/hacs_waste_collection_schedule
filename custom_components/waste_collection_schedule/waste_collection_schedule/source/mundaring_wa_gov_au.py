@@ -3,7 +3,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Shire of Mundaring"
 DESCRIPTION = "Source for mundaring.wa.gov.au services for the Shire of Mundaring, Western Australia"
@@ -14,10 +14,10 @@ TEST_CASES = {
     "Test_003": {"parcel_number": 1119284, "suburb": "Glen Forrest"},
 }
 ICON_MAP = {
-    "FOGO Bin": "mdi:leaf",
-    "Recycle Bin": "mdi:recycle",
-    "General Waste": "mdi:trash-can",
-    "Bulk Verge Collection": "mdi:sofa",
+    "FOGO Bin": Icons.BIO_KITCHEN,
+    "Recycle Bin": Icons.RECYCLING,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Bulk Verge Collection": Icons.BULKY,
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",

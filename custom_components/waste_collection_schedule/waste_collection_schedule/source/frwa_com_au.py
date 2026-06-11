@@ -1,9 +1,9 @@
-import json
+import re
 from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = (
     "Fleurieu Regional Waste Authority"  # Title will show up in README.md and info.md
@@ -41,11 +41,14 @@ API_URLS = {
     "SEARCH": "https://fleurieuregionalwasteauthority.com.au/wp-admin/admin-ajax.php",
 }
 ICON_MAP = {
-    "Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
+    "Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green Waste": Icons.GARDEN,
 }
-HEADERS = {"user-agent": "Mozilla/5.0"}
+HEADERS = {
+    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://fleurieuregionalwasteauthority.com.au/collection-calendar-downloads",
+}
 EXTRA_INFO = [
     {"title": "Kangaroo Island Council", "url": "https://www.kangarooisland.sa.gov.au"},
     {
@@ -89,11 +92,10 @@ class Source:
 
         # get security token
         r = s.get(API_URLS["HOME"], headers=HEADERS)
-        soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
-        script_text = soup.find("script", {"id": "autocomplete-search-js-extra"}).string
-        json_text = script_text.split("=", 1)[1].rsplit(";", 1)[0].strip()
-        data = json.loads(json_text)
-        token = data["ajax_nonce"]
+        match = re.search(r'"ajax_nonce"\s*:\s*"([^"]+)"', r.text)
+        if not match:
+            raise Exception("Unable to find ajax_nonce on FRWA website")
+        token = match.group(1)
 
         # get unique ID from street search
         params = {

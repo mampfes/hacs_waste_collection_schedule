@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Exeter City Council"
 DESCRIPTION = "Source for Exeter City services for Exeter City Council, UK."
@@ -16,10 +16,10 @@ TEST_CASES = {
     "Test_004": {"uprn": 100040241022},
 }
 ICON_MAP = {
-    "REFUSE": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN WASTE": "mdi:leaf",
-    "FOOD WASTE": "mdi:food",
+    "REFUSE": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN WASTE": Icons.GARDEN,
+    "FOOD WASTE": Icons.BIO_KITCHEN,
 }
 REGEX_ORDINALS = r"(?<=[0-9])(?:st|nd|rd|th)"
 
@@ -41,16 +41,22 @@ class Source:
 
         entries = []
         for b, d in zip(bins, dates):
-            # check cases where no date is given for a collection
-            if d and len(d.text.split(",")) > 1:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(
-                            re.compile(REGEX_ORDINALS).sub("", d.text), "%A, %d %B %Y"
-                        ).date(),
-                        t=b.text.replace(" collection", ""),
-                        icon=ICON_MAP.get(b.text.replace(" collection", "").upper()),
-                    )
+            raw_date = re.compile(REGEX_ORDINALS).sub("", d.get_text(strip=True))
+            for fmt in ("%A, %d %B %Y", "%A %d %B %Y"):
+                try:
+                    date = datetime.strptime(raw_date, fmt).date()
+                    break
+                except ValueError:
+                    continue
+            else:
+                continue
+
+            entries.append(
+                Collection(
+                    date=date,
+                    t=b.text.replace(" collection", ""),
+                    icon=ICON_MAP.get(b.text.replace(" collection", "").upper()),
                 )
+            )
 
         return entries

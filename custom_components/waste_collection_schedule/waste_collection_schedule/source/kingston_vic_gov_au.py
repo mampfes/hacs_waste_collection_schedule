@@ -1,7 +1,7 @@
 import logging
 from typing import List
 
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 from ..service.WhatBinDay import WhatBinDayService
 
@@ -33,9 +33,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "WasteBin": "mdi:trash-can",
-    "RecycleBin": "mdi:recycle",
-    "GreenBin": "mdi:leaf",
+    "WasteBin": Icons.GENERAL_WASTE,
+    "RecycleBin": Icons.RECYCLING,
+    "GreenBin": Icons.ORGANIC,
 }
 
 BIN_NAMES = {

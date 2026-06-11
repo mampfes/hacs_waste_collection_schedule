@@ -2,7 +2,7 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Kumberg"
@@ -12,11 +12,11 @@ TEST_CASES: dict[str, dict] = {"Whole Kumberg": {}}
 
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Bio": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Gelber Sack": "mdi:recycle",
-    "Sperrmüll": "mdi:sofa",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Bio": Icons.ORGANIC,
+    "Papier": Icons.PAPER,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Sperrmüll": Icons.BULKY,
 }
 
 

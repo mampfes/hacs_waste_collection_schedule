@@ -5,7 +5,7 @@ Abfallwirtschaftsbetrieb des Landkreises Pfaffenhofen a.d.Ilm (AWP) is supported
 
 ## How to get the configuration arguments
 
-- Go to <https://www.awp-paf.de/Abfuhrtermine/Abfallkalender.aspx> and select your town.
+- Go to <https://www.awp-paf.de/termine/abfuhrtermine/> and select your town.
 - Enter your street and house number.
 - Click on `ical-Kalenderabo` and `URL in die Zwischenablage kopieren` to get a webcal link.
 - Use this link as the `url` parameter.

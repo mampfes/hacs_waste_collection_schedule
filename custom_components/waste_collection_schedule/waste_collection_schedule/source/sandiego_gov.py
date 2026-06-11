@@ -3,7 +3,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "City of San Diego"
 DESCRIPTION = "Source for the City of San Diego."
@@ -15,9 +15,9 @@ TEST_CASES = {
     "Test_003": {"id": "a4Ot0000000eANbEAM"},
 }
 ICON_MAP = {
-    "Trash": "mdi:trash-can",
-    "Organics": "mdi:leaf",
-    "Recyclables": "mdi:recycle",
+    "Trash": Icons.GENERAL_WASTE,
+    "Organics": Icons.ORGANIC,
+    "Recyclables": Icons.RECYCLING,
 }
 HOW_TO_GET_ARGUMENTS_DESCRIPTION: dict = {
     "en": "The id can be found by visiting https://getitdone.sandiego.gov/apex/CollectionMapLookup) and searching for your address. Click on the Bookmarkable Page` button and when the Schedule Detail page has loaded you can see the id in the url.",

@@ -4,7 +4,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from requests.utils import requote_uri
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Unley City Council (SA)"
 DESCRIPTION = "Source for Unley City Council rubbish collection."
@@ -51,14 +51,13 @@ HEADERS = {
 }
 
 ICON_MAP = {
-    "General Waste (Blue Bin)": "mdi:trash-can",
-    "Organic Waste (Green or Grey Bin)": "mdi:leaf",
-    "Recycling (Yellow Lid Bin)": "mdi:recycle",
-    "Residential Street Cleaning": "mdi:broom",
-    # Fallback patterns
-    "General Waste": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Green Waste": "mdi:leaf",
+    "General Waste (Blue Bin)": Icons.GENERAL_WASTE,
+    "Organic Waste (Green or Grey Bin)": Icons.ORGANIC,
+    "Recycling (Yellow Lid Bin)": Icons.RECYCLING,
+    "Residential Street Cleaning": Icons.GENERAL_WASTE,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Green Waste": Icons.GARDEN,
 }
 
 

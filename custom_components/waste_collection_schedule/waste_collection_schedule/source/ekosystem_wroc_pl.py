@@ -1,11 +1,11 @@
 import datetime
-import json
 import html
+import json
 import re
-from urllib.parse import urlparse, parse_qsl
+from urllib.parse import parse_qsl, urlencode, urlparse
+from urllib.request import Request, urlopen
 
-import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Wrocław"
 DESCRIPTION = "Source for ekosystem.wroc.pl for Wrocław, Poland"
@@ -16,17 +16,17 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "zmieszane": "mdi:trash-can",  # Mixed
-    "tworzywa": "mdi:recycle",  # Plastic
-    "BIO": "mdi:leaf",  # Organic
-    "papier": "mdi:file-outline",  # Paper
-    "szkło": "mdi:glass-fragile"  # Glass
+    "zmieszane": Icons.GENERAL_WASTE,
+    "tworzywa": Icons.RECYCLING,
+    "BIO": Icons.ORGANIC,
+    "papier": Icons.PAPER,
+    "szkło": Icons.GLASS,
 }
 
 API_URL = "https://ekosystem.wroc.pl/wp-admin/admin-ajax.php"
 
-MESSAGE_FIELD_NAME = 'wiadomosc'
-PARAMS_NUMBER_PARAM_NAME = 'params'
+MESSAGE_FIELD_NAME = "wiadomosc"
+PARAMS_NUMBER_PARAM_NAME = "params"
 WASTE_TYPE_PARAM_FORMAT = "co_{}"
 DATE_PARAM_FORMAT = "kiedy_{}"
 
@@ -35,12 +35,24 @@ class Source:
     def __init__(self, location_id):
         self._location_id = location_id
         self._calendar_url_pattern = re.compile(
-            "<a href=\"(https://ekosystem\\.wroc\\.pl/download/\\?action=pdf[^\"]*)\"")
+            '<a href="(https://ekosystem\\.wroc\\.pl/download/\\?action=pdf[^"]*)"'
+        )
 
     def fetch(self):
-
-        r = requests.post(API_URL, data=dict(action="waste_disposal_form_get_schedule", id_numeru=self._location_id))
-        data = json.loads(r.text)
+        payload = urlencode(
+            {
+                "action": "waste_disposal_form_get_schedule",
+                "id_numeru": self._location_id,
+            }
+        ).encode()
+        request = Request(
+            API_URL,
+            data=payload,
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+            method="POST",
+        )
+        with urlopen(request, timeout=30) as response:
+            data = json.loads(response.read().decode("utf-8"))
 
         calendar_data = self.extract_calendar_data(data)
         entries = []
@@ -53,9 +65,9 @@ class Source:
             type_str = calendar_data[WASTE_TYPE_PARAM_FORMAT.format(i)]
             entries.append(
                 Collection(
-                    date=datetime.datetime.strptime(date_str, "%Y-%m-%d").date(),
+                    date=datetime.date.fromisoformat(date_str),
                     t=type_str.capitalize(),
-                    icon=ICON_MAP.get(type_str)
+                    icon=ICON_MAP.get(type_str),
                 )
             )
 
@@ -67,7 +79,9 @@ class Source:
         message = data[MESSAGE_FIELD_NAME]
         match = self._calendar_url_pattern.search(message)
         if not match:
-            raise Exception(f"Error: a message {message} does not contain a valid calendar url!")
+            raise Exception(
+                f"Error: a message {message} does not contain a valid calendar url!"
+            )
         calendar_url = html.unescape(match.group(1))
         parsed_url = urlparse(calendar_url)
         params_list = parse_qsl(parsed_url.query)

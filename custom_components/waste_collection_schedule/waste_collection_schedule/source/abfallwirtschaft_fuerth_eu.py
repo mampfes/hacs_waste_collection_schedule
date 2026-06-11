@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaft Stadt Fürth"
@@ -8,16 +8,16 @@ URL = "https://abfallwirtschaft.fuerth.eu/"
 COUNTRY = "de"
 TEST_CASES = {
     "Mühltalstrasse 4": {"id": 96983001},
-    "Carlo-Schmid-Strasse 27": {"id": 96975001},    
+    "Carlo-Schmid-Strasse 27": {"id": 96975001},
 }
 
 API_URL = "https://abfallwirtschaft.fuerth.eu/termine.php"
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Biotonne": "mdi:leaf",
-    "Gelber Sack": "mdi:recycle",
-    "Altpapier": "mdi:package-variant",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Altpapier": Icons.PAPER,
 }
 
 
@@ -47,5 +47,5 @@ class Source:
 
         for d in dates:
             entries.append(Collection(date=d[0], t=d[1], icon=ICON_MAP.get(d[1])))
-			
+
         return entries

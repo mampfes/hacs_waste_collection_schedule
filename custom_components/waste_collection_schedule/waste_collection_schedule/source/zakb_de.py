@@ -1,5 +1,5 @@
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Zweckverband Abfallwirtschaft Kreis Bergstraße"
@@ -39,13 +39,13 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restabfallbehaelter": "mdi:trash-can",
-    "Restabfallcontainer": "mdi:trash-can",
-    "Bioabfallbehaelter": "mdi:leaf",
-    "Papierbehaelter": "mdi:package-variant",
-    "Papiercontainer": "mdi:package-variant",
-    "Gelber Sack": "mdi:recycle",
-    "Gruensperrmuell": "mdi:forest",
+    "Restabfallbehaelter": Icons.GENERAL_WASTE,
+    "Restabfallcontainer": Icons.GENERAL_WASTE,
+    "Bioabfallbehaelter": Icons.BIO_KITCHEN,
+    "Papierbehaelter": Icons.PAPER,
+    "Papiercontainer": Icons.PAPER,
+    "Gelber Sack": Icons.PLASTIC_PACKAGING,
+    "Gruensperrmuell": Icons.GARDEN,
 }
 
 

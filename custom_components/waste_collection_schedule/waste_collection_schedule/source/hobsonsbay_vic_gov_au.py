@@ -3,7 +3,7 @@ from datetime import datetime
 from urllib.parse import urlencode, urljoin
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore
+from waste_collection_schedule import Collection, Icons  # type: ignore
 
 TITLE = "Hobsons Bay City Council"
 DESCRIPTION = "Source for Hobsons Bay City Council waste & recycling collection"
@@ -18,10 +18,10 @@ SEARCH_API_URL = "https://jw7fda7yti-2.algolianet.com/1/indexes/*/queries"
 SEARCH_APPLICATION_ID = "JW7FDA7YTI"
 SEARCH_API_KEY = "7a3b39eba83ef97796c682e6a749be71"
 ICON_MAP = {
-    "Rubbish": "mdi:trash-can-outline",
-    "Commingled Recycling": "mdi:recycle",
-    "Food and Garden": "mdi:leaf",
-    "Glass": "mdi:glass-fragile",
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Commingled Recycling": Icons.RECYCLING,
+    "Food and Garden": Icons.BIO_KITCHEN,
+    "Glass": Icons.GLASS,
 }
 
 _LOGGER = logging.getLogger(__name__)

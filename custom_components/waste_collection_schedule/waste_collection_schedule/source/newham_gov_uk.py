@@ -1,8 +1,7 @@
-from datetime import datetime
-
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from dateutil import parser as dateparser
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "London Borough of Newham"
 DESCRIPTION = "Source for newham.gov.uk services for London Borough of Newham, UK."
@@ -13,7 +12,10 @@ TEST_CASES = {
     "Test_003": {"property": 46012509},
 }
 
-ICON_MAP = {"DOMESTIC": "mdi:trash-can", "RECYCLING": "mdi:glass-fragile"}
+ICON_MAP = {
+    "DOMESTIC": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.GLASS,
+}
 
 
 class Source:
@@ -22,7 +24,10 @@ class Source:
 
     def fetch(self):
         s = requests.Session()
-        r = s.get(f"https://bincollection.newham.gov.uk/Details/Index/{self._property}")
+        r = s.get(
+            f"https://bincollection.newham.gov.uk/Details/Index/{self._property}",
+            verify=False,
+        )
 
         # Make a BS4 object
         soup = BeautifulSoup(r.text, features="html.parser")
@@ -56,7 +61,7 @@ class Source:
                 .find_next("mark")
                 .next_sibling.strip()
             )
-            next_collection = datetime.strptime(date_string, "%d/%m/%Y").date()
+            next_collection = dateparser.parse(date_string).date()
 
             entries.append(
                 Collection(

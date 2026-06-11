@@ -1,10 +1,11 @@
+import json
 import re
 from datetime import date
 from typing import Iterable
 
 import requests
 from dateutil.parser import parse as date_parse
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentRequired,
@@ -24,9 +25,9 @@ API_URL = "https://www.fareham.gov.uk/internetlookups/search_data.aspx"
 API_LIST = "DomesticBinCollections2025on"
 DEFAULT_ICON = "mdi:trash-can"
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Garden Waste": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Garden Waste": Icons.GARDEN,
 }
 
 
@@ -99,7 +100,7 @@ class Source:
         }
         response = requests.get(API_URL, params=params, headers=headers, timeout=30)
         response.raise_for_status()
-        payload = response.json()
+        payload = json.loads(self._fix_json(response.text))
         return payload.get("data", {}).get("rows", [])
 
     def _filter_rows(self, rows: Iterable[dict]):
@@ -125,6 +126,19 @@ class Source:
             matches.append(row)
 
         return matches
+
+    @staticmethod
+    def _fix_json(text: str) -> str:
+        rows_start = text.find('"rows": [')
+        if rows_start == -1:
+            return text
+        prefix = text[:rows_start]
+        rows_section = text[rows_start:]
+        # Remove incomplete stub entries: { "Row": "N", immediately followed by another {
+        rows_section = re.sub(r'\{\s*"Row":\s*"\d+",\s*(?=\{)', "", rows_section)
+        # Add missing { after }, when the next token is a property key
+        rows_section = re.sub(r"(},)(\s*)(\")", r"\1\2{\3", rows_section)
+        return prefix + rows_section
 
     @staticmethod
     def _normalize(value: str):

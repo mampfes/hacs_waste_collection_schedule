@@ -2,7 +2,7 @@ from datetime import datetime
 from urllib.parse import quote
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -15,9 +15,9 @@ TEST_CASES = {"Lysøysundveien 117": {"address": "Lysøysundveien 117"}}
 
 
 ICON_MAP = {
-    "Restavfall til forbrenning": "mdi:trash-can",
-    "Matavfall": "mdi:leaf",
-    "Papir og plastemballasje": "mdi:recycle",
+    "Restavfall til forbrenning": Icons.GENERAL_WASTE,
+    "Matavfall": Icons.BIO_KITCHEN,
+    "Papir og plastemballasje": Icons.PAPER,
 }
 
 

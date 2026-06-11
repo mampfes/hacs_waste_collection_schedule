@@ -1,7 +1,7 @@
 import time
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "London Borough of Bromley"
@@ -14,11 +14,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "NON-RECYCLABLE": "mdi:trash-can",
-    "FOOD": "mdi:food",
-    "GARDEN": "mdi:leaf",
-    "PAPER": "mdi:newspaper",
-    "MIXED": "mdi:glass-fragile",
+    "NON-RECYCLABLE": Icons.GENERAL_WASTE,
+    "FOOD": Icons.BIO_KITCHEN,
+    "GARDEN": Icons.GARDEN,
+    "PAPER": Icons.PAPER,
+    "MIXED": Icons.GLASS,
 }
 
 MAX_COUNT = 15

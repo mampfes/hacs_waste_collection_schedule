@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 # URL, DESCRIPTION  and TITLE of the website
@@ -18,10 +18,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Restmüll": "mdi:trash-can",
-    "Biotonne": "mdi:leaf",
-    "Papiercontainer": "mdi:package-variant",
-    "Gelbe(r) Sack/Tonne": "mdi:recycle",
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Papiercontainer": Icons.PAPER,
+    "Gelbe(r) Sack/Tonne": Icons.RECYCLING,
 }
 PARAM_TRANSLATIONS = {
     "de": {
@@ -50,7 +50,7 @@ class Source:
         # and in december for the next year
         if now.month == 12:
             try:
-                url_next_year = f"{URL}/termine/abfuhrtermine/{year +1 }/{self._city}/{self._street}.html"
+                url_next_year = f"{URL}/termine/abfuhrtermine/{year + 1}/{self._city}/{self._street}.html"
                 entries += self.get_data(url_next_year)
             except Exception:
                 pass

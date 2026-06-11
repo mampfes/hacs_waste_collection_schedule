@@ -7,7 +7,7 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Wigan Council"
 DESCRIPTION = "Source for wigan.gov.uk services for Wigan Council, UK."
@@ -20,10 +20,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "BLACK BIN": "mdi:trash-can",
-    "BROWN BIN": "mdi:glass-fragile",
-    "GREEN BIN": "mdi:leaf",
-    "BLUE BIN": "mdi:recycle",
+    "BLACK BIN": Icons.GENERAL_WASTE,
+    "BROWN BIN": Icons.BIO_KITCHEN,
+    "GREEN BIN": Icons.ORGANIC,
+    "BLUE BIN": Icons.RECYCLING,
 }
 
 REGEX_ORDINALS = r"(st|nd|rd|th)"
@@ -82,7 +82,7 @@ class Source:
         entries = []
         for bin in bin_collections:
             waste_type = bin.find("h2").text
-            waste_date = bin.find("div", {"class": "dateWrap-next"}).get_text(
+            waste_date = bin.find("div", {"class": "dateWrapper-next"}).get_text(
                 strip=True
             )
             waste_date = re.compile(REGEX_ORDINALS).sub("", waste_date.split("day")[1])

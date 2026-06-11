@@ -3,7 +3,7 @@ import logging
 import dateutil.parser as dparser
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "North Yorkshire Council - Harrogate"
 DESCRIPTION = "Source for North Yorkshire Council - Harrogate."
@@ -16,10 +16,10 @@ TEST_CASES = {
     "Test_004": {"uprn": "10003019065"},
 }
 ICON_MAP = {
-    "Refuse": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food Waste": "mdi:food",
-    "Garden Waste": "mdi:leaf",
+    "Refuse": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "Food Waste": Icons.BIO_KITCHEN,
+    "Garden Waste": Icons.GARDEN,
 }
 HEADERS = {
     "user-agent": "Mozilla/5.0",

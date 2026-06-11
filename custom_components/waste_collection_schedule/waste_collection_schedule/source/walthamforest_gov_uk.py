@@ -1,9 +1,9 @@
+import logging
 from datetime import datetime, timedelta
 from time import time_ns
-import logging
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 LOGGER = logging.getLogger(__name__)
 TITLE = "Waltham Forest"
@@ -16,16 +16,17 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "DOMESTIC WASTE COLLECTION SERVICE": "mdi:trash-can",
-    "FOOD WASTE COLLECTION SERVICE": "mdi:food",
-    "ORGANIC COLLECTION SERVICE": "mdi:leaf",
-    "RECYCLING COLLECTION SERVICE": "mdi:recycle",
+    "DOMESTIC WASTE COLLECTION SERVICE": Icons.GENERAL_WASTE,
+    "FOOD WASTE COLLECTION SERVICE": Icons.BIO_KITCHEN,
+    "ORGANIC COLLECTION SERVICE": Icons.ORGANIC,
+    "RECYCLING COLLECTION SERVICE": Icons.RECYCLING,
 }
 
 
 HEADERS = {
     "user-agent": "Mozilla/5.0",
 }
+
 
 class Source:
     def __init__(self, uprn: str | int):
@@ -50,7 +51,13 @@ class Source:
             "formValues": {
                 "Property": {
                     key: {"value": self._uprn}
-                    for key in ["AccountSiteUprn", "UPRNSearch", "calcUPRN", "customerUPRN", "inputUPRN"]
+                    for key in [
+                        "AccountSiteUprn",
+                        "UPRNSearch",
+                        "calcUPRN",
+                        "customerUPRN",
+                        "inputUPRN",
+                    ]
                 }
             }
         }
@@ -84,7 +91,9 @@ class Source:
                 attempts -= 1
 
             if not found:
-                LOGGER.error(f'Failing to find the date - API returned {next_date}, last date attempted was {attempt_date}')
+                LOGGER.error(
+                    f"Failing to find the date - API returned {next_date}, last date attempted was {attempt_date}"
+                )
                 continue
 
             entries.append(

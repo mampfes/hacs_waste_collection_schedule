@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Abfallwirtschaft Stadt Schweinfurt"
 DESCRIPTION = "Source for Schweinfurt, Germany"
@@ -46,7 +47,7 @@ class Source:
                 }
 
         if params is None:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         r = s.get(API_URL, params=params, headers=headers)
         r.raise_for_status()

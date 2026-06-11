@@ -1,10 +1,10 @@
 import csv
-import json
 from datetime import datetime, timedelta
 
 import requests
 
 from ..collection import Collection
+from ..icons import Icons
 
 TITLE = "Toronto (ON)"
 DESCRIPTION = "Source for Toronto waste collection"
@@ -22,11 +22,11 @@ SCHEDULE_LOOKUP_URL = (
 )
 
 ICON_MAP = {
-    "GreenBin": "mdi:compost",
-    "Garbage": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "YardWaste": "mdi:grass",
-    "ChristmasTree": "mdi:pine-tree",
+    "GreenBin": Icons.BIO_KITCHEN,
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "YardWaste": Icons.GARDEN,
+    "ChristmasTree": Icons.CHRISTMAS_TREE,
 }
 
 PICTURE_MAP = {
@@ -88,9 +88,7 @@ class Source:
             timeout=30,
         )
 
-        schedule_cursor = self.get_first_result(
-            schedule_response.json(), "AREACURSOR1"
-        )
+        schedule_cursor = self.get_first_result(schedule_response.json(), "AREACURSOR1")
 
         if not schedule_cursor:
             return entries
@@ -102,8 +100,7 @@ class Source:
 
         # normalize fieldnames (strip whitespace)
         reader.fieldnames = [
-            name.strip() if name else name
-            for name in reader.fieldnames
+            name.strip() if name else name for name in reader.fieldnames
         ]
 
         csv_lines = list(reader)

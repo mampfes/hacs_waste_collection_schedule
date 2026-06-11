@@ -2,7 +2,7 @@ import re
 from datetime import datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
@@ -17,11 +17,11 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "Empty Bin GREEN 240": "mdi:trash-can",
-    "Empty Bin REFUSE SACK": "mdi:trash-can",
-    "Empty Bin BLUE 240": "mdi:recycle",
-    "Empty Bin RECYCLING SACK": "mdi:recycle",
-    "Empty Bin BROWN 240": "mdi:leaf",
+    "Empty Bin GREEN 240": Icons.GENERAL_WASTE,
+    "Empty Bin REFUSE SACK": Icons.GENERAL_WASTE,
+    "Empty Bin BLUE 240": Icons.RECYCLING,
+    "Empty Bin RECYCLING SACK": Icons.RECYCLING,
+    "Empty Bin BROWN 240": Icons.ORGANIC,
 }
 
 

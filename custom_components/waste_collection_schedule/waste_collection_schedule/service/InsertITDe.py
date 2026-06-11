@@ -36,5 +36,4 @@ SERVICE_MAP = [
         "url": "https://www.insert-it.de/BmsAbfallkalenderOffenbach",
         "service_id": "BmsAbfallkalenderOffenbach",
     },
-    
 ]

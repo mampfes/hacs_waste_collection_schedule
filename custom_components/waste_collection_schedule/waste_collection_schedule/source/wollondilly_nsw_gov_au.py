@@ -1,7 +1,8 @@
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Wollondilly Shire Council"
 DESCRIPTION = "Source for Wollondilly Shire Council."
@@ -15,9 +16,9 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "garbage": "mdi:trash-can",
-    "garden organic": "mdi:leaf",
-    "recycling": "mdi:recycle",
+    "garbage": Icons.GENERAL_WASTE,
+    "garden organic": Icons.GARDEN,
+    "recycling": Icons.RECYCLING,
 }
 
 
@@ -37,7 +38,7 @@ class Source:
 
         data = r.json()
         if len(data) == 0:
-            raise Exception("Address not found")
+            raise SourceArgumentNotFound("address", self._address)
 
         id = data[0][1]["value"]
         args = {"fields": id}

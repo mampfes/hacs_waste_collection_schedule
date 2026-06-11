@@ -1,8 +1,9 @@
-import requests
 import datetime
+
+import requests
 from bs4 import BeautifulSoup
 from dateutil import parser
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Lichfield District Council"
 DESCRIPTION = "Source for Lichfield District Council, UK."
@@ -14,12 +15,12 @@ TEST_CASES = {
     "Test_004": {"uprn": "100031699855"},
 }
 ICON_MAP = {
-    "Black Bin": "mdi:trash-can",
-    "Blue Bin": "mdi:recycle",
-    "Blue Sack": "mdi:recycle",
-    "Purple Bin": "mdi:recycle",
-    "Garden Bin": "mdi:leaf",
-    "Brown Bin": "mdi:leaf",
+    "Black Bin": Icons.GENERAL_WASTE,
+    "Blue Bin": Icons.RECYCLING,
+    "Blue Sack": Icons.RECYCLING,
+    "Purple Bin": Icons.RECYCLING,
+    "Garden Bin": Icons.GARDEN,
+    "Brown Bin": Icons.BIO_KITCHEN,
 }
 
 
@@ -31,7 +32,7 @@ class Source:
         response = requests.get(
             "https://www.lichfielddc.gov.uk/bincalendar",
             params={"uprn": self._uprn},
-            headers={"User-Agent": "Mozilla"}
+            headers={"User-Agent": "Mozilla"},
         )
         soup = BeautifulSoup(response.text, "html.parser")
 
@@ -43,8 +44,12 @@ class Source:
         for i in range(len(dates)):
             bint = " ".join(bins[i].text.split()[2:4])
             date = parser.parse(dates[i].text).date()
-            if date.month == 1 and datetime.date.today().month == 12 and date.year == datetime.date.today().year:
-                date = date.replace(year=date.year+1)
+            if (
+                date.month == 1
+                and datetime.date.today().month == 12
+                and date.year == datetime.date.today().year
+            ):
+                date = date.replace(year=date.year + 1)
             entries.append(
                 Collection(
                     date=date,

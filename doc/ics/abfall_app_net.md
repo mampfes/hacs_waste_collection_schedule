@@ -16,6 +16,7 @@ known supported:
 - Altmarkkreis Salzwedel: <https://altmarkkreis-salzwedel.abfall-app.net>
 - Landkreis Lüchow-Dannenberg: <https://luechow-dannenberg.abfall-app.net>
 - Rhein-Pfalz-Kreis: <https://rhein-pfalz-kreis.abfall-app.net>
+- Landkreis Holzminden: <https://landkreis-holzminden.abfall-app.net>
 
 ## Examples
 

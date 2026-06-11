@@ -1,7 +1,7 @@
 import datetime
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "South Gloucestershire Council"  # Title will show up in README.md and info.md
 DESCRIPTION = "Source script for southglos.gov.uk"  # Describe your source
@@ -11,17 +11,19 @@ TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py 
     "Test_001": {"uprn": "643346"},
     "Test_002": {"uprn": "641084"},
 }
-ICON_MAP = {  # Optional: Dict of waste types and suitable mdi icons
-    "BLACK BIN": "mdi:trash-can",
-    "RECYCLING": "mdi:recycle",
-    "GARDEN WASTE": "mdi:leaf",
-    "FOOD BIN": "mdi:food",
+ICON_MAP = {
+    "BLACK BIN": Icons.GENERAL_WASTE,
+    "RECYCLING": Icons.RECYCLING,
+    "GARDEN WASTE": Icons.GARDEN,
+    "FOOD BIN": Icons.BIO_KITCHEN,
+    "AHP BIN": Icons.GENERAL_WASTE,
 }
 WASTE_MAP = {  # map new collection names to old collection names for compatibility
     "Refuse": "BLACK BIN",
     "Recycling": "RECYCLING",
     "Garden": "GARDEN WASTE",
     "Food": "FOOD BIN",
+    "AHP": "AHP BIN",
 }
 
 

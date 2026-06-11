@@ -2,7 +2,8 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Conwy County Borough Council"
 DESCRIPTION = "Source for Conwy County Borough Council."
@@ -15,14 +16,16 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "garden": "mdi:leaf",
-    "electrical": "mdi:battery",
-    "refuse": "mdi:trash-can",
-    "recycle": "mdi:recycle",
+    "garden": Icons.GARDEN,
+    "electrical": Icons.ELECTRONICS,
+    "refuse": Icons.GENERAL_WASTE,
+    "recycle": Icons.RECYCLING,
 }
 
 
-API_URL = "https://www.conwy.gov.uk/Contensis-Forms/erf/collection-result-soap-xmas2025.asp"
+API_URL = (
+    "https://www.conwy.gov.uk/Contensis-Forms/erf/collection-result-soap-xmas2025.asp"
+)
 
 
 class Source:
@@ -39,7 +42,7 @@ class Source:
         collection_dates = soup.select(".containererf")
 
         if not collection_dates:
-            raise Exception("Could not find collections")
+            raise SourceArgumentNotFound("uprn", self._uprn)
 
         for collection in collection_dates:
             date_str = collection.select_one("#main #content").text.strip()

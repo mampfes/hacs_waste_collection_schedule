@@ -7,14 +7,15 @@ import inspect
 import json
 import re
 import site
+import sys
 from functools import lru_cache
 from pathlib import Path
 from types import ModuleType
 from typing import Any, Callable, Tuple, TypedDict, TypeVar
 
-try:
+if sys.version_info >= (3, 11):
     from typing import NotRequired
-except ImportError:
+else:
     from typing_extensions import NotRequired
 
 import yaml
@@ -42,7 +43,7 @@ END_COUNTRY_SECTION = "<!--End of country section-->"
 START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
 
-LANGUAGES = ["en", "de", "it", "fr"]
+LANGUAGES = ["en", "de", "it", "fr", "nl"]
 ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
 ARG_DESCRIPTIONS_TO_KEEP = ["calendar_title"]
 ARG_GENERAL_KEYS_TO_KEEP = ["title", "description"]
@@ -168,6 +169,20 @@ class SourceInfo:
         )
 
         self._custom_param_description = default_descriptions(params)
+
+        # If a parameter has any custom description, do not keep default descriptions
+        # for other languages. Mixing default + custom across locales can produce
+        # placeholder-set mismatches during Home Assistant translation validation.
+        custom_description_params = {
+            param
+            for lang_descriptions in custom_param_description.values()
+            for param in lang_descriptions
+        }
+        if custom_description_params:
+            for lang_descriptions in self._custom_param_description.values():
+                for param in custom_description_params:
+                    lang_descriptions.pop(param, None)
+
         self._custom_param_description.update(custom_param_description)
         self._custom_param_description = extract_urls(self._custom_param_description)
         self._url_placeholders = url_placeholders
@@ -557,7 +572,7 @@ def write_ics_md_file(filename: Path, data: IcsSourceData) -> None:
         md += multiline_indent(yaml.dump(tc).rstrip("\n"), 8) + "\n"
         md += "```\n"
         # md += "\n"
-    with open(filename, "w", encoding="utf-8") as f:
+    with open(filename, "w", encoding="utf-8", newline="\n") as f:
         f.write(md)
 
 
@@ -611,7 +626,7 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     source_metadata_by_module: dict[str, dict[str, Any]] = {}
     source_owners_by_module: dict[str, list[str]] = {}
 
-    for country in sorted(countries):
+    for country in ["Generic"] + sorted(c for c in countries if c != "Generic"):
         output[country] = []
         for e in sorted(
             countries[country],
@@ -631,10 +646,10 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
                 }
             )
 
-            # Build metadata for each module (store once per module)
-            if module not in source_metadata_by_module:
+            # Build metadata for each source (keyed by id for per-source docs)
+            if id not in source_metadata_by_module:
                 doc_url = DOC_URL_BASE + e.filename
-                source_metadata_by_module[module] = {
+                source_metadata_by_module[id] = {
                     "docs_url": doc_url,
                     "howto": e.custom_howto,
                     "urls": e.url_placeholders,
@@ -649,12 +664,13 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
         "custom_components/waste_collection_schedule/sources.json",
         "w",
         encoding="utf-8",
+        newline="\n",
     ) as f:
         f.write(json.dumps(output, indent=2))
 
     # Save metadata separately (for runtime use)
     metadata_file = "custom_components/waste_collection_schedule/source_metadata.json"
-    with open(metadata_file, "w", encoding="utf-8") as f:
+    with open(metadata_file, "w", encoding="utf-8", newline="\n") as f:
         json.dump(source_metadata_by_module, f, indent=2, ensure_ascii=False)
 
     source_owner_file = ".github/source_owners.json"
@@ -851,6 +867,7 @@ def update_json(
             tranlation_file,
             "w",
             encoding="utf-8",
+            newline="\n",
         ) as f:
             json.dump(translations, f, indent=2, ensure_ascii=False)
 
@@ -1025,7 +1042,7 @@ def _patch_file(filename, section_id, str):
     md = md[:start_pos] + str + md[end_pos:]
 
     # write entire file
-    with open(filename, "w", encoding="utf-8") as f:
+    with open(filename, "w", encoding="utf-8", newline="\n") as f:
         f.write(md)
 
 
@@ -1107,6 +1124,10 @@ COUNTRYCODES = [
         "name": "Poland",
     },
     {
+        "code": "pt",
+        "name": "Portugal",
+    },
+    {
         "code": "se",
         "name": "Sweden",
     },
@@ -1123,6 +1144,10 @@ COUNTRYCODES = [
         "name": "Switzerland",
     },
     {
+        "code": "li",
+        "name": "Liechtenstein",
+    },
+    {
         "code": "us",
         "name": "United States of America",
     },
@@ -1137,6 +1162,10 @@ COUNTRYCODES = [
     {
         "code": "fi",
         "name": "Finland",
+    },
+    {
+        "code": "pt",
+        "name": "Portugal",
     },
 ]
 

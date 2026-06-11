@@ -18,6 +18,7 @@ from homeassistant.config_entries import (
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import callback
 from homeassistant.helpers.selector import (
+    BooleanSelector,
     DurationSelector,
     DurationSelectorConfig,
     IconSelector,
@@ -57,9 +58,13 @@ from .const import (
     CONF_DEDICATED_CALENDAR_TITLE,
     CONF_DETAILS_FORMAT,
     CONF_EVENT_INDEX,
+    CONF_FETCH_INTERVAL_DAYS,
+    CONF_FETCH_INTERVAL_DAYS_DEFAULT,
     CONF_FETCH_TIME,
     CONF_FETCH_TIME_DEFAULT,
     CONF_ICON,
+    CONF_IGNORE_DUPLICATES,
+    CONF_IGNORE_DUPLICATES_DEFAULT,
     CONF_LEADTIME,
     CONF_PICTURE,
     CONF_RANDOM_FETCH_TIME_OFFSET,
@@ -379,9 +384,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             {
                 vol.Required(CONF_COUNTRY_NAME): SelectSelector(
                     SelectSelectorConfig(
-                        options=[""] + list(self._sources.keys()),
+                        options=[""]
+                        + (["Generic"] if "Generic" in self._sources else [])
+                        + sorted(k for k in self._sources if k != "Generic"),
                         mode=SelectSelectorMode.DROPDOWN,
-                        sort=True,
+                        sort=False,
                     )
                 )
             }
@@ -647,7 +654,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         return schema, module
 
     async def __validate_args_user_input(
-        self, source: str, args_input: dict[str, Any], module: types.ModuleType
+        self,
+        source: str,
+        args_input: dict[str, Any],
+        module: types.ModuleType,
+        is_reconfigure: bool = False,
     ) -> Tuple[dict[str, str], dict[str, str], dict[str, Any]]:
         """Validate user input for source arguments.
 
@@ -655,6 +666,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             source (str): source name
             args_input (dict[str, Any]): user input
             module (types.ModuleType): the module of the source
+            is_reconfigure (bool): when True, skip the unique_id collision check
+                because the existing entry legitimately owns that unique_id.
 
         Returns:
             Tuple[dict, dict, dict]: errors, description_placeholders, options
@@ -673,7 +686,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             )
 
         await self.async_set_unique_id(source + json.dumps(args_input))
-        self._abort_if_unique_id_configured()
+        if not is_reconfigure:
+            # During reconfigure the existing entry already owns this unique_id;
+            # skipping the check prevents HA from aborting and creating a duplicate.
+            self._abort_if_unique_id_configured()
 
         try:
             instance = await self.hass.async_add_executor_job(
@@ -753,7 +769,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
         errors: dict[str, str] = {}
         description_placeholders: dict[str, str] = self._get_description_placeholders(
-            self._source
+            self._id
         )
         # If all args are filled in
         if args_input is not None:
@@ -898,6 +914,18 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
 
     async def finish(self) -> ConfigFlowResult:
+        if not self._options.get(CONF_SENSORS) and hasattr(self, "_fetched_types"):
+            self._options[CONF_SENSORS] = [
+                {
+                    CONF_NAME: t,
+                    CONF_DETAILS_FORMAT: "upcoming",
+                    CONF_COLLECTION_TYPES: [t],
+                    CONF_VALUE_TEMPLATE: 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
+                }
+                for t in self._fetched_types
+                if t
+            ]
+
         return self.async_create_entry(
             title=self._title,
             data=self._args_data,
@@ -934,18 +962,23 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 errors,
                 validation_placeholders,
                 options,
-            ) = await self.__validate_args_user_input(source, args_input, module)
+            ) = await self.__validate_args_user_input(
+                source, args_input, module, is_reconfigure=True
+            )
             # Update placeholders with validation errors
             description_placeholders.update(validation_placeholders)
             if len(errors) == 0:
                 data = {**config_entry.data}
                 data.update({CONF_SOURCE_NAME: source, CONF_SOURCE_ARGS: args_input})
+                # Preserve existing options (sensors, customizations, etc.)
+                # and only update the fields returned by validation
+                merged_options = {**config_entry.options, **options}
                 return self.async_update_reload_and_abort(
                     config_entry,
                     title=title,
                     unique_id=config_entry.unique_id,
                     data=data,
-                    options=options,
+                    options=merged_options,
                     reason="reconfigure_successful",
                 )
         return self.async_show_form(
@@ -1003,6 +1036,12 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                     ),
                 ): TimeSelector(),
                 vol.Optional(
+                    CONF_FETCH_INTERVAL_DAYS,
+                    default=self._entry.options.get(
+                        CONF_FETCH_INTERVAL_DAYS, CONF_FETCH_INTERVAL_DAYS_DEFAULT
+                    ),
+                ): vol.All(int, vol.Range(min=1)),
+                vol.Optional(
                     CONF_RANDOM_FETCH_TIME_OFFSET,
                     default={
                         "hours": self._entry.options.get(
@@ -1030,6 +1069,12 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                         CONF_DAY_OFFSET, CONF_DAY_OFFSET_DEFAULT
                     ),
                 ): int,
+                vol.Optional(
+                    CONF_IGNORE_DUPLICATES,
+                    default=self._entry.options.get(
+                        CONF_IGNORE_DUPLICATES, CONF_IGNORE_DUPLICATES_DEFAULT
+                    ),
+                ): BooleanSelector(),
                 vol.Optional(
                     "sensor_select",
                 ): SelectSelector(

@@ -1,8 +1,8 @@
 import datetime
 
-from bs4 import BeautifulSoup
 import requests
-from waste_collection_schedule import Collection
+from bs4 import BeautifulSoup
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "Harlow Council"
 DESCRIPTION = "Source for harlow.gov.uk, Harlow Council, UK"
@@ -17,12 +17,12 @@ TEST_CASES = {
 API_URL = "https://selfserve.harlow.gov.uk/appshost/firmstep/self/apps/custompage/bincollectionsecho?uprn={uprn}"
 
 ICON_MAP = {
-    "Non-Recycling": "mdi:trash-can",
-    "Food Caddy": "mdi:food-apple",
-    "Recycling": "mdi:recycle",
-    "Green Waste Subscription": "mdi:leaf",
-    "Communal Non-Recycling": "mdi:trash-can",
-    "Communal Recycling": "mdi:recycle",
+    "Non-Recycling": Icons.GENERAL_WASTE,
+    "Food Caddy": Icons.BIO_KITCHEN,
+    "Recycling": Icons.RECYCLING,
+    "Green Waste Subscription": Icons.GARDEN,
+    "Communal Non-Recycling": Icons.GENERAL_WASTE,
+    "Communal Recycling": Icons.RECYCLING,
 }
 
 
@@ -44,7 +44,10 @@ class Source:
         x = soup.findAll("div", {"class": "row collectionsrow"})
         for row in x:
             fields = row.findChildren()
-            if fields[0].text.strip() == "Please select an address to view the upcoming collections.":
+            if (
+                fields[0].text.strip()
+                == "Please select an address to view the upcoming collections."
+            ):
                 continue
 
             entries.append(

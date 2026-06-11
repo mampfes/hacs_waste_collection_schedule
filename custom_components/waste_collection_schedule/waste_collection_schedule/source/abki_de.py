@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
@@ -17,11 +17,11 @@ TEST_CASES = {
 
 
 ICON_MAP = {
-    "Restabfall": "mdi:trash-can",
-    "Glass": "mdi:bottle-soda",
-    "Bioabfall": "mdi:leaf",
-    "Papier": "mdi:package-variant",
-    "Gelbe": "mdi:recycle",
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Glass": Icons.GLASS,
+    "Bioabfall": Icons.BIO_KITCHEN,
+    "Papier": Icons.PAPER,
+    "Gelbe": Icons.RECYCLING,
 }
 
 
@@ -113,7 +113,7 @@ class Source:
                 request_data = r.json()["dataFile"]
                 r = session.get(ICAL_URL, params={"data": request_data})
                 dates += self._ics.convert(r.text)
-            except:
+            except Exception:
                 pass
 
         entries = []

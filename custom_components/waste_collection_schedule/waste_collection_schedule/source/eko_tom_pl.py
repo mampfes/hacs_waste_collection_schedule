@@ -5,7 +5,7 @@ import logging
 
 import requests as req
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 _LOOGGER = logging.getLogger(__name__)
 
@@ -23,12 +23,12 @@ TEST_CASES = {
 API_URL = "https://web.c-trace.de/ekotom-abfallkalender/(S(y0ommq52pdbwa0jek4oqqzgr))/kalendarzodpadow/abc?Ort={city}&Strasse={street}&Hausnr={nr}"
 
 ICON_MAP = {
-    "Zmieszane": "mdi:trash-can",  # Mixed
-    "Tworzywa": "mdi:recycle",  # Plastic
-    "BIO": "mdi:leaf",  # Organic
-    "Papier": "mdi:file-outline",  # Paper
-    "Szkło": "mdi:glass-fragile",  # Glass
-    "Gabaryty": "mdi:dump-truck",  # Bulky Waste
+    "Zmieszane": Icons.GENERAL_WASTE,
+    "Tworzywa": Icons.RECYCLING,
+    "BIO": Icons.ORGANIC,
+    "Papier": Icons.PAPER,
+    "Szkło": Icons.GLASS,
+    "Gabaryty": Icons.BULKY,
 }
 
 

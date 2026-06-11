@@ -1,6 +1,6 @@
 # There was an ICS source but the ICS file was not stored permanently and would be removed after a few days.
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallbehandlungsgesellschaft Havelland mbH (abh)"
@@ -20,10 +20,10 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
-    "mülltonne": "mdi:trash-can",
-    "bio-tonne": "mdi:leaf",
-    "papier": "mdi:package-variant",
-    "gelbe": "mdi:recycle",
+    "mülltonne": Icons.GENERAL_WASTE,
+    "bio-tonne": Icons.ORGANIC,
+    "papier": Icons.PAPER,
+    "gelbe": Icons.RECYCLING,
 }
 
 API_URL = "https://www.abfall-havelland.de/ics.php"

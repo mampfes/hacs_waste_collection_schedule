@@ -6,6 +6,7 @@ from pathlib import Path
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
+from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.discovery import async_load_platform
 
@@ -29,6 +30,23 @@ CUSTOMIZE_CONFIG = vol.Schema(
         vol.Optional(const.CONF_PICTURE): cv.string,
         vol.Optional(const.CONF_USE_DEDICATED_CALENDAR): cv.boolean,
         vol.Optional(const.CONF_DEDICATED_CALENDAR_TITLE): cv.string,
+    }
+)
+
+SENSOR_CONFIG = vol.Schema(
+    {
+        vol.Required(CONF_NAME): cv.string,
+        vol.Optional(const.CONF_SOURCE_INDEX, default=0): vol.Any(
+            cv.positive_int, vol.All(cv.ensure_list, [cv.positive_int])
+        ),
+        vol.Optional(const.CONF_DETAILS_FORMAT, default="upcoming"): cv.string,
+        vol.Optional(const.CONF_COUNT): cv.positive_int,
+        vol.Optional(const.CONF_LEADTIME): cv.positive_int,
+        vol.Optional(const.CONF_COLLECTION_TYPES): cv.ensure_list,
+        vol.Optional(CONF_VALUE_TEMPLATE): cv.template,
+        vol.Optional(const.CONF_DATE_TEMPLATE): cv.template,
+        vol.Optional(const.CONF_ADD_DAYS_TO, default=False): cv.boolean,
+        vol.Optional(const.CONF_EVENT_INDEX, default=0): cv.positive_int,
     }
 )
 
@@ -58,6 +76,10 @@ CONFIG_SCHEMA = vol.Schema(
                     const.CONF_FETCH_TIME, default=const.CONF_FETCH_TIME_DEFAULT
                 ): cv.time,
                 vol.Optional(
+                    const.CONF_FETCH_INTERVAL_DAYS,
+                    default=const.CONF_FETCH_INTERVAL_DAYS_DEFAULT,
+                ): cv.positive_int,
+                vol.Optional(
                     const.CONF_RANDOM_FETCH_TIME_OFFSET,
                     default=const.CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
                 ): cv.positive_int,
@@ -65,6 +87,9 @@ CONFIG_SCHEMA = vol.Schema(
                     const.CONF_DAY_SWITCH_TIME,
                     default=const.CONF_DAY_SWITCH_TIME_DEFAULT,
                 ): cv.time,
+                vol.Optional(const.CONF_SENSORS, default=[]): vol.All(
+                    cv.ensure_list, [SENSOR_CONFIG]
+                ),
             }
         )
     },
@@ -83,6 +108,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
         hass,
         separator=config[const.DOMAIN][const.CONF_SEPARATOR],
         fetch_time=config[const.DOMAIN][const.CONF_FETCH_TIME],
+        fetch_interval_days=config[const.DOMAIN][const.CONF_FETCH_INTERVAL_DAYS],
         random_fetch_time_offset=config[const.DOMAIN][
             const.CONF_RANDOM_FETCH_TIME_OFFSET
         ],
@@ -118,11 +144,21 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     # store api object
     hass.data.setdefault(const.DOMAIN, {})["YAML_CONFIG"] = api
 
+    # perform initial fetch so collection types are known before platform setup
+    await hass.async_add_executor_job(api._fetch)
+
     # load calendar platform
     await async_load_platform(hass, "calendar", const.DOMAIN, {"api": api}, config)
 
-    # initial fetch of all data
-    hass.add_job(api._fetch)
+    # load sensor platform for each sensor defined in the config
+    for sensor_config in config[const.DOMAIN].get(const.CONF_SENSORS, []):
+        await async_load_platform(
+            hass,
+            "sensor",
+            const.DOMAIN,
+            {"api": api, "sensor_config": sensor_config},
+            config,
+        )
 
     # Register new Service fetch_data
     hass.services.async_register(
