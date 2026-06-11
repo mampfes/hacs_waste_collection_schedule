@@ -39,6 +39,9 @@ class Icons(StrEnum):
     # General mixed/landfill waste
     GENERAL_WASTE = "mdi:trash-can"
 
+    # Combustible waste for household, for example in Japan
+    COMBUSTIBLE = "mdi:fire"
+
     # Non-combustible waste for household, for example in Japan
     NON_COMBUSTIBLE = "mdi:fire-off"
 
