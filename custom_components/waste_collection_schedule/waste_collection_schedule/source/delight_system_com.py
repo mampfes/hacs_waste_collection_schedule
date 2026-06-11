@@ -67,9 +67,7 @@ PARAM_DESCRIPTIONS = {
             "Municipality name or ID from the ThreeR app, e.g. `Shinjuku City` "
             "or `shinjukuku`."
         ),
-        "area_name": (
-            "Neighbourhood/chōme name from the app, e.g. `Aizumi-cho`."
-        ),
+        "area_name": ("Neighbourhood/chōme name from the app, e.g. `Aizumi-cho`."),
         "language_code": (
             "Language for municipality, area, and waste type labels from the API."
         ),
@@ -211,9 +209,7 @@ def _collect_areas(
 
         # Intermediate nodes have no area_id; recurse into child levels.
         if area_level == 1:
-            children = _collect_areas(
-                session, jichitai_id, language_code, 2, name, ""
-            )
+            children = _collect_areas(session, jichitai_id, language_code, 2, name, "")
             result.extend(children)
         elif area_level == 2:
             children = _collect_areas(
