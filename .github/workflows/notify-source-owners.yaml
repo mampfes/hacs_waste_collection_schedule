@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   notify-source-owners:
-    if: contains(github.event.issue.title, '[Bug]')
+    if: contains(github.event.issue.title, '[Bug]') || contains(github.event.issue.title, '[Source Defect]')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
