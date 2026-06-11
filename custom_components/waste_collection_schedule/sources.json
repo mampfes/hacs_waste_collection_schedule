@@ -7138,6 +7138,38 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Amt Bad Wilsnack/Weisen (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "1e9592418582666e2a5d1c62b2683435"
+      },
+      "id": "abfall_io"
+    },
+    {
+      "title": "Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "bb937857acd951dfc8de5be8b8a49f6d"
+      },
+      "id": "abfall_io"
+    },
+    {
+      "title": "Amt Meyenburg (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "4638881e7bebe6869e2e86de5f8aa09e"
+      },
+      "id": "abfall_io"
+    },
+    {
+      "title": "Amt Putlitz/Berge (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "4f06df48f154246415e57ce12b26abe5"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Andershausen",
       "module": "nerdbridge_de",
       "default_params": {
@@ -8955,12 +8987,28 @@
       "id": "cmcitymedia_de"
     },
     {
+      "title": "Gemeinde Gro\u00df Pankow (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "af91b65d2753a219309072837d8ea4e1"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Gemeinde Gr\u00fcndau",
       "module": "heimat_info_de",
       "default_params": {
         "commune": "gruendau"
       },
       "id": "heimat_info_de"
+    },
+    {
+      "title": "Gemeinde Gumtow (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "3cefa45ab357d231891bb497253c630f"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Gemeinde Kalletal",
@@ -8971,12 +9019,28 @@
       "id": "cmcitymedia_de"
     },
     {
+      "title": "Gemeinde Karst\u00e4dt (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "798f59a75627f5d7686dab0c7226c877"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Gemeinde Kranenburg",
       "module": "abfallnavi_de",
       "default_params": {
         "service": "kranenburg"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Gemeinde Plattenburg (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "a0461612534502273c518e28d4f6f1e4"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Gemeinde Roetgen",
@@ -12844,12 +12908,28 @@
       "id": "ics_osnabrueck_de"
     },
     {
+      "title": "Stadt Perleberg (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "9fb3e2e5498e825250105ee272102a7b"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Stadt Porta Westfalica",
       "module": "abfallnavi_de",
       "default_params": {
         "service": "portawestfalica"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Stadt Pritzwalk (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "d92f59ef4066ae6d299478996d1d8430"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Stadt Regensburg",
@@ -12900,6 +12980,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_wetzlar_de"
+    },
+    {
+      "title": "Stadt Wittenberge (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "b870ecfa6e1f882680758d374ba3fa2d"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Stadtbetrieb Frechen",
