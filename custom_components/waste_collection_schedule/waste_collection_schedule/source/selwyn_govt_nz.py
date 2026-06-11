@@ -6,6 +6,7 @@ from waste_collection_schedule import Icons
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
+    SourceArgumentRequired,
 )
 
 TITLE = "Selwyn District Council"
@@ -114,6 +115,11 @@ class Source:
         self._address: str = address.strip()
 
     def fetch(self) -> list[Collection]:
+        if not self._address:
+            raise SourceArgumentRequired(
+                "address", "a street address within the Selwyn District is required"
+            )
+
         # Case-insensitive prefix match on the full address. Escape single
         # quotes for the ArcGIS SQL-style ``where`` clause.
         escaped = self._address.lower().replace("'", "''")
@@ -122,6 +128,9 @@ class Source:
             "where": f"LOWER(Address_full) LIKE '{escaped}%'",
             "outFields": "ChargeType,COLLECTION_SCHEDULE,COLLECTION_DAY,Address_full",
             "returnGeometry": "false",
+            # Cap the response: a short prefix can match many properties. We rely
+            # on the ambiguity error below to prompt the user for a longer prefix.
+            "resultRecordCount": 200,
         }
 
         r = requests.get(API_URL, params=params, timeout=30)
@@ -131,15 +140,20 @@ class Source:
             raise SourceArgumentNotFound("address", self._address)
 
         # A short fragment can match several distinct properties. ArcGIS result
-        # ordering is not guaranteed, so don't silently pick one -- if the query
-        # is ambiguous, ask the user to disambiguate with the matching addresses.
+        # ordering is not guaranteed, so don't silently pick one. If the user's
+        # input is itself an exact (case-insensitive) full address, use it even
+        # when other properties share it as a prefix; otherwise ask the user to
+        # disambiguate with the matching addresses.
         matched = sorted({f["attributes"]["Address_full"] for f in features})
         if len(matched) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "address", self._address, matched[:MAX_SUGGESTIONS]
-            )
-
-        target = matched[0]
+            exact = [a for a in matched if a.lower() == self._address.lower()]
+            if not exact:
+                raise SourceArgAmbiguousWithSuggestions(
+                    "address", self._address, matched[:MAX_SUGGESTIONS]
+                )
+            target = exact[0]
+        else:
+            target = matched[0]
         features = [
             f for f in features if f["attributes"].get("Address_full") == target
         ]
