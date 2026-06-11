@@ -253,7 +253,7 @@ def _icon_for_trash_kind(name: str) -> str | None:
     # Best-effort icon from English or Japanese waste-type labels.
     lower = name.lower()
     if "plastic bottle" in lower or "ペットボトル" in name:
-        return Icons.PLASTIC_BOTTLES
+        return Icons.PLASTIC_PET
     if "recyclable" in lower or "資源" in name:
         return Icons.RECYCLING
     if "non-combustible" in lower or "不燃" in name:

@@ -46,8 +46,8 @@ class Icons(StrEnum):
     # visually distinct from RECYCLING to convey the separate stream.
     PLASTIC_PACKAGING = "mdi:recycle-variant"
 
-    # Plastic bottles / PET distinct from PLASTIC_PACKAGING and GLASS streams
-    PLASTIC_BOTTLES = "mdi:bottle-soda-outline"
+    # Plastic PET bottles distinct from PLASTIC_PACKAGING and GLASS bottles
+    PLASTIC_PET = "mdi:bottle-soda-outline"
 
     # Paper/cardboard
     PAPER = "mdi:package-variant"
