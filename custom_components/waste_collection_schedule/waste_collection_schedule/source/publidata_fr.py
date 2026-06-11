@@ -277,6 +277,11 @@ EXTRA_INFO = [
         "url": "https://tripratik.lehavreseinemetropole.fr/",
         "default_params": {"instance_id": 1408},
     },
+    {
+        "title": "Communauté de Communes Pévèle Carembault",
+        "url": "https://www.pevelecarembault.fr/",
+        "default_params": {"instance_id": 1141},
+    },
 ]
 
 _CALENDAR_DAY_VERY_ABBR = {
