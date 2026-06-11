@@ -2476,7 +2476,7 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>Japan</summary>
 
-- [threeR](/doc/source/delight_system_com.md) / threer1.delight-system.com
+- [ThreeR](/doc/source/delight_system_com.md) / threer1.delight-system.com
 </details>
 
 <details>

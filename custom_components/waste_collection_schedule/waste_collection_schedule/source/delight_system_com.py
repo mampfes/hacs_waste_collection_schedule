@@ -10,9 +10,9 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequiredWithSuggestions,
 )
 
-TITLE = "threeR"
+TITLE = "ThreeR"
 DESCRIPTION = (
-    "Source for Japanese municipalities using the threeR garbage collection app."
+    "Source for Japanese municipalities using the ThreeR garbage collection app."
 )
 URL = "https://threer1.delight-system.com"
 COUNTRY = "jp"
@@ -32,7 +32,9 @@ TEST_CASES = {
     },
 }
 
+# Path segment is lowercase "threeR" — required by the live API.
 API_BASE = "https://threer1.delight-system.com/threeR/api"
+# Sent on every request; bump when the upstream app version changes.
 APP_VERSION = "a2.10.1"
 
 # Trash kinds that mark non-collection days rather than actual pickups.
@@ -44,7 +46,7 @@ _SKIP_NAME_PATTERNS = re.compile(
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": (
-        "Enter your municipality and neighbourhood exactly as shown in the threeR "
+        "Enter your municipality and neighbourhood exactly as shown in the ThreeR "
         "garbage app (e.g. municipality `Shinjuku City`, area `Aizumi-cho`). "
         "If a value is not recognised, the setup form will offer matching options "
         "from the live API."
@@ -62,7 +64,7 @@ PARAM_TRANSLATIONS = {
 PARAM_DESCRIPTIONS = {
     "en": {
         "municipality": (
-            "Municipality name or ID from the threeR app, e.g. `Shinjuku City` "
+            "Municipality name or ID from the ThreeR app, e.g. `Shinjuku City` "
             "or `shinjukuku`."
         ),
         "area_name": (
@@ -83,10 +85,12 @@ CONFIG_FLOW_TYPES = {
 
 
 def _normalize(value: str) -> str:
+    # Strip and case-fold for case-insensitive user input matching.
     return value.strip().casefold()
 
 
 def _api_get(session: requests.Session, path: str, params: dict) -> dict:
+    # GET an API endpoint and return rest_result, or raise on HTTP/API errors.
     response = session.get(
         f"{API_BASE}/{path}",
         params={"app_version": APP_VERSION, **params},
@@ -94,6 +98,7 @@ def _api_get(session: requests.Session, path: str, params: dict) -> dict:
     )
     response.raise_for_status()
     payload = response.json()
+    # ThreeR wraps payloads in rest_error_kbn / rest_result (typo: rest_error_massage).
     if payload.get("rest_error_kbn") != "0":
         message = payload.get("rest_error_massage") or "Unknown API error"
         raise requests.HTTPError(message)
@@ -103,7 +108,7 @@ def _api_get(session: requests.Session, path: str, params: dict) -> dict:
 def _get_all_municipalities(
     session: requests.Session, language_code: str
 ) -> list[tuple[str, str]]:
-    """Return (jichitai_id, jichitai_name) for every municipality on the platform."""
+    # Return (jichitai_id, jichitai_name) for every municipality on the platform.
     result = []
     prefectures = _api_get(
         session,
@@ -130,13 +135,16 @@ def _get_all_municipalities(
 def _resolve_municipality(
     session: requests.Session, municipality: str, language_code: str
 ) -> str:
+    # Map user input to jichitai_id (accepts ID or display name).
     target = _normalize(municipality)
     all_municipalities = _get_all_municipalities(session, language_code)
 
+    # Exact match on API id or localised name.
     for jichitai_id, jichitai_name in all_municipalities:
         if _normalize(jichitai_id) == target or _normalize(jichitai_name) == target:
             return jichitai_id
 
+    # Fall back to a unique substring match.
     matches = []
     for jichitai_id, jichitai_name in all_municipalities:
         name = _normalize(jichitai_name)
@@ -163,6 +171,7 @@ def _fetch_area_list(
     area_name1: str = "",
     area_name2: str = "",
 ) -> list[dict]:
+    # Fetch one level of the area tree (levels 1–3, parent names in area_name*).
     result = _api_get(
         session,
         "area/areaList",
@@ -187,7 +196,7 @@ def _collect_areas(
     area_name1: str = "",
     area_name2: str = "",
 ) -> list[tuple[str, str]]:
-    """Return every selectable (area_name, area_id) pair for a municipality."""
+    # Return every selectable (area_name, area_id) pair for a municipality.
     result = []
     areas = _fetch_area_list(
         session, jichitai_id, language_code, area_level, area_name1, area_name2
@@ -200,6 +209,7 @@ def _collect_areas(
             result.append((name, str(area_id)))
             continue
 
+        # Intermediate nodes have no area_id; recurse into child levels.
         if area_level == 1:
             children = _collect_areas(
                 session, jichitai_id, language_code, 2, name, ""
@@ -220,6 +230,7 @@ def _resolve_area_id(
     area_name: str,
     language_code: str,
 ) -> str:
+    # Map neighbourhood name to area_id (same exact-then-substring logic as municipality).
     target = _normalize(area_name)
     areas = _collect_areas(session, jichitai_id, language_code)
 
@@ -243,6 +254,7 @@ def _resolve_area_id(
 
 
 def _icon_for_trash_kind(name: str) -> str | None:
+    # Best-effort icon from English or Japanese waste-type labels.
     lower = name.lower()
     if "plastic bottle" in lower or "ペットボトル" in name:
         return Icons.PLASTIC_PACKAGING
@@ -288,7 +300,7 @@ class Source:
         if not municipality:
             raise SourceArgumentRequired(
                 "municipality",
-                "Enter the municipality from the threeR app, e.g. Shinjuku City.",
+                "Enter the municipality from the ThreeR app, e.g. Shinjuku City.",
             )
 
         jichitai_id = _resolve_municipality(
@@ -296,6 +308,7 @@ class Source:
         )
 
         if not area_name:
+            # Empty area_name triggers the config-flow dropdown (RSAG-style wizard).
             areas = _collect_areas(self._session, jichitai_id, self._language_code)
             suggestions = []
             for name, _ in areas:
@@ -303,7 +316,7 @@ class Source:
             suggestions.sort()
             raise SourceArgumentRequiredWithSuggestions(
                 "area_name",
-                "Select your collection area as shown in the threeR app.",
+                "Select your collection area as shown in the ThreeR app.",
                 suggestions,
             )
 
@@ -313,6 +326,7 @@ class Source:
         self._area_name = area_name
 
     def fetch(self) -> list[Collection]:
+        # API requires a user_id tied to the collection area before returning data.
         user_id = self._register_user()
         data = self._get_calendar_data(user_id)
 
@@ -339,12 +353,13 @@ class Source:
         return entries
 
     def _register_user(self) -> str:
+        # Create a throwaway user for this area (mirrors first launch of the app).
         try:
             result = _api_get(
                 self._session,
                 "user/regist",
                 {
-                    "user_id": "",
+                    "user_id": "",  # empty → API allocates a new user_id
                     "area_id": self._area_id,
                     "language_code": self._language_code,
                 },
@@ -354,11 +369,12 @@ class Source:
                 "area_name",
                 self._area_name,
                 "The API rejected this collection area. Check your municipality "
-                "and area name match the threeR app.",
+                "and area name match the ThreeR app.",
             )
         return result["user_id"]
 
     def _get_calendar_data(self, user_id: str) -> dict:
+        # Feature flags mirror the app; only calendar_flag=1 is needed here.
         return _api_get(
             self._session,
             "allData/getData",

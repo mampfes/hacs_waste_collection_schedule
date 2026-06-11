@@ -1,6 +1,6 @@
-# threeR
+# ThreeR
 
-Support for schedules provided by [threeR](https://threer.delight-system.co.jp/), the garbage collection platform used by many municipalities across Japan (e.g. Shinjuku City, Chiba City).
+Support for schedules provided by [ThreeR](https://threer.delight-system.co.jp/), the garbage collection platform used by many municipalities across Japan (e.g. Shinjuku City, Chiba City).
 
 ## Configuration via configuration.yaml
 
@@ -48,6 +48,6 @@ waste_collection_schedule:
 
 ## Setup via the Home Assistant UI
 
-During integration setup, enter your municipality and area name as shown in threeR. If a value is not recognised, the form will show matching options fetched from the live API (the same pattern used by other sources such as RSAG in Germany).
+During integration setup, enter your municipality and area name as shown in ThreeR. If a value is not recognised, the form will show matching options fetched from the live API (the same pattern used by other sources such as RSAG in Germany).
 
 If you leave **area name** empty on the first attempt, the setup form will offer a dropdown of all collection areas for the selected municipality.
