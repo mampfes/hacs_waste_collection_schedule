@@ -115,15 +115,24 @@ class Source:
         soup = BeautifulSoup(page_html, "html.parser")
         address_field = soup.find("input", attrs={"name": "bcg_address"})
         if address_field is None:
-            raise SourceArgumentNotFound("address", self._address)
+            raise Exception(
+                "Unexpected page structure from Baltimore County site: "
+                "address input field (bcg_address) not found; the form markup may have changed."
+            )
         form = address_field.find_parent("form")
         if form is None:
-            raise SourceArgumentNotFound("address", self._address)
+            raise Exception(
+                "Unexpected page structure from Baltimore County site: "
+                "address input is not inside a <form> element; the form markup may have changed."
+            )
 
         form_build_input = form.find("input", attrs={"name": "form_build_id"})
         form_id_input = form.find("input", attrs={"name": "form_id"})
         if form_build_input is None or form_id_input is None:
-            raise SourceArgumentNotFound("address", self._address)
+            raise Exception(
+                "Unexpected page structure from Baltimore County site: "
+                "form_build_id or form_id hidden inputs not found; the form markup may have changed."
+            )
 
         libraries = ""
         match = re.search(r'"libraries":"([^"]+)"', page_html)
@@ -304,13 +313,21 @@ class Source:
             return None
 
         date_text = match.group(1)
-        if not re.search(r"\d{4}", date_text):
+        year_assumed = not re.search(r"\d{4}", date_text)
+        if year_assumed:
             date_text = f"{date_text}, {default_year}"
 
         try:
-            return parse(date_text).date()
+            parsed = parse(date_text).date()
         except (TypeError, ValueError, OverflowError):
             return None
+
+        # When the year was assumed, roll forward if the date is more than ~6 months
+        # in the past (handles year-end where "January 1" belongs to next year).
+        if year_assumed and (date.today() - parsed).days > 180:
+            parsed = parsed.replace(year=parsed.year + 1)
+
+        return parsed
 
     @staticmethod
     def _parse_shift_map(text: str) -> dict[int, int]:
