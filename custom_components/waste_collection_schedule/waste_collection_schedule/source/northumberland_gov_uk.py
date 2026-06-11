@@ -1,6 +1,6 @@
 import logging
 import re
-from datetime import datetime
+from datetime import date, datetime
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -74,7 +74,7 @@ class Source:
             )
         csrf_token1 = csrf_input.get("value", "")
 
-        # Step 2: POST postcode to /postcode — this returns the address-select page
+        # Step 2: POST postcode to /postcode — this redirects to /address-select,
         # which contains a fresh CSRF token for the next step.
         r2 = session.post(
             f"{BASE_URL}/postcode",
@@ -112,54 +112,51 @@ class Source:
 
         entries = []
 
-        # Pattern A: card divs
-        cards = soup.find_all("div", class_=re.compile(r"\bcard\b"))
-        for card in cards:
-            header = card.find(
-                ["h2", "h3", "h4", "h5", "b", "strong"],
-            )
-            if header is None:
+        # Pattern A: govuk table (three columns: date | day | bin-type)
+        # This is the "Upcoming bin collection days" section and gives the most entries.
+        rows = soup.find_all("tr")
+        for row in rows:
+            cells = row.find_all(["td", "th"])
+            if len(cells) < 3:
                 continue
-            bin_type = header.get_text(strip=True)
+            date_text = cells[0].get_text(strip=True)
+            # Skip the header row
+            if date_text.lower() == "date":
+                continue
+            bin_type = cells[2].get_text(strip=True)
             if not bin_type:
                 continue
-
-            date_text = None
-            for tag in card.find_all(["p", "span", "mark", "td", "dd"]):
-                text = tag.get_text(strip=True)
-                if re.search(r"\d{1,2}[\s/]\w+[\s/]\d{4}|\d{1,2}/\d{2}/\d{4}", text):
-                    date_text = text
-                    break
-
-            if date_text is None:
-                continue
-
-            date = _parse_date(date_text)
-            if date is None:
+            d = _parse_date(date_text)
+            if d is None:
                 _LOGGER.warning(
                     "Could not parse date %r for bin type %r", date_text, bin_type
                 )
                 continue
-
             icon = _get_icon(bin_type)
-            entries.append(Collection(date=date, t=bin_type, icon=icon))
+            entries.append(Collection(date=d, t=bin_type, icon=icon))
 
         if entries:
             return entries
 
-        # Pattern B: table rows
-        rows = soup.find_all("tr")
-        for row in rows:
-            cells = row.find_all(["td", "th"])
-            if len(cells) < 2:
+        # Pattern B: ncc-bin-calendar card divs (three <p> tags: bin-type | day | date-with-year)
+        # Fallback when the table structure is absent; dates here include the year.
+        bin_cals = soup.find_all("div", class_=re.compile(r"ncc-bin-calendar"))
+        for bc in bin_cals:
+            paras = bc.find_all("p")
+            if len(paras) < 3:
                 continue
-            bin_type = cells[0].get_text(strip=True)
-            date_text = cells[1].get_text(strip=True)
-            date = _parse_date(date_text)
-            if date is None:
+            bin_type = paras[0].get_text(strip=True)
+            date_text = paras[2].get_text(strip=True)
+            if not bin_type:
+                continue
+            d = _parse_date(date_text)
+            if d is None:
+                _LOGGER.warning(
+                    "Could not parse date %r for bin type %r", date_text, bin_type
+                )
                 continue
             icon = _get_icon(bin_type)
-            entries.append(Collection(date=date, t=bin_type, icon=icon))
+            entries.append(Collection(date=d, t=bin_type, icon=icon))
 
         if entries:
             return entries
@@ -172,11 +169,11 @@ class Source:
             if dd is None:
                 continue
             date_text = dd.get_text(strip=True)
-            date = _parse_date(date_text)
-            if date is None:
+            d = _parse_date(date_text)
+            if d is None:
                 continue
             icon = _get_icon(bin_type)
-            entries.append(Collection(date=date, t=bin_type, icon=icon))
+            entries.append(Collection(date=d, t=bin_type, icon=icon))
 
         if not entries:
             raise SourceArgumentNotFound(
@@ -196,7 +193,9 @@ def _parse_date(text: str):
         flags=re.IGNORECASE,
     )
     text = text.strip()
+    today = date.today()
 
+    # Formats that include a year
     for fmt in (
         "%d %B %Y",
         "%d %b %Y",
@@ -207,6 +206,19 @@ def _parse_date(text: str):
             return datetime.strptime(text, fmt).date()
         except ValueError:
             continue
+
+    # Yearless formats — infer year from today's date.
+    # Use 2000 as a known-good placeholder to avoid a DeprecationWarning in Python 3.15+.
+    for fmt in ("%d %B", "%d %b"):
+        try:
+            d = datetime.strptime(f"{text} 2000", f"{fmt} %Y")
+            candidate = d.replace(year=today.year).date()
+            if candidate >= today:
+                return candidate
+            return d.replace(year=today.year + 1).date()
+        except ValueError:
+            continue
+
     return None
 
 
