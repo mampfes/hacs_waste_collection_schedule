@@ -257,9 +257,9 @@ def _icon_for_trash_kind(name: str) -> str | None:
     if "recyclable" in lower or "資源" in name:
         return Icons.RECYCLING
     if "non-combustible" in lower or "不燃" in name:
-        return Icons.NON_BURNABLE
+        return Icons.NON_COMBUSTIBLE
     if "combustible" in lower or "可燃" in name:
-        return Icons.BURNABLE
+        return Icons.GENERAL_WASTE
     if "organic" in lower or "生ごみ" in name:
         return Icons.BIO_KITCHEN
     if "paper" in lower or "紙" in name:
