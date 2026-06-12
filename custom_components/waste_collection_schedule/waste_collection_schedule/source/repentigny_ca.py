@@ -1,40 +1,25 @@
 import logging
-import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Repentigny (QC)"
-DESCRIPTION = "Source script for Ville de Repentigny waste collection"
-URL = "https://repentigny.ca/services/citoyens/collectes"
+DESCRIPTION = "Source script for Ville de Repentigny waste collection using Quebec open data portal"
+URL = "https://www.donneesquebec.ca/recherche/dataset/8a36b825-def9-4ce8-b7e2-6f8d2f8ce246/resource/8683e519-c133-402c-b173-9807d592c487/download/collectematieresresiduelles2018.json"
 
 TEST_CASES = {
     "Sector A": {"sector": "A"},
     "Sector B": {"sector": "B"},
     "Sector C": {"sector": "C"},
+    "Sector D": {"sector": "D"},
 }
 
 ICON_MAP = {
-    "Residue": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Organic": Icons.ORGANIC,
-    "Bulky": Icons.BULKY,
-    "Branches": Icons.GARDEN,
-    "ChristmasTree": Icons.CHRISTMAS_TREE,
-    "Glass": Icons.GLASS,
-    "Paper": Icons.PAPER,
-    "Cardboard": Icons.PAPER,
-    "Yard Waste": Icons.GARDEN,
-    "Hazardous": Icons.HAZARDOUS,
-    "Dechets": Icons.GENERAL_WASTE,
-    "Résidus": Icons.GENERAL_WASTE,
-    "Recyclage": Icons.RECYCLING,
+    "Ordures ménagères": Icons.GENERAL_WASTE,
     "Matières organiques": Icons.ORGANIC,
-    "Encombrants": Icons.BULKY,
-    "Résidus verts": Icons.GARDEN,
-    "Sapins": Icons.CHRISTMAS_TREE,
+    "Matières recyclables": Icons.RECYCLING,
 }
 
 WEEKDAYS = {
@@ -45,6 +30,11 @@ WEEKDAYS = {
     "Friday": 4,
     "Saturday": 5,
     "Sunday": 6,
+    "Lundi": 0,
+    "Mardi": 1,
+    "Mercredi": 2,
+    "Jeudi": 3,
+    "Vendredi": 4,
 }
 
 MONTHS = {
@@ -98,103 +88,108 @@ class Source:
 
         # Validate that sector is provided
         if not sector:
-            raise ValueError("Sector must be provided")
+            raise SourceArgumentNotFound(
+                "sector", "", "please provide a sector (A, B, C, D, E, or F)"
+            )
+
+        # Validate sector is one of the allowed values
+        if sector not in ["A", "B", "C", "D", "E", "F"]:
+            raise SourceArgumentNotFound(
+                "sector", sector, "please provide a valid sector (A, B, C, D, E, or F)"
+            )
 
     def fetch(self):
         """Fetch waste collection schedule for the specified sector."""
-        # Use the provided sector directly
-        LOGGER.info(f"Using manually provided sector: {self._sector}")
-        return self._fetch_by_sector(self._sector)
-
-    def _fetch_by_sector(self, sector):
-        """Fetch collection data for a specific sector."""
-        # This implementation fetches collection data from the Repentigny
-        # municipal website using the identified sector.
-        # The sector is used to filter the collection calendar tables on the website.
-
-        # Fetch the collection calendar from the Repentigny website
+        # Fetch the collection data from the Quebec open data portal
         response = requests.get(URL, timeout=30)
         response.raise_for_status()
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        data = response.json()
         entries = []
 
-        # Find all collection tables
-        collection_tables = soup.find_all("table", {"class": "calendrier"})
+        # Filter data for the specified sector
+        sector_data = [item for item in data if item["Secteur"] == self._sector]
 
-        for table in collection_tables:
-            caption = table.find("caption")
-            if not caption:
+        for item in sector_data:
+            # Parse the day of the week
+            jour = item["Jour"]
+            day_of_week = WEEKDAYS.get(jour)
+            if day_of_week is None:
+                LOGGER.warning(f"Unknown day of week: {jour}")
                 continue
 
-            # Extract year and month from caption
-            caption_text = caption.text.strip()
-            month_match = re.search(r"([A-Za-zÀ-ÿ]+)\s+(\d{4})", caption_text)
-            if not month_match:
+            # Parse the frequency
+            frequence = item.get("Frequence", "")
+            if not frequence:
+                LOGGER.warning(f"No frequency specified for {item['TypeDechet']}")
                 continue
 
-            month_name = month_match.group(1)
-            year = int(month_match.group(2))
+            # Get the current year
+            year = datetime.now().year
 
-            month_num = MONTHS.get(month_name)
-            if not month_num:
-                continue
+            # Find the next occurrence of this day of the week
+            # Start from January 1st of the current year
+            start_date = datetime(year, 1, 1)
+            day_offset = (day_of_week - start_date.weekday()) % 7
+            collection_date = start_date + timedelta(days=day_offset)
 
-            # Parse table rows
-            for row in table.find_all("tr")[1:]:  # Skip header
-                cells = row.find_all("td")
-                if len(cells) < 2:
-                    continue
+            # If the collection date is before today, add 7 days (next week)
+            if collection_date.date() < datetime.now().date():
+                collection_date += timedelta(days=7)
 
-                # Check if this cell contains a date
-                date_cell = cells[0]
-                date_element = date_cell.find("p", {"class": "date"})
-                if not date_element or not date_element.text.strip().isdigit():
-                    continue
+            # Generate multiple dates based on frequency
+            collection_type = item["TypeDechet"]
+            icon = ICON_MAP.get(collection_type, Icons.GENERAL_WASTE)
 
-                day = int(date_element.text.strip())
+            if "semaine" in frequence.lower():
+                # Weekly or bi-weekly collections
+                if "deux" in frequence.lower():
+                    # Bi-weekly (every 2 weeks)
+                    max_occurrences = (
+                        26  # Approximately 26 bi-weekly collections per year
+                    )
+                    interval = 14  # 14 days
+                else:
+                    # Weekly (every 1 week)
+                    max_occurrences = 52  # Approximately 52 weekly collections per year
+                    interval = 7  # 7 days
 
-                # Create the date
-                try:
-                    collection_date = datetime(year, month_num, day).date()
-                except ValueError:
-                    continue
-
-                # Check if this row belongs to our sector
-                # The sector information is typically in the second cell
-                info_cell = cells[1]
-                if sector not in info_cell.text:
-                    continue
-
-                # Parse collection types from the row
-                img_container = info_cell.find("p", {"class": "img"})
-                if not img_container:
-                    continue
-
-                for img in img_container.find_all("img"):
-                    collection_type = img.get("title", img.get("alt", "")).strip()
-                    if not collection_type:
+                # Generate collection dates
+                for i in range(max_occurrences):
+                    collection_date = start_date + timedelta(
+                        days=day_offset + i * interval
+                    )
+                    if collection_date.year != year:
+                        break
+                    if collection_date.date() < datetime.now().date():
                         continue
-
-                    # Skip seasonal collections that might not apply to all years
-                    if "branches" in collection_type.lower() and month_num not in [
-                        5,
-                        6,
-                        7,
-                        8,
-                        9,
-                        10,
-                        11,
-                    ]:
-                        continue
-
-                    # Add collection entry
                     entries.append(
                         Collection(
-                            date=collection_date,
+                            date=collection_date.date(),
                             t=collection_type,
-                            icon=ICON_MAP.get(collection_type, Icons.GENERAL_WASTE),
+                            icon=icon,
                         )
                     )
+            elif "mois" in frequence.lower():
+                # Monthly collections
+                # Find the day of month (assuming it's the same day as the first occurrence)
+                day_of_month = collection_date.day
+                max_occurrences = 12  # 12 monthly collections per year
+                interval = 30  # Approximate 30 days
+
+                for i in range(max_occurrences):
+                    collection_date = datetime(year, 1 + i, day_of_month)
+                    if collection_date.date() < datetime.now().date():
+                        continue
+                    entries.append(
+                        Collection(
+                            date=collection_date.date(),
+                            t=collection_type,
+                            icon=icon,
+                        )
+                    )
+            else:
+                # Skip irregular/annual collections (no date data available)
+                continue
 
         return entries
