@@ -7,10 +7,10 @@ Support for schedules provided by [KAW Mainz und Mainz-Bingen AöR](https://lk.k
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: kaw_mainz_bingen_de
-      args:
-        bezirk: Abfuhrbezirk
-        ort: Ort
+        - name: kaw_mainz_bingen_de
+          args:
+            bezirk: Abfuhrbezirk
+            ort: Ort
 
 ```
 
@@ -27,10 +27,10 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: kaw_mainz_bingen_de
-      args:
-        bezirk: Stadt Ingelheim
-        ort: Ingelheim Süd
+        - name: kaw_mainz_bingen_de
+          args:
+            bezirk: Stadt Ingelheim
+            ort: Ingelheim Süd
 
 ```
 

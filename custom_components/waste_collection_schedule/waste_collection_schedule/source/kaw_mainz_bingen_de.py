@@ -5,7 +5,7 @@ from inspect import Parameter, Signature
 from typing import Any
 
 import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "KAW Mainz und Mainz-Bingen AöR"
@@ -53,7 +53,7 @@ class Source:
         # exposes the public calendar by district and city only.
         self._strasse: str | None = strasse
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
         session = requests.Session()
 
         settings = self._get_settings(session)
@@ -85,7 +85,7 @@ class Source:
         data = r.json()
         self._raise_for_api_error(data)
 
-        entries = []
+        entries: list[Collection] = []
         for item in data.get("DataList", []):
             date = datetime.datetime.strptime(item["Date"], "%d.%m.%Y").date()
             bin_type = item["WasteTypeName"]
