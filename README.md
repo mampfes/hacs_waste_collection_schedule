@@ -2485,6 +2485,12 @@ If you already have enough information for your municipality/region, you are ver
 </details>
 
 <details>
+<summary>Japan</summary>
+
+- [ThreeR](/doc/source/delight_system_com.md) / threer1.delight-system.com
+</details>
+
+<details>
 <summary>Liechtenstein</summary>
 
 - [Balzers](/doc/source/abfalltransport_li.md) / abfalltransport.li

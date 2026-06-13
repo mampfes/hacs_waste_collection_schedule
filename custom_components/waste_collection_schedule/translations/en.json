@@ -14970,6 +14970,37 @@
         },
         "data_description": {}
       },
+      "args_delight_system_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area_name": "Area name",
+          "language_code": "Language",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "area_name": "Neighbourhood/chōme name from the app, e.g. `Aizumi-cho`.",
+          "language_code": "Language for municipality, area, and waste type labels from the API.",
+          "municipality": "Municipality name or ID from the ThreeR app, e.g. `Shinjuku City` or `shinjukuku`."
+        }
+      },
+      "reconfigure_delight_system_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area_name": "Area name",
+          "language_code": "Language",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "area_name": "Neighbourhood/chōme name from the app, e.g. `Aizumi-cho`.",
+          "language_code": "Language for municipality, area, and waste type labels from the API.",
+          "municipality": "Municipality name or ID from the ThreeR app, e.g. `Shinjuku City` or `shinjukuku`."
+        }
+      },
       "args_abfalltransport_li": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

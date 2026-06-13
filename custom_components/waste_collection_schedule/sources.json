@@ -16581,6 +16581,14 @@
       "id": "junker_app"
     }
   ],
+  "Japan": [
+    {
+      "title": "ThreeR",
+      "module": "delight_system_com",
+      "default_params": {},
+      "id": "delight_system_com"
+    }
+  ],
   "Liechtenstein": [
     {
       "title": "Balzers",
