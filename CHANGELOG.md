@@ -4,6 +4,65 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.28.0] - 2026-06-13
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@asdfgasfhsn, @Brookterrace, @Dag0d, @havok2063, @iuginP, @jasonjhofmann, @obynio,
+@PersistentDabbler, @phpsystems and @ZeetLex. 🎉
+Thanks as well to our returning contributors (@anuj-dangi, @bbr111, @jan-tdy, @lit-af, @marsdeat)
+for the fixes and new sources below.
+
+### Added Sources
+
+- added Japan and ~248 municipalities (delight_system_com), JP (thanks @obynio) (#6612)
+- added KAW Mainz und Mainz-Bingen AöR (kaw_mainz_bingen_de), DE (thanks @Dag0d) (#6616)
+- added Baltimore County, MD, US (thanks @havok2063) (#6595)
+- added Selwyn District Council (selwyn_govt_nz), NZ (thanks @asdfgasfhsn) (#6591)
+- added RfD (Drammensregionen), NO (thanks @ZeetLex) (#6564)
+- added Boston Borough Council (boston_gov_uk), UK (#6594)
+- added Repentigny, QC, CA (thanks @lit-af) (#6603)
+- added Notre-Dame-du-Bon-Conseil, QC, CA (thanks @lit-af) (#6579)
+- added Geovest, IT (thanks @iuginP) (#6582)
+- added KOSIT EAST (kositeast_sk), SK (thanks @jan-tdy) (#6555)
+- added Liechtenstein Abfalltransport, LI (#6585)
+- added Ostprignitz-Ruppin, DE (thanks @anuj-dangi) (#6578)
+- added Landkreis Prignitz, DE (thanks @jan-tdy) (#6601)
+- added Gemünden (Wohra), DE (thanks @jan-tdy) (#6600)
+- added Red Bank, TN, US (thanks @PersistentDabbler) (#6567)
+
+### Fixed Sources
+
+- fixed okc_gov: restore every-other-week recycling via recycle_reference_date (#6621)
+- fixed stockport_gov_uk: send browser User-Agent to avoid 403 (thanks @phpsystems) (#6620)
+- fixed republicservices_com: weekly recurrence projection ('W' vs 'week') and bulk-waste icon (thanks @jasonjhofmann) (#6617)
+- fixed npdc_govt_nz: correct SSL certificate chain (#6613)
+- fixed data_montpellier3m_fr: complete TLS chain to fix SSL verification (#6610)
+- fixed northumberland_gov_uk: correct table column mapping and add yearless date parsing (#6609)
+- fixed northumberland_gov_uk: add required postcode step to fix CSRF flow (#6593)
+- fixed preston_gov_uk: require street for UPRN lookup; clarify parameter docs (#6605)
+- fixed publidata_fr: add CC Pévèle Carembault to EXTRA_INFO (#6604)
+- fixed edpevent_se: remove nodra provider (endpoint now login-protected) (#6592)
+- fixed wanneroo_wa_gov_au: handle "Week AFTER NEXT" rhythm and update test cases (#6589)
+- fixed gastrikeatervinnare_se: add icons for new plastic, paper and garden bins (#6588)
+- fixed south_norfolk_and_broadland_gov_uk: correct SOAP calendar day offset (#6587)
+- fixed opendata_bordeauxmetropole_fr: skip records with broken geometry (#6586)
+- fixed bracknell_forest_gov_uk: handle null firstDate (thanks @jan-tdy) (#6571)
+- fixed bedford_gov_uk: update data parsing (thanks @jan-tdy) (#6566)
+- fixed darlington_gov_uk: improve parsing (thanks @Brookterrace) (#6584)
+
+### Deprecated
+
+- deprecated muellmax_de RSAG Rhein-Sieg-Kreis entry in favour of rsag_de (#6614)
+- deprecated awb_mainz_bingen_de in favour of kaw_mainz_bingen_de (kept as a compatibility shim) (#6616)
+
+### Other
+
+- fixed config flow: allow editing a sensor value_template after a preset was previously set (#6623)
+- added generation of the source-owner mapping (SOURCE_CODEOWNERS) from source module metadata (thanks @bbr111) (#5577)
+- added a GitHub Actions workflow for automatic issue assignment (thanks @jan-tdy) (#6565)
+- docs: Norfolk councils and Dartford Council, UK (thanks @marsdeat) (#6577)
+- docs: Local Government Reorganisation notes for various England, UK sources (thanks @marsdeat) (#6596)
+
 ## [2.27.0] - 2026-06-07
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release —
