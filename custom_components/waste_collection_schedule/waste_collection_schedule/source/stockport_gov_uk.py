@@ -41,15 +41,17 @@ class Source:
         }
 
         r = requests.get(
-            f"https://myaccount.stockport.gov.uk/bin-collections/show/{self._uprn}", headers=headers, timeout=30
+            f"https://myaccount.stockport.gov.uk/bin-collections/show/{self._uprn}", 
+            headers=headers, 
+            timeout=30
         )
 
-#        _LOGGER.warning("Status: %s", r.status_code)
-#        _LOGGER.warning("URL after redirects: %s", r.url)
-#        _LOGGER.warning("Length: %s", len(r.text))
+        #_LOGGER.warning("Status: %s", r.status_code)
+        #_LOGGER.warning("URL after redirects: %s", r.url)
+        #_LOGGER.warning("Length: %s", len(r.text))
 
-#        with open("/tmp/stockport.html", "w") as f:
-#            f.write(r.text)
+        #with open("/tmp/stockport.html", "w") as f:
+            #f.write(r.text)
 
         
         soup = BeautifulSoup(r.text, features="html.parser")
