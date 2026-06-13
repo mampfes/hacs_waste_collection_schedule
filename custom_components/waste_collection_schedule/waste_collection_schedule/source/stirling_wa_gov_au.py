@@ -39,6 +39,8 @@ PARAM_TRANSLATIONS = {
     },
 }
 
+SOURCE_CODEOWNERS = ["@markvp"]
+
 ICON_MAP = {
     "red": Icons.GENERAL_WASTE,
     "green": Icons.ORGANIC,
