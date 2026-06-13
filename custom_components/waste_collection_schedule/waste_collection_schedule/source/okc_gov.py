@@ -15,6 +15,10 @@ TEST_CASES = {
         "recycleObjectID": 1215,
         "bulkyObjectID": 1,
     },
+    "Recycle every other week (anchored)": {
+        "recycleObjectID": 1215,
+        "recycle_reference_date": "2026-06-15",
+    },
     "Trash only": {
         "trashObjectID": 2,
     },
@@ -56,6 +60,7 @@ PARAM_DESCRIPTIONS = {
         "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal.",
         "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
         "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
+        "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
     },
 }
 
@@ -63,7 +68,9 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "en": "Provide the OBJECTID of one or more of your collection zones from the OKC Open "
     "Data Portal (trashObjectID, recycleObjectID, bulkyObjectID). At least one is required. "
     "Open the FeatureServer layers linked in the documentation, use the Query page to locate "
-    "the zone that covers your address, and read its OBJECTID."
+    "the zone that covers your address, and read its OBJECTID. Recycling is collected every "
+    "other week and the portal only reports the weekday, so also set recycle_reference_date "
+    "to one date you know recycling was (or will be) collected to pin the correct week."
 }
 
 
@@ -73,12 +80,26 @@ class Source:
         trashObjectID: str | int = "",
         recycleObjectID: str | int = "",
         bulkyObjectID: str | int = "",
+        recycle_reference_date: str = "",
     ):
         self._record_ids = {
             "TRASH": str(trashObjectID).strip(),
             "RECYCLE": str(recycleObjectID).strip(),
             "BULKY": str(bulkyObjectID).strip(),
         }
+
+        self._recycle_reference_date: date | None = None
+        if str(recycle_reference_date).strip():
+            try:
+                self._recycle_reference_date = datetime.strptime(
+                    str(recycle_reference_date).strip(), "%Y-%m-%d"
+                ).date()
+            except ValueError as exc:
+                raise SourceArgumentNotFound(
+                    "recycle_reference_date",
+                    recycle_reference_date,
+                    "must be an ISO date (YYYY-MM-DD) of a known recycling pickup.",
+                ) from exc
 
         if not any(self._record_ids.values()):
             raise SourceArgumentNotFound(
@@ -119,6 +140,20 @@ class Source:
         today = datetime.now().date()
         entries: list = []
 
+        # Recycling runs every other week, but the ArcGIS layer only exposes a
+        # weekday name (PickupDay) with no date or week-parity field. When the
+        # user supplies a known recycling date, project the fortnightly cadence
+        # from it instead of returning the next occurrence of the weekday.
+        if waste_type == "RECYCLE" and self._recycle_reference_date is not None:
+            entries.append(
+                Collection(
+                    date=self._next_biweekly(self._recycle_reference_date, today),
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type),
+                )
+            )
+            return entries
+
         pickup_day = None
         for field_name in ("PickupDay", "PickUpDay", "PICKUPDAY"):
             value = attributes.get(field_name)
@@ -142,6 +177,13 @@ class Source:
         target_weekday = WEEKDAY_INDEX[weekday_name.lower()]
         days_ahead = (target_weekday - today.weekday()) % 7
         return today + timedelta(days=days_ahead)
+
+    def _next_biweekly(self, reference_date: date, today: date) -> date:
+        """Return the next pickup on or after today on the same 14-day cycle as reference_date."""
+        offset = (today - reference_date).days % 14
+        if offset == 0:
+            return today
+        return today + timedelta(days=14 - offset)
 
     def _nth_weekday_of_month(
         self, year: int, month: int, weekday_index: int, nth: int
