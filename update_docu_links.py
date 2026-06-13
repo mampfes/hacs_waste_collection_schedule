@@ -1069,6 +1069,10 @@ COUNTRYCODES = [
         "name": "Italy",
     },
     {
+        "code": "jp",
+        "name": "Japan",
+    },
+    {
         "code": "lt",
         "name": "Lithuania",
     },
