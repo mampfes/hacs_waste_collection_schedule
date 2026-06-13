@@ -1169,6 +1169,14 @@
     },
     "urls": {}
   },
+  "repentigny_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/repentigny_ca.md",
+    "howto": {
+      "en": "Enter your sector manually if you know it from the <a href=\"https://repentigny.ca/services/citoyens/collectes\">collection calendar</a>.",
+      "fr": "Entrez votre secteur manuellement si vous le connaissez d'après le <a href=\"https://repentigny.ca/services/citoyens/collectes\">calendrier de collecte</a>."
+    },
+    "urls": {}
+  },
   "ics_riviere_beaudette_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/riviere_beaudette_com.md",
     "howto": {
