@@ -9,10 +9,10 @@ Existing `awb_mainz_bingen_de` configurations use the current [KAW Abfallkalende
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: awb_mainz_bingen_de
-      args:
-        bezirk: Abfuhrbezirk
-        ort: Ort
+        - name: awb_mainz_bingen_de
+          args:
+            bezirk: Abfuhrbezirk
+            ort: Ort
 
 ```
 
@@ -32,10 +32,10 @@ waste_collection_schedule:
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: awb_mainz_bingen_de
-      args:
-        bezirk: Stadt Ingelheim
-        ort: Ingelheim Süd
+        - name: awb_mainz_bingen_de
+          args:
+            bezirk: Stadt Ingelheim
+            ort: Ingelheim Süd
 
 ```
 
