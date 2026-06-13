@@ -6248,7 +6248,7 @@
   "okc_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md",
     "howto": {
-      "en": "Provide the OBJECTID of one or more of your collection zones from the OKC Open Data Portal (trashObjectID, recycleObjectID, bulkyObjectID). At least one is required. Open the FeatureServer layers linked in the documentation, use the Query page to locate the zone that covers your address, and read its OBJECTID."
+      "en": "Provide the OBJECTID of one or more of your collection zones from the OKC Open Data Portal (trashObjectID, recycleObjectID, bulkyObjectID). At least one is required. Open the FeatureServer layers linked in the documentation, use the Query page to locate the zone that covers your address, and read its OBJECTID. Recycling is collected every other week and the portal only reports the weekday, so also set recycle_reference_date to one date you know recycling was (or will be) collected to pin the correct week."
     },
     "urls": {}
   },

@@ -26034,6 +26034,7 @@
           "calendar_title": "Kalender Titel",
           "bulkyObjectID": "Bulky Object Id",
           "recycleObjectID": "Recycle Object Id",
+          "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {
@@ -26047,6 +26048,7 @@
           "calendar_title": "Kalender Titel",
           "bulkyObjectID": "Bulky Object Id",
           "recycleObjectID": "Recycle Object Id",
+          "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {}

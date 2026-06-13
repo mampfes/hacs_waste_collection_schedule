@@ -26832,12 +26832,14 @@
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
           "recycleObjectID": "Recycle Object Id",
+          "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
           "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
+          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
           "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
         }
       },
@@ -26848,11 +26850,13 @@
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
           "recycleObjectID": "Recycle Object Id",
+          "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {
           "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
           "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
+          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
           "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
         }
       },
