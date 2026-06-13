@@ -6893,7 +6893,7 @@
       "id": "ics_awb_landkreis_karlsruhe_de"
     },
     {
-      "title": "Abfallwirtschaftsbetrieb LK Mainz-Bingen",
+      "title": "Abfallwirtschaftsbetrieb LK Mainz-Bingen (Deprecated)",
       "module": "awb_mainz_bingen_de",
       "default_params": {},
       "id": "awb_mainz_bingen_de"
@@ -9808,6 +9808,12 @@
         "municipality": "Katlenburg"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "KAW Mainz und Mainz-Bingen A\u00f6R",
+      "module": "kaw_mainz_bingen_de",
+      "default_params": {},
+      "id": "kaw_mainz_bingen_de"
     },
     {
       "title": "KECL Kommunalentsorgung Chemnitzer Land",

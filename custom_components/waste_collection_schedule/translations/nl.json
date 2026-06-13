@@ -7563,8 +7563,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bezirk": "District",
-          "ort": "City",
-          "strasse": "Street"
+          "ort": "City"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -7576,8 +7575,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bezirk": "District",
-          "ort": "City",
-          "strasse": "Street"
+          "ort": "City"
         },
         "data_description": {}
       },
@@ -10516,6 +10514,28 @@
         "data": {
           "calendar_title": "Calendar Title",
           "abf_suche": "Search"
+        },
+        "data_description": {}
+      },
+      "args_kaw_mainz_bingen_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "bezirk": "District",
+          "ort": "City"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kaw_mainz_bingen_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "bezirk": "District",
+          "ort": "City"
         },
         "data_description": {}
       },

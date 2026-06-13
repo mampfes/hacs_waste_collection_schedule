@@ -7669,8 +7669,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "bezirk": "Bezirk",
-          "ort": "Ort",
-          "strasse": "Straße"
+          "ort": "Ort"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -7682,8 +7681,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "bezirk": "Bezirk",
-          "ort": "Ort",
-          "strasse": "Straße"
+          "ort": "Ort"
         },
         "data_description": {}
       },
@@ -10659,6 +10657,28 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "abf_suche": "Abf Suche"
+        },
+        "data_description": {}
+      },
+      "args_kaw_mainz_bingen_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "bezirk": "Bezirk",
+          "ort": "Ort"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_kaw_mainz_bingen_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "bezirk": "Bezirk",
+          "ort": "Ort"
         },
         "data_description": {}
       },
