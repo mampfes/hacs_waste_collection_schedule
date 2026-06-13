@@ -78,6 +78,23 @@ See `doc/contributing_source.md` for the full version of these rules.
 
 If the provider exposes an ICS feed, prefer adding a single YAML at `doc/ics/yaml/<name>.yaml` over writing a new source file. The generic `ics` source consumes it. Use `{%Y}` as a year placeholder if the URL embeds the current year. CI will regenerate the corresponding `doc/ics/<name>.md` automatically after merge — do not run `update_docu_links.py` in your PR branch.
 
+## Source ownership (encouraged for all new sources)
+
+If you add a new Python source, consider declaring yourself as an owner by adding `SOURCE_CODEOWNERS` to the module:
+
+```python
+SOURCE_CODEOWNERS = ["@your-github-handle"]
+```
+
+For a new ICS YAML provider, add the `codeowners` key:
+
+```yaml
+codeowners:
+  - "@your-github-handle"
+```
+
+Owners are automatically pinged and assigned when a bug report is filed for their source. This is the primary way maintainers know who to contact when a source breaks. Every handle must start with `@`.
+
 ## Common review rejections
 
 Things the maintainers consistently bounce in code review — avoid these from the start:

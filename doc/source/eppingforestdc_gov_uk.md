@@ -2,6 +2,9 @@
 
 Support for schedules provided by [Epping Forest District Council](https://www.eppingforestdc.gov.uk), Essex, UK.
 
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new West Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+
 ## Configuration via configuration.yaml
 
 ```yaml

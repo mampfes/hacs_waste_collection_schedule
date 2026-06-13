@@ -72,6 +72,10 @@ Pick the right `COUNTRY` value from `update_docu_links.py`'s `COUNTRYCODES` list
 
 An invalid value silently orphans the source from README/info/sources.json. Verify the code is in the list before recommending it.
 
+## Source ownership
+
+When producing the recommendation for a new source, note that contributors are **strongly encouraged** to declare themselves as the source maintainer by adding `SOURCE_CODEOWNERS` (for Python sources) or `codeowners:` (for ICS YAML). This ensures they are automatically notified and assigned when bugs are reported. The implementer agent will prompt them to do this.
+
 ## Output
 
 Return a structured recommendation in this exact shape, then stop:

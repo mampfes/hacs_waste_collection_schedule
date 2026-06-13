@@ -1,7 +1,9 @@
 # Maldon District Council
 
-Support for schedules provided by [Maldon District Council](https://maldon.suez.co.uk/maldon/AddressLookup/LookupAddresses), serving the
-district of Maldon, UK.
+Support for schedules provided by [Maldon District Council](https://maldon.suez.co.uk/maldon/AddressLookup/LookupAddresses), serving the district of Maldon, Essex, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new Mid Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 

@@ -1,6 +1,9 @@
 # Southampton City Council
 
-Support for schedules provided by [Southampton City Council](https://southampton.gov.uk/)
+Support for schedules provided by [Southampton City Council](https://southampton.gov.uk/), serving Southampton, Hampshire, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Hampshire, please continue to use the source for your current area as long as it's still working. New sources for the new South West Hampshire Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 

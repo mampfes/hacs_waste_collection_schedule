@@ -18,7 +18,7 @@ class Source(BaseSource):
     TITLE = "Reading Council"
     DESCRIPTION = "Source for reading.gov.uk services for Reading Council."
     URL = "https://reading.gov.uk"
-    COUNTRY = "gb"
+    COUNTRY = "uk"
 
     TEST_CASES = {
         "known_uprn": {"uprn": "310027679"},

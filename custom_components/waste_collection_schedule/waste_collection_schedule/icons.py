@@ -39,12 +39,21 @@ class Icons(StrEnum):
     # General mixed/landfill waste
     GENERAL_WASTE = "mdi:trash-can"
 
+    # Combustible waste for household, for example in Japan
+    COMBUSTIBLE = "mdi:fire"
+
+    # Non-combustible waste for household, for example in Japan
+    NON_COMBUSTIBLE = "mdi:fire-off"
+
     # Mixed dry recycling
     RECYCLING = "mdi:recycle"
 
     # Plastic/light-packaging stream (Gelber Sack, yellow bag, LVP, etc.) —
     # visually distinct from RECYCLING to convey the separate stream.
     PLASTIC_PACKAGING = "mdi:recycle-variant"
+
+    # Plastic PET bottles distinct from PLASTIC_PACKAGING and GLASS bottles
+    PLASTIC_PET = "mdi:bottle-soda-outline"
 
     # Paper/cardboard
     PAPER = "mdi:package-variant"

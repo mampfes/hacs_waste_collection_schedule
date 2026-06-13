@@ -7,11 +7,9 @@ SERVICE_MAP = [
         "url": "https://www.awista.de/",
         "service_id": "Dus",
     },
-    {
-        "title": "RSAG Rhein-Sieg-Kreis",
-        "url": "https://www.rsag.de",
-        "service_id": "Rsa",
-    },
+    # RSAG Rhein-Sieg-Kreis ("Rsa") is covered by the dedicated `rsag_de` source
+    # (same Müllmax backend, friendlier city/street config) — see #6553. Entry
+    # removed to avoid two listings for the same provider.
     {
         "title": "USB Bochum",
         "url": "https://www.usb-bochum.de/",

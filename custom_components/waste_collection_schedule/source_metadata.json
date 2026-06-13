@@ -1169,6 +1169,14 @@
     },
     "urls": {}
   },
+  "repentigny_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/repentigny_ca.md",
+    "howto": {
+      "en": "Enter your sector manually if you know it from the <a href=\"https://repentigny.ca/services/citoyens/collectes\">collection calendar</a>.",
+      "fr": "Entrez votre secteur manuellement si vous le connaissez d'après le <a href=\"https://repentigny.ca/services/citoyens/collectes\">calendrier de collecte</a>."
+    },
+    "urls": {}
+  },
   "ics_riviere_beaudette_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/riviere_beaudette_com.md",
     "howto": {
@@ -2332,6 +2340,11 @@
     "howto": {},
     "urls": {}
   },
+  "kaw_mainz_bingen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kaw_mainz_bingen_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "ics_kecl_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kecl_de.md",
     "howto": {
@@ -2705,6 +2718,11 @@
   },
   "frankenberg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/frankenberg_de.md",
+    "howto": {},
+    "urls": {}
+  },
+  "gemuenden_wohra_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gemuenden_wohra_de.md",
     "howto": {},
     "urls": {}
   },
@@ -3163,6 +3181,13 @@
     },
     "urls": {}
   },
+  "delight_system_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/delight_system_com.md",
+    "howto": {
+      "en": "Enter your municipality and neighbourhood exactly as shown in the ThreeR garbage app (e.g. municipality `Shinjuku City`, area `Aizumi-cho`). If a value is not recognised, the setup form will offer matching options from the live API."
+    },
+    "urls": {}
+  },
   "abfalltransport_li": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfalltransport_li.md",
     "howto": {
@@ -3394,6 +3419,13 @@
   "rotorua_lakes_council_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rotorua_lakes_council_nz.md",
     "howto": {},
+    "urls": {}
+  },
+  "selwyn_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/selwyn_govt_nz.md",
+    "howto": {
+      "en": "Enter your address exactly as it appears in the address search on Selwyn District Council's collection days and routes page, e.g. '30 Tennyson Street Rolleston'."
+    },
     "urls": {}
   },
   "taupodc_govt_nz": {
@@ -5533,10 +5565,10 @@
   },
   "preston_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/preston_gov_uk.md",
-    "howto": {},
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "howto": {
+      "en": "Enter your postcode or street name in the 'Street / Postcode' field. If your postcode returns multiple properties, find your UPRN at https://www.findmyaddress.co.uk/ and enter it in the optional 'UPRN' field to select the exact property."
+    },
+    "urls": {}
   },
   "reading_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reading_gov_uk.md",
@@ -6182,6 +6214,13 @@
     "howto": {},
     "urls": {}
   },
+  "baltimore_county_md_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/baltimore_county_md_us.md",
+    "howto": {
+      "en": "Go to the Baltimore County collection schedule page, type your house number and street in the Address field, and select the full address from the dropdown (for example: 610 Gifford Ln)."
+    },
+    "urls": {}
+  },
   "baton_rouge_la_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/baton_rouge_la_us.md",
     "howto": {},
@@ -6209,7 +6248,7 @@
   "okc_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md",
     "howto": {
-      "en": "Provide the OBJECTID of one or more of your collection zones from the OKC Open Data Portal (trashObjectID, recycleObjectID, bulkyObjectID). At least one is required. Open the FeatureServer layers linked in the documentation, use the Query page to locate the zone that covers your address, and read its OBJECTID."
+      "en": "Provide the OBJECTID of one or more of your collection zones from the OKC Open Data Portal (trashObjectID, recycleObjectID, bulkyObjectID). At least one is required. Open the FeatureServer layers linked in the documentation, use the Query page to locate the zone that covers your address, and read its OBJECTID. Recycling is collected every other week and the portal only reports the weekday, so also set recycle_reference_date to one date you know recycling was (or will be) collected to pin the correct week."
     },
     "urls": {}
   },

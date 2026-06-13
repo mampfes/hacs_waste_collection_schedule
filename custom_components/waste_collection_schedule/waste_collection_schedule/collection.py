@@ -1,6 +1,6 @@
 ﻿import datetime
 import logging
-from typing import Optional
+from typing import Union
 
 from .waste_types import WasteType
 
@@ -203,6 +203,16 @@ class _CollectionMeta:
 
     def __subclasscheck__(self, subclass):
         return issubclass(subclass, Collection)
+
+    # The package exports this factory instance as ``Collection`` for backward
+    # compatibility. Existing sources annotate with ``Collection | None``, which
+    # is evaluated at definition time, so the instance must support ``|`` like a
+    # real class would. Delegate to the underlying Collection class.
+    def __or__(self, other):
+        return Union[Collection, other]
+
+    def __ror__(self, other):
+        return Union[other, Collection]
 
 
 CollectionFactory = _CollectionMeta()

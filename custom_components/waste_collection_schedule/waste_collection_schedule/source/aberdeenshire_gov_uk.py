@@ -12,7 +12,7 @@ class Source(BaseSource):
     TITLE = "Aberdeenshire Council"
     DESCRIPTION = "Source for Aberdeenshire Council, UK."
     URL = "https://aberdeenshire.gov.uk"
-    COUNTRY = "gb"
+    COUNTRY = "uk"
 
     TEST_CASES = {
         "Test_001": {"uprn": "000151124612"},
@@ -40,6 +40,4 @@ class Source(BaseSource):
     )
 
     def __init__(self, uprn):
-        self.API_URL = (
-            f"https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes/Route/{str(uprn).zfill(12)}"
-        )
+        self.API_URL = f"https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes/Route/{str(uprn).zfill(12)}"

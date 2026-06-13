@@ -5224,6 +5224,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Repentigny (QC)",
+      "module": "repentigny_ca",
+      "default_params": {},
+      "id": "repentigny_ca"
+    },
+    {
       "title": "Richmond Hill (ON)",
       "module": "recyclecoach_com",
       "default_params": {},
@@ -5775,6 +5781,14 @@
       "module": "cc-montesquieu_fr",
       "default_params": {},
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Communaut\u00e9 de Communes P\u00e9v\u00e8le Carembault",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1141
+      },
+      "id": "publidata_fr"
     },
     {
       "title": "Dietwiller",
@@ -6879,7 +6893,7 @@
       "id": "ics_awb_landkreis_karlsruhe_de"
     },
     {
-      "title": "Abfallwirtschaftsbetrieb LK Mainz-Bingen",
+      "title": "Abfallwirtschaftsbetrieb LK Mainz-Bingen (Deprecated)",
       "module": "awb_mainz_bingen_de",
       "default_params": {},
       "id": "awb_mainz_bingen_de"
@@ -7136,6 +7150,38 @@
         "municipality": "Amelsen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Amt Bad Wilsnack/Weisen (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "1e9592418582666e2a5d1c62b2683435"
+      },
+      "id": "abfall_io"
+    },
+    {
+      "title": "Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "bb937857acd951dfc8de5be8b8a49f6d"
+      },
+      "id": "abfall_io"
+    },
+    {
+      "title": "Amt Meyenburg (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "4638881e7bebe6869e2e86de5f8aa09e"
+      },
+      "id": "abfall_io"
+    },
+    {
+      "title": "Amt Putlitz/Berge (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "4f06df48f154246415e57ce12b26abe5"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Andershausen",
@@ -8955,12 +9001,28 @@
       "id": "cmcitymedia_de"
     },
     {
+      "title": "Gemeinde Gro\u00df Pankow (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "af91b65d2753a219309072837d8ea4e1"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Gemeinde Gr\u00fcndau",
       "module": "heimat_info_de",
       "default_params": {
         "commune": "gruendau"
       },
       "id": "heimat_info_de"
+    },
+    {
+      "title": "Gemeinde Gumtow (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "3cefa45ab357d231891bb497253c630f"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Gemeinde Kalletal",
@@ -8971,12 +9033,28 @@
       "id": "cmcitymedia_de"
     },
     {
+      "title": "Gemeinde Karst\u00e4dt (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "798f59a75627f5d7686dab0c7226c877"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Gemeinde Kranenburg",
       "module": "abfallnavi_de",
       "default_params": {
         "service": "kranenburg"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Gemeinde Plattenburg (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "a0461612534502273c518e28d4f6f1e4"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Gemeinde Roetgen",
@@ -9730,6 +9808,12 @@
         "municipality": "Katlenburg"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "KAW Mainz und Mainz-Bingen A\u00f6R",
+      "module": "kaw_mainz_bingen_de",
+      "default_params": {},
+      "id": "kaw_mainz_bingen_de"
     },
     {
       "title": "KECL Kommunalentsorgung Chemnitzer Land",
@@ -12340,14 +12424,6 @@
       "id": "rsag_de"
     },
     {
-      "title": "RSAG Rhein-Sieg-Kreis",
-      "module": "muellmax_de",
-      "default_params": {
-        "service": "Rsa"
-      },
-      "id": "muellmax_de"
-    },
-    {
       "title": "R\u00f6dermark",
       "module": "ics",
       "default_params": {},
@@ -12726,6 +12802,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Stadt Gem\u00fcnden (Wohra)",
+      "module": "gemuenden_wohra_de",
+      "default_params": {},
+      "id": "gemuenden_wohra_de"
+    },
+    {
       "title": "Stadt Haltern am See",
       "module": "muellmax_de",
       "default_params": {
@@ -12838,12 +12920,28 @@
       "id": "ics_osnabrueck_de"
     },
     {
+      "title": "Stadt Perleberg (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "9fb3e2e5498e825250105ee272102a7b"
+      },
+      "id": "abfall_io"
+    },
+    {
       "title": "Stadt Porta Westfalica",
       "module": "abfallnavi_de",
       "default_params": {
         "service": "portawestfalica"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Stadt Pritzwalk (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "d92f59ef4066ae6d299478996d1d8430"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Stadt Regensburg",
@@ -12894,6 +12992,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_wetzlar_de"
+    },
+    {
+      "title": "Stadt Wittenberge (Landkreis Prignitz)",
+      "module": "abfall_io",
+      "default_params": {
+        "key": "b870ecfa6e1f882680758d374ba3fa2d"
+      },
+      "id": "abfall_io"
     },
     {
       "title": "Stadtbetrieb Frechen",
@@ -16487,6 +16593,14 @@
       "id": "junker_app"
     }
   ],
+  "Japan": [
+    {
+      "title": "ThreeR",
+      "module": "delight_system_com",
+      "default_params": {},
+      "id": "delight_system_com"
+    }
+  ],
   "Liechtenstein": [
     {
       "title": "Balzers",
@@ -17175,6 +17289,12 @@
       "module": "rotorua_lakes_council_nz",
       "default_params": {},
       "id": "rotorua_lakes_council_nz"
+    },
+    {
+      "title": "Selwyn District Council",
+      "module": "selwyn_govt_nz",
+      "default_params": {},
+      "id": "selwyn_govt_nz"
     },
     {
       "title": "Taup\u014d District Council",
@@ -22017,6 +22137,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Baltimore County",
+      "module": "baltimore_county_md_us",
+      "default_params": {},
+      "id": "baltimore_county_md_us"
     },
     {
       "title": "Baton Rouge, LA",

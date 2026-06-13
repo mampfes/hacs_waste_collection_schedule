@@ -407,15 +407,20 @@ def validate_sensor_user_input(
 
     # validate value_template and date_template against cv.template
     for key in [CONF_VALUE_TEMPLATE, CONF_DATE_TEMPLATE]:
-        if key + "_preset" in sensor_input and sensor_input[key + "_preset"]:
-            if key in sensor_input:
-                errors[key] = "preset_selected"
-                errors[key + "_preset"] = "preset_selected"
-                continue
-            args.pop(key + "_preset", None)
-            args[key] = sensor_input[key + "_preset"]
+        preset_key = key + "_preset"
+        has_preset = preset_key in sensor_input and sensor_input[preset_key]
+        has_custom = key in sensor_input and sensor_input[key]
 
-        if key in sensor_input and key:
+        if has_preset and has_custom:
+            # Both a preset selection and a custom value are present.
+            # The custom value (TemplateSelector) reflects the user's direct
+            # intent, so honour it and discard the stale preset.
+            args.pop(preset_key, None)
+        elif has_preset:
+            args.pop(preset_key, None)
+            args[key] = sensor_input[preset_key]
+
+        if key in args and args[key]:
             try:
                 cv.template(args[key])
             except vol.Invalid:

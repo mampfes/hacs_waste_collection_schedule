@@ -1,8 +1,11 @@
 # Portsmouth City Council
 
-Support for schedules provided by [Portsmouth City Council](https://www.portsmouth.gov.uk/).
+Support for schedules provided by [Portsmouth City Council](https://www.portsmouth.gov.uk/), serving Portsmouth, Hampshire, UK.
 
 If collection data is available for the address provided, it will return rubbish and recycling waste collection dates.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Hampshire, please continue to use the source for your current area as long as it's still working. New sources for the new South East Hampshire Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 
