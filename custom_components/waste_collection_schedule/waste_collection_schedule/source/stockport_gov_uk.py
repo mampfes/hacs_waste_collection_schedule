@@ -31,8 +31,18 @@ class Source:
         self._uprn = uprn
 
     def fetch(self):
+        headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/137.0 Safari/537.36"
+            )
+        }
+
         r = requests.get(
-            f"https://myaccount.stockport.gov.uk/bin-collections/show/{self._uprn}"
+            f"https://myaccount.stockport.gov.uk/bin-collections/show/{self._uprn}",
+            headers=headers,
+            timeout=30,
         )
 
         soup = BeautifulSoup(r.text, features="html.parser")
