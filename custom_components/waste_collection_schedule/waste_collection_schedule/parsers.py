@@ -88,3 +88,22 @@ def ics(self, response: requests.Response) -> List[Tuple[datetime.date, str]]:
     from waste_collection_schedule.service.ICS import ICS
 
     return ICS().convert(response.text)
+
+
+def ics_events(self, response: requests.Response) -> list:
+    """Parse response as an iCalendar feed, exposing full event fields.
+
+    Like :func:`ics`, but returns ``IcsEvent(date, title, location,
+    description)`` records instead of bare ``(date, summary)`` tuples. Use this
+    with ``classify()`` when the source must inspect the ICS ``LOCATION`` or
+    ``DESCRIPTION`` fields — for example to filter events by collection route::
+
+        parse = parsers.ics_events
+
+        def classify(self, record) -> Collection | None:
+            # record.title / record.location / record.description available
+            return Collection(date=record.date, waste_type=...)
+    """
+    from waste_collection_schedule.service.ICS import ICS
+
+    return ICS().convert_events(response.text)

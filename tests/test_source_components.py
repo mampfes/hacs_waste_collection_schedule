@@ -5,7 +5,7 @@ from importlib import import_module
 from inspect import Parameter, signature
 from types import GeneratorType, ModuleType
 from typing import Any, Iterable, Type
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import yaml
 
@@ -545,58 +545,38 @@ def test_uk_cloud9_client_requires_api_domains() -> None:
 
 
 def test_mzv_rotenburg_route_filter_without_location() -> None:
+    """Route filtering works when the route label is only in the ICS summary.
+
+    The BaseSource conversion uses parsers.ics_events + classify(); route info
+    here lives in the summary (LOCATION is empty), so route_context falls back
+    to the summary text. convert_events is patched to avoid the wall-clock
+    (now .. now+365) event window — this exercises classify(), not icalevents.
+    """
+    import datetime
+
+    from waste_collection_schedule.service.ICS import IcsEvent
+
     module = _get_module("mzv_rotenburg_bebra_de")
 
-    # The arch prototype converts mzv_rotenburg_bebra_de to the BaseSource ICS
-    # pipeline, which intentionally omits the yellow_route / paper_route filter
-    # (parsers.ics does not expose the ICS LOCATION field). Skip until a faithful
-    # conversion reinstates route filtering via classify(). See PR #6562 / #6561.
-    if not hasattr(module, "requests"):
-        import pytest
+    events = [
+        IcsEvent(datetime.date(2026, 1, 1), "Entsorgung Gelbe Tonne Route 1"),
+        IcsEvent(datetime.date(2026, 1, 2), "Entsorgung Gelbe Tonne Route 2"),
+        IcsEvent(datetime.date(2026, 1, 3), "Entsorgung Papier Route West"),
+        IcsEvent(datetime.date(2026, 1, 4), "Entsorgung Papier Route Ost"),
+        IcsEvent(datetime.date(2026, 1, 5), "Entsorgung Restabfall"),
+    ]
 
-        pytest.skip(
-            "mzv_rotenburg_bebra_de converted to BaseSource ICS pipeline; "
-            "route filtering not yet reimplemented in the prototype"
-        )
-
-    ics_text = """BEGIN:VCALENDAR
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260101
-SUMMARY:Entsorgung Gelbe Tonne Route 1
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260102
-SUMMARY:Entsorgung Gelbe Tonne Route 2
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260103
-SUMMARY:Entsorgung Papier Route West
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260104
-SUMMARY:Entsorgung Papier Route Ost
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260105
-SUMMARY:Entsorgung Restabfall
-END:VEVENT
-END:VCALENDAR
-"""
-
-    class _Response:
-        text = ics_text
-
-        @staticmethod
-        def raise_for_status() -> None:
-            return None
-
-    with patch.object(module.requests, "get", return_value=_Response()):
+    response = MagicMock()
+    with patch.object(module.Source, "retrieve", return_value=response), patch(
+        "waste_collection_schedule.service.ICS.ICS.convert_events",
+        return_value=events,
+    ):
         entries = module.Source(
             city="rote", yellow_route="2", paper_route="Ost"
         ).fetch()
 
-    assert [(entry.date.isoformat(), entry.type) for entry in entries] == [
-        ("2026-01-02", "Gelbe Tonne"),
-        ("2026-01-04", "Papier"),
-        ("2026-01-05", "Restabfall"),
+    assert [(entry.date.isoformat(), entry.waste_type.id) for entry in entries] == [
+        ("2026-01-02", "recyclables"),
+        ("2026-01-04", "paper"),
+        ("2026-01-05", "general_waste"),
     ]

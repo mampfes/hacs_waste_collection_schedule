@@ -59,7 +59,7 @@ class TestWasteType:
         from waste_collection_schedule.waste_types import ALL_TYPES
 
         for wt in ALL_TYPES:
-            assert wt.id, f"WasteType missing id"
+            assert wt.id, "WasteType missing id"
             assert wt.icon, f"{wt.id} missing icon"
             assert wt.color, f"{wt.id} missing color"
             assert "en" in wt.names, f"{wt.id} missing English name"
@@ -489,6 +489,29 @@ class TestParsers:
         ):
             result = ics(None, resp)
             assert result == expected
+
+    def test_ics_events_parser_returns_full_events(self):
+        from waste_collection_schedule.parsers import ics_events
+        from waste_collection_schedule.service.ICS import IcsEvent
+
+        resp = MagicMock()
+        resp.text = "BEGIN:VCALENDAR\nEND:VCALENDAR"
+        expected = [
+            IcsEvent(
+                datetime.date(2026, 1, 15),
+                "General Waste",
+                location="Route 1",
+                description="weekly",
+            )
+        ]
+
+        with patch(
+            "waste_collection_schedule.service.ICS.ICS.convert_events",
+            return_value=expected,
+        ):
+            result = ics_events(None, resp)
+            assert result == expected
+            assert result[0].location == "Route 1"
 
 
 class TestRetrievers:
