@@ -10,6 +10,8 @@ TITLE = "Neunkirchen Siegerland"
 DESCRIPTION = "Source for 'Abfallkalender Neunkirchen Siegerland'."
 URL = "https://www.neunkirchen-siegerland.de"
 COUNTRY = "de"
+AUTOCOMPLETE_URL = f"{URL}/output/autocomplete.php"
+CALENDAR_URL = f"{URL}/output/options.php"
 TEST_CASES = {"Waldstraße": {"strasse": "Waldstr"}}
 SOURCE_CODEOWNERS = ["@bbr111"]
 
@@ -59,7 +61,7 @@ class Source:
         }
         header = {"Referer": URL}
         r = self._session.get(
-            "https://www.neunkirchen-siegerland.de/output/autocomplete.php",
+            AUTOCOMPLETE_URL,
             params=args,
             headers=header,
             timeout=30,
@@ -81,7 +83,7 @@ class Source:
 
         args = {"ModID": 48, "call": "ical", "pois": ids[0][0], "kat": 1, "alarm": 0}
         r = self._session.get(
-            "https://www.neunkirchen-siegerland.de/output/options.php",
+            CALENDAR_URL,
             params=args,
             headers=header,
             timeout=30,
