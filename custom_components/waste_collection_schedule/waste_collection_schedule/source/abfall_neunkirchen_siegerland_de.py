@@ -24,8 +24,23 @@ ICON_MAP = {
     "Schadstoffsammlung": Icons.HAZARDOUS,
 }
 
-PARAM_TRANSLATIONS: dict = {}
-PARAM_DESCRIPTIONS: dict = {}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "strasse": "Street",
+    },
+    "de": {
+        "strasse": "Straße",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße').",
+    },
+    "de": {
+        "strasse": "Teil- oder vollständiger Straßenname wie im Abfallkalender Neunkirchen Siegerland (z.B. 'Waldstr' für 'Waldstraße').",
+    },
+}
 
 
 class Source:
