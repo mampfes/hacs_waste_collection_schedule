@@ -1,5 +1,5 @@
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
 
 TITLE = "Landkreis Peine"
 DESCRIPTION = "Source for Abfallwirtschaftsbetrieb Landkreis Peine waste collection."
@@ -13,6 +13,13 @@ TEST_CASES = {
 }
 
 API_URL = "https://www.ab-peine.de"
+
+ICON_MAP = {
+    "Altpapier": Icons.PAPER,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Gelbe Säcke": Icons.PLASTIC_PACKAGING,
+    "Restmüll": Icons.GENERAL_WASTE,
+}
 
 PARAM_TRANSLATIONS = {
     "de": {
@@ -34,4 +41,7 @@ class Source:
 
     def fetch(self):
         dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
-        return [Collection(date, waste_type) for date, waste_type in dates]
+        return [
+            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
+            for date, waste_type in dates
+        ]

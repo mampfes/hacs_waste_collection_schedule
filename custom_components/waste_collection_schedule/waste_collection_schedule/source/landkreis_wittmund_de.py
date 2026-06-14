@@ -1,5 +1,5 @@
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
 
 TITLE = "Landkreis Wittmund"
 DESCRIPTION = "Source for Landkreis Wittmund waste collection."
@@ -31,6 +31,14 @@ DOWNLOAD_PARAMS = {
 }
 
 
+ICON_MAP = {
+    "Baum- und Strauchschnitt": Icons.GARDEN,
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Papier": Icons.PAPER,
+    "Restabfall": Icons.GENERAL_WASTE,
+    "Wertstoff": Icons.RECYCLING,
+}
+
 PARAM_TRANSLATIONS = {
     "de": {
         "ort": "Ort",
@@ -50,4 +58,7 @@ class Source:
         refid = self._sitepark.resolve_refid(self._ort, API_URL)
         pois = self._sitepark.get_pois(strasse=self._strasse, refid=refid)
         dates = self._sitepark.fetch_ics(pois)
-        return [Collection(date, waste_type) for date, waste_type in dates]
+        return [
+            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
+            for date, waste_type in dates
+        ]

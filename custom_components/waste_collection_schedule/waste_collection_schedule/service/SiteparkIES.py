@@ -10,6 +10,20 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.ICS import ICS
 
 
+def match_icon(waste_type: str, icon_map: dict):
+    """Return the first icon whose key is contained in the waste type.
+
+    The Sitepark feeds often append a rhythm suffix to the waste type
+    (e.g. "Restmülltonne 14-täglichen Rhythmus"), so a substring match is
+    used instead of an exact lookup.
+    """
+    lowered = waste_type.lower()
+    for key, icon in icon_map.items():
+        if key.lower() in lowered:
+            return icon
+    return None
+
+
 class SiteparkIES:
     """Shared client for the Sitepark IES / abto waste-calendar platform.
 

@@ -1,5 +1,5 @@
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
 
 TITLE = "Landkreis Mecklenburgische Seenplatte"
 DESCRIPTION = "Source for Landkreis Mecklenburgische Seenplatte waste collection."
@@ -13,6 +13,13 @@ TEST_CASES = {
     "Dargun": {"ort": "Dargun", "strasse": "Dargun"},
     # legacy parameter names must keep working
     "Ahornweg (Altentreptow) [legacy]": {"city": "Altentreptow", "street": "Ahornweg"},
+}
+
+ICON_MAP = {
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Papiertonne": Icons.PAPER,
+    "Restmüll": Icons.GENERAL_WASTE,
 }
 
 PARAM_TRANSLATIONS = {
@@ -47,4 +54,7 @@ class Source:
 
     def fetch(self):
         dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
-        return [Collection(date, waste_type) for date, waste_type in dates]
+        return [
+            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
+            for date, waste_type in dates
+        ]

@@ -22,19 +22,38 @@ ICON_MAP = {
     "Abfuhr Weihnachtsbäume": Icons.CHRISTMAS_TREE,
 }
 
-PARAM_TRANSLATIONS: dict = {}
-PARAM_DESCRIPTIONS: dict = {}
+PARAM_TRANSLATIONS = {
+    "de": {
+        "strasse": "Straße",
+        "ort": "Ortsteil",
+    },
+    "en": {
+        "strasse": "Street",
+        "ort": "District",
+    },
+}
+PARAM_DESCRIPTIONS = {
+    "de": {
+        "strasse": "Straßenname oder eindeutiger Teil davon.",
+        "ort": "Optionaler Ortsteil zur Eindeutigkeit (der Teil in Klammern, z.B. 'Allenbach').",
+    },
+    "en": {
+        "strasse": "Street name or a unique part of it.",
+        "ort": "Optional district to disambiguate (the part in parentheses, e.g. 'Allenbach').",
+    },
+}
 
 
 class Source:
-    def __init__(self, strasse: str):
+    def __init__(self, strasse: str, ort=None):
         self._strasse = strasse
+        self._ort = ort
         self._sitepark = SiteparkIES(
             API_URL, download_params={"kat": "1", "alarm": "0"}
         )
 
     def fetch(self):
-        dates = self._sitepark.fetch(strasse=self._strasse)
+        dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
         return [
             Collection(date, waste_type, ICON_MAP.get(waste_type, Icons.GENERAL_WASTE))
             for date, waste_type in dates

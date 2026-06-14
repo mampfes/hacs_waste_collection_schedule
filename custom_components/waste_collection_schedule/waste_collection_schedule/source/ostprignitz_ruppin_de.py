@@ -1,5 +1,5 @@
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
 
 TITLE = "Ostprignitz-Ruppin"
 DESCRIPTION = "Source for Ostprignitz-Ruppin waste collection."
@@ -23,6 +23,14 @@ TEST_CASES = {
     },
 }
 
+ICON_MAP = {
+    "Biotonne": Icons.BIO_KITCHEN,
+    "Blaue Tonne": Icons.PAPER,
+    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Restmüll": Icons.GENERAL_WASTE,
+    "Schadstoff": Icons.HAZARDOUS,
+}
+
 PARAM_TRANSLATIONS = {
     "de": {
         "strasse": "Straße",
@@ -44,4 +52,7 @@ class Source:
 
     def fetch(self):
         dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
-        return [Collection(date, waste_type) for date, waste_type in dates]
+        return [
+            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
+            for date, waste_type in dates
+        ]
