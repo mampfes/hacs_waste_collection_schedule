@@ -942,6 +942,11 @@
     },
     "urls": {}
   },
+  "piberbach_ooe_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/piberbach_ooe_gv_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "rohrbach_lafnitz_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rohrbach_lafnitz_at.md",
     "howto": {},

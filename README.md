@@ -590,6 +590,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Pernegg im Waldviertel](/doc/source/citiesapps_com.md) / pernegg.info
 - [Perschling](/doc/source/citiesapps_com.md) / perschling.at
 - [Pfarrwerfen](/doc/source/citiesapps_com.md) / gemeinde.pfarrwerfen.at
+- [Piberbach](/doc/source/piberbach_ooe_gv_at.md) / piberbach.ooe.gv.at
 - [Pichl bei Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Pilgersdorf](/doc/source/citiesapps_com.md) / pilgersdorf.at
 - [Pinggau](/doc/source/citiesapps_com.md) / pinggau.gv.at

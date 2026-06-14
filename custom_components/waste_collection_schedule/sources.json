@@ -3438,6 +3438,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Piberbach",
+      "module": "piberbach_ooe_gv_at",
+      "default_params": {},
+      "id": "piberbach_ooe_gv_at"
+    },
+    {
       "title": "Pichl bei Wels",
       "module": "ics",
       "default_params": {},
