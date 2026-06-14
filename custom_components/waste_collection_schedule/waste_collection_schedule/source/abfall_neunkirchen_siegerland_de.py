@@ -1,4 +1,4 @@
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -7,9 +7,11 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Neunkirchen Siegerland"
-DESCRIPTION = " Source for 'Abfallkalender Neunkirchen Siegerland'."
+DESCRIPTION = "Source for 'Abfallkalender Neunkirchen Siegerland'."
 URL = "https://www.neunkirchen-siegerland.de"
+COUNTRY = "de"
 TEST_CASES = {"Waldstraße": {"strasse": "Waldstr"}}
+SOURCE_CODEOWNERS = ["@bbr111"]
 
 ICON_MAP = {
     "Biotonne": Icons.BIO_KITCHEN,
@@ -22,11 +24,15 @@ ICON_MAP = {
     "Schadstoffsammlung": Icons.HAZARDOUS,
 }
 
+PARAM_TRANSLATIONS: dict = {}
+PARAM_DESCRIPTIONS: dict = {}
+
 
 class Source:
     def __init__(self, strasse):
         self._strasse = strasse
         self._ics = ICS()
+        self._session = requests.Session(impersonate="chrome")
 
     def fetch(self):
         args = {
@@ -37,7 +43,7 @@ class Source:
             "term": self._strasse,
         }
         header = {"Referer": URL}
-        r = requests.get(
+        r = self._session.get(
             "https://www.neunkirchen-siegerland.de/output/autocomplete.php",
             params=args,
             headers=header,
@@ -59,7 +65,7 @@ class Source:
             )
 
         args = {"ModID": 48, "call": "ical", "pois": ids[0][0], "kat": 1, "alarm": 0}
-        r = requests.get(
+        r = self._session.get(
             "https://www.neunkirchen-siegerland.de/output/options.php",
             params=args,
             headers=header,
@@ -70,6 +76,6 @@ class Source:
         dates = self._ics.convert(r.text)
 
         return [
-            Collection(date, waste_type, ICON_MAP.get(waste_type, "mdi:trash-can"))
+            Collection(date, waste_type, ICON_MAP.get(waste_type, Icons.GENERAL_WASTE))
             for date, waste_type in dates
         ]
