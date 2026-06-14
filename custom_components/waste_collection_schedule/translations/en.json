@@ -12275,7 +12275,8 @@
           "strasse": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße')."
         }
       },
       "reconfigure_abfall_neunkirchen_siegerland_de": {
@@ -12285,7 +12286,9 @@
           "calendar_title": "Calendar Title",
           "strasse": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße')."
+        }
       },
       "args_ics_awu_oberhavel_de": {
         "title": "Configure Source",

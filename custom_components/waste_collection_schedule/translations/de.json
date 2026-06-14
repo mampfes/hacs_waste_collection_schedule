@@ -12004,7 +12004,8 @@
           "strasse": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "strasse": "Teil- oder vollständiger Straßenname wie im Abfallkalender Neunkirchen Siegerland (z.B. 'Waldstr' für 'Waldstraße')."
         }
       },
       "reconfigure_abfall_neunkirchen_siegerland_de": {
@@ -12014,7 +12015,9 @@
           "calendar_title": "Kalender Titel",
           "strasse": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "strasse": "Teil- oder vollständiger Straßenname wie im Abfallkalender Neunkirchen Siegerland (z.B. 'Waldstr' für 'Waldstraße')."
+        }
       },
       "args_ics_awu_oberhavel_de": {
         "title": "Quelle konfigurieren",
