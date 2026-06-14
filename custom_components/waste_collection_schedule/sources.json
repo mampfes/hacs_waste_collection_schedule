@@ -6298,6 +6298,12 @@
       "id": "sictom_lons_le_saunier_fr"
     },
     {
+      "title": "SICTOM du Val de Sa\u00f4ne",
+      "module": "sictomvds_com",
+      "default_params": {},
+      "id": "sictomvds_com"
+    },
+    {
       "title": "SIVOM de la Vall\u00e9e de l'Yerres et des S\u00e9narts",
       "module": "sivom_com",
       "default_params": {},
