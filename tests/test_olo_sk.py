@@ -350,9 +350,9 @@ def test_waste_types_all_have_display_name_and_icon():
     for waste_type, (display_name, icon) in olo_sk.WASTE_TYPES.items():
         assert display_name, f"Missing display name for {waste_type}"
         assert icon, f"Missing icon for {waste_type}"
-        assert icon.startswith(
-            "mdi:"
-        ), f"Icon should start with 'mdi:' for {waste_type}"
+        assert icon.startswith("mdi:"), (
+            f"Icon should start with 'mdi:' for {waste_type}"
+        )
 
 
 def test_waste_types_expected_count():

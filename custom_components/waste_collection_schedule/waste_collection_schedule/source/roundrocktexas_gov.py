@@ -27,25 +27,17 @@ DAYS = {
     "Saturday": SA,
     "Sunday": SU,
 }
-HOLIDAYS = (
-    {  # website indicates collections falling on these days will be shifted by 1 day
-        "Thanksgiving": list(
-            rrule(YEARLY, bymonth=11, byweekday=TH(4), dtstart=datetime.now())
-        )[
-            0
-        ].date(),  # 4th Thursday in November
-        "Christmas Day": list(
-            rrule(YEARLY, bymonth=12, bymonthday=25, dtstart=datetime.now())
-        )[
-            0
-        ].date(),  # 25th December
-        "New Years Day": list(
-            rrule(YEARLY, bymonth=1, bymonthday=1, dtstart=datetime.now())
-        )[
-            0
-        ].date(),  # 1st January
-    }
-)
+HOLIDAYS = {  # website indicates collections falling on these days will be shifted by 1 day
+    "Thanksgiving": list(
+        rrule(YEARLY, bymonth=11, byweekday=TH(4), dtstart=datetime.now())
+    )[0].date(),  # 4th Thursday in November
+    "Christmas Day": list(
+        rrule(YEARLY, bymonth=12, bymonthday=25, dtstart=datetime.now())
+    )[0].date(),  # 25th December
+    "New Years Day": list(
+        rrule(YEARLY, bymonth=1, bymonthday=1, dtstart=datetime.now())
+    )[0].date(),  # 1st January
+}
 
 
 class Source:

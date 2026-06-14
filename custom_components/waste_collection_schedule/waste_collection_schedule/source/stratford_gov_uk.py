@@ -10,12 +10,10 @@ DESCRIPTION = (
 )
 URL = "https://stratford.gov.uk"
 
-TEST_CASES = (
-    {  # if you want your address removed, please submit a request and this will be done
-        "Stratford DC": {"uprn": "100071513500"},  # doesn't have food waste
-        "Alscot Estate": {"uprn": 10024633309},
-    }
-)
+TEST_CASES = {  # if you want your address removed, please submit a request and this will be done
+    "Stratford DC": {"uprn": "100071513500"},  # doesn't have food waste
+    "Alscot Estate": {"uprn": 10024633309},
+}
 
 ICON_MAP = {
     "Garden waste": Icons.GARDEN,
@@ -68,7 +66,6 @@ class Source:
             # each bin may be "checked" to show it can be collected on that date
             for idx, cell in enumerate(all_bins):
                 if cell.find("img", class_="check-img"):
-
                     entries.append(
                         Collection(date=date, t=BINS[idx], icon=ICON_MAP.get(BINS[idx]))
                     )

@@ -270,9 +270,11 @@ class Source:
         """Parse holiday-week weekday shift mappings from the holiday table."""
         soup = BeautifulSoup(page_html, "html.parser")
         heading = soup.find(
-            lambda tag: tag.name in ["h2", "h3", "h4"]
-            and "holiday collection schedule"
-            in tag.get_text(" ", strip=True).casefold()
+            lambda tag: (
+                tag.name in ["h2", "h3", "h4"]
+                and "holiday collection schedule"
+                in tag.get_text(" ", strip=True).casefold()
+            )
         )
         if heading is None:
             return []
@@ -352,8 +354,10 @@ class Source:
         """Return computed yard-material collection dates for a schedule table."""
         soup = BeautifulSoup(page_html, "html.parser")
         heading = soup.find(
-            lambda tag: tag.name in ["h2", "h3", "h4"]
-            and tag.get_text(strip=True).lower().endswith(f"schedule {schedule_id}")
+            lambda tag: (
+                tag.name in ["h2", "h3", "h4"]
+                and tag.get_text(strip=True).lower().endswith(f"schedule {schedule_id}")
+            )
         )
         if heading is None:
             return []

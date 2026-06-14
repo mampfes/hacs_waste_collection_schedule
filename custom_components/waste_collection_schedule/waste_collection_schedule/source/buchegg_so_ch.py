@@ -179,8 +179,7 @@ class Source:
         """
         if locality and ortschaft:
             raise ValueError(
-                "Both 'locality' and 'ortschaft' are set. "
-                "Please use only 'locality'."
+                "Both 'locality' and 'ortschaft' are set. Please use only 'locality'."
             )
 
         if ortschaft:

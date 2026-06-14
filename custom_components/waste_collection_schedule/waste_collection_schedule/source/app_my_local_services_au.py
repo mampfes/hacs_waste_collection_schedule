@@ -163,8 +163,8 @@ class Source:
                 waste_type: str = data["Waste_Type"]
 
                 weekday_int: int = (
-                    data["Col_Day"] + -2
-                ) % 7  # Normalise to 0(monday)-6(sunday) as response is 1(sunday)-7(saturday)
+                    (data["Col_Day"] + -2) % 7
+                )  # Normalise to 0(monday)-6(sunday) as response is 1(sunday)-7(saturday)
                 freq: int = data["Col_Freq"]
                 offset: int = data["Col_Offset"]
 

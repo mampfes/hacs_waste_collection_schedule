@@ -73,7 +73,7 @@ PARAM_DESCRIPTIONS = {
     "it": {
         "address": "Il nome della via del tuo indirizzo "
         "(ad esempio, 'Via Triumplina').",
-        "house_number": "Il numero civico del tuo indirizzo " "(ad esempio, '90').",
+        "house_number": "Il numero civico del tuo indirizzo (ad esempio, '90').",
         "city": "La città del tuo indirizzo (ad esempio, 'Brescia').",
     },
 }

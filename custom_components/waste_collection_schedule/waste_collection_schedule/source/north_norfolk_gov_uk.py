@@ -148,9 +148,7 @@ class Source:
                         icon=ICON_MAP.get(details[0].text),
                     )
                 )
-            except (
-                IndexError
-            ):  # empty list is returned if property doesn't subscribe to that collection
+            except IndexError:  # empty list is returned if property doesn't subscribe to that collection
                 continue
 
         return entries

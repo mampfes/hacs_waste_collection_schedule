@@ -54,9 +54,13 @@ class Source:
             # List contains duplicates, so skip if already added.
             if self.contains(
                 entries,
-                lambda x: x.date
-                == datetime.strptime(job["ScheduledStart"], "%Y-%m-%dT%H:00:00").date()
-                and x.type == bin_type,
+                lambda x: (
+                    x.date
+                    == datetime.strptime(
+                        job["ScheduledStart"], "%Y-%m-%dT%H:00:00"
+                    ).date()
+                    and x.type == bin_type
+                ),
             ):
                 continue
 

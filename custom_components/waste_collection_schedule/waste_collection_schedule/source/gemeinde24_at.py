@@ -85,11 +85,10 @@ PARAM_DESCRIPTIONS = {
         "gemeinde": "Gemeindename wie in Gemeinde24 angezeigt.",
         "strasse": "Strassen-/Ortsteilname wie in Gemeinde24 angezeigt.",
         "gemeinde_id": (
-            "Numerische GemeindeID aus Gemeinde24 "
-            "(optional statt des Gemeinde-Feldes)."
+            "Numerische GemeindeID aus Gemeinde24 (optional statt des Gemeinde-Feldes)."
         ),
         "street_id": (
-            "Numerische streetID aus Gemeinde24 " "(optional statt des Straßen-Feldes)."
+            "Numerische streetID aus Gemeinde24 (optional statt des Straßen-Feldes)."
         ),
     },
 }

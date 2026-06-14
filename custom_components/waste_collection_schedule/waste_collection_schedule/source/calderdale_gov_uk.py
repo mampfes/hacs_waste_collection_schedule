@@ -55,8 +55,9 @@ class Source:
             # Check if address was found - if table is missing, likely invalid UPRN
             address_check = soup.find(
                 "p",
-                string=lambda text: text
-                and "Currently showing collection days for:" in text,
+                string=lambda text: (
+                    text and "Currently showing collection days for:" in text
+                ),
             )
             if not address_check:
                 raise SourceArgumentNotFound(
