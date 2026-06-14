@@ -542,6 +542,13 @@
     "howto": {},
     "urls": {}
   },
+  "nwrrr_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nwrrr_com_au.md",
+    "howto": {
+      "en": "Visit https://www.nwrrr.com.au/map, click 'Select Location', then choose your council and region from the list. Use the displayed council name as 'municipality' and the region name as 'region'."
+    },
+    "urls": {}
+  },
   "northernbeaches_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northernbeaches_nsw_gov_au.md",
     "howto": {

@@ -1002,6 +1002,12 @@
       "id": "nawma_sa_gov_au"
     },
     {
+      "title": "North West Resource Recovery and Recycling",
+      "module": "nwrrr_com_au",
+      "default_params": {},
+      "id": "nwrrr_com_au"
+    },
+    {
       "title": "Northern Areas Council",
       "module": "app_my_local_services_au",
       "default_params": {},
