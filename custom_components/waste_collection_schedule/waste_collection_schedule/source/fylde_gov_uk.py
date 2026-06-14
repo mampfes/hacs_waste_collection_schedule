@@ -4,7 +4,9 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+
+# type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 
 TITLE = "Fylde Council"
@@ -154,13 +156,15 @@ class Source:
         for event in events:
             # Filter by UPRN if specified
             if self._uprn is not None:
-                event_uprn = event.get("UPRN")
-                if event_uprn != self._uprn and str(event_uprn) != str(self._uprn):
+                try:
+                    if int(float(event.get("UPRN"))) != int(self._uprn):
+                        continue
+                except (TypeError, ValueError):
                     continue
 
-            # Extract bin type from Subject field (e.g., "GREY BIN 240L" -> "Grey Bin")
-            subject = event.get("Subject", "")
-            bin_type_match = re.search(REGEX_BIN_TYPE, subject)
+            # Extract bin type from Description field (e.g., "GREY BIN 240L" -> "Grey Bin")
+            description = event.get("Description", "")
+            bin_type_match = re.search(REGEX_BIN_TYPE, description)
             if not bin_type_match:
                 # Skip entries without a recognised bin type
                 continue
