@@ -51,7 +51,7 @@ class BaseTransformer:
 
     @property
     def waste_types(self) -> list[WasteType]:
-        """Unique WasteTypes this transformer can produce, in declaration order."""
+        """Return the WasteTypes this transformer can produce, in declaration order."""
         seen: set[str] = set()
         unique: list[WasteType] = []
         for wt in self._type_value_map.values():

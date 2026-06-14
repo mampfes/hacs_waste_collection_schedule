@@ -176,7 +176,7 @@ def _discover_new_style_sources() -> dict[str, list[Any]]:
         )
         country_name = _COUNTRY_CODE_MAP.get(country_code, country_code)
 
-        entry = {
+        entry: dict[str, Any] = {
             "title": title,
             "module": py_file.stem,
             "default_params": {},
@@ -673,7 +673,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
         # Resolve title
         source_cls = module.Source
-        title = getattr(source_cls, "TITLE", None) or getattr(module, "TITLE", source)
+        title: str = (
+            getattr(source_cls, "TITLE", None)
+            or getattr(module, "TITLE", source)
+            or source
+        )
         if hasattr(self, "_title") and isinstance(self._title, str):
             title = self._title
 

@@ -156,7 +156,7 @@ def dropdown(
     options: list[str],
     label: str | None = None,
 ) -> ConfigParam:
-    """Selection from a fixed list of options."""
+    """Select from a fixed list of options."""
     display = label or field_name.replace("_", " ").title()
     return ConfigParam(
         fields={field_name: display},
@@ -210,7 +210,7 @@ def multi_value_lookup(
     result_fields: list[str],
     label: str | None = None,
 ) -> ConfigParam:
-    """A single user input that the source resolves to multiple internal params.
+    """Define one user input that the source resolves to multiple internal params.
 
     Example: the user enters a postcode, the source looks it up and stores
     both an area_id and a district_id internally.  The framework collects the

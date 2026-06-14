@@ -69,10 +69,11 @@ def legacy_http_get(self) -> _plain_requests.Response:
 
 
 def legacy_ssl_http_get(self) -> _plain_requests.Response:
-    """HTTP GET using a legacy SSL session. Use only for endpoints that require
-    UNSAFE_LEGACY_RENEGOTIATION (SSL compatibility mode).
+    """Fetch via HTTP GET using a legacy SSL session.
 
-    Reads API_URL, _params, _headers, TIMEOUT from the source instance.
+    Use only for endpoints that require UNSAFE_LEGACY_RENEGOTIATION (SSL
+    compatibility mode). Reads API_URL, _params, _headers, TIMEOUT from the
+    source instance.
     """
     from waste_collection_schedule.service.SSLError import get_legacy_session
 

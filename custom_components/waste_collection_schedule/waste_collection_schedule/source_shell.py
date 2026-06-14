@@ -258,13 +258,19 @@ class SourceShell:
 
         # read metadata from Source class first, fall back to module level
         source_cls = source_module.Source
-        title = getattr(source_cls, "TITLE", None) or getattr(
-            source_module, "TITLE", ""
+        title: str = (
+            getattr(source_cls, "TITLE", None)
+            or getattr(source_module, "TITLE", "")
+            or ""
         )
-        description = getattr(source_cls, "DESCRIPTION", None) or getattr(
-            source_module, "DESCRIPTION", ""
+        description: str = (
+            getattr(source_cls, "DESCRIPTION", None)
+            or getattr(source_module, "DESCRIPTION", "")
+            or ""
         )
-        url = getattr(source_cls, "URL", None) or getattr(source_module, "URL", "")
+        url: str = (
+            getattr(source_cls, "URL", None) or getattr(source_module, "URL", "") or ""
+        )
 
         # create source shell
         g = SourceShell(

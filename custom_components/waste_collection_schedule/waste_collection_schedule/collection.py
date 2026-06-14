@@ -1,6 +1,6 @@
 ﻿import datetime
 import logging
-from typing import Union
+from typing import Optional, Union
 
 from .waste_types import WasteType
 
@@ -26,11 +26,11 @@ class Collection:
     def __init__(self, date: datetime.date, waste_type: WasteType):
         self._date = date
         self._waste_type = waste_type
-        self._type_override = None
-        self._icon_override = None
-        self._picture = None
-        self._location = None
-        self._description = None
+        self._type_override: Optional[str] = None
+        self._icon_override: Optional[str] = None
+        self._picture: Optional[str] = None
+        self._location: Optional[str] = None
+        self._description: Optional[str] = None
 
     @property
     def date(self) -> datetime.date:
@@ -223,11 +223,11 @@ class CollectionGroup:
 
     def __init__(self, date: datetime.date):
         self._date = date
-        self._icon = None
-        self._picture = None
-        self._types = []
-        self._locations = []
-        self._descriptions = []
+        self._icon: Optional[str] = None
+        self._picture: Optional[str] = None
+        self._types: list[str] = []
+        self._locations: list[str] = []
+        self._descriptions: list[str] = []
 
     @staticmethod
     def create(group):

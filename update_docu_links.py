@@ -470,7 +470,7 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     source_cls = module.Source
 
     title = getattr(source_cls, "TITLE", None) or getattr(module, "TITLE", None)
-    url = getattr(source_cls, "URL", None) or getattr(module, "URL", None)
+    url = getattr(source_cls, "URL", None) or getattr(module, "URL", None) or ""
     country = (
         getattr(source_cls, "COUNTRY", None)
         or getattr(module, "COUNTRY", None)
@@ -526,8 +526,8 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
             SourceInfo(
                 filename=filename,
                 module=file,
-                title=e.get("title", title),
-                url=e.get("url", url),
+                title=e.get("title", title) or "",
+                url=e.get("url", url) or "",
                 country=e.get("country", country),
                 params=params,
                 custom_param_translation=param_translations,
