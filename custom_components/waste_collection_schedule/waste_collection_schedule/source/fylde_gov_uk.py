@@ -4,10 +4,12 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-
-# type: ignore[attr-defined]
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentNotFound,
+    SourceArgumentRequired,
+)
 
 TITLE = "Fylde Council"
 DESCRIPTION = "Source for waste.fylde.gov.uk services for Fylde Council, UK."
@@ -109,8 +111,9 @@ class Source:
             "validation-summary-errors" in response.text
             or "/Identity/Account/Login" in response.url
         ):
-            raise Exception(
-                "Login failed. Please check your email and password credentials."
+            raise SourceArgumentExceptionMultiple(
+                ["email", "password"],
+                "Login failed. Please check your email and password credentials.",
             )
 
     def _extract_schedule_data(self, html: str) -> list:
@@ -183,15 +186,16 @@ class Source:
                 Collection(
                     date=collection_date,
                     t=bin_type,
-                    icon=ICON_MAP.get(bin_type, "mdi:trash-can"),
+                    icon=ICON_MAP.get(bin_type),
                 )
             )
 
         if not entries:
             if self._uprn is not None:
-                raise Exception(
-                    f"No collection events found for UPRN {self._uprn}. "
-                    "Please check that this property is registered on your waste portal account."
+                raise SourceArgumentNotFound(
+                    "uprn",
+                    self._uprn,
+                    "please check that this property is registered on your waste portal account.",
                 )
             else:
                 raise Exception(
