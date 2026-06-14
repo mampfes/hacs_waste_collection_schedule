@@ -1,5 +1,5 @@
 from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES
+from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
 
 TITLE = "Kreiswirtschaftsbetriebe Goslar"
 DESCRIPTION = "Source for kwb-goslar.de waste collection."
@@ -60,6 +60,6 @@ class Source:
             strasse=self._strasse, ort=self._ort, pois=self._pois
         )
         return [
-            Collection(date=date, t=waste_type, icon=ICON_MAP.get(waste_type))
+            Collection(date=date, t=waste_type, icon=match_icon(waste_type, ICON_MAP))
             for date, waste_type in dates
         ]

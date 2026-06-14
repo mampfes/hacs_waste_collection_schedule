@@ -1,5 +1,5 @@
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES
+from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
 
 TITLE = "Neunkirchen Siegerland"
 DESCRIPTION = "Source for 'Abfallkalender Neunkirchen Siegerland'."
@@ -17,13 +17,11 @@ SOURCE_CODEOWNERS = ["@bbr111"]
 
 ICON_MAP = {
     "Biotonne": Icons.BIO_KITCHEN,
-    "Papiertonne / Papiercontainer": Icons.PAPER,
-    "Restmülltonne": Icons.GENERAL_WASTE,
-    "Spartonne Restmüll": Icons.GENERAL_WASTE,
-    "Container Restmüll": Icons.GENERAL_WASTE,
+    "Papier": Icons.PAPER,
+    "Restmüll": Icons.GENERAL_WASTE,
     "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Astschnittsammlung": Icons.GARDEN,
-    "Schadstoffsammlung": Icons.HAZARDOUS,
+    "Astschnitt": Icons.GARDEN,
+    "Schadstoff": Icons.HAZARDOUS,
 }
 
 PARAM_TRANSLATIONS = {
@@ -60,6 +58,6 @@ class Source:
     def fetch(self):
         dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
         return [
-            Collection(date, waste_type, ICON_MAP.get(waste_type, Icons.GENERAL_WASTE))
+            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
             for date, waste_type in dates
         ]
