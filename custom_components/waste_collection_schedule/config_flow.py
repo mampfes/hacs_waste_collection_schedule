@@ -238,11 +238,13 @@ def _build_schema_from_params(
         description = None
         if args_input is not None and CONF_SOURCE_CALENDAR_TITLE in args_input:
             description = {"suggested_value": args_input[CONF_SOURCE_CALENDAR_TITLE]}
-        vol_args[vol.Optional(
-            CONF_SOURCE_CALENDAR_TITLE,
-            description=description,
-            default=title,
-        )] = str
+        vol_args[
+            vol.Optional(
+                CONF_SOURCE_CALENDAR_TITLE,
+                description=description,
+                default=title,
+            )
+        ] = str
 
     for param in params:
         for field_name, display_label in param.fields.items():
@@ -491,9 +493,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         self._sources = {k: list(v) for k, v in _SOURCES.items()}
 
         # Discover and merge new-style sources at runtime
-        new_style = await self.hass.async_add_executor_job(
-            _discover_new_style_sources
-        )
+        new_style = await self.hass.async_add_executor_job(_discover_new_style_sources)
         for country, entries in new_style.items():
             self._sources.setdefault(country, []).extend(entries)
 

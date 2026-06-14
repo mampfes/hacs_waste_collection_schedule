@@ -264,9 +264,7 @@ class SourceShell:
         description = getattr(source_cls, "DESCRIPTION", None) or getattr(
             source_module, "DESCRIPTION", ""
         )
-        url = getattr(source_cls, "URL", None) or getattr(
-            source_module, "URL", ""
-        )
+        url = getattr(source_cls, "URL", None) or getattr(source_module, "URL", "")
 
         # create source shell
         g = SourceShell(

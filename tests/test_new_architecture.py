@@ -1455,13 +1455,13 @@ class TestNewStyleSourceTestCases:
     def test_waste_types_are_declared(self, test_case):
         """All waste types returned by fetch() should be in WASTE_TYPES."""
         name, cls, tc_name, tc_args = test_case
-        declared = set(wt.id for wt in getattr(cls, "WASTE_TYPES", []))
+        declared = {wt.id for wt in getattr(cls, "WASTE_TYPES", [])}
         if not declared:
             pytest.skip(f"{name}: no WASTE_TYPES declared")
 
         source = cls(**tc_args)
         results = source.fetch()
-        returned = set(r.waste_type.id for r in results)
+        returned = {r.waste_type.id for r in results}
         undeclared = returned - declared
         assert (
             not undeclared
