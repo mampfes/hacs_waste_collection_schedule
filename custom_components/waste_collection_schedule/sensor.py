@@ -33,6 +33,7 @@ from .const import (
     UPDATE_SENSORS_SIGNAL,
 )
 from .waste_collection_api import WasteCollectionApi
+
 # CollectionBase is the real Collection class; the exported `Collection` is a
 # factory instance (not valid as a type annotation).
 from .waste_collection_schedule import CollectionBase, CollectionGroup, Icons
