@@ -1990,6 +1990,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vaterstetten](/doc/source/awido_de.md) / lra-ebe.de
 - [Verliehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Vettweiß](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [VEVG Vorpommern-Greifswald](/doc/source/vevg_karlsburg_de.md) / vevg-karlsburg.de
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Vlotho](/doc/ics/vlotho_de.md) / vlotho.de
 - [Vogelbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de

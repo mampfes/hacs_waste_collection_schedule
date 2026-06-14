@@ -13794,6 +13794,33 @@
         },
         "data_description": {}
       },
+      "args_vevg_karlsburg_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "kreis": "District code",
+          "ort": "Location ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "kreis": "Single-letter district code from the same dropdown (e.g. 'G' for Greifswald-Land, 'A' for Anklam, 'W' for Wolgast, 'L' for JTPL, 'H' for Stadt Greifswald, 'U' for Uecker-Randow).",
+          "ort": "Numeric location ID from the VEVG online calendar dropdown (e.g. 722 for Wusterhusen). See 'How to get the source arguments'."
+        }
+      },
+      "reconfigure_vevg_karlsburg_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "kreis": "District code",
+          "ort": "Location ID"
+        },
+        "data_description": {
+          "kreis": "Single-letter district code from the same dropdown (e.g. 'G' for Greifswald-Land, 'A' for Anklam, 'W' for Wolgast, 'L' for JTPL, 'H' for Stadt Greifswald, 'U' for Uecker-Randow).",
+          "ort": "Numeric location ID from the VEVG online calendar dropdown (e.g. 722 for Wusterhusen). See 'How to get the source arguments'."
+        }
+      },
       "args_ics_vlotho_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

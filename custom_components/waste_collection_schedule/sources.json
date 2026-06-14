@@ -13451,6 +13451,12 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "VEVG Vorpommern-Greifswald",
+      "module": "vevg_karlsburg_de",
+      "default_params": {},
+      "id": "vevg_karlsburg_de"
+    },
+    {
       "title": "VIVO Landkreis Miesbach",
       "module": "abfall_io",
       "default_params": {

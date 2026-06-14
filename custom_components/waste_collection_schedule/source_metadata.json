@@ -2908,6 +2908,14 @@
     },
     "urls": {}
   },
+  "vevg_karlsburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vevg_karlsburg_de.md",
+    "howto": {
+      "de": "\n1. Öffnen Sie den VEVG Online-Abfallkalender:\n   - OVP (Anklam/Wolgast/Greifswald-Land): https://vevg-karlsburg.de/online-abfallkalender-ovp.html\n   - JTPL (Jarmen/Tutow/Peenetal-Loitz): https://vevg-karlsburg.de/online-abfallkalender-jtpl.html\n   - UHGW (Straßen der Stadt Greifswald): https://vevg-karlsburg.de/online-abfallkalender-uhgw.html\n   - UER (Uecker-Randow): https://vevg-karlsburg.de/online-abfallkalender-uer.html\n2. Wählen Sie Ihren Ort aus der Liste und klicken Sie auf \"Auswählen\".\n3. Die Werte für `ort` und `kreis` stehen in der URL als `key={ort}#{name}#{kreis}#`.\n   - Beispiel: Wusterhusen hat `key=722#Wusterhusen#G#`, also `ort=722` und `kreis=\"G\"`.\n4. Bei Orten mit \"lesen\" (straßengenaue Abfrage): zuerst die Straße auswählen, dann ort/kreis aus der URL ablesen.\n",
+      "en": "\n1. Go to the VEVG online calendar:\n   - OVP (Anklam/Wolgast/Greifswald-Land): https://vevg-karlsburg.de/online-abfallkalender-ovp.html\n   - JTPL (Jarmen/Tutow/Peenetal-Loitz): https://vevg-karlsburg.de/online-abfallkalender-jtpl.html\n   - UHGW (Stadt Greifswald streets): https://vevg-karlsburg.de/online-abfallkalender-uhgw.html\n   - UER (Uecker-Randow): https://vevg-karlsburg.de/online-abfallkalender-uer.html\n2. Select your location from the dropdown and click \"Auswählen\".\n3. The `ort` and `kreis` values appear in the page URL as `key={ort}#{name}#{kreis}#`.\n   - Example: Wusterhusen shows `key=722#Wusterhusen#G#`, so `ort=722` and `kreis=\"G\"`.\n4. For locations marked with \"lesen\" (street-level lookup): select your street first, then read ort/kreis from the resulting URL.\n"
+    },
+    "urls": {}
+  },
   "ics_vlotho_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/vlotho_de.md",
     "howto": {

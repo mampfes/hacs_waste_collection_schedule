@@ -13518,6 +13518,33 @@
         },
         "data_description": {}
       },
+      "args_vevg_karlsburg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "kreis": "Kreis-Kennung",
+          "ort": "Orts-ID"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "kreis": "Einbuchstabige Kreis-Kennung aus derselben Auswahlliste (z.B. 'G' für Greifswald-Land, 'A' für Anklam, 'W' für Wolgast, 'L' für JTPL, 'H' für Stadt Greifswald, 'U' für Uecker-Randow).",
+          "ort": "Numerische Orts-ID aus der Auswahlliste des VEVG Online-Abfallkalenders (z.B. 722 für Wusterhusen)."
+        }
+      },
+      "reconfigure_vevg_karlsburg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "kreis": "Kreis-Kennung",
+          "ort": "Orts-ID"
+        },
+        "data_description": {
+          "kreis": "Einbuchstabige Kreis-Kennung aus derselben Auswahlliste (z.B. 'G' für Greifswald-Land, 'A' für Anklam, 'W' für Wolgast, 'L' für JTPL, 'H' für Stadt Greifswald, 'U' für Uecker-Randow).",
+          "ort": "Numerische Orts-ID aus der Auswahlliste des VEVG Online-Abfallkalenders (z.B. 722 für Wusterhusen)."
+        }
+      },
       "args_ics_vlotho_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
