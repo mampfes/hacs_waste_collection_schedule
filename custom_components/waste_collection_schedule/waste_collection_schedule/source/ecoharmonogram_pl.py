@@ -239,7 +239,7 @@ class Source:
         self._g4 = g4
         self._g5 = g5
 
-        # house_number should be required as group matching requires it and the App enfoces it too, Keepint it as optional for now to show a better error message
+        # house_number should be required as group matching requires it and the App enforces it too, Keeping it as optional for now to show a better error message
         if not house_number:
             raise SourceArgumentRequired(
                 "house_number",
