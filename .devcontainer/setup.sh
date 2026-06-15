@@ -25,16 +25,33 @@ python3 -m pip install \
 	"bandit==1.9.4" \
 	"mypy==2.1.0"
 
-# yamlfmt (jumanjihouse hook) is the Ruby gem of the same name. Install it if a
-# Ruby toolchain is available; don't fail the whole setup if it isn't.
-echo "==> Installing yamlfmt (Ruby gem)"
-if command -v gem >/dev/null 2>&1; then
-	gem install yamlfmt || echo "WARN: 'gem install yamlfmt' failed; use 'pre-commit run yamlfmt' instead"
+# yamlfmt is provided by the jumanjihouse pre-commit hook (a bundled Ruby
+# script, not a standalone package). Install a thin `yamlfmt` wrapper on PATH
+# that drives that exact hook, so terminal runs match CI behaviour.
+echo "==> Installing yamlfmt wrapper"
+mkdir -p "$HOME/.local/bin"
+cat >"$HOME/.local/bin/yamlfmt" <<'WRAPPER'
+#!/usr/bin/env bash
+# Run the project's yamlfmt pre-commit hook directly.
+# Usage: yamlfmt [files...]   (no args -> all files)
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+if [ "$#" -eq 0 ]; then
+	exec pre-commit run yamlfmt --all-files
 else
-	echo "WARN: Ruby/gem not found; run yaml formatting via 'pre-commit run yamlfmt --all-files'"
+	exec pre-commit run yamlfmt --files "$@"
 fi
+WRAPPER
+chmod +x "$HOME/.local/bin/yamlfmt"
 
+# Install the pre-commit git hooks, unless the container manages git hooks via
+# core.hooksPath (pre-commit refuses to install in that case).
 echo "==> Installing pre-commit git hooks"
-pre-commit install || true
+if [ -n "$(git config --get core.hooksPath || true)" ]; then
+	echo "    Skipped: core.hooksPath is set by the container."
+	echo "    Run checks manually with 'pre-commit run --all-files'."
+else
+	pre-commit install || true
+fi
 
 echo "==> Development environment ready"

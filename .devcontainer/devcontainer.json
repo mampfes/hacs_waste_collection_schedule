@@ -13,9 +13,6 @@
 			"version": "3.13",
 			"installTools": true
 		},
-		"ghcr.io/devcontainers/features/ruby:1": {
-			"version": "latest"
-		},
 		// Claude Code CLI — comment out this line if you don't use Claude Code.
 		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
 	},
