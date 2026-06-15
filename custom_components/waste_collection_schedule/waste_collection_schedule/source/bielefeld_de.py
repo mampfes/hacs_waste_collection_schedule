@@ -58,7 +58,7 @@ class HiddenInputParser(HTMLParser):
                     else:
                         new_radio = self._radio_args.copy()
                         for args in self._radio_args:
-                            if not d["name"] in args:
+                            if d["name"] not in args:
                                 args[d["name"]] = d["value"]
                             else:
                                 args_copy = args.copy()

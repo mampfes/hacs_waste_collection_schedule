@@ -3,6 +3,7 @@ from typing import List, Optional, Tuple
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
+
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
@@ -106,7 +107,7 @@ class SiteparkIES:
         options: dict = {}
         if select is not None:
             for option in select.find_all("option"):
-                value = (option.get("value") or "").strip()
+                value = str(option.get("value") or "").strip()
                 name = option.get_text(strip=True)
                 if not value or not name:
                     continue

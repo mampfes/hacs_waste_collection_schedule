@@ -43,8 +43,6 @@ ICON_MAP = {
     "Green Bin Collection": Icons.BIO_KITCHEN,
     "E-waste Event": Icons.ELECTRONICS,
     "Additional EnviroDepot Hours": Icons.EVENT,
-    "Garbage Collection": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
     "Recycling Collection": Icons.RECYCLING,
     "Waste": Icons.GENERAL_WASTE,
     "FOGO": Icons.BIO_KITCHEN,

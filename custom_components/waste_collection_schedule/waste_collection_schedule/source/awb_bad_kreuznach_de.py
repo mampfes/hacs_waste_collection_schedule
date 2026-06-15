@@ -229,7 +229,7 @@ class Source:
                 for collection in collections:
                     if (
                         collection == holiday_date
-                        and not (collection_name, collection) in moved
+                        and (collection_name, collection) not in moved
                     ):
                         new_date = datetime.fromtimestamp(
                             holiday["shiftTo"] / 1000

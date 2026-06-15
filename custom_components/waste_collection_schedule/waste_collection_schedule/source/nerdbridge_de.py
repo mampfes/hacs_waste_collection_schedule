@@ -2,8 +2,10 @@ import datetime
 from typing import Any
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule import Icons
+from waste_collection_schedule import (
+    Collection,  # type: ignore[attr-defined]
+    Icons,
+)
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Landkreis Northeim (unofficial)"
