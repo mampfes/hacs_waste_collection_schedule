@@ -15,7 +15,8 @@
 		},
 		"ghcr.io/devcontainers/features/ruby:1": {
 			"version": "latest"
-		}
+		},
+		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
 	},
 	"postCreateCommand": "bash .devcontainer/setup.sh",
 	"customizations": {
@@ -25,7 +26,8 @@
 				"charliermarsh.ruff",
 				"github.vscode-pull-request-github",
 				"ryanluker.vscode-coverage-gutters",
-				"ms-python.vscode-pylance"
+				"ms-python.vscode-pylance",
+				"anthropic.claude-code"
 			],
 			"settings": {
 				"files.eol": "\n",
