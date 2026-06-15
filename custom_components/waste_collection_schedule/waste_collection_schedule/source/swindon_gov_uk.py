@@ -53,7 +53,6 @@ class Source:
         for results in BeautifulSoup(r.text, "html.parser").find_all(
             "div", class_="bin-collection-content"
         ):
-
             try:
                 recyclingdate = results.find("span", class_="nextCollectionDate")
 

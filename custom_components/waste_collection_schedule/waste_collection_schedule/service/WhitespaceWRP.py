@@ -51,7 +51,9 @@ class WhitespaceClient:
             alink = soup.find("a", href=lambda h: h and "seq=1" in h)
 
         if alink is None:
-            raise ValueError("Initial WRP page did not load correctly – could not find collections link")
+            raise ValueError(
+                "Initial WRP page did not load correctly – could not find collections link"
+            )
 
         # Step 2: skip the landing splash (seq=1 → seq=2) then POST address form.
         next_url = alink["href"].replace("seq=1", "seq=2")
@@ -111,10 +113,18 @@ class WhitespaceClient:
             type_li = lis[2]
 
             date_p = date_li.find("p")
-            date_text = date_p.text.strip() if date_p else date_li.text.replace("\n", "").strip()
+            date_text = (
+                date_p.text.strip()
+                if date_p
+                else date_li.text.replace("\n", "").strip()
+            )
 
             type_p = type_li.find("p")
-            type_text = type_p.text.strip() if type_p else type_li.text.replace("\n", "").strip()
+            type_text = (
+                type_p.text.strip()
+                if type_p
+                else type_li.text.replace("\n", "").strip()
+            )
 
             if date_text:
                 results.append((date_text, type_text))

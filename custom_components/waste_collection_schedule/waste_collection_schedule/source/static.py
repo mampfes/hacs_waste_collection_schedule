@@ -223,7 +223,9 @@ class Source:
         self._start = (
             start
             if isinstance(start, datetime.date)
-            else parser.isoparse(start).date() if start else None
+            else parser.isoparse(start).date()
+            if start
+            else None
         )
         if until:
             self._until: datetime.date | None = (

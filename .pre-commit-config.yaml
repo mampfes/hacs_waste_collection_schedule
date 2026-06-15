@@ -1,20 +1,24 @@
 ---
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
+    rev: v3.21.2
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.17
     hooks:
-      - id: black
-        args:
-          - --safe
-          - --quiet
-        files: ^((custom_components|script|tests)/.+)?[^/]+\.py$
+      # Linting (replaces flake8 + isort). Source modules carry pre-existing
+      # issues out of scope here, matching what flake8 excluded.
+      - id: ruff
+        args: [--fix]
+        files: ^(custom_components|script|tests)/.+\.py$
+        exclude: ^custom_components/waste_collection_schedule/waste_collection_schedule/source/
+      # Formatting (replaces black). Runs on the full tree, like black did.
+      - id: ruff-format
+        files: ^(custom_components|script|tests)/.+\.py$
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.2
     hooks:
       - id: codespell
         args:
@@ -23,21 +27,8 @@ repos:
           - --skip="./.*,*.csv,*.json"
           - --quiet-level=2
         exclude_types: [csv, json]
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.2.0
-    hooks:
-      - id: flake8
-        args:
-          - --ignore=D100,D101,D102,D103,D104,D105,D106,D107,E501,W503,E203
-        additional_dependencies:
-          - flake8-docstrings==1.5.0
-          - pydocstyle==5.0.2
-        files: ^(custom_components|script|tests)/.+\.py$
-        # Source modules have pre-existing flake8 issues (docstring style,
-        # mostly D400) out of scope for the canonical-icons migration.
-        exclude: ^custom_components/waste_collection_schedule/waste_collection_schedule/source/
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.8.3
+    rev: 1.9.4
     hooks:
       - id: bandit
         args:
@@ -55,23 +46,15 @@ repos:
     hooks:
       - id: yamlfmt
         args: [--mapping, '2', --sequence, '4', --width, '150', --offset, '2']
-  - repo: https://github.com/pycqa/isort
-    rev: 6.0.1
-    hooks:
-      - id: isort
-        args:
-          - --multi-line=3
-          - --trailing-comma
-          - --profile=black
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-executables-have-shebangs
         stages: [manual]
       - id: check-json
         exclude: ^(\.(devcontainer|vscode)/)
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.16.0
+    rev: v2.1.0
     hooks:
       - id: mypy
         additional_dependencies: [types-requests, types-python-dateutil, types-pyyaml]

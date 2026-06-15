@@ -92,17 +92,17 @@ class Source:
         addr_input = soup.find(
             "input",
             attrs={
-                "id": lambda x: x
-                and "CollectionDaysSAP" in str(x)
-                and "Address" in str(x)
+                "id": lambda x: (
+                    x and "CollectionDaysSAP" in str(x) and "Address" in str(x)
+                )
             },
         )
         hdn_input = soup.find(
             "input",
             attrs={
-                "id": lambda x: x
-                and "CollectionDaysSAP" in str(x)
-                and "hdnValue" in str(x)
+                "id": lambda x: (
+                    x and "CollectionDaysSAP" in str(x) and "hdnValue" in str(x)
+                )
             },
         )
         if not addr_input or not hdn_input:

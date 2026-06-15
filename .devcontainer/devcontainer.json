@@ -15,6 +15,7 @@
 		"vscode": {
 			"extensions": [
 				"ms-python.python",
+				"charliermarsh.ruff",
 				"github.vscode-pull-request-github",
 				"ryanluker.vscode-coverage-gutters",
 				"ms-python.vscode-pylance"
@@ -25,12 +26,16 @@
 				"terminal.integrated.shell.linux": "/bin/bash",
 				"python.defaultInterpreterPath": "/usr/bin/python3",
 				"python.analysis.autoSearchPaths": false,
-				"python.linting.pylintEnabled": true,
-				"python.linting.enabled": true,
-				"python.formatting.provider": "black",
 				"editor.formatOnPaste": false,
 				"editor.formatOnSave": true,
 				"editor.formatOnType": true,
+				"[python]": {
+					"editor.defaultFormatter": "charliermarsh.ruff"
+				},
+				"editor.codeActionsOnSave": {
+					"source.fixAll.ruff": "explicit",
+					"source.organizeImports.ruff": "explicit"
+				},
 				"files.trimTrailingWhitespace": true
 			}
 		}
