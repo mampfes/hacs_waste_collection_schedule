@@ -8,8 +8,8 @@ howto:
     - Scroll down to the section with the gray box "Kalender abonnieren als"
     - Right click on the link "ical" and copy the link address.
 default_params:
-  regex: "ELW - (.*)"
+  regex: ELW - (.*)
 test_cases:
   Wilhelm-Dietz-Straße 5:
-    regex: "ELW - (.*)"
+    regex: ELW - (.*)
     url: https://www.elw.de/fileadmin/elw/php/downloads.php?func=ical&obj=%7B16194D84-3C94-4433-A464-16CEDE63F9F0%7D&location=0

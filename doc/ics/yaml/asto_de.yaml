@@ -13,5 +13,4 @@ howto:
 
 test_cases:
   Marienheide Am Brandteich:
-    url: 
-      https://www.asto.de/abfallkalender/{%Y}/abfallkalender-jahresdetail/jahrdetail-digital/staedte-listview/district-detailview/district-ical?tx_cctrashcalendar_fetrashcal%5Baction%5D=iCalExport&tx_cctrashcalendar_fetrashcal%5Bcontroller%5D=District&tx_cctrashcalendar_fetrashcal%5Bdistrict%5D=49364
+    url: https://www.asto.de/abfallkalender/{%Y}/abfallkalender-jahresdetail/jahrdetail-digital/staedte-listview/district-detailview/district-ical?tx_cctrashcalendar_fetrashcal%5Baction%5D=iCalExport&tx_cctrashcalendar_fetrashcal%5Bcontroller%5D=District&tx_cctrashcalendar_fetrashcal%5Bdistrict%5D=49364

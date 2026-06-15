@@ -16,6 +16,6 @@ howto:
 default_params:
   regex: Collecte\s*-\s(\w+)
 test_cases:
-  "Default":
+  Default:
     url: https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics?matricule=8546-45-9730-2-000-0000&codeZone=12
     regex: Collecte\s*-\s(\w+)

@@ -1,3 +1,4 @@
+---
 waste_collection_schedule:
   sources:
     - name: muellmax_de
