@@ -33,7 +33,7 @@ For complex sources that don't fit the standard transformers, implement
 
 import logging
 from abc import ABC
-from typing import Any
+from typing import Any, Generic, TypeVar
 
 from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
 from waste_collection_schedule.collection import Collection
@@ -43,8 +43,11 @@ from waste_collection_schedule.waste_types import WasteType
 
 _LOGGER = logging.getLogger(__name__)
 
+ParserType = TypeVar("ParserType")
+TransformerType = TypeVar("TransformerType")
 
-class BaseSource[ParserType, TransformerType](ABC):
+
+class BaseSource(ABC, Generic[ParserType, TransformerType]):
     """Optional base class for waste collection sources."""
 
     # --- Metadata (replaces module-level vars) ---

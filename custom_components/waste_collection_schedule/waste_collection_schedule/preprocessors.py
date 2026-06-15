@@ -15,23 +15,27 @@ fetch() behaviour: a single dict becomes ``[dict]``, a falsy/None value becomes
 """
 
 from collections.abc import Iterable, Mapping
-from typing import Any, Protocol
+from typing import Any, Protocol, TypeVar
+
+InT = TypeVar("InT")
+OutT = TypeVar("OutT")
+T = TypeVar("T")
 
 
-class Preprocessor[InT, OutT](Protocol):
+class Preprocessor(Protocol[InT, OutT]):
     """Normalise parsed output (InT) into an iterable of records (OutT)."""
 
     def __call__(self, records: InT) -> Iterable[OutT]: ...
 
 
-class IdentityPreprocessor[T](Preprocessor[Iterable[T], T]):
+class IdentityPreprocessor(Preprocessor[Iterable[T], T]):
     """Return the input iterable unchanged."""
 
     def __call__(self, records: Iterable[T]) -> Iterable[T]:
         return records
 
 
-class IdentityIterablePreprocessor[T](Preprocessor[T, T]):
+class IdentityIterablePreprocessor(Preprocessor[T, T]):
     """Wrap a non-iterable single record in a one-item list; pass iterables through."""
 
     def __call__(self, records: T) -> Iterable[T]:

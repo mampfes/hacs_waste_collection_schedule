@@ -26,7 +26,7 @@ For complex sources that don't fit any of these, implement classify() instead.
 import datetime
 import logging
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Iterable, Mapping, Optional
+from typing import Any, Callable, Generic, Iterable, Mapping, Optional, TypeVar
 
 from bs4 import Tag
 
@@ -36,8 +36,10 @@ from .waste_types import OTHER, WasteType
 
 _LOGGER = logging.getLogger(__name__)
 
+T = TypeVar("T")
 
-class BaseTransformer[T](ABC):
+
+class BaseTransformer(ABC, Generic[T]):
     """Internal base. Use a typed subclass instead."""
 
     def __init__(

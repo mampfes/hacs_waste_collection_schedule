@@ -27,13 +27,15 @@ problem):
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import TYPE_CHECKING, Any, Mapping, Protocol, TypeAlias, cast
+from typing import TYPE_CHECKING, Any, Mapping, Protocol, TypeAlias, TypeVar, cast
 
 import requests as _plain_requests
 from curl_cffi import requests as _cffi_requests
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
+
+T = TypeVar("T")
 
 Response: TypeAlias = "_plain_requests.Response | _cffi_requests.Response"
 
@@ -54,7 +56,7 @@ class RetrieverFunc(Protocol):
 
     def __call__(self, source: BaseSource) -> Response: ...
 
-    def _resolve[T](self, mapping: Callable[..., T] | T, source: BaseSource) -> T:
+    def _resolve(self, mapping: Callable[..., T] | T, source: BaseSource) -> T:
         """Resolve a constructor argument against the source's params.
 
         If ``mapping`` is callable, call it with ``**source.params`` so a

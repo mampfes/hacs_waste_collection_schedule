@@ -23,6 +23,7 @@ from typing import (
     Protocol,
     Tuple,
     TypeAlias,
+    TypeVar,
 )
 
 from bs4 import BeautifulSoup, Tag
@@ -36,8 +37,10 @@ if TYPE_CHECKING:
 else:
     Response = object
 
+T = TypeVar("T")
 
-class Parser[T](Protocol):
+
+class Parser(Protocol[T]):
     """A callable that converts an HTTP response into records of type T."""
 
     def __call__(self, response: Response) -> T: ...
