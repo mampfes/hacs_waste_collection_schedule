@@ -1,6 +1,12 @@
 {
   "default": [],
   "sources": {
+    "abfall_neunkirchen_siegerland_de": [
+      "@bbr111"
+    ],
+    "sictomvds_com": [
+      "@KingKemar"
+    ],
     "stirling_wa_gov_au": [
       "@markvp"
     ]

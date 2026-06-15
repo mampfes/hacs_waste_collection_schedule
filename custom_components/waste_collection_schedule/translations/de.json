@@ -2151,6 +2151,28 @@
         },
         "data_description": {}
       },
+      "args_nwrrr_com_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Gemeinde",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_nwrrr_com_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Gemeinde",
+          "region": "Region"
+        },
+        "data_description": {}
+      },
       "args_northernbeaches_nsw_gov_au": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -3879,6 +3901,24 @@
           "verify_ssl": "SSL-Verifizierung aktivieren",
           "version": "(Veraltet) Version, hat keine Auswirkung mehr",
           "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
+      "args_piberbach_ooe_gv_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_piberbach_ooe_gv_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel"
         },
         "data_description": {}
       },
@@ -5953,6 +5993,26 @@
         }
       },
       "reconfigure_sictom_lons_le_saunier_fr": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Commune"
+        },
+        "data_description": {}
+      },
+      "args_sictomvds_com": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Commune"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_sictomvds_com": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
@@ -11986,7 +12046,8 @@
           "strasse": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "strasse": "Teil- oder vollständiger Straßenname wie im Abfallkalender Neunkirchen Siegerland (z.B. 'Waldstr' für 'Waldstraße')."
         }
       },
       "reconfigure_abfall_neunkirchen_siegerland_de": {
@@ -11996,7 +12057,9 @@
           "calendar_title": "Kalender Titel",
           "strasse": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "strasse": "Teil- oder vollständiger Straßenname wie im Abfallkalender Neunkirchen Siegerland (z.B. 'Waldstr' für 'Waldstraße')."
+        }
       },
       "args_ics_awu_oberhavel_de": {
         "title": "Quelle konfigurieren",
@@ -13474,6 +13537,33 @@
           "year_field": "Jahresfeld"
         },
         "data_description": {}
+      },
+      "args_vevg_karlsburg_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "kreis": "Kreis-Kennung",
+          "ort": "Orts-ID"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "kreis": "Einbuchstabige Kreis-Kennung aus derselben Auswahlliste (z.B. 'G' für Greifswald-Land, 'A' für Anklam, 'W' für Wolgast, 'L' für JTPL, 'H' für Stadt Greifswald, 'U' für Uecker-Randow).",
+          "ort": "Numerische Orts-ID aus der Auswahlliste des VEVG Online-Abfallkalenders (z.B. 722 für Wusterhusen)."
+        }
+      },
+      "reconfigure_vevg_karlsburg_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "kreis": "Kreis-Kennung",
+          "ort": "Orts-ID"
+        },
+        "data_description": {
+          "kreis": "Einbuchstabige Kreis-Kennung aus derselben Auswahlliste (z.B. 'G' für Greifswald-Land, 'A' für Anklam, 'W' für Wolgast, 'L' für JTPL, 'H' für Stadt Greifswald, 'U' für Uecker-Randow).",
+          "ort": "Numerische Orts-ID aus der Auswahlliste des VEVG Online-Abfallkalenders (z.B. 722 für Wusterhusen)."
+        }
       },
       "args_ics_vlotho_de": {
         "title": "Quelle konfigurieren",

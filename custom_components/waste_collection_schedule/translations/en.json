@@ -2252,6 +2252,33 @@
         },
         "data_description": {}
       },
+      "args_nwrrr_com_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality / Council",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "Council name (e.g. 'Devonport', 'Burnie', 'Central Coast', 'Circular Head', 'Kentish', 'Latrobe', 'Waratah Wynyard', 'West Coast')",
+          "region": "Region name within the council (e.g. 'Devonport (Thursday)', 'Smithton East', 'Ulverstone')"
+        }
+      },
+      "reconfigure_nwrrr_com_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality / Council",
+          "region": "Region"
+        },
+        "data_description": {
+          "municipality": "Council name (e.g. 'Devonport', 'Burnie', 'Central Coast', 'Circular Head', 'Kentish', 'Latrobe', 'Waratah Wynyard', 'West Coast')",
+          "region": "Region name within the council (e.g. 'Devonport (Thursday)', 'Smithton East', 'Ulverstone')"
+        }
+      },
       "args_northernbeaches_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -4038,6 +4065,24 @@
           "verify_ssl": "Verify Ssl",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_piberbach_ooe_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_piberbach_ooe_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title"
         },
         "data_description": {}
       },
@@ -6222,6 +6267,29 @@
         },
         "data_description": {
           "commune": "The slug of your commune (e.g. 'courbouzon'). Search on {url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html} to find your commune name, then convert to lowercase with hyphens."
+        }
+      },
+      "args_sictomvds_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "Name of the municipality as shown on the SICTOM map (e.g. 'Velleminfroy')."
+        }
+      },
+      "reconfigure_sictomvds_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "Name of the municipality as shown on the SICTOM map (e.g. 'Velleminfroy')."
         }
       },
       "args_sivom_com": {
@@ -12257,7 +12325,8 @@
           "strasse": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße')."
         }
       },
       "reconfigure_abfall_neunkirchen_siegerland_de": {
@@ -12267,7 +12336,9 @@
           "calendar_title": "Calendar Title",
           "strasse": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße')."
+        }
       },
       "args_ics_awu_oberhavel_de": {
         "title": "Configure Source",
@@ -13745,6 +13816,33 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_vevg_karlsburg_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "kreis": "District code",
+          "ort": "Location ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "kreis": "Single-letter district code from the same dropdown (e.g. 'G' for Greifswald-Land, 'A' for Anklam, 'W' for Wolgast, 'L' for JTPL, 'H' for Stadt Greifswald, 'U' for Uecker-Randow).",
+          "ort": "Numeric location ID from the VEVG online calendar dropdown (e.g. 722 for Wusterhusen). See 'How to get the source arguments'."
+        }
+      },
+      "reconfigure_vevg_karlsburg_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "kreis": "District code",
+          "ort": "Location ID"
+        },
+        "data_description": {
+          "kreis": "Single-letter district code from the same dropdown (e.g. 'G' for Greifswald-Land, 'A' for Anklam, 'W' for Wolgast, 'L' for JTPL, 'H' for Stadt Greifswald, 'U' for Uecker-Randow).",
+          "ort": "Numeric location ID from the VEVG online calendar dropdown (e.g. 722 for Wusterhusen). See 'How to get the source arguments'."
+        }
       },
       "args_ics_vlotho_de": {
         "title": "Configure Source",
