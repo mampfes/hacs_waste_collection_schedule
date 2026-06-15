@@ -18,10 +18,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**roadID**  
+**roadID**
 *(string) (optional)*
 
-**street_name**  
+**street_name**
 *(string) (optional)*
 
 Either `roadID` or `street_name` is required.

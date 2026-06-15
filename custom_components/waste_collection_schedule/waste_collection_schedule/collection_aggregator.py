@@ -6,6 +6,7 @@ from typing import Iterable, Sequence
 from . import CollectionGroup
 from .collection import Collection
 from .source_shell import SourceShell
+from .type_aliases import expand_requested_types
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -96,6 +97,9 @@ class CollectionAggregator:
         include_today: bool = False,
         start_index: int | None = None,
     ) -> list[Collection]:
+        include_types = self._expand_types(include_types)
+        exclude_types = self._expand_types(exclude_types)
+
         # remove unwanted waste types from include list
         if include_types is not None:
             entries = list(filter(lambda e: e.type in set(include_types), entries))
@@ -126,3 +130,10 @@ class CollectionAggregator:
             entries = entries[:count]
 
         return entries
+
+    def _expand_types(self, requested_types: Iterable[str] | None) -> set[str] | None:
+        """Expand raw/aliased collection type names so both forms keep matching."""
+        expanded = requested_types
+        for shell in self._shells:
+            expanded = expand_requested_types(expanded, shell._customize)
+        return None if expanded is None else set(expanded)

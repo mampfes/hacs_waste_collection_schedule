@@ -17,21 +17,21 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street_number_and_name**  
+**street_number_and_name**
 *(string) (required)*
 
 Your street number and name (e.g. `"1201 16e Chemin"`).
 
-**locality**  
+**locality**
 *(string) (required)*
 
 Your municipality name (e.g. `"Métabetchouan-Lac-à-la-Croix"`).
 
-**province_or_state**  
+**province_or_state**
 *(string) (optional, default: `"QC"`)*
 Province or state code.
 
-**language**  
+**language**
 *(string) (optional, default: `"en"`)*
 Language code for collection type names. Supported: `en` (Garbage/Recycling/Organic), `fr` (Déchets/Recyclage/Matières organiques).
 

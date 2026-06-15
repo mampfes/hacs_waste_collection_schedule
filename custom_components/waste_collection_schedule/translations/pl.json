@@ -1,0 +1,226 @@
+{
+  "title": "Harmonogram odbioru odpadów",
+  "config": {
+    "abort": {
+      "already_configured": "To źródło zostało już skonfigurowane."
+    },
+    "step": {
+      "user": {
+        "title": "Wybierz kraj",
+        "data": {
+          "country": "Kraj"
+        },
+        "data_description": {
+          "country": "Wybierz swój kraj albo *Generic*, jeśli chcesz skonfigurować źródło *ICS*."
+        }
+      },
+      "source": {
+        "title": "Wybierz źródło",
+        "description": "Wybierz dostawcę usługi z listy.",
+        "data": {
+          "name": "Źródło"
+        }
+      },
+      "flow_type": {
+        "title": "Wybierz szczegóły konfiguracji",
+        "description": "Wybierz, jak szczegółowo chcesz skonfigurować integrację. Zostaw puste, jeśli potrzebujesz tylko podstawowego kalendarza.",
+        "data": {
+          "show_customize_config": "Pokaż konfigurację typów odbioru"
+        },
+        "data_description": {
+          "show_customize_config": "Wybierz, jeśli chcesz zmienić nazwy, ikony lub widoczność typów odbioru."
+        }
+      },
+      "detected_types": {
+        "title": "Utwórz sensory odpadów",
+        "description": "Źródło zwróciło {count} typów odbioru: {types}. Wybierz typy, które mają dostać własny sensor i urządzenie w Home Assistant. Każdy sensor możesz później dopracować na jego stronie urządzenia.",
+        "sections": {
+          "sensors": {
+            "name": "Wykryte typy odpadów",
+            "data": {
+              "create_sensors_for_types": "Utwórz sensory dla",
+              "create_combined_sensor": "Utwórz łączony sensor najbliższego odbioru"
+            },
+            "data_description": {
+              "create_sensors_for_types": "Każdy wybrany typ odpadu dostanie własne urządzenie i sensor w Home Assistant.",
+              "create_combined_sensor": "Dodaje jeden sensor, który obserwuje wszystkie typy odpadów i pokazuje odbiory z tego samego dnia razem, np. \"Bio, Śmieci za 10 dni\"."
+            }
+          },
+          "advanced": {
+            "name": "Konfiguracja zaawansowana",
+            "data": {
+              "customize_collection_types": "Zmień nazwy, ukryj lub ustaw wygląd typów odbioru teraz"
+            },
+            "data_description": {
+              "customize_collection_types": "Użyj, jeśli źródło zwróciło długie lub mało czytelne nazwy odpadów."
+            }
+          }
+        },
+        "data": {
+          "create_sensors_for_types": "Utwórz sensory dla",
+          "create_combined_sensor": "Utwórz łączony sensor najbliższego odbioru",
+          "customize_collection_types": "Zmień nazwy, ukryj lub ustaw wygląd typów odbioru teraz"
+        }
+      },
+      "customize_select": {
+        "title": "Wybierz typy odbioru do edycji",
+        "description": "Wybierz typy odpadów, których nazwę, widoczność lub wygląd chcesz zmienić.",
+        "data": {
+          "type": "Typ (opcjonalnie)"
+        }
+      },
+      "customize": {
+        "title": "Edytuj typ odbioru ({index}/{total}): {type}",
+        "description": "Dostosuj sposób wyświetlania \"{type}\" w Home Assistant.",
+        "sections": {
+          "basic": {
+            "name": "Nazwa i widoczność",
+            "data": {
+              "alias": "Nazwa wyświetlana",
+              "show": "Widoczny"
+            },
+            "data_description": {
+              "alias": "Krótka przyjazna nazwa wyświetlana zamiast surowego tekstu ze źródła.",
+              "show": "Wyłącz, aby ukryć ten typ odpadu w integracji."
+            }
+          },
+          "appearance": {
+            "name": "Wygląd",
+            "data": {
+              "icon": "Ikona",
+              "picture": "Obraz"
+            },
+            "data_description": {
+              "icon": "Ikona typu odbioru.",
+              "picture": "Ścieżka do obrazu dla typu odbioru."
+            }
+          },
+          "calendar": {
+            "name": "Dedykowany kalendarz",
+            "data": {
+              "use_dedicated_calendar": "Utwórz osobny kalendarz",
+              "dedicated_calendar_title": "Nazwa kalendarza"
+            }
+          },
+          "management": {
+            "name": "Zarządzanie",
+            "data": {
+              "delete": "Usuń"
+            }
+          }
+        },
+        "data": {
+          "alias": "Alias",
+          "show": "Pokaż",
+          "icon": "Ikona",
+          "picture": "Obraz",
+          "use_dedicated_calendar": "Użyj dedykowanego kalendarza",
+          "dedicated_calendar_title": "Tytuł dedykowanego kalendarza"
+        }
+      },
+      "args": {
+        "title": "Skonfiguruj źródło",
+        "description": "Skonfiguruj dostawcę usługi. {howto}Więcej szczegółów: {docs_url}.",
+        "data": {
+          "calendar_title": "Tytuł kalendarza"
+        },
+        "data_description": {
+          "calendar_title": "Bardziej czytelna lub przyjazna nazwa kalendarza odpadów. Jeśli nic nie podasz, zostanie użyta nazwa zwrócona przez źródło."
+        }
+      },
+      "sensor": {
+        "title": "Utwórz sensor {sensor_number}",
+        "description": "Najpierw wybierz nazwę sensora i przyjazny styl tekstu. Tryb zaawansowany włącz tylko wtedy, gdy chcesz wpisać własne szablony.",
+        "sections": {
+          "identity": {
+            "name": "Zmień nazwę",
+            "data": {
+              "name": "Nazwa sensora"
+            }
+          },
+          "display": {
+            "name": "Wyświetlanie",
+            "data": {
+              "details_format": "Szczegóły w oknie informacji",
+              "preset_language": "Język wyświetlania",
+              "value_template_preset": "Styl tekstu stanu",
+              "value_template": "Własny szablon stanu",
+              "date_template": "Własny szablon daty",
+              "date_template_preset": "Styl daty",
+              "add_days_to": "Udostępnij wartość dni do odbioru",
+              "advanced_mode": "Tryb zaawansowany"
+            },
+            "data_description": {
+              "details_format": "Wybierz, jak dodatkowe szczegóły odbioru mają wyglądać w oknie informacji.",
+              "preset_language": "Wybierz język gotowych stylów tekstu stanu.",
+              "value_template_preset": "Wybierz gotowy styl stanu, np. \"za 13 dni\" albo \"Bio za 13 dni\".",
+              "value_template": "Opcjonalny szablon Home Assistant dla stanu sensora. Dostępne wartości to m.in. 'value.date', 'value.daysTo' i 'value.types'.",
+              "date_template_preset": "Wybierz gotowy styl daty dla listy nadchodzących odbiorów.",
+              "date_template": "Opcjonalny szablon Home Assistant dla dat w szczegółach.",
+              "add_days_to": "Dodaj atrybut 'daysTo' z liczbą dni do najbliższego odbioru.",
+              "advanced_mode": "Pokaż surowe pola szablonów i opcje filtrowania odbiorów."
+            }
+          },
+          "filtering": {
+            "name": "Opcje zaawansowane",
+            "data": {
+              "count": "Ile odbiorów pokazać",
+              "leadtime": "Pokazuj tylko odbiory w ciągu dni",
+              "event_index": "Pozycja odbioru",
+              "types": "Typy odbioru"
+            }
+          },
+          "management": {
+            "name": "Zarządzanie",
+            "data": {
+              "skip": "Pomiń ten sensor",
+              "additional": "Utwórz kolejny sensor po tym kroku",
+              "delete": "Usuń"
+            }
+          }
+        },
+        "data": {
+          "name": "Nazwa sensora",
+          "details_format": "Format szczegółów",
+          "count": "Liczba",
+          "leadtime": "Zakres dni",
+          "value_template": "Szablon wartości",
+          "date_template": "Szablon daty",
+          "add_days_to": "Dodaj dni do odbioru",
+          "event_index": "Indeks zdarzenia",
+          "types": "Typy",
+          "skip": "Nie twórz sensora",
+          "additional": "Dodaj kolejne sensory",
+          "delete": "Usuń"
+        }
+      }
+    },
+    "error": {
+      "time_format": "Czas musi być podany w formacie HH:MM.",
+      "invalid_template": "Szablon jest nieprawidłowy. Sprawdź składnię i spróbuj ponownie.",
+      "name_exists": "Sensor o tej nazwie już istnieje. Wybierz inną nazwę.",
+      "preset_selected": "Nie można jednocześnie wybrać gotowego stylu i podać własnej wartości.",
+      "sensor_name_empty": "Nazwa sensora nie może być pusta.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Nie można podać tytułu dedykowanego kalendarza bez włączenia dedykowanego kalendarza."
+    },
+    "abort": {}
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opcje harmonogramu odbioru odpadów"
+      }
+    }
+  },
+  "selector": {
+    "details_format": {
+      "options": {
+        "upcoming": "Nadchodzące",
+        "appointment_types": "Według typu odbioru",
+        "generic": "Wszystkie atrybuty",
+        "hidden": "Ukryte"
+      }
+    }
+  },
+  "issues": {}
+}

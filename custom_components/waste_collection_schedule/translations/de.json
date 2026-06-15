@@ -25,12 +25,10 @@
         "title": "Konfigurations-detailgrad auswählen",
         "description": "Wähle den Detailgrad der Konfiguration aus. Leer lassen, für einen Einfachen Kalender ohne Anpassungen und Sensoren.",
         "data": {
-          "show_customize_config": "Mülltyp Anpassungsmenü Anzeigen",
-          "show_sensor_config": "Sensor Konfiguration Anzeigen"
+          "show_customize_config": "Mülltyp Anpassungsmenü Anzeigen"
         },
         "data_description": {
-          "show_customize_config": "Wähle dies, wenn du Mülltypen anpassen möchtest.",
-          "show_sensor_config": "Wähle dies, wenn du Sensoren konfigurieren möchtest."
+          "show_customize_config": "Wähle dies, wenn du Mülltypen anpassen möchtest."
         }
       },
       "customize_select": {
@@ -76,6 +74,60 @@
       "sensor": {
         "title": "Sensor Erstellen \"{sensor_number}\"",
         "description": "Konfiguriere einen Sensor nach dem anderen.",
+        "sections": {
+          "identity": {
+            "name": "Umbenennen",
+            "data": {
+              "name": "Sensorname"
+            }
+          },
+          "display": {
+            "name": "Anzeige",
+            "data": {
+              "details_format": "Details im Mehr-Info-Dialog",
+              "preset_language": "Anzeigesprache",
+              "value_template_preset": "Status-Textstil",
+              "value_template": "Eigenes Status-Template",
+              "date_template": "Eigenes Datums-Template",
+              "date_template_preset": "Datumsstil",
+              "add_days_to": "Wert für Tage bis Abholung anzeigen",
+              "advanced_mode": "Erweiterter Modus"
+            },
+            "data_description": {
+              "details_format": "Wähle, wie zusätzliche Abholdetails im Mehr-Info-Dialog angezeigt werden.",
+              "preset_language": "Wähle die Sprache für fertige Status-Textstile.",
+              "value_template_preset": "Wähle einen fertigen Statusstil, z.B. 'in 13 Tagen' oder 'Bio in 13 Tagen'.",
+              "value_template": "Optionales Home Assistant Template für den Sensorstatus. Verfügbare Werte sind 'value.date', 'value.daysTo' und 'value.types'.",
+              "date_template_preset": "Wähle einen fertigen Datumsstil für die Liste kommender Abholungen.",
+              "date_template": "Optionales Home Assistant Template für Datumswerte in den Details.",
+              "add_days_to": "Fügt ein 'daysTo'-Attribut mit der Anzahl der Tage bis zur nächsten Abholung hinzu.",
+              "advanced_mode": "Zeigt rohe Template-Felder und Filteroptionen für Abholungen an."
+            }
+          },
+          "filtering": {
+            "name": "Erweiterte Optionen",
+            "data": {
+              "count": "Anzahl der angezeigten Abholungen",
+              "leadtime": "Nur Abholungen innerhalb von Tagen anzeigen",
+              "event_index": "Abholposition",
+              "types": "Abholtypen"
+            },
+            "data_description": {
+              "count": "Begrenzt die Anzahl der kommenden Abholungen im Mehr-Info-Dialog.",
+              "leadtime": "Zeigt nur Abholungen an, die innerhalb dieser Anzahl von Tagen stattfinden.",
+              "event_index": "0 steht für die nächste Abholung, 1 für die zweite, 2 für die dritte usw.",
+              "types": "Zeigt in diesem Sensor nur die ausgewählten Abfallarten an."
+            }
+          },
+          "management": {
+            "name": "Verwaltung",
+            "data": {
+              "skip": "Diesen Sensor überspringen",
+              "additional": "Nach diesem Schritt weiteren Sensor erstellen",
+              "delete": "Löschen"
+            }
+          }
+        },
         "data": {
           "name": "Name des Sensors",
           "details_format": "Detailsformat",
@@ -83,9 +135,13 @@
           "leadtime": "Vorlaufzeit",
           "value_template": "Werte Template",
           "date_template": "Datums-Template",
+          "preset_language": "Anzeigesprache",
+          "value_template_preset": "Status-Textstil",
+          "date_template_preset": "Datumsstil",
           "add_days_to": "Tage Bis Hinzufügen",
           "event_index": "Ereignis Index",
           "types": "Typen",
+          "advanced_mode": "Erweiterter Modus",
           "skip": "Sensor nicht erstellen",
           "additional": "Weitere Sensoren hinzufügen"
         },
@@ -95,9 +151,13 @@
           "leadtime": "Begrenzt das mehr Info-Popup von Home Assistant auf die Anzeige von Sammlungen, die in den nächsten Vorlaufzeit-Tagen stattfinden",
           "value_template": "Verwendet Home Assistant Templating, um die Statusinformationen einer Entität zu formatieren. Du kannst die variablen 'value.date', 'value.daysTo', 'value.types' verwenden",
           "date_template": "Verwendet Home Assistant Templating, um die im mehr Info-Popup einer Entität angezeigten Daten zu formatieren. z.B. 'value.date.strftime(\"%d.%m.%Y\")'",
+          "preset_language": "Wähle die Sprache für fertige Status-Textstile.",
+          "value_template_preset": "Wähle einen fertigen Statusstil, z.B. 'in 13 Tagen' oder 'Bio in 13 Tagen'.",
+          "date_template_preset": "Wähle einen fertigen Datumsstil für die Liste kommender Abholungen.",
           "add_days_to": "Fügt dem Quellen-Entitätsstatus ein 'daysTo'-Attribut hinzu, das die Anzahl der Tage bis zur nächsten Sammlung enthält",
           "event_index": "Wird verwendet, um einen Sensor einem spezifischen Abholdatumsindex zuzuweisen. Das nächste Abholdatum hat den Ereignisindex 0. Nützlich, wenn du dedizierte Sensoren für die nächste Sammlung, die zweite Sammlung, die dritte Sammlung, ... haben möchtest",
           "types": "Wird verwendet, um Abfallarten zu filtern. Der Sensor zeigt nur Sammlungen an, die diesen Abfallarten entsprechen. Du musst den Alias verwenden, wenn du einen Alias gesetzt hast.",
+          "advanced_mode": "Zeigt rohe Template-Felder und Filteroptionen für Abholungen an.",
           "skip": "Wenn aktiviert, wird der Sensor nicht erstellt und alle oben stehenden Konfigurationen werden ignoriert.",
           "additional": "Wenn aktiviert, wirst du aufgefordert, nach dem Speichern dieses Sensors einen weiteren Sensor hinzuzufügen."
         }
@@ -26542,7 +26602,6 @@
       "init": {
         "description": "Waste Collection Schedule Details aktualisieren.",
         "data": {
-          "sensor_select": "Sensoren zum Ändern",
           "customize_select": "Zu Bearbeitende Anpassungen",
           "separator": "Trenner",
           "fetch_time": "Abrufzeit",
@@ -26553,7 +26612,6 @@
           "ignore_duplicates": "Ignoriere doppelte Einträge pro Tag"
         },
         "data_description": {
-          "sensor_select": "Wähle den Sensor aus, den du ändern möchtest. (wähle 'Neuen Sensor hinzufügen', um einen neuen Sensor zu erstellen)",
           "customize_select": "Wähle die Anpassung aus, die du ändern möchtest. (oder wähle eine neue Anpassung, um eine neue zu erstellen)",
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "seperator": "Wird verwendet, um Einträge aneinander zu hängen, wenn die Quelle mehrere Werte für einen Tag zurückgibt.",
@@ -26644,11 +26702,6 @@
         "monthly": "Monatlich",
         "weekly": "Wöchentlich",
         "daily": "Täglich"
-      }
-    },
-    "sensor_select": {
-      "options": {
-        "sensor_select_add_new": "Neuen Sensor hinzufügen"
       }
     }
   },
