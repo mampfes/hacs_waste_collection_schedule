@@ -9,6 +9,8 @@ these to build the config flow GUI automatically.
 
 from dataclasses import dataclass, field
 
+from waste_collection_schedule.exceptions import SourceArgumentRequired
+
 
 @dataclass(frozen=True)
 class ConfigParam:
@@ -25,6 +27,29 @@ class ConfigParam:
 
     # The widget type the config flow should render
     widget: str = "text"
+
+    # Whether the user must provide a value for every field in this param.
+    required: bool = True
+
+
+def validate(params: list[ConfigParam], values: dict) -> None:
+    """Validate user-supplied values against declared PARAMS.
+
+    Raises SourceArgumentRequired for any field of a required ConfigParam that
+    is absent or empty. Sources with mutually-exclusive alternatives (e.g.
+    address OR coordinates) should mark those params ``required=False`` and do
+    their own cross-field validation in ``__init__``.
+    """
+    for param in params:
+        if not param.required:
+            continue
+        for field_name in param.fields:
+            value = values.get(field_name)
+            if value is None or value == "":
+                raise SourceArgumentRequired(
+                    field_name,
+                    "this argument is required.",
+                )
 
 
 def coords(lat: str = "lat", lon: str = "lon") -> ConfigParam:

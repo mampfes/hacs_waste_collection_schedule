@@ -1,9 +1,10 @@
 import logging
+from dataclasses import replace
 
+from waste_collection_schedule import retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import coords, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.retrievers import http_get
 from waste_collection_schedule.service.ArcGis import ArcGisGeocodeError, geocode
 from waste_collection_schedule.transformers import KeyValueTransformer
 from waste_collection_schedule.waste_types import (
@@ -15,13 +16,14 @@ from waste_collection_schedule.waste_types import (
 
 _LOGGER = logging.getLogger(__name__)
 
-# Demonstrates: alternative-input PARAMS (address OR lat+lon).
-# The framework renders both groups; validation ensures at least one is complete.
-_PARAMS_ADDRESS = text_field(
-    "address",
-    label="Street Address",
-)
-_PARAMS_COORDS = coords(lat="lat", lon="lon")
+# Demonstrates: alternative-input PARAMS (address OR lat+lon) + a source that
+# overrides retrieve() to compute request headers from its params before
+# delegating to the zero-config http_get retriever.
+#
+# Because either group satisfies the source, both params are marked
+# required=False and the cross-field check lives in __init__.
+_PARAMS_ADDRESS = replace(text_field("address", label="Street Address"), required=False)
+_PARAMS_COORDS = replace(coords(lat="lat", lon="lon"), required=False)
 # A `ConfigParam` group tagged as mutually-exclusive alternatives would replace
 # the two separate params above once the framework supports that widget concept
 # (see issue #6561 for discussion).  For now, listing both is a valid prototype.
@@ -70,6 +72,7 @@ class Source(BaseSource):
         lat: float | None = None,
         lon: float | None = None,
     ):
+        super().__init__(address=address, lat=lat, lon=lon)
         self._address = address
         self._lat = float(lat) if lat is not None else None
         self._lon = float(lon) if lon is not None else None
@@ -89,7 +92,7 @@ class Source(BaseSource):
             raise SourceArgumentNotFound("address", self._address) from e
         return location["y"], location["x"]
 
-    def retrieve(self):
+    def retrieve(self, source):
         lat, lon = self._resolve_coordinates()
         self._headers = {
             "Accept": "application/json, text/javascript, */*; q=0.01",
@@ -98,6 +101,8 @@ class Source(BaseSource):
             "fields": f"{lon},{lat}",
             "apikeylookup": "Bin Day",
             "Origin": self.URL,
-            "Referer": f"{self.URL}/waste-and-environment/waste-and-recycling/bin-collections",
+            "Referer": (
+                f"{self.URL}/waste-and-environment/waste-and-recycling/bin-collections"
+            ),
         }
-        return http_get(self)
+        return retrievers.http_get(self)

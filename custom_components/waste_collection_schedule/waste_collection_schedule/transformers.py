@@ -17,7 +17,7 @@ Sources declare a transformer instead of implementing classify()::
 Transformers:
   JsonTransformer      — flat JSON object / dict record  (most common)
   KeyValueTransformer  — [{name: ..., value: ...}] array records
-  ICSTransformer       — (date, summary) tuples from parsers.ics
+  ICSTransformer       — (date, summary) tuples from parsers.IcsParser
   HtmlTransformer      — BeautifulSoup element, callable getters
 
 For complex sources that don't fit any of these, implement classify() instead.
@@ -25,7 +25,10 @@ For complex sources that don't fit any of these, implement classify() instead.
 
 import datetime
 import logging
-from typing import Callable, Optional
+from abc import ABC, abstractmethod
+from typing import Any, Callable, Iterable, Mapping, Optional
+
+from bs4 import Tag
 
 from . import date_parsers
 from .collection import Collection
@@ -34,20 +37,22 @@ from .waste_types import OTHER, WasteType
 _LOGGER = logging.getLogger(__name__)
 
 
-class BaseTransformer:
+class BaseTransformer[T](ABC):
     """Internal base. Use a typed subclass instead."""
 
     def __init__(
         self,
         type_value_map: Optional[dict[str, WasteType]] = None,
-        parse_date=None,
+        parse_date: date_parsers.DateParser | None = None,
     ):
         self._type_value_map = (
             {k.strip().lower(): v for k, v in type_value_map.items()}
             if type_value_map
             else {}
         )
-        self._parse_date_fn = parse_date or date_parsers.auto
+        self._parse_date_fn: date_parsers.DateParser = (
+            parse_date or date_parsers.DateParserAuto()
+        )
 
     @property
     def waste_types(self) -> list[WasteType]:
@@ -79,14 +84,16 @@ class BaseTransformer:
         # No map declared — everything becomes OTHER (no warning: that was intentional)
         return OTHER
 
-    def transform(self, record) -> Optional[Collection]:
+    @abstractmethod
+    def __call__(self, record: T) -> Optional[Collection]:
+        """Convert a single parsed record into a Collection (or None to skip)."""
         raise NotImplementedError
 
 
-class JsonTransformer(BaseTransformer):
+class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
     """Transform a flat JSON object (dict) record.
 
-    The most common transformer — use when each record from parsers.json
+    The most common transformer — use when each record from parsers.JsonParser
     is a plain dict with date and type fields::
 
         transformer = JsonTransformer(
@@ -109,13 +116,13 @@ class JsonTransformer(BaseTransformer):
         date_key: str,
         type_key: str,
         type_value_map: Optional[dict[str, WasteType]] = None,
-        parse_date=None,
+        parse_date: date_parsers.DateParser | None = None,
     ):
         super().__init__(type_value_map, parse_date)
         self._date_key = date_key
         self._type_key = type_key
 
-    def transform(self, record) -> Optional[Collection]:
+    def __call__(self, record: Mapping[str, Any]) -> Optional[Collection]:
         date_str = record.get(self._date_key)
         if not date_str:
             return None
@@ -126,7 +133,7 @@ class JsonTransformer(BaseTransformer):
         return Collection(date=self._parse_date(str(date_str)), waste_type=waste_type)
 
 
-class KeyValueTransformer(BaseTransformer):
+class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
     """Transform a [{name: ..., value: ...}] array record.
 
     Use when the API returns each collection as a list of name/value pairs
@@ -152,7 +159,7 @@ class KeyValueTransformer(BaseTransformer):
         date_key: str,
         type_key: str,
         type_value_map: Optional[dict[str, WasteType]] = None,
-        parse_date=None,
+        parse_date: date_parsers.DateParser | None = None,
         name_field: str = "name",
         value_field: str = "value",
     ):
@@ -162,7 +169,7 @@ class KeyValueTransformer(BaseTransformer):
         self._name_field = name_field
         self._value_field = value_field
 
-    def transform(self, record) -> Optional[Collection]:
+    def __call__(self, record: Iterable[Mapping[str, str]]) -> Optional[Collection]:
         fields = {
             item[self._name_field]: item[self._value_field]
             for item in record
@@ -178,13 +185,13 @@ class KeyValueTransformer(BaseTransformer):
         return Collection(date=self._parse_date(date_str), waste_type=waste_type)
 
 
-class ICSTransformer(BaseTransformer):
-    """Transform a (date, summary) tuple record from parsers.ics.
+class ICSTransformer(BaseTransformer[tuple[datetime.date, str]]):
+    """Transform a (date, summary) tuple record from parsers.IcsParser.
 
-    Use with ``parse = parsers.ics``. The date is already a datetime.date
-    object so no date parsing is needed::
+    Use with ``parse = parsers.IcsParser()``. The date is already a
+    datetime.date object so no date parsing is needed::
 
-        parse = parsers.ics
+        parse = parsers.IcsParser()
         transformer = ICSTransformer(
             type_value_map={"General Waste": GENERAL_WASTE, "Recycling": RECYCLABLES},
         )
@@ -198,7 +205,7 @@ class ICSTransformer(BaseTransformer):
     def __init__(self, type_value_map: Optional[dict[str, WasteType]] = None):
         super().__init__(type_value_map)
 
-    def transform(self, record) -> Optional[Collection]:
+    def __call__(self, record: tuple[datetime.date, str]) -> Optional[Collection]:
         date, summary = record
         waste_type = self._resolve_type(summary)
         if waste_type is None:
@@ -206,13 +213,14 @@ class ICSTransformer(BaseTransformer):
         return Collection(date=date, waste_type=waste_type)
 
 
-class HtmlTransformer(BaseTransformer):
+class HtmlTransformer(BaseTransformer[Tag]):
     """Transform a BeautifulSoup element record.
 
-    Use with ``parse = parsers.html`` when iterating over HTML elements.
-    Since HTML has no universal field access model, getters are callables::
+    Use with ``parse = parsers.HtmlParser(...)`` when iterating over HTML
+    elements. Since HTML has no universal field access model, getters are
+    callables::
 
-        parse = parsers.html
+        parse = parsers.HtmlParser("tr", skip=1)
         transformer = HtmlTransformer(
             date_getter=lambda el: el.select_one("td.date").text,
             type_getter=lambda el: el.select_one("td.type").text,
@@ -228,16 +236,16 @@ class HtmlTransformer(BaseTransformer):
 
     def __init__(
         self,
-        date_getter: Callable,
-        type_getter: Callable,
+        date_getter: Callable[[Tag], Any],
+        type_getter: Callable[[Tag], Any],
         type_value_map: Optional[dict[str, WasteType]] = None,
-        parse_date=None,
+        parse_date: date_parsers.DateParser | None = None,
     ):
         super().__init__(type_value_map, parse_date)
         self._date_getter = date_getter
         self._type_getter = type_getter
 
-    def transform(self, record) -> Optional[Collection]:
+    def __call__(self, record: Tag) -> Optional[Collection]:
         try:
             raw_date = self._date_getter(record)
             raw_type = self._type_getter(record)

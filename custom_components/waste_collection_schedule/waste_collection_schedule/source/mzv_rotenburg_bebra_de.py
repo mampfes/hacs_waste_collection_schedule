@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
@@ -12,11 +14,11 @@ from waste_collection_schedule.waste_types import (
     WasteType,
 )
 
-# Demonstrates: parsers.ics_events + the classify() escape hatch.
+# Demonstrates: parsers.IcsEventsParser + the classify() escape hatch.
 # Notable: per-route filtering (yellow_route / paper_route) needs the ICS
 # LOCATION / DESCRIPTION fields, which the (date, summary) tuples from
-# parsers.ics discard. parsers.ics_events exposes the full IcsEvent, and
-# classify() does the route filtering plus route-suffix-aware type mapping
+# parsers.IcsParser discard. parsers.IcsEventsParser exposes the full IcsEvent,
+# and classify() does the route filtering plus route-suffix-aware type mapping
 # ("Gelbe Tonne 2", "Papier Ost", ...) that a standard transformer can't.
 
 # Bin type (lower-cased, "Entsorgung " prefix and any route suffix removed) -> type.
@@ -50,8 +52,8 @@ class Source(BaseSource):
 
     PARAMS = [
         text_field("city", "City"),
-        text_field("yellow_route", "Gelbe Tonne Route"),
-        text_field("paper_route", "Papier Route"),
+        replace(text_field("yellow_route", "Gelbe Tonne Route"), required=False),
+        replace(text_field("paper_route", "Papier Route"), required=False),
     ]
 
     HOWTO = {
@@ -66,7 +68,7 @@ class Source(BaseSource):
     # classify() produces these — declared explicitly (no transformer to derive from).
     WASTE_TYPES = [RECYCLABLES, ORGANIC, GENERAL_WASTE, PAPER, BULKY_WASTE, OTHER]
 
-    parse = parsers.ics_events
+    parse = parsers.IcsEventsParser()
 
     def __init__(
         self,
@@ -74,6 +76,7 @@ class Source(BaseSource):
         yellow_route: str | None = None,
         paper_route: str | None = None,
     ):
+        super().__init__(city=city, yellow_route=yellow_route, paper_route=paper_route)
         self._yellow_route = yellow_route
         self._paper_route = paper_route
         self._params = {"ort": city}

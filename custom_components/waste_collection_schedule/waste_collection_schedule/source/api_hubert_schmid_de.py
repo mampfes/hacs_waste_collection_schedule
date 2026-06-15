@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 from waste_collection_schedule import retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
@@ -29,8 +31,8 @@ class Source(BaseSource):
 
     PARAMS = [
         text_field("city", "City"),
-        text_field("ortsteil", "District"),
-        text_field("strasse", "Street"),
+        replace(text_field("ortsteil", "District"), required=False),
+        replace(text_field("strasse", "Street"), required=False),
     ]
 
     retrieve = retrievers.http_post
@@ -42,6 +44,7 @@ class Source(BaseSource):
         ortsteil: str | None = None,
         strasse: str | None = None,
     ):
+        super().__init__(city=city, ortsteil=ortsteil, strasse=strasse)
         # Form-encoded POST body (not JSON): use _data, not _json.
         self._data = {"l": 3, "p1": city, "p2": ortsteil, "p3": strasse}
 

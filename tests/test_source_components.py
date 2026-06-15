@@ -23,6 +23,24 @@ SOURCES_TO_EXCLUDE = ["__init__.py", "example.py"]
 SOURCES_EXCLUDE_TEST_CASE_CHECK = ["multiple"]
 
 
+def _uses_base_source_init(source_cls: type) -> bool:
+    """True for new-style sources relying on BaseSource.__init__(**kwargs).
+
+    Such sources accept their constructor kwargs through the inherited base
+    __init__, so the valid/mandatory parameter names come from PARAMS rather
+    than the (``**kwargs``-only) signature.
+    """
+    try:
+        from waste_collection_schedule.base_source import BaseSource
+    except Exception:
+        return False
+    return (
+        isinstance(source_cls, type)
+        and issubclass(source_cls, BaseSource)
+        and source_cls.__init__ is BaseSource.__init__
+    )
+
+
 EXTRA_INFO_TYPES: dict[str, Type] = {
     "title": str,
     "url": str,
@@ -304,12 +322,23 @@ def test_source_has_necessary_parameters() -> None:
         module = _get_module(source)
         assert hasattr(module, "Source"), f"missing Source class in source {source}"
         init_params = signature(module.Source.__init__).parameters
-        init_params_names = set(init_params.keys()) - {"self"}
-        mandatory_init_params_names = {
-            name
-            for name, param in init_params.items()
-            if param.default is Parameter.empty
-        } - {"self"}
+        if _uses_base_source_init(module.Source):
+            # New-style source relying on BaseSource.__init__(**kwargs): the
+            # accepted kwargs are the fields declared in PARAMS, and the
+            # mandatory ones are those on required ConfigParams.
+            init_params_names = set()
+            mandatory_init_params_names = set()
+            for cfg_param in getattr(module.Source, "PARAMS", []):
+                init_params_names.update(cfg_param.fields.keys())
+                if getattr(cfg_param, "required", True):
+                    mandatory_init_params_names.update(cfg_param.fields.keys())
+        else:
+            init_params_names = set(init_params.keys()) - {"self"}
+            mandatory_init_params_names = {
+                name
+                for name, param in init_params.items()
+                if param.default is Parameter.empty
+            } - {"self"}
         assert _has_source_meta(module, "TITLE"), f"missing TITLE in source {source}"
         assert _has_source_meta(
             module, "DESCRIPTION"

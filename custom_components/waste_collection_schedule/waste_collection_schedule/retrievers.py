@@ -1,103 +1,226 @@
 """Standard retrieval methods for waste collection sources.
 
-Each retriever is a function that takes a source instance and returns
-a raw HTTP response. The source configures URL, params, headers etc
-as instance/class attributes.
+Each retriever is a typed callable that takes a source instance and returns a
+raw HTTP response. A retriever is configured either declaratively (passing the
+URL/params/headers to its constructor, optionally as callables resolved against
+``source.params``) or implicitly via the zero-config default instances, which
+read ``API_URL`` / ``_params`` / ``_headers`` etc. from the source.
 
-Preferred retrievers (curl_cffi, browser impersonation — works on Cloudflare-protected
-sites and regular sites alike):
+Preferred retrievers (curl_cffi, browser impersonation — works on
+Cloudflare-protected sites and regular sites alike):
 
-    retrieve = retrievers.http_get    # GET  — default in BaseSource
-    retrieve = retrievers.http_post   # POST
+    retrieve = retrievers.http_get    # zero-config GET — default in BaseSource
+    retrieve = retrievers.http_post   # zero-config POST
 
-Explicit fallback (plain requests — only use if curl_cffi causes a specific problem):
+    # or configured explicitly:
+    retrieve = retrievers.HttpGetRetriever(url="https://example.com/api")
+    retrieve = retrievers.HttpGetRetriever(url=lambda uprn: f".../{uprn}")
 
-    retrieve = retrievers.legacy_http_get
-    retrieve = retrievers.legacy_http_post
+Explicit fallback (plain requests — only use if curl_cffi causes a specific
+problem):
+
+    retrieve = retrievers.LegacyHttpGetRetriever(url=...)
+    retrieve = retrievers.LegacyHttpPostRetriever(url=...)
+    retrieve = retrievers.LegacySslHttpGetRetriever(url=...)
 """
+
+from __future__ import annotations
+
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any, Mapping, Protocol, TypeAlias, cast
 
 import requests as _plain_requests
 from curl_cffi import requests as _cffi_requests
 
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
 
-def http_get(self) -> _cffi_requests.Response:
-    """HTTP GET using curl_cffi (browser impersonation). Default retriever.
+Response: TypeAlias = "_plain_requests.Response | _cffi_requests.Response"
 
-    Works on both regular endpoints and Cloudflare-protected sites.
-    Reads API_URL, _params, _headers, TIMEOUT from the source instance.
+HeadersType: TypeAlias = Mapping[str, str | None] | None
+ParamsType: TypeAlias = dict | list | tuple | None
+JsonType: TypeAlias = dict | list | None
+
+SourceParams: TypeAlias = dict[str, Any]
+UrlArgs: TypeAlias = Callable[..., str] | str
+ParamsArgs: TypeAlias = Callable[..., ParamsType] | ParamsType
+HeadersArgs: TypeAlias = Callable[..., HeadersType] | HeadersType
+AnyArgs: TypeAlias = Callable[..., Any] | Any
+JsonArgs: TypeAlias = Callable[..., JsonType] | JsonType
+
+
+class RetrieverFunc(Protocol):
+    """A callable that fetches a raw HTTP response for a source."""
+
+    def __call__(self, source: BaseSource) -> Response: ...
+
+    def _resolve[T](self, mapping: Callable[..., T] | T, source: BaseSource) -> T:
+        """Resolve a constructor argument against the source's params.
+
+        If ``mapping`` is callable, call it with ``**source.params`` so a
+        source's user-supplied arguments flow into the URL/params/headers.
+        Otherwise return the literal value.
+        """
+        if callable(mapping):
+            return mapping(**source.params)
+        return cast("T", mapping)
+
+
+class HttpGetRetriever(RetrieverFunc):
+    """HTTP GET using curl_cffi (browser impersonation).
+
+    Works on both regular endpoints and Cloudflare-protected sites. Each
+    constructor argument may be a literal or a callable resolved against
+    ``source.params``.
     """
-    session = _cffi_requests.Session(impersonate="chrome")
-    return session.get(
-        self.API_URL,
-        params=getattr(self, "_params", None),
-        headers=getattr(self, "_headers", None),
-        timeout=getattr(self, "TIMEOUT", 30),
-    )
+
+    def __init__(
+        self,
+        url: UrlArgs,
+        params: ParamsArgs = None,
+        headers: HeadersArgs = None,
+        timeout: int = 30,
+    ):
+        self.url = url
+        self.params = params
+        self.headers = headers
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource) -> Response:
+        session = _cffi_requests.Session(impersonate="chrome")
+        return session.get(
+            self._resolve(self.url, source),
+            params=self._resolve(self.params, source),
+            headers=self._resolve(self.headers, source),
+            timeout=self.timeout,
+        )
 
 
-def http_post(self) -> _cffi_requests.Response:
-    """HTTP POST using curl_cffi (browser impersonation). Default POST retriever.
+class HttpPostRetriever(RetrieverFunc):
+    """HTTP POST using curl_cffi (browser impersonation).
 
-    Works on both regular endpoints and Cloudflare-protected sites.
-    Reads API_URL, _params, _data, _json, _headers, TIMEOUT from the source instance.
+    Works on both regular endpoints and Cloudflare-protected sites. Each
+    constructor argument may be a literal or a callable resolved against
+    ``source.params``.
     """
-    session = _cffi_requests.Session(impersonate="chrome")
-    return session.post(
-        self.API_URL,
-        params=getattr(self, "_params", None),
-        data=getattr(self, "_data", None),
-        json=getattr(self, "_json", None),
-        headers=getattr(self, "_headers", None),
-        timeout=getattr(self, "TIMEOUT", 30),
-    )
+
+    def __init__(
+        self,
+        url: UrlArgs,
+        params: ParamsArgs = None,
+        data: AnyArgs = None,
+        json: JsonArgs = None,
+        headers: HeadersArgs = None,
+        timeout: int = 30,
+    ):
+        self.url = url
+        self.params = params
+        self.data = data
+        self.json = json
+        self.headers = headers
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource) -> Response:
+        session = _cffi_requests.Session(impersonate="chrome")
+        return session.post(
+            self._resolve(self.url, source),
+            params=self._resolve(self.params, source),
+            data=self._resolve(self.data, source),
+            json=self._resolve(self.json, source),
+            headers=self._resolve(self.headers, source),
+            timeout=self.timeout,
+        )
 
 
-def legacy_http_get(self) -> _plain_requests.Response:
+class LegacyHttpGetRetriever(HttpGetRetriever):
     """HTTP GET using plain requests. Explicit non-preferred fallback.
 
-    Only use this if curl_cffi causes a specific, documented problem with
-    this source. Prefer http_get (curl_cffi) in all other cases.
-
-    Reads API_URL, _params, _headers, TIMEOUT from the source instance.
+    Only use this if curl_cffi causes a specific, documented problem with this
+    source. Prefer HttpGetRetriever (curl_cffi) in all other cases.
     """
-    return _plain_requests.get(
-        self.API_URL,
-        params=getattr(self, "_params", None),
-        headers=getattr(self, "_headers", None),
-        timeout=getattr(self, "TIMEOUT", 30),
-    )
+
+    def __call__(self, source: BaseSource) -> _plain_requests.Response:
+        return _plain_requests.get(
+            self._resolve(self.url, source),
+            params=self._resolve(self.params, source),
+            headers=self._resolve(self.headers, source),
+            timeout=self.timeout,
+        )
 
 
-def legacy_ssl_http_get(self) -> _plain_requests.Response:
-    """Fetch via HTTP GET using a legacy SSL session.
+class LegacySslHttpGetRetriever(LegacyHttpGetRetriever):
+    """HTTP GET using a legacy SSL session.
 
     Use only for endpoints that require UNSAFE_LEGACY_RENEGOTIATION (SSL
-    compatibility mode). Reads API_URL, _params, _headers, TIMEOUT from the
-    source instance.
+    compatibility mode).
     """
-    from waste_collection_schedule.service.SSLError import get_legacy_session
 
-    return get_legacy_session().get(
-        self.API_URL,
-        params=getattr(self, "_params", None),
-        headers=getattr(self, "_headers", None),
-        timeout=getattr(self, "TIMEOUT", 30),
-    )
+    def __call__(self, source: BaseSource) -> _plain_requests.Response:
+        from waste_collection_schedule.service.SSLError import get_legacy_session
+
+        return get_legacy_session().get(
+            self._resolve(self.url, source),
+            params=self._resolve(self.params, source),
+            headers=self._resolve(self.headers, source),
+            timeout=self.timeout,
+        )
 
 
-def legacy_http_post(self) -> _plain_requests.Response:
+class LegacyHttpPostRetriever(HttpPostRetriever):
     """HTTP POST using plain requests. Explicit non-preferred fallback.
 
-    Only use this if curl_cffi causes a specific, documented problem with
-    this source. Prefer http_post (curl_cffi) in all other cases.
-
-    Reads API_URL, _params, _data, _json, _headers, TIMEOUT from the source instance.
+    Only use this if curl_cffi causes a specific, documented problem with this
+    source. Prefer HttpPostRetriever (curl_cffi) in all other cases.
     """
-    return _plain_requests.post(
-        self.API_URL,
-        params=getattr(self, "_params", None),
-        data=getattr(self, "_data", None),
-        json=getattr(self, "_json", None),
-        headers=getattr(self, "_headers", None),
-        timeout=getattr(self, "TIMEOUT", 30),
-    )
+
+    def __call__(self, source: BaseSource) -> _plain_requests.Response:
+        return _plain_requests.post(
+            self._resolve(self.url, source),
+            params=self._resolve(self.params, source),
+            data=self._resolve(self.data, source),
+            json=self._resolve(self.json, source),
+            headers=self._resolve(self.headers, source),
+            timeout=self.timeout,
+        )
+
+
+class _DefaultHttpGetRetriever(RetrieverFunc):
+    """Zero-config GET that reads request settings from the source instance.
+
+    Reads ``API_URL``, ``_params``, ``_headers`` and ``TIMEOUT`` from the
+    source so that sources which only declare ``API_URL`` keep working without
+    declaring a retriever explicitly.
+    """
+
+    def __call__(self, source: BaseSource) -> Response:
+        session = _cffi_requests.Session(impersonate="chrome")
+        return session.get(
+            source.API_URL,
+            params=getattr(source, "_params", None),
+            headers=getattr(source, "_headers", None),
+            timeout=getattr(source, "TIMEOUT", 30),
+        )
+
+
+class _DefaultHttpPostRetriever(RetrieverFunc):
+    """Zero-config POST that reads request settings from the source instance.
+
+    Reads ``API_URL``, ``_params``, ``_data``, ``_json``, ``_headers`` and
+    ``TIMEOUT`` from the source.
+    """
+
+    def __call__(self, source: BaseSource) -> Response:
+        session = _cffi_requests.Session(impersonate="chrome")
+        return session.post(
+            source.API_URL,
+            params=getattr(source, "_params", None),
+            data=getattr(source, "_data", None),
+            json=getattr(source, "_json", None),
+            headers=getattr(source, "_headers", None),
+            timeout=getattr(source, "TIMEOUT", 30),
+        )
+
+
+# Zero-config default instances (used by BaseSource and simple sources).
+http_get = _DefaultHttpGetRetriever()
+http_post = _DefaultHttpPostRetriever()

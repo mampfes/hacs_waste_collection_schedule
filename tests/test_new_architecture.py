@@ -422,7 +422,7 @@ class TestDateParsers:
 
 
 class TestParsers:
-    """parsers.json, parsers.text, parsers.html."""
+    """JsonParser, TextParser, HtmlParser, IcsParser, IcsEventsParser."""
 
     def _mock_response(self, text, json_data=None):
         resp = MagicMock()
@@ -431,54 +431,54 @@ class TestParsers:
         return resp
 
     def test_json_parser_top_level(self):
-        from waste_collection_schedule.parsers import json
+        from waste_collection_schedule.parsers import JsonParser
 
         data = [{"date": "2026-01-01", "type": "bin"}]
         resp = self._mock_response("", json_data=data)
-        assert json()(None, resp) == data
+        assert JsonParser()(resp) == data
 
     def test_json_parser_nested_key(self):
-        from waste_collection_schedule.parsers import json
+        from waste_collection_schedule.parsers import JsonParser
 
         data = {"collections": [{"date": "2026-01-01", "type": "bin"}]}
         resp = self._mock_response("", json_data=data)
-        assert json("collections")(None, resp) == data["collections"]
+        assert JsonParser("collections")(resp) == data["collections"]
 
     def test_json_parser_deep_key_path(self):
-        from waste_collection_schedule.parsers import json
+        from waste_collection_schedule.parsers import JsonParser
 
         data = {"data": {"items": [{"date": "2026-01-01"}]}}
         resp = self._mock_response("", json_data=data)
-        assert json("data", "items")(None, resp) == data["data"]["items"]
+        assert JsonParser("data", "items")(resp) == data["data"]["items"]
 
     def test_text_parser(self):
-        from waste_collection_schedule.parsers import text
+        from waste_collection_schedule.parsers import TextParser
 
         resp = self._mock_response("hello world")
-        assert text(None, resp) == "hello world"
+        assert TextParser()(resp) == "hello world"
 
     def test_html_parser_with_selector(self):
-        from waste_collection_schedule.parsers import html
+        from waste_collection_schedule.parsers import HtmlParser
 
         resp = self._mock_response(
             "<table><tr><th>H</th></tr><tr><td>2024-01-15</td></tr></table>"
         )
-        parser = html("tr", skip=1)
-        rows = parser(None, resp)
+        parser = HtmlParser("tr", skip=1)
+        rows = parser(resp)
         assert len(rows) == 1
         assert rows[0].select_one("td").text == "2024-01-15"
 
     def test_html_parser_skip(self):
-        from waste_collection_schedule.parsers import html
+        from waste_collection_schedule.parsers import HtmlParser
 
         resp = self._mock_response("<ul><li>a</li><li>b</li><li>c</li></ul>")
-        parser = html("li", skip=1)
-        items = parser(None, resp)
+        parser = HtmlParser("li", skip=1)
+        items = parser(resp)
         assert len(items) == 2
         assert items[0].text == "b"
 
     def test_ics_parser_returns_date_summary_tuples(self):
-        from waste_collection_schedule.parsers import ics
+        from waste_collection_schedule.parsers import IcsParser
 
         resp = MagicMock()
         resp.text = "BEGIN:VCALENDAR\nEND:VCALENDAR"
@@ -487,11 +487,11 @@ class TestParsers:
         with patch(
             "waste_collection_schedule.service.ICS.ICS.convert", return_value=expected
         ):
-            result = ics(None, resp)
+            result = IcsParser()(resp)
             assert result == expected
 
     def test_ics_events_parser_returns_full_events(self):
-        from waste_collection_schedule.parsers import ics_events
+        from waste_collection_schedule.parsers import IcsEventsParser
         from waste_collection_schedule.service.ICS import IcsEvent
 
         resp = MagicMock()
@@ -509,15 +509,16 @@ class TestParsers:
             "waste_collection_schedule.service.ICS.ICS.convert_events",
             return_value=expected,
         ):
-            result = ics_events(None, resp)
+            result = IcsEventsParser()(resp)
             assert result == expected
             assert result[0].location == "Route 1"
 
 
 class TestRetrievers:
-    """retrievers.http_get/post (curl_cffi) and legacy_http_get/post (plain requests)."""
+    """Zero-config http_get/http_post (curl_cffi) and configured/legacy retrievers."""
 
     def test_http_get_uses_cffi_session(self):
+        """The zero-config http_get reads request settings off the source."""
         from waste_collection_schedule.retrievers import http_get
 
         source = MagicMock()
@@ -541,6 +542,7 @@ class TestRetrievers:
             )
 
     def test_http_post_uses_cffi_session(self):
+        """The zero-config http_post reads request settings off the source."""
         from waste_collection_schedule.retrievers import http_post
 
         source = MagicMock()
@@ -567,17 +569,44 @@ class TestRetrievers:
                 timeout=30,
             )
 
-    def test_legacy_http_get_uses_plain_requests(self):
-        from waste_collection_schedule.retrievers import legacy_http_get
+    def test_configured_http_get_resolves_callable_url(self):
+        """HttpGetRetriever resolves callable args against source.params."""
+        from waste_collection_schedule.retrievers import HttpGetRetriever
 
         source = MagicMock()
-        source.API_URL = "https://example.com/api"
-        source._params = {"key": "val"}
-        source._headers = None
-        source.TIMEOUT = 30
+        source.params = {"uprn": "123"}
+
+        retriever = HttpGetRetriever(
+            url=lambda uprn: f"https://example.com/{uprn}",
+            params={"key": "val"},
+        )
+
+        mock_session = MagicMock()
+        with patch(
+            "waste_collection_schedule.retrievers._cffi_requests.Session",
+            return_value=mock_session,
+        ) as mock_session_cls:
+            retriever(source)
+            mock_session_cls.assert_called_once_with(impersonate="chrome")
+            mock_session.get.assert_called_once_with(
+                "https://example.com/123",
+                params={"key": "val"},
+                headers=None,
+                timeout=30,
+            )
+
+    def test_legacy_http_get_uses_plain_requests(self):
+        from waste_collection_schedule.retrievers import LegacyHttpGetRetriever
+
+        source = MagicMock()
+        source.params = {}
+
+        retriever = LegacyHttpGetRetriever(
+            url="https://example.com/api", params={"key": "val"}
+        )
 
         with patch("waste_collection_schedule.retrievers._plain_requests") as mock_req:
-            legacy_http_get(source)
+            retriever(source)
             mock_req.get.assert_called_once_with(
                 "https://example.com/api",
                 params={"key": "val"},
@@ -586,18 +615,15 @@ class TestRetrievers:
             )
 
     def test_legacy_http_post_uses_plain_requests(self):
-        from waste_collection_schedule.retrievers import legacy_http_post
+        from waste_collection_schedule.retrievers import LegacyHttpPostRetriever
 
         source = MagicMock()
-        source.API_URL = "https://example.com/api"
-        source._params = None
-        source._data = "body"
-        source._json = None
-        source._headers = None
-        source.TIMEOUT = 30
+        source.params = {}
+
+        retriever = LegacyHttpPostRetriever(url="https://example.com/api", data="body")
 
         with patch("waste_collection_schedule.retrievers._plain_requests") as mock_req:
-            legacy_http_post(source)
+            retriever(source)
             mock_req.post.assert_called_once_with(
                 "https://example.com/api",
                 params=None,
@@ -711,7 +737,7 @@ class TestBaseSourcePipeline:
             def __init__(self):
                 pass
 
-            def retrieve(self):
+            def retrieve(self, source):
                 return MagicMock()  # mock response
 
             def parse(self, response):
@@ -784,7 +810,7 @@ class TestBaseSourcePipeline:
             def __init__(self):
                 pass
 
-            def retrieve(self):
+            def retrieve(self, source):
                 call_log.append("custom_retrieve")
                 return MagicMock()
 
@@ -811,7 +837,7 @@ class TestBaseSourcePipeline:
             def __init__(self):
                 pass
 
-            def retrieve(self):
+            def retrieve(self, source):
                 return "raw,csv,data"
 
             def parse(self, response):
@@ -839,7 +865,7 @@ class TestBaseSourcePipeline:
             def __init__(self):
                 pass
 
-            def retrieve(self):
+            def retrieve(self, source):
                 return MagicMock()
 
             def parse(self, response):
@@ -868,7 +894,7 @@ class TestBaseSourcePipeline:
             def __init__(self):
                 pass
 
-            def retrieve(self):
+            def retrieve(self, source):
                 return MagicMock()
 
             def parse(self, response):
@@ -929,7 +955,7 @@ class TestTransformers:
 
         t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
         record = {"date": "2026-01-15", "bin": "refuse"}
-        result = t.transform(record)
+        result = t(record)
         assert result is not None
         assert result.date == datetime.date(2026, 1, 15)
         assert result.waste_type is GENERAL_WASTE
@@ -939,7 +965,7 @@ class TestTransformers:
         from waste_collection_schedule.waste_types import GENERAL_WASTE
 
         t = JsonTransformer("date", "bin", {"Refuse": GENERAL_WASTE})
-        result = t.transform({"date": "2026-01-15", "bin": "REFUSE"})
+        result = t({"date": "2026-01-15", "bin": "REFUSE"})
         assert result is not None
         assert result.waste_type is GENERAL_WASTE
 
@@ -948,14 +974,14 @@ class TestTransformers:
         from waste_collection_schedule.waste_types import GENERAL_WASTE
 
         t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
-        assert t.transform({"bin": "refuse"}) is None
+        assert t({"bin": "refuse"}) is None
 
     def test_json_transformer_unknown_type_returns_other(self):
         from waste_collection_schedule.transformers import JsonTransformer
         from waste_collection_schedule.waste_types import GENERAL_WASTE, OTHER
 
         t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
-        result = t.transform({"date": "2026-01-15", "bin": "unknown"})
+        result = t({"date": "2026-01-15", "bin": "unknown"})
         assert result is not None
         assert result.waste_type is OTHER
 
@@ -967,7 +993,7 @@ class TestTransformers:
 
         t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
         with caplog.at_level(logging.WARNING):
-            t.transform({"date": "2026-01-15", "bin": "mystery_bin"})
+            t({"date": "2026-01-15", "bin": "mystery_bin"})
         assert any("mystery_bin" in r.message for r in caplog.records)
         assert any("type_value_map" in r.message for r in caplog.records)
 
@@ -979,7 +1005,7 @@ class TestTransformers:
 
         t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
         with caplog.at_level(logging.WARNING):
-            t.transform({"date": "2026-01-15", "bin": "refuse"})
+            t({"date": "2026-01-15", "bin": "refuse"})
         assert not any("type_value_map" in r.message for r in caplog.records)
 
     def test_json_transformer_parse_date(self):
@@ -993,7 +1019,7 @@ class TestTransformers:
             {"refuse": GENERAL_WASTE},
             parse_date=date_parsers.for_format("%d/%m/%Y"),
         )
-        result = t.transform({"date": "15/01/2026", "bin": "refuse"})
+        result = t({"date": "15/01/2026", "bin": "refuse"})
         assert result.date == datetime.date(2026, 1, 15)
 
     def test_json_transformer_waste_types_property(self):
@@ -1023,7 +1049,7 @@ class TestTransformers:
             {"name": "date", "value": "2026-01-15"},
             {"name": "type", "value": "red"},
         ]
-        result = t.transform(record)
+        result = t(record)
         assert result is not None
         assert result.date == datetime.date(2026, 1, 15)
         assert result.waste_type is GENERAL_WASTE
@@ -1037,7 +1063,7 @@ class TestTransformers:
             {"name": "date", "value": "15  Jan  2026"},
             {"name": "type", "value": "red"},
         ]
-        result = t.transform(record)
+        result = t(record)
         assert result is not None
         assert result.date == datetime.date(2026, 1, 15)
 
@@ -1046,7 +1072,7 @@ class TestTransformers:
         from waste_collection_schedule.waste_types import GENERAL_WASTE
 
         t = KeyValueTransformer("date", "type", {"red": GENERAL_WASTE})
-        assert t.transform([{"name": "type", "value": "red"}]) is None
+        assert t([{"name": "type", "value": "red"}]) is None
 
     def test_ics_transformer_basic(self):
         from waste_collection_schedule.transformers import ICSTransformer
@@ -1054,7 +1080,7 @@ class TestTransformers:
 
         t = ICSTransformer({"general waste": GENERAL_WASTE})
         record = (datetime.date(2026, 3, 1), "General Waste")
-        result = t.transform(record)
+        result = t(record)
         assert result is not None
         assert result.date == datetime.date(2026, 3, 1)
         assert result.waste_type is GENERAL_WASTE
@@ -1068,7 +1094,7 @@ class TestTransformers:
             type_getter=lambda el: el["type"],
             type_value_map={"refuse": GENERAL_WASTE},
         )
-        result = t.transform({"date": "2026-01-15", "type": "refuse"})
+        result = t({"date": "2026-01-15", "type": "refuse"})
         assert result is not None
         assert result.date == datetime.date(2026, 1, 15)
 
@@ -1081,7 +1107,7 @@ class TestTransformers:
             type_getter=lambda el: "refuse",
             type_value_map={"refuse": GENERAL_WASTE},
         )
-        assert t.transform({}) is None
+        assert t({}) is None
 
     def test_html_transformer_accepts_date_object_directly(self):
         from waste_collection_schedule.transformers import HtmlTransformer
@@ -1092,7 +1118,7 @@ class TestTransformers:
             type_getter=lambda el: "refuse",
             type_value_map={"refuse": GENERAL_WASTE},
         )
-        result = t.transform({})
+        result = t({})
         assert result.date == datetime.date(2026, 6, 1)
 
 
@@ -1363,11 +1389,23 @@ class TestNewStyleSourceMetadata:
             assert isinstance(p, ConfigParam), f"{name}: {p} is not a ConfigParam"
 
     def test_params_fields_match_init(self, source_info):
-        """PARAMS field names must match __init__ parameter names."""
+        """PARAMS field names must match __init__ parameter names.
+
+        Sources that rely on BaseSource.__init__(**kwargs) instead of declaring
+        their own __init__ accept exactly the PARAMS fields as keyword args, so
+        the check is vacuously satisfied for them.
+        """
         import inspect
 
         name, cls = source_info
-        init_params = set(inspect.signature(cls.__init__).parameters.keys()) - {"self"}
+        signature = inspect.signature(cls.__init__)
+        # A source using the inherited base __init__ exposes only **kwargs.
+        if any(
+            p.kind is inspect.Parameter.VAR_KEYWORD
+            for p in signature.parameters.values()
+        ):
+            return
+        init_params = set(signature.parameters.keys()) - {"self"}
         param_fields = set()
         for p in cls.PARAMS:
             param_fields.update(p.fields.keys())

@@ -1,40 +1,68 @@
 """Date parsing utilities.
 
-Each parser is a function that takes a string and returns a datetime.date.
-Sources select a parser by format or use the auto-detect fallback.
+Each parser is a typed callable that takes one or more positional arguments
+and returns a datetime.date. The last positional argument is always treated
+as the date string, so a parser works equally well as a bound source attribute
+(``self.parse_date(date_str)``) or passed to a transformer
+(``parse_date=date_parsers.auto``).
+
+Ergonomic module aliases are provided::
+
+    parse_date = date_parsers.auto            # DateParserAuto instance
+    parse_date = date_parsers.for_format(fmt) # DateParserForFormat factory
 """
 
 import datetime
 import logging
+from typing import Protocol
 
 from dateutil import parser as dateutil_parser
 
 _LOGGER = logging.getLogger(__name__)
 
 
-def auto(*args) -> datetime.date:
+class DateParser(Protocol):
+    """A callable that parses a date string into a datetime.date.
+
+    The last positional argument is always treated as the date string. This
+    lets the same callable be used as a Source attribute and as a transformer
+    ``parse_date`` argument.
+    """
+
+    def __call__(self, *args: str) -> datetime.date: ...
+
+
+class DateParserAuto(DateParser):
     """Auto-detect date format using dateutil.
 
-    Works both as a bound method (``parse_date = date_parsers.auto`` on a
-    Source class, called as ``self.parse_date(date_str)``) and as a plain
-    callable (passed to a transformer as ``parse_date=date_parsers.auto``).
-    The last positional argument is always treated as the date string.
-    """
-    date_str = args[-1]
-    return dateutil_parser.parse(str(date_str).strip()).date()
-
-
-def for_format(fmt: str):
-    """Return a date parser for a specific strptime format.
-
-    Works both as a bound method (``parse_date = date_parsers.for_format(fmt)``
-    on a Source class) and as a plain callable passed to a transformer
-    (``parse_date=date_parsers.for_format(fmt)``).
     The last positional argument is always treated as the date string.
     """
 
-    def _parse(*args) -> datetime.date:
+    def __call__(self, *args: str) -> datetime.date:
         date_str = args[-1]
-        return datetime.datetime.strptime(str(date_str).strip(), fmt).date()
+        return dateutil_parser.parse(str(date_str).strip()).date()
 
-    return _parse
+
+class DateParserForFormat(DateParser):
+    """Parse date strings in a specific format using datetime.strptime.
+
+    Prefer the ``for_format(fmt)`` factory, which returns a configured
+    instance. The last positional argument is always treated as the date
+    string.
+    """
+
+    def __init__(self, fmt: str):
+        self.fmt = fmt
+
+    def __call__(self, *args: str) -> datetime.date:
+        date_str = args[-1]
+        return datetime.datetime.strptime(str(date_str).strip(), self.fmt).date()
+
+
+# Ergonomic module-level aliases.
+auto = DateParserAuto()
+
+
+def for_format(fmt: str) -> DateParserForFormat:
+    """Return a DateParserForFormat for a specific strptime format."""
+    return DateParserForFormat(fmt)

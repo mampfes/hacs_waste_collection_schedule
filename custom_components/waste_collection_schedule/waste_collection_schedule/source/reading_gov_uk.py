@@ -1,4 +1,4 @@
-from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.transformers import JsonTransformer
@@ -9,9 +9,10 @@ from waste_collection_schedule.waste_types import (
     RECYCLABLES,
 )
 
-# Demonstrates: JsonTransformer + http_get (default retriever)
-# Notable: API embeds the UPRN in the URL path, so API_URL is set per-instance
-# in __init__. parsers.json("collections") drills into the nested array.
+# Demonstrates: JsonTransformer + a configured HttpGetRetriever
+# Notable: API embeds the UPRN in the URL path, so the retriever's URL is a
+# callable resolved against source.params. parsers.JsonParser("collections")
+# drills into the nested array.
 
 
 class Source(BaseSource):
@@ -27,7 +28,10 @@ class Source(BaseSource):
 
     PARAMS = [uprn()]
 
-    parse = parsers.json("collections")
+    retrieve = retrievers.HttpGetRetriever(
+        url=lambda uprn: f"https://api.reading.gov.uk/api/collections/{uprn}"
+    )
+    parse = parsers.JsonParser("collections")
 
     transformer = JsonTransformer(
         date_key="date",
@@ -40,7 +44,3 @@ class Source(BaseSource):
             "Garden Waste Collection Service": GARDEN_WASTE,
         },
     )
-
-    def __init__(self, uprn):
-        # Path-based URL parameter: set API_URL per-instance rather than using _params.
-        self.API_URL = f"https://api.reading.gov.uk/api/collections/{uprn}"

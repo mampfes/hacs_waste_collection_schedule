@@ -4,8 +4,9 @@ from waste_collection_schedule.config_params import uprn
 from waste_collection_schedule.transformers import HtmlTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, OTHER, RECYCLABLES
 
-# Demonstrates: HtmlTransformer + parsers.html(selector) + legacy_ssl_http_get
+# Demonstrates: HtmlTransformer + parsers.HtmlParser(selector) + legacy SSL GET.
 # No custom methods needed — retrieve and parse are declarative class attributes.
+# The UPRN is baked into the URL via a callable resolved against source.params.
 
 
 class Source(BaseSource):
@@ -23,8 +24,13 @@ class Source(BaseSource):
 
     PARAMS = [uprn()]
 
-    retrieve = retrievers.legacy_ssl_http_get
-    parse = parsers.html("tr", skip=1)  # table rows, skip header
+    retrieve = retrievers.LegacySslHttpGetRetriever(
+        url=lambda uprn: (
+            "https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes/Route/"
+            f"{str(uprn).zfill(12)}"
+        )
+    )
+    parse = parsers.HtmlParser("tr", skip=1)  # table rows, skip header
 
     # Explicit WASTE_TYPES: OTHER covers any bin types not in the map below.
     WASTE_TYPES = [RECYCLABLES, GENERAL_WASTE, OTHER]
@@ -38,6 +44,3 @@ class Source(BaseSource):
             "Refuse and food waste": GENERAL_WASTE,
         },
     )
-
-    def __init__(self, uprn):
-        self.API_URL = f"https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes/Route/{str(uprn).zfill(12)}"
