@@ -91,10 +91,12 @@ class Source:
 
         soup = BeautifulSoup(r.content, "html.parser")
         links = soup.find_all(
-            lambda tag: tag
-            and tag.name == "a"
-            and tag.get("href")
-            and "entsorgung.php?ort=" in tag["href"]
+            lambda tag: (
+                tag
+                and tag.name == "a"
+                and tag.get("href")
+                and "entsorgung.php?ort=" in tag["href"]
+            )
         )
         return [link["href"].split("?ort=")[1] for link in links]
 

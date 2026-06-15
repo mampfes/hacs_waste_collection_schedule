@@ -62,9 +62,9 @@ def test_collection_dates_are_valid(collections):
 
     # Assert all collection dates are valid date objects
     for collection in collections:
-        assert isinstance(
-            collection.date, date
-        ), "Collection date should be a date object"
+        assert isinstance(collection.date, date), (
+            "Collection date should be a date object"
+        )
         assert earliest_allowed <= collection.date <= latest_allowed, (
             f"Collection date {collection.date} is outside reasonable range "
             f"({earliest_allowed} to {latest_allowed})"
@@ -82,9 +82,9 @@ def test_collection_dates_are_valid(collections):
     # so we expect dates >= today, but allow a 1-day grace period for edge cases
     for ctype, dates in type_to_dates.items():
         soonest = min(dates)
-        assert (
-            soonest >= earliest_allowed
-        ), f"Soonest collection date for {ctype} is unexpectedly old: {soonest}"
+        assert soonest >= earliest_allowed, (
+            f"Soonest collection date for {ctype} is unexpectedly old: {soonest}"
+        )
 
 
 def test_collection_types_are_recognized(collections):
@@ -103,18 +103,18 @@ def test_collection_types_are_recognized(collections):
     collection_types = {c.type for c in collections}
 
     # Then
-    assert collection_types.issubset(
-        expected_types
-    ), f"Unexpected collection types found: {collection_types - expected_types}"
+    assert collection_types.issubset(expected_types), (
+        f"Unexpected collection types found: {collection_types - expected_types}"
+    )
 
 
 def test_icons_match_collection_types(collections):
     """Test that icons are correctly mapped to their collection types."""
     for collection in collections:
         expected_icon = midlothian_gov_uk.ICON_MAP.get(collection.type)
-        assert (
-            collection.icon == expected_icon
-        ), f"Icon mismatch for {collection.type}: expected {expected_icon}, got {collection.icon}"
+        assert collection.icon == expected_icon, (
+            f"Icon mismatch for {collection.type}: expected {expected_icon}, got {collection.icon}"
+        )
 
 
 def test_source_initialization():
@@ -132,6 +132,6 @@ def test_source_initialization():
 
 def test_multiple_collections_returned(collections):
     """Test that multiple collections are returned (typically multiple weeks/services)."""
-    assert (
-        len(collections) >= 2
-    ), f"Expected at least 2 collections, but got {len(collections)}"
+    assert len(collections) >= 2, (
+        f"Expected at least 2 collections, but got {len(collections)}"
+    )

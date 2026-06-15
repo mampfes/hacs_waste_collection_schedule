@@ -306,10 +306,9 @@ class Source:
             if not match:
                 matches = list(
                     map(
-                        lambda x: "town: "
-                        + x.get("name")
-                        + ", district:"
-                        + x.get("district"),
+                        lambda x: (
+                            "town: " + x.get("name") + ", district:" + x.get("district")
+                        ),
                         matching_towns_district,
                     )
                 )

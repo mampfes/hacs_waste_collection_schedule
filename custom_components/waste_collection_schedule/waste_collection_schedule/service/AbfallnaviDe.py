@@ -3,6 +3,7 @@
 from datetime import datetime
 
 import requests
+
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -183,7 +184,7 @@ class AbfallnaviDe:
         self._service_domain = service_domain
         if service_domain in self.SHARED_DOMAIN_SERVICES:
             self._service_url = (
-                "https://abfallapp.regioit.de/" f"abfall-app-{service_domain}/rest"
+                f"https://abfallapp.regioit.de/abfall-app-{service_domain}/rest"
             )
             self._service_url_fallback = (
                 f"https://{service_domain}"
@@ -197,7 +198,7 @@ class AbfallnaviDe:
                 f"abfall-app-{service_domain}/rest"
             )
             self._service_url_fallback = (
-                "https://abfallapp.regioit.de/" f"abfall-app-{service_domain}/rest"
+                f"https://abfallapp.regioit.de/abfall-app-{service_domain}/rest"
             )
         self._session = requests.Session()
 

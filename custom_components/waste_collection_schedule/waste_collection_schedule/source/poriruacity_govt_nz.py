@@ -56,7 +56,9 @@ class Source:
         # replace new Date(2022,7,22) with "2022-08-22"
         zones_js = re.sub(
             r"new Date\((\d{4}),(\d{1,2}),(\d{1,2})\)",
-            lambda m: f'"{m.group(1)}-{str(int(m.group(2)) + 1).zfill(2)}-{m.group(3).zfill(2)}"',
+            lambda m: (
+                f'"{m.group(1)}-{str(int(m.group(2)) + 1).zfill(2)}-{m.group(3).zfill(2)}"'
+            ),
             zones_js,
         )
         # replace zone1 with "zone1"

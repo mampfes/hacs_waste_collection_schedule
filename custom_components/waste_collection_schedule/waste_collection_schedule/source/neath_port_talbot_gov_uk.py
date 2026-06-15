@@ -184,7 +184,9 @@ def _parse_collections_from_page_source(raw_html: str) -> list[Collection]:
 
     # Find all date headers (they are <h2> containing e.g. "Thursday, 23 October").
     headers = [
-        h for h in root.find_all("h2") if _DAY_MONTH_RE.match(_clean_text(h.get_text()))  # type: ignore[union-attr]
+        h
+        for h in root.find_all("h2")
+        if _DAY_MONTH_RE.match(_clean_text(h.get_text()))  # type: ignore[union-attr]
     ]
 
     collections: list = []

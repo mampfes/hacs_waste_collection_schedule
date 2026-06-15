@@ -682,8 +682,8 @@ class Source:
             if part == "week":
                 kwargs["freq"] = WEEKLY
                 kwargs.update(self._parse_week_no(parts.pop(0)))
-            elif part.startswith("off") or part.startswith(
-                '"'
+            elif (
+                part.startswith("off") or part.startswith('"')
             ):  # schedule should be of type "closed" or "closing_exception", or part should be a comment
                 continue
             else:

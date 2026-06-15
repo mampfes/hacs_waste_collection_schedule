@@ -83,15 +83,11 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
         date_template = sensor.get(CONF_DATE_TEMPLATE)
         try:
             value_template = cv.template(value_template)
-        except (
-            vol.Invalid
-        ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
+        except vol.Invalid:  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
             value_template = None
         try:
             date_template = cv.template(date_template)
-        except (
-            vol.Invalid
-        ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
+        except vol.Invalid:  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
             date_template = None
         details_format = sensor.get(CONF_DETAILS_FORMAT)
         if isinstance(details_format, str):

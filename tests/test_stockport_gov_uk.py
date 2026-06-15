@@ -16,7 +16,6 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule import Collection  # noqa: E402
 from waste_collection_schedule.source import stockport_gov_uk  # noqa: E402
 
 # Sample HTML that mimics the Stockport council website structure
