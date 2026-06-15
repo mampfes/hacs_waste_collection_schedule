@@ -7277,45 +7277,25 @@
         },
         "data_description": {}
       },
-      "args_ics_kreis_ploen_de": {
+      "args_kreis_ploen_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_kreis_ploen_de": {
+      "reconfigure_kreis_ploen_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {}
       },
@@ -7870,45 +7850,25 @@
         },
         "data_description": {}
       },
-      "args_ics_ilm_kreis_de": {
+      "args_ilm_kreis_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_ilm_kreis_de": {
+      "reconfigure_ilm_kreis_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {}
       },
@@ -11171,45 +11131,25 @@
         },
         "data_description": {}
       },
-      "args_ics_gross_gerau_de": {
+      "args_gross_gerau_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_gross_gerau_de": {
+      "reconfigure_gross_gerau_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {}
       },
@@ -11218,10 +11158,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "pois": "POIS"
+          "ort": "Place",
+          "pois": "POIS",
+          "strasse": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ort": "Optional place/district to disambiguate (e.g. 'Seesen').",
+          "pois": "Direct POIS id (alternative to entering a street).",
+          "strasse": "Street name (resolved via autocomplete)."
         }
       },
       "reconfigure_kwb_goslar_de": {
@@ -11229,9 +11174,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "pois": "POIS"
+          "ort": "Place",
+          "pois": "POIS",
+          "strasse": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "ort": "Optional place/district to disambiguate (e.g. 'Seesen').",
+          "pois": "Direct POIS id (alternative to entering a street).",
+          "strasse": "Street name (resolved via autocomplete)."
+        }
       },
       "args_kwu_de": {
         "title": "Configure Source",
@@ -11554,12 +11505,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "ort": "City",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "Name of the municipality (as shown in the dropdown on the Abfallkalender page).",
-          "street": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
+          "ort": "Optional municipality name to disambiguate streets that exist in several places.",
+          "strasse": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
         }
       },
       "reconfigure_lk_mecklenburgische_seenplatte_de": {
@@ -11568,11 +11521,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "ort": "City",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {
-          "city": "Name of the municipality (as shown in the dropdown on the Abfallkalender page).",
-          "street": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
+          "ort": "Optional municipality name to disambiguate streets that exist in several places.",
+          "strasse": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
         }
       },
       "args_abfuhrplan_landkreis_neumarkt_de": {
@@ -11617,45 +11572,25 @@
         },
         "data_description": {}
       },
-      "args_ics_ab_peine_de": {
+      "args_ab_peine_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_ab_peine_de": {
+      "reconfigure_ab_peine_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {}
       },
@@ -11886,6 +11821,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "ort": "City",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {
@@ -11898,6 +11835,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "ort": "City",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {}
@@ -12255,6 +12194,33 @@
         },
         "data_description": {}
       },
+      "args_muehlenkreis_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "ort": "Place",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ort": "Optional place to disambiguate (the part in parentheses, e.g. 'Harlinghausen').",
+          "strasse": "Street name or a unique part of it."
+        }
+      },
+      "reconfigure_muehlenkreis_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "ort": "Place",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "ort": "Optional place to disambiguate (the part in parentheses, e.g. 'Harlinghausen').",
+          "strasse": "Street name or a unique part of it."
+        }
+      },
       "args_neu_ulm_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -12322,10 +12288,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ort": "District",
           "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ort": "Optional district (Ortsteil) to disambiguate a street that exists in several places, i.e. the part shown in parentheses (e.g. 'Neunkirchen').",
           "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße')."
         }
       },
@@ -12334,9 +12302,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ort": "District",
           "strasse": "Street"
         },
         "data_description": {
+          "ort": "Optional district (Ortsteil) to disambiguate a street that exists in several places, i.e. the part shown in parentheses (e.g. 'Neunkirchen').",
           "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße')."
         }
       },
@@ -12388,6 +12358,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "location": "Location",
+          "ort": "Place",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {
@@ -12400,6 +12372,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "location": "Location",
+          "ort": "Place",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {}
@@ -12962,10 +12936,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ort": "District",
           "strasse": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ort": "Optional district to disambiguate (the part in parentheses, e.g. 'Allenbach').",
+          "strasse": "Street name or a unique part of it."
         }
       },
       "reconfigure_hilchenbach_de": {
@@ -12973,9 +12950,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ort": "District",
           "strasse": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "ort": "Optional district to disambiguate (the part in parentheses, e.g. 'Allenbach').",
+          "strasse": "Street name or a unique part of it."
+        }
       },
       "args_ics_koblenz_de": {
         "title": "Configure Source",

@@ -6660,9 +6660,9 @@
     },
     {
       "title": "Abfallwirtschaft Kreis Pl\u00f6n",
-      "module": "ics",
+      "module": "kreis_ploen_de",
       "default_params": {},
-      "id": "ics_kreis_ploen_de"
+      "id": "kreis_ploen_de"
     },
     {
       "title": "Abfallwirtschaft Lahn-Dill-Kreises",
@@ -6860,13 +6860,9 @@
     },
     {
       "title": "Abfallwirtschaftsbetrieb Ilm-Kreis",
-      "module": "ics",
-      "default_params": {
-        "headers": {
-          "referer": "https://aik.ilm-kreis.de"
-        }
-      },
-      "id": "ics_ilm_kreis_de"
+      "module": "ilm_kreis_de",
+      "default_params": {},
+      "id": "ilm_kreis_de"
     },
     {
       "title": "Abfallwirtschaftsbetrieb Kiel (ABK)",
@@ -10452,9 +10448,9 @@
     },
     {
       "title": "Kreisstadt Gro\u00df-Gerau",
-      "module": "ics",
+      "module": "gross_gerau_de",
       "default_params": {},
-      "id": "ics_gross_gerau_de"
+      "id": "gross_gerau_de"
     },
     {
       "title": "Kreisstadt St. Wendel",
@@ -10967,9 +10963,9 @@
     },
     {
       "title": "Landkreis Peine",
-      "module": "ics",
+      "module": "ab_peine_de",
       "default_params": {},
-      "id": "ics_ab_peine_de"
+      "id": "ab_peine_de"
     },
     {
       "title": "Landkreis Ravensburg",
@@ -11696,6 +11692,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_moerfelden_walldorf_de"
+    },
+    {
+      "title": "M\u00fchlenkreis Minden-L\u00fcbbecke",
+      "module": "muehlenkreis_de",
+      "default_params": {},
+      "id": "muehlenkreis_de"
     },
     {
       "title": "M\u00fchlheim am Main (MyMuell App)",
