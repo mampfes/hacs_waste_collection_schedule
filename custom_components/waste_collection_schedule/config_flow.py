@@ -36,6 +36,7 @@ from homeassistant.helpers.selector import (
 from homeassistant.helpers.translation import async_get_translations
 from voluptuous.schema_builder import UNDEFINED
 from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.config_params import ConfigParam
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
@@ -90,12 +91,43 @@ _LOGGER = logging.getLogger(__name__)
 # Load source lists and metadata for configuration
 _SOURCES_FILE = Path(__file__).parent / "sources.json"
 _SOURCE_METADATA_FILE = Path(__file__).parent / "source_metadata.json"
+_SOURCE_DIR = Path(__file__).parent / "waste_collection_schedule" / "source"
 _SOURCES: dict[str, list[Any]] = {}
 _SOURCE_METADATA: dict[str, dict[str, Any]] = {}
 
+# Country code → display name (shared with update_docu_links.py)
+_COUNTRY_CODE_MAP: dict[str, str] = {
+    "au": "Australia",
+    "at": "Austria",
+    "be": "Belgium",
+    "ca": "Canada",
+    "cz": "Czech Republic",
+    "de": "Germany",
+    "dk": "Denmark",
+    "hamburg": "Germany",
+    "hu": "Hungary",
+    "ie": "Ireland",
+    "it": "Italy",
+    "lt": "Lithuania",
+    "lu": "Luxembourg",
+    "mt": "Malta",
+    "nl": "Netherlands",
+    "nz": "New Zealand",
+    "no": "Norway",
+    "pl": "Poland",
+    "se": "Sweden",
+    "sk": "Slovakia",
+    "si": "Slovenia",
+    "ch": "Switzerland",
+    "us": "United States of America",
+    "uk": "United Kingdom",
+    "fr": "France",
+    "fi": "Finland",
+}
+
 
 def _load_sources() -> dict[str, list[Any]]:
-    """Load sources.json with error handling."""
+    """Load sources.json (legacy sources) with error handling."""
     try:
         with open(_SOURCES_FILE, encoding="utf-8") as f:
             return json.load(f)
@@ -114,7 +146,49 @@ def _load_source_metadata() -> dict[str, dict[str, Any]]:
         return {}
 
 
-# Initialize both files on module import
+def _discover_new_style_sources() -> dict[str, list[Any]]:
+    """Discover new-style sources at runtime by scanning the source directory.
+
+    New-style sources (with PARAMS) are self-describing — their metadata
+    is read from the Source class, not from generated JSON files.
+    """
+    sources: dict[str, list[Any]] = {}
+
+    for py_file in _SOURCE_DIR.glob("*.py"):
+        if py_file.stem == "__init__":
+            continue
+
+        try:
+            module = importlib.import_module(
+                f"waste_collection_schedule.source.{py_file.stem}"
+            )
+        except Exception:
+            continue
+
+        source_cls = getattr(module, "Source", None)
+        if source_cls is None or not _is_new_style_source(source_cls):
+            continue
+
+        # Read metadata from Source class
+        title = getattr(source_cls, "TITLE", py_file.stem)
+        country_code = (
+            getattr(source_cls, "COUNTRY", "") or py_file.stem.rsplit("_", 1)[-1]
+        )
+        country_name = _COUNTRY_CODE_MAP.get(country_code, country_code)
+
+        entry: dict[str, Any] = {
+            "title": title,
+            "module": py_file.stem,
+            "default_params": {},
+            "id": py_file.stem,
+        }
+
+        sources.setdefault(country_name, []).append(entry)
+
+    return sources
+
+
+# Initialize on module import — legacy from JSON, new-style discovered at runtime
 _SOURCES = _load_sources()
 _SOURCE_METADATA = _load_source_metadata()
 
@@ -143,6 +217,68 @@ SUPPORTED_ARG_TYPES = {
     date: cv.date,
     datetime: cv.datetime,
 }
+
+
+def _is_new_style_source(source_cls) -> bool:
+    """Check if a source uses the new PARAMS-based architecture."""
+    return bool(getattr(source_cls, "PARAMS", None))
+
+
+def _build_schema_from_params(
+    params: list[ConfigParam],
+    pre_filled: dict[str, Any],
+    args_input: dict[str, Any] | None,
+    include_title: bool = True,
+    title: str = "",
+) -> vol.Schema:
+    """Build a voluptuous schema from PARAMS declarations."""
+    vol_args: dict = {}
+
+    if include_title:
+        description = None
+        if args_input is not None and CONF_SOURCE_CALENDAR_TITLE in args_input:
+            description = {"suggested_value": args_input[CONF_SOURCE_CALENDAR_TITLE]}
+        vol_args[
+            vol.Optional(
+                CONF_SOURCE_CALENDAR_TITLE,
+                description=description,
+                default=title,
+            )
+        ] = str
+
+    for param in params:
+        for field_name, display_label in param.fields.items():
+            description = None
+            if args_input is not None and field_name in args_input:
+                description = {"suggested_value": args_input[field_name]}
+            elif field_name in pre_filled:
+                description = {"suggested_value": pre_filled[field_name]}
+
+            # Map widget type to HA selector/validator
+            if param.widget == "map":
+                # Coordinates — use float fields
+                vol_args[vol.Required(field_name, description=description)] = cv.string
+            elif param.widget == "select":
+                # TODO: pass through options from ConfigParam when supported
+                vol_args[vol.Required(field_name, description=description)] = cv.string
+            elif param.widget == "uprn_lookup":
+                vol_args[vol.Required(field_name, description=description)] = cv.string
+            else:
+                # Default: text field
+                vol_args[vol.Required(field_name, description=description)] = cv.string
+
+    return vol.Schema(vol_args)
+
+
+def _get_waste_types_for_customize(source_cls) -> list[str]:
+    """Get waste type names from WASTE_TYPES for customization.
+
+    Returns waste_type.id strings for new-style sources.
+    """
+    waste_types = getattr(source_cls, "WASTE_TYPES", None)
+    if not waste_types:
+        return []
+    return [wt.names.get("en", wt.id) for wt in waste_types]
 
 
 def get_customize_schema(defaults: dict[str, Any] = {}):
@@ -353,8 +489,13 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if len(self._sources) > 0:
             return
 
-        # Use pre-loaded sources from module level
-        self._sources = _SOURCES
+        # Start with legacy sources from sources.json
+        self._sources = {k: list(v) for k, v in _SOURCES.items()}
+
+        # Discover and merge new-style sources at runtime
+        new_style = await self.hass.async_add_executor_job(_discover_new_style_sources)
+        for country, entries in new_style.items():
+            self._sources.setdefault(country, []).extend(entries)
 
         async def args_method(args_input):
             return await self.async_step_args(args_input)
@@ -513,6 +654,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     ) -> Tuple[vol.Schema, types.ModuleType]:
         """Get schema for source arguments.
 
+        For new-style sources (with PARAMS), builds the schema from those
+        declarations. For legacy sources, falls back to __init__ introspection.
+
         Args:
             source (str): source name
             pre_filled (dict[str, Any]): arguments that are pre-filled (description suggested_value)
@@ -522,6 +666,33 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         Returns:
             Tuple[vol.Schema, types.ModuleType]: schema, module
         """
+        # Import source module
+        module = await self.hass.async_add_executor_job(
+            importlib.import_module, f"waste_collection_schedule.source.{source}"
+        )
+
+        # Resolve title
+        source_cls = module.Source
+        title: str = (
+            getattr(source_cls, "TITLE", None)
+            or getattr(module, "TITLE", source)
+            or source
+        )
+        if hasattr(self, "_title") and isinstance(self._title, str):
+            title = self._title
+
+        # New-style source: build schema from PARAMS
+        if _is_new_style_source(source_cls):
+            schema = _build_schema_from_params(
+                source_cls.PARAMS,
+                pre_filled,
+                args_input,
+                include_title=include_title,
+                title=title,
+            )
+            return schema, module
+
+        # Legacy source: introspect __init__ signature
         suggestions: dict[str, list[Any]] = {}
         if hasattr(self, "_error_suggestions"):
             suggestions = {
@@ -530,20 +701,10 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 if len(value) > 0
             }
 
-        # Import source and get arguments
-        module = await self.hass.async_add_executor_job(
-            importlib.import_module, f"waste_collection_schedule.source.{source}"
-        )
-
         args = dict(inspect.signature(module.Source.__init__).parameters)
         del args["self"]  # Remove self
         # Convert schema for vol
         vol_args = {}
-        title = source  # Default title Should probably be overwritten by the module
-        if hasattr(module, "TITLE") and isinstance(module.TITLE, str):
-            title = module.TITLE
-        if hasattr(self, "_title") and isinstance(self._title, str):
-            title = self._title
 
         if include_title:
             description = None
@@ -708,6 +869,13 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if len(resp) == 0:
                 errors["base"] = "fetch_empty"
             self._fetched_types = list({x.type.strip() for x in resp})
+            # For new-style sources with WASTE_TYPES, also offer those
+            source_cls = module.Source
+            waste_type_names = _get_waste_types_for_customize(source_cls)
+            if waste_type_names:
+                self._fetched_types = list(
+                    set(self._fetched_types) | set(waste_type_names)
+                )
         except SourceArgumentSuggestionsExceptionBase as e:
             if not hasattr(self, "_error_suggestions"):
                 self._error_suggestions = {}
@@ -739,17 +907,41 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         return module.Source(**kwargs)
 
     def _get_description_placeholders(self, source: str) -> dict[str, str]:
-        """Get description placeholders (URLs and howto) for a source."""
+        """Get description placeholders (URLs and howto) for a source.
+
+        For new-style sources, reads directly from Source class attributes.
+        For legacy sources, reads from source_metadata.json.
+        """
         placeholders: dict[str, str] = {}
+
+        hass = getattr(self, "hass", None)
+        language = getattr(getattr(hass, "config", None), "language", "en")
+
+        # Try new-style source first (read from class)
+        try:
+            module = importlib.import_module(
+                f"waste_collection_schedule.source.{source}"
+            )
+            source_cls = module.Source
+            if _is_new_style_source(source_cls):
+                url = getattr(source_cls, "URL", "")
+                placeholders["docs_url"] = url
+                howto_dict = getattr(source_cls, "HOWTO", {})
+                howto = howto_dict.get(language, howto_dict.get("en", ""))
+                if howto:
+                    placeholders["howto"] = howto.rstrip("\n") + "\n\n"
+                else:
+                    placeholders["howto"] = ""
+                return placeholders
+        except Exception:
+            pass
+
+        # Fall back to legacy metadata from source_metadata.json
         if source in _SOURCE_METADATA:
             metadata = _SOURCE_METADATA[source]
             placeholders["docs_url"] = metadata.get("docs_url", "")
             placeholders.update(metadata.get("urls", {}))
-            # Get howto for current language (defaults to English)
             howto_dict = metadata.get("howto", {})
-            # Try to get howto for the current language
-            hass = getattr(self, "hass", None)
-            language = getattr(getattr(hass, "config", None), "language", "en")
             placeholders["howto"] = howto_dict.get(language, howto_dict.get("en", ""))
             if placeholders["howto"]:
                 placeholders["howto"] = placeholders["howto"].rstrip("\n") + "\n\n"

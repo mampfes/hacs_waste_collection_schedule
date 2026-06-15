@@ -462,18 +462,41 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     # iterate through all *.py files in waste_collection_schedule/source
     module = importlib.import_module(f"waste_collection_schedule.source.{file}")
 
-    title = module.TITLE
-    url = module.URL
-    country = getattr(module, "COUNTRY", file.split("_")[-1])
+    # Read metadata from the Source class first, fall back to module level.
+    # New-style (BaseSource) sources keep their metadata on the class; legacy
+    # sources expose it at module level. Both are documented the same way so
+    # converted sources still appear in the README, sources.json and the
+    # generated source_owners.json codeowners mapping.
+    source_cls = module.Source
 
-    sig = inspect.signature(module.Source.__init__)
+    title = getattr(source_cls, "TITLE", None) or getattr(module, "TITLE", None)
+    url = getattr(source_cls, "URL", None) or getattr(module, "URL", None) or ""
+    country = (
+        getattr(source_cls, "COUNTRY", None)
+        or getattr(module, "COUNTRY", None)
+        or file.split("_")[-1]
+    )
+
+    sig = inspect.signature(source_cls.__init__)
     params = [param.name for param in sig.parameters.values()]
     if "self" in params:
         params.remove("self")
-    param_translations = getattr(module, "PARAM_TRANSLATIONS", {})
-    param_descriptions = getattr(module, "PARAM_DESCRIPTIONS", {})
-    howto = getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
-    source_owners = getattr(module, "SOURCE_CODEOWNERS", [])
+    param_translations = getattr(source_cls, "PARAM_TRANSLATIONS", None) or getattr(
+        module, "PARAM_TRANSLATIONS", {}
+    )
+    param_descriptions = getattr(source_cls, "PARAM_DESCRIPTIONS", None) or getattr(
+        module, "PARAM_DESCRIPTIONS", {}
+    )
+    howto = (
+        getattr(source_cls, "HOWTO", None)
+        or getattr(source_cls, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", None)
+        or getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
+    )
+    # New-style sources carry codeowners on the class (CODEOWNERS); legacy
+    # sources use the module-level SOURCE_CODEOWNERS. Read class first.
+    source_owners = getattr(source_cls, "CODEOWNERS", None) or getattr(
+        module, "SOURCE_CODEOWNERS", []
+    )
 
     filename = f"/doc/source/{file}.md"
     sources = []
@@ -503,8 +526,8 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
             SourceInfo(
                 filename=filename,
                 module=file,
-                title=e.get("title", title),
-                url=e.get("url", url),
+                title=e.get("title", title) or "",
+                url=e.get("url", url) or "",
                 country=e.get("country", country),
                 params=params,
                 custom_param_translation=param_translations,

@@ -1,98 +1,46 @@
-from datetime import datetime
-from typing import List
-
-import requests
-from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
 )
 
-TITLE = "Reading Council"
-DESCRIPTION = "Source for reading.gov.uk services for Reading Council"
-URL = "https://reading.gov.uk"
-TEST_CASES = {
-    "known_uprn": {"uprn": "310027679"},
-    "known_uprn as number": {"uprn": 310027679},
-    "unknown_uprn_by_number": {"postcode": "RG31 5PN", "housenameornumber": "65"},
-    "unknown_uprn_by_number as number": {
-        "postcode": "RG31 5PN",
-        "housenameornumber": 65,
-    },
-}
-
-ICONS = {
-    "Rubbish": "mdi:trash-can",
-    "Recycling": "mdi:recycle",
-    "Food Waste": "mdi:food",
-    "Garden Waste": "mdi:tree",
-}
-
-COLLECTIONS = {
-    "Domestic Waste Collection Service": "Rubbish",
-    "Recycling Collection Service": "Recycling",
-    "Food Waste Collection Service": "Food Waste",
-    "Garden Waste Collection Service": "Garden Waste",
-}
-
-SEARCH_URLS = {
-    "UPRN": "https://api.reading.gov.uk/rbc/getaddresses",
-    "COLLECTION": "https://api.reading.gov.uk/api/collections",
-}
+# Demonstrates: JsonTransformer + a configured HttpGetRetriever
+# Notable: API embeds the UPRN in the URL path, so the retriever's URL is a
+# callable resolved against source.params. parsers.JsonParser("collections")
+# drills into the nested array.
 
 
-class Source:
-    def __init__(self, uprn=None, postcode=None, housenameornumber=None):
-        self._postcode = postcode
-        self._housenameornumber = str(housenameornumber)
-        self._uprn = uprn
-        if not any((uprn, postcode and housenameornumber)):
-            errors = []
-            if postcode:
-                errors.append("housenameornumber")
-            elif housenameornumber:
-                errors.append("postcode")
-            else:
-                errors = ["uprn", "postcode", "housenameornumber"]
-            raise SourceArgumentExceptionMultiple(
-                errors,
-                "Must provide either a UPRN or both the Postcode and House Name or Number",
-            )
+class Source(BaseSource):
+    TITLE = "Reading Council"
+    DESCRIPTION = "Source for reading.gov.uk services for Reading Council."
+    URL = "https://reading.gov.uk"
+    COUNTRY = "uk"
 
-    def fetch(self) -> List[Collection]:
-        if self._uprn is None:
-            self._uprn = self.get_uprn()
-        resp = requests.get(f"{SEARCH_URLS['COLLECTION']}/{self._uprn}")
-        return [self.parse_collection(col) for col in resp.json()["collections"]]
+    TEST_CASES = {
+        "known_uprn": {"uprn": "310027679"},
+        "known_uprn as number": {"uprn": 310027679},
+    }
 
-    def get_uprn(self) -> str:
-        resp = requests.get(f"{SEARCH_URLS['UPRN']}/{self._postcode}")
-        addresses = resp.json()["Addresses"]
-        if addresses is None:
-            raise SourceArgumentNotFound("postcode", self._postcode)
-        address = next(filter(self.filter_addresses, addresses), None)
-        if address is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "housenameornumber",
-                self._housenameornumber,
-                {self.extract_nameornum(a) for a in addresses},
-            )
-        return address["AccountSiteUprn"]
+    PARAMS = [uprn()]
 
-    def extract_nameornum(self, address) -> str:
-        nameornum, _ = address["SiteShortAddress"].split(
-            f", {address['SiteAddress2']}, "
-        )
-        return nameornum
+    retrieve = retrievers.HttpGetRetriever(
+        url=lambda uprn: f"https://api.reading.gov.uk/api/collections/{uprn}"
+    )
+    parse = parsers.JsonParser("collections")
 
-    def filter_addresses(self, address) -> bool:
-        nameornum = self.extract_nameornum(address)
-        return self._housenameornumber == nameornum
-
-    def parse_collection(self, col) -> Collection:
-        dt = datetime.strptime(col["date"], "%d/%m/%Y %H:%M:%S").date()
-        waste_type = COLLECTIONS[col["service"]]
-        icon = ICONS[waste_type]
-
-        return Collection(date=dt, t=waste_type, icon=icon)
+    transformer = JsonTransformer(
+        date_key="date",
+        type_key="service",
+        parse_date=date_parsers.for_format("%d/%m/%Y %H:%M:%S"),
+        type_value_map={
+            "Domestic Waste Collection Service": GENERAL_WASTE,
+            "Recycling Collection Service": RECYCLABLES,
+            "Food Waste Collection Service": FOOD_WASTE,
+            "Garden Waste Collection Service": GARDEN_WASTE,
+        },
+    )
