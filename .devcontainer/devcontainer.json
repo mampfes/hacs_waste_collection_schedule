@@ -16,6 +16,7 @@
 		"ghcr.io/devcontainers/features/ruby:1": {
 			"version": "latest"
 		},
+		// Claude Code CLI — comment out this line if you don't use Claude Code.
 		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
 	},
 	"postCreateCommand": "bash .devcontainer/setup.sh",
@@ -27,6 +28,7 @@
 				"github.vscode-pull-request-github",
 				"ryanluker.vscode-coverage-gutters",
 				"ms-python.vscode-pylance",
+				// Claude Code extension — comment out this line if you don't use Claude Code.
 				"anthropic.claude-code"
 			],
 			"settings": {
