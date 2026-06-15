@@ -13,19 +13,29 @@ URL = "https://data.toulouse-metropole.fr"
 COUNTRY = "fr"
 
 TEST_CASES = {
+    # Single-day OM (Lundi + Mardi) + bi-weekly CS (Mercredi semaine paire)
     "Colomiers - Avenue Henri Guillaumet": {
         "street_name": "Avenue Henri Guillaumet",
     },
+    # Multi-day OM "Le lundi, mercredi et vendredi" + single-day OM "Jeudi" + CS "Jeudi"
     "Toulouse - Rue de la Paix": {
         "street_name": "Rue de la Paix",
     },
-    # Confirmed in dataset: collecte sélective "semaine paire" (bi-weekly)
+    # Bi-weekly CS "Mercredi semaine paire" (even ISO weeks)
     "Chemin Vié (bi-weekly CS)": {
         "street_name": "Chemin Vié",
     },
-    # Confirmed in dataset: ordures ménagères "Vendredi"
+    # Single-day OM "Vendredi" + single-day OM "Lundi" + bi-weekly CS "Jeudi semaine impaire"
     "Route de Fonbeauzard": {
         "street_name": "Route de Fonbeauzard",
+    },
+    # 3-day multi-day OM "Le lundi, mercredi et vendredi" + CS "Jeudi"
+    "Toulouse - Rue Sainte-Thérèse": {
+        "street_name": "Rue Sainte-Thérèse",
+    },
+    # Daily OM "7 jours / 7" (every day of the week)
+    "Toulouse - Rue des Lois": {
+        "street_name": "Rue des Lois",
     },
 }
 
@@ -66,6 +76,8 @@ ICON_MAP = {
     "Déchets recyclables": Icons.RECYCLING,
 }
 
+SOURCE_CODEOWNERS = ["@fangedhex"]
+
 # ── Opendatasoft API v2.1 ──────────────────────────────────────────────────────
 _BASE = "https://data.toulouse-metropole.fr/api/explore/v2.1/catalog/datasets"
 _OM_DATASET = "dechets-collecte-des-ordures-menageres"
@@ -86,18 +98,24 @@ _DAY_MAP: dict[str, int] = {
 _WEEKS_AHEAD = 8
 
 
-def _parse_schedule(infobulle: str) -> tuple[int | None, str | None]:
+def _parse_schedule(infobulle: str) -> list[tuple[int, str | None]]:
     """
-    Parse the 'infobulle_pdi' field into (weekday, frequency).
+    Parse the 'infobulle_pdi' field into a list of (weekday, frequency).
 
     Examples:
-      "Vendredi"               -> (4, None)       every week
-      "Mercredi semaine paire" -> (2, "even")      even ISO weeks
-      "Lundi semaine impaire"  -> (0, "odd")       odd ISO weeks
+      "Vendredi"                        -> [(4, None)]
+      "Mercredi semaine paire"          -> [(2, "even")]
+      "Lundi semaine impaire"           -> [(0, "odd")]
+      "Le lundi et jeudi"               -> [(0, None), (3, None)]
+      "Le lundi, mercredi et vendredi"  -> [(0, None), (2, None), (4, None)]
+      "7 jours / 7"                     -> [(0, None), ..., (6, None)]
 
-    Returns (weekday_int, frequency) where frequency is None / "even" / "odd".
+    Returns list of (weekday_int, frequency) where frequency is None / "even" / "odd".
     """
     value = infobulle.lower().strip()
+
+    if "7 jours / 7" in value:
+        return [(d, None) for d in range(7)]
 
     frequency = None
     if "semaine paire" in value:
@@ -107,8 +125,11 @@ def _parse_schedule(infobulle: str) -> tuple[int | None, str | None]:
         frequency = "odd"
         value = value.replace("semaine impaire", "").strip()
 
-    weekday = _DAY_MAP.get(value)
-    return weekday, frequency
+    days: list[tuple[int, str | None]] = []
+    for day_name, day_num in _DAY_MAP.items():
+        if day_name in value:
+            days.append((day_num, frequency))
+    return days
 
 
 def _generate_dates(
@@ -178,20 +199,21 @@ class Source:
             if not infobulle or not flux:
                 continue
 
-            weekday, frequency = _parse_schedule(infobulle)
-            if weekday is None:
+            parsed_days = _parse_schedule(infobulle)
+            if not parsed_days:
                 _LOGGER.debug("Could not parse day from: %r", infobulle)
                 continue
-
-            key = (weekday, frequency)
-            if key in seen:
-                continue
-            seen.add(key)
 
             waste_type = _WASTE_TYPE_MAP.get(flux, flux)
             icon = ICON_MAP.get(waste_type, Icons.GENERAL_WASTE)
 
-            for date in _generate_dates(weekday, frequency):
-                entries.append(Collection(date=date, t=waste_type, icon=icon))
+            for weekday, frequency in parsed_days:
+                key = (weekday, frequency)
+                if key in seen:
+                    continue
+                seen.add(key)
+
+                for date in _generate_dates(weekday, frequency):
+                    entries.append(Collection(date=date, t=waste_type, icon=icon))
 
         return entries
