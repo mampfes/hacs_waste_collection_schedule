@@ -18,8 +18,8 @@ howto:
     - Verwenden Sie diesen angepassten Link als `url`-Parameter.
 test_cases:
   Abfuhrbezirk 1 wöchentlich:
-    url: "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-1_woechentlich.ics"
+    url: https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-1_woechentlich.ics
     version: 1
   Abfuhrbezirk 2 14-täglich:
-    url: "https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-2_14-taegig.ics"
+    url: https://www.schwalbach.de/city_data/assets/431/ical/{%Y}_Abfuhrbezirk-2_14-taegig.ics
     version: 1

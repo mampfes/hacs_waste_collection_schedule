@@ -11,4 +11,4 @@ howto:
     - Use this URL as the `url` parameter.
 test_cases:
   Hessenstrasse:
-    url: "https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/ics/hessenstrasse-382/feed.ics"
+    url: https://www.eaw-rheingau-taunus.de/abfallsammlung/abfuhrtermine/ics/hessenstrasse-382/feed.ics

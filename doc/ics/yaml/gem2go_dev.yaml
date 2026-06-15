@@ -32,4 +32,4 @@ howto:
     - Copy the full URL and use it as the `url` parameter.
 test_cases:
   Abfallverband OO:
-    url: "https://uwpio.gem2go.dev/ical/20151/280664/387228"
+    url: https://uwpio.gem2go.dev/ical/20151/280664/387228

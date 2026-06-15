@@ -13,4 +13,4 @@ howto:
     - Kopiere die URL und verwende sie als `url`-Parameter.
 test_cases:
   Bezirk 3:
-    url: "https://www.vue-waltrop.de/wp-content/uploads/2025/11/Bezirk-3.ics"
+    url: https://www.vue-waltrop.de/wp-content/uploads/2025/11/Bezirk-3.ics
