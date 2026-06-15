@@ -17,7 +17,7 @@ Rules:
 - Do not use unsupported translation language keys (only `en`, `de`, `it`, `fr`).
 - Use `Icons` enum in ICON_MAP.
 - Use lowercase COUNTRY allowlist value.
-- Run black/isort for changed Python files.
+- Run ruff (`ruff check --fix` + `ruff format`) for changed Python files.
 - If source files are touched, run `python -m pytest tests/test_source_components.py -q` before finalizing.
 
 Always output an Issue Triage Report containing label corrections, category, local work, draft comment, recommended action, and an execution plan with exact steps.
