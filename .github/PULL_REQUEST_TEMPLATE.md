@@ -12,7 +12,7 @@
 ## Checklist
 
 - [ ] `python -m pytest tests/test_source_components.py -q` passes
-- [ ] `python -m black` and `python -m isort --profile black` run on changed source files
+- [ ] `ruff check --fix` and `ruff format` run on changed source files
 - [ ] No generated files in diff (README.md, info.md, sources.json, translations/*.json — CI regenerates these post-merge)
 - [ ] `doc/source/<name>.md` created for new sources
 - [ ] TEST_CASES use real, publicly accessible addresses (not my own)
