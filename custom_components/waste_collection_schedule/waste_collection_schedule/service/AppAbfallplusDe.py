@@ -458,7 +458,7 @@ class AppAbfallplusDe:
         bezirk_id="",
         strasse_id=None,
         hnr_id=None,
-    ):
+    ) -> None:
         self._client = str(uuid.uuid4())
 
         self._app_id = app_id
