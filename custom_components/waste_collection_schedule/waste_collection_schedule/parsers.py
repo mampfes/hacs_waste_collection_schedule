@@ -37,13 +37,13 @@ if TYPE_CHECKING:
 else:
     Response = object
 
-T = TypeVar("T")
+T = TypeVar("T", covariant=True)
 
 
 class Parser(Protocol[T]):
     """A callable that converts an HTTP response into records of type T."""
 
-    def __call__(self, response: Response) -> T: ...
+    def __call__(self, response: Response) -> T: ...  # noqa: E704
 
 
 class JsonParser(Parser[Any]):

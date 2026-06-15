@@ -54,7 +54,7 @@ JsonArgs: TypeAlias = Callable[..., JsonType] | JsonType
 class RetrieverFunc(Protocol):
     """A callable that fetches a raw HTTP response for a source."""
 
-    def __call__(self, source: BaseSource) -> Response: ...
+    def __call__(self, source: BaseSource) -> Response: ...  # noqa: E704
 
     def _resolve(self, mapping: Callable[..., T] | T, source: BaseSource) -> T:
         """Resolve a constructor argument against the source's params.

@@ -24,7 +24,7 @@ SOURCES_EXCLUDE_TEST_CASE_CHECK = ["multiple"]
 
 
 def _uses_base_source_init(source_cls: type) -> bool:
-    """True for new-style sources relying on BaseSource.__init__(**kwargs).
+    """Return True for new-style sources relying on BaseSource.__init__(**kwargs).
 
     Such sources accept their constructor kwargs through the inherited base
     __init__, so the valid/mandatory parameter names come from PARAMS rather
@@ -37,7 +37,7 @@ def _uses_base_source_init(source_cls: type) -> bool:
     return (
         isinstance(source_cls, type)
         and issubclass(source_cls, BaseSource)
-        and source_cls.__init__ is BaseSource.__init__
+        and getattr(source_cls, "__init__", None) is BaseSource.__init__
     )
 
 

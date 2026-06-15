@@ -570,7 +570,7 @@ class TestRetrievers:
             )
 
     def test_configured_http_get_resolves_callable_url(self):
-        """HttpGetRetriever resolves callable args against source.params."""
+        """Resolve callable retriever args against source.params."""
         from waste_collection_schedule.retrievers import HttpGetRetriever
 
         source = MagicMock()

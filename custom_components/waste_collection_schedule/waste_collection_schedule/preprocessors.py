@@ -17,15 +17,15 @@ fetch() behaviour: a single dict becomes ``[dict]``, a falsy/None value becomes
 from collections.abc import Iterable, Mapping
 from typing import Any, Protocol, TypeVar
 
-InT = TypeVar("InT")
-OutT = TypeVar("OutT")
+InT = TypeVar("InT", contravariant=True)
+OutT = TypeVar("OutT", covariant=True)
 T = TypeVar("T")
 
 
 class Preprocessor(Protocol[InT, OutT]):
     """Normalise parsed output (InT) into an iterable of records (OutT)."""
 
-    def __call__(self, records: InT) -> Iterable[OutT]: ...
+    def __call__(self, records: InT) -> Iterable[OutT]: ...  # noqa: E704
 
 
 class IdentityPreprocessor(Preprocessor[Iterable[T], T]):
