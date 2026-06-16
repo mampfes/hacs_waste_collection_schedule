@@ -1,10 +1,13 @@
+import logging
 from datetime import date, datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
-TITLE = "Wieliczka Kiedy Odpady"
+_LOGGER = logging.getLogger(__name__)
+
+TITLE = "Wieliczka Kiedy Odpady (Deprecated)"
 DESCRIPTION = "Source for Wieliczka Kiedy Odpady schedules."
 URL = "https://wieliczka.kiedyodpady.pl"
 COUNTRY = "pl"
@@ -73,6 +76,10 @@ class Source:
         street: str | None = None,
         number: str | None = None,
     ):
+        _LOGGER.warning(
+            "The 'wieliczka_kiedyodpady_pl' source is deprecated; "
+            "please use the 'kiedyodpady_pl' source instead."
+        )
         self._city = city
         self._street = street.strip() if isinstance(street, str) else None
         self._number = number.strip() if isinstance(number, str) else None
