@@ -139,6 +139,7 @@ SUPPORTED_SERVICES = {
     ],
     "de.k4systems.abfallinfocw": ["Kreis Calw"],
     "de.k4systems.abfallinfoapp": [
+        "Kreis Euskirchen",
         "Bad Münstereifel",
         "Dahlem",
         "Hellenthal",
