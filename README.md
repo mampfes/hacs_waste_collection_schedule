@@ -908,6 +908,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [Dětmarovice (part Glembovec)](/doc/ics/detmarovice_glembovec_cz.md) / detmarovice.cz
 - [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
+- [Lysá nad Labem](/doc/ics/zhleatherworks_cz.md) / zhleatherworks.cz/waste_calendar
 - [Lázně Bohdaneč](/doc/source/laznebohdanec_cz.md) / lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523
 - [OZO Ostrava](/doc/source/ozoostrava_cz.md) / ozoostrava.cz
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi

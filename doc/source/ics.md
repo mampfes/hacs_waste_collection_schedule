@@ -233,6 +233,7 @@ This source has been successfully tested with the following service providers:
 
 - [Dětmarovice (part Glembovec)](/doc/ics/detmarovice_glembovec_cz.md) / detmarovice.cz
 - [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
+- [Lysá nad Labem](/doc/ics/zhleatherworks_cz.md) / zhleatherworks.cz/waste_calendar
 
 ### Denmark
 

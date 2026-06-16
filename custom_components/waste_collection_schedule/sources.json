@@ -5423,6 +5423,12 @@
       "id": "ics_svoz_litovle_cz"
     },
     {
+      "title": "Lys\u00e1 nad Labem",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_zhleatherworks_cz"
+    },
+    {
       "title": "L\u00e1zn\u011b Bohdane\u010d",
       "module": "laznebohdanec_cz",
       "default_params": {},

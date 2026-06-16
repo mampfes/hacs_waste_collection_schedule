@@ -1270,6 +1270,13 @@
     },
     "urls": {}
   },
+  "ics_zhleatherworks_cz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/zhleatherworks_cz.md",
+    "howto": {
+      "en": "- Open <https://www.zhleatherworks.cz/waste_calendar/> and use the \"Filtr Lokace\" field to get the location.\n- Click on \"Zkopírovat URL ICS souboru do schránky\". The ICS calendar URL will be copied.\n- Use the URL from the clipboard as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
   "laznebohdanec_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/laznebohdanec_cz.md",
     "howto": {
