@@ -203,6 +203,13 @@ TEST_CASES = {
         "house_number": "1",
         "additional_sides_matcher": "Zabudowa jednorodzinna",
     },
+    "Wodzisław Śląski, Mszańska 16 (community 23)": {
+        "town": "Wodzisław Śląski",
+        "district": "Wodzisław Śląski",
+        "community": "23",
+        "street": "Mszańska",
+        "house_number": "16",
+    },
 }
 
 
