@@ -9,4 +9,4 @@ howto:
     - Use this URL as the `url` parameter.
 test_cases:
   Blomberg:
-    url: "https://abfall-lippe.de/wp-content/uploads/2024/12/Blomberg-2025.ics"
+    url: https://abfall-lippe.de/wp-content/uploads/2024/12/Blomberg-2025.ics

@@ -9,4 +9,4 @@ howto:
     - Use this URL as the `url` parameter.
 test_cases:
   Bergheim:
-    url: "https://swbm.de/wp-content/uploads/2024/10/Bergheim.ics"
+    url: https://swbm.de/wp-content/uploads/2024/10/Bergheim.ics

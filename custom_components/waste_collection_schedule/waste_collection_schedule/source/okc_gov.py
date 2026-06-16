@@ -19,6 +19,10 @@ TEST_CASES = {
         "recycleObjectID": 1215,
         "recycle_reference_date": "2026-06-15",
     },
+    "Recycle Fri every other week (anchored, live zone)": {
+        "recycleObjectID": 1366,
+        "recycle_reference_date": "2026-06-19",
+    },
     "Trash only": {
         "trashObjectID": 2,
     },

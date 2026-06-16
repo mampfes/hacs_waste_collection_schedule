@@ -8,6 +8,7 @@ from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup, Tag
+
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -457,7 +458,7 @@ class AppAbfallplusDe:
         bezirk_id="",
         strasse_id=None,
         hnr_id=None,
-    ):
+    ) -> None:
         self._client = str(uuid.uuid4())
 
         self._app_id = app_id

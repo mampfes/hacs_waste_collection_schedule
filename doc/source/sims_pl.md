@@ -82,7 +82,7 @@ waste_collection_schedule:
         street_address: "23"
 ```
 
-usgin town_address
+using town_address
 
 ```yaml
 waste_collection_schedule:

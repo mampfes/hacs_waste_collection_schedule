@@ -40,7 +40,7 @@ PARAM_DESCRIPTIONS = {
     "en": {
         "uprn": "Use your UPRN if you know it.",
         "address": (
-            "Full Enfield address, for example " "'127 Palmerston Rd, London N22 8QX'."
+            "Full Enfield address, for example '127 Palmerston Rd, London N22 8QX'."
         ),
     }
 }

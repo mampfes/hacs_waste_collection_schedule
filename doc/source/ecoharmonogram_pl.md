@@ -89,8 +89,9 @@ The `community` argument is a numeric ID that can be found in the plugin URL of 
 
 | Community ID | Town |
 | ------------ | ---- |
-| 108 | Gdańsk |
+| 23 | Wodzisław Śląski |
 | 60 | Rzeszów |
+| 108 | Gdańsk |
 
 ## Keep in mind
 

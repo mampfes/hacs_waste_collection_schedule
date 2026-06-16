@@ -89,7 +89,9 @@ class Source:
                     argument=(
                         "name"
                         if self._name
-                        else "number" if self._number else "post_code"
+                        else "number"
+                        if self._number
+                        else "post_code"
                     ),
                     value=self._name or self._number or self._post_code,
                     suggestions=[

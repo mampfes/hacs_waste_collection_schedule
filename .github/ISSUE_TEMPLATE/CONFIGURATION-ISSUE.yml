@@ -1,7 +1,8 @@
+---
 name: Configuration Issue
 description: Sensors showing "unknown", incorrect values, or setup problems
-title: "[Config]: "
-labels: ["configuration issue"]
+title: '[Config]: '
+labels: [configuration issue]
 body:
   - type: markdown
     attributes:
@@ -45,7 +46,7 @@ body:
     id: calendar-check
     attributes:
       label: Calendar Tab Check
-      description: "Do events appear in the Home Assistant Calendar tab? If yes, what are the exact event names shown?"
+      description: Do events appear in the Home Assistant Calendar tab? If yes, what are the exact event names shown?
     validations:
       required: true
   - type: textarea

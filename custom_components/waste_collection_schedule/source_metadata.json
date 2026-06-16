@@ -542,6 +542,13 @@
     "howto": {},
     "urls": {}
   },
+  "nwrrr_com_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nwrrr_com_au.md",
+    "howto": {
+      "en": "Visit https://www.nwrrr.com.au/map, click 'Select Location', then choose your council and region from the list. Use the displayed council name as 'municipality' and the region name as 'region'."
+    },
+    "urls": {}
+  },
   "northernbeaches_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/northernbeaches_nsw_gov_au.md",
     "howto": {
@@ -942,6 +949,11 @@
     },
     "urls": {}
   },
+  "piberbach_ooe_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/piberbach_ooe_gv_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "rohrbach_lafnitz_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rohrbach_lafnitz_at.md",
     "howto": {},
@@ -1258,6 +1270,13 @@
     },
     "urls": {}
   },
+  "ics_zhleatherworks_cz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/zhleatherworks_cz.md",
+    "howto": {
+      "en": "- Open <https://www.zhleatherworks.cz/waste_calendar/> and use the \"Filtr Lokace\" field to get the location.\n- Click on \"Zkopírovat URL ICS souboru do schránky\". The ICS calendar URL will be copied.\n- Use the URL from the clipboard as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
   "laznebohdanec_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/laznebohdanec_cz.md",
     "howto": {
@@ -1442,6 +1461,11 @@
       "url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html": "https://sictom-lons-le-saunier.fr/quand-passe-le-camion-benne.html."
     }
   },
+  "sictomvds_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sictomvds_com.md",
+    "howto": {},
+    "urls": {}
+  },
   "sivom_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_com.md",
     "howto": {
@@ -1453,6 +1477,14 @@
   "sivom_rivedroite_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
     "howto": {},
+    "urls": {}
+  },
+  "toulouse_metropole_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/toulouse_metropole_fr.md",
+    "howto": {
+      "en": "Enter your street name exactly as it appears on the Toulouse Métropole open data portal. You can look it up at: https://data.toulouse-metropole.fr/explore/dataset/dechets-collecte-des-ordures-menageres/table/",
+      "fr": "Saisissez le nom de votre voie tel qu'il apparaît sur le portail open data de Toulouse Métropole. Vous pouvez le retrouver ici : https://data.toulouse-metropole.fr/explore/dataset/dechets-collecte-des-ordures-menageres/table/"
+    },
     "urls": {}
   },
   "123abfallkalender_de": {
@@ -1624,11 +1656,9 @@
     "howto": {},
     "urls": {}
   },
-  "ics_kreis_ploen_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kreis_ploen_de.md",
-    "howto": {
-      "en": "- Go to <https://www.kreis-ploen.de/Bürgerservice/Termine-Müllabfuhr/> and select your location.\n- Select `Jahreskalender` as view\n- Choose the types of waste you need\n- Click on `Als Kalenderdatei (.ics) exportieren`.\n- Get link of download (firefox only?):\n  - select `Keine benachrichting` which should start the download\n  - save the file\n  - copy the download link (firefox download icon: right click(on the downloaded ics file) -> copy download link)\n- If the above does not work (could not find a way to do this with chromium based browsers):\n  - Open the developer tools (F12)\n  - Go to the network tab\n  - Select `Keine benachrichting` which should start the download\n  - Look for the request in the network tab\n  - copy the request url\n- Use this link as the `url` parameter.\n- Replace the year field in the url with `{%Y}`.\n"
-    },
+  "kreis_ploen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kreis_ploen_de.md",
+    "howto": {},
     "urls": {}
   },
   "aw_harburg_de": {
@@ -1735,11 +1765,9 @@
     "howto": {},
     "urls": {}
   },
-  "ics_ilm_kreis_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ilm_kreis_de.md",
-    "howto": {
-      "en": "- Go to <https://aik.ilm-kreis.de/Abfuhrtermine/> and select your municipality.  \n- Right-click on `Terminexport` and select `Inspect`.\n- You should see a HTML fragment like this:\n\n  ```html\n  <input class=\"\" style=\"width:50%;\" type=\"button\" title=\"Termine im Format ICS exportieren\" value=\"Terminexport\" data-href=\"/output/options.php?ModID=48&amp;call=ical&amp;&amp;pois=3053.8&amp;kat=1%2C\">\n  ```\n\n  The relevant information pieces are the 2 numbers behind `ModID` and `pois` at the end of the HTML fragment:\n\n  ```\n  ModID=48\n  pois=3053.8\n  ```\n\n- Replace the numbers behind `ModID` and `pois` in the example configuration with your values from the HTML fragment.\n"
-    },
+  "ilm_kreis_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ilm_kreis_de.md",
+    "howto": {},
     "urls": {}
   },
   "abki_de": {
@@ -2371,11 +2399,9 @@
     },
     "urls": {}
   },
-  "ics_gross_gerau_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gross_gerau_de.md",
-    "howto": {
-      "en": "- Go to <https://www.gross-gerau.de/B%C3%BCrger-Service-Online-Dienste/Ver-und-Entsorgung/Abfuhrtermine-PDF-Abfallkalender/index.php> and select your street.  \n- Click on `Als Kalenderdatei (.ics) herunterladen`, select no alarm. The ICS file will be doanloaded automatically, but one can grab the source URL. (inspecting the button (F12) reveals the URL (you need to add the prefix `https://www.gross-gerau.de`))\n- Use this link as the `url` parameter.\n"
-    },
+  "gross_gerau_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gross_gerau_de.md",
+    "howto": {},
     "urls": {}
   },
   "kwb_goslar_de": {
@@ -2458,11 +2484,9 @@
     "howto": {},
     "urls": {}
   },
-  "ics_ab_peine_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ab_peine_de.md",
-    "howto": {
-      "en": "- Go to <https://www.ab-peine.de/Abfuhrtermine/> and select your address. You can leave `Ab Monat` and `Darstellung` as is.\n- For all bin types do not select any bin type checkbox\n- Copy the link of the `Kalender abonnieren` button\n- Use this link as the `url` parameter.\n"
-    },
+  "ab_peine_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ab_peine_de.md",
+    "howto": {},
     "urls": {}
   },
   "rv_de": {
@@ -2582,6 +2606,11 @@
     },
     "urls": {}
   },
+  "muehlenkreis_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muehlenkreis_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "neu_ulm_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/neu_ulm_de.md",
     "howto": {},
@@ -2609,8 +2638,8 @@
   "ostprignitz_ruppin_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ostprignitz_ruppin_de.md",
     "howto": {
-      "de": "Öffnen Sie https://www.ostprignitz-ruppin.de/Verwaltung/Dezernate/Dezernat-Bauen-Ordnung-und-Umwelt/Bau-und-Umweltamt/Abfallwirtschaft-M%C3%BCllentsorgung/.\nWählen Sie Ihren Ort aus.\nWählen Sie Ihre Straße aus.\nVerwenden Sie den Ortsnamen als Parameter `location`.\nVerwenden Sie den Straßennamen als Parameter `street`.",
-      "en": "Go to https://www.ostprignitz-ruppin.de/Verwaltung/Dezernate/Dezernat-Bauen-Ordnung-und-Umwelt/Bau-und-Umweltamt/Abfallwirtschaft-M%C3%BCllentsorgung/.\nSelect your municipality (Ort).\nSelect your street (Straße).\nUse the municipality name as the `location` parameter.\nUse the street name as the `street` parameter."
+      "de": "Geben Sie Ihre Straße als `strasse` ein. Kommt der Straßenname in mehreren Orten vor, geben Sie zusätzlich den Ort als `ort` an.",
+      "en": "Enter your street as `strasse`. If the street name exists in several places, add the place name as `ort` to disambiguate."
     },
     "urls": {}
   },
@@ -2892,7 +2921,15 @@
   "ics_ebu_ulm_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ebu_ulm_de.md",
     "howto": {
-      "en": "- Go to <https://www.ebu-ulm.de/abfall/abfuhrtermine.php> and select your location.  \n- Scroll down and copy the link of the `ICS Kalenderdaten für Outlook / iCal...` button.\n- Use this link as the `url` parameter.\n- Replcae the year with `{%Y}` to keep the link valid for following years.\n"
+      "en": "- Go to <https://www.ebu-ulm.de/abfall/abfuhrtermine.php> and select your location.\n- Scroll down and copy the link of the `ICS Kalenderdaten für Outlook / iCal...` button.\n- Use this link as the `url` parameter.\n- Replace the year with `{%Y}` to keep the link valid for following years.\n"
+    },
+    "urls": {}
+  },
+  "vevg_karlsburg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vevg_karlsburg_de.md",
+    "howto": {
+      "de": "\n1. Öffnen Sie den VEVG Online-Abfallkalender:\n   - OVP (Anklam/Wolgast/Greifswald-Land): https://vevg-karlsburg.de/online-abfallkalender-ovp.html\n   - JTPL (Jarmen/Tutow/Peenetal-Loitz): https://vevg-karlsburg.de/online-abfallkalender-jtpl.html\n   - UHGW (Straßen der Stadt Greifswald): https://vevg-karlsburg.de/online-abfallkalender-uhgw.html\n   - UER (Uecker-Randow): https://vevg-karlsburg.de/online-abfallkalender-uer.html\n2. Wählen Sie Ihren Ort aus der Liste und klicken Sie auf \"Auswählen\".\n3. Die Werte für `ort` und `kreis` stehen in der URL als `key={ort}#{name}#{kreis}#`.\n   - Beispiel: Wusterhusen hat `key=722#Wusterhusen#G#`, also `ort=722` und `kreis=\"G\"`.\n4. Bei Orten mit \"lesen\" (straßengenaue Abfrage): zuerst die Straße auswählen, dann ort/kreis aus der URL ablesen.\n",
+      "en": "\n1. Go to the VEVG online calendar:\n   - OVP (Anklam/Wolgast/Greifswald-Land): https://vevg-karlsburg.de/online-abfallkalender-ovp.html\n   - JTPL (Jarmen/Tutow/Peenetal-Loitz): https://vevg-karlsburg.de/online-abfallkalender-jtpl.html\n   - UHGW (Stadt Greifswald streets): https://vevg-karlsburg.de/online-abfallkalender-uhgw.html\n   - UER (Uecker-Randow): https://vevg-karlsburg.de/online-abfallkalender-uer.html\n2. Select your location from the dropdown and click \"Auswählen\".\n3. The `ort` and `kreis` values appear in the page URL as `key={ort}#{name}#{kreis}#`.\n   - Example: Wusterhusen shows `key=722#Wusterhusen#G#`, so `ort=722` and `kreis=\"G\"`.\n4. For locations marked with \"lesen\" (street-level lookup): select your street first, then read ort/kreis from the resulting URL.\n"
     },
     "urls": {}
   },
@@ -3588,6 +3625,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ichisystem_eu.md",
     "howto": {
       "en": "Open https://harmonogram.ichisystem.eu/hemar/ and pick your city, street, and house number from the dropdowns. Use those exact values for the city, street, and house_number arguments (matching is case-insensitive)."
+    },
+    "urls": {}
+  },
+  "kiedyodpady_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedyodpady_pl.md",
+    "howto": {
+      "en": "Open https://{municipality}.kiedyodpady.pl (e.g. https://pabianice.kiedyodpady.pl) and step through the address selection. The municipality value is the subdomain prefix (everything before '.kiedyodpady.pl'). Copy the city, street, and house-number values exactly as displayed in the dropdown lists."
     },
     "urls": {}
   },

@@ -74,7 +74,7 @@ DEFAULT_WEEKS_AHEAD = 12
 _LOGGER = logging.getLogger(__name__)
 REQUEST_HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) " "Gecko/20100101 Firefox/128.0"
+        "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0"
     )
 }
 WEEKDAYS = {
@@ -400,7 +400,7 @@ class Source:
                     "layers": "none",
                     "styles": "",
                     "srs": "EPSG:27700",
-                    "bbox": f"{x-buffer_size},{y-buffer_size},{x+buffer_size},{y+buffer_size}",
+                    "bbox": f"{x - buffer_size},{y - buffer_size},{x + buffer_size},{y + buffer_size}",
                     "width": 101,
                     "height": 101,
                     "query_layers": layer_id,

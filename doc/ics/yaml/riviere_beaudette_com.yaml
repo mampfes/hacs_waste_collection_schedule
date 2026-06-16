@@ -17,5 +17,5 @@ howto:
     - Utilisez le paramètre `regex` pour extraire les types de collecte.
 test_cases:
   Rivière-Beaudette:
-    url: "https://riviere-beaudette.com/wp-content/uploads/{%Y}/01/CollectesRB{%Y}V2.ics"
-    regex: '\s*Collecte (?:de la |du |des |de |la )?(.+?)\s*$'
+    url: https://riviere-beaudette.com/wp-content/uploads/{%Y}/01/CollectesRB{%Y}V2.ics
+    regex: \s*Collecte (?:de la |du |des |de |la )?(.+?)\s*$

@@ -1002,6 +1002,12 @@
       "id": "nawma_sa_gov_au"
     },
     {
+      "title": "North West Resource Recovery and Recycling",
+      "module": "nwrrr_com_au",
+      "default_params": {},
+      "id": "nwrrr_com_au"
+    },
+    {
       "title": "Northern Areas Council",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -3438,6 +3444,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Piberbach",
+      "module": "piberbach_ooe_gv_at",
+      "default_params": {},
+      "id": "piberbach_ooe_gv_at"
+    },
+    {
       "title": "Pichl bei Wels",
       "module": "ics",
       "default_params": {},
@@ -5411,6 +5423,12 @@
       "id": "ics_svoz_litovle_cz"
     },
     {
+      "title": "Lys\u00e1 nad Labem",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_zhleatherworks_cz"
+    },
+    {
       "title": "L\u00e1zn\u011b Bohdane\u010d",
       "module": "laznebohdanec_cz",
       "default_params": {},
@@ -6286,6 +6304,12 @@
       "id": "sictom_lons_le_saunier_fr"
     },
     {
+      "title": "SICTOM du Val de Sa\u00f4ne",
+      "module": "sictomvds_com",
+      "default_params": {},
+      "id": "sictomvds_com"
+    },
+    {
       "title": "SIVOM de la Vall\u00e9e de l'Yerres et des S\u00e9narts",
       "module": "sivom_com",
       "default_params": {},
@@ -6328,6 +6352,12 @@
         "city": "Talence"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Toulouse M\u00e9tropole",
+      "module": "toulouse_metropole_fr",
+      "default_params": {},
+      "id": "toulouse_metropole_fr"
     },
     {
       "title": "Tours M\u00e9tropole",
@@ -6642,9 +6672,9 @@
     },
     {
       "title": "Abfallwirtschaft Kreis Pl\u00f6n",
-      "module": "ics",
+      "module": "kreis_ploen_de",
       "default_params": {},
-      "id": "ics_kreis_ploen_de"
+      "id": "kreis_ploen_de"
     },
     {
       "title": "Abfallwirtschaft Lahn-Dill-Kreises",
@@ -6842,13 +6872,9 @@
     },
     {
       "title": "Abfallwirtschaftsbetrieb Ilm-Kreis",
-      "module": "ics",
-      "default_params": {
-        "headers": {
-          "referer": "https://aik.ilm-kreis.de"
-        }
-      },
-      "id": "ics_ilm_kreis_de"
+      "module": "ilm_kreis_de",
+      "default_params": {},
+      "id": "ilm_kreis_de"
     },
     {
       "title": "Abfallwirtschaftsbetrieb Kiel (ABK)",
@@ -10434,9 +10460,9 @@
     },
     {
       "title": "Kreisstadt Gro\u00df-Gerau",
-      "module": "ics",
+      "module": "gross_gerau_de",
       "default_params": {},
-      "id": "ics_gross_gerau_de"
+      "id": "gross_gerau_de"
     },
     {
       "title": "Kreisstadt St. Wendel",
@@ -10949,9 +10975,9 @@
     },
     {
       "title": "Landkreis Peine",
-      "module": "ics",
+      "module": "ab_peine_de",
       "default_params": {},
-      "id": "ics_ab_peine_de"
+      "id": "ab_peine_de"
     },
     {
       "title": "Landkreis Ravensburg",
@@ -11678,6 +11704,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_moerfelden_walldorf_de"
+    },
+    {
+      "title": "M\u00fchlenkreis Minden-L\u00fcbbecke",
+      "module": "muehlenkreis_de",
+      "default_params": {},
+      "id": "muehlenkreis_de"
     },
     {
       "title": "M\u00fchlheim am Main (MyMuell App)",
@@ -13437,6 +13469,12 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "VEVG Vorpommern-Greifswald",
+      "module": "vevg_karlsburg_de",
+      "default_params": {},
+      "id": "vevg_karlsburg_de"
     },
     {
       "title": "VIVO Landkreis Miesbach",
@@ -18256,6 +18294,12 @@
       "id": "ichisystem_eu"
     },
     {
+      "title": "Kiedy Odpady (kiedyodpady.pl)",
+      "module": "kiedyodpady_pl",
+      "default_params": {},
+      "id": "kiedyodpady_pl"
+    },
+    {
       "title": "Kiedy \u015bmieci",
       "module": "kiedysmieci_info",
       "default_params": {},
@@ -18380,6 +18424,14 @@
       "id": "mpo_krakow_pl"
     },
     {
+      "title": "Pabianice",
+      "module": "kiedyodpady_pl",
+      "default_params": {
+        "municipality": "pabianice"
+      },
+      "id": "kiedyodpady_pl"
+    },
+    {
       "title": "Parafia \u015bw. Wojciecha Biskupa i M\u0119czennika w Nidzicy",
       "module": "sims_pl",
       "default_params": {
@@ -18472,7 +18524,15 @@
       "id": "warszawa19115_pl"
     },
     {
-      "title": "Wieliczka Kiedy Odpady",
+      "title": "Wieliczka",
+      "module": "kiedyodpady_pl",
+      "default_params": {
+        "municipality": "wieliczka"
+      },
+      "id": "kiedyodpady_pl"
+    },
+    {
+      "title": "Wieliczka Kiedy Odpady (Deprecated)",
       "module": "wieliczka_kiedyodpady_pl",
       "default_params": {},
       "id": "wieliczka_kiedyodpady_pl"

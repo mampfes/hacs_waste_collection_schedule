@@ -45,20 +45,19 @@ def fetch_streets() -> dict[str, str]:
     response = requests.post(API_URL, data={"token": TOKEN})
     response.raise_for_status()
     data = response.json()
-    if data != "error":
+    if isinstance(data, list):
         # Build a dictionary {StreetName: StreetID} excluding bad entries
-        if isinstance(data, list):  # Ensure data is a list
-            streets: dict[str, str] = {}
-            for item in data:
-                name = item["name"].strip().title()
-                street_id = item["id"]
-                if street_id != 0 and name != "-Brak-":
-                    # If the name is already in the dictionary, keep the smallest ID
-                    if name not in streets or street_id < streets[name]:
-                        streets[name] = street_id
-            return streets
+        streets: dict[str, str] = {}
+        for item in data:
+            name = item["name"].strip().title()
+            street_id = item["id"]
+            if street_id != "0" and name != "-Brak-":
+                # If the name is already in the dictionary, keep the smallest ID
+                if name not in streets or int(street_id) < int(streets[name]):
+                    streets[name] = street_id
+        return streets
     _LOGGER.error(
-        "API returned 'error' while fetching the street list. Possibly invalid token or server issue."
+        "API returned an unexpected response while fetching the street list. Possibly invalid token or server issue."
     )
     raise Exception("Could not fetch streets from the API.")
 
@@ -84,7 +83,7 @@ def fetch_numbers(street_name: str) -> dict[str, str]:
     response.raise_for_status()
     data = response.json()
 
-    if data != "error":
+    if isinstance(data, list):
         return {
             item["name"].strip().upper(): item["id"]
             for item in data
@@ -92,7 +91,7 @@ def fetch_numbers(street_name: str) -> dict[str, str]:
         }
 
     _LOGGER.error(
-        "API returned 'error' while fetching building numbers for street '%s'.",
+        "API returned an unexpected response while fetching building numbers for street '%s'.",
         street_name,
     )
     raise Exception(
@@ -160,7 +159,8 @@ def extract_schedule(text: str) -> list[dict]:
     current_year = extract_year(text)
 
     # Pattern to capture a date line + types of waste until the next date line
-    schedule_pattern = r"(\w+\n\d+\s\w+)\n([\w\s]+?)(?=\n\w+\n\d+\s\w+|$)"
+    # The character class includes hyphens to handle waste types like "Beczka - odpady kuchenne"
+    schedule_pattern = r"(\w+\n\d+\s\w+)\n([\w\s\-]+?)(?=\n\w+\n\d+\s\w+|$)"
     matches = re.findall(schedule_pattern, text)
     if not matches:
         _LOGGER.error(

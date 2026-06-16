@@ -15,7 +15,7 @@ howto:
     - Utilisez cette URL comme paramètre `url`.
 
 test_cases:
-  "Secteur A (English)":
+  Secteur A (English):
     url: https://brossard.ca/app/uploads/2026/01/bciti-collections-BROSSARD-66c692504abe45198c3041f1-2025-09-12-2025-en-A-B-E-Sectors.ics
-  "Secteur A (Français)":
+  Secteur A (Français):
     url: https://brossard.ca/app/uploads/2025/12/bciti-collections-BROSSARD-66c692504abe45198c3041f1-2025-05-12-2025-fr-Secteurs-A-B-E.ics

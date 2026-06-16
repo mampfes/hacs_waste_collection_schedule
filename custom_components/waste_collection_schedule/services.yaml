@@ -1,3 +1,4 @@
+---
 fetch_data:
   name: Fetch data from all sources.
   description: Fetch data from all sources.

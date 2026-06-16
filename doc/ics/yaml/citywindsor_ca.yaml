@@ -9,4 +9,4 @@ howto:
     - Use this URL as the `url` parameter.
 test_cases:
   Location 4A:
-    url: "https://opendata.citywindsor.ca/api/events/wasteCollection/ical/?location=4A"
+    url: https://opendata.citywindsor.ca/api/events/wasteCollection/ical/?location=4A

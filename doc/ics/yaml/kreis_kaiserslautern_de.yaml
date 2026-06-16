@@ -16,5 +16,4 @@ howto:
     - Replace the year in the url with `{%Y}`.
 test_cases:
   Ramstein:
-    url: 
-      https://abfallapp.softwareentwicklung-roth.de/{%Y}/KL/Ramstein/Rathausring/ics/de?abfallart_Restmuell=on&abfallart_GelberSack=on&abfallart_Biomuell=on&abfallart_Papier=on
+    url: https://abfallapp.softwareentwicklung-roth.de/{%Y}/KL/Ramstein/Rathausring/ics/de?abfallart_Restmuell=on&abfallart_GelberSack=on&abfallart_Biomuell=on&abfallart_Papier=on

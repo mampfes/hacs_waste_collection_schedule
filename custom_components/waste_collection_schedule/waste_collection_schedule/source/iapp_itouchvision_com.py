@@ -245,7 +245,7 @@ EXTRA_INFO = [
 class Source:
     def __init__(self, uprn: str | int, municipality: MUNICIPALITY_LITERALS):
         self._uprn: str | int = uprn
-        if not municipality.upper() in MUNICIPALITIES:
+        if municipality.upper() not in MUNICIPALITIES:
             raise ValueError(f"Unknown municipality: {municipality}")
         self._payload = MUNICIPALITIES[municipality.upper()]["PAYLOAD"]
         self._api_url = MUNICIPALITIES[municipality.upper()]["API_URL"]

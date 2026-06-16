@@ -121,13 +121,29 @@ waste_collection_schedule:
 
 | Parameter | Type | Requirement | Description |
 |-----|-----|-----|-----|
-| type | string | required | The identity of the waste type as returned from the source  |
+| type | string | required | The identity of the waste type as returned from the source. May contain an [fnmatch](https://docs.python.org/3/library/fnmatch.html) wildcard (`*`, `?`, `[...]`) to match a family of waste types with a single entry, e.g. `Sonderabfall *`. See the note below. |
 | alias | string | optional | A more readable, or user-friendly, name for the type of waste being collected. Default is `None` |
 | show | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
 | icon | string | optional | Icon to use for this specific waste type. Any [Material Design Icon](https://pictogrammers.com/library/mdi/) name in the form `mdi:icon-name` is accepted (e.g. `mdi:bottle-soda`). When omitted, the source's default icon is used — defaults follow the canonical [`Icons`](../custom_components/waste_collection_schedule/waste_collection_schedule/icons.py) catalogue so the same logical category looks consistent across sources. Set this to override the default for any single waste type. |
 | picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
 | use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
 | dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
+
+### Wildcard type matching
+
+The `type` key may be an [fnmatch](https://docs.python.org/3/library/fnmatch.html) glob pattern, so a single `customize` entry can cover a family of waste types. For example, to hide every waste type starting with `Sonderabfall`:
+
+```yaml
+customize:
+  - type: Sonderabfall *
+    show: false
+```
+
+Matching rules:
+
+- An exact `type` match always takes precedence over a wildcard pattern, so you can override a single type while a pattern covers the rest.
+- Patterns are matched case-sensitively against the type returned by the source (after whitespace is stripped). A key counts as a pattern only if it contains `*`, `?`, or `[...]`.
+- Wildcards apply to `alias`, `show`, `icon`, and `picture`. They do **not** apply to `use_dedicated_calendar`: a dedicated calendar still requires an exact `type`, because one pattern can match several types.
 
 ## Configuring Sensor(s)
 

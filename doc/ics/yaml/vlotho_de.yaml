@@ -15,13 +15,13 @@ howto:
     - Verwenden Sie diesen Wert als `strasse`-Parameter.
 test_cases:
   Burgstraße:
-    url: "https://www.vlotho.de/output/abfall_export.php"
+    url: https://www.vlotho.de/output/abfall_export.php
     params:
-      csv_export: "1"
-      mode: "vcal"
-      ort: "393.8"
-      strasse: "3136.93.1"
-      vtyp: "1"
-      vMo: "01"
-      bMo: "12"
-    year_field: "vJ"
+      csv_export: '1'
+      mode: vcal
+      ort: '393.8'
+      strasse: 3136.93.1
+      vtyp: '1'
+      vMo: '01'
+      bMo: '12'
+    year_field: vJ

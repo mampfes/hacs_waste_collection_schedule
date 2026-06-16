@@ -189,6 +189,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Naracoorte Lucindale Council](/doc/source/app_my_local_services_au.md) / naracoortelucindale.sa.gov.au
 - [Nillumbik Shire Council](/doc/source/nillumbik_vic_gov_au.md) / nillumbik.vic.gov.au
 - [North Adelaide Waste Management Authority](/doc/source/nawma_sa_gov_au.md) / nawma.sa.gov.au
+- [North West Resource Recovery and Recycling](/doc/source/nwrrr_com_au.md) / nwrrr.com.au
 - [Northern Areas Council](/doc/source/app_my_local_services_au.md) / nacouncil.sa.gov.au/page.aspx
 - [Northern Beaches Council (NSW)](/doc/source/northernbeaches_nsw_gov_au.md) / northernbeaches.nsw.gov.au
 - [Orange City Council](/doc/source/orange_nsw_gov_au.md) / orange.nsw.gov.au
@@ -590,6 +591,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Pernegg im Waldviertel](/doc/source/citiesapps_com.md) / pernegg.info
 - [Perschling](/doc/source/citiesapps_com.md) / perschling.at
 - [Pfarrwerfen](/doc/source/citiesapps_com.md) / gemeinde.pfarrwerfen.at
+- [Piberbach](/doc/source/piberbach_ooe_gv_at.md) / piberbach.ooe.gv.at
 - [Pichl bei Wels](/doc/ics/gem2go_dev.md) / uwpio.gem2go.dev
 - [Pilgersdorf](/doc/source/citiesapps_com.md) / pilgersdorf.at
 - [Pinggau](/doc/source/citiesapps_com.md) / pinggau.gv.at
@@ -906,6 +908,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [Dětmarovice (part Glembovec)](/doc/ics/detmarovice_glembovec_cz.md) / detmarovice.cz
 - [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
+- [Lysá nad Labem](/doc/ics/zhleatherworks_cz.md) / zhleatherworks.cz/waste_calendar
 - [Lázně Bohdaneč](/doc/source/laznebohdanec_cz.md) / lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523
 - [OZO Ostrava](/doc/source/ozoostrava_cz.md) / ozoostrava.cz
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
@@ -1037,12 +1040,14 @@ If you already have enough information for your municipality/region, you are ver
 - [Saumur Val de Loire](/doc/source/publidata_fr.md) / saumurvaldeloire.fr
 - [Sausheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [SICTOM de Lons-le-Saunier](/doc/source/sictom_lons_le_saunier_fr.md) / sictom-lons-le-saunier.fr
+- [SICTOM du Val de Saône](/doc/source/sictomvds_com.md) / sictomvds.com
 - [SIVOM de la Vallée de l'Yerres et des Sénarts](/doc/source/sivom_com.md) / sivom.com
 - [SIVOM Rive Droite](/doc/source/publidata_fr.md) / sivom-rivedroite.fr
 - [Sivom Rive Droite - Bassens](/doc/source/sivom_rivedroite_fr.md) / sivom-rivedroite.fr
 - [Staffelfelden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Steinbrunn-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Talence](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Toulouse Métropole](/doc/source/toulouse_metropole_fr.md) / data.toulouse-metropole.fr
 - [Tours Métropole](/doc/source/publidata_fr.md) / tours-metropole.fr
 - [Ungersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Valcobreizh](/doc/source/publidata_fr.md) / dechets.valcobreizh.fr
@@ -1093,7 +1098,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfallwirtschaft-freiburg.de
 - [Abfallwirtschaft Germersheim](/doc/source/abfallwirtschaft_germersheim_de.md) / abfallwirtschaft-germersheim.de
 - [Abfallwirtschaft Isar-Inn](/doc/source/awido_de.md) / awv-isar-inn.de
-- [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / kreis-ploen.de
+- [Abfallwirtschaft Kreis Plön](/doc/source/kreis_ploen_de.md) / kreis-ploen.de
 - [Abfallwirtschaft Lahn-Dill-Kreises](/doc/source/awido_de.md) / awld.de
 - [Abfallwirtschaft Landkreis Böblingen](/doc/ics/abfall_io_ics.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Freudenstadt](/doc/source/abfall_io.md) / awb-fds.de
@@ -1122,7 +1127,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Abfallwirtschaftsbetrieb des Landkreises Pfaffenhofen a.d.Ilm (AWP)](/doc/ics/awp_landkreis_pfaffenhofen.md) / awp-paf.de
 - [Abfallwirtschaftsbetrieb Emsland](/doc/source/awb_emsland_de.md) / awb-emsland.de
 - [Abfallwirtschaftsbetrieb Esslingen](/doc/source/awb_es_de.md) / awb-es.de
-- [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
+- [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/source/ilm_kreis_de.md) / ilm-kreis.de
 - [Abfallwirtschaftsbetrieb Kiel (ABK)](/doc/source/abki_de.md) / abki.de
 - [Abfallwirtschaftsbetrieb Landkreis Ahrweiler](/doc/source/meinawb_de.md) / meinawb.de
 - [Abfallwirtschaftsbetrieb Landkreis Altenkirchen](/doc/source/awido_de.md) / awb-ak.de
@@ -1590,7 +1595,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kreis Würzburg](/doc/source/app_abfallplus_de.md) / Abfall+ App: teamorange
 - [Kreisstadt Dietzenbach](/doc/source/c_trace_de.md) / dietzenbach.de
 - [Kreisstadt Friedberg](/doc/source/muellmax_de.md) / friedberg-hessen.de
-- [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
+- [Kreisstadt Groß-Gerau](/doc/source/gross_gerau_de.md) / gross-gerau.de
 - [Kreisstadt St. Wendel](/doc/source/c_trace_de.md) / sankt-wendel.de
 - [Kreiswerke Schmalkalden-Meiningen GmbH](/doc/source/hausmuell_info.md) / kwsm.de
 - [Kreiswirtschaftsbetriebe Goslar](/doc/source/kwb_goslar_de.md) / kwb-goslar.de
@@ -1657,7 +1662,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Oldenburg](/doc/source/abfall_io.md) / oldenburg-kreis.de
 - [Landkreis Ostallgäu](/doc/source/abfall_io.md) / buerger-ostallgaeu.de
 - [Landkreis Paderborn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
-- [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
+- [Landkreis Peine](/doc/source/ab_peine_de.md) / ab-peine.de
 - [Landkreis Ravensburg](/doc/source/rv_de.md) / rv.de
 - [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
 - [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
@@ -1754,6 +1759,7 @@ If you already have enough information for your municipality/region, you are ver
 - [MZV Rotenburg](/doc/source/mzv_rotenburg_bebra_de.md) / mzv-rotenburg-bebra.de
 - [Mölln](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/9-molln
 - [Mörfelden-Walldorf](/doc/ics/moerfelden_walldorf_de.md) / moerfelden-walldorf.de
+- [Mühlenkreis Minden-Lübbecke](/doc/source/muehlenkreis_de.md) / muehlenkreis.de
 - [Mühlheim am Main (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Müllabfuhr Deutschland](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [MüllALARM / Schönmackers](/doc/source/abfall_io.md) / schoenmackers.de
@@ -1988,6 +1994,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vaterstetten](/doc/source/awido_de.md) / lra-ebe.de
 - [Verliehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Vettweiß](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [VEVG Vorpommern-Greifswald](/doc/source/vevg_karlsburg_de.md) / vevg-karlsburg.de
 - [VIVO Landkreis Miesbach](/doc/source/abfall_io.md) / vivowarngau.de
 - [Vlotho](/doc/ics/vlotho_de.md) / vlotho.de
 - [Vogelbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2752,6 +2759,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gospodarka Odpadami - Pelplin](/doc/source/sims_pl.md) / sisms.pl
 - [Gospodarka Odpadami - Starogard Gdański](/doc/source/sims_pl.md) / sisms.pl
 - [Hemar (ichisystem.eu)](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
+- [Kiedy Odpady (kiedyodpady.pl)](/doc/source/kiedyodpady_pl.md) / kiedyodpady.pl
 - [Kiedy śmieci](/doc/source/kiedysmieci_info.md) / kiedysmieci.info
 - [Kiszkowo](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Kleszczewo/Kostrzyn](/doc/source/zys_harmonogram_pl.md) / puk-zys.pl/index.php
@@ -2769,6 +2777,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Miasto Wałbrzych](/doc/source/sims_pl.md) / sisms.pl
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl
 - [MPO Kraków](/doc/source/mpo_krakow_pl.md) / harmonogram.mpo.krakow.pl
+- [Pabianice](/doc/source/kiedyodpady_pl.md) / pabianice.kiedyodpady.pl
 - [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
 - [Pobiedziska](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Polkowice](/doc/source/sims_pl.md) / sisms.pl
@@ -2782,7 +2791,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Strzelce Krajeńskie](/doc/source/sims_pl.md) / sisms.pl
 - [Szczecin](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
-- [Wieliczka Kiedy Odpady](/doc/source/wieliczka_kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl
+- [Wieliczka](/doc/source/kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl
+- [Wieliczka Kiedy Odpady (Deprecated)](/doc/source/wieliczka_kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl
 - [Wrocław](/doc/source/ekosystem_wroc_pl.md) / ekosystem.wroc.pl
 - [ZGPD-7](/doc/source/sims_pl.md) / sisms.pl
 - [Łódź](/doc/source/lodz_pl.md) / kartalodzianina.pl

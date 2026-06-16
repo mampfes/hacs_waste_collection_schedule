@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import argparse
 import hashlib
 import importlib
 import inspect
@@ -585,7 +584,7 @@ def browse_ics_yaml() -> list[SourceInfo]:
 
 def write_ics_md_file(filename: Path, data: IcsSourceData) -> None:
     """Write a markdown file for a ICS .yaml file"""
-    if not "en" in data["howto"]:
+    if "en" not in data["howto"]:
         print(
             f"howto in {filename} does not contain an english translation, please add one"
         )
@@ -768,9 +767,9 @@ def get_custom_translations(
 
             source_doc_url[module] = DOC_URL_BASE + e.filename
 
-            if not module in param_translations:
+            if module not in param_translations:
                 param_translations[module] = {}
-            if not module in param_descriptions:
+            if module not in param_descriptions:
                 param_descriptions[module] = {}
 
             for param in sorted(e.params):

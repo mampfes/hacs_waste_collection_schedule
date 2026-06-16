@@ -1,13 +1,14 @@
-import requests
 from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
 
 TITLE = "Kreiswirtschaftsbetriebe Goslar"
 DESCRIPTION = "Source for kwb-goslar.de waste collection."
 URL = "https://www.kwb-goslar.de"
+COUNTRY = "de"
 TEST_CASES = {
     "Berliner Straße (Clausthal-Zellerfeld)": {"pois": "2523.602"},
     "Braunschweiger Straße (Seesen)": {"pois": "2523.409"},
+    "Marktstraße (Seesen)": {"strasse": "Marktstraße", "ort": "Seesen"},
 }
 
 ICON_MAP = {
@@ -22,41 +23,43 @@ ICON_MAP = {
 
 PARAM_TRANSLATIONS = {
     "de": {
+        "strasse": "Straße",
+        "ort": "Ort",
         "pois": "POIS",
     },
     "en": {
+        "strasse": "Street",
+        "ort": "Place",
         "pois": "POIS",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "de": {
+        "strasse": "Straßenname (per Autocomplete aufgelöst).",
+        "ort": "Optionaler Ort/Ortsteil zur Eindeutigkeit (z.B. 'Seesen').",
+        "pois": "Direkte POIS-ID (Alternative zur Straßeneingabe).",
+    },
+    "en": {
+        "strasse": "Street name (resolved via autocomplete).",
+        "ort": "Optional place/district to disambiguate (e.g. 'Seesen').",
+        "pois": "Direct POIS id (alternative to entering a street).",
     },
 }
 
 
 class Source:
-    def __init__(self, pois):
-        self.ics = ICS()
-        self.pois = pois
+    def __init__(self, strasse=None, ort=None, pois=None):
+        self._strasse = strasse
+        self._ort = ort
+        self._pois = pois
+        self._sitepark = SiteparkIES(URL)
 
     def fetch(self):
-        r = requests.get(
-            url="https://www.kwb-goslar.de/output/options.php",
-            params={
-                "ModID": "48",
-                "call": "ical",
-                "pois": self.pois,
-            },
-            headers={
-                "Referer": "https://www.kwb-goslar.de",
-            },
+        dates = self._sitepark.fetch(
+            strasse=self._strasse, ort=self._ort, pois=self._pois
         )
-
-        if not r.ok:
-            raise Exception(f"Error: failed to fetch url: {r.request.url}")
-
-        dates = self.ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            date, waste_type = d
-            icon = ICON_MAP.get(waste_type)
-            entries.append(Collection(date=date, t=waste_type, icon=icon))
-
-        return entries
+        return [
+            Collection(date=date, t=waste_type, icon=match_icon(waste_type, ICON_MAP))
+            for date, waste_type in dates
+        ]

@@ -11,8 +11,8 @@ howto:
     - Verwende die URL als `url`-Parameter.
 test_cases:
   Ranstadt:
-    url: "https://www.ambnet.biz/Abfall-Ranstadt.ics"
+    url: https://www.ambnet.biz/Abfall-Ranstadt.ics
   Ranstadt-RBB:
-    url: "https://www.ambnet.biz/Abfall-Ranstadt-RBB.ics"
+    url: https://www.ambnet.biz/Abfall-Ranstadt-RBB.ics
   Ranstadt-DO:
-    url: "https://www.ambnet.biz/Abfall-Ranstadt-DO.ics"
+    url: https://www.ambnet.biz/Abfall-Ranstadt-DO.ics

@@ -70,9 +70,9 @@ class Source:
         }
         # reformat dates to make comparison easier
         revised_schedules = {
-            datetime.strptime(k, "%A %d %B %Y")
-            .strftime("%d/%m/%Y"): datetime.strptime(v, "%A %d %B %Y")
-            .strftime("%d/%m/%Y")
+            datetime.strptime(k, "%A %d %B %Y").strftime("%d/%m/%Y"): datetime.strptime(
+                v, "%A %d %B %Y"
+            ).strftime("%d/%m/%Y")
             for k, v in revised_schedules.items()
         }
 

@@ -1,8 +1,10 @@
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule import Icons
+from waste_collection_schedule import (
+    Collection,  # type: ignore[attr-defined]
+    Icons,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,

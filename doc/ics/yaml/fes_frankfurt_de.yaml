@@ -9,8 +9,8 @@ howto:
     - Use the ICS URL format: `https://frankfurtplus.de/abfallkalender/ADDRESS_ID/ical`
 
 default_params:
-  regex: "[^:]+:\\s*(.*)"
+  regex: '[^:]+:\s*(.*)'
 test_cases:
   Ludwig-Ruppel-Str. 89:
     url: https://frankfurtplus.de/abfallkalender/69882/ical
-    regex: "[^:]+:\\s*(.*)"
+    regex: '[^:]+:\s*(.*)'

@@ -21,15 +21,13 @@ ICON_MAP = {
     "Altmetall": Icons.METAL,
 }
 
-OLD_WASTE_NAME = (
-    {  # New fetcher uses different names this should prevent breaking changes
-        "Kehrichtsammlung": "Kehricht",
-        "Grüngutsammlung": "Grüngut",
-        "Papiersammlung": "Papier",
-        "Kartonsammlung": "Karton",
-        "Alteisen/Metallsammlung": "Altmetall",
-    }
-)
+OLD_WASTE_NAME = {  # New fetcher uses different names this should prevent breaking changes
+    "Kehrichtsammlung": "Kehricht",
+    "Grüngutsammlung": "Grüngut",
+    "Papiersammlung": "Papier",
+    "Kartonsammlung": "Karton",
+    "Alteisen/Metallsammlung": "Altmetall",
+}
 
 API_URL = "https://www.real-luzern.ch/abfall/sammeldienst/abfallkalender/"
 

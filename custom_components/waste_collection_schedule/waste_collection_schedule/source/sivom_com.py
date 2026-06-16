@@ -262,7 +262,7 @@ class Source:
             # Exclude mid-December to mid-March (no green waste collection)
             if (
                 not (d.month == 12 and d.day >= 15)
-                and not (d.month in (1, 2))
+                and d.month not in (1, 2)
                 and not (d.month == 3 and d.day < 15)
             ):
                 entries.append(
