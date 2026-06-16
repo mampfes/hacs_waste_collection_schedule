@@ -537,6 +537,7 @@ waste_collection_schedule:
         version: 2
         verify_ssl: VERIFY_SSL
         headers: HEADERS
+        impersonate: IMPERSONATE
         title_template: "{{date.summary}}"
 ```
 
@@ -636,6 +637,13 @@ Set this option to `False` if you see the following warning in the logs:
 Add custom headers to HTTP request, e.g. `referer`. By default, the `user-agent` is already set to `Mozilla/5.0 (Windows NT 10.0; Win64; x64)`.
 
 See also [example](#custom-headers) below.
+
+**impersonate**  
+*(string) (optional, default: None)*
+
+Impersonate a real browser so the request matches a browser's TLS/JA3 fingerprint. Some providers sit behind a WAF (e.g. Incapsula/Imperva, Cloudflare) that rejects non-browser clients with an `HTTP 403` even when a browser `user-agent` header is set, because the block is based on the TLS handshake rather than the header. Setting this to a browser name (e.g. `chrome`) makes the underlying `curl_cffi` client mimic that browser and pass the check.
+
+Only set this if you get a `403` that a custom `user-agent` header does not fix. See the [curl_cffi documentation](https://curl-cffi.readthedocs.io/en/latest/impersonate.html) for the list of supported values (e.g. `chrome`, `safari`, `firefox`).
 
 **title_template**  
 *(str) (optional, default: `{{date.summary}}`)*
