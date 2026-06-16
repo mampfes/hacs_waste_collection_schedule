@@ -1933,6 +1933,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
 - [Stadt Verl](/doc/source/verl_de.md) / verl.de
+- [Stadt Vlotho](/doc/ics/abfall_export_vcal.md) / vlotho.de
 - [Stadt Wetzlar](/doc/ics/wetzlar_de.md) / wetzlar.de
 - [Stadt Wittenberge (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de

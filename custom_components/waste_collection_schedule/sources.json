@@ -13020,6 +13020,12 @@
       "id": "verl_de"
     },
     {
+      "title": "Stadt Vlotho",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfall_export_vcal"
+    },
+    {
       "title": "Stadt Wetzlar",
       "module": "ics",
       "default_params": {},

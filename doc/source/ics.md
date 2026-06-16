@@ -385,6 +385,7 @@ This source has been successfully tested with the following service providers:
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
 - [Stadt Saarlouis](/doc/ics/mein_abfallkalender_online.md) / saarlouis.de
 - [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
+- [Stadt Vlotho](/doc/ics/abfall_export_vcal.md) / vlotho.de
 - [Stadt Wetzlar](/doc/ics/wetzlar_de.md) / wetzlar.de
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
