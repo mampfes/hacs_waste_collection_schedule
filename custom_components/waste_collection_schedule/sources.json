@@ -16391,6 +16391,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Torre de' Passeri",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Traona",
       "module": "junker_app",
       "default_params": {},

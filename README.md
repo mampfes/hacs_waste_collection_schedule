@@ -2453,6 +2453,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Tivoli - ASA Tivoli Spa](/doc/source/junker_app.md) / junker.app
 - [Toro](/doc/source/junker_app.md) / junker.app
 - [Torpè - Eco Flap - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Torre de' Passeri](/doc/source/junker_app.md) / junker.app
 - [Traona](/doc/source/junker_app.md) / junker.app
 - [Trappeto](/doc/source/junker_app.md) / junker.app
 - [Tricase](/doc/source/junker_app.md) / junker.app
