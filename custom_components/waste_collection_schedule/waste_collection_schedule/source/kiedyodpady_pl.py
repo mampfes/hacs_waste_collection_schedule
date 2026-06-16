@@ -1,92 +1,126 @@
-import logging
 from datetime import date, datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
-_LOGGER = logging.getLogger(__name__)
-
-TITLE = "Wieliczka Kiedy Odpady (Deprecated)"
-DESCRIPTION = "Source for Wieliczka Kiedy Odpady schedules."
-URL = "https://wieliczka.kiedyodpady.pl"
+TITLE = "Kiedy Odpady (kiedyodpady.pl)"
+DESCRIPTION = (
+    "Source for Polish municipalities using the kiedyodpady.pl "
+    "(mOdpady / mMieszkaniec) waste collection platform."
+)
+URL = "https://kiedyodpady.pl"
 COUNTRY = "pl"
+
+EXTRA_INFO = [
+    {
+        "title": "Wieliczka",
+        "url": "https://wieliczka.kiedyodpady.pl",
+        "country": "pl",
+        "default_params": {"municipality": "wieliczka"},
+    },
+    {
+        "title": "Pabianice",
+        "url": "https://pabianice.kiedyodpady.pl",
+        "country": "pl",
+        "default_params": {"municipality": "pabianice"},
+    },
+]
 
 TEST_CASES = {
     "Wieliczka (miasto), ul. Adama Asnyka, pozostałe": {
+        "municipality": "wieliczka",
         "city": "Wieliczka (miasto)",
         "street": "ul. Adama Asnyka",
         "number": "pozostałe",
-    }
+    },
+    'Pabianice (miasto), ul. 15 Pułku Piechoty "Wilków", pozostałe': {
+        "municipality": "pabianice",
+        "city": "Pabianice (miasto)",
+        "street": 'ul. 15 Pułku Piechoty "Wilków"',
+        "number": "pozostałe",
+    },
 }
 
 API_URL = "https://api.kiedyodpady.pl/public"
-ORIGIN = "https://wieliczka.kiedyodpady.pl"
 DEFAULT_DAYS = 35
 
 ICON_MAP = {
     "bio": Icons.ORGANIC,
-    "papier": Icons.PAPER,
-    "metale": Icons.METAL,
-    "tworzywa": Icons.RECYCLING,
-    "szkło": Icons.GLASS,
-    "zmieszane": Icons.GENERAL_WASTE,
-    "gabaryt": Icons.BULKY,
-    "choinka": Icons.CHRISTMAS_TREE,
-    "odpady zielone": Icons.GARDEN,
+    "paper": Icons.PAPER,
+    "plastics": Icons.PLASTIC_PACKAGING,
+    "glass": Icons.GLASS,
+    "mixed": Icons.GENERAL_WASTE,
+    "bulky": Icons.BULKY,
+    "constructionWaste": Icons.BULKY,
+    "hazardous": Icons.HAZARDOUS,
+    "ewaste": Icons.ELECTRONICS,
+    "battery": Icons.BATTERY,
+    "textile": Icons.TEXTILE,
+    "tree": Icons.CHRISTMAS_TREE,
+    "garden": Icons.GARDEN,
+    "metal": Icons.METAL,
 }
 
 PARAM_TRANSLATIONS = {
     "en": {
+        "municipality": "Municipality",
         "city": "City Name",
         "street": "Street Name",
         "number": "House Number",
-    }
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Open https://wieliczka.kiedyodpady.pl and select your location. Use the city name, street name, and house number exactly as shown in the UI.",
+    },
 }
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "city": "City name from the Kiedy Odpady locality list.",
-        "street": "Street name from the selected city.",
-        "number": "House number/address value from the selected street.",
-    }
+        "municipality": (
+            "Subdomain slug for your municipality on kiedyodpady.pl, "
+            "e.g. 'pabianice' for pabianice.kiedyodpady.pl."
+        ),
+        "city": "City/locality name as shown in the kiedyodpady.pl UI.",
+        "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities).",
+        "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
+    },
 }
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": (
+        "Open https://{municipality}.kiedyodpady.pl (e.g. https://pabianice.kiedyodpady.pl) "
+        "and step through the address selection. "
+        "The municipality value is the subdomain prefix (everything before '.kiedyodpady.pl'). "
+        "Copy the city, street, and house-number values exactly as displayed in the dropdown lists."
+    ),
+}
+
+SOURCE_CODEOWNERS = ["@dominik-korsa"]
 
 
 def _normalize(value: str) -> str:
     return value.strip().lower().casefold()
 
 
-def _pick_icon(name: str) -> str | None:
-    lowered = name.lower()
-    for key, icon in ICON_MAP.items():
-        if key in lowered:
-            return icon
-    return None
+def _pick_icon(icon_slug: str | None) -> str | None:
+    if not icon_slug:
+        return None
+    return ICON_MAP.get(icon_slug)
 
 
 class Source:
     def __init__(
         self,
+        municipality: str,
         city: str,
         street: str | None = None,
         number: str | None = None,
     ):
-        _LOGGER.warning(
-            "The 'wieliczka_kiedyodpady_pl' source is deprecated; "
-            "please use the 'kiedyodpady_pl' source instead."
-        )
-        self._city = city
+        self._municipality = municipality.strip().lower()
+        self._city = city.strip()
         self._street = street.strip() if isinstance(street, str) else None
         self._number = number.strip() if isinstance(number, str) else None
         self._session = requests.Session()
         self._session.headers.update(
             {
-                "Origin": ORIGIN,
+                "Origin": f"https://{self._municipality}.kiedyodpady.pl",
                 "User-Agent": "Mozilla/5.0",
                 "Accept": "application/json",
             }
@@ -163,16 +197,20 @@ class Source:
                 suggestions=numbers,
             )
 
-    def _get_waste_types(self) -> dict[str, str]:
+    def _get_waste_type_map(self) -> dict[str, tuple[str, str | None]]:
         response = self._session.get(f"{API_URL}/waste-types", timeout=30)
         response.raise_for_status()
-        return {item["id"]: item["name"] for item in response.json() if "id" in item}
+        result: dict[str, tuple[str, str | None]] = {}
+        for item in response.json():
+            if "id" in item:
+                result[item["id"]] = (item.get("name", item["id"]), item.get("icon"))
+        return result
 
     def fetch(self) -> list[Collection]:
         locality_id = self._resolve_city_id()
         street_id = self._resolve_street_id(locality_id)
         self._validate_number(locality_id, street_id)
-        waste_type_map = self._get_waste_types()
+        waste_type_map = self._get_waste_type_map()
 
         today = date.today()
         date_to = today + timedelta(days=DEFAULT_DAYS)
@@ -200,12 +238,13 @@ class Source:
 
         entries: list[Collection] = []
         for occurrence in data.get("occurrences", []):
-            waste_name = waste_type_map.get(occurrence["what"], occurrence["what"])
+            waste_id = occurrence.get("what", "")
+            waste_name, icon_slug = waste_type_map.get(waste_id, (waste_id, None))
             entries.append(
                 Collection(
                     date=datetime.fromisoformat(occurrence["when"]).date(),
                     t=waste_name,
-                    icon=_pick_icon(waste_name),
+                    icon=_pick_icon(icon_slug),
                 )
             )
 
