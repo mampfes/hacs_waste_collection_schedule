@@ -5,6 +5,7 @@ import time
 import uuid
 from collections import Counter, OrderedDict
 from datetime import date, datetime
+from urllib.parse import unquote
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -821,7 +822,7 @@ class AppAbfallplusDe:
             hnrs.append(
                 {
                     "id": a[0],
-                    "name": a[0].split("|")[0],
+                    "name": unquote(a[0]).split("|")[0],
                     "f_id_strasse": a[6] if len(a) > 6 else None,
                 }
             )
