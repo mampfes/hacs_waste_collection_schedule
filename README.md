@@ -1981,6 +1981,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Twistetal](/doc/source/lobbe_app.md) / lobbe.app
 - [Tönnieshof](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Tübingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: app
+- [UBZ Umwelt- und Servicebetrieb Zweibrücken](/doc/source/ubzzw_de.md) / ubzzw.com
 - [Uckermark](/doc/source/jumomind_de.md) / udg-uckermark.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
