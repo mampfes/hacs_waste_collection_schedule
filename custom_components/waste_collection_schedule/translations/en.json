@@ -17331,6 +17331,41 @@
           "street": "Street name as listed on the Hemar portal."
         }
       },
+      "args_kiedyodpady_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City Name",
+          "municipality": "Municipality",
+          "number": "House Number",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "City/locality name as shown in the kiedyodpady.pl UI.",
+          "municipality": "Subdomain slug for your municipality on kiedyodpady.pl, e.g. 'pabianice' for pabianice.kiedyodpady.pl.",
+          "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
+          "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities)."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City Name",
+          "municipality": "Municipality",
+          "number": "House Number",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "city": "City/locality name as shown in the kiedyodpady.pl UI.",
+          "municipality": "Subdomain slug for your municipality on kiedyodpady.pl, e.g. 'pabianice' for pabianice.kiedyodpady.pl.",
+          "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
+          "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities)."
+        }
+      },
       "args_kiedysmieci_info": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

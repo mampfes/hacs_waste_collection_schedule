@@ -3621,6 +3621,13 @@
     },
     "urls": {}
   },
+  "kiedyodpady_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedyodpady_pl.md",
+    "howto": {
+      "en": "Open https://{municipality}.kiedyodpady.pl (e.g. https://pabianice.kiedyodpady.pl) and step through the address selection. The municipality value is the subdomain prefix (everything before '.kiedyodpady.pl'). Copy the city, street, and house-number values exactly as displayed in the dropdown lists."
+    },
+    "urls": {}
+  },
   "kiedysmieci_info": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kiedysmieci_info.md",
     "howto": {},

@@ -18288,6 +18288,12 @@
       "id": "ichisystem_eu"
     },
     {
+      "title": "Kiedy Odpady (kiedyodpady.pl)",
+      "module": "kiedyodpady_pl",
+      "default_params": {},
+      "id": "kiedyodpady_pl"
+    },
+    {
       "title": "Kiedy \u015bmieci",
       "module": "kiedysmieci_info",
       "default_params": {},
@@ -18412,6 +18418,14 @@
       "id": "mpo_krakow_pl"
     },
     {
+      "title": "Pabianice",
+      "module": "kiedyodpady_pl",
+      "default_params": {
+        "municipality": "pabianice"
+      },
+      "id": "kiedyodpady_pl"
+    },
+    {
       "title": "Parafia \u015bw. Wojciecha Biskupa i M\u0119czennika w Nidzicy",
       "module": "sims_pl",
       "default_params": {
@@ -18504,7 +18518,15 @@
       "id": "warszawa19115_pl"
     },
     {
-      "title": "Wieliczka Kiedy Odpady",
+      "title": "Wieliczka",
+      "module": "kiedyodpady_pl",
+      "default_params": {
+        "municipality": "wieliczka"
+      },
+      "id": "kiedyodpady_pl"
+    },
+    {
+      "title": "Wieliczka Kiedy Odpady (Deprecated)",
       "module": "wieliczka_kiedyodpady_pl",
       "default_params": {},
       "id": "wieliczka_kiedyodpady_pl"
