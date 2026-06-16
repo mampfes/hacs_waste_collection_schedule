@@ -1046,6 +1046,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Staffelfelden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Steinbrunn-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Talence](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Toulouse Métropole](/doc/source/toulouse_metropole_fr.md) / data.toulouse-metropole.fr
 - [Tours Métropole](/doc/source/publidata_fr.md) / tours-metropole.fr
 - [Ungersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Valcobreizh](/doc/source/publidata_fr.md) / dechets.valcobreizh.fr

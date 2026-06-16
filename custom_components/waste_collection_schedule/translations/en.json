@@ -6399,6 +6399,29 @@
         },
         "data_description": {}
       },
+      "args_toulouse_metropole_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Name of your street, exactly as in the open data portal (e.g. 'Avenue Henri Guillaumet')"
+        }
+      },
+      "reconfigure_toulouse_metropole_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street name"
+        },
+        "data_description": {
+          "street_name": "Name of your street, exactly as in the open data portal (e.g. 'Avenue Henri Guillaumet')"
+        }
+      },
       "args_ics": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

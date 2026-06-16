@@ -6023,6 +6023,26 @@
         },
         "data_description": {}
       },
+      "args_toulouse_metropole_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_toulouse_metropole_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street Name"
+        },
+        "data_description": {}
+      },
       "args_ics": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

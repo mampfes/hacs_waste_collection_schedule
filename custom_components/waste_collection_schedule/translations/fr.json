@@ -6118,6 +6118,29 @@
         },
         "data_description": {}
       },
+      "args_toulouse_metropole_fr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_name": "Nom de la voie"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Nom de votre voie, tel qu'il apparaît dans le portail open data (ex : 'Avenue Henri Guillaumet')"
+        }
+      },
+      "reconfigure_toulouse_metropole_fr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_name": "Nom de la voie"
+        },
+        "data_description": {
+          "street_name": "Nom de votre voie, tel qu'il apparaît dans le portail open data (ex : 'Avenue Henri Guillaumet')"
+        }
+      },
       "args_ics": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
