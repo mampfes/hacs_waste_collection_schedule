@@ -900,6 +900,11 @@
     "howto": {},
     "urls": {}
   },
+  "koppl_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/koppl_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "kumberg_gv_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kumberg_gv_at.md",
     "howto": {},

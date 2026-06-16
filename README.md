@@ -478,6 +478,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Klöch](/doc/source/citiesapps_com.md) / kloech.com
 - [Kobersdorf](/doc/source/citiesapps_com.md) / kobersdorf.at/index.php
 - [Kohfidisch](/doc/source/citiesapps_com.md) / kohfidisch.at
+- [Koppl](/doc/source/koppl_at.md) / koppl.at
 - [Korneuburg](/doc/source/citiesapps_com.md) / korneuburg.gv.at
 - [Krems in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Krensdorf](/doc/source/citiesapps_com.md) / krensdorf.at
