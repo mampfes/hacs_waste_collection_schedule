@@ -1,7 +1,7 @@
 title: Lysá nad Labem
 url: https://www.zhleatherworks.cz/waste_calendar/
-country: Czech Republic
-howto: 
+country: cz
+howto:
   en: |
     - Open <https://www.zhleatherworks.cz/waste_calendar/> and use the "Filtr Lokace" field to get the location.
     - Click on "Zkopírovat URL ICS souboru do schránky". The ICS calendar URL will be copied.
