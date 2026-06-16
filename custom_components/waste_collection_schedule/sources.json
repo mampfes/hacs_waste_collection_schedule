@@ -7605,6 +7605,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Bad M\u00fcnstereifel",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfoapp"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Bad Oeynhausen",
       "module": "abfallkalender_prezero_network",
       "default_params": {
@@ -8190,6 +8198,14 @@
       "module": "ceb_coburg_de",
       "default_params": {},
       "id": "ceb_coburg_de"
+    },
+    {
+      "title": "Dahlem",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfoapp"
+      },
+      "id": "app_abfallplus_de"
     },
     {
       "title": "Dankelsheim",
@@ -9472,6 +9488,14 @@
       "id": "heinz_entsorgung_de"
     },
     {
+      "title": "Hellenthal",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfoapp"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Helmscherode",
       "module": "nerdbridge_de",
       "default_params": {
@@ -9804,6 +9828,14 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Kall",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfoapp"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Kammerborn",
       "module": "nerdbridge_de",
       "default_params": {
@@ -10055,6 +10087,14 @@
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.awbemsland"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Kreis Euskirchen",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfoapp"
       },
       "id": "app_abfallplus_de"
     },
@@ -11551,7 +11591,7 @@
       "id": "lobbe_app"
     },
     {
-      "title": "Mechernich und Kommunen",
+      "title": "Mechernich",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.abfallinfoapp"
@@ -12554,6 +12594,14 @@
         "municipality": "Schlarpe"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Schleiden",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfoapp"
+      },
+      "id": "app_abfallplus_de"
     },
     {
       "title": "Schleswig-Flensburg (ASF)",
@@ -13666,6 +13714,14 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Weilerswist",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfoapp"
+      },
+      "id": "app_abfallplus_de"
+    },
+    {
       "title": "Weilrod",
       "module": "ics",
       "default_params": {},
@@ -14087,6 +14143,14 @@
         "customer": "zv-muc-so"
       },
       "id": "awido_de"
+    },
+    {
+      "title": "Z\u00fclpich",
+      "module": "app_abfallplus_de",
+      "default_params": {
+        "app_id": "de.k4systems.abfallinfoapp"
+      },
+      "id": "app_abfallplus_de"
     },
     {
       "title": "\u00dcssinghausen",

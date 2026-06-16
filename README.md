@@ -1227,6 +1227,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bad Gandersheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bad Homburg vdH](/doc/source/jumomind_de.md) / bad-homburg.de
 - [Bad Kissingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappbk
+- [Bad Münstereifel](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Bad Oeynhausen](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network/bad-oeynhausen
 - [Bad Soden a.Ts.](/doc/ics/mein_abfallkalender_online.md) / bad-soden.de
 - [Bad Vilbel](/doc/ics/mein_abfallkalender_online.md) / sw-bv.de
@@ -1303,6 +1304,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Clus](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [CM City Media - Müllkalender](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Coburg Entsorgungs- und Baubetrieb CEB](/doc/source/ceb_coburg_de.md) / ceb-coburg.de
+- [Dahlem](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Dankelsheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Dannhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Darmstadt (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -1469,6 +1471,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Heimbach](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/ics/heinz_entsorgung_de.md) / abfallkalender.heinz-entsorgung.de
 - [Heinz-Entsorgung (Landkreis Freising)](/doc/source/heinz_entsorgung_de.md) / abfallkalender.heinz-entsorgung.de
+- [Hellenthal](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Helmscherode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hemer](/doc/source/lobbe_app.md) / lobbe.app
 - [Herten (durth-roos.de)](/doc/ics/herten_de.md) / herten.de
@@ -1512,6 +1515,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Jumomind](/doc/source/jumomind_de.md) / jumomind.de
 - [KAEV Niederlausitz](/doc/source/kaev_niederlausitz.md) / kaev.de
 - [Kalefeld](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Kall](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Kammerborn](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kamp-Lintfort (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Karben](/doc/ics/mein_abfallkalender_online.md) / karben.de
@@ -1545,6 +1549,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kreis Diepholz](/doc/source/app_abfallplus_de.md) / Abfall+ App: awgbassum
 - [Kreis Emmendingen](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkemmendingen
 - [Kreis Emsland](/doc/source/app_abfallplus_de.md) / Abfall+ App: awbemsland
+- [Kreis Euskirchen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Kreis Freudenstadt](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappfds
 - [Kreis Fürth](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappfuerth
 - [Kreis Garmisch-Partenkirchen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappgap
@@ -1739,7 +1744,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Markt Kastl (Lauterachtal)](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kastl-lauterachtal/abfallkalender
 - [Markt Schwaben](/doc/source/awido_de.md) / lra-ebe.de
 - [Marsberg](/doc/source/lobbe_app.md) / lobbe.app
-- [Mechernich und Kommunen](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
+- [Mechernich](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Medebach](/doc/source/lobbe_app.md) / lobbe.app
 - [Mein-Abfallkalender.online](/doc/ics/mein_abfallkalender_online.md) / mein-abfallkalender.online
 - [Meinerzhagen](/doc/source/lobbe_app.md) / lobbe.app
@@ -1871,6 +1876,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Schachtenbeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Schalksmühle](/doc/source/lobbe_app.md) / lobbe.app
 - [Schlarpe](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Schleiden](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Schleswig-Flensburg (ASF)](/doc/ics/asf_online_de.md) / asf-online.de
 - [Schmitten im Taunus (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Schnedinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2020,6 +2026,7 @@ If you already have enough information for your municipality/region, you are ver
 - [WBO Wirtschaftsbetriebe Oberhausen](/doc/source/abfallnavi_de.md) / wbo-online.de
 - [Weddehagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Wegberg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Weilerswist](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Weilrod](/doc/ics/mein_abfallkalender_online.md) / weilrod.de
 - [Weimarer Land](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Wellersen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -2077,6 +2084,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis](/doc/source/zva_sek_de.md) / zva-sek.de
 - [Zweckverband Abfallwirtschaft Südwestsachsen (ZAS)](/doc/ics/za_sws_de.md) / za-sws.de
 - [Zweckverband München-Südost](/doc/source/awido_de.md) / zvmso.de
+- [Zülpich](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallinfoapp
 - [Üssinghausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 </details>
 
