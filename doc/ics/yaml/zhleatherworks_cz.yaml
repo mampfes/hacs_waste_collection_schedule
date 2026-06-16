@@ -1,3 +1,4 @@
+---
 title: Lysá nad Labem
 url: https://www.zhleatherworks.cz/waste_calendar/
 country: cz
@@ -8,6 +9,6 @@ howto:
     - Use the URL from the clipboard as the `url` parameter.
 test_cases:
   Sojovicka:
-    url: "https://www.zhleatherworks.cz/calendars/Sojovick%C3%A1.ics"
+    url: https://www.zhleatherworks.cz/calendars/Sojovick%C3%A1.ics
   Bozeny_Nemcove:
     url: https://www.zhleatherworks.cz/calendars/Bo%C5%BEeny%20N%C4%9Bmcov%C3%A9.ics
