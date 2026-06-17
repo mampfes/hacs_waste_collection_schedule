@@ -367,18 +367,22 @@ class RiSKommunalSource:
         query = "&".join(f"{k}={v}" for k, v in params.items())
         return self.BASE_URL.rstrip("/") + ICS_PATH + "?" + query
 
-    def parse_ics_url(self, url: str) -> list[tuple[date, str]]:
-        """Fetch one ICS URL and return its ``(date, title)`` entries."""
-        r = requests.get(url, headers=HEADERS, timeout=60)
+    def parse_ics_url(self, url: str, cookies=None) -> list[tuple[date, str]]:
+        """Fetch one ICS URL and return its ``(date, title)`` entries.
+
+        Optional ``cookies`` are passed per request (no session persistence) for
+        installs that gate the iCal download behind a selection cookie.
+        """
+        r = requests.get(url, headers=HEADERS, cookies=cookies, timeout=60)
         r.raise_for_status()
         r.encoding = r.apparent_encoding or "utf-8"
         return ICS().convert(r.text)
 
-    def parse_ics_urls(self, urls: list[str]) -> list[Collection]:
+    def parse_ics_urls(self, urls: list[str], cookies=None) -> list[Collection]:
         """Fetch several ICS URLs, using each event's own title as the waste type."""
         entries: list[Collection] = []
         for url in urls:
-            for d, title in self.parse_ics_url(url):
+            for d, title in self.parse_ics_url(url, cookies=cookies):
                 waste_type = title.strip()
                 entries.append(
                     Collection(date=d, t=waste_type, icon=self._icon(waste_type))

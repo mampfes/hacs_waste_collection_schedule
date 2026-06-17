@@ -3,15 +3,15 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
-from waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defined]
+from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 
 TITLE = "Stadtservice Korneuburg"
 DESCRIPTION = "Source for Stadtservice Korneuburg"
 URL = "https://www.korneuburg.gv.at"
+COUNTRY = "at"
 TEST_CASES = {
     "Rathaus": {"street_name": "Hauptplatz", "street_number": 39},  # Teilgebiet 4
     "Rathaus using Teilgebiet": {
@@ -45,8 +45,11 @@ PARAM_TRANSLATIONS = {
 }
 
 
-class Source:
+class Source(RiSKommunalSource):
+    BASE_URL = "https://www.korneuburg.gv.at"
+
     def __init__(self, street_name, street_number, teilgebiet=-1):
+        super().__init__()
         self.street_name = street_name
         self.street_number = street_number
         self.teilgebiet = teilgebiet
@@ -56,7 +59,6 @@ class Source:
         self._street_number_id = -1
         self._headers = {"User-Agent": "Mozilla/5.0"}
         self._cookies = {"ris_cookie_setting": "g7750"}  # Accept Cookie Consent
-        self._ics = ICS()
 
     @staticmethod
     def extract_street_numbers(soup):
@@ -169,7 +171,7 @@ class Source:
         return str(region)
 
     def get_region_links(self):
-        """Traverse the pages for different waste types and collect download links for the iCals."""
+        """Traverse the waste-type pages and collect the iCal download links."""
         if self._region is None:
             self._region = self.determine_region()
 
@@ -192,23 +194,6 @@ class Source:
 
         return ical_urls
 
-    def process_waste_type(self, url):
-        """Download one calendar and return list with entries."""
-        r = requests.get(url=url, headers=self._headers, cookies=self._cookies)
-        r.encoding = r.apparent_encoding
-
-        dates = self._ics.convert(r.text)
-
-        entries = [Collection(d[0], d[1]) for d in dates]
-
-        return entries
-
     def fetch(self):
         ical_urls = self.get_region_links()
-        all_entries = []
-
-        for ical in ical_urls:
-            entries = self.process_waste_type(url=ical)
-            all_entries = all_entries + entries
-
-        return all_entries
+        return self.parse_ics_urls(ical_urls, cookies=self._cookies)
