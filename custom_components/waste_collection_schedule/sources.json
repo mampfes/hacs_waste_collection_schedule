@@ -22631,6 +22631,12 @@
       "id": "sunbury_ohio_org"
     },
     {
+      "title": "Vogel Disposal Service",
+      "module": "vogeldisposal_com",
+      "default_params": {},
+      "id": "vogeldisposal_com"
+    },
+    {
       "title": "Waste Connections",
       "module": "ics",
       "default_params": {

@@ -27828,6 +27828,33 @@
         },
         "data_description": {}
       },
+      "args_vogeldisposal_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street address",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your street address, for example '1002 tudor' or '1002 TUDOR DR'.",
+          "municipality": "Your Vogel municipality, for example 'butler twp' or 'BUTLER TWP, BUTLER COUNTY'."
+        }
+      },
+      "reconfigure_vogeldisposal_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street address",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "address": "Your street address, for example '1002 tudor' or '1002 TUDOR DR'.",
+          "municipality": "Your Vogel municipality, for example 'butler twp' or 'BUTLER TWP, BUTLER COUNTY'."
+        }
+      },
       "args_wm_com": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
