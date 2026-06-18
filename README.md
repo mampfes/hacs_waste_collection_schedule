@@ -653,6 +653,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Schwechat](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schwoich](/doc/ics/muellapp_com.md) / muellapp.com
 - [Schäffern](/doc/source/citiesapps_com.md) / schaeffern.gv.at
+- [Schärding](/doc/source/schaerding_ooe_gv_at.md) / schaerding.ooe.gv.at
 - [Schützen am Gebirge](/doc/source/citiesapps_com.md) / schuetzen-am-gebirge.at
 - [Seeboden](/doc/ics/muellapp_com.md) / muellapp.com
 - [Seeham](/doc/ics/muellapp_com.md) / muellapp.com
@@ -677,6 +678,7 @@ If you already have enough information for your municipality/region, you are ver
 - [St. Jakob im Rosental](/doc/source/citiesapps_com.md) / st-jakob-rosental.gv.at
 - [St. Johann in der Haide](/doc/source/citiesapps_com.md) / st-johann-haide.gv.at
 - [St. Johann in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
+- [St. Kanzian am Klopeiner See](/doc/source/kanzian_at.md) / kanzian.at
 - [St. Konrad](/doc/source/citiesapps_com.md) / st-konrad.at
 - [St. Lorenzen am Wechsel](/doc/source/citiesapps_com.md) / st-lorenzen-wechsel.at
 - [St. Margareten im Rosental](/doc/ics/muellapp_com.md) / muellapp.com

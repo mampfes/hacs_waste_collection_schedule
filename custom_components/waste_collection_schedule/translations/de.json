@@ -3409,7 +3409,10 @@
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3419,7 +3422,10 @@
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3701,7 +3707,10 @@
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3711,7 +3720,10 @@
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3826,7 +3838,9 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "_": ""
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3837,7 +3851,9 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "_": ""
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3868,7 +3884,10 @@
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3878,7 +3897,10 @@
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3886,7 +3908,10 @@
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3896,7 +3921,10 @@
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3948,7 +3976,10 @@
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3958,7 +3989,10 @@
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3966,7 +4000,10 @@
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -3976,7 +4013,10 @@
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -4006,6 +4046,57 @@
           "hausnummer": "Hausnummer wie im Saalfeldener Abfallkalender aufgelistet.",
           "strasse": "Straßenname wie im Saalfeldener Abfallkalender aufgelistet."
         }
+      },
+      "args_schaerding_ooe_gv_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hausnummer": "Hausnummer wie im Schärdinger Abfallkalender aufgelistet.",
+          "strasse": "Straßenname wie im Schärdinger Abfallkalender aufgelistet."
+        }
+      },
+      "reconfigure_schaerding_ooe_gv_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "hausnummer": "Hausnummer wie im Schärdinger Abfallkalender aufgelistet.",
+          "strasse": "Straßenname wie im Schärdinger Abfallkalender aufgelistet."
+        }
+      },
+      "args_kanzian_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_kanzian_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße",
+          "zone": "Zone"
+        },
+        "data_description": {}
       },
       "args_klosterneuburg_at": {
         "title": "Quelle konfigurieren",

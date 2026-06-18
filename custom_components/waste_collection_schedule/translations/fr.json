@@ -3365,7 +3365,10 @@
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -3375,7 +3378,10 @@
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3643,7 +3649,10 @@
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -3653,7 +3662,10 @@
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3768,7 +3780,9 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "_": ""
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -3779,7 +3793,9 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "_": ""
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3807,7 +3823,10 @@
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -3817,7 +3836,10 @@
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3825,7 +3847,10 @@
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -3835,7 +3860,10 @@
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3887,7 +3915,10 @@
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -3897,7 +3928,10 @@
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3905,7 +3939,10 @@
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -3915,7 +3952,10 @@
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3938,6 +3978,52 @@
           "calendar_title": "Titre du Calendrier",
           "hausnummer": "Numéro civique",
           "strasse": "Rue"
+        },
+        "data_description": {}
+      },
+      "args_schaerding_ooe_gv_at": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_schaerding_ooe_gv_at": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue"
+        },
+        "data_description": {}
+      },
+      "args_kanzian_at": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_kanzian_at": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "hausnummer": "Numéro civique",
+          "strasse": "Rue",
+          "zone": "Zone"
         },
         "data_description": {}
       },

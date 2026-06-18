@@ -3816,6 +3816,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Sch\u00e4rding",
+      "module": "schaerding_ooe_gv_at",
+      "default_params": {},
+      "id": "schaerding_ooe_gv_at"
+    },
+    {
       "title": "Sch\u00fctzen am Gebirge",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3958,6 +3964,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "St. Kanzian am Klopeiner See",
+      "module": "kanzian_at",
+      "default_params": {},
+      "id": "kanzian_at"
     },
     {
       "title": "St. Konrad",
