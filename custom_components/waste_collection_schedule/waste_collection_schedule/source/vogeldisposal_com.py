@@ -83,7 +83,9 @@ class Source:
         return requests.Session(impersonate="chrome")
 
     def _post(self, session, path: str, payload: dict):
-        resp = session.post(f"{API_BASE}/collectionlookup.aspx/{path}", json=payload)
+        resp = session.post(
+            f"{API_BASE}/collectionlookup.aspx/{path}", json=payload, timeout=30
+        )
         resp.raise_for_status()
         return resp.json().get("d")
 
@@ -144,19 +146,26 @@ class Source:
         municipality = self._resolve_municipality(session)
         address = self._resolve_address(session, municipality)
 
-        resp = session.post(
-            f"{API_BASE}/collectionlookup.aspx/GetPickupInfoByAddress",
-            json={"municipality": municipality, "strAddress": address},
+        # municipality and address are already validated above, so a non-success
+        # response here is a genuine failure: _post raises on HTTP errors and the
+        # ValueError surfaces an unexpected empty result rather than hiding it.
+        info = self._post(
+            session,
+            "GetPickupInfoByAddress",
+            {"municipality": municipality, "strAddress": address},
         )
-        info = resp.json().get("d") if resp.status_code == 200 else None
         if isinstance(info, dict) and info.get("success"):
             return info
-        raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
+        raise ValueError(
+            "Vogel Disposal returned no schedule for resolved address "
+            f"{address!r} in {municipality!r}"
+        )
 
     def _fetch_calendar(self, session, cd, rd, rw, year: int) -> str:
         resp = session.get(
             f"{API_BASE}/collectioncalendar.aspx",
             params={"rw": rw, "cd": cd, "rd": rd, "yr": year},
+            timeout=30,
         )
         resp.raise_for_status()
         return resp.text
@@ -205,7 +214,7 @@ class Source:
             entries += self._parse(
                 self._fetch_calendar(session, cd, rd, rw, this_year + 1)
             )
-        except Exception as err:
+        except requests.exceptions.RequestException as err:
             _LOGGER.debug(
                 "Vogel next-year (%s) calendar unavailable: %s",
                 this_year + 1,
