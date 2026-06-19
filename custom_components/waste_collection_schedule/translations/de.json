@@ -3449,6 +3449,33 @@
         },
         "data_description": {}
       },
+      "args_enns_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hausnummer": "Hausnummer wie im Ennser Abfallkalender aufgelistet.",
+          "strasse": "Straßenname wie im Ennser Abfallkalender aufgelistet."
+        }
+      },
+      "reconfigure_enns_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "hausnummer": "Hausnummer wie im Ennser Abfallkalender aufgelistet.",
+          "strasse": "Straßenname wie im Ennser Abfallkalender aufgelistet."
+        }
+      },
       "args_fritzens_gv_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -3706,6 +3733,33 @@
         "data_description": {
           "calendar_index": "Index des zu verwendenden Kalenders, wenn eine Straße mehreren Kalendern zugeordnet ist (beginnt bei 0).",
           "street": "Der Straßenname, wie er in der Gänserndorf-App angezeigt wird."
+        }
+      },
+      "args_hartbeigraz_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Hart bei Graz aufgeführt.",
+          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Hart bei Graz aufgeführt."
+        }
+      },
+      "reconfigure_hartbeigraz_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Hart bei Graz aufgeführt.",
+          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Hart bei Graz aufgeführt."
         }
       },
       "args_hausmannstaetten_gv_at": {

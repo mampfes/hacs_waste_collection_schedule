@@ -3613,6 +3613,33 @@
         },
         "data_description": {}
       },
+      "args_enns_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Enns waste calendar.",
+          "strasse": "Street name as listed in the Enns waste calendar."
+        }
+      },
+      "reconfigure_enns_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Enns waste calendar.",
+          "strasse": "Street name as listed in the Enns waste calendar."
+        }
+      },
       "args_fritzens_gv_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -3870,6 +3897,33 @@
         "data_description": {
           "calendar_index": "Index of the calendar to use when a street maps to multiple calendars (starting at 0).",
           "street": "The name of your street as shown in the Gänserndorf App."
+        }
+      },
+      "args_hartbeigraz_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Hart bei Graz waste calendar dropdown.",
+          "strasse": "Street name as listed in the Hart bei Graz waste calendar dropdown."
+        }
+      },
+      "reconfigure_hartbeigraz_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Hart bei Graz waste calendar dropdown.",
+          "strasse": "Street name as listed in the Hart bei Graz waste calendar dropdown."
         }
       },
       "args_hausmannstaetten_gv_at": {

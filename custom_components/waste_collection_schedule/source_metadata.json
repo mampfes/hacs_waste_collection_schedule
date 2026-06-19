@@ -848,6 +848,11 @@
     "howto": {},
     "urls": {}
   },
+  "enns_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/enns_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "fritzens_gv_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fritzens_gv_at.md",
     "howto": {},
@@ -901,6 +906,14 @@
   "gaenserndorf_city_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gaenserndorf_city_at.md",
     "howto": {},
+    "urls": {}
+  },
+  "hartbeigraz_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hartbeigraz_at.md",
+    "howto": {
+      "de": "Öffnen Sie https://www.hartbeigraz.at/Service/Muell, wählen Sie Ihre Straße und Hausnummer aus den Dropdown-Menüs, und verwenden Sie dieselben Werte für 'strasse' und 'hausnummer'.",
+      "en": "Open https://www.hartbeigraz.at/Service/Muell, pick your street and house number from the dropdowns, and use the same values for 'strasse' and 'hausnummer'."
+    },
     "urls": {}
   },
   "hausmannstaetten_gv_at": {

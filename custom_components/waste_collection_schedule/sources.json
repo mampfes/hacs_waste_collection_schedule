@@ -1870,6 +1870,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Enns",
+      "module": "enns_at",
+      "default_params": {},
+      "id": "enns_at"
+    },
+    {
       "title": "Enzenreith",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2442,6 +2448,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Hart bei Graz",
+      "module": "hartbeigraz_at",
+      "default_params": {},
+      "id": "hartbeigraz_at"
     },
     {
       "title": "Hartberg",
