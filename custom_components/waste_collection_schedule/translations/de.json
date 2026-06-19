@@ -3639,6 +3639,33 @@
         },
         "data_description": {}
       },
+      "args_buermoos_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Bürmoos aufgeführt.",
+          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Bürmoos aufgeführt."
+        }
+      },
+      "reconfigure_buermoos_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Bürmoos aufgeführt.",
+          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Bürmoos aufgeführt."
+        }
+      },
       "args_felixdorf_gv_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

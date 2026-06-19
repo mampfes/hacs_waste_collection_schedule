@@ -3803,6 +3803,33 @@
         },
         "data_description": {}
       },
+      "args_buermoos_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Bürmoos waste calendar dropdown.",
+          "strasse": "Street name as listed in the Bürmoos waste calendar dropdown."
+        }
+      },
+      "reconfigure_buermoos_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Bürmoos waste calendar dropdown.",
+          "strasse": "Street name as listed in the Bürmoos waste calendar dropdown."
+        }
+      },
       "args_felixdorf_gv_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

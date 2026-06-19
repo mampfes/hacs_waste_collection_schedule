@@ -885,6 +885,14 @@
     },
     "urls": {}
   },
+  "buermoos_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/buermoos_at.md",
+    "howto": {
+      "de": "Öffnen Sie https://www.buermoos.at/Service/Aktuelles/Muellkalender, wählen Sie Ihre Straße und Hausnummer aus den Dropdown-Menüs, und verwenden Sie dieselben Werte für 'strasse' und 'hausnummer'.",
+      "en": "Open https://www.buermoos.at/Service/Aktuelles/Muellkalender, pick your street and house number from the dropdowns, and use the same values for 'strasse' and 'hausnummer'."
+    },
+    "urls": {}
+  },
   "felixdorf_gv_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/felixdorf_gv_at.md",
     "howto": {

@@ -2138,6 +2138,12 @@
       "id": "ics_aspangmarkt_at"
     },
     {
+      "title": "Gemeinde B\u00fcrmoos",
+      "module": "buermoos_at",
+      "default_params": {},
+      "id": "buermoos_at"
+    },
+    {
       "title": "Gemeinde Felixdorf",
       "module": "felixdorf_gv_at",
       "default_params": {},
