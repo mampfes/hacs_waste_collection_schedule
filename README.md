@@ -579,6 +579,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Obertrum am See](/doc/ics/muellapp_com.md) / muellapp.com
 - [Obervellach](/doc/ics/muellapp_com.md) / muellapp.com
 - [Oberwart](/doc/source/citiesapps_com.md) / oberwart.gv.at
+- [Ort im Innkreis](/doc/source/ort_im_innkreis_at.md) / ort-im-innkreis.at
 - [Oslip](/doc/source/citiesapps_com.md) / oslip.at
 - [Ottendorf an der Rittschein](/doc/source/citiesapps_com.md) / ottendorf-rittschein.steiermark.at
 - [Ottobrunn](/doc/ics/muellapp_com.md) / muellapp.com

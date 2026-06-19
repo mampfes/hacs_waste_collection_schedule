@@ -959,6 +959,11 @@
     },
     "urls": {}
   },
+  "ort_im_innkreis_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ort_im_innkreis_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "piberbach_ooe_gv_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/piberbach_ooe_gv_at.md",
     "howto": {},
