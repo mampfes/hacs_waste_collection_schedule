@@ -488,6 +488,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Krems in Kärnten](/doc/ics/muellapp_com.md) / muellapp.com
 - [Krensdorf](/doc/source/citiesapps_com.md) / krensdorf.at
 - [Krieglach](/doc/source/citiesapps_com.md) / krieglach.at
+- [Kronstorf](/doc/source/kronstorf_at.md) / kronstorf.at
 - [Krottendorf-Gaisfeld](/doc/source/lipizzanerheimat_at.md) / krottendorf-gaisfeld.gv.at
 - [Krumpendorf am Wörthersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Kuchl](/doc/source/citiesapps_com.md) / kuchl.net

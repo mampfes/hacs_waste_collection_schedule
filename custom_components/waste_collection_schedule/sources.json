@@ -2826,6 +2826,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Kronstorf",
+      "module": "kronstorf_at",
+      "default_params": {},
+      "id": "kronstorf_at"
+    },
+    {
       "title": "Krottendorf-Gaisfeld",
       "module": "lipizzanerheimat_at",
       "default_params": {},
