@@ -30,6 +30,7 @@ ICON_MAP = {
     "Problemstoff": Icons.HAZARDOUS,
 }
 
+SOURCE_CODEOWNERS = ["@bbr111"]
 
 class Source(RiSKommunalSource):
     BASE_URL = "https://www.kronstorf.at"
