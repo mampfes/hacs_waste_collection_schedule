@@ -1043,6 +1043,14 @@
     "howto": {},
     "urls": {}
   },
+  "puchbeihallein_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/puchbeihallein_gv_at.md",
+    "howto": {
+      "de": "Öffnen Sie https://www.puchbeihallein.gv.at/Buergerservice/Aktuelles/Abfallkalender, wählen Sie Ihre Straße und Hausnummer aus den Dropdown-Menüs, und verwenden Sie dieselben Werte für 'strasse' und 'hausnummer'.",
+      "en": "Visit https://www.puchbeihallein.gv.at/Buergerservice/Aktuelles/Abfallkalender, pick your street and house number from the dropdowns, and use the same values for 'strasse' and 'hausnummer'."
+    },
+    "urls": {}
+  },
   "rohrbach_lafnitz_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rohrbach_lafnitz_at.md",
     "howto": {},

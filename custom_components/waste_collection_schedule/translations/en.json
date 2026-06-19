@@ -4526,6 +4526,33 @@
         },
         "data_description": {}
       },
+      "args_puchbeihallein_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Puch bei Hallein waste calendar dropdown (e.g. '3', '4a').",
+          "strasse": "Street name as listed in the Puch bei Hallein waste calendar dropdown."
+        }
+      },
+      "reconfigure_puchbeihallein_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Puch bei Hallein waste calendar dropdown (e.g. '3', '4a').",
+          "strasse": "Street name as listed in the Puch bei Hallein waste calendar dropdown."
+        }
+      },
       "args_rohrbach_lafnitz_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

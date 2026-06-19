@@ -3624,6 +3624,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Puch bei Hallein",
+      "module": "puchbeihallein_gv_at",
+      "default_params": {},
+      "id": "puchbeihallein_gv_at"
+    },
+    {
       "title": "P\u00f6chlarn",
       "module": "citiesapps_com",
       "default_params": {},
