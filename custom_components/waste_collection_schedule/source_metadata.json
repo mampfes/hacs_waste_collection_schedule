@@ -811,6 +811,11 @@
     "howto": {},
     "urls": {}
   },
+  "baumkirchen_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/baumkirchen_gv_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "ics_gem2go_dev": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gem2go_dev.md",
     "howto": {

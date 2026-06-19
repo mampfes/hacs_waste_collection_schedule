@@ -284,6 +284,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bad Waltersdorf](/doc/source/citiesapps_com.md) / bad-waltersdorf.gv.at/home
 - [Baldramsdorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Baumgartenberg](/doc/source/citiesapps_com.md) / baumgartenberg.at
+- [Baumkirchen](/doc/source/baumkirchen_gv_at.md) / baumkirchen.gv.at
 - [Behamberg](/doc/source/citiesapps_com.md) / behamberg.gv.at
 - [Berg im Drautal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Berndorf bei Salzburg](/doc/ics/muellapp_com.md) / muellapp.com
