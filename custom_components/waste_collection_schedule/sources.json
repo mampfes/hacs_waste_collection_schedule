@@ -4172,6 +4172,12 @@
       "id": "infeo_at"
     },
     {
+      "title": "Stadtbetriebe Steyr GmbH",
+      "module": "steyr_at",
+      "default_params": {},
+      "id": "steyr_at"
+    },
+    {
       "title": "Stadtgemeinde Berndorf",
       "module": "berndorf_gv_at",
       "default_params": {},

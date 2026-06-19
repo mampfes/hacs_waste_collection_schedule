@@ -712,6 +712,7 @@ If you already have enough information for your municipality/region, you are ver
 - [St. Urban](/doc/source/citiesapps_com.md) / sturban.at
 - [St. Veit in der Südsteiermark](/doc/source/citiesapps_com.md) / st-veit-suedsteiermark.gv.at
 - [Stadt Salzburg](/doc/source/infeo_at.md) / stadt-salzburg.at
+- [Stadtbetriebe Steyr GmbH](/doc/source/steyr_at.md) / steyr.at
 - [Stadtgemeinde Berndorf](/doc/source/berndorf_gv_at.md) / berndorf.gv.at
 - [Stadtgemeinde Klosterneuburg](/doc/source/klosterneuburg_at.md) / klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender
 - [Stadtgemeinde Traiskirchen](/doc/ics/traiskirchen_gv_at.md) / traiskirchen.gv.at
