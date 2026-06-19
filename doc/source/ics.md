@@ -95,6 +95,7 @@ This source has been successfully tested with the following service providers:
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
 - [Markt Piesting Dreistetten](/doc/ics/piesting_at.md) / piesting.at
+- [Marktgemeinde Kirchberg am Wechsel](/doc/ics/kirchberg_am_wechsel_at.md) / kirchberg-am-wechsel.at
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mayer Recycling](/doc/ics/mayer_recycling_at.md) / mayer-recycling.at
 - [Millstatt](/doc/ics/muellapp_com.md) / muellapp.com

@@ -3168,6 +3168,12 @@
       "id": "goessendorf_at"
     },
     {
+      "title": "Marktgemeinde Kirchberg am Wechsel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_kirchberg_am_wechsel_at"
+    },
+    {
       "title": "Marktgemeinde Obdach",
       "module": "obdach_at",
       "default_params": {},

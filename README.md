@@ -545,6 +545,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Marktgemeinde Edlitz](/doc/source/edlitz_at.md) / edlitz.at
 - [Marktgemeinde Eggelsberg](/doc/source/eggelsberg_at.md) / eggelsberg.at
 - [Marktgemeinde Gössendorf](/doc/source/goessendorf_at.md) / goessendorf.com
+- [Marktgemeinde Kirchberg am Wechsel](/doc/ics/kirchberg_am_wechsel_at.md) / kirchberg-am-wechsel.at
 - [Marktgemeinde Obdach](/doc/source/obdach_at.md) / obdach.gv.at
 - [Marktgemeinde Schlierbach](/doc/source/schlierbach_at.md) / schlierbach.at
 - [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
