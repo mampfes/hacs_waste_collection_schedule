@@ -461,6 +461,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Irschen](/doc/ics/muellapp_com.md) / muellapp.com
 - [Jabing](/doc/source/citiesapps_com.md) / gemeinde-jabing.at
 - [Jagerberg](/doc/source/citiesapps_com.md) / jagerberg.info
+- [Jochberg](/doc/source/jochberg_gv_at.md) / jochberg.gv.at
 - [Kainach](/doc/source/lipizzanerheimat_at.md) / kainach.at
 - [Kaindorf](/doc/source/citiesapps_com.md) / kaindorf.at
 - [Kaisersdorf](/doc/source/citiesapps_com.md) / kaisersdorf.com

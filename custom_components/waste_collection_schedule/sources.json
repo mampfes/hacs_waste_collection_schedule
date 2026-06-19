@@ -2664,6 +2664,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Jochberg",
+      "module": "jochberg_gv_at",
+      "default_params": {},
+      "id": "jochberg_gv_at"
+    },
+    {
       "title": "Kainach",
       "module": "lipizzanerheimat_at",
       "default_params": {},
