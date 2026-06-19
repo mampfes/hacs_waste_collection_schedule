@@ -4649,6 +4649,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "cotswold_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cotswold_gov_uk.md",
+    "howto": {
+      "en": "Go to the Cotswold District Council waste collection enquiry page (https://community.cotswold.gov.uk/s/waste-collection-enquiry) and start typing your postcode or street name into the address lookup. Select your property from the autocomplete suggestions and use the full address string exactly as it appears (e.g. '10 HAVEN HILL, CIRENCESTER, GL7 1BN')."
+    },
+    "urls": {}
+  },
   "coventry_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/coventry_gov_uk.md",
     "howto": {},

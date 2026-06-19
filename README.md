@@ -3116,6 +3116,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Colchester City Council](/doc/source/colchester_gov_uk.md) / colchester.gov.uk
 - [Conwy County Borough Council](/doc/source/conwy_gov_uk.md) / conwy.gov.uk
 - [Cornwall Council](/doc/source/cornwall_gov_uk.md) / cornwall.gov.uk
+- [Cotswold District Council](/doc/source/cotswold_gov_uk.md) / cotswold.gov.uk
 - [Coventry City Council](/doc/source/coventry_gov_uk.md) / coventry.gov.uk
 - [Crawley Borough Council (myCrawley)](/doc/source/crawley_gov_uk.md) / crawley.gov.uk
 - [Croydon Council](/doc/source/croydon_gov_uk.md) / croydon.gov.uk
