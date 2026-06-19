@@ -867,6 +867,14 @@
     },
     "urls": {}
   },
+  "felixdorf_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/felixdorf_gv_at.md",
+    "howto": {
+      "de": "Wählen Sie Ihre Abholzone (Rayon 1 oder Rayon 2). Leer lassen für alle Zonen.",
+      "en": "Select your collection zone (Rayon 1 or Rayon 2). Leave blank to receive all zones."
+    },
+    "urls": {}
+  },
   "gemeinde24_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gemeinde24_at.md",
     "howto": {
@@ -960,6 +968,14 @@
   "obdach_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/obdach_at.md",
     "howto": {},
+    "urls": {}
+  },
+  "schlierbach_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/schlierbach_at.md",
+    "howto": {
+      "de": "Das Argument 'zone' ist optional. Zone '1' ergänzt den 4-wöchentlichen Restabfall-Abholplan; Zone 'Wohnhausanlagen' ergänzt den Gelbe-Tonne-Plan für Wohnhausanlagen. Ohne Angabe werden alle Termine angezeigt.",
+      "en": "The zone argument is optional. Zone '1' adds the 4-weekly Restabfall schedule; zone 'Wohnhausanlagen' adds the Gelbe Tonne schedule for residential complexes. Leave it out to receive all events regardless of zone."
+    },
     "urls": {}
   },
   "ics_mayer_recycling_at": {
