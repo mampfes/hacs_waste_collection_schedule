@@ -13,6 +13,8 @@ TEST_CASES = {
     "Wohnhausanlagen": {"zone": "Wohnhausanlagen"},
 }
 
+SOURCE_CODEOWNERS = ["@bbr111"]
+
 ICON_MAP = {
     "Restabfall": Icons.GENERAL_WASTE,
     "Gelber Sack": Icons.PLASTIC_PACKAGING,
