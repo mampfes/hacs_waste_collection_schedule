@@ -2120,6 +2120,12 @@
       "id": "ics_aspangmarkt_at"
     },
     {
+      "title": "Gemeinde Felixdorf",
+      "module": "felixdorf_gv_at",
+      "default_params": {},
+      "id": "felixdorf_gv_at"
+    },
+    {
       "title": "Gemeinde Sulz",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3136,6 +3142,12 @@
       "module": "obdach_at",
       "default_params": {},
       "id": "obdach_at"
+    },
+    {
+      "title": "Marktgemeinde Schlierbach",
+      "module": "schlierbach_at",
+      "default_params": {},
+      "id": "schlierbach_at"
     },
     {
       "title": "Marz",
