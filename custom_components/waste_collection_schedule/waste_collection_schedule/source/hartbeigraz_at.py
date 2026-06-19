@@ -20,6 +20,8 @@ TEST_CASES = {
     },
 }
 
+SOURCE_CODEOWNERS = ["@bbr111"]
+
 ICON_MAP = {
     "Restmüll": Icons.GENERAL_WASTE,
     "Bioabfall": Icons.BIO_KITCHEN,
