@@ -435,6 +435,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Henndorf am Wallersee](/doc/source/citiesapps_com.md) / henndorf.at
 - [Henndorf am Wallersee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hermagor-Pressegger See](/doc/ics/muellapp_com.md) / muellapp.com
+- [Herzogsdorf](/doc/source/herzogsdorf_ooe_gv_at.md) / herzogsdorf.ooe.gv.at
 - [Heugraben](/doc/source/citiesapps_com.md) / heugraben.at
 - [Himberg](/doc/ics/muellapp_com.md) / muellapp.com
 - [Hirm](/doc/source/citiesapps_com.md) / hirm.gv.at

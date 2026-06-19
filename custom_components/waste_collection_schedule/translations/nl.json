@@ -3639,6 +3639,30 @@
         },
         "data_description": {}
       },
+      "args_herzogsdorf_ooe_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_herzogsdorf_ooe_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_abfall_io_graphql": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

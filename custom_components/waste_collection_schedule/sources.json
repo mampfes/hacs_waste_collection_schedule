@@ -2504,6 +2504,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Herzogsdorf",
+      "module": "herzogsdorf_ooe_gv_at",
+      "default_params": {},
+      "id": "herzogsdorf_ooe_gv_at"
+    },
+    {
       "title": "Heugraben",
       "module": "citiesapps_com",
       "default_params": {},
