@@ -1876,6 +1876,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Elsbethen",
+      "module": "elsbethen_at",
+      "default_params": {},
+      "id": "elsbethen_at"
+    },
+    {
       "title": "Enns",
       "module": "enns_at",
       "default_params": {},
@@ -4078,6 +4084,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "St. Margarethen im Lungau",
+      "module": "st_margarethen_salzburg_at",
+      "default_params": {},
+      "id": "st_margarethen_salzburg_at"
     },
     {
       "title": "St. Martin im Innkreis",
