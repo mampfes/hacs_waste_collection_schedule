@@ -969,6 +969,11 @@
     },
     "urls": {}
   },
+  "micheldorf_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/micheldorf_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "ort_im_innkreis_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ort_im_innkreis_at.md",
     "howto": {},

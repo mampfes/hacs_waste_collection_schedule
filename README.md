@@ -548,6 +548,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Meiseldorf](/doc/source/citiesapps_com.md) / meiseldorf.gv.at
 - [Melk](/doc/source/citiesapps_com.md) / stadt-melk.at
 - [Mettersdorf am Saßbach](/doc/source/citiesapps_com.md) / mettersdorf.com
+- [Micheldorf in Oberösterreich](/doc/source/micheldorf_at.md) / micheldorf.at
 - [Miesenbach](/doc/source/citiesapps_com.md) / miesenbach.at
 - [Millstatt](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mischendorf](/doc/source/citiesapps_com.md) / mischendorf.at

@@ -3186,6 +3186,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Micheldorf in Ober\u00f6sterreich",
+      "module": "micheldorf_at",
+      "default_params": {},
+      "id": "micheldorf_at"
+    },
+    {
       "title": "Miesenbach",
       "module": "citiesapps_com",
       "default_params": {},
