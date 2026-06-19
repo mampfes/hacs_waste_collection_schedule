@@ -4172,6 +4172,12 @@
       "id": "infeo_at"
     },
     {
+      "title": "Stadtgemeinde Berndorf",
+      "module": "berndorf_gv_at",
+      "default_params": {},
+      "id": "berndorf_gv_at"
+    },
+    {
       "title": "Stadtgemeinde Klosterneuburg",
       "module": "klosterneuburg_at",
       "default_params": {},
