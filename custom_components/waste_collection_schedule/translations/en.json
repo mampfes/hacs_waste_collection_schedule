@@ -3725,6 +3725,29 @@
         },
         "data_description": {}
       },
+      "args_felixdorf_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "zone": "Collection zone (Rayon 1 or Rayon 2), or leave empty for all zones"
+        }
+      },
+      "reconfigure_felixdorf_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "zone": "Collection zone (Rayon 1 or Rayon 2), or leave empty for all zones"
+        }
+      },
       "args_gemeinde24_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -4163,6 +4186,29 @@
           "zone": "Zone"
         },
         "data_description": {}
+      },
+      "args_schlierbach_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "zone": "Collection zone: '1' or 'Wohnhausanlagen' (optional)."
+        }
+      },
+      "reconfigure_schlierbach_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "zone": "Collection zone: '1' or 'Wohnhausanlagen' (optional)."
+        }
       },
       "args_ics_mayer_recycling_at": {
         "title": "Configure Source",

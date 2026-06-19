@@ -3561,6 +3561,29 @@
         },
         "data_description": {}
       },
+      "args_felixdorf_gv_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "zone": "Abholzone (Rayon 1 oder Rayon 2), oder leer für alle Zonen"
+        }
+      },
+      "reconfigure_felixdorf_gv_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "zone": "Abholzone (Rayon 1 oder Rayon 2), oder leer für alle Zonen"
+        }
+      },
       "args_gemeinde24_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -3999,6 +4022,29 @@
           "zone": "Zone"
         },
         "data_description": {}
+      },
+      "args_schlierbach_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "zone": "Abholzone: '1' oder 'Wohnhausanlagen' (optional)."
+        }
+      },
+      "reconfigure_schlierbach_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "zone": "Abholzone: '1' oder 'Wohnhausanlagen' (optional)."
+        }
       },
       "args_ics_mayer_recycling_at": {
         "title": "Quelle konfigurieren",
