@@ -17,6 +17,8 @@ TEST_CASES = {
     },
 }
 
+SOURCE_CODEOWNERS = ["@bbr111"]
+
 ICON_MAP = {
     "Bioabfall": Icons.ORGANIC,
     "Restabfall 2-wöchentlich": Icons.GENERAL_WASTE,
