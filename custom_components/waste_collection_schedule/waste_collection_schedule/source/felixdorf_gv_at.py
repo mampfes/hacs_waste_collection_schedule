@@ -13,6 +13,8 @@ TEST_CASES: dict[str, dict] = {
     "All zones": {},
 }
 
+SOURCE_CODEOWNERS = ["@bbr111"]
+
 ICON_MAP = {
     "Biotonne": Icons.ORGANIC,
     "Restmüll": Icons.GENERAL_WASTE,
