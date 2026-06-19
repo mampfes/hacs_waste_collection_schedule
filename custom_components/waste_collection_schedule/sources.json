@@ -3102,6 +3102,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Marktgemeinde Angern an der March",
+      "module": "angern_gv_at",
+      "default_params": {},
+      "id": "angern_gv_at"
+    },
+    {
       "title": "Marktgemeinde Edlitz",
       "module": "edlitz_at",
       "default_params": {},

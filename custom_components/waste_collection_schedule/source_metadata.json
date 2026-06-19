@@ -929,6 +929,11 @@
     },
     "urls": {}
   },
+  "angern_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/angern_gv_at.md",
+    "howto": {},
+    "urls": {}
+  },
   "edlitz_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edlitz_at.md",
     "howto": {},
