@@ -47,6 +47,7 @@ This source has been successfully tested with the following service providers:
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
 - [gem2go (Abfallverband)](/doc/ics/gem2go_dev.md) / gem2go.dev
 - [Gemeinde Aspang-Markt](/doc/ics/aspangmarkt_at.md) / aspangmarkt.at
+- [Gemeinde Passail](/doc/ics/passail_at.md) / passail.at
 - [Gerasdorf bei Wien](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
@@ -95,6 +96,8 @@ This source has been successfully tested with the following service providers:
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
 - [Markt Piesting Dreistetten](/doc/ics/piesting_at.md) / piesting.at
+- [Marktgemeinde Kirchberg am Wechsel](/doc/ics/kirchberg_am_wechsel_at.md) / kirchberg-am-wechsel.at
+- [Marktgemeinde Sollenau](/doc/ics/sollenau_at.md) / sollenau.noe.gv.at
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mayer Recycling](/doc/ics/mayer_recycling_at.md) / mayer-recycling.at
 - [Millstatt](/doc/ics/muellapp_com.md) / muellapp.com
@@ -169,6 +172,7 @@ This source has been successfully tested with the following service providers:
 - [Zell](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zell am Ziller](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zellberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Zillingdorf](/doc/ics/zillingdorf_at.md) / zillingdorf.gv.at
 - [Zwölfaxing](/doc/ics/muellapp_com.md) / muellapp.com
 
 ### Belgium

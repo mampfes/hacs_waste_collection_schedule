@@ -1570,6 +1570,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Baumkirchen",
+      "module": "baumkirchen_gv_at",
+      "default_params": {},
+      "id": "baumkirchen_gv_at"
+    },
+    {
       "title": "Behamberg",
       "module": "citiesapps_com",
       "default_params": {},
@@ -1634,6 +1640,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_abfallv_zerowaste_io"
+    },
+    {
+      "title": "Breitenau",
+      "module": "citiesapps_com",
+      "default_params": {},
+      "id": "citiesapps_com"
     },
     {
       "title": "Breitenbach am Inn",
@@ -1868,6 +1880,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Elsbethen",
+      "module": "elsbethen_at",
+      "default_params": {},
+      "id": "elsbethen_at"
     },
     {
       "title": "Enns",
@@ -2126,10 +2144,22 @@
       "id": "ics_aspangmarkt_at"
     },
     {
+      "title": "Gemeinde B\u00fcrmoos",
+      "module": "buermoos_at",
+      "default_params": {},
+      "id": "buermoos_at"
+    },
+    {
       "title": "Gemeinde Felixdorf",
       "module": "felixdorf_gv_at",
       "default_params": {},
       "id": "felixdorf_gv_at"
+    },
+    {
+      "title": "Gemeinde Passail",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_passail_at"
     },
     {
       "title": "Gemeinde Sulz",
@@ -2620,6 +2650,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Imst",
+      "module": "imst_at",
+      "default_params": {},
+      "id": "imst_at"
+    },
+    {
       "title": "infeo",
       "module": "infeo_at",
       "default_params": {},
@@ -2656,6 +2692,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Jochberg",
+      "module": "jochberg_gv_at",
+      "default_params": {},
+      "id": "jochberg_gv_at"
     },
     {
       "title": "Kainach",
@@ -3156,6 +3198,12 @@
       "id": "goessendorf_at"
     },
     {
+      "title": "Marktgemeinde Kirchberg am Wechsel",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_kirchberg_am_wechsel_at"
+    },
+    {
       "title": "Marktgemeinde Obdach",
       "module": "obdach_at",
       "default_params": {},
@@ -3166,6 +3214,12 @@
       "module": "schlierbach_at",
       "default_params": {},
       "id": "schlierbach_at"
+    },
+    {
+      "title": "Marktgemeinde Sollenau",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_sollenau_at"
     },
     {
       "title": "Marz",
@@ -3384,6 +3438,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Oberndorf bei Schwanenstadt",
+      "module": "oberndorf_schwanenstadt_at",
+      "default_params": {},
+      "id": "oberndorf_schwanenstadt_at"
+    },
+    {
       "title": "Oberndorf in Tirol",
       "module": "ics",
       "default_params": {},
@@ -3598,6 +3658,12 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Puch bei Hallein",
+      "module": "puchbeihallein_gv_at",
+      "default_params": {},
+      "id": "puchbeihallein_gv_at"
     },
     {
       "title": "P\u00f6chlarn",
@@ -4062,6 +4128,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "St. Margarethen im Lungau",
+      "module": "st_margarethen_salzburg_at",
+      "default_params": {},
+      "id": "st_margarethen_salzburg_at"
+    },
+    {
       "title": "St. Martin im Innkreis",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4122,6 +4194,18 @@
         "customer": "salzburg"
       },
       "id": "infeo_at"
+    },
+    {
+      "title": "Stadtbetriebe Steyr GmbH",
+      "module": "steyr_at",
+      "default_params": {},
+      "id": "steyr_at"
+    },
+    {
+      "title": "Stadtgemeinde Berndorf",
+      "module": "berndorf_gv_at",
+      "default_params": {},
+      "id": "berndorf_gv_at"
     },
     {
       "title": "Stadtgemeinde Klosterneuburg",
@@ -4668,6 +4752,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Zillingdorf",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_zillingdorf_at"
     },
     {
       "title": "Zillingtal",

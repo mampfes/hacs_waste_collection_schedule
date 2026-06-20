@@ -17,6 +17,7 @@ DESCRIPTION = (
     "Consolidated waste collection provider for several districts in Lower Austria"
 )
 URL = "https://www.umweltverbaende.at/"
+COUNTRY = "at"
 
 
 class E_I_TYPE(TypedDict):
@@ -223,7 +224,7 @@ PARAM_TRANSLATIONS = {
         "plz": "Postleitzahl",
         "street": "Straße",
         "hnr": "Hausnummer",
-        "zusatz": "Zusatz",
+        "addition": "Zusatz",
         "calendar": "Kalender",
         "calendar_title_separator": "Kalendertitel Separator",
         "calendar_splitter": "Kalendereintrag-Trenner",
@@ -235,7 +236,7 @@ PARAM_TRANSLATIONS = {
         "plz": "Postal code",
         "street": "Street",
         "hnr": "House number",
-        "zusatz": "Addition",
+        "addition": "Addition",
         "calendar": "Calendar",
         "calendar_title_separator": "Calendar title separator",
         "calendar_splitter": "Calendar entry splitter",
@@ -376,16 +377,6 @@ ICON_MAP = {
     "Strauchschnitt": Icons.GARDEN,
     "Verpackung": Icons.PAPER,
     "LVP": Icons.PLASTIC_PACKAGING,
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "district": "Gebiet",
-        "municipal": "Gemeinde",
-        "calendar": "Kalender",
-        "calendar_title_separator": "Kalendertitel Separator",
-        "calendar_splitter": "Kalendereintrag-Trenner",
-    }
 }
 
 POSSIBLE_COLLECTION_PATHS = (
