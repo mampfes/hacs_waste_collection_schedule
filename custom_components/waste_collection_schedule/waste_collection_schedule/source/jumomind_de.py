@@ -186,7 +186,10 @@ SERVICE_MAP = {
     "kbl": {"list": ["Langen"], "url": "https://www.kbl-langen.de/"},
     "ros": {"list": ["Rosbach Vor Der Höhe"], "url": "https://www.rosbach-hessen.de/"},
     "mkk": {"list": ["Main-Kinzig-Kreis"], "url": "https://abfall-mkk.de/"},
-    "wol": {"list": ["ALW Wolfenbüttel"], "url": "https://www.alw-wf.de"},
+    "wol": {
+        "list": ["ALW Wolfenbüttel"],
+        "url": "https://wol.jumomind.com/webmodul/alw/",
+    },
 }
 
 
