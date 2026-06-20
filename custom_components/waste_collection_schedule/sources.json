@@ -3420,6 +3420,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Oberndorf bei Schwanenstadt",
+      "module": "oberndorf_schwanenstadt_at",
+      "default_params": {},
+      "id": "oberndorf_schwanenstadt_at"
+    },
+    {
       "title": "Oberndorf in Tirol",
       "module": "ics",
       "default_params": {},

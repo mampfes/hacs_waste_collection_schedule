@@ -587,6 +587,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Niederneukirchen](/doc/source/citiesapps_com.md) / niederneukirchen.ooe.gv.at
 - [Ober-Grafendorf](/doc/source/citiesapps_com.md) / gemeinde.ober-grafendorf.gv.at
 - [Oberdrauburg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Oberndorf bei Schwanenstadt](/doc/source/oberndorf_schwanenstadt_at.md) / oberndorf.ooe.gv.at
 - [Oberndorf in Tirol](/doc/ics/muellapp_com.md) / muellapp.com
 - [Oberpullendorf](/doc/source/citiesapps_com.md) / oberpullendorf.gv.at
 - [Oberschützen](/doc/source/citiesapps_com.md) / oberschuetzen.at

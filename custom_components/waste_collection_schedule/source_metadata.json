@@ -1041,6 +1041,14 @@
     "howto": {},
     "urls": {}
   },
+  "oberndorf_schwanenstadt_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oberndorf_schwanenstadt_at.md",
+    "howto": {
+      "de": "Öffnen Sie https://www.oberndorf.ooe.gv.at, wählen Sie Ihre Straße und Hausnummer aus den Abfallkalender-Auswahlfeldern auf der Startseite, und verwenden Sie dieselben Werte hier.",
+      "en": "Visit https://www.oberndorf.ooe.gv.at, pick your street and house number from the waste-calendar dropdowns on the homepage, and use the same values here."
+    },
+    "urls": {}
+  },
   "ort_im_innkreis_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ort_im_innkreis_at.md",
     "howto": {},
