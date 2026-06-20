@@ -171,6 +171,7 @@ This source has been successfully tested with the following service providers:
 - [Zell](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zell am Ziller](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zellberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Zillingdorf](/doc/ics/zillingdorf_at.md) / zillingdorf.gv.at
 - [Zwölfaxing](/doc/ics/muellapp_com.md) / muellapp.com
 
 ### Belgium

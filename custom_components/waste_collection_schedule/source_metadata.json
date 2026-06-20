@@ -1165,6 +1165,13 @@
     "howto": {},
     "urls": {}
   },
+  "ics_zillingdorf_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/zillingdorf_at.md",
+    "howto": {
+      "en": "The municipality publishes a single public Google Calendar containing all waste collection events.\n\nUse the following URL as the `url` parameter:\n\n`https://calendar.google.com/calendar/ical/v60bh2s8sl7tg2khv1kgg3qu5c%40group.calendar.google.com/public/basic.ics`\n"
+    },
+    "urls": {}
+  },
   "bep_environnement_be": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bep_environnement_be.md",
     "howto": {
