@@ -2103,6 +2103,11 @@
     },
     "urls": {}
   },
+  "awsas_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awsas_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "abfallwirtschaft_vechta_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallwirtschaft_vechta_de.md",
     "howto": {},

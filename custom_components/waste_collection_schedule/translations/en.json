@@ -9695,6 +9695,33 @@
         },
         "data_description": {}
       },
+      "args_awsas_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Name of the district (Ortsteil), e.g. 'Langendorf'.",
+          "municipality": "Name of the municipality (Gemeinde/Stadt), e.g. 'Gemeinde Elsteraue' or 'Stadt Naumburg'."
+        }
+      },
+      "reconfigure_awsas_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "district": "Name of the district (Ortsteil), e.g. 'Langendorf'.",
+          "municipality": "Name of the municipality (Gemeinde/Stadt), e.g. 'Gemeinde Elsteraue' or 'Stadt Naumburg'."
+        }
+      },
       "args_abfallwirtschaft_vechta_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

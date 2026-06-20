@@ -9413,6 +9413,33 @@
         },
         "data_description": {}
       },
+      "args_awsas_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Ortsteil",
+          "municipality": "Gemeinde / Stadt"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "district": "Name des Ortsteils, z. B. 'Langendorf'.",
+          "municipality": "Name der Gemeinde oder Stadt, z. B. 'Gemeinde Elsteraue' oder 'Stadt Naumburg'."
+        }
+      },
+      "reconfigure_awsas_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Ortsteil",
+          "municipality": "Gemeinde / Stadt"
+        },
+        "data_description": {
+          "district": "Name des Ortsteils, z. B. 'Langendorf'.",
+          "municipality": "Name der Gemeinde oder Stadt, z. B. 'Gemeinde Elsteraue' oder 'Stadt Naumburg'."
+        }
+      },
       "args_abfallwirtschaft_vechta_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
