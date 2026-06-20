@@ -161,6 +161,10 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         bins:           Colour-to-label bins, tried in order per cell.
         url_param:      Field name used in error messages (and to read the URL
                         if the retrieved image lacks one).
+        crop:           Optional ``(left, top, right, bottom)`` as fractions of
+                        the image (0..1). Restricts detection to the month grid
+                        for pages that wrap it in banners, legends or text
+                        panels. ``None`` uses the whole image.
         box_cols:       Month boxes per row (3 for a 3x4 grid, 4 for 4x3).
         grid_cols/grid_rows: Day-cell grid within each month box (7x6).
         ref_width:      Reference image width the pixel constants were tuned at.
@@ -178,6 +182,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         header_matches: RGBMatcher,
         bins: List[ColourBin],
         url_param: str = DEFAULT_URL_PARAM,
+        crop: Optional[Tuple[float, float, float, float]] = None,
         box_cols: int = 3,
         grid_cols: int = 7,
         grid_rows: int = 6,
@@ -196,6 +201,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         self._header_matches = header_matches
         self._bins = bins
         self._url_param = url_param
+        self._crop = crop
         self._box_cols = box_cols
         self._grid_cols = grid_cols
         self._grid_rows = grid_rows
@@ -333,6 +339,17 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         self, retrieved: CalendarImage, source: "BaseSource | None" = None
     ) -> List[Tuple[date, str]]:
         img = retrieved.image
+        if self._crop is not None:
+            full_w, full_h = img.size
+            left, top, right, bottom = self._crop
+            img = img.crop(
+                (
+                    int(left * full_w),
+                    int(top * full_h),
+                    int(right * full_w),
+                    int(bottom * full_h),
+                )
+            )
         width, height = img.size
         px: Any = img.load()
         scale = width / self._ref_width
