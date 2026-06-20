@@ -2954,16 +2954,16 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Addition",
+          "addition": "Zusatz",
           "calendar": "Kalender",
           "calendar_splitter": "Kalendereintrag-Trenner",
           "calendar_title_separator": "Kalendertitel Separator",
-          "district": "Gebiet",
-          "hnr": "Hnr",
+          "district": "Gebiet/Service provider id",
+          "hnr": "Hausnummer",
           "municipal": "Gemeinde",
-          "plz": "Plz",
-          "street": "Street",
-          "town": "Town"
+          "plz": "Postleitzahl",
+          "street": "Straße",
+          "town": "Ort"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
@@ -2984,16 +2984,16 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "addition": "Addition",
+          "addition": "Zusatz",
           "calendar": "Kalender",
           "calendar_splitter": "Kalendereintrag-Trenner",
           "calendar_title_separator": "Kalendertitel Separator",
-          "district": "Gebiet",
-          "hnr": "Hnr",
+          "district": "Gebiet/Service provider id",
+          "hnr": "Hausnummer",
           "municipal": "Gemeinde",
-          "plz": "Plz",
-          "street": "Street",
-          "town": "Town"
+          "plz": "Postleitzahl",
+          "street": "Straße",
+          "town": "Ort"
         },
         "data_description": {
           "addition": "(Neue Website) In den meisten Fällen nicht notwendig, nur verwenden, wenn ein Fehler ohne diese Angabe auftritt",
