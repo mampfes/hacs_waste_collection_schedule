@@ -3906,6 +3906,33 @@
         },
         "data_description": {}
       },
+      "args_imst_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Imst aufgeführt.",
+          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Imst aufgeführt."
+        }
+      },
+      "reconfigure_imst_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Imst aufgeführt.",
+          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Imst aufgeführt."
+        }
+      },
       "args_jochberg_gv_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

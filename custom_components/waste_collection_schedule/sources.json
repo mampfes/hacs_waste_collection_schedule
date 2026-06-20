@@ -2644,6 +2644,12 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Imst",
+      "module": "imst_at",
+      "default_params": {},
+      "id": "imst_at"
+    },
+    {
       "title": "infeo",
       "module": "infeo_at",
       "default_params": {},

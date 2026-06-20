@@ -458,6 +458,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hüttenberg](/doc/source/citiesapps_com.md) / huettenberg.at
 - [Ilz](/doc/source/citiesapps_com.md) / ilz.at
 - [Ilztal](/doc/source/citiesapps_com.md) / ilztal.at
+- [Imst](/doc/source/imst_at.md) / imst.gv.at
 - [infeo](/doc/source/infeo_at.md) / infeo.at
 - [Innsbrucker Kommunalbetriebe](/doc/source/infeo_at.md) / ikb.at
 - [Inzenhof](/doc/source/citiesapps_com.md) / inzenhof.at
