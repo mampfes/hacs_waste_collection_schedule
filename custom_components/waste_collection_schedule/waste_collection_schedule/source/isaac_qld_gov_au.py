@@ -96,7 +96,11 @@ class Source(BaseSource):
     CODEOWNERS = ["@markvp"]
 
     EXTRA_INFO = [
-        {"title": f"Isaac Regional Council ({town})", "url": URL}
+        {
+            "title": f"Isaac Regional Council ({town})",
+            "url": URL,
+            "default_params": {"town": town},
+        }
         for town in SUPPORTED_TOWNS
     ]
 
