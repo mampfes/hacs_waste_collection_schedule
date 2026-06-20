@@ -1037,6 +1037,13 @@
     },
     "urls": {}
   },
+  "ics_sollenau_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/sollenau_at.md",
+    "howto": {
+      "en": "The municipality publishes a single public Google Calendar containing all waste collection events (Restmüll, Biomüll, Papier, Gelber Sack, Altkleidersammlung).\n\nUse the following URL as the `url` parameter:\n\n`https://calendar.google.com/calendar/ical/muellsollenau%40gmail.com/public/basic.ics`\n"
+    },
+    "urls": {}
+  },
   "ics_mayer_recycling_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mayer_recycling_at.md",
     "howto": {

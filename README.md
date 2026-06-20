@@ -552,6 +552,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Marktgemeinde Kirchberg am Wechsel](/doc/ics/kirchberg_am_wechsel_at.md) / kirchberg-am-wechsel.at
 - [Marktgemeinde Obdach](/doc/source/obdach_at.md) / obdach.gv.at
 - [Marktgemeinde Schlierbach](/doc/source/schlierbach_at.md) / schlierbach.at
+- [Marktgemeinde Sollenau](/doc/ics/sollenau_at.md) / sollenau.noe.gv.at
 - [Marz](/doc/source/citiesapps_com.md) / marz.gv.at
 - [Mattersburg](/doc/source/citiesapps_com.md) / mattersburg.gv.at
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
