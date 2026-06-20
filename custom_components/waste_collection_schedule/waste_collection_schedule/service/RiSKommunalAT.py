@@ -22,6 +22,7 @@ from __future__ import annotations
 import ast
 import re
 from datetime import date, datetime
+from typing import TYPE_CHECKING, Iterable, Iterator
 
 import requests
 from bs4 import BeautifulSoup
@@ -30,7 +31,12 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.retrievers import RetrieverFunc
 from waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defined]
+
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
 
 # Assembly-qualified name token required by every RiSKommunal CalendarService.ashx
 # endpoint. It is a platform constant (base64 of
@@ -330,7 +336,7 @@ class RiSKommunalSource:
 
         result: dict[str, int] = {}
         for opt in select.find_all("option"):
-            value = (opt.get("value") or "").strip()
+            value = str(opt.get("value") or "").strip()
             text = opt.get_text(strip=True)
             if value and text:
                 result[text] = int(value)
@@ -417,3 +423,181 @@ class RiSKommunalSource:
             if key.casefold() in lowered:
                 return value
         return None
+
+
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture)
+#
+# RiSKommunal owns a multi-request, content-driven fetch (paginated HTML, plus an
+# optional address -> typids resolution). The BaseSource pipeline expresses this
+# while keeping retrieval and parsing strictly separate:
+#
+#     retrieve = RiSKommunalRetriever(base_url=..., query_params={...})
+#     parse    = RiSKommunalParser(zone_param="zone")   # zone_param optional
+#
+# RiSKommunalRetriever yields the calendar pages as *raw HTML, lazily* — page
+# N+1 is only fetched if the parser asks for it. RiSKommunalParser pulls pages,
+# extracts (date, label) rows (reusing the extraction above) and decides when to
+# stop (empty page, repeated first row, or list rendering). "How to fetch a page"
+# lives in the retriever; "when to stop" lives in the parser. The parser also
+# reads ``zone`` from ``source.params``, so config-dependent filtering happens at
+# parse time without coupling it to retrieval.
+# --------------------------------------------------------------------------- #
+
+
+class RiSKommunalRetriever(RetrieverFunc):
+    """Yield RiSKommunal calendar pages as raw HTML (lazily).
+
+    If ``strasse_param`` is set, an address -> ``typids`` lookup runs first
+    (a prerequisite request that turns the user's street/house number into the
+    query parameter the calendar needs). Pages are then produced on demand.
+
+    Args:
+        base_url: Municipality root URL, e.g. ``https://www.koppl.at``.
+        query_params: Fixed query parameters for ``kalender.aspx``.
+        strasse_param / hausnummer_param: ``source.params`` field names holding
+            the street / house number, for address-based municipalities.
+        selection_url: Page carrying the street dropdown (defaults to the
+            calendar page).
+        vdatum_today: Add ``vdatum`` = today to each request.
+        max_pages: Pagination upper bound.
+        timeout: Request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        base_url: str,
+        query_params: dict | None = None,
+        strasse_param: str | None = None,
+        hausnummer_param: str | None = None,
+        selection_url: str | None = None,
+        vdatum_today: bool = False,
+        max_pages: int = 50,
+        timeout: int = 30,
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.query_params = dict(query_params or {})
+        self.strasse_param = strasse_param
+        self.hausnummer_param = hausnummer_param
+        self.selection_url = selection_url
+        self.vdatum_today = vdatum_today
+        self.max_pages = max_pages
+        self.timeout = timeout
+
+    def _calendar_url(self) -> str:
+        return self.base_url + CALENDAR_PATH
+
+    def __call__(self, source: BaseSource) -> Iterator[str]:
+        session = requests.Session()
+        typids = None
+        if self.strasse_param:
+            typids = self._resolve_typids(session, source)
+        return self._pages(session, typids)
+
+    def _pages(self, session: requests.Session, typids: str | None) -> Iterator[str]:
+        for page in range(self.max_pages):
+            params = dict(self.query_params)
+            if self.vdatum_today:
+                params["vdatum"] = date.today().strftime("%d.%m.%Y")
+            if typids is not None:
+                params["typids"] = typids
+            params["page"] = page
+
+            r = session.get(
+                self._calendar_url(),
+                params=params,
+                headers=HEADERS,
+                timeout=self.timeout,
+            )
+            r.raise_for_status()
+            r.encoding = r.apparent_encoding or "utf-8"
+            yield r.text
+
+    def _resolve_typids(self, session: requests.Session, source: BaseSource) -> str:
+        strasse = source.params.get(self.strasse_param) if self.strasse_param else None
+        hausnummer = (
+            source.params.get(self.hausnummer_param) if self.hausnummer_param else None
+        )
+        url = self.selection_url or self._calendar_url()
+        r = session.get(url, headers=HEADERS, timeout=self.timeout)
+        r.raise_for_status()
+        r.encoding = r.apparent_encoding or "utf-8"
+        html = r.text
+
+        street_map = RiSKommunalSource._parse_street_dropdown(html)
+        target = str(strasse or "").casefold().replace(" ", "")
+        street_id = next(
+            (
+                sid
+                for name, sid in street_map.items()
+                if name.casefold().replace(" ", "") == target
+            ),
+            None,
+        )
+        if street_id is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                self.strasse_param or "strasse", strasse, sorted(street_map)
+            )
+
+        house = str(hausnummer or "").casefold()
+        labels: list[str] = []
+        for entry in RiSKommunalSource._parse_strassen_arr(html):
+            if entry[0] != street_id:
+                continue
+            for hnr in entry[1]:
+                label = str(hnr[1])
+                labels.append(label)
+                if label.casefold() == house:
+                    return hnr[2]
+            break
+        raise SourceArgumentNotFoundWithSuggestions(
+            self.hausnummer_param or "hausnummer", hausnummer, labels
+        )
+
+
+class RiSKommunalParser(Parser[Iterator["tuple[date, str]"]]):
+    """Extract ``(date, label)`` rows from RiSKommunal calendar pages.
+
+    Consumes the raw-HTML page iterator produced by RiSKommunalRetriever, pulling
+    pages only as far as needed: it stops at the first empty page, a repeated
+    first row (loop guard), or the single-page list rendering. Row extraction is
+    delegated to the existing :class:`RiSKommunalSource` parsing, configured with
+    ``zone`` read from ``source.params`` when ``zone_param`` is set.
+    """
+
+    def __init__(self, zone_param: str | None = None):
+        self.zone_param = zone_param
+
+    def __call__(
+        self, pages: Iterable[str], source: BaseSource | None = None
+    ) -> Iterator[tuple[date, str]]:
+        zone = None
+        if source is not None and self.zone_param:
+            zone = source.params.get(self.zone_param)
+        extractor = RiSKommunalSource(zone=zone)
+
+        seen: set[tuple[str, str]] = set()
+        seen_first: set[tuple[str, str]] = set()
+        for html in pages:
+            soup = BeautifulSoup(html, "html.parser")
+            rows = extractor._parse_table(soup)
+            list_mode = rows is None
+            if list_mode:
+                rows = extractor._parse_list(soup)
+            if not rows:
+                break
+
+            first_key = (rows[0][0].isoformat(), rows[0][1])
+            if first_key in seen_first:
+                break
+            seen_first.add(first_key)
+
+            for collection_date, waste_type in rows:
+                key = (collection_date.isoformat(), waste_type)
+                if key in seen:
+                    continue
+                seen.add(key)
+                yield collection_date, waste_type
+
+            if list_mode:
+                break

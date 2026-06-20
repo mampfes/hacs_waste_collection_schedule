@@ -27,11 +27,14 @@ from typing import (
 )
 
 from bs4 import BeautifulSoup, Tag
+
 from waste_collection_schedule.service.ICS import IcsEvent
 
 if TYPE_CHECKING:
     import requests
     from curl_cffi import requests as _cffi_requests
+
+    from waste_collection_schedule.base_source import BaseSource
 
     Response: TypeAlias = "requests.Response | _cffi_requests.Response"
 else:
@@ -41,9 +44,15 @@ T = TypeVar("T", covariant=True)
 
 
 class Parser(Protocol[T]):
-    """A callable that converts an HTTP response into records of type T."""
+    """A callable that converts raw retrieved data into records of type T.
 
-    def __call__(self, response: Response) -> T: ...  # noqa: E704
+    Receives the raw output of ``retrieve`` (an HTTP response, or a lazy
+    iterable of responses for paginated sources) and the ``source`` instance,
+    so a parser can read ``source.params`` or use ``source.session`` to fetch
+    supplementary data while parsing.
+    """
+
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> T: ...  # noqa: E704
 
 
 class JsonParser(Parser[Any]):
@@ -64,7 +73,7 @@ class JsonParser(Parser[Any]):
     def __init__(self, *keys: str):
         self.keys = keys
 
-    def __call__(self, response: Response) -> Any:
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
         data = response.json()
         for key in self.keys:
             data = data[key]
@@ -74,7 +83,7 @@ class JsonParser(Parser[Any]):
 class TextParser(Parser[str]):
     """Return response as plain text."""
 
-    def __call__(self, response: Response) -> str:
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> str:
         return response.text
 
 
@@ -99,7 +108,9 @@ class HtmlParser(Parser[List[Tag]]):
         self.selector = selector
         self.skip = skip
 
-    def __call__(self, response: Response) -> List[Tag]:
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> List[Tag]:
         soup = BeautifulSoup(response.text, "html.parser")
         return soup.select(self.selector)[self.skip :]
 
@@ -114,7 +125,9 @@ class IcsParser(Parser[List[Tuple[datetime.date, str]]]):
         transformer = ICSTransformer(type_value_map={...})
     """
 
-    def __call__(self, response: Response) -> List[Tuple[datetime.date, str]]:
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> List[Tuple[datetime.date, str]]:
         from waste_collection_schedule.service.ICS import ICS
 
         return ICS().convert(response.text)
@@ -135,7 +148,9 @@ class IcsEventsParser(Parser[List[IcsEvent]]):
             return Collection(date=record.date, waste_type=...)
     """
 
-    def __call__(self, response: Response) -> List[IcsEvent]:
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> List[IcsEvent]:
         from waste_collection_schedule.service.ICS import ICS
 
         return ICS().convert_events(response.text)

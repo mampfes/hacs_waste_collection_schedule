@@ -1,5 +1,19 @@
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AbfallnaviDe import SERVICE_DOMAINS, AbfallnaviDe
+from dataclasses import replace
+
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service.AbfallnaviDe import (
+    SERVICE_DOMAINS,
+    AbfallnaviParser,
+    AbfallnaviRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+
+# Waste-type names come back as open-ended German fraktion strings that vary by
+# municipality, so this source declares NO per-source type map: the shared
+# multilingual resolver (waste_types.resolve) classifies the standard German
+# labels, and anything it doesn't recognise is preserved verbatim rather than
+# collapsed to OTHER.
 
 TITLE = "AbfallNavi (RegioIT.de)"
 DESCRIPTION = (
@@ -70,7 +84,42 @@ TEST_CASES = {
 }
 
 
-class Source:
+class Source(BaseSource):
+    TITLE = TITLE
+    DESCRIPTION = DESCRIPTION
+    URL = URL
+    COUNTRY = "de"
+    TEST_CASES = TEST_CASES
+
+    PARAMS = [
+        text_field("service", "Service"),
+        text_field("ort", "Ort"),
+        replace(text_field("strasse", "Straße"), required=False),
+        replace(text_field("hausnummer", "Hausnummer"), required=False),
+    ]
+
+    HOWTO = {
+        "en": (
+            "Pick the 'service' id for your region from the source's list of "
+            "municipalities, then enter your town ('ort'), and where required "
+            "the street ('strasse') and house number ('hausnummer')."
+        ),
+        "de": (
+            "Wählen Sie die 'service'-Kennung Ihrer Region aus der Liste der "
+            "Kommunen, geben Sie dann Ihren Ort an und, falls erforderlich, "
+            "die Straße ('strasse') und Hausnummer ('hausnummer')."
+        ),
+    }
+
+    retrieve = AbfallnaviRetriever(
+        service="service",
+        city="ort",
+        street="strasse",
+        house_number="hausnummer",
+    )
+    parse = AbfallnaviParser()
+    transformer = ICSTransformer()  # types resolved via the shared vocabulary
+
     def __init__(
         self,
         service: str,
@@ -78,18 +127,9 @@ class Source:
         strasse: str | None = None,
         hausnummer: str | int | None = None,
     ):
-        self._api = AbfallnaviDe(service)
-        self._ort = ort
-        self._strasse = strasse
-        self._hausnummer = (
-            str(hausnummer) if isinstance(hausnummer, int) else hausnummer
+        super().__init__(
+            service=service,
+            ort=ort,
+            strasse=strasse,
+            hausnummer=(str(hausnummer) if isinstance(hausnummer, int) else hausnummer),
         )
-
-    def fetch(self):
-        dates = self._api.get_dates(self._ort, self._strasse, self._hausnummer)
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-
-        return sorted(entries, key=lambda e: e.date)

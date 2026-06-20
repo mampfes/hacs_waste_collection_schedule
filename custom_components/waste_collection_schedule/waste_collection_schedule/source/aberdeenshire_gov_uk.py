@@ -1,3 +1,4 @@
+from bs4 import Tag
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
@@ -7,6 +8,18 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE, OTHER, RECYCLAB
 # Demonstrates: HtmlTransformer + parsers.HtmlParser(selector) + legacy SSL GET.
 # No custom methods needed — retrieve and parse are declarative class attributes.
 # The UPRN is baked into the URL via a callable resolved against source.params.
+
+
+def _cell_text(el: Tag, selector: str) -> str:
+    """Return the text of the first matching child cell.
+
+    Raises AttributeError if the cell is missing; HtmlTransformer catches that
+    and skips the record, matching the prior behaviour.
+    """
+    cell = el.select_one(selector)
+    if cell is None:
+        raise AttributeError(f"no cell matching {selector!r}")
+    return cell.text
 
 
 class Source(BaseSource):
@@ -36,8 +49,8 @@ class Source(BaseSource):
     WASTE_TYPES = [RECYCLABLES, GENERAL_WASTE, OTHER]
 
     transformer = HtmlTransformer(
-        date_getter=lambda el: el.select_one("td:nth-child(1)").text.split(" ")[0],
-        type_getter=lambda el: el.select_one("td:nth-child(2)").text,
+        date_getter=lambda el: _cell_text(el, "td:nth-child(1)").split(" ")[0],
+        type_getter=lambda el: _cell_text(el, "td:nth-child(2)"),
         parse_date=date_parsers.for_format("%d/%m/%Y"),
         type_value_map={
             "Mixed recycling and food waste": RECYCLABLES,

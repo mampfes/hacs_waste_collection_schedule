@@ -15,11 +15,18 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.retrievers import RetrieverFunc
+
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
 
 # --- Custom Exception Hierarchy ---
 
@@ -264,8 +271,9 @@ class MapsClient:
                 "Could not identify a valid FullText address form template."
             )
 
-        self._address_form_template_id = match["templateId"]
-        return self._address_form_template_id
+        template_id = str(match["templateId"])
+        self._address_form_template_id = template_id
+        return template_id
 
     def search_address(self, address: str, suburb: str | None = None) -> dict[str, Any]:
         """
@@ -495,6 +503,90 @@ class IntegrationClient:
 
 
 # --- Helpers ---
+
+
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture)
+#
+# IntraMaps needs a stateful, multi-request handshake (session token -> module ->
+# form template -> search -> select) before any data comes back. The split:
+#
+#     retrieve = IntraMapsRetriever(CONFIG, address="address")
+#     parse    = IntraMapsPanelParser()        # -> [{"column", "value"}, ...]
+#
+# IntraMapsRetriever drives the whole stateful handshake and returns the *raw*
+# infoPanels response. IntraMapsPanelParser turns that raw response into column /
+# value field records (no I/O — it runs against a cached response too). Turning a
+# field's value ("Every Friday", "Friday Next Week") into dates is council
+# specific, so that stays in the source's preprocessor.
+# --------------------------------------------------------------------------- #
+
+
+class IntraMapsRetriever(RetrieverFunc):
+    """Run the IntraMaps session handshake and return the raw infoPanels response.
+
+    Args:
+        config: A fully-populated :class:`MapsClientConfig` for the council.
+        address: ``source.params`` field name holding the address string.
+        suburb: Optional ``source.params`` field name to disambiguate matches.
+    """
+
+    def __init__(
+        self,
+        config: MapsClientConfig,
+        address: str = "address",
+        suburb: str | None = None,
+    ):
+        self.config = config
+        self.address = address
+        self.suburb = suburb
+
+    def __call__(self, source: BaseSource) -> dict[str, Any]:
+        addr = source.params[self.address]
+        suburb = source.params.get(self.suburb) if self.suburb else None
+        try:
+            with MapsClient(self.config) as client:
+                result = client.select_address(addr, suburb)
+        except IntraMapsError as e:
+            field = self.address if isinstance(self.address, str) else "address"
+            raise SourceArgumentNotFound(field, addr) from e
+
+        response = result.get("response")
+        return response if isinstance(response, dict) else {}
+
+
+class IntraMapsPanelParser(Parser["list[dict[str, str]]"]):
+    """Extract ``{"column", "value"}`` field records from an infoPanels response.
+
+    Reads the same nested ``infoPanels > panel > feature > fields`` structure as
+    :func:`extract_panel_fields`, but keys each field by its ``value.column`` (the
+    stable machine name councils filter on) rather than its display caption.
+    """
+
+    def __init__(self, panel: str = "info1"):
+        self.panel = panel
+
+    def __call__(
+        self, response: dict[str, Any], source: BaseSource | None = None
+    ) -> list[dict[str, str]]:
+        fields = (
+            (response or {})
+            .get("infoPanels", {})
+            .get(self.panel, {})
+            .get("feature", {})
+            .get("fields", [])
+        )
+        records: list[dict[str, str]] = []
+        for field in fields:
+            value = field.get("value", {})
+            if isinstance(value, dict):
+                records.append(
+                    {
+                        "column": value.get("column", ""),
+                        "value": value.get("value", ""),
+                    }
+                )
+        return records
 
 
 def extract_panel_fields(

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-from datetime import datetime
+from datetime import date, datetime
+from typing import TYPE_CHECKING, Any
 
 import requests
 
@@ -8,6 +9,11 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
+from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.retrievers import RetrieverFunc
+
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
 
 SERVICE_DOMAINS = [
     {
@@ -298,68 +304,87 @@ class AbfallnaviDe:
         waste_types = self._fetch_json("fraktionen")
         return {waste_type["id"]: waste_type["name"] for waste_type in waste_types}
 
-    def _get_dates(self, target, id, waste_types=None):
-        # retrieve collections
-        args = []
-
-        if waste_types is None:
-            waste_types = self.get_waste_types()
-
-        for f in waste_types.keys():
-            args.append(("fraktion", f))
-
-        results = self._fetch_json(f"{target}/{id}/termine", params=args)
-
-        return [
-            [
-                datetime.strptime(r["datum"], "%Y-%m-%d").date(),
-                waste_types[r["bezirk"]["fraktionId"]],
-            ]
-            for r in results
-        ]
-
-    def get_dates_by_street_id(self, street_id):
-        return self._get_dates("strassen", street_id, waste_types=None)
-
-    def get_dates_by_house_number_id(self, house_number_id):
-        return self._get_dates("hausnummern", house_number_id, waste_types=None)
-
-    def get_dates(self, city, street, house_number=None):
-        """Get dates by strings only for convenience."""
-        # find city_id
-        city_id = self.get_city_id(city)
-
-        # find street_id
-        street_ids = self.get_street_ids(city_id, street)
-
-        dates = []
-        for street_id in street_ids:
-            # find house_number_id (which is optional: not all house number do have an id)
-            house_number_id = self.get_house_number_id(street_id, house_number)
-
-            # return dates for specific house number of street if house number
-            # doesn't have an own id
-            if house_number_id is not None:
-                dates += self.get_dates_by_house_number_id(house_number_id)
-            else:
-                dates += self.get_dates_by_street_id(street_id)
-        return dates
-
     def _find_in_inverted_dict(self, mydict, value):
-        inverted_dict = dict(map(reversed, mydict.items()))
+        inverted_dict = {v: k for k, v in mydict.items()}
         return inverted_dict.get(value)
 
 
-def main():
-    aachen = AbfallnaviDe("aachen")
-    print(aachen.get_dates("Aachen", "Abteiplatz", "7"))
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture)
+#
+# regio iT / Abfallnavi resolves a place across several requests (city -> id,
+# street -> id, house -> id) before fetching the date feed, and the date feed
+# only carries a ``fraktionId`` that has to be decoded against a separate
+# ``fraktionen`` reference list. The split:
+#
+#     retrieve = AbfallnaviRetriever(service="service", city="city", ...)
+#     parse    = AbfallnaviParser()
+#
+# AbfallnaviRetriever performs the multi-request acquisition and returns the two
+# *raw* payloads it gathered, bundled: the ``termine`` feed and the ``fraktionen``
+# reference map. AbfallnaviParser does no I/O — it cross-references the two into
+# ``(date, label)`` rows. Acquisition (many requests) and interpretation stay
+# separate; a plain ICSTransformer then maps each label onto a canonical type.
+# --------------------------------------------------------------------------- #
 
-    lindlar = AbfallnaviDe("bav")
-    print(lindlar.get_dates("Lindlar", "Aggerweg"))
 
-    roe = AbfallnaviDe("roe")
-    print(roe.get_dates("Roetgen", "Am Sportplatz", "2"))
+class AbfallnaviRetriever(RetrieverFunc):
+    """Resolve the place and return the raw ``termine`` feed + ``fraktionen`` map.
+
+    Args are the ``source.params`` field names holding the regio iT service id,
+    the city, the street and (optionally) the house number.
+    """
+
+    def __init__(
+        self,
+        service: str = "service",
+        city: str = "city",
+        street: str = "street",
+        house_number: str = "house_number",
+    ):
+        self.service = service
+        self.city = city
+        self.street = street
+        self.house_number = house_number
+
+    def __call__(self, source: "BaseSource") -> dict[str, Any]:
+        params = source.params
+        client = AbfallnaviDe(params[self.service])
+
+        city_id = client.get_city_id(params.get(self.city))
+        street_ids = client.get_street_ids(city_id, params.get(self.street))
+        fraktionen = client.get_waste_types()
+
+        termine: list[dict] = []
+        for street_id in street_ids:
+            house_number_id = client.get_house_number_id(
+                street_id, params.get(self.house_number)
+            )
+            if house_number_id is not None:
+                target, object_id = "hausnummern", house_number_id
+            else:
+                target, object_id = "strassen", street_id
+            args = [("fraktion", fraktion_id) for fraktion_id in fraktionen]
+            termine += client._fetch_json(f"{target}/{object_id}/termine", params=args)
+
+        return {"termine": termine, "fraktionen": fraktionen}
 
 
-if __name__ == "__main__":
-    main()
+class AbfallnaviParser(Parser["list[tuple[date, str]]"]):
+    """Decode the raw ``termine`` feed into ``(date, label)`` rows.
+
+    Cross-references each entry's ``fraktionId`` against the ``fraktionen``
+    reference map gathered by the retriever. Does no I/O, so it runs standalone
+    against a cached ``{"termine": ..., "fraktionen": ...}`` fixture.
+    """
+
+    def __call__(
+        self, raw: dict[str, Any], source: "BaseSource | None" = None
+    ) -> list[tuple[date, str]]:
+        fraktionen = raw["fraktionen"]
+        rows: list[tuple[date, str]] = []
+        for entry in raw["termine"]:
+            collection_date = datetime.strptime(entry["datum"], "%Y-%m-%d").date()
+            label = fraktionen.get(entry["bezirk"]["fraktionId"], "")
+            rows.append((collection_date, label))
+        return rows

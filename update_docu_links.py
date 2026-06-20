@@ -20,6 +20,7 @@ else:
 import yaml
 
 from default_translations import default_descriptions, default_translations
+from doc_generator import _is_base_source, render_source_doc
 
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
@@ -53,6 +54,7 @@ PACKAGE_DIR = (
     / "waste_collection_schedule"
 )
 SOURCE_DIR = PACKAGE_DIR / "waste_collection_schedule" / "source"
+DOC_SOURCE_DIR = Path(__file__).resolve().parents[0] / "doc" / "source"
 DOC_URL_BASE = "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master"
 
 T = TypeVar("T")
@@ -498,6 +500,13 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     )
 
     filename = f"/doc/source/{file}.md"
+
+    # New-architecture (BaseSource) sources derive their doc/source/<id>.md from
+    # class metadata, so contributors no longer hand-write it. Legacy sources
+    # keep their hand-written file untouched.
+    if title is not None and _is_base_source(source_cls):
+        generate_base_source_doc(file, source_cls)
+
     sources = []
     if title is not None:
         sources.append(
@@ -537,6 +546,19 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
             )
         )
     return module, sources
+
+
+def generate_base_source_doc(file: str, source_cls: Any) -> None:
+    """Write doc/source/<file>.md for a new-architecture (BaseSource) source.
+
+    The text is fully derived from the source class metadata via
+    render_source_doc(). Legacy (module-level) sources are not handled here;
+    they keep their hand-written doc file.
+    """
+    md = render_source_doc(file, source_cls)
+    out_path = DOC_SOURCE_DIR / f"{file}.md"
+    with open(out_path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(md)
 
 
 def browse_ics_yaml() -> list[SourceInfo]:

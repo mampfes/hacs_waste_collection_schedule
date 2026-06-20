@@ -246,13 +246,13 @@ def _test_source_has_necessary_parameters_test_cases(
     init_params_names: Iterable[str],
     mandatory_init_params_names: Iterable[str],
 ) -> None:
-    assert _has_source_meta(
-        module, "TEST_CASES"
-    ), f"missing test_cases in source {source}"
+    assert _has_source_meta(module, "TEST_CASES"), (
+        f"missing test_cases in source {source}"
+    )
     test_cases = _source_meta(module, "TEST_CASES")
-    assert isinstance(
-        test_cases, dict
-    ), f"test_cases must be a dictionary in source {source}"
+    assert isinstance(test_cases, dict), (
+        f"test_cases must be a dictionary in source {source}"
+    )
     assert len(test_cases) > 0, f"test_cases must not be empty in source {source}"
 
     if source not in SOURCES_EXCLUDE_TEST_CASE_CHECK:
@@ -338,9 +338,9 @@ def test_source_has_necessary_parameters() -> None:
                 if param.default is Parameter.empty
             } - {"self"}
         assert _has_source_meta(module, "TITLE"), f"missing TITLE in source {source}"
-        assert _has_source_meta(
-            module, "DESCRIPTION"
-        ), f"missing DESCRIPTION in source {source}"
+        assert _has_source_meta(module, "DESCRIPTION"), (
+            f"missing DESCRIPTION in source {source}"
+        )
         assert _has_source_meta(module, "URL"), f"missing URL in source {source}"
 
         _test_source_has_necessary_parameters_test_cases(
@@ -359,14 +359,14 @@ def test_source_has_necessary_parameters() -> None:
             module.Source, "COUNTRY", None
         )
         if declared_country:
-            assert _is_supported_country_code(
-                declared_country
-            ), f"unsupported country code {declared_country!r} in source {source}"
+            assert _is_supported_country_code(declared_country), (
+                f"unsupported country code {declared_country!r} in source {source}"
+            )
 
         if source not in SOURCES_NO_COUNTRY and not _has_supported_country_code(source):
-            assert (
-                declared_country
-            ), f"missing COUNTRY in source {source} or supported countrycode in filename"
+            assert declared_country, (
+                f"missing COUNTRY in source {source} or supported countrycode in filename"
+            )
 
         if hasattr(module, "EXTRA_INFO"):
             _test_source_has_necessary_parameters_extra_info(
@@ -594,9 +594,14 @@ def test_mzv_rotenburg_route_filter_without_location() -> None:
     ]
 
     response = MagicMock()
-    with patch.object(module.Source, "retrieve", return_value=response), patch(
-        "waste_collection_schedule.service.ICS.ICS.convert_events",
-        return_value=events,
+    # parse() guards against a non-ICS body (unknown city); give it a valid feed.
+    response.text = "BEGIN:VCALENDAR\nEND:VCALENDAR"
+    with (
+        patch.object(module.Source, "retrieve", return_value=response),
+        patch(
+            "waste_collection_schedule.service.ICS.ICS.convert_events",
+            return_value=events,
+        ),
     ):
         entries = module.Source(
             city="rote", yellow_route="2", paper_route="Ost"

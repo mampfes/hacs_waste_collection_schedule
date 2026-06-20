@@ -33,13 +33,15 @@ For complex sources that don't fit the standard transformers, implement
 
 import logging
 from abc import ABC
+from collections.abc import Callable, Iterable
 from typing import Any, Generic, TypeVar
 
 from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import ConfigParam, validate
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.transformers import BaseTransformer
-from waste_collection_schedule.waste_types import WasteType
+from waste_collection_schedule.waste_types import ALL_TYPES, WasteType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -63,7 +65,10 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
 
     # --- Waste types this source produces ---
     # Auto-derived from transformer.waste_types when not explicitly declared.
-    # Explicit declaration takes precedence for sources using classify().
+    # A transformer with an explicit type_value_map yields that subset; one that
+    # relies solely on the shared multilingual resolver could produce any
+    # canonical type, so it derives ALL_TYPES. Explicit declaration takes
+    # precedence (e.g. classify()-based sources).
     WASTE_TYPES: list[WasteType] = []
 
     def __init_subclass__(cls, **kwargs):
@@ -72,39 +77,65 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         if "WASTE_TYPES" not in cls.__dict__ and "transformer" in cls.__dict__:
             transformer = cls.__dict__["transformer"]
             if transformer is not None:
-                cls.WASTE_TYPES = transformer.waste_types
+                cls.WASTE_TYPES = transformer.waste_types or list(ALL_TYPES)
 
     # --- Pipeline config ---
     API_URL: str = ""
     TIMEOUT: int = 30
 
+    # When True, fetch() raises instead of returning an empty list if the
+    # pipeline produced no collections. Set on address/lookup sources where an
+    # empty result means the input didn't resolve (so the UI shows a clear error
+    # rather than a silently-empty calendar). Leave False for sources that may
+    # legitimately have no collections in the current window.
+    RAISE_ON_EMPTY: bool = False
+
     # --- Pipeline steps (override to customise) ---
 
-    retrieve: retrievers.RetrieverFunc = retrievers.http_get
-    """Fetch raw data from the remote service. Returns an HTTP Response.
+    # The pipeline-step attributes below are typed as plain callables rather
+    # than as their step protocols. A configured retriever/parser/preprocessor
+    # *instance* satisfies the protocol, but a source may instead override the
+    # step with a plain ``def retrieve(self, source)`` method. A bound-method
+    # override does not structurally match a single-argument callable protocol,
+    # so pyright would flag ``reportIncompatibleVariableOverride``. Typing these
+    # as ``Callable[..., ...]`` accepts both forms while keeping the runtime
+    # behaviour identical (``fetch`` calls them positionally).
+
+    retrieve: Callable[..., Any] = retrievers.http_get
+    """Fetch raw data from the remote service.
+
+    Returns an HTTP Response, or a (possibly lazy) iterable of responses for
+    paginated/multi-layer sources whose ``parse`` consumes them. The return is
+    typed ``Any`` so method overrides may return either shape.
 
     Default: zero-config GET to API_URL with _params, _headers, TIMEOUT.
     Set on the class to swap the retrieval strategy::
 
         retrieve = retrievers.http_post                       # zero-config POST
         retrieve = retrievers.HttpGetRetriever(url="https://...")
+
+    Or override as a method for full control::
+
+        def retrieve(self, source):
+            return source.session.get(...)
     """
 
-    parse: parsers.Parser[ParserType] = parsers.JsonParser()
+    parse: Callable[..., ParserType] = parsers.JsonParser()
     """Convert the raw response into parsed output.
 
     Default: parse as JSON (response.json()).
     Alternatives: parsers.JsonParser("key"), parsers.IcsParser(),
-    parsers.HtmlParser(selector).
+    parsers.HtmlParser(selector). May also be overridden as a method.
     """
 
-    preprocessor: preprocessors.Preprocessor[ParserType, TransformerType] = (
+    preprocessor: Callable[..., Iterable[TransformerType]] = (
         preprocessors.DefaultPreprocessor()
     )
     """Normalise parsed output into an iterable of records for the transformer.
 
     Default: a single dict becomes ``[dict]``, a falsy/None value becomes
-    ``[]``, and an existing iterable passes through unchanged.
+    ``[]``, and an existing iterable passes through unchanged. May also be
+    overridden as a method.
     """
 
     transformer: BaseTransformer[TransformerType] | None = None
@@ -138,16 +169,43 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         """
         validate(self.PARAMS, kwargs)
         self.params: dict[str, Any] = dict(kwargs)
+        self._session: Any = None
+
+    @property
+    def session(self) -> Any:
+        """A shared, lazily-created HTTP client (curl_cffi, browser impersonation).
+
+        Available to every pipeline stage so that retrieval and any parse-driven
+        follow-up requests reuse one connection. A parser that needs to fetch a
+        supplementary page (e.g. a detail link discovered while parsing) does::
+
+            def parse(self, response, source):
+                index = response.json()
+                detail = source.session.get(index["detail_url"]).json()
+                ...
+        """
+        if self._session is None:
+            from curl_cffi import requests as _cffi_requests
+
+            self._session = _cffi_requests.Session(impersonate="chrome")
+        return self._session
 
     # --- Pipeline orchestration ---
 
     def fetch(self) -> list[Collection]:
-        """Orchestrate the pipeline: retrieve → parse → preprocess → transform."""
-        response = self.retrieve(self)
-        records = self.parse(response)
+        """Orchestrate the pipeline: retrieve → parse → preprocess → transform.
+
+        Each stage receives the source instance, so a parser/preprocessor can
+        read ``source.params`` and use ``source.session`` for follow-up requests.
+        ``retrieve`` may return a single raw response or a lazy iterable of raw
+        responses (pagination); a parser consuming the latter controls how many
+        pages are actually fetched by how far it iterates.
+        """
+        raw = self.retrieve(self)
+        records = self.parse(raw, self)
 
         entries: list[Collection] = []
-        for record in self.preprocessor(records):
+        for record in self.preprocessor(records, self):
             if self.transformer is not None:
                 collection = self.transformer(record)
             else:
@@ -155,7 +213,28 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
             if collection is not None:
                 entries.append(collection)
 
+        if not entries and self.RAISE_ON_EMPTY:
+            self._raise_empty()
+
         return entries
+
+    def _raise_empty(self) -> None:
+        """Signal "nothing found" instead of returning an empty schedule.
+
+        Used by RAISE_ON_EMPTY sources where an empty result means the user's
+        input didn't resolve (e.g. an address outside the service area), so the
+        HA UI shows a clear error rather than a silently-empty calendar. Blames
+        the first declared PARAM field when there is one (so the message names
+        the offending argument), else raises a generic error.
+        """
+        for param in self.PARAMS:
+            for field_name in param.fields:
+                raise SourceArgumentNotFound(
+                    field_name,
+                    self.params.get(field_name),
+                    "no collections found, please check this value is correct.",
+                )
+        raise ValueError("No collections found.")
 
     def classify(self, record: Any) -> Collection | None:
         """Extract a Collection from a single parsed record.

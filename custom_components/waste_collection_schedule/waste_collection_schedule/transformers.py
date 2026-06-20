@@ -32,7 +32,7 @@ from bs4 import Tag
 
 from . import date_parsers
 from .collection import Collection
-from .waste_types import OTHER, WasteType
+from .waste_types import WasteType, preserved, resolve
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -71,20 +71,28 @@ class BaseTransformer(ABC, Generic[T]):
         return self._parse_date_fn(date_str)
 
     def _resolve_type(self, raw_type: str) -> Optional[WasteType]:
-        """Map raw type string to WasteType. Returns OTHER if unmapped; None to skip."""
+        """Map a raw type string to a WasteType (never loses information).
+
+        Resolution order:
+          1. the source's ``type_value_map`` (an explicit override),
+          2. the shared multilingual vocabulary (``waste_types.resolve``),
+          3. ``waste_types.preserved`` — keep the original label verbatim rather
+             than collapsing unknown labels to OTHER.
+        """
         key = raw_type.strip().lower()
-        if self._type_value_map:
-            wt = self._type_value_map.get(key)
-            if wt is not None:
-                return wt
-            _LOGGER.warning(
-                "Unknown waste type %r — no entry in type_value_map; "
-                "falling back to OTHER. Add it to suppress this warning.",
-                raw_type,
-            )
-            return OTHER
-        # No map declared — everything becomes OTHER (no warning: that was intentional)
-        return OTHER
+        if self._type_value_map and key in self._type_value_map:
+            return self._type_value_map[key]
+
+        waste_type = resolve(raw_type)
+        if waste_type is not None:
+            return waste_type
+
+        _LOGGER.warning(
+            "Unresolved waste type %r — preserving the original label. "
+            "Add an alias to waste_types to classify it.",
+            raw_type,
+        )
+        return preserved(raw_type)
 
     @abstractmethod
     def __call__(self, record: T) -> Optional[Collection]:

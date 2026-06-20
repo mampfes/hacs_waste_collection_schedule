@@ -71,6 +71,58 @@ class TestWasteType:
         assert len(ids) == len(set(ids)), "Duplicate WasteType ids"
 
 
+class TestWasteTypeResolution:
+    """resolve() recognises labels across languages; unknowns are preserved."""
+
+    def test_resolve_across_languages(self):
+        from waste_collection_schedule import waste_types as wt
+
+        cases = {
+            "Restmüll": "general_waste",  # de display name
+            "Restabfall": "general_waste",  # de alias
+            "Ordures ménagères": "general_waste",  # fr name
+            "Wertstofftonne": "recyclables",  # de alias
+            "Gelber Sack": "recyclables",
+            "Bioabfall": "organic",
+            "Blaue Tonne": "paper",
+            "Altglas": "glass",
+            "Vetro": "glass",  # it name
+            "Sperrmüll": "bulky_waste",
+            "Problemstoff": "hazardous",
+            "Weiße Ware": "electronics",
+            "Grünschnitt": "garden_waste",
+            "Déchets verts": "garden_waste",  # fr alias
+        }
+        for label, expected_id in cases.items():
+            resolved = wt.resolve(label)
+            assert resolved is not None, f"{label!r} should resolve"
+            assert resolved.id == expected_id, f"{label!r} -> {resolved.id}"
+
+    def test_resolve_is_case_and_whitespace_insensitive(self):
+        from waste_collection_schedule import waste_types as wt
+
+        assert wt.resolve("  RESTMÜLL  ") is wt.GENERAL_WASTE
+
+    def test_resolve_unknown_returns_none(self):
+        from waste_collection_schedule import waste_types as wt
+
+        assert wt.resolve("Frobnitz-Tonne") is None
+
+    def test_preserved_keeps_label_in_every_locale(self):
+        from waste_collection_schedule import waste_types as wt
+
+        p = wt.preserved("Frobnitz-Tonne")
+        assert p.id == "preserved:frobnitz-tonne"
+        assert p.names["en"] == p.names["de"] == "Frobnitz-Tonne"
+        assert p.icon == wt.OTHER.icon  # borrows OTHER's icon/colour
+
+    def test_other_is_not_resolvable(self):
+        # OTHER is an explicit sink, not part of the recognised vocabulary.
+        from waste_collection_schedule import waste_types as wt
+
+        assert wt.resolve("Other") is not wt.OTHER
+
+
 class TestCollection:
     """Collection(date, waste_type) — new-style primary interface."""
 
@@ -514,6 +566,443 @@ class TestParsers:
             assert result[0].location == "Route 1"
 
 
+class TestArcGisComponents:
+    """ArcGis service contributes a Retriever and a Parser, kept independent."""
+
+    def test_feature_retriever_geocodes_then_queries_raw(self):
+        from waste_collection_schedule.service import ArcGis
+
+        source = MagicMock()
+        source.params = {"address": "1 Test St"}
+        captured = {}
+
+        def fake_get(url, params=None, timeout=None):
+            captured["url"] = url
+            captured["params"] = params
+            return MagicMock()
+
+        retriever = ArcGis.ArcGisFeatureRetriever(
+            "https://x/FeatureServer/0", address="address"
+        )
+        with (
+            patch.object(ArcGis, "geocode", return_value={"x": 1.0, "y": 2.0}),
+            patch.object(ArcGis.requests, "get", side_effect=fake_get),
+        ):
+            retriever(source)
+
+        assert captured["url"].endswith("/FeatureServer/0/query")
+        assert captured["params"]["f"] == "json"
+        assert "geometry" in captured["params"]
+
+    def test_feature_retriever_bad_address_raises_source_argument(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service import ArcGis
+
+        source = MagicMock()
+        source.params = {"address": "nowhere"}
+        retriever = ArcGis.ArcGisFeatureRetriever("https://x/FeatureServer/0")
+        with patch.object(
+            ArcGis, "geocode", side_effect=ArcGis.ArcGisGeocodeError("none")
+        ):
+            with pytest.raises(SourceArgumentNotFound):
+                retriever(source)
+
+    def test_feature_parser_extracts_attributes_from_raw_response(self):
+        from waste_collection_schedule.service import ArcGis
+
+        resp = MagicMock()
+        resp.raise_for_status.return_value = None
+        resp.json.return_value = {
+            "features": [{"attributes": {"a": 1}}, {"attributes": {"a": 2}}]
+        }
+        # Runs standalone against a fixture Response — no retriever involved.
+        assert ArcGis.ArcGisFeatureParser()(resp) == [{"a": 1}, {"a": 2}]
+
+    def test_feature_parser_empty_features(self):
+        from waste_collection_schedule.service import ArcGis
+
+        resp = MagicMock()
+        resp.raise_for_status.return_value = None
+        resp.json.return_value = {"features": []}
+        assert ArcGis.ArcGisFeatureParser()(resp) == []
+
+
+class TestPipelineContext:
+    """Parser/preprocessor receive the source; source exposes a lazy session."""
+
+    def test_parse_receives_source(self):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        seen = {}
+
+        class Src(BaseSource):
+            def __init__(self):
+                super().__init__()
+
+            def retrieve(self, source):
+                return "raw"
+
+            def parse(self, raw, source):
+                # The parser can read params off the source it is handed.
+                seen["got_source"] = source is self
+                return [raw]
+
+            def classify(self, record):
+                return Collection(
+                    date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE
+                )
+
+        Src().fetch()
+        assert seen["got_source"] is True
+
+    def test_preprocessor_receives_source(self):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        seen = {}
+
+        class Src(BaseSource):
+            def __init__(self):
+                super().__init__(town="x")
+
+            def retrieve(self, source):
+                return ["a"]
+
+            def parse(self, raw, source):
+                return raw
+
+            def preprocessor(self, records, source):
+                seen["town"] = source.params.get("town")
+                return records
+
+            def classify(self, record):
+                return Collection(
+                    date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE
+                )
+
+        Src().fetch()
+        assert seen["town"] == "x"
+
+    def test_session_is_lazy_and_cached(self):
+        from waste_collection_schedule.base_source import BaseSource
+
+        class Src(BaseSource):
+            def __init__(self):
+                super().__init__()
+
+        src = Src()
+        assert src._session is None
+        sentinel = object()
+        with patch("curl_cffi.requests.Session", return_value=sentinel) as session_cls:
+            first = src.session
+            second = src.session
+        assert first is sentinel
+        assert second is sentinel
+        session_cls.assert_called_once()  # created once, then cached
+
+
+class TestRiSKommunalComponents:
+    """RiSKommunal contributes a lazy paginating Retriever and a config-aware Parser."""
+
+    _PAGE0 = (
+        '<table class="ris_table">'
+        "<tr><td>01.07.2026</td><td><a>Restmüll</a></td></tr>"
+        "<tr><td>02.07.2026</td><td><a>Bioabfall</a></td></tr>"
+        "</table>"
+    )
+    _EMPTY = "<html><body>no calendar</body></html>"
+
+    def _response(self, text):
+        resp = MagicMock()
+        resp.text = text
+        resp.apparent_encoding = "utf-8"
+        resp.raise_for_status.return_value = None
+        return resp
+
+    def test_retriever_pages_are_lazy(self):
+        """Retriever yields raw pages; only those the parser pulls get fetched."""
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        calls = {"n": 0}
+        outer = self
+
+        class FakeSession:
+            def get(self, url, params=None, headers=None, timeout=None):
+                calls["n"] += 1
+                page = params.get("page", 0)
+                return outer._response(outer._PAGE0 if page == 0 else outer._EMPTY)
+
+        source = MagicMock()
+        source.params = {}
+        retriever = R.RiSKommunalRetriever(
+            base_url="https://example.at", query_params={"x": "1"}
+        )
+        parser = R.RiSKommunalParser()
+        with patch.object(R.requests, "Session", return_value=FakeSession()):
+            rows = list(parser(retriever(source), source))
+
+        # page 0 (rows) + page 1 (empty -> stop). Pages 2..49 never fetched.
+        assert calls["n"] == 2
+        assert [t for _, t in rows] == ["Restmüll", "Bioabfall"]
+
+    def test_parser_filters_by_zone_from_params(self):
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        page = (
+            '<table class="ris_table">'
+            "<tr><td>10.07.2026</td><td><a>Restmüll</a></td><td>Zone A</td></tr>"
+            "<tr><td>11.07.2026</td><td><a>Restmüll</a></td><td>Zone B</td></tr>"
+            "<tr><td>12.07.2026</td><td><a>Bioabfall</a></td><td>Gemeinde Alle</td></tr>"
+            "</table>"
+        )
+        source = MagicMock()
+        source.params = {"zone": "Zone A"}
+        parser = R.RiSKommunalParser(zone_param="zone")
+        rows = list(parser([page, self._EMPTY], source))
+        days = {d.isoformat() for d, _ in rows}
+        assert "2026-07-10" in days  # Zone A kept
+        assert "2026-07-12" in days  # "Gemeinde Alle" always kept
+        assert "2026-07-11" not in days  # Zone B filtered out
+
+
+class TestAbfallnaviComponents:
+    """AbfallnaviDe (regio iT): multi-request retriever + cross-referencing parser."""
+
+    # Canned regio iT REST responses keyed by request path.
+    _RESPONSES = {
+        "orte": [{"id": 1, "name": "Aachen"}],
+        "orte/1/strassen": [{"id": 10, "name": "Abteiplatz"}],
+        "strassen/10": {"hausNrList": [{"id": 100, "nr": "7"}]},
+        "fraktionen": [
+            {"id": 5, "name": "Restmüll"},
+            {"id": 6, "name": "Bioabfall"},
+        ],
+        "hausnummern/100/termine": [
+            {"datum": "2026-07-01", "bezirk": {"fraktionId": 5}},
+            {"datum": "2026-07-02", "bezirk": {"fraktionId": 6}},
+        ],
+    }
+
+    def _patched_client(self):
+        from waste_collection_schedule.service import AbfallnaviDe as M
+
+        responses = self._RESPONSES
+
+        def fake_fetch_json(self, path, params=None):
+            return responses[path]
+
+        return patch.object(M.AbfallnaviDe, "_fetch_json", fake_fetch_json)
+
+    def test_retriever_bundles_raw_termine_and_fraktionen(self):
+        from waste_collection_schedule.service import AbfallnaviDe as M
+
+        source = MagicMock()
+        source.params = {
+            "service": "aachen",
+            "ort": "Aachen",
+            "strasse": "Abteiplatz",
+            "hausnummer": "7",
+        }
+        retriever = M.AbfallnaviRetriever(
+            service="service", city="ort", street="strasse", house_number="hausnummer"
+        )
+        with self._patched_client():
+            raw = retriever(source)
+        assert set(raw) == {"termine", "fraktionen"}
+        assert raw["fraktionen"] == {5: "Restmüll", 6: "Bioabfall"}
+        assert len(raw["termine"]) == 2
+
+    def test_parser_cross_references_without_io(self):
+        from waste_collection_schedule.service import AbfallnaviDe as M
+
+        raw = {
+            "fraktionen": {5: "Restmüll", 6: "Bioabfall"},
+            "termine": [
+                {"datum": "2026-07-01", "bezirk": {"fraktionId": 5}},
+                {"datum": "2026-07-02", "bezirk": {"fraktionId": 6}},
+            ],
+        }
+        # Standalone, no retriever / no network.
+        rows = M.AbfallnaviParser()(raw)
+        assert rows == [
+            (datetime.date(2026, 7, 1), "Restmüll"),
+            (datetime.date(2026, 7, 2), "Bioabfall"),
+        ]
+
+    def test_end_to_end_through_basesource(self):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.service.AbfallnaviDe import (
+            AbfallnaviParser,
+            AbfallnaviRetriever,
+        )
+        from waste_collection_schedule.transformers import ICSTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC
+
+        class Src(BaseSource):
+            retrieve = AbfallnaviRetriever(
+                service="service",
+                city="ort",
+                street="strasse",
+                house_number="hausnummer",
+            )
+            parse = AbfallnaviParser()
+            transformer = ICSTransformer(
+                type_value_map={"Restmüll": GENERAL_WASTE, "Bioabfall": ORGANIC}
+            )
+
+            def __init__(self):
+                super().__init__(
+                    service="aachen", ort="Aachen", strasse="Abteiplatz", hausnummer="7"
+                )
+
+        with self._patched_client():
+            cols = Src().fetch()
+        by_date = {c.date.isoformat(): c.waste_type.id for c in cols}
+        assert by_date == {"2026-07-01": "general_waste", "2026-07-02": "organic"}
+
+
+class TestIntraMapsComponents:
+    """IntraMaps: stateful-session retriever + panel parser, kept separate."""
+
+    _RESPONSE = {
+        "infoPanels": {
+            "info1": {
+                "feature": {
+                    "fields": [
+                        {
+                            "value": {
+                                "column": "Rubbish_Collection_Day",
+                                "value": "Every Friday",
+                            }
+                        },
+                        {
+                            "value": {
+                                "column": "Recycle_Collection",
+                                "value": "Friday This Week",
+                            }
+                        },
+                        {"value": {"column": "ignored", "value": "x"}},
+                    ]
+                }
+            }
+        }
+    }
+
+    def _fake_client(self, response=None, error=None):
+        resp = self._RESPONSE if response is None else response
+
+        class FakeClient:
+            def __init__(self, cfg):
+                pass
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *a):
+                return False
+
+            def select_address(self, address, suburb=None):
+                if error is not None:
+                    raise error
+                return {"status": "success", "response": resp}
+
+        return FakeClient
+
+    def test_retriever_runs_handshake_and_returns_raw_panels(self):
+        from waste_collection_schedule.service import IntraMaps
+
+        source = MagicMock()
+        source.params = {"address": "1 Test St"}
+        retriever = IntraMaps.IntraMapsRetriever(
+            IntraMaps.MapsClientConfig(base_url="https://x"), address="address"
+        )
+        with patch.object(IntraMaps, "MapsClient", self._fake_client()):
+            raw = retriever(source)
+        assert "infoPanels" in raw
+
+    def test_retriever_maps_search_error_to_source_argument(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service import IntraMaps
+
+        source = MagicMock()
+        source.params = {"address": "nowhere"}
+        retriever = IntraMaps.IntraMapsRetriever(
+            IntraMaps.MapsClientConfig(base_url="https://x"), address="address"
+        )
+        err = IntraMaps.IntraMapsSearchError("no match")
+        with patch.object(IntraMaps, "MapsClient", self._fake_client(error=err)):
+            with pytest.raises(SourceArgumentNotFound):
+                retriever(source)
+
+    def test_panel_parser_extracts_column_value_records(self):
+        from waste_collection_schedule.service import IntraMaps
+
+        records = IntraMaps.IntraMapsPanelParser()(self._RESPONSE)
+        assert {"column": "Rubbish_Collection_Day", "value": "Every Friday"} in records
+        assert len(records) == 3
+
+    def test_end_to_end_kwinana_projects_schedule(self):
+        from waste_collection_schedule.service import IntraMaps
+        from waste_collection_schedule.source import kwinana_wa_gov_au as K
+
+        with patch.object(IntraMaps, "MapsClient", self._fake_client()):
+            cols = K.Source(address="1 Chisham Avenue KWINANA TOWN CENTRE").fetch()
+
+        types = {c.waste_type.id for c in cols}
+        # weekly general waste (26) + fortnightly recycling (13); "ignored" dropped
+        assert types == {"general_waste", "recyclables"}
+        assert len(cols) == 26 + 13
+
+
+class TestRecurrence:
+    """Core recurrence helpers shared by projection-based sources/services."""
+
+    def test_recurring_steps_by_delta(self):
+        from waste_collection_schedule import recurrence
+
+        dates = recurrence.recurring(datetime.date(2026, 1, 1), recurrence.WEEKLY, 3)
+        assert dates == [
+            datetime.date(2026, 1, 1),
+            datetime.date(2026, 1, 8),
+            datetime.date(2026, 1, 15),
+        ]
+
+    def test_recurring_from_anchor_rolls_forward(self):
+        from waste_collection_schedule import recurrence
+
+        anchor = datetime.date(2020, 1, 6)  # long in the past
+        after = datetime.date(2026, 1, 1)
+        dates = recurrence.recurring_from_anchor(
+            anchor, recurrence.FORTNIGHTLY, 2, after=after
+        )
+        assert len(dates) == 2
+        assert dates[0] >= after
+        assert dates[0] - recurrence.FORTNIGHTLY < after  # first on/after `after`
+        assert (dates[0] - anchor).days % 14 == 0  # still on the anchor's cycle
+        assert dates[1] - dates[0] == recurrence.FORTNIGHTLY
+
+    def test_next_weekday(self):
+        from waste_collection_schedule import recurrence
+
+        result = recurrence.next_weekday(4, on_or_after=datetime.date(2026, 6, 15))
+        assert result.weekday() == 4
+        assert result >= datetime.date(2026, 6, 15)
+        assert (result - datetime.date(2026, 6, 15)).days < 7
+
+    def test_most_recent_weekday(self):
+        from waste_collection_schedule import recurrence
+
+        result = recurrence.most_recent_weekday(
+            0, on_or_before=datetime.date(2026, 6, 17)
+        )
+        assert result.weekday() == 0
+        assert result <= datetime.date(2026, 6, 17)
+        assert (datetime.date(2026, 6, 17) - result).days < 7
+
+
 class TestRetrievers:
     """Zero-config http_get/http_post (curl_cffi) and configured/legacy retrievers."""
 
@@ -740,7 +1229,7 @@ class TestBaseSourcePipeline:
             def retrieve(self, source):
                 return MagicMock()  # mock response
 
-            def parse(self, response):
+            def parse(self, response, source=None):
                 return records
 
             classify = classify_fn
@@ -814,7 +1303,7 @@ class TestBaseSourcePipeline:
                 call_log.append("custom_retrieve")
                 return MagicMock()
 
-            def parse(self, response):
+            def parse(self, response, source=None):
                 return [{"date": "2026-01-01"}]
 
             def classify(self, record):
@@ -840,7 +1329,7 @@ class TestBaseSourcePipeline:
             def retrieve(self, source):
                 return "raw,csv,data"
 
-            def parse(self, response):
+            def parse(self, response, source=None):
                 return [{"val": v} for v in response.split(",")]
 
             def classify(self, record):
@@ -868,7 +1357,7 @@ class TestBaseSourcePipeline:
             def retrieve(self, source):
                 return MagicMock()
 
-            def parse(self, response):
+            def parse(self, response, source=None):
                 return [{"date": "10.04.2026"}]
 
             def classify(self, record):
@@ -897,7 +1386,7 @@ class TestBaseSourcePipeline:
             def retrieve(self, source):
                 return MagicMock()
 
-            def parse(self, response):
+            def parse(self, response, source=None):
                 return [{"date": "2026-03-01", "bin": "refuse"}]
 
         results = TestSource().fetch()
@@ -976,14 +1465,27 @@ class TestTransformers:
         t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
         assert t({"bin": "refuse"}) is None
 
-    def test_json_transformer_unknown_type_returns_other(self):
+    def test_json_transformer_unknown_type_is_preserved_not_other(self):
         from waste_collection_schedule.transformers import JsonTransformer
         from waste_collection_schedule.waste_types import GENERAL_WASTE, OTHER
 
         t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
-        result = t({"date": "2026-01-15", "bin": "unknown"})
+        result = t({"date": "2026-01-15", "bin": "Frobnitz-Tonne"})
         assert result is not None
-        assert result.waste_type is OTHER
+        # Unknown labels are preserved verbatim, never collapsed to OTHER.
+        assert result.waste_type is not OTHER
+        assert result.waste_type.id.startswith("preserved:")
+        assert result.type == "Frobnitz-Tonne"
+
+    def test_json_transformer_resolves_known_type_without_map_entry(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import RECYCLABLES
+
+        # No map entry for "Wertstofftonne", but the shared vocabulary resolves it.
+        t = JsonTransformer("date", "bin")
+        result = t({"date": "2026-01-15", "bin": "Wertstofftonne"})
+        assert result is not None
+        assert result.waste_type is RECYCLABLES
 
     def test_json_transformer_unknown_type_emits_warning(self, caplog):
         import logging
@@ -995,7 +1497,7 @@ class TestTransformers:
         with caplog.at_level(logging.WARNING):
             t({"date": "2026-01-15", "bin": "mystery_bin"})
         assert any("mystery_bin" in r.message for r in caplog.records)
-        assert any("type_value_map" in r.message for r in caplog.records)
+        assert any("preserving" in r.message for r in caplog.records)
 
     def test_known_type_does_not_warn(self, caplog):
         import logging
@@ -1319,8 +1821,7 @@ def _discover_new_style_sources():
     from pathlib import Path
 
     source_dir = Path(__file__).resolve().parent.parent / (
-        "custom_components/waste_collection_schedule"
-        "/waste_collection_schedule/source"
+        "custom_components/waste_collection_schedule/waste_collection_schedule/source"
     )
     sources = []
     for py_file in source_dir.glob("*.py"):
@@ -1426,9 +1927,9 @@ class TestNewStyleSourceMetadata:
         name, cls = source_info
         has_transformer = getattr(cls, "transformer", None) is not None
         has_classify = cls.classify is not BaseSource.classify
-        assert (
-            has_transformer or has_classify
-        ), f"{name}: must declare a transformer or implement classify()"
+        assert has_transformer or has_classify, (
+            f"{name}: must declare a transformer or implement classify()"
+        )
 
 
 @pytest.mark.skipif(
@@ -1471,14 +1972,14 @@ class TestNewStyleSourceTestCases:
                 f"{name}::{tc_name}: result[{i}] is {type(r).__name__}, "
                 f"expected Collection"
             )
-            assert isinstance(
-                r.date, datetime.date
-            ), f"{name}::{tc_name}: result[{i}].date is {type(r.date).__name__}"
+            assert isinstance(r.date, datetime.date), (
+                f"{name}::{tc_name}: result[{i}].date is {type(r.date).__name__}"
+            )
             assert r.type, f"{name}::{tc_name}: result[{i}].type is empty"
             assert r.icon, f"{name}::{tc_name}: result[{i}].icon is empty"
-            assert (
-                r.waste_type is not None
-            ), f"{name}::{tc_name}: result[{i}].waste_type is None"
+            assert r.waste_type is not None, (
+                f"{name}::{tc_name}: result[{i}].waste_type is None"
+            )
 
     def test_fetch_returns_non_empty(self, test_case):
         """Test cases should return at least one collection."""
@@ -1501,6 +2002,6 @@ class TestNewStyleSourceTestCases:
         results = source.fetch()
         returned = {r.waste_type.id for r in results}
         undeclared = returned - declared
-        assert (
-            not undeclared
-        ), f"{name}::{tc_name}: returned undeclared waste types: {undeclared}"
+        assert not undeclared, (
+            f"{name}::{tc_name}: returned undeclared waste types: {undeclared}"
+        )

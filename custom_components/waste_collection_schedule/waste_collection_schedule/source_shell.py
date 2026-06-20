@@ -3,7 +3,7 @@ import fnmatch
 import importlib
 import logging
 import traceback
-from typing import Dict, Iterable, List, Optional, Protocol
+from typing import Dict, Iterable, List, Optional, Protocol, cast
 
 from .collection import Collection, LegacyCollection
 
@@ -274,8 +274,11 @@ class SourceShell:
     ) -> "SourceShell | None":
         # load source module
         try:
-            source_module: SourceModule = importlib.import_module(
-                f"waste_collection_schedule.source.{source_name}"
+            source_module: SourceModule = cast(
+                SourceModule,
+                importlib.import_module(
+                    f"waste_collection_schedule.source.{source_name}"
+                ),
             )
         except ImportError as e:
             if str(e).startswith(

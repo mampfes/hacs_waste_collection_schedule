@@ -1,6 +1,6 @@
 import datetime
 import logging
-from typing import Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union, overload
 
 from .waste_types import WasteType
 
@@ -23,7 +23,35 @@ class Collection:
     Sources using BaseSource return these directly.
     """
 
-    def __init__(self, date: datetime.date, waste_type: WasteType):
+    if TYPE_CHECKING:
+        # The package exports the ``CollectionFactory`` callable as
+        # ``Collection``. These TYPE_CHECKING-only overloads describe both the
+        # call shapes that the factory accepts at runtime: the new-style
+        # ``Collection(date=..., waste_type=...)`` and the legacy
+        # ``Collection(date=..., t=..., icon=...)``. They affect type checking
+        # only; the runtime ``__init__`` below is unchanged.
+        @overload
+        def __init__(self, date: datetime.date, waste_type: WasteType): ...
+
+        @overload
+        def __init__(
+            self,
+            date: datetime.date,
+            t: str,
+            icon: Optional[str] = ...,
+            picture: Optional[str] = ...,
+            location: Optional[str] = ...,
+            description: Optional[str] = ...,
+        ): ...
+
+        def __init__(self, date: datetime.date, *args: Any, **kwargs: Any): ...
+
+    else:
+
+        def __init__(self, date: datetime.date, waste_type: WasteType):
+            self._init_impl(date, waste_type)
+
+    def _init_impl(self, date: datetime.date, waste_type: WasteType):
         self._date = date
         self._waste_type = waste_type
         self._type_override: Optional[str] = None
@@ -215,7 +243,18 @@ class _CollectionMeta:
         return Union[other, Collection]
 
 
-CollectionFactory = _CollectionMeta()
+if TYPE_CHECKING:
+    # At runtime ``CollectionFactory`` is a ``_CollectionMeta`` instance that
+    # constructs the right Collection/LegacyCollection and supports
+    # ``isinstance`` / ``|``. The package exports it as ``Collection``. Type
+    # checkers need a real class so that both annotations (``list[Collection]``)
+    # and the legacy constructor call (``Collection(date=..., t=..., icon=...)``)
+    # type-check. ``Collection`` (below) carries a TYPE_CHECKING-only overload
+    # accepting the legacy keyword arguments, so aliasing the factory to the
+    # class is exact for the type checker.
+    CollectionFactory = Collection
+else:
+    CollectionFactory = _CollectionMeta()
 
 
 class CollectionGroup:

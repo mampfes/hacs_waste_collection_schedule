@@ -52,9 +52,25 @@ JsonArgs: TypeAlias = Callable[..., JsonType] | JsonType
 
 
 class RetrieverFunc(Protocol):
-    """A callable that fetches a raw HTTP response for a source."""
+    """A callable that fetches a raw HTTP response for a source.
+
+    This is the structural contract every retriever satisfies: a callable
+    taking the source and returning a raw HTTP response. It carries only the
+    ``__call__`` member so that a source can override ``retrieve`` with either a
+    configured retriever instance or a plain ``def retrieve(self, source)``
+    method without tripping ``reportIncompatibleVariableOverride``.
+    """
 
     def __call__(self, source: BaseSource) -> Response: ...  # noqa: E704
+
+
+class _BaseRetriever:
+    """Concrete base for the configured HTTP retrievers.
+
+    Provides the shared ``_resolve`` helper. The configured retriever classes
+    inherit from this; service-specific retrievers that don't need ``_resolve``
+    subclass :class:`RetrieverFunc` (the protocol) directly.
+    """
 
     def _resolve(self, mapping: Callable[..., T] | T, source: BaseSource) -> T:
         """Resolve a constructor argument against the source's params.
@@ -64,11 +80,11 @@ class RetrieverFunc(Protocol):
         Otherwise return the literal value.
         """
         if callable(mapping):
-            return mapping(**source.params)
+            return cast("T", mapping(**source.params))
         return cast("T", mapping)
 
 
-class HttpGetRetriever(RetrieverFunc):
+class HttpGetRetriever(_BaseRetriever):
     """HTTP GET using curl_cffi (browser impersonation).
 
     Works on both regular endpoints and Cloudflare-protected sites. Each
@@ -98,7 +114,7 @@ class HttpGetRetriever(RetrieverFunc):
         )
 
 
-class HttpPostRetriever(RetrieverFunc):
+class HttpPostRetriever(_BaseRetriever):
     """HTTP POST using curl_cffi (browser impersonation).
 
     Works on both regular endpoints and Cloudflare-protected sites. Each

@@ -22,6 +22,8 @@ class Source(BaseSource):
     API_URL = "https://www.hschmid24.de/BlaueTonne/php/ajax.php"
 
     TEST_CASES = {
+        "Albatsried(Seeg)": {"city": "Albatsried(Seeg)"},
+        "Nesselwang > Attlesee": {"city": "Nesselwang", "ortsteil": "Attlesee"},
         "Buchloe > Hausen > Dorfstraße": {
             "city": "Buchloe",
             "ortsteil": "Hausen",
@@ -48,7 +50,7 @@ class Source(BaseSource):
         # Form-encoded POST body (not JSON): use _data, not _json.
         self._data = {"l": 3, "p1": city, "p2": ortsteil, "p3": strasse}
 
-    def parse(self, response):
+    def parse(self, response, source):
         # API returns {"cal": ["YYYY-MM-DD", ...]} with "0000-00-00" as a no-date sentinel.
         return [d for d in response.json()["cal"] if d != SENTINEL]
 

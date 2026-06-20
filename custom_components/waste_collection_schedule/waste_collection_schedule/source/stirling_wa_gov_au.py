@@ -86,10 +86,12 @@ class Source(BaseSource):
     def _resolve_coordinates(self) -> tuple[float, float]:
         if self._lat is not None and self._lon is not None:
             return self._lat, self._lon
+        # __init__ guarantees address is set when coords are not provided.
+        address = self._address or ""
         try:
-            location = geocode(self._address)
+            location = geocode(address)
         except ArcGisGeocodeError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("address", address) from e
         return location["y"], location["x"]
 
     def retrieve(self, source):
