@@ -381,6 +381,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Aspang-Markt](/doc/ics/aspangmarkt_at.md) / aspangmarkt.at
 - [Gemeinde Bürmoos](/doc/source/buermoos_at.md) / buermoos.at
 - [Gemeinde Felixdorf](/doc/source/felixdorf_gv_at.md) / felixdorf.gv.at
+- [Gemeinde Passail](/doc/ics/passail_at.md) / passail.at
 - [Gemeinde Sulz](/doc/source/citiesapps_com.md) / gemeinde-sulz.at
 - [Gemeinde24](/doc/source/gemeinde24_at.md) / gemeinde24.at
 - [Gemeindeverband Horn](/doc/source/umweltverbaende_at.md) / horn.umweltverbaende.at

@@ -2156,6 +2156,12 @@
       "id": "felixdorf_gv_at"
     },
     {
+      "title": "Gemeinde Passail",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_passail_at"
+    },
+    {
       "title": "Gemeinde Sulz",
       "module": "citiesapps_com",
       "default_params": {},

@@ -901,6 +901,14 @@
     },
     "urls": {}
   },
+  "ics_passail_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/passail_at.md",
+    "howto": {
+      "de": "- Besuchen Sie <https://www.passail.at/muellentsorgung/>.\n- Klicken Sie mit der rechten Maustaste auf den ICS-Download-Link für Ihren Abfuhrbereich und kopieren Sie den Link.\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
+      "en": "- Visit <https://www.passail.at/muellentsorgung/>.\n- Right-click the ICS download link for your collection area and copy the link address.\n- Use this link as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
   "gemeinde24_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gemeinde24_at.md",
     "howto": {
