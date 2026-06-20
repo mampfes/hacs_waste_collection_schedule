@@ -9,28 +9,42 @@
 		"TZ": "Europe/Berlin" // Set your local timezone here
 	},
 	"features": {
-		"ghcr.io/devcontainers/features/python:1": {}
+		"ghcr.io/devcontainers/features/python:1": {
+			"version": "3.13",
+			"installTools": true
+		},
+		// Claude Code CLI — comment out this line if you don't use Claude Code.
+		"ghcr.io/anthropics/devcontainer-features/claude-code:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
 	},
+	"postCreateCommand": "bash .devcontainer/setup.sh",
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"ms-python.python",
+				"charliermarsh.ruff",
 				"github.vscode-pull-request-github",
 				"ryanluker.vscode-coverage-gutters",
-				"ms-python.vscode-pylance"
+				"ms-python.vscode-pylance",
+				// Claude Code extension — comment out this line if you don't use Claude Code.
+				"anthropic.claude-code"
 			],
 			"settings": {
 				"files.eol": "\n",
 				"editor.tabSize": 4,
 				"terminal.integrated.shell.linux": "/bin/bash",
-				"python.defaultInterpreterPath": "/usr/bin/python3",
+				"python.defaultInterpreterPath": "/usr/local/python/current/bin/python3",
 				"python.analysis.autoSearchPaths": false,
-				"python.linting.pylintEnabled": true,
-				"python.linting.enabled": true,
-				"python.formatting.provider": "black",
 				"editor.formatOnPaste": false,
 				"editor.formatOnSave": true,
 				"editor.formatOnType": true,
+				"[python]": {
+					"editor.defaultFormatter": "charliermarsh.ruff"
+				},
+				"editor.codeActionsOnSave": {
+					"source.fixAll.ruff": "explicit",
+					"source.organizeImports.ruff": "explicit"
+				},
 				"files.trimTrailingWhitespace": true
 			}
 		}

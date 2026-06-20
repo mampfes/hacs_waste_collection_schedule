@@ -203,6 +203,13 @@ TEST_CASES = {
         "house_number": "1",
         "additional_sides_matcher": "Zabudowa jednorodzinna",
     },
+    "Wodzisław Śląski, Mszańska 16 (community 23)": {
+        "town": "Wodzisław Śląski",
+        "district": "Wodzisław Śląski",
+        "community": "23",
+        "street": "Mszańska",
+        "house_number": "16",
+    },
 }
 
 
@@ -239,7 +246,7 @@ class Source:
         self._g4 = g4
         self._g5 = g5
 
-        # house_number should be required as group matching requires it and the App enfoces it too, Keepint it as optional for now to show a better error message
+        # house_number should be required as group matching requires it and the App enforces it too, Keeping it as optional for now to show a better error message
         if not house_number:
             raise SourceArgumentRequired(
                 "house_number",
@@ -306,10 +313,9 @@ class Source:
             if not match:
                 matches = list(
                     map(
-                        lambda x: "town: "
-                        + x.get("name")
-                        + ", district:"
-                        + x.get("district"),
+                        lambda x: (
+                            "town: " + x.get("name") + ", district:" + x.get("district")
+                        ),
                         matching_towns_district,
                     )
                 )

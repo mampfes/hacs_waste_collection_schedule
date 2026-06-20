@@ -143,7 +143,6 @@ class Source:
             waste_blocks = waste_div.find_all("div", class_="waste")
 
             for waste_block in waste_blocks:
-
                 # Get location of <h4> for Waste Type and <strong> for Collection Date
                 waste_h4 = waste_block.find("h4")
                 collection_strong = waste_block.find("strong")

@@ -326,6 +326,7 @@ SERVICE_PROVIDERS = {
     "Broni",
     "San Cipriano Po",
     "Stradella",
+    "Torre de' Passeri",
 }
 
 
@@ -349,6 +350,10 @@ TEST_CASES = {
     "Mosciano Sant'Angelo": {"municipality": "Mosciano Sant'Angelo"},
     "Lodè": {"municipality": "Lodè", "area": "Utenze non domestiche"},
     "Udine": {"municipality": "Udine", "area": "Zona 2-4-5-6 - Utenze domestiche"},
+    "Torre de' Passeri": {
+        "municipality": "Torre de' Passeri",
+        "area": "Utenze domestiche",
+    },
 }
 
 

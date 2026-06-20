@@ -244,7 +244,7 @@ class Source:
             dates = self._ics.convert(r.text)
         except ValueError as e:
             raise ValueError(
-                "Got invalid response from the server, " "please recheck your arguments"
+                "Got invalid response from the server, please recheck your arguments"
             ) from e
 
         entries = []

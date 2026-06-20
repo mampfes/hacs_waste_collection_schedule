@@ -106,7 +106,7 @@ Things the maintainers consistently bounce in code review — avoid these from t
 - **Unsupported language codes in `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, or `HOW_TO_GET_ARGUMENTS_DESCRIPTION`.** Only `en`, `de`, `it`, `fr` are valid keys. Including any other code (e.g. `lt`, `nl`, `pl`) fails `test_source_has_necessary_parameters`. If a contributor wrote their `HOW_TO_GET_ARGUMENTS_DESCRIPTION` in only one language (e.g. `{"en": "..."}`) that is fine — do not add translations for the other languages. See the [HOW_TO_GET_ARGUMENTS_DESCRIPTION rules](#how_to_get_arguments_description-rules) section.
 - **Editing files in the "must not hand-edit" list above** — they get overwritten by CI after merge.
 - **Suppressing failures silently.** Returning `[]` on an HTTP error masks problems as "no upcoming collections".
-- **Unformatted code.** Run `black` and `isort` before committing (see Commands below).
+- **Unformatted code.** Run `ruff check --fix` and `ruff format` before committing (see Commands below).
 - **Raw `mdi:*` strings in `ICON_MAP`.** Use the canonical `Icons` enum (`from waste_collection_schedule import Icons`) so icons stay consistent across sources for the same logical waste category. See `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`.
 
 ## HOW_TO_GET_ARGUMENTS_DESCRIPTION rules
@@ -147,20 +147,18 @@ python -m pytest tests/
 cd custom_components/waste_collection_schedule/waste_collection_schedule/test
 python test_sources.py -s <source_name> -l
 
-# Format before every commit — REQUIRED on every file you change
-python -m black <path>
-python -m isort --profile black <path>
-
-# Lint
-python -m flake8 --extend-ignore=D100,D101,D102,D103,D104,D105,D106,D107,E501,W503,E203 <path>
+# Format + lint before every commit — REQUIRED on every file you change
+# ruff replaces black, flake8 and isort
+ruff check --fix <path>
+ruff format <path>
 
 # Activate the git pre-commit hook (run once after cloning — enforces formatting automatically)
 pre-commit install
 ```
 
-`pre-commit run --all-files` runs the full lint suite (black, flake8, isort, mypy, codespell, bandit, pyupgrade, yamlfmt).
+`pre-commit run --all-files` runs the full lint suite (ruff lint + format, mypy, codespell, bandit, pyupgrade, yamlfmt).
 
-> **AI agents:** Always run `python -m black <path> && python -m isort --profile black <path>` on every changed file before calling `git commit`. The pre-commit hook enforces this for human contributors; agents must do it explicitly.
+> **AI agents:** Always run `ruff check --fix <path> && ruff format <path>` on every changed file before calling `git commit`. The pre-commit hook enforces this for human contributors; agents must do it explicitly.
 
 > **Note:** Do not run `update_docu_links.py` in a PR branch. The `Update Documentation` CI workflow runs it automatically on every push to `master` (post-merge) and commits the generated output.
 
@@ -175,6 +173,6 @@ pre-commit install
 1. Source module passes `test_sources.py -s <name>` against real TEST_CASES.
 2. New `doc/source/<name>.md` exists.
 3. `python -m pytest tests/` passes locally.
-4. Changed files are formatted with `black` and `isort --profile black`.
+4. Changed files are formatted and linted with `ruff format` and `ruff check --fix`.
 5. PR targets `master` of `mampfes/hacs_waste_collection_schedule`.
 6. Do **not** commit changes to `README.md`, `info.md`, `sources.json`, `source_metadata.json`, `translations/*.json`, or `doc/ics/*.md` — CI regenerates these after merge.

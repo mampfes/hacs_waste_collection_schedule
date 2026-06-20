@@ -1,0 +1,13 @@
+---
+title: Zillingdorf
+url: https://www.zillingdorf.gv.at
+howto:
+  en: |
+    The municipality publishes a single public Google Calendar containing all waste collection events.
+
+    Use the following URL as the `url` parameter:
+
+    `https://calendar.google.com/calendar/ical/v60bh2s8sl7tg2khv1kgg3qu5c%40group.calendar.google.com/public/basic.ics`
+test_cases:
+  Zillingdorf:
+    url: https://calendar.google.com/calendar/ical/v60bh2s8sl7tg2khv1kgg3qu5c%40group.calendar.google.com/public/basic.ics

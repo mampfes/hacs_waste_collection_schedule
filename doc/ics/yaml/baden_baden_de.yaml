@@ -19,8 +19,7 @@ default_params:
   year_field: jahr
 test_cases:
   Neuweier:
-    url: 
-      https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/?ort=3&strasse=1&abfallart[]=1&abfallart[]=2&abfallart[]=3&abfallart[]=5&abfallart[]=6&abfallart[]=4&t=1&pdf=3
+    url: https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/?ort=3&strasse=1&abfallart[]=1&abfallart[]=2&abfallart[]=3&abfallart[]=5&abfallart[]=6&abfallart[]=4&t=1&pdf=3
     params:
       jahr: ''
     year_field: jahr

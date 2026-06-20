@@ -49,19 +49,9 @@ class Source:
             "-", ""
         ).replace("str.", "straße").replace("straße", "strasse").replace(
             ".", ""
-        ) == self._street.lower().replace(
-            " ", ""
-        ).replace(
-            '"', ""
-        ).replace(
+        ) == self._street.lower().replace(" ", "").replace('"', "").replace(
             "-", ""
-        ).replace(
-            "str.", "straße"
-        ).replace(
-            "straße", "strasse"
-        ).replace(
-            ".", ""
-        )
+        ).replace("str.", "straße").replace("straße", "strasse").replace(".", "")
 
     def fetch(self) -> list[Collection]:
         fresh_ids = False

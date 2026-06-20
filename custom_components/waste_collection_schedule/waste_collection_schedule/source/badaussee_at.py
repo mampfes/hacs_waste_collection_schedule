@@ -1,10 +1,10 @@
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule import Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 
 TITLE = "Bad Aussee"
 DESCRIPTION = "Source for Bad Aussee, Austria"
 URL = "https://www.badaussee.at"
+COUNTRY = "at"
 TEST_CASES = {
     "Zone 1": {
         "restmuell_zone": "1",
@@ -16,16 +16,6 @@ TEST_CASES = {
         "biomuell_zone": "4",
         "altpapier_zone": "4",
     },
-}
-
-ICS_BASE_URL = "https://www.badaussee.at/system/web/CalendarService.ashx"
-ICS_PARAMS = {
-    "aqn": (
-        "UmlTS29tbXVuYWwuT2JqZWN0cy5LYWxlbmRlciwgUklTQ29tcG9uZW50cywgVmVyc2lvbj0xLjAuMC4w"
-        "LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGw="
-    ),
-    "sprache": "1",
-    "gnr": "3138",
 }
 
 # Mapping of zone codes to their ICS 'do' parameter values
@@ -87,73 +77,33 @@ PARAM_TRANSLATIONS = {
 }
 
 
-class Source:
+class Source(RiSKommunalSource):
+    BASE_URL = "https://www.badaussee.at"
+    ICON_MAP = ICON_MAP
+    GNR = "3138"
+
     def __init__(
         self,
         restmuell_zone: str | int = "",
         biomuell_zone: str | int = "",
         altpapier_zone: str | int = "",
     ):
+        super().__init__()
         self._restmuell_zone = str(restmuell_zone) if restmuell_zone else ""
         self._biomuell_zone = str(biomuell_zone) if biomuell_zone else ""
         self._altpapier_zone = str(altpapier_zone) if altpapier_zone else ""
-        self._ics = ICS()
 
-    def fetch(self) -> list[Collection]:
-        entries = []
+    def fetch(self):
+        # Always include Gelber Sack, then add the configured zone calendars.
+        do_ids = [ICS_ZONE_MAPPING["gelber_sack"]]
 
-        # Always include Gelber Sack
-        gelber_sack_code = ICS_ZONE_MAPPING["gelber_sack"]
-        assert isinstance(gelber_sack_code, str)
-        ics_urls = [self._build_ics_url(gelber_sack_code)]
+        for key, zone in (
+            ("restmuell", self._restmuell_zone),
+            ("biomuell", self._biomuell_zone),
+            ("altpapier", self._altpapier_zone),
+        ):
+            mapping = ICS_ZONE_MAPPING[key]
+            if zone and zone in mapping:
+                do_ids.append(mapping[zone])
 
-        # Add zone-specific URLs based on configured zones
-        restmuell_zones = ICS_ZONE_MAPPING["restmuell"]
-        assert isinstance(restmuell_zones, dict)
-        if self._restmuell_zone and self._restmuell_zone in restmuell_zones:
-            ics_urls.append(self._build_ics_url(restmuell_zones[self._restmuell_zone]))
-
-        biomuell_zones = ICS_ZONE_MAPPING["biomuell"]
-        assert isinstance(biomuell_zones, dict)
-        if self._biomuell_zone and self._biomuell_zone in biomuell_zones:
-            ics_urls.append(self._build_ics_url(biomuell_zones[self._biomuell_zone]))
-
-        altpapier_zones = ICS_ZONE_MAPPING["altpapier"]
-        assert isinstance(altpapier_zones, dict)
-        if self._altpapier_zone and self._altpapier_zone in altpapier_zones:
-            ics_urls.append(self._build_ics_url(altpapier_zones[self._altpapier_zone]))
-
-        # Fetch and parse each ICS feed
-        for ics_url in ics_urls:
-            r = requests.get(ics_url, timeout=60)
-            r.raise_for_status()
-
-            # Parse ICS data
-            dates = self._ics.convert(r.text)
-
-            # Convert to Collection objects
-            for d in dates:
-                waste_type = d[1].strip()
-
-                # Determine icon based on waste type
-                icon = "mdi:trash-can-outline"
-                for key, value in ICON_MAP.items():
-                    if key.lower() in waste_type.lower():
-                        icon = value
-                        break
-
-                entries.append(
-                    Collection(
-                        date=d[0],
-                        t=waste_type,
-                        icon=icon,
-                    )
-                )
-
-        return entries
-
-    def _build_ics_url(self, do_param: str) -> str:
-        """Build ICS URL with the given 'do' parameter."""
-        params = {**ICS_PARAMS, "do": do_param}
-        param_str = "&".join([f"{k}={v}" for k, v in params.items()])
-        return f"{ICS_BASE_URL}?{param_str}"
+        return self.fetch_ics(self.GNR, do_ids)

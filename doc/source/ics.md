@@ -47,6 +47,7 @@ This source has been successfully tested with the following service providers:
 - [GDA Amstetten](/doc/ics/gda_gv_at.md) / gda.gv.at
 - [gem2go (Abfallverband)](/doc/ics/gem2go_dev.md) / gem2go.dev
 - [Gemeinde Aspang-Markt](/doc/ics/aspangmarkt_at.md) / aspangmarkt.at
+- [Gemeinde Passail](/doc/ics/passail_at.md) / passail.at
 - [Gerasdorf bei Wien](/doc/ics/muellapp_com.md) / muellapp.com
 - [Gitschtal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Globasnitz](/doc/ics/muellapp_com.md) / muellapp.com
@@ -95,6 +96,8 @@ This source has been successfully tested with the following service providers:
 - [Maria Saal](/doc/ics/muellapp_com.md) / muellapp.com
 - [Maria Wörth](/doc/ics/muellapp_com.md) / muellapp.com
 - [Markt Piesting Dreistetten](/doc/ics/piesting_at.md) / piesting.at
+- [Marktgemeinde Kirchberg am Wechsel](/doc/ics/kirchberg_am_wechsel_at.md) / kirchberg-am-wechsel.at
+- [Marktgemeinde Sollenau](/doc/ics/sollenau_at.md) / sollenau.noe.gv.at
 - [Mattsee](/doc/ics/muellapp_com.md) / muellapp.com
 - [Mayer Recycling](/doc/ics/mayer_recycling_at.md) / mayer-recycling.at
 - [Millstatt](/doc/ics/muellapp_com.md) / muellapp.com
@@ -169,6 +172,7 @@ This source has been successfully tested with the following service providers:
 - [Zell](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zell am Ziller](/doc/ics/muellapp_com.md) / muellapp.com
 - [Zellberg](/doc/ics/muellapp_com.md) / muellapp.com
+- [Zillingdorf](/doc/ics/zillingdorf_at.md) / zillingdorf.gv.at
 - [Zwölfaxing](/doc/ics/muellapp_com.md) / muellapp.com
 
 ### Belgium
@@ -233,6 +237,7 @@ This source has been successfully tested with the following service providers:
 
 - [Dětmarovice (part Glembovec)](/doc/ics/detmarovice_glembovec_cz.md) / detmarovice.cz
 - [Litovel](/doc/ics/svoz_litovle_cz.md) / svoz.litovle.cz
+- [Lysá nad Labem](/doc/ics/zhleatherworks_cz.md) / zhleatherworks.cz/waste_calendar
 
 ### Denmark
 
@@ -253,7 +258,6 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / abfallwirtschaft-enzkreis.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfallwirtschaft-freiburg.de
-- [Abfallwirtschaft Kreis Plön](/doc/ics/kreis_ploen_de.md) / kreis-ploen.de
 - [Abfallwirtschaft Landkreis Böblingen](/doc/ics/abfall_io_ics.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Göppingen](/doc/ics/abfall_io_ics.md) / awb-gp.de
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
@@ -262,7 +266,6 @@ This source has been successfully tested with the following service providers:
 - [Abfallwirtschaft Rems-Murr (AWRM) - ICS Version](/doc/ics/abfallwirtschaft_rems_murr_de.md) / abfallwirtschaft-rems-murr.de
 - [Abfallwirtschaft Sonneberg](/doc/ics/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
 - [Abfallwirtschaftsbetrieb des Landkreises Pfaffenhofen a.d.Ilm (AWP)](/doc/ics/awp_landkreis_pfaffenhofen.md) / awp-paf.de
-- [Abfallwirtschaftsbetrieb Ilm-Kreis](/doc/ics/ilm_kreis_de.md) / ilm-kreis.de
 - [Abfallwirtschaftsbetrieb Landkreis Karlsruhe](/doc/ics/awb_landkreis_karlsruhe_de.md) / awb-landkreis-karlsruhe.de
 - [Abfallwirtschaftsbetrieb Unstrut-Hainich-Kreis](/doc/ics/abfallwirtschaft_uhk_de.md) / abfallwirtschaft-uhk.de
 - [Abfallwirtschaftsgesellschaft Landkreis Schaumburg](/doc/ics/aws_shg_de.md) / aws-shg.de
@@ -332,7 +335,6 @@ This source has been successfully tested with the following service providers:
 - [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
 - [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
 - [Kreis Steinburg](/doc/ics/steinburg_de.md) / steinburg.de
-- [Kreisstadt Groß-Gerau](/doc/ics/gross_gerau_de.md) / gross-gerau.de
 - [Kreuztal](/doc/ics/abfuhrtermine_info.md) / kreuztal.de
 - [Landkreis Amberg-Sulzbach](/doc/ics/landkreis_as_de.md) / landkreis-as.de
 - [Landkreis Anhalt-Bitterfeld](/doc/ics/abikw_de.md) / abikw.de
@@ -342,7 +344,6 @@ This source has been successfully tested with the following service providers:
 - [Landkreis Holzminden](/doc/ics/abfall_app_net.md) / landkreis-holzminden.de
 - [Landkreis Kaiserslautern](/doc/ics/kreis_kaiserslautern_de.md) / kaiserslautern-kreis.de
 - [Landkreis Lüchow-Dannenberg](/doc/ics/abfall_app_net.md) / luechow-dannenberg.de
-- [Landkreis Peine](/doc/ics/ab_peine_de.md) / ab-peine.de
 - [Landkreis soest](/doc/ics/abfall_app_net.md) / kreis-soest.de
 - [Landkreis Stade](/doc/ics/landkreis_stade_de.md) / landkreis-stade.de
 - [Landkreis Stendal](/doc/ics/abfall_app_net.md) / landkreis-stendal.de
@@ -388,6 +389,7 @@ This source has been successfully tested with the following service providers:
 - [Stadt Osnabrück](/doc/ics/osnabrueck_de.md) / osnabrueck.de
 - [Stadt Saarlouis](/doc/ics/mein_abfallkalender_online.md) / saarlouis.de
 - [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
+- [Stadt Vlotho](/doc/ics/abfall_export_vcal.md) / vlotho.de
 - [Stadt Wetzlar](/doc/ics/wetzlar_de.md) / wetzlar.de
 - [Stadtbetrieb Frechen](/doc/ics/stadtbetrieb_frechen_de.md) / stadtbetrieb-frechen.de
 - [Stadtentsorgung Rostock](/doc/ics/stadtentsorgung_rostock_de.md) / stadtentsorgung-rostock.de
@@ -541,6 +543,7 @@ waste_collection_schedule:
         version: 2
         verify_ssl: VERIFY_SSL
         headers: HEADERS
+        impersonate: IMPERSONATE
         title_template: "{{date.summary}}"
 ```
 
@@ -640,6 +643,13 @@ Set this option to `False` if you see the following warning in the logs:
 Add custom headers to HTTP request, e.g. `referer`. By default, the `user-agent` is already set to `Mozilla/5.0 (Windows NT 10.0; Win64; x64)`.
 
 See also [example](#custom-headers) below.
+
+**impersonate**  
+*(string) (optional, default: None)*
+
+Impersonate a real browser so the request matches a browser's TLS/JA3 fingerprint. Some providers sit behind a WAF (e.g. Incapsula/Imperva, Cloudflare) that rejects non-browser clients with an `HTTP 403` even when a browser `user-agent` header is set, because the block is based on the TLS handshake rather than the header. Setting this to a browser name (e.g. `chrome`) makes the underlying `curl_cffi` client mimic that browser and pass the check.
+
+Only set this if you get a `403` that a custom `user-agent` header does not fix. See the [curl_cffi documentation](https://curl-cffi.readthedocs.io/en/latest/impersonate.html) for the list of supported values (e.g. `chrome`, `safari`, `firefox`).
 
 **title_template**  
 *(str) (optional, default: `{{date.summary}}`)*

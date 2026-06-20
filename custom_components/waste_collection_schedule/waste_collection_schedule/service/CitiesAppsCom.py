@@ -122,6 +122,11 @@ SERVICE_MAP = [
         "country": "at",
     },
     {
+        "title": "Breitenau",
+        "url": "https://www.breitenau.gv.at",
+        "country": "at",
+    },
+    {
         "title": "Breitenbrunn am Neusiedler See",
         "url": "http://www.breitenbrunn.at",
         "country": "at",

@@ -9,9 +9,7 @@ from unittest.mock import MagicMock, patch
 
 import yaml
 
-sys.path.append(
-    os.path.join(os.path.dirname(__file__), "..")
-)  # isort:skip # noqa: E402
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # isort:skip # noqa: E402
 from update_docu_links import (  # isort:skip # noqa: E402
     BLACK_LIST,
     COUNTRYCODES,
@@ -195,26 +193,26 @@ def _param_translation_check(
     init_params_names: Iterable[str],
     source_param_to_test: str = "translations",
 ) -> None:
-    assert isinstance(
-        translations, dict
-    ), f"{source_param_to_test} must be a dictionary in {source}"
+    assert isinstance(translations, dict), (
+        f"{source_param_to_test} must be a dictionary in {source}"
+    )
     for lang, lang_translations in translations.items():
-        assert (
-            lang in LANGUAGES
-        ), f"unknown/unsupported language code {lang} in {source} {source_param_to_test}, must be one of {LANGUAGES}"
-        assert isinstance(
-            lang_translations, dict
-        ), f"{source_param_to_test} must be a dictionary in {source}"
+        assert lang in LANGUAGES, (
+            f"unknown/unsupported language code {lang} in {source} {source_param_to_test}, must be one of {LANGUAGES}"
+        )
+        assert isinstance(lang_translations, dict), (
+            f"{source_param_to_test} must be a dictionary in {source}"
+        )
         for argument, argument_translation in lang_translations.items():
-            assert isinstance(
-                argument, str
-            ), f"{source_param_to_test} keys must be strings in {source} for language {lang}"
-            assert isinstance(
-                argument_translation, str
-            ), f"{source_param_to_test} values must be strings in {source} for language {lang}"
-            assert (
-                argument in init_params_names
-            ), f"{source_param_to_test} key {argument} for language {lang} not a valid parameter in Source class in {source}"
+            assert isinstance(argument, str), (
+                f"{source_param_to_test} keys must be strings in {source} for language {lang}"
+            )
+            assert isinstance(argument_translation, str), (
+                f"{source_param_to_test} values must be strings in {source} for language {lang}"
+            )
+            assert argument in init_params_names, (
+                f"{source_param_to_test} key {argument} for language {lang} not a valid parameter in Source class in {source}"
+            )
 
 
 def _test_case_check(
@@ -225,21 +223,21 @@ def _test_case_check(
     mandatory_init_params_names: Iterable[str],
 ) -> None:
     assert isinstance(name, str), f"test_case key must be a string in source {source}"
-    assert isinstance(
-        test_case, dict
-    ), f"test_case value must be a dictionary in source {source}"
+    assert isinstance(test_case, dict), (
+        f"test_case value must be a dictionary in source {source}"
+    )
     for test_case_param in test_case.keys():
-        assert isinstance(
-            test_case_param, str
-        ), f"test_case keys must be strings in source {source}"
-        assert (
-            test_case_param in init_params_names
-        ), f"test_case key {test_case_param} not a valid parameter in Source class in source {source}"
+        assert isinstance(test_case_param, str), (
+            f"test_case keys must be strings in source {source}"
+        )
+        assert test_case_param in init_params_names, (
+            f"test_case key {test_case_param} not a valid parameter in Source class in source {source}"
+        )
 
     for param in mandatory_init_params_names:
-        assert (
-            param in test_case.keys()
-        ), f"missing mandatory parameter ({param}) in test_case '{name}' in source {source}"
+        assert param in test_case.keys(), (
+            f"missing mandatory parameter ({param}) in test_case '{name}' in source {source}"
+        )
 
 
 def _test_source_has_necessary_parameters_test_cases(
@@ -276,44 +274,44 @@ def _test_source_has_necessary_parameters_extra_info(
             assert False, f"EXTRA_INFO() function in source {source} failed with {e}"
 
         # check if is iterable (list, tupüle, set)
-        assert isinstance(
-            extra_info, (list, tuple, set, GeneratorType)
-        ), f"EXTRA_INFO in source {source}, must be or return an iterable"
+        assert isinstance(extra_info, (list, tuple, set, GeneratorType)), (
+            f"EXTRA_INFO in source {source}, must be or return an iterable"
+        )
         # check if all items are dictionaries
         for item in extra_info:
-            assert isinstance(
-                item, dict
-            ), f"EXTRA_INFO in source {source}, must return a list of dictionaries, but at least one is not a dict"
-            assert (
-                "title" in item
-            ), f"EXTRA_INFO in source {source}, must have a new title key in each dictionary"
-            assert isinstance(
-                item["title"], str
-            ), f"EXTRA_INFO in source {source}, must have a string title key in each dictionary"
+            assert isinstance(item, dict), (
+                f"EXTRA_INFO in source {source}, must return a list of dictionaries, but at least one is not a dict"
+            )
+            assert "title" in item, (
+                f"EXTRA_INFO in source {source}, must have a new title key in each dictionary"
+            )
+            assert isinstance(item["title"], str), (
+                f"EXTRA_INFO in source {source}, must have a string title key in each dictionary"
+            )
 
             for key in item.keys():
-                assert isinstance(
-                    key, str
-                ), f"EXTRA_INFO in source {source}, must only have string keys in each dictionary"
-                assert (
-                    key in EXTRA_INFO_KEYS
-                ), f"Found unknown key {key} in source {source}, must have only the following keys: {EXTRA_INFO_KEYS}"
-                assert isinstance(
-                    item[key], EXTRA_INFO_TYPES[key]
-                ), f"EXTRA_INFO in source {source}, key {key} must have type {EXTRA_INFO_TYPES[key]}"
+                assert isinstance(key, str), (
+                    f"EXTRA_INFO in source {source}, must only have string keys in each dictionary"
+                )
+                assert key in EXTRA_INFO_KEYS, (
+                    f"Found unknown key {key} in source {source}, must have only the following keys: {EXTRA_INFO_KEYS}"
+                )
+                assert isinstance(item[key], EXTRA_INFO_TYPES[key]), (
+                    f"EXTRA_INFO in source {source}, key {key} must have type {EXTRA_INFO_TYPES[key]}"
+                )
 
             if "country" in item:
-                assert _is_supported_country_code(
-                    item["country"]
-                ), f"unsupported country code in source {source} in EXTRA_INFO"
+                assert _is_supported_country_code(item["country"]), (
+                    f"unsupported country code in source {source} in EXTRA_INFO"
+                )
             if "default_params" in item:
                 for key in item["default_params"].keys():
-                    assert isinstance(
-                        key, str
-                    ), f"EXTRA_INFO in source {source}, default_params keys must be strings"
-                    assert (
-                        key in init_params_names
-                    ), f"EXTRA_INFO in source {source}, default_params key {key} not a valid parameter in Source class"
+                    assert isinstance(key, str), (
+                        f"EXTRA_INFO in source {source}, default_params keys must be strings"
+                    )
+                    assert key in init_params_names, (
+                        f"EXTRA_INFO in source {source}, default_params key {key} not a valid parameter in Source class"
+                    )
 
 
 def test_source_has_necessary_parameters() -> None:
@@ -349,9 +347,9 @@ def test_source_has_necessary_parameters() -> None:
             module, source, init_params_names, mandatory_init_params_names
         )
 
-        assert hasattr(
-            module.Source, "fetch"
-        ), f"missing fetch method in Source class of source {source}"
+        assert hasattr(module.Source, "fetch"), (
+            f"missing fetch method in Source class of source {source}"
+        )
 
         # If COUNTRY is declared it must be a valid code — update_docu_links.py uses
         # this value directly and silently orphans the source if it doesn't match.
@@ -376,16 +374,16 @@ def test_source_has_necessary_parameters() -> None:
             )
 
         if hasattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION"):
-            assert isinstance(
-                module.HOW_TO_GET_ARGUMENTS_DESCRIPTION, dict
-            ), f"HOW_TO_GET_ARGUMENTS_DESCRIPTION must be a dictionary in {source}"
+            assert isinstance(module.HOW_TO_GET_ARGUMENTS_DESCRIPTION, dict), (
+                f"HOW_TO_GET_ARGUMENTS_DESCRIPTION must be a dictionary in {source}"
+            )
             for key, value in module.HOW_TO_GET_ARGUMENTS_DESCRIPTION.items():
-                assert (
-                    key in LANGUAGES
-                ), f"HOW_TO_GET_ARGUMENTS_DESCRIPTION key {key} must be a valid/supported language code in {source}, must be one of {LANGUAGES}"
-                assert isinstance(
-                    value, str
-                ), f"HOW_TO_GET_ARGUMENTS_DESCRIPTION values must be strings in {source}"
+                assert key in LANGUAGES, (
+                    f"HOW_TO_GET_ARGUMENTS_DESCRIPTION key {key} must be a valid/supported language code in {source}, must be one of {LANGUAGES}"
+                )
+                assert isinstance(value, str), (
+                    f"HOW_TO_GET_ARGUMENTS_DESCRIPTION values must be strings in {source}"
+                )
 
         if hasattr(module, "PARAM_TRANSLATIONS"):
             _param_translation_check(
@@ -404,13 +402,13 @@ def test_source_has_necessary_parameters() -> None:
 
         if hasattr(module, "SOURCE_CODEOWNERS"):
             owners = module.SOURCE_CODEOWNERS
-            assert isinstance(
-                owners, list
-            ), f"SOURCE_CODEOWNERS must be a list in {source}, got {type(owners).__name__}"
+            assert isinstance(owners, list), (
+                f"SOURCE_CODEOWNERS must be a list in {source}, got {type(owners).__name__}"
+            )
             for i, handle in enumerate(owners):
-                assert (
-                    isinstance(handle, str) and handle.strip()
-                ), f"SOURCE_CODEOWNERS[{i}] in {source} must be a non-empty string"
+                assert isinstance(handle, str) and handle.strip(), (
+                    f"SOURCE_CODEOWNERS[{i}] in {source} must be a non-empty string"
+                )
                 assert handle.strip().startswith("@"), (
                     f"SOURCE_CODEOWNERS[{i}] in {source} must start with '@' "
                     f"(got {handle!r}). Use the canonical @handle format."
@@ -430,25 +428,25 @@ def test_ics_source_has_necessary_parameters():
         assert "title" in data, f"missing title in yaml file {source}.yaml"
         assert "url" in data, f"missing url in yaml file {source}.yaml"
         assert "howto" in data, f"missing howto in yaml file {source}.yaml"
-        assert isinstance(
-            data["howto"], dict
-        ), f"howto must be a dictionary in yaml file {source}.yaml"
-        assert (
-            "en" in data["howto"]
-        ), f"missing english howto translation in {source}.yaml"
+        assert isinstance(data["howto"], dict), (
+            f"howto must be a dictionary in yaml file {source}.yaml"
+        )
+        assert "en" in data["howto"], (
+            f"missing english howto translation in {source}.yaml"
+        )
         for key, value in data["howto"].items():
             assert isinstance(key, str), f"howto keys must be strings in {source}.yaml"
-            assert (
-                key in LANGUAGES
-            ), f"howto key {key} must be a valid/supported language code in {source}.yaml, must be one of {LANGUAGES}"
-            assert isinstance(
-                value, str
-            ), f"howto values must be strings in {source}.yaml"
+            assert key in LANGUAGES, (
+                f"howto key {key} must be a valid/supported language code in {source}.yaml, must be one of {LANGUAGES}"
+            )
+            assert isinstance(value, str), (
+                f"howto values must be strings in {source}.yaml"
+            )
 
         assert "test_cases" in data, f"missing test_cases in yaml file {source}.yaml"
-        assert isinstance(
-            data["test_cases"], dict
-        ), f"test_cases must be a dictionary in yaml file {source}.yaml"
+        assert isinstance(data["test_cases"], dict), (
+            f"test_cases must be a dictionary in yaml file {source}.yaml"
+        )
         for name, test_case in data["test_cases"].items():
             _test_case_check(
                 name,
@@ -464,13 +462,13 @@ def test_ics_source_has_necessary_parameters():
 
         if "codeowners" in data:
             ics_owners = data["codeowners"]
-            assert isinstance(
-                ics_owners, list
-            ), f"codeowners must be a list in ICS yaml {source}.yaml, got {type(ics_owners).__name__}"
+            assert isinstance(ics_owners, list), (
+                f"codeowners must be a list in ICS yaml {source}.yaml, got {type(ics_owners).__name__}"
+            )
             for i, handle in enumerate(ics_owners):
-                assert (
-                    isinstance(handle, str) and handle.strip()
-                ), f"codeowners[{i}] in ICS yaml {source}.yaml must be a non-empty string"
+                assert isinstance(handle, str) and handle.strip(), (
+                    f"codeowners[{i}] in ICS yaml {source}.yaml must be a non-empty string"
+                )
                 assert handle.strip().startswith("@"), (
                     f"codeowners[{i}] in ICS yaml {source}.yaml must start with '@' "
                     f"(got {handle!r}). Use the canonical @handle format."

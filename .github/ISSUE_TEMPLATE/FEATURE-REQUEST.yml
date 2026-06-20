@@ -1,7 +1,8 @@
+---
 name: Feature Request
 description: Suggest a new feature or improvement for the integration
-title: "[Feature]: "
-labels: ["enhancement"]
+title: '[Feature]: '
+labels: [enhancement]
 body:
   - type: markdown
     attributes:
@@ -10,7 +11,7 @@ body:
   - type: dropdown
     id: type
     attributes:
-      label: "I propose a feature for:"
+      label: 'I propose a feature for:'
       options:
         - Sources
         - Sensors

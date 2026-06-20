@@ -194,9 +194,7 @@ class Source:
                     "Friday",
                     "Saturday",
                     "Sunday",
-                ].index(
-                    start_day
-                )
+                ].index(start_day)
                 if days_ahead <= 0:
                     days_ahead += 7
                 start_date = start_date + timedelta(days=days_ahead)

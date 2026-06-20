@@ -1970,6 +1970,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -1992,6 +1993,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3020,6 +3022,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3042,6 +3045,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3114,6 +3118,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3136,6 +3141,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3208,6 +3214,30 @@
         },
         "data_description": {}
       },
+      "args_baumkirchen_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_baumkirchen_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
       "args_ics_gem2go_dev": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -3215,6 +3245,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3237,6 +3268,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3257,6 +3289,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3279,6 +3312,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3323,6 +3357,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3345,6 +3380,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3362,7 +3398,10 @@
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -3372,7 +3411,10 @@
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {}
       },
@@ -3396,6 +3438,74 @@
         },
         "data_description": {}
       },
+      "args_elsbethen_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_elsbethen_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
+      "args_enns_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_enns_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
+      "args_fritzens_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_fritzens_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
       "args_ics_gda_gv_at": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -3403,6 +3513,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3425,6 +3536,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3445,6 +3557,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3467,6 +3580,93 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_buermoos_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_buermoos_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
+      "args_felixdorf_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_felixdorf_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
+      "args_ics_passail_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_passail_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3590,6 +3790,28 @@
         },
         "data_description": {}
       },
+      "args_hartbeigraz_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_hartbeigraz_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
       "args_hausmannstaetten_gv_at": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -3605,6 +3827,30 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario"
+        },
+        "data_description": {}
+      },
+      "args_herzogsdorf_ooe_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_herzogsdorf_ooe_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {}
       },
@@ -3629,6 +3875,100 @@
           "idHouseNumber": "Id House Number",
           "key": "Key",
           "wasteTypes": "Waste Types"
+        },
+        "data_description": {}
+      },
+      "args_imst_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_imst_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
+      "args_jochberg_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_jochberg_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
+      "args_koppl_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_koppl_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
+      "args_kronstorf_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_kronstorf_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {}
       },
@@ -3657,6 +3997,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3679,6 +4020,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3699,6 +4041,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3721,6 +4064,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3734,12 +4078,38 @@
         },
         "data_description": {}
       },
+      "args_angern_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_angern_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
       "args_edlitz_at": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "_": ""
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -3750,7 +4120,9 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "_": ""
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {}
       },
@@ -3778,7 +4150,10 @@
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -3788,7 +4163,54 @@
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
+      "args_ics_kirchberg_am_wechsel_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_kirchberg_am_wechsel_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },
@@ -3796,7 +4218,10 @@
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -3806,7 +4231,74 @@
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
+      "args_schlierbach_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_schlierbach_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
+      "args_ics_sollenau_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_sollenau_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },
@@ -3817,6 +4309,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3839,6 +4332,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3852,11 +4346,82 @@
         },
         "data_description": {}
       },
+      "args_micheldorf_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_micheldorf_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
+      "args_oberndorf_schwanenstadt_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_oberndorf_schwanenstadt_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
+      "args_ort_im_innkreis_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ort_im_innkreis_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
       "args_piberbach_ooe_gv_at": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -3866,7 +4431,32 @@
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
+      "args_puchbeihallein_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_puchbeihallein_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
         },
         "data_description": {}
       },
@@ -3874,7 +4464,10 @@
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -3884,7 +4477,10 @@
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {}
       },
@@ -3907,6 +4503,122 @@
           "calendar_title": "Nome Calendario",
           "hausnummer": "Hausnummer",
           "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
+      "args_schaerding_ooe_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_schaerding_ooe_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
+      "args_kanzian_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_kanzian_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
+      "args_st_margarethen_salzburg_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_st_margarethen_salzburg_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
+      "args_steyr_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_steyr_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse"
+        },
+        "data_description": {}
+      },
+      "args_berndorf_gv_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_berndorf_gv_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "hausnummer": "Hausnummer",
+          "strasse": "Strasse",
+          "zone": "Zona"
         },
         "data_description": {}
       },
@@ -3939,6 +4651,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -3961,6 +4674,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4005,6 +4719,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4027,6 +4742,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4069,6 +4785,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4091,6 +4808,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4130,6 +4848,50 @@
         },
         "data_description": {}
       },
+      "args_ics_zillingdorf_at": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_zillingdorf_at": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_bep_environnement_be": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -4157,6 +4919,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4179,6 +4942,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4239,6 +5003,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4261,6 +5026,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4327,6 +5093,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4349,6 +5116,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4389,6 +5157,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4411,6 +5180,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4453,6 +5223,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4475,6 +5246,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4495,6 +5267,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4517,6 +5290,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4537,6 +5311,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4559,6 +5334,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4579,6 +5355,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4601,6 +5378,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4621,6 +5399,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4643,6 +5422,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4864,6 +5644,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4886,6 +5667,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4932,6 +5714,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4954,6 +5737,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -4994,6 +5778,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -5016,6 +5801,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -5056,6 +5842,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -5078,6 +5865,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -5159,6 +5947,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -5181,6 +5970,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -5201,6 +5991,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -5223,6 +6014,51 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_ics_zhleatherworks_cz": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Metodo",
+          "offset": "Offset",
+          "params": "Parametri",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verifica SSL",
+          "version": "Versione",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ics_zhleatherworks_cz": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "file": "Nome File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -5427,6 +6263,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -5449,6 +6286,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6006,6 +6844,26 @@
         },
         "data_description": {}
       },
+      "args_toulouse_metropole_fr": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_name": "Nome Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_toulouse_metropole_fr": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "street_name": "Nome Strada"
+        },
+        "data_description": {}
+      },
       "args_ics": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -6013,6 +6871,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6035,6 +6894,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6111,6 +6971,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6133,6 +6994,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6173,6 +7035,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6195,6 +7058,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6215,6 +7079,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6237,6 +7102,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6257,6 +7123,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6279,6 +7146,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6299,6 +7167,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6321,6 +7190,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6441,6 +7311,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6463,6 +7334,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6483,6 +7355,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6505,6 +7378,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6525,6 +7399,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6547,6 +7422,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6635,6 +7511,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6657,6 +7534,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6725,6 +7603,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6747,6 +7626,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6797,6 +7677,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6819,6 +7700,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6839,6 +7721,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6861,6 +7744,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6881,6 +7765,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6903,6 +7788,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -6938,45 +7824,25 @@
         },
         "data_description": {}
       },
-      "args_ics_kreis_ploen_de": {
+      "args_kreis_ploen_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
-      "reconfigure_ics_kreis_ploen_de": {
+      "reconfigure_kreis_ploen_de": {
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {}
       },
@@ -7011,6 +7877,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7033,6 +7900,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7053,6 +7921,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7075,6 +7944,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7179,6 +8049,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7201,6 +8072,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7221,6 +8093,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7243,6 +8116,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7317,6 +8191,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7339,6 +8214,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7445,6 +8321,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7467,6 +8344,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7528,45 +8406,25 @@
         },
         "data_description": {}
       },
-      "args_ics_ilm_kreis_de": {
+      "args_ilm_kreis_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
-      "reconfigure_ics_ilm_kreis_de": {
+      "reconfigure_ilm_kreis_de": {
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {}
       },
@@ -7625,6 +8483,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7647,6 +8506,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7689,6 +8549,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7711,6 +8572,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7757,6 +8619,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7779,6 +8642,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7827,6 +8691,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7849,6 +8714,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7963,6 +8829,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -7985,6 +8852,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8061,6 +8929,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8083,6 +8952,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8133,6 +9003,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8155,6 +9026,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8197,6 +9069,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8219,6 +9092,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8239,6 +9113,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8261,6 +9136,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8327,6 +9203,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8349,6 +9226,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8369,6 +9247,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8391,6 +9270,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8529,6 +9409,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8551,6 +9432,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8637,6 +9519,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8659,6 +9542,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8761,6 +9645,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8783,6 +9668,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8849,6 +9735,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8871,6 +9758,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8915,6 +9803,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8937,6 +9826,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8957,6 +9847,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -8979,6 +9870,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9041,6 +9933,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9063,6 +9956,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9107,6 +10001,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9129,6 +10024,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9149,6 +10045,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9171,6 +10068,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9261,6 +10159,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9283,6 +10182,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9431,6 +10331,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9453,6 +10354,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9473,6 +10375,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9495,6 +10398,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9515,6 +10419,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9537,6 +10442,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9557,6 +10463,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9579,6 +10486,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9667,6 +10575,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9689,6 +10598,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9709,6 +10619,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9731,6 +10642,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9751,6 +10663,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9773,6 +10686,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9793,6 +10707,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9815,6 +10730,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9835,6 +10751,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9857,6 +10774,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9877,6 +10795,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9899,6 +10818,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9945,6 +10865,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9967,6 +10888,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -9987,6 +10909,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10009,6 +10932,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10029,6 +10953,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10051,6 +10976,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10071,6 +10997,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10093,6 +11020,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10113,6 +11041,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10135,6 +11064,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10155,6 +11085,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10177,6 +11108,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10197,6 +11129,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10219,6 +11152,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10239,6 +11173,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10261,6 +11196,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10305,6 +11241,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10327,6 +11264,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10347,6 +11285,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10369,6 +11308,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10389,6 +11329,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10411,6 +11352,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10479,6 +11421,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10501,6 +11444,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10541,6 +11485,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10563,6 +11508,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10649,6 +11595,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10671,6 +11618,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10691,6 +11639,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10713,6 +11662,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10757,6 +11707,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10779,6 +11730,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10792,45 +11744,25 @@
         },
         "data_description": {}
       },
-      "args_ics_gross_gerau_de": {
+      "args_gross_gerau_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
-      "reconfigure_ics_gross_gerau_de": {
+      "reconfigure_gross_gerau_de": {
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {}
       },
@@ -10839,7 +11771,9 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "pois": "Pois"
+          "ort": "Ort",
+          "pois": "Pois",
+          "strasse": "Strasse"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -10850,7 +11784,9 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "pois": "Pois"
+          "ort": "Ort",
+          "pois": "Pois",
+          "strasse": "Strasse"
         },
         "data_description": {}
       },
@@ -10885,6 +11821,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10907,6 +11844,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10927,6 +11865,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10949,6 +11888,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -10991,6 +11931,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11013,6 +11954,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11033,6 +11975,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11055,6 +11998,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11103,6 +12047,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11125,6 +12070,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11164,6 +12110,8 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
+          "ort": "Ort",
+          "strasse": "Strasse",
           "street": "Strada"
         },
         "data_description": {
@@ -11176,6 +12124,8 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
+          "ort": "Ort",
+          "strasse": "Strasse",
           "street": "Strada"
         },
         "data_description": {}
@@ -11222,45 +12172,25 @@
         },
         "data_description": {}
       },
-      "args_ics_ab_peine_de": {
+      "args_ab_peine_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
         }
       },
-      "reconfigure_ics_ab_peine_de": {
+      "reconfigure_ab_peine_de": {
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "file": "Nome File",
-          "headers": "Headers",
-          "method": "Metodo",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verifica SSL",
-          "version": "Versione",
-          "year_field": "Year Field"
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {}
       },
@@ -11369,6 +12299,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11391,6 +12322,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11437,6 +12369,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11459,6 +12392,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11478,6 +12412,8 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
+          "ort": "Ort",
+          "strasse": "Strasse",
           "street": "Strada"
         },
         "data_description": {
@@ -11490,6 +12426,8 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
+          "ort": "Ort",
+          "strasse": "Strasse",
           "street": "Strada"
         },
         "data_description": {}
@@ -11501,6 +12439,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11523,6 +12462,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11543,6 +12483,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11565,6 +12506,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11585,6 +12527,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11607,6 +12550,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11627,6 +12571,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11649,6 +12594,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11669,6 +12615,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11691,6 +12638,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11799,6 +12747,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11821,6 +12770,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11831,6 +12781,28 @@
           "verify_ssl": "Verifica SSL",
           "version": "Versione",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_muehlenkreis_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "ort": "Ort",
+          "strasse": "Strasse"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_muehlenkreis_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "ort": "Ort",
+          "strasse": "Strasse"
         },
         "data_description": {}
       },
@@ -11861,6 +12833,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11883,6 +12856,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11901,6 +12875,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "ort": "Ort",
           "strasse": "Strasse"
         },
         "data_description": {
@@ -11912,6 +12887,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "ort": "Ort",
           "strasse": "Strasse"
         },
         "data_description": {}
@@ -11923,6 +12899,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11945,6 +12922,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -11964,6 +12942,8 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "location": "Posizione",
+          "ort": "Ort",
+          "strasse": "Strasse",
           "street": "Strada"
         },
         "data_description": {
@@ -11976,6 +12956,8 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "location": "Posizione",
+          "ort": "Ort",
+          "strasse": "Strasse",
           "street": "Strada"
         },
         "data_description": {}
@@ -12067,6 +13049,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12089,6 +13072,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12151,6 +13135,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12173,6 +13158,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12213,6 +13199,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12235,6 +13222,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12255,6 +13243,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12277,6 +13266,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12319,6 +13309,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12341,6 +13332,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12361,6 +13353,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12383,6 +13376,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12403,6 +13397,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12425,6 +13420,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12445,6 +13441,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12467,6 +13464,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12527,6 +13525,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "ort": "Ort",
           "strasse": "Strasse"
         },
         "data_description": {
@@ -12538,6 +13537,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "ort": "Ort",
           "strasse": "Strasse"
         },
         "data_description": {}
@@ -12549,6 +13549,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12571,6 +13572,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12591,6 +13593,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12613,6 +13616,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12633,6 +13637,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12655,6 +13660,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12675,6 +13681,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12697,6 +13704,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12737,6 +13745,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12759,6 +13768,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12779,6 +13789,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12801,6 +13812,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12821,6 +13833,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12843,6 +13856,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12932,6 +13946,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -12954,6 +13969,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13018,6 +14034,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13040,6 +14057,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13060,6 +14078,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13082,6 +14101,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13148,6 +14168,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13170,6 +14191,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13190,6 +14212,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13212,6 +14235,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13252,6 +14276,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13274,6 +14299,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13329,6 +14355,28 @@
         },
         "data_description": {}
       },
+      "args_ubzzw_de": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_ubzzw_de": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Civico",
+          "street": "Strada"
+        },
+        "data_description": {}
+      },
       "args_ics_ebu_ulm_de": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -13336,6 +14384,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13358,6 +14407,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13400,6 +14450,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13422,6 +14473,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13442,6 +14494,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13464,6 +14517,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13484,6 +14538,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13506,6 +14561,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13548,6 +14604,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13570,6 +14627,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13612,6 +14670,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13634,6 +14693,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13706,6 +14766,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13728,6 +14789,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13748,6 +14810,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13770,6 +14833,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13860,6 +14924,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13882,6 +14947,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13954,6 +15020,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -13976,6 +15043,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -14351,6 +15419,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -14373,6 +15442,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -14393,6 +15463,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -14415,6 +15486,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -14762,6 +15834,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -14784,6 +15857,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15114,6 +16188,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15136,6 +16211,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15156,6 +16232,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15178,6 +16255,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15198,6 +16276,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15220,6 +16299,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15240,6 +16320,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15262,6 +16343,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15282,6 +16364,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15304,6 +16387,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15394,6 +16478,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -15416,6 +16501,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -16144,6 +17230,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -16166,6 +17253,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -16431,6 +17519,32 @@
           "calendar_title": "Nome Calendario",
           "city": "Città",
           "house_number": "Civico",
+          "street": "Strada"
+        },
+        "data_description": {}
+      },
+      "args_kiedyodpady_pl": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "municipality": "Municipality",
+          "number": "Numero",
+          "street": "Strada"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Città",
+          "municipality": "Municipality",
+          "number": "Numero",
           "street": "Strada"
         },
         "data_description": {}
@@ -16812,6 +17926,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -16834,6 +17949,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -16881,6 +17997,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -16903,6 +18020,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18047,6 +19165,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18069,6 +19188,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18111,6 +19231,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18133,6 +19254,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18153,6 +19275,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18175,6 +19298,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18253,6 +19377,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18275,6 +19400,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18315,6 +19441,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18337,6 +19464,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18443,6 +19571,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18465,6 +19594,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18485,6 +19615,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18507,6 +19638,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18658,6 +19790,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -18680,6 +19813,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -19441,6 +20575,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -19463,6 +20598,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -20192,6 +21328,26 @@
         "data_description": {
           "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
         }
+      },
+      "args_cotswold_gov_uk": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_cotswold_gov_uk": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {}
       },
       "args_coventry_gov_uk": {
         "title": "Configurazione Sorgente",
@@ -20993,6 +22149,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -21015,6 +22172,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -21240,6 +22398,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -21262,6 +22421,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -22208,6 +23368,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -22230,6 +23391,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -23017,6 +24179,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -23039,6 +24202,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -24830,6 +25994,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -24852,6 +26017,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -25472,6 +26638,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -25494,6 +26661,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -25514,6 +26682,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -25536,6 +26705,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -25875,6 +27045,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -25897,6 +27068,7 @@
           "calendar_title": "Nome Calendario",
           "file": "Nome File",
           "headers": "Headers",
+          "impersonate": "Impersonate",
           "method": "Metodo",
           "offset": "Offset",
           "params": "Parametri",
@@ -26321,6 +27493,28 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario"
+        },
+        "data_description": {}
+      },
+      "args_vogeldisposal_com": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+        }
+      },
+      "reconfigure_vogeldisposal_com": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo",
+          "municipality": "Municipality"
         },
         "data_description": {}
       },

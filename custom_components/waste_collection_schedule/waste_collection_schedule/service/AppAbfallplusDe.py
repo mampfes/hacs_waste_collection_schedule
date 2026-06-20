@@ -5,9 +5,11 @@ import time
 import uuid
 from collections import Counter, OrderedDict
 from datetime import date, datetime
+from urllib.parse import unquote
 
 import requests
 from bs4 import BeautifulSoup, Tag
+
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -136,7 +138,17 @@ SUPPORTED_SERVICES = {
         "Tübingen",
     ],
     "de.k4systems.abfallinfocw": ["Kreis Calw"],
-    "de.k4systems.abfallinfoapp": ["Mechernich und Kommunen"],
+    "de.k4systems.abfallinfoapp": [
+        "Kreis Euskirchen",
+        "Bad Münstereifel",
+        "Dahlem",
+        "Hellenthal",
+        "Kall",
+        "Mechernich",
+        "Schleiden",
+        "Weilerswist",
+        "Zülpich",
+    ],
     "de.k4systems.abfallappes": ["Landkreis Esslingen"],
     "de.k4systems.egst": ["Kreis Steinfurt"],
     "de.idcontor.abfallwbd": ["Duisburg"],
@@ -457,7 +469,7 @@ class AppAbfallplusDe:
         bezirk_id="",
         strasse_id=None,
         hnr_id=None,
-    ):
+    ) -> None:
         self._client = str(uuid.uuid4())
 
         self._app_id = app_id
@@ -820,7 +832,7 @@ class AppAbfallplusDe:
             hnrs.append(
                 {
                     "id": a[0],
-                    "name": a[0].split("|")[0],
+                    "name": unquote(a[0]).split("|")[0],
                     "f_id_strasse": a[6] if len(a) > 6 else None,
                 }
             )

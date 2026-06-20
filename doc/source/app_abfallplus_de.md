@@ -126,7 +126,7 @@ The app_id can be found from the url of the play store entry: https://play.googl
 |-|-|
 | de.albagroup.app | Berlin, Braunschweig, Havelland, Oberhavel, Ostprignitz-Ruppin, Tübingen |
 | de.k4systems.abfallinfocw | Kreis Calw |
-| de.k4systems.abfallinfoapp | Mechernich und Kommunen |
+| de.k4systems.abfallinfoapp | Kreis Euskirchen, Bad Münstereifel, Dahlem, Hellenthal, Kall, Mechernich, Schleiden, Weilerswist, Zülpich |
 | de.k4systems.abfallappes | Landkreis Esslingen |
 | de.k4systems.egst | Kreis Steinfurt |
 | de.idcontor.abfallwbd | Duisburg |

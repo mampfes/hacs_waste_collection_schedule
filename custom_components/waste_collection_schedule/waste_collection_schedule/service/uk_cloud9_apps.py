@@ -3,6 +3,7 @@ from datetime import date, datetime
 from typing import Any, Optional, Sequence, cast
 
 from curl_cffi import requests
+
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,

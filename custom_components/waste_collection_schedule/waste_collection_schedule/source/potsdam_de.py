@@ -175,7 +175,7 @@ class Source:
         )
 
     def __date_is_collection5_6(self, node, day: datetime) -> bool:
-        if not node["typ"] in (5, 6):
+        if node["typ"] not in (5, 6):
             return False
         termin1 = datetime.fromisoformat(node["termin1"].replace("Z", "+00:00")).date()
         termin2 = datetime.fromisoformat(node["termin2"].replace("Z", "+00:00")).date()

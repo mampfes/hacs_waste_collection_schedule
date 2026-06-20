@@ -2068,6 +2068,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -2090,6 +2091,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3118,12 +3120,12 @@
           "calendar_title": "Calendar Title",
           "addition": "Addition",
           "calendar": "Calendar",
-          "calendar_splitter": "Calendar Splitter",
-          "calendar_title_separator": "Calendar Title Separator",
-          "district": "District",
-          "hnr": "House Number",
+          "calendar_splitter": "Calendar entry splitter",
+          "calendar_title_separator": "Calendar title separator",
+          "district": "District/Service provider id",
+          "hnr": "House number",
           "municipal": "Municipal",
-          "plz": "Plz",
+          "plz": "Postal code",
           "street": "Street",
           "town": "Town"
         },
@@ -3148,12 +3150,12 @@
           "calendar_title": "Calendar Title",
           "addition": "Addition",
           "calendar": "Calendar",
-          "calendar_splitter": "Calendar Splitter",
-          "calendar_title_separator": "Calendar Title Separator",
-          "district": "District",
-          "hnr": "House Number",
+          "calendar_splitter": "Calendar entry splitter",
+          "calendar_title_separator": "Calendar title separator",
+          "district": "District/Service provider id",
+          "hnr": "House number",
           "municipal": "Municipal",
-          "plz": "Plz",
+          "plz": "Postal code",
           "street": "Street",
           "town": "Town"
         },
@@ -3205,6 +3207,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3227,6 +3230,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3306,6 +3310,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3328,6 +3333,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3407,6 +3413,30 @@
           "restmuell_zone": "Zone number for residual waste (Restmüll)"
         }
       },
+      "args_baumkirchen_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_baumkirchen_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_ics_gem2go_dev": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -3414,6 +3444,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3436,6 +3467,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3456,6 +3488,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3478,6 +3511,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3522,6 +3556,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3544,6 +3579,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3561,7 +3597,10 @@
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -3571,7 +3610,10 @@
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3595,6 +3637,84 @@
         },
         "data_description": {}
       },
+      "args_elsbethen_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Elsbethen waste calendar.",
+          "strasse": "Street name as listed in the Elsbethen waste calendar."
+        }
+      },
+      "reconfigure_elsbethen_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Elsbethen waste calendar.",
+          "strasse": "Street name as listed in the Elsbethen waste calendar."
+        }
+      },
+      "args_enns_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Enns waste calendar.",
+          "strasse": "Street name as listed in the Enns waste calendar."
+        }
+      },
+      "reconfigure_enns_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Enns waste calendar.",
+          "strasse": "Street name as listed in the Enns waste calendar."
+        }
+      },
+      "args_fritzens_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_fritzens_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_ics_gda_gv_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -3602,6 +3722,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3624,6 +3745,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3644,6 +3766,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3666,6 +3789,101 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_buermoos_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Bürmoos waste calendar dropdown.",
+          "strasse": "Street name as listed in the Bürmoos waste calendar dropdown."
+        }
+      },
+      "reconfigure_buermoos_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Bürmoos waste calendar dropdown.",
+          "strasse": "Street name as listed in the Bürmoos waste calendar dropdown."
+        }
+      },
+      "args_felixdorf_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "zone": "Collection zone (Rayon 1 or Rayon 2), or leave empty for all zones"
+        }
+      },
+      "reconfigure_felixdorf_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "zone": "Collection zone (Rayon 1 or Rayon 2), or leave empty for all zones"
+        }
+      },
+      "args_ics_passail_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_passail_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3803,6 +4021,33 @@
           "street": "The name of your street as shown in the Gänserndorf App."
         }
       },
+      "args_hartbeigraz_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Hart bei Graz waste calendar dropdown.",
+          "strasse": "Street name as listed in the Hart bei Graz waste calendar dropdown."
+        }
+      },
+      "reconfigure_hartbeigraz_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Hart bei Graz waste calendar dropdown.",
+          "strasse": "Street name as listed in the Hart bei Graz waste calendar dropdown."
+        }
+      },
       "args_hausmannstaetten_gv_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -3818,6 +4063,30 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title"
+        },
+        "data_description": {}
+      },
+      "args_herzogsdorf_ooe_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_herzogsdorf_ooe_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3842,6 +4111,105 @@
           "idHouseNumber": "Id House Number",
           "key": "Key",
           "wasteTypes": "Waste Types"
+        },
+        "data_description": {}
+      },
+      "args_imst_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Imst waste calendar dropdown.",
+          "strasse": "Street name as listed in the Imst waste calendar dropdown."
+        }
+      },
+      "reconfigure_imst_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Imst waste calendar dropdown.",
+          "strasse": "Street name as listed in the Imst waste calendar dropdown."
+        }
+      },
+      "args_jochberg_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_jochberg_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_koppl_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_koppl_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_kronstorf_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kronstorf_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3870,6 +4238,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3892,6 +4261,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3912,6 +4282,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3934,6 +4305,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -3947,12 +4319,38 @@
         },
         "data_description": {}
       },
+      "args_angern_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_angern_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_edlitz_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "_": ""
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -3963,7 +4361,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "_": ""
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -3994,7 +4394,10 @@
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4004,7 +4407,54 @@
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_ics_kirchberg_am_wechsel_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_kirchberg_am_wechsel_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },
@@ -4012,7 +4462,10 @@
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4022,7 +4475,77 @@
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_schlierbach_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "zone": "Collection zone: '1' or 'Wohnhausanlagen' (optional)."
+        }
+      },
+      "reconfigure_schlierbach_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "zone": "Collection zone: '1' or 'Wohnhausanlagen' (optional)."
+        }
+      },
+      "args_ics_sollenau_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_sollenau_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
         },
         "data_description": {}
       },
@@ -4033,6 +4556,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4055,6 +4579,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4068,11 +4593,92 @@
         },
         "data_description": {}
       },
+      "args_micheldorf_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Micheldorf waste calendar.",
+          "strasse": "Street name as listed in the Micheldorf waste calendar."
+        }
+      },
+      "reconfigure_micheldorf_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Micheldorf waste calendar.",
+          "strasse": "Street name as listed in the Micheldorf waste calendar."
+        }
+      },
+      "args_oberndorf_schwanenstadt_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Oberndorf bei Schwanenstadt waste calendar.",
+          "strasse": "Street name as listed in the Oberndorf bei Schwanenstadt waste calendar."
+        }
+      },
+      "reconfigure_oberndorf_schwanenstadt_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Oberndorf bei Schwanenstadt waste calendar.",
+          "strasse": "Street name as listed in the Oberndorf bei Schwanenstadt waste calendar."
+        }
+      },
+      "args_ort_im_innkreis_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ort_im_innkreis_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_piberbach_ooe_gv_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4082,15 +4688,48 @@
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {}
+      },
+      "args_puchbeihallein_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Puch bei Hallein waste calendar dropdown (e.g. '3', '4a').",
+          "strasse": "Street name as listed in the Puch bei Hallein waste calendar dropdown."
+        }
+      },
+      "reconfigure_puchbeihallein_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Puch bei Hallein waste calendar dropdown (e.g. '3', '4a').",
+          "strasse": "Street name as listed in the Puch bei Hallein waste calendar dropdown."
+        }
       },
       "args_rohrbach_lafnitz_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -4100,7 +4739,10 @@
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
         },
         "data_description": {}
       },
@@ -4130,6 +4772,132 @@
           "hausnummer": "House number as listed in the Saalfelden waste calendar.",
           "strasse": "Street name as listed in the Saalfelden waste calendar."
         }
+      },
+      "args_schaerding_ooe_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Schärding waste calendar.",
+          "strasse": "Street name as listed in the Schärding waste calendar."
+        }
+      },
+      "reconfigure_schaerding_ooe_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Schärding waste calendar.",
+          "strasse": "Street name as listed in the Schärding waste calendar."
+        }
+      },
+      "args_kanzian_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kanzian_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_st_margarethen_salzburg_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_st_margarethen_salzburg_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_steyr_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hausnummer": "House number as listed in the Steyr waste calendar.",
+          "strasse": "Street name as listed in the Steyr waste calendar."
+        }
+      },
+      "reconfigure_steyr_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House number",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "hausnummer": "House number as listed in the Steyr waste calendar.",
+          "strasse": "Street name as listed in the Steyr waste calendar."
+        }
+      },
+      "args_berndorf_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_berndorf_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "hausnummer": "House Number",
+          "strasse": "Street",
+          "zone": "Zone"
+        },
+        "data_description": {}
       },
       "args_klosterneuburg_at": {
         "title": "Configure Source",
@@ -4165,6 +4933,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4187,6 +4956,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4231,6 +5001,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4253,6 +5024,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4295,6 +5067,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4317,6 +5090,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4356,6 +5130,50 @@
         },
         "data_description": {}
       },
+      "args_ics_zillingdorf_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_zillingdorf_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_bep_environnement_be": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -4386,6 +5204,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4408,6 +5227,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4468,6 +5288,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4490,6 +5311,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4559,6 +5381,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4581,6 +5404,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4621,6 +5445,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4643,6 +5468,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4690,6 +5516,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4712,6 +5539,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4732,6 +5560,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4754,6 +5583,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4774,6 +5604,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4796,6 +5627,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4816,6 +5648,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4838,6 +5671,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4858,6 +5692,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -4880,6 +5715,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5126,6 +5962,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5148,6 +5985,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5203,6 +6041,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5225,6 +6064,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5268,6 +6108,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5290,6 +6131,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5330,6 +6172,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5352,6 +6195,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5433,6 +6277,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5455,6 +6300,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5475,6 +6321,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5497,6 +6344,51 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_ics_zhleatherworks_cz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "Url",
+          "verify_ssl": "Verify Ssl",
+          "version": "(Deprecated) Version, has no effect anymore",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_ics_zhleatherworks_cz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5709,6 +6601,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -5731,6 +6624,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6339,6 +7233,29 @@
         },
         "data_description": {}
       },
+      "args_toulouse_metropole_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_name": "Name of your street, exactly as in the open data portal (e.g. 'Avenue Henri Guillaumet')"
+        }
+      },
+      "reconfigure_toulouse_metropole_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_name": "Street name"
+        },
+        "data_description": {
+          "street_name": "Name of your street, exactly as in the open data portal (e.g. 'Avenue Henri Guillaumet')"
+        }
+      },
       "args_ics": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -6346,6 +7263,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6368,6 +7286,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6447,6 +7366,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6469,6 +7389,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6512,6 +7433,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6534,6 +7456,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6554,6 +7477,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6576,6 +7500,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6596,6 +7521,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6618,6 +7544,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6638,6 +7565,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6660,6 +7588,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6780,6 +7709,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6802,6 +7732,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6822,6 +7753,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6844,6 +7776,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6864,6 +7797,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6886,6 +7820,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6974,6 +7909,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -6996,6 +7932,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7064,6 +8001,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7086,6 +8024,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7136,6 +8075,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7158,6 +8098,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7178,6 +8119,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7200,6 +8142,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7220,6 +8163,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7242,6 +8186,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7277,45 +8222,25 @@
         },
         "data_description": {}
       },
-      "args_ics_kreis_ploen_de": {
+      "args_kreis_ploen_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_kreis_ploen_de": {
+      "reconfigure_kreis_ploen_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {}
       },
@@ -7350,6 +8275,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7372,6 +8298,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7392,6 +8319,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7414,6 +8342,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7518,6 +8447,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7540,6 +8470,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7560,6 +8491,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7582,6 +8514,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7659,6 +8592,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7681,6 +8615,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7787,6 +8722,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7809,6 +8745,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7870,45 +8807,25 @@
         },
         "data_description": {}
       },
-      "args_ics_ilm_kreis_de": {
+      "args_ilm_kreis_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_ilm_kreis_de": {
+      "reconfigure_ilm_kreis_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {}
       },
@@ -7967,6 +8884,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -7989,6 +8907,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8031,6 +8950,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8053,6 +8973,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8099,6 +9020,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8121,6 +9043,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8169,6 +9092,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8191,6 +9115,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8310,6 +9235,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8332,6 +9258,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8408,6 +9335,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8430,6 +9358,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8480,6 +9409,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8502,6 +9432,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8549,6 +9480,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8571,6 +9503,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8591,6 +9524,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8613,6 +9547,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8679,6 +9614,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8701,6 +9637,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8721,6 +9658,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8743,6 +9681,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8886,6 +9825,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8908,6 +9848,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -8994,6 +9935,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9016,6 +9958,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9118,6 +10061,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9140,6 +10084,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9213,6 +10158,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9235,6 +10181,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9279,6 +10226,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9301,6 +10249,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9321,6 +10270,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9343,6 +10293,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9405,6 +10356,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9427,6 +10379,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9471,6 +10424,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9493,6 +10447,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9513,6 +10468,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9535,6 +10491,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9625,6 +10582,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9647,6 +10605,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9795,6 +10754,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9817,6 +10777,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9837,6 +10798,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9859,6 +10821,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9879,6 +10842,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9901,6 +10865,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9921,6 +10886,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -9943,6 +10909,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10034,6 +11001,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10056,6 +11024,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10076,6 +11045,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10098,6 +11068,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10118,6 +11089,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10140,6 +11112,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10160,6 +11133,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10182,6 +11156,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10202,6 +11177,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10224,6 +11200,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10244,6 +11221,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10266,6 +11244,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10321,6 +11300,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10343,6 +11323,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10363,6 +11344,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10385,6 +11367,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10405,6 +11388,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10427,6 +11411,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10447,6 +11432,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10469,6 +11455,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10489,6 +11476,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10511,6 +11499,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10531,6 +11520,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10553,6 +11543,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10573,6 +11564,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10595,6 +11587,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10615,6 +11608,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10637,6 +11631,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10681,6 +11676,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10703,6 +11699,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10723,6 +11720,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10745,6 +11743,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10765,6 +11764,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10787,6 +11787,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10858,6 +11859,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10880,6 +11882,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10920,6 +11923,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -10942,6 +11946,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11028,6 +12033,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11050,6 +12056,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11070,6 +12077,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11092,6 +12100,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11136,6 +12145,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11158,6 +12168,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11171,45 +12182,25 @@
         },
         "data_description": {}
       },
-      "args_ics_gross_gerau_de": {
+      "args_gross_gerau_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_gross_gerau_de": {
+      "reconfigure_gross_gerau_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {}
       },
@@ -11218,10 +12209,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "pois": "POIS"
+          "ort": "Place",
+          "pois": "POIS",
+          "strasse": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ort": "Optional place/district to disambiguate (e.g. 'Seesen').",
+          "pois": "Direct POIS id (alternative to entering a street).",
+          "strasse": "Street name (resolved via autocomplete)."
         }
       },
       "reconfigure_kwb_goslar_de": {
@@ -11229,9 +12225,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "pois": "POIS"
+          "ort": "Place",
+          "pois": "POIS",
+          "strasse": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "ort": "Optional place/district to disambiguate (e.g. 'Seesen').",
+          "pois": "Direct POIS id (alternative to entering a street).",
+          "strasse": "Street name (resolved via autocomplete)."
+        }
       },
       "args_kwu_de": {
         "title": "Configure Source",
@@ -11264,6 +12266,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11286,6 +12289,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11306,6 +12310,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11328,6 +12333,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11370,6 +12376,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11392,6 +12399,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11412,6 +12420,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11434,6 +12443,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11493,6 +12503,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11515,6 +12526,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11554,12 +12566,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "ort": "City",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "Name of the municipality (as shown in the dropdown on the Abfallkalender page).",
-          "street": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
+          "ort": "Optional municipality name to disambiguate streets that exist in several places.",
+          "strasse": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
         }
       },
       "reconfigure_lk_mecklenburgische_seenplatte_de": {
@@ -11568,11 +12582,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "ort": "City",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {
-          "city": "Name of the municipality (as shown in the dropdown on the Abfallkalender page).",
-          "street": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
+          "ort": "Optional municipality name to disambiguate streets that exist in several places.",
+          "strasse": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun')."
         }
       },
       "args_abfuhrplan_landkreis_neumarkt_de": {
@@ -11617,45 +12633,25 @@
         },
         "data_description": {}
       },
-      "args_ics_ab_peine_de": {
+      "args_ab_peine_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_ab_peine_de": {
+      "reconfigure_ab_peine_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "File",
-          "headers": "Headers",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "Url",
-          "verify_ssl": "Verify Ssl",
-          "version": "(Deprecated) Version, has no effect anymore",
-          "year_field": "Year Field"
+          "ort": "Place",
+          "strasse": "Street"
         },
         "data_description": {}
       },
@@ -11777,6 +12773,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11799,6 +12796,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11845,6 +12843,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11867,6 +12866,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11886,6 +12886,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "ort": "City",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {
@@ -11898,6 +12900,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "ort": "City",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {}
@@ -11909,6 +12913,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11931,6 +12936,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11951,6 +12957,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11973,6 +12980,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -11993,6 +13001,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12015,6 +13024,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12035,6 +13045,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12057,6 +13068,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12077,6 +13089,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12099,6 +13112,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12220,6 +13234,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12242,6 +13257,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12254,6 +13270,33 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_muehlenkreis_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "ort": "Place",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ort": "Optional place to disambiguate (the part in parentheses, e.g. 'Harlinghausen').",
+          "strasse": "Street name or a unique part of it."
+        }
+      },
+      "reconfigure_muehlenkreis_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "ort": "Place",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "ort": "Optional place to disambiguate (the part in parentheses, e.g. 'Harlinghausen').",
+          "strasse": "Street name or a unique part of it."
+        }
       },
       "args_neu_ulm_de": {
         "title": "Configure Source",
@@ -12282,6 +13325,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12304,6 +13348,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12322,10 +13367,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ort": "District",
           "strasse": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ort": "Optional district (Ortsteil) to disambiguate a street that exists in several places, i.e. the part shown in parentheses (e.g. 'Neunkirchen').",
           "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße')."
         }
       },
@@ -12334,9 +13381,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ort": "District",
           "strasse": "Street"
         },
         "data_description": {
+          "ort": "Optional district (Ortsteil) to disambiguate a street that exists in several places, i.e. the part shown in parentheses (e.g. 'Neunkirchen').",
           "strasse": "Partial or full street name as shown on the Neunkirchen Siegerland waste calendar (e.g. 'Waldstr' for 'Waldstraße')."
         }
       },
@@ -12347,6 +13396,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12369,6 +13419,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12388,6 +13439,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "location": "Location",
+          "ort": "Place",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {
@@ -12400,6 +13453,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "location": "Location",
+          "ort": "Place",
+          "strasse": "Street",
           "street": "Street"
         },
         "data_description": {}
@@ -12491,6 +13546,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12513,6 +13569,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12583,6 +13640,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12605,6 +13663,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12645,6 +13704,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12667,6 +13727,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12687,6 +13748,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12709,6 +13771,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12751,6 +13814,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12773,6 +13837,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12793,6 +13858,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12815,6 +13881,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12835,6 +13902,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12857,6 +13925,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12877,6 +13946,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12899,6 +13969,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -12962,10 +14033,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ort": "District",
           "strasse": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ort": "Optional district to disambiguate (the part in parentheses, e.g. 'Allenbach').",
+          "strasse": "Street name or a unique part of it."
         }
       },
       "reconfigure_hilchenbach_de": {
@@ -12973,9 +14047,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "ort": "District",
           "strasse": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "ort": "Optional district to disambiguate (the part in parentheses, e.g. 'Allenbach').",
+          "strasse": "Street name or a unique part of it."
+        }
       },
       "args_ics_koblenz_de": {
         "title": "Configure Source",
@@ -12984,6 +14062,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13006,6 +14085,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13026,6 +14106,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13048,6 +14129,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13068,6 +14150,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13090,6 +14173,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13110,6 +14194,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13132,6 +14217,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13175,6 +14261,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13197,6 +14284,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13217,6 +14305,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13239,6 +14328,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13259,6 +14349,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13281,6 +14372,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13373,6 +14465,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13395,6 +14488,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13459,6 +14553,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13481,6 +14576,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13501,6 +14597,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13523,6 +14620,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13589,6 +14687,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13611,6 +14710,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13631,6 +14731,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13653,6 +14754,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13693,6 +14795,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13715,6 +14818,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13775,6 +14879,33 @@
           "street": "Street name — use exact spelling from the provider's calendar"
         }
       },
+      "args_ubzzw_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "House number, optionally including a suffix (e.g. 75 or 1 a)",
+          "street": "Full street name as shown on the UBZ collection calendar (e.g. Vogesenstraße)"
+        }
+      },
+      "reconfigure_ubzzw_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "house_number": "House number, optionally including a suffix (e.g. 75 or 1 a)",
+          "street": "Full street name as shown on the UBZ collection calendar (e.g. Vogesenstraße)"
+        }
+      },
       "args_ics_ebu_ulm_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -13782,6 +14913,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13804,6 +14936,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13851,6 +14984,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13873,6 +15007,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13893,6 +15028,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13915,6 +15051,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13935,6 +15072,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13957,6 +15095,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -13999,6 +15138,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14021,6 +15161,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14063,6 +15204,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14085,6 +15227,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14166,6 +15309,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14188,6 +15332,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14208,6 +15353,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14230,6 +15376,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14325,6 +15472,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14347,6 +15495,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14419,6 +15568,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14441,6 +15591,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14841,6 +15992,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14863,6 +16015,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14883,6 +16036,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -14905,6 +16059,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15270,6 +16425,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15292,6 +16448,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15622,6 +16779,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15644,6 +16802,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15664,6 +16823,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15686,6 +16846,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15706,6 +16867,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15728,6 +16890,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15748,6 +16911,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15770,6 +16934,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15790,6 +16955,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15812,6 +16978,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15916,6 +17083,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -15938,6 +17106,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -16681,6 +17850,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -16703,6 +17873,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -17019,6 +18190,41 @@
           "city": "City / town name as listed on the Hemar portal.",
           "house_number": "House number as listed on the Hemar portal.",
           "street": "Street name as listed on the Hemar portal."
+        }
+      },
+      "args_kiedyodpady_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City Name",
+          "municipality": "Municipality",
+          "number": "House Number",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "City/locality name as shown in the kiedyodpady.pl UI.",
+          "municipality": "Subdomain slug for your municipality on kiedyodpady.pl, e.g. 'pabianice' for pabianice.kiedyodpady.pl.",
+          "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
+          "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities)."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City Name",
+          "municipality": "Municipality",
+          "number": "House Number",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "city": "City/locality name as shown in the kiedyodpady.pl UI.",
+          "municipality": "Subdomain slug for your municipality on kiedyodpady.pl, e.g. 'pabianice' for pabianice.kiedyodpady.pl.",
+          "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
+          "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities)."
         }
       },
       "args_kiedysmieci_info": {
@@ -17415,6 +18621,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -17437,6 +18644,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -17484,6 +18692,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -17506,6 +18715,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18694,6 +19904,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18716,6 +19927,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18758,6 +19970,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18780,6 +19993,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18800,6 +20014,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18822,6 +20037,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18903,6 +20119,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18925,6 +20142,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18965,6 +20183,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -18987,6 +20206,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -19096,6 +20316,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -19118,6 +20339,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -19138,6 +20360,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -19160,6 +20383,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -19320,6 +20544,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -19342,6 +20567,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -20128,6 +21354,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -20150,6 +21377,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -20912,6 +22140,29 @@
         },
         "data_description": {
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+        }
+      },
+      "args_cotswold_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "The full address string as returned by the lookup on the Cotswold District Council waste collection enquiry page."
+        }
+      },
+      "reconfigure_cotswold_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "The full address string as returned by the lookup on the Cotswold District Council waste collection enquiry page."
         }
       },
       "args_coventry_gov_uk": {
@@ -21759,6 +23010,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -21781,6 +23033,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -22016,6 +23269,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -22038,6 +23292,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -23016,6 +24271,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -23038,6 +24294,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -23876,6 +25133,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -23898,6 +25156,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -25787,6 +27046,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -25809,6 +27069,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -26445,6 +27706,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -26467,6 +27729,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -26487,6 +27750,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -26509,6 +27773,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -26865,6 +28130,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -26887,6 +28153,7 @@
           "calendar_title": "Calendar Title",
           "file": "File",
           "headers": "Headers",
+          "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
           "method": "Method",
           "offset": "Offset",
           "params": "Params",
@@ -27355,6 +28622,33 @@
           "calendar_title": "Calendar Title"
         },
         "data_description": {}
+      },
+      "args_vogeldisposal_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street address",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your street address, for example '1002 tudor' or '1002 TUDOR DR'.",
+          "municipality": "Your Vogel municipality, for example 'butler twp' or 'BUTLER TWP, BUTLER COUNTY'."
+        }
+      },
+      "reconfigure_vogeldisposal_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street address",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "address": "Your street address, for example '1002 tudor' or '1002 TUDOR DR'.",
+          "municipality": "Your Vogel municipality, for example 'butler twp' or 'BUTLER TWP, BUTLER COUNTY'."
+        }
       },
       "args_wm_com": {
         "title": "Configure Source",

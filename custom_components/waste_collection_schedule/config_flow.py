@@ -35,6 +35,7 @@ from homeassistant.helpers.selector import (
 )
 from homeassistant.helpers.translation import async_get_translations
 from voluptuous.schema_builder import UNDEFINED
+
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import ConfigParam
 from waste_collection_schedule.exceptions import (
@@ -808,9 +809,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                         default=UNDEFINED if default is None else default,
                         description=description,
                     )
-                ] = (
-                    field_type or cv.string
-                )
+                ] = field_type or cv.string
             else:
                 _LOGGER.debug(
                     f"Unsupported type: {type(default)}: {arg_name}: {default}: {field_type}"

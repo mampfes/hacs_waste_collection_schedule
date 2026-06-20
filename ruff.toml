@@ -1,0 +1,14 @@
+target-version = "py313"
+line-length = 88
+
+[lint]
+# Mirror the previous flake8 + isort behaviour: pycodestyle (E/W), pyflakes (F)
+# and import sorting (I, equivalent to isort profile=black). E203/E501 were
+# ignored by flake8; E721 is stricter in ruff than pycodestyle, so keep it off
+# to avoid new findings the old tool chain never reported.
+select = ["E", "F", "W", "I"]
+ignore = ["E203", "E501", "E721"]
+
+[format]
+quote-style = "double"
+indent-style = "space"

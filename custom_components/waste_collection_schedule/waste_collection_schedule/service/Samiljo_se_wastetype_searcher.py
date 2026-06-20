@@ -77,7 +77,7 @@ retry_codes = [
 ]
 
 
-NEW_NAME_MAP = {}
+NEW_NAME_MAP: dict[str, str] = {}
 
 
 def waste_searcher(arg1):  # sourcery skip: use-fstring-for-concatenation

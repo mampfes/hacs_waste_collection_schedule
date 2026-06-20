@@ -24,5 +24,4 @@ extra_info:
     country: de
 test_cases:
   Speyer, Schnaudigelweg (Abfallgebiet Hellgrün):
-    url: 
-      https://www.stadtwerke-speyer.de/speyerGips/Gips?SessionMandant=Speyer&Anwendung=Abfuhrkalender&Methode=TermineAnzeigenICS&Mandant=Speyer&Abfuhrkalender=Speyer{%Y}&Bezirk_ID=22&Jahr={%Y}
+    url: https://www.stadtwerke-speyer.de/speyerGips/Gips?SessionMandant=Speyer&Anwendung=Abfuhrkalender&Methode=TermineAnzeigenICS&Mandant=Speyer&Abfuhrkalender=Speyer{%Y}&Bezirk_ID=22&Jahr={%Y}
