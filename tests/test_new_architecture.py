@@ -1455,6 +1455,75 @@ class TestConfigParams:
             assert lang in p.labels, f"Missing {lang} labels for coords"
 
 
+class TestConfigParamValidation:
+    """Defaults, alternatives, and validate() rules for ConfigParam."""
+
+    def test_text_field_default_makes_optional(self):
+        from waste_collection_schedule.config_params import api_key, text_field
+
+        p = text_field("key", default="EMBEDDED")
+        assert p.required is False
+        assert p.defaults == {"key": "EMBEDDED"}
+        # No default => required, no defaults recorded.
+        assert text_field("key").required is True
+        assert text_field("key").defaults == {}
+        # api_key wraps text_field with the same default behaviour.
+        assert api_key(default="X").defaults == {"api_key": "X"}
+
+    def test_apply_defaults_fills_only_missing(self):
+        from waste_collection_schedule.config_params import apply_defaults, text_field
+
+        params = [text_field("key", default="EMBEDDED")]
+        # Missing/empty fields get the default; a supplied value is kept.
+        assert apply_defaults(params, {}) == {"key": "EMBEDDED"}
+        assert apply_defaults(params, {"key": ""}) == {"key": "EMBEDDED"}
+        assert apply_defaults(params, {"key": "mine"}) == {"key": "mine"}
+
+    def test_validate_required_raises_when_missing(self):
+        from waste_collection_schedule.config_params import uprn, validate
+        from waste_collection_schedule.exceptions import SourceArgumentRequired
+
+        with pytest.raises(SourceArgumentRequired):
+            validate([uprn()], {})
+
+    def test_alternatives_declares_union_and_groups(self):
+        from waste_collection_schedule.config_params import (
+            alternatives,
+            postcode,
+            text_field,
+            uprn,
+        )
+
+        p = alternatives([uprn()], [postcode(), text_field("house")])
+        assert p.widget == "alternatives"
+        assert p.required is False
+        # Every field of every group is declared (so __init__ accepts them).
+        assert set(p.fields) == {"uprn", "postcode", "house"}
+        assert p.groups == (("uprn",), ("postcode", "house"))
+
+    def test_validate_alternatives_requires_exactly_one_full_group(self):
+        from waste_collection_schedule.config_params import (
+            alternatives,
+            postcode,
+            text_field,
+            uprn,
+            validate,
+        )
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentExceptionMultiple,
+        )
+
+        params = [alternatives([uprn()], [postcode(), text_field("house")])]
+        # One full group satisfies validation.
+        validate(params, {"uprn": "123"})
+        validate(params, {"postcode": "AB1", "house": "5"})
+        # No group, or only a partial group, fails.
+        with pytest.raises(SourceArgumentExceptionMultiple):
+            validate(params, {})
+        with pytest.raises(SourceArgumentExceptionMultiple):
+            validate(params, {"postcode": "AB1"})
+
+
 # =====================================================================
 # 4. Pipeline orchestration (BaseSource)
 # =====================================================================

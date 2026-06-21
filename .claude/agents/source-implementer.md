@@ -38,7 +38,7 @@ Before writing any retriever or parser, check whether the provider runs on a pla
 ### Building blocks
 
 - **Metadata** are CLASS attributes: `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES`, `PARAMS`, plus optional `HOWTO`, `RAISE_ON_EMPTY`, `CODEOWNERS`, `EXTRA_INFO`. There is no `ICON_MAP` and no `WASTE_TYPES` (derived from the transformer).
-- **`PARAMS`** uses typed factories from `waste_collection_schedule.config_params`: `coords`, `uprn`, `postcode`, `address`, `municipality`, `dropdown`, `dependent_select`, `multi_value_lookup`, `text_field`. These drive both the config-flow UI and up-front validation.
+- **`PARAMS`** uses typed factories from `waste_collection_schedule.config_params`: `coords`, `uprn`, `postcode`, `address`, `municipality`, `dropdown`, `dependent_select`, `multi_value_lookup`, `text_field`, `api_key`, `alternatives`. These drive both the config-flow UI and up-front validation. `text_field`/`api_key` take `default=` to make a field optional and pre-filled (e.g. an embedded public key); `alternatives(*groups)` declares mutually-exclusive input groups (validation requires exactly one full group).
 - **Retrievers** (`waste_collection_schedule.retrievers`): declare none to use the zero-config default GET (curl_cffi; reads `API_URL`, `self._params`, `self._headers`, `TIMEOUT`). Use `http_get` / `http_post`, or `HttpGetRetriever` / `HttpPostRetriever`. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure. For full control, override `retrieve` as a method.
 - **Parsers** (`waste_collection_schedule.parsers`): `JsonParser()`, `JsonParser("key")`, `HtmlParser("tr", skip=1)`, `IcsParser()`, `IcsEventsParser()`, `TextParser()`. A parser may also be a method (`def parse(self, response, source)`).
 - **Preprocessors** (`waste_collection_schedule.preprocessors`): the default suits most sources. Use `RecurrenceExpander(describe)` with `Schedule` to project a weekday-plus-cadence schedule into dates, `Compose` to chain, `HolidayShift` to adjust holidays.
@@ -96,7 +96,7 @@ class Source(BaseSource):
         self._params = {"uprn": uprn}
 ```
 
-No `retrieve` is declared, so the zero-config GET is used. Set `self._params` / `self._headers` in `__init__` to shape the request. For a service-platform source, assign the platform's retriever and parser instead (see `koppl_at.py`). For alternative-input sources (UPRN or postcode plus house), mark each param `required=False` with `dataclasses.replace(...)` and do the cross-field check in `__init__`, then override `retrieve` as a method (see `reading_gov_uk.py`).
+No `retrieve` is declared, so the zero-config GET is used. Set `self._params` / `self._headers` in `__init__` to shape the request. For a service-platform source, assign the platform's retriever and parser instead (see `koppl_at.py`). For alternative-input sources (UPRN or postcode plus house), declare a single `alternatives([uprn()], [postcode(), text_field("house")])` param: validation then requires exactly one group, so no hand-rolled cross-field check is needed (see `reading_gov_uk.py`). A two-call source (lookup then schedule) can use `retrievers.TwoStepRetriever` rather than overriding `retrieve` by hand.
 
 ### Rules
 

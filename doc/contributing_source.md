@@ -96,6 +96,7 @@ Notes:
 | `HttpPostRetriever(url=...)` | curl_cffi | Configured POST. |
 | `LegacyHttpGetRetriever` / `LegacyHttpPostRetriever` | plain requests | Only if curl_cffi causes a documented problem. |
 | `LegacySslHttpGetRetriever` | plain requests + SSL compat | `UNSAFE_LEGACY_RENEGOTIATION` endpoints. |
+| `TwoStepRetriever(lookup_url, extract, schedule_url, direct_key=...)` | curl_cffi | Two-call sources: a lookup (e.g. postcode to id) feeds the schedule fetch. `direct_key` short-circuits when the id is already supplied. |
 
 Always try curl_cffi (the default) first. It impersonates Chrome and clears most Cloudflare blocks. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure.
 
@@ -116,8 +117,13 @@ def retrieve(self, source):
 | `IcsParser()` | `list[(date, summary)]` |
 | `IcsEventsParser()` | `list[IcsEvent(date, title, location, description)]`; use when the type lives in the LOCATION/DESCRIPTION fields |
 | `TextParser()` | `response.text` |
+| `PdfTextParser()` | text extracted from a PDF response |
+| `XmlParser(namespaces=...)` | parsed XML (ElementTree), namespaces optional |
+| `CsvParser()` | CSV rows (handles a `utf-8-sig` BOM) |
 
 A parser may also be a method (`def parse(self, response, source)`), for example to detect an error body or to fetch a supplementary page via `source.session`.
+
+The JSON/HTML/ICS parsers accept an optional `shape=` (a TypedDict / list of required selectors / minimum event count). On a mismatch the parser logs the response and raises `ResponseShapeError`, so a source fails clearly when a provider changes its API rather than returning silently-wrong data. See `stirling_wa_gov_au.py`.
 
 ### Preprocessors (`waste_collection_schedule.preprocessors`)
 
@@ -141,15 +147,20 @@ The default preprocessor wraps a single dict into a one-item list and passes exi
 | `ICSTransformer(type_value_map=...)` | `(date, label)` tuples | ICS feeds and recurrence rows |
 | `HtmlTransformer(date_getter, type_getter, type_value_map=...)` | BeautifulSoup elements | HTML scraping |
 
-All accept an optional `parse_date` (a `date_parsers` callable; default is `date_parsers.auto`). All accept an optional `type_value_map`. See the next section for how a label becomes a `WasteType`.
+All accept an optional `parse_date` (a `date_parsers` callable; default is `date_parsers.auto`). All accept an optional `type_value_map`. A map value may be a single `WasteType` or a `list[WasteType]` for a combined round that covers several types on one date (e.g. a glass-plus-paper collection); the transformer then emits one `Collection` per type. See the next section for how a label becomes a `WasteType`.
 
 ### Config params (`waste_collection_schedule.config_params`)
 
 `PARAMS` is a list of typed `ConfigParam` descriptors. They drive both the config flow (the UI form) and up-front validation, so retrievers and transformers can assume clean arguments.
 
-Available factories: `coords(lat, lon)`, `uprn()`, `postcode()`, `address()`, `municipality()`, `dropdown()`, `dependent_select()`, `multi_value_lookup()`, `text_field(name, label)`.
+Available factories: `coords(lat, lon)`, `uprn()`, `postcode()`, `address()`, `municipality()`, `dropdown()`, `dependent_select()`, `multi_value_lookup()`, `text_field(name, label, default=...)`, `api_key(name, label, default=...)`, `alternatives(*groups)`.
 
-A param is required by default. For alternative-input sources (UPRN or postcode plus house number), mark each `required=False` with `dataclasses.replace(...)` and do the cross-field check in `__init__`.
+A param is required by default. Two factories relax that:
+
+- **Optional with a default.** `text_field(..., default=...)` (and the `api_key(...)` wrapper for provider keys) makes a field optional and pre-fills it, e.g. an embedded public API key. The default is applied before validation, so the user need not supply one but can override it.
+- **Alternative input.** `alternatives([uprn()], [postcode(), text_field("house")])` declares mutually-exclusive input groups: validation requires exactly one group to be fully provided. Use this instead of a hand-rolled cross-field check in `__init__` (see `reading_gov_uk.py`).
+
+`dependent_select(parent, child)` is a cascading two-level dropdown. The source MUST implement `get_choices(parent_value) -> list[str]` (child options for a chosen parent) and MAY implement `get_parent_choices() -> list[str]` (parent options; absent means the parent is free text). Both run at config-flow time and may fetch live. See `gemeinde24_at.py`.
 
 ### Date parsers (`waste_collection_schedule.date_parsers`)
 
@@ -160,7 +171,7 @@ A param is required by default. For alternative-input sources (UPRN or postcode 
 
 For schedules published as a weekday plus a cadence rather than explicit dates:
 
-- `WEEKDAYS` / `MONTHS`: multilingual (en, de, fr, it) name to number maps.
+- `WEEKDAYS` / `MONTHS`: multilingual (en, de, fr, it, pl) name to number maps. Add a language's names here when a provider publishes worded dates in it (rather than carrying a private dict in the source).
 - `weekday(name)` / `month(name)`: tolerant lookups returning `int` or `None`.
 - `recurring(start, step, count)`, `recurring_from_anchor(anchor, step, count)`, `next_weekday(weekday)`, `most_recent_weekday(weekday)`.
 - `WEEKLY`, `FORTNIGHTLY` step constants.
