@@ -135,7 +135,10 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
 
     Default: a single dict becomes ``[dict]``, a falsy/None value becomes
     ``[]``, and an existing iterable passes through unchanged. May also be
-    overridden as a method.
+    overridden as a method ``def preprocessor(self, records, source=None)`` or a
+    callable instance, but NOT a bare module-level function assigned to the
+    attribute: ``fetch`` calls ``self.preprocessor(records, self)``, which binds
+    ``self`` to a plain function and passes three positional args.
     """
 
     transformer: BaseTransformer[TransformerType] | None = None

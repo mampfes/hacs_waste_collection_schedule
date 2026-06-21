@@ -222,12 +222,22 @@ class PdfTextParser(Parser[str]):
     """Extract the text layer of a PDF response (pypdf, no OCR).
 
     For providers whose calendar is a text-PDF (``pypdf`` text extraction
-    returns the schedule). Returns the concatenated page text; the source's
-    ``classify()`` then parses it. Pass ``shape`` (a minimum character count) to
-    flag an image-only/empty PDF, which is logged and raises
-    ``ResponseShapeError`` rather than yielding nothing::
+    returns the schedule). Returns the *whole page text as one string*. Because
+    a text PDF is one blob that fans out into many rows, pair it with a custom
+    ``preprocessor`` (defined as a method, not a bare function) that yields the
+    rows; the default preprocessor / ``classify()`` expect per-record input and
+    won't fit::
 
         parse = parsers.PdfTextParser(shape=200)
+        transformer = ICSTransformer(type_value_map={...})
+
+        def preprocessor(self, text, source=None):
+            for date, key in _rows_from_text(text):   # source-specific parsing
+                yield (date, key)
+
+    Pass ``shape`` (a minimum character count) to flag an image-only/empty PDF,
+    which is logged and raises ``ResponseShapeError`` rather than yielding
+    nothing.
     """
 
     def __init__(self, shape: "int | None" = None):
@@ -262,17 +272,35 @@ class XmlParser(Parser["list[Any]"]):
 
         parse = parsers.XmlParser("collection")         # all <collection> nodes
         parse = parsers.XmlParser(".//event", shape=1)   # XPath
+
+    For a namespaced feed, pass ``namespaces`` (a prefix->URI map) and use the
+    prefix in ``path`` instead of inlining ``{uri}tag``::
+
+        parse = parsers.XmlParser(".//w:Collection", namespaces={"w": NS_URI})
+
+    Note: ``shape`` (a minimum node count) suits fixed feeds. For an
+    address-lookup source where an unknown input legitimately returns zero
+    nodes, leave ``shape`` unset and rely on ``RAISE_ON_EMPTY`` instead, so a
+    bad lookup is reported as a bad argument rather than a changed feed.
     """
 
-    def __init__(self, path: "str | None" = None, shape: "int | None" = None):
+    def __init__(
+        self,
+        path: "str | None" = None,
+        shape: "int | None" = None,
+        namespaces: "dict[str, str] | None" = None,
+    ):
         self.path = path
         self.shape = shape
+        self.namespaces = namespaces
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> list:
         from lxml import etree  # type: ignore[attr-defined]
 
         root = etree.fromstring(response.content)
-        elements = root.findall(self.path) if self.path else [root]
+        elements = (
+            root.findall(self.path, namespaces=self.namespaces) if self.path else [root]
+        )
         if self.shape is not None:
             from waste_collection_schedule import response_shape
 
@@ -306,7 +334,10 @@ class CsvParser(Parser["list[dict[str, str]]"]):
         import csv
         import io
 
-        reader = csv.DictReader(io.StringIO(response.text), delimiter=self.delimiter)
+        # Decode utf-8-sig so a UTF-8 BOM doesn't contaminate the first column
+        # name (a common export quirk).
+        text = response.content.decode("utf-8-sig", errors="replace")
+        reader = csv.DictReader(io.StringIO(text), delimiter=self.delimiter)
         rows = list(reader)
         if self.shape:
             from waste_collection_schedule import response_shape
