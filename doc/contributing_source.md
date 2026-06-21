@@ -39,6 +39,8 @@ For providers too irregular for a standard transformer, implement `classify()` i
 
 ## Minimal example
 
+To start a new source, copy the annotated skeleton at [`doc/new_source_template.py`](new_source_template.py) and fill in the parts marked `# >>>`. The `source-implementer` agent (or `/new-source`) can generate this for you.
+
 A flat JSON API, typed by a label-to-waste-type map:
 
 ```python

@@ -39,7 +39,7 @@ If the recommendation is **"not feasible"** (login wall, no public feed, PDF-onl
 
 If the recommendation is **a new source**: confirm with the user that the approach (ICS YAML / Python source / etc.) matches their understanding. Then continue to Step 2.
 
-New Python sources are written on the `BaseSource` pipeline platform (declare retrieve, parse, preprocess and transform from reusable components; the only source-specific code is usually `__init__`). The authoritative guide is `doc/contributing_source.md`. The legacy module-level `fetch()` style is reserved for editing the roughly 600 existing legacy sources, not for new work.
+New Python sources are written on the `BaseSource` pipeline platform (declare retrieve, parse, preprocess and transform from reusable components; the only source-specific code is usually `__init__`). The authoritative guide is `doc/contributing_source.md`, and `doc/new_source_template.py` is an annotated skeleton to copy from. The legacy module-level `fetch()` style is reserved for editing the roughly 600 existing legacy sources, not for new work.
 
 ## Step 2: implement
 
