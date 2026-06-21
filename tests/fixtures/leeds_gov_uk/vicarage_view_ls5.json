@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-06-21",
+  "interactions": [
+    {
+      "key": "GET https://api.leeds.gov.uk/public/waste/v1/BinsDays 0650d2e0be",
+      "method": "GET",
+      "url": "https://api.leeds.gov.uk/public/waste/v1/BinsDays",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 21 Jun 2026 07:23:34 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "set-cookie": "ARRAffinity=dde7293a6aad00db58800ee68945263f3c56235c3ff8f6c8af4e7bca136cefe9;Path=/;HttpOnly;Secure;Domain=as-intg-waste-prod-001.azurewebsites.net, ARRAffinitySameSite=dde7293a6aad00db58800ee68945263f3c56235c3ff8f6c8af4e7bca136cefe9;Path=/;HttpOnly;SameSite=None;Secure;Domain=as-intg-waste-prod-001.azurewebsites.net",
+        "x-powered-by": "ASP.NET",
+        "request-context": "appId=cid-v1:fc166efd-84c9-440e-96a5-76bd4e558bf5"
+      },
+      "content_b64": "W3sidHlwZSI6IkJyb3duIiwiZGF0ZSI6IjIwMjYtMDYtMjVUMDc6MDA6MDAifSx7InR5cGUiOiJCbGFjayIsImRhdGUiOiIyMDI2LTA2LTI2VDA3OjAwOjAwIn0seyJ0eXBlIjoiR3JlZW4iLCJkYXRlIjoiMjAyNi0wNy0wM1QwNzowMDowMCJ9LHsidHlwZSI6IkJyb3duIiwiZGF0ZSI6IjIwMjYtMDctMDlUMDc6MDA6MDAifSx7InR5cGUiOiJCbGFjayIsImRhdGUiOiIyMDI2LTA3LTEwVDA3OjAwOjAwIn0seyJ0eXBlIjoiR3JlZW4iLCJkYXRlIjoiMjAyNi0wNy0xN1QwNzowMDowMCJ9LHsidHlwZSI6IkJyb3duIiwiZGF0ZSI6IjIwMjYtMDctMjNUMDc6MDA6MDAifSx7InR5cGUiOiJCbGFjayIsImRhdGUiOiIyMDI2LTA3LTI0VDA3OjAwOjAwIn0seyJ0eXBlIjoiR3JlZW4iLCJkYXRlIjoiMjAyNi0wNy0zMVQwNzowMDowMCJ9LHsidHlwZSI6IkJyb3duIiwiZGF0ZSI6IjIwMjYtMDgtMDZUMDc6MDA6MDAifSx7InR5cGUiOiJCbGFjayIsImRhdGUiOiIyMDI2LTA4LTA3VDA3OjAwOjAwIn0seyJ0eXBlIjoiR3JlZW4iLCJkYXRlIjoiMjAyNi0wOC0xNFQwNzowMDowMCJ9XQ=="
+    }
+  ]
+}
