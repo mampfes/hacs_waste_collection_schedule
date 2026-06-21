@@ -22,66 +22,97 @@ work out the start date and cadence. Once you have those, use these helpers::
 """
 
 import datetime
+import unicodedata
+
+from babel import Locale
 
 WEEKLY = datetime.timedelta(weeks=1)
 FORTNIGHTLY = datetime.timedelta(days=14)
 
 
-def _index(rows: list[list[str]], start: int) -> dict[str, int]:
-    """Build a {normalised name -> number} map from per-item synonym rows."""
+# Languages we source month/weekday names for, via Babel's CLDR data. Adding a
+# language is just adding its code here: the names (in every grammatical form
+# CLDR carries) come from Babel, so sources never hand-roll a weekday/month dict.
+# Covers the regions the project's sources span.
+_LOCALES = (
+    "en",
+    "de",
+    "fr",
+    "it",
+    "pl",
+    "nl",
+    "es",
+    "pt",
+    "sv",
+    "da",
+    "nb",
+    "nn",
+    "fi",
+    "is",
+    "cs",
+    "sk",
+    "sl",
+    "hr",
+    "hu",
+    "ro",
+    "et",
+    "lv",
+    "lt",
+    "ga",
+)
+
+
+def _strip_accents(text: str) -> str:
+    """Drop combining marks: 'février' -> 'fevrier', 'lunedì' -> 'lunedi'."""
+    return "".join(
+        c for c in unicodedata.normalize("NFKD", text) if not unicodedata.combining(c)
+    )
+
+
+def _german_expand(text: str) -> str:
+    """German umlaut/eszett spelling: 'märz' -> 'maerz', 'straße' -> 'strasse'."""
+    return (
+        text.replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
+    )
+
+
+def _register(index: dict[str, int], name: str, number: int) -> None:
+    """Register a name and its accent-stripped / umlaut-expanded variants."""
+    key = name.strip().lower()
+    if not key:
+        return
+    for variant in (key, _strip_accents(key), _german_expand(key)):
+        index.setdefault(variant, number)
+
+
+def _build_index(attr: str) -> dict[str, int]:
+    """Build a {name -> number} map from Babel for every language in _LOCALES.
+
+    ``attr`` is ``"days"`` (keyed 0=Mon..6=Sun) or ``"months"`` (1=Jan..12=Dec);
+    both Babel orderings already match our convention. Both the ``format`` and
+    ``stand-alone`` CLDR contexts are included, so grammatically inflected names
+    (e.g. Polish genitive "stycznia" vs nominative "styczeń") all resolve.
+    """
     index: dict[str, int] = {}
-    for offset, names in enumerate(rows, start=start):
-        for name in names:
-            index[name] = offset
+    for code in _LOCALES:
+        try:
+            locale = Locale.parse(code)
+        except Exception:  # noqa: BLE001 - skip a locale Babel can't load
+            continue
+        table = getattr(locale, attr)
+        for context in ("format", "stand-alone"):
+            for number, name in table.get(context, {}).get("wide", {}).items():
+                _register(index, name, number)
     return index
 
 
-# Weekday name (any of en/de/fr/it/pl, lower-case) -> Python weekday number
-# (Monday=0 .. Sunday=6). Multilingual so sources don't each carry a local dict
-# (e.g. shawinigan publishes French day names). Use ``weekday()`` for tolerant
-# lookup; the dict itself is kept for direct ``WEEKDAYS["friday"]`` access.
-WEEKDAYS = _index(
-    [
-        ["monday", "montag", "lundi", "lunedì", "lunedi", "poniedziałek"],
-        ["tuesday", "dienstag", "mardi", "martedì", "martedi", "wtorek"],
-        ["wednesday", "mittwoch", "mercredi", "mercoledì", "mercoledi", "środa"],
-        ["thursday", "donnerstag", "jeudi", "giovedì", "giovedi", "czwartek"],
-        ["friday", "freitag", "vendredi", "venerdì", "venerdi", "piątek"],
-        ["saturday", "samstag", "samedi", "sabato", "sobota"],
-        ["sunday", "sonntag", "dimanche", "domenica", "niedziela"],
-    ],
-    start=0,
-)
+# Weekday name (any supported language, lower-case) -> Python weekday number
+# (Monday=0 .. Sunday=6). Use ``weekday()`` for tolerant lookup; the dict is also
+# kept for direct ``WEEKDAYS["friday"]`` access.
+WEEKDAYS = _build_index("days")
 
-# Month name (en/de/fr/it/pl, lower-case) -> month number (January=1 .. December=12).
-# Polish dates inflect the month into the genitive (e.g. "12 stycznia 2026"), so
-# the genitive form is listed first; the nominative is kept as a synonym for
-# completeness.
-MONTHS = _index(
-    [
-        ["january", "januar", "janvier", "gennaio", "stycznia", "styczeń"],
-        ["february", "februar", "février", "fevrier", "febbraio", "lutego", "luty"],
-        ["march", "märz", "maerz", "mars", "marzo", "marca", "marzec"],
-        ["april", "avril", "aprile", "kwietnia", "kwiecień"],
-        ["may", "mai", "maggio", "maja", "maj"],
-        ["june", "juni", "juin", "giugno", "czerwca", "czerwiec"],
-        ["july", "juli", "juillet", "luglio", "lipca", "lipiec"],
-        ["august", "août", "aout", "agosto", "sierpnia", "sierpień"],
-        ["september", "septembre", "settembre", "września", "wrzesień"],
-        ["october", "oktober", "octobre", "ottobre", "października", "październik"],
-        ["november", "novembre", "novembre", "listopada", "listopad"],
-        [
-            "december",
-            "dezember",
-            "décembre",
-            "decembre",
-            "dicembre",
-            "grudnia",
-            "grudzień",
-        ],
-    ],
-    start=1,
-)
+# Month name (any supported language, lower-case) -> month number (1..12).
+MONTHS = _build_index("months")
 
 
 def weekday(name: str) -> int | None:

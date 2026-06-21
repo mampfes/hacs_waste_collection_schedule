@@ -15,4 +15,6 @@ typing_extensions>=4.12.2
 pypdf>=5.1.0
 Pillow>=10.0.0
 pdfminer.six>=20221105
+Babel>=2.12.0
+holidays>=0.40
 homeassistant

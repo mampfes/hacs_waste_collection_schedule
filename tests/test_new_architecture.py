@@ -1037,6 +1037,24 @@ class TestRecurrence:
         assert dates[0] >= datetime.date(2026, 6, 1)
         assert dates[0] - recurrence.FORTNIGHTLY < datetime.date(2026, 6, 1)
 
+    def test_weekday_month_names_multilingual(self):
+        from waste_collection_schedule import recurrence
+
+        # Names we previously hand-maintained still resolve...
+        assert recurrence.month("january") == 1
+        assert recurrence.month("märz") == 3 and recurrence.month("maerz") == 3
+        assert recurrence.month("février") == 2 and recurrence.month("fevrier") == 2
+        # Polish genitive (format) and nominative (stand-alone) both resolve.
+        assert recurrence.month("stycznia") == 1 and recurrence.month("styczeń") == 1
+        assert recurrence.weekday("poniedziałek") == 0
+        # ...and languages we never hand-added now come from Babel for free.
+        assert recurrence.month("enero") == 1  # Spanish
+        assert recurrence.month("dezembro") == 12  # Portuguese
+        assert recurrence.weekday("maandag") == 0  # Dutch
+        assert recurrence.weekday("torsdag") == 3  # Swedish/Danish Thursday
+        # Unknown input is still a clean miss.
+        assert recurrence.month("not-a-month") is None
+
     def test_recurring_within_empty_window(self):
         from waste_collection_schedule import recurrence
 
