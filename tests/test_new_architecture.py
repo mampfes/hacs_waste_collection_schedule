@@ -1144,6 +1144,35 @@ class TestToolkitParsers:
 
         assert "api_key" in api_key().fields
 
+    def test_html_parser_from_json_key(self):
+        from waste_collection_schedule import parsers
+
+        class _JsonResp:
+            text = ""
+
+            def json(self):
+                return {"responseContent": "<article><h3>Rubbish</h3></article>"}
+
+        elements = parsers.HtmlParser("article", from_json_key="responseContent")(
+            _JsonResp()
+        )
+        assert len(elements) == 1
+        assert elements[0].h3.string == "Rubbish"
+
+    def test_date_parser_from_epoch(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        # Noon UTC so the calendar date is host-timezone independent.
+        moment = datetime.datetime(2026, 6, 24, 12, 0, tzinfo=datetime.timezone.utc)
+        epoch_s = int(moment.timestamp())
+        expected = datetime.date(2026, 6, 24)
+        assert date_parsers.from_epoch()(epoch_s) == expected
+        assert date_parsers.from_epoch(unit="ms")(epoch_s * 1000) == expected
+        # Accepts a numeric string too (JSON APIs vary).
+        assert date_parsers.from_epoch()(str(epoch_s)) == expected
+
 
 class TestLookups:
     """Normalised name lookup with suggestions-on-miss (Gap 5)."""

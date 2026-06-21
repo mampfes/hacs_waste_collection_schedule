@@ -120,17 +120,43 @@ class HtmlParser(Parser[list[Tag]]):
                   response is logged and ``ResponseShapeError`` is raised::
 
                       parse = parsers.HtmlParser("tr", skip=1, shape=["table.bins"])
+        from_json_key: When set, the HTML to parse is read from a field of a
+                  JSON response instead of ``response.text`` — pass the key (or a
+                  path of keys) holding the HTML string. This covers the common
+                  pattern of an API returning rendered HTML inside JSON, e.g. the
+                  OCAPI ``wasteservices`` endpoint many AU councils use::
+
+                      parse = parsers.HtmlParser("article", from_json_key="responseContent")
     """
 
-    def __init__(self, selector: str, skip: int = 0, shape: "list[str] | None" = None):
+    def __init__(
+        self,
+        selector: str,
+        skip: int = 0,
+        shape: "list[str] | None" = None,
+        from_json_key: "str | tuple[str, ...] | None" = None,
+    ):
         self.selector = selector
         self.skip = skip
         self.shape = shape
+        self.from_json_key = from_json_key
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[Tag]:
-        soup = BeautifulSoup(response.text, "html.parser")
+        if self.from_json_key is not None:
+            data = response.json()
+            keys = (
+                (self.from_json_key,)
+                if isinstance(self.from_json_key, str)
+                else self.from_json_key
+            )
+            for key in keys:
+                data = data[key]
+            markup = str(data)
+        else:
+            markup = response.text
+        soup = BeautifulSoup(markup, "html.parser")
         if self.shape:
             from waste_collection_schedule import response_shape
 
