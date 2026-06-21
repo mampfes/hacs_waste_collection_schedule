@@ -46,6 +46,36 @@ class ResponseShapeError(Exception):
         )
 
 
+def source_name(source: Any) -> str:
+    """Best-effort short name for a source instance (its module name)."""
+    if source is None:
+        return "source"
+    return type(source).__module__.rsplit(".", 1)[-1]
+
+
+def expect(
+    ok: bool, *, source_name: str = "source", detail: str, raw: Any = None
+) -> None:
+    """Raise :class:`ResponseShapeError` (logging ``raw``) when ``ok`` is false.
+
+    The non-JSON counterpart to :func:`validate`: a parser checks a structural
+    expectation (a required HTML element, a minimum event count, ...) and calls
+    this so every source type reports a changed response the same way.
+    """
+    if ok:
+        return
+    if raw is not None:
+        sample = raw if isinstance(raw, str) else repr(raw)
+        _LOGGER.warning(
+            "%s: response shape mismatch (%s). Raw response sample:\n%.*s",
+            source_name,
+            detail,
+            _SAMPLE_CHARS,
+            sample,
+        )
+    raise ResponseShapeError(source_name, detail)
+
+
 def validate(data: Any, shape: Any, *, source_name: str = "source") -> Any:
     """Return ``data`` if it matches ``shape``, else log it and raise.
 

@@ -86,8 +86,9 @@ class JsonParser(Parser[Any]):
         if self.shape is not None:
             from waste_collection_schedule import response_shape
 
-            name = type(source).__module__.rsplit(".", 1)[-1] if source else "source"
-            data = response_shape.validate(data, self.shape, source_name=name)
+            data = response_shape.validate(
+                data, self.shape, source_name=response_shape.source_name(source)
+            )
         return data
 
 
@@ -113,16 +114,34 @@ class HtmlParser(Parser[list[Tag]]):
     Args:
         selector: CSS selector string passed to BeautifulSoup.select().
         skip:     Number of leading elements to drop (default 0).
+        shape:    Optional list of CSS selectors that must each match at least
+                  one element — the structural anchors the source depends on.
+                  If one is missing (the provider redesigned the page), the
+                  response is logged and ``ResponseShapeError`` is raised::
+
+                      parse = parsers.HtmlParser("tr", skip=1, shape=["table.bins"])
     """
 
-    def __init__(self, selector: str, skip: int = 0):
+    def __init__(self, selector: str, skip: int = 0, shape: "list[str] | None" = None):
         self.selector = selector
         self.skip = skip
+        self.shape = shape
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[Tag]:
         soup = BeautifulSoup(response.text, "html.parser")
+        if self.shape:
+            from waste_collection_schedule import response_shape
+
+            name = response_shape.source_name(source)
+            for sel in self.shape:
+                response_shape.expect(
+                    bool(soup.select(sel)),
+                    source_name=name,
+                    detail=f"required element {sel!r} not found",
+                    raw=response.text,
+                )
         return soup.select(self.selector)[self.skip :]
 
 
@@ -134,14 +153,31 @@ class IcsParser(Parser[list[tuple[datetime.date, str]]]):
 
         parse = parsers.IcsParser()
         transformer = ICSTransformer(type_value_map={...})
+
+    Pass ``shape`` (a minimum event count) to assert the feed parsed as expected;
+    fewer events (e.g. the provider returned an HTML error page) logs the
+    response and raises ``ResponseShapeError``.
     """
+
+    def __init__(self, shape: "int | None" = None):
+        self.shape = shape
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[tuple[datetime.date, str]]:
         from waste_collection_schedule.service.ICS import ICS
 
-        return ICS().convert(response.text)
+        events = ICS().convert(response.text)
+        if self.shape is not None:
+            from waste_collection_schedule import response_shape
+
+            response_shape.expect(
+                len(events) >= self.shape,
+                source_name=response_shape.source_name(source),
+                detail=f"expected at least {self.shape} ICS events, got {len(events)}",
+                raw=response.text,
+            )
+        return events
 
 
 class IcsEventsParser(Parser[list[IcsEvent]]):
@@ -157,11 +193,26 @@ class IcsEventsParser(Parser[list[IcsEvent]]):
         def classify(self, record) -> Collection | None:
             # record.title / record.location / record.description available
             return Collection(date=record.date, waste_type=...)
+
+    Pass ``shape`` (a minimum event count) to assert the feed parsed as expected.
     """
+
+    def __init__(self, shape: "int | None" = None):
+        self.shape = shape
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[IcsEvent]:
         from waste_collection_schedule.service.ICS import ICS
 
-        return ICS().convert_events(response.text)
+        events = ICS().convert_events(response.text)
+        if self.shape is not None:
+            from waste_collection_schedule import response_shape
+
+            response_shape.expect(
+                len(events) >= self.shape,
+                source_name=response_shape.source_name(source),
+                detail=f"expected at least {self.shape} ICS events, got {len(events)}",
+                raw=response.text,
+            )
+        return events
