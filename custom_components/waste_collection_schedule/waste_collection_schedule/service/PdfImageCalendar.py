@@ -38,7 +38,7 @@ from dataclasses import dataclass
 from datetime import date
 from io import BytesIO
 from statistics import median
-from typing import TYPE_CHECKING, Any, Callable, List, NamedTuple, Optional, Tuple
+from typing import TYPE_CHECKING, Any, Callable, NamedTuple
 
 from waste_collection_schedule.exceptions import SourceArgumentException
 from waste_collection_schedule.parsers import Parser
@@ -73,7 +73,7 @@ class CalendarImage:
     from it without needing to know the source's parameter names.
     """
 
-    image: "Image.Image"
+    image: Image.Image
     url: str
 
 
@@ -83,7 +83,7 @@ def year_from_url(url: str) -> int:
     return int(match.group(0)) if match else date.today().year
 
 
-def box_year_month(base_year: int, start_month: int, box_index: int) -> Tuple[int, int]:
+def box_year_month(base_year: int, start_month: int, box_index: int) -> tuple[int, int]:
     """Map a grid box position to a (year, month).
 
     Box 0 is ``start_month`` of ``base_year``; subsequent boxes advance one month
@@ -113,7 +113,7 @@ class PdfImageRetriever(RetrieverFunc):
         self.url_param = url_param
         self.timeout = timeout
 
-    def __call__(self, source: "BaseSource") -> CalendarImage:
+    def __call__(self, source: BaseSource) -> CalendarImage:
         from pypdf import PdfReader
 
         url = source.params[self.url_param]
@@ -155,7 +155,7 @@ class PdfImageRetriever(RetrieverFunc):
         return CalendarImage(image=image, url=url)
 
 
-class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
+class ColourGridCalendarParser(Parser["list[tuple[date, str]]"]):
     """Detect a grid of monthly mini-calendars and read colour-filled day cells.
 
     Consumes the :class:`CalendarImage` from :class:`PdfImageRetriever` and emits
@@ -197,15 +197,15 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         self,
         *,
         header_matches: RGBMatcher,
-        bins: List[ColourBin],
+        bins: list[ColourBin],
         url_param: str = DEFAULT_URL_PARAM,
-        crop: Optional[Tuple[float, float, float, float]] = None,
+        crop: tuple[float, float, float, float] | None = None,
         box_cols: int = 3,
         start_month: int = 1,
         grid_cols: int = 7,
         grid_rows: int = 6,
         ref_width: int = 1240,
-        fallback_box_x: Optional[Tuple[int, ...]] = None,
+        fallback_box_x: tuple[int, ...] | None = None,
         fallback_box_w: int = 353,
         row1_ratio: float = 71.0 / 267.0,
         row_pitch_ratio: float = 29.4 / 267.0,
@@ -238,7 +238,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
 
     # -- geometry detection -------------------------------------------------
 
-    def _header_bands(self, img: "Image.Image") -> List[Tuple[int, int]]:
+    def _header_bands(self, img: Image.Image) -> list[tuple[int, int]]:
         """Locate the coloured month-header bands (one per box-row)."""
         width, height = img.size
         px: Any = img.load()
@@ -248,7 +248,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         ]
 
         threshold = max(rows) * 0.4
-        bands: List[Tuple[int, int]] = []
+        bands: list[tuple[int, int]] = []
         start = None
         for y, count in enumerate(rows):
             if count > threshold and start is None:
@@ -270,8 +270,8 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         return bands
 
     def _box_columns(
-        self, img: "Image.Image", top: int, bot: int
-    ) -> Optional[List[Tuple[int, int]]]:
+        self, img: Image.Image, top: int, bot: int
+    ) -> list[tuple[int, int]] | None:
         """Detect each month-box's (left, width) from a header band.
 
         A box header is split by its white month name, so a box shows up as two
@@ -283,7 +283,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         px: Any = img.load()
         band_h = bot - top
         threshold = band_h * 0.3
-        runs: List[Tuple[int, int]] = []
+        runs: list[tuple[int, int]] = []
         start = None
         for x in range(width):
             count = sum(1 for y in range(top, bot) if self._header_matches(*px[x, y]))
@@ -310,7 +310,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         if len(cuts) != self._box_cols - 1:
             return None  # two boundaries collapsed onto one gap -> ambiguous
 
-        boxes: List[Tuple[int, int]] = []
+        boxes: list[tuple[int, int]] = []
         prev = 0
         for cut in sorted(cuts) + [len(runs) - 1]:
             group = runs[prev : cut + 1]
@@ -321,7 +321,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
 
     # -- validation ---------------------------------------------------------
 
-    def _validate(self, raw: List[Tuple[date, str]]) -> None:
+    def _validate(self, raw: list[tuple[date, str]]) -> None:
         """Guard against a misread layout producing plausible-but-wrong dates."""
         if len(raw) < self._min_collections:
             raise SourceArgumentException(
@@ -330,7 +330,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
                 "may have changed",
             )
 
-        by_label: dict[str, List[date]] = defaultdict(list)
+        by_label: dict[str, list[date]] = defaultdict(list)
         for collection_date, label in raw:
             by_label[label].append(collection_date)
 
@@ -355,8 +355,8 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
     # -- parse --------------------------------------------------------------
 
     def __call__(
-        self, retrieved: CalendarImage, source: "BaseSource | None" = None
-    ) -> List[Tuple[date, str]]:
+        self, retrieved: CalendarImage, source: BaseSource | None = None
+    ) -> list[tuple[date, str]]:
         img = retrieved.image
         if self._crop is not None:
             full_w, full_h = img.size
@@ -412,7 +412,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         half_y = max(5, int(self._sample_half_y * scale))
         fill_threshold = max(40, int(self._fill_threshold * scale * scale))
 
-        def cell_bin(cx: int, cy: int) -> Optional[ColourBin]:
+        def cell_bin(cx: int, cy: int) -> ColourBin | None:
             counts = [0] * len(self._bins)
             for x in range(cx - half_x, cx + half_x + 1):
                 if x < 0 or x >= width:
@@ -430,7 +430,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
                 return self._bins[best]
             return None
 
-        raw: List[Tuple[date, str]] = []
+        raw: list[tuple[date, str]] = []
         for box_index in range(12):
             box_row = box_index // self._box_cols
             box_col = box_index % self._box_cols
