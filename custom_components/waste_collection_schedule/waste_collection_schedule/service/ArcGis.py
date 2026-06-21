@@ -17,13 +17,22 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import TYPE_CHECKING, Any, Callable
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any, TypedDict
 
 import requests
 
+from waste_collection_schedule import response_shape
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import Response, RetrieverFunc
+
+
+class FeatureEnvelope(TypedDict):
+    """The ArcGIS ``/query`` response shape every Feature parser relies on."""
+
+    features: list
+
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
@@ -218,8 +227,12 @@ class ArcGisFeatureParser(Parser[list[dict[str, Any]]]):
         self, response: Response, source: BaseSource | None = None
     ) -> list[dict[str, Any]]:
         response.raise_for_status()
-        features = response.json().get("features", [])
-        return [feature.get("attributes", {}) for feature in features]
+        data = response_shape.validate(
+            response.json(),
+            FeatureEnvelope,
+            source_name=response_shape.source_name(source),
+        )
+        return [feature.get("attributes", {}) for feature in data["features"]]
 
 
 class ArcGisMultiFeatureRetriever(RetrieverFunc):
@@ -309,8 +322,12 @@ class ArcGisMultiFeatureParser(Parser[list[tuple[Any, dict[str, Any]]]]):
         source: BaseSource | None = None,
     ) -> list[tuple[Any, dict[str, Any]]]:
         records: list[tuple[Any, dict[str, Any]]] = []
+        name = response_shape.source_name(source)
         for label, response in responses:
             response.raise_for_status()
-            for feature in response.json().get("features", []):
+            data = response_shape.validate(
+                response.json(), FeatureEnvelope, source_name=name
+            )
+            for feature in data["features"]:
                 records.append((label, feature.get("attributes", {})))
         return records

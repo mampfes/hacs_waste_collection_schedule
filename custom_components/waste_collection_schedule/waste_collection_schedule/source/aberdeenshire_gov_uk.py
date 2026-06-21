@@ -46,7 +46,9 @@ class Source(BaseSource):
             f"{str(uprn).zfill(12)}"
         )
     )
-    parse = parsers.HtmlParser("tr", skip=1)  # table rows, skip header
+    # `shape` asserts the collection table is present; a redesigned page (no
+    # row cells) logs the response and raises ResponseShapeError.
+    parse = parsers.HtmlParser("tr", skip=1, shape=["tr td"])
 
     # Explicit WASTE_TYPES: OTHER covers any bin types not in the map below.
     WASTE_TYPES = [RECYCLABLES, GENERAL_WASTE, OTHER]

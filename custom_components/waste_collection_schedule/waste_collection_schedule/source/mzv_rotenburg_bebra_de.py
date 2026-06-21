@@ -76,7 +76,9 @@ class Source(BaseSource):
         ELECTRONICS,
     ]
 
-    _ics_parser = parsers.IcsEventsParser()
+    # shape=1: a valid feed has at least one event; an HTML error page (no
+    # events) is logged and raises ResponseShapeError.
+    _ics_parser = parsers.IcsEventsParser(shape=1)
 
     def __init__(
         self,

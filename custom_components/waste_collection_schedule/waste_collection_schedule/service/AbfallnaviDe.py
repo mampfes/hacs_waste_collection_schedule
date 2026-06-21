@@ -381,6 +381,14 @@ class AbfallnaviParser(Parser["list[tuple[date, str]]"]):
     def __call__(
         self, raw: dict[str, Any], source: "BaseSource | None" = None
     ) -> list[tuple[date, str]]:
+        from waste_collection_schedule import response_shape
+
+        response_shape.expect(
+            isinstance(raw, dict) and "termine" in raw and "fraktionen" in raw,
+            source_name=response_shape.source_name(source),
+            detail="Abfallnavi response missing 'termine'/'fraktionen'",
+            raw=raw,
+        )
         fraktionen = raw["fraktionen"]
         rows: list[tuple[date, str]] = []
         for entry in raw["termine"]:

@@ -569,6 +569,14 @@ class IntraMapsPanelParser(Parser["list[dict[str, str]]"]):
     def __call__(
         self, response: dict[str, Any], source: BaseSource | None = None
     ) -> list[dict[str, str]]:
+        from waste_collection_schedule import response_shape
+
+        response_shape.expect(
+            isinstance(response, dict) and "infoPanels" in response,
+            source_name=response_shape.source_name(source),
+            detail="IntraMaps response has no 'infoPanels'",
+            raw=response,
+        )
         fields = (
             (response or {})
             .get("infoPanels", {})

@@ -1,5 +1,5 @@
 from dataclasses import replace
-from typing import final
+from typing import TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -41,6 +41,13 @@ SEARCH_URLS = {
 }
 
 
+class _Collection(TypedDict):
+    """The fields the transformer reads from each collections entry."""
+
+    date: str
+    service: str
+
+
 @final
 class Source(BaseSource):
     TITLE = "Reading Council"
@@ -77,7 +84,7 @@ class Source(BaseSource):
         "Garden Waste Collection Service": GARDEN_WASTE,
     }
 
-    parse = parsers.JsonParser("collections")
+    parse = parsers.JsonParser("collections", shape=list[_Collection])
 
     transformer = JsonTransformer(
         date_key="date",
