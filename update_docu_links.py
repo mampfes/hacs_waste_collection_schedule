@@ -524,28 +524,33 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
             )
         )
 
-    # EXTRA_INFO lists extra discoverable entries (e.g. one municipality per
-    # default_params) under a single module. Read it class-first so a new-style
-    # BaseSource source can declare it as a class attribute like its other
-    # metadata; legacy sources keep it at module level.
-    _raw_extra_info = getattr(source_cls, "EXTRA_INFO", None)
-    if _raw_extra_info is None:
-        _raw_extra_info = getattr(module, "EXTRA_INFO", [])
-    extra_info: list[ExtraInfoDict] = (
-        _raw_extra_info() if callable(_raw_extra_info) else _raw_extra_info
-    )
-    for e in extra_info:
+    # A source is one structure covering one or more regions. The typed Region
+    # list (REGIONS) is the canonical structure; the deprecated EXTRA_INFO dict
+    # list is adapted into Regions at this boundary so the rest of the
+    # generation works in Region terms only.
+    from waste_collection_schedule.regions import from_extra_info
+
+    region_list = getattr(source_cls, "REGIONS", None)
+    if region_list:
+        region_list = list(region_list() if callable(region_list) else region_list)
+    else:
+        legacy = getattr(source_cls, "EXTRA_INFO", None)
+        if legacy is None:
+            legacy = getattr(module, "EXTRA_INFO", [])
+        region_list = from_extra_info(legacy)
+
+    for r in region_list:
         sources.append(
             SourceInfo(
                 filename=filename,
                 module=file,
-                title=e.get("title", title) or "",
-                url=e.get("url", url) or "",
-                country=e.get("country", country),
+                title=r.title or title or "",
+                url=r.url or url,
+                country=r.country or country,
                 params=params,
                 custom_param_translation=param_translations,
                 custom_param_description=param_descriptions,
-                extra_info_default_params=e.get("default_params", {}),
+                extra_info_default_params=r.params,
                 custom_howto=howto,
                 source_owners=source_owners,
             )

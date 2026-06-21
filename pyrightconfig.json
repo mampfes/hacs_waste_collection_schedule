@@ -9,6 +9,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/preprocessors.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/transformers.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/recurrence.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/regions.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/retrievers.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/date_parsers.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/config_params.py",

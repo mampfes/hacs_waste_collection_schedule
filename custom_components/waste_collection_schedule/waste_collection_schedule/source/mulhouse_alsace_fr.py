@@ -11,6 +11,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
+from waste_collection_schedule.regions import region
 from waste_collection_schedule.waste_types import (
     FOOD_WASTE,
     GARDEN_WASTE,
@@ -133,12 +134,11 @@ class Source(BaseSource):
         "Habsheim": {"commune": "Habsheim"},
     }
 
-    # Each commune in the agglomération is listed as its own discoverable entry
-    # (README / sources.json) via EXTRA_INFO, declared on the class like the
-    # other new-style metadata.
-    EXTRA_INFO = [
-        {"title": title, "default_params": {"commune": title}}
-        for title in (
+    # One structure, many communes: each is a Region (the same pipeline with a
+    # different `commune`), surfaced as its own README / sources.json listing.
+    REGIONS = [
+        region(name, commune=name)
+        for name in (
             "Bantzenheim",
             "Bruebach",
             "Feldkirch",
@@ -178,12 +178,7 @@ class Source(BaseSource):
             "Ruelisheim",
             "Staffelfelden",
         )
-    ] + [
-        {
-            "title": "Mulhouse",
-            "default_params": {"commune": "Mulhouse", "quartier": "Centre Ville"},
-        }
-    ]
+    ] + [region("Mulhouse", commune="Mulhouse", quartier="Centre Ville")]
 
     PARAMS = [
         text_field("commune", label="Municipality"),

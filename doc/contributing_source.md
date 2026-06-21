@@ -294,7 +294,8 @@ On a pipeline source the metadata lives on the class:
 | `HOWTO` | dict | Optional per-language guidance shown above the config form. Keys must be in the supported set: `en`, `de`, `it`, `fr`, `nl`. |
 | `RAISE_ON_EMPTY` | bool | Optional. `True` for address/lookup sources so an empty result raises. |
 | `CODEOWNERS` | list | Optional. GitHub handles (each starting with `@`) who maintain this source. Feeds `.github/source_owners.json` and the notify-source-owners workflow. Strongly encouraged. |
-| `EXTRA_INFO` | list or callable | Optional. One module covering several providers: each entry becomes its own README / `sources.json` listing. Keys: `title`, `url`, `country`, `default_params`. A class attribute on pipeline sources (see `mulhouse_alsace_fr.py`). |
+| `REGIONS` | list or callable | Optional. The regions one structure covers, as `region(title, **params)` entries (`waste_collection_schedule.regions`); each becomes its own README / `sources.json` listing with its `params` pre-filled. See `mulhouse_alsace_fr.py`. |
+| `EXTRA_INFO` | list or callable | Legacy form of `REGIONS` (dicts with `title`, `url`, `country`, `default_params`). Still supported and adapted into `Region`s internally; prefer `REGIONS` for new sources. |
 
 `WASTE_TYPES` is derived automatically from the transformer, so you do not declare it unless you use `classify()` (then list the types your source can produce).
 

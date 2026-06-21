@@ -112,7 +112,8 @@ Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), the 
 
 Optional:
 
-- `EXTRA_INFO`: list of dicts (`title`, `url`, `country`, `default_params`) for sources that cover multiple municipalities under one module; each entry becomes its own discoverable listing in the README / `sources.json`. Declare it as a **class attribute** on pipeline (`BaseSource`) sources (read class-first) or at module level for legacy sources; it may also be a callable returning the list.
+- `REGIONS` (pipeline, preferred): a `list[Region]` (from `regions.region(title, **params)`) declaring the regions one structure covers, each becoming its own discoverable listing in the README / `sources.json` with its `params` pre-filled. A source is one structure (pipeline + `PARAMS`) applied to one or more regions; a single-region source leaves it empty. May be a callable returning the list (for large external registries).
+- `EXTRA_INFO` (legacy): the older dict form (`title`, `url`, `country`, `default_params`) of the same idea. Still supported (class-first for pipeline sources, module level for legacy) but adapted into `Region`s internally; prefer `REGIONS` for new work.
 - `RAISE_ON_EMPTY` (pipeline): set `True` on address/lookup sources so an empty result raises instead of returning `[]`.
 - `HOWTO` (pipeline) / `HOW_TO_GET_ARGUMENTS_DESCRIPTION` (legacy): per-language guidance shown in the config form.
 - `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` (legacy): per-language argument labels and descriptions, read by `update_docu_links.py`. Pipeline sources use `PARAMS` labels and `HOWTO` instead.

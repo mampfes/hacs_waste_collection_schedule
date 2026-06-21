@@ -81,4 +81,4 @@ repos:
         entry: npx --yes pyright
         language: system
         pass_filenames: false
-        files: ^custom_components/waste_collection_schedule/waste_collection_schedule/(base_source|parsers|preprocessors|transformers|recurrence|retrievers|date_parsers|config_params|waste_types|collection|collection_aggregator|exceptions|icons|source_shell|__init__)\.py$|^custom_components/waste_collection_schedule/waste_collection_schedule/service/(ArcGis|RiSKommunalAT|AbfallnaviDe|IntraMaps)\.py$|^custom_components/waste_collection_schedule/waste_collection_schedule/source/.+\.py$
+        files: ^custom_components/waste_collection_schedule/waste_collection_schedule/(base_source|parsers|preprocessors|transformers|recurrence|regions|retrievers|date_parsers|config_params|waste_types|collection|collection_aggregator|exceptions|icons|source_shell|__init__)\.py$|^custom_components/waste_collection_schedule/waste_collection_schedule/service/(ArcGis|RiSKommunalAT|AbfallnaviDe|IntraMaps)\.py$|^custom_components/waste_collection_schedule/waste_collection_schedule/source/.+\.py$

@@ -1502,6 +1502,44 @@ class TestConfigParams:
             assert lang in p.labels, f"Missing {lang} labels for coords"
 
 
+class TestRegions:
+    """The structure-plus-regions model (Region / region() / legacy adapter)."""
+
+    def test_region_factory_collects_params(self):
+        from waste_collection_schedule.regions import Region, region
+
+        r = region("Mulhouse", commune="Mulhouse", quartier="Centre Ville")
+        assert isinstance(r, Region)
+        assert r.title == "Mulhouse"
+        assert r.params == {"commune": "Mulhouse", "quartier": "Centre Ville"}
+        assert r.url is None and r.country is None
+
+    def test_region_display_overrides(self):
+        from waste_collection_schedule.regions import region
+
+        r = region("Somewhere", url="https://x.example", country="fr", code="42")
+        assert r.url == "https://x.example"
+        assert r.country == "fr"
+        assert r.params == {"code": "42"}
+
+    def test_from_extra_info_adapts_legacy_dicts(self):
+        from waste_collection_schedule.regions import Region, from_extra_info
+
+        regions = from_extra_info(
+            [
+                {"title": "A", "default_params": {"city": "A"}},
+                {"title": "B", "url": "https://b.example", "country": "de"},
+            ]
+        )
+        assert regions == [
+            Region(title="A", params={"city": "A"}),
+            Region(title="B", params={}, url="https://b.example", country="de"),
+        ]
+        # Accepts a callable (legacy EXTRA_INFO could be a function) and empties.
+        assert from_extra_info(lambda: []) == []
+        assert from_extra_info(None) == []
+
+
 class TestConfigParamValidation:
     """Defaults, alternatives, and validate() rules for ConfigParam."""
 

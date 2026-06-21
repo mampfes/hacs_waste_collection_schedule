@@ -44,6 +44,7 @@ from waste_collection_schedule.config_params import (
     validate,
 )
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.regions import Region
 from waste_collection_schedule.transformers import BaseTransformer
 from waste_collection_schedule.waste_types import ALL_TYPES, WasteType
 
@@ -66,6 +67,14 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
 
     # --- Configuration parameters (drives the config flow + validation) ---
     PARAMS: list[ConfigParam] = []
+
+    # --- Regions this one structure covers ---
+    # A source is one structure (the pipeline + PARAMS above) applied to one or
+    # more regions. Leave empty for a single-region source; list a Region per
+    # municipality/provider (or a callable returning them, for large external
+    # registries) when one structure serves many. Drives the per-region README /
+    # sources.json listings. The typed successor to the legacy EXTRA_INFO dicts.
+    REGIONS: "list[Region] | Callable[[], list[Region]]" = []
 
     # --- Waste types this source produces ---
     # Auto-derived from transformer.waste_types when not explicitly declared.

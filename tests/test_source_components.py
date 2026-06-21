@@ -368,15 +368,36 @@ def test_source_has_necessary_parameters() -> None:
                 f"missing COUNTRY in source {source} or supported countrycode in filename"
             )
 
-        # EXTRA_INFO may sit on the Source class (new-style) or at module level
-        # (legacy); validate whichever is present, class first.
-        extra_info_attr = getattr(module.Source, "EXTRA_INFO", None)
-        if extra_info_attr is None:
-            extra_info_attr = getattr(module, "EXTRA_INFO", None)
-        if extra_info_attr is not None:
-            _test_source_has_necessary_parameters_extra_info(
-                extra_info_attr, source, init_params_names
+        # A source covers one or more regions. The typed REGIONS list is
+        # canonical; a legacy EXTRA_INFO (class or module level) is adapted into
+        # Regions at the boundary so validation works in Region terms only.
+        from waste_collection_schedule.regions import from_extra_info
+
+        region_list = getattr(module.Source, "REGIONS", None)
+        if region_list:
+            region_list = list(
+                region_list() if callable(region_list) else region_list
             )
+        else:
+            legacy = getattr(module.Source, "EXTRA_INFO", None)
+            if legacy is None:
+                legacy = getattr(module, "EXTRA_INFO", None)
+            region_list = from_extra_info(legacy) if legacy is not None else []
+        for r in region_list:
+            assert isinstance(r.title, str) and r.title, (
+                f"a REGION in source {source} must have a non-empty string title"
+            )
+            assert isinstance(r.params, dict), (
+                f"a REGION in source {source} must have a dict of params"
+            )
+            for key in r.params:
+                assert key in init_params_names, (
+                    f"REGION in source {source}: param {key} is not a valid Source parameter"
+                )
+            if r.country:
+                assert _is_supported_country_code(r.country), (
+                    f"unsupported country code in source {source} REGION"
+                )
 
         if hasattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION"):
             assert isinstance(module.HOW_TO_GET_ARGUMENTS_DESCRIPTION, dict), (
