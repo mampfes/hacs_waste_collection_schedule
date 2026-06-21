@@ -1,4 +1,3 @@
-from dataclasses import replace
 from typing import final
 
 import requests
@@ -53,8 +52,8 @@ class Source(BaseSource):
 
     PARAMS = [
         text_field("city", "City"),
-        replace(text_field("yellow_route", "Gelbe Tonne Route"), required=False),
-        replace(text_field("paper_route", "Papier Route"), required=False),
+        text_field("yellow_route", "Gelbe Tonne Route", optional=True),
+        text_field("paper_route", "Papier Route", optional=True),
     ]
 
     HOWTO = {

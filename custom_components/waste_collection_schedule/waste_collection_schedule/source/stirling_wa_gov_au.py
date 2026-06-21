@@ -1,10 +1,9 @@
 import logging
-from dataclasses import replace
 from typing import TypedDict, final
 
 from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import coords, text_field
+from waste_collection_schedule.config_params import alternatives, coords, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import ArcGisGeocodeError, geocode
 from waste_collection_schedule.transformers import KeyValueTransformer
@@ -31,17 +30,11 @@ class _Field(TypedDict):
 # the offline fixtures, and raises a clear error if the provider changes it.
 ResponseShape = list[list[_Field]]
 
-# Demonstrates: alternative-input PARAMS (address OR lat+lon) + a source that
-# overrides retrieve() to compute request headers from its params before
-# delegating to the zero-config http_get retriever.
-#
-# Because either group satisfies the source, both params are marked
-# required=False and the cross-field check lives in __init__.
-_PARAMS_ADDRESS = replace(text_field("address", label="Street Address"), required=False)
-_PARAMS_COORDS = replace(coords(lat="lat", lon="lon"), required=False)
-# A `ConfigParam` group tagged as mutually-exclusive alternatives would replace
-# the two separate params above once the framework supports that widget concept
-# (see issue #6561 for discussion).  For now, listing both is a valid prototype.
+# Demonstrates: alternative-input PARAMS via config_params.alternatives() (an
+# address OR a lat+lon pair) + a source that overrides retrieve() to compute
+# request headers from its params before delegating to the zero-config http_get
+# retriever. validate() requires exactly one group, so no cross-field check is
+# needed in __init__.
 
 
 @final
@@ -59,9 +52,12 @@ class Source(BaseSource):
         "by_coords_str": {"lat": "-31.8783052", "lon": "115.8157741"},
     }
 
-    # TODO(arch): once the framework supports mutually-exclusive PARAMS groups,
-    # this becomes: PARAMS = [address_or_coords("address", "lat", "lon")]
-    PARAMS = [_PARAMS_ADDRESS, _PARAMS_COORDS]
+    PARAMS = [
+        alternatives(
+            [text_field("address", label="Street Address")],
+            [coords(lat="lat", lon="lon")],
+        )
+    ]
 
     HOWTO = {
         "en": (
@@ -90,16 +86,11 @@ class Source(BaseSource):
         lat: float | None = None,
         lon: float | None = None,
     ):
+        # validate() (in super) enforces the address-or-(lat+lon) alternative.
         super().__init__(address=address, lat=lat, lon=lon)
         self._address = address
         self._lat = float(lat) if lat is not None else None
         self._lon = float(lon) if lon is not None else None
-
-        if not self._address and (self._lat is None or self._lon is None):
-            raise SourceArgumentNotFound(
-                "address",
-                "Either 'address' or both 'lat' and 'lon' must be provided.",
-            )
 
     def _resolve_coordinates(self) -> tuple[float, float]:
         if self._lat is not None and self._lon is not None:

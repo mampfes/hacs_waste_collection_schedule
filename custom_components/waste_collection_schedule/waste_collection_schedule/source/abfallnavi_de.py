@@ -1,4 +1,3 @@
-from dataclasses import replace
 from typing import final
 
 from waste_collection_schedule.base_source import BaseSource
@@ -96,8 +95,8 @@ class Source(BaseSource):
     PARAMS = [
         text_field("service", "Service"),
         text_field("ort", "Ort"),
-        replace(text_field("strasse", "Straße"), required=False),
-        replace(text_field("hausnummer", "Hausnummer"), required=False),
+        text_field("strasse", "Straße", optional=True),
+        text_field("hausnummer", "Hausnummer", optional=True),
     ]
 
     HOWTO = {

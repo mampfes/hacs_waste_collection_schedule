@@ -214,8 +214,13 @@ def dropdown(
     field_name: str,
     options: list[str],
     label: str | None = None,
+    optional: bool = False,
 ) -> ConfigParam:
-    """Select from a fixed list of options."""
+    """Select from a fixed list of options.
+
+    Required by default; pass ``optional=True`` for a selection the source can
+    do without (e.g. a manual override that otherwise auto-resolves).
+    """
     display = label or field_name.replace("_", " ").title()
     return ConfigParam(
         fields={field_name: display},
@@ -223,6 +228,7 @@ def dropdown(
         labels={
             "en": {field_name: display},
         },
+        required=not optional,
     )
 
 
@@ -313,9 +319,18 @@ def text_field(
     field_name: str,
     label: str | None = None,
     default: str | None = None,
+    optional: bool = False,
 ) -> ConfigParam:
-    """Free text entry. Pass ``default`` to make the field optional with a
-    pre-filled value (e.g. an embedded API key)."""
+    """Free text entry.
+
+    Required by default. Two ways to relax that:
+
+    - ``default=...`` makes the field optional and pre-fills it (e.g. an
+      embedded public API key).
+    - ``optional=True`` makes the field optional with no default, for a
+      refinement the source can do without (e.g. an extra street or route
+      filter alongside a required city).
+    """
     display = label or field_name.replace("_", " ").title()
     return ConfigParam(
         fields={field_name: display},
@@ -324,7 +339,7 @@ def text_field(
             "en": {field_name: display},
         },
         defaults={field_name: default} if default is not None else {},
-        required=default is None,
+        required=default is None and not optional,
     )
 
 

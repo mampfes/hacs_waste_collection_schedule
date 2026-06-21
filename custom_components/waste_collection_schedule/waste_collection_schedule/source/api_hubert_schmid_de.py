@@ -1,4 +1,3 @@
-from dataclasses import replace
 from typing import final
 
 from waste_collection_schedule import retrievers
@@ -35,8 +34,8 @@ class Source(BaseSource):
 
     PARAMS = [
         text_field("city", "City"),
-        replace(text_field("ortsteil", "District"), required=False),
-        replace(text_field("strasse", "Street"), required=False),
+        text_field("ortsteil", "District", optional=True),
+        text_field("strasse", "Street", optional=True),
     ]
 
     retrieve = retrievers.http_post

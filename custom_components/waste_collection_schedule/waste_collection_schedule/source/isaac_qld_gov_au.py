@@ -1,5 +1,4 @@
 import re
-from dataclasses import replace
 from typing import final
 
 from bs4 import BeautifulSoup
@@ -93,9 +92,8 @@ class Source(BaseSource):
 
     PARAMS = [
         dropdown("town", ALL_TOWNS, label="Town"),
-        replace(
-            dropdown("collection_day", WEEKDAY_OPTIONS, label="Collection day"),
-            required=False,
+        dropdown(
+            "collection_day", WEEKDAY_OPTIONS, label="Collection day", optional=True
         ),
     ]
 

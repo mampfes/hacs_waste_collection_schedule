@@ -155,9 +155,10 @@ All accept an optional `parse_date` (a `date_parsers` callable; default is `date
 
 Available factories: `coords(lat, lon)`, `uprn()`, `postcode()`, `address()`, `municipality()`, `dropdown()`, `dependent_select()`, `multi_value_lookup()`, `text_field(name, label, default=...)`, `api_key(name, label, default=...)`, `alternatives(*groups)`.
 
-A param is required by default. Two factories relax that:
+A param is required by default. Three ways to relax that:
 
 - **Optional with a default.** `text_field(..., default=...)` (and the `api_key(...)` wrapper for provider keys) makes a field optional and pre-fills it, e.g. an embedded public API key. The default is applied before validation, so the user need not supply one but can override it.
+- **Optional, no default.** `text_field(..., optional=True)` / `dropdown(..., optional=True)` makes a field optional with no pre-filled value, for a refinement the source can do without (e.g. an extra street or route filter alongside a required city). Prefer this over `dataclasses.replace(..., required=False)`.
 - **Alternative input.** `alternatives([uprn()], [postcode(), text_field("house")])` declares mutually-exclusive input groups: validation requires exactly one group to be fully provided. Use this instead of a hand-rolled cross-field check in `__init__` (see `reading_gov_uk.py`).
 
 `dependent_select(parent, child)` is a cascading two-level dropdown. The source MUST implement `get_choices(parent_value) -> list[str]` (child options for a chosen parent) and MAY implement `get_parent_choices() -> list[str]` (parent options; absent means the parent is free text). Both run at config-flow time and may fetch live. See `gemeinde24_at.py`.

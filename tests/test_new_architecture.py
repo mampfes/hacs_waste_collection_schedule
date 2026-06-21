@@ -1470,6 +1470,21 @@ class TestConfigParamValidation:
         # api_key wraps text_field with the same default behaviour.
         assert api_key(default="X").defaults == {"api_key": "X"}
 
+    def test_optional_without_default(self):
+        from waste_collection_schedule.config_params import (
+            dropdown,
+            text_field,
+            validate,
+        )
+
+        # optional=True makes a field optional with no pre-filled value.
+        p = text_field("strasse", optional=True)
+        assert p.required is False
+        assert p.defaults == {}
+        assert dropdown("day", ["Mon"], optional=True).required is False
+        # An optional field absent from the values passes validation.
+        validate([p], {})
+
     def test_apply_defaults_fills_only_missing(self):
         from waste_collection_schedule.config_params import apply_defaults, text_field
 
