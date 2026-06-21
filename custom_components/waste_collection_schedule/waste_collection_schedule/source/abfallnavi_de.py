@@ -67,10 +67,10 @@ TEST_CASES = {
         "ort": "Bergkamen",
         "strasse": "Agnes-Miegel-Str.",
     },
-    "Pinneberg Kummerfeld no Street": {
+    "Pinneberg Kummerfeld, Dorfstraße": {
         "service": "pi",
         "ort": "Kummerfeld",
-        "strasse": "alle Straßen",
+        "strasse": "Dorfstraße",
     },
     "Cuxhaven": {
         "service": "cux",

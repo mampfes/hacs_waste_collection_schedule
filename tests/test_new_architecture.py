@@ -2173,7 +2173,12 @@ class TestNewStyleSourceTestCases:
         source = cls(**tc_args)
         results = source.fetch()
         returned = {r.waste_type.id for r in results}
-        undeclared = returned - declared
+        # `preserved:` types are intentional: the multilingual resolver keeps an
+        # unmapped label verbatim (never collapsing it to OTHER), so it is
+        # legitimately absent from the declared set. Only flag other types.
+        undeclared = {
+            wid for wid in (returned - declared) if not wid.startswith("preserved:")
+        }
         assert not undeclared, (
             f"{name}::{tc_name}: returned undeclared waste types: {undeclared}"
         )
