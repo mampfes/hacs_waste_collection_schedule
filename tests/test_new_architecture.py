@@ -1049,6 +1049,32 @@ class TestRecurrence:
         assert dates == []
 
 
+class TestLookups:
+    """Normalised name lookup with suggestions-on-miss (Gap 5)."""
+
+    def test_resolve_matches_case_insensitively(self):
+        from waste_collection_schedule import lookups
+
+        mapping = {"Glenden": 1, "Middlemount": 0}
+        assert lookups.resolve(mapping, "  glenden ", argument="town") == 1
+
+    def test_resolve_raises_with_suggestions(self):
+        from waste_collection_schedule import lookups
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+        )
+
+        with pytest.raises(SourceArgumentNotFoundWithSuggestions) as exc:
+            lookups.resolve({"Glenden": 1, "Nebo": 2}, "Moranbah", argument="town")
+        # suggestions list the valid keys
+        assert "Glenden" in str(exc.value) and "Nebo" in str(exc.value)
+
+    def test_normalize_text_collapses_whitespace(self):
+        from waste_collection_schedule import lookups
+
+        assert lookups.normalize_text("  Main   Street ") == "main street"
+
+
 class TestSeasonalSchedule:
     """Schedule windowing (Gap 1): season-bounded, per-window cadence."""
 

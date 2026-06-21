@@ -1,10 +1,9 @@
 import re
 
 from bs4 import BeautifulSoup
-from waste_collection_schedule import recurrence
+from waste_collection_schedule import lookups, recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE
@@ -142,11 +141,5 @@ class Source(BaseSource):
             if weekday is not None:
                 town_weekdays[town] = weekday
 
-        weekday = town_weekdays.get(self._town)
-        if weekday is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "town",
-                self._town,
-                sorted(town_weekdays),
-            )
+        weekday = lookups.resolve(town_weekdays, self._town, argument="town")
         return [{"weekday": weekday}]

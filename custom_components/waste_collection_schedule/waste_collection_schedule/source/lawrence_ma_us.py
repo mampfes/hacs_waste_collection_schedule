@@ -2,7 +2,7 @@ import re
 from typing import Any, Iterable
 
 from bs4 import BeautifulSoup
-from waste_collection_schedule import recurrence, retrievers
+from waste_collection_schedule import lookups, recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -30,7 +30,7 @@ _WEEKS_AHEAD = 26
 
 def _base_street(name: str) -> str:
     """Strip a trailing qualifier like '(State Street to Ballard Road)'."""
-    return re.split(r"\s*\(", name, maxsplit=1)[0].strip().casefold()
+    return lookups.normalize_text(re.split(r"\s*\(", name, maxsplit=1)[0])
 
 
 def _describe(
@@ -38,7 +38,7 @@ def _describe(
 ) -> Iterable[Schedule]:
     weekday, streets = record
     assert source is not None
-    wanted = str(source.params["street"]).strip().casefold()
+    wanted = lookups.normalize_text(source.params["street"])
     if not any(_base_street(s) == wanted for s in streets):
         return
     start = recurrence.next_weekday(weekday)
