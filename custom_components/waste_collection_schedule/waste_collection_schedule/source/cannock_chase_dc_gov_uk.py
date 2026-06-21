@@ -1,109 +1,92 @@
-import datetime
-import xml.etree.ElementTree as ET
+from typing import Any, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+    WasteType,
+)
 
-TITLE = "Cannock Chase Council"
-DESCRIPTION = "Source for cannockchasedc.gov.uk services for Cannock Chase Council, UK."
-URL = "https://www.cannockchasedc.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "100031640287", "postcode": "WS15 1DN"},
-    "Test_002": {"uprn": "100031640289", "postcode": "WS15 1DN"},
-    "Test_003": {"uprn": "100031624295", "postcode": "WS11 6DY"},
-    "Test_004": {"uprn": "10008163213", "postcode": "WS11 7UD"},
-}
+# Demonstrates: parsers.XmlParser on a real, namespaced SOAP-style XML feed.
+#
+# The Whitespace WS endpoint returns one <Collection> element per event, each
+# with dedicated <Date> and <Service> children, under the
+# http://webservices.whitespacews.com/ namespace. XmlParser does
+# root.findall(path) (lxml ElementPath) with no namespace map, so the namespace
+# is baked into the path using the {uri}tag form. classify() then reads each
+# element's <Date>/<Service> children and maps the service to a canonical
+# WasteType. An invalid UPRN simply yields a feed with no <Collection> nodes,
+# so RAISE_ON_EMPTY surfaces a "check your UPRN" error to the HA UI.
 
-API_URL = "https://ccdc.opendata.onl/DynamicCall.dll"
-ICON_MAP = {
-    "REFUSE": Icons.GENERAL_WASTE,
-    "RECYCLING": Icons.RECYCLING,
-    "GARDEN WASTE": Icons.GARDEN,
-    "FOOD WASTE": Icons.BIO_KITCHEN,
-}
+_NS = "{http://webservices.whitespacews.com/}"
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-        "postcode": "Postcode of the property",
-    },
-}
-
-SERVICE_NAME_MAP = {
-    "Refuse Collection Service": "Refuse",
-    "Recycle Collection Service": "Recycling",
-    "Garden Collection Service": "Garden waste",
-    "Food Waste Collection Service": "Food waste",
+_SERVICE_MAP: dict[str, WasteType] = {
+    "Refuse Collection Service": GENERAL_WASTE,
+    "Recycle Collection Service": RECYCLABLES,
+    "Garden Collection Service": GARDEN_WASTE,
+    "Food Waste Collection Service": FOOD_WASTE,
 }
 
 
-class Source:
+@final
+class Source(BaseSource):
+    TITLE = "Cannock Chase Council"
+    DESCRIPTION = (
+        "Source for cannockchasedc.gov.uk services for Cannock Chase Council, UK."
+    )
+    URL = "https://www.cannockchasedc.gov.uk"
+    COUNTRY = "uk"
+    API_URL = "https://ccdc.opendata.onl/DynamicCall.dll"
+    CODEOWNERS = ["@markvp"]
+
+    TEST_CASES = {
+        "Test_001": {"uprn": "100031640287", "postcode": "WS15 1DN"},
+        "Test_002": {"uprn": "100031640289", "postcode": "WS15 1DN"},
+        "Test_003": {"uprn": "100031624295", "postcode": "WS11 6DY"},
+        "Test_004": {"uprn": "10008163213", "postcode": "WS11 7UD"},
+    }
+
+    PARAMS = [uprn(), postcode()]
+
+    HOWTO = {
+        "en": (
+            "Find your UPRN by visiting https://www.findmyaddress.co.uk/ and "
+            "entering your address details, then provide it together with your "
+            "postcode."
+        ),
+    }
+
+    RAISE_ON_EMPTY = True
+
+    retrieve = retrievers.http_post
+    # No shape= here: an unknown UPRN legitimately yields zero <Collection>
+    # nodes, which RAISE_ON_EMPTY turns into a "check your UPRN" error blaming
+    # the right field. A shape guard would instead misreport that as a changed
+    # feed (ResponseShapeError), which fires before the empty-result check.
+    parse = parsers.XmlParser(f".//{_NS}Collection")
+    parse_date = date_parsers.for_format("%d/%m/%Y %H:%M:%S")
+
+    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
+
     def __init__(self, uprn: str | int, postcode: str):
-        self._uprn: str = str(uprn).zfill(12)
-        self._postcode: str = postcode
-
-    def fetch(self) -> list[Collection]:
-        args = {
+        super().__init__(uprn=str(uprn).zfill(12), postcode=postcode)
+        self._data = {
             "Method": "CollectionDates",
-            "UPRN": self._uprn,
-            "Postcode": self._postcode,
+            "UPRN": self.params["uprn"],
+            "Postcode": self.params["postcode"],
         }
 
-        r = requests.post(API_URL, data=args)
-        r.raise_for_status()
-
-        ns = {"ws": "http://webservices.whitespacews.com/"}
-        tree = ET.fromstring(r.text)  # nosec B314
-
-        success_flag_element = tree.find(".//ws:SuccessFlag", ns)
-        if success_flag_element is not None and success_flag_element.text != "true":
-            error_code_element = tree.find(".//ws:ErrorCode", ns)
-            error_description_element = tree.find(".//ws:ErrorDescription", ns)
-
-            # API response for invalid UPRN includes:
-            #   <ErrorCode>6</ErrorCode>
-            #   <ErrorDescription>No results returned</ErrorDescription>
-            if error_code_element is not None and error_code_element.text == "6":
-                raise SourceArgumentException(
-                    "uprn", "UPRN is invalid or outside the Cannock Chase Council area"
-                )
-
-            if (
-                error_description_element is not None
-                and error_description_element.text is not None
-            ):
-                raise Exception(f"API returned error: {error_description_element.text}")
-            else:
-                raise Exception("API returned error")
-
-        entries = []
-
-        for collection in tree.findall(".//ws:Collection", ns):
-            date_element = collection.find("ws:Date", ns)
-            service_element = collection.find("ws:Service", ns)
-
-            if (
-                date_element is None
-                or date_element.text is None
-                or service_element is None
-                or service_element.text is None
-            ):
-                continue
-
-            service = service_element.text
-            service_name = SERVICE_NAME_MAP.get(service, service)
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(
-                        date_element.text, "%d/%m/%Y %H:%M:%S"
-                    ).date(),
-                    t=service_name,
-                    icon=ICON_MAP.get(service_name.upper()),
-                )
-            )
-
-        return entries
+    def classify(self, record: Any) -> Collection | None:
+        date_text = record.findtext(f"{_NS}Date")
+        service = record.findtext(f"{_NS}Service")
+        if not date_text or service not in _SERVICE_MAP:
+            return None
+        return Collection(
+            date=self.parse_date(date_text),
+            waste_type=_SERVICE_MAP[service],
+        )
