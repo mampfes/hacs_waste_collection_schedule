@@ -368,9 +368,14 @@ def test_source_has_necessary_parameters() -> None:
                 f"missing COUNTRY in source {source} or supported countrycode in filename"
             )
 
-        if hasattr(module, "EXTRA_INFO"):
+        # EXTRA_INFO may sit on the Source class (new-style) or at module level
+        # (legacy); validate whichever is present, class first.
+        extra_info_attr = getattr(module.Source, "EXTRA_INFO", None)
+        if extra_info_attr is None:
+            extra_info_attr = getattr(module, "EXTRA_INFO", None)
+        if extra_info_attr is not None:
             _test_source_has_necessary_parameters_extra_info(
-                module.EXTRA_INFO, source, init_params_names
+                extra_info_attr, source, init_params_names
             )
 
         if hasattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION"):

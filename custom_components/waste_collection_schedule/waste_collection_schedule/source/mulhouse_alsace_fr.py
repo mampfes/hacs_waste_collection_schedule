@@ -133,6 +133,58 @@ class Source(BaseSource):
         "Habsheim": {"commune": "Habsheim"},
     }
 
+    # Each commune in the agglomération is listed as its own discoverable entry
+    # (README / sources.json) via EXTRA_INFO, declared on the class like the
+    # other new-style metadata.
+    EXTRA_INFO = [
+        {"title": title, "default_params": {"commune": title}}
+        for title in (
+            "Bantzenheim",
+            "Bruebach",
+            "Feldkirch",
+            "Flaxlanden",
+            "Galfingue",
+            "Habsheim",
+            "Illzach",
+            "Morschwiller-le-Bas",
+            "Richwiller",
+            "Rixheim",
+            "Wittelsheim",
+            "Zillisheim",
+            "Zimmersheim",
+            "Baldersheim",
+            "Battenheim",
+            "Bollwiller",
+            "Eschentzwiller",
+            "Heimsbrunn",
+            "Hombourg",
+            "Pfastatt",
+            "Reiningue",
+            "Riedisheim",
+            "Sausheim",
+            "Steinbrunn-le-Bas",
+            "Ungersheim",
+            "Wittenheim",
+            "Berrwiller",
+            "Brunstatt-Didenheim",
+            "Chalampé",
+            "Dietwiller",
+            "Kingersheim",
+            "Lutterbach",
+            "Niffer",
+            "Ottmarsheim",
+            "Petit-Landau",
+            "Pulversheim",
+            "Ruelisheim",
+            "Staffelfelden",
+        )
+    ] + [
+        {
+            "title": "Mulhouse",
+            "default_params": {"commune": "Mulhouse", "quartier": "Centre Ville"},
+        }
+    ]
+
     PARAMS = [
         text_field("commune", label="Municipality"),
         text_field("quartier", label="District", optional=True),

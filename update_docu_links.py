@@ -10,7 +10,7 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 from types import ModuleType
-from typing import Any, Callable, Tuple, TypedDict, TypeVar
+from typing import Any, Tuple, TypedDict, TypeVar
 
 if sys.version_info >= (3, 11):
     from typing import NotRequired
@@ -524,11 +524,16 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
             )
         )
 
-    extra_info: list[ExtraInfoDict] | Callable[[], list[ExtraInfoDict]] = getattr(
-        module, "EXTRA_INFO", []
+    # EXTRA_INFO lists extra discoverable entries (e.g. one municipality per
+    # default_params) under a single module. Read it class-first so a new-style
+    # BaseSource source can declare it as a class attribute like its other
+    # metadata; legacy sources keep it at module level.
+    _raw_extra_info = getattr(source_cls, "EXTRA_INFO", None)
+    if _raw_extra_info is None:
+        _raw_extra_info = getattr(module, "EXTRA_INFO", [])
+    extra_info: list[ExtraInfoDict] = (
+        _raw_extra_info() if callable(_raw_extra_info) else _raw_extra_info
     )
-    if callable(extra_info):
-        extra_info = extra_info()
     for e in extra_info:
         sources.append(
             SourceInfo(
