@@ -210,11 +210,17 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         entries: list[Collection] = []
         for record in self.preprocessor(records, self):
             if self.transformer is not None:
-                collection = self.transformer(record)
+                result = self.transformer(record)
             else:
-                collection = self.classify(record)
-            if collection is not None:
-                entries.append(collection)
+                result = self.classify(record)
+            # A record may yield no collection (None), exactly one, or several
+            # (a combined round that covers multiple waste types on one date).
+            if result is None:
+                continue
+            if isinstance(result, Collection):
+                entries.append(result)
+            else:
+                entries.extend(result)
 
         if not entries and self.RAISE_ON_EMPTY:
             self._raise_empty()
@@ -239,12 +245,13 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
                 )
         raise ValueError("No collections found.")
 
-    def classify(self, record: Any) -> Collection | None:
+    def classify(self, record: Any) -> Collection | list[Collection] | None:
         """Extract a Collection from a single parsed record.
 
         Escape hatch for sources too complex for a standard transformer.
-        Receives one record (dict, HTML element, etc.) and returns a
-        Collection or None to skip the record.
+        Receives one record (dict, HTML element, etc.) and returns a single
+        Collection, a list of Collections (a combined round covering several
+        waste types on one date), or None to skip the record.
 
         Use self.parse_date() to parse date strings::
 

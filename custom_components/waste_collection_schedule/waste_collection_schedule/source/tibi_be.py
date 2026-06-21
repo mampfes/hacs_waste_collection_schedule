@@ -4,7 +4,7 @@ from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import GLASS, RECYCLABLES
+from waste_collection_schedule.waste_types import GLASS, PAPER, RECYCLABLES
 
 # Demonstrates: a downloadable open-data CSV consumed end-to-end by the pipeline.
 # parsers.CsvParser turns the semicolon-delimited export into dict rows (one row
@@ -16,22 +16,23 @@ from waste_collection_schedule.waste_types import GLASS, RECYCLABLES
 # Tibi (the intercommunale serving the Charleroi region of Wallonia) publishes
 # this calendar through the Open Data Wallonie-Bruxelles Opendatasoft portal.
 # It covers the two door-to-door selective streams only: PMC (plastics, metals,
-# drink cartons) and the combined glass + paper/cardboard day ("V / PC").
+# drink cartons) and the combined glass + paper/cardboard day ("V / PC"). That
+# combined day is a single export row covering two waste types, so it maps to a
+# list of WasteTypes and the pipeline emits one Collection per type on the date.
 
 DATASET_URL = (
     "https://digitalwallonia.opendatasoft.com/api/explore/v2.1/"
     "catalog/datasets/calendrier-des-collectes-2026/exports/csv"
 )
 
-# Raw export `type` value -> canonical WasteType.
+# Raw export `type` value -> canonical WasteType(s).
 #   "PMC"    = Plastiques, Métaux, Cartons à boissons -> packaging recyclables.
 #   "V / PC" = Verre / Papier-Carton, glass and paper/cardboard collected on the
-#              same day. The canonical vocabulary has no combined member, so this
-#              maps to GLASS (the paper/cardboard component is not separately
-#              represented; see the report note on this lossy mapping).
+#              same day. Mapping it to a list yields one Collection per type on
+#              that date, so both streams are represented faithfully.
 _TYPE_MAP = {
     "PMC": RECYCLABLES,
-    "V / PC": GLASS,
+    "V / PC": [GLASS, PAPER],
 }
 
 
