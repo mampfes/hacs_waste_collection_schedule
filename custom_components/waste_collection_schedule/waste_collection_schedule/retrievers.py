@@ -184,18 +184,27 @@ class TwoStepRetriever(_BaseRetriever):
         extract: Callable[..., Any],
         schedule_url: Callable[..., str],
         direct_key: Callable[[BaseSource], Any] | None = None,
+        headers: HeadersArgs = None,
     ):
         self.lookup_url = lookup_url
         self.extract = extract
         self.schedule_url = schedule_url
         self.direct_key = direct_key
+        self.headers = headers
 
     def __call__(self, source: BaseSource) -> Response:
+        # Same headers on both calls; e.g. an Accept: application/json that some
+        # content-negotiating APIs need to return JSON rather than XML.
+        headers = self._resolve(self.headers, source)
         key = self.direct_key(source) if self.direct_key else None
         if key is None:
-            lookup = source.session.get(self._resolve(self.lookup_url, source))
+            lookup = source.session.get(
+                self._resolve(self.lookup_url, source), headers=headers
+            )
             key = self.extract(lookup, source)
-        return source.session.get(self.schedule_url(key, **source.params))
+        return source.session.get(
+            self.schedule_url(key, **source.params), headers=headers
+        )
 
 
 class LegacyHttpGetRetriever(HttpGetRetriever):

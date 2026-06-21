@@ -57,6 +57,11 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/leeds_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/gemeinde24_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/muttenz_ch.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/source/zys_harmonogram_pl.py"
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/zys_harmonogram_pl.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/mrcjoliette_qc_ca.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/yarra_ranges_vic_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/lancaster_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/mulhouse_alsace_fr.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/phila_gov.py"
   ]
 }
