@@ -148,6 +148,7 @@ def render_source_doc(source_id: str, source_cls: Any) -> str:
     # --- Configuration via configuration.yaml ---
     lines.append("## Configuration via configuration.yaml")
     lines.append("")
+    config_scenarios: list[tuple[tuple[str, ...] | None, list[str]]]
     if alt_groups:
         config_scenarios = [(group, base + list(group)) for group in alt_groups]
     else:
