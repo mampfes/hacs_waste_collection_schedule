@@ -135,7 +135,10 @@ class Source:
         self._radius = radius
         self._api_key = api_key
         self._only_monitored = only_monitored
-        self._ignored_containers = ignored_containers or []
+        # Normalize to strings: the UI config flow stores ignored_containers
+        # as strings, while the API returns container_id as an int. Comparing
+        # the two directly never matches, so coerce both sides to str.
+        self._ignored_containers = [str(x) for x in (ignored_containers or [])]
         self._auto_suffix = auto_suffix
         self._suffix = suffix
 
@@ -157,7 +160,7 @@ class Source:
 
         for feature in features:
             for container in feature["properties"]["containers"]:
-                if container["container_id"] in self._ignored_containers:
+                if str(container["container_id"]) in self._ignored_containers:
                     continue
 
                 trash_type = container["trash_type"]
