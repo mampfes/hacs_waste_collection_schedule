@@ -20,6 +20,8 @@ import datetime
 import re
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 from ..collection import Collection
 from ..exceptions import SourceArgumentNotFound
@@ -52,6 +54,9 @@ TEST_CASES: dict[str, dict] = {
 
 _REST_BASE = "https://rest-api.wm.com/"
 _TIMEOUT = 30
+_MAX_RETRIES = 3
+_BACKOFF_FACTOR = 2
+_RETRY_STATUS_CODES = (502, 503, 504)
 
 # Guest API keys embedded in WM's JavaScript bundle, one per endpoint group.
 _API_KEY_GUEST = "498C9CEE262DA37A80AA"  # account search, services, pickupinfo
@@ -102,6 +107,27 @@ PARAM_TRANSLATIONS = {
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+
+def _build_session() -> requests.Session:
+    """
+    Build a requests Session with automatic retries on transient gateway
+    errors. WM's guest API can be slow and occasionally returns 502/503/504
+    under load; retrying with backoff smooths over these blips without
+    failing the whole fetch.
+    """
+    session = requests.Session()
+    retry = Retry(
+        total=_MAX_RETRIES,
+        backoff_factor=_BACKOFF_FACTOR,
+        status_forcelist=_RETRY_STATUS_CODES,
+        allowed_methods=["GET"],
+        raise_on_status=False,
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    return session
 
 
 def _guest_headers(api_key: str) -> dict[str, str]:
@@ -311,7 +337,7 @@ class Source:
     # ------------------------------------------------------------------
 
     def fetch(self) -> list[Collection]:
-        session = requests.Session()
+        session = _build_session()
 
         # Step 1 – resolve address to hashed account token.
         ezpay_id = self._search_account(session)
