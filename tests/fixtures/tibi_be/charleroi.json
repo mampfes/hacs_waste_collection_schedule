@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-06-21",
+  "interactions": [
+    {
+      "key": "GET https://digitalwallonia.opendatasoft.com/api/explore/v2.1/catalog/datasets/calendrier-des-collectes-2026/exports/csv 73425db7d8",
+      "method": "GET",
+      "url": "https://digitalwallonia.opendatasoft.com/api/explore/v2.1/catalog/datasets/calendrier-des-collectes-2026/exports/csv",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "openresty",
+        "date": "Sun, 21 Jun 2026 06:27:30 GMT",
+        "content-type": "text/csv; charset=utf-8",
+        "content-disposition": "attachment; filename=\"calendrier-des-collectes-2026.csv\"",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "x-ratelimit-remaining": "19990",
+        "x-ratelimit-limit": "20000",
+        "x-ratelimit-reset": "2026-06-22 00:00:00+00:00",
+        "vary": "Accept-Language, Cookie, Host",
+        "content-language": "en-gb",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "POST, GET, OPTIONS",
+        "access-control-max-age": "1000",
+        "access-control-allow-headers": "Authorization, X-Requested-With, Origin, ODS-API-Analytics-App, ODS-API-Analytics-Embed-Type, ODS-API-Analytics-Embed-Referrer, ODS-Widgets-Version, Accept",
+        "access-control-expose-headers": "ODS-Explore-API-Deprecation, Link, X-RateLimit-Remaining, X-RateLimit-Limit, X-RateLimit-Reset, X-RateLimit-dataset-Remaining, X-RateLimit-dataset-Limit, X-RateLimit-dataset-Reset",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "x-ua-compatible": "IE=edge",
+        "permissions-policy": "midi=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "77u/Y29tbXVuZTt0eXBlO2RhdGU7c2FtZWRpDQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDItMTM7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDctMDM7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDctMTc7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDktMjU7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMTAtMjM7DQpDaGFybGVyb2k7UE1DOzIwMjYtMTAtMDk7DQpDaGFybGVyb2k7UE1DOzIwMjYtMTAtMjM7DQpDaGFybGVyb2k7UE1DOzIwMjYtMTItMDQ7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDEtMzA7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDEtMTY7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDEtMzA7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDItMjc7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDItMjc7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDQtMjQ7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDUtMjI7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDYtMDU7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDgtMTQ7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDgtMTQ7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDgtMjg7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMTAtMDk7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDEtMDI7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDMtMjc7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDMtMjc7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDUtMDg7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDYtMTk7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDctMzE7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDctMDM7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDctMzE7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDgtMjg7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDktMTE7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDktMTE7DQpDaGFybGVyb2k7UE1DOzIwMjYtMTEtMDY7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMTItMTg7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDEtMDI7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDEtMTY7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDMtMTM7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDMtMTM7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDQtMTA7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDQtMTA7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDYtMDU7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDktMjU7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMTEtMDY7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMTEtMjA7DQpDaGFybGVyb2k7UE1DOzIwMjYtMTEtMjA7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDItMTM7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDQtMjQ7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDUtMDg7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDUtMjI7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMDYtMTk7DQpDaGFybGVyb2k7UE1DOzIwMjYtMDctMTc7DQpDaGFybGVyb2k7ViAvIFBDOzIwMjYtMTItMDQ7DQpDaGFybGVyb2k7UE1DOzIwMjYtMTItMTg7DQo="
+    }
+  ]
+}
