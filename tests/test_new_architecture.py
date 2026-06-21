@@ -2108,11 +2108,17 @@ class TestNewStyleSourceMetadata:
     len(_NEW_STYLE_SOURCES) == 0,
     reason="No new-style sources discoverable (likely missing dependencies)",
 )
+@pytest.mark.live
 class TestNewStyleSourceTestCases:
     """Run each new-style source's TEST_CASES through the full pipeline.
 
     This exercises: retrieve → parse → classify → Collection for each
     test case, validating every step produces the correct types.
+
+    Marked ``live`` because it fetches from real provider endpoints, so it is
+    excluded from the gating CI run (``-m "not live"``) to keep CI deterministic
+    and offline. An offline fixture-replay harness will supersede the live
+    fetch; run locally with ``-m live`` against real providers when needed.
     """
 
     @staticmethod
