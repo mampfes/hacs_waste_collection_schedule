@@ -53,6 +53,9 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/response_shape.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/stkh_hu.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/cannock_chase_dc_gov_uk.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/source/tibi_be.py"
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/tibi_be.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/leeds_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/gemeinde24_at.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/muttenz_ch.py"
   ]
 }

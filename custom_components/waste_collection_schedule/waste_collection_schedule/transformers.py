@@ -55,7 +55,7 @@ class BaseTransformer(ABC, Generic[T]):
 
     def __init__(
         self,
-        type_value_map: dict[str, TypeMapValue] | None = None,
+        type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
     ):
         self._type_value_map: dict[str, TypeMapValue] = (
@@ -158,7 +158,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         self,
         date_key: str,
         type_key: str,
-        type_value_map: dict[str, TypeMapValue] | None = None,
+        type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
     ):
         super().__init__(type_value_map, parse_date)
@@ -201,7 +201,7 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
         self,
         date_key: str,
         type_key: str,
-        type_value_map: dict[str, TypeMapValue] | None = None,
+        type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
         name_field: str = "name",
         value_field: str = "value",
@@ -245,7 +245,7 @@ class ICSTransformer(BaseTransformer[tuple[datetime.date, str]]):
         type_value_map: Maps summary strings (case-insensitive) to WasteTypes.
     """
 
-    def __init__(self, type_value_map: dict[str, TypeMapValue] | None = None):
+    def __init__(self, type_value_map: Mapping[str, TypeMapValue] | None = None):
         super().__init__(type_value_map)
 
     def __call__(
@@ -281,7 +281,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
         self,
         date_getter: Callable[[Tag], Any],
         type_getter: Callable[[Tag], Any],
-        type_value_map: dict[str, TypeMapValue] | None = None,
+        type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
     ):
         super().__init__(type_value_map, parse_date)

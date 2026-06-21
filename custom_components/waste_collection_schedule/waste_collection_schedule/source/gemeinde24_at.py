@@ -1,4 +1,3 @@
-from dataclasses import replace
 from typing import Any, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers
@@ -34,10 +33,6 @@ from waste_collection_schedule.waste_types import (
 # collects the parent value, then calls Source.get_choices(parent_value) to
 # populate the child selector. get_choices() here resolves the municipality name
 # to its GemeindeID and fetches that municipality's streets from wastesetup_v2.
-#
-# The numeric GemeindeID / streetID are accepted as optional power-user kwargs
-# (and used by the ID-based TEST_CASES) but are not part of the user-facing
-# PARAMS, which model the name-based cascade.
 
 API_BASE_URL = "https://www.gemeinde24.at/admin/API"
 API_KEY = "justanapp"
@@ -221,27 +216,10 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     TEST_CASES = {
-        "Gaal by IDs": {"gemeinde_id": "114", "street_id": "4321"},
-        "Gaal by names": {"gemeinde": "Gaal", "strasse": "Gaal"},
-        "St. Marien - Pachersdorf (3-wöchentlich)": {
-            "gemeinde_id": "83",
-            "street_id": "4129",
-        },
-        "St. Marien - Pachersdorf (6-wöchentlich)": {
-            "gemeinde_id": "83",
-            "street_id": "3911",
-        },
+        "Gaal": {"gemeinde": "Gaal", "strasse": "Gaal"},
     }
 
-    # required=False because the numeric gemeinde_id / street_id kwargs are an
-    # accepted alternative to the name cascade (used by the ID TEST_CASES); the
-    # cross-field check lives in __init__.
-    PARAMS = [
-        replace(
-            dependent_select("gemeinde", "strasse", child_label="Street"),
-            required=False,
-        )
-    ]
+    PARAMS = [dependent_select("gemeinde", "strasse", child_label="Street")]
 
     HOWTO = {
         "en": (
@@ -262,27 +240,11 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%Y-%m-%d"),
     )
 
-    def __init__(
-        self,
-        gemeinde: str | None = None,
-        strasse: str | None = None,
-        gemeinde_id: str | int | None = None,
-        street_id: str | int | None = None,
-        **kwargs,
-    ):
-        # gemeinde_id / street_id are an accepted alternative to the name cascade
-        # but are not user-facing PARAMS fields, so __init__ takes **kwargs: that
-        # documents the asymmetry (PARAMS declares only the cascade) and keeps the
-        # source's accepted args a superset of its PARAMS fields.
+    def __init__(self, gemeinde: str | None = None, strasse: str | None = None):
+        # validate() (in super) enforces the required gemeinde + strasse cascade.
         super().__init__(gemeinde=gemeinde, strasse=strasse)
         self._gemeinde = _clean(gemeinde)
         self._strasse = _clean(strasse)
-        self._gemeinde_id = _clean(gemeinde_id)
-        self._street_id = _clean(street_id)
-        if not (self._gemeinde or self._gemeinde_id):
-            raise SourceArgumentRequired(
-                "gemeinde", "or provide 'gemeinde_id' as an alternative."
-            )
 
     @classmethod
     def get_choices(cls, parent_value: str) -> list[str]:
@@ -300,12 +262,8 @@ class Source(BaseSource):
         return _deduplicate([name for name, _ in _streets(session, gemeinde_id)])
 
     def retrieve(self, source):
-        gemeinde_id = self._gemeinde_id or _resolve_gemeinde_id(
-            source.session, self._gemeinde
-        )
-        street_id = _resolve_street_id(
-            source.session, gemeinde_id, self._strasse, self._street_id
-        )
+        gemeinde_id = _resolve_gemeinde_id(source.session, self._gemeinde)
+        street_id = _resolve_street_id(source.session, gemeinde_id, self._strasse, "")
         return source.session.get(
             f"{API_BASE_URL}/content2.php",
             params={
