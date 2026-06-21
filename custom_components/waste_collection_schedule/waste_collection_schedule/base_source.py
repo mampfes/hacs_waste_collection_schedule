@@ -38,7 +38,11 @@ from typing import Any, Generic, TypeVar
 
 from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.config_params import ConfigParam, validate
+from waste_collection_schedule.config_params import (
+    ConfigParam,
+    apply_defaults,
+    validate,
+)
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.transformers import BaseTransformer
 from waste_collection_schedule.waste_types import ALL_TYPES, WasteType
@@ -170,8 +174,9 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         assume clean params. Sources may override __init__ for custom
         validation but should call ``super().__init__(**kwargs)``.
         """
-        validate(self.PARAMS, kwargs)
-        self.params: dict[str, Any] = dict(kwargs)
+        prepared = apply_defaults(self.PARAMS, dict(kwargs))
+        validate(self.PARAMS, prepared)
+        self.params: dict[str, Any] = prepared
         self._session: Any = None
 
     @property

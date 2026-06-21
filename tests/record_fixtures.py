@@ -31,7 +31,7 @@ sys.path.insert(
 from importlib import import_module  # noqa: E402
 
 import cassette  # noqa: E402
-from fixtures_support import fixture_path, slug  # noqa: E402
+from fixtures_support import choices_path, fixture_path, slug  # noqa: E402
 
 SOURCE_DIR = os.path.join(
     os.path.dirname(__file__),
@@ -70,6 +70,49 @@ def record(module_name: str) -> None:
             print(f"  ! {case_key}: {type(exc).__name__}: {exc}")
 
 
+def record_choices(module_name: str) -> None:
+    """Record the HTTP for a dependent_select source's choice methods.
+
+    For a source whose first PARAM is a ``dependent_select``, this captures the
+    network for ``get_parent_choices()`` (when defined) and ``get_choices()``
+    using the parent value from the first TEST_CASE, storing the expected parent
+    and child values alongside so the offline test can assert against them.
+    """
+    module = import_module(f"waste_collection_schedule.source.{module_name}")
+    source_cls = module.Source
+    params = getattr(source_cls, "PARAMS", [])
+    dep = next((p for p in params if p.widget == "dependent_select"), None)
+    if dep is None or not hasattr(source_cls, "get_choices"):
+        return
+    parent_field, child_field = list(dep.fields)[:2]
+    case = next(iter(source_cls.TEST_CASES.values()))
+    parent_value = case.get(parent_field)
+    child_value = case.get(child_field)
+    if not parent_value:
+        print(f"  ! {module_name}: first TEST_CASE has no '{parent_field}', skipped")
+        return
+
+    today = datetime.date.today().isoformat()
+    path = choices_path(module_name)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    extra = {
+        "parent_field": parent_field,
+        "child_field": child_field,
+        "parent_value": parent_value,
+        "child_value": child_value,
+    }
+    try:
+        with cassette.recording(path, today, extra=extra):
+            if hasattr(source_cls, "get_parent_choices"):
+                source_cls.get_parent_choices()
+            source_cls.get_choices(parent_value)
+        print(f"  recorded choices for {module_name} (parent={parent_value!r})")
+    except Exception as exc:  # noqa: BLE001 - report and continue
+        if os.path.exists(path):
+            os.remove(path)
+        print(f"  ! {module_name} choices: {type(exc).__name__}: {exc}")
+
+
 if __name__ == "__main__":
     args = sys.argv[1:]
     modules = _new_arch_modules() if args == ["--all"] else args
@@ -79,3 +122,4 @@ if __name__ == "__main__":
     for mod in modules:
         print(f"== {mod} ==")
         record(mod)
+        record_choices(mod)

@@ -231,8 +231,16 @@ def _build_schema_from_params(
     args_input: dict[str, Any] | None,
     include_title: bool = True,
     title: str = "",
+    dependent_options: dict[str, list[str]] | None = None,
 ) -> vol.Schema:
-    """Build a voluptuous schema from PARAMS declarations."""
+    """Build a voluptuous schema from PARAMS declarations.
+
+    ``dependent_options`` maps a field name to a fixed option list; such fields
+    render as a dropdown instead of free text. The config flow uses this to feed
+    a ``dependent_select`` param the choices fetched from the source's
+    ``get_parent_choices``/``get_choices`` methods.
+    """
+    dependent_options = dependent_options or {}
     vol_args: dict = {}
 
     if include_title:
@@ -248,6 +256,12 @@ def _build_schema_from_params(
         ] = str
 
     for param in params:
+        # A field is optional in the form when its param is required=False, the
+        # param declares mutually-exclusive groups (alternatives), or the field
+        # has a default. A dependent_select child whose options aren't known yet
+        # (parent not chosen) is also shown as optional so the form can submit
+        # the parent first.
+        param_optional = (not param.required) or bool(param.groups)
         for field_name, display_label in param.fields.items():
             description = None
             if args_input is not None and field_name in args_input:
@@ -255,18 +269,29 @@ def _build_schema_from_params(
             elif field_name in pre_filled:
                 description = {"suggested_value": pre_filled[field_name]}
 
-            # Map widget type to HA selector/validator
-            if param.widget == "map":
-                # Coordinates — use float fields
-                vol_args[vol.Required(field_name, description=description)] = cv.string
-            elif param.widget == "select":
-                # TODO: pass through options from ConfigParam when supported
-                vol_args[vol.Required(field_name, description=description)] = cv.string
-            elif param.widget == "uprn_lookup":
-                vol_args[vol.Required(field_name, description=description)] = cv.string
+            options = dependent_options.get(field_name)
+            default = param.defaults.get(field_name)
+            optional = param_optional or default is not None
+            if param.widget == "dependent_select" and options is None:
+                # Options not yet available (parent not selected); collect later.
+                optional = True
+            marker = vol.Optional if optional else vol.Required
+            if default is not None:
+                key = marker(field_name, description=description, default=default)
             else:
-                # Default: text field
-                vol_args[vol.Required(field_name, description=description)] = cv.string
+                key = marker(field_name, description=description)
+            if options is not None:
+                vol_args[key] = SelectSelector(
+                    SelectSelectorConfig(
+                        options=[
+                            SelectOptionDict(label=opt, value=opt) for opt in options
+                        ],
+                        mode=SelectSelectorMode.DROPDOWN,
+                        custom_value=True,
+                    )
+                )
+            else:
+                vol_args[key] = cv.string
 
     return vol.Schema(vol_args)
 
@@ -646,6 +671,43 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     is_string = a == cv.string
         return return_val
 
+    async def __get_dependent_options(
+        self,
+        source_cls,
+        pre_filled: dict[str, Any],
+        args_input: dict[str, Any] | None,
+    ) -> dict[str, list[str]]:
+        """Fetch option lists for any dependent_select PARAM of this source.
+
+        For each ``dependent_select`` param: populate the parent field from
+        ``get_parent_choices()`` (when the source defines it), and, once the
+        parent value is known, populate the child field from
+        ``get_choices(parent_value)``. Both methods may fetch live, so they run
+        off the event loop. Failures degrade gracefully to free-text input.
+        """
+        options: dict[str, list[str]] = {}
+        chosen = {**pre_filled, **(args_input or {})}
+        for param in source_cls.PARAMS:
+            if param.widget != "dependent_select":
+                continue
+            parent_field, child_field = list(param.fields)[:2]
+            if hasattr(source_cls, "get_parent_choices"):
+                try:
+                    options[parent_field] = await self.hass.async_add_executor_job(
+                        source_cls.get_parent_choices
+                    )
+                except Exception as exc:  # noqa: BLE001 - degrade to free text
+                    _LOGGER.debug("get_parent_choices failed: %s", exc)
+            parent_value = chosen.get(parent_field)
+            if parent_value:
+                try:
+                    options[child_field] = await self.hass.async_add_executor_job(
+                        source_cls.get_choices, parent_value
+                    )
+                except Exception as exc:  # noqa: BLE001 - degrade to free text
+                    _LOGGER.debug("get_choices failed: %s", exc)
+        return options
+
     async def __get_arg_schema(
         self,
         source: str,
@@ -684,12 +746,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
         # New-style source: build schema from PARAMS
         if _is_new_style_source(source_cls):
+            dependent_options = await self.__get_dependent_options(
+                source_cls, pre_filled, args_input
+            )
             schema = _build_schema_from_params(
                 source_cls.PARAMS,
                 pre_filled,
                 args_input,
                 include_title=include_title,
                 title=title,
+                dependent_options=dependent_options,
             )
             return schema, module
 

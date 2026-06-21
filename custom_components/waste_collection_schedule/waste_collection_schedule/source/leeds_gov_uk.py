@@ -1,5 +1,4 @@
 import datetime
-from dataclasses import replace
 from typing import TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers
@@ -35,10 +34,6 @@ DEFAULT_API_KEY = "ad8dd80444fe45fcad376f82cf9a5ab4"
 # How far ahead to request collections.
 WINDOW_DAYS = 56
 
-# api_key is optional because we ship the embedded default; a user only needs to
-# set it if the council rotates the key.
-_PARAM_API_KEY = replace(api_key(), required=False)
-
 
 class _Collection(TypedDict):
     """The fields the transformer reads from each BinsDays entry."""
@@ -62,7 +57,7 @@ class Source(BaseSource):
         "Vicarage View LS5": {"uprn": "72543283"},
     }
 
-    PARAMS = [uprn(), _PARAM_API_KEY]
+    PARAMS = [uprn(), api_key(default=DEFAULT_API_KEY)]
 
     HOWTO = {
         "en": (
@@ -89,7 +84,8 @@ class Source(BaseSource):
     )
 
     def __init__(self, uprn=None, api_key=None):
-        super().__init__(uprn=uprn, api_key=api_key or DEFAULT_API_KEY)
+        # api_key defaults to the embedded public key via apply_defaults().
+        super().__init__(uprn=uprn, api_key=api_key)
 
     def retrieve(self, source):
         today = datetime.date.today()

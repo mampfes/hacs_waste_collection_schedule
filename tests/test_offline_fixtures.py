@@ -10,6 +10,7 @@ transform in CI without touching a provider. Refresh with
 
 import calendar  # noqa: F401 - import stdlib calendar before the package path
 import datetime
+import json
 import os
 import sys
 
@@ -27,10 +28,15 @@ sys.path.insert(
 from importlib import import_module  # noqa: E402
 
 import cassette  # noqa: E402
-from fixtures_support import discover_fixtures, slug  # noqa: E402
+from fixtures_support import (  # noqa: E402
+    discover_choice_fixtures,
+    discover_fixtures,
+    slug,
+)
 from waste_collection_schedule.collection import Collection  # noqa: E402
 
 _FIXTURES = discover_fixtures()
+_CHOICE_FIXTURES = discover_choice_fixtures()
 
 
 def _resolve_case(module_name: str, case_slug: str):
@@ -61,3 +67,34 @@ def test_offline_replay(module_name, case_slug, path):
         assert isinstance(r, Collection)
         assert isinstance(r.date, datetime.date)
         assert r.waste_type is not None
+
+
+@pytest.mark.parametrize(
+    "module_name,path",
+    _CHOICE_FIXTURES,
+    ids=[m for m, _ in _CHOICE_FIXTURES],
+)
+def test_offline_choices(module_name, path):
+    """Replay a dependent_select source's get_parent_choices/get_choices.
+
+    Exercises the dependent_select config-flow contract offline: the recorded
+    HTTP is served back while we call the source's choice methods, asserting the
+    parent list includes the recorded parent and the child list includes the
+    recorded child. This is what the config flow consumes to populate the
+    cascading dropdowns.
+    """
+    with open(path, encoding="utf-8") as fh:
+        meta = json.load(fh)
+    module = import_module(f"waste_collection_schedule.source.{module_name}")
+    cls = module.Source
+
+    with cassette.replaying(path):
+        if hasattr(cls, "get_parent_choices"):
+            parents = cls.get_parent_choices()
+            assert isinstance(parents, list) and parents
+            assert meta["parent_value"] in parents
+        children = cls.get_choices(meta["parent_value"])
+
+    assert isinstance(children, list) and children
+    if meta.get("child_value"):
+        assert meta["child_value"] in children

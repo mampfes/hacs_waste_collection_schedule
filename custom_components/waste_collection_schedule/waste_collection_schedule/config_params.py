@@ -9,7 +9,10 @@ these to build the config flow GUI automatically.
 
 from dataclasses import dataclass, field
 
-from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule.exceptions import (
+    SourceArgumentExceptionMultiple,
+    SourceArgumentRequired,
+)
 
 
 @dataclass(frozen=True)
@@ -31,16 +34,47 @@ class ConfigParam:
     # Whether the user must provide a value for every field in this param.
     required: bool = True
 
+    # Default values per field ({field_name: default}). Applied before
+    # validation, so a field with a default is satisfied without user input.
+    defaults: dict[str, str] = field(default_factory=dict)
+
+    # Mutually-exclusive input groups, each a tuple of field names. When set
+    # (see ``alternatives``), validation requires exactly one group to be fully
+    # provided rather than every field.
+    groups: tuple[tuple[str, ...], ...] = ()
+
+
+def apply_defaults(params: list[ConfigParam], values: dict) -> dict:
+    """Return ``values`` with any missing/empty defaulted field filled in."""
+    prepared = dict(values)
+    for param in params:
+        for field_name, default in param.defaults.items():
+            if prepared.get(field_name) in (None, ""):
+                prepared[field_name] = default
+    return prepared
+
 
 def validate(params: list[ConfigParam], values: dict) -> None:
     """Validate user-supplied values against declared PARAMS.
 
     Raises SourceArgumentRequired for any field of a required ConfigParam that
-    is absent or empty. Sources with mutually-exclusive alternatives (e.g.
-    address OR coordinates) should mark those params ``required=False`` and do
-    their own cross-field validation in ``__init__``.
+    is absent or empty. For a param declaring mutually-exclusive ``groups`` (see
+    ``alternatives``), requires exactly one group to be fully provided.
     """
     for param in params:
+        if param.groups:
+            if not any(
+                all(values.get(f) not in (None, "") for f in group)
+                for group in param.groups
+            ):
+                raise SourceArgumentExceptionMultiple(
+                    list(param.fields),
+                    "provide one of: "
+                    + " or ".join(
+                        "(" + " + ".join(group) + ")" for group in param.groups
+                    ),
+                )
+            continue
         if not param.required:
             continue
         for field_name in param.fields:
@@ -200,16 +234,27 @@ def dependent_select(
 ) -> ConfigParam:
     """Cascading two-level dropdown (e.g. municipality → district).
 
-    The framework fetches child options at config-flow time by calling
-    Source.get_choices(parent_value) with the value from the parent field.
-    The parent value is collected first; the child selector is then shown
-    with the options returned by get_choices().
+    The parent value is collected first; the child selector is then populated
+    by calling ``Source.get_choices(parent_value)`` with the chosen parent.
 
-    Sources that use this param MUST implement a class method::
+    Sources that use this param MUST implement a class method that returns the
+    child options for a given parent::
 
         @classmethod
         def get_choices(cls, parent_value: str) -> list[str]:
             ...
+
+    Sources MAY also implement a class method that returns the parent options::
+
+        @classmethod
+        def get_parent_choices(cls) -> list[str]:
+            ...
+
+    When ``get_parent_choices`` is present the config flow renders the parent as
+    a dropdown of those options; when it is absent the parent is a free-text
+    field (the source resolves a typed value in ``get_choices``/``__init__``).
+    Both methods run at config-flow time and may fetch live, so the framework
+    calls them off the event loop.
 
     Demonstrates: dependent-dropdown PARAM flow (see issue #6561 design discussion).
     """
@@ -267,8 +312,10 @@ def multi_value_lookup(
 def text_field(
     field_name: str,
     label: str | None = None,
+    default: str | None = None,
 ) -> ConfigParam:
-    """Free text entry."""
+    """Free text entry. Pass ``default`` to make the field optional with a
+    pre-filled value (e.g. an embedded API key)."""
     display = label or field_name.replace("_", " ").title()
     return ConfigParam(
         fields={field_name: display},
@@ -276,14 +323,59 @@ def text_field(
         labels={
             "en": {field_name: display},
         },
+        defaults={field_name: default} if default is not None else {},
+        required=default is None,
     )
 
 
-def api_key(field_name: str = "api_key", label: str | None = None) -> ConfigParam:
+def api_key(
+    field_name: str = "api_key",
+    label: str | None = None,
+    default: str | None = None,
+) -> ConfigParam:
     """A free-text field for a provider API key (public, keyed endpoints).
 
-    A thin, semantic wrapper over :func:`text_field` so keyed sources read
-    declaratively (``PARAMS = [api_key()]``) and the config form labels it
-    clearly.
+    A thin, semantic wrapper over :func:`text_field`. Pass ``default`` for a
+    provider that ships an embedded/public key, so the user need not supply one
+    (but can override it if the provider rotates the key).
     """
-    return text_field(field_name, label or "API Key")
+    return text_field(field_name, label or "API Key", default=default)
+
+
+def alternatives(*groups: list[ConfigParam]) -> ConfigParam:
+    """Mutually-exclusive input groups: the user provides exactly one group.
+
+    Each group is a list of ConfigParams. For example, a UPRN OR a postcode plus
+    house name/number::
+
+        PARAMS = [alternatives([uprn()], [postcode(), text_field("house")])]
+
+    All fields are declared (so __init__ accepts them) and individually
+    optional; :func:`validate` then requires exactly one group to be fully
+    provided. The config flow renders the fields as optional.
+    """
+    fields: dict[str, str] = {}
+    labels: dict[str, dict[str, str]] = {}
+    descriptions: dict[str, dict[str, str]] = {}
+    defaults: dict[str, str] = {}
+    group_field_names: list[tuple[str, ...]] = []
+    for group in groups:
+        names: list[str] = []
+        for param in group:
+            fields.update(param.fields)
+            names.extend(param.fields)
+            for lang, mapping in param.labels.items():
+                labels.setdefault(lang, {}).update(mapping)
+            for lang, mapping in param.descriptions.items():
+                descriptions.setdefault(lang, {}).update(mapping)
+            defaults.update(param.defaults)
+        group_field_names.append(tuple(names))
+    return ConfigParam(
+        fields=fields,
+        labels=labels,
+        descriptions=descriptions,
+        widget="alternatives",
+        required=False,
+        defaults=defaults,
+        groups=tuple(group_field_names),
+    )

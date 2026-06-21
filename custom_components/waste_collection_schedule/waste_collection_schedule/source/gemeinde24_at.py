@@ -247,6 +247,21 @@ class Source(BaseSource):
         self._strasse = _clean(strasse)
 
     @classmethod
+    def get_parent_choices(cls) -> list[str]:
+        """Return the full list of municipality (Gemeinde) names.
+
+        Implements the optional parent half of the dependent_select contract:
+        the framework calls this to populate the parent (Gemeinde) selector.
+        gemeinden.php returns every municipality (sorted by distance from a
+        fixed point), so this is the complete option list.
+        """
+        from curl_cffi import requests as _cffi
+
+        session = _cffi.Session(impersonate="chrome")
+        names = [_clean(r.get("Gemeindename")) for r in _gemeinden(session)]
+        return _deduplicate(sorted(n for n in names if n))
+
+    @classmethod
     def get_choices(cls, parent_value: str) -> list[str]:
         """Return the street names available within a municipality.
 

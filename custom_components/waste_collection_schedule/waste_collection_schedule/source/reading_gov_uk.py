@@ -1,11 +1,14 @@
-from dataclasses import replace
 from typing import TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import postcode, text_field, uprn
+from waste_collection_schedule.config_params import (
+    alternatives,
+    postcode,
+    text_field,
+    uprn,
+)
 from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
@@ -17,23 +20,13 @@ from waste_collection_schedule.waste_types import (
     RECYCLABLES,
 )
 
-# Demonstrates: alternative-input PARAMS (UPRN OR postcode + house) on the new
-# BaseSource architecture, with a two-mode retrieve() method.
+# Demonstrates: alternative-input PARAMS via config_params.alternatives() —
+# the user provides a UPRN, OR a postcode + house name/number. validate()
+# enforces exactly one group; no per-source cross-field check needed.
 #
-# The API embeds the UPRN in the collections URL path. A user may supply the
-# UPRN directly, or supply a postcode + house name/number which the source
-# resolves to a UPRN via the getaddresses lookup before fetching collections.
-#
-# Because either input group satisfies the source, every param is marked
-# required=False and the cross-field check lives in __init__ (see
-# stirling_wa_gov_au.py for the same pattern). parsers.JsonParser("collections")
-# drills into the nested array for both modes.
-
-_PARAMS_UPRN = replace(uprn(), required=False)
-_PARAMS_POSTCODE = replace(postcode(), required=False)
-_PARAMS_HOUSE = replace(
-    text_field("housenameornumber", label="House Name or Number"), required=False
-)
+# The API embeds the UPRN in the collections URL path. A postcode + house is
+# resolved to a UPRN via the getaddresses lookup (TwoStepRetriever) before
+# fetching collections.
 
 SEARCH_URLS = {
     "UPRN": "https://api.reading.gov.uk/rbc/getaddresses",
@@ -84,10 +77,12 @@ class Source(BaseSource):
         },
     }
 
-    # TODO(arch): once the framework supports mutually-exclusive PARAMS groups,
-    # this becomes a single uprn-or-address group. For now, listing each param
-    # required=False with the cross-field check in __init__ is the prototype.
-    PARAMS = [_PARAMS_UPRN, _PARAMS_POSTCODE, _PARAMS_HOUSE]
+    PARAMS = [
+        alternatives(
+            [uprn()],
+            [postcode(), text_field("housenameornumber", label="House Name or Number")],
+        )
+    ]
 
     HOWTO = {
         "en": (
@@ -122,18 +117,7 @@ class Source(BaseSource):
     )
 
     def __init__(self, uprn=None, postcode=None, housenameornumber=None):
+        # validate() enforces the UPRN-or-(postcode+house) alternative via PARAMS.
         super().__init__(
             uprn=uprn, postcode=postcode, housenameornumber=housenameornumber
         )
-        if not any((uprn, postcode and housenameornumber)):
-            errors = []
-            if postcode:
-                errors.append("housenameornumber")
-            elif housenameornumber:
-                errors.append("postcode")
-            else:
-                errors = ["uprn", "postcode", "housenameornumber"]
-            raise SourceArgumentExceptionMultiple(
-                errors,
-                "Must provide either a UPRN or both the Postcode and House Name or Number",
-            )

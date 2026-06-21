@@ -23,8 +23,21 @@ def fixture_path(source_module: str, case_key: str, ext: str = "json") -> str:
     return os.path.join(FIXTURE_DIR, source_module, f"{slug(case_key)}.{ext}")
 
 
+# Cassette holding the HTTP for a dependent_select source's choice methods
+# (get_parent_choices / get_choices), kept separate from the fetch() cassettes.
+CHOICES_FILENAME = "_choices.json"
+
+
+def choices_path(source_module: str) -> str:
+    return os.path.join(FIXTURE_DIR, source_module, CHOICES_FILENAME)
+
+
 def discover_fixtures() -> list[tuple[str, str, str]]:
-    """Return ``(source_module, case_slug, path)`` for every stored fixture."""
+    """Return ``(source_module, case_slug, path)`` for every fetch fixture.
+
+    Files starting with ``_`` (e.g. the dependent_select choices cassette) are
+    not fetch cassettes and are skipped here.
+    """
     found: list[tuple[str, str, str]] = []
     if not os.path.isdir(FIXTURE_DIR):
         return found
@@ -33,6 +46,20 @@ def discover_fixtures() -> list[tuple[str, str, str]]:
         if not os.path.isdir(moddir):
             continue
         for fname in sorted(os.listdir(moddir)):
+            if fname.startswith("_"):
+                continue
             case_slug = fname.rsplit(".", 1)[0]
             found.append((module, case_slug, os.path.join(moddir, fname)))
+    return found
+
+
+def discover_choice_fixtures() -> list[tuple[str, str]]:
+    """Return ``(source_module, path)`` for every stored choices cassette."""
+    found: list[tuple[str, str]] = []
+    if not os.path.isdir(FIXTURE_DIR):
+        return found
+    for module in sorted(os.listdir(FIXTURE_DIR)):
+        path = os.path.join(FIXTURE_DIR, module, CHOICES_FILENAME)
+        if os.path.isfile(path):
+            found.append((module, path))
     return found

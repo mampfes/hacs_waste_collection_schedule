@@ -108,8 +108,13 @@ def _capture(resp: Any, method: str, url: str, kwargs: dict) -> dict:
 
 
 @contextlib.contextmanager
-def recording(path: str, today: str):
-    """Patch both stacks to pass through and record interactions to ``path``."""
+def recording(path: str, today: str, extra: dict | None = None):
+    """Patch both stacks to pass through and record interactions to ``path``.
+
+    ``extra`` is merged into the saved cassette JSON (e.g. the parent/child
+    values a ``get_choices`` replay test asserts against). ``replaying`` ignores
+    any keys beyond ``interactions``/``recorded_at``.
+    """
     interactions: list[dict] = []
     originals = (_cffi.Session.request, _requests_sessions.Session.request)
 
@@ -135,10 +140,11 @@ def recording(path: str, today: str):
         # Only persist a cassette for a clean run, so a failed fetch never
         # leaves a partial/misleading recording behind.
         if success:
+            payload = {"recorded_at": today, "interactions": interactions}
+            if extra:
+                payload.update(extra)
             with open(path, "w", encoding="utf-8", newline="\n") as fh:
-                json.dump(
-                    {"recorded_at": today, "interactions": interactions}, fh, indent=2
-                )
+                json.dump(payload, fh, indent=2)
                 fh.write("\n")
 
 
