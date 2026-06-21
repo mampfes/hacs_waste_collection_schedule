@@ -1,8 +1,8 @@
 import logging
 from dataclasses import replace
-from typing import final
+from typing import TypedDict, final
 
-from waste_collection_schedule import retrievers
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import coords, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
@@ -16,6 +16,20 @@ from waste_collection_schedule.waste_types import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+
+class _Field(TypedDict):
+    """One name/value pair in the bincollectioncheck response."""
+
+    name: str
+    caption: str
+    value: str
+
+
+# The endpoint returns a list of collections, each a list of name/value fields
+# ("type", "day", "date"). Declared here so the shape is type-checked, drives
+# the offline fixtures, and raises a clear error if the provider changes it.
+ResponseShape = list[list[_Field]]
 
 # Demonstrates: alternative-input PARAMS (address OR lat+lon) + a source that
 # overrides retrieve() to compute request headers from its params before
@@ -56,6 +70,8 @@ class Source(BaseSource):
             "or provide latitude and longitude coordinates."
         ),
     }
+
+    parse = parsers.JsonParser(shape=ResponseShape)
 
     transformer = KeyValueTransformer(
         date_key="date",

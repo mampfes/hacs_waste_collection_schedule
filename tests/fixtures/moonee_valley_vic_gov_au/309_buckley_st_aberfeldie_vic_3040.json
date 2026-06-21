@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-06-21",
+  "interactions": [
+    {
+      "key": "GET https://services8.arcgis.com/Qhxu8dzT7BHYuJZL/arcgis/rest/services/BinCollection_add/FeatureServer/0/query c84c907003",
+      "method": "GET",
+      "url": "https://services8.arcgis.com/Qhxu8dzT7BHYuJZL/arcgis/rest/services/BinCollection_add/FeatureServer/0/query",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sun, 21 Jun 2026 04:32:44 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "648",
+        "Connection": "keep-alive",
+        "Cache-Control": "public, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Thu, 08 Jan 2026 02:07:48 GMT",
+        "ETag": "sd536_-1337147574",
+        "Vary": "X-Esri-Authorization",
+        "Request-Context": "appId=cid-v1:51ddf63e-295f-4750-9246-c1fd1cd03a35, appId=cid-v1:aee5d73c-efd8-4362-94ca-2a7baad8dc01",
+        "x-arcgis-upstream": "us1h08c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260620T091859Z-r1cb5f964f6bbb48hC1MELw0mn00000008d0000000000vb8",
+        "x-esri-query-request-units": "2",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=2;max=6000",
+        "X-ArcGIS-Correlation-Id": "e711d9b04c09c4d7",
+        "X-ArcGIS-Instance": "5nxvauy5s000007",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260621T043244Z-17ddcfbd767w6q6dhC1MELx4mw00000010r00000000006nu",
+        "x-fd-int-roxy-purgeid": "0",
+        "X-Cache-Info": "L2_T2",
+        "X-Cache": "TCP_REVALIDATED_HIT",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6IkZJRCIsInVuaXF1ZUlkRmllbGQiOnsibmFtZSI6IkZJRCIsImlzU3lzdGVtTWFpbnRhaW5lZCI6dHJ1ZX0sImdsb2JhbElkRmllbGROYW1lIjoiIiwiZ2VvbWV0cnlUeXBlIjoiZXNyaUdlb21ldHJ5UG9pbnQiLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjEwMjEwMCwibGF0ZXN0V2tpZCI6Mzg1N30sImZpZWxkcyI6W3sibmFtZSI6IkZJRCIsInR5cGUiOiJlc3JpRmllbGRUeXBlT0lEIiwiYWxpYXMiOiJGSUQiLCJzcWxUeXBlIjoic3FsVHlwZUludGVnZXIiLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiQXV0byIsInR5cGUiOiJlc3JpRmllbGRUeXBlRG91YmxlIiwiYWxpYXMiOiJBdXRvIiwic3FsVHlwZSI6InNxbFR5cGVGbG9hdCIsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJjYWxlbmRhciIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJjYWxlbmRhciIsInNxbFR5cGUiOiJzcWxUeXBlTlZhcmNoYXIiLCJsZW5ndGgiOjgsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJjb2xsZWN0aW9uIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6ImNvbGxlY3Rpb24iLCJzcWxUeXBlIjoic3FsVHlwZU5WYXJjaGFyIiwibGVuZ3RoIjo1MCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6ImNvbGxlY3RkYXkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiY29sbGVjdGRheSIsInNxbFR5cGUiOiJzcWxUeXBlTlZhcmNoYXIiLCJsZW5ndGgiOjIwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiY29sbGVjdGFyZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlSW50ZWdlciIsImFsaWFzIjoiY29sbGVjdGFyZSIsInNxbFR5cGUiOiJzcWxUeXBlSW50ZWdlciIsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJjb2xsZWN0aV8xIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVJbnRlZ2VyIiwiYWxpYXMiOiJjb2xsZWN0aV8xIiwic3FsVHlwZSI6InNxbFR5cGVJbnRlZ2VyIiwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6ImxhbmRfZmlsbCIsInR5cGUiOiJlc3JpRmllbGRUeXBlRGF0ZSIsImFsaWFzIjoibGFuZF9maWxsIiwic3FsVHlwZSI6InNxbFR5cGVUaW1lc3RhbXAyIiwibGVuZ3RoIjo4LCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiZ3JlZW5fc3RfZCIsInR5cGUiOiJlc3JpRmllbGRUeXBlRGF0ZSIsImFsaWFzIjoiZ3JlZW5fc3RfZCIsInNxbFR5cGUiOiJzcWxUeXBlVGltZXN0YW1wMiIsImxlbmd0aCI6OCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6InJlY3lfc3RkYXQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURhdGUiLCJhbGlhcyI6InJlY3lfc3RkYXQiLCJzcWxUeXBlIjoic3FsVHlwZVRpbWVzdGFtcDIiLCJsZW5ndGgiOjgsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJsaW5rIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6ImxpbmsiLCJzcWxUeXBlIjoic3FsVHlwZU5WYXJjaGFyIiwibGVuZ3RoIjoyNTAsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJFWklfQUREUkVTIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkVaSV9BRERSRVMiLCJzcWxUeXBlIjoic3FsVHlwZU5WYXJjaGFyIiwibGVuZ3RoIjo4MCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiRklEIjo1MzEzNCwiQXV0byI6NTMxMzQsImNhbGVuZGFyIjoiQXJlYSAxIiwiY29sbGVjdGlvbiI6IkZyaWRheS1BcmVhIDFFIiwiY29sbGVjdGRheSI6IkZyaWRheSIsImNvbGxlY3RhcmUiOjEsImNvbGxlY3RpXzEiOjYsImxhbmRfZmlsbCI6MTYyMzk3NDQwMDAwMCwiZ3JlZW5fc3RfZCI6MTYyMjc2NDgwMDAwMCwicmVjeV9zdGRhdCI6MTYyMjE2MDAwMDAwMCwibGluayI6Imh0dHBzOi8vbW9vbmVldmFsbGV5Lm1hcHMuYXJjZ2lzLmNvbS9zaGFyaW5nL3Jlc3QvY29udGVudC9pdGVtcy9lY2M2ZWYwMGFlMjI0MTZkOWJmZDIzYmMwZmIxNzM0Yy9kYXRhIiwiRVpJX0FERFJFUyI6IjMwOSBCVUNLTEVZIFNUUkVFVCBBQkVSRkVMRElFIDMwNDAifX1dfQ=="
+    }
+  ]
+}

@@ -309,6 +309,29 @@ Debugging inside Home Assistant is slow. Use the command line test script, which
 
 Useful options: `-l` lists all dates, `-i` adds the icon (with `-l`), `-t` shows full stack traces, `-d` runs fetch twice and checks the results match (use it if fetch mutates the source object).
 
+### Offline fixtures (record once, replay in CI)
+
+The gating CI must not hit live provider endpoints, so the pipeline is exercised
+against recorded responses. After your source works against the live provider,
+record a cassette of its HTTP traffic:
+
+```bash
+python tests/record_fixtures.py <your_module>
+```
+
+This runs each `TEST_CASES` entry once and writes
+`tests/fixtures/<your_module>/<case>.json` (the recorded requests/responses plus
+the recording date). Commit those. `tests/test_offline_fixtures.py` then replays
+them with the clock frozen to the recording date, so the run is deterministic.
+Re-record when a provider changes its response.
+
+For JSON sources, also declare the response shape and pass it to the parser
+(`parse = parsers.JsonParser(shape=MyResponse)`). A `TypedDict`/`list[...]`
+shape is type-checked by pyright, validates the fixtures, and at runtime logs
+the response and raises `ResponseShapeError` if the provider changes its API
+(the source-defect issue template asks users to paste that log). See
+`stirling_wa_gov_au.py`.
+
 ### Before submitting
 
 Run the structural tests and the type checker:

@@ -49,6 +49,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/amarsul_pt.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/lawrence_ma_us.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/isaac_qld_gov_au.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/source/hohokus_nj_us.py"
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/hohokus_nj_us.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/response_shape.py"
   ]
 }

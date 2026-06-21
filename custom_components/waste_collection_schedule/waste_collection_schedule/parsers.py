@@ -19,9 +19,7 @@ import datetime
 from typing import (
     TYPE_CHECKING,
     Any,
-    List,
     Protocol,
-    Tuple,
     TypeAlias,
     TypeVar,
 )
@@ -68,15 +66,28 @@ class JsonParser(Parser[Any]):
         parse = parsers.JsonParser("data", "items")   # response.json()["data"]["items"]
 
     If the response is already a list at the top level, omit keys entirely.
+
+    Pass ``shape`` (a ``TypedDict`` / ``list[...]`` / etc.) to validate the
+    drilled-into value against the source's declared response shape. A mismatch
+    logs the response and raises ``ResponseShapeError`` (the provider changed
+    its API), instead of failing obscurely deeper in the pipeline::
+
+        parse = parsers.JsonParser("collections", shape=list[CollectionRecord])
     """
 
-    def __init__(self, *keys: str):
+    def __init__(self, *keys: str, shape: Any = None):
         self.keys = keys
+        self.shape = shape
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
         data = response.json()
         for key in self.keys:
             data = data[key]
+        if self.shape is not None:
+            from waste_collection_schedule import response_shape
+
+            name = type(source).__module__.rsplit(".", 1)[-1] if source else "source"
+            data = response_shape.validate(data, self.shape, source_name=name)
         return data
 
 
@@ -87,7 +98,7 @@ class TextParser(Parser[str]):
         return response.text
 
 
-class HtmlParser(Parser[List[Tag]]):
+class HtmlParser(Parser[list[Tag]]):
     """Parse response as HTML and select elements by CSS selector.
 
     Use with HtmlTransformer. Selects all elements matching ``selector``
@@ -110,12 +121,12 @@ class HtmlParser(Parser[List[Tag]]):
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
-    ) -> List[Tag]:
+    ) -> list[Tag]:
         soup = BeautifulSoup(response.text, "html.parser")
         return soup.select(self.selector)[self.skip :]
 
 
-class IcsParser(Parser[List[Tuple[datetime.date, str]]]):
+class IcsParser(Parser[list[tuple[datetime.date, str]]]):
     """Parse response as an iCalendar feed.
 
     Returns a list of (date, summary) tuples for all events in the next year.
@@ -127,13 +138,13 @@ class IcsParser(Parser[List[Tuple[datetime.date, str]]]):
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
-    ) -> List[Tuple[datetime.date, str]]:
+    ) -> list[tuple[datetime.date, str]]:
         from waste_collection_schedule.service.ICS import ICS
 
         return ICS().convert(response.text)
 
 
-class IcsEventsParser(Parser[List[IcsEvent]]):
+class IcsEventsParser(Parser[list[IcsEvent]]):
     """Parse response as an iCalendar feed, exposing full event fields.
 
     Like :class:`IcsParser`, but returns ``IcsEvent(date, title, location,
@@ -150,7 +161,7 @@ class IcsEventsParser(Parser[List[IcsEvent]]):
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
-    ) -> List[IcsEvent]:
+    ) -> list[IcsEvent]:
         from waste_collection_schedule.service.ICS import ICS
 
         return ICS().convert_events(response.text)

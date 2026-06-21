@@ -1069,6 +1069,46 @@ class TestPdfImageCalendarBoxMapping:
         assert box_year_month(2025, 7, 11) == (2026, 6)
 
 
+class TestResponseShape:
+    """Typed response-shape validation (logs + raises on a provider change)."""
+
+    def _shape(self):
+        from typing import TypedDict
+
+        class Field(TypedDict):
+            name: str
+            value: str
+
+        return list[list[Field]]
+
+    def test_matching_shape_passes_through(self):
+        from waste_collection_schedule import response_shape
+
+        data = [[{"name": "type", "value": "Red"}]]
+        assert response_shape.validate(data, self._shape(), source_name="x") is data
+
+    def test_wrong_container_raises(self):
+        from waste_collection_schedule import response_shape
+
+        with pytest.raises(response_shape.ResponseShapeError):
+            response_shape.validate({"error": "moved"}, self._shape(), source_name="x")
+
+    def test_missing_required_key_raises(self):
+        from waste_collection_schedule import response_shape
+
+        with pytest.raises(response_shape.ResponseShapeError):
+            response_shape.validate(
+                [[{"name": "type"}]], self._shape(), source_name="x"
+            )
+
+    def test_extra_keys_are_tolerated(self):
+        from waste_collection_schedule import response_shape
+
+        data = [[{"name": "type", "value": "Red", "caption": "type"}]]
+        # An added key is not a breaking change, so validation passes.
+        assert response_shape.validate(data, self._shape(), source_name="x") is data
+
+
 class TestLookups:
     """Normalised name lookup with suggestions-on-miss (Gap 5)."""
 

@@ -29,7 +29,10 @@ body:
     id: logs
     attributes:
       label: Error Logs
-      description: Paste relevant logs from Home Assistant (Settings → System → Logs). Remove any sensitive information (addresses, API keys).
+      description: |
+        Paste relevant logs from Home Assistant (Settings → System → Logs). Remove any sensitive information (addresses, API keys).
+
+        If you see a "response shape mismatch" error, please include the full logged "Raw response sample" that accompanies it: it shows exactly how the provider changed its response, which lets us fix the source quickly.
       render: Shell
     validations:
       required: true
