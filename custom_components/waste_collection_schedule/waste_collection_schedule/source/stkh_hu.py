@@ -92,9 +92,9 @@ class Source(BaseSource):
     }
 
     retrieve = HttpGetRetriever(url=lambda url: url)
-    parse = PdfTextParser(shape=200)
+    parse = PdfTextParser(min_chars=200)
 
-    def preprocessor(
+    def preprocess(
         self, text: str, source: "_Base | None" = None
     ) -> Iterable[tuple[datetime.date, str]]:
         """Turn the PDF text into (date, type-key) rows for the transformer."""
@@ -110,7 +110,7 @@ class Source(BaseSource):
                         continue
                     yield collection_date, type_key
 
-    transformer = ICSTransformer(
+    transform = ICSTransformer(
         type_value_map={
             "szelektiv": RECYCLABLES,
             "zoldhulladek": GARDEN_WASTE,

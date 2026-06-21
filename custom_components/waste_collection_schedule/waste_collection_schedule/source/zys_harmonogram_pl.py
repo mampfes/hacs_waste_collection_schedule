@@ -97,7 +97,7 @@ class Source(BaseSource):
         ),
     }
 
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="date",
         type_key="type",
         type_value_map=_TYPE_MAP,

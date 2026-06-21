@@ -234,7 +234,7 @@ class Source(BaseSource):
 
     parse = parsers.JsonParser("waste_list.php", shape=list[_WasteItem])
 
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="_date",
         type_key="title",
         parse_date=date_parsers.for_format("%Y-%m-%d"),
@@ -290,7 +290,7 @@ class Source(BaseSource):
             timeout=30,
         )
 
-    def preprocessor(self, records, source=None):
+    def preprocess(self, records, source=None):
         """Split the gemeinde24 'weekday-YYYY-MM-DD' date into a clean field.
 
         Each record's ``datum`` looks like ``Do-2026-07-02`` (German weekday

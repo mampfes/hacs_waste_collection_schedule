@@ -2,7 +2,7 @@ import datetime
 import logging
 from typing import final
 
-from waste_collection_schedule import recurrence
+from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
@@ -42,19 +42,15 @@ from waste_collection_schedule.waste_types import (
 
 _LOGGER = logging.getLogger(__name__)
 
-TITLE = "Shawinigan"
-DESCRIPTION = "Source for Shawinigan, Canada waste collection schedule."
-URL = "https://geoweb.shawinigan.ca/CollecteMatieresResiduelles/"
-COUNTRY = "ca"
-
-TEST_CASES = {
-    "Shawinigan": {"address": "1760 Avenue de la Paix, Shawinigan, QC G9N 6H7"},
-}
-
 MAPSERVER_BASE = "https://geoweb.shawinigan.ca/arcgis/rest/services/MunicipalServices_DeTravail/MapServer"
 
 HOLIDAYS_LAYER = 6
 DEFAULT_HOLIDAY_FIELD = "IMPACTGARB"
+
+# Declarative date parsers: ISO dates in the irregular SCHEDULE list, and the
+# JavaScript-style millisecond epoch in the holidays layer's HOLIDAYDATE field.
+_iso = date_parsers.for_format("%Y-%m-%d")
+_from_ms = date_parsers.from_epoch(unit="ms")
 
 # Each layer: the MapServer layer id and the waste-type string it emits (the
 # legacy t= value, keyed into _TYPE_MAP).
@@ -85,7 +81,7 @@ def _parse_irregular(
     for part in schedule_str.split(","):
         part = part.strip()
         try:
-            d = datetime.datetime.strptime(part, "%Y-%m-%d").date()
+            d = _iso(part)
             if start_date <= d <= end_date:
                 dates.append(d)
         except ValueError:
@@ -236,12 +232,15 @@ def _adjust(collection_date, key, source):
 
 @final
 class Source(BaseSource):
-    TITLE = TITLE
-    DESCRIPTION = DESCRIPTION
-    URL = URL
-    COUNTRY = COUNTRY
-    TEST_CASES = TEST_CASES
+    TITLE = "Shawinigan"
+    DESCRIPTION = "Source for Shawinigan, Canada waste collection schedule."
+    URL = "https://geoweb.shawinigan.ca/CollecteMatieresResiduelles/"
+    COUNTRY = "ca"
     RAISE_ON_EMPTY = True
+
+    TEST_CASES = {
+        "Shawinigan": {"address": "1760 Avenue de la Paix, Shawinigan, QC G9N 6H7"},
+    }
 
     PARAMS = [text_field("address", "Street Address")]
 
@@ -252,12 +251,11 @@ class Source(BaseSource):
         ),
     }
 
-    preprocessor = Compose(RecurrenceExpander(_describe), HolidayShift(_adjust))
-    transformer = ICSTransformer(type_value_map=_TYPE_MAP)
+    preprocess = Compose(RecurrenceExpander(_describe), HolidayShift(_adjust))
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
-        super().__init__(address=address)
-        self._address = address.strip()
+        super().__init__(address=address.strip())
         # Populated in retrieve(): {impact_field: {holiday_date: adjusted_or_None}}.
         self._holidays: dict[str, dict[datetime.date, datetime.date | None]] = {}
         # Populated in _describe(): {waste_type_key: holiday_field}.
@@ -271,10 +269,11 @@ class Source(BaseSource):
         {field: {holiday_date: adjusted_or_None}} map stashed on the source, so
         HolidayShift's adjuster can apply it after the cadence is projected.
         """
+        address = self.params["address"]
         try:
-            location = ArcGis.geocode(self._address, timeout=20)
+            location = ArcGis.geocode(address, timeout=20)
         except ArcGisGeocodeError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("address", address) from e
 
         self._holidays = self._fetch_holidays()
 
@@ -347,7 +346,7 @@ class Source(BaseSource):
             holiday_ms = attrs.get("HOLIDAYDATE")
             if not holiday_ms:
                 continue
-            holiday_date = datetime.date.fromtimestamp(holiday_ms / 1000)
+            holiday_date = _from_ms(holiday_ms)
             # Iterate over every IMPACT* field — robust to new collection types.
             for field in [k for k in attrs if k.startswith("IMPACT")]:
                 val = (attrs.get(field) or "").strip()

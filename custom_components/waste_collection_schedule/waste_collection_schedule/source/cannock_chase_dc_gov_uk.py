@@ -64,7 +64,7 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     retrieve = retrievers.http_post
-    # No shape= here: an unknown UPRN legitimately yields zero <Collection>
+    # No min_nodes= here: an unknown UPRN legitimately yields zero <Collection>
     # nodes, which RAISE_ON_EMPTY turns into a "check your UPRN" error blaming
     # the right field. A shape guard would instead misreport that as a changed
     # feed (ResponseShapeError), which fires before the empty-result check.

@@ -2,6 +2,7 @@ from typing import final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.AbfallnaviDe import (
     SERVICE_DOMAINS,
     AbfallnaviParser,
@@ -15,82 +16,77 @@ from waste_collection_schedule.transformers import ICSTransformer
 # labels, and anything it doesn't recognise is preserved verbatim rather than
 # collapsed to OTHER.
 
-TITLE = "AbfallNavi (RegioIT.de)"
-DESCRIPTION = (
-    "Source for AbfallNavi waste collection. AbfallNavi is a brand name of regioit.de."
-)
-URL = "https://www.regioit.de"
 
-
-def EXTRA_INFO():
+def _regions() -> list[Region]:
     return [
-        {
-            "title": s["title"],
-            "url": s["url"],
-            "default_params": {"service": s["service_id"]},
-        }
+        region(s["title"], url=s["url"], service=s["service_id"])
         for s in SERVICE_DOMAINS
     ]
 
 
-TEST_CASES = {
-    "Aachen, Abteiplatz 7": {
-        "service": "aachen",
-        "ort": "Aachen",
-        "strasse": "Abteiplatz",
-        "hausnummer": "7",
-    },
-    "Lindlar, Aggerweg": {
-        "service": "bav",
-        "ort": "Lindlar",
-        "strasse": "Aggerweg",
-    },
-    "Overath, Hauptstraße": {
-        "service": "bav",
-        "ort": "Overath",
-        "strasse": "Hauptstraße",
-    },
-    "Roetgen, Am Sportplatz 2": {
-        "service": "zew2",
-        "ort": "Roetgen",
-        "strasse": "Am Sportplatz",
-        "hausnummer": "2",
-    },
-    "nds Norderstedt Adenauerplatz": {
-        "service": "nds",
-        "ort": "Norderstedt",
-        "strasse": "Distelweg",
-    },
-    "una Bergkamen, Agnes-Miegel-Str.": {
-        "service": "unna",
-        "ort": "Bergkamen",
-        "strasse": "Agnes-Miegel-Str.",
-    },
-    "Pinneberg Kummerfeld, Dorfstraße": {
-        "service": "pi",
-        "ort": "Kummerfeld",
-        "strasse": "Dorfstraße",
-    },
-    "Cuxhaven": {
-        "service": "cux",
-        "ort": "Cuxhaven",
-        "strasse": "Zur Holter Höhe",
-    },
-    "frankenthal, Am Martinspfad": {
-        "service": "frankenthal",
-        "ort": "Frankenthal",
-        "strasse": "Am Martinspfad",
-    },
-}
-
-
 @final
 class Source(BaseSource):
-    TITLE = TITLE
-    DESCRIPTION = DESCRIPTION
-    URL = URL
+    TITLE = "AbfallNavi (RegioIT.de)"
+    DESCRIPTION = (
+        "Source for AbfallNavi waste collection. "
+        "AbfallNavi is a brand name of regioit.de."
+    )
+    URL = "https://www.regioit.de"
     COUNTRY = "de"
-    TEST_CASES = TEST_CASES
+
+    # One structure (regioit.de AbfallNavi) covering many municipalities; the
+    # full list is derived from the shared SERVICE_DOMAINS registry at load time.
+    REGIONS = _regions
+
+    TEST_CASES = {
+        "Aachen, Abteiplatz 7": {
+            "service": "aachen",
+            "ort": "Aachen",
+            "strasse": "Abteiplatz",
+            "hausnummer": "7",
+        },
+        "Lindlar, Aggerweg": {
+            "service": "bav",
+            "ort": "Lindlar",
+            "strasse": "Aggerweg",
+        },
+        "Overath, Hauptstraße": {
+            "service": "bav",
+            "ort": "Overath",
+            "strasse": "Hauptstraße",
+        },
+        "Roetgen, Am Sportplatz 2": {
+            "service": "zew2",
+            "ort": "Roetgen",
+            "strasse": "Am Sportplatz",
+            "hausnummer": "2",
+        },
+        "nds Norderstedt Adenauerplatz": {
+            "service": "nds",
+            "ort": "Norderstedt",
+            "strasse": "Distelweg",
+        },
+        "una Bergkamen, Agnes-Miegel-Str.": {
+            "service": "unna",
+            "ort": "Bergkamen",
+            "strasse": "Agnes-Miegel-Str.",
+        },
+        "Pinneberg Kummerfeld, Dorfstraße": {
+            "service": "pi",
+            "ort": "Kummerfeld",
+            "strasse": "Dorfstraße",
+        },
+        "Cuxhaven": {
+            "service": "cux",
+            "ort": "Cuxhaven",
+            "strasse": "Zur Holter Höhe",
+        },
+        "frankenthal, Am Martinspfad": {
+            "service": "frankenthal",
+            "ort": "Frankenthal",
+            "strasse": "Am Martinspfad",
+        },
+    }
 
     PARAMS = [
         text_field("service", "Service"),
@@ -119,7 +115,7 @@ class Source(BaseSource):
         house_number="hausnummer",
     )
     parse = AbfallnaviParser()
-    transformer = ICSTransformer()  # types resolved via the shared vocabulary
+    transform = ICSTransformer()  # types resolved via the shared vocabulary
 
     def __init__(
         self,

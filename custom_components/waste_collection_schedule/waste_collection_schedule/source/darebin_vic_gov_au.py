@@ -1,9 +1,10 @@
 import datetime
 from typing import final
 
-from waste_collection_schedule import recurrence
+from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service import ArcGis
 from waste_collection_schedule.transformers import ICSTransformer
@@ -23,6 +24,7 @@ from waste_collection_schedule.waste_types import (
 FEATURE_URL = "https://services-ap1.arcgis.com/1WJBRkF3v1EEG5gz/arcgis/rest/services/Waste_Collection_Date3/FeatureServer/0"
 
 _SIX_WEEKLY = datetime.timedelta(weeks=6)
+_from_ms = date_parsers.from_epoch(unit="ms")
 
 _TYPE_MAP = {
     "Rubbish": GENERAL_WASTE,
@@ -47,14 +49,14 @@ def _describe(attrs, source):
     # Green + Recycling — fortnightly from their epoch-ms base dates.
     yield Schedule(
         "Green Waste",
-        datetime.date.fromtimestamp(attrs["Green_Collection"] / 1000),
+        _from_ms(attrs["Green_Collection"]),
         recurrence.FORTNIGHTLY,
         26,
         anchor=True,
     )
     yield Schedule(
         "Recycling",
-        datetime.date.fromtimestamp(attrs["Recycle_Collection"] / 1000),
+        _from_ms(attrs["Recycle_Collection"]),
         recurrence.FORTNIGHTLY,
         26,
         anchor=True,
@@ -62,7 +64,7 @@ def _describe(attrs, source):
     # Street sweeping — the next single date on a 6-week cycle.
     yield Schedule(
         "Street Sweeping",
-        datetime.date.fromtimestamp(attrs["Street_Sweeping"] / 1000),
+        _from_ms(attrs["Street_Sweeping"]),
         _SIX_WEEKLY,
         1,
         anchor=True,
@@ -95,22 +97,28 @@ class Source(BaseSource):
     }
 
     parse = ArcGis.ArcGisFeatureParser()
-    preprocessor = RecurrenceExpander(_describe)
-    transformer = ICSTransformer(type_value_map=_TYPE_MAP)
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, property_location: str):
         super().__init__(property_location=property_location)
-        self._property_location = property_location
 
+    # A two-step attribute query (address LIKE -> OBJECTID -> full record) that
+    # the single-call retrievers can't express, so retrieve stays custom; but the
+    # lookup response goes through the shared ArcGisFeatureParser so the
+    # FeatureEnvelope shape is validated and a no-match raises a clear argument
+    # error rather than an IndexError.
     def retrieve(self, source):
-        # Step 1: resolve the address to an OBJECTID.
+        location = source.params["property_location"]
         lookup = ArcGis.feature_query(
             FEATURE_URL,
-            where=f"EZI_ADDRESS LIKE '{self._property_location}%'",
+            where=f"EZI_ADDRESS LIKE '{location}%'",
             out_fields="EZI_ADDRESS,OBJECTID",
         )
-        lookup.raise_for_status()
-        object_id = lookup.json()["features"][0]["attributes"]["OBJECTID"]
+        matches = ArcGis.ArcGisFeatureParser()(lookup, source)
+        if not matches:
+            raise SourceArgumentNotFound("property_location", location)
+        object_id = matches[0]["OBJECTID"]
 
         # Step 2: fetch the full record for that OBJECTID.
         return ArcGis.feature_query(

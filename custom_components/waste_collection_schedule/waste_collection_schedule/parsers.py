@@ -26,6 +26,7 @@ from typing import (
 
 from bs4 import BeautifulSoup, Tag
 
+from waste_collection_schedule import response_shape
 from waste_collection_schedule.service.ICS import IcsEvent
 
 if TYPE_CHECKING:
@@ -39,6 +40,24 @@ else:
     Response = object
 
 T = TypeVar("T", covariant=True)
+
+
+def _expect_min_events(
+    events: list, minimum: int | None, raw: str, source: Any
+) -> None:
+    """Shared shape check for the ICS parsers: at least ``minimum`` events.
+
+    Fewer events (e.g. the provider returned an HTML error page) logs the
+    response and raises ``ResponseShapeError``.
+    """
+    if minimum is None:
+        return
+    response_shape.expect(
+        len(events) >= minimum,
+        source_name=response_shape.source_name(source),
+        detail=f"expected at least {minimum} ICS events, got {len(events)}",
+        raw=raw,
+    )
 
 
 class Parser(Protocol[T]):
@@ -84,8 +103,6 @@ class JsonParser(Parser[Any]):
         for key in self.keys:
             data = data[key]
         if self.shape is not None:
-            from waste_collection_schedule import response_shape
-
             data = response_shape.validate(
                 data, self.shape, source_name=response_shape.source_name(source)
             )
@@ -93,10 +110,26 @@ class JsonParser(Parser[Any]):
 
 
 class TextParser(Parser[str]):
-    """Return response as plain text."""
+    """Return response as plain text.
+
+    Pass ``min_chars`` (a minimum character count) to flag an empty/error
+    response (e.g. the provider returned a blank body or a short error page),
+    which is logged and raises ``ResponseShapeError`` rather than parsing nothing.
+    """
+
+    def __init__(self, min_chars: "int | None" = None):
+        self.min_chars = min_chars
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> str:
-        return response.text
+        text = response.text
+        if self.min_chars is not None:
+            response_shape.expect(
+                len(text.strip()) >= self.min_chars,
+                source_name=response_shape.source_name(source),
+                detail=f"response text under {self.min_chars} chars (empty/error page?)",
+                raw=text[:500],
+            )
+        return text
 
 
 class HtmlParser(Parser[list[Tag]]):
@@ -114,12 +147,12 @@ class HtmlParser(Parser[list[Tag]]):
     Args:
         selector: CSS selector string passed to BeautifulSoup.select().
         skip:     Number of leading elements to drop (default 0).
-        shape:    Optional list of CSS selectors that must each match at least
+        require:  Optional list of CSS selectors that must each match at least
                   one element — the structural anchors the source depends on.
                   If one is missing (the provider redesigned the page), the
                   response is logged and ``ResponseShapeError`` is raised::
 
-                      parse = parsers.HtmlParser("tr", skip=1, shape=["table.bins"])
+                      parse = parsers.HtmlParser("tr", skip=1, require=["table.bins"])
         from_json_key: When set, the HTML to parse is read from a field of a
                   JSON response instead of ``response.text`` — pass the key (or a
                   path of keys) holding the HTML string. This covers the common
@@ -133,12 +166,12 @@ class HtmlParser(Parser[list[Tag]]):
         self,
         selector: str,
         skip: int = 0,
-        shape: "list[str] | None" = None,
+        require: "list[str] | None" = None,
         from_json_key: "str | tuple[str, ...] | None" = None,
     ):
         self.selector = selector
         self.skip = skip
-        self.shape = shape
+        self.require = require
         self.from_json_key = from_json_key
 
     def __call__(
@@ -157,11 +190,9 @@ class HtmlParser(Parser[list[Tag]]):
         else:
             markup = response.text
         soup = BeautifulSoup(markup, "html.parser")
-        if self.shape:
-            from waste_collection_schedule import response_shape
-
+        if self.require:
             name = response_shape.source_name(source)
-            for sel in self.shape:
+            for sel in self.require:
                 response_shape.expect(
                     bool(soup.select(sel)),
                     source_name=name,
@@ -178,15 +209,15 @@ class IcsParser(Parser[list[tuple[datetime.date, str]]]):
     Use this with the default retriever and an ICSTransformer::
 
         parse = parsers.IcsParser()
-        transformer = ICSTransformer(type_value_map={...})
+        transform = ICSTransformer(type_value_map={...})
 
-    Pass ``shape`` (a minimum event count) to assert the feed parsed as expected;
-    fewer events (e.g. the provider returned an HTML error page) logs the
-    response and raises ``ResponseShapeError``.
+    Pass ``min_events`` (a minimum event count) to assert the feed parsed as
+    expected; fewer events (e.g. the provider returned an HTML error page) logs
+    the response and raises ``ResponseShapeError``.
     """
 
-    def __init__(self, shape: "int | None" = None):
-        self.shape = shape
+    def __init__(self, min_events: "int | None" = None):
+        self.min_events = min_events
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -194,15 +225,7 @@ class IcsParser(Parser[list[tuple[datetime.date, str]]]):
         from waste_collection_schedule.service.ICS import ICS
 
         events = ICS().convert(response.text)
-        if self.shape is not None:
-            from waste_collection_schedule import response_shape
-
-            response_shape.expect(
-                len(events) >= self.shape,
-                source_name=response_shape.source_name(source),
-                detail=f"expected at least {self.shape} ICS events, got {len(events)}",
-                raw=response.text,
-            )
+        _expect_min_events(events, self.min_events, response.text, source)
         return events
 
 
@@ -220,11 +243,12 @@ class IcsEventsParser(Parser[list[IcsEvent]]):
             # record.title / record.location / record.description available
             return Collection(date=record.date, waste_type=...)
 
-    Pass ``shape`` (a minimum event count) to assert the feed parsed as expected.
+    Pass ``min_events`` (a minimum event count) to assert the feed parsed as
+    expected.
     """
 
-    def __init__(self, shape: "int | None" = None):
-        self.shape = shape
+    def __init__(self, min_events: "int | None" = None):
+        self.min_events = min_events
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -232,15 +256,7 @@ class IcsEventsParser(Parser[list[IcsEvent]]):
         from waste_collection_schedule.service.ICS import ICS
 
         events = ICS().convert_events(response.text)
-        if self.shape is not None:
-            from waste_collection_schedule import response_shape
-
-            response_shape.expect(
-                len(events) >= self.shape,
-                source_name=response_shape.source_name(source),
-                detail=f"expected at least {self.shape} ICS events, got {len(events)}",
-                raw=response.text,
-            )
+        _expect_min_events(events, self.min_events, response.text, source)
         return events
 
 
@@ -254,20 +270,20 @@ class PdfTextParser(Parser[str]):
     rows; the default preprocessor / ``classify()`` expect per-record input and
     won't fit::
 
-        parse = parsers.PdfTextParser(shape=200)
-        transformer = ICSTransformer(type_value_map={...})
+        parse = parsers.PdfTextParser(min_chars=200)
+        transform = ICSTransformer(type_value_map={...})
 
-        def preprocessor(self, text, source=None):
+        def preprocess(self, text, source=None):
             for date, key in _rows_from_text(text):   # source-specific parsing
                 yield (date, key)
 
-    Pass ``shape`` (a minimum character count) to flag an image-only/empty PDF,
-    which is logged and raises ``ResponseShapeError`` rather than yielding
+    Pass ``min_chars`` (a minimum character count) to flag an image-only/empty
+    PDF, which is logged and raises ``ResponseShapeError`` rather than yielding
     nothing.
     """
 
-    def __init__(self, shape: "int | None" = None):
-        self.shape = shape
+    def __init__(self, min_chars: "int | None" = None):
+        self.min_chars = min_chars
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> str:
         from io import BytesIO
@@ -276,13 +292,11 @@ class PdfTextParser(Parser[str]):
 
         reader = PdfReader(BytesIO(response.content))
         text = "\n".join((page.extract_text() or "") for page in reader.pages)
-        if self.shape is not None:
-            from waste_collection_schedule import response_shape
-
+        if self.min_chars is not None:
             response_shape.expect(
-                len(text.strip()) >= self.shape,
+                len(text.strip()) >= self.min_chars,
                 source_name=response_shape.source_name(source),
-                detail=f"PDF text under {self.shape} chars (image-only PDF?)",
+                detail=f"PDF text under {self.min_chars} chars (image-only PDF?)",
                 raw=text[:500],
             )
         return text
@@ -293,31 +307,31 @@ class XmlParser(Parser["list[Any]"]):
 
     Selects all elements matching ``path`` (an XPath or tag name), each passed
     to the transformer/classify. Omit ``path`` to get the root element back as a
-    single-item list. Pass ``shape`` (a minimum match count) to flag a changed
-    feed::
+    single-item list. Pass ``min_nodes`` (a minimum match count) to flag a
+    changed feed::
 
-        parse = parsers.XmlParser("collection")         # all <collection> nodes
-        parse = parsers.XmlParser(".//event", shape=1)   # XPath
+        parse = parsers.XmlParser("collection")             # all <collection> nodes
+        parse = parsers.XmlParser(".//event", min_nodes=1)   # XPath
 
     For a namespaced feed, pass ``namespaces`` (a prefix->URI map) and use the
     prefix in ``path`` instead of inlining ``{uri}tag``::
 
         parse = parsers.XmlParser(".//w:Collection", namespaces={"w": NS_URI})
 
-    Note: ``shape`` (a minimum node count) suits fixed feeds. For an
-    address-lookup source where an unknown input legitimately returns zero
-    nodes, leave ``shape`` unset and rely on ``RAISE_ON_EMPTY`` instead, so a
-    bad lookup is reported as a bad argument rather than a changed feed.
+    Note: ``min_nodes`` suits fixed feeds. For an address-lookup source where an
+    unknown input legitimately returns zero nodes, leave ``min_nodes`` unset and
+    rely on ``RAISE_ON_EMPTY`` instead, so a bad lookup is reported as a bad
+    argument rather than a changed feed.
     """
 
     def __init__(
         self,
         path: "str | None" = None,
-        shape: "int | None" = None,
+        min_nodes: "int | None" = None,
         namespaces: "dict[str, str] | None" = None,
     ):
         self.path = path
-        self.shape = shape
+        self.min_nodes = min_nodes
         self.namespaces = namespaces
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> list:
@@ -327,13 +341,11 @@ class XmlParser(Parser["list[Any]"]):
         elements = (
             root.findall(self.path, namespaces=self.namespaces) if self.path else [root]
         )
-        if self.shape is not None:
-            from waste_collection_schedule import response_shape
-
+        if self.min_nodes is not None:
             response_shape.expect(
-                len(elements) >= self.shape,
+                len(elements) >= self.min_nodes,
                 source_name=response_shape.source_name(source),
-                detail=f"expected at least {self.shape} XML nodes, got {len(elements)}",
+                detail=f"expected at least {self.min_nodes} XML nodes, got {len(elements)}",
                 raw=response.text,
             )
         return elements
@@ -343,16 +355,16 @@ class CsvParser(Parser["list[dict[str, str]]"]):
     """Parse CSV into a list of dict rows (csv.DictReader).
 
     Each row is a ``{column: value}`` dict, so it pairs with ``JsonTransformer``
-    (``date_key`` / ``type_key`` are column names). Pass ``shape`` (a list of
+    (``date_key`` / ``type_key`` are column names). Pass ``require`` (a list of
     required column names) to flag a changed export whose header no longer has
     the columns the source reads::
 
-        parse = parsers.CsvParser(shape=["date", "type"])
+        parse = parsers.CsvParser(require=["date", "type"])
     """
 
-    def __init__(self, delimiter: str = ",", shape: "list[str] | None" = None):
+    def __init__(self, delimiter: str = ",", require: "list[str] | None" = None):
         self.delimiter = delimiter
-        self.shape = shape
+        self.require = require
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -365,11 +377,9 @@ class CsvParser(Parser["list[dict[str, str]]"]):
         text = response.content.decode("utf-8-sig", errors="replace")
         reader = csv.DictReader(io.StringIO(text), delimiter=self.delimiter)
         rows = list(reader)
-        if self.shape:
-            from waste_collection_schedule import response_shape
-
+        if self.require:
             columns = set(reader.fieldnames or [])
-            missing = [c for c in self.shape if c not in columns]
+            missing = [c for c in self.require if c not in columns]
             response_shape.expect(
                 not missing,
                 source_name=response_shape.source_name(source),

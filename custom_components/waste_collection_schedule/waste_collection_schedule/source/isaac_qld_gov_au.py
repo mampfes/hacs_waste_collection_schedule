@@ -7,6 +7,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE
 
@@ -80,6 +81,7 @@ class Source(BaseSource):
     URL = URL
     COUNTRY = "au"
     RAISE_ON_EMPTY = True
+    API_URL = URL
 
     TEST_CASES = {
         "Glenden (single-day town)": {"town": "Glenden"},
@@ -111,31 +113,22 @@ class Source(BaseSource):
 
     CODEOWNERS = ["@markvp"]
 
-    EXTRA_INFO = [
-        {
-            "title": f"Isaac Regional Council ({town})",
-            "url": URL,
-            "default_params": {"town": town},
-        }
+    REGIONS = [
+        region(f"Isaac Regional Council ({town})", url=URL, town=town)
         for town in SINGLE_DAY_TOWNS
     ]
 
-    preprocessor = RecurrenceExpander(_describe)
-    transformer = ICSTransformer(type_value_map={"general waste": GENERAL_WASTE})
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map={"general waste": GENERAL_WASTE})
 
     def __init__(self, town: str, collection_day: str | None = None):
         super().__init__(town=town, collection_day=collection_day)
-        self._town = town
-        self._collection_day = collection_day
         if town in MULTI_DAY_TOWNS and not collection_day:
             raise SourceArgumentRequired(
                 "collection_day",
                 f"{town} has several collection days that depend on your street; "
                 "look yours up on the council collection map and select it.",
             )
-
-    def retrieve(self, source):
-        return source.session.get(self.URL, timeout=self.TIMEOUT)
 
     def parse(self, response, source):
         """Resolve the collection weekday for the selected town.
@@ -144,8 +137,9 @@ class Source(BaseSource):
         towns) wins; otherwise the town's single town-wide weekday is read live
         from the page. Returns ``[{"weekday": <0-6>}]``.
         """
-        if self._collection_day:
-            weekday = recurrence.weekday(self._collection_day)
+        collection_day = self.params["collection_day"]
+        if collection_day:
+            weekday = recurrence.weekday(collection_day)
             return [{"weekday": weekday}]
 
         soup = BeautifulSoup(response.text, "html.parser")
@@ -170,5 +164,5 @@ class Source(BaseSource):
             if weekday is not None:
                 town_weekdays[town] = weekday
 
-        weekday = lookups.resolve(town_weekdays, self._town, argument="town")
+        weekday = lookups.resolve(town_weekdays, self.params["town"], argument="town")
         return [{"weekday": weekday}]

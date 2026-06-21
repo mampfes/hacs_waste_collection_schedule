@@ -152,16 +152,27 @@ class Collection:
         for k, v in d.items():
             self[k] = v
 
+    @property
+    def _identity_key(self) -> str:
+        """Stable, locale-independent identity for equality and hashing.
+
+        Uses the type override when one was set (legacy ``set_type``), else the
+        canonical ``WasteType.id``. Deliberately NOT ``self.type`` (the display
+        name), which follows the UI language, so two collections must not
+        compare equal in one language and unequal in another.
+        """
+        return self._type_override or self._waste_type.id
+
     def __repr__(self):
         return f"Collection{{date={self.date}, waste_type={self._waste_type.id}}}"
 
     def __eq__(self, other):
         if not isinstance(other, Collection):
             return NotImplemented
-        return self.date == other.date and self.type == other.type
+        return self.date == other.date and self._identity_key == other._identity_key
 
     def __hash__(self):
-        return hash((self.date, self.type))
+        return hash((self.date, self._identity_key))
 
 
 class LegacyCollection(Collection):

@@ -164,8 +164,8 @@ class Source(BaseSource):
     # match into its weekly or fortnightly cycle.
     retrieve = ArcGisMultiFeatureRetriever(LAYERS, address="address")
     parse = ArcGisMultiFeatureParser()
-    preprocessor = RecurrenceExpander(_describe)
-    transformer = ICSTransformer(type_value_map=_TYPE_MAP)
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
         super().__init__(address=address.strip())

@@ -100,7 +100,7 @@ class Source(BaseSource):
 
     parse = parsers.JsonParser("collections", shape=list[_Collection])
 
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="date",
         type_key="service",
         parse_date=date_parsers.for_format("%d/%m/%Y %H:%M:%S"),

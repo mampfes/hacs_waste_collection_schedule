@@ -21,6 +21,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
+from waste_collection_schedule import response_shape
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
@@ -548,19 +549,33 @@ class IntraMapsRetriever(RetrieverFunc):
             with MapsClient(self.config) as client:
                 result = client.select_address(addr, suburb)
         except IntraMapsError as e:
-            field = self.address if isinstance(self.address, str) else "address"
-            raise SourceArgumentNotFound(field, addr) from e
+            raise SourceArgumentNotFound(self.address, addr) from e
 
         response = result.get("response")
         return response if isinstance(response, dict) else {}
 
 
+def _panel_fields(response: dict[str, Any], panel_key: str) -> list[dict[str, Any]]:
+    """The raw ``infoPanels > panel > feature > fields`` list (single traversal).
+
+    The one place that knows the IntraMaps response nesting. The pipeline parser
+    and the legacy ``extract_panel_fields`` adapter both build on this so the
+    structure is described once.
+    """
+    return (
+        (response or {})
+        .get("infoPanels", {})
+        .get(panel_key, {})
+        .get("feature", {})
+        .get("fields", [])
+    )
+
+
 class IntraMapsPanelParser(Parser["list[dict[str, str]]"]):
     """Extract ``{"column", "value"}`` field records from an infoPanels response.
 
-    Reads the same nested ``infoPanels > panel > feature > fields`` structure as
-    :func:`extract_panel_fields`, but keys each field by its ``value.column`` (the
-    stable machine name councils filter on) rather than its display caption.
+    Keys each field by its ``value.column`` (the stable machine name councils
+    filter on) rather than its display caption.
     """
 
     def __init__(self, panel: str = "info1"):
@@ -569,23 +584,14 @@ class IntraMapsPanelParser(Parser["list[dict[str, str]]"]):
     def __call__(
         self, response: dict[str, Any], source: BaseSource | None = None
     ) -> list[dict[str, str]]:
-        from waste_collection_schedule import response_shape
-
         response_shape.expect(
             isinstance(response, dict) and "infoPanels" in response,
             source_name=response_shape.source_name(source),
             detail="IntraMaps response has no 'infoPanels'",
             raw=response,
         )
-        fields = (
-            (response or {})
-            .get("infoPanels", {})
-            .get(self.panel, {})
-            .get("feature", {})
-            .get("fields", [])
-        )
         records: list[dict[str, str]] = []
-        for field in fields:
+        for field in _panel_fields(response, self.panel):
             value = field.get("value", {})
             if isinstance(value, dict):
                 records.append(
@@ -602,17 +608,11 @@ def extract_panel_fields(
 ) -> dict[str, str]:
     """Extract a name→value dict from an IntraMaps infoPanels response.
 
-    Handles the nested structure: infoPanels > panel_key > feature > fields,
-    where each field has a name/caption and a value dict with a 'value' key.
+    Legacy adapter for the ~7 hand-written sources that predate
+    :class:`IntraMapsPanelParser`; both share :func:`_panel_fields`.
     """
-    fields = (
-        response.get("infoPanels", {})
-        .get(panel_key, {})
-        .get("feature", {})
-        .get("fields", [])
-    )
     result: dict[str, str] = {}
-    for field in fields:
+    for field in _panel_fields(response, panel_key):
         name = field.get("name") or field.get("caption", "")
         value = field.get("value", {})
         if isinstance(value, dict):

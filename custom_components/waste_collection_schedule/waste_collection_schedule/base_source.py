@@ -21,14 +21,14 @@ via ``super().__init__(**kwargs)``). Everything else is declarative::
         API_URL = "https://api.example.com/collections"
         PARAMS = [config_params.uprn()]
         parse = parsers.JsonParser("collections")
-        transformer = JsonTransformer(
+        transform = JsonTransformer(
             date_key="date",
             type_key="bin",
             type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
         )
 
 For complex sources that don't fit the standard transformers, implement
-``classify()`` instead of declaring a transformer.
+``classify()`` instead of declaring a transform.
 """
 
 import logging
@@ -77,7 +77,7 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     REGIONS: "list[Region] | Callable[[], list[Region]]" = []
 
     # --- Waste types this source produces ---
-    # Auto-derived from transformer.waste_types when not explicitly declared.
+    # Auto-derived from transform.waste_types when not explicitly declared.
     # A transformer with an explicit type_value_map yields that subset; one that
     # relies solely on the shared multilingual resolver could produce any
     # canonical type, so it derives ALL_TYPES. Explicit declaration takes
@@ -85,12 +85,12 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     WASTE_TYPES: list[WasteType] = []
 
     def __init_subclass__(cls, **kwargs):
-        """Auto-derive WASTE_TYPES from transformer when not explicitly declared."""
+        """Auto-derive WASTE_TYPES from the transform when not explicitly declared."""
         super().__init_subclass__(**kwargs)
-        if "WASTE_TYPES" not in cls.__dict__ and "transformer" in cls.__dict__:
-            transformer = cls.__dict__["transformer"]
-            if transformer is not None:
-                cls.WASTE_TYPES = transformer.waste_types or list(ALL_TYPES)
+        if "WASTE_TYPES" not in cls.__dict__ and "transform" in cls.__dict__:
+            transform = cls.__dict__["transform"]
+            if transform is not None:
+                cls.WASTE_TYPES = transform.waste_types or list(ALL_TYPES)
 
     # --- Pipeline config ---
     API_URL: str = ""
@@ -141,25 +141,25 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     parsers.HtmlParser(selector). May also be overridden as a method.
     """
 
-    preprocessor: Callable[..., Iterable[TransformerType]] = (
+    preprocess: Callable[..., Iterable[TransformerType]] = (
         preprocessors.DefaultPreprocessor()
     )
-    """Normalise parsed output into an iterable of records for the transformer.
+    """Normalise parsed output into an iterable of records for the transform.
 
     Default: a single dict becomes ``[dict]``, a falsy/None value becomes
     ``[]``, and an existing iterable passes through unchanged. May also be
-    overridden as a method ``def preprocessor(self, records, source=None)`` or a
+    overridden as a method ``def preprocess(self, records, source=None)`` or a
     callable instance, but NOT a bare module-level function assigned to the
-    attribute: ``fetch`` calls ``self.preprocessor(records, self)``, which binds
+    attribute: ``fetch`` calls ``self.preprocess(records, self)``, which binds
     ``self`` to a plain function and passes three positional args.
     """
 
-    transformer: BaseTransformer[TransformerType] | None = None
+    transform: BaseTransformer[TransformerType] | None = None
     """Convert each record into a Collection.
 
     Set to a typed transformer instance instead of implementing classify()::
 
-        transformer = JsonTransformer(
+        transform = JsonTransformer(
             date_key="date",
             type_key="bin",
             type_value_map={"refuse": GENERAL_WASTE},
@@ -222,9 +222,9 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         records = self.parse(raw, self)
 
         entries: list[Collection] = []
-        for record in self.preprocessor(records, self):
-            if self.transformer is not None:
-                result = self.transformer(record)
+        for record in self.preprocess(records, self):
+            if self.transform is not None:
+                result = self.transform(record)
             else:
                 result = self.classify(record)
             # A record may yield no collection (None), exactly one, or several

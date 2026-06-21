@@ -24,18 +24,6 @@ from waste_collection_schedule.waste_types import GARDEN_WASTE, GENERAL_WASTE
 # weekly schedules for trash, and per-occurrence one-off schedules for the
 # irregular monthly-parity yard-waste pattern.
 
-TITLE = "Abilene, TX"
-DESCRIPTION = "Source for Abilene, TX solid waste and yard waste collection."
-URL = "https://abilenetx.gov/426/Solid-Waste-Recycling"
-COUNTRY = "us"
-
-TEST_CASES = {
-    "Chimney Rock Rd (Mon/Thu trash, 4th-Monday yard)": {
-        "address": "3601 Chimney Rock Rd, Abilene, TX"
-    },
-    "City Hall area (Tue/Fri trash)": {"address": "555 Walnut St, Abilene, TX"},
-}
-
 TRASH_URL = "https://services6.arcgis.com/iBFmWI3dYPQqS1KF/arcgis/rest/services/Trash_Pickup/FeatureServer/0"
 YARD_WASTE_URL = "https://services6.arcgis.com/iBFmWI3dYPQqS1KF/arcgis/rest/services/Yard_Waste_Pickup/FeatureServer/0"
 
@@ -128,12 +116,18 @@ def _describe(record, source):
 
 @final
 class Source(BaseSource):
-    TITLE = TITLE
-    DESCRIPTION = DESCRIPTION
-    URL = URL
-    COUNTRY = COUNTRY
-    TEST_CASES = TEST_CASES
+    TITLE = "Abilene, TX"
+    DESCRIPTION = "Source for Abilene, TX solid waste and yard waste collection."
+    URL = "https://abilenetx.gov/426/Solid-Waste-Recycling"
+    COUNTRY = "us"
     RAISE_ON_EMPTY = True
+
+    TEST_CASES = {
+        "Chimney Rock Rd (Mon/Thu trash, 4th-Monday yard)": {
+            "address": "3601 Chimney Rock Rd, Abilene, TX"
+        },
+        "City Hall area (Tue/Fri trash)": {"address": "555 Walnut St, Abilene, TX"},
+    }
 
     PARAMS = [text_field("address", "Street Address")]
 
@@ -149,8 +143,8 @@ class Source(BaseSource):
     # matched a feature. _describe() projects each match into concrete dates.
     retrieve = ArcGisMultiFeatureRetriever(LAYERS, address="address")
     parse = ArcGisMultiFeatureParser()
-    preprocessor = RecurrenceExpander(_describe)
-    transformer = ICSTransformer(type_value_map=_TYPE_MAP)
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
         super().__init__(address=address.strip())

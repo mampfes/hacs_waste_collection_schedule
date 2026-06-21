@@ -1,17 +1,17 @@
 import re
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 from typing import final
 
 import holidays
-from waste_collection_schedule import recurrence
+from waste_collection_schedule import date_parsers, parsers, recurrence, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
 from waste_collection_schedule.regions import region
+from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     FOOD_WASTE,
     GARDEN_WASTE,
@@ -23,7 +23,8 @@ from waste_collection_schedule.waste_types import (
 # holidays library (France, Alsace-Moselle subdivision "6AE") instead of
 # hand-rolled easter arithmetic, and whose French weekday names resolve via the
 # Babel-backed recurrence vocabulary. The provider-specific bits (the free-text
-# "ferie" move/cancellation rules, the even/odd-week cadence) stay in the source.
+# "ferie" move/cancellation rules, the even/odd-week cadence) stay in the
+# preprocess, which yields (date, label) rows for a standard ICSTransformer.
 
 API_URL = (
     "https://data.mulhouse-alsace.fr/api/explore/v2.1/catalog/datasets/"
@@ -37,6 +38,7 @@ WASTE_FIELDS = (
     ("freq_bio_d", "jour_bio", "Bio-déchets", FOOD_WASTE),
     ("freq_vert", "jour_vert", "Déchets verts", GARDEN_WASTE),
 )
+_TYPE_MAP = {label: waste_type for _f, _d, label, waste_type in WASTE_FIELDS}
 
 HORIZON_WEEKS = 26
 
@@ -46,11 +48,17 @@ _REPORT_RE = re.compile(
 )
 _NON_REPORTE_RE = re.compile(rf"{_DATE_TOKEN}\s+non\s+report[ée]", re.IGNORECASE)
 
+# The ferie notes use either a 4- or 2-digit year; try both known formats.
+_FR_DATE_FORMATS = (
+    date_parsers.for_format("%d/%m/%Y"),
+    date_parsers.for_format("%d/%m/%y"),
+)
+
 
 def _parse_french_date(value: str) -> date | None:
-    for fmt in ("%d/%m/%Y", "%d/%m/%y"):
+    for parse in _FR_DATE_FORMATS:
         try:
-            return datetime.strptime(value.strip(), fmt).date()
+            return parse(value)
         except ValueError:
             continue
     return None
@@ -126,7 +134,6 @@ class Source(BaseSource):
     URL = "https://data.mulhouse-alsace.fr/"
     COUNTRY = "fr"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, FOOD_WASTE, GARDEN_WASTE]
 
     TEST_CASES = {
         "Wittelsheim": {"commune": "Wittelsheim"},
@@ -190,20 +197,15 @@ class Source(BaseSource):
         "en": "Provide your municipality; for Mulhouse also provide the district.",
     }
 
+    retrieve = retrievers.HttpGetRetriever(
+        url=API_URL,
+        params=lambda commune, **_: {"where": f'com_nom="{commune}"', "limit": 100},
+    )
+    parse = parsers.JsonParser("results")
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
     def __init__(self, commune: str, quartier: str | None = None):
         super().__init__(commune=commune, quartier=quartier)
-        self._commune = commune
-        self._quartier = quartier
-
-    def retrieve(self, source):
-        return source.session.get(
-            API_URL,
-            params={"where": f'com_nom="{self._commune}"', "limit": 100},
-            timeout=30,
-        )
-
-    def parse(self, response, source):
-        return response.json().get("results", [])
 
     def _list_communes(self, source) -> list[str]:
         resp = source.session.get(
@@ -216,24 +218,24 @@ class Source(BaseSource):
     def _select_row(self, rows: list[dict]) -> dict:
         if len(rows) == 1:
             return rows[0]
+        commune = self.params["commune"]
+        quartier = self.params.get("quartier")
         quartiers = sorted({_clean(r.get("quartier")) for r in rows})
-        if self._quartier is None:
+        if quartier is None:
             raise SourceArgumentRequiredWithSuggestions(
                 "quartier",
-                f"{self._commune} has multiple districts; please specify one.",
+                f"{commune} has multiple districts; please specify one.",
                 quartiers,
             )
         for row in rows:
-            if _clean(row.get("quartier")) == self._quartier:
+            if _clean(row.get("quartier")) == quartier:
                 return row
-        raise SourceArgumentNotFoundWithSuggestions(
-            "quartier", self._quartier, quartiers
-        )
+        raise SourceArgumentNotFoundWithSuggestions("quartier", quartier, quartiers)
 
-    def preprocessor(self, records, source=None):
+    def preprocess(self, records, source=None):
         if not records:
             raise SourceArgumentNotFoundWithSuggestions(
-                "commune", self._commune, self._list_communes(source)
+                "commune", self.params["commune"], self._list_communes(source)
             )
 
         row = self._select_row(list(records))
@@ -241,7 +243,7 @@ class Source(BaseSource):
         end = today + timedelta(weeks=HORIZON_WEEKS)
         moves, cancellations = _parse_ferie(row.get("ferie"), (today, end))
 
-        for freq_field, jour_field, label, waste_type in WASTE_FIELDS:
+        for freq_field, jour_field, label, _waste_type in WASTE_FIELDS:
             jour = row.get(jour_field)
             freq = row.get(freq_field)
             if not jour or not freq:
@@ -252,7 +254,5 @@ class Source(BaseSource):
                 effective = moves.get(collection_date, collection_date)
                 if effective in cancellations:
                     continue
-                yield {"date": effective, "waste_type": waste_type}
-
-    def classify(self, record) -> Collection:
-        return Collection(date=record["date"], waste_type=record["waste_type"])
+                # (date, label) row for the standard ICSTransformer.
+                yield (effective, label)

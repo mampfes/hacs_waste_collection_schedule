@@ -8,7 +8,7 @@ It encapsulates three things that vary together:
 
 Sources declare a transformer instead of implementing classify()::
 
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="collectionDate",
         type_key="binType",
         type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
@@ -139,7 +139,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
     The most common transformer — use when each record from parsers.JsonParser
     is a plain dict with date and type fields::
 
-        transformer = JsonTransformer(
+        transform = JsonTransformer(
             date_key="collectionDate",
             type_key="binType",
             type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
@@ -149,7 +149,9 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         date_key:      Key in the record dict containing the date string.
         type_key:      Key in the record dict containing the waste type string.
         type_value_map: Maps raw type strings (case-insensitive) to WasteTypes.
-                       If omitted, all records are classified as OTHER.
+                       Labels not in the map are resolved against the shared
+                       multilingual vocabulary, and otherwise preserved verbatim
+                       (never collapsed to OTHER), so no collection is lost.
         parse_date:    A ``date_parsers`` callable. Defaults to ``date_parsers.auto``.
                        Use ``date_parsers.for_format("%d/%m/%Y")`` for a known format.
     """
@@ -182,7 +184,7 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
     Use when the API returns each collection as a list of name/value pairs
     rather than a flat object::
 
-        transformer = KeyValueTransformer(
+        transform = KeyValueTransformer(
             date_key="date",
             type_key="type",
             type_value_map={"red": GENERAL_WASTE, "yellow": RECYCLABLES},
@@ -235,11 +237,13 @@ class ICSTransformer(BaseTransformer[tuple[datetime.date, str]]):
     datetime.date object so no date parsing is needed::
 
         parse = parsers.IcsParser()
-        transformer = ICSTransformer(
+        transform = ICSTransformer(
             type_value_map={"General Waste": GENERAL_WASTE, "Recycling": RECYCLABLES},
         )
 
-    If ``type_value_map`` is omitted, all summaries are classified as OTHER.
+    Summaries not in ``type_value_map`` are resolved against the shared
+    multilingual vocabulary, and otherwise preserved verbatim (never collapsed
+    to OTHER).
 
     Args:
         type_value_map: Maps summary strings (case-insensitive) to WasteTypes.
@@ -264,7 +268,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
     callables::
 
         parse = parsers.HtmlParser("tr", skip=1)
-        transformer = HtmlTransformer(
+        transform = HtmlTransformer(
             date_getter=lambda el: el.select_one("td.date").text,
             type_getter=lambda el: el.select_one("td.type").text,
             type_value_map={"refuse": GENERAL_WASTE},

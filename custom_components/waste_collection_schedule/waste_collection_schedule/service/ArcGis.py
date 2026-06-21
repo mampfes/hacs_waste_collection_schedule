@@ -7,10 +7,19 @@ Provides:
     return the raw HTTP Response
   - ArcGisFeatureRetriever / ArcGisFeatureParser: the pipeline stages a source
     declares (retrieve returns the raw Response; parse extracts attributes)
+  - ArcGisMultiFeatureRetriever / ArcGisMultiFeatureParser: the same for a
+    source whose layers are split (one per bin type / zone)
 
-Sources that project recurring schedules use the core ``recurrence`` helpers; a
-source hitting several layers keeps its own ``retrieve`` and calls
-feature_query() per layer.
+Prefer these declarative stages over a hand-written ``retrieve``: a single-layer
+source uses ``ArcGisFeatureRetriever`` (address-geocode or ``where`` clause), a
+multi-layer source uses ``ArcGisMultiFeatureRetriever``, and both pair with the
+matching parser so the ``FeatureEnvelope`` shape is validated in one place. Reach
+for ``feature_query()``/``geocode()`` directly only for a genuinely irregular
+flow the retrievers can't express, and still route the final Response through
+``ArcGisFeatureParser`` so the response-shape check is not bypassed. Sources that
+project recurring schedules add the core ``recurrence`` helpers as a preprocess
+step; holiday adjustments go in a ``HolidayShift`` preprocess, not a custom
+retrieve.
 """
 
 from __future__ import annotations
@@ -55,20 +64,27 @@ def geocode(
     *,
     geocode_url: str = GEOCODE_URL,
     out_sr: int = 4326,
+    out_fields: str | None = None,
     max_locations: int = 1,
     timeout: int = 20,
-) -> dict[str, float]:
-    """Geocode an address string to coordinates.
+) -> dict[str, Any]:
+    """Geocode an address string to a point, with the candidate's attributes.
 
     Args:
         address: Free-text address to geocode.
         geocode_url: Base URL of the GeocodeServer (defaults to Esri World).
         out_sr: Output spatial reference WKID (default 4326 = WGS84).
+        out_fields: Optional ``outFields`` to populate ``attributes`` (e.g.
+            ``"City"`` or ``"*"``). Omit it when you only need the point.
         max_locations: Maximum number of candidates to request.
         timeout: Request timeout in seconds.
 
     Returns:
-        dict with 'x' and 'y' keys (longitude and latitude for WKID 4326).
+        A dict carrying the point coordinates (``x``/``y`` for WKID 4326) plus an
+        ``attributes`` dict. Callers that only need the point read ``x``/``y``
+        (:func:`feature_query` does exactly that and ignores the rest), so the
+        return is a drop-in geometry; callers that also need a field (a city, a
+        zone) pass ``out_fields`` and read ``result["attributes"]``.
 
     Raises:
         ArcGisGeocodeError: If no candidates are found.
@@ -79,6 +95,8 @@ def geocode(
         "maxLocations": max_locations,
         "f": "json",
     }
+    if out_fields is not None:
+        params["outFields"] = out_fields
 
     r = requests.get(
         f"{geocode_url.rstrip('/')}/findAddressCandidates",
@@ -91,9 +109,10 @@ def geocode(
     if not candidates:
         raise ArcGisGeocodeError(f"No candidates found for: {address}")
 
-    location = candidates[0]["location"]
+    best = candidates[0]
+    location = best["location"]
     _LOGGER.debug("Geocoded '%s' -> (%s, %s)", address, location["x"], location["y"])
-    return location
+    return {**location, "attributes": best.get("attributes", {})}
 
 
 # --------------------------------------------------------------------------- #
@@ -136,7 +155,9 @@ def feature_query(
         "f": "json",
     }
     if geometry is not None:
-        params["geometry"] = json.dumps(geometry)
+        # Use only the point coordinates; geocode() returns a richer dict (with
+        # an attributes map) and a caller may hand the whole thing straight in.
+        params["geometry"] = json.dumps({"x": geometry["x"], "y": geometry["y"]})
         params["geometryType"] = "esriGeometryPoint"
         params["spatialRel"] = "esriSpatialRelIntersects"
         params["inSR"] = str(in_sr)
@@ -291,6 +312,7 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
         # (HTTP/connection error) by skipping it, so one bad layer doesn't abort
         # the whole fetch — matching the per-layer try/except councils relied on.
         results: list[tuple[Any, Response]] = []
+        last_error: requests.RequestException | None = None
         for label, url, fields in self.layers:
             try:
                 response = feature_query(
@@ -303,8 +325,16 @@ class ArcGisMultiFeatureRetriever(RetrieverFunc):
                 response.raise_for_status()
             except requests.RequestException as err:
                 _LOGGER.debug("ArcGIS layer %s failed, skipping: %s", url, err)
+                last_error = err
                 continue
             results.append((label, response))
+        # Tolerating one bad layer is fine, but if EVERY layer failed the
+        # provider is down or has moved: surface that instead of returning a
+        # silently-empty schedule that reads to the user as "no collections".
+        if self.layers and not results:
+            raise ArcGisError(
+                f"all {len(self.layers)} ArcGIS layers failed to load"
+            ) from last_error
         return results
 
 

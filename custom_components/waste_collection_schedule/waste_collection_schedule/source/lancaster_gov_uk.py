@@ -1,7 +1,7 @@
 import logging
-from datetime import datetime
 from typing import final
 
+from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import postcode, text_field
@@ -66,16 +66,16 @@ class Source(BaseSource):
         "council's bin-day lookup.",
     }
 
+    parse_date = date_parsers.for_format("%d/%m/%Y")
+
     def __init__(self, postcode: str, house_number: int | str | None = None):
         super().__init__(postcode=postcode, house_number=house_number)
-        self._postcode = postcode
-        self._house_number = house_number
         self._client = WhitespaceClient(API_URL)
 
     def retrieve(self, source):
         return self._client.fetch_schedule(
-            address_name_number=self._house_number,
-            address_postcode=self._postcode,
+            address_name_number=self.params["house_number"],
+            address_postcode=self.params["postcode"],
             address_street="",
         )
 
@@ -92,7 +92,7 @@ class Source(BaseSource):
             else next((key for key in _TYPE_MAP if type_str.startswith(key)), cleaned)
         )
         try:
-            date = datetime.strptime(date_str, "%d/%m/%Y").date()
+            date = self.parse_date(date_str)
         except ValueError:
             _LOGGER.info("Skipped %s: unexpected date format", date_str)
             return None

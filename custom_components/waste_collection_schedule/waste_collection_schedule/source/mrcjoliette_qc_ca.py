@@ -84,7 +84,7 @@ class Source(BaseSource):
 
     parse = parsers.JsonParser("result", shape=list[_Event])
 
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="start",
         type_key="color",
         parse_date=date_parsers.from_epoch(unit="ms"),
@@ -117,7 +117,7 @@ class Source(BaseSource):
         }
         return retrievers.http_get(self)
 
-    def preprocessor(self, records, source=None):
+    def preprocess(self, records, source=None):
         # Skip entries without a colour/start (the transformer needs both).
         for record in records:
             if isinstance(record, dict) and record.get("color") and record.get("start"):

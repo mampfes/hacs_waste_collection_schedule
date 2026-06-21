@@ -81,9 +81,9 @@ class Source(BaseSource):
     # first column name ("﻿commune"). The commune column is filtered
     # server-side and never read by the transformer, so the shape guard checks
     # only the columns actually consumed ("type", "date") to avoid the BOM.
-    parse = parsers.CsvParser(delimiter=";", shape=["type", "date"])
+    parse = parsers.CsvParser(delimiter=";", require=["type", "date"])
 
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="date",
         type_key="type",
         parse_date=date_parsers.for_format("%Y-%m-%d"),

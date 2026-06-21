@@ -48,12 +48,12 @@ class Source(BaseSource):
     )
     # `shape` asserts the collection table is present; a redesigned page (no
     # row cells) logs the response and raises ResponseShapeError.
-    parse = parsers.HtmlParser("tr", skip=1, shape=["tr td"])
+    parse = parsers.HtmlParser("tr", skip=1, require=["tr td"])
 
     # Explicit WASTE_TYPES: OTHER covers any bin types not in the map below.
     WASTE_TYPES = [RECYCLABLES, GENERAL_WASTE, OTHER]
 
-    transformer = HtmlTransformer(
+    transform = HtmlTransformer(
         date_getter=lambda el: _cell_text(el, "td:nth-child(1)").split(" ")[0],
         type_getter=lambda el: _cell_text(el, "td:nth-child(2)"),
         parse_date=date_parsers.for_format("%d/%m/%Y"),

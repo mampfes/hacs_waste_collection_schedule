@@ -47,7 +47,7 @@ class Source(BaseSource):
     # Only the frequency-suffixed residual-waste labels need an explicit entry;
     # every other label (Restmüll, Bioabfall, Altpapier, Gelber Sack, Altglas,
     # Sperrmüll, Problemstoff, ...) is classified by the shared vocabulary.
-    transformer = ICSTransformer(
+    transform = ICSTransformer(
         type_value_map={
             "Restabfall 14-tägig": GENERAL_WASTE,
             "Restabfall monatlich": GENERAL_WASTE,

@@ -1,4 +1,3 @@
-import json
 import logging
 import re
 from datetime import date, datetime, timedelta
@@ -24,20 +23,20 @@ from waste_collection_schedule.waste_types import (
 
 # CWD (North Texas) publishes pickup days/frequency per service across SIX ArcGIS
 # FeatureServer layers, queried with a single spatial point each. The point is
-# resolved with a *custom* GeocodeServer call that also returns the City, which
-# drives a holiday-delay lookup scraped from the support portal's bundled JS.
+# resolved with the shared ArcGis.geocode helper, asking it for the City field
+# too, which drives a holiday-delay lookup scraped from the support portal's
+# bundled JS.
 #
-# This source keeps its own retrieve() because it: (1) geocodes via a custom URL
-# returning (location, community); (2) queries multiple layers; (3) fetches
-# holiday delays. retrieve() does acquisition only (raw ArcGis.feature_query
-# Responses per layer); parse() extracts attrs per layer and skips empties; the
-# week/holiday date arithmetic stays in _describe (count=1 one-off Schedules so
-# the exact legacy dates, including holiday shifts, are reproduced).
+# This source keeps its own retrieve() because it: (1) needs the geocoded City to
+# (2) fetch holiday delays before (3) querying multiple layers. retrieve() does
+# acquisition only (raw ArcGis.feature_query Responses per layer); parse()
+# extracts attrs per layer and skips empties; the week/holiday date arithmetic
+# stays in _describe (count=1 one-off Schedules so the exact legacy dates,
+# including holiday shifts, are reproduced).
 
 _LOGGER = logging.getLogger(__name__)
 
 FEATURE_BASE = "https://services3.arcgis.com/xeSJphIgrY4QfLVq/arcgis/rest/services/CWD_Routes_View/FeatureServer"
-GEOCODE_URL = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
 
 # Layer id -> legacy raw ``t=`` string (the key into _TYPE_MAP below).
 LAYER_TYPES = {
@@ -159,8 +158,8 @@ class Source(BaseSource):
         ),
     }
 
-    preprocessor = RecurrenceExpander(_describe)
-    transformer = ICSTransformer(type_value_map=_TYPE_MAP)
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
         super().__init__(address=address)
@@ -168,27 +167,6 @@ class Source(BaseSource):
         self._holidays: dict[str, dict[str, int]] = {}
         self._today = date.today()
         self._end_date = self._today + timedelta(days=365)
-
-    def _geocode(self) -> tuple[dict, str]:
-        """Custom GeocodeServer call returning (location, community/City)."""
-        r = requests.get(
-            f"{GEOCODE_URL}/findAddressCandidates",
-            params={
-                "SingleLine": self._address,
-                "outSR": json.dumps({"wkid": 4326}),
-                "maxLocations": 1,
-                "outFields": "City",
-                "f": "json",
-            },
-            timeout=20,
-        )
-        r.raise_for_status()
-        candidates = r.json().get("candidates", [])
-        if not candidates:
-            raise SourceArgumentNotFound("address", self._address)
-        location = candidates[0]["location"]
-        city = candidates[0].get("attributes", {}).get("City", "")
-        return location, city
 
     def _get_holidays(self, community: str) -> dict[str, dict[str, int]]:
         try:
@@ -254,13 +232,12 @@ class Source(BaseSource):
         return holidays
 
     def retrieve(self, source):
-        """Geocode (custom), look up holidays, then query each layer (raw)."""
+        """Geocode (shared helper, with City), look up holidays, query layers."""
         try:
-            location, community = self._geocode()
-        except SourceArgumentNotFound:
-            raise
+            location = ArcGis.geocode(self._address, out_fields="City")
         except Exception as e:
             raise SourceArgumentNotFound("address", self._address) from e
+        community = location["attributes"].get("City", "")
 
         self._holidays = self._get_holidays(community) if community else {}
 

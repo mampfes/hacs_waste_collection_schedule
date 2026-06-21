@@ -18,9 +18,19 @@ from typing import Any
 import yaml
 
 # Map a ConfigParam widget to the type label shown in the doc, mirroring the
-# phrasing used in the existing hand-written files (e.g. "(string)").
+# phrasing used in the existing hand-written files (e.g. "(string)"). Listed
+# explicitly (rather than defaulting silently) so a new widget is a visible
+# omission here. All text-like inputs are "string"; only the map picker yields
+# floats (a latitude and a longitude).
 _WIDGET_TYPE: dict[str, str] = {
     "map": "float",
+    "uprn_lookup": "string",
+    "postcode": "string",
+    "address": "string",
+    "text": "string",
+    "select": "string",
+    "dependent_select": "string",
+    "alternatives": "string",
 }
 
 

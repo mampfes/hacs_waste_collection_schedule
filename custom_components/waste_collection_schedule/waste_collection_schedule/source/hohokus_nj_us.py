@@ -109,9 +109,9 @@ class Source(BaseSource):
 
     retrieve = retrievers.HttpGetRetriever(url=API_URL)
 
-    preprocessor = RecurrenceExpander(_describe)
+    preprocess = RecurrenceExpander(_describe)
 
-    transformer = ICSTransformer(
+    transform = ICSTransformer(
         type_value_map={GENERAL: GENERAL_WASTE, YARD: GARDEN_WASTE},
     )
 

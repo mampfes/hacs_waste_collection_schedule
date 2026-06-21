@@ -13,12 +13,9 @@ Ergonomic module aliases are provided::
 """
 
 import datetime
-import logging
 from typing import Protocol
 
 from dateutil import parser as dateutil_parser
-
-_LOGGER = logging.getLogger(__name__)
 
 
 class DateParser(Protocol):

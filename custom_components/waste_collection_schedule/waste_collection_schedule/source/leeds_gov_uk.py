@@ -76,7 +76,7 @@ class Source(BaseSource):
 
     parse = parsers.JsonParser(shape=list[_Collection])
 
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="date",
         type_key="type",
         parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),

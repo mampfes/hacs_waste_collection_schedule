@@ -75,9 +75,9 @@ class Source(BaseSource):
         ELECTRONICS,
     ]
 
-    # shape=1: a valid feed has at least one event; an HTML error page (no
+    # min_events=1: a valid feed has at least one event; an HTML error page (no
     # events) is logged and raises ResponseShapeError.
-    _ics_parser = parsers.IcsEventsParser(shape=1)
+    _ics_parser = parsers.IcsEventsParser(min_events=1)
 
     def __init__(
         self,
@@ -86,9 +86,6 @@ class Source(BaseSource):
         paper_route: str | None = None,
     ):
         super().__init__(city=city, yellow_route=yellow_route, paper_route=paper_route)
-        self._city = city
-        self._yellow_route = yellow_route
-        self._paper_route = paper_route
         self._params = {"ort": city}
         self._headers = {"User-Agent": "Mozilla/5.0"}
 
@@ -103,11 +100,13 @@ class Source(BaseSource):
             except Exception:
                 raise SourceArgumentNotFound(
                     "city",
-                    self._city,
+                    self.params["city"],
                     "make sure the city is spelled exactly like in the link of "
                     "the website https://www.mzv-rotenburg-bebra.de//webapp.html",
                 )
-            raise SourceArgumentNotFoundWithSuggestions("city", self._city, cities)
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self.params["city"], cities
+            )
         return self._ics_parser(response, source)
 
     @staticmethod
@@ -137,12 +136,14 @@ class Source(BaseSource):
 
         bin_type = summary.removeprefix("Entsorgung ").strip().lower()
 
+        yellow_route = self.params["yellow_route"]
+        paper_route = self.params["paper_route"]
         if bin_type.startswith("gelbe tonne"):
-            if self._yellow_route and self._yellow_route.lower() not in route_context:
+            if yellow_route and yellow_route.lower() not in route_context:
                 return None
             bin_type = "gelbe tonne"
         elif bin_type.startswith("papier"):
-            if self._paper_route and self._paper_route.lower() not in route_context:
+            if paper_route and paper_route.lower() not in route_context:
                 return None
             bin_type = "papier"
 

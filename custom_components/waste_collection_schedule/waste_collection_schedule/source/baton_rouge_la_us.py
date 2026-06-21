@@ -105,8 +105,8 @@ class Source(BaseSource):
     # feature. _describe() projects each match into a weekly cycle per flagged day.
     retrieve = ArcGisMultiFeatureRetriever(_LAYERS, address="address")
     parse = ArcGisMultiFeatureParser()
-    preprocessor = RecurrenceExpander(_describe)
-    transformer = ICSTransformer(type_value_map=_TYPE_MAP)
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
         super().__init__(address=address.strip())

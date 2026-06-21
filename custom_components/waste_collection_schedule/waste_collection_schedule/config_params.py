@@ -22,7 +22,10 @@ class ConfigParam:
     # How this param maps to Source.__init__ kwargs
     fields: dict[str, str]  # {"init_param_name": "display_label", ...}
 
-    # Standard labels per language (framework uses these for GUI)
+    # Standard labels per language ({lang: {field_name: label}}). The doc/
+    # translation generator (update_docu_links.py) writes these into the
+    # generated config-flow translations, so the UI shows localised labels.
+    # Languages may be a subset of the allowlist; missing ones fall back to en.
     labels: dict[str, dict[str, str]] = field(default_factory=dict)
 
     # Description per language
@@ -44,6 +47,11 @@ class ConfigParam:
     groups: tuple[tuple[str, ...], ...] = ()
 
 
+def _title(field_name: str, label: str | None) -> str:
+    """A field's display label: the explicit ``label`` or a Title-Cased name."""
+    return label or field_name.replace("_", " ").title()
+
+
 def apply_defaults(params: list[ConfigParam], values: dict) -> dict:
     """Return ``values`` with any missing/empty defaulted field filled in."""
     prepared = dict(values)
@@ -63,13 +71,18 @@ def validate(params: list[ConfigParam], values: dict) -> None:
     """
     for param in params:
         if param.groups:
-            if not any(
-                all(values.get(f) not in (None, "") for f in group)
+            provided = [
+                group
                 for group in param.groups
-            ):
+                if all(values.get(f) not in (None, "") for f in group)
+            ]
+            # Exactly one group must be fully provided: zero means nothing was
+            # entered, more than one means the mutually-exclusive groups were
+            # both filled in (e.g. UPRN *and* postcode), which is ambiguous.
+            if len(provided) != 1:
                 raise SourceArgumentExceptionMultiple(
                     list(param.fields),
-                    "provide one of: "
+                    "provide exactly one of: "
                     + " or ".join(
                         "(" + " + ".join(group) + ")" for group in param.groups
                     ),
@@ -221,7 +234,7 @@ def dropdown(
     Required by default; pass ``optional=True`` for a selection the source can
     do without (e.g. a manual override that otherwise auto-resolves).
     """
-    display = label or field_name.replace("_", " ").title()
+    display = _title(field_name, label)
     return ConfigParam(
         fields={field_name: display},
         widget="select",
@@ -261,11 +274,9 @@ def dependent_select(
     field (the source resolves a typed value in ``get_choices``/``__init__``).
     Both methods run at config-flow time and may fetch live, so the framework
     calls them off the event loop.
-
-    Demonstrates: dependent-dropdown PARAM flow (see issue #6561 design discussion).
     """
-    parent_display = label or parent_field.replace("_", " ").title()
-    child_display = child_label or child_field.replace("_", " ").title()
+    parent_display = _title(parent_field, label)
+    child_display = _title(child_field, child_label)
     return ConfigParam(
         fields={parent_field: parent_display, child_field: child_display},
         widget="dependent_select",
@@ -296,11 +307,8 @@ def multi_value_lookup(
     Unlike address(), this does NOT pass the result fields to Source.__init__
     as kwargs — only lookup_field is passed.  The source handles the mapping
     internally (e.g. by calling an API in __init__).
-
-    Demonstrates: one-user-value → many-internal-params flow
-    (see issue #6561 design discussion).
     """
-    display = label or lookup_field.replace("_", " ").title()
+    display = _title(lookup_field, label)
     return ConfigParam(
         fields={lookup_field: display},
         widget="text",
@@ -331,7 +339,7 @@ def text_field(
       refinement the source can do without (e.g. an extra street or route
       filter alongside a required city).
     """
-    display = label or field_name.replace("_", " ").title()
+    display = _title(field_name, label)
     return ConfigParam(
         fields={field_name: display},
         widget="text",

@@ -88,10 +88,10 @@ class Source(BaseSource):
 
     retrieve = ArcGisFeatureRetriever(FEATURE_URL, address="address")
     parse = ArcGisFeatureParser()
-    preprocessor = RecurrenceExpander(_describe)
+    preprocess = RecurrenceExpander(_describe)
 
     # Derived from _SERVICES: the rows are tagged with the feature field name.
-    transformer = ICSTransformer(
+    transform = ICSTransformer(
         type_value_map={
             field: waste_type for field, (waste_type, _) in _SERVICES.items()
         }

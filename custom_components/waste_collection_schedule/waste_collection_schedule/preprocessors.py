@@ -5,13 +5,15 @@ takes whatever the parser produced and yields the individual records that the
 transformer expects. This replaces the inline dict/list normalisation that
 used to live in BaseSource.fetch().
 
-Each preprocessor is a typed callable class::
+Most sources need no preprocessor: the default (DefaultPreprocessor, wired into
+BaseSource) normalises parser output the way the historical fetch() did — a
+single dict becomes ``[dict]``, a falsy/None value becomes ``[]``, and an
+existing iterable passes through unchanged.
 
-    preprocessor = preprocessors.JsonPreprocessor()
+Recurring-schedule sources set one explicitly to expand a base date + cadence
+into individual collection dates::
 
-The default used by BaseSource (DefaultPreprocessor) reproduces the historical
-fetch() behaviour: a single dict becomes ``[dict]``, a falsy/None value becomes
-``[]``, and an existing iterable passes through unchanged.
+    preprocess = preprocessors.RecurrenceExpander(_describe)
 """
 
 import datetime
@@ -26,7 +28,6 @@ if TYPE_CHECKING:
 
 InT = TypeVar("InT", contravariant=True)
 OutT = TypeVar("OutT", covariant=True)
-T = TypeVar("T")
 
 
 class Preprocessor(Protocol[InT, OutT]):
@@ -39,60 +40,6 @@ class Preprocessor(Protocol[InT, OutT]):
     def __call__(  # noqa: E704
         self, records: InT, source: "BaseSource | None" = None
     ) -> Iterable[OutT]: ...
-
-
-class IdentityPreprocessor(Preprocessor[Iterable[T], T]):
-    """Return the input iterable unchanged."""
-
-    def __call__(
-        self, records: Iterable[T], source: "BaseSource | None" = None
-    ) -> Iterable[T]:
-        return records
-
-
-class IdentityIterablePreprocessor(Preprocessor[T, T]):
-    """Wrap a non-iterable single record in a one-item list; pass iterables through."""
-
-    def __call__(self, records: T, source: "BaseSource | None" = None) -> Iterable[T]:
-        if isinstance(records, Iterable):
-            return records
-        return [records]
-
-
-class JsonPreprocessor(Preprocessor[Any, Mapping[str, Any]]):
-    """Normalise JSON parser output that is either a dict or a list of dicts.
-
-    A single mapping yields one record; a list yields each mapping it contains
-    (non-mapping entries are skipped). Anything else yields nothing.
-    """
-
-    def __call__(
-        self, records: Any, source: "BaseSource | None" = None
-    ) -> Iterable[Mapping[str, Any]]:
-        if isinstance(records, Mapping):
-            yield records
-        elif isinstance(records, Iterable):
-            for entry in records:
-                if isinstance(entry, Mapping):
-                    yield entry
-
-
-class KeyValuePreprocessor(Preprocessor[Any, Iterable[Mapping[str, str]]]):
-    """Normalise key/value array records.
-
-    Input of the form ``[[{name: ..., value: ...}], [{...}]]`` yields each
-    inner iterable, filtered down to its mapping items.
-    """
-
-    def __call__(
-        self, records: Any, source: "BaseSource | None" = None
-    ) -> Iterable[Iterable[Mapping[str, str]]]:
-        if not isinstance(records, Iterable):
-            return
-        for entry in records:
-            if not isinstance(entry, Iterable):
-                continue
-            yield [item for item in entry if isinstance(item, Mapping)]
 
 
 class DefaultPreprocessor(Preprocessor[Any, Any]):
@@ -154,8 +101,8 @@ class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
             yield Schedule("general", base_date, recurrence.FORTNIGHTLY, 13)
 
         class Source(BaseSource):
-            preprocessor = RecurrenceExpander(_describe)
-            transformer = ICSTransformer(type_value_map={"general": GENERAL_WASTE})
+            preprocess = RecurrenceExpander(_describe)
+            transform = ICSTransformer(type_value_map={"general": GENERAL_WASTE})
 
     Args:
         describe: Callable ``(record, source) -> Iterable[Schedule]``.
@@ -173,25 +120,26 @@ class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
         for record in records:
             for schedule in self._describe(record, source):
                 if schedule.until is not None:
-                    dates = recurrence.recurring_within(
+                    # Windowed: recurring_within already honours not_before.
+                    dates: Iterable[datetime.date] = recurrence.recurring_within(
                         schedule.start,
                         schedule.step,
                         not_before=schedule.not_before or schedule.start,
                         until=schedule.until,
                     )
-                elif schedule.anchor:
-                    dates = recurrence.recurring_from_anchor(
-                        schedule.start, schedule.step, schedule.count
-                    )
                 else:
-                    dates = recurrence.recurring(
-                        schedule.start, schedule.step, schedule.count
-                    )
+                    if schedule.anchor:
+                        dates = recurrence.recurring_from_anchor(
+                            schedule.start, schedule.step, schedule.count
+                        )
+                    else:
+                        dates = recurrence.recurring(
+                            schedule.start, schedule.step, schedule.count
+                        )
+                    # Count-based expansion ignores not_before; apply it here.
+                    if schedule.not_before is not None:
+                        dates = [d for d in dates if d >= schedule.not_before]
                 for collection_date in dates:
-                    if schedule.not_before is not None and (
-                        collection_date < schedule.not_before
-                    ):
-                        continue
                     yield collection_date, schedule.key
 
 
@@ -200,7 +148,7 @@ class Compose(Preprocessor[Any, Any]):
 
     Lets a source pipe a one-to-many stage into a follow-up adjustment stage::
 
-        preprocessor = Compose(
+        preprocess = Compose(
             RecurrenceExpander(_describe),   # records -> (date, key) rows
             HolidayShift(_adjust),           # shift/cancel rows on holidays
         )
@@ -226,7 +174,7 @@ class HolidayShift(Preprocessor[Any, "tuple[datetime.date, str]"]):
     collection. The holiday data itself is whatever the source fetched during
     ``retrieve`` and made available (typically stashed on ``source``)::
 
-        preprocessor = Compose(RecurrenceExpander(_describe), HolidayShift(_adjust))
+        preprocess = Compose(RecurrenceExpander(_describe), HolidayShift(_adjust))
 
         def _adjust(collection_date, key, source):
             return source.holidays.get(key, {}).get(collection_date, collection_date)

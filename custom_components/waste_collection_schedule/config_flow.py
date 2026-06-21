@@ -232,6 +232,7 @@ def _build_schema_from_params(
     include_title: bool = True,
     title: str = "",
     dependent_options: dict[str, list[str]] | None = None,
+    error_suggestions: dict[str, list[Any]] | None = None,
 ) -> vol.Schema:
     """Build a voluptuous schema from PARAMS declarations.
 
@@ -239,8 +240,18 @@ def _build_schema_from_params(
     render as a dropdown instead of free text. The config flow uses this to feed
     a ``dependent_select`` param the choices fetched from the source's
     ``get_parent_choices``/``get_choices`` methods.
+
+    ``error_suggestions`` maps a field name to candidate values surfaced by a
+    ``SourceArgumentNotFoundWithSuggestions`` raised on a previous attempt; such
+    a field re-renders as a custom-value dropdown of those suggestions (the same
+    enrichment the legacy introspection path provides).
+
+    Field labels are not set here: Home Assistant renders them from the
+    generated ``translations/<lang>.json`` (produced from each param's typed
+    ``labels`` by update_docu_links.py), keyed by field name.
     """
     dependent_options = dependent_options or {}
+    error_suggestions = error_suggestions or {}
     vol_args: dict = {}
 
     if include_title:
@@ -262,14 +273,16 @@ def _build_schema_from_params(
         # (parent not chosen) is also shown as optional so the form can submit
         # the parent first.
         param_optional = (not param.required) or bool(param.groups)
-        for field_name, display_label in param.fields.items():
+        for field_name in param.fields:
             description = None
             if args_input is not None and field_name in args_input:
                 description = {"suggested_value": args_input[field_name]}
             elif field_name in pre_filled:
                 description = {"suggested_value": pre_filled[field_name]}
 
-            options = dependent_options.get(field_name)
+            options = dependent_options.get(field_name) or error_suggestions.get(
+                field_name
+            )
             default = param.defaults.get(field_name)
             optional = param_optional or default is not None
             if param.widget == "dependent_select" and options is None:
@@ -744,6 +757,15 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if hasattr(self, "_title") and isinstance(self._title, str):
             title = self._title
 
+        # Suggestions surfaced by a prior failed attempt (shared by both paths).
+        suggestions: dict[str, list[Any]] = {}
+        if hasattr(self, "_error_suggestions"):
+            suggestions = {
+                key: value
+                for key, value in self._error_suggestions.items()
+                if len(value) > 0
+            }
+
         # New-style source: build schema from PARAMS
         if _is_new_style_source(source_cls):
             dependent_options = await self.__get_dependent_options(
@@ -756,17 +778,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 include_title=include_title,
                 title=title,
                 dependent_options=dependent_options,
+                error_suggestions=suggestions,
             )
             return schema, module
 
         # Legacy source: introspect __init__ signature
-        suggestions: dict[str, list[Any]] = {}
-        if hasattr(self, "_error_suggestions"):
-            suggestions = {
-                key: value
-                for key, value in self._error_suggestions.items()
-                if len(value) > 0
-            }
 
         args = dict(inspect.signature(module.Source.__init__).parameters)
         del args["self"]  # Remove self
@@ -960,8 +976,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if len(e.arguments) == 0:
                 errors["base"] = "invalid_arg"
             else:
+                # Bind to the bare field names the schema registers, so the UI
+                # highlights the offending inputs (both arg-schema paths use
+                # unprefixed field names).
                 for arg in e.arguments:
-                    errors[f"{source}_{arg}"] = "invalid_arg"
+                    errors[arg] = "invalid_arg"
         except Exception as e:
             errors["base"] = "fetch_error"
             description_placeholders["fetch_error_message"] = str(e)

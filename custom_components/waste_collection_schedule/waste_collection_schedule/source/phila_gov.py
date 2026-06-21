@@ -1,24 +1,28 @@
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 from typing import Any, final
 
 import requests
-from waste_collection_schedule import recurrence
+from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 # Demonstrates: a source with two independent fetches (the city's observed
 # holiday feed + the address record) combined in a custom retrieve(), then a
 # recurrence projection plus Philadelphia's same-week cascading holiday shift in
-# the preprocessor. The holiday calendar is the city's own published feed, not
-# the holidays library, so observed dates match the provider exactly.
+# the preprocess. The holiday calendar is the city's own published feed, not the
+# holidays library, so observed dates match the provider exactly. The projected
+# (date, key) rows feed a standard ICSTransformer rather than a hand-written
+# classify().
 
 HOLIDAYS_URL = "https://api.phila.gov/phila/trashday/v1"
 ADDRESS_URL = "https://api.phila.gov/ais/v1/addresses/{address}"
 HEADERS = {"user-agent": "Mozilla/5.0"}
 
 DAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4, "SAT": 5, "SUN": 6}
+
+_parse_iso = date_parsers.for_format("%Y-%m-%d")
 
 
 def _shift_for_holidays(holidays: list[date], dt: date) -> date:
@@ -44,7 +48,6 @@ class Source(BaseSource):
     URL = "https://www.phila.gov/"
     COUNTRY = "us"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES]
 
     TEST_CASES = {
         "Test_001": {"address": "1830 Fitzwater Street"},
@@ -60,30 +63,35 @@ class Source(BaseSource):
         "collection-day search results.",
     }
 
+    transform = ICSTransformer(
+        type_value_map={"general": GENERAL_WASTE, "recycling": RECYCLABLES}
+    )
+
     def __init__(self, address: str):
         super().__init__(address=address)
-        self._address = address.upper()
 
     def retrieve(self, source):
         # Two independent fetches: the city's observed holidays and the property.
         # Uses plain requests, not the curl_cffi session: api.phila.gov serves a
-        # 202 bot-challenge to the impersonated-Chrome client.
+        # 202 bot-challenge to the impersonated-Chrome client. This is the
+        # documented exception to the http_get default (a two-call retrieve that
+        # LegacyHttpGetRetriever, a single GET, cannot express).
+        address = source.params["address"].upper()
         holidays_resp = requests.get(HOLIDAYS_URL, headers=HEADERS, timeout=30)
         address_resp = requests.get(
-            ADDRESS_URL.format(address=self._address), headers=HEADERS, timeout=30
+            ADDRESS_URL.format(address=address), headers=HEADERS, timeout=30
         )
         return {"holidays": holidays_resp.json(), "address": address_resp.json()}
 
     def parse(self, raw, source):
         return raw
 
-    def preprocessor(self, records, source=None):
+    def preprocess(self, records, source=None):
         data: dict[str, Any] = records
 
         # Weekday holidays only (weekend ones never affect collections).
         holidays = [
-            datetime.strptime(item["start_date"], "%Y-%m-%d").date()
-            for item in data["holidays"]["holidays"]
+            _parse_iso(item["start_date"]) for item in data["holidays"]["holidays"]
         ]
         holidays = [h for h in holidays if h.weekday() < 5]
 
@@ -112,10 +120,8 @@ class Source(BaseSource):
                         out.add(_shift_for_holidays(holidays, d))
             return out
 
+        # (date, key) rows for the standard ICSTransformer to classify.
         for d in dates_for(waste_days):
-            yield {"date": d, "waste_type": GENERAL_WASTE}
+            yield (d, "general")
         for d in dates_for(recycle_days):
-            yield {"date": d, "waste_type": RECYCLABLES}
-
-    def classify(self, record) -> Collection:
-        return Collection(date=record["date"], waste_type=record["waste_type"])
+            yield (d, "recycling")

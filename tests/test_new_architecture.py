@@ -674,7 +674,7 @@ class TestPipelineContext:
             def parse(self, raw, source):
                 return raw
 
-            def preprocessor(self, records, source):
+            def preprocess(self, records, source):
                 seen["town"] = source.params.get("town")
                 return records
 
@@ -849,7 +849,7 @@ class TestAbfallnaviComponents:
                 house_number="hausnummer",
             )
             parse = AbfallnaviParser()
-            transformer = ICSTransformer(
+            transform = ICSTransformer(
                 type_value_map={"Restmüll": GENERAL_WASTE, "Bioabfall": ORGANIC}
             )
 
@@ -1140,22 +1140,22 @@ class TestToolkitParsers:
         from waste_collection_schedule.response_shape import ResponseShapeError
 
         resp = self._Resp("date,type\n2026-06-24,Red\n2026-07-01,Yellow\n")
-        rows = parsers.CsvParser(shape=["date", "type"])(resp)
+        rows = parsers.CsvParser(require=["date", "type"])(resp)
         assert rows == [
             {"date": "2026-06-24", "type": "Red"},
             {"date": "2026-07-01", "type": "Yellow"},
         ]
         with pytest.raises(ResponseShapeError):
-            parsers.CsvParser(shape=["date", "bin"])(self._Resp("date,type\nx,y\n"))
+            parsers.CsvParser(require=["date", "bin"])(self._Resp("date,type\nx,y\n"))
 
     def test_xml_parser_selects_and_shape(self):
         from waste_collection_schedule import parsers
         from waste_collection_schedule.response_shape import ResponseShapeError
 
         xml = "<root><event><d>1</d></event><event><d>2</d></event></root>"
-        assert len(parsers.XmlParser("event", shape=1)(self._Resp(xml))) == 2
+        assert len(parsers.XmlParser("event", min_nodes=1)(self._Resp(xml))) == 2
         with pytest.raises(ResponseShapeError):
-            parsers.XmlParser("missing", shape=1)(self._Resp(xml))
+            parsers.XmlParser("missing", min_nodes=1)(self._Resp(xml))
 
     def test_api_key_param(self):
         from waste_collection_schedule.config_params import api_key
@@ -1301,8 +1301,8 @@ class TestSeasonalSchedule:
 class TestRetrievers:
     """Zero-config http_get/http_post (curl_cffi) and configured/legacy retrievers."""
 
-    def test_http_get_uses_cffi_session(self):
-        """The zero-config http_get reads request settings off the source."""
+    def test_http_get_uses_shared_session(self):
+        """The zero-config http_get issues the request via the shared session."""
         from waste_collection_schedule.retrievers import http_get
 
         source = MagicMock()
@@ -1311,22 +1311,16 @@ class TestRetrievers:
         source._headers = {"X-Custom": "yes"}
         source.TIMEOUT = 15
 
-        mock_session = MagicMock()
-        with patch(
-            "waste_collection_schedule.retrievers._cffi_requests.Session",
-            return_value=mock_session,
-        ) as mock_session_cls:
-            http_get(source)
-            mock_session_cls.assert_called_once_with(impersonate="chrome")
-            mock_session.get.assert_called_once_with(
-                "https://example.com/api",
-                params={"key": "val"},
-                headers={"X-Custom": "yes"},
-                timeout=15,
-            )
+        http_get(source)
+        source.session.get.assert_called_once_with(
+            "https://example.com/api",
+            params={"key": "val"},
+            headers={"X-Custom": "yes"},
+            timeout=15,
+        )
 
-    def test_http_post_uses_cffi_session(self):
-        """The zero-config http_post reads request settings off the source."""
+    def test_http_post_uses_shared_session(self):
+        """The zero-config http_post issues the request via the shared session."""
         from waste_collection_schedule.retrievers import http_post
 
         source = MagicMock()
@@ -1337,21 +1331,27 @@ class TestRetrievers:
         source._headers = None
         source.TIMEOUT = 30
 
-        mock_session = MagicMock()
-        with patch(
-            "waste_collection_schedule.retrievers._cffi_requests.Session",
-            return_value=mock_session,
-        ) as mock_session_cls:
-            http_post(source)
-            mock_session_cls.assert_called_once_with(impersonate="chrome")
-            mock_session.post.assert_called_once_with(
-                "https://example.com/api",
-                params=None,
-                data="body",
-                json=None,
-                headers=None,
-                timeout=30,
-            )
+        http_post(source)
+        source.session.post.assert_called_once_with(
+            "https://example.com/api",
+            params=None,
+            data="body",
+            json=None,
+            headers=None,
+            timeout=30,
+        )
+
+    def test_base_source_session_impersonates_chrome(self):
+        """The one place a curl_cffi session is built is BaseSource.session."""
+        from waste_collection_schedule.base_source import BaseSource
+
+        class _S(BaseSource):
+            pass
+
+        src = _S()
+        with patch("curl_cffi.requests.Session", return_value=MagicMock()) as mk:
+            _ = src.session
+            mk.assert_called_once_with(impersonate="chrome")
 
     def test_configured_http_get_resolves_callable_url(self):
         """Resolve callable retriever args against source.params."""
@@ -1365,19 +1365,13 @@ class TestRetrievers:
             params={"key": "val"},
         )
 
-        mock_session = MagicMock()
-        with patch(
-            "waste_collection_schedule.retrievers._cffi_requests.Session",
-            return_value=mock_session,
-        ) as mock_session_cls:
-            retriever(source)
-            mock_session_cls.assert_called_once_with(impersonate="chrome")
-            mock_session.get.assert_called_once_with(
-                "https://example.com/123",
-                params={"key": "val"},
-                headers=None,
-                timeout=30,
-            )
+        retriever(source)
+        source.session.get.assert_called_once_with(
+            "https://example.com/123",
+            params={"key": "val"},
+            headers=None,
+            timeout=30,
+        )
 
     def test_legacy_http_get_uses_plain_requests(self):
         from waste_collection_schedule.retrievers import LegacyHttpGetRetriever
@@ -1822,7 +1816,7 @@ class TestBaseSourcePipeline:
         from waste_collection_schedule.waste_types import GENERAL_WASTE
 
         class TestSource(BaseSource):
-            transformer = JsonTransformer(
+            transform = JsonTransformer(
                 date_key="date",
                 type_key="bin",
                 type_value_map={"refuse": GENERAL_WASTE},
@@ -1849,7 +1843,7 @@ class TestBaseSourcePipeline:
         from waste_collection_schedule.waste_types import GLASS, PAPER, RECYCLABLES
 
         class TestSource(BaseSource):
-            transformer = JsonTransformer(
+            transform = JsonTransformer(
                 date_key="date",
                 type_key="type",
                 type_value_map={"V / PC": [GLASS, PAPER], "PMC": RECYCLABLES},
@@ -1899,7 +1893,7 @@ class TestBaseSourcePipeline:
         from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
         class TestSource(BaseSource):
-            transformer = JsonTransformer(
+            transform = JsonTransformer(
                 date_key="date",
                 type_key="bin",
                 type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
@@ -1914,7 +1908,7 @@ class TestBaseSourcePipeline:
         from waste_collection_schedule.waste_types import GLASS, PAPER, RECYCLABLES
 
         class TestSource(BaseSource):
-            transformer = JsonTransformer(
+            transform = JsonTransformer(
                 date_key="date",
                 type_key="type",
                 type_value_map={"V / PC": [GLASS, PAPER], "PMC": RECYCLABLES},
@@ -1933,7 +1927,7 @@ class TestBaseSourcePipeline:
         )
 
         class TestSource(BaseSource):
-            transformer = JsonTransformer(
+            transform = JsonTransformer(
                 date_key="date",
                 type_key="bin",
                 type_value_map={"refuse": GENERAL_WASTE},
@@ -2481,10 +2475,10 @@ class TestNewStyleSourceMetadata:
         from waste_collection_schedule.base_source import BaseSource
 
         name, cls = source_info
-        has_transformer = getattr(cls, "transformer", None) is not None
+        has_transform = getattr(cls, "transform", None) is not None
         has_classify = cls.classify is not BaseSource.classify
-        assert has_transformer or has_classify, (
-            f"{name}: must declare a transformer or implement classify()"
+        assert has_transform or has_classify, (
+            f"{name}: must declare a transform or implement classify()"
         )
 
 

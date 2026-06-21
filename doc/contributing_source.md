@@ -68,7 +68,7 @@ class Source(BaseSource):
     PARAMS = [uprn()]
 
     parse = parsers.JsonParser("collections")
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="date",
         type_key="binType",
         type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
@@ -100,9 +100,14 @@ Notes:
 | `LegacySslHttpGetRetriever` | plain requests + SSL compat | `UNSAFE_LEGACY_RENEGOTIATION` endpoints. |
 | `TwoStepRetriever(lookup_url, extract, schedule_url, direct_key=..., headers=...)` | curl_cffi | Two-call sources: a lookup (e.g. postcode to id) feeds the schedule fetch. `direct_key` short-circuits when the id is already supplied; `headers` (e.g. `Accept: application/json`) apply to both calls. |
 
-Always try curl_cffi (the default) first. It impersonates Chrome and clears most Cloudflare blocks. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure.
+Always try curl_cffi (the default) first. It impersonates Chrome and clears most Cloudflare blocks. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure. Never call `requests.get` / `curl_cffi` directly in a source: every retriever runs through the shared `source.session`, so a `Legacy*` retriever is the one visible, named way to use plain requests.
 
-For full control, override `retrieve` as a method. It may return one response or a lazy iterable of responses (for pagination, the parser controls how many pages are pulled):
+There is one preferred way to shape a request, depending on where the values come from:
+
+- **Static or simple values** known at construction time: set `self._params` / `self._headers` in `__init__` and let the default `http_get` use them (the minimal example above).
+- **Values computed from user input**: pass a callable to a configured retriever, resolved against `source.params`: `HttpGetRetriever(url=API_URL, params=lambda uprn, **_: {"uprn": uprn})`.
+
+Override `retrieve` as a method only for a genuinely irregular flow a configured retriever cannot express (e.g. two independent fetches), not merely to inject params. It may return one response or a lazy iterable of responses (for pagination, the parser controls how many pages are pulled); always go through `source.session`:
 
 ```python
 def retrieve(self, source):
@@ -126,15 +131,18 @@ def retrieve(self, source):
 
 A parser may also be a method (`def parse(self, response, source)`), for example to detect an error body or to fetch a supplementary page via `source.session`.
 
-The JSON/HTML/ICS parsers accept an optional `shape=` (a TypedDict / list of required selectors / minimum event count). On a mismatch the parser logs the response and raises `ResponseShapeError`, so a source fails clearly when a provider changes its API rather than returning silently-wrong data. See `stirling_wa_gov_au.py`.
+Each parser accepts an optional validation argument named for what it checks, so the intent is clear at the call site. On a mismatch the parser logs the response and raises `ResponseShapeError`, so a source fails clearly when a provider changes its API rather than returning silently-wrong data (see `stirling_wa_gov_au.py`):
+
+- `JsonParser(shape=...)`: a `TypedDict` / `list[...]` validated structurally (required keys and element types).
+- `HtmlParser(require=[...])` / `CsvParser(require=[...])`: CSS selectors / column names that must be present.
+- `IcsParser(min_events=N)` / `IcsEventsParser(min_events=N)`, `XmlParser(path, min_nodes=N)`, `PdfTextParser(min_chars=N)` / `TextParser(min_chars=N)`: a minimum count below which the response is treated as empty or changed.
 
 ### Preprocessors (`waste_collection_schedule.preprocessors`)
 
-The default preprocessor wraps a single dict into a one-item list and passes existing iterables through, so most sources never set one. Set a preprocessor when parsed output needs reshaping or projecting:
+The default preprocessor wraps a single dict into a one-item list and passes existing iterables through, so most sources never set one. Set `preprocess` only to project a recurring schedule into concrete dates:
 
 | Preprocessor | Purpose |
 |---|---|
-| `JsonPreprocessor` / `KeyValuePreprocessor` | Reshape JSON shapes into per-record mappings. |
 | `RecurrenceExpander(describe)` | Project a recurring schedule (a weekday plus a cadence) into concrete dates. `describe(record, source)` yields `Schedule` objects. |
 | `Compose(*stages)` | Chain preprocessors. |
 | `HolidayShift(adjust)` | Shift dates that fall on holidays. |
@@ -244,14 +252,14 @@ class Source(BaseSource):
         query_params={"bdatum": "31.12.9999", "typids": "225241960"},
     )
     parse = RiSKommunalParser()
-    transformer = ICSTransformer(
+    transform = ICSTransformer(
         type_value_map={"Restabfall 14-tägig": GENERAL_WASTE},
     )
 ```
 
 ## The classify() escape hatch
 
-When no standard transformer fits, omit `transformer` and implement `classify(self, record)`. It receives one record and returns a `Collection` or `None` to skip it. Use `self.parse_date(...)` for dates and the canonical `WasteType` values:
+When no standard transformer fits, omit `transform` and implement `classify(self, record)`. It receives one record and returns a `Collection` or `None` to skip it. Use `self.parse_date(...)` for dates and the canonical `WasteType` values:
 
 ```python
 def classify(self, record):
@@ -260,6 +268,27 @@ def classify(self, record):
         return None
     return Collection(date=date, waste_type=GENERAL_WASTE)
 ```
+
+`classify()` is a genuine last resort. If your `preprocess` has already worked out each record's date and waste type, do **not** write a pass-through `classify()` that just wraps them: have `preprocess` yield `(date, key)` tuples and declare `transform = ICSTransformer(type_value_map={...})`. A `classify()` that contains no provider-specific branching is a sign a standard transformer fits.
+
+## Anti-patterns (do not reintroduce)
+
+These are the old-style habits the pipeline exists to remove. A new or converted source must not contain them; each has a canonical replacement above.
+
+| Don't | Do |
+|---|---|
+| `datetime.strptime(...)` / hand-rolled date maths | `parse_date=date_parsers.for_format(...)` / `from_epoch(...)`, or `self.parse_date(...)` in `classify` |
+| `requests.get(...)` / `curl_cffi.Session(...)` in a source | the default `http_get`, a configured `HttpGetRetriever`, or a named `Legacy*` retriever; all use `source.session` |
+| `BeautifulSoup(...)` built by hand | `parse = parsers.HtmlParser(selector, ...)` |
+| `ICON_MAP` / `mdi:*` strings | the icon comes from the canonical `WasteType`; declare none |
+| `self._x = x` in `__init__` that is read back unchanged | read `self.params["x"]` at point of use (keep the `__init__` signature) |
+| a `retrieve` / `parse` method that only injects params or calls `.json()` | a configured retriever + a declared `parse =` parser |
+| a pass-through `classify()` over already-resolved records | yield `(date, key)` and use a transformer |
+| `EXTRA_INFO` dict list on a new source | `REGIONS = [region(title, **params), ...]` |
+| `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` / `HOW_TO_GET_ARGUMENTS_DESCRIPTION` | typed `PARAMS` (labels) + `HOWTO` |
+| a private weekday/month name dict | `recurrence.weekday()` / `recurrence.month()` |
+| hand-rolled ArcGIS geocode + query | `ArcGisFeatureRetriever` / `ArcGisMultiFeatureRetriever` + the matching parser; route any custom lookup through `ArcGisFeatureParser` |
+| dead module-level `TITLE = ...` re-aliased as `TITLE = TITLE` in the class | put the literal metadata on the class only |
 
 ## Empty results and exceptions
 

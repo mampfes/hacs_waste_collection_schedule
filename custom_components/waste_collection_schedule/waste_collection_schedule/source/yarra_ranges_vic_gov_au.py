@@ -1,9 +1,8 @@
 import re
-from datetime import datetime
 from typing import final
 from urllib.parse import urlencode
 
-from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
@@ -82,8 +81,10 @@ class Source(BaseSource):
     )
 
     parse = parsers.HtmlParser(
-        "article", from_json_key="responseContent", shape=["article"]
+        "article", from_json_key="responseContent", require=["article"]
     )
+
+    parse_date = date_parsers.for_format("%d/%m/%Y")
 
     def __init__(self, street_address: str):
         super().__init__(street_address=street_address)
@@ -101,7 +102,7 @@ class Source(BaseSource):
         if not match:
             return None
 
-        date = datetime.strptime(match.group(1), "%d/%m/%Y").date()
+        date = self.parse_date(match.group(1))
         return Collection(
             date=date,
             waste_type=_TYPE_MAP.get(waste_type)

@@ -89,7 +89,7 @@ class Source(BaseSource):
         fallback_box_w=353,
     )
 
-    transformer = ICSTransformer(
+    transform = ICSTransformer(
         type_value_map={
             PAPER_LABEL: PAPER,
             PACKAGING_LABEL: RECYCLABLES,

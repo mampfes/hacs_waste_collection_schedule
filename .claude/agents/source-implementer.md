@@ -42,7 +42,7 @@ Before writing any retriever or parser, check whether the provider runs on a pla
 - **Retrievers** (`waste_collection_schedule.retrievers`): declare none to use the zero-config default GET (curl_cffi; reads `API_URL`, `self._params`, `self._headers`, `TIMEOUT`). Use `http_get` / `http_post`, or `HttpGetRetriever` / `HttpPostRetriever`. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure. For full control, override `retrieve` as a method.
 - **Parsers** (`waste_collection_schedule.parsers`): `JsonParser()`, `JsonParser("key")`, `HtmlParser("tr", skip=1)`, `IcsParser()`, `IcsEventsParser()`, `TextParser()`. A parser may also be a method (`def parse(self, response, source)`).
 - **Preprocessors** (`waste_collection_schedule.preprocessors`): the default suits most sources. Use `RecurrenceExpander(describe)` with `Schedule` to project a weekday-plus-cadence schedule into dates, `Compose` to chain, `HolidayShift` to adjust holidays.
-- **Transformers** (`waste_collection_schedule.transformers`): `JsonTransformer`, `KeyValueTransformer`, `ICSTransformer`, `HtmlTransformer` (all take an optional `type_value_map` and `parse_date`). When no standard transformer fits, omit `transformer` and implement `classify(self, record)` returning a `Collection` or `None`.
+- **Transformers** (`waste_collection_schedule.transformers`): `JsonTransformer`, `KeyValueTransformer`, `ICSTransformer`, `HtmlTransformer` (all take an optional `type_value_map` and `parse_date`). When no standard transformer fits, omit `transform` and implement `classify(self, record)` returning a `Collection` or `None`. If `preprocess` has already resolved each record's date and type, yield `(date, key)` tuples and use `ICSTransformer` rather than a pass-through `classify()`.
 - **Waste types** (`waste_collection_schedule.waste_types`): the eleven canonical types `GENERAL_WASTE`, `RECYCLABLES`, `ORGANIC`, `PAPER`, `GLASS`, `FOOD_WASTE`, `GARDEN_WASTE`, `BULKY_WASTE`, `HAZARDOUS`, `ELECTRONICS`, `OTHER`. The icon comes from the type, so there is no per-source icon map. A label resolves via `type_value_map`, then the shared multilingual vocabulary, then is preserved verbatim. It is never silently collapsed to `OTHER`. Only list a label in `type_value_map` when the vocabulary cannot resolve it (e.g. a frequency-suffixed residual-waste label) or when you want to force a particular type.
 - **Recurrence helpers** (`waste_collection_schedule.recurrence`): use the shared multilingual `WEEKDAYS` / `MONTHS`, `weekday()` / `month()`, `recurring()`, `next_weekday()` and the `WEEKLY` / `FORTNIGHTLY` constants. Do not carry a private weekday or month dict.
 - **Date parsers** (`waste_collection_schedule.date_parsers`): `auto` (default) or `for_format("%d/%m/%Y")`.
@@ -85,7 +85,7 @@ class Source(BaseSource):
     # CODEOWNERS = ["@contributor-github-handle"]
 
     parse = parsers.JsonParser("collections")
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="date",
         type_key="binType",
         type_value_map={"refuse": GENERAL_WASTE, "recycling": RECYCLABLES},
@@ -112,6 +112,7 @@ No `retrieve` is declared, so the zero-config GET is used. Set `self._params` / 
 - No hardcoded dates or schedules. Fetch live from the provider.
 - No dummy parameters (e.g. `_`) just to satisfy the config GUI.
 - Type hints on the `__init__` signature are expected by the test suite's static checks (pyright covers pipeline sources).
+- **Do not reintroduce old-style habits inside the pipeline** (full list in `doc/contributing_source.md` "Anti-patterns"). No `datetime.strptime` (use `date_parsers.for_format(...)` / `from_epoch(...)` or `self.parse_date`); no `requests.get` / `curl_cffi.Session` in a source (use the default `http_get`, a configured retriever, or a named `Legacy*` one, all via `source.session`); no hand-built `BeautifulSoup` (use `HtmlParser`); no `self._x = x` stash that is read back unchanged (read `self.params["x"]`); prefer `REGIONS` over `EXTRA_INFO`; prefer a configured retriever over a `retrieve` method that only injects params; for ArcGIS use the declarative `ArcGis*` retrievers/parsers, not a hand-rolled geocode+query.
 
 ## Documentation page
 

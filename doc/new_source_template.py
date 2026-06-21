@@ -72,7 +72,7 @@ class Source(BaseSource):
     # >>> Turn each record into a Collection. Map the provider's type labels to
     # canonical WasteTypes; a value may be a list[WasteType] for a combined
     # round. parse_date= sets the date format (default: auto-detect).
-    transformer = JsonTransformer(
+    transform = JsonTransformer(
         date_key="date",
         type_key="type",
         parse_date=date_parsers.for_format("%Y-%m-%d"),
@@ -95,11 +95,11 @@ class Source(BaseSource):
     #     # full control over the request(s); return a response or an iterable
     #     return source.session.get(self.API_URL, params=self._params)
     #
-    # def preprocessor(self, records, source=None):
+    # def preprocess(self, records, source=None):
     #     # reshape parsed output into the records the transformer expects
     #     yield from records
     #
-    # For sources too irregular for a transformer, drop `transformer` and
+    # For sources too irregular for a transformer, drop `transform` and
     # implement classify() instead:
     #
     # def classify(self, record):

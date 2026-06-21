@@ -103,9 +103,9 @@ class Source(BaseSource):
 
     retrieve = IntraMapsRetriever(INTRAMAPS_CONFIG, address="address")
     parse = IntraMapsPanelParser()
-    preprocessor = RecurrenceExpander(_describe)
+    preprocess = RecurrenceExpander(_describe)
 
-    transformer = ICSTransformer(type_value_map=_TYPE_MAP)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, address: str):
         super().__init__(address=address)

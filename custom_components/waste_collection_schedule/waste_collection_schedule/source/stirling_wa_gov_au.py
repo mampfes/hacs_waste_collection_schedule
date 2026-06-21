@@ -69,7 +69,7 @@ class Source(BaseSource):
 
     parse = parsers.JsonParser(shape=ResponseShape)
 
-    transformer = KeyValueTransformer(
+    transform = KeyValueTransformer(
         date_key="date",
         type_key="type",
         type_value_map={
@@ -88,7 +88,6 @@ class Source(BaseSource):
     ):
         # validate() (in super) enforces the address-or-(lat+lon) alternative.
         super().__init__(address=address, lat=lat, lon=lon)
-        self._address = address
         self._lat = float(lat) if lat is not None else None
         self._lon = float(lon) if lon is not None else None
 
@@ -96,7 +95,7 @@ class Source(BaseSource):
         if self._lat is not None and self._lon is not None:
             return self._lat, self._lon
         # __init__ guarantees address is set when coords are not provided.
-        address = self._address or ""
+        address = self.params["address"] or ""
         try:
             location = geocode(address)
         except ArcGisGeocodeError as e:

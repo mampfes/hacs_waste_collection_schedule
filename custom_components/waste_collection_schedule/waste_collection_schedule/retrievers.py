@@ -6,6 +6,13 @@ URL/params/headers to its constructor, optionally as callables resolved against
 ``source.params``) or implicitly via the zero-config default instances, which
 read ``API_URL`` / ``_params`` / ``_headers`` etc. from the source.
 
+Every curl_cffi retriever issues its request through the single shared
+``source.session`` (created once per source, browser-impersonating), so the
+connection, cookies and TLS handshake are reused across the retrieve step and
+any follow-up requests a parser makes. Retrievers never construct their own
+session. A retriever only does HTTP: it must not inspect or parse the response
+body (that is the parser's job), which keeps retrieve and parse orthogonal.
+
 Preferred retrievers (curl_cffi, browser impersonation — works on
 Cloudflare-protected sites and regular sites alike):
 
@@ -30,9 +37,10 @@ from collections.abc import Callable, Mapping
 from typing import TYPE_CHECKING, Any, Protocol, TypeAlias, TypeVar, cast
 
 import requests as _plain_requests
-from curl_cffi import requests as _cffi_requests
 
 if TYPE_CHECKING:
+    from curl_cffi import requests as _cffi_requests
+
     from waste_collection_schedule.base_source import BaseSource
 
 T = TypeVar("T")
@@ -105,8 +113,7 @@ class HttpGetRetriever(_BaseRetriever):
         self.timeout = timeout
 
     def __call__(self, source: BaseSource) -> Response:
-        session = _cffi_requests.Session(impersonate="chrome")
-        return session.get(
+        return source.session.get(
             self._resolve(self.url, source),
             params=self._resolve(self.params, source),
             headers=self._resolve(self.headers, source),
@@ -139,8 +146,7 @@ class HttpPostRetriever(_BaseRetriever):
         self.timeout = timeout
 
     def __call__(self, source: BaseSource) -> Response:
-        session = _cffi_requests.Session(impersonate="chrome")
-        return session.post(
+        return source.session.post(
             self._resolve(self.url, source),
             params=self._resolve(self.params, source),
             data=self._resolve(self.data, source),
@@ -268,8 +274,7 @@ class _DefaultHttpGetRetriever(RetrieverFunc):
     """
 
     def __call__(self, source: BaseSource) -> Response:
-        session = _cffi_requests.Session(impersonate="chrome")
-        return session.get(
+        return source.session.get(
             source.API_URL,
             params=getattr(source, "_params", None),
             headers=getattr(source, "_headers", None),
@@ -285,8 +290,7 @@ class _DefaultHttpPostRetriever(RetrieverFunc):
     """
 
     def __call__(self, source: BaseSource) -> Response:
-        session = _cffi_requests.Session(impersonate="chrome")
-        return session.post(
+        return source.session.post(
             source.API_URL,
             params=getattr(source, "_params", None),
             data=getattr(source, "_data", None),

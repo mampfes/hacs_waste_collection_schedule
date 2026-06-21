@@ -482,11 +482,19 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     params = [param.name for param in sig.parameters.values()]
     if "self" in params:
         params.remove("self")
-    param_translations = getattr(source_cls, "PARAM_TRANSLATIONS", None) or getattr(
-        module, "PARAM_TRANSLATIONS", {}
+    # New-style (BaseSource) sources carry per-field labels/descriptions on
+    # their typed PARAMS instead of PARAM_TRANSLATIONS/PARAM_DESCRIPTIONS dicts.
+    # Both have the same {lang: {field: text}} shape, so derive the legacy form
+    # from PARAMS here; the rest of the translation generation is unchanged.
+    param_translations = (
+        getattr(source_cls, "PARAM_TRANSLATIONS", None)
+        or getattr(module, "PARAM_TRANSLATIONS", None)
+        or _params_labels(source_cls, "labels")
     )
-    param_descriptions = getattr(source_cls, "PARAM_DESCRIPTIONS", None) or getattr(
-        module, "PARAM_DESCRIPTIONS", {}
+    param_descriptions = (
+        getattr(source_cls, "PARAM_DESCRIPTIONS", None)
+        or getattr(module, "PARAM_DESCRIPTIONS", None)
+        or _params_labels(source_cls, "descriptions")
     )
     howto = (
         getattr(source_cls, "HOWTO", None)
@@ -556,6 +564,23 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
             )
         )
     return module, sources
+
+
+def _params_labels(source_cls: Any, attr: str) -> dict[str, dict[str, str]]:
+    """Merge per-field ``labels`` or ``descriptions`` across a source's PARAMS.
+
+    Returns the ``{lang: {field: text}}`` mapping the translation generator
+    expects (the same shape legacy PARAM_TRANSLATIONS/PARAM_DESCRIPTIONS use),
+    so a new-style source's typed PARAMS drive the localised config-flow labels.
+    """
+    params = getattr(source_cls, "PARAMS", None)
+    if not params:
+        return {}
+    merged: dict[str, dict[str, str]] = {}
+    for param in params:
+        for lang, mapping in getattr(param, attr, {}).items():
+            merged.setdefault(lang, {}).update(mapping)
+    return merged
 
 
 def generate_base_source_doc(file: str, source_cls: Any) -> None:
@@ -913,20 +938,20 @@ def update_json(
 
         for module, module_params in param_translations.items():
             translations["config"]["step"][f"args_{module}"] = keys_for_all_args.copy()
-            translations["config"]["step"][
-                f"reconfigure_{module}"
-            ] = keys_for_all_reconfigure.copy()
+            translations["config"]["step"][f"reconfigure_{module}"] = (
+                keys_for_all_reconfigure.copy()
+            )
 
-            translations["config"]["step"][f"args_{module}"][
-                "data"
-            ] = translation_for_all.copy()
-            translations["config"]["step"][f"reconfigure_{module}"][
-                "data"
-            ] = translation_for_all.copy()
+            translations["config"]["step"][f"args_{module}"]["data"] = (
+                translation_for_all.copy()
+            )
+            translations["config"]["step"][f"reconfigure_{module}"]["data"] = (
+                translation_for_all.copy()
+            )
 
-            translations["config"]["step"][f"args_{module}"][
-                "data_description"
-            ] = description_for_all_args.copy()
+            translations["config"]["step"][f"args_{module}"]["data_description"] = (
+                description_for_all_args.copy()
+            )
             translations["config"]["step"][f"reconfigure_{module}"][
                 "data_description"
             ] = description_for_all_reconfigure.copy()

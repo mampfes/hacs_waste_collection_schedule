@@ -53,6 +53,17 @@ def source_name(source: Any) -> str:
     return type(source).__module__.rsplit(".", 1)[-1]
 
 
+def _log_mismatch(source_name: str, detail: str, sample: str) -> None:
+    """Log an offending response sample so a user can paste it into a bug report."""
+    _LOGGER.warning(
+        "%s: response shape mismatch (%s). Raw response sample:\n%.*s",
+        source_name,
+        detail,
+        _SAMPLE_CHARS,
+        sample,
+    )
+
+
 def expect(
     ok: bool, *, source_name: str = "source", detail: str, raw: Any = None
 ) -> None:
@@ -65,14 +76,7 @@ def expect(
     if ok:
         return
     if raw is not None:
-        sample = raw if isinstance(raw, str) else repr(raw)
-        _LOGGER.warning(
-            "%s: response shape mismatch (%s). Raw response sample:\n%.*s",
-            source_name,
-            detail,
-            _SAMPLE_CHARS,
-            sample,
-        )
+        _log_mismatch(source_name, detail, raw if isinstance(raw, str) else repr(raw))
     raise ResponseShapeError(source_name, detail)
 
 
@@ -84,13 +88,7 @@ def validate(data: Any, shape: Any, *, source_name: str = "source") -> Any:
     """
     problem = _check(data, shape, "$")
     if problem is not None:
-        _LOGGER.warning(
-            "%s: response shape mismatch (%s). Raw response sample:\n%.*s",
-            source_name,
-            problem,
-            _SAMPLE_CHARS,
-            repr(data),
-        )
+        _log_mismatch(source_name, problem, repr(data))
         raise ResponseShapeError(source_name, problem)
     return data
 
