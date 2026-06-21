@@ -1,5 +1,6 @@
 import datetime
 import re
+from typing import final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -79,6 +80,7 @@ def _describe(record, source):
             yield schedule
 
 
+@final
 class Source(BaseSource):
     TITLE = "City of Kwinana"
     DESCRIPTION = "Source for City of Kwinana waste collection."

@@ -1,5 +1,6 @@
 import datetime
 import re
+from typing import final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -135,6 +136,7 @@ def _describe(record, source):
         )
 
 
+@final
 class Source(BaseSource):
     TITLE = "Rochester, NY"
     DESCRIPTION = "Source for Rochester, NY waste collection."

@@ -1,5 +1,6 @@
 import datetime
 import logging
+from typing import final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -233,6 +234,7 @@ def _adjust(collection_date, key, source):
     return layer_holidays.get(collection_date, collection_date)
 
 
+@final
 class Source(BaseSource):
     TITLE = TITLE
     DESCRIPTION = DESCRIPTION

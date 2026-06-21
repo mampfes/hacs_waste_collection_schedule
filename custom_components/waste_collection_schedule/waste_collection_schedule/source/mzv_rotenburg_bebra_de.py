@@ -1,4 +1,5 @@
 from dataclasses import replace
+from typing import final
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -32,6 +33,7 @@ WEBAPP_URL = "https://www.mzv-rotenburg-bebra.de//webapp.html"
 # by the shared multilingual vocabulary (resolve), not a per-source map.
 
 
+@final
 class Source(BaseSource):
     TITLE = "MZV Rotenburg"
     DESCRIPTION = "Source for MZV Rotenburg."

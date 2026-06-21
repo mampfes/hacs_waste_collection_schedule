@@ -1,4 +1,5 @@
 from dataclasses import replace
+from typing import final
 
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -40,6 +41,7 @@ SEARCH_URLS = {
 }
 
 
+@final
 class Source(BaseSource):
     TITLE = "Reading Council"
     DESCRIPTION = "Source for reading.gov.uk services for Reading Council."

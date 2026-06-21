@@ -42,6 +42,8 @@ For providers too irregular for a standard transformer, implement `classify()` i
 A flat JSON API, typed by a label-to-waste-type map:
 
 ```python
+from typing import final
+
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
@@ -49,6 +51,7 @@ from waste_collection_schedule.transformers import JsonTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 
+@final
 class Source(BaseSource):
     TITLE = "Example Council"
     DESCRIPTION = "Source for Example Council."
@@ -76,6 +79,7 @@ class Source(BaseSource):
 
 Notes:
 
+- Decorate the class with `@typing.final`. A `Source` is only ever instantiated by the framework, never subclassed, so marking it final lets the type checker (pyright) verify it fully and correctly implements the `BaseSource` contract; without it, override and signature mismatches in the source can go unreported.
 - No `retrieve` is declared, so the default zero-config GET is used. It reads `API_URL`, `self._params`, `self._headers` and `TIMEOUT` from the source. Set `self._params` / `self._headers` in `__init__` to shape the request.
 - No icons. The icon comes from the canonical `WasteType`, not from a per-source map.
 - `__init__` must call `super().__init__(**kwargs)`. That validates the arguments against `PARAMS` and stores them on `self.params`.
@@ -193,6 +197,8 @@ Also check the existing shared YAML and EXTRA_INFO platforms (Recollect, Recycle
 ### A service-based source (fully declarative)
 
 ```python
+from typing import final
+
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
@@ -202,6 +208,7 @@ from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE
 
 
+@final
 class Source(BaseSource):
     TITLE = "Koppl"
     DESCRIPTION = "Waste collection schedule for Koppl, Austria."

@@ -1,5 +1,5 @@
 import re
-from typing import Any, Iterable
+from typing import Any, Iterable, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import lookups, recurrence, retrievers
@@ -46,6 +46,7 @@ def _describe(
     yield Schedule("recycling", start, recurrence.WEEKLY, _WEEKS_AHEAD)
 
 
+@final
 class Source(BaseSource):
     TITLE = "City of Lawrence"
     DESCRIPTION = "Source for City of Lawrence, Massachusetts, USA."

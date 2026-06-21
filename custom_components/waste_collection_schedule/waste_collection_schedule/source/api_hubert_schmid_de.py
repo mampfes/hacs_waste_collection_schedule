@@ -1,4 +1,5 @@
 from dataclasses import replace
+from typing import final
 
 from waste_collection_schedule import retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -14,6 +15,7 @@ from waste_collection_schedule.waste_types import RECYCLABLES
 SENTINEL = "0000-00-00"
 
 
+@final
 class Source(BaseSource):
     TITLE = "HubertSchmid Recycling und Umweltschutz GmbH"
     DESCRIPTION = "Abfuhrtermine Blaue Tonne"

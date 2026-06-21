@@ -44,6 +44,11 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/darebin_vic_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/moonee_valley_vic_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/communitywastedisposal_com.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/source/abfallnavi_de.py"
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/abfallnavi_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/lookups.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/amarsul_pt.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/lawrence_ma_us.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/isaac_qld_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/hohokus_nj_us.py"
   ]
 }

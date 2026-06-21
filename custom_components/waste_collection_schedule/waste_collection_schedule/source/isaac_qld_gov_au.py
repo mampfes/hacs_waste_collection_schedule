@@ -1,5 +1,6 @@
 import re
 from dataclasses import replace
+from typing import final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import lookups, recurrence
@@ -70,6 +71,7 @@ def _describe(record, source):
     yield Schedule("general waste", start, recurrence.WEEKLY, _WEEKS_AHEAD)
 
 
+@final
 class Source(BaseSource):
     TITLE = "Isaac Regional Council"
     DESCRIPTION = (

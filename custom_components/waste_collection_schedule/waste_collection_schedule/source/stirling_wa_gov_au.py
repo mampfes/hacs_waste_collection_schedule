@@ -1,5 +1,6 @@
 import logging
 from dataclasses import replace
+from typing import final
 
 from waste_collection_schedule import retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -29,6 +30,7 @@ _PARAMS_COORDS = replace(coords(lat="lat", lon="lon"), required=False)
 # (see issue #6561 for discussion).  For now, listing both is a valid prototype.
 
 
+@final
 class Source(BaseSource):
     TITLE = "Stirling"
     DESCRIPTION = "Source for Stirling."

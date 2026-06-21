@@ -1,3 +1,5 @@
+from typing import final
+
 from bs4 import Tag
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -22,6 +24,7 @@ def _cell_text(el: Tag, selector: str) -> str:
     return cell.text
 
 
+@final
 class Source(BaseSource):
     TITLE = "Aberdeenshire Council"
     DESCRIPTION = "Source for Aberdeenshire Council, UK."

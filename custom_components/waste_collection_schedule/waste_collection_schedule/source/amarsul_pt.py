@@ -14,6 +14,8 @@ The year is read from the PDF URL, so the schedule is parsed live rather than
 hardcoded.
 """
 
+from typing import final
+
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.service.PdfImageCalendar import (
@@ -42,6 +44,7 @@ def _is_teal(r: int, g: int, b: int) -> bool:
     return abs(r - 3) < 45 and abs(g - 74) < 45 and abs(b - 96) < 45
 
 
+@final
 class Source(BaseSource):
     TITLE = "Amarsul"
     DESCRIPTION = "Source for Amarsul selective-collection calendars, Portugal."

@@ -1,3 +1,5 @@
+from typing import final
+
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
@@ -45,6 +47,7 @@ def _describe(attrs, source):
         yield Schedule(waste_type, start, recurrence.WEEKLY, 26)
 
 
+@final
 class Source(BaseSource):
     TITLE = "Northville Township, MI"
     DESCRIPTION = "Source for Northville Township, MI waste collection."

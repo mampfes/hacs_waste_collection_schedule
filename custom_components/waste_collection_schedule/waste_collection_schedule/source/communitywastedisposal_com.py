@@ -2,6 +2,7 @@ import json
 import logging
 import re
 from datetime import date, datetime, timedelta
+from typing import final
 
 import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
@@ -136,6 +137,7 @@ def _describe(record, source):
             yield Schedule(raw_type, collection_date, count=1)
 
 
+@final
 class Source(BaseSource):
     TITLE = "Community Waste Disposal (CWD)"
     DESCRIPTION = "Source for Community Waste Disposal (CWD) in North Texas"

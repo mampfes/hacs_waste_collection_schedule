@@ -1,3 +1,5 @@
+from typing import final
+
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalParser,
@@ -17,6 +19,7 @@ from waste_collection_schedule.waste_types import GENERAL_WASTE
 # itself is fully declarative — no fetch(), retrieve() or parse() code.
 
 
+@final
 class Source(BaseSource):
     TITLE = "Koppl"
     DESCRIPTION = "Waste collection schedule for Koppl, Austria."

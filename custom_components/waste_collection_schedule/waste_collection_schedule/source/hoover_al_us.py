@@ -1,3 +1,5 @@
+from typing import final
+
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
@@ -37,6 +39,7 @@ def _describe(attrs, source):
             )
 
 
+@final
 class Source(BaseSource):
     TITLE = "Hoover, AL"
     DESCRIPTION = "Source for Hoover, AL garbage collection."

@@ -1,5 +1,6 @@
 import re
 from datetime import date, timedelta
+from typing import final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import recurrence, retrievers
@@ -81,6 +82,7 @@ def _describe(record, source):
         yield from _window(GENERAL, winter_day, out_start, out_end, today, horizon)
 
 
+@final
 class Source(BaseSource):
     TITLE = "Borough of Ho-Ho-Kus"
     DESCRIPTION = "Source for the Borough of Ho-Ho-Kus, New Jersey, USA."
@@ -141,8 +143,12 @@ class Source(BaseSource):
             )
 
         season_match = _SEASON_RE.search(text)
-        start_month = recurrence.month(season_match.group(1)) if season_match else None
-        end_month = recurrence.month(season_match.group(3)) if season_match else None
+        if season_match is None:
+            raise SourceArgumentNotFound(
+                "district", self._district, "could not read the collection season"
+            )
+        start_month = recurrence.month(season_match.group(1))
+        end_month = recurrence.month(season_match.group(3))
         if start_month is None or end_month is None:
             raise SourceArgumentNotFound(
                 "district", self._district, "could not read the collection season"

@@ -1,5 +1,6 @@
 import datetime
 import re
+from typing import final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -125,6 +126,7 @@ def _describe(record, source):
                 yield Schedule(waste_type, d, recurrence.WEEKLY, 1)
 
 
+@final
 class Source(BaseSource):
     TITLE = TITLE
     DESCRIPTION = DESCRIPTION

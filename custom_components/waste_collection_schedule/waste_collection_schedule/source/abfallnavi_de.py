@@ -1,4 +1,5 @@
 from dataclasses import replace
+from typing import final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
@@ -84,6 +85,7 @@ TEST_CASES = {
 }
 
 
+@final
 class Source(BaseSource):
     TITLE = TITLE
     DESCRIPTION = DESCRIPTION
