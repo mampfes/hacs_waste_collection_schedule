@@ -36,38 +36,49 @@ def _index(rows: list[list[str]], start: int) -> dict[str, int]:
     return index
 
 
-# Weekday name (any of en/de/fr/it, lower-case) -> Python weekday number
+# Weekday name (any of en/de/fr/it/pl, lower-case) -> Python weekday number
 # (Monday=0 .. Sunday=6). Multilingual so sources don't each carry a local dict
 # (e.g. shawinigan publishes French day names). Use ``weekday()`` for tolerant
 # lookup; the dict itself is kept for direct ``WEEKDAYS["friday"]`` access.
 WEEKDAYS = _index(
     [
-        ["monday", "montag", "lundi", "lunedì", "lunedi"],
-        ["tuesday", "dienstag", "mardi", "martedì", "martedi"],
-        ["wednesday", "mittwoch", "mercredi", "mercoledì", "mercoledi"],
-        ["thursday", "donnerstag", "jeudi", "giovedì", "giovedi"],
-        ["friday", "freitag", "vendredi", "venerdì", "venerdi"],
-        ["saturday", "samstag", "samedi", "sabato"],
-        ["sunday", "sonntag", "dimanche", "domenica"],
+        ["monday", "montag", "lundi", "lunedì", "lunedi", "poniedziałek"],
+        ["tuesday", "dienstag", "mardi", "martedì", "martedi", "wtorek"],
+        ["wednesday", "mittwoch", "mercredi", "mercoledì", "mercoledi", "środa"],
+        ["thursday", "donnerstag", "jeudi", "giovedì", "giovedi", "czwartek"],
+        ["friday", "freitag", "vendredi", "venerdì", "venerdi", "piątek"],
+        ["saturday", "samstag", "samedi", "sabato", "sobota"],
+        ["sunday", "sonntag", "dimanche", "domenica", "niedziela"],
     ],
     start=0,
 )
 
-# Month name (en/de/fr/it, lower-case) -> month number (January=1 .. December=12).
+# Month name (en/de/fr/it/pl, lower-case) -> month number (January=1 .. December=12).
+# Polish dates inflect the month into the genitive (e.g. "12 stycznia 2026"), so
+# the genitive form is listed first; the nominative is kept as a synonym for
+# completeness.
 MONTHS = _index(
     [
-        ["january", "januar", "janvier", "gennaio"],
-        ["february", "februar", "février", "fevrier", "febbraio"],
-        ["march", "märz", "maerz", "mars", "marzo"],
-        ["april", "avril", "aprile"],
-        ["may", "mai", "maggio"],
-        ["june", "juni", "juin", "giugno"],
-        ["july", "juli", "juillet", "luglio"],
-        ["august", "août", "aout", "agosto"],
-        ["september", "septembre", "settembre"],
-        ["october", "oktober", "octobre", "ottobre"],
-        ["november", "novembre", "novembre"],
-        ["december", "dezember", "décembre", "decembre", "dicembre"],
+        ["january", "januar", "janvier", "gennaio", "stycznia", "styczeń"],
+        ["february", "februar", "février", "fevrier", "febbraio", "lutego", "luty"],
+        ["march", "märz", "maerz", "mars", "marzo", "marca", "marzec"],
+        ["april", "avril", "aprile", "kwietnia", "kwiecień"],
+        ["may", "mai", "maggio", "maja", "maj"],
+        ["june", "juni", "juin", "giugno", "czerwca", "czerwiec"],
+        ["july", "juli", "juillet", "luglio", "lipca", "lipiec"],
+        ["august", "août", "aout", "agosto", "sierpnia", "sierpień"],
+        ["september", "septembre", "settembre", "września", "wrzesień"],
+        ["october", "oktober", "octobre", "ottobre", "października", "październik"],
+        ["november", "novembre", "novembre", "listopada", "listopad"],
+        [
+            "december",
+            "dezember",
+            "décembre",
+            "decembre",
+            "dicembre",
+            "grudnia",
+            "grudzień",
+        ],
     ],
     start=1,
 )
