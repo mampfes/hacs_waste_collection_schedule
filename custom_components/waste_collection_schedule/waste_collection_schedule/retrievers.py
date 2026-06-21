@@ -26,8 +26,8 @@ problem):
 
 from __future__ import annotations
 
-from collections.abc import Callable
-from typing import TYPE_CHECKING, Any, Mapping, Protocol, TypeAlias, TypeVar, cast
+from collections.abc import Callable, Mapping
+from typing import TYPE_CHECKING, Any, Protocol, TypeAlias, TypeVar, cast
 
 import requests as _plain_requests
 from curl_cffi import requests as _cffi_requests
@@ -148,6 +148,54 @@ class HttpPostRetriever(_BaseRetriever):
             headers=self._resolve(self.headers, source),
             timeout=self.timeout,
         )
+
+
+class TwoStepRetriever(_BaseRetriever):
+    """Resolve a key via a lookup request, then fetch the schedule with it.
+
+    The common "address/postcode -> id -> collections" shape, used by ~50
+    sources that currently hand-roll a two-request ``retrieve``. Provide:
+
+    * ``lookup_url`` -- the lookup URL (or a callable resolved against
+      ``source.params``), requested when no direct key is available;
+    * ``extract`` -- ``callable(lookup_response, source) -> key``; it pulls the
+      key out of the lookup response and may raise ``SourceArgumentNotFound`` /
+      ``SourceArgumentNotFoundWithSuggestions`` to report a bad lookup;
+    * ``schedule_url`` -- ``callable(key, **source.params) -> str`` for the
+      final schedule request;
+    * ``direct_key`` (optional) -- ``callable(source) -> key | None``; when it
+      returns a key the lookup is skipped (e.g. the user supplied the id
+      directly).
+
+    Both requests use the shared ``source.session`` (curl_cffi)::
+
+        retrieve = retrievers.TwoStepRetriever(
+            lookup_url=lambda postcode, **_: f"{LOOKUP}/{postcode}",
+            extract=_pick_uprn,
+            schedule_url=lambda key, **_: f"{COLLECTIONS}/{key}",
+            direct_key=lambda source: source.params.get("uprn"),
+        )
+    """
+
+    def __init__(
+        self,
+        *,
+        lookup_url: UrlArgs,
+        extract: Callable[..., Any],
+        schedule_url: Callable[..., str],
+        direct_key: Callable[[BaseSource], Any] | None = None,
+    ):
+        self.lookup_url = lookup_url
+        self.extract = extract
+        self.schedule_url = schedule_url
+        self.direct_key = direct_key
+
+    def __call__(self, source: BaseSource) -> Response:
+        key = self.direct_key(source) if self.direct_key else None
+        if key is None:
+            lookup = source.session.get(self._resolve(self.lookup_url, source))
+            key = self.extract(lookup, source)
+        return source.session.get(self.schedule_url(key, **source.params))
 
 
 class LegacyHttpGetRetriever(HttpGetRetriever):

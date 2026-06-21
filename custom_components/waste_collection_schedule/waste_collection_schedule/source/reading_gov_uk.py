@@ -1,7 +1,7 @@
 from dataclasses import replace
 from typing import TypedDict, final
 
-from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, text_field, uprn
 from waste_collection_schedule.exceptions import (
@@ -46,6 +46,25 @@ class _Collection(TypedDict):
 
     date: str
     service: str
+
+
+def _extract_nameornum(address: dict) -> str:
+    nameornum, _ = address["SiteShortAddress"].split(f", {address['SiteAddress2']}, ")
+    return nameornum
+
+
+def _pick_uprn(lookup, source) -> str:
+    """TwoStepRetriever extractor: postcode lookup response -> UPRN."""
+    addresses = lookup.json()["Addresses"]
+    if addresses is None:
+        raise SourceArgumentNotFound("postcode", source.params.get("postcode"))
+    wanted = str(source.params.get("housenameornumber"))
+    address = next((a for a in addresses if _extract_nameornum(a) == wanted), None)
+    if address is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "housenameornumber", wanted, {_extract_nameornum(a) for a in addresses}
+        )
+    return address["AccountSiteUprn"]
 
 
 @final
@@ -93,16 +112,19 @@ class Source(BaseSource):
         type_value_map=_TYPE_MAP,
     )
 
+    # Two-step: a UPRN fetches collections directly; otherwise resolve it from
+    # the postcode lookup (picking the address by house name/number) first.
+    retrieve = retrievers.TwoStepRetriever(
+        lookup_url=lambda postcode=None, **_: f"{SEARCH_URLS['UPRN']}/{postcode}",
+        extract=_pick_uprn,
+        schedule_url=lambda key, **_: f"{SEARCH_URLS['COLLECTION']}/{key}",
+        direct_key=lambda source: source.params.get("uprn"),
+    )
+
     def __init__(self, uprn=None, postcode=None, housenameornumber=None):
         super().__init__(
             uprn=uprn, postcode=postcode, housenameornumber=housenameornumber
         )
-        self._uprn = uprn
-        self._postcode = postcode
-        self._housenameornumber = (
-            None if housenameornumber is None else str(housenameornumber)
-        )
-
         if not any((uprn, postcode and housenameornumber)):
             errors = []
             if postcode:
@@ -115,30 +137,3 @@ class Source(BaseSource):
                 errors,
                 "Must provide either a UPRN or both the Postcode and House Name or Number",
             )
-
-    def retrieve(self, source):
-        uprn = self._uprn if self._uprn is not None else self._resolve_uprn(source)
-        return source.session.get(f"{SEARCH_URLS['COLLECTION']}/{uprn}")
-
-    def _resolve_uprn(self, source) -> str:
-        resp = source.session.get(f"{SEARCH_URLS['UPRN']}/{self._postcode}")
-        addresses = resp.json()["Addresses"]
-        if addresses is None:
-            raise SourceArgumentNotFound("postcode", self._postcode)
-        address = next(filter(self._filter_addresses, addresses), None)
-        if address is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "housenameornumber",
-                self._housenameornumber,
-                {self._extract_nameornum(a) for a in addresses},
-            )
-        return address["AccountSiteUprn"]
-
-    def _extract_nameornum(self, address) -> str:
-        nameornum, _ = address["SiteShortAddress"].split(
-            f", {address['SiteAddress2']}, "
-        )
-        return nameornum
-
-    def _filter_addresses(self, address) -> bool:
-        return self._housenameornumber == self._extract_nameornum(address)
