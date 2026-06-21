@@ -1002,6 +1002,132 @@ class TestRecurrence:
         assert result <= datetime.date(2026, 6, 17)
         assert (datetime.date(2026, 6, 17) - result).days < 7
 
+    def test_recurring_within_aligns_and_clips(self):
+        from waste_collection_schedule import recurrence
+
+        # Phase fixed to a Wednesday outside the window; weekly within October.
+        start = datetime.date(2026, 1, 7)  # a Wednesday, well before the window
+        dates = recurrence.recurring_within(
+            start,
+            recurrence.WEEKLY,
+            not_before=datetime.date(2026, 10, 1),
+            until=datetime.date(2026, 10, 31),
+        )
+        assert dates == [
+            datetime.date(2026, 10, 7),
+            datetime.date(2026, 10, 14),
+            datetime.date(2026, 10, 21),
+            datetime.date(2026, 10, 28),
+        ]
+        assert all(d.weekday() == 2 for d in dates)  # still Wednesdays
+
+    def test_recurring_within_keeps_fortnightly_phase(self):
+        from waste_collection_schedule import recurrence
+
+        # Anchor pins which fortnight; only the in-window occurrences come back.
+        anchor = datetime.date(2026, 5, 2)  # a Saturday
+        dates = recurrence.recurring_within(
+            anchor,
+            recurrence.FORTNIGHTLY,
+            not_before=datetime.date(2026, 6, 1),
+            until=datetime.date(2026, 7, 31),
+        )
+        assert dates and all(d.weekday() == 5 for d in dates)
+        assert all((d - anchor).days % 14 == 0 for d in dates)  # same fortnight cycle
+        assert dates[0] >= datetime.date(2026, 6, 1)
+        assert dates[0] - recurrence.FORTNIGHTLY < datetime.date(2026, 6, 1)
+
+    def test_recurring_within_empty_window(self):
+        from waste_collection_schedule import recurrence
+
+        dates = recurrence.recurring_within(
+            datetime.date(2026, 1, 7),
+            recurrence.WEEKLY,
+            not_before=datetime.date(2026, 3, 1),
+            until=datetime.date(2026, 2, 1),  # until before not_before
+        )
+        assert dates == []
+
+
+class TestSeasonalSchedule:
+    """Schedule windowing (Gap 1): season-bounded, per-window cadence."""
+
+    def _expand(self, schedules):
+        from waste_collection_schedule.preprocessors import RecurrenceExpander
+
+        expander = RecurrenceExpander(lambda record, source: schedules)
+        return list(expander([object()], None))
+
+    def test_windowed_weekly_segment(self):
+        from waste_collection_schedule import recurrence
+        from waste_collection_schedule.preprocessors import Schedule
+
+        rows = self._expand(
+            [
+                Schedule(
+                    "yard",
+                    datetime.date(2026, 1, 7),  # phase only (a Wednesday)
+                    recurrence.WEEKLY,
+                    not_before=datetime.date(2026, 10, 1),
+                    until=datetime.date(2026, 10, 31),
+                )
+            ]
+        )
+        assert [d for d, _ in rows] == [
+            datetime.date(2026, 10, 7),
+            datetime.date(2026, 10, 14),
+            datetime.date(2026, 10, 21),
+            datetime.date(2026, 10, 28),
+        ]
+        assert {k for _, k in rows} == {"yard"}
+
+    def test_no_collection_months_yield_nothing(self):
+        # A season with no collection is modelled by issuing no Schedule.
+        rows = self._expand([])
+        assert rows == []
+
+    def test_partial_month_until(self):
+        from waste_collection_schedule import recurrence
+        from waste_collection_schedule.preprocessors import Schedule
+
+        # "December weeks Dec 1 until week of Dec 14" -> stop mid-month.
+        rows = self._expand(
+            [
+                Schedule(
+                    "yard",
+                    datetime.date(2026, 12, 2),  # a Wednesday
+                    recurrence.WEEKLY,
+                    not_before=datetime.date(2026, 12, 1),
+                    until=datetime.date(2026, 12, 14),
+                )
+            ]
+        )
+        assert [d for d, _ in rows] == [
+            datetime.date(2026, 12, 2),
+            datetime.date(2026, 12, 9),
+        ]
+
+    def test_not_before_clips_count_mode(self):
+        from waste_collection_schedule import recurrence
+        from waste_collection_schedule.preprocessors import Schedule
+
+        # Without `until`, not_before just drops earlier count-based occurrences.
+        rows = self._expand(
+            [
+                Schedule(
+                    "general",
+                    datetime.date(2026, 6, 1),
+                    recurrence.WEEKLY,
+                    count=4,
+                    not_before=datetime.date(2026, 6, 15),
+                )
+            ]
+        )
+        assert [d for d, _ in rows] == [
+            datetime.date(2026, 6, 15),
+            datetime.date(2026, 6, 22),
+        ]
+
 
 class TestRetrievers:
     """Zero-config http_get/http_post (curl_cffi) and configured/legacy retrievers."""

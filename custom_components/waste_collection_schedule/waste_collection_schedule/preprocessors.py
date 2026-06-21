@@ -130,6 +130,14 @@ class Schedule:
     # When True, ``start`` is a (possibly historical) anchor: roll it forward by
     # ``step`` to the first occurrence on/after today before generating dates.
     anchor: bool = False
+    # Optional season window. When ``until`` is set, the schedule runs in
+    # windowed mode: ``start`` fixes only the cadence phase and every occurrence
+    # within ``[not_before or start, until]`` is emitted (``count`` is ignored).
+    # When ``until`` is unset, ``not_before`` simply drops earlier occurrences
+    # from the count-based expansion. Model a seasonal schedule by yielding one
+    # windowed Schedule per season segment (and none for no-collection months).
+    not_before: datetime.date | None = None
+    until: datetime.date | None = None
 
 
 class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
@@ -164,7 +172,14 @@ class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
     ) -> Iterable[tuple[datetime.date, str]]:
         for record in records:
             for schedule in self._describe(record, source):
-                if schedule.anchor:
+                if schedule.until is not None:
+                    dates = recurrence.recurring_within(
+                        schedule.start,
+                        schedule.step,
+                        not_before=schedule.not_before or schedule.start,
+                        until=schedule.until,
+                    )
+                elif schedule.anchor:
                     dates = recurrence.recurring_from_anchor(
                         schedule.start, schedule.step, schedule.count
                     )
@@ -173,6 +188,10 @@ class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
                         schedule.start, schedule.step, schedule.count
                     )
                 for collection_date in dates:
+                    if schedule.not_before is not None and (
+                        collection_date < schedule.not_before
+                    ):
+                        continue
                     yield collection_date, schedule.key
 
 

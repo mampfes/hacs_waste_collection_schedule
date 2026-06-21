@@ -111,6 +111,43 @@ def recurring_from_anchor(
     return recurring(current, step, count)
 
 
+def recurring_within(
+    start: datetime.date,
+    step: datetime.timedelta,
+    *,
+    not_before: datetime.date,
+    until: datetime.date,
+) -> list[datetime.date]:
+    """Phase-aligned occurrences within an inclusive ``[not_before, until]`` window.
+
+    ``start`` fixes the cadence *phase* (which day the cycle lands on); it need
+    not itself be inside the window. The cycle is advanced or retreated to the
+    first occurrence on/after ``not_before``, then every occurrence up to and
+    including ``until`` is returned. Returns ``[]`` if the window is empty.
+
+    Use for seasonal schedules where a cadence only applies within part of the
+    year (e.g. garden waste collected weekly in April but fortnightly May-Sep),
+    by issuing one windowed :class:`Schedule` per season segment.
+    """
+    if step <= datetime.timedelta(0):
+        raise ValueError("step must be positive")
+
+    current = start
+    if current < not_before:
+        current += step * ((not_before - current) // step)
+        while current < not_before:
+            current += step
+    else:
+        while current - step >= not_before:
+            current -= step
+
+    dates: list[datetime.date] = []
+    while current <= until:
+        dates.append(current)
+        current += step
+    return dates
+
+
 def next_weekday(
     weekday: int, *, on_or_after: datetime.date | None = None
 ) -> datetime.date:
