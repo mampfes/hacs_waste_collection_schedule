@@ -375,9 +375,7 @@ def test_source_has_necessary_parameters() -> None:
 
         region_list = getattr(module.Source, "REGIONS", None)
         if region_list:
-            region_list = list(
-                region_list() if callable(region_list) else region_list
-            )
+            region_list = list(region_list() if callable(region_list) else region_list)
         else:
             legacy = getattr(module.Source, "EXTRA_INFO", None)
             if legacy is None:
