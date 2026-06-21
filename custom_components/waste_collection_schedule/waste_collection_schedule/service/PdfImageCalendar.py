@@ -83,6 +83,19 @@ def year_from_url(url: str) -> int:
     return int(match.group(0)) if match else date.today().year
 
 
+def box_year_month(base_year: int, start_month: int, box_index: int) -> Tuple[int, int]:
+    """Map a grid box position to a (year, month).
+
+    Box 0 is ``start_month`` of ``base_year``; subsequent boxes advance one month
+    each, rolling the year over after December. For a Jan-Dec calendar
+    (``start_month=1``) box ``i`` is month ``i+1`` of ``base_year``; for a
+    July-June financial-year calendar (``start_month=7``) box 6 is January of
+    ``base_year + 1``.
+    """
+    absolute_month = (start_month - 1) + box_index
+    return base_year + absolute_month // 12, absolute_month % 12 + 1
+
+
 class PdfImageRetriever(RetrieverFunc):
     """Download a calendar PDF and extract its embedded page image.
 
@@ -166,6 +179,10 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
                         for pages that wrap it in banners, legends or text
                         panels. ``None`` uses the whole image.
         box_cols:       Month boxes per row (3 for a 3x4 grid, 4 for 4x3).
+        start_month:    Calendar month of the first (top-left) box. 1 for a
+                        Jan-Dec calendar; 7 for a July-June financial-year
+                        calendar (the URL year applies to ``start_month`` and
+                        the year rolls over after December).
         grid_cols/grid_rows: Day-cell grid within each month box (7x6).
         ref_width:      Reference image width the pixel constants were tuned at.
         fallback_box_x/fallback_box_w: Optional calibrated horizontal fallback.
@@ -184,6 +201,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         url_param: str = DEFAULT_URL_PARAM,
         crop: Optional[Tuple[float, float, float, float]] = None,
         box_cols: int = 3,
+        start_month: int = 1,
         grid_cols: int = 7,
         grid_rows: int = 6,
         ref_width: int = 1240,
@@ -203,6 +221,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         self._url_param = url_param
         self._crop = crop
         self._box_cols = box_cols
+        self._start_month = start_month
         self._grid_cols = grid_cols
         self._grid_rows = grid_rows
         self._ref_width = ref_width
@@ -353,7 +372,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
         width, height = img.size
         px: Any = img.load()
         scale = width / self._ref_width
-        year = year_from_url(retrieved.url)
+        base_year = year_from_url(retrieved.url)
 
         bands = self._header_bands(img)
         header_tops = [b[0] for b in bands]
@@ -412,12 +431,13 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
             return None
 
         raw: List[Tuple[date, str]] = []
-        for month in range(1, 13):
-            box_row = (month - 1) // self._box_cols
-            box_col = (month - 1) % self._box_cols
+        for box_index in range(12):
+            box_row = box_index // self._box_cols
+            box_col = box_index % self._box_cols
             htop = header_tops[box_row]
             box_left, box_w = columns[box_row][box_col]
-            first_weekday, days_in_month = calendar.monthrange(year, month)
+            box_year, month = box_year_month(base_year, self._start_month, box_index)
+            first_weekday, days_in_month = calendar.monthrange(box_year, month)
 
             for week in range(self._grid_rows):
                 cy = int(htop + row1_offset + week * row_pitch)
@@ -430,7 +450,7 @@ class ColourGridCalendarParser(Parser["List[Tuple[date, str]]"]):
                     if not 1 <= day <= days_in_month:
                         # Geometry sanity guard: skip impossible mappings.
                         continue
-                    raw.append((date(year, month, day), colour_bin.label))
+                    raw.append((date(box_year, month, day), colour_bin.label))
 
         if not raw:
             raise SourceArgumentException(

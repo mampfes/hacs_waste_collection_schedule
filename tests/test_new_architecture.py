@@ -1049,6 +1049,26 @@ class TestRecurrence:
         assert dates == []
 
 
+class TestPdfImageCalendarBoxMapping:
+    """Grid box -> (year, month) mapping incl. financial-year calendars (Gap 4)."""
+
+    def test_jan_dec_calendar(self):
+        from waste_collection_schedule.service.PdfImageCalendar import box_year_month
+
+        # start_month=1: box i is month i+1 of the base year, no rollover.
+        assert box_year_month(2026, 1, 0) == (2026, 1)
+        assert box_year_month(2026, 1, 11) == (2026, 12)
+
+    def test_financial_year_calendar_rolls_over(self):
+        from waste_collection_schedule.service.PdfImageCalendar import box_year_month
+
+        # start_month=7 (Jul-Jun): Jul..Dec stay in base year, Jan..Jun roll over.
+        assert box_year_month(2025, 7, 0) == (2025, 7)
+        assert box_year_month(2025, 7, 5) == (2025, 12)
+        assert box_year_month(2025, 7, 6) == (2026, 1)
+        assert box_year_month(2025, 7, 11) == (2026, 6)
+
+
 class TestLookups:
     """Normalised name lookup with suggestions-on-miss (Gap 5)."""
 
