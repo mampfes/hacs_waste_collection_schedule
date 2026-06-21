@@ -122,7 +122,7 @@ Optional:
 
 `tests/test_source_components.py` runs in CI on every PR and enforces:
 
-1. **Language allowlist:** `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS` keys MUST be in `{"en", "de", "it", "fr"}`. **Default behaviour when a contributor / agent wants to use any other language** (e.g. `fi`, `es`, `nl`, `pl`): strip the unsupported-language block from the source's translation dicts in the current PR, and open a *separate* issue titled `Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist` linked back to the original PR/issue, asking for contributors to help with the full translation pipeline (allowlist + `update_docu_links.py` + `translations/<xx>.json`). Never silently include an unsupported language — CI will reject the PR.
+1. **Language allowlist:** `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS` keys MUST be in `{"en", "de", "it", "fr", "nl"}` (the `LANGUAGES` list in `update_docu_links.py` is the source of truth). **Default behaviour when a contributor / agent wants to use any other language** (e.g. `fi`, `es`, `pl`): strip the unsupported-language block from the source's translation dicts in the current PR, and open a *separate* issue titled `Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist` linked back to the original PR/issue, asking for contributors to help with the full translation pipeline (allowlist + `update_docu_links.py` + `translations/<xx>.json`). Never silently include an unsupported language; CI will reject the PR.
 2. **Icons enum (legacy sources):** `ICON_MAP` values MUST be members of the `Icons` enum (`from waste_collection_schedule import Icons`). Raw `"mdi:..."` strings fail the `test_icon_map_uses_canonical_icons` check. The canonical catalogue is at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`; pick the nearest sensible member and do not extend the enum in a source PR. Pipeline sources have no `ICON_MAP`: the icon comes from the canonical `WasteType` the transformer resolves, so this rule does not apply to them.
 3. **COUNTRY allowlist** as already noted above.
 
@@ -160,7 +160,7 @@ These files are produced by `update_docu_links.py`, which runs automatically via
 - `README.md`, `info.md`
 - `custom_components/waste_collection_schedule/sources.json`
 - `custom_components/waste_collection_schedule/source_metadata.json`
-- `custom_components/waste_collection_schedule/translations/{en,de,it,fr}.json` (config-flow `args_*` sections only — the `options.step.init` section IS hand-maintained)
+- `custom_components/waste_collection_schedule/translations/{en,de,it,fr,nl}.json` (config-flow `args_*` sections only; the `options.step.init` section IS hand-maintained)
 - `custom_components/waste_collection_schedule/waste_collection_schedule/translations/*.json`
 - `doc/ics/*.md` (one per `doc/ics/yaml/*.yaml`)
 

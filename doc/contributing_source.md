@@ -165,6 +165,8 @@ A param is required by default. Three ways to relax that:
 
 `dependent_select(parent, child)` is a cascading two-level dropdown. The source MUST implement `get_choices(parent_value) -> list[str]` (child options for a chosen parent) and MAY implement `get_parent_choices() -> list[str]` (parent options; absent means the parent is free text). Both run at config-flow time and may fetch live. See `gemeinde24_at.py`.
 
+**Field labels and translations.** Reuse a canonical field name where one fits (`postcode`, `house_number`, `municipality`, `street`, `lat`/`lon`, `uprn`, …). `update_docu_links.py` translates those common names into every supported config-flow language (en, de, it, fr, nl) from `default_translations.py`, so a pipeline source inherits multilingual form labels for free. Only a genuinely novel field needs a per-language `PARAM_TRANSLATIONS` block, and its keys must stay within that allowlist. The translated text is human-maintained (Home Assistant's JSON catalogues), not derived from locale data; `recurrence`'s month/weekday names are the only locale data sourced automatically (via Babel).
+
 ### Date parsers (`waste_collection_schedule.date_parsers`)
 
 - `auto` (default): detect the format with dateutil.
