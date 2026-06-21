@@ -124,3 +124,28 @@ def test_render_no_args_block_when_no_params():
     doc = render_source_doc("koppl_at", source_cls)
     assert "args:" not in doc
     assert "No configuration arguments are required." in doc
+
+
+def test_render_alternatives_source_renders_per_group():
+    """An alternatives() source renders one config/example block per group.
+
+    reading_gov_uk accepts a UPRN OR a postcode plus house name/number, so the
+    doc must show both options, mark the fields as an alternative (not plain
+    required/optional), and tell the user to provide exactly one group.
+    """
+    source_cls = _load_source("reading_gov_uk")
+    doc = render_source_doc("reading_gov_uk", source_cls)
+
+    # One labelled block per mutually-exclusive group.
+    assert "### Using uprn" in doc
+    assert "### Using postcode and housenameornumber" in doc
+    # Grouped fields are marked as an alternative, not (required)/(optional).
+    assert "*(string) (alternative)*" in doc
+    # A summary line names the groups.
+    assert "Provide one of: `uprn` or `postcode` + `housenameornumber`." in doc
+    # The example shows a real value per group.
+    assert "postcode: RG31 5PN" in doc
+
+    # Canonical 2-space mapping indentation in every config block.
+    assert "\n  sources:\n" in doc
+    assert "\n    sources:\n" not in doc

@@ -60,6 +60,45 @@ def _yaml_args_block(kwargs: dict[str, Any], indent: int = 8) -> str:
     return "\n".join(f"{pad}{line}" for line in dumped.split("\n"))
 
 
+def _alternatives_groups(params: list[Any]) -> tuple[tuple[str, ...], ...]:
+    """Return the mutually-exclusive field groups if the source declares any.
+
+    An ``alternatives()`` param carries ``groups`` (one tuple of field names per
+    mutually-exclusive input option). Sources without alternatives return ``()``.
+    """
+    for param in params:
+        groups = getattr(param, "groups", ()) or ()
+        if groups:
+            return groups
+    return ()
+
+
+def _base_fields(params: list[Any]) -> list[str]:
+    """Field names from params that are NOT part of an alternatives group."""
+    base: list[str] = []
+    for param in params:
+        if getattr(param, "groups", ()):
+            continue
+        base.extend(param.fields)
+    return base
+
+
+def _human_join(names: tuple[str, ...]) -> str:
+    """``('lat', 'lon')`` -> ``'lat and lon'``; ``('address',)`` -> ``'address'``."""
+    items = list(names)
+    if len(items) <= 1:
+        return items[0] if items else ""
+    return ", ".join(items[:-1]) + " and " + items[-1]
+
+
+def _test_case_for(test_cases: dict[str, dict], field_names: list[str]) -> dict | None:
+    """First test case whose kwargs cover every name in ``field_names``."""
+    for kwargs in test_cases.values():
+        if field_names and all(name in kwargs for name in field_names):
+            return kwargs
+    return None
+
+
 def render_source_doc(source_id: str, source_cls: Any) -> str:
     """Render the full ``doc/source/<id>.md`` text for a BaseSource source.
 
@@ -99,46 +138,90 @@ def render_source_doc(source_id: str, source_cls: Any) -> str:
         lines.append(description)
         lines.append("")
 
+    # A source with an alternatives() param accepts one of several mutually
+    # exclusive input groups (e.g. a UPRN OR a postcode plus house number), so
+    # the config and example blocks are rendered once per group.
+    alt_groups = _alternatives_groups(params)
+    base = _base_fields(params)
+    all_fields = [name for name, _type, _req in fields]
+
     # --- Configuration via configuration.yaml ---
     lines.append("## Configuration via configuration.yaml")
     lines.append("")
-    lines.append("```yaml")
-    lines.append("waste_collection_schedule:")
-    lines.append("  sources:")
-    lines.append(f"    - name: {source_id}")
-    if fields:
-        lines.append("      args:")
-        for field_name, _type_label, _required in fields:
-            lines.append(f"        {field_name}: {field_name.upper()}")
-    lines.append("```")
-    lines.append("")
+    if alt_groups:
+        config_scenarios = [(group, base + list(group)) for group in alt_groups]
+    else:
+        config_scenarios = [(None, all_fields)]
+    for group, field_names in config_scenarios:
+        if group is not None:
+            lines.append(f"### Using {_human_join(group)}")
+            lines.append("")
+        lines.append("```yaml")
+        lines.append("waste_collection_schedule:")
+        lines.append("  sources:")
+        lines.append(f"    - name: {source_id}")
+        if field_names:
+            lines.append("      args:")
+            for field_name in field_names:
+                lines.append(f"        {field_name}: {field_name.upper()}")
+        lines.append("```")
+        lines.append("")
 
     # --- Configuration Variables ---
+    grouped = {name for group in alt_groups for name in group}
     lines.append("### Configuration Variables")
     lines.append("")
     if fields:
         for field_name, type_label, required in fields:
-            requirement = "required" if required else "optional"
+            if field_name in grouped:
+                requirement = "alternative"
+            elif required:
+                requirement = "required"
+            else:
+                requirement = "optional"
             lines.append(f"**{field_name}**  ")
             lines.append(f"*({type_label}) ({requirement})*")
+            lines.append("")
+        if alt_groups:
+            opts = " or ".join("`" + "` + `".join(group) + "`" for group in alt_groups)
+            lines.append(f"Provide one of: {opts}.")
             lines.append("")
     else:
         lines.append("No configuration arguments are required.")
         lines.append("")
 
     # --- Example ---
-    representative = _representative_test_case(test_cases)
     lines.append("## Example")
     lines.append("")
-    lines.append("```yaml")
-    lines.append("waste_collection_schedule:")
-    lines.append("  sources:")
-    lines.append(f"    - name: {source_id}")
-    if representative:
-        lines.append("      args:")
-        lines.append(_yaml_args_block(representative))
-    lines.append("```")
-    lines.append("")
+    if alt_groups:
+        for group in alt_groups:
+            field_names = base + list(group)
+            kwargs = _test_case_for(test_cases, field_names)
+            if not kwargs:
+                continue
+            lines.append(f"### Using {_human_join(group)}")
+            lines.append("")
+            lines.append("```yaml")
+            lines.append("waste_collection_schedule:")
+            lines.append("  sources:")
+            lines.append(f"    - name: {source_id}")
+            shown = {k: kwargs[k] for k in field_names if k in kwargs}
+            if shown:
+                lines.append("      args:")
+                lines.append(_yaml_args_block(shown))
+            lines.append("```")
+            lines.append("")
+    else:
+        representative = _representative_test_case(test_cases)
+        lines.append("```yaml")
+        lines.append("waste_collection_schedule:")
+        lines.append("  sources:")
+        lines.append(f"    - name: {source_id}")
+        if representative:
+            lines.append("      args:")
+            lines.append(_yaml_args_block(representative))
+        lines.append("```")
+        lines.append("")
 
     # --- How to get the source arguments ---
     howto_text = howto.get("en") or next(iter(howto.values()), "")
