@@ -98,7 +98,7 @@ Notes:
 | `HttpPostRetriever(url=...)` | curl_cffi | Configured POST. |
 | `LegacyHttpGetRetriever` / `LegacyHttpPostRetriever` | plain requests | Only if curl_cffi causes a documented problem. |
 | `LegacySslHttpGetRetriever` | plain requests + SSL compat | `UNSAFE_LEGACY_RENEGOTIATION` endpoints. |
-| `TwoStepRetriever(lookup_url, extract, schedule_url, direct_key=...)` | curl_cffi | Two-call sources: a lookup (e.g. postcode to id) feeds the schedule fetch. `direct_key` short-circuits when the id is already supplied. |
+| `TwoStepRetriever(lookup_url, extract, schedule_url, direct_key=..., headers=...)` | curl_cffi | Two-call sources: a lookup (e.g. postcode to id) feeds the schedule fetch. `direct_key` short-circuits when the id is already supplied; `headers` (e.g. `Accept: application/json`) apply to both calls. |
 
 Always try curl_cffi (the default) first. It impersonates Chrome and clears most Cloudflare blocks. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure.
 
@@ -116,6 +116,7 @@ def retrieve(self, source):
 | `JsonParser()` | `response.json()` |
 | `JsonParser("collections")` | `response.json()["collections"]` (drill into a nested key; pass several keys for a path) |
 | `HtmlParser("tr", skip=1)` | CSS-selected elements; `skip` drops leading results such as a header row |
+| `HtmlParser("article", from_json_key="responseContent")` | HTML rendered inside a JSON field (e.g. the OCAPI `wasteservices` endpoint many AU councils use) |
 | `IcsParser()` | `list[(date, summary)]` |
 | `IcsEventsParser()` | `list[IcsEvent(date, title, location, description)]`; use when the type lives in the LOCATION/DESCRIPTION fields |
 | `TextParser()` | `response.text` |
@@ -171,6 +172,7 @@ A param is required by default. Three ways to relax that:
 
 - `auto` (default): detect the format with dateutil.
 - `for_format("%d/%m/%Y")`: a known fixed format.
+- `from_epoch(unit="s"|"ms")`: a Unix timestamp (seconds or milliseconds), as returned by many JSON APIs.
 
 ### Recurrence helpers (`waste_collection_schedule.recurrence`)
 
