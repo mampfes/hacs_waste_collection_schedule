@@ -296,9 +296,19 @@ class Source(BaseSource):
         feature attributes and the layer's HOLIDAYFIELD (default "IMPACTGARB").
         Layers whose query matched no feature are skipped.
         """
+        from waste_collection_schedule import response_shape
+
+        name = response_shape.source_name(source)
         for layer, response in raw:
             response.raise_for_status()
-            features = response.json().get("features", [])
+            data = response.json()
+            response_shape.expect(
+                isinstance(data, dict) and "features" in data,
+                source_name=name,
+                detail="ArcGIS response has no 'features'",
+                raw=data,
+            )
+            features = data["features"]
             if not features:
                 continue
             attrs = dict(features[0].get("attributes", {}))

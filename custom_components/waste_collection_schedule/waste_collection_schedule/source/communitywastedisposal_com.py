@@ -276,15 +276,25 @@ class Source(BaseSource):
 
     def parse(self, raw, source):
         """Extract the first feature's attributes per layer; skip empties."""
+        from waste_collection_schedule import response_shape
+
         records = []
         for raw_type, response in raw:
             try:
                 response.raise_for_status()
-                features = response.json().get("features", [])
+                data = response.json()
             except Exception:
                 continue
-            if not features:
+            # A valid (even empty) layer carries a "features" list; its absence
+            # means the ArcGIS API changed -> log and raise rather than skip.
+            response_shape.expect(
+                isinstance(data, dict) and "features" in data,
+                source_name=response_shape.source_name(source),
+                detail="ArcGIS response has no 'features'",
+                raw=data,
+            )
+            if not data["features"]:
                 continue
-            attrs = features[0].get("attributes", {})
+            attrs = data["features"][0].get("attributes", {})
             records.append({"type": raw_type, "attrs": attrs})
         return records
