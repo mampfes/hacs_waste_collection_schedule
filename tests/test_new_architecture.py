@@ -1642,6 +1642,56 @@ class TestBaseSourcePipeline:
         assert results[0].date == datetime.date(2026, 3, 1)
         assert results[0].waste_type is GENERAL_WASTE
 
+    def test_fetch_flattens_transformer_list_into_separate_collections(self):
+        """A list-valued mapping (combined round) becomes several collections."""
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GLASS, PAPER, RECYCLABLES
+
+        class TestSource(BaseSource):
+            transformer = JsonTransformer(
+                date_key="date",
+                type_key="type",
+                type_value_map={"V / PC": [GLASS, PAPER], "PMC": RECYCLABLES},
+            )
+
+            def __init__(self):
+                pass
+
+            def retrieve(self, source):
+                return MagicMock()
+
+            def parse(self, response, source=None):
+                return [
+                    {"date": "2026-03-01", "type": "V / PC"},
+                    {"date": "2026-03-08", "type": "PMC"},
+                ]
+
+        results = TestSource().fetch()
+        # One combined row -> two collections; one scalar row -> one. Total 3.
+        assert len(results) == 3
+        by_date = {}
+        for c in results:
+            by_date.setdefault(c.date.isoformat(), []).append(c.waste_type.id)
+        assert by_date["2026-03-01"] == ["glass", "paper"]
+        assert by_date["2026-03-08"] == ["recyclables"]
+
+    def test_fetch_flattens_classify_list(self):
+        """classify() may also return a list, which fetch flattens."""
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GLASS, PAPER
+
+        def classify(self, record):
+            d = datetime.date(2026, 1, int(record["day"]))
+            return [
+                Collection(date=d, waste_type=GLASS),
+                Collection(date=d, waste_type=PAPER),
+            ]
+
+        Source = self._make_source_class([{"day": "1"}], classify)
+        results = Source().fetch()
+        assert [c.waste_type.id for c in results] == ["glass", "paper"]
+
     def test_waste_types_derived_from_transformer(self):
         """WASTE_TYPES is auto-derived from transformer.waste_types."""
         from waste_collection_schedule.base_source import BaseSource
@@ -1656,6 +1706,21 @@ class TestBaseSourcePipeline:
             )
 
         assert TestSource.WASTE_TYPES == [GENERAL_WASTE, RECYCLABLES]
+
+    def test_waste_types_derived_includes_combined_round_members(self):
+        """A list-valued mapping contributes each of its types to WASTE_TYPES."""
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GLASS, PAPER, RECYCLABLES
+
+        class TestSource(BaseSource):
+            transformer = JsonTransformer(
+                date_key="date",
+                type_key="type",
+                type_value_map={"V / PC": [GLASS, PAPER], "PMC": RECYCLABLES},
+            )
+
+        assert TestSource.WASTE_TYPES == [GLASS, PAPER, RECYCLABLES]
 
     def test_waste_types_explicit_overrides_transformer(self):
         """Explicit WASTE_TYPES declaration takes precedence over transformer derivation."""
@@ -1789,6 +1854,49 @@ class TestTransformers:
             "date", "bin", {"black": GENERAL_WASTE, "grey": GENERAL_WASTE}
         )
         assert t.waste_types == [GENERAL_WASTE]
+
+    def test_json_transformer_list_value_yields_multiple_collections(self):
+        # A combined round: one raw label -> several types on the same date.
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GLASS, PAPER
+
+        t = JsonTransformer("date", "type", {"V / PC": [GLASS, PAPER]})
+        result = t({"date": "2026-01-15", "type": "V / PC"})
+        assert isinstance(result, list)
+        assert [c.waste_type for c in result] == [GLASS, PAPER]
+        # Same date on every emitted collection.
+        assert all(c.date == datetime.date(2026, 1, 15) for c in result)
+
+    def test_json_transformer_scalar_value_still_yields_single_collection(self):
+        # The scalar path is unchanged: a single Collection, not a list.
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import RECYCLABLES
+
+        t = JsonTransformer("date", "type", {"PMC": RECYCLABLES})
+        result = t({"date": "2026-01-15", "type": "PMC"})
+        assert isinstance(result, Collection)
+        assert result.waste_type is RECYCLABLES
+
+    def test_waste_types_flattens_list_values(self):
+        # waste_types reports each member of a combined round, in order, deduped.
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GLASS, PAPER, RECYCLABLES
+
+        t = JsonTransformer(
+            "date", "type", {"V / PC": [GLASS, PAPER], "PMC": RECYCLABLES}
+        )
+        assert t.waste_types == [GLASS, PAPER, RECYCLABLES]
+
+    def test_ics_transformer_list_value_yields_multiple_collections(self):
+        from waste_collection_schedule.transformers import ICSTransformer
+        from waste_collection_schedule.waste_types import GLASS, PAPER
+
+        t = ICSTransformer({"glass and paper": [GLASS, PAPER]})
+        result = t((datetime.date(2026, 3, 1), "Glass and Paper"))
+        assert isinstance(result, list)
+        assert [c.waste_type for c in result] == [GLASS, PAPER]
+        assert all(c.date == datetime.date(2026, 3, 1) for c in result)
 
     def test_key_value_transformer_basic(self):
         from waste_collection_schedule.transformers import KeyValueTransformer
