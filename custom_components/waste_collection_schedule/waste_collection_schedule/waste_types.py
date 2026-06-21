@@ -29,6 +29,30 @@ class WasteType:
     aliases: dict[str, list[str]] = field(default_factory=dict)
 
 
+# Display language for WasteType names. Defaults to English for standalone
+# library use; the Home Assistant integration sets it to the UI language at
+# startup. Collection.type reads it, so a source's displayed label and any
+# type-based filtering speak one language (e.g. a French HA instance shows
+# "Ordures ménagères", not "General Waste").
+_display_language = "en"
+
+
+def set_display_language(language: str | None) -> None:
+    """Set the language used for WasteType display names (falls back to English).
+
+    Accepts a full locale (``"fr-CA"``) or bare code (``"fr"``); only the base
+    language is used.
+    """
+    global _display_language
+    _display_language = (language or "en").split("-")[0].lower()
+
+
+def display_name(waste_type: "WasteType") -> str:
+    """A WasteType's name in the configured display language, else English."""
+    names = waste_type.names
+    return names.get(_display_language) or names.get("en") or waste_type.id
+
+
 GENERAL_WASTE = WasteType(
     id="general_waste",
     icon="mdi:trash-can",

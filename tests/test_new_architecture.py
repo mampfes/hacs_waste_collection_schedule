@@ -1540,6 +1540,37 @@ class TestRegions:
         assert from_extra_info(None) == []
 
 
+class TestDisplayLanguage:
+    """Collection.type localises to the configured display language."""
+
+    def test_collection_type_follows_display_language(self):
+        from waste_collection_schedule import waste_types as w
+        from waste_collection_schedule.collection import Collection
+
+        day = datetime.date(2026, 1, 1)
+        try:
+            # Default is English.
+            assert Collection(date=day, waste_type=w.GENERAL_WASTE).type == (
+                "General Waste"
+            )
+            # A French instance sees the French canonical name.
+            w.set_display_language("fr")
+            assert Collection(date=day, waste_type=w.GENERAL_WASTE).type == (
+                "Ordures ménagères"
+            )
+            # A full locale falls back to the base language.
+            w.set_display_language("de-DE")
+            assert Collection(date=day, waste_type=w.GENERAL_WASTE).type == "Restmüll"
+            # An unsupported language falls back to English.
+            w.set_display_language("es")
+            assert Collection(date=day, waste_type=w.GENERAL_WASTE).type == (
+                "General Waste"
+            )
+        finally:
+            # Restore the default so other tests keep seeing English labels.
+            w.set_display_language("en")
+
+
 class TestConfigParamValidation:
     """Defaults, alternatives, and validate() rules for ConfigParam."""
 

@@ -176,7 +176,7 @@ A param is required by default. Three ways to relax that:
 
 For schedules published as a weekday plus a cadence rather than explicit dates:
 
-- `WEEKDAYS` / `MONTHS`: multilingual (en, de, fr, it, pl) name to number maps. Add a language's names here when a provider publishes worded dates in it (rather than carrying a private dict in the source).
+- `WEEKDAYS` / `MONTHS`: name-to-number maps sourced from Babel's CLDR data across many locales (including inflected forms such as Polish genitive months), so worded dates resolve in any of those languages without hand-maintained tables. To cover a new language, add its code to `_LOCALES` in `recurrence.py`; do not carry a private dict in the source.
 - `weekday(name)` / `month(name)`: tolerant lookups returning `int` or `None`.
 - `recurring(start, step, count)`, `recurring_from_anchor(anchor, step, count)`, `next_weekday(weekday)`, `most_recent_weekday(weekday)`.
 - `WEEKLY`, `FORTNIGHTLY` step constants.
@@ -196,6 +196,8 @@ A transformer turns each record's label into a `WasteType` in this order:
 The label is **never** silently collapsed to `OTHER`. An unknown label is preserved so the user still sees a meaningful name. Only list a label in `type_value_map` when the shared vocabulary cannot resolve it (for example a frequency-suffixed residual-waste label), or when you want to force a particular canonical type.
 
 If a provider returns a genuinely new category that fits none of the eleven types and is general enough that other sources would use it, open an issue first to propose the addition (name, MDI icon, two or three example providers). The catalogue is deliberately small. Do not extend it inside a source PR.
+
+The displayed label is the `WasteType`'s name in the Home Assistant UI language (the integration sets it at startup; standalone use falls back to English). So a French instance shows `Ordures ménagères`, a German one `Restmüll`. One consequence when **converting a legacy source**: its bin-type labels change from the author's hard-coded strings to the canonical names (e.g. `Garbage` to `General Waste`). Config arguments are unchanged, but anyone filtering by the old label (`types:`, per-type customisation, templates) must update. Call this out in the PR / release notes; users can re-map via the integration's alias/customise options.
 
 ## Reusable service platforms
 

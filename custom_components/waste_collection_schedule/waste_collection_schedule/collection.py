@@ -2,7 +2,7 @@ import datetime
 import logging
 from typing import TYPE_CHECKING, Any, Optional, Union, overload
 
-from .waste_types import WasteType
+from .waste_types import WasteType, display_name
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -74,9 +74,7 @@ class Collection:
 
     @property
     def type(self) -> str:
-        return self._type_override or self._waste_type.names.get(
-            "en", self._waste_type.id
-        )
+        return self._type_override or display_name(self._waste_type)
 
     @property
     def icon(self) -> str:
