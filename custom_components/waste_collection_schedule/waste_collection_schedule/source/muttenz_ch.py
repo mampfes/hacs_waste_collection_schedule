@@ -94,7 +94,7 @@ class Source(BaseSource):
         of HTML, reduced here to plain text for ``classify`` to consume.
         """
         soup = BeautifulSoup(response.text, "html.parser")
-        for element in soup.find_all(attrs={"data-entities": True}):
+        for element in soup.select("[data-entities]"):
             blob = element["data-entities"]
             if not isinstance(blob, str):
                 continue
