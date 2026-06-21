@@ -1109,6 +1109,42 @@ class TestResponseShape:
         assert response_shape.validate(data, self._shape(), source_name="x") is data
 
 
+class TestToolkitParsers:
+    """Phase-2 parser/param additions: CSV, XML, api_key."""
+
+    class _Resp:
+        def __init__(self, text):
+            self.text = text
+            self.content = text.encode("utf-8")
+
+    def test_csv_parser_rows_and_shape(self):
+        from waste_collection_schedule import parsers
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        resp = self._Resp("date,type\n2026-06-24,Red\n2026-07-01,Yellow\n")
+        rows = parsers.CsvParser(shape=["date", "type"])(resp)
+        assert rows == [
+            {"date": "2026-06-24", "type": "Red"},
+            {"date": "2026-07-01", "type": "Yellow"},
+        ]
+        with pytest.raises(ResponseShapeError):
+            parsers.CsvParser(shape=["date", "bin"])(self._Resp("date,type\nx,y\n"))
+
+    def test_xml_parser_selects_and_shape(self):
+        from waste_collection_schedule import parsers
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        xml = "<root><event><d>1</d></event><event><d>2</d></event></root>"
+        assert len(parsers.XmlParser("event", shape=1)(self._Resp(xml))) == 2
+        with pytest.raises(ResponseShapeError):
+            parsers.XmlParser("missing", shape=1)(self._Resp(xml))
+
+    def test_api_key_param(self):
+        from waste_collection_schedule.config_params import api_key
+
+        assert "api_key" in api_key().fields
+
+
 class TestLookups:
     """Normalised name lookup with suggestions-on-miss (Gap 5)."""
 

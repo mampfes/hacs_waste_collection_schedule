@@ -216,3 +216,107 @@ class IcsEventsParser(Parser[list[IcsEvent]]):
                 raw=response.text,
             )
         return events
+
+
+class PdfTextParser(Parser[str]):
+    """Extract the text layer of a PDF response (pypdf, no OCR).
+
+    For providers whose calendar is a text-PDF (``pypdf`` text extraction
+    returns the schedule). Returns the concatenated page text; the source's
+    ``classify()`` then parses it. Pass ``shape`` (a minimum character count) to
+    flag an image-only/empty PDF, which is logged and raises
+    ``ResponseShapeError`` rather than yielding nothing::
+
+        parse = parsers.PdfTextParser(shape=200)
+    """
+
+    def __init__(self, shape: "int | None" = None):
+        self.shape = shape
+
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> str:
+        from io import BytesIO
+
+        from pypdf import PdfReader
+
+        reader = PdfReader(BytesIO(response.content))
+        text = "\n".join((page.extract_text() or "") for page in reader.pages)
+        if self.shape is not None:
+            from waste_collection_schedule import response_shape
+
+            response_shape.expect(
+                len(text.strip()) >= self.shape,
+                source_name=response_shape.source_name(source),
+                detail=f"PDF text under {self.shape} chars (image-only PDF?)",
+                raw=text[:500],
+            )
+        return text
+
+
+class XmlParser(Parser["list[Any]"]):
+    """Parse XML and select elements by tag/XPath (lxml).
+
+    Selects all elements matching ``path`` (an XPath or tag name), each passed
+    to the transformer/classify. Omit ``path`` to get the root element back as a
+    single-item list. Pass ``shape`` (a minimum match count) to flag a changed
+    feed::
+
+        parse = parsers.XmlParser("collection")         # all <collection> nodes
+        parse = parsers.XmlParser(".//event", shape=1)   # XPath
+    """
+
+    def __init__(self, path: "str | None" = None, shape: "int | None" = None):
+        self.path = path
+        self.shape = shape
+
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> list:
+        from lxml import etree  # type: ignore[attr-defined]
+
+        root = etree.fromstring(response.content)
+        elements = root.findall(self.path) if self.path else [root]
+        if self.shape is not None:
+            from waste_collection_schedule import response_shape
+
+            response_shape.expect(
+                len(elements) >= self.shape,
+                source_name=response_shape.source_name(source),
+                detail=f"expected at least {self.shape} XML nodes, got {len(elements)}",
+                raw=response.text,
+            )
+        return elements
+
+
+class CsvParser(Parser["list[dict[str, str]]"]):
+    """Parse CSV into a list of dict rows (csv.DictReader).
+
+    Each row is a ``{column: value}`` dict, so it pairs with ``JsonTransformer``
+    (``date_key`` / ``type_key`` are column names). Pass ``shape`` (a list of
+    required column names) to flag a changed export whose header no longer has
+    the columns the source reads::
+
+        parse = parsers.CsvParser(shape=["date", "type"])
+    """
+
+    def __init__(self, delimiter: str = ",", shape: "list[str] | None" = None):
+        self.delimiter = delimiter
+        self.shape = shape
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[dict[str, str]]":
+        import csv
+        import io
+
+        reader = csv.DictReader(io.StringIO(response.text), delimiter=self.delimiter)
+        rows = list(reader)
+        if self.shape:
+            from waste_collection_schedule import response_shape
+
+            columns = set(reader.fieldnames or [])
+            missing = [c for c in self.shape if c not in columns]
+            response_shape.expect(
+                not missing,
+                source_name=response_shape.source_name(source),
+                detail=f"CSV missing expected columns: {missing}",
+                raw=response.text[:500],
+            )
+        return rows

@@ -277,3 +277,13 @@ def text_field(
             "en": {field_name: display},
         },
     )
+
+
+def api_key(field_name: str = "api_key", label: str | None = None) -> ConfigParam:
+    """A free-text field for a provider API key (public, keyed endpoints).
+
+    A thin, semantic wrapper over :func:`text_field` so keyed sources read
+    declaratively (``PARAMS = [api_key()]``) and the config form labels it
+    clearly.
+    """
+    return text_field(field_name, label or "API Key")
