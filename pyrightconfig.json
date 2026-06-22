@@ -63,6 +63,11 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/yarra_ranges_vic_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/lancaster_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/mulhouse_alsace_fr.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/source/phila_gov.py"
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/phila_gov.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/abfalltermine_forchheim_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/calgary_ca.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/eko_tom_pl.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/muellmax_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/abfall_io.py"
   ]
 }

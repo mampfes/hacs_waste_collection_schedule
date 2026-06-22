@@ -1,253 +1,176 @@
-from html.parser import HTMLParser
+from typing import final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.MuellmaxDe import SERVICE_MAP
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Müllmax"
-DESCRIPTION = "Source for Müllmax waste collection."
-URL = "https://www.muellmax.de"
+# Demonstrates: a deep, stateful form-wizard flow that no configured retriever
+# can express. A method retrieve() walks the multi-step Müllmax form on the
+# shared session — GET a session token, then up to ~7 conditional POSTs (select
+# Abfuhrtermine, optional city, optional street search+select, auto-detected
+# house number, choose iCalendar, tick every fraction, download) — re-reading
+# each page only to extract the form state (session id, house-number options,
+# fraction checkboxes) that drives the next request. The final ICS response then
+# flows to the ordinary IcsParser + ICSTransformer; the German bin names resolve
+# through the shared multilingual vocabulary. One structure covers every Müllmax
+# municipality via a callable REGIONS over the platform's SERVICE_MAP.
 
 
-def EXTRA_INFO():
-    return [
-        {
-            "title": s["title"],
-            "url": s["url"],
-            "default_params": {"service": s["service_id"]},
-        }
-        for s in SERVICE_MAP
+def _soup(text: str) -> BeautifulSoup:
+    return BeautifulSoup(text, "html.parser")
+
+
+def _session_token(text: str) -> str | None:
+    """The hidden ``mm_ses`` token threaded through every step of the form."""
+    el = _soup(text).find("input", attrs={"name": "mm_ses"})
+    value = el.get("value") if isinstance(el, Tag) else None
+    return value if isinstance(value, str) else None
+
+
+def _hnr_options(text: str) -> list[str]:
+    select = _soup(text).find("select", attrs={"name": "mm_frm_hnr_sel"})
+    if not isinstance(select, Tag):
+        return []
+    options: list[str] = []
+    for option in select.find_all("option"):
+        value = option.get("value") if isinstance(option, Tag) else None
+        if isinstance(value, str) and value:
+            options.append(value)
+    return options
+
+
+def _fraction_checkboxes(text: str) -> dict[str, str]:
+    """Every ``mm_frm_fra*`` checkbox, so the download covers all waste types."""
+    values: dict[str, str] = {}
+    for inp in _soup(text).find_all("input"):
+        if not isinstance(inp, Tag):
+            continue
+        name = inp.get("name")
+        if isinstance(name, str) and name.startswith("mm_frm_fra"):
+            value = inp.get("value")
+            values[name] = value if isinstance(value, str) else ""
+    return values
+
+
+def _resolve_house_number(given: str | None, text: str) -> str:
+    """Map a plain house number to the form's full ``id;area;number;`` option."""
+    options = _hnr_options(text)
+    if given is None:
+        raise SourceArgumentNotFoundWithSuggestions("mm_frm_hnr_sel", "", options)
+    if ";" in given:
+        return given
+    matches = [o for o in options if o.split(";")[2:3] == [given]]
+    if len(matches) == 1:
+        return matches[0]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "mm_frm_hnr_sel", given, matches or options
+    )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Müllmax"
+    DESCRIPTION = "Source for Müllmax waste collection."
+    URL = "https://www.muellmax.de"
+    COUNTRY = "de"
+
+    TEST_CASES = {
+        "USB Freiligrathstraße 55": {
+            "service": "Usb",
+            "mm_frm_str_sel": "Freiligrathstraße",
+            "mm_frm_hnr_sel": "44791;Innenstadt;55;",
+        },
+        "ASH Schäferstraße 49 (plain number)": {
+            "service": "Ash",
+            "mm_frm_str_sel": "Schäferstraße",
+            "mm_frm_hnr_sel": "49",
+        },
+    }
+
+    PARAMS = [
+        text_field("service", "Service"),
+        text_field("mm_frm_ort_sel", "Ort", optional=True),
+        text_field("mm_frm_str_sel", "Straße", optional=True),
+        text_field("mm_frm_hnr_sel", "Hausnummer", optional=True),
     ]
 
+    parse = parsers.IcsParser(min_events=1)
+    transform = ICSTransformer()
 
-TEST_CASES = {
-    # "Münster, Achatiusweg": {"service": "Awm", "mm_frm_str_sel": "Achatiusweg"},
-    # "Hal, Postweg": {"service": "Hal", "mm_frm_str_sel": "Postweg"},
-    # "giessen": {
-    #     "service": "Lkg",
-    #     "mm_frm_ort_sel": "Langgöns",
-    #     "mm_frm_str_sel": "Hauptstraße",
-    # },
-    "USB Freiligrathstraße 55": {
-        "service": "Usb",
-        "mm_frm_str_sel": "Freiligrathstraße",
-        "mm_frm_hnr_sel": "44791;Innenstadt;55;",
-    },
-    "ASH Schäferstraße 49 (plain number)": {
-        "service": "Ash",
-        "mm_frm_str_sel": "Schäferstraße",
-        "mm_frm_hnr_sel": "49",
-    },
-}
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "service": "Service",
-        "mm_frm_ort_sel": "Ort",
-        "mm_frm_str_sel": "Straße",
-        "mm_frm_hnr_sel": "Hausnummer",
-    },
-}
-
-
-# Parser for HTML checkbox
-class InputCheckboxParser(HTMLParser):
-    def __init__(self, startswith):
-        super().__init__()
-        self._startswith = startswith
-        self._value = {}
-
-    @property
-    def value(self):
-        return self._value
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "input":
-            d = dict(attrs)
-            if d.get("name", "").startswith(self._startswith):
-                self._value[d["name"]] = d.get("value")
-
-
-# Parser for HTML select options
-class SelectOptionParser(HTMLParser):
-    def __init__(self, select_name):
-        super().__init__()
-        self._select_name = select_name
-        self._in_select = False
-        self._options = []
-
-    @property
-    def options(self):
-        return self._options
-
-    def handle_starttag(self, tag, attrs):
-        d = dict(attrs)
-        if tag == "select" and d.get("name") == self._select_name:
-            self._in_select = True
-        if tag == "option" and self._in_select:
-            value = d.get("value", "")
-            if value:
-                self._options.append(value)
-
-    def handle_endtag(self, tag):
-        if tag == "select":
-            self._in_select = False
-
-
-# Parser for HTML input (hidden) text
-class InputTextParser(HTMLParser):
-    def __init__(self, **identifiers):
-        super().__init__()
-        self._identifiers = identifiers
-        self._value = None
-
-    @property
-    def value(self):
-        return self._value
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "input":
-            d = dict(attrs)
-            for key, value in self._identifiers.items():
-                if key not in d or d[key] != value:
-                    return
-            self._value = d.get("value")
-
-
-class Source:
     def __init__(
         self,
-        service,
-        mm_frm_ort_sel=None,
-        mm_frm_str_sel=None,
-        mm_frm_hnr_sel=None,
+        service: str,
+        mm_frm_ort_sel: str | None = None,
+        mm_frm_str_sel: str | None = None,
+        mm_frm_hnr_sel: str | None = None,
     ):
-        self._service = service
-        self._mm_frm_ort_sel = mm_frm_ort_sel
-        self._mm_frm_str_sel = mm_frm_str_sel
-        self._mm_frm_hnr_sel = mm_frm_hnr_sel
-        self._ics = ICS()
-
-    def fetch(self):
-        mm_ses = InputTextParser(name="mm_ses")
-
-        url = (
-            f"https://www.muellmax.de/abfallkalender/"
-            f"{self._service.lower()}/res/"
-            f"{self._service}Start.php"
+        super().__init__(
+            service=service,
+            mm_frm_ort_sel=mm_frm_ort_sel,
+            mm_frm_str_sel=mm_frm_str_sel,
+            mm_frm_hnr_sel=mm_frm_hnr_sel,
         )
-        session = requests.Session()
-        r = session.get(url, headers=HEADERS)
-        mm_ses.feed(r.text)
 
-        # select "Abfuhrtermine", returns ort or an empty street search field
-        args = {"mm_ses": mm_ses.value, "mm_aus_ort.x": 0, "mm_aus_ort.y": 0}
-        r = session.post(url, data=args, headers=HEADERS)
-        mm_ses.feed(r.text)
+    @staticmethod
+    def REGIONS() -> list[Region]:
+        return [
+            region(s["title"], url=s["url"], service=s["service_id"])
+            for s in SERVICE_MAP
+        ]
 
-        if self._mm_frm_ort_sel is not None:
-            # select city
-            args = {
-                "mm_ses": mm_ses.value,
+    def retrieve(self, source):
+        service = source.params["service"]
+        url = (
+            f"https://www.muellmax.de/abfallkalender/{service.lower()}"
+            f"/res/{service}Start.php"
+        )
+        session = source.session
+
+        response = session.get(url)
+        token = _session_token(response.text)
+
+        def step(data: dict) -> None:
+            nonlocal response, token
+            response = session.post(url, data={"mm_ses": token, **data})
+            token = _session_token(response.text) or token
+
+        # Select "Abfuhrtermine"; returns either a city selector or a street search.
+        step({"mm_aus_ort.x": 0, "mm_aus_ort.y": 0})
+
+        ort = source.params.get("mm_frm_ort_sel")
+        if ort:
+            step({"xxx": 1, "mm_frm_ort_sel": ort, "mm_aus_ort_submit": "weiter"})
+
+        street = source.params.get("mm_frm_str_sel")
+        if street:
+            step(
+                {"xxx": 1, "mm_frm_str_name": street, "mm_aus_str_txt_submit": "suchen"}
+            )
+            step(
+                {"xxx": 1, "mm_frm_str_sel": street, "mm_aus_str_sel_submit": "weiter"}
+            )
+
+        # The form decides whether a house number is needed for this address.
+        if "mm_frm_hnr_sel" in response.text:
+            hnr = _resolve_house_number(
+                source.params.get("mm_frm_hnr_sel"), response.text
+            )
+            step({"xxx": 1, "mm_frm_hnr_sel": hnr, "mm_aus_hnr_sel_submit": "weiter"})
+
+        # Switch the output to an iCalendar file, tick every fraction, download.
+        step({"xxx": 1, "mm_ica_auswahl": "iCalendar-Datei"})
+        fractions = _fraction_checkboxes(response.text)
+        step(
+            {
                 "xxx": 1,
-                "mm_frm_ort_sel": self._mm_frm_ort_sel,
-                "mm_aus_ort_submit": "weiter",
+                "mm_frm_type": "termine",
+                **fractions,
+                "mm_ica_gen": "iCalendar-Datei laden",
             }
-            r = session.post(url, data=args, headers=HEADERS)
-            mm_ses.feed(r.text)
-
-        if self._mm_frm_str_sel is not None:
-            # show street selection page
-            args = {
-                "mm_ses": mm_ses.value,
-                "xxx": 1,
-                "mm_frm_str_name": self._mm_frm_str_sel,
-                "mm_aus_str_txt_submit": "suchen",
-            }
-            r = session.post(url, data=args, headers=HEADERS)
-            mm_ses.feed(r.text)
-
-            # select street
-            args = {
-                "mm_ses": mm_ses.value,
-                "xxx": 1,
-                "mm_frm_str_sel": self._mm_frm_str_sel,
-                "mm_aus_str_sel_submit": "weiter",
-            }
-            r = session.post(url, data=args, headers=HEADERS)
-            mm_ses.feed(r.text)
-
-        # auto-detect if house number selection is required
-        if "mm_frm_hnr_sel" in r.text:
-            hnr_value = self._mm_frm_hnr_sel
-            if hnr_value is None:
-                op = SelectOptionParser("mm_frm_hnr_sel")
-                op.feed(r.text)
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "mm_frm_hnr_sel", "", op.options
-                )
-
-            # if user provided a plain number, match against dropdown options
-            if ";" not in str(hnr_value):
-                op = SelectOptionParser("mm_frm_hnr_sel")
-                op.feed(r.text)
-                matches = [o for o in op.options if o.split(";")[2] == str(hnr_value)]
-                if len(matches) == 1:
-                    hnr_value = matches[0]
-                elif len(matches) == 0:
-                    raise SourceArgumentNotFoundWithSuggestions(
-                        "mm_frm_hnr_sel", str(hnr_value), op.options
-                    )
-                else:
-                    raise SourceArgumentNotFoundWithSuggestions(
-                        "mm_frm_hnr_sel", str(hnr_value), matches
-                    )
-
-            args = {
-                "mm_ses": mm_ses.value,
-                "xxx": 1,
-                "mm_frm_hnr_sel": hnr_value,
-                "mm_aus_hnr_sel_submit": "weiter",
-            }
-            r = session.post(url, data=args, headers=HEADERS)
-            mm_ses.feed(r.text)
-
-        # select to get ical
-        args = {
-            "mm_ses": mm_ses.value,
-            "xxx": 1,
-            "mm_ica_auswahl": "iCalendar-Datei",
-        }
-        r = session.post(url, data=args, headers=HEADERS)
-        mm_ses.feed(r.text)
-
-        mm_frm_fra = InputCheckboxParser(startswith="mm_frm_fra")
-        mm_frm_fra.feed(r.text)
-
-        # get ics file
-        args = {"mm_ses": mm_ses.value, "xxx": 1, "mm_frm_type": "termine"}
-        args.update(mm_frm_fra.value)
-        args.update({"mm_ica_gen": "iCalendar-Datei laden"})
-        r = session.post(url, data=args, headers=HEADERS)
-        mm_ses.feed(r.text)
-
-        entries = []
-
-        # parse ics file
-        try:
-            dates = self._ics.convert(r.text)
-        except ValueError as e:
-            raise ValueError(
-                "Got invalid response from the server, please recheck your arguments"
-            ) from e
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
+        )
+        return response

@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-06-22",
+  "interactions": [
+    {
+      "key": "GET https://data.calgary.ca/resource/jq4t-b745.json 2144eda54f",
+      "method": "GET",
+      "url": "https://data.calgary.ca/resource/jq4t-b745.json",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Mon, 22 Jun 2026 06:47:57 GMT",
+        "content-type": "application/json;charset=utf-8",
+        "transfer-encoding": "chunked",
+        "connection": "keep-alive",
+        "access-control-allow-origin": "*",
+        "etag": "\"Z29sZi4xMTQxOF8xMF8yNzg0MUJPZTRRV213UjdWTURiUl9JWTh5UENzUHNCSQ---gzijO5AnXh1-bLa-ro4gkv_LhKZ_nX--gzip--gzip\"",
+        "x-soda2-fields": "[\"address\",\"quadrant\",\"community\",\"comm_code\",\"commodity\",\"current_season\",\"summer_start\",\"summer_end\",\"winter_start\",\"winter_end\",\"collection_day_summer\",\"collection_day_winter\",\"clect_int_summer\",\"clect_int_winter\",\"clect_day_code\",\"create_dt_utc\",\"point\"]",
+        "x-soda2-types": "[\"text\",\"text\",\"text\",\"text\",\"text\",\"text\",\"floating_timestamp\",\"floating_timestamp\",\"floating_timestamp\",\"floating_timestamp\",\"text\",\"text\",\"text\",\"text\",\"number\",\"fixed_timestamp\",\"point\"]",
+        "x-soda2-data-out-of-date": "false",
+        "x-soda2-truth-last-modified": "Mon, 15 Jun 2026 23:48:59 GMT",
+        "x-soda2-secondary-last-modified": "Mon, 15 Jun 2026 23:48:59 GMT",
+        "last-modified": "Mon, 15 Jun 2026 23:48:59 GMT",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-socrata-region": "aws-us-east-1-fedramp-prod",
+        "x-socrata-requestid": "0206e108ddc40b5e44762ced42a52a79"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjQyIEFVQlVSTiBTSE9SRVMgV1kgU0UiLCJxdWFkcmFudCI6IlNFIiwiY29tbXVuaXR5IjoiQVVCVVJOIEJBWSIsImNvbW1fY29kZSI6IkFVQiIsImNvbW1vZGl0eSI6IkJsdWUiLCJjdXJyZW50X3NlYXNvbiI6IlNVTU1FUiIsInN1bW1lcl9zdGFydCI6IjIwMjYtMDQtMTlUMDA6MDA6MDAuMDAwIiwic3VtbWVyX2VuZCI6IjIwMjYtMTAtMzFUMDA6MDA6MDAuMDAwIiwid2ludGVyX3N0YXJ0IjoiMjAyNS0xMS0wMlQwMDowMDowMC4wMDAiLCJ3aW50ZXJfZW5kIjoiMjAyNi0wNC0xOFQwMDowMDowMC4wMDAiLCJjb2xsZWN0aW9uX2RheV9zdW1tZXIiOiJGcmlkYXkiLCJjb2xsZWN0aW9uX2RheV93aW50ZXIiOiJGcmlkYXkiLCJjbGVjdF9pbnRfc3VtbWVyIjoiRVZFUlkiLCJjbGVjdF9pbnRfd2ludGVyIjoiRVZFUlkiLCJjbGVjdF9kYXlfY29kZSI6IjEiLCJjcmVhdGVfZHRfdXRjIjoiMjAyNi0wNi0xMlQxMjoxMToyOC4wMDBaIiwicG9pbnQiOnsidHlwZSI6IlBvaW50IiwiY29vcmRpbmF0ZXMiOlstMTEzLjk1NzE2NDUsNTAuODg2ODczNl19fQoseyJhZGRyZXNzIjoiNDIgQVVCVVJOIFNIT1JFUyBXWSBTRSIsInF1YWRyYW50IjoiU0UiLCJjb21tdW5pdHkiOiJBVUJVUk4gQkFZIiwiY29tbV9jb2RlIjoiQVVCIiwiY29tbW9kaXR5IjoiQmxhY2siLCJjdXJyZW50X3NlYXNvbiI6IlNVTU1FUiIsInN1bW1lcl9zdGFydCI6IjIwMjYtMDQtMTlUMDA6MDA6MDAuMDAwIiwic3VtbWVyX2VuZCI6IjIwMjYtMTAtMzFUMDA6MDA6MDAuMDAwIiwid2ludGVyX3N0YXJ0IjoiMjAyNS0xMS0wMlQwMDowMDowMC4wMDAiLCJ3aW50ZXJfZW5kIjoiMjAyNi0wNC0xOFQwMDowMDowMC4wMDAiLCJjb2xsZWN0aW9uX2RheV9zdW1tZXIiOiJUaHVyc2RheSIsImNvbGxlY3Rpb25fZGF5X3dpbnRlciI6IlRodXJzZGF5IiwiY2xlY3RfaW50X3N1bW1lciI6Ik9ERCIsImNsZWN0X2ludF93aW50ZXIiOiJPREQiLCJjbGVjdF9kYXlfY29kZSI6IjQiLCJjcmVhdGVfZHRfdXRjIjoiMjAyNi0wNi0xMlQxMjoxMToyOC4wMDBaIiwicG9pbnQiOnsidHlwZSI6IlBvaW50IiwiY29vcmRpbmF0ZXMiOlstMTEzLjk1NzE2NDUsNTAuODg2ODczNl19fQoseyJhZGRyZXNzIjoiNDIgQVVCVVJOIFNIT1JFUyBXWSBTRSIsInF1YWRyYW50IjoiU0UiLCJjb21tdW5pdHkiOiJBVUJVUk4gQkFZIiwiY29tbV9jb2RlIjoiQVVCIiwiY29tbW9kaXR5IjoiR3JlZW4iLCJjdXJyZW50X3NlYXNvbiI6IlNVTU1FUiIsInN1bW1lcl9zdGFydCI6IjIwMjYtMDQtMTlUMDA6MDA6MDAuMDAwIiwic3VtbWVyX2VuZCI6IjIwMjYtMTAtMzFUMDA6MDA6MDAuMDAwIiwid2ludGVyX3N0YXJ0IjoiMjAyNS0xMS0wMlQwMDowMDowMC4wMDAiLCJ3aW50ZXJfZW5kIjoiMjAyNi0wNC0xOFQwMDowMDowMC4wMDAiLCJjb2xsZWN0aW9uX2RheV9zdW1tZXIiOiJGcmlkYXkiLCJjb2xsZWN0aW9uX2RheV93aW50ZXIiOiJGcmlkYXkiLCJjbGVjdF9pbnRfc3VtbWVyIjoiRVZFUlkiLCJjbGVjdF9pbnRfd2ludGVyIjoiT0REIiwiY2xlY3RfZGF5X2NvZGUiOiIxIiwiY3JlYXRlX2R0X3V0YyI6IjIwMjYtMDYtMTJUMTI6MTE6MjguMDAwWiIsInBvaW50Ijp7InR5cGUiOiJQb2ludCIsImNvb3JkaW5hdGVzIjpbLTExMy45NTcxNjQ1LDUwLjg4Njg3MzZdfX1dCg=="
+    }
+  ]
+}
