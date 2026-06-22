@@ -19583,6 +19583,12 @@
       "id": "koeniz_ch"
     },
     {
+      "title": "Gemeinde Hochfelden",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_hochfelden_ch"
+    },
+    {
       "title": "Gemeinde W\u00fcrenlos",
       "module": "ics",
       "default_params": {},

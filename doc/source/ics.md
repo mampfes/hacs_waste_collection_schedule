@@ -456,6 +456,7 @@ This source has been successfully tested with the following service providers:
 ### Switzerland
 
 - [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
+- [Gemeinde Hochfelden](/doc/ics/hochfelden_ch.md) / hochfelden.ch
 - [Gemeinde Würenlos](/doc/ics/wuerenlos_ch.md) / wuerenlos.ch
 - [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
 - [mopage.ch](/doc/ics/mopage_ch.md) / mopage.ch

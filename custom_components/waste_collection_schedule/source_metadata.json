@@ -4229,6 +4229,14 @@
     "howto": {},
     "urls": {}
   },
+  "ics_hochfelden_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/hochfelden_ch.md",
+    "howto": {
+      "de": "Hochfelden veröffentlicht öffentliche ICS-Feeds über die Mondstaub-Kalenderplattform.\nVerwenden Sie die kombinierte URL unten als `url`-Parameter. `{%Y}` wird automatisch\ndurch das aktuelle Jahr ersetzt.\n\nEinzelne Abfallarten sind ebenfalls verfügbar:\n- Nur Kehricht: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/kehricht-hochfelden-{%Y}.ics`\n- Nur Grüngut: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/gruengut-hochfelden-{%Y}.ics`\n- Nur Karton: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/karton-sammlung-hochfelden-{%Y}.ics`\n- Nur Altpapier: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/altpapier-sammlung-hochfelden-{%Y}.ics`\n",
+      "en": "Hochfelden publishes public ICS feeds via the Mondstaub calendar platform.\nUse the combined URL below as the `url` parameter. `{%Y}` is replaced with\nthe current year automatically.\n\nIndividual waste-type feeds are also available:\n- Kehricht only: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/kehricht-hochfelden-{%Y}.ics`\n- Grüngut only: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/gruengut-hochfelden-{%Y}.ics`\n- Karton only: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/karton-sammlung-hochfelden-{%Y}.ics`\n- Altpapier only: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/altpapier-sammlung-hochfelden-{%Y}.ics`\n"
+    },
+    "urls": {}
+  },
   "ics_wuerenlos_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerenlos_ch.md",
     "howto": {
