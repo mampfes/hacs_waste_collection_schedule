@@ -43,7 +43,7 @@ TEST_CASES = {
 }
 
 API_URL = "https://api.kiedyodpady.pl/public"
-DEFAULT_DAYS = 35
+DEFAULT_LOOKAHEAD_DAYS = 365
 
 ICON_MAP = {
     "bio": Icons.ORGANIC,
@@ -68,6 +68,7 @@ PARAM_TRANSLATIONS = {
         "city": "City Name",
         "street": "Street Name",
         "number": "House Number",
+        "lookahead_days": "Lookahead Days",
     },
 }
 
@@ -80,6 +81,10 @@ PARAM_DESCRIPTIONS = {
         "city": "City/locality name as shown in the kiedyodpady.pl UI.",
         "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities).",
         "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
+        "lookahead_days": (
+            "Number of days ahead to fetch the schedule. "
+            "Defaults to 365, matching the official Android app."
+        ),
     },
 }
 
@@ -112,11 +117,13 @@ class Source:
         city: str,
         street: str | None = None,
         number: str | None = None,
+        lookahead_days: int = DEFAULT_LOOKAHEAD_DAYS,
     ):
         self._municipality = municipality.strip().lower()
         self._city = city.strip()
         self._street = street.strip() if isinstance(street, str) else None
         self._number = number.strip() if isinstance(number, str) else None
+        self._lookahead_days = int(lookahead_days)
         self._session = requests.Session()
         self._session.headers.update(
             {
@@ -213,7 +220,7 @@ class Source:
         waste_type_map = self._get_waste_type_map()
 
         today = date.today()
-        date_to = today + timedelta(days=DEFAULT_DAYS)
+        date_to = today + timedelta(days=self._lookahead_days)
         payload = {
             "from": today.isoformat(),
             "to": date_to.isoformat(),
