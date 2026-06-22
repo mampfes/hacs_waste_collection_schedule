@@ -17771,6 +17771,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Gemeinde",
           "number": "Nummer",
           "street": "Straße"
@@ -17785,6 +17786,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Gemeinde",
           "number": "Nummer",
           "street": "Straße"

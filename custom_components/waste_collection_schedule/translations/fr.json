@@ -17555,6 +17555,7 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Municipalité",
           "number": "Numéro",
           "street": "Rue"
@@ -17569,6 +17570,7 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Municipalité",
           "number": "Numéro",
           "street": "Rue"

@@ -17439,6 +17439,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Municipality",
           "number": "Number",
           "street": "Street"
@@ -17453,6 +17454,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Municipality",
           "number": "Number",
           "street": "Street"

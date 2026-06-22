@@ -18198,6 +18198,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City Name",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Municipality",
           "number": "House Number",
           "street": "Street Name"
@@ -18205,6 +18206,7 @@
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "city": "City/locality name as shown in the kiedyodpady.pl UI.",
+          "lookahead_days": "Number of days ahead to fetch the schedule. Defaults to 365, matching the official Android app.",
           "municipality": "Subdomain slug for your municipality on kiedyodpady.pl, e.g. 'pabianice' for pabianice.kiedyodpady.pl.",
           "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
           "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities)."
@@ -18216,12 +18218,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "City Name",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Municipality",
           "number": "House Number",
           "street": "Street Name"
         },
         "data_description": {
           "city": "City/locality name as shown in the kiedyodpady.pl UI.",
+          "lookahead_days": "Number of days ahead to fetch the schedule. Defaults to 365, matching the official Android app.",
           "municipality": "Subdomain slug for your municipality on kiedyodpady.pl, e.g. 'pabianice' for pabianice.kiedyodpady.pl.",
           "number": "House number / address entry as shown in the kiedyodpady.pl UI (optional).",
           "street": "Street name as shown in the kiedyodpady.pl UI (optional for some localities)."

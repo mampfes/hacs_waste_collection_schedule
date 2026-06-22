@@ -17529,6 +17529,7 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Municipality",
           "number": "Numero",
           "street": "Strada"
@@ -17543,6 +17544,7 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
+          "lookahead_days": "Lookahead Days",
           "municipality": "Municipality",
           "number": "Numero",
           "street": "Strada"
