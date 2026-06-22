@@ -1,34 +1,80 @@
-from datetime import datetime
+import logging
+from typing import final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.WhitespaceWRP import WhitespaceClient
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service.WhitespaceWRP import (
+    WhitespaceParser,
+    WhitespaceRetriever,
+)
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+    preserved,
+    resolve,
+)
 
-TITLE = "Waverley Borough Council"
-DESCRIPTION = "Source for www.waverley.gov.uk services for Waverley Borough Council."
-URL = "https://waverley.gov.uk"
-TEST_CASES = {
-    "Example": {
-        "address_postcode": "GU8 5QQ",
-        "address_name_numer": "1",
-        "address_street": "Gasden Drive",
-    },
-    "Example No Postcode Space": {
-        "address_postcode": "GU85QQ",
-        "address_name_numer": "1",
-        "address_street": "Gasden Drive",
-    },
+# Declarative source on the shared Whitespace WRP components (WhitespaceRetriever
+# + WhitespaceParser). classify() maps the council's open-ended type labels onto
+# canonical WasteTypes; the legacy ``address_name_numer`` spelling is kept so
+# existing configurations continue to work.
+
+_LOGGER = logging.getLogger(__name__)
+
+_TYPE_MAP = {
+    "Domestic Waste": GENERAL_WASTE,
+    "Recycling": RECYCLABLES,
+    "Garden Waste": GARDEN_WASTE,
+    "Food Waste": FOOD_WASTE,
 }
-ICON_MAP = {
-    "Domestic Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden Waste": Icons.GARDEN,
-    "Food Waste": Icons.BIO_KITCHEN,
-}
-
-API_URL = "https://wav-wrp.whitespacews.com/"
 
 
-class Source:
+@final
+class Source(BaseSource):
+    TITLE = "Waverley Borough Council"
+    DESCRIPTION = (
+        "Source for www.waverley.gov.uk services for Waverley Borough Council."
+    )
+    URL = "https://waverley.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
+    API_URL = "https://wav-wrp.whitespacews.com/"
+
+    TEST_CASES = {
+        "Example": {
+            "address_postcode": "GU8 5QQ",
+            "address_name_numer": "1",
+            "address_street": "Gasden Drive",
+        },
+        "Example No Postcode Space": {
+            "address_postcode": "GU85QQ",
+            "address_name_numer": "1",
+            "address_street": "Gasden Drive",
+        },
+    }
+
+    PARAMS = [
+        text_field("address_postcode", "Postcode"),
+        text_field("address_name_numer", "House name/number", optional=True),
+        text_field("address_street", "Street", optional=True),
+        text_field("street_town", "Town", optional=True),
+    ]
+
+    parse_date = date_parsers.for_format("%d/%m/%Y")
+
+    retrieve = WhitespaceRetriever(
+        name_number="address_name_numer",
+        postcode="address_postcode",
+        street="address_street",
+        town="street_town",
+    )
+    parse = WhitespaceParser()
+
     def __init__(
         self,
         address_name_numer=None,
@@ -36,28 +82,22 @@ class Source:
         street_town=None,
         address_postcode=None,
     ):
-        self._address_name_numer = address_name_numer
-        self._address_street = address_street
-        self._street_town = street_town
-        self._address_postcode = address_postcode
-        self._client = WhitespaceClient(API_URL)
-
-    def fetch(self):
-        schedule = self._client.fetch_schedule(
-            address_name_number=self._address_name_numer,
-            address_postcode=self._address_postcode,
-            address_street=self._address_street,
-            street_town=self._street_town,
+        super().__init__(
+            address_postcode=address_postcode,
+            address_name_numer=address_name_numer,
+            address_street=address_street,
+            street_town=street_town,
         )
 
-        entries = []
-        for date_str, type_str in schedule:
-            collection_type = type_str.replace(" Collection Service", "")
-            entries.append(
-                Collection(
-                    date=datetime.strptime(date_str, "%d/%m/%Y").date(),
-                    t=type_str,
-                    icon=ICON_MAP.get(collection_type),
-                )
-            )
-        return entries
+    def classify(self, record) -> Collection | None:
+        date_str, type_str = record
+        cleaned = type_str.replace(" Collection Service", "").strip()
+        try:
+            date = self.parse_date(date_str)
+        except ValueError:
+            _LOGGER.info("Skipped %s: unexpected date format", date_str)
+            return None
+        return Collection(
+            date=date,
+            waste_type=_TYPE_MAP.get(cleaned) or resolve(cleaned) or preserved(cleaned),
+        )
