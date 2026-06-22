@@ -15,6 +15,16 @@ from dataclasses import dataclass, field
 
 _LOGGER = logging.getLogger(__name__)
 
+# Languages every canonical WasteType is translated into, matching the project's
+# config-flow translation set (en/de/it/fr/nl). The display name is localised
+# server-side from the Home Assistant UI language because the type appears in
+# free-text surfaces (calendar event summaries, composed sensor states, list
+# attributes) that HA does not localise per-user; an enum/translation_key state
+# would only cover a fixed value set and not these surfaces. Any HA language
+# outside this set falls back to English. Add a language here AND to the
+# config-flow allowlist (update_docu_links.LANGUAGES) to keep the two in step.
+SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl")
+
 
 @dataclass(frozen=True)
 class WasteType:
@@ -62,6 +72,7 @@ GENERAL_WASTE = WasteType(
         "de": "Restmüll",
         "fr": "Ordures ménagères",
         "it": "Rifiuto indifferenziato",
+        "nl": "Restafval",
     },
     aliases={
         "en": [
@@ -81,6 +92,7 @@ GENERAL_WASTE = WasteType(
         ],
         "fr": ["déchets résiduels", "ordures"],
         "it": ["indifferenziato", "secco", "secco residuo"],
+        "nl": ["restafval", "restafvalcontainer"],
     },
 )
 
@@ -93,6 +105,7 @@ RECYCLABLES = WasteType(
         "de": "Wertstoffe",
         "fr": "Recyclage",
         "it": "Differenziata",
+        "nl": "Recycling",
     },
     aliases={
         "en": [
@@ -114,6 +127,7 @@ RECYCLABLES = WasteType(
         ],
         "fr": ["recyclables", "emballages", "tri sélectif", "bac jaune"],
         "it": ["imballaggi", "plastica e lattine", "multimateriale"],
+        "nl": ["pmd", "plastic", "verpakkingen", "plastic verpakkingen"],
     },
 )
 
@@ -126,12 +140,14 @@ ORGANIC = WasteType(
         "de": "Biomüll",
         "fr": "Biodéchets",
         "it": "Organico",
+        "nl": "GFT-afval",
     },
     aliases={
         "en": ["organic", "biowaste", "fogo", "food and garden"],
         "de": ["bioabfall", "biotonne", "bio"],
         "fr": ["déchets organiques"],
         "it": ["umido", "frazione organica"],
+        "nl": ["gft", "groente fruit tuinafval", "bioafval"],
     },
 )
 
@@ -144,6 +160,7 @@ PAPER = WasteType(
         "de": "Altpapier",
         "fr": "Papier",
         "it": "Carta e cartone",
+        "nl": "Papier en karton",
     },
     aliases={
         "en": ["paper", "cardboard", "paper and card", "blue bin"],
@@ -157,6 +174,7 @@ PAPER = WasteType(
         ],
         "fr": ["carton", "papiers", "papier et carton"],
         "it": ["carta", "cartone"],
+        "nl": ["papier", "oud papier", "karton"],
     },
 )
 
@@ -169,11 +187,13 @@ GLASS = WasteType(
         "de": "Glas",
         "fr": "Verre",
         "it": "Vetro",
+        "nl": "Glas",
     },
     aliases={
         "en": ["glass bottles"],
         "de": ["altglas", "glascontainer"],
         "it": ["vetro e lattine"],
+        "nl": ["glasbak"],
     },
 )
 
@@ -186,11 +206,13 @@ FOOD_WASTE = WasteType(
         "de": "Lebensmittelabfall",
         "fr": "Déchets alimentaires",
         "it": "Rifiuto alimentare",
+        "nl": "Etensresten",
     },
     aliases={
         "en": ["food", "food scraps", "food caddy"],
         "de": ["speisereste", "küchenabfälle"],
         "it": ["scarti alimentari"],
+        "nl": ["etensresten", "voedselresten", "keukenafval"],
     },
 )
 
@@ -203,6 +225,7 @@ GARDEN_WASTE = WasteType(
         "de": "Grünschnitt",
         "fr": "Déchets verts",
         "it": "Rifiuto verde",
+        "nl": "Tuinafval",
     },
     aliases={
         "en": [
@@ -226,6 +249,7 @@ GARDEN_WASTE = WasteType(
         ],
         "fr": ["déchets de jardin", "sapins de noël"],
         "it": ["sfalci e potature", "verde"],
+        "nl": ["tuinafval", "snoeiafval", "groenafval", "takken"],
     },
 )
 
@@ -238,12 +262,14 @@ BULKY_WASTE = WasteType(
         "de": "Sperrmüll",
         "fr": "Encombrants",
         "it": "Ingombranti",
+        "nl": "Grofvuil",
     },
     aliases={
         "en": ["bulky", "bulk waste", "hard waste", "large items"],
         "de": ["sperrgut", "grobmüll"],
         "fr": ["objets encombrants"],
         "it": ["rifiuti ingombranti"],
+        "nl": ["grofvuil", "grof huishoudelijk afval"],
     },
 )
 
@@ -256,6 +282,7 @@ HAZARDOUS = WasteType(
         "de": "Problemstoff",
         "fr": "Déchets dangereux",
         "it": "Rifiuti pericolosi",
+        "nl": "Klein chemisch afval",
     },
     aliases={
         "en": ["hazardous", "household hazardous waste", "hhw", "chemicals"],
@@ -269,6 +296,7 @@ HAZARDOUS = WasteType(
             "giftmüll",
         ],
         "fr": ["déchets toxiques"],
+        "nl": ["kca", "chemisch afval", "klein chemisch afval"],
     },
 )
 
@@ -281,6 +309,7 @@ ELECTRONICS = WasteType(
         "de": "Elektroschrott",
         "fr": "Déchets électroniques",
         "it": "Rifiuti elettronici",
+        "nl": "Elektronisch afval",
     },
     aliases={
         "en": ["electronics", "e-waste", "weee", "white goods", "appliances"],
@@ -296,6 +325,7 @@ ELECTRONICS = WasteType(
         ],
         "fr": ["deee", "électroménager"],
         "it": ["raee"],
+        "nl": ["e-waste", "elektrische apparaten", "wit- en bruingoed", "elektronica"],
     },
 )
 
@@ -308,6 +338,7 @@ OTHER = WasteType(
         "de": "Sonstiges",
         "fr": "Autres",
         "it": "Altro",
+        "nl": "Overig",
     },
 )
 
@@ -384,5 +415,5 @@ def preserved(label: str) -> WasteType:
         id=f"preserved:{_norm(label)}",
         icon=OTHER.icon,
         color=OTHER.color,
-        names={lang: text for lang in ("en", "de", "fr", "it")},
+        names={lang: text for lang in SUPPORTED_LANGUAGES},
     )

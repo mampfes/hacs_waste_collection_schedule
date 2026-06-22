@@ -197,12 +197,12 @@ Do not carry a private weekday or month dict in your source. Use these shared, m
 
 ## Waste types and icons
 
-Each collection is typed by a canonical `WasteType` from `waste_collection_schedule.waste_types`. The eleven canonical types are `GENERAL_WASTE`, `RECYCLABLES`, `ORGANIC`, `PAPER`, `GLASS`, `FOOD_WASTE`, `GARDEN_WASTE`, `BULKY_WASTE`, `HAZARDOUS`, `ELECTRONICS` and `OTHER`. Each carries its own id, colour, icon and names in en, de, fr and it. Because the type carries the icon, a pipeline source never declares an `ICON_MAP`.
+Each collection is typed by a canonical `WasteType` from `waste_collection_schedule.waste_types`. The eleven canonical types are `GENERAL_WASTE`, `RECYCLABLES`, `ORGANIC`, `PAPER`, `GLASS`, `FOOD_WASTE`, `GARDEN_WASTE`, `BULKY_WASTE`, `HAZARDOUS`, `ELECTRONICS` and `OTHER`. Each carries its own id, colour, icon and names in en, de, fr, it and nl (the same languages as the config-flow translations). Because the type carries the icon, a pipeline source never declares an `ICON_MAP`.
 
 A transformer turns each record's label into a `WasteType` in this order:
 
 1. The source's `type_value_map`, if the label is listed.
-2. `resolve(label)`: match the label against the canonical names and aliases across en, de, fr and it.
+2. `resolve(label)`: match the label against the canonical names and aliases across en, de, fr, it and nl.
 3. `preserved(label)`: keep the original label verbatim as its own type.
 
 The label is **never** silently collapsed to `OTHER`. An unknown label is preserved so the user still sees a meaningful name. Only list a label in `type_value_map` when the shared vocabulary cannot resolve it (for example a frequency-suffixed residual-waste label), or when you want to force a particular canonical type.
@@ -346,7 +346,7 @@ Set the class metadata correctly so generation produces the right entries. An in
 
 ## Legacy module-level sources
 
-The earlier contract is still supported and powers most existing sources. A module defines `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES`, an `ICON_MAP` of `Icons` enum members, optional `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS`, and a `Source` class with `__init__(**kwargs)` and `fetch() -> list[Collection]` that returns `Collection(date, t, icon=...)`. The CI-enforced rules (icon enum, country allowlist, the `en`/`de`/`it`/`fr` language allowlist) apply to both styles. New sources should prefer the pipeline, but a bug fix to an existing legacy source does not need to convert it.
+The earlier contract is still supported and powers most existing sources. A module defines `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES`, an `ICON_MAP` of `Icons` enum members, optional `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS`, and a `Source` class with `__init__(**kwargs)` and `fetch() -> list[Collection]` that returns `Collection(date, t, icon=...)`. The CI-enforced rules (icon enum, country allowlist, the `en`/`de`/`it`/`fr`/`nl` language allowlist) apply to both styles. New sources should prefer the pipeline, but a bug fix to an existing legacy source does not need to convert it.
 
 ## Test the new source file
 
