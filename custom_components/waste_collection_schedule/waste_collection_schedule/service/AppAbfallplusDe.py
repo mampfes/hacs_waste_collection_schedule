@@ -5,17 +5,43 @@ import time
 import uuid
 from collections import Counter, OrderedDict
 from datetime import date, datetime
-from urllib.parse import unquote
+from typing import TYPE_CHECKING
 
 import requests
 from bs4 import BeautifulSoup, Tag
 
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequiredWithSuggestions,
-)
+from ..parsers import Parser
+from ..retrievers import RetrieverFunc
 
+if TYPE_CHECKING:
+    from ..base_source import BaseSource
+
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture)
+#
+# "Apps by Abfall+" is a live-discovery platform: there is no static registry of
+# regions. Each app walks a server-side wizard (init for a token, then a
+# Bundesland -> Landkreis -> Kommune -> (Bezirk) -> Straße -> (Hausnummer)
+# cascade), selects every waste type, validates, and finally downloads a
+# struktur.xml.zip holding the categories and pickup dates.
+#
+# That stateful acquisition belongs to the platform, so it lives here:
+#
+#     retrieve = AppAbfallplusRetriever()
+#     parse    = AppAbfallplusParser()
+#
+# AppAbfallplusRetriever runs the whole wizard on the shared session, stashes
+# the AppAbfallplusDe client on the source (the parser needs the subtitle hints
+# it gathered while walking), and returns the raw struktur response.
+# AppAbfallplusParser interprets that XML into (category, date) records; the
+# source then maps each German category name onto a canonical WasteType via the
+# shared multilingual vocabulary. ``discover_choices`` replays the same cascade
+# to enumerate one level's options for the config flow
+# (config_params.cascading_select).
+# --------------------------------------------------------------------------- #
+
+# Discovery seed: the AbfallPlus app ids known to use this platform. Used by the
+# offline ``generate_supported_services`` tooling, not at runtime.
 SUPPORTED_APPS = [
     "de.albagroup.app",
     "de.k4systems.abfallinfocw",
@@ -128,6 +154,9 @@ SUPPORTED_APPS = [
     "de.cmcitymedia.shawaste",
 ]
 
+# The provider registry for the source's listings. Each app id maps to the
+# region name(s) it serves (collected offline by ``generate_supported_services``
+# and curated here). The source turns these into discoverable Region listings.
 SUPPORTED_SERVICES = {
     "de.albagroup.app": [
         "Berlin",
@@ -138,17 +167,7 @@ SUPPORTED_SERVICES = {
         "Tübingen",
     ],
     "de.k4systems.abfallinfocw": ["Kreis Calw"],
-    "de.k4systems.abfallinfoapp": [
-        "Kreis Euskirchen",
-        "Bad Münstereifel",
-        "Dahlem",
-        "Hellenthal",
-        "Kall",
-        "Mechernich",
-        "Schleiden",
-        "Weilerswist",
-        "Zülpich",
-    ],
+    "de.k4systems.abfallinfoapp": ["Mechernich und Kommunen"],
     "de.k4systems.abfallappes": ["Landkreis Esslingen"],
     "de.k4systems.egst": ["Kreis Steinfurt"],
     "de.idcontor.abfallwbd": ["Duisburg"],
@@ -412,7 +431,7 @@ VERIFY_SSL = True
 
 
 def extract_onclicks(
-    data: BeautifulSoup | str | requests.Response, hnr=False
+    data: "BeautifulSoup | str | requests.Response", hnr=False
 ) -> list[list]:
     if isinstance(data, requests.Response):
         data = data.text
@@ -469,11 +488,15 @@ class AppAbfallplusDe:
         bezirk_id="",
         strasse_id=None,
         hnr_id=None,
-    ) -> None:
+        session=None,
+    ):
         self._client = str(uuid.uuid4())
 
         self._app_id = app_id
-        self._session = requests.Session()
+        # Run on the shared source.session when one is provided (BaseSource
+        # pipeline); fall back to a private requests.Session for the offline
+        # discovery tooling at the bottom of this module.
+        self._session = session if session is not None else requests.Session()
         self._bundesland_search = bundesland
         self._landkreis_search = landkreis
         self._region_search = kommune
@@ -551,7 +574,7 @@ class AppAbfallplusDe:
             )
         return r
 
-    def get_kom_or_lk_name(self) -> str | bool:
+    def get_kom_or_lk_name(self) -> "str | bool":
         """Get the landkreis or kommune name if the app is designed for a specific one."""
         if self._kommune_id and "|" in self._kommune_id:
             if self._kommune_id.split("|")[0] != "0":
@@ -574,7 +597,6 @@ class AppAbfallplusDe:
         soup = BeautifulSoup(r.text, features="html.parser")
         if not (inputs := soup.find_all("input")):
             return
-
         for input in inputs:
             if input.attrs["name"] == "f_id_bundesland":
                 self._bundesland_id = input.attrs["value"]
@@ -654,8 +676,6 @@ class AppAbfallplusDe:
             data["id_bundesland"] = self._bundesland_id
         if self._landkreis_id:
             data["id_landkreis"] = self._landkreis_id
-        # if self._kommune_id:
-        #     data["id_kommune"] = self._kommune_id
         r = self._request(region_key_name + "/", data=data)
         r.raise_for_status()
         regions = []
@@ -669,13 +689,13 @@ class AppAbfallplusDe:
                     "kommune_id": a[5].get("set_id_kommune"),
                 }
             )
-            # name = a.text.strip()
-            # id = a.attrs()["onclick"].split("'")[1]
         if region_key_name == "kommune" and regions == []:
             return self.get_kommunen("region")
         return regions
 
     def select_kommune(self, kommune=None):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
         if kommune:
             self._region_search = kommune
 
@@ -729,6 +749,8 @@ class AppAbfallplusDe:
         return bezirke
 
     def select_bezirk(self, bezirk=None) -> bool:
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
         if bezirk:
             self._bezirk_search = bezirk
 
@@ -786,6 +808,11 @@ class AppAbfallplusDe:
         return streets
 
     def select_street(self, street=None):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+            SourceArgumentRequiredWithSuggestions,
+        )
+
         if street:
             self._strasse_search = street
         streets = self.get_streets()
@@ -794,8 +821,8 @@ class AppAbfallplusDe:
         if self._strasse_search is None and len(streets) == 0:
             return
         elif self._strasse_search is None:
-            SourceArgumentRequiredWithSuggestions(
-                "strasse", [s["name"] for s in streets]
+            raise SourceArgumentRequiredWithSuggestions(
+                "strasse", "street is required", [s["name"] for s in streets]
             )
 
         for street in streets:
@@ -832,13 +859,18 @@ class AppAbfallplusDe:
             hnrs.append(
                 {
                     "id": a[0],
-                    "name": unquote(a[0]).split("|")[0],
+                    "name": a[0].split("|")[0],
                     "f_id_strasse": a[6] if len(a) > 6 else None,
                 }
             )
         return hnrs
 
     def select_hnr(self, hnr=None):
+        from waste_collection_schedule.exceptions import (
+            SourceArgumentNotFoundWithSuggestions,
+            SourceArgumentRequiredWithSuggestions,
+        )
+
         if hnr:
             self._hnr_search = hnr
         hnrs = self.get_hnrs()
@@ -848,7 +880,7 @@ class AppAbfallplusDe:
             return
         elif self._hnr_search is None:
             raise SourceArgumentRequiredWithSuggestions(
-                "hnr", [hnr["name"] for hnr in hnrs]
+                "hnr", "house number is required", [hnr["name"] for hnr in hnrs]
             )
         for hnr in hnrs:
             if compare(hnr["name"], self._hnr_search, remove_space=True):
@@ -918,7 +950,6 @@ class AppAbfallplusDe:
 
     def validate(self):
         data = {
-            # "f_id_region": self._region_id if hasattr(self, "_region_id") else "",
             "f_id_bundesland": self._bundesland_id,
             "f_id_landkreis": self._landkreis_id,
             "f_id_kommune": self._kommune_id,
@@ -941,18 +972,19 @@ class AppAbfallplusDe:
         r = self._request("finish/", data=data)
         r.raise_for_status()
 
-    def get_collections(self) -> list[dict[str, date | str]]:
-        """Get collections for the selected address as a list of dicts.
+    def fetch_struktur(self) -> requests.Response:
+        """Download the struktur.xml.zip (raw, undecoded). Pure I/O.
 
-        Returns:
-            list[dict[str, date|str]]: all collection dates
+        Issues the version handshake the app makes before each download, then
+        returns the struktur response without interpreting it; that is the
+        parser's job.
         """
-        r = self._request(
+        self._request(
             "version.xml",
             base=API_BASE,
             data={"client": self._client, "app_id": self._app_id},
         )
-        r = self._request(
+        self._request(
             "version.xml",
             params={"renew": 1},
             base=API_BASE,
@@ -964,8 +996,43 @@ class AppAbfallplusDe:
             data={"client": self._client, "app_id": self._app_id},
         )
         r.raise_for_status()
+        return r
 
-        soup = BeautifulSoup(r.text, "xml")
+    def walk_to_struktur(self) -> requests.Response:
+        """Run the whole wizard and return the raw struktur response. Pure I/O.
+
+        Walks the same cascade the legacy ``generate_calendar`` did (init,
+        Bundesland/Landkreis/Kommune/Bezirk/Straße/Hausnummer selection, waste
+        type selection, validate), leaving the gathered ``_needs_subtitle`` on
+        the instance for the parser, then downloads the struktur.
+        """
+        self.init_connection()
+        if self._bundesland_search:
+            self.select_bundesland()
+        if self._landkreis_search:
+            self.select_landkreis()
+        if self._region_search:
+            self.select_kommune()
+        finished = False
+        if self._bezirk_search:
+            finished = self.select_bezirk()
+        if not finished:
+            self.select_street()
+            if self._hnrs:
+                self.select_hnr()
+        self.select_all_waste_types()
+        self.validate()
+        return self.fetch_struktur()
+
+    @staticmethod
+    def parse_struktur(text: str, needs_subtitle: list[str]) -> list[dict]:
+        """Interpret the struktur XML into ``[{category, date}]`` records.
+
+        Pure parsing, no I/O: it reads the category list and the appointment
+        list out of the XML, disambiguating duplicate category names with their
+        subtitle when needed.
+        """
+        soup = BeautifulSoup(text, "xml")
         soup_categories = soup.find("key", text="categories")
         if not soup_categories:
             raise Exception("No categories found.")
@@ -1000,7 +1067,7 @@ class AppAbfallplusDe:
 
         categories = {}
         for cat_id, name, subtitle in raw_categories:
-            if any(s_id in cat_id for s_id in self._needs_subtitle) or (
+            if any(s_id in cat_id for s_id in needs_subtitle) or (
                 name_counts[name] > 1 and subtitle
             ):
                 name += " - " + subtitle
@@ -1029,32 +1096,15 @@ class AppAbfallplusDe:
 
         return collections
 
-    def generate_calendar(self) -> list[dict[str, date | str]]:
-        """Run all necessary function and return the output of get_collections.
+    def get_collections(self) -> "list[dict[str, date | str]]":
+        """Download and parse the struktur in one step (offline tooling)."""
+        r = self.fetch_struktur()
+        return self.parse_struktur(r.text, self._needs_subtitle)
 
-        Returns:
-            list[dict[str, date|str]]: all collection dates
-        """
-        self.init_connection()
-        if self._bundesland_search:
-            self.select_bundesland()
-        if self._landkreis_search:
-            self.select_landkreis()
-        if self._region_search:
-            self.select_kommune()
-        finished = False
-        if self._bezirk_search:
-            finished = self.select_bezirk()
-        if not finished:
-            self.select_street()
-            if self._hnrs:
-                self.select_hnr()
-        self.select_all_waste_types()
-        self.validate()
-        return self.get_collections()
-
-    def test(self):
-        print(self.generate_calendar())
+    def generate_calendar(self) -> "list[dict[str, date | str]]":
+        """Run the full wizard and return the parsed collections (offline tooling)."""
+        r = self.walk_to_struktur()
+        return self.parse_struktur(r.text, self._needs_subtitle)
 
     def get_suppoted_by_bl(self):
         supported = []
@@ -1087,29 +1137,138 @@ class AppAbfallplusDe:
             self._hnr = None
             self._hnr_id = None
 
-    def debug(self):
-        r = "AppAbfallplusDe("
-        r += f"""app_id={self._app_id},
-        hnr={self._hnr},
-        bundesland_id={self._bundesland_id},
-        landkreis_id={self._landkreis_id},
-        kommune_id={self._kommune_id},
-        bezirk_id={self._bezirk_id},
-        strasse_id={self._strasse_id}
-        -- SEARCH --
-        (
-            bundesland_search={self._bundesland_search},
-            landkreis_search={self._landkreis_search},
-            region_search={self._region_search},
-            strasse_search={self._strasse_search},
-            hnr_search={self._hnr_search},
-        )
-        """
-        return r + ")"
+
+# --------------------------------------------------------------------------- #
+# BaseSource pipeline components
+# --------------------------------------------------------------------------- #
+
+
+def _client_from_params(params: dict, session=None) -> AppAbfallplusDe:
+    """Build an AppAbfallplusDe client from a source's params.
+
+    ``hnr`` may arrive as an int (some TEST_CASES use it); coerce to str so the
+    name comparison the cascade does behaves the same as the legacy source.
+    """
+    hnr = params.get("hnr")
+    return AppAbfallplusDe(
+        app_id=params["app_id"],
+        kommune=params.get("city"),
+        strasse=params.get("strasse"),
+        hnr=str(hnr) if isinstance(hnr, int) else hnr,
+        bundesland=params.get("bundesland"),
+        landkreis=params.get("landkreis"),
+        bezirk=params.get("bezirk"),
+        session=session,
+    )
+
+
+class AppAbfallplusRetriever(RetrieverFunc):
+    """Walk the AbfallPlus app wizard and return the raw struktur response.
+
+    Reads ``app_id`` plus the cascade fields (``bundesland`` / ``landkreis`` /
+    ``city`` / ``bezirk`` / ``strasse`` / ``hnr``) from ``source.params``,
+    stashing the client on the source so the parser can read the subtitle hints
+    it gathered while walking.
+
+    The wizard drives a stateful, cookie-bearing POST flow built on a
+    ``requests.Session`` (prepared requests carrying the session cookies), which
+    the curl_cffi ``source.session`` does not expose, so the client keeps its own
+    ``requests.Session`` rather than the shared one. The endpoint is a plain API
+    (no Cloudflare), so browser impersonation is not needed here.
+    """
+
+    def __call__(self, source: "BaseSource") -> requests.Response:
+        client = _client_from_params(source.params)
+        response = client.walk_to_struktur()
+        # The parser needs the subtitle hints gathered during the walk.
+        source._appabfallplus_client = client  # type: ignore[attr-defined]
+        return response
+
+
+class AppAbfallplusParser(Parser["list[dict]"]):
+    """Interpret the struktur response into ``[{category, date}]`` records.
+
+    Reads the ``_needs_subtitle`` hints the retriever gathered (off the source)
+    so duplicate category names are disambiguated exactly as before. Falls back
+    to no hints when run standalone against a cached response.
+    """
+
+    def __call__(
+        self, response: requests.Response, source: "BaseSource | None" = None
+    ) -> "list[dict]":
+        client = getattr(source, "_appabfallplus_client", None)
+        needs_subtitle = client._needs_subtitle if client is not None else []
+        return AppAbfallplusDe.parse_struktur(response.text, needs_subtitle)
+
+
+def discover_choices(
+    app_id: str, field: str, selections: dict
+) -> list[tuple[str, str]]:
+    """Options for one cascade level given the levels chosen so far.
+
+    Implements the config_params.cascading_select contract for the source's
+    ``get_choices``. Replays the live Bundesland -> Landkreis -> Kommune ->
+    Bezirk -> Straße -> Hausnummer discovery and returns the options for
+    ``field`` as ``(name, name)`` pairs (the wizard stores names, not opaque
+    ids), or ``[]`` when that level does not apply for the current selections.
+    """
+    client = _client_from_params({"app_id": app_id, **selections})
+    try:
+        client.init_connection()
+        # Bundesland / Landkreis only appear for apps with no Kommune at the top
+        # level. Detect that the way the wizard does.
+        needs_bundesland = client.get_kommunen() == []
+
+        def names(items: list) -> list[tuple[str, str]]:
+            return [(i["name"], i["name"]) for i in items if i.get("name")]
+
+        if field == "bundesland":
+            return names(client.get_bundeslaender()) if needs_bundesland else []
+        if field == "landkreis":
+            if not needs_bundesland:
+                return []
+            if selections.get("bundesland"):
+                client.select_bundesland()
+            return names(client.get_landkreise())
+        if field == "city":
+            if needs_bundesland:
+                if selections.get("bundesland"):
+                    client.select_bundesland()
+                if selections.get("landkreis"):
+                    client.select_landkreis()
+            return names(client.get_kommunen())
+
+        # The remaining levels need the Kommune resolved first.
+        if needs_bundesland:
+            if selections.get("bundesland"):
+                client.select_bundesland()
+            if selections.get("landkreis"):
+                client.select_landkreis()
+        if selections.get("city"):
+            client.select_kommune()
+
+        if field == "bezirk":
+            return names(client.get_bezirke())
+
+        if selections.get("bezirk"):
+            client.select_bezirk()
+
+        if field == "strasse":
+            return names(client.get_streets())
+
+        if field == "hnr":
+            if selections.get("strasse"):
+                client.select_street()
+            return names(client.get_hnrs())
+    except requests.exceptions.HTTPError:
+        return []
+    except Exception:
+        return []
+    return []
 
 
 def generate_supported_services(suppoted_apps=SUPPORTED_APPS):
-    supported_services = {}
+    supported_services: dict = {}
     for index, app_id in enumerate(suppoted_apps):
         print(f"starting {index + 1}/{len(suppoted_apps)}: {app_id}")
         supported_services[app_id] = []
@@ -1133,65 +1292,3 @@ def generate_supported_services(suppoted_apps=SUPPORTED_APPS):
             print(f"App {app_id} not supported or not working.")
             continue
     print("\n\n\nFINAL:" + json.dumps(supported_services, indent=4, ensure_ascii=False))
-
-
-def get_newly_supported_apps():
-    """Parse the Play Store page to get the app IDs of the newly supported apps."""
-    # DO NOT MOVE THIS IMPORT TO THE TOP IT MAY BREAK THE SCRIPT IF SELENIUM IS NOT INSTALLED
-    import time
-
-    from selenium import webdriver
-    from selenium.webdriver.firefox.options import Options
-    from selenium.webdriver.firefox.service import Service as FirefoxService
-    from webdriver_manager.firefox import GeckoDriverManager
-
-    base_url = "https://play.google.com/store/apps/developer?id=Abfall%2B"
-
-    # Setup Firefox options
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-
-    # Initialize the Firefox driver
-    driver = webdriver.Firefox(
-        service=FirefoxService(GeckoDriverManager().install()), options=options
-    )
-    driver.get(base_url)
-
-    app_ids = set()
-    last_height = driver.execute_script("return document.body.scrollHeight")
-
-    while True:
-        # Scroll down to the bottom
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(2)  # Wait to load the page
-
-        # Extract app IDs
-        soup = BeautifulSoup(driver.page_source, "html.parser")
-        for link in soup.find_all("a"):
-            href = link.get("href")
-            if link and "/store/apps/details?id=" in href:
-                app_id = href.split("=")[-1]
-                app_ids.add(app_id)
-
-        # Calculate new scroll height and compare with last scroll height
-        new_height = driver.execute_script("return document.body.scrollHeight")
-        if new_height == last_height:
-            break
-        last_height = new_height
-
-    driver.quit()
-    # print changes
-    print(f"Added: {app_ids - set(SUPPORTED_APPS)}")
-
-
-if __name__ == "__main__":
-    # get_newly_supported_apps()
-    generate_supported_services()
-
-    # Check if the app is supported and works with user agent
-    # app = AppAbfallplusDe("de.biberach.abfallapp", "", "", "")
-    # app.init_connection()
-    # print(app.get_kom_or_lk_name())
-    # print(app.get_kommunen())
