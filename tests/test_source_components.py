@@ -495,6 +495,61 @@ def test_uk_cloud9_client_falls_back_to_secondary_domain(monkeypatch) -> None:
     ]
 
 
+def test_koma_pl_resolves_house_number_and_parses_schedule() -> None:
+    module = _get_module("koma_pl")
+
+    posesje = [
+        {"numer_posesji": "ND00050", "numer_domu": "4/1", "ulica": "Kanałowa"},
+        {"numer_posesji": "1941", "numer_domu": "5", "ulica": "Kanałowa"},
+    ]
+    schedule = {
+        "rok": "2026",
+        "odbior": [
+            {"data": "2026-01-07", "typ": "Bio"},
+            {"data": "2026-01-15", "typ": "Zmieszane"},
+            {"data": "bad-date", "typ": "Papier"},
+        ],
+    }
+
+    class _Response:
+        def __init__(self, payload):
+            self._payload = payload
+
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self):
+            return self._payload
+
+    requested = []
+
+    class _Session:
+        def get(self, url, params=None, timeout=None):
+            requested.append((url, params))
+            if "apiharmonogram" in url:
+                return _Response(schedule)
+            return _Response(posesje)
+
+    with patch.object(module.requests, "Session", lambda **kwargs: _Session()):
+        entries = module.Source(
+            gmina="Nowy Dwór Gdański",
+            miejscowosc="Nowy Dwór Gdański",
+            ulica="Kanałowa",
+            numer_domu="5",
+        ).fetch()
+
+    # House number "5" must resolve to property id 1941 in the schedule request.
+    assert any(
+        params and params.get("value") == "Nowy Dwór Gdański/1941"
+        for _, params in requested
+    )
+    # Valid dates parsed, invalid date skipped.
+    assert [(entry.date.isoformat(), entry.type) for entry in entries] == [
+        ("2026-01-07", "Bio"),
+        ("2026-01-15", "Zmieszane"),
+    ]
+
+
 def test_uk_cloud9_client_requires_api_domains() -> None:
     module = import_module("waste_collection_schedule.service.uk_cloud9_apps")
 
