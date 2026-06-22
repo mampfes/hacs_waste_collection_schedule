@@ -15,163 +15,6 @@ from waste_collection_schedule.retrievers import RetrieverFunc
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
 
-SERVICE_DOMAINS = [
-    {
-        "title": "Stadt Aachen",
-        "url": "https://www.aachen.de",
-        "service_id": "aachen",
-    },
-    {
-        "title": "Abfallwirtschaft Stadt Nürnberg",
-        "url": "https://www.nuernberg.de/",
-        "service_id": "nuernberg",
-    },
-    {
-        "title": "Abfallwirtschaftsbetrieb Bergisch Gladbach",
-        "url": "https://www.bergischgladbach.de/",
-        "service_id": "aw-bgl2",
-    },
-    {
-        "title": "AWA Entsorgungs GmbH",
-        "url": "https://www.awa-gmbh.de/",
-        "service_id": "zew2",
-    },
-    {
-        "title": "AWG Kreis Warendorf",
-        "url": "https://www.awg-waf.de/",
-        "service_id": "krwaf",
-    },
-    {
-        "title": "Bergischer Abfallwirtschaftverbund",
-        "url": "https://www.bavweb.de/",
-        "service_id": "bav",
-    },
-    {
-        "title": "Kreis Coesfeld",
-        "url": "https://wbc-coesfeld.de/",
-        "service_id": "coe",
-    },
-    {
-        "title": "Stadt Cottbus",
-        "url": "https://www.cottbus.de/",
-        "service_id": "cottbus",
-    },
-    {
-        "title": "Dinslaken",
-        "url": "https://www.dinslaken.de/",
-        "service_id": "din",
-    },
-    {
-        "title": "Stadt Dorsten",
-        "url": "https://www.ebd-dorsten.de/",
-        "service_id": "dorsten",
-    },
-    {
-        "title": "EGW Westmünsterland",
-        "url": "https://www.egw.de/",
-        "service_id": "wml2",
-    },
-    {
-        "title": "Kreis Gütersloh GEG",
-        "url": "https://www.geg-gt.de/",
-        "service_id": "krwaf",
-    },
-    {
-        "title": "Halver",
-        "url": "https://www.halver.de/",
-        "service_id": "hlv",
-    },
-    {
-        "title": "Kreis Heinsberg",
-        "url": "https://www.kreis-heinsberg.de/",
-        "service_id": "krhs",
-    },
-    {
-        "title": "Kronberg im Taunus",
-        "url": "https://www.kronberg.de/",
-        "service_id": "kronberg",
-    },
-    {
-        "title": "MHEG Mülheim an der Ruhr",
-        "url": "https://www.mheg.de/",
-        "service_id": "muelheim",
-    },
-    {
-        "title": "Stadt Norderstedt",
-        "url": "https://www.betriebsamt-norderstedt.de/",
-        "service_id": "nds",
-    },
-    {
-        "title": "Kreis Pinneberg",
-        "url": "https://www.kreis-pinneberg.de/",
-        "service_id": "pi",
-    },
-    {
-        "title": "Gemeinde Roetgen",
-        "url": "https://www.roetgen.de/",
-        "service_id": "roe",
-    },
-    {
-        "title": "Stadt Solingen",
-        "url": "https://www.solingen.de/",
-        "service_id": "solingen",
-    },
-    {
-        "title": "STL Lüdenscheid",
-        "url": "https://www.stl-luedenscheid.de/",
-        "service_id": "stl",
-    },
-    {
-        "title": "GWA - Kreis Unna mbH",
-        "url": "https://www.gwa-online.de/",
-        "service_id": "unna",
-    },
-    {
-        "title": "Kreis Viersen",
-        "url": "https://www.kreis-viersen.de/",
-        "service_id": "viersen",
-    },
-    {
-        "title": "WBO Wirtschaftsbetriebe Oberhausen",
-        "url": "https://www.wbo-online.de/",
-        "service_id": "oberhausen",
-    },
-    {
-        "title": "ZEW Zweckverband Entsorgungsregion West",
-        "url": "https://zew-entsorgung.de/",
-        "service_id": "zew2",
-    },
-    #    {
-    #        "title": "'Stadt Straelen",
-    #        "url": "https://www.straelen.de/",
-    #        "service_id": "straelen",
-    #    },
-    {
-        "title": "Stadt Cuxhaven",
-        "url": "https://www.cuxhaven.de/",
-        "service_id": "cux",
-    },
-    {
-        "title": "Stadt Frankenthal",
-        "url": "https://www.frankenthal.de/",
-        "service_id": "frankenthal",
-    },
-    {
-        "title": "Abfallwirtschaftsverband Lippe",
-        "url": "https://www.abfall-lippe.de/",
-        "service_id": "awvlippe",
-    },
-    {
-        "title": "Gemeinde Kranenburg",
-        "url": "https://www.kranenburg.de/",
-        "service_id": "kranenburg",
-    },
-    {
-        "title": "Stadt Porta Westfalica",
-        "url": "https://www.portawestfalica.de/",
-        "service_id": "portawestfalica",
-    },
-]
 
 DEFAULT_TIMEOUT = 20
 
@@ -186,8 +29,12 @@ class AbfallnaviDe:
         "kranenburg",
     }
 
-    def __init__(self, service_domain):
+    def __init__(self, service_domain, known_services=None):
         self._service_domain = service_domain
+        # Valid service ids for the 404 "did you mean" suggestion. Supplied by
+        # the retriever from the source's REGIONS, so the provider registry
+        # lives in the source and this service module holds no provider list.
+        self._known_services = known_services or []
         if service_domain in self.SHARED_DOMAIN_SERVICES:
             self._service_url = (
                 f"https://abfallapp.regioit.de/abfall-app-{service_domain}/rest"
@@ -223,7 +70,7 @@ class AbfallnaviDe:
             raise SourceArgumentNotFoundWithSuggestions(
                 "service",
                 self._service_domain,
-                [s["service_id"] for s in SERVICE_DOMAINS],
+                self._known_services,
             )
         r.raise_for_status()
         return r
@@ -349,7 +196,16 @@ class AbfallnaviRetriever(RetrieverFunc):
 
     def __call__(self, source: "BaseSource") -> dict[str, Any]:
         params = source.params
-        client = AbfallnaviDe(params[self.service])
+        # Valid service ids come from the source's own REGIONS (the registry
+        # lives in the source); passed in so the client can suggest them on a
+        # bad service id without this module holding a provider list. Resolved
+        # via the class (REGIONS may be a staticmethod, a plain function, or a
+        # list) so instance access does not bind ``self``.
+        regions = getattr(type(source), "REGIONS", [])
+        if callable(regions):
+            regions = regions()
+        known_services = [r.params.get(self.service) for r in regions]
+        client = AbfallnaviDe(params[self.service], known_services=known_services)
 
         city_id = client.get_city_id(params.get(self.city))
         street_ids = client.get_street_ids(city_id, params.get(self.street))
