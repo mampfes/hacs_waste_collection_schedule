@@ -13,6 +13,7 @@ waste_collection_schedule:
         city: "Pabianice (miasto)"
         street: 'ul. 15 Pułku Piechoty "Wilków"'   # optional for some localities
         number: "pozostałe"                          # optional for some localities
+        lookahead_days: 365                          # optional, default 365
 ```
 
 ### Configuration Variables
@@ -28,6 +29,9 @@ waste_collection_schedule:
 
 **number**
 *(String) (optional)* House number / address entry exactly as shown in the UI. Not required for all localities.
+
+**lookahead_days**
+*(Integer) (optional, default: 365)* Number of days ahead to fetch the schedule. Defaults to 365, matching the official Android app. Use a smaller value to reduce API load, or a larger value to see further ahead.
 
 ## How to get the source arguments
 
