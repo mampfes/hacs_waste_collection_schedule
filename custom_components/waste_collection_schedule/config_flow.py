@@ -834,7 +834,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 vol.Optional(CONF_TYPE): SelectSelector(
                     SelectSelectorConfig(
                         options=self._fetched_types,
-                        mode=SelectSelectorMode.DROPDOWN,
+                        mode=SelectSelectorMode.LIST,
                         custom_value=True,
                         multiple=True,
                     )
@@ -1093,6 +1093,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                                 label="add_new_sensor", value="sensor_select_add_new"
                             ),
                         ],
+                        mode=SelectSelectorMode.LIST,
                         custom_value=False,
                         multiple=True,
                     )
@@ -1121,6 +1122,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                                 for x in uncustomized_types
                             ],
                         ],
+                        mode=SelectSelectorMode.LIST,
                         custom_value=True,
                         multiple=True,
                     )
