@@ -19,7 +19,7 @@ into individual collection dates::
 import datetime
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, Protocol, TypeVar
+from typing import TYPE_CHECKING, Any, Literal, Protocol, TypeVar
 
 from waste_collection_schedule import recurrence
 
@@ -85,6 +85,14 @@ class Schedule:
     # windowed Schedule per season segment (and none for no-collection months).
     not_before: datetime.date | None = None
     until: datetime.date | None = None
+    # Optional ISO-week parity filter. When set to ``"even"`` / ``"odd"``, only
+    # occurrences falling in an even- / odd-numbered ISO week are kept. This is
+    # the correct way to express an "A week / B week" cadence keyed to the ISO
+    # week number: pair it with ``step = WEEKLY`` and the parity selects every
+    # other week, recomputed per date so it stays right across 53-week ISO years
+    # (where naive fortnightly stepping would drift). The provider only has to
+    # say which parity; no per-source week arithmetic.
+    iso_week_parity: Literal["even", "odd"] | None = None
 
 
 class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
@@ -139,6 +147,11 @@ class RecurrenceExpander(Preprocessor[Any, "tuple[datetime.date, str]"]):
                     # Count-based expansion ignores not_before; apply it here.
                     if schedule.not_before is not None:
                         dates = [d for d in dates if d >= schedule.not_before]
+                if schedule.iso_week_parity is not None:
+                    want_even = schedule.iso_week_parity == "even"
+                    dates = [
+                        d for d in dates if (d.isocalendar().week % 2 == 0) == want_even
+                    ]
                 for collection_date in dates:
                     yield collection_date, schedule.key
 

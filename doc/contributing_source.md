@@ -147,7 +147,7 @@ The default preprocessor wraps a single dict into a one-item list and passes exi
 | `Compose(*stages)` | Chain preprocessors. |
 | `HolidayShift(adjust)` | Shift dates that fall on holidays. |
 
-`Schedule(key, start, step=WEEKLY, count=1, anchor=False)` describes one recurring series. Use it with `RecurrenceExpander` so the date arithmetic stays in core rather than in your source.
+`Schedule(key, start, step=WEEKLY, count=1, anchor=False)` describes one recurring series. Use it with `RecurrenceExpander` so the date arithmetic stays in core rather than in your source. For a *seasonal* schedule, set `not_before` / `until` to bound a window (the cadence is then phase-aligned and clipped to that window). For an *A-week / B-week* cadence keyed to the ISO week number, set `step=WEEKLY` and `iso_week_parity="even"` / `"odd"`; the parity is recomputed per date, so it stays correct across 53-week ISO years where naive fortnightly stepping would drift (see `calgary_ca.py`).
 
 ### Transformers (`waste_collection_schedule.transformers`)
 
@@ -164,7 +164,7 @@ All accept an optional `parse_date` (a `date_parsers` callable; default is `date
 
 `PARAMS` is a list of typed `ConfigParam` descriptors. They drive both the config flow (the UI form) and up-front validation, so retrievers and transformers can assume clean arguments.
 
-Available factories: `coords(lat, lon)`, `uprn()`, `postcode()`, `address()`, `municipality()`, `dropdown()`, `dependent_select()`, `multi_value_lookup()`, `text_field(name, label, default=...)`, `api_key(name, label, default=...)`, `alternatives(*groups)`.
+Available factories: `coords(lat, lon)`, `uprn()`, `postcode()`, `address()`, `municipality()`, `dropdown()`, `dependent_select()`, `cascading_select(*levels)`, `multi_value_lookup()`, `text_field(name, label, default=...)`, `api_key(name, label, default=...)`, `alternatives(*groups)`.
 
 A param is required by default. Three ways to relax that:
 
@@ -173,6 +173,8 @@ A param is required by default. Three ways to relax that:
 - **Alternative input.** `alternatives([uprn()], [postcode(), text_field("house")])` declares mutually-exclusive input groups: validation requires exactly one group to be fully provided. Use this instead of a hand-rolled cross-field check in `__init__` (see `reading_gov_uk.py`).
 
 `dependent_select(parent, child)` is a cascading two-level dropdown. The source MUST implement `get_choices(parent_value) -> list[str]` (child options for a chosen parent) and MAY implement `get_parent_choices() -> list[str]` (parent options; absent means the parent is free text). Both run at config-flow time and may fetch live. See `gemeinde24_at.py`.
+
+`cascading_select(*levels)` is the N-level generalisation, for a wizard deeper than two levels (e.g. kommune to district to street to house number). The source implements `get_choices(field, selections) -> list[str] | list[(label, value)]`, returning one level's options given the levels chosen so far. A `(label, value)` pair shows a human name while storing an opaque id (so the stored config and `TEST_CASES` can stay id-based); a level whose `get_choices` returns `[]` for the current selections is not applicable and is skipped. Pair it with `RAISE_ON_EMPTY = True`. See `abfall_io.py`.
 
 **Field labels and translations.** Reuse a canonical field name where one fits (`postcode`, `house_number`, `municipality`, `street`, `lat`/`lon`, `uprn`, …). `update_docu_links.py` translates those common names into every supported config-flow language (en, de, it, fr, nl) from `default_translations.py`, so a pipeline source inherits multilingual form labels for free. Only a genuinely novel field needs a per-language `PARAM_TRANSLATIONS` block, and its keys must stay within that allowlist. The translated text is human-maintained (Home Assistant's JSON catalogues), not derived from locale data; `recurrence`'s month/weekday names are the only locale data sourced automatically (via Babel).
 

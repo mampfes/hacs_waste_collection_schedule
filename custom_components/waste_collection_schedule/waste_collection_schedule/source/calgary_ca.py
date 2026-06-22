@@ -1,23 +1,24 @@
 import datetime
 from collections.abc import Iterable, Mapping
-from typing import TypedDict, final
+from typing import Literal, TypedDict, final
 
-from waste_collection_schedule import date_parsers, parsers, recurrence
+from waste_collection_schedule import date_parsers, parsers, preprocessors, recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import Schedule
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Demonstrates: a recurring schedule published as rules rather than dates, where
-# the cadence is "collect on ISO-even / ISO-odd numbered weeks". That parity rule
-# diverges from plain fortnightly stepping in 53-week ISO years (e.g. 2026), so
-# it cannot be a fortnightly Schedule. Instead a method preprocess() generates
-# the weekly candidates within each season window via recurrence.recurring_within
-# (no per-source date arithmetic) and applies Calgary's own even/odd-week
-# predicate — provider business logic, kept local. Note: Calgary has partly moved
-# to Recollect, so this open-data feed may not list every collection any more
-# (see doc/ics/recollect.md).
+# the cadence is "collect on ISO-even / ISO-odd numbered weeks". A describe()
+# reads each season window (the only provider-specific part), and the toolkit
+# does all the date work: RecurrenceExpander projects a weekly Schedule across
+# the window and Schedule.iso_week_parity selects every other week by ISO week
+# number (which stays correct across 53-week ISO years like 2026, where naive
+# fortnightly stepping would drift). No per-source date arithmetic or parity
+# predicate. Note: Calgary has partly moved to Recollect, so this open-data feed
+# may not list every collection any more (see doc/ics/recollect.md).
 
 API_URL = "https://data.calgary.ca/resource/jq4t-b745.json"
 
@@ -38,12 +39,35 @@ class ScheduleRecord(TypedDict):
     clect_int_winter: str
 
 
-def _parity_matches(day: datetime.date, interval: str) -> bool:
-    """Calgary's cadence: EVERY week, or only ISO-EVEN / ISO-ODD numbered weeks."""
-    if interval == "EVERY":
-        return True
-    week_is_even = day.isocalendar().week % 2 == 0
-    return week_is_even if interval == "EVEN" else not week_is_even
+def _describe(
+    record: Mapping[str, str], source: "BaseSource | None" = None
+) -> Iterable[Schedule]:
+    """One windowed weekly Schedule per season; EVEN/ODD become an ISO parity.
+
+    Typed as a plain str-mapping (every field ScheduleRecord validates is a
+    string) so the by-season key lookups need no literal keys.
+    """
+    today = datetime.date.today()
+    for season in ("summer", "winter"):
+        day = recurrence.weekday(record[f"collection_day_{season}"])
+        if day is None:
+            continue
+        start = _parse_window(record[f"{season}_start"])
+        end = _parse_window(record[f"{season}_end"])
+        interval = record[f"clect_int_{season}"].strip().upper()
+        parity: Literal["even", "odd"] | None = None
+        if interval == "EVEN":
+            parity = "even"
+        elif interval == "ODD":
+            parity = "odd"
+        yield Schedule(
+            key=record["commodity"],
+            start=recurrence.next_weekday(day, on_or_after=start),
+            step=recurrence.WEEKLY,
+            not_before=max(start, today),
+            until=end,
+            iso_week_parity=parity,
+        )
 
 
 @final
@@ -73,34 +97,8 @@ class Source(BaseSource):
         params=lambda street_address, **_: {"address": street_address.upper()},
     )
     parse = parsers.JsonParser(shape=list[ScheduleRecord])
+    preprocess = preprocessors.RecurrenceExpander(_describe)
     transform = ICSTransformer(type_value_map=TYPE_MAP)
 
     def __init__(self, street_address: str):
         super().__init__(street_address=street_address)
-
-    def preprocess(
-        self, records: list[Mapping[str, str]], source: "BaseSource | None" = None
-    ) -> Iterable[tuple[datetime.date, str]]:
-        # Typed as a plain str-mapping (every field validated by ScheduleRecord is
-        # a string) so the by-season key lookups below need no literal keys.
-        today = datetime.date.today()
-        for entry in records:
-            commodity = entry["commodity"]
-            for season in ("summer", "winter"):
-                day = recurrence.weekday(entry[f"collection_day_{season}"])
-                if day is None:
-                    continue
-                start = _parse_window(entry[f"{season}_start"])
-                end = _parse_window(entry[f"{season}_end"])
-                interval = entry[f"clect_int_{season}"].strip().upper()
-                # One collection-weekday per week within the (still upcoming part
-                # of the) season window; parity then thins it to every other week.
-                seed = recurrence.next_weekday(day, on_or_after=start)
-                for collection_date in recurrence.recurring_within(
-                    seed,
-                    recurrence.WEEKLY,
-                    not_before=max(start, today),
-                    until=end,
-                ):
-                    if _parity_matches(collection_date, interval):
-                        yield collection_date, commodity

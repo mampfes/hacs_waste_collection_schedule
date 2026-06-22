@@ -70,6 +70,56 @@ def record(module_name: str) -> None:
             print(f"  ! {case_key}: {type(exc).__name__}: {exc}")
 
 
+def record_cascading_choices(module_name: str) -> bool:
+    """Record the HTTP for a cascading_select source's get_choices walk.
+
+    Picks the TEST_CASE exercising the most cascade levels, then records
+    ``get_choices(field, selections-so-far)`` for each populated level, storing
+    the expected id per level so the offline test can assert each non-empty
+    level's option list contains it. Returns True if it handled the source.
+    """
+    module = import_module(f"waste_collection_schedule.source.{module_name}")
+    source_cls = module.Source
+    params = getattr(source_cls, "PARAMS", [])
+    casc = next((p for p in params if p.widget == "cascading_select"), None)
+    if casc is None or not hasattr(source_cls, "get_choices"):
+        return False
+    fields = list(casc.fields)
+    case = max(
+        source_cls.TEST_CASES.values(),
+        key=lambda c: sum(1 for f in fields if c.get(f) not in (None, "")),
+    )
+    context = {k: v for k, v in case.items() if k not in fields}
+    expected = {f: case[f] for f in fields if case.get(f) not in (None, "")}
+    if not expected:
+        print(f"  ! {module_name}: no TEST_CASE populates a cascade level, skipped")
+        return True
+
+    today = datetime.date.today().isoformat()
+    path = choices_path(module_name)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    extra = {
+        "widget": "cascading_select",
+        "fields": fields,
+        "context": context,
+        "expected": expected,
+    }
+    try:
+        with cassette.recording(path, today, extra=extra):
+            selections = dict(context)
+            for field in fields:
+                if field not in expected:
+                    continue
+                source_cls.get_choices(field, dict(selections))
+                selections[field] = expected[field]
+        print(f"  recorded cascading choices for {module_name} ({list(expected)})")
+    except Exception as exc:  # noqa: BLE001 - report and continue
+        if os.path.exists(path):
+            os.remove(path)
+        print(f"  ! {module_name} choices: {type(exc).__name__}: {exc}")
+    return True
+
+
 def record_choices(module_name: str) -> None:
     """Record the HTTP for a dependent_select source's choice methods.
 
@@ -78,6 +128,8 @@ def record_choices(module_name: str) -> None:
     using the parent value from the first TEST_CASE, storing the expected parent
     and child values alongside so the offline test can assert against them.
     """
+    if record_cascading_choices(module_name):
+        return
     module = import_module(f"waste_collection_schedule.source.{module_name}")
     source_cls = module.Source
     params = getattr(source_cls, "PARAMS", [])

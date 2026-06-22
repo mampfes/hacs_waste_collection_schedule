@@ -88,6 +88,10 @@ def test_offline_choices(module_name, path):
     module = import_module(f"waste_collection_schedule.source.{module_name}")
     cls = module.Source
 
+    if meta.get("widget") == "cascading_select":
+        _replay_cascading_choices(cls, meta, path)
+        return
+
     with cassette.replaying(path):
         if hasattr(cls, "get_parent_choices"):
             parents = cls.get_parent_choices()
@@ -98,3 +102,34 @@ def test_offline_choices(module_name, path):
     assert isinstance(children, list) and children
     if meta.get("child_value"):
         assert meta["child_value"] in children
+
+
+def _replay_cascading_choices(cls, meta, path):
+    """Replay an N-level cascading_select get_choices walk.
+
+    For each populated cascade level, asserts get_choices(field, selections)
+    returns the expected stored id when it returns any options. A provider may
+    not present every level (an auto-fixed level returns []), so empties are
+    tolerated, but at least one level must resolve — proving the live walk works.
+    """
+    fields = meta["fields"]
+    expected = meta["expected"]
+    any_resolved = False
+    with cassette.replaying(path):
+        selections = dict(meta["context"])
+        for field in fields:
+            if field not in expected:
+                continue
+            choices = cls.get_choices(field, dict(selections))
+            assert isinstance(choices, list)
+            if choices:
+                values = [
+                    str(c[1]) if isinstance(c, (list, tuple)) else str(c)
+                    for c in choices
+                ]
+                assert str(expected[field]) in values, (
+                    f"{field}: {expected[field]!r} not in {values}"
+                )
+                any_resolved = True
+            selections[field] = expected[field]
+    assert any_resolved, "no cascade level resolved any options"

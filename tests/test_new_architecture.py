@@ -1297,6 +1297,51 @@ class TestSeasonalSchedule:
             datetime.date(2026, 6, 22),
         ]
 
+    def test_iso_week_parity_selects_even_weeks(self):
+        from waste_collection_schedule import recurrence
+        from waste_collection_schedule.preprocessors import Schedule
+
+        # A weekly window thinned to ISO-even weeks (an "A week / B week" cadence).
+        rows = self._expand(
+            [
+                Schedule(
+                    "blue",
+                    datetime.date(2026, 1, 7),  # a Wednesday, ISO W02 (even)
+                    recurrence.WEEKLY,
+                    not_before=datetime.date(2026, 1, 5),
+                    until=datetime.date(2026, 2, 1),
+                    iso_week_parity="even",
+                )
+            ]
+        )
+        dates = [d for d, _ in rows]
+        assert dates == [datetime.date(2026, 1, 7), datetime.date(2026, 1, 21)]
+        assert all(d.isocalendar().week % 2 == 0 for d in dates)
+
+    def test_iso_week_parity_correct_across_53_week_year(self):
+        from waste_collection_schedule import recurrence
+        from waste_collection_schedule.preprocessors import Schedule
+
+        # 2026 is a 53-week ISO year. Naive fortnightly stepping from Dec 23
+        # would land on Jan 6 (W01, odd) and drift; ISO parity recomputed per
+        # date skips W53 and W01 and resumes on W02 — a 21-day gap, not 14.
+        rows = self._expand(
+            [
+                Schedule(
+                    "blue",
+                    datetime.date(2026, 12, 23),  # Wednesday, W52 (even)
+                    recurrence.WEEKLY,
+                    not_before=datetime.date(2026, 12, 21),
+                    until=datetime.date(2027, 1, 20),
+                    iso_week_parity="even",
+                )
+            ]
+        )
+        dates = [d for d, _ in rows]
+        assert dates == [datetime.date(2026, 12, 23), datetime.date(2027, 1, 13)]
+        assert (dates[1] - dates[0]).days == 21
+        assert all(d.isocalendar().week % 2 == 0 for d in dates)
+
 
 class TestRetrievers:
     """Zero-config http_get/http_post (curl_cffi) and configured/legacy retrievers."""
@@ -1494,6 +1539,22 @@ class TestConfigParams:
         p = coords()
         for lang in ["en", "de", "fr", "it"]:
             assert lang in p.labels, f"Missing {lang} labels for coords"
+
+    def test_cascading_select_declares_ordered_levels(self):
+        from waste_collection_schedule.config_params import cascading_select
+
+        p = cascading_select(
+            ("f_id_kommune", "Kommune"),
+            ("f_id_bezirk", "Bezirk"),
+            "f_id_strasse",
+        )
+        assert p.widget == "cascading_select"
+        # Ordered levels; a bare name gets a title-cased label.
+        assert list(p.fields) == ["f_id_kommune", "f_id_bezirk", "f_id_strasse"]
+        assert p.fields["f_id_kommune"] == "Kommune"
+        assert p.fields["f_id_strasse"] == "F Id Strasse"
+        # Levels are individually optional (the cascade shape is data-dependent).
+        assert p.required is False
 
 
 class TestRegions:

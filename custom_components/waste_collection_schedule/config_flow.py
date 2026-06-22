@@ -231,7 +231,7 @@ def _build_schema_from_params(
     args_input: dict[str, Any] | None,
     include_title: bool = True,
     title: str = "",
-    dependent_options: dict[str, list[str]] | None = None,
+    dependent_options: dict[str, list] | None = None,
     error_suggestions: dict[str, list[Any]] | None = None,
 ) -> vol.Schema:
     """Build a voluptuous schema from PARAMS declarations.
@@ -285,8 +285,12 @@ def _build_schema_from_params(
             )
             default = param.defaults.get(field_name)
             optional = param_optional or default is not None
-            if param.widget == "dependent_select" and options is None:
-                # Options not yet available (parent not selected); collect later.
+            if (
+                param.widget in ("dependent_select", "cascading_select")
+                and options is None
+            ):
+                # Options not yet available (an earlier level not chosen);
+                # collect later, once the prior levels have been submitted.
                 optional = True
             marker = vol.Optional if optional else vol.Required
             if default is not None:
@@ -294,10 +298,15 @@ def _build_schema_from_params(
             else:
                 key = marker(field_name, description=description)
             if options is not None:
+                # An option is either a plain string (label == stored value) or a
+                # (label, value) pair, so a cascade can show a name but store an id.
                 vol_args[key] = SelectSelector(
                     SelectSelectorConfig(
                         options=[
-                            SelectOptionDict(label=opt, value=opt) for opt in options
+                            SelectOptionDict(label=opt[0], value=opt[1])
+                            if isinstance(opt, tuple)
+                            else SelectOptionDict(label=opt, value=opt)
+                            for opt in options
                         ],
                         mode=SelectSelectorMode.DROPDOWN,
                         custom_value=True,
@@ -689,7 +698,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         source_cls,
         pre_filled: dict[str, Any],
         args_input: dict[str, Any] | None,
-    ) -> dict[str, list[str]]:
+    ) -> dict[str, list]:
         """Fetch option lists for any dependent_select PARAM of this source.
 
         For each ``dependent_select`` param: populate the parent field from
@@ -698,9 +707,30 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         ``get_choices(parent_value)``. Both methods may fetch live, so they run
         off the event loop. Failures degrade gracefully to free-text input.
         """
-        options: dict[str, list[str]] = {}
+        options: dict[str, list] = {}
         chosen = {**pre_filled, **(args_input or {})}
         for param in source_cls.PARAMS:
+            if param.widget == "cascading_select":
+                # N-level cascade: populate each level whose prior levels are all
+                # chosen, by calling get_choices(field, selections-so-far). A
+                # level returning [] is not applicable and is left as free text.
+                if not hasattr(source_cls, "get_choices"):
+                    continue
+                level_fields = list(param.fields)
+                for index, field in enumerate(level_fields):
+                    prior = level_fields[:index]
+                    if any(chosen.get(p) in (None, "") for p in prior):
+                        break
+                    try:
+                        level_options = await self.hass.async_add_executor_job(
+                            source_cls.get_choices, field, dict(chosen)
+                        )
+                    except Exception as exc:  # noqa: BLE001 - degrade to free text
+                        _LOGGER.debug("get_choices(%s) failed: %s", field, exc)
+                        continue
+                    if level_options:
+                        options[field] = level_options
+                continue
             if param.widget != "dependent_select":
                 continue
             parent_field, child_field = list(param.fields)[:2]

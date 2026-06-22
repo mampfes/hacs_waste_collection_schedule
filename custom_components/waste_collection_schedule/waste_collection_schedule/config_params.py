@@ -292,6 +292,48 @@ def dependent_select(
     )
 
 
+def cascading_select(
+    *levels: str | tuple[str, str],
+    labels: dict[str, dict[str, str]] | None = None,
+) -> ConfigParam:
+    """An N-level cascading dropdown (the general form of ``dependent_select``).
+
+    Each level's options are fetched from the source given the levels chosen so
+    far, so a provider with a kommune -> district -> street -> house-number
+    wizard is expressible in one param. Each ``level`` is a field name, or a
+    ``(field, label)`` pair for a custom label.
+
+    The source MUST implement a class method that returns the options for one
+    level given the prior selections::
+
+        @classmethod
+        def get_choices(cls, field: str, selections: dict[str, str]) -> list[str] | list[tuple[str, str]]:
+            ...
+
+    A returned option may be a plain string (label and stored value are the
+    same) or a ``(label, value)`` pair, so the dropdown can show a human name
+    while storing an opaque id. A level whose ``get_choices`` returns ``[]`` for
+    the current selections is not applicable and is skipped.
+
+    Levels are individually optional in the form (the cascade requiredness is
+    data-dependent); pair the source with ``RAISE_ON_EMPTY = True`` so an
+    incomplete selection surfaces as a clear error rather than empty data.
+    """
+    fields: dict[str, str] = {}
+    for level in levels:
+        if isinstance(level, tuple):
+            field_name, label = level
+        else:
+            field_name, label = level, _title(level, None)
+        fields[field_name] = label
+    return ConfigParam(
+        fields=fields,
+        widget="cascading_select",
+        labels=labels or {"en": dict(fields)},
+        required=False,
+    )
+
+
 def multi_value_lookup(
     lookup_field: str,
     result_fields: list[str],
