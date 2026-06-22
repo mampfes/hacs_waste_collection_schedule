@@ -1,123 +1,87 @@
 import datetime
-import logging
+from typing import final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AbfallIOGraphQL import SERVICE_MAP
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.regions import Region, region
+from waste_collection_schedule.service.AbfallIOGraphQL import (
+    AbfallIoGraphQLParser,
+    AbfallIoGraphQLRetriever,
+)
+from waste_collection_schedule.waste_types import ALL_TYPES, preserved, resolve
 
-TITLE = "Abfall.IO / AbfallPlus (GraphQL)"
-DESCRIPTION = "Source for AbfallPlus.de waste collection using the v3 GraphQL API."
-URL = "https://www.abfallplus.de"
-COUNTRY = "de"
+# Declarative source on the abfall.io v3 GraphQL components (AbfallIoGraphQL-
+# Retriever + AbfallIoGraphQLParser). classify() turns each appointment into a
+# Collection, resolving the waste-type name through the shared multilingual
+# vocabulary. The provider registry lives here, in the source that owns it.
 
-_LOGGER = logging.getLogger(__name__)
+_PROVIDERS = [
+    {
+        "title": "Landkreis Märkisch-Oderland",
+        "url": "https://www.maerkisch-oderland.de/",
+        "service_id": "efb75cbd1f08fae1d4e47ae72a85c655",
+    },
+    {
+        "title": "Holding Graz",
+        "url": "https://www.holding-graz.at/",
+        "service_id": "1c230a689579b6d3ddb9ceb5a56c6072",
+        "country": "at",
+    },
+]
 
-INIT_URL = "https://api.abfall.io"
-GQL_URL = "https://widgets.abfall.io/graphql"
-HEADERS = {
-    "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0"
-}
 
-APPOINTMENTS_QUERY = """
-query Query($idHouseNumber: ID!, $wasteTypes: [ID], $dateMin: Date, $dateMax: Date, $showInactive: Boolean) {
-    appointments(idHouseNumber: $idHouseNumber, wasteTypes: $wasteTypes, dateMin: $dateMin, dateMax: $dateMax, showInactive: $showInactive) {
-        date
-        wasteType {
-            name
-        }
+@final
+class Source(BaseSource):
+    TITLE = "Abfall.IO / AbfallPlus (GraphQL)"
+    DESCRIPTION = "Source for AbfallPlus.de waste collection using the v3 GraphQL API."
+    URL = "https://www.abfallplus.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    # classify() resolves each provider's open-ended German labels through the
+    # shared multilingual vocabulary, so any canonical type may appear.
+    WASTE_TYPES = list(ALL_TYPES)
+
+    TEST_CASES = {
+        "Altlandsberg": {
+            "key": "efb75cbd1f08fae1d4e47ae72a85c655",
+            "idHouseNumber": 4136,
+        },
+        "Strausberg": {
+            "key": "efb75cbd1f08fae1d4e47ae72a85c655",
+            "idHouseNumber": 5985,
+        },
+        "Graz (Rudersdorfer Straße 60)": {
+            "key": "1c230a689579b6d3ddb9ceb5a56c6072",
+            "idHouseNumber": 31972,
+        },
     }
-}
-"""
 
+    PARAMS = [
+        text_field("key", "Key"),
+        text_field("idHouseNumber", "House number id"),
+        text_field("wasteTypes", "Waste type ids (optional filter)", optional=True),
+    ]
 
-def EXTRA_INFO():
-    result = []
-    for s in SERVICE_MAP:
-        entry = {
-            "title": s["title"],
-            "url": s["url"],
-            "default_params": {"key": s["service_id"]},
-        }
-        if "country" in s:
-            entry["country"] = s["country"]
-        result.append(entry)
-    return result
+    retrieve = AbfallIoGraphQLRetriever()
+    parse = AbfallIoGraphQLParser()
 
-
-TEST_CASES = {
-    "Altlandsberg": {
-        "key": "efb75cbd1f08fae1d4e47ae72a85c655",
-        "idHouseNumber": 4136,
-    },
-    "Strausberg": {
-        "key": "efb75cbd1f08fae1d4e47ae72a85c655",
-        "idHouseNumber": 5985,
-    },
-    "Graz (Rudersdorfer Straße 60)": {
-        "key": "1c230a689579b6d3ddb9ceb5a56c6072",
-        "idHouseNumber": 31972,
-    },
-}
-
-
-class Source:
-    def __init__(self, key, idHouseNumber, wasteTypes=None):
-        self._key = key
-        self._id_house_number = str(idHouseNumber)
-        self._waste_types = [str(w) for w in wasteTypes] if wasteTypes else None
-
-    def fetch(self):
-        r = requests.get(INIT_URL, params={"key": self._key}, headers=HEADERS)
-        if r.status_code == 401:
-            raise ValueError(
-                f"API key '{self._key}' is not valid for the abfall.io v3 GraphQL API. "
-                "Please check that you are using the correct key for your provider."
+    @staticmethod
+    def REGIONS() -> list[Region]:
+        return [
+            region(
+                s["title"],
+                url=s["url"],
+                country=s.get("country"),
+                key=s["service_id"],
             )
-        r.raise_for_status()
-        config = r.json()
-        api_key = config["apiKey"]
+            for s in _PROVIDERS
+        ]
 
-        waste_types = self._waste_types
-        if waste_types is None:
-            waste_types = [
-                wt["wasteType"]
-                for wt in config["settings"].get("PUB_ABFALLTYPEN", [])
-                if wt.get("checked", False)
-            ]
+    def __init__(self, key, idHouseNumber, wasteTypes=None):
+        super().__init__(key=key, idHouseNumber=idHouseNumber, wasteTypes=wasteTypes)
 
-        now = datetime.date.today()
-        date_max = now + datetime.timedelta(days=365)
-
-        gql_headers = {
-            **HEADERS,
-            "Content-Type": "application/json",
-            "x-abfallplus-api-key": api_key,
-        }
-
-        r = requests.post(
-            GQL_URL,
-            json={
-                "query": APPOINTMENTS_QUERY,
-                "variables": {
-                    "idHouseNumber": self._id_house_number,
-                    "wasteTypes": waste_types if waste_types else None,
-                    "dateMin": now.isoformat(),
-                    "dateMax": date_max.isoformat(),
-                    "showInactive": False,
-                },
-            },
-            headers=gql_headers,
-        )
-        r.raise_for_status()
-
-        data = r.json()
-        if "errors" in data:
-            raise ValueError(f"GraphQL error: {data['errors']}")
-
-        entries = []
-        for apt in data.get("data", {}).get("appointments", []):
-            date = datetime.date.fromisoformat(apt["date"])
-            waste_type = apt["wasteType"]["name"]
-            entries.append(Collection(date, waste_type))
-
-        return entries
+    def classify(self, record) -> Collection | None:
+        date = datetime.date.fromisoformat(record["date"])
+        name = record["wasteType"]["name"]
+        return Collection(date=date, waste_type=resolve(name) or preserved(name))
