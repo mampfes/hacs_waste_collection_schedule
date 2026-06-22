@@ -5,7 +5,10 @@ from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import postcode, text_field
-from waste_collection_schedule.service.WhitespaceWRP import WhitespaceClient
+from waste_collection_schedule.service.WhitespaceWRP import (
+    WhitespaceParser,
+    WhitespaceRetriever,
+)
 from waste_collection_schedule.waste_types import (
     FOOD_WASTE,
     GARDEN_WASTE,
@@ -15,13 +18,10 @@ from waste_collection_schedule.waste_types import (
     resolve,
 )
 
-# Demonstrates: wrapping an existing shared service client (WhitespaceWRP, which
-# is not yet split into pipeline components) from a custom retrieve(), so a
-# service-backed source migrates to BaseSource without first converting the
-# whole platform. parse() passes the client's (date, type) rows straight to
-# classify().
-
-API_URL = "https://lcc-wrp.whitespacews.com"
+# Demonstrates: a fully declarative service-backed source. The Whitespace WRP
+# platform's 4-step scrape lives in its service module as WhitespaceRetriever +
+# WhitespaceParser, so this source only declares the pipeline and maps the
+# council's open-ended type labels onto canonical WasteTypes in classify().
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -54,6 +54,7 @@ class Source(BaseSource):
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True
     WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
+    API_URL = "https://lcc-wrp.whitespacews.com"
 
     TEST_CASES = {
         "1 Queen Street Lancaster, LA1 1RS": {"house_number": 1, "postcode": "LA1 1RS"}
@@ -68,20 +69,11 @@ class Source(BaseSource):
 
     parse_date = date_parsers.for_format("%d/%m/%Y")
 
+    retrieve = WhitespaceRetriever(name_number="house_number", postcode="postcode")
+    parse = WhitespaceParser()
+
     def __init__(self, postcode: str, house_number: int | str | None = None):
         super().__init__(postcode=postcode, house_number=house_number)
-        self._client = WhitespaceClient(API_URL)
-
-    def retrieve(self, source):
-        return self._client.fetch_schedule(
-            address_name_number=self.params["house_number"],
-            address_postcode=self.params["postcode"],
-            address_street="",
-        )
-
-    def parse(self, raw, source):
-        # The client already returns a list of (date_str, type_str) rows.
-        return raw
 
     def classify(self, record) -> Collection | None:
         date_str, type_str = record
