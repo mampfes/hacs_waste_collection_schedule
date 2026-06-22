@@ -25,12 +25,10 @@
         "title": "Sélectionner les Détails de la Configuration",
         "description": "Choisissez le niveau de détail souhaité pour cette intégration. Laissez vide si vous souhaitez simplement configurer un calendrier de base.",
         "data": {
-          "show_customize_config": "Afficher les Configurations Personnalisées des Événements de Collecte",
-          "show_sensor_config": "Afficher les Configurations des Capteurs"
+          "show_customize_config": "Afficher les Configurations Personnalisées des Événements de Collecte"
         },
         "data_description": {
-          "show_customize_config": "Sélectionnez ceci si vous souhaitez personnaliser les types de collecte.",
-          "show_sensor_config": "Sélectionnez ceci si vous souhaitez configurer des capteurs."
+          "show_customize_config": "Sélectionnez ceci si vous souhaitez personnaliser les types de collecte."
         }
       },
       "customize_select": {
@@ -76,6 +74,60 @@
       "sensor": {
         "title": "Créer un Capteur \"{sensor_number}\"",
         "description": "Configurez un capteur à la fois.",
+        "sections": {
+          "identity": {
+            "name": "Renommer",
+            "data": {
+              "name": "Nom du capteur"
+            }
+          },
+          "display": {
+            "name": "Affichage",
+            "data": {
+              "details_format": "Détails dans plus d'informations",
+              "preset_language": "Langue d'affichage",
+              "value_template_preset": "Style du texte d'état",
+              "value_template": "Modèle d'état personnalisé",
+              "date_template": "Modèle de date personnalisé",
+              "date_template_preset": "Style de date",
+              "add_days_to": "Exposer la valeur jours avant collecte",
+              "advanced_mode": "Mode avancé"
+            },
+            "data_description": {
+              "details_format": "Choisissez comment les détails supplémentaires de collecte doivent apparaître dans la fenêtre plus d'informations.",
+              "preset_language": "Choisissez la langue des styles de texte d'état prêts à l'emploi.",
+              "value_template_preset": "Choisissez un style d'état prêt à l'emploi, par exemple 'dans 13 jours' ou 'Bio dans 13 jours'.",
+              "value_template": "Modèle Home Assistant optionnel pour l'état du capteur. Les valeurs disponibles incluent 'value.date', 'value.daysTo' et 'value.types'.",
+              "date_template_preset": "Choisissez un style de date prêt à l'emploi pour la liste des prochaines collectes.",
+              "date_template": "Modèle Home Assistant optionnel pour les dates affichées dans les détails.",
+              "add_days_to": "Ajoute un attribut 'daysTo' avec le nombre de jours jusqu'à la prochaine collecte.",
+              "advanced_mode": "Affiche les champs de modèle bruts et les options de filtrage des collectes."
+            }
+          },
+          "filtering": {
+            "name": "Options avancées",
+            "data": {
+              "count": "Nombre de collectes à lister",
+              "leadtime": "Afficher seulement les collectes dans les prochains jours",
+              "event_index": "Position de la collecte",
+              "types": "Types de collecte"
+            },
+            "data_description": {
+              "count": "Limite le nombre de prochaines collectes affichées dans la fenêtre plus d'informations.",
+              "leadtime": "Inclut uniquement les collectes ayant lieu dans ce nombre de jours.",
+              "event_index": "Utilisez 0 pour la prochaine collecte, 1 pour la deuxième, 2 pour la troisième, etc.",
+              "types": "Affiche uniquement les types de déchets sélectionnés dans ce capteur."
+            }
+          },
+          "management": {
+            "name": "Gestion",
+            "data": {
+              "skip": "Ignorer ce capteur",
+              "additional": "Créer un autre capteur après cette étape",
+              "delete": "Supprimer"
+            }
+          }
+        },
         "data": {
           "name": "Nom du Capteur",
           "details_format": "Format des Détails",
@@ -83,9 +135,13 @@
           "leadtime": "Délai",
           "value_template": "Modèle de Valeur",
           "date_template": "Modèle de Date",
+          "preset_language": "Langue d'affichage",
+          "value_template_preset": "Style du texte d'état",
+          "date_template_preset": "Style de date",
           "add_days_to": "Ajouter des Jours à",
           "event_index": "Index de l'Événement",
           "types": "Types",
+          "advanced_mode": "Mode avancé",
           "skip": "Ne pas créer de capteur",
           "additional": "Ajouter des capteurs supplémentaires"
         },
@@ -95,9 +151,13 @@
           "leadtime": "Limite l'affichage aux collectes se produisant dans un certain délai.",
           "value_template": "Utilise le templating de Home Assistant pour formater les informations d'état d'une entité. Vous pouvez utiliser 'value.date', 'value.daysTo', 'value.types'.",
           "date_template": "Utilise le templating de Home Assistant pour formater les dates affichées. Par exemple : 'value.date.strftime(\"%d.%m.%Y\")'.",
+          "preset_language": "Choisissez la langue des styles de texte d'état prêts à l'emploi.",
+          "value_template_preset": "Choisissez un style d'état prêt à l'emploi, par exemple 'dans 13 jours' ou 'Bio dans 13 jours'.",
+          "date_template_preset": "Choisissez un style de date prêt à l'emploi pour la liste des prochaines collectes.",
           "add_days_to": "Ajoute un attribut 'daysTo' contenant le nombre de jours jusqu'à la prochaine collecte.",
           "event_index": "Utilisé pour attribuer un capteur à un index de date spécifique. Utile pour les collectes successives.",
           "types": "Utilisé pour filtrer les types de déchets. Affichera uniquement les collectes correspondantes.",
+          "advanced_mode": "Affiche les champs de modèle bruts et les options de filtrage des collectes.",
           "skip": "Si coché, le capteur ne sera pas créé.",
           "additional": "Permet d'ajouter d'autres capteurs."
         }

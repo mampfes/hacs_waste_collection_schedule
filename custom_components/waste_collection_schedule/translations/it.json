@@ -25,12 +25,10 @@
         "title": "Seleziona i Dettagli della Configurazione",
         "description": "Seleziona quanto dettagliata vuoi che sia la configurazione di questa integrazione. Lascia vuoto se desideri configurare solo un semplice calendario.",
         "data": {
-          "show_customize_config": "Mostra Configurazioni di Personalizzazione Eventi di Raccolta",
-          "show_sensor_config": "Mostra Configurazioni Sensori"
+          "show_customize_config": "Mostra Configurazioni di Personalizzazione Eventi di Raccolta"
         },
         "data_description": {
-          "show_customize_config": "Seleziona questo se vuoi personalizzare i tipi di raccolta.",
-          "show_sensor_config": "Seleziona questo se vuoi configurare i sensori."
+          "show_customize_config": "Seleziona questo se vuoi personalizzare i tipi di raccolta."
         }
       },
       "customize_select": {
@@ -76,6 +74,60 @@
       "sensor": {
         "title": "Crea Sensore \"{sensor_number}\"",
         "description": "Configura un sensore alla volta.",
+        "sections": {
+          "identity": {
+            "name": "Rinomina",
+            "data": {
+              "name": "Nome sensore"
+            }
+          },
+          "display": {
+            "name": "Visualizzazione",
+            "data": {
+              "details_format": "Dettagli nelle informazioni",
+              "preset_language": "Lingua di visualizzazione",
+              "value_template_preset": "Stile testo stato",
+              "value_template": "Template stato personalizzato",
+              "date_template": "Template data personalizzato",
+              "date_template_preset": "Stile data",
+              "add_days_to": "Esponi il valore giorni alla raccolta",
+              "advanced_mode": "Modalità avanzata"
+            },
+            "data_description": {
+              "details_format": "Scegli come visualizzare i dettagli aggiuntivi della raccolta nella finestra informazioni.",
+              "preset_language": "Scegli la lingua per gli stili predefiniti del testo di stato.",
+              "value_template_preset": "Scegli uno stile di stato predefinito, ad esempio 'tra 13 giorni' o 'Bio tra 13 giorni'.",
+              "value_template": "Template Home Assistant opzionale per lo stato del sensore. I valori disponibili includono 'value.date', 'value.daysTo' e 'value.types'.",
+              "date_template_preset": "Scegli uno stile data predefinito per l'elenco delle prossime raccolte.",
+              "date_template": "Template Home Assistant opzionale per le date mostrate nei dettagli.",
+              "add_days_to": "Aggiunge un attributo 'daysTo' con il numero di giorni fino alla prossima raccolta.",
+              "advanced_mode": "Mostra i campi template grezzi e le opzioni di filtro delle raccolte."
+            }
+          },
+          "filtering": {
+            "name": "Opzioni avanzate",
+            "data": {
+              "count": "Quante raccolte mostrare",
+              "leadtime": "Mostra solo raccolte entro giorni",
+              "event_index": "Posizione raccolta",
+              "types": "Tipi di raccolta"
+            },
+            "data_description": {
+              "count": "Limita quante prossime raccolte appaiono nella finestra informazioni.",
+              "leadtime": "Include solo le raccolte che avvengono entro questo numero di giorni.",
+              "event_index": "Usa 0 per la prossima raccolta, 1 per la seconda, 2 per la terza e così via.",
+              "types": "Mostra solo i tipi di rifiuti selezionati in questo sensore."
+            }
+          },
+          "management": {
+            "name": "Gestione",
+            "data": {
+              "skip": "Salta questo sensore",
+              "additional": "Crea un altro sensore dopo questo passaggio",
+              "delete": "Elimina"
+            }
+          }
+        },
         "data": {
           "name": "Nome del sensore",
           "details_format": "Formato dei dettagli",
@@ -83,9 +135,13 @@
           "leadtime": "Tempo ",
           "value_template": "Template valore",
           "date_template": "Formato data",
+          "preset_language": "Lingua di visualizzazione",
+          "value_template_preset": "Stile testo stato",
+          "date_template_preset": "Stile data",
           "add_days_to": "Aggiungi giorni a",
           "event_index": "Indice dell'evento",
           "types": "Tipi di rifiuti",
+          "advanced_mode": "Modalità avanzata",
           "skip": "Non creare sensore",
           "additional": "Aggiungi sensori aggiuntivi"
         },
@@ -95,9 +151,13 @@
           "leadtime": "Limita il pop-up 'more-info' di Home Assistant alla visualizzazione solo delle raccolte che avvengono entro i prossimi n giorni di preavviso",
           "value_template": "Utilizza il templating di Home Assistant per formattare le informazioni sullo stato di un'entità. Puoi usare 'value.date', 'value.daysTo', 'value.types'.",
           "date_template": "Utilizza il templating di Home Assistant per formattare le date visualizzate all'interno delle informazioni del pop-up 'more-info' di un'entità. Es: 'value.date.strftime(\"%d.%m.%Y\")'.",
+          "preset_language": "Scegli la lingua per gli stili predefiniti del testo di stato.",
+          "value_template_preset": "Scegli uno stile di stato predefinito, ad esempio 'tra 13 giorni' o 'Bio tra 13 giorni'.",
+          "date_template_preset": "Scegli uno stile data predefinito per l'elenco delle prossime raccolte.",
           "add_days_to": "Aggiunge un attributo 'daysTo' allo stato dell'entità sorgente contenente il numero di giorni alla prossima raccolta.",
           "event_index": "Utilizzato per assegnare un sensore a un indice di data di raccolta specifico. La prossima data di raccolta ha event_index 0. Utile se si desidera avere sensori dedicati per la prossima raccolta, la seconda raccolta, la terza raccolta, ecc.",
           "types": "Utilizzato per filtrare i tipi di rifiuti. Il sensore mostrerà solo le raccolte corrispondenti a questi tipi di rifiuti. È necessario utilizzare l'alias se hai usato un alias nella configurazione delle sorgenti.",
+          "advanced_mode": "Mostra i campi template grezzi e le opzioni di filtro delle raccolte.",
           "skip": "Se selezionato, il sensore non verrà creato e tutta la tua configurazione sopra verrà ignorata.",
           "additional": "Se selezionato, ti verrà chiesto di aggiungere un altro sensore dopo aver salvato questo."
         }
@@ -27611,7 +27671,6 @@
       "init": {
         "description": "Aggiorna i dettagli del calendario di raccolta dei rifiuti.",
         "data": {
-          "sensor_select": "Sensori da modificare",
           "customize_select": "Tipi di raccolte da modificare",
           "calendar_title": "Titolo del calendario",
           "separator": "Separatore",
@@ -27623,7 +27682,6 @@
           "ignore_duplicates": "Ignora voci duplicate al giorno"
         },
         "data_description": {
-          "sensor_select": "Seleziona il sensore che vuoi modificare. (seleziona 'Aggiungi nuovo sensore' per creare un nuovo sensore)",
           "customize_select": "Seleziona il tipo di raccolta che vuoi modificare.",
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verrà utilizzato il nome del tuo fornitore di servizi.",
           "separator": "Utilizzato per unire le voci se la fonte restituisce più valori per un singolo giorno.",
@@ -27714,11 +27772,6 @@
         "monthly": "Mensile",
         "weekly": "Settimanale",
         "daily": "Quotidiano"
-      }
-    },
-    "sensor_select": {
-      "options": {
-        "sensor_select_add_new": "Aggiungi nuovo sensore"
       }
     }
   },

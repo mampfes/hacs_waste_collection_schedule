@@ -17,12 +17,12 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**pdf_url**  
-*(string) (required)*  
+**pdf_url**
+*(string) (required)*
 Direct URL to the PDF calendar. Find it on the Gruppo Veritas website under your municipality's waste collection page. The URL changes each year when a new calendar is published.
 
-**year**  
-*(integer) (optional, default: `2026`)*  
+**year**
+*(integer) (optional, default: `2026`)*
 The calendar year to extract. Must match the year printed inside the PDF. Update this value (together with `pdf_url`) when the new annual calendar is published.
 
 ## How to find the PDF URL
