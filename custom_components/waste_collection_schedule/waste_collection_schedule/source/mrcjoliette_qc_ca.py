@@ -16,7 +16,7 @@ from waste_collection_schedule.waste_types import (
 
 # Demonstrates: date_parsers.from_epoch for a JSON API that returns collection
 # dates as Unix milliseconds, plus a dropdown whose human-readable options the
-# source resolves to the provider's numeric sector id in __init__.
+# source resolves to the provider's numeric sector id in the params callable.
 
 API_URL = "https://mrcjoliette.qc.ca/wp-content/plugins/mrcjoliette-gmr/json/collectes_public_cal.json.php"
 
@@ -58,6 +58,25 @@ class _Event(TypedDict):
     start: int
 
 
+def _calendar_params(city_id, **_):
+    # The API wants the calendar year as a millisecond epoch window; compute it
+    # fresh each fetch so a long-running instance rolls over the new year. The
+    # dropdown stores the human-readable sector name; resolve it to the numeric
+    # id the API expects.
+    now = datetime.now(timezone.utc)
+    start = int(datetime(now.year, 1, 1, tzinfo=timezone.utc).timestamp() * 1000)
+    end = int(
+        datetime(now.year, 12, 31, 23, 59, 59, tzinfo=timezone.utc).timestamp() * 1000
+    )
+    return {
+        "id": _NAME_TO_ID[city_id],
+        "from": start,
+        "to": end,
+        "utc_offset_from": 0,
+        "utc_offset_to": 0,
+    }
+
+
 @final
 class Source(BaseSource):
     TITLE = "MRC Joliette (QC)"
@@ -82,6 +101,7 @@ class Source(BaseSource):
         "fr": "Trouvez votre secteur sur la carte des collectes de la MRC Joliette (https://mrcjoliette.qc.ca/gmr/carte-des-collectes/) et choisissez-le dans la liste.",
     }
 
+    retrieve = retrievers.HttpGetRetriever(url=API_URL, params=_calendar_params)
     parse = parsers.JsonParser("result", shape=list[_Event])
 
     transform = JsonTransformer(
@@ -97,28 +117,3 @@ class Source(BaseSource):
                 "city_id", city_id, list(CITIES.values())
             )
         super().__init__(city_id=city_id)
-        self._sector_id = _NAME_TO_ID[city_id]
-
-    def retrieve(self, source):
-        # The API wants the calendar year as a millisecond epoch window; compute
-        # it fresh each fetch so a long-running instance rolls over the new year.
-        now = datetime.now(timezone.utc)
-        start = int(datetime(now.year, 1, 1, tzinfo=timezone.utc).timestamp() * 1000)
-        end = int(
-            datetime(now.year, 12, 31, 23, 59, 59, tzinfo=timezone.utc).timestamp()
-            * 1000
-        )
-        self._params = {
-            "id": self._sector_id,
-            "from": start,
-            "to": end,
-            "utc_offset_from": 0,
-            "utc_offset_to": 0,
-        }
-        return retrievers.http_get(self)
-
-    def preprocess(self, records, source=None):
-        # Skip entries without a colour/start (the transformer needs both).
-        for record in records:
-            if isinstance(record, dict) and record.get("color") and record.get("start"):
-                yield record
