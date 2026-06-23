@@ -24,9 +24,18 @@ Transformers:
   JsonTransformer      — flat JSON object / dict record  (most common)
   KeyValueTransformer  — [{name: ..., value: ...}] array records
   ICSTransformer       — (date, summary) tuples from parsers.IcsParser
+  RowTransformer       — (date, label) rows, date a string or a date
   HtmlTransformer      — BeautifulSoup element, callable getters
 
-For complex sources that don't fit any of these, implement classify() instead.
+Every transformer also accepts:
+  * ``date_key``/``type_key`` as a callable (not just a string), to reach a
+    nested value (``lambda r: r["wasteType"]["name"]``) or assemble a date from
+    several fields — so a non-flat record needn't drop to classify().
+  * ``clean=`` — a label normaliser applied before mapping/resolving; build one
+    with ``label_cleaner(strip_suffixes=..., remap=...)``.
+  * a date value that is already a ``datetime.date`` (used as-is, not parsed).
+
+For sources that genuinely don't fit any of these, implement classify() instead.
 """
 
 import datetime
@@ -57,6 +66,7 @@ class BaseTransformer(ABC, Generic[T]):
         self,
         type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
+        clean: Callable[[str], str] | None = None,
     ):
         self._type_value_map: dict[str, TypeMapValue] = (
             {k.strip().lower(): v for k, v in type_value_map.items()}
@@ -66,6 +76,30 @@ class BaseTransformer(ABC, Generic[T]):
         self._parse_date_fn: date_parsers.DateParser = (
             parse_date or date_parsers.DateParserAuto()
         )
+        # Optional normaliser applied to the raw label before mapping/resolving
+        # (e.g. strip a " Collection Service" suffix), so a source needn't drop
+        # to classify() just to tidy a label. See ``label_cleaner`` for a helper.
+        self._clean = clean
+
+    def _to_date(self, value: Any) -> datetime.date | None:
+        """Coerce a record's date value to a date: pass a ``date`` through,
+        skip empty values, otherwise parse the string."""
+        if value is None or value == "":
+            return None
+        if isinstance(value, datetime.date):
+            return value
+        return self._parse_date(str(value))
+
+    @staticmethod
+    def _get(record: Mapping[str, Any], key: "str | Callable[..., Any]") -> Any:
+        """Read a field by key, or compute it with a callable.
+
+        A plain string reads ``record[key]``; a callable receives the whole
+        record, so a source can reach a nested value (``r["wasteType"]["name"]``)
+        or assemble a date from several fields without a custom transformer."""
+        if callable(key):
+            return key(record)
+        return record.get(key)
 
     @property
     def waste_types(self) -> list[WasteType]:
@@ -95,20 +129,21 @@ class BaseTransformer(ABC, Generic[T]):
           3. ``waste_types.preserved`` — keep the original label verbatim rather
              than collapsing unknown labels to OTHER.
         """
-        key = raw_type.strip().lower()
+        label = self._clean(raw_type) if self._clean else raw_type
+        key = label.strip().lower()
         if self._type_value_map and key in self._type_value_map:
             return self._type_value_map[key]
 
-        waste_type = resolve(raw_type)
+        waste_type = resolve(label)
         if waste_type is not None:
             return waste_type
 
         _LOGGER.warning(
             "Unresolved waste type %r — preserving the original label. "
             "Add an alias to waste_types to classify it.",
-            raw_type,
+            label,
         )
-        return preserved(raw_type)
+        return preserved(label)
 
     @staticmethod
     def _collections(
@@ -158,24 +193,25 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
 
     def __init__(
         self,
-        date_key: str,
-        type_key: str,
+        date_key: "str | Callable[[Mapping[str, Any]], Any]",
+        type_key: "str | Callable[[Mapping[str, Any]], Any]",
         type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
+        clean: Callable[[str], str] | None = None,
     ):
-        super().__init__(type_value_map, parse_date)
+        super().__init__(type_value_map, parse_date, clean)
         self._date_key = date_key
         self._type_key = type_key
 
     def __call__(
         self, record: Mapping[str, Any]
     ) -> Collection | list[Collection] | None:
-        date_str = record.get(self._date_key)
-        if not date_str:
+        date = self._to_date(self._get(record, self._date_key))
+        if date is None:
             return None
-        raw_type = str(record.get(self._type_key, ""))
+        raw_type = str(self._get(record, self._type_key) or "")
         resolved = self._resolve_type(raw_type)
-        return self._collections(self._parse_date(str(date_str)), resolved)
+        return self._collections(date, resolved)
 
 
 class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
@@ -207,8 +243,9 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
         parse_date: date_parsers.DateParser | None = None,
         name_field: str = "name",
         value_field: str = "value",
+        clean: Callable[[str], str] | None = None,
     ):
-        super().__init__(type_value_map, parse_date)
+        super().__init__(type_value_map, parse_date, clean)
         self._date_key = date_key
         self._type_key = type_key
         self._name_field = name_field
@@ -249,8 +286,12 @@ class ICSTransformer(BaseTransformer[tuple[datetime.date, str]]):
         type_value_map: Maps summary strings (case-insensitive) to WasteTypes.
     """
 
-    def __init__(self, type_value_map: Mapping[str, TypeMapValue] | None = None):
-        super().__init__(type_value_map)
+    def __init__(
+        self,
+        type_value_map: Mapping[str, TypeMapValue] | None = None,
+        clean: Callable[[str], str] | None = None,
+    ):
+        super().__init__(type_value_map, clean=clean)
 
     def __call__(
         self, record: tuple[datetime.date, str]
@@ -258,6 +299,38 @@ class ICSTransformer(BaseTransformer[tuple[datetime.date, str]]):
         date, summary = record
         resolved = self._resolve_type(summary)
         return self._collections(date, resolved)
+
+
+class RowTransformer(BaseTransformer[tuple[Any, str]]):
+    """Transform a ``(date, label)`` row, the date a string or a ``date``.
+
+    The general form of :class:`ICSTransformer` for any parser that yields
+    ``(date, label)`` pairs (e.g. a service client returning rows). Parses the
+    date when it is a string, passes a ``datetime.date`` through, optionally
+    cleans the label, then maps/resolves it::
+
+        parse = WhitespaceParser()
+        transform = RowTransformer(
+            parse_date=date_parsers.for_format("%d/%m/%Y"),
+            clean=label_cleaner(strip_suffixes=[" Collection Service"]),
+            type_value_map={"Domestic Waste": GENERAL_WASTE},
+        )
+    """
+
+    def __init__(
+        self,
+        type_value_map: Mapping[str, TypeMapValue] | None = None,
+        parse_date: date_parsers.DateParser | None = None,
+        clean: Callable[[str], str] | None = None,
+    ):
+        super().__init__(type_value_map, parse_date, clean)
+
+    def __call__(self, record: tuple[Any, str]) -> Collection | list[Collection] | None:
+        raw_date, label = record
+        date = self._to_date(raw_date)
+        if date is None:
+            return None
+        return self._collections(date, self._resolve_type(str(label)))
 
 
 class HtmlTransformer(BaseTransformer[Tag]):
@@ -287,8 +360,9 @@ class HtmlTransformer(BaseTransformer[Tag]):
         type_getter: Callable[[Tag], Any],
         type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
+        clean: Callable[[str], str] | None = None,
     ):
-        super().__init__(type_value_map, parse_date)
+        super().__init__(type_value_map, parse_date, clean)
         self._date_getter = date_getter
         self._type_getter = type_getter
 
@@ -310,3 +384,33 @@ class HtmlTransformer(BaseTransformer[Tag]):
 
         resolved = self._resolve_type(str(raw_type))
         return self._collections(date, resolved)
+
+
+def label_cleaner(
+    *,
+    strip_suffixes: Iterable[str] = (),
+    remap: Mapping[str, str] | None = None,
+) -> Callable[[str], str]:
+    """Build a ``clean`` callable for a transformer's label normalisation.
+
+    A declarative substitute for the most common reason a source dropped to
+    ``classify()``: tidying a provider's label before it is mapped/resolved.
+
+    * ``strip_suffixes`` — remove the first matching trailing phrase
+      (e.g. ``" Collection Service"``), then trim whitespace.
+    * ``remap`` — replace exact (case-insensitive, trimmed) labels with another
+      string before resolution (e.g. ``{"Rest": "Restmüll"}``).
+
+    Applied in order: strip the suffix, then remap.
+    """
+    lowered_remap = {k.strip().lower(): v for k, v in (remap or {}).items()}
+
+    def clean(label: str) -> str:
+        text = label.strip()
+        for suffix in strip_suffixes:
+            if text.endswith(suffix):
+                text = text[: -len(suffix)].strip()
+                break
+        return lowered_remap.get(text.lower(), text)
+
+    return clean
