@@ -2,7 +2,6 @@ from typing import final
 
 from waste_collection_schedule import field_terms
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import cascading_select, text_field
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.AppAbfallplusDe import (
@@ -11,13 +10,14 @@ from waste_collection_schedule.service.AppAbfallplusDe import (
     AppAbfallplusRetriever,
     discover_choices,
 )
-from waste_collection_schedule.waste_types import ALL_TYPES, preserved, resolve
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import ALL_TYPES
 
 # Declarative source over the "Apps by Abfall+" platform. The whole live wizard
 # (token, Bundesland -> Landkreis -> Kommune -> Bezirk -> Straße -> Hausnummer
 # cascade, validate, struktur download) and the XML interpretation live in the
 # service as AppAbfallplusRetriever + AppAbfallplusParser, so this source only
-# declares the pipeline. classify() maps each German category name onto a
+# declares the pipeline. The transformer maps each German category name onto a
 # canonical WasteType via the shared multilingual vocabulary.
 #
 # There is no static region registry on this platform: regions are discovered
@@ -36,7 +36,7 @@ class Source(BaseSource):
     URL = "https://www.abfallplus.de/"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
-    # classify() resolves each app's open-ended German labels through the shared
+    # The transformer resolves each app's open-ended German labels through the shared
     # multilingual vocabulary, so any canonical type may appear.
     WASTE_TYPES = list(ALL_TYPES)
 
@@ -117,6 +117,7 @@ class Source(BaseSource):
 
     retrieve = AppAbfallplusRetriever()
     parse = AppAbfallplusParser()
+    transform = JsonTransformer(date_key="date", type_key="category")
 
     def __init__(
         self,
@@ -157,9 +158,3 @@ class Source(BaseSource):
         if not app_id:
             return []
         return discover_choices(str(app_id), field, selections)
-
-    def classify(self, record: dict) -> Collection | None:
-        name = record["category"]
-        return Collection(
-            date=record["date"], waste_type=resolve(name) or preserved(name)
-        )

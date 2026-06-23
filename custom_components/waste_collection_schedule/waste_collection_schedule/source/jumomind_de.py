@@ -1,7 +1,4 @@
-import datetime
-
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import (
     alternatives,
     area_id,
@@ -16,10 +13,11 @@ from waste_collection_schedule.service.Jumomind import (
     JumomindParser,
     JumomindRetriever,
 )
-from waste_collection_schedule.waste_types import ALL_TYPES, preserved, resolve
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import ALL_TYPES
 
 # Waste-type names come back as open-ended German labels that vary by provider,
-# so this source declares NO per-source type map: classify() resolves the
+# so this source declares NO per-source type map: the transformer resolves the
 # standard German labels via the shared multilingual vocabulary
 # (waste_types.resolve), and anything it doesn't recognise is preserved verbatim
 # rather than collapsed to OTHER.
@@ -189,7 +187,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Jumomind.de waste collection."
     URL = "https://www.jumomind.de"
     COUNTRY = "de"
-    # classify() resolves open-ended German labels via the shared vocabulary,
+    # The transformer resolves open-ended German labels via the shared vocabulary,
     # so any canonical type may appear.
     WASTE_TYPES = list(ALL_TYPES)
 
@@ -295,6 +293,7 @@ class Source(BaseSource):
         area_id="area_id",
     )
     parse = JumomindParser()
+    transform = RowTransformer()
 
     def __init__(
         self,
@@ -313,7 +312,3 @@ class Source(BaseSource):
             area_id=area_id,
             house_number=(str(house_number) if house_number is not None else None),
         )
-
-    def classify(self, record: tuple[datetime.date, str]) -> Collection | None:
-        date, label = record
-        return Collection(date=date, waste_type=resolve(label) or preserved(label))

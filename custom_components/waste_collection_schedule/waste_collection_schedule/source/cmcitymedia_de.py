@@ -1,20 +1,20 @@
-import datetime
 from typing import final
 
+from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import district, text_field
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.CMCityMedia import (
     CMCityMediaParser,
     CMCityMediaRetriever,
 )
-from waste_collection_schedule.waste_types import ALL_TYPES, preserved, resolve
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import ALL_TYPES
 
 # Declarative source on the CM City Media components (CMCityMediaRetriever +
 # CMCityMediaParser). The provider registry lives here, in the source that owns
 # it; each entry carries the homepage id (hpid) the user selects and the realm
-# the API needs. classify() resolves each item's German type name onto a
+# the API needs. The transformer resolves each item's German type name onto a
 # canonical WasteType via the shared multilingual vocabulary.
 
 URL = "https://cmcitymedia.de"
@@ -70,7 +70,7 @@ class Source(BaseSource):
     # A fixed-provider source: an empty schedule is a legitimate "no collections
     # in the window" result, so do not RAISE_ON_EMPTY (matches the legacy source
     # which returned []).
-    # classify() resolves open-ended German labels via the shared vocabulary,
+    # The transformer resolves open-ended German labels via the shared vocabulary,
     # so any canonical type may appear.
     WASTE_TYPES = list(ALL_TYPES)
 
@@ -89,6 +89,9 @@ class Source(BaseSource):
 
     retrieve = CMCityMediaRetriever()
     parse = CMCityMediaParser()
+    transform = JsonTransformer(
+        date_key="date", type_key="name", parse_date=date_parsers.for_format("%Y-%m-%d")
+    )
 
     @staticmethod
     def REGIONS() -> list[Region]:
@@ -107,8 +110,3 @@ class Source(BaseSource):
             if provider is not None:
                 realm = provider["realm"]
         super().__init__(hpid=hpid, realmid=realmid, district=district, realm=realm)
-
-    def classify(self, record) -> Collection | None:
-        date = datetime.datetime.strptime(record["date"], "%Y-%m-%d").date()
-        name = record["name"]
-        return Collection(date=date, waste_type=resolve(name) or preserved(name))

@@ -3,15 +3,15 @@ from typing import final
 
 from waste_collection_schedule import retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.parsers import JsonParser
-from waste_collection_schedule.waste_types import ALL_TYPES, preserved, resolve
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import ALL_TYPES
 
 # Standalone JSON-API source. The calendar endpoint takes the street_code +
 # building_number plus a year/month window, computed live so the request always
 # covers the next 12 months. Each record carries the date split across year/
-# month/day integer fields and a German type label, so classify() builds the
+# month/day integer fields and a German type label, so the transformer builds the
 # date and resolves the label onto a canonical WasteType.
 
 API_URL = "https://www.awbkoeln.de/api/calendar"
@@ -46,13 +46,12 @@ class Source(BaseSource):
 
     retrieve = retrievers.HttpGetRetriever(url=API_URL, params=_calendar_params)
     parse = JsonParser("data")
+    transform = JsonTransformer(
+        date_key=lambda r: datetime.date(
+            year=r["year"], month=r["month"], day=r["day"]
+        ),
+        type_key="type",
+    )
 
     def __init__(self, street_code, building_number):
         super().__init__(street_code=street_code, building_number=building_number)
-
-    def classify(self, record) -> Collection | None:
-        date = datetime.date(
-            year=record["year"], month=record["month"], day=record["day"]
-        )
-        label = record["type"]
-        return Collection(date=date, waste_type=resolve(label) or preserved(label))

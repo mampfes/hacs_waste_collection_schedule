@@ -1,18 +1,17 @@
-import datetime
 from typing import final
 
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import api_key, text_field, waste_types
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.AbfallIOGraphQL import (
     AbfallIoGraphQLParser,
     AbfallIoGraphQLRetriever,
 )
-from waste_collection_schedule.waste_types import ALL_TYPES, preserved, resolve
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import ALL_TYPES
 
 # Declarative source on the abfall.io v3 GraphQL components (AbfallIoGraphQL-
-# Retriever + AbfallIoGraphQLParser). classify() turns each appointment into a
+# Retriever + AbfallIoGraphQLParser). The transformer turns each appointment into a
 # Collection, resolving the waste-type name through the shared multilingual
 # vocabulary. The provider registry lives here, in the source that owns it.
 
@@ -38,7 +37,7 @@ class Source(BaseSource):
     URL = "https://www.abfallplus.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
-    # classify() resolves each provider's open-ended German labels through the
+    # The transformer resolves each provider's open-ended German labels through the
     # shared multilingual vocabulary, so any canonical type may appear.
     WASTE_TYPES = list(ALL_TYPES)
 
@@ -65,6 +64,9 @@ class Source(BaseSource):
 
     retrieve = AbfallIoGraphQLRetriever()
     parse = AbfallIoGraphQLParser()
+    transform = JsonTransformer(
+        date_key="date", type_key=lambda r: r["wasteType"]["name"]
+    )
 
     @staticmethod
     def REGIONS() -> list[Region]:
@@ -80,8 +82,3 @@ class Source(BaseSource):
 
     def __init__(self, key, idHouseNumber, wasteTypes=None):
         super().__init__(key=key, idHouseNumber=idHouseNumber, wasteTypes=wasteTypes)
-
-    def classify(self, record) -> Collection | None:
-        date = datetime.date.fromisoformat(record["date"])
-        name = record["wasteType"]["name"]
-        return Collection(date=date, waste_type=resolve(name) or preserved(name))
