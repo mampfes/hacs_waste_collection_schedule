@@ -1,4 +1,3 @@
-import logging
 from typing import TypedDict, final
 
 from waste_collection_schedule import parsers, retrievers
@@ -13,8 +12,6 @@ from waste_collection_schedule.waste_types import (
     ORGANIC,
     RECYCLABLES,
 )
-
-_LOGGER = logging.getLogger(__name__)
 
 
 class _Field(TypedDict):
@@ -31,10 +28,41 @@ class _Field(TypedDict):
 ResponseShape = list[list[_Field]]
 
 # Demonstrates: alternative-input PARAMS via config_params.alternatives() (an
-# address OR a lat+lon pair) + a source that overrides retrieve() to compute
-# request headers from its params before delegating to the zero-config http_get
-# retriever. validate() requires exactly one group, so no cross-field check is
-# needed in __init__.
+# address OR a lat+lon pair) + a fully declarative HttpGetRetriever whose headers
+# are a callable resolved against the source's params: it geocodes the address (or
+# uses the supplied coords) and bakes the point into the request headers the
+# endpoint requires. validate() requires exactly one group, so no cross-field
+# check is needed in __init__.
+
+_BASE_URL = "https://www.stirling.wa.gov.au"
+
+
+def _resolve_coordinates(
+    address: str | None, lat: float | str | None, lon: float | str | None
+) -> tuple[float, float]:
+    if lat is not None and lon is not None:
+        return float(lat), float(lon)
+    try:
+        location = geocode(address or "")
+    except ArcGisGeocodeError as e:
+        raise SourceArgumentNotFound("address", address) from e
+    return location["y"], location["x"]
+
+
+def _headers(address=None, lat=None, lon=None, **_):
+    """Build the request headers, baking in the resolved collection point."""
+    lat_v, lon_v = _resolve_coordinates(address, lat, lon)
+    return {
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "configid": "7c833520-7b62-4228-8522-fb1a220b32e8",
+        "form": "57753bab-f589-44d7-8934-098b6d5c572f",
+        "fields": f"{lon_v},{lat_v}",
+        "apikeylookup": "Bin Day",
+        "Origin": _BASE_URL,
+        "Referer": (
+            f"{_BASE_URL}/waste-and-environment/waste-and-recycling/bin-collections"
+        ),
+    }
 
 
 @final
@@ -67,6 +95,7 @@ class Source(BaseSource):
         ),
     }
 
+    retrieve = retrievers.HttpGetRetriever(url=API_URL, headers=_headers)
     parse = parsers.JsonParser(shape=ResponseShape)
 
     transform = KeyValueTransformer(
@@ -88,31 +117,3 @@ class Source(BaseSource):
     ):
         # validate() (in super) enforces the address-or-(lat+lon) alternative.
         super().__init__(address=address, lat=lat, lon=lon)
-        self._lat = float(lat) if lat is not None else None
-        self._lon = float(lon) if lon is not None else None
-
-    def _resolve_coordinates(self) -> tuple[float, float]:
-        if self._lat is not None and self._lon is not None:
-            return self._lat, self._lon
-        # __init__ guarantees address is set when coords are not provided.
-        address = self.params["address"] or ""
-        try:
-            location = geocode(address)
-        except ArcGisGeocodeError as e:
-            raise SourceArgumentNotFound("address", address) from e
-        return location["y"], location["x"]
-
-    def retrieve(self, source):
-        lat, lon = self._resolve_coordinates()
-        self._headers = {
-            "Accept": "application/json, text/javascript, */*; q=0.01",
-            "configid": "7c833520-7b62-4228-8522-fb1a220b32e8",
-            "form": "57753bab-f589-44d7-8934-098b6d5c572f",
-            "fields": f"{lon},{lat}",
-            "apikeylookup": "Bin Day",
-            "Origin": self.URL,
-            "Referer": (
-                f"{self.URL}/waste-and-environment/waste-and-recycling/bin-collections"
-            ),
-        }
-        return retrievers.http_get(self)

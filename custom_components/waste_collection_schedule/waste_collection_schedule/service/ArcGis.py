@@ -9,6 +9,8 @@ Provides:
     declares (retrieve returns the raw Response; parse extracts attributes)
   - ArcGisMultiFeatureRetriever / ArcGisMultiFeatureParser: the same for a
     source whose layers are split (one per bin type / zone)
+  - ArcGisTwoStepFeatureRetriever: a two-step attribute query (locate a record's
+    id via one ``where`` clause, then fetch the full record by that id)
 
 Prefer these declarative stages over a hand-written ``retrieve``: a single-layer
 source uses ``ArcGisFeatureRetriever`` (address-geocode or ``where`` clause), a
@@ -254,6 +256,76 @@ class ArcGisFeatureParser(Parser[list[dict[str, Any]]]):
             source_name=response_shape.source_name(source),
         )
         return [feature.get("attributes", {}) for feature in data["features"]]
+
+
+class ArcGisTwoStepFeatureRetriever(RetrieverFunc):
+    """Resolve a record id via one attribute query, then fetch the full record.
+
+    The common ArcGIS "address ``LIKE`` -> ``OBJECTID`` -> full record" shape:
+    one ``where`` clause locates the matching feature, a field is pulled from it
+    (typically ``OBJECTID``), and a second ``where`` clause fetches the wanted
+    fields for that id. Both requests run through :func:`feature_query` and the
+    lookup response is validated by :class:`ArcGisFeatureParser`, so a no-match
+    raises a clear argument error instead of an ``IndexError``.
+
+    Args:
+        feature_url: Full FeatureServer layer URL (e.g. ``.../FeatureServer/0``).
+        lookup_where: SQL where clause for the lookup (string or a callable
+            resolved against ``**source.params``).
+        schedule_where: ``callable(key, **source.params) -> str`` building the
+            second where clause from the extracted key.
+        argument: ``source.params`` field name reported in the not-found error,
+            and the value shown with it.
+        id_field: feature field pulled from the first match (default ``OBJECTID``).
+        lookup_fields: ``outFields`` for the lookup query.
+        out_fields: ``outFields`` for the final schedule query.
+        timeout: request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        feature_url: str,
+        *,
+        lookup_where: str | Callable[..., str],
+        schedule_where: Callable[..., str],
+        argument: str = "address",
+        id_field: str = "OBJECTID",
+        lookup_fields: str = "*",
+        out_fields: str = "*",
+        timeout: int = 20,
+    ):
+        self.feature_url = feature_url
+        self.lookup_where = lookup_where
+        self.schedule_where = schedule_where
+        self.argument = argument
+        self.id_field = id_field
+        self.lookup_fields = lookup_fields
+        self.out_fields = out_fields
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource) -> Response:
+        where = (
+            self.lookup_where(**source.params)
+            if callable(self.lookup_where)
+            else self.lookup_where
+        )
+        lookup = feature_query(
+            self.feature_url,
+            where=where,
+            out_fields=self.lookup_fields,
+            timeout=self.timeout,
+        )
+        matches = ArcGisFeatureParser()(lookup, source)
+        value = source.params.get(self.argument)
+        if not matches:
+            raise SourceArgumentNotFound(self.argument, value)
+        key = matches[0][self.id_field]
+        return feature_query(
+            self.feature_url,
+            where=self.schedule_where(key, **source.params),
+            out_fields=self.out_fields,
+            timeout=self.timeout,
+        )
 
 
 class ArcGisMultiFeatureRetriever(RetrieverFunc):

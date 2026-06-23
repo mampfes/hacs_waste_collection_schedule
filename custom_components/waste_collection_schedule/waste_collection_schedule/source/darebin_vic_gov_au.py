@@ -4,7 +4,6 @@ from typing import final
 from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service import ArcGis
 from waste_collection_schedule.transformers import ICSTransformer
@@ -96,35 +95,23 @@ class Source(BaseSource):
         ),
     }
 
+    # Two-step attribute query (address LIKE -> OBJECTID -> full record) via the
+    # shared ArcGIS component: both requests route through ArcGisFeatureParser so
+    # the FeatureEnvelope shape is validated and a no-match raises a clear
+    # argument error rather than an IndexError.
+    retrieve = ArcGis.ArcGisTwoStepFeatureRetriever(
+        FEATURE_URL,
+        lookup_where=lambda property_location, **_: (
+            f"EZI_ADDRESS LIKE '{property_location}%'"
+        ),
+        schedule_where=lambda key, **_: f"OBJECTID={key}",
+        argument="property_location",
+        lookup_fields="EZI_ADDRESS,OBJECTID",
+        out_fields="Collection_Day,Green_Collection,Recycle_Collection,Street_Sweeping",
+    )
     parse = ArcGis.ArcGisFeatureParser()
     preprocess = RecurrenceExpander(_describe)
     transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
     def __init__(self, property_location: str):
         super().__init__(property_location=property_location)
-
-    # A two-step attribute query (address LIKE -> OBJECTID -> full record) that
-    # the single-call retrievers can't express, so retrieve stays custom; but the
-    # lookup response goes through the shared ArcGisFeatureParser so the
-    # FeatureEnvelope shape is validated and a no-match raises a clear argument
-    # error rather than an IndexError.
-    def retrieve(self, source):
-        location = source.params["property_location"]
-        lookup = ArcGis.feature_query(
-            FEATURE_URL,
-            where=f"EZI_ADDRESS LIKE '{location}%'",
-            out_fields="EZI_ADDRESS,OBJECTID",
-        )
-        matches = ArcGis.ArcGisFeatureParser()(lookup, source)
-        if not matches:
-            raise SourceArgumentNotFound("property_location", location)
-        object_id = matches[0]["OBJECTID"]
-
-        # Step 2: fetch the full record for that OBJECTID.
-        return ArcGis.feature_query(
-            FEATURE_URL,
-            where=f"OBJECTID={object_id}",
-            out_fields=(
-                "Collection_Day,Green_Collection,Recycle_Collection,Street_Sweeping"
-            ),
-        )

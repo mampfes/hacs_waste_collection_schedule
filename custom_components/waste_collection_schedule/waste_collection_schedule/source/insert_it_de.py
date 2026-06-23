@@ -1,5 +1,4 @@
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import (
     alternatives,
     house_number,
@@ -14,13 +13,14 @@ from waste_collection_schedule.service.InsertITDe import (
     InsertItParser,
     InsertItRetriever,
 )
-from waste_collection_schedule.waste_types import ALL_TYPES, preserved, resolve
+from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
+from waste_collection_schedule.waste_types import ALL_TYPES
 
 # Declarative source on the Insert IT components. The per-region configuration
 # travels with each provider entry (the app path, the ICS regex, and an optional
 # type-name remap), rather than living in separate parallel maps keyed by
-# municipality. classify() applies the region's remap then resolves the label
-# onto a canonical WasteType via the shared multilingual vocabulary.
+# municipality. The remap (only some municipalities need one) is applied as a
+# per-instance ICSTransformer clean step, set in __init__ from the provider.
 
 _LEERUNG = r"Leerung:\s+(.*)\s+\(.*\)"
 
@@ -110,6 +110,7 @@ class Source(BaseSource):
 
     retrieve = InsertItRetriever()
     parse = InsertItParser()
+    transform = ICSTransformer()
 
     @staticmethod
     def REGIONS() -> list[Region]:
@@ -128,8 +129,11 @@ class Source(BaseSource):
             raise SourceArgumentNotFoundWithSuggestions(
                 "municipality", municipality, list(_BY_MUNICIPALITY)
             )
-        # Per-region remap (only some municipalities need one).
-        self._types: dict = provider.get("types", {})
+        # Only some municipalities relabel their types; apply that region's remap
+        # as a per-instance clean step before the canonical resolve.
+        types = provider.get("types")
+        if types:
+            self.transform = ICSTransformer(clean=label_cleaner(remap=types))
         super().__init__(
             municipality=municipality,
             street=street,
@@ -138,8 +142,3 @@ class Source(BaseSource):
             path=provider["path"],
             regex=provider["regex"],
         )
-
-    def classify(self, record) -> Collection | None:
-        date, summary = record
-        name = self._types.get(summary, summary)
-        return Collection(date=date, waste_type=resolve(name) or preserved(name))
