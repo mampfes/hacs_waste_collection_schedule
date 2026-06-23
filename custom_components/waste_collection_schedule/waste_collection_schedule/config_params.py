@@ -13,6 +13,25 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentRequired,
 )
+from waste_collection_schedule.field_terms import (
+    API_KEY,
+    AREA_ID,
+    CITY,
+    CITY_ID,
+    CUSTOMER_NUMBER,
+    DISTRICT,
+    HOUSE_NUMBER,
+    LATITUDE,
+    LOCATION_ID,
+    LONGITUDE,
+    MUNICIPALITY,
+    POSTCODE,
+    SERVICE_ID,
+    STREET,
+    UPRN,
+    WASTE_TYPES,
+    FieldTerm,
+)
 
 
 @dataclass(frozen=True)
@@ -50,6 +69,65 @@ class ConfigParam:
 def _title(field_name: str, label: str | None) -> str:
     """A field's display label: the explicit ``label`` or a Title-Cased name."""
     return label or field_name.replace("_", " ").title()
+
+
+def _compose(
+    widget: str,
+    *bindings: "tuple[FieldTerm, str]",
+    optional: bool = False,
+    defaults: dict[str, str] | None = None,
+    groups: tuple[tuple[str, ...], ...] = (),
+) -> ConfigParam:
+    """Build a ConfigParam by binding standard ``FieldTerm``s to wire names.
+
+    Each binding is ``(term, wire_name)``: the term supplies the label and help
+    text in every supported language, the wire name is how the value reaches
+    ``Source.__init__``/the server. This keeps the field's meaning (and its
+    localisation) standard while only the wire name varies per source.
+    """
+    fields: dict[str, str] = {}
+    labels: dict[str, dict[str, str]] = {}
+    descriptions: dict[str, dict[str, str]] = {}
+    for term, wire in bindings:
+        fields[wire] = term.labels["en"]
+        for lang, label in term.labels.items():
+            labels.setdefault(lang, {})[wire] = label
+        for lang, help_text in term.descriptions.items():
+            descriptions.setdefault(lang, {})[wire] = help_text
+    return ConfigParam(
+        fields=fields,
+        widget=widget,
+        labels=labels,
+        descriptions=descriptions,
+        required=(not optional) and not groups,
+        defaults=defaults or {},
+        groups=groups,
+    )
+
+
+def _term_label_maps(
+    bindings: "list[tuple[str, FieldTerm | str | None]]",
+) -> tuple[dict[str, str], dict[str, dict[str, str]], dict[str, dict[str, str]]]:
+    """Resolve ``(wire_name, term-or-label)`` bindings to fields/labels/descriptions.
+
+    Used by the cascade params, whose levels may be a plain label string or a
+    standard ``FieldTerm`` (preferred, multilingual).
+    """
+    fields: dict[str, str] = {}
+    labels: dict[str, dict[str, str]] = {}
+    descriptions: dict[str, dict[str, str]] = {}
+    for wire, term_or_label in bindings:
+        if isinstance(term_or_label, FieldTerm):
+            fields[wire] = term_or_label.labels["en"]
+            for lang, label in term_or_label.labels.items():
+                labels.setdefault(lang, {})[wire] = label
+            for lang, help_text in term_or_label.descriptions.items():
+                descriptions.setdefault(lang, {})[wire] = help_text
+        else:
+            display = _title(wire, term_or_label)
+            fields[wire] = display
+            labels.setdefault("en", {})[wire] = display
+    return fields, labels, descriptions
 
 
 def apply_defaults(params: list[ConfigParam], values: dict) -> dict:
@@ -101,41 +179,12 @@ def validate(params: list[ConfigParam], values: dict) -> None:
 
 def coords(lat: str = "lat", lon: str = "lon") -> ConfigParam:
     """Location by map/coordinates. Framework shows a map picker."""
-    return ConfigParam(
-        fields={lat: "Latitude", lon: "Longitude"},
-        widget="map",
-        labels={
-            "en": {lat: "Latitude", lon: "Longitude"},
-            "de": {lat: "Breitengrad", lon: "Längengrad"},
-            "fr": {lat: "Latitude", lon: "Longitude"},
-            "it": {lat: "Latitudine", lon: "Longitudine"},
-        },
-        descriptions={
-            "en": {
-                lat: "Select your location on the map.",
-                lon: "Select your location on the map.",
-            },
-        },
-    )
+    return _compose("map", (LATITUDE, lat), (LONGITUDE, lon))
 
 
 def uprn(field_name: str = "uprn") -> ConfigParam:
     """UK Unique Property Reference Number. Framework shows address lookup."""
-    return ConfigParam(
-        fields={field_name: "UPRN"},
-        widget="uprn_lookup",
-        labels={
-            "en": {field_name: "UPRN"},
-            "de": {field_name: "UPRN"},
-            "fr": {field_name: "UPRN"},
-            "it": {field_name: "UPRN"},
-        },
-        descriptions={
-            "en": {
-                field_name: "Your Unique Property Reference Number. Find it at https://www.findmyaddress.co.uk/",
-            },
-        },
-    )
+    return _compose("uprn_lookup", (UPRN, field_name))
 
 
 def postcode(
@@ -143,84 +192,84 @@ def postcode(
     house_field: str | None = None,
 ) -> ConfigParam:
     """Postcode with optional house number."""
-    fields = {postcode_field: "Postcode"}
-    labels_en = {postcode_field: "Postcode"}
-    labels_de = {postcode_field: "Postleitzahl"}
-    labels_fr = {postcode_field: "Code postal"}
-    labels_it = {postcode_field: "CAP"}
-
+    bindings = [(POSTCODE, postcode_field)]
     if house_field:
-        fields[house_field] = "House Number"
-        labels_en[house_field] = "House Number"
-        labels_de[house_field] = "Hausnummer"
-        labels_fr[house_field] = "Numéro"
-        labels_it[house_field] = "Numero civico"
-
-    return ConfigParam(
-        fields=fields,
-        widget="postcode",
-        labels={"en": labels_en, "de": labels_de, "fr": labels_fr, "it": labels_it},
-    )
+        bindings.append((HOUSE_NUMBER, house_field))
+    return _compose("postcode", *bindings)
 
 
 def address(
-    street: str = "street",
+    street_field: str = "street",
     number: str = "house_number",
     postcode_field: str = "postcode",
-    city: str | None = None,
+    city_field: str | None = None,
 ) -> ConfigParam:
     """Full address entry with optional city."""
-    fields = {
-        street: "Street",
-        number: "House Number",
-        postcode_field: "Postcode",
-    }
-    labels_en = {street: "Street", number: "House Number", postcode_field: "Postcode"}
-    labels_de = {
-        street: "Straße",
-        number: "Hausnummer",
-        postcode_field: "Postleitzahl",
-    }
-    labels_fr = {street: "Rue", number: "Numéro", postcode_field: "Code postal"}
-    labels_it = {street: "Via", number: "Numero civico", postcode_field: "CAP"}
-
-    if city:
-        fields[city] = "City"
-        labels_en[city] = "City"
-        labels_de[city] = "Stadt"
-        labels_fr[city] = "Ville"
-        labels_it[city] = "Città"
-
-    return ConfigParam(
-        fields=fields,
-        widget="address",
-        labels={"en": labels_en, "de": labels_de, "fr": labels_fr, "it": labels_it},
-    )
+    bindings = [
+        (STREET, street_field),
+        (HOUSE_NUMBER, number),
+        (POSTCODE, postcode_field),
+    ]
+    if city_field:
+        bindings.append((CITY, city_field))
+    return _compose("address", *bindings)
 
 
-def municipality(
-    field_name: str = "municipality",
-    district: str | None = None,
+def municipality(field: str = "municipality", *, optional: bool = False) -> ConfigParam:
+    """Municipality / commune (standard field; bind to a wire name)."""
+    return _compose("text", (MUNICIPALITY, field), optional=optional)
+
+
+def city(field: str = "city", *, optional: bool = False) -> ConfigParam:
+    """City / town (standard field; bind to a wire name)."""
+    return _compose("text", (CITY, field), optional=optional)
+
+
+def district(field: str = "district", *, optional: bool = False) -> ConfigParam:
+    """District / part of a municipality (standard field)."""
+    return _compose("text", (DISTRICT, field), optional=optional)
+
+
+def street(field: str = "street", *, optional: bool = False) -> ConfigParam:
+    """Street (standard field; bind to a wire name)."""
+    return _compose("text", (STREET, field), optional=optional)
+
+
+def house_number(field: str = "house_number", *, optional: bool = False) -> ConfigParam:
+    """House number (standard field; bind to a wire name)."""
+    return _compose("text", (HOUSE_NUMBER, field), optional=optional)
+
+
+def location_id(field: str = "location_id", *, optional: bool = False) -> ConfigParam:
+    """An opaque per-location identifier (standard field)."""
+    return _compose("text", (LOCATION_ID, field), optional=optional)
+
+
+def area_id(field: str = "area_id", *, optional: bool = False) -> ConfigParam:
+    """An opaque per-area identifier (standard field)."""
+    return _compose("text", (AREA_ID, field), optional=optional)
+
+
+def city_id(field: str = "city_id", *, optional: bool = False) -> ConfigParam:
+    """An opaque per-city identifier (standard field)."""
+    return _compose("text", (CITY_ID, field), optional=optional)
+
+
+def service_id(field: str = "service_id", *, optional: bool = False) -> ConfigParam:
+    """A provider/service identifier (standard field)."""
+    return _compose("text", (SERVICE_ID, field), optional=optional)
+
+
+def customer_number(
+    field: str = "customer_number", *, optional: bool = False
 ) -> ConfigParam:
-    """Municipality/district selection."""
-    fields = {field_name: "Municipality"}
-    labels_en = {field_name: "Municipality"}
-    labels_de = {field_name: "Gemeinde"}
-    labels_fr = {field_name: "Commune"}
-    labels_it = {field_name: "Comune"}
+    """A customer/account number (standard field)."""
+    return _compose("text", (CUSTOMER_NUMBER, field), optional=optional)
 
-    if district:
-        fields[district] = "District"
-        labels_en[district] = "District"
-        labels_de[district] = "Ortsteil"
-        labels_fr[district] = "Quartier"
-        labels_it[district] = "Quartiere"
 
-    return ConfigParam(
-        fields=fields,
-        widget="text",
-        labels={"en": labels_en, "de": labels_de, "fr": labels_fr, "it": labels_it},
-    )
+def waste_types(field: str = "waste_types", *, optional: bool = True) -> ConfigParam:
+    """An optional waste-type filter (standard field; optional by default)."""
+    return _compose("text", (WASTE_TYPES, field), optional=optional)
 
 
 def dropdown(
@@ -300,8 +349,9 @@ def cascading_select(
 
     Each level's options are fetched from the source given the levels chosen so
     far, so a provider with a kommune -> district -> street -> house-number
-    wizard is expressible in one param. Each ``level`` is a field name, or a
-    ``(field, label)`` pair for a custom label.
+    wizard is expressible in one param. Each ``level`` is a field name, a
+    ``(field, label)`` pair for a custom English label, or a ``(field, term)``
+    pair binding a standard ``FieldTerm`` (preferred: multilingual label/help).
 
     The source MUST implement a class method that returns the options for one
     level given the prior selections::
@@ -319,17 +369,18 @@ def cascading_select(
     data-dependent); pair the source with ``RAISE_ON_EMPTY = True`` so an
     incomplete selection surfaces as a clear error rather than empty data.
     """
-    fields: dict[str, str] = {}
+    bindings: list[tuple[str, FieldTerm | str | None]] = []
     for level in levels:
         if isinstance(level, tuple):
-            field_name, label = level
+            bindings.append((level[0], level[1]))
         else:
-            field_name, label = level, _title(level, None)
-        fields[field_name] = label
+            bindings.append((level, None))
+    fields, built_labels, descriptions = _term_label_maps(bindings)
     return ConfigParam(
         fields=fields,
         widget="cascading_select",
-        labels=labels or {"en": dict(fields)},
+        labels=labels or built_labels,
+        descriptions=descriptions,
         required=False,
     )
 
@@ -370,8 +421,14 @@ def text_field(
     label: str | None = None,
     default: str | None = None,
     optional: bool = False,
+    term: "FieldTerm | None" = None,
 ) -> ConfigParam:
-    """Free text entry.
+    """Free text entry — the escape hatch for a field with no standard concept.
+
+    Prefer a standard field factory (``municipality()``, ``street()``, …) so the
+    label is localised for free. When a genuinely novel field still maps to a
+    known concept, pass ``term=`` to get the multilingual label/help; otherwise
+    a plain ``label`` is English-only.
 
     Required by default. Two ways to relax that:
 
@@ -381,6 +438,13 @@ def text_field(
       refinement the source can do without (e.g. an extra street or route
       filter alongside a required city).
     """
+    if term is not None:
+        return _compose(
+            "text",
+            (term, field_name),
+            optional=optional or default is not None,
+            defaults={field_name: default} if default is not None else None,
+        )
     display = _title(field_name, label)
     return ConfigParam(
         fields={field_name: display},
@@ -400,11 +464,18 @@ def api_key(
 ) -> ConfigParam:
     """A free-text field for a provider API key (public, keyed endpoints).
 
-    A thin, semantic wrapper over :func:`text_field`. Pass ``default`` for a
-    provider that ships an embedded/public key, so the user need not supply one
-    (but can override it if the provider rotates the key).
+    A thin, semantic wrapper over the standard API_KEY term. Pass ``default``
+    for a provider that ships an embedded/public key, so the user need not
+    supply one (but can override it if the provider rotates the key).
     """
-    return text_field(field_name, label or "API Key", default=default)
+    if label is not None:
+        return text_field(field_name, label, default=default)
+    return _compose(
+        "text",
+        (API_KEY, field_name),
+        optional=default is not None,
+        defaults={field_name: default} if default is not None else None,
+    )
 
 
 def alternatives(*groups: list[ConfigParam]) -> ConfigParam:

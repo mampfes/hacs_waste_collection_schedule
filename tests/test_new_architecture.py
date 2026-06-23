@@ -1506,18 +1506,24 @@ class TestConfigParams:
     def test_address(self):
         from waste_collection_schedule.config_params import address
 
-        p = address(city="city")
+        p = address(city_field="city")
         assert "street" in p.fields
         assert "house_number" in p.fields
         assert "postcode" in p.fields
         assert "city" in p.fields
+        # Standard term labels are now multilingual (incl. nl).
+        assert p.labels["nl"]["street"] == "Straat"
 
     def test_municipality(self):
-        from waste_collection_schedule.config_params import municipality
+        from waste_collection_schedule.config_params import district, municipality
 
-        p = municipality(district="district")
-        assert "municipality" in p.fields
-        assert "district" in p.fields
+        p = municipality(field="f_id_kommune")
+        assert "f_id_kommune" in p.fields
+        assert p.labels["de"]["f_id_kommune"] == "Gemeinde"
+
+        d = district(field="f_id_bezirk")
+        assert "f_id_bezirk" in d.fields
+        assert d.labels["fr"]["f_id_bezirk"] == "Quartier"
 
     def test_dropdown(self):
         from waste_collection_schedule.config_params import dropdown
