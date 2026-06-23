@@ -3,23 +3,21 @@ from typing import final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.service.WhitespaceWRP import (
     WhitespaceParser,
     WhitespaceRetriever,
 )
+from waste_collection_schedule.transformers import RowTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
     GENERAL_WASTE,
     RECYCLABLES,
-    preserved,
-    resolve,
 )
 
 # Declarative source on the shared Whitespace WRP components (WhitespaceRetriever
-# + WhitespaceParser). classify() maps the council's open-ended type labels onto
-# canonical WasteTypes.
+# + WhitespaceParser). A RowTransformer maps the council's open-ended type labels
+# onto canonical WasteTypes.
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -53,29 +51,20 @@ class Source(BaseSource):
         text_field("address_name_number", "House name/number", optional=True),
     ]
 
-    parse_date = date_parsers.for_format("%d/%m/%Y")
-
     retrieve = WhitespaceRetriever(
         name_number="address_name_number",
         postcode="address_postcode",
     )
     parse = WhitespaceParser()
+    transform = RowTransformer(
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        clean=lambda s: s.replace(" Collection", "").replace(" Service", "").strip(),
+        skip_unparseable_dates=True,
+    )
 
     def __init__(self, address_name_number=None, address_postcode=None):
         super().__init__(
             address_postcode=address_postcode,
             address_name_number=address_name_number,
-        )
-
-    def classify(self, record) -> Collection | None:
-        date_str, type_str = record
-        cleaned = type_str.replace(" Collection", "").replace(" Service", "").strip()
-        try:
-            date = self.parse_date(date_str)
-        except ValueError:
-            _LOGGER.info("Skipped %s: unexpected date format", date_str)
-            return None
-        return Collection(
-            date=date,
-            waste_type=_TYPE_MAP.get(cleaned) or resolve(cleaned) or preserved(cleaned),
         )
