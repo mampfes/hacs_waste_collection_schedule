@@ -24,11 +24,8 @@ from waste_collection_schedule.transformers import ICSTransformer
 # (a discoverable listing with its Müllmax service id pre-filled). New providers
 # are added here, in the source that owns them.
 _PROVIDERS = [
-    {
-        "title": "AWISTA Düsseldorf",
-        "url": "https://www.awista.de/",
-        "service_id": "Dus",
-    },
+    # AWISTA Düsseldorf ("Dus") removed: the provider switched its backend and the
+    # Müllmax form no longer works (upstream #6707, issue #3500).
     # RSAG Rhein-Sieg-Kreis ("Rsa") is covered by the dedicated `rsag_de` source
     # (same Müllmax backend, friendlier city/street config) — see #6553. Entry
     # removed to avoid two listings for the same provider.

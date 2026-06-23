@@ -7653,14 +7653,6 @@
       "id": "awigo_de"
     },
     {
-      "title": "AWISTA D\u00fcsseldorf",
-      "module": "muellmax_de",
-      "default_params": {
-        "service": "Dus"
-      },
-      "id": "muellmax_de"
-    },
-    {
       "title": "AWISTA LOGISTIK Stadt Remscheid",
       "module": "monaloga_de",
       "default_params": {},
@@ -19589,6 +19581,12 @@
         "municipality": "Gasel"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Gemeinde Hochfelden",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_hochfelden_ch"
     },
     {
       "title": "Gemeinde W\u00fcrenlos",

@@ -1,0 +1,28 @@
+---
+title: Gemeinde Hochfelden
+url: https://hochfelden.ch
+country: ch
+howto:
+  en: |
+    Hochfelden publishes public ICS feeds via the Mondstaub calendar platform.
+    Use the combined URL below as the `url` parameter. `{%Y}` is replaced with
+    the current year automatically.
+
+    Individual waste-type feeds are also available:
+    - Kehricht only: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/kehricht-hochfelden-{%Y}.ics`
+    - Grüngut only: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/gruengut-hochfelden-{%Y}.ics`
+    - Karton only: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/karton-sammlung-hochfelden-{%Y}.ics`
+    - Altpapier only: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/altpapier-sammlung-hochfelden-{%Y}.ics`
+  de: |
+    Hochfelden veröffentlicht öffentliche ICS-Feeds über die Mondstaub-Kalenderplattform.
+    Verwenden Sie die kombinierte URL unten als `url`-Parameter. `{%Y}` wird automatisch
+    durch das aktuelle Jahr ersetzt.
+
+    Einzelne Abfallarten sind ebenfalls verfügbar:
+    - Nur Kehricht: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/kehricht-hochfelden-{%Y}.ics`
+    - Nur Grüngut: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/gruengut-hochfelden-{%Y}.ics`
+    - Nur Karton: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/karton-sammlung-hochfelden-{%Y}.ics`
+    - Nur Altpapier: `https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/altpapier-sammlung-hochfelden-{%Y}.ics`
+test_cases:
+  Hochfelden - alle Termine:
+    url: https://hochfelden.ch/files/content/aktuelles/{%Y}/Entsorgungskalender/entsorgung-hochfelden-{%Y}-alle%20Termine.ics
