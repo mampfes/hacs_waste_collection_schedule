@@ -97,7 +97,7 @@ class BaseTransformer(ABC, Generic[T]):
             try:
                 return self._parse_date(str(value))
             except (ValueError, TypeError):
-                _LOGGER.info("Skipping record: unparseable date %r", value)
+                _LOGGER.info("Skipping record: could not parse date %r", value)
                 return None
         return self._parse_date(str(value))
 
@@ -204,8 +204,11 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
 
     def __init__(
         self,
-        date_key: "str | Callable[[Mapping[str, Any]], Any]",
-        type_key: "str | Callable[[Mapping[str, Any]], Any]",
+        # A callable key receives the whole record. Typed as Any (not Mapping) so
+        # the transformer also serves records that aren't dicts, e.g. an XML
+        # Element from parsers.XmlParser whose key reads el.findtext(...).
+        date_key: "str | Callable[[Any], Any]",
+        type_key: "str | Callable[[Any], Any]",
         type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,

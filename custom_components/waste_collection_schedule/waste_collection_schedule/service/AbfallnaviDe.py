@@ -201,7 +201,7 @@ class AbfallnaviRetriever(RetrieverFunc):
         # bad service id without this module holding a provider list. Resolved
         # via the class (REGIONS may be a staticmethod, a plain function, or a
         # list) so instance access does not bind ``self``.
-        regions = getattr(type(source), "REGIONS", [])
+        regions: Any = getattr(type(source), "REGIONS", [])
         if callable(regions):
             regions = regions()
         known_services = [r.params.get(self.service) for r in regions]

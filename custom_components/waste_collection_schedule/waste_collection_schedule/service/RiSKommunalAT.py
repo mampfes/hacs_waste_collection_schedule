@@ -25,7 +25,7 @@ from datetime import date, datetime
 from typing import TYPE_CHECKING, Iterable, Iterator
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
@@ -245,7 +245,7 @@ class RiSKommunalSource:
         ``<span>`` category is preferred because it matches the ``ICON_MAP`` keys.
         """
         div = soup.find(id=_LIST_DIV_ID)
-        if div is None:
+        if not isinstance(div, Tag):
             return []
 
         out: list[tuple[date, str]] = []
@@ -331,7 +331,7 @@ class RiSKommunalSource:
                 "select",
                 attrs={"id": re.compile(r"boxmuellkalenderstrassedd$")},
             )
-        if select is None:
+        if not isinstance(select, Tag):
             raise ValueError("Could not locate street selector on RiSKommunal page")
 
         result: dict[str, int] = {}

@@ -342,7 +342,7 @@ def dependent_select(
 
 
 def cascading_select(
-    *levels: str | tuple[str, str],
+    *levels: str | tuple[str, str | FieldTerm],
     labels: dict[str, dict[str, str]] | None = None,
 ) -> ConfigParam:
     """An N-level cascading dropdown (the general form of ``dependent_select``).
