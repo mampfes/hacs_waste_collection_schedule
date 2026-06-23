@@ -1,29 +1,24 @@
-import logging
 from typing import final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import postcode, text_field
 from waste_collection_schedule.service.WhitespaceWRP import (
     WhitespaceParser,
     WhitespaceRetriever,
 )
+from waste_collection_schedule.transformers import RowTransformer
 from waste_collection_schedule.waste_types import (
     FOOD_WASTE,
     GARDEN_WASTE,
     GENERAL_WASTE,
     RECYCLABLES,
-    preserved,
-    resolve,
 )
 
 # Demonstrates: a fully declarative service-backed source. The Whitespace WRP
 # platform's 4-step scrape lives in its service module as WhitespaceRetriever +
 # WhitespaceParser, so this source only declares the pipeline and maps the
-# council's open-ended type labels onto canonical WasteTypes in classify().
-
-_LOGGER = logging.getLogger(__name__)
+# council's open-ended type labels onto canonical WasteTypes via a RowTransformer.
 
 _TYPE_MAP = {
     "Domestic Waste": GENERAL_WASTE,
@@ -40,10 +35,16 @@ _SUFFIXES = (
 
 
 def _clean_collection_type(type_text: str) -> str:
+    cleaned = type_text.strip()
     for suffix in _SUFFIXES:
         if type_text.endswith(suffix):
-            return type_text[: -len(suffix)].strip()
-    return type_text.strip()
+            cleaned = type_text[: -len(suffix)].strip()
+            break
+    # If the suffix-stripped label is not a known type, fall back to matching a
+    # known type that the raw label starts with (e.g. "Recycling Red - ...").
+    if cleaned in _TYPE_MAP:
+        return cleaned
+    return next((key for key in _TYPE_MAP if type_text.startswith(key)), cleaned)
 
 
 @final
@@ -67,28 +68,14 @@ class Source(BaseSource):
         "council's bin-day lookup.",
     }
 
-    parse_date = date_parsers.for_format("%d/%m/%Y")
-
     retrieve = WhitespaceRetriever(name_number="house_number", postcode="postcode")
     parse = WhitespaceParser()
+    transform = RowTransformer(
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        clean=_clean_collection_type,
+        skip_unparseable_dates=True,
+    )
 
     def __init__(self, postcode: str, house_number: int | str | None = None):
         super().__init__(postcode=postcode, house_number=house_number)
-
-    def classify(self, record) -> Collection | None:
-        date_str, type_str = record
-        cleaned = _clean_collection_type(type_str)
-        label = (
-            cleaned
-            if cleaned in _TYPE_MAP
-            else next((key for key in _TYPE_MAP if type_str.startswith(key)), cleaned)
-        )
-        try:
-            date = self.parse_date(date_str)
-        except ValueError:
-            _LOGGER.info("Skipped %s: unexpected date format", date_str)
-            return None
-        return Collection(
-            date=date,
-            waste_type=_TYPE_MAP.get(label) or resolve(label) or preserved(label),
-        )
