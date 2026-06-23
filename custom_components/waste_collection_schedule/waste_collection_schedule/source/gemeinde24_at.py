@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from typing import Any, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers
@@ -69,6 +70,27 @@ class _WasteItem(TypedDict):
 
 def _clean(value: Any) -> str:
     return "" if value is None else str(value).strip()
+
+
+def _schedule_date(record: Mapping[str, Any]) -> str:
+    """Strip the German weekday prefix from ``datum`` (``Do-2026-07-02``).
+
+    Returns the ``YYYY-MM-DD`` tail, or ``""`` when there is no prefix to split
+    (the transformer then skips the record as date-less).
+    """
+    return _clean(record.get("datum")).partition("-")[2]
+
+
+def _waste_label(record: Mapping[str, Any]) -> str:
+    """Resolve the record's waste label, preferring the wasteID code map.
+
+    A known ``wasteID`` code wins over the free-text ``title`` (titles are
+    occasionally custom): it is rewritten to the canonical German name so the
+    transformer resolves it onto the right WasteType. Unknown codes fall back to
+    the title verbatim.
+    """
+    mapped = _CODE_MAP.get(_clean(record.get("wasteID")).lower())
+    return mapped.names["de"] if mapped is not None else _clean(record.get("title"))
 
 
 def _normalize(value: str) -> str:
@@ -234,9 +256,11 @@ class Source(BaseSource):
 
     parse = parsers.JsonParser("waste_list.php", shape=list[_WasteItem])
 
+    # The date split (weekday prefix) and the wasteID code override are folded
+    # into the transformer's date/type callables, so no preprocess step is needed.
     transform = JsonTransformer(
-        date_key="_date",
-        type_key="title",
+        date_key=_schedule_date,
+        type_key=_waste_label,
         parse_date=date_parsers.for_format("%Y-%m-%d"),
     )
 
@@ -289,28 +313,3 @@ class Source(BaseSource):
             },
             timeout=30,
         )
-
-    def preprocess(self, records, source=None):
-        """Split the gemeinde24 'weekday-YYYY-MM-DD' date into a clean field.
-
-        Each record's ``datum`` looks like ``Do-2026-07-02`` (German weekday
-        prefix). The transformer's ``date_key`` reads the cleaned ``_date`` this
-        adds (``2026-07-02``); records whose date can't be split are dropped, and
-        the wasteID code is used to override the canonical type when known.
-        """
-        for record in records:
-            if not isinstance(record, dict):
-                continue
-            _, sep, date_value = _clean(record.get("datum")).partition("-")
-            if not sep or not date_value:
-                continue
-            title = _clean(record.get("title"))
-            if not title:
-                continue
-            code = _clean(record.get("wasteID")).lower()
-            # Let an explicit code mapping win over free-text title resolution by
-            # rewriting the title to the canonical German name when we know it.
-            mapped = _CODE_MAP.get(code)
-            if mapped is not None:
-                title = mapped.names["de"]
-            yield {"_date": date_value, "title": title}
