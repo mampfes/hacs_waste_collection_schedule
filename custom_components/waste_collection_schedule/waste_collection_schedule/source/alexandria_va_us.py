@@ -4,12 +4,13 @@ from waste_collection_schedule import Collection, Icons  # type: ignore[attr-def
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ArcGis import (
     ArcGisError,
+    epoch_ms_to_date,
     geocode,
     query_feature_layer,
 )
 
 TITLE = "Alexandria, VA"
-DESCRIPTION = "Source for City of Alexandria, VA trash and recycling collection."
+DESCRIPTION = "Source for City of Alexandria, VA trash, recycling and leaf collection."
 URL = "https://www.alexandriava.gov/RefuseCollection"
 COUNTRY = "us"
 
@@ -22,6 +23,7 @@ SOURCE_CODEOWNERS = ["@lpukatch"]
 ICON_MAP = {
     "Trash": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
+    "Leaf Collection": Icons.ORGANIC,
 }
 
 PARAM_DESCRIPTIONS = {
@@ -37,10 +39,12 @@ PARAM_TRANSLATIONS = {
 }
 
 # City of Alexandria alx311Info MapServer.
-# Layer 3 = Refuse Day Zone (field DAYSERVED), layer 2 = Recycle Zones (field PICKUPDAY).
+# Layer 3 = Refuse Day Zone (field DAYSERVED), layer 2 = Recycle Zones (field PICKUPDAY),
+# layer 16 = Leaf Zones (field PassDate, one feature per seasonal collection pass).
 MAPSERVER = "https://maps.alexandriava.gov/alexmaps/rest/services/alx311Info/MapServer"
 REFUSE_URL = f"{MAPSERVER}/3"
 RECYCLE_URL = f"{MAPSERVER}/2"
+LEAF_URL = f"{MAPSERVER}/16"
 
 WEEKDAYS = {
     "Monday": 0,
@@ -80,6 +84,11 @@ class Source:
         if recycle_day is not None:
             entries += self._weekly_dates(recycle_day, "Recycling")
 
+        # Leaf collection — seasonal vacuum-leaf passes with explicit dates.
+        # The layer only holds the current season, so this yields nothing
+        # outside the fall/winter leaf-collection period.
+        entries += self._leaf_dates(location)
+
         return entries
 
     @staticmethod
@@ -93,6 +102,30 @@ class Source:
         if value not in WEEKDAYS:
             return None
         return value
+
+    @staticmethod
+    def _leaf_dates(location: dict[str, float]) -> list[Collection]:
+        try:
+            features = query_feature_layer(
+                LEAF_URL, geometry=location, out_fields="PassDate"
+            )
+        except ArcGisError:
+            return []
+
+        icon = ICON_MAP.get("Leaf Collection")
+        entries: list[Collection] = []
+        for attrs in features:
+            pass_date = attrs.get("PassDate")
+            if not pass_date:
+                continue
+            entries.append(
+                Collection(
+                    date=epoch_ms_to_date(pass_date),
+                    t="Leaf Collection",
+                    icon=icon,
+                )
+            )
+        return entries
 
     @staticmethod
     def _weekly_dates(day_name: str, waste_type: str) -> list[Collection]:
