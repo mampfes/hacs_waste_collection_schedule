@@ -2,17 +2,16 @@ import re
 from typing import final
 from urllib.parse import urlencode
 
+from bs4 import Tag
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.transformers import HtmlTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
     ORGANIC,
     RECYCLABLES,
-    preserved,
-    resolve,
 )
 
 # Demonstrates: the OCAPI "myarea" two-step flow (address lookup -> geolocation
@@ -42,6 +41,26 @@ def _geolocation_id(lookup, source) -> str:
             "address search returned no results.",
         )
     return items[0]["Id"]
+
+
+def _waste_type(article: Tag) -> str:
+    # The heading carries the service name. Skip the "Burning off" notice and any
+    # heading-less article by raising, which HtmlTransformer treats as "skip row".
+    heading = article.h3
+    waste_type = heading.string.strip() if heading and heading.string else ""
+    if not waste_type or waste_type == "Burning off":
+        raise ValueError("no collectable waste type")
+    return waste_type
+
+
+def _next_date(article: Tag) -> str | None:
+    # The next collection date is embedded in free text inside .next-service.
+    # Return None (skip the row) when the block or a date is absent.
+    next_service = article.find("div", {"class": "next-service"})
+    if next_service is None:
+        return None
+    match = _DATE_RE.search(next_service.get_text())
+    return match.group(1) if match else None
 
 
 @final
@@ -86,26 +105,12 @@ class Source(BaseSource):
 
     parse_date = date_parsers.for_format("%d/%m/%Y")
 
+    transform = HtmlTransformer(
+        date_getter=_next_date,
+        type_getter=_waste_type,
+        type_value_map=_TYPE_MAP,
+        parse_date=parse_date,
+    )
+
     def __init__(self, street_address: str):
         super().__init__(street_address=street_address)
-
-    def classify(self, record) -> Collection | None:
-        heading = record.h3
-        waste_type = heading.string.strip() if heading and heading.string else ""
-        if not waste_type or waste_type == "Burning off":
-            return None
-
-        next_service = record.find("div", {"class": "next-service"})
-        if next_service is None:
-            return None
-        match = _DATE_RE.search(next_service.get_text())
-        if not match:
-            return None
-
-        date = self.parse_date(match.group(1))
-        return Collection(
-            date=date,
-            waste_type=_TYPE_MAP.get(waste_type)
-            or resolve(waste_type)
-            or preserved(waste_type),
-        )
