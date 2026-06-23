@@ -67,6 +67,7 @@ class BaseTransformer(ABC, Generic[T]):
         type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
+        skip_unparseable_dates: bool = False,
     ):
         self._type_value_map: dict[str, TypeMapValue] = (
             {k.strip().lower(): v for k, v in type_value_map.items()}
@@ -80,14 +81,24 @@ class BaseTransformer(ABC, Generic[T]):
         # (e.g. strip a " Collection Service" suffix), so a source needn't drop
         # to classify() just to tidy a label. See ``label_cleaner`` for a helper.
         self._clean = clean
+        # When True, a record whose date won't parse is skipped (returns None)
+        # rather than raising, so one malformed row doesn't fail the whole fetch.
+        self._skip_unparseable_dates = skip_unparseable_dates
 
     def _to_date(self, value: Any) -> datetime.date | None:
         """Coerce a record's date value to a date: pass a ``date`` through,
-        skip empty values, otherwise parse the string."""
+        skip empty values, otherwise parse the string (skipping on failure when
+        ``skip_unparseable_dates`` is set)."""
         if value is None or value == "":
             return None
         if isinstance(value, datetime.date):
             return value
+        if self._skip_unparseable_dates:
+            try:
+                return self._parse_date(str(value))
+            except (ValueError, TypeError):
+                _LOGGER.info("Skipping record: unparseable date %r", value)
+                return None
         return self._parse_date(str(value))
 
     @staticmethod
@@ -198,8 +209,9 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
+        skip_unparseable_dates: bool = False,
     ):
-        super().__init__(type_value_map, parse_date, clean)
+        super().__init__(type_value_map, parse_date, clean, skip_unparseable_dates)
         self._date_key = date_key
         self._type_key = type_key
 
@@ -322,8 +334,9 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
         type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
+        skip_unparseable_dates: bool = False,
     ):
-        super().__init__(type_value_map, parse_date, clean)
+        super().__init__(type_value_map, parse_date, clean, skip_unparseable_dates)
 
     def __call__(self, record: tuple[Any, str]) -> Collection | list[Collection] | None:
         raw_date, label = record
