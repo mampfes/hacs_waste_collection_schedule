@@ -176,7 +176,20 @@ A param is required by default. Three ways to relax that:
 
 `cascading_select(*levels)` is the N-level generalisation, for a wizard deeper than two levels (e.g. kommune to district to street to house number). The source implements `get_choices(field, selections) -> list[str] | list[(label, value)]`, returning one level's options given the levels chosen so far. A `(label, value)` pair shows a human name while storing an opaque id (so the stored config and `TEST_CASES` can stay id-based); a level whose `get_choices` returns `[]` for the current selections is not applicable and is skipped. Pair it with `RAISE_ON_EMPTY = True`. See `abfall_io.py`.
 
-**Field labels and translations.** Reuse a canonical field name where one fits (`postcode`, `house_number`, `municipality`, `street`, `lat`/`lon`, `uprn`, …). `update_docu_links.py` translates those common names into every supported config-flow language (en, de, it, fr, nl) from `default_translations.py`, so a pipeline source inherits multilingual form labels for free. Only a genuinely novel field needs a per-language `PARAM_TRANSLATIONS` block, and its keys must stay within that allowlist. The translated text is human-maintained (Home Assistant's JSON catalogues), not derived from locale data; `recurrence`'s month/weekday names are the only locale data sourced automatically (via Babel).
+**Field labels and translations.** A config field is a standard *concept*; the only thing that varies per source is the *wire name* (the property the value is sent as / the `__init__` kwarg). Use the standard field factories and bind each to its wire name. The localised label and per-field help come from the shared catalogue (`field_terms.py`) in every supported language (en/de/fr/it/nl), so you never hand-write a label, a translation, or a HOWTO for a standard field:
+
+```python
+PARAMS = [
+    api_key(field="key"),
+    municipality(field="f_id_kommune"),
+    street(field="f_id_strasse"),
+    house_number(field="f_id_strasse_hnr"),
+]
+```
+
+Available factories: `municipality`, `city`, `district`, `street`, `house_number`, `postcode`, `address`, `coords`, `uprn`, `location_id`, `area_id`, `city_id`, `service_id`, `customer_number`, `api_key`, `waste_types`, plus `state`/`county` for German Bundesland/Landkreis cascades. `cascading_select`/`dependent_select` levels accept a `FieldTerm` (`("f_id_kommune", field_terms.MUNICIPALITY)`) for the same multilingual labels.
+
+`text_field("name", "Label")` is the escape hatch for a field with no standard concept (a provider-specific opaque id); its label is English-only unless you pass `term=field_terms.SOME_TERM`. To add a concept, add a `FieldTerm` to `field_terms.py` (all languages) and a thin factory in `config_params.py`; don't reach for a per-source `PARAM_TRANSLATIONS` block. Legacy sources still use `default_translations.py` (field-name keyed) and `PARAM_TRANSLATIONS`; the pipeline runs off `field_terms.py`.
 
 ### Date parsers (`waste_collection_schedule.date_parsers`)
 
