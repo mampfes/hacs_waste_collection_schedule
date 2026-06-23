@@ -205,11 +205,6 @@ class Source(BaseSource):
             "city_id": 1,
             "area_id": 411,
         },
-        "Bad Buchau via MyMuell": {
-            "service_id": "mymuell",
-            "city_id": 3031,
-            "area_id": 3031,
-        },
         # END DEPRECATED
         "sbm Minden Meißener Str. 6a": {
             "service_id": "sbm",
