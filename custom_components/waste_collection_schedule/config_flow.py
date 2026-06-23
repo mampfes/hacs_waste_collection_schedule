@@ -37,6 +37,7 @@ from homeassistant.helpers.translation import async_get_translations
 from voluptuous.schema_builder import UNDEFINED
 
 from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.config_params import ConfigParam
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentExceptionMultiple,
@@ -91,12 +92,43 @@ _LOGGER = logging.getLogger(__name__)
 # Load source lists and metadata for configuration
 _SOURCES_FILE = Path(__file__).parent / "sources.json"
 _SOURCE_METADATA_FILE = Path(__file__).parent / "source_metadata.json"
+_SOURCE_DIR = Path(__file__).parent / "waste_collection_schedule" / "source"
 _SOURCES: dict[str, list[Any]] = {}
 _SOURCE_METADATA: dict[str, dict[str, Any]] = {}
 
+# Country code → display name (shared with update_docu_links.py)
+_COUNTRY_CODE_MAP: dict[str, str] = {
+    "au": "Australia",
+    "at": "Austria",
+    "be": "Belgium",
+    "ca": "Canada",
+    "cz": "Czech Republic",
+    "de": "Germany",
+    "dk": "Denmark",
+    "hamburg": "Germany",
+    "hu": "Hungary",
+    "ie": "Ireland",
+    "it": "Italy",
+    "lt": "Lithuania",
+    "lu": "Luxembourg",
+    "mt": "Malta",
+    "nl": "Netherlands",
+    "nz": "New Zealand",
+    "no": "Norway",
+    "pl": "Poland",
+    "se": "Sweden",
+    "sk": "Slovakia",
+    "si": "Slovenia",
+    "ch": "Switzerland",
+    "us": "United States of America",
+    "uk": "United Kingdom",
+    "fr": "France",
+    "fi": "Finland",
+}
+
 
 def _load_sources() -> dict[str, list[Any]]:
-    """Load sources.json with error handling."""
+    """Load sources.json (legacy sources) with error handling."""
     try:
         with open(_SOURCES_FILE, encoding="utf-8") as f:
             return json.load(f)
@@ -115,7 +147,49 @@ def _load_source_metadata() -> dict[str, dict[str, Any]]:
         return {}
 
 
-# Initialize both files on module import
+def _discover_new_style_sources() -> dict[str, list[Any]]:
+    """Discover new-style sources at runtime by scanning the source directory.
+
+    New-style sources (with PARAMS) are self-describing — their metadata
+    is read from the Source class, not from generated JSON files.
+    """
+    sources: dict[str, list[Any]] = {}
+
+    for py_file in _SOURCE_DIR.glob("*.py"):
+        if py_file.stem == "__init__":
+            continue
+
+        try:
+            module = importlib.import_module(
+                f"waste_collection_schedule.source.{py_file.stem}"
+            )
+        except Exception:
+            continue
+
+        source_cls = getattr(module, "Source", None)
+        if source_cls is None or not _is_new_style_source(source_cls):
+            continue
+
+        # Read metadata from Source class
+        title = getattr(source_cls, "TITLE", py_file.stem)
+        country_code = (
+            getattr(source_cls, "COUNTRY", "") or py_file.stem.rsplit("_", 1)[-1]
+        )
+        country_name = _COUNTRY_CODE_MAP.get(country_code, country_code)
+
+        entry: dict[str, Any] = {
+            "title": title,
+            "module": py_file.stem,
+            "default_params": {},
+            "id": py_file.stem,
+        }
+
+        sources.setdefault(country_name, []).append(entry)
+
+    return sources
+
+
+# Initialize on module import — legacy from JSON, new-style discovered at runtime
 _SOURCES = _load_sources()
 _SOURCE_METADATA = _load_source_metadata()
 
@@ -144,6 +218,115 @@ SUPPORTED_ARG_TYPES = {
     date: cv.date,
     datetime: cv.datetime,
 }
+
+
+def _is_new_style_source(source_cls) -> bool:
+    """Check if a source uses the new PARAMS-based architecture."""
+    return bool(getattr(source_cls, "PARAMS", None))
+
+
+def _build_schema_from_params(
+    params: list[ConfigParam],
+    pre_filled: dict[str, Any],
+    args_input: dict[str, Any] | None,
+    include_title: bool = True,
+    title: str = "",
+    dependent_options: dict[str, list] | None = None,
+    error_suggestions: dict[str, list[Any]] | None = None,
+) -> vol.Schema:
+    """Build a voluptuous schema from PARAMS declarations.
+
+    ``dependent_options`` maps a field name to a fixed option list; such fields
+    render as a dropdown instead of free text. The config flow uses this to feed
+    a ``dependent_select`` param the choices fetched from the source's
+    ``get_parent_choices``/``get_choices`` methods.
+
+    ``error_suggestions`` maps a field name to candidate values surfaced by a
+    ``SourceArgumentNotFoundWithSuggestions`` raised on a previous attempt; such
+    a field re-renders as a custom-value dropdown of those suggestions (the same
+    enrichment the legacy introspection path provides).
+
+    Field labels are not set here: Home Assistant renders them from the
+    generated ``translations/<lang>.json`` (produced from each param's typed
+    ``labels`` by update_docu_links.py), keyed by field name.
+    """
+    dependent_options = dependent_options or {}
+    error_suggestions = error_suggestions or {}
+    vol_args: dict = {}
+
+    if include_title:
+        description = None
+        if args_input is not None and CONF_SOURCE_CALENDAR_TITLE in args_input:
+            description = {"suggested_value": args_input[CONF_SOURCE_CALENDAR_TITLE]}
+        vol_args[
+            vol.Optional(
+                CONF_SOURCE_CALENDAR_TITLE,
+                description=description,
+                default=title,
+            )
+        ] = str
+
+    for param in params:
+        # A field is optional in the form when its param is required=False, the
+        # param declares mutually-exclusive groups (alternatives), or the field
+        # has a default. A dependent_select child whose options aren't known yet
+        # (parent not chosen) is also shown as optional so the form can submit
+        # the parent first.
+        param_optional = (not param.required) or bool(param.groups)
+        for field_name in param.fields:
+            description = None
+            if args_input is not None and field_name in args_input:
+                description = {"suggested_value": args_input[field_name]}
+            elif field_name in pre_filled:
+                description = {"suggested_value": pre_filled[field_name]}
+
+            options = dependent_options.get(field_name) or error_suggestions.get(
+                field_name
+            )
+            default = param.defaults.get(field_name)
+            optional = param_optional or default is not None
+            if (
+                param.widget in ("dependent_select", "cascading_select")
+                and options is None
+            ):
+                # Options not yet available (an earlier level not chosen);
+                # collect later, once the prior levels have been submitted.
+                optional = True
+            marker = vol.Optional if optional else vol.Required
+            if default is not None:
+                key = marker(field_name, description=description, default=default)
+            else:
+                key = marker(field_name, description=description)
+            if options is not None:
+                # An option is either a plain string (label == stored value) or a
+                # (label, value) pair, so a cascade can show a name but store an id.
+                vol_args[key] = SelectSelector(
+                    SelectSelectorConfig(
+                        options=[
+                            SelectOptionDict(label=opt[0], value=opt[1])
+                            if isinstance(opt, tuple)
+                            else SelectOptionDict(label=opt, value=opt)
+                            for opt in options
+                        ],
+                        mode=SelectSelectorMode.DROPDOWN,
+                        custom_value=True,
+                    )
+                )
+            else:
+                vol_args[key] = cv.string
+
+    return vol.Schema(vol_args)
+
+
+def _get_waste_types_for_customize(source_cls) -> list[str]:
+    """Get waste type names from WASTE_TYPES for customization.
+
+    Returns waste_type.id strings for new-style sources.
+    """
+    waste_types = getattr(source_cls, "WASTE_TYPES", None)
+    if not waste_types:
+        return []
+    return [wt.names.get("en", wt.id) for wt in waste_types]
 
 
 def get_customize_schema(defaults: dict[str, Any] = {}):
@@ -354,8 +537,13 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if len(self._sources) > 0:
             return
 
-        # Use pre-loaded sources from module level
-        self._sources = _SOURCES
+        # Start with legacy sources from sources.json
+        self._sources = {k: list(v) for k, v in _SOURCES.items()}
+
+        # Discover and merge new-style sources at runtime
+        new_style = await self.hass.async_add_executor_job(_discover_new_style_sources)
+        for country, entries in new_style.items():
+            self._sources.setdefault(country, []).extend(entries)
 
         async def args_method(args_input):
             return await self.async_step_args(args_input)
@@ -505,6 +693,64 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     is_string = a == cv.string
         return return_val
 
+    async def __get_dependent_options(
+        self,
+        source_cls,
+        pre_filled: dict[str, Any],
+        args_input: dict[str, Any] | None,
+    ) -> dict[str, list]:
+        """Fetch option lists for any dependent_select PARAM of this source.
+
+        For each ``dependent_select`` param: populate the parent field from
+        ``get_parent_choices()`` (when the source defines it), and, once the
+        parent value is known, populate the child field from
+        ``get_choices(parent_value)``. Both methods may fetch live, so they run
+        off the event loop. Failures degrade gracefully to free-text input.
+        """
+        options: dict[str, list] = {}
+        chosen = {**pre_filled, **(args_input or {})}
+        for param in source_cls.PARAMS:
+            if param.widget == "cascading_select":
+                # N-level cascade: populate each level whose prior levels are all
+                # chosen, by calling get_choices(field, selections-so-far). A
+                # level returning [] is not applicable and is left as free text.
+                if not hasattr(source_cls, "get_choices"):
+                    continue
+                level_fields = list(param.fields)
+                for index, field in enumerate(level_fields):
+                    prior = level_fields[:index]
+                    if any(chosen.get(p) in (None, "") for p in prior):
+                        break
+                    try:
+                        level_options = await self.hass.async_add_executor_job(
+                            source_cls.get_choices, field, dict(chosen)
+                        )
+                    except Exception as exc:  # noqa: BLE001 - degrade to free text
+                        _LOGGER.debug("get_choices(%s) failed: %s", field, exc)
+                        continue
+                    if level_options:
+                        options[field] = level_options
+                continue
+            if param.widget != "dependent_select":
+                continue
+            parent_field, child_field = list(param.fields)[:2]
+            if hasattr(source_cls, "get_parent_choices"):
+                try:
+                    options[parent_field] = await self.hass.async_add_executor_job(
+                        source_cls.get_parent_choices
+                    )
+                except Exception as exc:  # noqa: BLE001 - degrade to free text
+                    _LOGGER.debug("get_parent_choices failed: %s", exc)
+            parent_value = chosen.get(parent_field)
+            if parent_value:
+                try:
+                    options[child_field] = await self.hass.async_add_executor_job(
+                        source_cls.get_choices, parent_value
+                    )
+                except Exception as exc:  # noqa: BLE001 - degrade to free text
+                    _LOGGER.debug("get_choices failed: %s", exc)
+        return options
+
     async def __get_arg_schema(
         self,
         source: str,
@@ -513,6 +759,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         include_title=True,
     ) -> Tuple[vol.Schema, types.ModuleType]:
         """Get schema for source arguments.
+
+        For new-style sources (with PARAMS), builds the schema from those
+        declarations. For legacy sources, falls back to __init__ introspection.
 
         Args:
             source (str): source name
@@ -523,6 +772,22 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         Returns:
             Tuple[vol.Schema, types.ModuleType]: schema, module
         """
+        # Import source module
+        module = await self.hass.async_add_executor_job(
+            importlib.import_module, f"waste_collection_schedule.source.{source}"
+        )
+
+        # Resolve title
+        source_cls = module.Source
+        title: str = (
+            getattr(source_cls, "TITLE", None)
+            or getattr(module, "TITLE", source)
+            or source
+        )
+        if hasattr(self, "_title") and isinstance(self._title, str):
+            title = self._title
+
+        # Suggestions surfaced by a prior failed attempt (shared by both paths).
         suggestions: dict[str, list[Any]] = {}
         if hasattr(self, "_error_suggestions"):
             suggestions = {
@@ -531,20 +796,28 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 if len(value) > 0
             }
 
-        # Import source and get arguments
-        module = await self.hass.async_add_executor_job(
-            importlib.import_module, f"waste_collection_schedule.source.{source}"
-        )
+        # New-style source: build schema from PARAMS
+        if _is_new_style_source(source_cls):
+            dependent_options = await self.__get_dependent_options(
+                source_cls, pre_filled, args_input
+            )
+            schema = _build_schema_from_params(
+                source_cls.PARAMS,
+                pre_filled,
+                args_input,
+                include_title=include_title,
+                title=title,
+                dependent_options=dependent_options,
+                error_suggestions=suggestions,
+            )
+            return schema, module
+
+        # Legacy source: introspect __init__ signature
 
         args = dict(inspect.signature(module.Source.__init__).parameters)
         del args["self"]  # Remove self
         # Convert schema for vol
         vol_args = {}
-        title = source  # Default title Should probably be overwritten by the module
-        if hasattr(module, "TITLE") and isinstance(module.TITLE, str):
-            title = module.TITLE
-        if hasattr(self, "_title") and isinstance(self._title, str):
-            title = self._title
 
         if include_title:
             description = None
@@ -707,6 +980,13 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if len(resp) == 0:
                 errors["base"] = "fetch_empty"
             self._fetched_types = list({x.type.strip() for x in resp})
+            # For new-style sources with WASTE_TYPES, also offer those
+            source_cls = module.Source
+            waste_type_names = _get_waste_types_for_customize(source_cls)
+            if waste_type_names:
+                self._fetched_types = list(
+                    set(self._fetched_types) | set(waste_type_names)
+                )
         except SourceArgumentSuggestionsExceptionBase as e:
             if not hasattr(self, "_error_suggestions"):
                 self._error_suggestions = {}
@@ -726,8 +1006,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if len(e.arguments) == 0:
                 errors["base"] = "invalid_arg"
             else:
+                # Bind to the bare field names the schema registers, so the UI
+                # highlights the offending inputs (both arg-schema paths use
+                # unprefixed field names).
                 for arg in e.arguments:
-                    errors[f"{source}_{arg}"] = "invalid_arg"
+                    errors[arg] = "invalid_arg"
         except Exception as e:
             errors["base"] = "fetch_error"
             description_placeholders["fetch_error_message"] = str(e)
@@ -738,17 +1021,41 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         return module.Source(**kwargs)
 
     def _get_description_placeholders(self, source: str) -> dict[str, str]:
-        """Get description placeholders (URLs and howto) for a source."""
+        """Get description placeholders (URLs and howto) for a source.
+
+        For new-style sources, reads directly from Source class attributes.
+        For legacy sources, reads from source_metadata.json.
+        """
         placeholders: dict[str, str] = {}
+
+        hass = getattr(self, "hass", None)
+        language = getattr(getattr(hass, "config", None), "language", "en")
+
+        # Try new-style source first (read from class)
+        try:
+            module = importlib.import_module(
+                f"waste_collection_schedule.source.{source}"
+            )
+            source_cls = module.Source
+            if _is_new_style_source(source_cls):
+                url = getattr(source_cls, "URL", "")
+                placeholders["docs_url"] = url
+                howto_dict = getattr(source_cls, "HOWTO", {})
+                howto = howto_dict.get(language, howto_dict.get("en", ""))
+                if howto:
+                    placeholders["howto"] = howto.rstrip("\n") + "\n\n"
+                else:
+                    placeholders["howto"] = ""
+                return placeholders
+        except Exception:
+            pass
+
+        # Fall back to legacy metadata from source_metadata.json
         if source in _SOURCE_METADATA:
             metadata = _SOURCE_METADATA[source]
             placeholders["docs_url"] = metadata.get("docs_url", "")
             placeholders.update(metadata.get("urls", {}))
-            # Get howto for current language (defaults to English)
             howto_dict = metadata.get("howto", {})
-            # Try to get howto for the current language
-            hass = getattr(self, "hass", None)
-            language = getattr(getattr(hass, "config", None), "language", "en")
             placeholders["howto"] = howto_dict.get(language, howto_dict.get("en", ""))
             if placeholders["howto"]:
                 placeholders["howto"] = placeholders["howto"].rstrip("\n") + "\n\n"

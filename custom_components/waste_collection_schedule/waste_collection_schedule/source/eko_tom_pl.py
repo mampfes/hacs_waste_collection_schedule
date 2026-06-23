@@ -1,103 +1,97 @@
-# This source uses the already existing API for c_trace but with some name changes and it does not use the ical file, so it got its own source file.
-
 import datetime
-import logging
+import re
+from collections.abc import Iterable
+from typing import final
 
-import requests as req
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-_LOOGGER = logging.getLogger(__name__)
-
-TITLE = "Czerwonak, Murowana Goślina, Oborniki"
-DESCRIPTION = (
-    "Source for eko-tom.pl. Municipalities: Czerwonak, Murowana Goślina, Oborniki"
+from bs4 import Tag
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
 )
-URL = "https://www.eko-tom.pl"
 
-TEST_CASES = {
-    "Czerwonak": {"city": "Czerwonak", "street": "Źródlana", "nr": "39"},
-    "BIAŁĘŻYN": {"city": "BIAŁĘŻYN", "street": "BIAŁĘŻYN", "nr": "1/A"},
+# Demonstrates: HTML scraping where the waste type is encoded in the *container's*
+# CSS class, not in each dated <li>. parsers.HtmlParser selects the per-type
+# containers; a method preprocess() reads the class to find the type and the <li>
+# dates beneath it, yielding (date, class-token) rows for a plain ICSTransformer.
+# The provider (c-trace) carries an ASP.NET session id in the URL path; the stale
+# embedded token simply 302-redirects to a fresh one, which the shared session
+# follows, so no separate token-priming request is needed.
+
+# c-trace embeds a session id in the path; a stale value is refreshed by a 302.
+_SESSION = "(S(y0ommq52pdbwa0jek4oqqzgr))"
+_BASE_URL = (
+    f"https://web.c-trace.de/ekotom-abfallkalender/{_SESSION}/kalendarzodpadow/abc"
+)
+
+_DATE_RE = re.compile(r"\d{2}\.\d{2}\.\d{4}")
+_parse_date = date_parsers.for_format("%d.%m.%Y")
+
+# The discriminating c-trace CSS class on each container -> canonical waste type.
+TYPE_MAP = {
+    "rest": GENERAL_WASTE,
+    "glas": GLASS,
+    "plastik": RECYCLABLES,
+    "bio": ORGANIC,
+    "papier": PAPER,
+    "sperr": BULKY_WASTE,
 }
 
-API_URL = "https://web.c-trace.de/ekotom-abfallkalender/(S(y0ommq52pdbwa0jek4oqqzgr))/kalendarzodpadow/abc?Ort={city}&Strasse={street}&Hausnr={nr}"
 
-ICON_MAP = {
-    "Zmieszane": Icons.GENERAL_WASTE,
-    "Tworzywa": Icons.RECYCLING,
-    "BIO": Icons.ORGANIC,
-    "Papier": Icons.PAPER,
-    "Szkło": Icons.GLASS,
-    "Gabaryty": Icons.BULKY,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Czerwonak, Murowana Goślina, Oborniki"
+    DESCRIPTION = (
+        "Source for eko-tom.pl. Municipalities: Czerwonak, Murowana Goślina, Oborniki"
+    )
+    URL = "https://www.eko-tom.pl"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
 
+    # The former "BIAŁĘŻYN / 1/A" case now returns "Brak harmonogramu" (no
+    # schedule) upstream; dropped as stale. RAISE_ON_EMPTY surfaces such a dead
+    # lookup as a clear argument error rather than the legacy silent empty list.
+    TEST_CASES = {
+        "Czerwonak": {"city": "Czerwonak", "street": "Źródlana", "nr": "39"},
+    }
 
-class Source:
-    def __init__(self, street, city, nr):
-        self._city = city
-        self._street = street
-        self._nr = nr
+    PARAMS = [
+        text_field("city", "City"),
+        text_field("street", "Street"),
+        text_field("nr", "House Number"),
+    ]
 
-    def fetch(self):
-        address = API_URL.format(city=self._city, street=self._street, nr=self._nr)
-        response = req.get(address)
+    retrieve = HttpGetRetriever(
+        url=_BASE_URL,
+        params=lambda city, street, nr, **_: {
+            "Ort": city,
+            "Strasse": street,
+            "Hausnr": nr,
+        },
+    )
+    parse = parsers.HtmlParser(".rest, .glas, .plastik, .bio, .papier, .sperr")
+    transform = ICSTransformer(type_value_map=TYPE_MAP)
 
-        if response.status_code != 200:
-            print(f"Error fetching data from {address}: {response.status_code}")
-            return []
+    def __init__(self, street: str, city: str, nr: str):
+        super().__init__(city=city, street=street, nr=nr)
 
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        entries = []
-
-        waste_types = {
-            "plan rest clear": "Zmieszane",
-            "glas": "Szkło",
-            "plastik": "Tworzywa",
-            "bio": "BIO",
-            "papier": "Papier",
-            "plan sperr clear": "Gabaryty",
-        }
-
-        for waste_class, waste_type in waste_types.items():
-            try:
-                for li in soup.find(class_=waste_class).find_all("li"):
-                    date_text = li.text.strip()
-                    date_format = "%d.%m.%Y"
-                    cleaned_date_text = (
-                        date_text.replace("\r", "")
-                        .replace("\n", "")
-                        .replace("pon.,", "")
-                        .replace("wt.,", "")
-                        .replace("sr.,", "")
-                        .replace("śr.,", "")
-                        .replace("czw.,", "")
-                        .replace("pt.,", "")
-                        .replace("sob.,", "")
-                        .replace("nie.,", "")
-                        .strip()
-                    )
-                    date_str = str(
-                        datetime.datetime.strptime(
-                            cleaned_date_text, date_format
-                        ).date()
-                    )
-
-                    try:
-                        entries.append(
-                            Collection(
-                                date=datetime.datetime.strptime(
-                                    date_str, "%Y-%m-%d"
-                                ).date(),
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-
-                    except ValueError:
-                        _LOOGGER.debug(f"Error converting date string: {date_text}")
-
-            except AttributeError:
-                _LOOGGER.debug(f"No data found for waste type: {waste_type}")
-
-        return entries
+    def preprocess(
+        self, containers: list[Tag], source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        for container in containers:
+            classes = container.get("class") or []
+            key = next((c for c in classes if c in TYPE_MAP), None)
+            if key is None:
+                continue
+            for li in container.find_all("li"):
+                match = _DATE_RE.search(li.get_text())
+                if match:
+                    yield _parse_date(match.group(0)), key

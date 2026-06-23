@@ -5,7 +5,7 @@ from importlib import import_module
 from inspect import Parameter, signature
 from types import GeneratorType, ModuleType
 from typing import Any, Iterable, Type
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import yaml
 
@@ -19,6 +19,24 @@ from update_docu_links import (  # isort:skip # noqa: E402
 SOURCES_NO_COUNTRY = [g.split("/")[-1].removesuffix(".md") for g in BLACK_LIST]
 SOURCES_TO_EXCLUDE = ["__init__.py", "example.py"]
 SOURCES_EXCLUDE_TEST_CASE_CHECK = ["multiple"]
+
+
+def _uses_base_source_init(source_cls: type) -> bool:
+    """Return True for new-style sources relying on BaseSource.__init__(**kwargs).
+
+    Such sources accept their constructor kwargs through the inherited base
+    __init__, so the valid/mandatory parameter names come from PARAMS rather
+    than the (``**kwargs``-only) signature.
+    """
+    try:
+        from waste_collection_schedule.base_source import BaseSource
+    except Exception:
+        return False
+    return (
+        isinstance(source_cls, type)
+        and issubclass(source_cls, BaseSource)
+        and getattr(source_cls, "__init__", None) is BaseSource.__init__
+    )
 
 
 EXTRA_INFO_TYPES: dict[str, Type] = {
@@ -92,6 +110,35 @@ def _get_ics_md() -> list[str]:
 def _load_ics_yaml(source: str) -> Any:
     with open(os.path.join(ICS_YAML_PATH, f"{source}.yaml"), encoding="utf-8") as file:
         return yaml.safe_load(file)
+
+
+_SENTINEL = object()
+
+
+def _source_meta(module: ModuleType, name: str, default=_SENTINEL):
+    """Resolve a source's metadata attribute.
+
+    Legacy sources declare metadata (TITLE, URL, TEST_CASES, ...) at module
+    level. New-style (BaseSource) sources declare it on the ``Source`` class.
+    Look at the module first, then fall back to the class.
+    """
+    if hasattr(module, name):
+        return getattr(module, name)
+    source_cls = getattr(module, "Source", None)
+    if source_cls is not None and getattr(source_cls, name, None):
+        return getattr(source_cls, name)
+    if default is _SENTINEL:
+        raise AttributeError(name)
+    return default
+
+
+def _has_source_meta(module: ModuleType, name: str) -> bool:
+    # A module-level declaration counts even when falsy: a deliberate
+    # ``TITLE = None`` marks a deprecated legacy source and must still pass.
+    # New-style sources declare metadata on the Source class.
+    if hasattr(module, name):
+        return True
+    return bool(getattr(getattr(module, "Source", None), name, None))
 
 
 def _is_supported_country_code(code: str) -> bool:
@@ -199,16 +246,17 @@ def _test_source_has_necessary_parameters_test_cases(
     init_params_names: Iterable[str],
     mandatory_init_params_names: Iterable[str],
 ) -> None:
-    assert hasattr(module, "TEST_CASES"), f"missing test_cases in source {source}"
-    assert isinstance(module.TEST_CASES, dict), (
+    assert _has_source_meta(module, "TEST_CASES"), (
+        f"missing test_cases in source {source}"
+    )
+    test_cases = _source_meta(module, "TEST_CASES")
+    assert isinstance(test_cases, dict), (
         f"test_cases must be a dictionary in source {source}"
     )
-    assert len(module.TEST_CASES) > 0, (
-        f"test_cases must not be empty in source {source}"
-    )
+    assert len(test_cases) > 0, f"test_cases must not be empty in source {source}"
 
     if source not in SOURCES_EXCLUDE_TEST_CASE_CHECK:
-        for name, test_case in module.TEST_CASES.items():
+        for name, test_case in test_cases.items():
             _test_case_check(
                 name, test_case, source, init_params_names, mandatory_init_params_names
             )
@@ -272,15 +320,28 @@ def test_source_has_necessary_parameters() -> None:
         module = _get_module(source)
         assert hasattr(module, "Source"), f"missing Source class in source {source}"
         init_params = signature(module.Source.__init__).parameters
-        init_params_names = set(init_params.keys()) - {"self"}
-        mandatory_init_params_names = {
-            name
-            for name, param in init_params.items()
-            if param.default is Parameter.empty
-        } - {"self"}
-        assert hasattr(module, "TITLE"), f"missing TITLE in source {source}"
-        assert hasattr(module, "DESCRIPTION"), f"missing DESCRIPTION in source {source}"
-        assert hasattr(module, "URL"), f"missing URL in source {source}"
+        if _uses_base_source_init(module.Source):
+            # New-style source relying on BaseSource.__init__(**kwargs): the
+            # accepted kwargs are the fields declared in PARAMS, and the
+            # mandatory ones are those on required ConfigParams.
+            init_params_names = set()
+            mandatory_init_params_names = set()
+            for cfg_param in getattr(module.Source, "PARAMS", []):
+                init_params_names.update(cfg_param.fields.keys())
+                if getattr(cfg_param, "required", True):
+                    mandatory_init_params_names.update(cfg_param.fields.keys())
+        else:
+            init_params_names = set(init_params.keys()) - {"self"}
+            mandatory_init_params_names = {
+                name
+                for name, param in init_params.items()
+                if param.default is Parameter.empty
+            } - {"self"}
+        assert _has_source_meta(module, "TITLE"), f"missing TITLE in source {source}"
+        assert _has_source_meta(module, "DESCRIPTION"), (
+            f"missing DESCRIPTION in source {source}"
+        )
+        assert _has_source_meta(module, "URL"), f"missing URL in source {source}"
 
         _test_source_has_necessary_parameters_test_cases(
             module, source, init_params_names, mandatory_init_params_names
@@ -290,22 +351,51 @@ def test_source_has_necessary_parameters() -> None:
             f"missing fetch method in Source class of source {source}"
         )
 
-        # If the module declares COUNTRY it must be a valid code — update_docu_links.py
-        # uses this value directly and silently orphans the source if it doesn't match.
-        if hasattr(module, "COUNTRY"):
-            assert _is_supported_country_code(module.COUNTRY), (
-                f"unsupported country code {module.COUNTRY!r} in source {source}"
+        # If COUNTRY is declared it must be a valid code — update_docu_links.py uses
+        # this value directly and silently orphans the source if it doesn't match.
+        # New-style (BaseSource) sources declare COUNTRY on the class; legacy sources
+        # declare it at module level. Validate whichever is present.
+        declared_country = getattr(module, "COUNTRY", None) or getattr(
+            module.Source, "COUNTRY", None
+        )
+        if declared_country:
+            assert _is_supported_country_code(declared_country), (
+                f"unsupported country code {declared_country!r} in source {source}"
             )
 
         if source not in SOURCES_NO_COUNTRY and not _has_supported_country_code(source):
-            assert hasattr(module, "COUNTRY"), (
+            assert declared_country, (
                 f"missing COUNTRY in source {source} or supported countrycode in filename"
             )
 
-        if hasattr(module, "EXTRA_INFO"):
-            _test_source_has_necessary_parameters_extra_info(
-                module.EXTRA_INFO, source, init_params_names
+        # A source covers one or more regions. The typed REGIONS list is
+        # canonical; a legacy EXTRA_INFO (class or module level) is adapted into
+        # Regions at the boundary so validation works in Region terms only.
+        from waste_collection_schedule.regions import from_extra_info
+
+        region_list = getattr(module.Source, "REGIONS", None)
+        if region_list:
+            region_list = list(region_list() if callable(region_list) else region_list)
+        else:
+            legacy = getattr(module.Source, "EXTRA_INFO", None)
+            if legacy is None:
+                legacy = getattr(module, "EXTRA_INFO", None)
+            region_list = from_extra_info(legacy) if legacy is not None else []
+        for r in region_list:
+            assert isinstance(r.title, str) and r.title, (
+                f"a REGION in source {source} must have a non-empty string title"
             )
+            assert isinstance(r.params, dict), (
+                f"a REGION in source {source} must have a dict of params"
+            )
+            for key in r.params:
+                assert key in init_params_names, (
+                    f"REGION in source {source}: param {key} is not a valid Source parameter"
+                )
+            if r.country:
+                assert _is_supported_country_code(r.country), (
+                    f"unsupported country code in source {source} REGION"
+                )
 
         if hasattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION"):
             assert isinstance(module.HOW_TO_GET_ARGUMENTS_DESCRIPTION, dict), (
@@ -506,46 +596,43 @@ def test_uk_cloud9_client_requires_api_domains() -> None:
 
 
 def test_mzv_rotenburg_route_filter_without_location() -> None:
+    """Route filtering works when the route label is only in the ICS summary.
+
+    The BaseSource conversion uses parsers.ics_events + classify(); route info
+    here lives in the summary (LOCATION is empty), so route_context falls back
+    to the summary text. convert_events is patched to avoid the wall-clock
+    (now .. now+365) event window — this exercises classify(), not icalevents.
+    """
+    import datetime
+
+    from waste_collection_schedule.service.ICS import IcsEvent
+
     module = _get_module("mzv_rotenburg_bebra_de")
 
-    ics_text = """BEGIN:VCALENDAR
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260101
-SUMMARY:Entsorgung Gelbe Tonne Route 1
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260102
-SUMMARY:Entsorgung Gelbe Tonne Route 2
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260103
-SUMMARY:Entsorgung Papier Route West
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260104
-SUMMARY:Entsorgung Papier Route Ost
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;VALUE=DATE:20260105
-SUMMARY:Entsorgung Restabfall
-END:VEVENT
-END:VCALENDAR
-"""
+    events = [
+        IcsEvent(datetime.date(2026, 1, 1), "Entsorgung Gelbe Tonne Route 1"),
+        IcsEvent(datetime.date(2026, 1, 2), "Entsorgung Gelbe Tonne Route 2"),
+        IcsEvent(datetime.date(2026, 1, 3), "Entsorgung Papier Route West"),
+        IcsEvent(datetime.date(2026, 1, 4), "Entsorgung Papier Route Ost"),
+        IcsEvent(datetime.date(2026, 1, 5), "Entsorgung Restabfall"),
+    ]
 
-    class _Response:
-        text = ics_text
-
-        @staticmethod
-        def raise_for_status() -> None:
-            return None
-
-    with patch.object(module.requests, "get", return_value=_Response()):
+    response = MagicMock()
+    # parse() guards against a non-ICS body (unknown city); give it a valid feed.
+    response.text = "BEGIN:VCALENDAR\nEND:VCALENDAR"
+    with (
+        patch.object(module.Source, "retrieve", return_value=response),
+        patch(
+            "waste_collection_schedule.service.ICS.ICS.convert_events",
+            return_value=events,
+        ),
+    ):
         entries = module.Source(
             city="rote", yellow_route="2", paper_route="Ost"
         ).fetch()
 
-    assert [(entry.date.isoformat(), entry.type) for entry in entries] == [
-        ("2026-01-02", "Gelbe Tonne"),
-        ("2026-01-04", "Papier"),
-        ("2026-01-05", "Restabfall"),
+    assert [(entry.date.isoformat(), entry.waste_type.id) for entry in entries] == [
+        ("2026-01-02", "recyclables"),
+        ("2026-01-04", "paper"),
+        ("2026-01-05", "general_waste"),
     ]

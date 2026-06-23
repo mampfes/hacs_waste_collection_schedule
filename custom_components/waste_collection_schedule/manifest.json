@@ -15,7 +15,10 @@
     "lxml",
     "pycryptodome",
     "pypdf",
-    "curl_cffi>=0.7.0"
+    "Pillow>=10.0.0",
+    "curl_cffi>=0.7.0",
+    "Babel>=2.12.0",
+    "holidays>=0.40"
   ],
   "version": "2.29.0"
 }

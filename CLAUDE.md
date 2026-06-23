@@ -93,7 +93,12 @@ ruff format <file>
 
 ## Source module contract
 
-Every source file in `custom_components/waste_collection_schedule/waste_collection_schedule/source/` must define:
+There are two source styles. The full guide is `doc/contributing_source.md`.
+
+1. **`BaseSource` pipeline (preferred for new sources).** The source declares which reusable steps to use: `retrieve` (raw fetch) then `parse` (structure) then `preprocess` (records) then `transform` (one `Collection` per record). Metadata, `PARAMS` and the steps are class attributes; usually the only source-specific code is `__init__` (which calls `super().__init__(**kwargs)`). No `fetch()`, no per-source `ICON_MAP`, no manual date parsing. Use `classify()` instead of a transformer for irregular providers. See the converted examples (`kwinana_wa_gov_au.py`, `koppl_at.py`, `reading_gov_uk.py`).
+2. **Legacy module-level contract (still fully supported).** Module-level `TITLE`/`URL`/... plus a `Source` class with a hand-written `fetch() -> list[Collection]` returning `Collection(date, t, icon=...)`. Around 600 sources use this. A bug fix to one does not need converting.
+
+Both styles need this metadata (on the class for pipeline sources, at module level for legacy):
 
 | Symbol | Type | Notes |
 |---|---|---|
@@ -101,23 +106,25 @@ Every source file in `custom_components/waste_collection_schedule/waste_collecti
 | `DESCRIPTION` | `str` | One-line description. |
 | `URL` | `str` | Provider's website. |
 | `COUNTRY` | `str` | **Lowercase code** from `update_docu_links.py`'s `COUNTRYCODES` list. UK = `"uk"` (NOT `"gb"`); Canada = `"ca"` (lowercase). An invalid value silently orphans the source out of README/info/sources.json. |
-| `TEST_CASES` | `dict` | Maps test-case name → constructor kwargs. Must not be empty. |
-| `Source` class | | `__init__(**kwargs)` and `fetch() -> list[Collection]`. |
+| `TEST_CASES` | `dict` | Maps test-case name to constructor kwargs. Must not be empty. |
+
+Pipeline sources also declare `PARAMS` (typed `config_params` descriptors), the step attributes, and a `transformer` (or `classify()`). Legacy sources provide the `Source` class with `__init__(**kwargs)` and `fetch()`.
 
 Optional:
 
-- `EXTRA_INFO` — list of dicts (`title`, `url`, `country`, `default_params`) for sources that cover multiple municipalities under one module.
-- `TITLE_LANG` / `EXTRA_INFO_LANG` — non-English titles.
-- `HOW_TO_GET_ARGUMENTS_DESCRIPTION` — per-language guidance shown in the config wizard.
-- `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` — per-language argument labels and descriptions. Currently still required on master (read by `update_docu_links.py` to generate `translations/en.json`). A future i18n YAML migration will replace these but is not yet merged — keep them.
-- `SOURCE_CODEOWNERS` — `list[str]` of GitHub handles (e.g. `["@your-handle"]`) who maintain this source. Each entry must start with `@`. `update_docu_links.py` writes these into `.github/source_owners.json`; a GitHub Action pings+assigns the listed owners when a bug report names this source. **Strongly encouraged for all new sources.** ICS YAML providers use the equivalent `codeowners:` key in their `.yaml` file.
+- `REGIONS` (pipeline, preferred): a `list[Region]` (from `regions.region(title, **params)`) declaring the regions one structure covers, each becoming its own discoverable listing in the README / `sources.json` with its `params` pre-filled. A source is one structure (pipeline + `PARAMS`) applied to one or more regions; a single-region source leaves it empty. May be a callable returning the list (for large external registries).
+- `EXTRA_INFO` (legacy): the older dict form (`title`, `url`, `country`, `default_params`) of the same idea. Still supported (class-first for pipeline sources, module level for legacy) but adapted into `Region`s internally; prefer `REGIONS` for new work.
+- `RAISE_ON_EMPTY` (pipeline): set `True` on address/lookup sources so an empty result raises instead of returning `[]`.
+- `HOWTO` (pipeline) / `HOW_TO_GET_ARGUMENTS_DESCRIPTION` (legacy): per-language guidance shown in the config form.
+- `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` (legacy): per-language argument labels and descriptions, read by `update_docu_links.py`. Pipeline sources use `PARAMS` labels and `HOWTO` instead.
+- `CODEOWNERS` (pipeline class attribute) / `SOURCE_CODEOWNERS` (legacy module variable): `list[str]` of GitHub handles (e.g. `["@your-handle"]`), each starting with `@`. `update_docu_links.py` writes these into `.github/source_owners.json`; a GitHub Action pings and assigns the listed owners when a bug report names this source. **Strongly encouraged for all new sources.** ICS YAML providers use the equivalent `codeowners:` key in their `.yaml` file.
 
 ### CI-enforced structural rules
 
 `tests/test_source_components.py` runs in CI on every PR and enforces:
 
-1. **Language allowlist:** `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS` keys MUST be in `{"en", "de", "it", "fr"}`. **Default behaviour when a contributor / agent wants to use any other language** (e.g. `fi`, `es`, `nl`, `pl`): strip the unsupported-language block from the source's translation dicts in the current PR, and open a *separate* issue titled `Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist` linked back to the original PR/issue, asking for contributors to help with the full translation pipeline (allowlist + `update_docu_links.py` + `translations/<xx>.json`). Never silently include an unsupported language — CI will reject the PR.
-2. **Icons enum:** `ICON_MAP` values MUST be members of the `Icons` enum (`from waste_collection_schedule import Icons`). Raw `"mdi:..."` strings fail the `test_icon_map_uses_canonical_icons` check. The canonical catalogue is at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py` — pick the nearest sensible member; do not extend the enum in a source PR.
+1. **Language allowlist:** `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS` keys MUST be in `{"en", "de", "it", "fr", "nl"}` (the `LANGUAGES` list in `update_docu_links.py` is the source of truth). **Default behaviour when a contributor / agent wants to use any other language** (e.g. `fi`, `es`, `pl`): strip the unsupported-language block from the source's translation dicts in the current PR, and open a *separate* issue titled `Add <lang> (xx) language support to PARAM_TRANSLATIONS allowlist` linked back to the original PR/issue, asking for contributors to help with the full translation pipeline (allowlist + `update_docu_links.py` + `translations/<xx>.json`). Never silently include an unsupported language; CI will reject the PR.
+2. **Icons enum (legacy sources):** `ICON_MAP` values MUST be members of the `Icons` enum (`from waste_collection_schedule import Icons`). Raw `"mdi:..."` strings fail the `test_icon_map_uses_canonical_icons` check. The canonical catalogue is at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`; pick the nearest sensible member and do not extend the enum in a source PR. Pipeline sources have no `ICON_MAP`: the icon comes from the canonical `WasteType` the transformer resolves, so this rule does not apply to them.
 3. **COUNTRY allowlist** as already noted above.
 
 Run `python -m pytest tests/test_source_components.py -q` locally after any source-module change and before committing; do not rely on CI to catch these.
@@ -154,7 +161,7 @@ These files are produced by `update_docu_links.py`, which runs automatically via
 - `README.md`, `info.md`
 - `custom_components/waste_collection_schedule/sources.json`
 - `custom_components/waste_collection_schedule/source_metadata.json`
-- `custom_components/waste_collection_schedule/translations/{en,de,it,fr}.json` (config-flow `args_*` sections only — the `options.step.init` section IS hand-maintained)
+- `custom_components/waste_collection_schedule/translations/{en,de,it,fr,nl}.json` (config-flow `args_*` sections only; the `options.step.init` section IS hand-maintained)
 - `custom_components/waste_collection_schedule/waste_collection_schedule/translations/*.json`
 - `doc/ics/*.md` (one per `doc/ics/yaml/*.yaml`)
 
@@ -162,8 +169,8 @@ If a PR diff touches any of the above, revert with `git checkout upstream/master
 
 ### Files that ARE editable
 
-- `custom_components/waste_collection_schedule/waste_collection_schedule/source/*.py` — source modules.
-- `doc/source/<id>.md` — **must be created manually** for each new source. The update script reads but does not create these.
+- `custom_components/waste_collection_schedule/waste_collection_schedule/source/*.py` (source modules).
+- `doc/source/<id>.md`: for **legacy** sources, **must be created manually** (the update script reads but does not create these). For **pipeline** (`BaseSource`) sources, `doc_generator.py` renders this from the class metadata during the post-merge generation run, so do not hand-write it.
 - `doc/source/ics.md`, `doc/source/static.md` — manually maintained (blacklisted from generation, except for an auto-patched service-table section in each).
 - `doc/ics/yaml/*.yaml` — ICS provider definitions. Each file generates the matching `doc/ics/<name>.md`. When adding a provider, update BOTH the `extra_info` list (for the README/sources.json listing) AND the table inside the `howto.en` string (for the generated `.md`).
 - `CHANGELOG.md`, `manifest.json` — manually maintained (release-time only).
@@ -176,7 +183,7 @@ These are the issues that come up most often in PR review. Avoid them and your P
 
 1. **`COUNTRY` mismatch**. Must be a lowercase code from `update_docu_links.py`'s `COUNTRYCODES` list. UK = `"uk"`, Canada = `"ca"`. An invalid value silently orphans the source — CI did not catch this in the past.
 2. **Generated files in the diff**. See list above. Revert before pushing.
-3. **Missing `doc/source/<id>.md`**. Required for every new source; create it manually.
+3. **Missing `doc/source/<id>.md`** (legacy sources). Required for every new legacy source; create it manually. Pipeline (`BaseSource`) sources have it auto-generated, so do not hand-write one.
 4. **Hardcoded data**. Fetch live; do not paste a schedule.
 5. **Provider already covered by a shared platform** (Recollect, RecycleCoach, ICS YAML, Publidata, IntraMaps, etc.). Check first.
 6. **Generic `Exception`**. Use `SourceArgumentNotFound` / `SourceArgumentNotFoundWithSuggestions`.
@@ -184,7 +191,7 @@ These are the issues that come up most often in PR review. Avoid them and your P
 8. **Login-required**. Not supported — the project only consumes public endpoints.
 9. **Running `update_docu_links.py` in a PR branch**. Don't — CI handles it post-merge.
 10. **Editing translations directly**. The `config.step.args_*` sections are generated. Hand-edit only `options.step.init` (in the outer `translations/*.json`).
-11. **Raw `mdi:*` strings in `ICON_MAP`**. Use the `Icons` enum from `waste_collection_schedule` (catalogue at `waste_collection_schedule/icons.py`). This keeps icons consistent across sources for the same logical waste category — see #2813.
+11. **Raw `mdi:*` strings in `ICON_MAP`** (legacy sources). Use the `Icons` enum from `waste_collection_schedule` (catalogue at `waste_collection_schedule/icons.py`). This keeps icons consistent across sources for the same logical waste category (see #2813). Pipeline sources have no `ICON_MAP`: the icon comes from the canonical `WasteType`.
 
 ---
 

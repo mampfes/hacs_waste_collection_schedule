@@ -1,58 +1,112 @@
-import datetime
+from typing import final
 
-import requests
-from waste_collection_schedule import Collection
-from waste_collection_schedule.service.CMCityMedia import SERVICE_MAP
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, text_field
+from waste_collection_schedule.regions import Region, region
+from waste_collection_schedule.service.CMCityMedia import (
+    CMCityMediaParser,
+    CMCityMediaRetriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import ALL_TYPES
 
-TITLE = "CM City Media - Müllkalender"
-DESCRIPTION = "Source script for cmcitymedia.de"
+# Declarative source on the CM City Media components (CMCityMediaRetriever +
+# CMCityMediaParser). The provider registry lives here, in the source that owns
+# it; each entry carries the homepage id (hpid) the user selects and the realm
+# the API needs. The transformer resolves each item's German type name onto a
+# canonical WasteType via the shared multilingual vocabulary.
+
 URL = "https://cmcitymedia.de"
-TEST_CASES = {
-    "Blankenheim - Bezirk F: Lindweiler, Rohr": {"hpid": 415, "district": 1371},
-    "Blankenheim": {"hpid": 415, "realmid": 41500},
-    "Oberstadion": {"hpid": 447, "district": 1349},
-}
-TEST_CASES.update({s["region"]: {"hpid": s["hpid"]} for s in SERVICE_MAP})
+
+_PROVIDERS = [
+    {"hpid": 415, "realm": 41500, "region": "Gemeinde Blankenheim"},
+    {
+        "hpid": 95,
+        "realm": 9501,
+        "region": "Landkreis Schwäbisch Hall",
+        "disabled": True,
+    },
+    {"hpid": 1, "realm": 100, "region": "Gemeinde Bühlerzell", "disabled": True},
+    {
+        "hpid": 107,
+        "realm": 10701,
+        "region": "Gemeinde Kressbronn am Bodensee",
+        "disabled": True,
+    },
+    {"hpid": 168, "realm": 16801, "region": "Hohenlohekreis", "disabled": True},
+    {"hpid": 225, "realm": 22500, "region": "Gemeinde Deggenhausertal"},
+    {"hpid": 233, "realm": 23301, "region": "Stadt Kraichtal", "disabled": True},
+    {"hpid": 248, "realm": 24800, "region": "Gemeinde Kappelrodeck", "disabled": True},
+    {"hpid": 331, "realm": 33100, "region": "Gemeinde Schutterwald"},
+    {"hpid": 374, "realm": 37401, "region": "Gemeinde Aschheim", "disabled": True},
+    {
+        "hpid": 390,
+        "realm": 39000,
+        "region": "Gemeinde Mittelbiberach",
+        "disabled": True,
+    },
+    {"hpid": 391, "realm": 39100, "region": "Stadt Ehingen", "disabled": True},
+    {
+        "hpid": 420,
+        "realm": 42000,
+        "region": "Gemeinde Senden (Westfalen)",
+        "disabled": True,
+    },
+    {"hpid": 421, "realm": 42100, "region": "Stadt Emden", "disabled": True},
+    {"hpid": 424, "realm": 42400, "region": "Stadt Emmendingen"},
+    {"hpid": 426, "realm": 42600, "region": "Gemeinde Kalletal"},
+    {"hpid": 441, "realm": 44100, "region": "Stadt Messstetten"},
+    {"hpid": 447, "realm": 44700, "region": "Gemeinde Oberstadion", "disabled": True},
+]
 
 
-def EXTRA_INFO():
-    return [
-        {"title": s["region"], "url": URL, "default_params": {"hpid": s["hpid"]}}
-        for s in SERVICE_MAP
-        if not s.get("disabled", False)
+@final
+class Source(BaseSource):
+    TITLE = "CM City Media - Müllkalender"
+    DESCRIPTION = "Source script for cmcitymedia.de"
+    URL = URL
+    COUNTRY = "de"
+    # A fixed-provider source: an empty schedule is a legitimate "no collections
+    # in the window" result, so do not RAISE_ON_EMPTY (matches the legacy source
+    # which returned []).
+    # The transformer resolves open-ended German labels via the shared vocabulary,
+    # so any canonical type may appear.
+    WASTE_TYPES = list(ALL_TYPES)
+
+    # Both cases exercise the enabled Blankenheim provider (district-based and
+    # realmid-override paths); disabled providers serve no data so are not tested.
+    TEST_CASES = {
+        "Blankenheim - Bezirk F: Lindweiler, Rohr": {"hpid": 415, "district": 1371},
+        "Blankenheim": {"hpid": 415, "realmid": 41500},
+    }
+
+    PARAMS = [
+        text_field("hpid", "Homepage ID"),
+        text_field("realmid", "Realm ID (optional override)", optional=True),
+        district("district", optional=True),
     ]
 
+    retrieve = CMCityMediaRetriever()
+    parse = CMCityMediaParser()
+    transform = JsonTransformer(
+        date_key="date", type_key="name", parse_date=date_parsers.for_format("%Y-%m-%d")
+    )
 
-API_URL = "http://slim.cmcitymedia.de/v1/{}/waste/{}/dates"
-DATE_FORMAT = "%Y-%m-%d"
+    @staticmethod
+    def REGIONS() -> list[Region]:
+        return [
+            region(p["region"], url=URL, hpid=p["hpid"])
+            for p in _PROVIDERS
+            if not p.get("disabled", False)
+        ]
 
-
-class Source:
     def __init__(self, hpid, realmid=None, district=None):
-        self.hpid = hpid
-        self.service = next(
-            (item for item in SERVICE_MAP if item["hpid"] == self.hpid), None
-        )
-        self.realmid = realmid if realmid else self.service["realm"]
-        self.district = district
-
-    def fetch(self):
-        entries = []
-
-        district_param = f"?district={self.district}" if self.district else ""
-        result = requests.get(
-            API_URL.format(self.hpid, self.service["realm"]) + district_param
-        )
-
-        result.raise_for_status()
-
-        for item in result.json()["result"][1]["items"]:
-            entries.append(
-                Collection(
-                    date=datetime.datetime.strptime(item["date"], DATE_FORMAT).date(),
-                    t=item["name"],
-                    icon=self.service["icons"][item["wastetype"]],
-                )
-            )
-
-        return entries
+        # Resolve the realm the API needs from the provider registry (the user
+        # selects only the hpid); realmid stays an explicit override.
+        realm = realmid
+        if realm is None:
+            provider = next((p for p in _PROVIDERS if p["hpid"] == hpid), None)
+            if provider is not None:
+                realm = provider["realm"]
+        super().__init__(hpid=hpid, realmid=realmid, district=district, realm=realm)

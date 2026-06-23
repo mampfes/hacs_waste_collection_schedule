@@ -1,163 +1,124 @@
-import waste_collection_schedule.service.AppAbfallplusDe as AppAbfallplusDe
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import final
 
-SUPPORTED_SERVICES = AppAbfallplusDe.SUPPORTED_SERVICES
-EXTRA_INFO = AppAbfallplusDe.get_extra_info
-TITLE = "Apps by Abfall+"
-DESCRIPTION = "Source for Apps by Abfall+."
-URL = "https://www.abfallplus.de/"
-TEST_CASES = {
-    "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
-        "app_id": "de.k4systems.abfallappnf",
-        "city": "Ahrenviöl",
-        "strasse": "Alle Straßen",
-    },
-    "de.albagroup.app Braunschweig Hauptstraße 7A  ": {
-        "app_id": "de.albagroup.app",
-        "city": "Braunschweig",
-        "strasse": "Hauptstraße",
-        "hnr": "7A",
-    },
-    "de.k4systems.bonnorange Auf dem Hügel": {
-        "app_id": "de.k4systems.bonnorange",
-        "city": "A",  # First letter of street required
-        "strasse": "Auf dem Hügel",
-        "hnr": 6,
-    },
-    "de.ucom.abfallavr Brühl Habichtstr. 4A": {
-        "app_id": "de.ucom.abfallavr",
-        "strasse": "Habichtstr.",
-        "hnr": "4A",
-        "city": "Brühl",
-    },
-    "de.k4systems.abfallappwug Bergen hauptstr. 1": {
-        "app_id": "de.k4systems.abfallappwug",
-        "strasse": "Alle Straßen",
-        "city": "Bergen",
-    },
-    "de.k4systems.abfallappcux Wurster Nordseeküste Aakweg Alle Hausnummern": {
-        "app_id": "de.k4systems.abfallappcux",
-        "strasse": "Aakweg",
-        "hnr": "Alle Hausnummern",
-        "city": "Wurster Nordseeküste",
-    },
-    "de.abfallwecker Mutzschen, Am Lindigt 1": {
-        "app_id": "de.abfallwecker",
-        "city": "Dahlen",
-        "strasse": "Hauptstraße",
-        "hnr": 2,
-        "bundesland": "Sachsen",
-        "landkreis": "Landkreis Nordsachsen",
-    },
-    "de.k4systems.leipziglk Brandis Brandis": {
-        "app_id": "de.k4systems.leipziglk",
-        "city": "Brandis",
-        "bezirk": "Brandis",
-    },
-    "de.k4systems.leipziglk Machern Machern": {
-        "app_id": "de.k4systems.leipziglk",
-        "city": "Machern",
-        "bezirk": "Machern",
-        "strasse": "alle Straßen",
-    },
-    "de.k4systems.lkgoettingen, Abfallwirtschaft Altkreis Göttingen,  Adelebsen, Alle Straßen": {
-        "app_id": "de.k4systems.lkgoettingen",
-        "landkreis": "Abfallwirtschaft Altkreis Göttingen",
-        "city": "Adelebsen",
-        "strasse": "Alle Straßen",
-        "bezirk": "Adelebsen",
-    },
-    # MORE TEST CASES UNCOMMENT IF NEEDED FOR DEBUGGING
-    # "de.k4systems.zakb Fürth Ahornweg 3": {
-    #     "app_id": "de.k4systems.zakb",
-    #     "strasse": "Ahornweg",
-    #     "hnr": "3",
-    #     "city": "Fürth",
-    # },
-    # "de.albagroup.app Kreis Oberhavel, Region Marwitz, Oberkrämer, Dreihügelweg  ": {
-    #     "app_id": "de.albagroup.app",
-    #     "bezirk": "Marwitz",
-    #     "city": "Oberkrämer",
-    #     "strasse": "Dreihügelweg",
-    #     "landkreis": "Oberhavel",
-    # },
-    # "de.k4systems.avea Leverkusen Haberstr.": {
-    #     "app_id": "de.k4systems.avea",
-    #     "strasse": "Haberstr.",
-    #     "city": "Leverkusen",
-    # },
-    # "de.k4systems.abfallappog Bad Peterstal-Griesbach alle Straßen": {
-    #     "app_id": "de.k4systems.abfallappog",
-    #     "strasse": "Alle Straßen",
-    #     "city": "Bad Peterstal-Griesbach",
-    # },
-    # "de.k4systems.abfallappfuerth Großhabersdorf Am Dürren Grund 1 a": {
-    #     "app_id": "de.k4systems.abfallappfuerth",
-    #     "strasse": "Am Dürren Grund",
-    #     "hnr": "1",
-    #     "city": "Großhabersdorf",
-    # },
-    # "de.k4systems.awbgp Bad Boll Ahornstraße Alle Hausnummern": {
-    #     "app_id": "de.k4systems.awbgp",
-    #     "strasse": "Ahornstraße",
-    #     "hnr": "Alle Hausnummern",
-    #     "city": "Bad Boll",
-    # },
-    # "de.k4systems.abfalllkbz Hoyerswerda bezirk: WK VIII": {
-    #     "app_id": "de.k4systems.abfalllkbz",
-    #     "bezirk": "WK VIII",
-    #     "city": "Hoyerswerda",
-    # },
-    # "de.idcontor.abfallwbd Duisburg, Rahm Am Junkersknappen 6": {
-    #     "app_id": "de.idcontor.abfallwbd",
-    #     "strasse": "Am Junkersknappen",
-    #     "bezirk": "Rahm",
-    #     "hnr": "6",
-    #     "city": "Duisburg",
-    # },
-    # "de.k4systems.awbrastatt Muggensturm Adlergasse": {
-    #     "app_id": "de.k4systems.awbrastatt",
-    #     "strasse": "Adlergasse",
-    #     "city": "Muggensturm",
-    # },
-    # # This test case will probably fail in 2025, due to harmonization of waste collection services
-    # # https://www.landkreisgoettingen.de/themen-leistungen/abfall-entsorgung/harmonisierung-der-abfallwirtschaften
-    # "de.k4systems.lkgoettingen Altkreis Osterode": {
-    #     "app_id": "de.k4systems.lkgoettingen",
-    #     "landkreis": "Abfallwirtschaft Altkreis Osterode am Harz",
-    #     "city": "Osterode am Harz",
-    #     "strasse": "Kornmarkt",
-    #     "bezirk": "Osterode am Harz"
-    # }
-    # "de.k4systems.abfallscout Hammelburg Morlesau": {
-    #     "app_id": "de.k4systems.abfallscout",
-    #     "city": "Hammelburg",
-    #     "bezirk": "Morlesau",
-    #     # "strasse": "Alle Straßen", # OPTIONAL
-    #     # "hnr": "Alle Hausnummern" # OPTIONAL
-    # }
-}
+from waste_collection_schedule import field_terms
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import cascading_select, text_field
+from waste_collection_schedule.regions import Region, region
+from waste_collection_schedule.service.AppAbfallplusDe import (
+    SUPPORTED_SERVICES,
+    AppAbfallplusParser,
+    AppAbfallplusRetriever,
+    discover_choices,
+)
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import ALL_TYPES
+
+# Declarative source over the "Apps by Abfall+" platform. The whole live wizard
+# (token, Bundesland -> Landkreis -> Kommune -> Bezirk -> Straße -> Hausnummer
+# cascade, validate, struktur download) and the XML interpretation live in the
+# service as AppAbfallplusRetriever + AppAbfallplusParser, so this source only
+# declares the pipeline. The transformer maps each German category name onto a
+# canonical WasteType via the shared multilingual vocabulary.
+#
+# There is no static region registry on this platform: regions are discovered
+# live. The config cascade is expressed with config_params.cascading_select;
+# get_choices(field, selections) delegates to the service's discover_choices,
+# which replays the same wizard to list one level's options. The provider
+# registry below (which app id serves which area, collected offline) drives the
+# discoverable README / sources.json listings only; it pre-fills the app id, and
+# the rest of the cascade is resolved live.
 
 
-ICON_MAP = {
-    "restmüll": Icons.GENERAL_WASTE,
-    "schwarz": Icons.GENERAL_WASTE,
-    "grau": Icons.GENERAL_WASTE,
-    "glass": Icons.GLASS,
-    "bio": Icons.ORGANIC,
-    "braun": Icons.ORGANIC,
-    "pappier": Icons.PAPER,
-    "blaue tonne": Icons.PAPER,
-    "plastik": Icons.PLASTIC_PACKAGING,
-    "wertstoff": Icons.RECYCLING,
-    "gelber sack": Icons.PLASTIC_PACKAGING,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Apps by Abfall+"
+    DESCRIPTION = "Source for Apps by Abfall+."
+    URL = "https://www.abfallplus.de/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    # The transformer resolves each app's open-ended German labels through the shared
+    # multilingual vocabulary, so any canonical type may appear.
+    WASTE_TYPES = list(ALL_TYPES)
 
+    TEST_CASES = {
+        "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
+            "app_id": "de.k4systems.abfallappnf",
+            "city": "Ahrenviöl",
+            "strasse": "Alle Straßen",
+        },
+        "de.albagroup.app Braunschweig Hauptstraße 7A  ": {
+            "app_id": "de.albagroup.app",
+            "city": "Braunschweig",
+            "strasse": "Hauptstraße",
+            "hnr": "7A",
+        },
+        "de.k4systems.bonnorange Auf dem Hügel": {
+            "app_id": "de.k4systems.bonnorange",
+            "city": "A",  # First letter of street required
+            "strasse": "Auf dem Hügel",
+            "hnr": 6,
+        },
+        "de.ucom.abfallavr Brühl Habichtstr. 4A": {
+            "app_id": "de.ucom.abfallavr",
+            "strasse": "Habichtstr.",
+            "hnr": "4A",
+            "city": "Brühl",
+        },
+        "de.k4systems.abfallappwug Bergen hauptstr. 1": {
+            "app_id": "de.k4systems.abfallappwug",
+            "strasse": "Alle Straßen",
+            "city": "Bergen",
+        },
+        "de.k4systems.abfallappcux Wurster Nordseeküste Aakweg Alle Hausnummern": {
+            "app_id": "de.k4systems.abfallappcux",
+            "strasse": "Aakweg",
+            "hnr": "Alle Hausnummern",
+            "city": "Wurster Nordseeküste",
+        },
+        "de.abfallwecker Mutzschen, Am Lindigt 1": {
+            "app_id": "de.abfallwecker",
+            "city": "Dahlen",
+            "strasse": "Hauptstraße",
+            "hnr": 2,
+            "bundesland": "Sachsen",
+            "landkreis": "Landkreis Nordsachsen",
+        },
+        "de.k4systems.leipziglk Brandis Brandis": {
+            "app_id": "de.k4systems.leipziglk",
+            "city": "Brandis",
+            "bezirk": "Brandis",
+        },
+        "de.k4systems.leipziglk Machern Machern": {
+            "app_id": "de.k4systems.leipziglk",
+            "city": "Machern",
+            "bezirk": "Machern",
+            "strasse": "alle Straßen",
+        },
+        "de.k4systems.lkgoettingen, Abfallwirtschaft Altkreis Göttingen,  Adelebsen, Alle Straßen": {
+            "app_id": "de.k4systems.lkgoettingen",
+            "landkreis": "Abfallwirtschaft Altkreis Göttingen",
+            "city": "Adelebsen",
+            "strasse": "Alle Straßen",
+            "bezirk": "Adelebsen",
+        },
+    }
 
-API_URL = ""
+    PARAMS = [
+        text_field("app_id", "App ID"),
+        cascading_select(
+            ("bundesland", field_terms.STATE),
+            ("landkreis", field_terms.COUNTY),
+            ("city", field_terms.MUNICIPALITY),
+            ("bezirk", field_terms.DISTRICT),
+            ("strasse", field_terms.STREET),
+            ("hnr", field_terms.HOUSE_NUMBER),
+        ),
+    ]
 
+    retrieve = AppAbfallplusRetriever()
+    parse = AppAbfallplusParser()
+    transform = JsonTransformer(date_key="date", type_key="category")
 
-class Source:
     def __init__(
         self,
         app_id: str,
@@ -168,27 +129,32 @@ class Source:
         bundesland: str | None = None,
         landkreis: str | None = None,
     ):
-        self._app = AppAbfallplusDe.AppAbfallplusDe(
+        super().__init__(
             app_id=app_id,
-            kommune=city,
             strasse=strasse,
-            hnr=str(hnr) if isinstance(hnr, int) else hnr,
+            hnr=hnr,
+            bezirk=bezirk,
+            city=city,
             bundesland=bundesland,
             landkreis=landkreis,
-            bezirk=bezirk,
         )
 
-    def fetch(self):
-        entries = []
-        for d in self._app.generate_calendar():
-            bin_type = d["category"]
-            icon = None
-            for name, icon_str in ICON_MAP.items():
-                if name in bin_type.lower():
-                    icon = icon_str
-                    break
+    @staticmethod
+    def REGIONS() -> list[Region]:
+        regions: list[Region] = []
+        for app_id, services in SUPPORTED_SERVICES.items():
+            for service in services:
+                regions.append(region(service, app_id=app_id, city=service))
+        return regions
 
-            # Collection icon
-            entries.append(Collection(date=d["date"], t=bin_type, icon=icon))
+    @classmethod
+    def get_choices(cls, field: str, selections: dict) -> list[tuple[str, str]]:
+        """Options for one cascade level given the levels chosen so far.
 
-        return entries
+        Implements config_params.cascading_select. Delegates to the service's
+        live discovery, which walks the AbfallPlus wizard for the given app id.
+        """
+        app_id = selections.get("app_id")
+        if not app_id:
+            return []
+        return discover_choices(str(app_id), field, selections)

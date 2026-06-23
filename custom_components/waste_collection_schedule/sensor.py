@@ -33,7 +33,10 @@ from .const import (
     UPDATE_SENSORS_SIGNAL,
 )
 from .waste_collection_api import WasteCollectionApi
-from .waste_collection_schedule import Collection, CollectionGroup, Icons
+
+# CollectionBase is the real Collection class; the exported `Collection` is a
+# factory instance (not valid as a type annotation).
+from .waste_collection_schedule import CollectionBase, CollectionGroup, Icons
 from .wcs_coordinator import WCSCoordinator
 
 # fmt: on
@@ -306,7 +309,7 @@ class ScheduleSensor(SensorEntity):
         self._attr_icon = collection.icon or Icons.GENERAL_WASTE
         self._attr_entity_picture = collection.picture
 
-    def _render_date(self, collection: Collection):
+    def _render_date(self, collection: CollectionBase):
         if self._date_template is not None:
             return self._date_template.async_render_with_possible_json_value(
                 collection, None

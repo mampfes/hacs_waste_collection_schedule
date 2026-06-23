@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-06-21",
+  "interactions": [
+    {
+      "key": "GET https://www.stirling.wa.gov.au/bincollectioncheck/getresult ",
+      "method": "GET",
+      "url": "https://www.stirling.wa.gov.au/bincollectioncheck/getresult",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 21 Jun 2026 04:33:39 GMT",
+        "content-type": "text/plain; charset=utf-8",
+        "content-length": "626",
+        "x-sucuri-id": "16027",
+        "x-xss-protection": "1; mode=block",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=31536000",
+        "content-security-policy": "upgrade-insecure-requests;",
+        "access-control-allow-origin": "https://www.stirling.wa.gov.au, https://stirling.my.site.com",
+        "server": "Sucuri/Cloudproxy",
+        "x-sucuri-cache": "BYPASS",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "W1t7Im5hbWUiOiJ0eXBlIiwiY2FwdGlvbiI6InR5cGUiLCJ2YWx1ZSI6IlJlZCJ9LHsibmFtZSI6ImRheSIsImNhcHRpb24iOiJkYXkiLCJ2YWx1ZSI6IldlZG5lc2RheSJ9LHsibmFtZSI6ImRhdGUiLCJjYXB0aW9uIjoiZGF0ZSIsInZhbHVlIjoiSnVuIDI0IDIwMjYgIn1dLFt7Im5hbWUiOiJ0eXBlIiwiY2FwdGlvbiI6InR5cGUiLCJ2YWx1ZSI6IlllbGxvdyJ9LHsibmFtZSI6ImRheSIsImNhcHRpb24iOiJkYXkiLCJ2YWx1ZSI6IldlZG5lc2RheSJ9LHsibmFtZSI6ImRhdGUiLCJjYXB0aW9uIjoiZGF0ZSIsInZhbHVlIjoiSnVsIDEgMjAyNiAifV0sW3sibmFtZSI6InR5cGUiLCJjYXB0aW9uIjoidHlwZSIsInZhbHVlIjoiR3JlZW4ifSx7Im5hbWUiOiJkYXkiLCJjYXB0aW9uIjoiZGF5IiwidmFsdWUiOiJXZWRuZXNkYXkifSx7Im5hbWUiOiJkYXRlIiwiY2FwdGlvbiI6ImRhdGUiLCJ2YWx1ZSI6Ikp1biAyNCAyMDI2ICJ9XSxbeyJuYW1lIjoidHlwZSIsImNhcHRpb24iOiJ0eXBlIiwidmFsdWUiOiJHcmVlblZlcmdlIn0seyJuYW1lIjoiZGF5IiwiY2FwdGlvbiI6ImRheSIsInZhbHVlIjoiIn0seyJuYW1lIjoiZGF0ZSIsImNhcHRpb24iOiJkYXRlIiwidmFsdWUiOiIxMyBBcHIgMjAyNiJ9XV0="
+    }
+  ]
+}

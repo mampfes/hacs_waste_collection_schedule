@@ -121,17 +121,22 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        links = soup.find_all(
-            "a", href=lambda h: h and h.endswith(".pdf") and "abfuhrtermine" in h
-        )
-
         street_link: str | None = None
         streets = []
-        for link in links:
+        for link in soup.find_all("a"):
+            if not isinstance(link, Tag):
+                continue
+            href = link.get("href")
+            if not (
+                isinstance(href, str)
+                and href.endswith(".pdf")
+                and "abfuhrtermine" in href
+            ):
+                continue
             text = link.text.strip()
             streets.append(text)
             if self._street.lower().replace(" ", "") == text.lower().replace(" ", ""):
-                street_link = link.get("href")
+                street_link = href
                 break
 
         if street_link is None:
@@ -169,7 +174,8 @@ class Source:
             if self._municipality.lower().replace(" ", "").replace("(", "").replace(
                 ")", ""
             ) == text.lower().replace(" ", "").replace("(", "").replace(")", ""):
-                mun_link = link.get("href")
+                href = link.get("href")
+                mun_link = href if isinstance(href, str) else None
                 break
         if mun_link is None:
             raise SourceArgumentNotFoundWithSuggestions(

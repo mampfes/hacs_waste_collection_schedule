@@ -1,199 +1,144 @@
-import json
-from datetime import datetime
-
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    house_number,
+    location_id,
+    municipality,
+    street,
 )
-from waste_collection_schedule.service.ICS import ICS
-from waste_collection_schedule.service.InsertITDe import SERVICE_MAP
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.regions import Region, region
+from waste_collection_schedule.service.InsertITDe import (
+    BASE_URL,
+    InsertItParser,
+    InsertItRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
+from waste_collection_schedule.waste_types import ALL_TYPES
 
-TITLE = "Insert IT Apps"
-DESCRIPTION = "Source for Apps by Insert IT"
-URL = "https://insert-infotech.de/"
-COUNTRY = "de"
+# Declarative source on the Insert IT components. The per-region configuration
+# travels with each provider entry (the app path, the ICS regex, and an optional
+# type-name remap), rather than living in separate parallel maps keyed by
+# municipality. The remap (only some municipalities need one) is applied as a
+# per-instance ICSTransformer clean step, set in __init__ from the provider.
 
+_LEERUNG = r"Leerung:\s+(.*)\s+\(.*\)"
 
-def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
-
-
-TEST_CASES = {
-    "Offenbach Address": {
+_PROVIDERS = [
+    {
+        "municipality": "Hattingen",
+        "title": "Abfallkalender Hattingen",
+        "path": "BmsAbfallkalenderHattingen",
+        "regex": _LEERUNG,
+    },
+    {
+        "municipality": "Herne",
+        "title": "Abfallkalender Herne",
+        "path": "BmsAbfallkalenderHerne",
+        "regex": _LEERUNG,
+    },
+    {
+        "municipality": "Kassel",
+        "title": "Abfallkalender Kassel",
+        "path": "BmsAbfallkalenderKassel",
+        "regex": _LEERUNG,
+    },
+    {
+        "municipality": "Krefeld",
+        "title": "GSAK APP / Krefeld",
+        "path": "BmsAbfallkalenderKrefeld",
+        "regex": _LEERUNG,
+    },
+    {
+        "municipality": "Luebeck",
+        "title": "Abfallkalender Luebeck",
+        "path": "BmsAbfallkalenderLuebeck",
+        "regex": _LEERUNG,
+    },
+    {
+        "municipality": "Mannheim",
+        "title": "Abfallkalender Mannheim",
+        "path": "BmsAbfallkalenderMannheim",
+        "regex": r"Leerung:\s+(.*)",
+        "types": {
+            "Rest": "Restmüll",
+            "Wertstoff": "Sack/Tonne gelb",
+            "Bio": "Biomüll",
+            "Papier": "Altpapier",
+            "Grünschnitt": "Grünschnitt",
+        },
+    },
+    {
         "municipality": "Offenbach",
-        "street": "Kaiserstraße",
-        "hnr": 1,
+        "title": "Abfallkalender Offenbach",
+        "path": "BmsAbfallkalenderOffenbach",
+        "regex": _LEERUNG,
     },
-    "Offenbach Location ID": {"municipality": "Offenbach", "location_id": 7036},
-    "Mannheim Address": {"municipality": "Mannheim", "street": "A 3", "hnr": 1},
-    "Mannheim Location ID": {"municipality": "Mannheim", "location_id": 430650},
-}
+]
+
+_BY_MUNICIPALITY = {p["municipality"]: p for p in _PROVIDERS}
 
 
-MUNICIPALITIES = {
-    "Hattingen": "BmsAbfallkalenderHattingen",
-    "Herne": "BmsAbfallkalenderHerne",
-    "Kassel": "BmsAbfallkalenderKassel",
-    "Krefeld": "BmsAbfallkalenderKrefeld",
-    "Luebeck": "BmsAbfallkalenderLuebeck",
-    "Mannheim": "BmsAbfallkalenderMannheim",
-    "Offenbach": "BmsAbfallkalenderOffenbach",
-}
+# Not @final: offenbach_de subclasses this as a deprecated alias.
+class Source(BaseSource):
+    TITLE = "Insert IT Apps"
+    DESCRIPTION = "Source for Apps by Insert IT"
+    URL = "https://insert-infotech.de/"
+    COUNTRY = "de"
+    # classify() resolves open-ended German labels via the shared vocabulary,
+    # so any canonical type may appear.
+    WASTE_TYPES = list(ALL_TYPES)
 
-ICON_MAP = {
-    "Offenbach": {
-        "Restmüll": {"icon": "mdi:trash-can", "name": "Restmüll"},
-        "Biomüll": {"icon": "mdi:leaf", "name": "Biomüll"},
-        "DSD": {"icon": "mdi:recycle", "name": "DSD"},
-        "Altpapier": {"icon": "mdi:package-variant", "name": "Altpapier"},
-    },
-    "Mannheim": {
-        "Rest": {"icon": "mdi:trash-can", "name": "Restmüll"},
-        "Wertstoff": {"icon": "mdi:recycle", "name": "Sack/Tonne gelb"},
-        "Bio": {"icon": "mdi:leaf", "name": "Biomüll"},
-        "Papier": {"icon": "mdi:package-variant", "name": "Altpapier"},
-        "Grünschnitt": {"icon": "mdi:leaf", "name": "Grünschnitt"},
-    },
-}
-
-REGEX_MAP = {
-    "Hattingen": r"Leerung:\s+(.*)\s+\(.*\)",
-    "Herne": r"Leerung:\s+(.*)\s+\(.*\)",
-    "Kassel": r"Leerung:\s+(.*)\s+\(.*\)",
-    "Krefeld": r"Leerung:\s+(.*)\s+\(.*\)",
-    "Luebeck": r"Leerung:\s+(.*)\s+\(.*\)",
-    "Mannheim": r"Leerung:\s+(.*)",
-    "Offenbach": r"Leerung:\s+(.*)\s+\(.*\)",
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "municipality": "Ort",
-        "street": "Straße",
-        "hnr": "Hausnummer",
-        "location_id": "Standort ID",
+    TEST_CASES = {
+        "Offenbach Address": {
+            "municipality": "Offenbach",
+            "street": "Kaiserstraße",
+            "hnr": 1,
+        },
+        "Offenbach Location ID": {"municipality": "Offenbach", "location_id": 7036},
+        "Mannheim Address": {"municipality": "Mannheim", "street": "A 3", "hnr": 1},
+        "Mannheim Location ID": {"municipality": "Mannheim", "location_id": 430650},
     }
-}
 
+    PARAMS = [
+        municipality("municipality"),
+        alternatives(
+            [location_id("location_id")],
+            [street("street"), house_number("hnr")],
+        ),
+    ]
 
-class Source:
+    retrieve = InsertItRetriever()
+    parse = InsertItParser()
+    transform = ICSTransformer()
+
+    @staticmethod
+    def REGIONS() -> list[Region]:
+        return [
+            region(
+                p["title"],
+                url=f"{BASE_URL}/{p['path']}",
+                municipality=p["municipality"],
+            )
+            for p in _PROVIDERS
+        ]
+
     def __init__(self, municipality, street=None, hnr=None, location_id=None):
-        self._municipality = municipality
-        self._street = street
-        self._hnr = hnr
-        self._location = location_id
-
-        # Check if municipality is in list
-        municipalities = MUNICIPALITIES
-        if municipality not in municipalities:
+        provider = _BY_MUNICIPALITY.get(municipality)
+        if provider is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "municipality", municipality, list(municipalities.keys())
+                "municipality", municipality, list(_BY_MUNICIPALITY)
             )
-
-        self._api_url = f"https://www.insert-it.de/{municipalities[municipality]}"
-        self._ics = ICS(regex=REGEX_MAP.get(municipality))
-
-        # Check if at least either location_id is set or both street and hnr are set
-        if not ((location_id is not None) or (street is not None and hnr is not None)):
-            problems = []
-            if street is not None:
-                problems.append("hnr")
-            elif hnr is not None:
-                problems.append("street")
-            else:
-                problems = ["location_id", "street", "hnr"]
-
-            raise SourceArgumentExceptionMultiple(
-                problems,
-                "At least either location_id should be set or both street and hnr should be set.",
-            )
-
-        self._uselocation = location_id is not None
-
-    def get_street_id(self):
-        """Return ID of matching street."""
-        s = requests.Session()
-        params = {"text": self._street}
-
-        r = s.get(f"{self._api_url}/Main/GetStreets", params=params)
-        r.raise_for_status()
-        r.encoding = "utf-8"
-
-        result = json.loads(r.text)
-        if not result:
-            raise SourceArgumentNotFound("street", self._street)
-
-        for element in result:
-            if element["Name"] == self._street:
-                street_id = element["ID"]
-                return street_id
-
-        raise SourceArgumentNotFoundWithSuggestions(
-            "street", self._street, [x["Name"] for x in result]
+        # Only some municipalities relabel their types; apply that region's remap
+        # as a per-instance clean step before the canonical resolve.
+        types = provider.get("types")
+        if types:
+            self.transform = ICSTransformer(clean=label_cleaner(remap=types))
+        super().__init__(
+            municipality=municipality,
+            street=street,
+            hnr=hnr,
+            location_id=location_id,
+            path=provider["path"],
+            regex=provider["regex"],
         )
-
-    def get_location_id(self, street_id):
-        """Return ID of first matching location."""
-        s = requests.Session()
-        params = {"streetId": street_id, "houseNumber": self._hnr}
-
-        r = s.get(f"{self._api_url}/Main/GetLocations", params=params)
-        r.raise_for_status()
-        r.encoding = "utf-8"
-
-        result = json.loads(r.text)
-        if not result:
-            raise Exception(
-                f"No locations found for Street ID {street_id} and House number {self._hnr}"
-            )
-
-        for element in result:
-            if element["StreetId"] == street_id and element["Text"] == str(self._hnr):
-                location_id = element["ID"]
-                return location_id
-
-        raise SourceArgumentNotFound(
-            "hnr", self._hnr, [x["Text"] for x in result if x["StreetId"] == street_id]
-        )
-
-    def fetch(self):
-        if not (self._uselocation):
-            street_id = self.get_street_id()
-            self._location = self.get_location_id(street_id)
-
-        now = datetime.now()
-
-        entries = self.fetch_year(now.year)
-        if now.month == 12:
-            entries += self.fetch_year(now.year + 1)
-        return entries
-
-    def fetch_year(self, year):
-        s = requests.Session()
-        params = {"bmsLocationId": self._location, "year": year}
-
-        r = s.get(f"{self._api_url}/Main/Calender", params=params)
-        r.raise_for_status()
-        r.encoding = "utf-8"
-
-        entries = []
-
-        dates = self._ics.convert(r.text)
-        mapping = ICON_MAP.get(self._municipality, None)
-
-        for d in dates:
-            if mapping is not None and d[1] in mapping:
-                entries.append(
-                    Collection(
-                        date=d[0],
-                        t=mapping[d[1]]["name"],
-                        icon=mapping[d[1]]["icon"],
-                    )
-                )
-            else:
-                entries.append(Collection(d[0], d[1]))
-
-        return entries

@@ -1,59 +1,70 @@
-from datetime import datetime
+import logging
+from typing import final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.WhitespaceWRP import WhitespaceClient
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service.WhitespaceWRP import (
+    WhitespaceParser,
+    WhitespaceRetriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+)
 
-TITLE = "Allerdale Borough Council"
-DESCRIPTION = "Source for www.allerdale.gov.uk services for Allerdale Borough Council."
-URL = "https://www.allerdale.gov.uk"
-TEST_CASES = {
-    "Keswick": {
-        "address_postcode": "CA12 4HU",
-        "address_name_number": "11",
-    },
-    "Workington": {
-        "address_postcode": "CA14 3NS",
-        "address_name_number": "177",
-    },
-    "Wigton": {
-        "address_postcode": "CA7 9RS",
-        "address_name_number": "55",
-    },
+# Declarative source on the shared Whitespace WRP components (WhitespaceRetriever
+# + WhitespaceParser). A RowTransformer maps the council's open-ended type labels
+# onto canonical WasteTypes.
+
+_LOGGER = logging.getLogger(__name__)
+
+_TYPE_MAP = {
+    "Domestic Waste": GENERAL_WASTE,
+    "Glass Cans and Plastic Recycling": RECYCLABLES,
+    "Garden Waste": GARDEN_WASTE,
 }
-ICON_MAP = {
-    "Domestic Waste": Icons.GENERAL_WASTE,
-    "Glass Cans and Plastic Recycling": Icons.PLASTIC_PACKAGING,
-    "Garden Waste": Icons.GARDEN,
-}
-API_URL = "https://abc-wrp.whitespacews.com/"
 
 
-class Source:
-    def __init__(
-        self,
-        address_name_number=None,
-        address_postcode=None,
-    ):
-        self._address_name_number = address_name_number
-        self._address_postcode = address_postcode
-        self._client = WhitespaceClient(API_URL)
+@final
+class Source(BaseSource):
+    TITLE = "Allerdale Borough Council"
+    DESCRIPTION = (
+        "Source for www.allerdale.gov.uk services for Allerdale Borough Council."
+    )
+    URL = "https://www.allerdale.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE]
+    API_URL = "https://abc-wrp.whitespacews.com/"
 
-    def fetch(self):
-        schedule = self._client.fetch_schedule(
-            address_name_number=self._address_name_number,
-            address_postcode=self._address_postcode,
+    TEST_CASES = {
+        "Keswick": {"address_postcode": "CA12 4HU", "address_name_number": "11"},
+        "Workington": {"address_postcode": "CA14 3NS", "address_name_number": "177"},
+        "Wigton": {"address_postcode": "CA7 9RS", "address_name_number": "55"},
+    }
+
+    PARAMS = [
+        text_field("address_postcode", "Postcode"),
+        text_field("address_name_number", "House name/number", optional=True),
+    ]
+
+    retrieve = WhitespaceRetriever(
+        name_number="address_name_number",
+        postcode="address_postcode",
+    )
+    parse = WhitespaceParser()
+    transform = RowTransformer(
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        clean=lambda s: s.replace(" Collection", "").replace(" Service", "").strip(),
+        skip_unparseable_dates=True,
+    )
+
+    def __init__(self, address_name_number=None, address_postcode=None):
+        super().__init__(
+            address_postcode=address_postcode,
+            address_name_number=address_name_number,
         )
-
-        entries = []
-        for date_str, type_str in schedule:
-            collection_type = type_str.replace(" Collection", "").replace(
-                " Service", ""
-            )
-            entries.append(
-                Collection(
-                    date=datetime.strptime(date_str, "%d/%m/%Y").date(),
-                    t=type_str,
-                    icon=ICON_MAP.get(collection_type),
-                )
-            )
-        return entries

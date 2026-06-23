@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff pytest
+          pip install ruff pytest freezegun
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with ruff
         run: |
@@ -40,4 +40,10 @@ jobs:
           pre-commit run --show-diff-on-failure --color=always --from-ref ${{ github.event.pull_request.base.sha }} --to-ref ${{ github.event.pull_request.head.sha }}
       - name: Test with pytest
         run: |
-          pytest
+          # Exclude `live` tests (they fetch real provider endpoints); the
+          # gating run stays deterministic and offline.
+          pytest -m "not live"
+      - name: Report BaseSource pipeline coverage
+        run: |
+          # Informational migration metric (RFC #6561); never fails the build.
+          python tools/arch_coverage.py

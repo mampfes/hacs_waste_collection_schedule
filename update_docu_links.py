@@ -10,7 +10,7 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 from types import ModuleType
-from typing import Any, Callable, Tuple, TypedDict, TypeVar
+from typing import Any, Tuple, TypedDict, TypeVar
 
 if sys.version_info >= (3, 11):
     from typing import NotRequired
@@ -20,6 +20,7 @@ else:
 import yaml
 
 from default_translations import default_descriptions, default_translations
+from doc_generator import _is_base_source, render_source_doc
 
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
@@ -53,6 +54,7 @@ PACKAGE_DIR = (
     / "waste_collection_schedule"
 )
 SOURCE_DIR = PACKAGE_DIR / "waste_collection_schedule" / "source"
+DOC_SOURCE_DIR = Path(__file__).resolve().parents[0] / "doc" / "source"
 DOC_URL_BASE = "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master"
 
 T = TypeVar("T")
@@ -461,20 +463,58 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     # iterate through all *.py files in waste_collection_schedule/source
     module = importlib.import_module(f"waste_collection_schedule.source.{file}")
 
-    title = module.TITLE
-    url = module.URL
-    country = getattr(module, "COUNTRY", file.split("_")[-1])
+    # Read metadata from the Source class first, fall back to module level.
+    # New-style (BaseSource) sources keep their metadata on the class; legacy
+    # sources expose it at module level. Both are documented the same way so
+    # converted sources still appear in the README, sources.json and the
+    # generated source_owners.json codeowners mapping.
+    source_cls = module.Source
 
-    sig = inspect.signature(module.Source.__init__)
+    title = getattr(source_cls, "TITLE", None) or getattr(module, "TITLE", None)
+    url = getattr(source_cls, "URL", None) or getattr(module, "URL", None) or ""
+    country = (
+        getattr(source_cls, "COUNTRY", None)
+        or getattr(module, "COUNTRY", None)
+        or file.split("_")[-1]
+    )
+
+    sig = inspect.signature(source_cls.__init__)
     params = [param.name for param in sig.parameters.values()]
     if "self" in params:
         params.remove("self")
-    param_translations = getattr(module, "PARAM_TRANSLATIONS", {})
-    param_descriptions = getattr(module, "PARAM_DESCRIPTIONS", {})
-    howto = getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
-    source_owners = getattr(module, "SOURCE_CODEOWNERS", [])
+    # New-style (BaseSource) sources carry per-field labels/descriptions on
+    # their typed PARAMS instead of PARAM_TRANSLATIONS/PARAM_DESCRIPTIONS dicts.
+    # Both have the same {lang: {field: text}} shape, so derive the legacy form
+    # from PARAMS here; the rest of the translation generation is unchanged.
+    param_translations = (
+        getattr(source_cls, "PARAM_TRANSLATIONS", None)
+        or getattr(module, "PARAM_TRANSLATIONS", None)
+        or _params_labels(source_cls, "labels")
+    )
+    param_descriptions = (
+        getattr(source_cls, "PARAM_DESCRIPTIONS", None)
+        or getattr(module, "PARAM_DESCRIPTIONS", None)
+        or _params_labels(source_cls, "descriptions")
+    )
+    howto = (
+        getattr(source_cls, "HOWTO", None)
+        or getattr(source_cls, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", None)
+        or getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
+    )
+    # New-style sources carry codeowners on the class (CODEOWNERS); legacy
+    # sources use the module-level SOURCE_CODEOWNERS. Read class first.
+    source_owners = getattr(source_cls, "CODEOWNERS", None) or getattr(
+        module, "SOURCE_CODEOWNERS", []
+    )
 
     filename = f"/doc/source/{file}.md"
+
+    # New-architecture (BaseSource) sources derive their doc/source/<id>.md from
+    # class metadata, so contributors no longer hand-write it. Legacy sources
+    # keep their hand-written file untouched.
+    if title is not None and _is_base_source(source_cls):
+        generate_base_source_doc(file, source_cls)
+
     sources = []
     if title is not None:
         sources.append(
@@ -492,28 +532,68 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
             )
         )
 
-    extra_info: list[ExtraInfoDict] | Callable[[], list[ExtraInfoDict]] = getattr(
-        module, "EXTRA_INFO", []
-    )
-    if callable(extra_info):
-        extra_info = extra_info()
-    for e in extra_info:
+    # A source is one structure covering one or more regions. The typed Region
+    # list (REGIONS) is the canonical structure; the deprecated EXTRA_INFO dict
+    # list is adapted into Regions at this boundary so the rest of the
+    # generation works in Region terms only.
+    from waste_collection_schedule.regions import from_extra_info
+
+    region_list = getattr(source_cls, "REGIONS", None)
+    if region_list:
+        region_list = list(region_list() if callable(region_list) else region_list)
+    else:
+        legacy = getattr(source_cls, "EXTRA_INFO", None)
+        if legacy is None:
+            legacy = getattr(module, "EXTRA_INFO", [])
+        region_list = from_extra_info(legacy)
+
+    for r in region_list:
         sources.append(
             SourceInfo(
                 filename=filename,
                 module=file,
-                title=e.get("title", title),
-                url=e.get("url", url),
-                country=e.get("country", country),
+                title=r.title or title or "",
+                url=r.url or url,
+                country=r.country or country,
                 params=params,
                 custom_param_translation=param_translations,
                 custom_param_description=param_descriptions,
-                extra_info_default_params=e.get("default_params", {}),
+                extra_info_default_params=r.params,
                 custom_howto=howto,
                 source_owners=source_owners,
             )
         )
     return module, sources
+
+
+def _params_labels(source_cls: Any, attr: str) -> dict[str, dict[str, str]]:
+    """Merge per-field ``labels`` or ``descriptions`` across a source's PARAMS.
+
+    Returns the ``{lang: {field: text}}`` mapping the translation generator
+    expects (the same shape legacy PARAM_TRANSLATIONS/PARAM_DESCRIPTIONS use),
+    so a new-style source's typed PARAMS drive the localised config-flow labels.
+    """
+    params = getattr(source_cls, "PARAMS", None)
+    if not params:
+        return {}
+    merged: dict[str, dict[str, str]] = {}
+    for param in params:
+        for lang, mapping in getattr(param, attr, {}).items():
+            merged.setdefault(lang, {}).update(mapping)
+    return merged
+
+
+def generate_base_source_doc(file: str, source_cls: Any) -> None:
+    """Write doc/source/<file>.md for a new-architecture (BaseSource) source.
+
+    The text is fully derived from the source class metadata via
+    render_source_doc(). Legacy (module-level) sources are not handled here;
+    they keep their hand-written doc file.
+    """
+    md = render_source_doc(file, source_cls)
+    out_path = DOC_SOURCE_DIR / f"{file}.md"
+    with open(out_path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(md)
 
 
 def browse_ics_yaml() -> list[SourceInfo]:
@@ -858,20 +938,20 @@ def update_json(
 
         for module, module_params in param_translations.items():
             translations["config"]["step"][f"args_{module}"] = keys_for_all_args.copy()
-            translations["config"]["step"][
-                f"reconfigure_{module}"
-            ] = keys_for_all_reconfigure.copy()
+            translations["config"]["step"][f"reconfigure_{module}"] = (
+                keys_for_all_reconfigure.copy()
+            )
 
-            translations["config"]["step"][f"args_{module}"][
-                "data"
-            ] = translation_for_all.copy()
-            translations["config"]["step"][f"reconfigure_{module}"][
-                "data"
-            ] = translation_for_all.copy()
+            translations["config"]["step"][f"args_{module}"]["data"] = (
+                translation_for_all.copy()
+            )
+            translations["config"]["step"][f"reconfigure_{module}"]["data"] = (
+                translation_for_all.copy()
+            )
 
-            translations["config"]["step"][f"args_{module}"][
-                "data_description"
-            ] = description_for_all_args.copy()
+            translations["config"]["step"][f"args_{module}"]["data_description"] = (
+                description_for_all_args.copy()
+            )
             translations["config"]["step"][f"reconfigure_{module}"][
                 "data_description"
             ] = description_for_all_reconfigure.copy()

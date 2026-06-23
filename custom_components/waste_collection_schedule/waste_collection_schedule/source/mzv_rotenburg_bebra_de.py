@@ -1,170 +1,152 @@
-from datetime import datetime
-from typing import Any
+from typing import final
 
 import requests
-from bs4 import BeautifulSoup
-from icalendar import Calendar
-from waste_collection_schedule import Collection, Icons
+from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    ELECTRONICS,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+    preserved,
+    resolve,
+)
 
-TITLE = "MZV Rotenburg"
-DESCRIPTION = "Source for MZV Rotenburg."
-URL = "https://www.mzv-rotenburg-bebra.de"
-TEST_CASES = {
-    "Rotenburg an der Fulda 2 Ost": {
-        "city": "rote",
-        "yellow_route": "2",
-        "paper_route": "Ost",
+WEBAPP_URL = "https://www.mzv-rotenburg-bebra.de//webapp.html"
+
+# Demonstrates: parsers.IcsEventsParser + the classify() escape hatch.
+# Notable: per-route filtering (yellow_route / paper_route) needs the ICS
+# LOCATION / DESCRIPTION fields, which the (date, summary) tuples from
+# parsers.IcsParser discard. parsers.IcsEventsParser exposes the full IcsEvent,
+# and classify() does the route filtering plus route-suffix normalisation
+# ("Gelbe Tonne 2", "Papier Ost", ...); the cleaned bin name is then classified
+# by the shared multilingual vocabulary (resolve), not a per-source map.
+
+
+@final
+class Source(BaseSource):
+    TITLE = "MZV Rotenburg"
+    DESCRIPTION = "Source for MZV Rotenburg."
+    URL = "https://www.mzv-rotenburg-bebra.de"
+    COUNTRY = "de"
+    API_URL = "https://www.mzv-rotenburg-bebra.de/entsorgung.php"
+
+    TEST_CASES = {
+        "Rotenburg an der Fulda": {"city": "rote"},
+        "Bebra": {"city": "bebra"},
+        "Rotenburg an der Fulda 2 Ost": {
+            "city": "rote",
+            "yellow_route": "2",
+            "paper_route": "Ost",
+        },
     }
-}
 
+    PARAMS = [
+        text_field("city", "City"),
+        text_field("yellow_route", "Gelbe Tonne Route", optional=True),
+        text_field("paper_route", "Papier Route", optional=True),
+    ]
 
-ICON_MAP = {
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Bioabfall": Icons.BIO_KITCHEN,
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Papier": Icons.PAPER,
-    "Sperrmüll": Icons.BULKY,
-    "Weiße Ware": Icons.ELECTRONICS,
-    "Kühlgeräte": Icons.ELECTRONICS,
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "yellow_route": "Gelbe Tonne Rute",
-        "paper_route": "Papier Rute",
+    HOWTO = {
+        "de": (
+            "Der Ort muss genau wie im `ort`-URL-Parameter der Links auf "
+            "https://www.mzv-rotenburg-bebra.de//webapp.html geschrieben werden "
+            "(z.B. `rote`, `bebra`). yellow_route / paper_route filtern nach "
+            "Sammelroute, falls der Ort mehrere Routen hat."
+        ),
     }
-}
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "yellow_route": "Used if there are multiple routes for the yellow bin collection. E.g 'Rotenburg - Kernstadt' has yellow bin collection routes `1`,`2`,`3` and `4`.",
-        "paper_route": "Used if there are multiple routes for the paper collection. E.g 'Rotenburg - Kernstadt' has paper collection routes `West` and `Ost`.",
-        "city": "Should be spelled exactly like in the `ort` URL parameter of the link url shown on the website: https://www.mzv-rotenburg-bebra.de//webapp.html Like: `lisp`, `rot`, `bebra`, ...",
-    },
-    "de": {
-        "city": "Genau wie in der `ort` URL-Parameter des Links auf der Website: https://www.mzv-rotenburg-bebra.de//webapp.html. Z.B. `lisp`, `rot`, `bebra`, ...",
-        "yellow_route": "Wird verwendet, wenn es mehrere Routen für die Gelbe Tonne gibt. Z.B. hat 'Rotenburg - Kernstadt' Gelbe Tonne Routen `1`,`2`,`3` und `4`.",
-        "paper_route": "Wird verwendet, wenn es mehrere Routen für die Papierabholung gibt. Z.B. hat 'Rotenburg - Kernstadt' Papierabholrouten `West` und `Ost`.",
-    },
-}
+    # classify() produces these — declared explicitly (no transformer to derive from).
+    WASTE_TYPES = [
+        RECYCLABLES,
+        ORGANIC,
+        GENERAL_WASTE,
+        PAPER,
+        BULKY_WASTE,
+        ELECTRONICS,
+    ]
 
+    # min_events=1: a valid feed has at least one event; an HTML error page (no
+    # events) is logged and raises ResponseShapeError.
+    _ics_parser = parsers.IcsEventsParser(min_events=1)
 
-API_URL = "https://www.mzv-rotenburg-bebra.de/entsorgung.php"
-
-
-def ics_prop_to_str(value: Any) -> str:
-    """Convert icalendar properties to a clean UTF-8 string.
-
-    Handles vText, list[vText], and None values.
-    """
-    if not value:
-        return ""
-
-    if isinstance(value, list):
-        return value[0].to_ical().decode("utf-8", errors="ignore")
-
-    if hasattr(value, "to_ical"):
-        return value.to_ical().decode("utf-8", errors="ignore")
-
-    return str(value)
-
-
-class Source:
     def __init__(
-        self, city: str, yellow_route: str | None = None, paper_route: str | None = None
+        self,
+        city: str,
+        yellow_route: str | None = None,
+        paper_route: str | None = None,
     ):
-        self._city: str = city
-        self._yellow_route: str | None = yellow_route
-        self._paper_route: str | None = paper_route
+        super().__init__(city=city, yellow_route=yellow_route, paper_route=paper_route)
+        self._params = {"ort": city}
+        self._headers = {"User-Agent": "Mozilla/5.0"}
 
-    def _get_possible_cities(self) -> list[str]:
-        r = requests.get(
-            "https://www.mzv-rotenburg-bebra.de//webapp.html",
-            headers={"User-Agent": "Mozilla/5.0"},
-        )
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.content, "html.parser")
-        links = soup.find_all(
-            lambda tag: (
-                tag
-                and tag.name == "a"
-                and tag.get("href")
-                and "entsorgung.php?ort=" in tag["href"]
-            )
-        )
-        return [link["href"].split("?ort=")[1] for link in links]
-
-    def fetch(self) -> list[Collection]:
-        args = {
-            "ort": self._city,
-        }
-        r = requests.get(API_URL, params=args, headers={"User-Agent": "Mozilla/5.0"})
-        r.raise_for_status()
-
-        try:
-            cal = Calendar.from_ical(r.text)
-        except ValueError:
+    def parse(self, response, source):
+        # The endpoint returns an ICS feed for a valid `ort`; an unknown city
+        # yields non-ICS content. Detect that and raise with the list of valid
+        # city names (recovered from the web-app page), matching the upstream
+        # behaviour, instead of silently returning no events.
+        if "BEGIN:VCALENDAR" not in response.text:
             try:
                 cities = self._get_possible_cities()
             except Exception:
                 raise SourceArgumentNotFound(
                     "city",
-                    self._city,
-                    "make sure the city is spelled exactly like in the link of the website https://www.mzv-rotenburg-bebra.de//webapp.html",
+                    self.params["city"],
+                    "make sure the city is spelled exactly like in the link of "
+                    "the website https://www.mzv-rotenburg-bebra.de//webapp.html",
                 )
             raise SourceArgumentNotFoundWithSuggestions(
-                "city",
-                self._city,
-                cities,
+                "city", self.params["city"], cities
             )
+        return self._ics_parser(response, source)
 
-        entries = []
+    @staticmethod
+    def _get_possible_cities() -> list[str]:
+        r = requests.get(WEBAPP_URL, headers={"User-Agent": "Mozilla/5.0"})
+        r.raise_for_status()
 
-        for component in cal.walk("VEVENT"):
-            dtstart = component.get("DTSTART").dt
-            if isinstance(dtstart, datetime):
-                dtstart = dtstart.date()
+        soup = BeautifulSoup(r.content, "html.parser")
+        cities: list[str] = []
+        for link in soup.find_all("a", href=True):
+            if not isinstance(link, Tag):
+                continue
+            href = str(link.get("href", ""))
+            if "entsorgung.php?ort=" in href:
+                cities.append(href.split("?ort=")[1])
+        return cities
 
-            summary = component.get("SUMMARY")
-            location = component.get("LOCATION")
-            description = component.get("DESCRIPTION")
+    def classify(self, record) -> Collection | None:
+        summary = (record.title or "").strip()
+        if not summary:
+            return None
 
-            summary_text = ics_prop_to_str(summary).strip()
-            location_text = ics_prop_to_str(location).strip()
-            description_text = ics_prop_to_str(description).strip()
-            route_context = " ".join(
-                part for part in (summary_text, location_text, description_text) if part
-            ).lower()
+        # The route label may appear in the summary, location or description.
+        route_context = " ".join(
+            part for part in (record.title, record.location, record.description) if part
+        ).lower()
 
-            raw_bin_type = summary_text.removeprefix("Entsorgung ").strip()
-            raw_bin_type_lower = raw_bin_type.lower()
-            bin_type = raw_bin_type
-            if raw_bin_type_lower.startswith("gelbe tonne"):
-                bin_type = "Gelbe Tonne"
-            elif raw_bin_type_lower.startswith("papier"):
-                bin_type = "Papier"
-            bin_type_cmp = bin_type.lower()
+        bin_type = summary.removeprefix("Entsorgung ").strip().lower()
 
-            if bin_type_cmp == "gelbe tonne" and self._yellow_route:
-                if self._yellow_route.lower() not in route_context:
-                    continue
+        yellow_route = self.params["yellow_route"]
+        paper_route = self.params["paper_route"]
+        if bin_type.startswith("gelbe tonne"):
+            if yellow_route and yellow_route.lower() not in route_context:
+                return None
+            bin_type = "gelbe tonne"
+        elif bin_type.startswith("papier"):
+            if paper_route and paper_route.lower() not in route_context:
+                return None
+            bin_type = "papier"
 
-            if bin_type_cmp == "papier" and self._paper_route:
-                if self._paper_route.lower() not in route_context:
-                    continue
-
-            entries.append(
-                Collection(
-                    dtstart,
-                    bin_type,
-                    ICON_MAP.get(bin_type),
-                )
-            )
-
-        return entries
+        return Collection(
+            date=record.date, waste_type=resolve(bin_type) or preserved(bin_type)
+        )

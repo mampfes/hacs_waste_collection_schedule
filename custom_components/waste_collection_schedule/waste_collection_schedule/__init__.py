@@ -1,4 +1,12 @@
-from .collection import Collection, CollectionBase, CollectionGroup  # type: ignore # isort:skip # noqa: F401
+# isort: skip_file
+# Import order here is load-bearing and must not be reordered: CollectionGroup
+# has to be exported before collection_aggregator (which does
+# `from . import CollectionGroup`) is imported, or that import hits a circular
+# import on the partially-initialised package. CollectionBase is a backwards
+# compatibility alias for the Collection class.
+from .collection import CollectionFactory as Collection  # noqa: F401
+from .collection import Collection as CollectionBase  # noqa: F401
+from .collection import CollectionGroup  # noqa: F401
 from .collection_aggregator import CollectionAggregator  # noqa: F401
 from .icons import Icons  # noqa: F401
 from .source_shell import Customize, SourceShell  # noqa: F401

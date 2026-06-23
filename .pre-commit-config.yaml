@@ -68,3 +68,17 @@ repos:
           - --show-error-context
           - --ignore-missing-imports
           - --explicit-package-bases
+  - repo: local
+    hooks:
+      # Pyright strict-ish type checking for the NEW pipeline architecture only.
+      # Scope (core library, the four pipeline service modules, and every
+      # BaseSource source) is defined by the `include` list in pyrightconfig.json;
+      # legacy source/ modules are intentionally excluded. New-arch sources are
+      # added to that include list as they migrate. Runs via `npx pyright` so it
+      # picks up pyrightconfig.json; needs Node/npx on PATH.
+      - id: pyright
+        name: pyright (new architecture)
+        entry: npx --yes pyright
+        language: system
+        pass_filenames: false
+        files: ^custom_components/waste_collection_schedule/waste_collection_schedule/(base_source|parsers|preprocessors|transformers|recurrence|regions|retrievers|date_parsers|config_params|waste_types|collection|collection_aggregator|exceptions|icons|source_shell|__init__)\.py$|^custom_components/waste_collection_schedule/waste_collection_schedule/service/(ArcGis|RiSKommunalAT|AbfallnaviDe|IntraMaps)\.py$|^custom_components/waste_collection_schedule/waste_collection_schedule/source/.+\.py$

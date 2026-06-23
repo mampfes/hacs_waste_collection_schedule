@@ -1,115 +1,101 @@
-from datetime import date, datetime, timedelta, timezone
+import datetime
+from typing import final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import (
-    ArcGisError,
-    geocode,
-    query_feature_layer,
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    RECYCLABLES,
+    WasteType,
 )
 
-TITLE = "Launceston City Council"
-DESCRIPTION = "Source for Launceston City Council waste collection."
-URL = "https://www.launceston.tas.gov.au"
-COUNTRY = "au"
+# Demonstrates: the ArcGis service contributing two independent pipeline stages —
+# ArcGisFeatureRetriever (raw /query Response) and ArcGisFeatureParser (Response
+# -> feature-attribute dicts) — plus the reusable RecurrenceExpander preprocessor.
+#
+# ArcGIS councils publish one base date per service plus a cadence; the only
+# source-specific code is _describe(), which reads those out of the feature. The
+# expander fans each Schedule into dates and a plain ICSTransformer types them.
 
-TEST_CASES = {
-    "Southgate Dr": {"address": "40 Southgate Dr, Kings Meadows, TAS"},
-    "Brisbane St": {"address": "68 Brisbane St, Launceston, TAS"},
+# feature field -> (canonical waste type, cadence). Single source of truth: the
+# transformer map is derived from it, and _describe reads the cadence from it.
+_SERVICES: dict[str, tuple[WasteType, str]] = {
+    "Garbagedate": (GENERAL_WASTE, "weekly"),
+    "Recycledate": (RECYCLABLES, "fortnightly"),
+    "Fogodate": (ORGANIC, "fortnightly"),
+    "Hardwastedate": (BULKY_WASTE, "once"),
 }
 
-ICON_MAP = {
-    "Garbage": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "FOGO": Icons.BIO_KITCHEN,
-    "Hard Waste": Icons.BULKY,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. '40 Southgate Dr, Kings Meadows, TAS')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-WASTE_URL = "https://services.arcgis.com/yeXpdyjk3azbqItW/arcgis/rest/services/Waste/FeatureServer/0"
-
-# Maps ArcGIS date fields to waste type names and whether they are fortnightly.
-DATE_FIELDS = {
-    "Garbagedate": ("Garbage", False),
-    "Recycledate": ("Recycling", True),
-    "Fogodate": ("FOGO", True),
-    "Hardwastedate": ("Hard Waste", None),  # one-off
+# cadence -> (step, count) for the recurring projection.
+_CADENCE = {
+    "weekly": (recurrence.WEEKLY, 26),
+    "fortnightly": (recurrence.FORTNIGHTLY, 13),
 }
 
 
-class Source:
+def _describe(attrs, source):
+    """Read each service's base date + cadence out of one ArcGIS feature."""
+    today = datetime.datetime.now().date()
+    service_types = (attrs.get("Servicetypes") or "").upper()
+    for field_name, (_waste_type, cadence) in _SERVICES.items():
+        # FOGO is only collected where the property is signed up for it.
+        if field_name == "Fogodate" and "F" not in service_types:
+            continue
+        timestamp = attrs.get(field_name)
+        if not timestamp:
+            continue
+        base = datetime.datetime.fromtimestamp(
+            timestamp / 1000, tz=datetime.timezone.utc
+        ).date()
+        if cadence == "once":
+            if base >= today:  # one-off (hard waste): only if still upcoming
+                yield Schedule(field_name, base)
+            continue
+        step, count = _CADENCE[cadence]
+        yield Schedule(field_name, base, step, count)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Launceston City Council"
+    DESCRIPTION = "Source for Launceston City Council waste collection."
+    URL = "https://www.launceston.tas.gov.au"
+    COUNTRY = "au"
+
+    FEATURE_URL = "https://services.arcgis.com/yeXpdyjk3azbqItW/arcgis/rest/services/Waste/FeatureServer/0"
+
+    TEST_CASES = {
+        "Southgate Dr": {"address": "40 Southgate Dr, Kings Meadows, TAS"},
+        "Brisbane St": {"address": "68 Brisbane St, Launceston, TAS"},
+    }
+
+    PARAMS = [text_field("address", "Street Address")]
+
+    HOWTO = {
+        "en": (
+            "Enter your street address, e.g. '40 Southgate Dr, Kings Meadows, TAS'."
+        ),
+    }
+
+    retrieve = ArcGisFeatureRetriever(FEATURE_URL, address="address")
+    parse = ArcGisFeatureParser()
+    preprocess = RecurrenceExpander(_describe)
+
+    # Derived from _SERVICES: the rows are tagged with the feature field name.
+    transform = ICSTransformer(
+        type_value_map={
+            field: waste_type for field, (waste_type, _) in _SERVICES.items()
+        }
+    )
+
     def __init__(self, address: str):
-        self._address = address.strip()
-
-    def fetch(self) -> list[Collection]:
-        try:
-            location = geocode(self._address)
-            features = query_feature_layer(WASTE_URL, geometry=location)
-        except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
-
-        attrs = features[0]
-        service_types = (attrs.get("Servicetypes") or "").upper()
-
-        entries: list[Collection] = []
-        today = datetime.now().date()
-
-        for field, (waste_type, fortnightly) in DATE_FIELDS.items():
-            # Skip FOGO if not in service types
-            if waste_type == "FOGO" and "F" not in service_types:
-                continue
-
-            ts = attrs.get(field)
-            if not ts:
-                continue
-
-            base_date = datetime.fromtimestamp(ts / 1000, tz=timezone.utc).date()
-            icon = ICON_MAP.get(waste_type)
-
-            if fortnightly is None:
-                # Hard waste: include only if date is in the future
-                if base_date >= today:
-                    entries.append(Collection(date=base_date, t=waste_type, icon=icon))
-            elif fortnightly:
-                entries.extend(self._fortnightly_dates(base_date, waste_type, icon))
-            else:
-                entries.extend(self._weekly_dates(base_date, waste_type, icon))
-
-        return entries
-
-    @staticmethod
-    def _weekly_dates(
-        base_date: date, waste_type: str, icon: str | None
-    ) -> list[Collection]:
-        return [
-            Collection(
-                date=base_date + timedelta(weeks=i),
-                t=waste_type,
-                icon=icon,
-            )
-            for i in range(26)
-        ]
-
-    @staticmethod
-    def _fortnightly_dates(
-        base_date: date, waste_type: str, icon: str | None
-    ) -> list[Collection]:
-        return [
-            Collection(
-                date=base_date + timedelta(days=i * 14),
-                t=waste_type,
-                icon=icon,
-            )
-            for i in range(13)
-        ]
+        super().__init__(address=address)

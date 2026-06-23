@@ -1,140 +1,92 @@
-import datetime
-import logging
-
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    area_id,
+    city,
+    city_id,
+    house_number,
+    service_id,
+    street,
 )
+from waste_collection_schedule.regions import Region, region
+from waste_collection_schedule.service.Jumomind import (
+    JumomindParser,
+    JumomindRetriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import ALL_TYPES
 
-TITLE = "Jumomind"
-DESCRIPTION = "Source for Jumomind.de waste collection."
-URL = "https://www.jumomind.de"
-TEST_CASES = {
-    # DEPRECATED
-    "ZAW": {"service_id": "zaw", "city_id": 106, "area_id": 94},
-    "Bad Homburg, Bahnhofstrasse": {"service_id": "hom", "city_id": 1, "area_id": 411},
-    "Bad Buchau via MyMuell": {
-        "service_id": "mymuell",
-        "city_id": 3031,
-        "area_id": 3031,
-    },
-    # END DEPRECATED
-    "sbm Minden Meißener Str. 6a": {
-        "service_id": "sbm",
-        "city": "Minden",
-        "street": "Meißener Str.",
-        "house_number": "6A",
-    },
-    "Darmstaadt ": {"service_id": "mymuell", "city": "Darmstadt", "street": "Achatweg"},
-    "zaw Alsbach-Hähnlein Hähnleiner Str.": {
+# Waste-type names come back as open-ended German labels that vary by provider,
+# so this source declares NO per-source type map: the transformer resolves the
+# standard German labels via the shared multilingual vocabulary
+# (waste_types.resolve), and anything it doesn't recognise is preserved verbatim
+# rather than collapsed to OTHER.
+
+
+# The provider registry for this one structure: each entry becomes one or more
+# Regions (a discoverable listing with its Jumomind service id pre-filled). New
+# providers are added here, in the source that owns them. ``comment`` is an
+# optional listing suffix (e.g. the white-label app the provider runs under).
+_PROVIDERS = [
+    {
         "service_id": "zaw",
-        "city": "Alsbach-Hähnlein",
-        "street": "Hähnleiner Str.",
-    },
-    "ingolstadt": {
-        "service_id": "ingol",
-        "city": "Ingolstadt",
-        "street": "Hauffstr.",
-        "house_number": "9 1/2",
-    },
-    "mymuell only city": {
-        "service_id": "mymuell",
-        "city": "Bad Wünnenberg-Bleiwäsche",
-    },
-    "neustadt": {
-        "service_id": "esn",
-        "city": "Neustadt",
-        "street": "Hauberallee (Kernstadt)",
-    },
-    "Main-Kinzig-Kreis": {
-        "service_id": "mkk",
-        "city": "Freigericht",
-        "street": "Hauptstraße (Altenmittlau)",
-    },
-    "ALW Wolfenbüttel": {
-        "service_id": "wol",
-        "city": "Linden",
-        "street": "Am Buschkopf",
-    },
-    "KSR Recklinghausen Ottostr. 53": {
-        "service_id": "ksr",
-        "city": "Recklinghausen",
-        "street": "Ottostr.",
-        "house_number": "53",
-    },
-}
-
-
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "Biomüll": Icons.BIO_KITCHEN,
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Papier": Icons.PAPER,
-    "Papiertonne": Icons.PAPER,
-    "Gelber": Icons.RECYCLING,
-    "Gelbe": Icons.RECYCLING,
-    "Schadstoffmobil": Icons.HAZARDOUS,
-}
-
-SERVICE_MAP = {
-    "zaw": {
         "url": "https://www.zaw-online.de",
-        "list": ["Darmstadt-Dieburg (ZAW)"],
+        "cities": ["Darmstadt-Dieburg (ZAW)"],
     },
-    "aoe": {
+    {
+        "service_id": "aoe",
         "url": "https://www.lra-aoe.de",
-        "list": ["Altötting (LK)"],
+        "cities": ["Altötting (LK)"],
     },
-    "lka": {
+    {
+        "service_id": "lka",
         "url": "https://mkw-grossefehn.de",
-        "list": ["Aurich (MKW)"],
+        "cities": ["Aurich (MKW)"],
     },
-    "hom": {
+    {
+        "service_id": "hom",
         "url": "https://www.bad-homburg.de",
-        "list": ["Bad Homburg vdH"],
+        "cities": ["Bad Homburg vdH"],
     },
-    "bdg": {
+    {
+        "service_id": "bdg",
         "url": "https://www.kreiswerke-barnim.de/",
-        "list": ["Barnim"],
+        "cities": ["Barnim"],
     },
-    "hat": {
+    {
+        "service_id": "hat",
         "url": "https://www.hattersheim.de",
-        "list": ["Hattersheim am Main"],
+        "cities": ["Hattersheim am Main"],
     },
-    "ingol": {
-        "url": "https://www.in-kb.de",
-        "list": ["Ingolstadt"],
-    },
-    "lue": {
-        "comment": "Jumomind",  # has its own service
+    {"service_id": "ingol", "url": "https://www.in-kb.de", "cities": ["Ingolstadt"]},
+    {
+        "service_id": "lue",
         "url": "https://www.luebbecke.de",
-        "list": ["Lübbecke"],
+        "comment": "Jumomind",
+        "cities": ["Lübbecke"],
     },
-    "sbm": {
-        "url": "https://www.minden.de/",
-        "list": ["Minden"],
-    },
-    "ksr": {
+    {"service_id": "sbm", "url": "https://www.minden.de/", "cities": ["Minden"]},
+    {
+        "service_id": "ksr",
         "url": "https://www.zbh-ksr.de",
-        "list": ["Recklinghausen"],
+        "cities": ["Recklinghausen"],
     },
-    "rhe": {
-        "comment": "Jumomind",  # has its own service
+    {
+        "service_id": "rhe",
         "url": "https://www.rh-entsorgung.de/",
-        "list": ["Rhein-Hunsrück"],
+        "comment": "Jumomind",
+        "cities": ["Rhein-Hunsrück"],
     },
-    "udg": {
+    {
+        "service_id": "udg",
         "url": "https://www.udg-uckermark.de/",
-        "list": ["Uckermark"],
+        "cities": ["Uckermark"],
     },
-    "mymuell": {
-        "comment": "MyMuell App",
+    {
+        "service_id": "mymuell",
         "url": "https://www.mymuell.de/",
-        "list": [
+        "comment": "MyMuell App",
+        "cities": [
             "Aschaffenburg",
             "Bad Arolsen",
             "Beverungen",
@@ -157,7 +109,6 @@ SERVICE_MAP = {
             "Landkreis Mettmann",
             "Landkreis Paderborn",
             "Landkreis Wittmund",
-            "Landkreis Wittmund",
             "Main-Kinzig-Kreis",
             "Mühlheim am Main",
             "Nenndorf",
@@ -175,93 +126,175 @@ SERVICE_MAP = {
             "Wilhelmshaven",
         ],
     },
-    "esn": {"list": ["Neustadt an der Weinstraße"], "url": "https://www.neustadt.eu/"},
-    "zac": {"list": ["Celle"], "url": "https://www.zacelle.de/"},
-    "ben": {
-        "list": ["Landkreis Grafschaft"],
-        "url": "https://awb.grafschaft-bentheim.de/",
+    {
+        "service_id": "esn",
+        "url": "https://www.neustadt.eu/",
+        "cities": ["Neustadt an der Weinstraße"],
     },
-    "enwi": {"list": ["Landkreis Harz"], "url": "https://www.enwi-hz.de/"},
-    "hox": {"list": ["Höxter"], "url": "https://abfallservice.kreis-hoexter.de/"},
-    "kbl": {"list": ["Langen"], "url": "https://www.kbl-langen.de/"},
-    "ros": {"list": ["Rosbach Vor Der Höhe"], "url": "https://www.rosbach-hessen.de/"},
-    "mkk": {"list": ["Main-Kinzig-Kreis"], "url": "https://abfall-mkk.de/"},
-    "wol": {"list": ["ALW Wolfenbüttel"], "url": "https://www.alw-wf.de"},
-}
+    {"service_id": "zac", "url": "https://www.zacelle.de/", "cities": ["Celle"]},
+    {
+        "service_id": "ben",
+        "url": "https://awb.grafschaft-bentheim.de/",
+        "cities": ["Landkreis Grafschaft"],
+    },
+    {
+        "service_id": "enwi",
+        "url": "https://www.enwi-hz.de/",
+        "cities": ["Landkreis Harz"],
+    },
+    {
+        "service_id": "hox",
+        "url": "https://abfallservice.kreis-hoexter.de/",
+        "cities": ["Höxter"],
+    },
+    {"service_id": "kbl", "url": "https://www.kbl-langen.de/", "cities": ["Langen"]},
+    {
+        "service_id": "ros",
+        "url": "https://www.rosbach-hessen.de/",
+        "cities": ["Rosbach Vor Der Höhe"],
+    },
+    {
+        "service_id": "mkk",
+        "url": "https://abfall-mkk.de/",
+        "cities": ["Main-Kinzig-Kreis"],
+    },
+    {
+        "service_id": "wol",
+        "url": "https://www.alw-wf.de",
+        "cities": ["ALW Wolfenbüttel"],
+    },
+]
 
 
-def EXTRA_INFO():
-    extra_info = []
-    for provider, entries in SERVICE_MAP.items():
-        url = entries["url"]
-        comment = ""
-        if "comment" in entries:
-            comment = f" ({entries['comment']})"
-
-        for area in entries["list"]:
-            title = area + comment
-
-            extra_info.append(
-                {"title": title, "url": url, "default_params": {"service_id": provider}}
+def _regions() -> list[Region]:
+    regions: list[Region] = []
+    for provider in _PROVIDERS:
+        comment = f" ({provider['comment']})" if "comment" in provider else ""
+        for city_name in provider["cities"]:
+            regions.append(
+                region(
+                    f"{city_name}{comment}",
+                    url=provider["url"],
+                    service_id=provider["service_id"],
+                )
             )
-    return extra_info
+    return regions
 
 
-API_URL = "https://{provider}.jumomind.com/mmapp/api.php"
+# Not @final: rh_entsorgung_de subclasses this for the RHE municipality.
+class Source(BaseSource):
+    TITLE = "Jumomind"
+    DESCRIPTION = "Source for Jumomind.de waste collection."
+    URL = "https://www.jumomind.de"
+    COUNTRY = "de"
+    # The transformer resolves open-ended German labels via the shared vocabulary,
+    # so any canonical type may appear.
+    WASTE_TYPES = list(ALL_TYPES)
 
+    # One structure (the Jumomind mmapp API) covering many municipalities; the
+    # full list is derived from the source's own provider registry at load time.
+    REGIONS = _regions
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "service_id": "Service ID",
-        "city": "Ort",
-        "street": "Straße",
-        "city_id": "Ort ID",
-        "area_id": "Bereich ID",
-        "house_number": "Hausnummer",
+    TEST_CASES = {
+        # DEPRECATED
+        "ZAW": {"service_id": "zaw", "city_id": 106, "area_id": 94},
+        "Bad Homburg, Bahnhofstrasse": {
+            "service_id": "hom",
+            "city_id": 1,
+            "area_id": 411,
+        },
+        # END DEPRECATED
+        "sbm Minden Meißener Str. 6a": {
+            "service_id": "sbm",
+            "city": "Minden",
+            "street": "Meißener Str.",
+            "house_number": "6A",
+        },
+        "Darmstaadt ": {
+            "service_id": "mymuell",
+            "city": "Darmstadt",
+            "street": "Achatweg",
+        },
+        "zaw Alsbach-Hähnlein Hähnleiner Str.": {
+            "service_id": "zaw",
+            "city": "Alsbach-Hähnlein",
+            "street": "Hähnleiner Str.",
+        },
+        "ingolstadt": {
+            "service_id": "ingol",
+            "city": "Ingolstadt",
+            "street": "Hauffstr.",
+            "house_number": "9 1/2",
+        },
+        "mymuell only city": {
+            "service_id": "mymuell",
+            "city": "Bad Wünnenberg-Bleiwäsche",
+        },
+        "neustadt": {
+            "service_id": "esn",
+            "city": "Neustadt",
+            "street": "Hauberallee (Kernstadt)",
+        },
+        "Main-Kinzig-Kreis": {
+            "service_id": "mkk",
+            "city": "Freigericht",
+            "street": "Hauptstraße (Altenmittlau)",
+        },
+        "ALW Wolfenbüttel": {
+            "service_id": "wol",
+            "city": "Linden",
+            "street": "Am Buschkopf",
+        },
+        "KSR Recklinghausen Ottostr. 53": {
+            "service_id": "ksr",
+            "city": "Recklinghausen",
+            "street": "Ottostr.",
+            "house_number": "53",
+        },
     }
-}
 
-LOGGER = logging.getLogger(__name__)
+    # service_id is always required. The place is given either by city name
+    # (with optional street / house number) or directly by city_id + area_id;
+    # alternatives() enforces exactly one of those two groups.
+    PARAMS = [
+        service_id("service_id"),
+        alternatives(
+            [city("city")],
+            [city_id("city_id"), area_id("area_id")],
+        ),
+        street("street", optional=True),
+        house_number("house_number", optional=True),
+    ]
 
+    HOWTO = {
+        "en": (
+            "Pick the 'service_id' for your region from the source's list of "
+            "municipalities, then enter your town ('city') and where required "
+            "the street ('street') and house number ('house_number'). "
+            "Alternatively provide a known 'city_id' and 'area_id' directly."
+        ),
+        "de": (
+            "Wählen Sie die 'service_id' Ihrer Region aus der Liste der Kommunen, "
+            "geben Sie dann Ihren Ort ('city') an und, falls erforderlich, die "
+            "Straße ('street') und Hausnummer ('house_number'). Alternativ können "
+            "Sie eine bekannte 'city_id' und 'area_id' direkt angeben."
+        ),
+    }
 
-def validate_params(value):
-    errors = {}
-    service_id = value.get("service_id")
-    city = value.get("city")
-    street = value.get("street")
-    city_id = value.get("city_id")
-    area_id = value.get("area_id")
-    house_number = value.get("house_number")
-    if service_id is None:
-        errors["service_id"] = "service_id is required"
-    if city is None and city_id is None:
-        errors["city"] = "city or city_id is required"
-        errors["city_id"] = "city or city_id is required"
-    if city is not None and city_id is not None:
-        errors["city"] = "city or city_id is required. Do not use both"
-        errors["city_id"] = "city or city_id is required. Do not use both"
-    if city is None and street is not None:
-        errors["street"] = "street is not needed without city"
-    if city is None and house_number is not None:
-        errors["house_number"] = "house_number is not needed without city"
-    if city_id is not None and area_id is None:
-        errors["area_id"] = "area_id is required when using city_id"
-    if area_id is not None and city_id is None:
-        errors["city_id"] = "city_id is required when using area_id"
-    return errors
+    # Address/lookup source: an empty result means the input didn't resolve.
+    RAISE_ON_EMPTY = True
 
-
-def normalize_street(value: str | None) -> str | None:
-    return value and (
-        value.lower()
-        .strip()
-        .casefold()
-        .replace("straße", "strasse")
-        .replace("str.", "strasse")
+    retrieve = JumomindRetriever(
+        service_id="service_id",
+        city="city",
+        street="street",
+        house_number="house_number",
+        city_id="city_id",
+        area_id="area_id",
     )
+    parse = JumomindParser()
+    transform = RowTransformer()
 
-
-class Source:
     def __init__(
         self,
         service_id: str,
@@ -271,154 +304,11 @@ class Source:
         area_id=None,
         house_number=None,
     ):
-        self._api_url: str = API_URL.format(provider=service_id)
-        self._city: str | None = city.lower().strip() if city else None
-        self._street: str | None = street.lower().strip() if street else None
-        self._house_number: str | None = (
-            str(house_number).lower().strip().lstrip("0") if house_number else None
+        super().__init__(
+            service_id=service_id,
+            city=city,
+            street=street,
+            city_id=city_id,
+            area_id=area_id,
+            house_number=(str(house_number) if house_number is not None else None),
         )
-
-        self._service_id = service_id
-        self._city_id = city_id if city_id else None
-        self._area_id = area_id if area_id else None
-
-    def fetch(self):
-        session = requests.Session()
-        session.headers.update({"Accept-Encoding": "identity"})
-
-        city_id = self._city_id
-        area_id = self._area_id
-
-        if city_id is None and self._city is None:
-            raise SourceArgumentExceptionMultiple(
-                ["city", "city_id"], "City or city id is required"
-            )
-        if city_id is not None and self._city is not None:
-            raise SourceArgumentExceptionMultiple(
-                ["city", "city_id"], "City OR city id is required. Do not use both"
-            )
-
-        r = session.get(self._api_url, params={"r": "cities_web"})
-        r.raise_for_status()
-
-        cities = r.json()
-
-        if city_id is not None:
-            if area_id is None:
-                raise SourceArgumentException(
-                    "area_id",
-                    "Area id is required when using city_id. Remove city id when using city (and street) name",
-                )
-        else:
-            has_streets = True
-            for city in cities:
-                if (
-                    city["name"].lower().strip() == self._city
-                    or city["_name"].lower().strip() == self._city
-                ):
-                    city_id = city["id"]
-                    area_id = city["area_id"]
-                    has_streets = city["has_streets"]
-                    break
-
-            if city_id is None:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "city", self._city, [c["name"] for c in cities]
-                )
-
-            if has_streets:
-                r = session.get(
-                    self._api_url, params={"r": "streets", "city_id": city_id}
-                )
-                r.raise_for_status()
-                streets = r.json()
-
-                street_found = False
-                for street in streets:
-                    if normalize_street(street["name"]) == normalize_street(
-                        self._street
-                    ) or normalize_street(street["_name"]) == normalize_street(
-                        self._street
-                    ):
-                        street_found = True
-                        area_id = street["area_id"]
-                        if "houseNumbers" in street:
-                            if self._house_number is not None:
-                                for house_number in street["houseNumbers"]:
-                                    if (
-                                        house_number[0].lower().strip().lstrip("0")
-                                        == self._house_number
-                                    ):
-                                        area_id = house_number[1]
-                                        break
-                            else:
-                                distinct_area_ids = {
-                                    hn[1] for hn in street["houseNumbers"]
-                                }
-                                if len(distinct_area_ids) > 1:
-                                    LOGGER.warning(
-                                        "Street '%s' spans multiple collection zones. "
-                                        "Please provide a house_number for accurate results",
-                                        street["name"],
-                                    )
-                        break
-                if not street_found:
-                    streets_suggestions = {s.get("name") for s in streets}
-                    streets_suggestions.update({s.get("_name") for s in streets})
-                    streets_suggestions -= {None}
-                    raise SourceArgumentNotFoundWithSuggestions(
-                        "street", self._street, streets_suggestions
-                    )
-            else:
-                if self._street is not None:
-                    LOGGER.warning(
-                        "City does not need street name please remove it, continuing anyway"
-                    )
-
-        # get names for bins
-
-        bin_name_map = {}
-        r = session.get(
-            self._api_url,
-            params={"r": "trash", "city_id": city_id, "area_id": area_id},
-        )
-        r.raise_for_status()
-
-        for bin_type in r.json():
-            bin_name_map[bin_type["name"]] = bin_type["title"]
-            if bin_type["_name"] not in bin_name_map:
-                bin_name_map[bin_type["_name"]] = bin_type["title"]
-
-        r = session.get(
-            self._api_url,
-            params={"r": "dates/0", "city_id": city_id, "area_id": area_id, "ws": 3},
-        )
-        r.raise_for_status()
-
-        entries = []
-        for event in r.json():
-            bin_type = bin_name_map[event["trash_name"]]
-            date = datetime.datetime.strptime(event["day"], "%Y-%m-%d").date()
-            icon = ICON_MAP.get(bin_type.split(" ")[0])  # Collection icon
-            entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        return entries
-
-
-def print_md_table():
-    table = "|service_id|cities|\n|---|---|\n"
-
-    for service, data in sorted(SERVICE_MAP.items()):
-        print(f"service: {service}")
-        args = {"r": "cities"}
-        r = requests.get(f"https://{service}.jumomind.com/mmapp/api.php", params=args)
-        r.raise_for_status()
-        table += f"|{service}|"
-
-        table += "`" + "`, `".join([c["name"] for c in r.json()]) + "`"
-        table += "|\n"
-    print(table)
-
-
-if __name__ == "__main__":
-    print_md_table()

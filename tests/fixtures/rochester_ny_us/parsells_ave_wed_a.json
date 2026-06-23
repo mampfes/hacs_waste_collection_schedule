@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-06-21",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 69986d0669",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sun, 21 Jun 2026 04:33:02 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "224",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"889ba257\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTI0IFBhcnNlbGxzIEF2ZSwgUm9jaGVzdGVyLCBOZXcgWW9yaywgMTQ2MDkiLCJsb2NhdGlvbiI6eyJ4IjotNzcuNTc1NzQ1NzUzNjQ3LCJ5Ijo0My4xNjU3MDA0MzU1Njh9LCJzY29yZSI6MTAwLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOi03Ny41NzY3NDU3NTM2NDcsInltaW4iOjQzLjE2NDcwMDQzNTU2OCwieG1heCI6LTc3LjU3NDc0NTc1MzY0NywieW1heCI6NDMuMTY2NzAwNDM1NTY4fX1dfQ=="
+    },
+    {
+      "key": "GET http://maps.cityofrochester.gov/arcgis/rest/services/App_CityServices/City_Services/MapServer/8/query 39436dd8bc",
+      "method": "GET",
+      "url": "http://maps.cityofrochester.gov/arcgis/rest/services/App_CityServices/City_Services/MapServer/8/query",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "ntCoent-Length": "774",
+        "Content-Type": "application/json; charset=UTF-8",
+        "ETag": "\"a4487ffb\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 21 Jun 2026 04:33:03 GMT",
+        "Cache-Control": "private",
+        "Content-Encoding": "gzip",
+        "Content-Length": "280"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RJRCIsImZpZWxkQWxpYXNlcyI6eyJNT05EQVkiOiJNb25kYXkiLCJUVUVTREFZIjoiVHVlc2RheSIsIldFRE5FU0RBWSI6IldlZG5lc2RheSIsIlRIVVJTREFZIjoiVGh1cnNkYXkiLCJGUklEQVkiOiJGcmlkYXkiLCJTQVRVUkRBWSI6IlNhdHVyZGF5In0sImZpZWxkcyI6W3sibmFtZSI6Ik1PTkRBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJNb25kYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlRVRVNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVHVlc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiV0VETkVTREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IldlZG5lc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiVEhVUlNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVGh1cnNkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IkZSSURBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJGcmlkYXkiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlNBVFVSREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlNhdHVyZGF5IiwibGVuZ3RoIjo1fV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7Ik1PTkRBWSI6Ik5vIiwiVFVFU0RBWSI6Ik5vIiwiV0VETkVTREFZIjoiWWVzIiwiVEhVUlNEQVkiOiJObyIsIkZSSURBWSI6Ik5vIiwiU0FUVVJEQVkiOiJObyJ9fV19"
+    },
+    {
+      "key": "GET http://maps.cityofrochester.gov/arcgis/rest/services/App_CityServices/City_Services/MapServer/9/query ca2d9ac505",
+      "method": "GET",
+      "url": "http://maps.cityofrochester.gov/arcgis/rest/services/App_CityServices/City_Services/MapServer/9/query",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "ntCoent-Length": "1071",
+        "Content-Type": "application/json; charset=UTF-8",
+        "ETag": "\"7150694d\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 21 Jun 2026 04:33:06 GMT",
+        "Cache-Control": "private",
+        "Content-Encoding": "gzip",
+        "Content-Length": "374"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RJRCIsImZpZWxkQWxpYXNlcyI6eyJORVhUUElDS1VQIjoiTkVYVFBJQ0tVUCIsIkRPVyI6IkRheSBvZiB0aGUgV2VlayIsIk1PTkRBWSI6Ik1vbmRheSIsIlRVRVNEQVkiOiJUdWVzZGF5IiwiV0VETkVTREFZIjoiV2VkbmVzZGF5IiwiVEhVUlNEQVkiOiJUaHVyc2RheSIsIkZSSURBWSI6IkZyaWRheSIsIlNBVFVSREFZIjoiU2F0dXJkYXkifSwiZmllbGRzIjpbeyJuYW1lIjoiTkVYVFBJQ0tVUCIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJORVhUUElDS1VQIiwibGVuZ3RoIjo0MDAwfSx7Im5hbWUiOiJET1ciLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRGF5IG9mIHRoZSBXZWVrIiwibGVuZ3RoIjoyMH0seyJuYW1lIjoiTU9OREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6Ik1vbmRheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiVFVFU0RBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJUdWVzZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJXRURORVNEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiV2VkbmVzZGF5IiwibGVuZ3RoIjo1fSx7Im5hbWUiOiJUSFVSU0RBWSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJUaHVyc2RheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiRlJJREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkZyaWRheSIsImxlbmd0aCI6NX0seyJuYW1lIjoiU0FUVVJEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiU2F0dXJkYXkiLCJsZW5ndGgiOjV9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiTkVYVFBJQ0tVUCI6Ik5FWFQgd2VlayBvbiBXZWRuZXNkYXksIEp1bHkgMDFcdTAwM2MvYVx1MDAzZSIsIkRPVyI6IldlZG5lc2RheSIsIk1PTkRBWSI6Ik5vIiwiVFVFU0RBWSI6Ik5vIiwiV0VETkVTREFZIjoiWWVzIiwiVEhVUlNEQVkiOiJObyIsIkZSSURBWSI6Ik5vIiwiU0FUVVJEQVkiOiJObyJ9fV19"
+    }
+  ]
+}
