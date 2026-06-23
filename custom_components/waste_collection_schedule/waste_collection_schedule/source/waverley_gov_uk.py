@@ -1,29 +1,24 @@
-import logging
 from typing import final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.service.WhitespaceWRP import (
     WhitespaceParser,
     WhitespaceRetriever,
 )
+from waste_collection_schedule.transformers import RowTransformer, label_cleaner
 from waste_collection_schedule.waste_types import (
     FOOD_WASTE,
     GARDEN_WASTE,
     GENERAL_WASTE,
     RECYCLABLES,
-    preserved,
-    resolve,
 )
 
 # Declarative source on the shared Whitespace WRP components (WhitespaceRetriever
-# + WhitespaceParser). classify() maps the council's open-ended type labels onto
-# canonical WasteTypes; the legacy ``address_name_numer`` spelling is kept so
+# + WhitespaceParser). A RowTransformer maps the council's open-ended type labels
+# onto canonical WasteTypes; the legacy ``address_name_numer`` spelling is kept so
 # existing configurations continue to work.
-
-_LOGGER = logging.getLogger(__name__)
 
 _TYPE_MAP = {
     "Domestic Waste": GENERAL_WASTE,
@@ -65,8 +60,6 @@ class Source(BaseSource):
         text_field("street_town", "Town", optional=True),
     ]
 
-    parse_date = date_parsers.for_format("%d/%m/%Y")
-
     retrieve = WhitespaceRetriever(
         name_number="address_name_numer",
         postcode="address_postcode",
@@ -74,6 +67,12 @@ class Source(BaseSource):
         town="street_town",
     )
     parse = WhitespaceParser()
+    transform = RowTransformer(
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        clean=label_cleaner(strip_suffixes=[" Collection Service"]),
+        skip_unparseable_dates=True,
+    )
 
     def __init__(
         self,
@@ -87,17 +86,4 @@ class Source(BaseSource):
             address_name_numer=address_name_numer,
             address_street=address_street,
             street_town=street_town,
-        )
-
-    def classify(self, record) -> Collection | None:
-        date_str, type_str = record
-        cleaned = type_str.replace(" Collection Service", "").strip()
-        try:
-            date = self.parse_date(date_str)
-        except ValueError:
-            _LOGGER.info("Skipped %s: unexpected date format", date_str)
-            return None
-        return Collection(
-            date=date,
-            waste_type=_TYPE_MAP.get(cleaned) or resolve(cleaned) or preserved(cleaned),
         )
