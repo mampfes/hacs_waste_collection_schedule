@@ -1,9 +1,9 @@
-from typing import Any, final
+from typing import final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.transformers import JsonTransformer
 from waste_collection_schedule.waste_types import (
     FOOD_WASTE,
     GARDEN_WASTE,
@@ -12,14 +12,16 @@ from waste_collection_schedule.waste_types import (
     WasteType,
 )
 
-# Demonstrates: parsers.XmlParser on a real, namespaced SOAP-style XML feed.
+# Demonstrates: parsers.XmlParser on a real, namespaced SOAP-style XML feed,
+# transformed declaratively with JsonTransformer callable keys.
 #
 # The Whitespace WS endpoint returns one <Collection> element per event, each
 # with dedicated <Date> and <Service> children, under the
 # http://webservices.whitespacews.com/ namespace. XmlParser does
 # root.findall(path) (lxml ElementPath) with no namespace map, so the namespace
-# is baked into the path using the {uri}tag form. classify() then reads each
-# element's <Date>/<Service> children and maps the service to a canonical
+# is baked into the path using the {uri}tag form. JsonTransformer's date_key and
+# type_key accept callables, which here read each element's <Date>/<Service>
+# children (the namespace baked into the path) and map the service to a canonical
 # WasteType. An invalid UPRN simply yields a feed with no <Collection> nodes,
 # so RAISE_ON_EMPTY surfaces a "check your UPRN" error to the HA UI.
 
@@ -69,7 +71,12 @@ class Source(BaseSource):
     # the right field. A shape guard would instead misreport that as a changed
     # feed (ResponseShapeError), which fires before the empty-result check.
     parse = parsers.XmlParser(f".//{_NS}Collection")
-    parse_date = date_parsers.for_format("%d/%m/%Y %H:%M:%S")
+    transform = JsonTransformer(
+        date_key=lambda el: el.findtext(f"{_NS}Date"),
+        type_key=lambda el: el.findtext(f"{_NS}Service"),
+        type_value_map=_SERVICE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y %H:%M:%S"),
+    )
 
     WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
 
@@ -80,13 +87,3 @@ class Source(BaseSource):
             "UPRN": self.params["uprn"],
             "Postcode": self.params["postcode"],
         }
-
-    def classify(self, record: Any) -> Collection | None:
-        date_text = record.findtext(f"{_NS}Date")
-        service = record.findtext(f"{_NS}Service")
-        if not date_text or service not in _SERVICE_MAP:
-            return None
-        return Collection(
-            date=self.parse_date(date_text),
-            waste_type=_SERVICE_MAP[service],
-        )
