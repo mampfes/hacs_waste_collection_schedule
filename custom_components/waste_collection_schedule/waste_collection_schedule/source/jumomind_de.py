@@ -2,7 +2,15 @@ import datetime
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.config_params import alternatives, text_field
+from waste_collection_schedule.config_params import (
+    alternatives,
+    area_id,
+    city,
+    city_id,
+    house_number,
+    service_id,
+    street,
+)
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.Jumomind import (
     JumomindParser,
@@ -164,10 +172,10 @@ def _regions() -> list[Region]:
     regions: list[Region] = []
     for provider in _PROVIDERS:
         comment = f" ({provider['comment']})" if "comment" in provider else ""
-        for city in provider["cities"]:
+        for city_name in provider["cities"]:
             regions.append(
                 region(
-                    f"{city}{comment}",
+                    f"{city_name}{comment}",
                     url=provider["url"],
                     service_id=provider["service_id"],
                 )
@@ -256,13 +264,13 @@ class Source(BaseSource):
     # (with optional street / house number) or directly by city_id + area_id;
     # alternatives() enforces exactly one of those two groups.
     PARAMS = [
-        text_field("service_id", "Service ID"),
+        service_id("service_id"),
         alternatives(
-            [text_field("city", "Ort")],
-            [text_field("city_id", "Ort ID"), text_field("area_id", "Bereich ID")],
+            [city("city")],
+            [city_id("city_id"), area_id("area_id")],
         ),
-        text_field("street", "Straße", optional=True),
-        text_field("house_number", "Hausnummer", optional=True),
+        street("street", optional=True),
+        house_number("house_number", optional=True),
     ]
 
     HOWTO = {

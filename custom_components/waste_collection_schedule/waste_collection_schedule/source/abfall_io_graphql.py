@@ -3,7 +3,7 @@ from typing import final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import api_key, text_field, waste_types
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.AbfallIOGraphQL import (
     AbfallIoGraphQLParser,
@@ -58,9 +58,9 @@ class Source(BaseSource):
     }
 
     PARAMS = [
-        text_field("key", "Key"),
-        text_field("idHouseNumber", "House number id"),
-        text_field("wasteTypes", "Waste type ids (optional filter)", optional=True),
+        api_key("key"),
+        text_field("idHouseNumber", "House number ID"),
+        waste_types("wasteTypes"),
     ]
 
     retrieve = AbfallIoGraphQLRetriever()

@@ -3,7 +3,7 @@ from typing import final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import district, text_field
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.CMCityMedia import (
     CMCityMediaParser,
@@ -82,9 +82,9 @@ class Source(BaseSource):
     }
 
     PARAMS = [
-        text_field("hpid", "Homepage id"),
-        text_field("realmid", "Realm id (optional override)", optional=True),
-        text_field("district", "District (optional)", optional=True),
+        text_field("hpid", "Homepage ID"),
+        text_field("realmid", "Realm ID (optional override)", optional=True),
+        district("district", optional=True),
     ]
 
     retrieve = CMCityMediaRetriever()

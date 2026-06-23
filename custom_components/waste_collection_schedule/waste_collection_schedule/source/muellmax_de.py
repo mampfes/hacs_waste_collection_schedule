@@ -2,7 +2,12 @@ from typing import final
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.config_params import (
+    city,
+    house_number,
+    service_id,
+    street,
+)
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.MuellmaxDe import MuellmaxRetriever
 from waste_collection_schedule.transformers import ICSTransformer
@@ -116,10 +121,10 @@ class Source(BaseSource):
     }
 
     PARAMS = [
-        text_field("service", "Service"),
-        text_field("mm_frm_ort_sel", "Ort", optional=True),
-        text_field("mm_frm_str_sel", "Straße", optional=True),
-        text_field("mm_frm_hnr_sel", "Hausnummer", optional=True),
+        service_id("service"),
+        city("mm_frm_ort_sel", optional=True),
+        street("mm_frm_str_sel", optional=True),
+        house_number("mm_frm_hnr_sel", optional=True),
     ]
 
     retrieve = MuellmaxRetriever()

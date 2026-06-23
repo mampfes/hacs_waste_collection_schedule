@@ -120,6 +120,13 @@ ADDRESS = _term(
     help_en="Your full address.",
 )
 REGION = _term("region", "Region", "Region", "Région", "Regione", "Regio")
+# Administrative levels above the municipality (used by German platforms whose
+# cascade is Bundesland -> Landkreis -> Kommune). fr/it/nl labels keep the
+# German "Land"/"Landkreis" where there is no close equivalent; review welcome.
+STATE = _term("state", "Federal State", "Bundesland", "Land", "Land", "Deelstaat")
+COUNTY = _term(
+    "county", "District", "Landkreis", "Arrondissement", "Circondario", "Landkreis"
+)
 
 # --- Coordinates -------------------------------------------------------------
 LATITUDE = _term(
@@ -221,6 +228,8 @@ ALL_TERMS = [
     POSTCODE,
     ADDRESS,
     REGION,
+    STATE,
+    COUNTY,
     LATITUDE,
     LONGITUDE,
     UPRN,

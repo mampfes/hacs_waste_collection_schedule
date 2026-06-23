@@ -1,6 +1,12 @@
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
-from waste_collection_schedule.config_params import alternatives, text_field
+from waste_collection_schedule.config_params import (
+    alternatives,
+    house_number,
+    location_id,
+    municipality,
+    street,
+)
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.InsertITDe import (
@@ -95,10 +101,10 @@ class Source(BaseSource):
     }
 
     PARAMS = [
-        text_field("municipality", "Ort"),
+        municipality("municipality"),
         alternatives(
-            [text_field("location_id", "Standort ID")],
-            [text_field("street", "Straße"), text_field("hnr", "Hausnummer")],
+            [location_id("location_id")],
+            [street("street"), house_number("hnr")],
         ),
     ]
 

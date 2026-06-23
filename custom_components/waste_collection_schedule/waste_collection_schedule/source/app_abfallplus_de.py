@@ -1,5 +1,6 @@
 from typing import final
 
+from waste_collection_schedule import field_terms
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.config_params import cascading_select, text_field
@@ -105,12 +106,12 @@ class Source(BaseSource):
     PARAMS = [
         text_field("app_id", "App ID"),
         cascading_select(
-            ("bundesland", "Bundesland"),
-            ("landkreis", "Landkreis"),
-            ("city", "Kommune"),
-            ("bezirk", "Bezirk"),
-            ("strasse", "Straße"),
-            ("hnr", "Hausnummer"),
+            ("bundesland", field_terms.STATE),
+            ("landkreis", field_terms.COUNTY),
+            ("city", field_terms.MUNICIPALITY),
+            ("bezirk", field_terms.DISTRICT),
+            ("strasse", field_terms.STREET),
+            ("hnr", field_terms.HOUSE_NUMBER),
         ),
     ]
 

@@ -1,7 +1,12 @@
 from typing import final
 
+from waste_collection_schedule import field_terms
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import cascading_select, text_field
+from waste_collection_schedule.config_params import (
+    api_key,
+    cascading_select,
+    waste_types,
+)
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.AbfallIO import (
     AbfallIoParser,
@@ -304,14 +309,14 @@ class Source(BaseSource):
     }
 
     PARAMS = [
-        text_field("key", "Key"),
+        api_key("key"),
         cascading_select(
-            ("f_id_kommune", "Kommune"),
-            ("f_id_bezirk", "Bezirk"),
-            ("f_id_strasse", "Straße"),
-            ("f_id_strasse_hnr", "Hausnummer"),
+            ("f_id_kommune", field_terms.MUNICIPALITY),
+            ("f_id_bezirk", field_terms.DISTRICT),
+            ("f_id_strasse", field_terms.STREET),
+            ("f_id_strasse_hnr", field_terms.HOUSE_NUMBER),
         ),
-        text_field("f_abfallarten", "Abfallarten", optional=True),
+        waste_types("f_abfallarten"),
     ]
 
     retrieve = AbfallIoRetriever()
