@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup, Tag
 from dateutil import parser
@@ -16,8 +18,13 @@ TEST_CASES = {
 
 ICON_MAP = {
     "Black bin": Icons.GENERAL_WASTE,
+    "Black Bins": Icons.GENERAL_WASTE,
     "Brown bin": Icons.BIO_KITCHEN,
+    "Brown Bins": Icons.BIO_KITCHEN,
     "Blue bin": Icons.RECYCLING,
+    "Blue Bins": Icons.RECYCLING,
+    "Food Bins": Icons.BIO_KITCHEN,
+    "Green Bins": Icons.GARDEN,
 }
 
 
@@ -51,16 +58,16 @@ class Source:
         for collection in waste_panel.contents:
             if isinstance(collection, Tag):
                 if collection.name == "strong":
-                    bin_type = " ".join(
-                        a.strip()
-                        for a in collection.text.strip().strip(":").split("\n")
-                    ).replace("   ", " ")
+                    bin_type = " ".join(collection.text.strip().strip(":").split())
                 continue
 
             collection = collection.strip()
             date_str = collection.strip()
             # date: Saturday 30th December
             coll_date = parser.parse(date_str).date()
+            if (datetime.now().date() - coll_date).days > 180:
+                coll_date = coll_date.replace(year=coll_date.year + 1)
+
             entries.append(
                 Collection(date=coll_date, t=bin_type, icon=ICON_MAP.get(bin_type))
             )
