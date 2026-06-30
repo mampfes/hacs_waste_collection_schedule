@@ -51,6 +51,15 @@ class DetailsFormat(Enum):
     hidden = "hidden"  # hide details
 
 
+def get_days_to_text(days: int) -> str:
+    """Return a human-readable string for days until collection."""
+    if days == 0:
+        return "Today"
+    if days == 1:
+        return "Tomorrow"
+    return f"in {days} days"
+
+
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_NAME): cv.string,
@@ -383,6 +392,7 @@ class ScheduleSensor(SensorEntity):
         if len(upcoming1) > 0:
             if self._add_days_to:
                 attributes["daysTo"] = upcoming1[0].daysTo
+                attributes["daysToText"] = get_days_to_text(upcoming1[0].daysTo)
 
         self._attr_extra_state_attributes = attributes
         self._add_refreshtime()
