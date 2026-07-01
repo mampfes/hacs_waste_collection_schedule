@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
 )
 
 TITLE = "ALBA Swarzędz"
@@ -86,31 +87,66 @@ POLISH_MONTHS = {
 
 
 class Source:
-    def __init__(self, city: str, street: str, number: str):
-        self._city = city.upper().strip()
-        self._street = street.upper().strip()
-        self._number = str(number).strip()
+    def __init__(self, city: str = "", street: str = "", number: str = ""):
+        city = city.upper().strip()
+        street = street.upper().strip()
+        number = str(number).strip()
+
+        # Step 1: resolve city
+        cities = requests.get(f"{API_BASE}/addresses/cities", timeout=30).json()
+        city_suggestions = [c["value"] for c in cities]
+        if not city:
+            raise SourceArgumentRequiredWithSuggestions(
+                "city", "Select your city.", city_suggestions
+            )
+        city_match = next(
+            (c for c in cities if c["value"].upper().strip() == city), None
+        )
+        if not city_match:
+            raise SourceArgumentNotFoundWithSuggestions("city", city, city_suggestions)
+        city_id = city_match["id"]
+
+        # Step 2: resolve street
+        streets = requests.get(
+            f"{API_BASE}/addresses/streets/{city_id}", timeout=30
+        ).json()
+        street_suggestions = [s["value"] for s in streets]
+        if not street:
+            raise SourceArgumentRequiredWithSuggestions(
+                "street", "Select your street.", street_suggestions
+            )
+        street_match = next(
+            (s for s in streets if s["value"].upper().strip() == street), None
+        )
+        if not street_match:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", street, street_suggestions
+            )
+        street_id = street_match["id"]
+
+        # Step 3: resolve building number
+        numbers = requests.get(
+            f"{API_BASE}/addresses/numbers/{city_id}/{street_id}", timeout=30
+        ).json()
+        number_suggestions = [str(n["value"]) for n in numbers]
+        if not number:
+            raise SourceArgumentRequiredWithSuggestions(
+                "number", "Select your house number.", number_suggestions
+            )
+        number_match = next(
+            (n for n in numbers if str(n["value"]).strip() == number), None
+        )
+        if not number_match:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "number", number, number_suggestions
+            )
+
+        self._address_id = number_match["id"]
 
     def fetch(self) -> list[Collection]:
-        city_id = self._resolve_id(
-            f"{API_BASE}/addresses/cities",
-            self._city,
-            "city",
-        )
-        street_id = self._resolve_id(
-            f"{API_BASE}/addresses/streets/{city_id}",
-            self._street,
-            "street",
-        )
-        address_id = self._resolve_id(
-            f"{API_BASE}/addresses/numbers/{city_id}/{street_id}",
-            self._number,
-            "number",
-        )
-
         report = requests.get(
             f"{API_BASE}/reports",
-            params={"type": "html", "id": address_id},
+            params={"type": "html", "id": self._address_id},
             timeout=30,
         ).json()
 
@@ -121,17 +157,6 @@ class Source:
             raise ValueError("No waste collection dates found in the schedule")
 
         return entries
-
-    def _resolve_id(self, url: str, value: str, arg_name: str) -> int:
-        items = requests.get(url, timeout=30).json()
-        suggestions = [str(i["value"]) for i in items]
-        match = next(
-            (i for i in items if str(i["value"]).upper().strip() == value),
-            None,
-        )
-        if not match:
-            raise SourceArgumentNotFoundWithSuggestions(arg_name, value, suggestions)
-        return match["id"]
 
     def _parse(self, html: str) -> list[Collection]:
         soup = BeautifulSoup(html, "html.parser")
