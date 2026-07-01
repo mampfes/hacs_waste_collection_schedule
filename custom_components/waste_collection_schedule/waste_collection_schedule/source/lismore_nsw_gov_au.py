@@ -38,9 +38,6 @@ PARAM_DESCRIPTIONS = {
     }
 }
 
-SOURCE_CODEOWNERS: list[str] = []
-
-
 _EXPERIAN_SEARCH_URL = "https://api.experianaperture.io/address/search/v1"
 # Auth-Token sourced from the Lismore Council WhatBinDay widget configuration
 # at https://www.lismore.nsw.gov.au/Households/Waste-and-recycling/Whats-My-Bin-Day1
