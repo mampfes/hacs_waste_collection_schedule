@@ -114,7 +114,7 @@ class Source:
             timeout=30,
         ).json()
 
-        html = requests.get(report["filePath"], timeout=30).text
+        html = requests.get(report["filePath"], timeout=30).content.decode("utf-8")
         entries = self._parse(html)
 
         if not entries:
