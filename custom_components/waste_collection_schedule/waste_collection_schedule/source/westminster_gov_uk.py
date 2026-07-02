@@ -93,7 +93,7 @@ def _parse_days(text: str) -> set[int]:
     return result
 
 
-def _get_icon(waste_type: str):
+def _get_icon(waste_type: str) -> Icons | None:
     """Return the mapped Icons member for a waste type, or None if unmapped."""
     return ICON_MAP.get(waste_type)
 
