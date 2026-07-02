@@ -96,3 +96,80 @@ def test_get_icon_recycling():
 
 def test_get_icon_unknown_returns_none():
     assert westminster_gov_uk._get_icon("Some New Service") is None
+
+
+# ---------------------------------------------------------------------------
+# Section 3: _extract_pairs (panel parser)
+# ---------------------------------------------------------------------------
+
+# Minimal page mirroring the live structure: a long-street rubbish row using a
+# Mon-Fri range + Sat, Sun weekend, two recycling rows, and a street-cleaning
+# panel that must be ignored.
+FULL_HTML = """
+<html><body>
+<div id="pnlrubbishcollection">
+<table>
+<tr><th>Location</th><th>Week Days</th><th>Week Times</th><th>Weekend Days</th><th>Weekend Times</th></tr>
+<tr><td>Some St (BOS)</td><td>Mon-Fri</td><td>09:00 - 10:00</td><td>Sat, Sun</td><td>09:00 - 10:00</td></tr>
+</table>
+</div>
+<div id="pnlrecyclingcollections">
+<table>
+<tr><th>Location</th><th>Service Description</th><th>Week Days</th><th>Week Times</th><th>Weekend Days</th><th>Weekend Times</th></tr>
+<tr><td>Some St</td><td>Food Recycling Collection</td><td>Tue</td><td>08:00 - 14:00</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>Some St (part)</td><td>Recycling Collection</td><td>Tue, Fri</td><td>08:00 - 14:00</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+</div>
+<div id="pnlstreetcleaning">
+<table>
+<tr><th>Location</th><th>Service Description</th><th>Week Days</th><th>Weekend Days</th></tr>
+<tr><td>Some St</td><td>Your street will be swept on…</td><td>Mon - Fri</td><td>Sat, Sun</td></tr>
+</table>
+</div>
+</body></html>
+"""
+
+# A page for a USRN with no collections: panels present but no data rows.
+EMPTY_HTML = """
+<html><body>
+<div id="pnlrubbishcollection"><table>
+<tr><th>Location</th><th>Week Days</th><th>Week Times</th><th>Weekend Days</th><th>Weekend Times</th></tr>
+</table></div>
+<div id="pnlrecyclingcollections"><table>
+<tr><th>Location</th><th>Service Description</th><th>Week Days</th><th>Week Times</th><th>Weekend Days</th><th>Weekend Times</th></tr>
+</table></div>
+</body></html>
+"""
+
+
+def _pairs(html):
+    from bs4 import BeautifulSoup
+
+    return westminster_gov_uk._extract_pairs(BeautifulSoup(html, "html.parser"))
+
+
+def test_extract_pairs_rubbish_all_seven_days():
+    pairs = _pairs(FULL_HTML)
+    for weekday in range(7):
+        assert (westminster_gov_uk.RUBBISH_TYPE, weekday) in pairs
+
+
+def test_extract_pairs_recycling_types():
+    pairs = _pairs(FULL_HTML)
+    assert ("Food Recycling Collection", 1) in pairs
+    assert ("Recycling Collection", 1) in pairs
+    assert ("Recycling Collection", 4) in pairs
+
+
+def test_extract_pairs_total_count():
+    # 7 rubbish + 1 food + 2 recycling = 10 deduped pairs
+    assert len(_pairs(FULL_HTML)) == 10
+
+
+def test_extract_pairs_skips_street_cleaning():
+    pairs = _pairs(FULL_HTML)
+    assert not any("swept" in t.lower() for t, _ in pairs)
+
+
+def test_extract_pairs_empty_page_yields_no_pairs():
+    assert _pairs(EMPTY_HTML) == set()

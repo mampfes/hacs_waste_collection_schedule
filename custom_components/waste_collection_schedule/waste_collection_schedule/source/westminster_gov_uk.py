@@ -98,6 +98,65 @@ def _get_icon(waste_type: str) -> Icons | None:
     return ICON_MAP.get(waste_type)
 
 
+def _column_index(table) -> dict[str, int]:
+    """Map lowercased header-cell text -> column index for a table's first row."""
+    header = table.find("tr")
+    cols: dict[str, int] = {}
+    if header is None:
+        return cols
+    for i, cell in enumerate(header.find_all(["th", "td"])):
+        cols[cell.get_text(strip=True).lower()] = i
+    return cols
+
+
+def _data_rows(table):
+    """All rows after the header row."""
+    return table.find_all("tr")[1:]
+
+
+def _days_from_row(cells, cols) -> set[int]:
+    """Union of Week Days + Weekend Days cells for one row."""
+    days: set[int] = set()
+    for key in ("week days", "weekend days"):
+        idx = cols.get(key)
+        if idx is not None and idx < len(cells):
+            days |= _parse_days(cells[idx].get_text())
+    return days
+
+
+def _extract_pairs(soup) -> set:
+    """Parse the rubbish + recycling panels into deduped (waste_type, weekday) pairs."""
+    pairs: set = set()
+
+    rubbish = soup.find("div", id="pnlrubbishcollection")
+    if rubbish is not None:
+        table = rubbish.find("table")
+        if table is not None:
+            cols = _column_index(table)
+            for row in _data_rows(table):
+                cells = row.find_all(["td", "th"])
+                for weekday in _days_from_row(cells, cols):
+                    pairs.add((RUBBISH_TYPE, weekday))
+
+    recycling = soup.find("div", id="pnlrecyclingcollections")
+    if recycling is not None:
+        table = recycling.find("table")
+        if table is not None:
+            cols = _column_index(table)
+            sd = cols.get("service description")
+            for row in _data_rows(table):
+                cells = row.find_all(["td", "th"])
+                if sd is None or sd >= len(cells):
+                    continue
+                waste_type = cells[sd].get_text(strip=True)
+                if not waste_type:
+                    continue
+                for weekday in _days_from_row(cells, cols):
+                    pairs.add((waste_type, weekday))
+
+    return pairs
+
+
 class Source:
     def __init__(self, usrn):
         self._usrn = str(usrn)
