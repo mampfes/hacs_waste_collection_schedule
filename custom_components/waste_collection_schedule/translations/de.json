@@ -8852,8 +8852,9 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "bezirk": "Bezirk",
+          "city": "Stadt",
           "hnr": "Hnr",
-          "plz": "PLZ",
           "strasse": "Straße"
         },
         "data_description": {
@@ -8865,8 +8866,9 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "bezirk": "Bezirk",
+          "city": "Stadt",
           "hnr": "Hnr",
-          "plz": "PLZ",
           "strasse": "Straße"
         },
         "data_description": {}

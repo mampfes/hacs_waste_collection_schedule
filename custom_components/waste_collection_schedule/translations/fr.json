@@ -8788,8 +8788,9 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "bezirk": "District",
+          "city": "Ville",
           "hnr": "Numéro civique",
-          "plz": "Code postal",
           "strasse": "Rue"
         },
         "data_description": {
@@ -8801,8 +8802,9 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "bezirk": "District",
+          "city": "Ville",
           "hnr": "Numéro civique",
-          "plz": "Code postal",
           "strasse": "Rue"
         },
         "data_description": {}

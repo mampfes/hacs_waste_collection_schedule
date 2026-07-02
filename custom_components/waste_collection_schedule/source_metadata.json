@@ -1994,7 +1994,7 @@
   "ahe_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ahe_de.md",
     "howto": {
-      "en": "Find the parameter of your address using [https://ahe.atino.net/pickup-dates](https://ahe.atino.net/pickup-dates) and write them exactly like on the web page."
+      "en": "Visit [https://ahe.de/abfallkalender/](https://ahe.de/abfallkalender/) and select your city and street. Use the exact city name as the `city` parameter (e.g. `Wetter`, `Herdecke`, `Gevelsberg`)."
     },
     "urls": {}
   },

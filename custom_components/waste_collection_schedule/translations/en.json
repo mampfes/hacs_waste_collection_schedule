@@ -9134,8 +9134,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "bezirk": "District",
+          "city": "City",
           "hnr": "House Number",
-          "plz": "Plz",
           "strasse": "Street"
         },
         "data_description": {
@@ -9147,8 +9148,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "bezirk": "District",
+          "city": "City",
           "hnr": "House Number",
-          "plz": "Plz",
           "strasse": "Street"
         },
         "data_description": {}
