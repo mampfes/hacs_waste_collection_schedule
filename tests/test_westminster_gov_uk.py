@@ -66,3 +66,7 @@ def test_parse_days_empty_and_nbsp():
 
 def test_parse_days_ignores_unknown_tokens():
     assert westminster_gov_uk._parse_days("Someday, Tue") == {1}
+
+
+def test_parse_days_wraparound_range():
+    assert westminster_gov_uk._parse_days("Fri-Mon") == {0, 4, 5, 6}
