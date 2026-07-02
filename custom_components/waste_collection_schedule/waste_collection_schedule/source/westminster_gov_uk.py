@@ -56,6 +56,42 @@ PARAM_DESCRIPTIONS = {
     },
 }
 
+_WEEKDAYS = {
+    "mon": 0,
+    "tue": 1,
+    "wed": 2,
+    "thu": 3,
+    "fri": 4,
+    "sat": 5,
+    "sun": 6,
+}
+
+
+def _parse_days(text: str) -> set[int]:
+    """Expand a day cell (e.g. 'Tue, Fri', 'Mon-Fri') into weekday() indices."""
+    text = text.replace("\xa0", " ")
+    result: set[int] = set()
+    for token in text.split(","):
+        token = token.strip().lower()
+        if not token:
+            continue
+        if "-" in token:
+            start, _, end = token.partition("-")
+            s = _WEEKDAYS.get(start.strip()[:3])
+            e = _WEEKDAYS.get(end.strip()[:3])
+            if s is None or e is None:
+                continue
+            if s <= e:
+                result.update(range(s, e + 1))
+            else:  # wrap-around range, e.g. Sat-Mon
+                result.update(range(s, 7))
+                result.update(range(0, e + 1))
+        else:
+            v = _WEEKDAYS.get(token[:3])
+            if v is not None:
+                result.add(v)
+    return result
+
 
 class Source:
     def __init__(self, usrn):
