@@ -164,10 +164,10 @@ class Source:
         table = None
         headers: list[str] = []
         for t in soup.find_all("table"):
-            ths = [th.get_text(strip=True) for th in t.find_all("th")]
-            if "Miesiąc" in ths:
+            th_texts = [th.get_text(strip=True) for th in t.find_all("th")]
+            if "Miesiąc" in th_texts:
                 table = t
-                headers = ths[1:]
+                headers = th_texts[1:]
                 break
 
         if table is None:
