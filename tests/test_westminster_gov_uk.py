@@ -70,3 +70,29 @@ def test_parse_days_ignores_unknown_tokens():
 
 def test_parse_days_wraparound_range():
     assert westminster_gov_uk._parse_days("Fri-Mon") == {0, 4, 5, 6}
+
+
+# ---------------------------------------------------------------------------
+# Section 2: _get_icon (pure function)
+# ---------------------------------------------------------------------------
+
+
+def test_get_icon_rubbish():
+    assert (
+        westminster_gov_uk._get_icon("Residential rubbish and commercial waste")
+        == Icons.GENERAL_WASTE
+    )
+
+
+def test_get_icon_food():
+    assert (
+        westminster_gov_uk._get_icon("Food Recycling Collection") == Icons.BIO_KITCHEN
+    )
+
+
+def test_get_icon_recycling():
+    assert westminster_gov_uk._get_icon("Recycling Collection") == Icons.RECYCLING
+
+
+def test_get_icon_unknown_returns_none():
+    assert westminster_gov_uk._get_icon("Some New Service") is None
