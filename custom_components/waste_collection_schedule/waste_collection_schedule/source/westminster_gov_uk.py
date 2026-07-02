@@ -10,7 +10,9 @@ DESCRIPTION = "Source for Westminster City Council (London, UK) bin collections.
 URL = "https://www.westminster.gov.uk"
 COUNTRY = "uk"
 
-API_URL = "https://transact.westminster.gov.uk/env/streetreport.aspx?Street=NA&USRN={usrn}"
+API_URL = (
+    "https://transact.westminster.gov.uk/env/streetreport.aspx?Street=NA&USRN={usrn}"
+)
 
 TEST_CASES = {
     "Shirland Mews (short street)": {"usrn": "8400172"},
@@ -169,5 +171,32 @@ class Source:
     def __init__(self, usrn):
         self._usrn = str(usrn)
 
-    def fetch(self):
-        raise NotImplementedError
+    def fetch(self) -> list[Collection]:
+        response = requests.get(
+            API_URL.format(usrn=self._usrn), headers=HEADERS, timeout=30
+        )
+        response.raise_for_status()
+
+        soup = BeautifulSoup(response.text, "html.parser")
+        pairs = _extract_pairs(soup)
+        if not pairs:
+            raise SourceArgumentNotFound(
+                "usrn",
+                f"No collections found for USRN '{self._usrn}'. Check the USRN is correct.",
+            )
+
+        today = date.today()
+        horizon_end = today + timedelta(days=_HORIZON_DAYS)
+
+        entries: list[Collection] = []
+        for waste_type, weekday in pairs:
+            offset = (weekday - today.weekday()) % 7
+            collection_date = today + timedelta(days=offset)
+            icon = _get_icon(waste_type)
+            while collection_date <= horizon_end:
+                entries.append(
+                    Collection(date=collection_date, t=waste_type, icon=icon)
+                )
+                collection_date += timedelta(days=7)
+
+        return entries

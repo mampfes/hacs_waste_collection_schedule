@@ -192,3 +192,103 @@ SHIFTED_ROW_HTML = """
 
 def test_extract_pairs_skips_row_with_mismatched_cell_count():
     assert _pairs(SHIFTED_ROW_HTML) == set()
+
+
+# ---------------------------------------------------------------------------
+# Section 4: Source.fetch()
+# ---------------------------------------------------------------------------
+
+# 2026-06-01 is a Monday; pin date.today() for deterministic projection.
+FROZEN_MONDAY = real_date(2026, 6, 1)
+
+
+class MockResponse:
+    """Minimal requests.Response stand-in (the source reads .text)."""
+
+    def __init__(self, text="", status_code=200):
+        self.text = text
+        self.status_code = status_code
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            from requests import HTTPError
+
+            raise HTTPError(f"HTTP {self.status_code}")
+
+
+def test_init_coerces_usrn_to_string():
+    s = westminster_gov_uk.Source(usrn=8400243)
+    assert s._usrn == "8400243"
+
+
+@patch("waste_collection_schedule.source.westminster_gov_uk.date")
+@patch("waste_collection_schedule.source.westminster_gov_uk.requests")
+def test_fetch_types_and_icons(mock_requests, mock_date):
+    mock_date.today.return_value = FROZEN_MONDAY
+    mock_requests.get.return_value = MockResponse(text=FULL_HTML)
+
+    entries = westminster_gov_uk.Source(usrn="8400243").fetch()
+
+    by_type = {e.type: e.icon for e in entries}
+    assert by_type["Residential rubbish and commercial waste"] == Icons.GENERAL_WASTE
+    assert by_type["Food Recycling Collection"] == Icons.BIO_KITCHEN
+    assert by_type["Recycling Collection"] == Icons.RECYCLING
+
+
+@patch("waste_collection_schedule.source.westminster_gov_uk.date")
+@patch("waste_collection_schedule.source.westminster_gov_uk.requests")
+def test_fetch_dates_within_horizon_and_future(mock_requests, mock_date):
+    mock_date.today.return_value = FROZEN_MONDAY
+    mock_requests.get.return_value = MockResponse(text=FULL_HTML)
+
+    entries = westminster_gov_uk.Source(usrn="8400243").fetch()
+
+    horizon_end = FROZEN_MONDAY + westminster_gov_uk.timedelta(
+        days=westminster_gov_uk._HORIZON_DAYS
+    )
+    for e in entries:
+        assert FROZEN_MONDAY <= e.date <= horizon_end
+
+
+@patch("waste_collection_schedule.source.westminster_gov_uk.date")
+@patch("waste_collection_schedule.source.westminster_gov_uk.requests")
+def test_fetch_food_dates_all_tuesdays(mock_requests, mock_date):
+    mock_date.today.return_value = FROZEN_MONDAY
+    mock_requests.get.return_value = MockResponse(text=FULL_HTML)
+
+    entries = westminster_gov_uk.Source(usrn="8400243").fetch()
+
+    food = [e for e in entries if e.type == "Food Recycling Collection"]
+    assert len(food) >= 50  # weekly across ~52 weeks
+    assert all(e.date.weekday() == 1 for e in food)  # Tuesday
+
+
+@patch("waste_collection_schedule.source.westminster_gov_uk.requests")
+def test_fetch_builds_url_with_usrn(mock_requests):
+    mock_requests.get.return_value = MockResponse(text=FULL_HTML)
+
+    westminster_gov_uk.Source(usrn="8400243").fetch()
+
+    called_url = mock_requests.get.call_args[0][0]
+    assert "USRN=8400243" in called_url
+    assert "Street=NA" in called_url
+
+
+@patch("waste_collection_schedule.source.westminster_gov_uk.requests")
+def test_fetch_raises_source_not_found_when_no_collections(mock_requests):
+    mock_requests.get.return_value = MockResponse(text=EMPTY_HTML)
+
+    with pytest.raises(SourceArgumentNotFound) as exc_info:
+        westminster_gov_uk.Source(usrn="0000000").fetch()
+
+    assert exc_info.value.argument == "usrn"
+
+
+@patch("waste_collection_schedule.source.westminster_gov_uk.requests")
+def test_fetch_http_error_propagates(mock_requests):
+    from requests import HTTPError
+
+    mock_requests.get.return_value = MockResponse(status_code=503)
+
+    with pytest.raises(HTTPError):
+        westminster_gov_uk.Source(usrn="8400243").fetch()
