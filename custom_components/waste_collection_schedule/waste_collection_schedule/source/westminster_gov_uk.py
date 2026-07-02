@@ -135,6 +135,12 @@ def _extract_pairs(soup) -> set:
             cols = _column_index(table)
             for row in _data_rows(table):
                 cells = row.find_all(["td", "th"])
+                # A row with a different cell count than the header (e.g. a
+                # merged/omitted cell) can't be trusted to align positionally
+                # with `cols` — skip it rather than silently reading the
+                # wrong column.
+                if len(cells) != len(cols):
+                    continue
                 for weekday in _days_from_row(cells, cols):
                     pairs.add((RUBBISH_TYPE, weekday))
 
@@ -146,6 +152,8 @@ def _extract_pairs(soup) -> set:
             sd = cols.get("service description")
             for row in _data_rows(table):
                 cells = row.find_all(["td", "th"])
+                if len(cells) != len(cols):
+                    continue
                 if sd is None or sd >= len(cells):
                     continue
                 waste_type = cells[sd].get_text(strip=True)

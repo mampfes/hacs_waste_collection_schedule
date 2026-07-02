@@ -173,3 +173,22 @@ def test_extract_pairs_skips_street_cleaning():
 
 def test_extract_pairs_empty_page_yields_no_pairs():
     assert _pairs(EMPTY_HTML) == set()
+
+
+# A recycling row missing its leading Location cell (e.g. a merged/omitted
+# cell) has one fewer <td> than the header. This must be skipped rather than
+# silently reading each subsequent column shifted by one position.
+SHIFTED_ROW_HTML = """
+<html><body>
+<div id="pnlrecyclingcollections">
+<table>
+<tr><th>Location</th><th>Service Description</th><th>Week Days</th><th>Week Times</th><th>Weekend Days</th><th>Weekend Times</th></tr>
+<tr><td>Recycling Collection</td><td>Wed</td><td>Thu</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+</div>
+</body></html>
+"""
+
+
+def test_extract_pairs_skips_row_with_mismatched_cell_count():
+    assert _pairs(SHIFTED_ROW_HTML) == set()
