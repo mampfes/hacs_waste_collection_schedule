@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from urllib.parse import quote
 
 import requests
 from bs4 import BeautifulSoup
@@ -126,9 +127,9 @@ def _days_from_row(cells, cols) -> set[int]:
     return days
 
 
-def _extract_pairs(soup) -> set:
+def _extract_pairs(soup) -> set[tuple[str, int]]:
     """Parse the rubbish + recycling panels into deduped (waste_type, weekday) pairs."""
-    pairs: set = set()
+    pairs: set[tuple[str, int]] = set()
 
     rubbish = soup.find("div", id="pnlrubbishcollection")
     if rubbish is not None:
@@ -173,7 +174,7 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         response = requests.get(
-            API_URL.format(usrn=self._usrn), headers=HEADERS, timeout=30
+            API_URL.format(usrn=quote(self._usrn)), headers=HEADERS, timeout=30
         )
         response.raise_for_status()
 
