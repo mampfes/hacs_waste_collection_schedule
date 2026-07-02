@@ -288,6 +288,7 @@ MAP_APP_USERAGENTS = {
     "abfallMA.ucom.de": "Abfall-Ma",
     "de.ahrweiler.meinawb": "Abfall App",
     "de.abfallwecker": "ABFALL+",
+    "de.abfallplus.ahe": "AHE",
     "de.albagroup.app": "Abfuhrtermine",
     "de.biberach.abfallapp": "Abfall App",
     "de.cmcitymedia.hokwaste": "Abfallinfo HOK",
