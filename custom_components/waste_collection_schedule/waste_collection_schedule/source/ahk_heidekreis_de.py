@@ -13,11 +13,11 @@ TEST_CASES = {
         "street": "Wagnerstr.",
         "house_number": "10-18",
     },
-    "Walsrode, Wagnerstr.": {
-        "city": "Walsrode",
-        "postcode": "29664",
-        "street": "Wagnerstr.",
-        "house_number": "1",
+    "Fallingbostel, Konrad-Zuse-Str. 4": {
+        "city": "Fallingbostel/Bad Fallingbostel",
+        "postcode": 29683,
+        "street": "Konrad-Zuse-Str.",
+        "house_number": 4,
     },
 }
 
