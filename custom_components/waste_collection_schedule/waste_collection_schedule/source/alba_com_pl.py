@@ -174,7 +174,9 @@ class Source:
             raise ValueError("Schedule table not found in HTML response")
 
         entries: list[Collection] = []
-        for row in table.find("tbody").find_all("tr"):
+        tbody = table.find("tbody")
+        rows = tbody.find_all("tr") if tbody else table.find_all("tr")
+        for row in rows:
             cells = row.find_all("td")
             if not cells:
                 continue
@@ -183,7 +185,7 @@ class Source:
             if len(parts) < 2:
                 continue
 
-            month = POLISH_MONTHS.get(parts[0])
+            month = POLISH_MONTHS.get(parts[0].upper())
             if not month:
                 continue
             year = int(parts[-1])
