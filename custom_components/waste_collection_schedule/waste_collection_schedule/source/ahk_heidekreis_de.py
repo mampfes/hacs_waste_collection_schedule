@@ -1,215 +1,167 @@
-import json
-import logging
-from datetime import datetime, timedelta, timezone
-
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-)
-from waste_collection_schedule.service.ICS import ICS
+from datetime import date, timedelta
 
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule import Collection
 
 TITLE = "AHK Heidekreis"
-DESCRIPTION = "Source for Abfallwirtschaft Heidekreis."
-URL = "https://www.ahk-heidekreis.de/"
+DESCRIPTION = "Source for AHK Heidekreis, Germany (ahk-heidekreis.de)"
+URL = "https://www.ahk-heidekreis.de"
 TEST_CASES = {
-    "Munster - Wagnerstr. 10-18": {
+    "Munster, Wagnerstr. 10-18": {
         "city": "Munster",
         "postcode": "29633",
         "street": "Wagnerstr.",
         "house_number": "10-18",
     },
-    "Fallingbostel - Konrad-Zuse-Str. 4": {
-        "city": "Fallingbostel/Bad Fallingbostel",
-        "postcode": 29683,
-        "street": "Konrad-Zuse-Str.",
-        "house_number": 4,
+    "Walsrode, Wagnerstr.": {
+        "city": "Walsrode",
+        "postcode": "29664",
+        "street": "Wagnerstr.",
+        "house_number": "1",
     },
 }
 
-# Field name mappings to support multiple API response formats.
-# The API may return field names in different conventions depending on server version.
-_STREET_NAME_KEYS = ("strassenName", "name", "Name", "streetName", "StreetName")
-_STREET_PLZ_KEYS = ("plz", "PLZ", "Plz", "postalCode", "PostalCode")
-_STREET_PLACE_KEYS = ("ort", "place", "Ort", "Place", "city", "City")
-_STREET_ID_KEYS = ("id", "Id", "streetId", "StreetId", "strassenId")
-_HOUSE_NR_KEYS = ("houseNr", "HouseNr", "hausnummer", "Hausnummer")
-_HOUSE_NR_ADD_KEYS = (
-    "houseNrAdd",
-    "HouseNrAdd",
-    "hausnummerZusatz",
-    "HausnummerZusatz",
-)
-_OBJECT_ID_KEYS = (
-    "idObject",
-    "IdObject",
-    "objektId",
-    "ObjektId",
-    "objectId",
-    "ObjectId",
-)
+API_BASE = "https://ahkwebapi.heidekreis.de/api"
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-        "postcode": "PLZ",
-        "house_number": "Hausnummer",
-    }
+HEADERS = {
+    "accept": "application/json, text/plain, */*",
+    "content-type": "application/json",
+    "referer": "https://ahkweb.heidekreis.de/",
+    "origin": "https://ahkweb.heidekreis.de",
 }
 
+# Maps the disposal type names returned by the API to icons.
+# Names have occasionally changed slightly on the API side, so matching
+# is done case-insensitively and falls back to a generic bin icon.
+ICON_MAP = {
+    "restabfall": "mdi:trash-can",
+    "gelbe tonne": "mdi:recycle",
+    "bio- und gartenabfall": "mdi:leaf",
+    "altpapier": "mdi:package-variant",
+}
 
-def _get_field(item: dict, *possible_keys: str):
-    """Return the value for the first matching key found in item."""
-    for key in possible_keys:
-        if key in item:
-            return item[key]
-    return None
+DEFAULT_ICON = "mdi:trash-can"
+
+
+def _normalize(value: str) -> str:
+    return (value or "").strip().lower()
 
 
 class Source:
-    def __init__(self, city, postcode, street, house_number):
-        self._city = city
+    def __init__(self, city: str, postcode: str, street: str, house_number: str):
+        self._city = str(city)
         self._postcode = str(postcode)
-        self._street = street
+        self._street = str(street)
         self._house_number = str(house_number)
-        self._ics = ICS()
 
     def fetch(self):
-        params = {
-            "PartialName": self._street,
-        }
+        session = requests.Session()
+        session.headers.update(HEADERS)
 
-        # get list of streets and house numbers
-        r = requests.get(
-            "https://ahkwebapi.heidekreis.de/api/QMasterData/QStreetByPartialName",
-            params=params,
-        )
+        ar_strasse = self._resolve_street_id(session)
+        id_objekt = self._resolve_object_id(session, ar_strasse)
+        type_names = self._get_disposal_type_names(session)
+        return self._get_entries(session, id_objekt, type_names)
 
-        data = json.loads(r.text)
-        if len(data) == 0:
-            raise SourceArgumentNotFound("street", self._street)
-
-        # Detect API field names from the first item and log for debugging
-        if data:
-            _LOGGER.debug(
-                "QStreetByPartialName response keys: %s", list(data[0].keys())
-            )
-
-        street_entry = next(
-            (
-                item
-                for item in data
-                if _get_field(item, *_STREET_NAME_KEYS) == self._street
-                and _get_field(item, *_STREET_PLZ_KEYS) == self._postcode
-                and _get_field(item, *_STREET_PLACE_KEYS) == self._city
-            ),
-            None,
-        )
-
-        if street_entry is None:
-            suggestions = [
-                _get_field(item, *_STREET_NAME_KEYS)
-                for item in data
-                if _get_field(item, *_STREET_PLZ_KEYS) == self._postcode
-                and _get_field(item, *_STREET_PLACE_KEYS) == self._city
-            ]
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, suggestions=[s for s in suggestions if s]
-            )
-
-        street_id = _get_field(street_entry, *_STREET_ID_KEYS)
-        if street_id is None:
-            _LOGGER.error(
-                "Unexpected API response format for street ID. Available keys: %s",
-                list(street_entry.keys()),
-            )
-            raise SourceArgumentNotFound("street", self._street)
-        params = {"StreetId": street_id}
-        r = requests.get(
-            "https://ahkwebapi.heidekreis.de/api/QMasterData/QHouseNrEkal",
-            params=params,
+    def _resolve_street_id(self, session: requests.Session) -> int:
+        r = session.get(
+            f"{API_BASE}/QMasterData/QStreetByPartialName",
+            params={"PartialName": self._street},
         )
         r.raise_for_status()
+        streets = r.json()
 
-        data = json.loads(r.text)
-        if len(data) == 0:
-            raise SourceArgumentNotFound("house_number", self._house_number)
+        target_street = _normalize(self._street)
+        target_postcode = self._postcode.strip()
+        # City may be given as "Fallingbostel/Bad Fallingbostel" style combos
+        target_city_parts = [
+            _normalize(part) for part in self._city.replace(",", "/").split("/")
+        ]
 
-        # Detect house number API field names and log for debugging
-        if data:
-            _LOGGER.debug("QHouseNrEkal response keys: %s", list(data[0].keys()))
+        matches = [
+            s
+            for s in streets
+            if _normalize(s.get("strassenname")) == target_street
+            and str(s.get("plz", "")).strip() == target_postcode
+            and (
+                _normalize(s.get("ort")) in target_city_parts
+                or _normalize(s.get("ortOrtsteil")) in target_city_parts
+                or any(
+                    part in _normalize(s.get("ortOrtsteil", "")) for part in target_city_parts
+                )
+            )
+        ]
 
-        house_number_entry = next(
-            (
-                item
-                for item in data
-                if _get_field(item, *_HOUSE_NR_KEYS) is not None
-                and _get_field(item, *_HOUSE_NR_ADD_KEYS) is not None
-                and f"{_get_field(item, *_HOUSE_NR_KEYS)}{_get_field(item, *_HOUSE_NR_ADD_KEYS)}"
-                == self._house_number
-            ),
-            None,
-        )
-
-        if house_number_entry is None:
-            suggestions = [
-                f"{_get_field(item, *_HOUSE_NR_KEYS)}{_get_field(item, *_HOUSE_NR_ADD_KEYS)}"
-                for item in data
-                if _get_field(item, *_HOUSE_NR_KEYS) is not None
-                and _get_field(item, *_HOUSE_NR_ADD_KEYS) is not None
+        if not matches:
+            # relax: ignore city, just match street name + postcode
+            matches = [
+                s
+                for s in streets
+                if _normalize(s.get("strassenname")) == target_street
+                and str(s.get("plz", "")).strip() == target_postcode
             ]
-            raise SourceArgumentNotFoundWithSuggestions(
-                "house_number", self._house_number, suggestions=suggestions
+
+        if not matches:
+            raise Exception(
+                f"No street found for street='{self._street}', "
+                f"postcode='{self._postcode}', city='{self._city}'. "
+                f"Check spelling against the address lookup on "
+                f"https://www.ahk-heidekreis.de/fuer-privatkunden/abfuhrzeiten.html"
             )
 
-        # get ics file
-        object_id = _get_field(house_number_entry, *_OBJECT_ID_KEYS)
-        if object_id is None:
-            _LOGGER.error(
-                "Unexpected API response format for object ID. Available keys: %s",
-                list(house_number_entry.keys()),
-            )
-            raise SourceArgumentNotFound("house_number", self._house_number)
-        params = {
-            "von": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]
-            + "Z",
-            "bis": (datetime.now(timezone.utc) + timedelta(days=365)).strftime(
-                "%Y-%m-%dT%H:%M:%S.%f"
-            )[:-3]
-            + "Z",
-            "benachrichtigungVorJederAbholung": False,
-            "abholbenachrichtigungTageVorher": 1,
-            "abholbenachrichtigungUhrzeit": {
-                "ticks": 28800000,
-                "sekunden": 28800,
-                "minuten": 480,
-                "stunden": 8,
-            },
-            "benachrichtigungNächsterKalender": False,
-            "kalenderBenachrichtigungTageVorEnde": 3,
-            "kalenderbenachrichtigungUhrzeit": {
-                "ticks": 28800000,
-                "sekunden": 28800,
-                "minuten": 480,
-                "stunden": 8,
-            },
-        }
-        headers = {"content-type": "application/json"}
+        return matches[0]["arStrasse"]
 
-        r = requests.post(
-            f"https://ahkwebapi.heidekreis.de/api/object/{object_id}/QDisposalScheduler/asIcal",
-            data=json.dumps(params),
-            headers=headers,
+    def _resolve_object_id(self, session: requests.Session, ar_strasse: int) -> int:
+        r = session.post(
+            f"{API_BASE}/QMasterData/QHouseNrEkal",
+            json=[ar_strasse],
         )
-        dates = self._ics.convert(r.text)
+        r.raise_for_status()
+        house_numbers = r.json()
+
+        target_house_number = _normalize(self._house_number)
+
+        matches = [
+            h
+            for h in house_numbers
+            if _normalize(h.get("hausNrHausNrZ")) == target_house_number
+        ]
+
+        if not matches:
+            available = ", ".join(
+                sorted({h.get("hausNrHausNrZ", "") for h in house_numbers})
+            )
+            raise Exception(
+                f"House number '{self._house_number}' not found for this street. "
+                f"Available house numbers: {available}"
+            )
+
+        return matches[0]["arObjekt"]
+
+    def _get_disposal_type_names(self, session: requests.Session) -> dict:
+        r = session.get(f"{API_BASE}/QDisposalCalendar/QDisposalTypes")
+        r.raise_for_status()
+        return {t["id"]: t["name"] for t in r.json()}
+
+    def _get_entries(self, session: requests.Session, id_objekt: int, type_names: dict):
+        today = date.today()
+        date_from = today.strftime("%m/%d/%Y")
+        date_to = (today + timedelta(days=365)).strftime("%m/%d/%Y")
+
+        r = session.get(
+            f"{API_BASE}/QDisposalCalendar/QDisposaldays",
+            params={"idObject": id_objekt, "from": date_from, "to": date_to},
+        )
+        r.raise_for_status()
+        days = r.json()
 
         entries = []
-        for d in dates:
-            for bin_type in d[1].removesuffix(", ").split(", "):
-                _LOGGER.info("%s - %s", d[0], d[1])
-                entries.append(Collection(d[0], bin_type))
+        for d in days:
+            entry_date = date.fromisoformat(d["date"][:10])
+            waste_type = type_names.get(
+                d.get("idDisposalType"), f"Typ {d.get('idDisposalType')}"
+            )
+            icon = ICON_MAP.get(_normalize(waste_type), DEFAULT_ICON)
+            entries.append(Collection(date=entry_date, t=waste_type, icon=icon))
+
         return entries
