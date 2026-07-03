@@ -112,7 +112,7 @@ class Source:
         if self._action_candidates is not None:
             return self._action_candidates
 
-        page = session.get(BASE_URL)
+        page = session.get(BASE_URL, timeout=30)
         page.raise_for_status()
 
         # Script tags carry a `?dpl=<deployment>` query suffix, so match the
@@ -124,7 +124,7 @@ class Source:
         candidates: List[str] = []
         for path in dict.fromkeys(chunk_paths):
             try:
-                chunk = session.get(DOMAIN + path)
+                chunk = session.get(DOMAIN + path, timeout=30)
                 chunk.raise_for_status()
             except requests.RequestException:
                 continue
@@ -155,6 +155,7 @@ class Source:
                 "next-action": action,
             },
             data=json.dumps([address]),
+            timeout=30,
         )
         if response.status_code != 200:
             return None
@@ -205,7 +206,7 @@ class Source:
 
         uuid = self._uuid or self._resolve_uuid(session)
 
-        response = session.get(f"{BASE_URL}/{uuid}/calendar.ics")
+        response = session.get(f"{BASE_URL}/{uuid}/calendar.ics", timeout=30)
         response.raise_for_status()
 
         dates = self._ics.convert(response.text)
