@@ -2,19 +2,23 @@ import base64
 import json
 import re
 from datetime import datetime
-from urllib.parse import urlparse, parse_qs
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Sunderland City Council"
 DESCRIPTION = "Source for sunderland.gov.uk services for Sunderland City Council, UK."
 URL = "https://www.sunderland.gov.uk/"
 PAGE_URL = "https://www.sunderland.gov.uk/bindays"
-SUBMIT_URL = "https://www.sunderland.gov.uk/apiserver/formsservice/http/processsubmission"
 FORM_PREFIX = "BINCOLLECTIONCHECKERNEWV3"
-HEADERS = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"}
+HEADERS = {
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+}
 
 TEST_CASES = {
     "Test_001": {"postcode": "SR4 7PU", "address": "191 Cleveland Road"},
@@ -35,7 +39,7 @@ class Source:
         self._address = str(address).strip()
 
     def _get_hidden_fields(self, soup: BeautifulSoup) -> dict:
-        """Extract all hidden input fields from the form."""
+        """Extract hidden input fields whose name starts with FORM_PREFIX."""
         fields = {}
         for tag in soup.find_all("input", type="hidden"):
             name = tag.get("name", "")
@@ -64,26 +68,28 @@ class Source:
 
         # Step 2: POST postcode to trigger address lookup
         payload = dict(fields)
-        payload.update({
-            f"{FORM_PREFIX}_PAGENAME": "ADDRESSSEARCH",
-            f"{FORM_PREFIX}_PAGEINSTANCE": "0",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_SCCPOSTCODE": self._postcode,
-            f"{FORM_PREFIX}_FORMACTION_NEXT": f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODETRIGGER",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_SCCLISTOFADDRESSES": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODE": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_UPRN": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_RESIDUALBIN": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_TRADEBIN": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_RECYCLEBIN": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_GARDENBIN": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_NEXTBIN": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_PDFURL": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_LAT": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_LNG": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_ADDRESSTEXT": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_DATARETURNED": "",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_DATARETURNED2": "",
-        })
+        payload.update(
+            {
+                f"{FORM_PREFIX}_PAGENAME": "ADDRESSSEARCH",
+                f"{FORM_PREFIX}_PAGEINSTANCE": "0",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_SCCPOSTCODE": self._postcode,
+                f"{FORM_PREFIX}_FORMACTION_NEXT": f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODETRIGGER",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_SCCLISTOFADDRESSES": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODE": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_UPRN": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_RESIDUALBIN": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_TRADEBIN": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_RECYCLEBIN": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_GARDENBIN": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_NEXTBIN": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_PDFURL": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_LAT": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_LNG": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_ADDRESSTEXT": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_DATARETURNED": "",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_DATARETURNED2": "",
+            }
+        )
 
         r = s.post(submit_url, data=payload, allow_redirects=True)
         r.raise_for_status()
@@ -95,14 +101,17 @@ class Source:
 
         variables_b64 = fields.get(f"{FORM_PREFIX}_VARIABLES", "")
         if not variables_b64:
-            raise ValueError("No address data returned for postcode. Check postcode is correct.")
+            raise SourceArgumentNotFound(
+                "postcode",
+                self._postcode,
+                "no addresses were returned, please check the postcode is correct.",
+            )
 
         variables = json.loads(base64.b64decode(variables_b64).decode())
 
         # postcodefoundoptionset is a list of [uprn, display_address, ""] entries
         # First entry is always ["", "Please select", ""]
         address_options = variables.get("postcodefoundoptionset", {}).get("value", [])
-        full_details = variables.get("postcodefoundfulldetails", {}).get("value", [])
 
         # Match the user's address string (case-insensitive, comma/whitespace normalised)
         def normalise(s: str) -> str:
@@ -119,23 +128,26 @@ class Source:
 
         if uprn is None:
             available = [o[1] for o in address_options[1:]]
-            raise ValueError(
-                f"Address '{self._address}' not found in results for postcode '{self._postcode}'. "
-                f"Available addresses: {available}"
+            raise SourceArgumentNotFoundWithSuggestions(
+                "address",
+                self._address,
+                available,
             )
 
         # Step 4: POST with selected UPRN to retrieve collection dates
         payload = dict(fields)
-        payload.update({
-            f"{FORM_PREFIX}_PAGENAME": "ADDRESSSEARCH",
-            f"{FORM_PREFIX}_PAGEINSTANCE": "1",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_SCCPOSTCODE": self._postcode,
-            f"{FORM_PREFIX}_FORMACTION_NEXT": f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODETRIGGER",
-            f"{FORM_PREFIX}_ADDRESSSEARCH_SCCLISTOFADDRESSES": uprn,
-            f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODE": self._postcode,
-            f"{FORM_PREFIX}_ADDRESSSEARCH_UPRN": uprn,
-            f"{FORM_PREFIX}_ADDRESSSEARCH_ADDRESSTEXT": matched_address,
-        })
+        payload.update(
+            {
+                f"{FORM_PREFIX}_PAGENAME": "ADDRESSSEARCH",
+                f"{FORM_PREFIX}_PAGEINSTANCE": "1",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_SCCPOSTCODE": self._postcode,
+                f"{FORM_PREFIX}_FORMACTION_NEXT": f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODETRIGGER",
+                f"{FORM_PREFIX}_ADDRESSSEARCH_SCCLISTOFADDRESSES": uprn,
+                f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODE": self._postcode,
+                f"{FORM_PREFIX}_ADDRESSSEARCH_UPRN": uprn,
+                f"{FORM_PREFIX}_ADDRESSSEARCH_ADDRESSTEXT": matched_address,
+            }
+        )
 
         r = s.post(submit_url, data=payload, allow_redirects=True)
         r.raise_for_status()
@@ -167,5 +179,10 @@ class Source:
             except ValueError:
                 continue
 
-        return entries
+        if not entries:
+            raise ValueError(
+                "No collection dates could be parsed from the Sunderland bindays "
+                "portal. The website structure may have changed."
+            )
 
+        return entries
