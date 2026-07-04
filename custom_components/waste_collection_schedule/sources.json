@@ -17275,6 +17275,14 @@
       "id": "hvcgroep_nl"
     },
     {
+      "title": "Gemeente Sliedrecht",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "sliedrecht"
+      },
+      "id": "hvcgroep_nl"
+    },
+    {
       "title": "Gemeente Sudwest-Fryslan",
       "module": "hvcgroep_nl",
       "default_params": {

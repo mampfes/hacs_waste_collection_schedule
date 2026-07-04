@@ -2613,6 +2613,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeente Middelburg + Vlissingen](/doc/source/hvcgroep_nl.md) / middelburgvlissingen.nl
 - [Gemeente Peel en Maas](/doc/source/hvcgroep_nl.md) / peelenmaas.nl
 - [Gemeente Schouwen-Duiveland](/doc/source/hvcgroep_nl.md) / schouwen-duiveland.nl
+- [Gemeente Sliedrecht](/doc/source/hvcgroep_nl.md) / sliedrecht.nl
 - [Gemeente Sudwest-Fryslan](/doc/source/hvcgroep_nl.md) / sudwestfryslan.nl
 - [Gemeente Utrecht](/doc/source/burgerportaal_nl.md) / utrecht.nl
 - [Gemeente Venlo](/doc/source/ximmio_nl.md) / venlo.nl
