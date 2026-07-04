@@ -2,10 +2,10 @@ from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
+from dateutil.parser import ParserError
+from dateutil.parser import parse as dateutil_parse
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.icons import Icons  # type: ignore[attr-defined]
-from dateutil.parser import parse as dateutil_parse
-from dateutil.parser import ParserError
 
 TITLE = "Birmingham City Council"
 DESCRIPTION = "Source for birmingham.gov.uk services for Birmingham, UK."
@@ -110,4 +110,3 @@ class Source:
             )
 
         return entries
-    
