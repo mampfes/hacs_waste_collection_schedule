@@ -1,8 +1,11 @@
-from datetime import datetime
+from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.icons import Icons  # type: ignore[attr-defined]
+from dateutil.parser import parse as dateutil_parse
+from dateutil.parser import ParserError
 
 TITLE = "Birmingham City Council"
 DESCRIPTION = "Source for birmingham.gov.uk services for Birmingham, UK."
@@ -15,18 +18,43 @@ TEST_CASES = {
 }
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
 }
 
-API_URLS = {
-    "get_session": "https://www.birmingham.gov.uk/xfp/form/619",
-    "collection": "https://www.birmingham.gov.uk/xfp/form/619",
-}
+API_URL = "https://www.birmingham.gov.uk/info/50388/check_your_collection_day"
+
 ICON_MAP = {
-    "Household Collection": Icons.GENERAL_WASTE,
-    "Recycling Collection": Icons.RECYCLING,
-    "Green Recycling Chargeable Collections": Icons.ORGANIC,
+    "Rubbish": Icons.GENERAL_WASTE,
+    "Food": Icons.BIO_KITCHEN,
+    "Mixed recycling": Icons.RECYCLING,
 }
+
+YEAR_ROLLOVER_THRESHOLD_MONTHS = 6
+
+
+def _parse_collection_date(raw_date: str, today: datetime) -> date | None:
+    """
+    Parse a 'Weekday DD Month' table entry (year omitted).
+
+    Schedules only ever contain current/future dates plus one just-completed
+    row from the past week, so year rollover only happens at the Dec -> Jan
+    boundary - never mid-year. A month-gap > 6 is unambiguous evidence of a
+    genuine wraparound (e.g. today=Dec, parsed=Jan); anything smaller is just
+    "earlier this month/last month" and is left alone (the caller filters it
+    out via the cutoff if it's genuinely in the past).
+    """
+    try:
+        parsed = dateutil_parse(raw_date, default=today, fuzzy=True)
+    except (ParserError, ValueError, OverflowError):
+        return None
+
+    if (
+        parsed.month < today.month
+        and today.month - parsed.month > YEAR_ROLLOVER_THRESHOLD_MONTHS
+    ):
+        parsed = parsed.replace(year=parsed.year + 1)
+
+    return parsed.date()
 
 
 class Source:
@@ -37,43 +65,40 @@ class Source:
     def fetch(self):
         entries: list[Collection] = []
 
-        session = requests.Session()
-        session.headers.update(HEADERS)
-
-        token_response = session.get(API_URLS["get_session"])
-        soup = BeautifulSoup(token_response.text, "html.parser")
-        token = soup.find("input", {"name": "__token"}).attrs["value"]
-        if not token:
-            raise ValueError(
-                "Could not parse CSRF Token from initial response. Won't be able to proceed."
-            )
-
-        form_data = {
-            "__token": token,
-            "page": "491",
-            "locale": "en_GB",
-            "q1f8ccce1d1e2f58649b4069712be6879a839233f_0_0": self._postcode,
-            "q1f8ccce1d1e2f58649b4069712be6879a839233f_1_0": self._uprn,
+        params = {
+            "postcode": self._postcode,
+            "uprn": self._uprn,
             "next": "Next",
         }
+        response = requests.get(API_URL, headers=HEADERS, params=params, timeout=30)
+        response.raise_for_status()
 
-        collection_response = session.post(API_URLS["collection"], data=form_data)
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = soup.find("table", class_="data-table")
+        if table is None:
+            raise ValueError(
+                "Could not find collection schedule table - check UPRN/postcode "
+                "or whether the council page structure has changed."
+            )
 
-        collection_soup = BeautifulSoup(collection_response.text, "html.parser")
+        today = datetime.now()
+        cutoff = today - timedelta(days=1)  # drop the just-completed row
 
-        for table_row in collection_soup.find(
-            "table", class_="data-table"
-        ).tbody.find_all("tr"):
-            collection_type = table_row.contents[0].text
-            collection_next = table_row.contents[1].text
+        for table_row in table.tbody.find_all("tr"):
+            cells = table_row.find_all(["th", "td"])
+            if len(cells) < 2:
+                continue
 
-            collection_date_obj = datetime.strptime(
-                collection_next, "%a %d/%m/%Y"
-            ).date()
+            raw_date = cells[0].text.strip()
+            collection_type = cells[1].text.strip()
+
+            collection_date = _parse_collection_date(raw_date, today)
+            if collection_date is None or collection_date < cutoff.date():
+                continue
 
             entries.append(
                 Collection(
-                    date=collection_date_obj,
+                    date=collection_date,
                     t=collection_type,
                     icon=ICON_MAP.get(collection_type, "mdi:help"),
                 )
@@ -85,3 +110,4 @@ class Source:
             )
 
         return entries
+    
