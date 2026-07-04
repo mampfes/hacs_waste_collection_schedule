@@ -475,6 +475,7 @@ This source has been successfully tested with the following service providers:
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
 - [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
+- [Newcastle upon Tyne](/doc/ics/recollect.md) / new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day
 - [North Tyneside Council](/doc/ics/northtyneside_gov_uk.md) / northtyneside.gov.uk
 - [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
 - [Stirling Council, UK](/doc/ics/recollect.md) / stirling.gov.uk
