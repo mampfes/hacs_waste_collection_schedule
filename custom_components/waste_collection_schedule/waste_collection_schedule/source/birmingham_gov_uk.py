@@ -29,30 +29,24 @@ ICON_MAP = {
     "Mixed recycling": Icons.RECYCLING,
 }
 
-YEAR_ROLLOVER_THRESHOLD_MONTHS = 6
 
-
-def _parse_collection_date(raw_date: str, today: datetime) -> date | None:
+def _parse_collection_date(raw_date: str, today: datetime) -> date:
     """
     Parse a 'Weekday DD Month' table entry (year omitted).
 
-    Schedules only ever contain current/future dates plus one just-completed
-    row from the past week, so year rollover only happens at the Dec -> Jan
-    boundary - never mid-year. A month-gap > 6 is unambiguous evidence of a
-    genuine wraparound (e.g. today=Dec, parsed=Jan); anything smaller is just
-    "earlier this month/last month" and is left alone (the caller filters it
-    out via the cutoff if it's genuinely in the past).
+    If we are in the last quarter of the year and the parsed month is in the first quarter, assume the date is in the next year.
+    if we are in the first quarter of the year and the parsed month is in the last quarter, assume the date is in the previous year.
     """
     try:
         parsed = dateutil_parse(raw_date, default=today, fuzzy=True)
-    except (ParserError, ValueError, OverflowError):
-        return None
+    except (ParserError, ValueError, OverflowError) as exc:
+        raise ValueError(f"Could not parse collection date '{raw_date}'") from exc
 
-    if (
-        parsed.month < today.month
-        and today.month - parsed.month > YEAR_ROLLOVER_THRESHOLD_MONTHS
-    ):
+    # handle year crossover
+    if today.month >= 10 and parsed.month <= 3:
         parsed = parsed.replace(year=parsed.year + 1)
+    elif today.month <= 3 and parsed.month >= 10:
+        parsed = parsed.replace(year=parsed.year - 1)
 
     return parsed.date()
 
@@ -74,8 +68,7 @@ class Source:
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, "html.parser")
-        table = soup.find("table", class_="data-table")
-        if table is None:
+        if not (table := soup.find("table", class_="data-table")) or not table.tbody:
             raise ValueError(
                 "Could not find collection schedule table - check UPRN/postcode "
                 "or whether the council page structure has changed."
@@ -93,14 +86,14 @@ class Source:
             collection_type = cells[1].text.strip()
 
             collection_date = _parse_collection_date(raw_date, today)
-            if collection_date is None or collection_date < cutoff.date():
+            if collection_date < cutoff.date():
                 continue
 
             entries.append(
                 Collection(
                     date=collection_date,
                     t=collection_type,
-                    icon=ICON_MAP.get(collection_type, "mdi:help"),
+                    icon=ICON_MAP.get(collection_type, Icons.GENERAL_WASTE),
                 )
             )
 
