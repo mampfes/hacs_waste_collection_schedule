@@ -3423,6 +3423,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [Abilene, TX](/doc/source/abilene_tx_us.md) / abilenetx.gov/426/Solid-Waste-Recycling
 - [Albuquerque, New Mexico, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-nm-city-of-albuquerque
+- [Alexandria, VA](/doc/source/alexandria_va_us.md) / alexandriava.gov/RefuseCollection
 - [Atlantic Waste Services, GA](/doc/ics/recollect.md) / atlanticwaste.com
 - [Baltimore County](/doc/source/baltimore_county_md_us.md) / baltimorecountymd.gov/departments/public-works/solid-waste/collection-schedule
 - [Baton Rouge, LA](/doc/source/baton_rouge_la_us.md) / brla.gov/337/Garbage-Collection
