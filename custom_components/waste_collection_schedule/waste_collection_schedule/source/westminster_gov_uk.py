@@ -190,7 +190,7 @@ class Source:
         horizon_end = today + timedelta(days=_HORIZON_DAYS)
 
         entries: list[Collection] = []
-        for waste_type, weekday in pairs:
+        for waste_type, weekday in sorted(pairs):
             offset = (weekday - today.weekday()) % 7
             collection_date = today + timedelta(days=offset)
             icon = _get_icon(waste_type)
