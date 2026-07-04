@@ -9,7 +9,7 @@ waste_collection_schedule:
   sources:
     - name: ocarcims_ocfl_com
       args:
-        parcel_id: "123456789012345"
+        parcel_id: YOUR_PARCEL_ID
 ```
 
 ### Configuration Variables
@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: ocarcims_ocfl_com
       args:
-        parcel_id: "123456789012345"
+        parcel_id: "012128690001243"  # Orange County Fire Station 27
 ```
 
 ## Returned Collection Types
