@@ -1239,6 +1239,7 @@ If you already have enough information for your municipality/region, you are ver
 - [AWG Wuppertal](/doc/source/awg_wuppertal_de.md) / awg-wuppertal.de
 - [AWIDO Online](/doc/source/awido_de.md) / awido-online.de
 - [AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH](/doc/source/awigo_de.md) / awigo.de
+- [AWISTA Kommunal GmbH (Düsseldorf)](/doc/source/awista_kommunal_de.md) / awista-kommunal.de/abfallkalender
 - [AWISTA LOGISTIK Stadt Remscheid](/doc/source/monaloga_de.md) / monaloga.de
 - [Awista Starnberg](/doc/ics/awista_starnberg_de.md) / awista-starnberg.de
 - [AWL Neuss](/doc/source/awlneuss_de.md) / buergerportal.awl-neuss.de

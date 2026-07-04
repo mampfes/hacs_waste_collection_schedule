@@ -2145,6 +2145,14 @@
     "howto": {},
     "urls": {}
   },
+  "awista_kommunal_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awista_kommunal_de.md",
+    "howto": {
+      "de": "Geben Sie 'street' (Straße) und 'house_number' (Hausnummer) so an, wie Sie sie in die Adresssuche auf https://www.awista-kommunal.de/abfallkalender eingeben würden. Alternativ können Sie Ihre Adresse auf dieser Seite suchen und die UUID aus der Adresszeile des Browsers kopieren (z. B. https://www.awista-kommunal.de/abfallkalender/<uuid>) und als Argument 'uuid' angeben; wird 'uuid' angegeben, werden die Adressargumente ignoriert.",
+      "en": "Provide your 'street' and 'house_number' as you would type them into the address search at https://www.awista-kommunal.de/abfallkalender. Alternatively, search for your address on that page and copy the UUID from the browser URL bar (e.g. https://www.awista-kommunal.de/abfallkalender/<uuid>) into the 'uuid' argument; if 'uuid' is given, the address arguments are ignored."
+    },
+    "urls": {}
+  },
   "monaloga_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/monaloga_de.md",
     "howto": {},

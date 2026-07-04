@@ -7653,6 +7653,12 @@
       "id": "awigo_de"
     },
     {
+      "title": "AWISTA Kommunal GmbH (D\u00fcsseldorf)",
+      "module": "awista_kommunal_de",
+      "default_params": {},
+      "id": "awista_kommunal_de"
+    },
+    {
       "title": "AWISTA LOGISTIK Stadt Remscheid",
       "module": "monaloga_de",
       "default_params": {},
