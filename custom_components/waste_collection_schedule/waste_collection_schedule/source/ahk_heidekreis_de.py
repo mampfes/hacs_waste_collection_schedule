@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, Icons
 
 TITLE = "AHK Heidekreis"
 DESCRIPTION = "Source for AHK Heidekreis, Germany (ahk-heidekreis.de)"
@@ -34,13 +34,13 @@ HEADERS = {
 # Names have occasionally changed slightly on the API side, so matching
 # is done case-insensitively and falls back to a generic bin icon.
 ICON_MAP = {
-    "restabfall": "mdi:trash-can",
-    "gelbe tonne": "mdi:recycle",
-    "bio- und gartenabfall": "mdi:leaf",
-    "altpapier": "mdi:package-variant",
+    "restabfall": Icons.GENERAL_WASTE,
+    "gelbe tonne": Icons.RECYCLING,
+    "bio- und gartenabfall": Icons.ORGANIC,
+    "altpapier": Icons.PAPER,
 }
 
-DEFAULT_ICON = "mdi:trash-can"
+DEFAULT_ICON = Icons.GENERAL_WASTE
 
 
 def _normalize(value: str) -> str:
