@@ -11,6 +11,7 @@ TITLE = "Orange County, FL"
 DESCRIPTION = "Source for Orange County Government curbside collection schedules."
 URL = "https://ocarcims.ocfl.net/"
 COUNTRY = "us"
+SOURCE_CODEOWNERS = ["@rbusquet"]
 
 TEST_CASES = {
     "Orange County Fire Station 27": {"parcel_id": "012128690001243"},
