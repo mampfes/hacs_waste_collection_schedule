@@ -17129,6 +17129,14 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Barendrecht Albrandswaard Ridderkerk",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "afvalbeheer"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "BAT Tilburg",
       "module": "burgerportaal_nl",
       "default_params": {
