@@ -90,7 +90,7 @@ class Source:
         for item in result:
             service = item.get("service", "")
             day = item.get("day", "")
-            for d in self._upcoming_dates(day, weeks=8):
+            for d in self._upcoming_dates(day, weeks=26):
                 entries.append(
                     Collection(
                         date=d,
@@ -178,7 +178,7 @@ class Source:
                 d += timedelta(days=1)
         return d
 
-    def _upcoming_dates(self, day: str, weeks: int = 8) -> list[date]:
+    def _upcoming_dates(self, day: str, weeks: int = 26) -> list[date]:
         """Return the next ``weeks`` occurrences of a collection day, with
         holiday shifts applied."""
         first = self._parse_day(day)
