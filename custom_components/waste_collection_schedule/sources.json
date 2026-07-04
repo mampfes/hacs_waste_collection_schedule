@@ -17728,6 +17728,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "ALBA Swarz\u0119dz",
+      "module": "alba_com_pl",
+      "default_params": {},
+      "id": "alba_com_pl"
+    },
+    {
       "title": "App Moje Odpady",
       "module": "moje_odpady_pl",
       "default_params": {},

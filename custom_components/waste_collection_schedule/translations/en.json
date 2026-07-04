@@ -17926,6 +17926,37 @@
           "town_address": "House number of the town if street is not set"
         }
       },
+      "args_alba_com_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "City name in uppercase, e.g. SWARZĘDZ",
+          "number": "House/building number, e.g. 2",
+          "street": "Street name in uppercase, e.g. JÓZEFA RIVOLIEGO"
+        }
+      },
+      "reconfigure_alba_com_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "City name in uppercase, e.g. SWARZĘDZ",
+          "number": "House/building number, e.g. 2",
+          "street": "Street name in uppercase, e.g. JÓZEFA RIVOLIEGO"
+        }
+      },
       "args_moje_odpady_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

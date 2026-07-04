@@ -3747,6 +3747,13 @@
     "howto": {},
     "urls": {}
   },
+  "alba_com_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alba_com_pl.md",
+    "howto": {
+      "en": "Open https://www.alba.com.pl/odbior_odpadow_wywoz_smieci/swarzedz and use the schedule search form. Select your city, street and house number from the dropdowns and use those exact values (uppercase) as the source arguments."
+    },
+    "urls": {}
+  },
   "moje_odpady_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moje_odpady_pl.md",
     "howto": {},

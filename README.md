@@ -2694,6 +2694,7 @@ If you already have enough information for your municipality/region, you are ver
 <summary>Poland</summary>
 
 - [ABRUKO PLUS](/doc/source/sims_pl.md) / sisms.pl
+- [ALBA Swarzędz](/doc/source/alba_com_pl.md) / alba.com.pl
 - [App Moje Odpady](/doc/source/moje_odpady_pl.md) / moje-odpady.pl
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
 - [Czerwonak, Murowana Goślina, Oborniki](/doc/source/eko_tom_pl.md) / eko-tom.pl
