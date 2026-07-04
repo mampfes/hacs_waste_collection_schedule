@@ -41,6 +41,11 @@ TEST_CASES = {
         "house_number": "1",
         "service": "peelenmaas",
     },
+    "Sliedrecht": {
+        "postal_code": "3361AK",
+        "house_number": "397",
+        "service": "sliedrecht",
+    },
     "Tollebeek": {"postal_code": "8309AV", "house_number": "1"},
     "Hvcgroep: Tollebeek": {
         "postal_code": "8309AV",
@@ -199,6 +204,16 @@ SERVICE_MAP = [
             "appel-gft": "mdi:leaf",
             "doos-karton-papier": "mdi:archive",
             "doos-karton-blik-fles-glas-plastic-hero-logo": "mdi:recycle",
+        },
+    },
+    {
+        "title": "Gemeente Sliedrecht",
+        "api_url": "https://afvalkalender.sliedrecht.nl",
+        "icons": {
+            "plastic-blik-drinkpak": "mdi:recycle",
+            "gft": "mdi:leaf",
+            "papier-en-karton": "mdi:archive",
+            "restafval": "mdi:trash-can",
         },
     },
     {
