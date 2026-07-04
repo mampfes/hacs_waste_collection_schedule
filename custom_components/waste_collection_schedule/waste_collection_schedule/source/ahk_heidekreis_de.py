@@ -30,21 +30,33 @@ HEADERS = {
     "origin": "https://ahkweb.heidekreis.de",
 }
 
-# Maps the disposal type names returned by the API to icons.
-# Names have occasionally changed slightly on the API side, so matching
-# is done case-insensitively and falls back to a generic bin icon.
-ICON_MAP = {
-    "restabfall": Icons.GENERAL_WASTE,
-    "gelbe tonne": Icons.RECYCLING,
-    "bio- und gartenabfall": Icons.ORGANIC,
-    "altpapier": Icons.PAPER,
-}
+# Maps keywords found in the disposal description to icons. The API's
+# QDisposalDayIcons descriptions include the container size and variant
+# (e.g. "Restabfalltonne 120 L"), so matching is done by keyword
+# containment rather than exact equality, and falls back to a generic
+# bin icon.
+ICON_KEYWORDS = (
+    ("restabfall", Icons.GENERAL_WASTE),
+    ("gelbe tonne", Icons.RECYCLING),
+    ("bioenergie", Icons.ORGANIC),
+    ("bio- und garten", Icons.ORGANIC),
+    ("garten", Icons.ORGANIC),
+    ("papier", Icons.PAPER),
+)
 
 DEFAULT_ICON = Icons.GENERAL_WASTE
 
 
 def _normalize(value: str) -> str:
     return (value or "").strip().lower()
+
+
+def _icon_for(description: str) -> Icons:
+    normalized = _normalize(description)
+    for keyword, icon in ICON_KEYWORDS:
+        if keyword in normalized:
+            return icon
+    return DEFAULT_ICON
 
 
 class Source:
@@ -60,8 +72,20 @@ class Source:
 
         ar_strasse = self._resolve_street_id(session)
         id_objekt = self._resolve_object_id(session, ar_strasse)
+
+        today = date.today()
+        date_from = today.strftime("%m/%d/%Y")
+        date_to = (today + timedelta(days=365)).strftime("%m/%d/%Y")
+
+        # Fallback labels keyed by idDisposalType, used only for entries whose
+        # idIcon has no matching description (see QDisposalDayIcons below).
         type_names = self._get_disposal_type_names(session)
-        return self._get_entries(session, id_objekt, type_names)
+        icon_descriptions = self._get_icon_descriptions(
+            session, id_objekt, date_from, date_to
+        )
+        return self._get_entries(
+            session, id_objekt, date_from, date_to, icon_descriptions, type_names
+        )
 
     def _resolve_street_id(self, session: requests.Session) -> int:
         r = session.get(
@@ -144,11 +168,32 @@ class Source:
         r.raise_for_status()
         return {t["id"]: t["name"] for t in r.json()}
 
-    def _get_entries(self, session: requests.Session, id_objekt: int, type_names: dict):
-        today = date.today()
-        date_from = today.strftime("%m/%d/%Y")
-        date_to = (today + timedelta(days=365)).strftime("%m/%d/%Y")
+    def _get_icon_descriptions(
+        self, session: requests.Session, id_objekt: int, date_from: str, date_to: str
+    ) -> dict:
+        # Keyed by idIcon (not idDisposalType); descriptions here are more
+        # specific than QDisposalTypes' names, e.g. "Restabfalltonne 120 L"
+        # instead of just "Restabfall".
+        r = session.get(
+            f"{API_BASE}/QDisposalCalendar/QDisposalDayIcons",
+            params={"idObject": id_objekt, "from": date_from, "to": date_to},
+        )
+        r.raise_for_status()
+        return {
+            entry["id"]: entry["description"].strip()
+            for entry in r.json()
+            if entry.get("description")
+        }
 
+    def _get_entries(
+        self,
+        session: requests.Session,
+        id_objekt: int,
+        date_from: str,
+        date_to: str,
+        icon_descriptions: dict,
+        type_names: dict,
+    ):
         r = session.get(
             f"{API_BASE}/QDisposalCalendar/QDisposaldays",
             params={"idObject": id_objekt, "from": date_from, "to": date_to},
@@ -159,10 +204,10 @@ class Source:
         entries = []
         for d in days:
             entry_date = date.fromisoformat(d["date"][:10])
-            waste_type = type_names.get(
+            waste_type = icon_descriptions.get(d.get("idIcon")) or type_names.get(
                 d.get("idDisposalType"), f"Typ {d.get('idDisposalType')}"
             )
-            icon = ICON_MAP.get(_normalize(waste_type), DEFAULT_ICON)
+            icon = _icon_for(waste_type)
             entries.append(Collection(date=entry_date, t=waste_type, icon=icon))
 
         return entries
