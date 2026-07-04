@@ -1,6 +1,6 @@
-import requests
 from datetime import date, timedelta
 
+import requests
 from waste_collection_schedule import Collection
 
 TITLE = "AHK Heidekreis"
@@ -87,7 +87,8 @@ class Source:
                 _normalize(s.get("ort")) in target_city_parts
                 or _normalize(s.get("ortOrtsteil")) in target_city_parts
                 or any(
-                    part in _normalize(s.get("ortOrtsteil", "")) for part in target_city_parts
+                    part in _normalize(s.get("ortOrtsteil", ""))
+                    for part in target_city_parts
                 )
             )
         ]
