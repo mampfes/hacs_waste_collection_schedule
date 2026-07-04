@@ -54,6 +54,7 @@ class Source:
 
         bin_type = None
         entries = []
+        today = datetime.now().date()
 
         for collection in waste_panel.contents:
             if isinstance(collection, Tag):
@@ -65,7 +66,7 @@ class Source:
             date_str = collection.strip()
             # date: Saturday 30th December
             coll_date = parser.parse(date_str).date()
-            if (datetime.now().date() - coll_date).days > 180:
+            if (today - coll_date).days > 180:
                 coll_date = coll_date.replace(year=coll_date.year + 1)
 
             entries.append(
