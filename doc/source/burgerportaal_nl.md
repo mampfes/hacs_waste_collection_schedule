@@ -21,6 +21,7 @@ waste_collection_schedule:
 
 Use one of the following codes as organization code:
 
+- afvalbeheer
 - assen
 - bat
 - groningen
@@ -40,6 +41,7 @@ For example if you house is `2A` you will put `A` here.
 
 ## Supported Operators
 
+- `afvalbeheer` (Barendrecht Albrandswaard Ridderkerk): <https://21burgerportaal.mendixcloud.com/p/afvalbeheer/landing/>
 - `assen` (Gemeente Assen): <https://21burgerportaal.mendixcloud.com/p/assen/landing/>
 - `bat` (BAT Tilburg): <https://21burgerportaal.mendixcloud.com/p/bat/landing/>
 - `groningen` (Gemeente Groningen): <https://21burgerportaal.mendixcloud.com/p/groningen/landing/>
