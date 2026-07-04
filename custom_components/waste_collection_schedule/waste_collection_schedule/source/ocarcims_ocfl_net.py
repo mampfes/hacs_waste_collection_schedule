@@ -160,6 +160,10 @@ class Source:
         """Shift a collection date forward by one day if it falls on or after a
         holiday within the same week.
 
+        Per the county's own statement on https://ocarcims.ocfl.net/:
+        "When Thanksgiving and Christmas fall on a regular scheduled day,
+        collection will move one day forward for the rest of the week."
+
         Orange County observes two holidays:
         - Thanksgiving (4th Thursday of November)
         - Christmas (December 25)
