@@ -160,7 +160,8 @@ class Source:
         """Shift a collection date forward by one day if it falls on or after a
         holiday within the same week.
 
-        Per the county's own statement on https://ocarcims.ocfl.net/:
+        Per the county's holiday collection policy:
+        https://www.orangecountyfl.net/WaterGarbageRecycling/HolidayCollection.aspx
         "When Thanksgiving and Christmas fall on a regular scheduled day,
         collection will move one day forward for the rest of the week."
 
