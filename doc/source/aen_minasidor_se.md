@@ -38,9 +38,9 @@ empty initially; the configuration flow will offer the available addresses.
 Store the login details in Home Assistant's `secrets.yaml`.
 
 ```yaml
-aen_minasidor_email: YOUR_EMAIL
-aen_minasidor_password: YOUR_PASSWORD
-aen_minasidor_address: YOUR_ADDRESS
+aen_minasidor_se_email: YOUR_EMAIL
+aen_minasidor_se_password: YOUR_PASSWORD
+aen_minasidor_se_address: YOUR_ADDRESS
 ```
 
 ### Example
@@ -50,6 +50,6 @@ waste_collection_schedule:
   sources:
     - name: aen_minasidor_se
       args:
-        email: !secret aen_minasidor_email
-        password: !secret aen_minasidor_password
+        email: !secret aen_minasidor_se_email
+        password: !secret aen_minasidor_se_password
 ```
