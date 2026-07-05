@@ -25,9 +25,9 @@ ICON_MAP = {
 }
 
 WASTE_TYPE_MAP = {
-    "General non-recyclable waste": "General Waste",
-    "Recycling": "Recycling",
-    "Garden waste": "Garden Waste",
+    "general non-recyclable waste": "General Waste",
+    "recycling": "Recycling",
+    "garden waste": "Garden Waste",
 }
 
 
@@ -188,7 +188,9 @@ class Source:
                     waste_types = [w.strip() for w in waste_description.split("&")]
 
                     for waste_type in waste_types:
-                        bin_type = WASTE_TYPE_MAP.get(waste_type)
+                        bin_type = WASTE_TYPE_MAP.get(
+                            " ".join(waste_type.split()).casefold()
+                        )
                         if bin_type:
                             entries.append(
                                 Collection(
