@@ -6574,6 +6574,13 @@
     "howto": {},
     "urls": {}
   },
+  "ocarcims_ocfl_net": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ocarcims_ocfl_net.md",
+    "howto": {
+      "en": "Search for your address at https://ocarcims.ocfl.net/ or https://www.ocpafl.org/. The 15-digit parcel ID appears in the search results on either site."
+    },
+    "urls": {}
+  },
   "palmcoast_fl_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/palmcoast_fl_gov.md",
     "howto": {},

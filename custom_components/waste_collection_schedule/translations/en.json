@@ -28630,6 +28630,29 @@
           "address": "Street address (e.g. '16795 Northville Rd')"
         }
       },
+      "args_ocarcims_ocfl_net": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "parcel_id": "Parcel ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "parcel_id": "15-digit parcel ID from the Orange County Property Appraiser (ocpafl.org)"
+        }
+      },
+      "reconfigure_ocarcims_ocfl_net": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "parcel_id": "Parcel ID"
+        },
+        "data_description": {
+          "parcel_id": "15-digit parcel ID from the Orange County Property Appraiser (ocpafl.org)"
+        }
+      },
       "args_palmcoast_fl_gov": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
