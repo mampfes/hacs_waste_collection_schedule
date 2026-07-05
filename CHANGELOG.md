@@ -4,6 +4,47 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.30.0] - 2026-07-06
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@Coderzz69, @igor-vovk, @kamilos-dev, @listiges-kaenguru, @lpukatch, @parmymansam,
+@rbusquet and @SA7BNT. 🎉
+Thanks as well to our returning contributors (@amildenhall, @anuj-dangi, @bbr111,
+@danielcolquitt, @marsdeat, @Zaunei) for the fixes and new sources below.
+
+### Deprecated
+
+- deprecated newcastle_gov_uk: community.newcastle.gov.uk bin lookup retired by the council; migrate to the shared ReCollect ICS source (area `NewcastleUponTyneUK`) (#6753)
+
+### Added Sources
+
+- added Aneby Miljö & Vatten (aen_minasidor_se), SE (thanks @SA7BNT) (#6721)
+- added Terres Touloises (terrestouloises_com), FR (#6766)
+- added Orange County, FL (ocarcims_ocfl_net), US (thanks @rbusquet) (#6760)
+- added Westminster City Council (westminster_gov_uk), UK (thanks @parmymansam) (#6744)
+- added AWISTA Kommunal GmbH (Düsseldorf) (awista_kommunal_de), DE (thanks @Zaunei) (#6722)
+- added Alexandria, VA (alexandria_va_us), US (thanks @lpukatch) (#6720)
+- added ALBA Swarzędz (alba_com_pl), PL (thanks @kamilos-dev) (#6736)
+
+### Fixed Sources
+
+- fixed app_abfallplus_de: don't append empty subtitle to waste-type names (#6767)
+- fixed braintree_gov_uk: normalise new bin-type labels and restore icon mapping (thanks @amildenhall) (#6765)
+- fixed lismore_city_nsw_gov_au: refactored onto shared WhatBinDay service, added metadata and a second test case (thanks @anuj-dangi) (#6759)
+- fixed st_helens_gov_uk: make waste-type matching case-insensitive so garden waste isn't silently skipped (thanks @danielcolquitt) (#6764)
+- fixed highpeak_gov_uk: update source for new Bartec bin-day portal (#6757)
+- fixed burgerportaal_nl: add afvalbeheer organisation, fix address_id typo (thanks @igor-vovk) (#6756)
+- fixed westsuffolk_gov_uk: correct year rollover around New Year and update ICON_MAP for new bin labels (thanks @Coderzz69) (#6734)
+- fixed hvcgroep_nl: migrate per-municipality icon dicts to canonical Icons enum (#6752)
+- fixed hvcgroep_nl: add Sliedrecht to supported organizations (thanks @igor-vovk) (#6748)
+- fixed ahk_heidekreis_de: update for changed provider API (thanks @listiges-kaenguru) (#6746)
+- fixed awb_oldenburg_de: update for new URL and TYPO3 form flow (#6742)
+- fixed ahe_de: rebuilt on abfallplus platform after atino.net shutdown; breaking change: `plz` parameter replaced by `city` (#6741)
+
+### Other
+
+- renamed south_norfolk_and_broadland_gov_uk test cases for clarity (thanks @marsdeat) (#6758)
+
 ## [2.29.0] - 2026-06-22
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
