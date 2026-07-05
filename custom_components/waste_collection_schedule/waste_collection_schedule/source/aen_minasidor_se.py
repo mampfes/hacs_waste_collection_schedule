@@ -87,7 +87,7 @@ class Source:
                 API_URL,
                 params={
                     "dateStart": today.isoformat(),
-                    "dateEnd": date(today.year + 1, 12, 31).isoformat(),
+                    "dateEnd": (today + timedelta(days=365)).isoformat(),
                     "pickupId": pickup_id,
                 },
                 headers={"Authorization": f"Bearer {access_token}"},
@@ -95,7 +95,8 @@ class Source:
             )
             response.raise_for_status()
 
-            for job in response.json().get("d", {}).get("Jobs", []):
+            data = response.json().get("d") or {}
+            for job in data.get("Jobs", []):
                 calendar = job.get("Calendar") or {}
                 execution_date = _parse_date(calendar.get("ExecutionDate", ""))
                 if execution_date is None or execution_date < today:
@@ -126,7 +127,8 @@ class Source:
         )
         response.raise_for_status()
 
-        pickup_addresses = response.json().get("d", {}).get("PickupAddresses", [])
+        data = response.json().get("d") or {}
+        pickup_addresses = data.get("PickupAddresses", [])
         addresses: dict[str, list[str]] = {}
         for pickup in pickup_addresses:
             address = pickup.get("Address", "").strip()
