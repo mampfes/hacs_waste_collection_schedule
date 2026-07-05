@@ -1,12 +1,8 @@
 import re
-from typing import TYPE_CHECKING
 
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.WhatBinDay import WhatBinDayService
-
-if TYPE_CHECKING:
-    from waste_collection_schedule.service.WhatBinDay import WhatBinDayService
 
 TITLE = "Lismore City Council"
 DESCRIPTION = (
@@ -43,17 +39,6 @@ BIN_NAMES = {
     "WasteBin": "General Waste",
     "RecycleBin": "Recycling",
     "GreenBin": "Green Waste",
-}
-
-STATE_MAP = {
-    "NSW": "New South Wales",
-    "VIC": "Victoria",
-    "QLD": "Queensland",
-    "SA": "South Australia",
-    "WA": "Western Australia",
-    "TAS": "Tasmania",
-    "ACT": "Australian Capital Territory",
-    "NT": "Northern Territory",
 }
 
 
