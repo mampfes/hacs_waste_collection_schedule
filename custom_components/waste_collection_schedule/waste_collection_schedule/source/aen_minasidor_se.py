@@ -68,11 +68,11 @@ _DATE_PATTERN = re.compile(r"^/Date\((-?\d+)([+-]\d{4})?\)/$")
 
 class Source:
     def __init__(self, email: str, password: str, address: str | None = None):
-        if not email:
+        self._email = (email or "").strip()
+        if not self._email:
             raise SourceArgumentRequired("email", "An email address is required.")
         if not password:
             raise SourceArgumentRequired("password", "A password is required.")
-        self._email = email.strip()
         self._password = password
         self._address = address.strip() if address else None
 
