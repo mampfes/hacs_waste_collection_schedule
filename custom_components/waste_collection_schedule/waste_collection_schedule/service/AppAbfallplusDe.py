@@ -795,8 +795,10 @@ class AppAbfallplusDe:
         if self._strasse_search is None and len(streets) == 0:
             return
         elif self._strasse_search is None:
-            SourceArgumentRequiredWithSuggestions(
-                "strasse", [s["name"] for s in streets]
+            raise SourceArgumentRequiredWithSuggestions(
+                "strasse",
+                "multiple streets found, please specify one",
+                [s["name"] for s in streets],
             )
 
         for street in streets:
@@ -849,7 +851,9 @@ class AppAbfallplusDe:
             return
         elif self._hnr_search is None:
             raise SourceArgumentRequiredWithSuggestions(
-                "hnr", [hnr["name"] for hnr in hnrs]
+                "hnr",
+                "multiple house numbers found, please specify one",
+                [hnr["name"] for hnr in hnrs],
             )
         for hnr in hnrs:
             if compare(hnr["name"], self._hnr_search, remove_space=True):
@@ -1001,8 +1005,9 @@ class AppAbfallplusDe:
 
         categories = {}
         for cat_id, name, subtitle in raw_categories:
-            if any(s_id in cat_id for s_id in self._needs_subtitle) or (
-                name_counts[name] > 1 and subtitle
+            if subtitle and (
+                any(s_id in cat_id for s_id in self._needs_subtitle)
+                or name_counts[name] > 1
             ):
                 name += " - " + subtitle
             categories[cat_id] = name
