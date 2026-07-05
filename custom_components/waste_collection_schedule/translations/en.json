@@ -18980,6 +18980,37 @@
         },
         "data_description": {}
       },
+      "args_aen_minasidor_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "email": "Email address",
+          "password": "Password"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Address to use when the account has more than one property.",
+          "email": "Email address used to log in to AEN Mina Sidor.",
+          "password": "Password used to log in to AEN Mina Sidor."
+        }
+      },
+      "reconfigure_aen_minasidor_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "email": "Email address",
+          "password": "Password"
+        },
+        "data_description": {
+          "address": "Address to use when the account has more than one property.",
+          "email": "Email address used to log in to AEN Mina Sidor.",
+          "password": "Password used to log in to AEN Mina Sidor."
+        }
+      },
       "args_skaraborg_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
