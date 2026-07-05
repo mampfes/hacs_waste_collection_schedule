@@ -1549,6 +1549,11 @@
     "howto": {},
     "urls": {}
   },
+  "terrestouloises_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/terrestouloises_com.md",
+    "howto": {},
+    "urls": {}
+  },
   "opendata_bordeauxmetropole_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md",
     "howto": {},

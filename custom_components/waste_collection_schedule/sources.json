@@ -5775,6 +5775,14 @@
   ],
   "France": [
     {
+      "title": "Aingeray",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Aingeray"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Ambar\u00e8s-et-Lagrave",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -5791,10 +5799,26 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Andilly",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Andilly"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Angers Loire M\u00e9tropole",
       "module": "data_angers_fr",
       "default_params": {},
       "id": "data_angers_fr"
+    },
+    {
+      "title": "Ansauville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Ansauville"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Ardenne M\u00e9tropole",
@@ -5803,6 +5827,14 @@
         "instance_id": 670
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Avrainville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Avrainville"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Ayguemorte-les-Graves",
@@ -5853,12 +5885,28 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Bicqueley",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Bicqueley"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Blanquefort",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Blanquefort"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Bois-de-Haye",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Bois-de-Haye"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Bollwiller",
@@ -5883,6 +5931,22 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Boucq",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Boucq"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Bouvron",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Bouvron"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Bruebach",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -5897,6 +5961,14 @@
         "city": "Bruges"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Bruley",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Bruley"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Brunstatt-Didenheim",
@@ -5955,6 +6027,30 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Charmes-la-C\u00f4te",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Charmes-la-C\u00f4te"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Chaudeney-sur-Moselle",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Chaudeney-sur-Moselle"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Choloy-M\u00e9nillot",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Choloy-M\u00e9nillot"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Ch\u00e2teauroux M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
@@ -5983,6 +6079,30 @@
         "commune": "Dietwiller"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Domgermain",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Domgermain"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Dommartin-l\u00e8s-Toul",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Dommartin-l\u00e8s-Toul"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Dom\u00e8vre-en-Haye",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Dom\u00e8vre-en-Haye"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Dreux Agglom\u00e9ration",
@@ -6033,12 +6153,44 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Fontenoy-sur-Moselle",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Fontenoy-sur-Moselle"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Foug",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Foug"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Francheville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Francheville"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Galfingue",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Galfingue"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Gondreville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Gondreville"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Gradignan",
@@ -6077,6 +6229,22 @@
         "instance_id": 101
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Grosrouvres",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Grosrouvres"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Gye",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Gye"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Habsheim",
@@ -6119,6 +6287,14 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Jaillon",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Jaillon"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Kingersheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -6133,6 +6309,30 @@
         "commune": "La Br\u00e8de"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Lagney",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Lagney"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Laneuveville-derri\u00e8re-Foug",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Laneuveville-derri\u00e8re-Foug"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Lay-Saint-R\u00e9my",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Lay-Saint-R\u00e9my"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Le Bouscat",
@@ -6167,6 +6367,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Lucey",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Lucey"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Lutterbach",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -6189,6 +6397,22 @@
       "id": "mamirolle_info"
     },
     {
+      "title": "Manoncourt-en-Wo\u00ebvre",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Manoncourt-en-Wo\u00ebvre"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Manonville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Manonville"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Martignas-sur-Jalle",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -6203,6 +6427,14 @@
         "commune": "Martillac"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Minorville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Minorville"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Montpellier M\u00e9diterran\u00e9e M\u00e9tropole",
@@ -6240,6 +6472,14 @@
       "id": "memotri_agglo_pau_fr"
     },
     {
+      "title": "M\u00e9nil-la-Tour",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "M\u00e9nil-la-Tour"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "M\u00e9rignac",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -6270,6 +6510,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Noviant-aux-Pr\u00e9s",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Noviant-aux-Pr\u00e9s"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Orl\u00e9ans M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
@@ -6284,6 +6532,14 @@
         "commune": "Ottmarsheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Pagney-derri\u00e8re-Barine",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Pagney-derri\u00e8re-Barine"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Parempuyre",
@@ -6316,6 +6572,14 @@
         "commune": "Pfastatt"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Pierre-la-Treiche",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Pierre-la-Treiche"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Publidata generic source",
@@ -6362,6 +6626,14 @@
         "commune": "Rixheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Royaumeix",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Royaumeix"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Rueil-Malmaison",
@@ -6440,6 +6712,14 @@
         "city": "Saint-Vincent-de-Paul"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Sanzey",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Sanzey"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Saucats",
@@ -6522,6 +6802,12 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Terres Touloises",
+      "module": "terrestouloises_com",
+      "default_params": {},
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Toulouse M\u00e9tropole",
       "module": "toulouse_metropole_fr",
       "default_params": {},
@@ -6534,6 +6820,22 @@
         "instance_id": 65
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Tremblecourt",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Tremblecourt"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Trondes",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Trondes"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Ungersheim",
@@ -6584,6 +6886,22 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Villey-le-Sec",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Villey-le-Sec"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Villey-Saint-\u00c9tienne",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Villey-Saint-\u00c9tienne"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Wittelsheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -6614,6 +6932,14 @@
         "commune": "Zimmersheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "\u00c9crouves",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "\u00c9crouves"
+      },
+      "id": "terrestouloises_com"
     }
   ],
   "Germany": [
