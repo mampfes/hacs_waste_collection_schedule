@@ -1,10 +1,9 @@
-import hashlib
 import re
 from datetime import date, timedelta
-from urllib.parse import quote
 
 import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests as curl_requests
 from dateutil.rrule import (
     FR,
     MO,
@@ -117,54 +116,23 @@ class Source:
             )
         return ban_id, label
 
-    def _solve_challenge(self, session: requests.Session) -> None:
-        """Solve BunkerWeb proof-of-work challenge."""
-        r = session.get(BASE_URL + "/", timeout=15, allow_redirects=True)
-        r.raise_for_status()
-
-        # Check if we already have access (no challenge)
-        if "csrfmiddlewaretoken" in r.text or "memotri" in r.text.lower():
-            if "Bot Detection" not in r.text:
-                return
-
-        # Extract nonce from challenge JavaScript
-        nonce_match = re.search(r'digestMessage\("([^"]+)"\+a\.toString\(\)\)', r.text)
-        if not nonce_match:
-            return  # No challenge found, proceed
-
-        nonce = nonce_match.group(1)
-
-        # Find required prefix length
-        prefix_match = re.search(r'startsWith\("(0+)"\)', r.text)
-        prefix = prefix_match.group(1) if prefix_match else "0000"
-
-        # Determine an iteration budget based on prefix length, with an upper bound
-        max_iterations = min(50_000_000, 10 * (16 ** len(prefix)))
-
-        # Solve proof-of-work
-        found = False
-        for i in range(max_iterations):
-            h = hashlib.sha256((nonce + str(i)).encode()).hexdigest()
-            if h.startswith(prefix):
-                found = True
-                break
-
-        if not found:
-            raise RuntimeError(
-                "Proof-of-work solution not found within iteration limit"
+    def _get_csrf_token(self, session: curl_requests.Session) -> str:
+        """Get CSRF token from the home page."""
+        r = session.get(BASE_URL + "/", timeout=15)
+        if r.status_code == 404:
+            raise SourceArgumentException(
+                "address",
+                "The website is temporarily unavailable or blocking automated requests. Please try again later.",
             )
-
-        # Submit solution
-        response = session.post(
-            BASE_URL + "/challenge",
-            data={"challenge": str(i)},
-            headers={"Referer": BASE_URL + "/challenge"},
-            timeout=15,
-            allow_redirects=True,
-        )
-        response.raise_for_status()
-        if "Bot Detection" in response.text:
-            raise RuntimeError("Proof-of-work challenge was not accepted by the server")
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+        csrf_input = soup.find("input", {"name": "csrfmiddlewaretoken"})
+        if not csrf_input:
+            raise SourceArgumentException(
+                "address",
+                "Unable to retrieve CSRF token from the website. The site may be temporarily unavailable.",
+            )
+        return csrf_input["value"]
 
     def _parse_schedule(
         self, schedule_text: str
@@ -201,26 +169,22 @@ class Source:
     def fetch(self) -> list[Collection]:
         ban_id, label = self._resolve_address()
 
-        session = requests.Session()
-        session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-            }
+        session = curl_requests.Session(impersonate="chrome131")
+
+        csrf_token = self._get_csrf_token(session)
+
+        # Submit form: select2 value format is 'banId&label'
+        r = session.post(
+            BASE_URL + "/",
+            data={
+                "csrfmiddlewaretoken": csrf_token,
+                "select_adresse": f"{ban_id}&{label}",
+            },
+            headers={"Referer": BASE_URL + "/"},
+            timeout=15,
+            allow_redirects=True,
         )
-
-        self._solve_challenge(session)
-
-        # Fetch collection schedule page
-        encoded_label = quote(label, safe="")
-        url = f"{BASE_URL}/consignes-tri/{ban_id}/{encoded_label}/"
-        r = session.get(url, timeout=15)
         r.raise_for_status()
-
-        if "Bot Detection" in r.text:
-            raise SourceArgumentException(
-                "address",
-                "Unable to bypass bot protection. Please try again later.",
-            )
 
         soup = BeautifulSoup(r.text, "html.parser")
         entries: list[Collection] = []
