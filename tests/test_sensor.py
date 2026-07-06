@@ -1,7 +1,5 @@
 """Tests for sensor logic."""
 
-__author__ = "Coderzz69"
-
 from custom_components.waste_collection_schedule.sensor import get_days_to_text
 
 
