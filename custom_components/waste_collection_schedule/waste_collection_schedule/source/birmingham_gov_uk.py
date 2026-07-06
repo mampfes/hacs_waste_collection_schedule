@@ -12,6 +12,7 @@ DESCRIPTION = "Source for birmingham.gov.uk services for Birmingham, UK."
 URL = "https://birmingham.gov.uk"
 TEST_CASES = {
     "Cherry Tree Croft": {"uprn": 100070321799, "postcode": "B27 6TF"},
+    "Ludgate Loft Apartments": {"uprn": 10033389698, "postcode": "B3 1DW"},
     "Victoria Road": {"uprn": 100070548572, "postcode": "B17 0AH"},
     "Windermere Road": {"uprn": "100070566109", "postcode": "B13 9JP"},
     "Park Hill": {"uprn": "100070475114", "postcode": "B13 8DS"},
@@ -22,6 +23,7 @@ HEADERS = {
 }
 
 API_URL = "https://www.birmingham.gov.uk/info/50388/check_your_collection_day"
+LEGACY_API_URL = "https://www.birmingham.gov.uk/xfp/form/619"
 
 ICON_MAP = {
     "Rubbish": Icons.GENERAL_WASTE,
@@ -68,6 +70,15 @@ class Source:
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, "html.parser")
+
+        not_found = soup.find(
+            "p",
+            string="Unfortunately we have been unable to find your rubbish collection schedule.",
+        )
+        if not_found:
+            # new API cannot find data to fall back to legacy API
+            return self.legacy_api
+
         if not (table := soup.find("table", class_="data-table")) or not table.tbody:
             raise ValueError(
                 "Could not find collection schedule table - check UPRN/postcode "
@@ -92,6 +103,58 @@ class Source:
             entries.append(
                 Collection(
                     date=collection_date,
+                    t=collection_type,
+                    icon=ICON_MAP.get(collection_type, Icons.GENERAL_WASTE),
+                )
+            )
+
+        if not entries:
+            raise ValueError(
+                "Could not get collections for the given combination of UPRN and Postcode."
+            )
+
+        return entries
+
+    def legacy_api(self):
+        entries: list[Collection] = []
+
+        session = requests.Session()
+        session.headers.update(HEADERS)
+
+        token_response = session.get(LEGACY_API_URL)
+        soup = BeautifulSoup(token_response.text, "html.parser")
+        token = soup.find("input", {"name": "__token"}).attrs["value"]
+        if not token:
+            raise ValueError(
+                "Could not parse CSRF Token from initial response. Won't be able to proceed."
+            )
+
+        form_data = {
+            "__token": token,
+            "page": "491",
+            "locale": "en_GB",
+            "q1f8ccce1d1e2f58649b4069712be6879a839233f_0_0": self._postcode,
+            "q1f8ccce1d1e2f58649b4069712be6879a839233f_1_0": self._uprn,
+            "next": "Next",
+        }
+
+        collection_response = session.post(LEGACY_API_URL, data=form_data)
+
+        collection_soup = BeautifulSoup(collection_response.text, "html.parser")
+
+        for table_row in collection_soup.find(
+            "table", class_="data-table"
+        ).tbody.find_all("tr"):
+            collection_type = table_row.contents[0].text
+            collection_next = table_row.contents[1].text
+
+            collection_date_obj = datetime.strptime(
+                collection_next, "%a %d/%m/%Y"
+            ).date()
+
+            entries.append(
+                Collection(
+                    date=collection_date_obj,
                     t=collection_type,
                     icon=ICON_MAP.get(collection_type, Icons.GENERAL_WASTE),
                 )
