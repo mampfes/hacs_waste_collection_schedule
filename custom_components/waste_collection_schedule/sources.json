@@ -7179,6 +7179,12 @@
       "id": "kreis_ploen_de"
     },
     {
+      "title": "Abfallwirtschaft Kyffh\u00e4userkreis",
+      "module": "abfall_kyffhaeuser_de",
+      "default_params": {},
+      "id": "abfall_kyffhaeuser_de"
+    },
+    {
       "title": "Abfallwirtschaft Lahn-Dill-Kreises",
       "module": "awido_de",
       "default_params": {
@@ -23148,6 +23154,12 @@
       "module": "hoover_al_us",
       "default_params": {},
       "id": "hoover_al_us"
+    },
+    {
+      "title": "Jacksonville, FL",
+      "module": "jacksonville_fl_us",
+      "default_params": {},
+      "id": "jacksonville_fl_us"
     },
     {
       "title": "Louisville, Kentucky, USA",

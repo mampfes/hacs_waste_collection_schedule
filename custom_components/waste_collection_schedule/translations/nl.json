@@ -7847,6 +7847,26 @@
         },
         "data_description": {}
       },
+      "args_abfall_kyffhaeuser_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_abfall_kyffhaeuser_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City"
+        },
+        "data_description": {}
+      },
       "args_aw_harburg_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -27351,6 +27371,26 @@
         }
       },
       "reconfigure_hoover_al_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
+      "args_jacksonville_fl_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_jacksonville_fl_us": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {

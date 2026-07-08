@@ -1169,6 +1169,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Abfallwirtschaft Germersheim](/doc/source/abfallwirtschaft_germersheim_de.md) / abfallwirtschaft-germersheim.de
 - [Abfallwirtschaft Isar-Inn](/doc/source/awido_de.md) / awv-isar-inn.de
 - [Abfallwirtschaft Kreis Plön](/doc/source/kreis_ploen_de.md) / kreis-ploen.de
+- [Abfallwirtschaft Kyffhäuserkreis](/doc/source/abfall_kyffhaeuser_de.md) / abfall-kyffhaeuser.de
 - [Abfallwirtschaft Lahn-Dill-Kreises](/doc/source/awido_de.md) / awld.de
 - [Abfallwirtschaft Landkreis Böblingen](/doc/ics/abfall_io_ics.md) / awb-bb.de
 - [Abfallwirtschaft Landkreis Freudenstadt](/doc/source/abfall_io.md) / awb-fds.de
@@ -3514,6 +3515,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Fuquay-Varina, North Carolina](/doc/source/fuquay_varina_nc_us.md) / gis1.fuquay-varina.org
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
+- [Jacksonville, FL](/doc/source/jacksonville_fl_us.md) / myjax.custhelp.com/app/hauler
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
 - [New Rochelle (NY)](/doc/source/recyclecoach_com.md) / newrochelleny.gov/791/Collection-Dates

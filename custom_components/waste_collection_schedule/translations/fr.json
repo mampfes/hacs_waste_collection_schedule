@@ -7948,6 +7948,26 @@
         },
         "data_description": {}
       },
+      "args_abfall_kyffhaeuser_de": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "Ville"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_abfall_kyffhaeuser_de": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "Ville"
+        },
+        "data_description": {}
+      },
       "args_aw_harburg_de": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -27519,6 +27539,26 @@
         }
       },
       "reconfigure_hoover_al_us": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
+      "args_jacksonville_fl_us": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_jacksonville_fl_us": {
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {

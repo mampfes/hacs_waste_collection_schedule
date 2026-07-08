@@ -8016,6 +8016,29 @@
         },
         "data_description": {}
       },
+      "args_abfall_kyffhaeuser_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort / Tour"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ortsname wie im Filter 'Ort' auf {url_abfall_kyffhaeuser_de_kalender} angezeigt, z. B. 'Ebeleben' oder 'Bad Frankenhausen - Tour 1'."
+        }
+      },
+      "reconfigure_abfall_kyffhaeuser_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ort / Tour"
+        },
+        "data_description": {
+          "city": "Ortsname wie im Filter 'Ort' auf {url_abfall_kyffhaeuser_de_kalender} angezeigt, z. B. 'Ebeleben' oder 'Bad Frankenhausen - Tour 1'."
+        }
+      },
       "args_aw_harburg_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -27771,6 +27794,26 @@
         }
       },
       "reconfigure_hoover_al_us": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
+      "args_jacksonville_fl_us": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_jacksonville_fl_us": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {

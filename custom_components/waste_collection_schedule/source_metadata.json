@@ -1842,6 +1842,16 @@
     "howto": {},
     "urls": {}
   },
+  "abfall_kyffhaeuser_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_kyffhaeuser_de.md",
+    "howto": {
+      "de": "Besuchen Sie https://abfall-kyffhaeuser.de/kalender/, öffnen Sie den Filter 'Ort' und verwenden Sie den dort angezeigten Namen exakt als 'city'-Parameter. Größere Orte (Bad Frankenhausen, Sondershausen, Artern) sind in mehrere Abfuhrtouren ('Tour 1', 'Tour 2', ...) aufgeteilt - bitte prüfen Sie Ihren Abfuhrkalender/-bescheid oder fragen Sie bei der Abfallwirtschaft Kyffhäuserkreis nach, welche Tour für Ihre Straße zuständig ist. Bei unbekannten oder mehrdeutigen Namen listet die Fehlermeldung alle gültigen Ortsnamen auf.",
+      "en": "Visit https://abfall-kyffhaeuser.de/kalender/, open the 'Ort' filter and use the exact place name shown there as the 'city' argument. Larger towns (Bad Frankenhausen, Sondershausen, Artern) are split into several collection tours ('Tour 1', 'Tour 2', ...) - check your bin / waste collection notice or ask the Kyffhäuserkreis waste department which tour serves your street. If you enter an unknown or ambiguous name, the resulting error message will list the valid place names."
+    },
+    "urls": {
+      "url_abfall_kyffhaeuser_de_kalender": "https://abfall-kyffhaeuser.de/kalender/"
+    }
+  },
   "aw_harburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aw_harburg_de.md",
     "howto": {},
@@ -6577,6 +6587,13 @@
   "hoover_al_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hoover_al_us.md",
     "howto": {},
+    "urls": {}
+  },
+  "jacksonville_fl_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jacksonville_fl_us.md",
+    "howto": {
+      "en": "Use the same address you would enter on the MyJax hauler lookup page."
+    },
     "urls": {}
   },
   "apps_ci_minneapolis_mn_us": {
