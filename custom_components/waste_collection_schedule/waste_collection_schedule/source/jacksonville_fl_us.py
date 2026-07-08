@@ -10,6 +10,7 @@ TITLE = "Jacksonville, FL"
 DESCRIPTION = "Source for Jacksonville, FL waste collection."
 URL = "https://myjax.custhelp.com/app/hauler"
 COUNTRY = "us"
+SOURCE_CODEOWNERS = ["@biggiebytes"]
 
 TEST_CASES = {
     "EverBank Stadium": {"address": "1 EverBank Stadium Dr, Jacksonville, FL"},
