@@ -51,14 +51,14 @@ PARAM_DESCRIPTIONS = {
 
 class Source:
     def __init__(self, x: int | str, y: int | str, id: int | str):
-        self._query: str = f"x={str(x)};y={str(y)};id={str(id)}"
+        self._query: str = f"x={x!s};y={y!s};id={id!s}"
 
     def append_year(self, d: list) -> list[date]:
         today = datetime.now().date()
         year: int = today.year
         dates: list[date] = []
         for dt in d:
-            dt = datetime.strptime(f"{dt}/{str(year)}", "%d/%m/%Y").date()
+            dt = datetime.strptime(f"{dt}/{year!s}", "%d/%m/%Y").date()
             if (dt - today) < timedelta(days=-31):
                 dt = dt.replace(year=dt.year + 1)
             dates.append(dt)
@@ -79,7 +79,7 @@ class Source:
             headers=HEADERS,
             params=params,
         )
-        r.raise_for_status
+        r.raise_for_status()
 
         soup: BeautifulSoup = BeautifulSoup(
             r.content.decode("unicode-escape"), "html.parser"

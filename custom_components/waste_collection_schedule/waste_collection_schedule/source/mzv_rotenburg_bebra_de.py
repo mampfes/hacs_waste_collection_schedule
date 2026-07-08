@@ -117,12 +117,12 @@ class Source:
                     "city",
                     self._city,
                     "make sure the city is spelled exactly like in the link of the website https://www.mzv-rotenburg-bebra.de//webapp.html",
-                )
+                ) from None
             raise SourceArgumentNotFoundWithSuggestions(
                 "city",
                 self._city,
                 cities,
-            )
+            ) from None
 
         entries = []
 

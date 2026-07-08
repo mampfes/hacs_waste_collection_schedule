@@ -386,7 +386,7 @@ class Source:
             opening_hours = opening_hours.replace(
                 f"{time_start}-{time_end}", ""
             ).strip()
-            start_hour, start_minute, end_hour, end_minute = self._parse_hours(
+            start_hour, start_minute, _end_hour, _end_minute = self._parse_hours(
                 time_start, time_end
             )
         else:

@@ -17,7 +17,7 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from custom_components.waste_collection_schedule.waste_collection_schedule.source import (  # noqa: E402
+from custom_components.waste_collection_schedule.waste_collection_schedule.source import (
     midlothian_gov_uk,
 )
 

@@ -311,14 +311,10 @@ class Source:
                     town = town_district
                     break
             if not match:
-                matches = list(
-                    map(
-                        lambda x: (
-                            "town: " + x.get("name") + ", district:" + x.get("district")
-                        ),
-                        matching_towns_district,
-                    )
-                )
+                matches = [
+                    ("town: " + x.get("name") + ", district:" + x.get("district"))
+                    for x in matching_towns_district
+                ]
 
                 raise Exception(
                     f"Found multiple matches but no exact match found {matches}"

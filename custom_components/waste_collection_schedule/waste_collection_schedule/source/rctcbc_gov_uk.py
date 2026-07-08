@@ -78,7 +78,7 @@ class Source:
         s = requests.Session()
         # website appears to display ~4 months worth of collections, so iterate through those pages
         entries: list[Collection] = []
-        for month in range(0, 4):
+        for month in range(4):
             r = s.get(
                 f"https://www.rctcbc.gov.uk/EN/Resident/RecyclingandWaste/RecyclingandWasteCollectionDays.aspx?uprn={self._uprn}&month={month}"
             )

@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule import Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 
@@ -65,7 +67,7 @@ class Source(RiSKommunalSource):
         "https://www.schaerding.ooe.gv.at/system/web/kalender.aspx?menuonr=226878372"
     )
     RAISE_ON_EMPTY = True
-    QUERY_PARAMS = {
+    QUERY_PARAMS: ClassVar = {
         "sprache": "1",
         "menuonr": "226878372",
     }

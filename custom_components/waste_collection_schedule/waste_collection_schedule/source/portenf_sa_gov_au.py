@@ -68,8 +68,10 @@ class Source:
         self._unit_number: str = str(unit_number)
 
     def __set_args(
-        self, soup: BeautifulSoup, event_taget=None, additional: dict = {}
+        self, soup: BeautifulSoup, event_taget=None, additional: dict | None = None
     ) -> dict:
+        if additional is None:
+            additional = {}
         args = {
             "ctl00$MainContent$txtSuburb": self._suburb,
             "ctl00$MainContent$txtStreetName": self._street,

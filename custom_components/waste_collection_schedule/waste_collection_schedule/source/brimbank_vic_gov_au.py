@@ -183,7 +183,7 @@ def _parse_pdf(pdf_bytes):
         # Remove spurious Saturday entries that aren't holiday shifts
         # A Saturday is only valid if the preceding Friday is NONE (holiday)
         to_remove = []
-        for d, color in schedule.items():
+        for d, _color in schedule.items():
             if d.weekday() == 5:  # Saturday
                 friday = d - timedelta(days=1)
                 if schedule.get(friday) != "NONE":

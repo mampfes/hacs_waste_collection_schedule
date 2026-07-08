@@ -173,7 +173,7 @@ class Source:
         entries = []
 
         while current_date <= end_date:
-            year, week, _ = current_date.isocalendar()
+            _year, week, _ = current_date.isocalendar()
             month = current_date.month
 
             even_week = week % 2 == 0

@@ -571,7 +571,7 @@ def _extract_events_from_weekly_pdf(pdf_bytes: bytes) -> list[Collection]:
 
         keep = [
             it
-            for it, w, h in zip(items, item_widths, item_heights)
+            for it, w, h in zip(items, item_widths, item_heights, strict=False)
             if abs(w - med_w) < 2.0 and abs(h - med_h) < 2.0
         ]
         if len(keep) >= 10:

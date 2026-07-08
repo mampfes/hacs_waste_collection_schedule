@@ -38,7 +38,7 @@ def match_customize(
 
 
 class Fetchable(Protocol):
-    def fetch(self) -> list[Collection]: ...  # noqa: E704
+    def fetch(self) -> list[Collection]: ...
 
 
 class SourceModule(Protocol):
@@ -200,11 +200,11 @@ class SourceShell:
         entries = filter(lambda x: filter_function(x, self._customize), entries)
 
         # customize fetched entries
-        entries = map(lambda x: customize_function(x, self._customize), entries)
+        entries = (customize_function(x, self._customize) for x in entries)
 
         # apply day offset
         if self._day_offset != 0:
-            entries = map(lambda x: apply_day_offset(x, self._day_offset), entries)
+            entries = (apply_day_offset(x, self._day_offset) for x in entries)
 
         result = list(entries)
 

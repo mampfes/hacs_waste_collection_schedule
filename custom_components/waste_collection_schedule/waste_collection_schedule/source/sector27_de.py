@@ -123,7 +123,7 @@ class Source:
         city = CITIES.get(self._city)
         if city is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "city", self._city, [x for x in CITIES.keys()]
+                "city", self._city, list(CITIES.keys())
             )
 
         street_id = self._lookup_street_id(city)

@@ -109,7 +109,7 @@ class Source:
         try:
             events = json.loads(json_data)
         except json.JSONDecodeError as e:
-            raise ValueError(f"Error parsing the JSON schedule: {e}")
+            raise ValueError(f"Error parsing the JSON schedule: {e}") from e
 
         entries = []
 

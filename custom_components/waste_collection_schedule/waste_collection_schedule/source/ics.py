@@ -147,9 +147,11 @@ class Source:
         split_at: str | None = None,
         version: int | None = None,
         verify_ssl: bool = True,
-        headers: dict = {},
+        headers: dict | None = None,
         impersonate: str | None = None,
     ):
+        if headers is None:
+            headers = {}
         self._url = re.sub("^webcal", "https", url) if url else None
         self._file = file
         if bool(self._url is not None) == bool(self._file is not None):

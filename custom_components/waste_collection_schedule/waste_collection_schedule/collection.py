@@ -123,7 +123,7 @@ class CollectionGroup(CollectionBase):
             x.set_picture(group[0].picture)
         else:
             x.set_icon(f"mdi:numeric-{len(group)}-box-multiple")
-        x["types"] = list(it.type for it in group)
+        x["types"] = [it.type for it in group]
 
         ordered_locs: list[str] = []
         for it in group:

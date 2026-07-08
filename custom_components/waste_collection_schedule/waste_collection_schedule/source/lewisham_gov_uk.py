@@ -65,17 +65,17 @@ class Source:
             addresses = r.json()
 
             if self._name:
-                self._uprn = [
+                self._uprn = next(
                     x["Uprn"]
                     for x in addresses
                     if (x["Title"]).upper().startswith(self._name.upper())
-                ][0]
+                )
             elif self._number:
-                self._uprn = [
+                self._uprn = next(
                     x["Uprn"]
                     for x in addresses
                     if (x["Title"]).startswith(str(self._number))
-                ][0]
+                )
 
             if not self._uprn:
                 raise Exception(

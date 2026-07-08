@@ -54,7 +54,7 @@ class SepanClient:
                 # A well-formed response that just didn't match: no point
                 # retrying against another base URL, the argument is wrong.
                 raise
-            except Exception as e:  # noqa: BLE001 - network/format failures only
+            except Exception as e:
                 last_error = e
                 continue
         raise last_error or Exception("Could not resolve address: no base URL worked")

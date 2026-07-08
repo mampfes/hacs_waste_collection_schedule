@@ -68,7 +68,7 @@ class Source:
                 date_object = datetime.strptime(tag_text, "%a %d/%m/%Y").date()
                 waste_date.append(date_object)
 
-        waste = list(zip(waste_type, waste_date))
+        waste = list(zip(waste_type, waste_date, strict=False))
 
         entries = []
         for item in waste:

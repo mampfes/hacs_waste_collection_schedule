@@ -113,7 +113,7 @@ def _year_from_pdf_text(session: requests.Session, url: str) -> int | None:
             m = _YEAR_IN_URL_RE.search(text)
             if m:
                 return int(m.group(1))
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         _LOGGER.debug(
             "orange_nsw_gov_au: Could not extract year from PDF text: %s", exc
         )
@@ -180,7 +180,7 @@ class Source:
             year = _year_from_pdf_url(pdf_url)
             if year is None:
                 year = _year_from_pdf_text(session, pdf_url)
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             _LOGGER.warning(
                 "orange_nsw_gov_au: Could not fetch booklet from %s (%s). "
                 "Falling back to current calendar year.",

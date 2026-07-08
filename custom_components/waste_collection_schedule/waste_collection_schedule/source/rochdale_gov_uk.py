@@ -75,7 +75,7 @@ class Source:
         except KeyError:
             raise ValueError(
                 f"Rochdale API: Failed to retrieve bartecToken for UPRN {self._uprn}."
-            )
+            ) from None
 
         # 3. STEP 2: Fetch the Calendar
         # Lookup 68b58a1364572 returns the annual calendar using the token and date bounds

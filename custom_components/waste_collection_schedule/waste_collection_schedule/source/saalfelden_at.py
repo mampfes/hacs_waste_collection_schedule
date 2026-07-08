@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule import Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 
@@ -67,7 +69,7 @@ class Source(RiSKommunalSource):
     SELECTION_URL = "https://www.saalfelden.at/Buergerservice/Abfallkalender"
     LOOKAHEAD_DAYS = 365
     MAX_PAGES = 30
-    QUERY_PARAMS = {
+    QUERY_PARAMS: ClassVar = {
         "detailonr": "225697049",
         "menuonr": "225696673",
     }

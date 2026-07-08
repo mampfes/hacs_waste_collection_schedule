@@ -126,7 +126,7 @@ class Source:
                     )
 
         # RedLid (General Waste) — fortnightly, next date given
-        if "RedLid" in fields and fields["RedLid"]:
+        if fields.get("RedLid"):
             try:
                 next_red = dateparse(fields["RedLid"], dayfirst=True).date()
                 for d in rrule(WEEKLY, interval=2, dtstart=next_red, count=13):
@@ -141,7 +141,7 @@ class Source:
                 pass
 
         # YellowLid (Recycling) — fortnightly, next date given
-        if "YellowLid" in fields and fields["YellowLid"]:
+        if fields.get("YellowLid"):
             try:
                 next_yellow = dateparse(fields["YellowLid"], dayfirst=True).date()
                 for d in rrule(WEEKLY, interval=2, dtstart=next_yellow, count=13):

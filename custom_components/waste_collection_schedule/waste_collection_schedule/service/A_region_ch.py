@@ -162,7 +162,7 @@ class A_region_ch:
         if len(districts) > 0:
             if len(districts) == 1:
                 # only one district found -> use it
-                return self.get_ICS_sources(list(districts.values())[0], tour)
+                return self.get_ICS_sources(next(iter(districts.values())), tour)
             if self._district is None:
                 raise SourceArgumentRequiredWithSuggestions(
                     "district",
@@ -176,7 +176,7 @@ class A_region_ch:
                 )
             return self.get_ICS_sources(districts[self._district], tour)
 
-        dates = list()
+        dates = []
 
         downloads = soup.find_all("a", href=True)
         for download in downloads:

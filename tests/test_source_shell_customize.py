@@ -9,8 +9,8 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule.collection import Collection  # noqa: E402
-from waste_collection_schedule.source_shell import (  # noqa: E402
+from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.source_shell import (
     Customize,
     customize_function,
     filter_function,

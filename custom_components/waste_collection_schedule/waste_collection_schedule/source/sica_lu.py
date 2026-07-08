@@ -94,7 +94,7 @@ class Source:
         try:
             data = r.json()
         except ValueError as e:
-            raise ValueError(f"Error decoding JSON from API: {e} - {r.text}")
+            raise ValueError(f"Error decoding JSON from API: {e} - {r.text}") from e
         return data
 
     def _get_municipality_id(self) -> None:
@@ -107,7 +107,7 @@ class Source:
             {
                 item["name"]["en"].lower(): item["id"]
                 for m in data.get("data", [])
-                for item in [m] + m.get("children", [])
+                for item in [m, *m.get("children", [])]
                 if not item["isDisabled"] and not item.get("children", [])
             }
         )

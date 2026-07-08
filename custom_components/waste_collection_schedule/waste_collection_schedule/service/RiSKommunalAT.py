@@ -22,6 +22,7 @@ from __future__ import annotations
 import ast
 import re
 from datetime import date, datetime
+from typing import ClassVar
 
 import requests
 from bs4 import BeautifulSoup
@@ -68,8 +69,8 @@ class RiSKommunalSource:
     """
 
     BASE_URL: str = ""
-    ICON_MAP: dict = {}
-    QUERY_PARAMS: dict = {}
+    ICON_MAP: ClassVar[dict] = {}
+    QUERY_PARAMS: ClassVar[dict] = {}
     VDATUM_TODAY: bool = False
     MAX_PAGES: int = 50
     SELECTION_URL: str | None = None

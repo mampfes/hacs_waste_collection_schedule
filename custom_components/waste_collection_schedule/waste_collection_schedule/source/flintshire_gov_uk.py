@@ -49,7 +49,7 @@ class Source:
 
         for row in rows:
             cols = row.find_all("div")
-            cols = list(map(lambda x: x.text.strip(), cols))
+            cols = [x.text.strip() for x in cols]
             if len(cols) == 0 or not re.match(r"\d{2}/\d{2}/\d{4}", cols[0]):
                 continue
 

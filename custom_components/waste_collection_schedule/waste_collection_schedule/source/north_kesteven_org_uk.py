@@ -36,7 +36,7 @@ class Source:
         bin_dates = soup.find_all("strong")
 
         entries = []
-        for idx in range(0, len(bin_type)):
+        for idx in range(len(bin_type)):
             entries.append(
                 Collection(
                     date=datetime.strptime(

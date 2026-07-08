@@ -45,7 +45,7 @@ class Source:
         r.raise_for_status()
         addresses = r.json()
         if (
-            ("error" in addresses and addresses["error"])
+            (addresses.get("error"))
             or "results" not in addresses
             or len(addresses["results"]) == 0
         ):

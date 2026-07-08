@@ -91,8 +91,10 @@ def select_bezirk(
     questions = [
         inquirer.List(
             "bezirk",
-            choices=sorted([(s["name"], s["name"]) for s in bezirke])
-            + [("BACK", "BACK")],
+            choices=[
+                *sorted([(s["name"], s["name"]) for s in bezirke]),
+                ("BACK", "BACK"),
+            ],
             message="Select your Bezirk",
         )
     ]
@@ -120,8 +122,10 @@ def select_street(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
         questions = [
             inquirer.List(
                 "street",
-                choices=sorted([(s["name"], s["name"]) for s in streets])
-                + [("BACK", "BACK")],
+                choices=[
+                    *sorted([(s["name"], s["name"]) for s in streets]),
+                    ("BACK", "BACK"),
+                ],
                 message="Select your Street",
             )
         ]

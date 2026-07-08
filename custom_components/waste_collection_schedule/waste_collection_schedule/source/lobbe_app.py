@@ -151,8 +151,13 @@ class Source:
 
     @staticmethod
     def _get_id(
-        action: str, compare_to: str, param_name: str, params: dict[str, str | int] = {}
+        action: str,
+        compare_to: str,
+        param_name: str,
+        params: dict[str, str | int] | None = None,
     ) -> tuple[int, str]:
+        if params is None:
+            params = {}
         params = {"action": action, **params}
         original_compare_to = compare_to
         compare_to = make_comparable(compare_to)
@@ -211,7 +216,7 @@ class Source:
             "place[text]": self._city_name,
             "street[id]": self._street_id,
             "street[text]": self._street_name,
-            **{t: 1 for t in TYPES},
+            **dict.fromkeys(TYPES, 1),
             "hours": 18,
             "minutes": 00,
             "action": "create_ical",

@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
     # Ensure the local package is importable when running directly
     try:
-        from waste_collection_schedule import Collection  # noqa: F811
+        from waste_collection_schedule import Collection
     except ModuleNotFoundError:
         sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
@@ -183,7 +183,7 @@ if __name__ == "__main__":
         collections = src.fetch()
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
-        raise SystemExit(1)
+        raise SystemExit(1) from e
 
     if not collections:
         print("No collections found for the provided address.")

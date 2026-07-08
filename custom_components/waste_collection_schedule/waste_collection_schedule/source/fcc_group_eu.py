@@ -153,7 +153,7 @@ class Source:
         if self._frequency in available_freqs:
             return data
 
-        changed: dict[str, FREQUENCIES_LITERAL] = dict()
+        changed: dict[str, FREQUENCIES_LITERAL] = {}
 
         if (
             data["defaultFrequencyTitle"]

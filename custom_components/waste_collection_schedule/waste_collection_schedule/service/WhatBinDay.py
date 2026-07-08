@@ -2,7 +2,7 @@
 
 import datetime
 import logging
-from typing import TYPE_CHECKING, Callable, Dict, List, Optional
+from typing import TYPE_CHECKING, Callable, ClassVar, Dict, List, Optional
 
 import requests
 
@@ -36,12 +36,12 @@ class WhatBinDayService:
     and regions, primarily in Australia.
     """
 
-    API_URLS = {
+    API_URLS: ClassVar = {
         "register_device": "https://api.whatbinday.com/V3/Device",
         "services": "https://api.whatbinday.com/V3/Device/{}/Services",
     }
 
-    HEADERS = {
+    HEADERS: ClassVar = {
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Linux; Android 11; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36",
         "Accept": "application/json",
@@ -49,13 +49,13 @@ class WhatBinDayService:
         "Accept-Language": "en-US,en;q=0.9",
     }
 
-    DEFAULT_ICON_MAP = {
+    DEFAULT_ICON_MAP: ClassVar = {
         "WasteBin": "mdi:trash-can",
         "RecycleBin": "mdi:recycle",
         "GreenBin": "mdi:leaf",
     }
 
-    DEFAULT_BIN_NAMES = {
+    DEFAULT_BIN_NAMES: ClassVar = {
         "WasteBin": "General waste (landfill)",
         "RecycleBin": "Recycling",
         "GreenBin": "Food and garden waste",
@@ -331,8 +331,8 @@ class WhatBinDayService:
             return entries
 
         except requests.RequestException as e:
-            raise Exception(f"Network error: {e}")
+            raise Exception(f"Network error: {e}") from e
         except KeyError as e:
-            raise Exception(f"Unexpected API response format: {e}")
+            raise Exception(f"Unexpected API response format: {e}") from e
         except Exception as e:
-            raise Exception(f"Error fetching collection schedule: {e}")
+            raise Exception(f"Error fetching collection schedule: {e}") from e

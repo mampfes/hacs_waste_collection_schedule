@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule import Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
@@ -45,7 +47,7 @@ VALID_ZONES = ["Rayon 1", "Rayon 2"]
 class Source(RiSKommunalSource):
     BASE_URL = "https://www.felixdorf.gv.at"
     ICON_MAP = ICON_MAP
-    QUERY_PARAMS = {
+    QUERY_PARAMS: ClassVar = {
         "bdatum": "31.12.9999",
         "blnr": "",
         "gnr_search": "0",

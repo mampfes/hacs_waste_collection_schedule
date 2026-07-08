@@ -82,14 +82,14 @@ class Source:
             )
             response.raise_for_status()
         except requests.Timeout:
-            raise Exception("API request timed out")
+            raise Exception("API request timed out") from None
         except requests.RequestException as e:
-            raise Exception(f"API request failed: {e}")
+            raise Exception(f"API request failed: {e}") from e
 
         try:
             data = response.json()
         except ValueError:
-            raise Exception("Invalid JSON response")
+            raise Exception("Invalid JSON response") from None
 
         services = data.get("SiteServices")
         if not services:

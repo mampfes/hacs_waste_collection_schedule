@@ -79,7 +79,7 @@ class Source:
         next4s = div.find_all("ul")
         entries = []  # List that holds collection schedule
 
-        for bin, next4 in zip(bins, next4s):
+        for bin, next4 in zip(bins, next4s, strict=False):
             t = bin.text.split(" (", 1)[0]
             dates = next4.find_all("li")
             for date in dates:
