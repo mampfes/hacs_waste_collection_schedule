@@ -2664,6 +2664,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeente Assen](/doc/source/burgerportaal_nl.md) / assen.nl
 - [Gemeente Berkelland](/doc/source/hvcgroep_nl.md) / gemeenteberkelland.nl
 - [Gemeente Borsele](/doc/ics/afvalkalender_borsele_nl.md) / borsele.nl
+- [Gemeente Breda](/doc/source/burgerportaal_nl.md) / breda.nl
 - [Gemeente Cranendonck](/doc/source/hvcgroep_nl.md) / cranendonck.nl
 - [Gemeente Groningen](/doc/source/burgerportaal_nl.md) / gemeente.groningen.nl
 - [Gemeente Hellendoorn](/doc/source/ximmio_nl.md) / hellendoorn.nl

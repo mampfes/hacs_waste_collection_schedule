@@ -17682,6 +17682,14 @@
       "id": "ics_afvalkalender_borsele_nl"
     },
     {
+      "title": "Gemeente Breda",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "breda"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "Gemeente Cranendonck",
       "module": "hvcgroep_nl",
       "default_params": {
