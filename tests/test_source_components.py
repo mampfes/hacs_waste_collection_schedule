@@ -422,10 +422,8 @@ SOURCES_ALLOWED_RAW_ICONS: set[str] = {
     "insert_it_de",  # nested {region: {waste_type: {icon, name}}} structure
     "landkreis_helmstedt_de",  # computed keys
     "potsdam_de",  # integer keys
-    "sepan_remondis_pl",  # dynamic ICON_MAP construction
     "wermelskirchen_de",  # dynamic ICON_MAP construction
     "woollahra_nsw_gov_au",  # dynamic ICON_MAP construction
-    "zys_harmonogram_pl",  # dynamic ICON_MAP construction
 }
 
 

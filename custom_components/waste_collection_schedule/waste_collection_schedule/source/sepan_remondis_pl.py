@@ -1,30 +1,26 @@
 import datetime
-import json
-import logging
 import xml.etree.ElementTree
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.Sepan import SepanClient
 
 TITLE = "Koziegłowy/Objezierze/Oborniki"
 DESCRIPTION = "Source for Koziegłowy/Objezierze/Oborniki city garbage collection"
 URL = "https://sepan.remondis.pl"
+COUNTRY = "pl"
 TEST_CASES = {
     "Street Name": {
         "city": "Poznań",
         "street_name": "ŚWIĘTY MARCIN",
-        "street_number": "1",
+        "street_number": "2",
     },
 }
 
-_LOGGER = logging.getLogger(__name__)
-
-
-API_URL = "https://sepan.remondis.pl/harmonogram{}"
-
+# Waste-type names and icons by report-table column position. This source's
+# report tables don't reliably expose parseable header text (unlike
+# zys_harmonogram_pl / alba_com_pl), so - as in the pre-refactor
+# implementation - rows are read positionally: row 1 = January ... row 12 =
+# December, column 1..7 = the fixed categories below.
 NAME_MAP = {
     1: "Zmieszane odpady komunalne",
     2: "Papier",
@@ -36,80 +32,35 @@ NAME_MAP = {
 }
 
 ICON_MAP = {
-    1: "mdi:trash-can",
-    2: "mdi:recycle",
-    3: "mdi:recycle",
-    4: "mdi:recycle",
-    5: "mdi:recycle",
-    6: "mdi:recycle",
-    7: "mdi:trash-can",
+    1: Icons.GENERAL_WASTE,
+    2: Icons.PAPER,
+    3: Icons.RECYCLING,
+    4: Icons.GLASS,
+    5: Icons.ORGANIC,
+    6: Icons.CHRISTMAS_TREE,
+    7: Icons.BULKY,
 }
 
 
+def _base_urls() -> list[str]:
+    year = datetime.datetime.now().year
+    return [
+        f"https://sepan.remondis.pl/harmonogram{year}",
+        "https://sepan.remondis.pl/harmonogram",
+    ]
+
+
 class Source:
-    def __init__(self, city, street_name, street_number):
-        self._city = city.upper()
-        self._street_name = street_name.upper()
-        self._street_number = street_number.upper()
+    def __init__(self, city: str, street_name: str, street_number: str):
+        self._client = SepanClient(_base_urls())
+        self._address_id = self._client.resolve_address(
+            city, street_name, street_number
+        )
 
-    def fetch(self):
-        try:
-            return self.get_data(API_URL.format(datetime.datetime.now().year))
-        except Exception:
-            _LOGGER.debug(
-                f"fetch failed for source {TITLE}: trying different API_URL ..."
-            )
-            return self.get_data(API_URL.format(""))
-
-    def get_data(self, api_url):
-        r = requests.get(f"{api_url}/addresses/cities")
-        r.raise_for_status()
-        city_id = 0
-        cities = json.loads(r.text)
-        for item in cities:
-            if item["value"] == self._city:
-                city_id = item["id"]
-        if city_id == 0:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city", self._city, [item["value"] for item in cities]
-            )
-
-        r = requests.get(f"{api_url}/addresses/streets/{city_id}")
-        r.raise_for_status()
-        street_id = 0
-        streets = json.loads(r.text)
-        for item in streets:
-            if item["value"] == self._street_name:
-                street_id = item["id"]
-        if street_id == 0:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_name", self._street_name, [item["value"] for item in streets]
-            )
-
-        r = requests.get(f"{api_url}/addresses/numbers/{city_id}/{street_id}")
-        r.raise_for_status()
-        number_id = 0
-        numbers = json.loads(r.text)
-        for item in numbers:
-            if item["value"] == self._street_number:
-                number_id = item["id"]
-        if number_id == 0:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
-                self._street_number,
-                [item["value"] for item in numbers],
-            )
-
-        r = requests.get(f"{api_url}/reports?type=html&id={number_id}")
-        r.raise_for_status()
-        report = json.loads(r.text)
-        if report["status"] != "success":
-            raise Exception("fetch report failed")
-
-        r = requests.get(report["filePath"])
-        r.raise_for_status()
-        table = r.text[r.text.find("<table") : r.text.rfind("</table>") + 8]
-        tree = xml.etree.ElementTree.fromstring(table)  # nosec B314
+    def fetch(self) -> list[Collection]:
+        html = self._client.fetch_report_html(self._address_id)
+        table_html = html[html.find("<table") : html.rfind("</table>") + 8]
+        tree = xml.etree.ElementTree.fromstring(table_html)  # nosec B314
         year = datetime.date.today().year
 
         entries = []
