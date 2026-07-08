@@ -101,7 +101,7 @@ REFERENCE_MONDAY = date(2025, 1, 6)
 #   - outer_west: https://www.durban.gov.za/uploads/0000/6/2025/09/18/outer-west.docx
 #   - south: https://www.durban.gov.za/uploads/0000/6/2025/09/18/south-region.docx
 #   - south_central: https://www.durban.gov.za/uploads/0000/6/2025/09/18/south-central.docx
-# Last generated: 2026-07-08
+# Based on schedules dated: 2025-09-18
 COLLECTION_AREAS = {
     "inner_west": {
         "2_mgababa": {"title": "2 & Mgababa", "weekday": 2},
