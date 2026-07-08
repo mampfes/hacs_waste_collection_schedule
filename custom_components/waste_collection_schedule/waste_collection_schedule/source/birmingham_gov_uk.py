@@ -77,7 +77,7 @@ class Source:
         )
         if not_found:
             # new API cannot find data to fall back to legacy API
-            return self.legacy_api
+            return self.legacy_api()
 
         if not (table := soup.find("table", class_="data-table")) or not table.tbody:
             raise ValueError(
