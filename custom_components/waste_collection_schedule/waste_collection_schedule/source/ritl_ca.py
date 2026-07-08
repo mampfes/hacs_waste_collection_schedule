@@ -1,13 +1,17 @@
-import logging
+from datetime import date as datetime_date
+from datetime import datetime as datetime_datetime
+from datetime import timedelta
 from typing import Dict, List
 
 import requests
+from icalendar import Calendar
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "RITL"
-DESCRIPTION = "Source for Régie intermunicipale des Trois-Lacs (RITL) waste collection schedule."
+DESCRIPTION = (
+    "Source for Régie intermunicipale des Trois-Lacs (RITL) waste collection schedule."
+)
 URL = "https://ritl.ca/"
 COUNTRY = "ca"
 
@@ -84,6 +88,17 @@ PARAM_DESCRIPTIONS = {
     },
 }
 
+PARAM_TRANSLATIONS = {
+    "en": {
+        "municipality": "Municipality",
+        "sector": "Sector",
+    },
+    "fr": {
+        "municipality": "Municipalité",
+        "sector": "Secteur",
+    },
+}
+
 ICON_MAP = {
     "Déchets": Icons.GENERAL_WASTE,
     "Recyclage": Icons.RECYCLING,
@@ -143,8 +158,6 @@ for m_name, sectors in MUNICIPALITIES.items():
 
 class Source:
     def __init__(self, municipality: str, sector: str | None = None):
-        self._ics = ICS()
-
         norm_m = normalize(municipality)
         if norm_m not in MUNICIPALITIES_NORMALIZED:
             raise SourceArgumentNotFoundWithSuggestions(
@@ -205,33 +218,92 @@ class Source:
             "ai1ec_cat_ids": cat_ids_str,
         }
         headers = {"User-Agent": "Mozilla/5.0"}
-        r = requests.get("https://ritl.ca/", params=params, headers=headers)
+        r = requests.get("https://ritl.ca/", params=params, headers=headers, timeout=30)
         r.raise_for_status()
 
-        dates = self._ics.convert(r.text)
-        entries = []
-        for date, summary in dates:
-            summary_lower = summary.lower()
-            if "compost" in summary_lower or "organique" in summary_lower:
-                t = "Compost"
-            elif (
-                "récupération" in summary_lower
-                or "recuperation" in summary_lower
-                or "recyclage" in summary_lower
-                or "recup" in summary_lower
-                or "bleu" in summary_lower
-            ):
-                t = "Recyclage"
-            elif (
-                "déchets" in summary_lower
-                or "dechets" in summary_lower
-                or "ordures" in summary_lower
-            ):
-                t = "Déchets"
-            else:
-                t = summary
+        cal = Calendar.from_ical(r.text)
 
-            icon = ICON_MAP.get(t)
-            entries.append(Collection(date=date, t=t, icon=icon))
+        today = datetime_date.today()
+        start_date = today
+        end_date = today + timedelta(days=365)
+
+        entries = []
+
+        for component in cal.walk():
+            if component.name == "VEVENT":
+                summary = component.get("summary")
+                categories = component.get("categories")
+
+                # Combine categories and summary to identify waste type
+                check_strings = []
+                if summary:
+                    check_strings.append(str(summary))
+                if categories:
+                    if hasattr(categories, "cats"):
+                        check_strings.extend(str(c) for c in categories.cats)
+                    elif isinstance(categories, list):
+                        check_strings.extend(str(c) for c in categories)
+                    else:
+                        check_strings.append(str(categories))
+
+                check_text = " ".join(check_strings).lower()
+
+                if "compost" in check_text or "organique" in check_text:
+                    t = "Compost"
+                elif any(
+                    w in check_text
+                    for w in [
+                        "récupération",
+                        "recuperation",
+                        "recyclage",
+                        "recup",
+                        "bleu",
+                    ]
+                ):
+                    t = "Recyclage"
+                elif any(w in check_text for w in ["déchets", "dechets", "ordures"]):
+                    t = "Déchets"
+                else:
+                    t = str(summary) if summary else "Unknown"
+
+                # Extract dates
+                dates = []
+
+                # DTSTART
+                dtstart_prop = component.get("dtstart")
+                if dtstart_prop:
+                    dt = dtstart_prop.dt
+                    if isinstance(dt, datetime_datetime):
+                        dates.append(dt.date())
+                    elif isinstance(dt, datetime_date):
+                        dates.append(dt)
+
+                # RDATEs
+                rdate_prop = component.get("rdate")
+                if rdate_prop:
+                    if not isinstance(rdate_prop, list):
+                        rdate_prop = [rdate_prop]
+                    for r in rdate_prop:
+                        if hasattr(r, "dts"):
+                            for dt_item in r.dts:
+                                dt = dt_item.dt
+                                if isinstance(dt, datetime_datetime):
+                                    dates.append(dt.date())
+                                elif isinstance(dt, datetime_date):
+                                    dates.append(dt)
+                        elif hasattr(r, "dt"):
+                            dt = r.dt
+                            if isinstance(dt, datetime_datetime):
+                                dates.append(dt.date())
+                            elif isinstance(dt, datetime_date):
+                                dates.append(dt)
+
+                # Filter and add collections
+                icon = ICON_MAP.get(t)
+                seen_dates = set()
+                for d in dates:
+                    if start_date <= d <= end_date and d not in seen_dates:
+                        seen_dates.add(d)
+                        entries.append(Collection(date=d, t=t, icon=icon))
 
         return entries
