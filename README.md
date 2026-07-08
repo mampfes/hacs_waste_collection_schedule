@@ -1134,6 +1134,7 @@ If you already have enough information for your municipality/region, you are ver
 <summary>Germany</summary>
 
 - [123abfallkalender](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de
+- [Aach](/doc/source/muellmann_app_de.md) / aach.muellmann-app.de
 - [Aballwirtschaft Ludwigslust-Parchim AöR](/doc/ics/alp_lup_de.md) / alp-lup.de
 - [Abbecke](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Abfall App](/doc/ics/abfall_app_net.md) / abfall-app.net
@@ -1224,6 +1225,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Albrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [ALF Lahn-Fulda](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallhr
 - [Allendorf](/doc/source/lobbe_app.md) / lobbe.app
+- [Allensbach](/doc/source/muellmann_app_de.md) / allensbach.muellmann-app.de
 - [Allensbach am Bodensee](/doc/ics/gemeinde_allensbach_de.md) / gemeinde-allensbach.de
 - [Allershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Alsdorf](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
@@ -1333,6 +1335,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Blankenhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Blaue Tonne - Schlaue Tonne](/doc/ics/blauetonne_schlauetonne_de.md) / blauetonne-schlauetonne.de
 - [Bodenfelde](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Bodman-Ludwigshafen](/doc/source/muellmann_app_de.md) / bodman.muellmann-app.de
 - [Bogenschütz Entsorgung](/doc/source/infeo_at.md) / bogenschuetz-entsorgung.de
 - [Bollensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Bonn](/doc/source/app_abfallplus_de.md) / Abfall+ App: bonnorange
@@ -1476,6 +1479,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Fränkisch-Crumbach](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
 - [Fürstenhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Gailingen am Hochrhein](/doc/source/muellmann_app_de.md) / gailingen.muellmann-app.de
 - [Gaimersheim](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/gaimersheim/abfallkalender
 - [Garlebsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Gehrenrode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1553,6 +1557,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hilwartshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
+- [Hohenfels](/doc/source/muellmann_app_de.md) / hohenfels.muellmann-app.de
 - [Hohenlinden](/doc/source/awido_de.md) / lra-ebe.de
 - [Hohenlohekreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: hokwaste
 - [Hohnstedt](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1587,6 +1592,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kammerborn](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kamp-Lintfort (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Karben](/doc/ics/mein_abfallkalender_online.md) / karben.de
+- [Karlsruhe](/doc/source/muellmann_app_de.md) / karlsruhe.muellmann-app.de
 - [Kastl (Lkr. AÖ)](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/kastl/abfallkalender
 - [Katlenburg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [KAW Mainz und Mainz-Bingen AöR](/doc/source/kaw_mainz_bingen_de.md) / lk.kaw-mainz-bingen.de/de/Abfallentsorgung/Abfallkalender
@@ -1600,6 +1606,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
 - [Kohnsen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kommunalservice Landkreis Börde AöR](/doc/source/ks_boerde_de.md) / ks-boerde.de
+- [Konstanz](/doc/source/muellmann_app_de.md) / konstanz.muellmann-app.de
 - [Korbach](/doc/source/lobbe_app.md) / lobbe.app
 - [Kreiensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kreis Ahrweiler](/doc/source/app_abfallplus_de.md) / Abfall+ App: meinawb
@@ -1825,6 +1832,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Minden](/doc/source/jumomind_de.md) / minden.de
 - [Monheim am Rhein](/doc/source/monheim_de.md) / monheim.de
 - [Monschau](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Moos](/doc/source/muellmann_app_de.md) / moos.muellmann-app.de
 - [Moosach](/doc/source/awido_de.md) / lra-ebe.de
 - [Moringen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Mossautal](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
@@ -1834,10 +1842,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Mölln](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/9-molln
 - [Mörfelden-Walldorf](/doc/ics/moerfelden_walldorf_de.md) / moerfelden-walldorf.de
 - [Mühlenkreis Minden-Lübbecke](/doc/source/muehlenkreis_de.md) / muehlenkreis.de
+- [Mühlhausen-Ehingen](/doc/source/muellmann_app_de.md) / muehlhausen.muellmann-app.de
 - [Mühlheim am Main (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Mühlingen](/doc/source/muellmann_app_de.md) / muehlingen.muellmann-app.de
 - [Müllabfuhr Deutschland](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [MüllALARM / Schönmackers](/doc/source/abfall_io.md) / schoenmackers.de
 - [Müllershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Müllmann-App](/doc/source/muellmann_app_de.md) / muellmann-app.de
 - [Müllmax](/doc/source/muellmax_de.md) / muellmax.de
 - [München Landkreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: lkmabfallplus
 - [Nachrodt-Wiblingwerde](/doc/source/lobbe_app.md) / lobbe.app
@@ -1879,6 +1890,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Olsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [Olxheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Opperhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Orsingen-Nenzingen](/doc/source/muellmann_app_de.md) / orsingen.muellmann-app.de
 - [Ortenaukreis](/doc/source/app_abfallplus_de.md) / Abfall+ App: abfallappog
 - [Orxhausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Osterbruch](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1903,10 +1915,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Prignitz](/doc/source/app_abfallplus_de.md) / Abfall+ App: willkommen
 - [Pullach im Isartal](/doc/source/awido_de.md) / pullach.de
 - [Pöring (Zorneding)](/doc/source/awido_de.md) / lra-ebe.de
+- [Radolfzell am Bodensee](/doc/source/muellmann_app_de.md) / radolfzell.muellmann-app.de
 - [Rauischholzhausen](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/10-rauischholzhausen
 - [Recklinghausen](/doc/source/jumomind_de.md) / zbh-ksr.de
 - [RegioEntsorgung Städteregion Aachen](/doc/source/regioentsorgung_de.md) / regioentsorgung.de
 - [Reichelsheim](/doc/source/reso_gmbh_de.md) / reso-gmbh.de
+- [Reichenau](/doc/source/muellmann_app_de.md) / reichenau.muellmann-app.de
 - [Relliehausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Remondis Rheinland](/doc/source/app_abfallplus_de.md) / Abfall+ App: rheinland
 - [Rengershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -1966,6 +1980,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sievershausen (Dassel)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Sievershausen (Einbeck)](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Simmerath](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
+- [Singen (Hohentwiel)](/doc/source/muellmann_app_de.md) / singenah.muellmann-app.de
 - [Sohlingen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [St Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [St. Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
@@ -2028,6 +2043,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Steinheim](/doc/source/lobbe_app.md) / lobbe.app
 - [Steinhöring](/doc/source/awido_de.md) / lra-ebe.de
 - [STL Lüdenscheid](/doc/source/abfallnavi_de.md) / stl-luedenscheid.de
+- [Stockach](/doc/source/muellmann_app_de.md) / stockach.muellmann-app.de
 - [Stolberg](/doc/source/app_abfallplus_de.md) / Abfall+ App: regioentsorgung
 - [Strodthagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Stroit](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de

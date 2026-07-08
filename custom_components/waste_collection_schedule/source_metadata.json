@@ -1668,6 +1668,14 @@
     },
     "urls": {}
   },
+  "muellmann_app_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muellmann_app_de.md",
+    "howto": {
+      "de": "Geben Sie den Namen der Gemeinde ein (siehe Liste der unterstützten Orte dieser Quelle). Für Gemeinden mit straßengenauen Abfuhrterminen geben Sie zusätzlich Ihren Straßennamen an. Ist Ihre Straße in mehrere Abfuhrbereiche unterteilt, ergänzen Sie den passenden Wert für 'range_selector'; die Fehlermeldung beim ersten Versuch listet die für Ihre Straße gültigen Werte auf.",
+      "en": "Enter the municipality name (see the source's supported places list). For municipalities with street-level schedules, also provide your street name. If your street is split into several collection areas, add the correct 'range_selector' value; the error message you get on first try will list the valid options for your street."
+    },
+    "urls": {}
+  },
   "ics_alp_lup_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/alp_lup_de.md",
     "howto": {

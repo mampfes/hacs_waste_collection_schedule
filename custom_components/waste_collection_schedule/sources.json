@@ -6950,6 +6950,14 @@
       "id": "123abfallkalender_de"
     },
     {
+      "title": "Aach",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Aach"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Aballwirtschaft Ludwigslust-Parchim A\u00f6R",
       "module": "ics",
       "default_params": {},
@@ -7566,6 +7574,14 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Allensbach",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Allensbach"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Allensbach am Bodensee",
@@ -8381,6 +8397,14 @@
         "municipality": "Bodenfelde"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Bodman-Ludwigshafen",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Bodman-Ludwigshafen"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Bogensch\u00fctz Entsorgung",
@@ -9475,6 +9499,14 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Gailingen am Hochrhein",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Gailingen am Hochrhein"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Gaimersheim",
       "module": "heimat_info_de",
       "default_params": {
@@ -10079,6 +10111,14 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Hohenfels",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Hohenfels"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Hohenlinden",
       "module": "awido_de",
       "default_params": {
@@ -10344,6 +10384,15 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Karlsruhe",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Karlsruhe",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Kastl (Lkr. A\u00d6)",
       "module": "heimat_info_de",
       "default_params": {
@@ -10438,6 +10487,15 @@
       "module": "ks_boerde_de",
       "default_params": {},
       "id": "ks_boerde_de"
+    },
+    {
+      "title": "Konstanz",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Konstanz",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Korbach",
@@ -12179,6 +12237,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Moos",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Moos"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Moosach",
       "module": "awido_de",
       "default_params": {
@@ -12244,12 +12310,28 @@
       "id": "muehlenkreis_de"
     },
     {
+      "title": "M\u00fchlhausen-Ehingen",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "M\u00fchlhausen-Ehingen"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "M\u00fchlheim am Main (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "M\u00fchlingen",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "M\u00fchlingen"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "M\u00fcllabfuhr Deutschland",
@@ -12272,6 +12354,12 @@
         "municipality": "M\u00fcllershausen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "M\u00fcllmann-App",
+      "module": "muellmann_app_de",
+      "default_params": {},
+      "id": "muellmann_app_de"
     },
     {
       "title": "M\u00fcllmax",
@@ -12587,6 +12675,14 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Orsingen-Nenzingen",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Orsingen-Nenzingen"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Ortenaukreis",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -12771,6 +12867,15 @@
       "id": "awido_de"
     },
     {
+      "title": "Radolfzell am Bodensee",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Radolfzell",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Rauischholzhausen",
       "module": "123abfallkalender_de",
       "default_params": {
@@ -12799,6 +12904,14 @@
         "ort": "Reichelsheim"
       },
       "id": "reso_gmbh_de"
+    },
+    {
+      "title": "Reichenau",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Reichenau"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Relliehausen",
@@ -13244,6 +13357,15 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Singen (Hohentwiel)",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Singen (Hohentwiel)",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Sohlingen",
@@ -13694,6 +13816,15 @@
         "service": "stl"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Stockach",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Stockach",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Stolberg",

@@ -7385,6 +7385,37 @@
           "district": "District"
         }
       },
+      "args_muellmann_app_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "Municipality",
+          "range_selector": "Range selector (advanced)",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Municipality name, e.g. 'Radolfzell' or 'Konstanz'.",
+          "range_selector": "Only needed if your street is split into several collection areas. Leave empty first; the error message will list the valid values for your street if one is required.",
+          "street": "Street name (only required for municipalities with street-level schedules, e.g. Karlsruhe, Konstanz, Radolfzell, Singen (Hohentwiel), Stockach)."
+        }
+      },
+      "reconfigure_muellmann_app_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "Municipality",
+          "range_selector": "Range selector (advanced)",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "Municipality name, e.g. 'Radolfzell' or 'Konstanz'.",
+          "range_selector": "Only needed if your street is split into several collection areas. Leave empty first; the error message will list the valid values for your street if one is required.",
+          "street": "Street name (only required for municipalities with street-level schedules, e.g. Karlsruhe, Konstanz, Radolfzell, Singen (Hohentwiel), Stockach)."
+        }
+      },
       "args_ics_alp_lup_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
