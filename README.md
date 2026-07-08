@@ -3499,6 +3499,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
+- [New Rochelle (NY)](/doc/source/recyclecoach_com.md) / newrochelleny.gov/791/Collection-Dates
 - [New York City](/doc/source/nyc_gov.md) / nyc.gov
 - [Newark, Delaware, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-de-city-of-newark
 - [Northville Township, MI](/doc/source/northville_township_mi_us.md) / twp.northville.mi.us
