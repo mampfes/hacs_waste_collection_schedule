@@ -14,7 +14,7 @@ The year is read from the PDF URL, so the schedule is parsed live rather than
 hardcoded.
 """
 
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
@@ -50,7 +50,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Amarsul selective-collection calendars, Portugal."
     URL = "https://www.amarsul.pt"
     COUNTRY = "pt"
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
 
     # A real, confirmed circuit calendar (circuits D230A/D231A/D249A-D254A, 2026).
     _EXAMPLE_CALENDAR_URL = (
@@ -58,13 +58,13 @@ class Source(BaseSource):
         "calend%C3%A1rio-recolhas-2026-d230a-d231a-d249a-d250a-d251a-d252a-d253a-e-d254a.pdf"
     )
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Circuits D230A-D254A (2026)": {"calendar_url": _EXAMPLE_CALENDAR_URL},
     }
 
-    PARAMS = [text_field("calendar_url", "Calendar PDF URL")]
+    PARAMS = (text_field("calendar_url", "Calendar PDF URL"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Find the collection calendar (PDF) for your circuit on the Amarsul "
             "website (https://www.amarsul.pt) and copy the direct link to the PDF "

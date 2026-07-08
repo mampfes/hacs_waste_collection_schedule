@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from typing import Any, final
+from typing import Any, ClassVar, final
 
 import requests
 from waste_collection_schedule import date_parsers, recurrence
@@ -49,16 +49,16 @@ class Source(BaseSource):
     COUNTRY = "us"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Test_001": {"address": "1830 Fitzwater Street"},
         "Test_002": {"address": "9868 Cowden St"},
         "Test_003": {"address": "582 Paoli Ave"},
         "Test_004": {"address": "2714 S Marvine St"},
     }
 
-    PARAMS = [text_field("address", label="Address")]
+    PARAMS = (text_field("address", label="Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": "Use your address as shown on the phila.gov trash/recycling "
         "collection-day search results.",
     }

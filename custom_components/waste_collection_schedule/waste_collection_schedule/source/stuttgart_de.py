@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
@@ -23,18 +23,18 @@ class Source(BaseSource):
     COUNTRY = "de"
     # The transformer resolves open-ended German labels via the shared vocabulary,
     # so any canonical type may appear.
-    WASTE_TYPES = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
     # Address lookup: an empty result means the street/number didn't resolve.
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Im Steinengarten 7": {"street": "Im Steinengarten", "streetnr": 7},
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("street", "Straße"),
         text_field("streetnr", "Hausnummer"),
-    ]
+    )
 
     retrieve = StuttgartRetriever()
     parse = StuttgartParser()

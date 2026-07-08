@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -40,7 +40,7 @@ class Source(BaseSource):
     COUNTRY = "de"
     API_URL = "https://www.mzv-rotenburg-bebra.de/entsorgung.php"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Rotenburg an der Fulda": {"city": "rote"},
         "Bebra": {"city": "bebra"},
         "Rotenburg an der Fulda 2 Ost": {
@@ -50,13 +50,13 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("city", "City"),
         text_field("yellow_route", "Gelbe Tonne Route", optional=True),
         text_field("paper_route", "Papier Route", optional=True),
-    ]
+    )
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "de": (
             "Der Ort muss genau wie im `ort`-URL-Parameter der Links auf "
             "https://www.mzv-rotenburg-bebra.de//webapp.html geschrieben werden "
@@ -66,7 +66,7 @@ class Source(BaseSource):
     }
 
     # classify() produces these — declared explicitly (no transformer to derive from).
-    WASTE_TYPES = [
+    WASTE_TYPES: ClassVar[list] = [
         RECYCLABLES,
         ORGANIC,
         GENERAL_WASTE,
@@ -97,13 +97,13 @@ class Source(BaseSource):
         if "BEGIN:VCALENDAR" not in response.text:
             try:
                 cities = self._get_possible_cities()
-            except Exception:
+            except Exception as e:
                 raise SourceArgumentNotFound(
                     "city",
                     self.params["city"],
                     "make sure the city is spelled exactly like in the link of "
                     "the website https://www.mzv-rotenburg-bebra.de//webapp.html",
-                )
+                ) from e
             raise SourceArgumentNotFoundWithSuggestions(
                 "city", self.params["city"], cities
             )

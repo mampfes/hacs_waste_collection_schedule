@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, final
+from typing import Any, ClassVar, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule.base_source import BaseSource
@@ -83,20 +83,20 @@ class Source(BaseSource):
     COUNTRY = "se"
     # classify() resolves open-ended Swedish labels via the shared vocabulary,
     # so any canonical type may appear.
-    WASTE_TYPES = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Residential - Villa": {"address": "Helsingborgsvägen 31", "kundNr": 25494},
         "Residential - Apartment": {"address": "Hallandsvägen 9", "kundNr": 13726},
         "Commercial": {"address": "Hallandsvägen 9", "kundNr": 33159},
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("address", "Address for collection"),
         text_field("kundNr", "Customer number", optional=True),
-    ]
+    )
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": "Enter your address. If more than one collection shares the "
         "address, also provide your customer number (kundNr). Fetch your "
         "calendar at narabtomningskalender.se and run narabKUNDNRData.value in "

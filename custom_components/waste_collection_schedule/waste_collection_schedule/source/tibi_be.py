@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -46,14 +46,14 @@ class Source(BaseSource):
     URL = "https://www.tibi.be"
     COUNTRY = "be"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Charleroi": {"commune": "Charleroi"},
         "Couillet": {"commune": "Couillet"},
     }
 
-    PARAMS = [text_field("commune", "Commune")]
+    PARAMS = (text_field("commune", "Commune"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your commune exactly as it appears in the Tibi calendar "
             "(e.g. 'Charleroi', 'Couillet', 'Marcinelle'). Larger municipalities "
@@ -66,7 +66,7 @@ class Source(BaseSource):
         ),
     }
 
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
 
     # An unknown commune yields an empty export rather than an error, so surface
     # that to the user as a bad-argument error instead of a silent empty calendar.

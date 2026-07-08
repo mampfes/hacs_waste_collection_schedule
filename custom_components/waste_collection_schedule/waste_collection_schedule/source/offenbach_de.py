@@ -1,5 +1,5 @@
 import logging
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.source.insert_it_de import Source as InsertItSource
@@ -20,7 +20,7 @@ class Source(InsertItSource):
     URL = "https://www.offenbach.de"
     COUNTRY = "de"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "offenbach": {"f_id_location": 7036},  # Kaiserstraße 1
     }
 
@@ -28,8 +28,8 @@ class Source(InsertItSource):
     # optional so validate() does not require the renamed field (the parent
     # stores ``location_id``). REGIONS is empty: this alias is not separately
     # listed, the insert_it_de Offenbach region is the canonical listing.
-    PARAMS = [text_field("f_id_location", "Standort ID", optional=True)]
-    REGIONS: list = []
+    PARAMS = (text_field("f_id_location", "Standort ID", optional=True),)
+    REGIONS = ()
 
     def __init__(self, f_id_location):
         _LOGGER.warning(

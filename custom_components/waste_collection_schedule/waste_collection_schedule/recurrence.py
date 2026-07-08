@@ -97,7 +97,7 @@ def _build_index(attr: str) -> dict[str, int]:
     for code in _LOCALES:
         try:
             locale = Locale.parse(code)
-        except Exception:  # noqa: BLE001 - skip a locale Babel can't load
+        except Exception:
             continue
         table = getattr(locale, attr)
         for context in ("format", "stand-alone"):

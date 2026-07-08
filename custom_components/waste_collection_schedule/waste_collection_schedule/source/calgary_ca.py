@@ -1,6 +1,6 @@
 import datetime
 from collections.abc import Iterable, Mapping
-from typing import Literal, TypedDict, final
+from typing import ClassVar, Literal, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, preprocessors, recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -79,13 +79,13 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     # Addresses must be upper case and include a quadrant (e.g. "... SE").
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "42 AUBURN SHORES WY SE": {"street_address": "42 AUBURN SHORES WY SE"},
     }
 
-    PARAMS = [text_field("street_address", "Street Address")]
+    PARAMS = (text_field("street_address", "Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address in upper case, including the city quadrant "
             "(e.g. `42 AUBURN SHORES WY SE`)."

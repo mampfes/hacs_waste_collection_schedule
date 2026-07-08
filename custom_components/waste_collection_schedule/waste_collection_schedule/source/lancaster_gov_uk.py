@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -54,16 +54,16 @@ class Source(BaseSource):
     URL = "https://lancaster.gov.uk"
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
     API_URL = "https://lcc-wrp.whitespacews.com"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "1 Queen Street Lancaster, LA1 1RS": {"house_number": 1, "postcode": "LA1 1RS"}
     }
 
-    PARAMS = [postcode(), text_field("house_number", optional=True)]
+    PARAMS = (postcode(), text_field("house_number", optional=True))
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": "Provide your postcode and house name or number as shown on the "
         "council's bin-day lookup.",
     }

@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     alternatives,
@@ -189,13 +191,13 @@ class Source(BaseSource):
     COUNTRY = "de"
     # The transformer resolves open-ended German labels via the shared vocabulary,
     # so any canonical type may appear.
-    WASTE_TYPES = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
 
     # One structure (the Jumomind mmapp API) covering many municipalities; the
     # full list is derived from the source's own provider registry at load time.
     REGIONS = _regions
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         # DEPRECATED
         "ZAW": {"service_id": "zaw", "city_id": 106, "area_id": 94},
         "Bad Homburg, Bahnhofstrasse": {
@@ -256,7 +258,7 @@ class Source(BaseSource):
     # service_id is always required. The place is given either by city name
     # (with optional street / house number) or directly by city_id + area_id;
     # alternatives() enforces exactly one of those two groups.
-    PARAMS = [
+    PARAMS = (
         service_id("service_id"),
         alternatives(
             [city("city")],
@@ -264,9 +266,9 @@ class Source(BaseSource):
         ),
         street("street", optional=True),
         house_number("house_number", optional=True),
-    ]
+    )
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Pick the 'service_id' for your region from the source's list of "
             "municipalities, then enter your town ('city') and where required "

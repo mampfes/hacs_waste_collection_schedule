@@ -1,6 +1,6 @@
 import datetime
 import re
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -144,14 +144,14 @@ class Source(BaseSource):
     COUNTRY = "us"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Parsells Ave (Wed/A)": {"address": "124 Parsells Ave, Rochester, NY"},
         "Lyell Ave (Mon/B)": {"address": "200 Lyell Ave, Rochester, NY"},
     }
 
-    PARAMS = [text_field("address", "Street Address")]
+    PARAMS = (text_field("address", "Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address within the City of Rochester "
             "(e.g. '124 Parsells Ave, Rochester, NY')."

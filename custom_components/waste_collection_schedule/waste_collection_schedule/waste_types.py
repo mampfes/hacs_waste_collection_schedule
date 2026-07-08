@@ -415,5 +415,5 @@ def preserved(label: str) -> WasteType:
         id=f"preserved:{_norm(label)}",
         icon=OTHER.icon,
         color=OTHER.color,
-        names={lang: text for lang in SUPPORTED_LANGUAGES},
+        names=dict.fromkeys(SUPPORTED_LANGUAGES, text),
     )

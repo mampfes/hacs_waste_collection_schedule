@@ -69,7 +69,7 @@ class Parser(Protocol[T]):
     supplementary data while parsing.
     """
 
-    def __call__(self, response: Response, source: "BaseSource | None" = None) -> T: ...  # noqa: E704
+    def __call__(self, response: Response, source: "BaseSource | None" = None) -> T: ...
 
 
 class JsonParser(Parser[Any]):

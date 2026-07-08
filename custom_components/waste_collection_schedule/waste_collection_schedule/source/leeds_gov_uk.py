@@ -1,5 +1,5 @@
 import datetime
-from typing import TypedDict, final
+from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -62,18 +62,18 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Leeds City Council bin collections."
     URL = "https://www.leeds.gov.uk/bins-and-recycling"
     COUNTRY = "uk"
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Rose Terrace LS18": {"uprn": "72306030"},
         "Greenside Drive LS12": {"uprn": "72083396"},
         "Vicarage View LS5": {"uprn": "72543283"},
     }
 
-    PARAMS = [uprn(), api_key(default=DEFAULT_API_KEY)]
+    PARAMS = (uprn(), api_key(default=DEFAULT_API_KEY))
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Provide your UPRN (Unique Property Reference Number); find it at "
             "https://www.findmyaddress.co.uk/. The API Key is optional: leave it "
@@ -82,7 +82,7 @@ class Source(BaseSource):
         ),
     }
 
-    _TYPE_MAP = {
+    _TYPE_MAP: ClassVar[dict] = {
         "Black": GENERAL_WASTE,
         "Green": RECYCLABLES,
         "Brown": GARDEN_WASTE,

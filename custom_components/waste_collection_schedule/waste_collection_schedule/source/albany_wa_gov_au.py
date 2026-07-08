@@ -1,5 +1,5 @@
 import datetime
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -91,7 +91,7 @@ class Source(BaseSource):
     COUNTRY = "au"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Laithwood Circuit Marbelup (Zone A)": {
             "address": "Laithwood Circuit, Marbelup, Albany WA 6330"
         },
@@ -100,9 +100,9 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [text_field("address", "Street Address")]
+    PARAMS = (text_field("address", "Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address within the City of Albany "
             "(e.g. '15 Melville Street, Albany WA 6330')."

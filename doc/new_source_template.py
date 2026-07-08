@@ -12,7 +12,7 @@ For most sources the only source-specific code is ``__init__``; everything else
 is declarative class attributes.
 """
 
-from typing import TypedDict, final
+from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -41,7 +41,7 @@ class Source(BaseSource):
     DESCRIPTION = "Waste collections for Example Council."  # >>> one line
     URL = "https://example.com"  # >>> provider website
     COUNTRY = "uk"  # >>> lowercase country code (uk, not gb; ca lowercase)
-    CODEOWNERS = ["@your-handle"]  # >>> strongly encouraged
+    CODEOWNERS: ClassVar[list] = ["@your-handle"]  # >>> strongly encouraged
 
     # >>> Where the data comes from. A bare API_URL is enough for the default
     # zero-config GET; override retrieve() for anything more involved.
@@ -49,7 +49,7 @@ class Source(BaseSource):
 
     # >>> At least one entry; the keys are constructor kwargs. Used by CI and the
     # offline fixtures, so use known-good public examples (never a real address).
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "example": {"uprn": "100012345678"},
     }
 
@@ -57,10 +57,10 @@ class Source(BaseSource):
     # coords(), municipality(), dropdown(), dependent_select(), text_field(),
     # api_key(), alternatives(...). Use optional=True / default=... / alternatives
     # rather than dataclasses.replace.
-    PARAMS = [uprn()]
+    PARAMS = (uprn(),)
 
     # >>> Per-language guidance shown in the config form (en/de/fr/it).
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": "Find your UPRN at https://www.findmyaddress.co.uk/",
     }
 

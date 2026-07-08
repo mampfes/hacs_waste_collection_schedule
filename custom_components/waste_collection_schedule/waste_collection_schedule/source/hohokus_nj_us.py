@@ -1,6 +1,6 @@
 import re
 from datetime import date, timedelta
-from typing import final
+from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import recurrence, retrievers
@@ -88,17 +88,17 @@ class Source(BaseSource):
     DESCRIPTION = "Source for the Borough of Ho-Ho-Kus, New Jersey, USA."
     URL = "https://www.hhkborough.com"
     COUNTRY = "us"
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "District 1 (Mon/Thu)": {"district": "District 1"},
         "District 2 (Tue/Fri)": {"district": "District 2"},
     }
 
-    PARAMS = [dropdown("district", ["District 1", "District 2"], label="District")]
+    PARAMS = (dropdown("district", ["District 1", "District 2"], label="District"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Select your collection district (1 or 2). The borough collects yard "
             "waste on your two solid-waste days from 1 April to 31 October, and "

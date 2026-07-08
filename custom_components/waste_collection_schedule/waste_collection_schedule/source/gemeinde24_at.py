@@ -1,5 +1,5 @@
 from collections.abc import Mapping
-from typing import Any, TypedDict, final
+from typing import Any, ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -234,16 +234,16 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Gemeinde24 municipal app waste collection data."
     URL = "https://www.gemeinde24.at"
     COUNTRY = "at"
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Gaal": {"gemeinde": "Gaal", "strasse": "Gaal"},
     }
 
-    PARAMS = [dependent_select("gemeinde", "strasse", child_label="Street")]
+    PARAMS = (dependent_select("gemeinde", "strasse", child_label="Street"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Choose your municipality (Gemeinde), then choose your street/local "
             "area (Strasse) from the list that loads for that municipality."

@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -45,15 +45,15 @@ class Source(BaseSource):
     COUNTRY = "us"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "460 Sawyers Mill Xing": {
             "address": "460 Sawyers Mill Xing, Chesapeake, VA 23323"
         },
     }
 
-    PARAMS = [text_field("address", "Street Address")]
+    PARAMS = (text_field("address", "Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your full street address including city and state "
             "(e.g. '460 Sawyers Mill Xing, Chesapeake, VA 23323')."

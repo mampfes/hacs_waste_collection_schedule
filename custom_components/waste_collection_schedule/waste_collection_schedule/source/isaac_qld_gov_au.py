@@ -1,5 +1,5 @@
 import re
-from typing import final
+from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import lookups, recurrence
@@ -83,7 +83,7 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
     API_URL = URL
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Glenden (single-day town)": {"town": "Glenden"},
         "Middlemount (single-day town)": {"town": "Middlemount"},
         "Moranbah (multi-day, manual day)": {
@@ -92,14 +92,14 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         dropdown("town", ALL_TOWNS, label="Town"),
         dropdown(
             "collection_day", WEEKDAY_OPTIONS, label="Collection day", optional=True
         ),
-    ]
+    )
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Select your town. The smaller towns (Coastal, Glenden, Middlemount, "
             "Nebo) have a single town-wide collection day, read automatically. "
@@ -111,9 +111,9 @@ class Source(BaseSource):
         ),
     }
 
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
 
-    REGIONS = [
+    REGIONS: ClassVar[list] = [
         region(f"Isaac Regional Council ({town})", url=URL, town=town)
         for town in SINGLE_DAY_TOWNS
     ]

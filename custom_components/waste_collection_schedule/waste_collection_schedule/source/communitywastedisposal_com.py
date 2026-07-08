@@ -1,7 +1,7 @@
 import logging
 import re
 from datetime import date, datetime, timedelta
-from typing import final
+from typing import ClassVar, final
 
 import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
@@ -144,14 +144,14 @@ class Source(BaseSource):
     COUNTRY = "us"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Forney TX": {"address": "100 Princeton Cir, Forney, TX 75126"},
         "Allen TX": {"address": "123 Main St, Allen, TX 75002"},
     }
 
-    PARAMS = [text_field("address", "Street Address")]
+    PARAMS = (text_field("address", "Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address including city and ZIP "
             "(e.g. '123 Main St, Allen, TX 75002')."

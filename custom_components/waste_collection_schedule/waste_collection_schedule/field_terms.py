@@ -57,7 +57,7 @@ def _term(
     return FieldTerm(
         key=key,
         labels={"en": en, "de": de, "fr": fr, "it": it, "nl": nl},
-        descriptions=dict(zip(_LANGS, desc)) if desc else {},
+        descriptions=dict(zip(_LANGS, desc, strict=True)) if desc else {},
     )
 
 

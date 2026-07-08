@@ -1,6 +1,6 @@
 import datetime
 from collections.abc import Iterable
-from typing import Any, final
+from typing import Any, ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
@@ -67,14 +67,14 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
     # classify() may preserve an unknown company-suffixed label, so the produced
     # set is open-ended beyond the four canonical types the codes resolve to.
-    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, ORGANIC, GARDEN_WASTE]
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, ORGANIC, GARDEN_WASTE]
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Hufeland_45a": {"schedule_id": "04901100010300413840045A"},
         "Marktstr_1": {"schedule_id": "049011000105000297900010"},
     }
 
-    PARAMS = [text_field("schedule_id", "Schedule id")]
+    PARAMS = (text_field("schedule_id", "Schedule id"),)
 
     retrieve = HttpGetRetriever(url=ENDPOINT_PICKUPS, params=_filter)
     parse = JsonParser("dates")

@@ -1,5 +1,5 @@
 import datetime
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -73,14 +73,14 @@ class Source(BaseSource):
 
     FEATURE_URL = "https://services.arcgis.com/yeXpdyjk3azbqItW/arcgis/rest/services/Waste/FeatureServer/0"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Southgate Dr": {"address": "40 Southgate Dr, Kings Meadows, TAS"},
         "Brisbane St": {"address": "68 Brisbane St, Launceston, TAS"},
     }
 
-    PARAMS = [text_field("address", "Street Address")]
+    PARAMS = (text_field("address", "Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address, e.g. '40 Southgate Dr, Kings Meadows, TAS'."
         ),

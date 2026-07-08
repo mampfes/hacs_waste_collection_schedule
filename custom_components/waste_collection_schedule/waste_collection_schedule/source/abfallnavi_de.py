@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
@@ -198,7 +198,7 @@ class Source(BaseSource):
     # full list is derived from the source's own provider registry at load time.
     REGIONS = _regions
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Aachen, Abteiplatz 7": {
             "service": "aachen",
             "ort": "Aachen",
@@ -248,14 +248,14 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("service", "Service"),
         text_field("ort", "Ort"),
         text_field("strasse", "Straße", optional=True),
         text_field("hausnummer", "Hausnummer", optional=True),
-    ]
+    )
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Pick the 'service' id for your region from the source's list of "
             "municipalities, then enter your town ('ort'), and where required "

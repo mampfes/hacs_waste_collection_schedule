@@ -37,7 +37,7 @@ class Preprocessor(Protocol[InT, OutT]):
     ``source.params`` while shaping records.
     """
 
-    def __call__(  # noqa: E704
+    def __call__(
         self, records: InT, source: "BaseSource | None" = None
     ) -> Iterable[OutT]: ...
 

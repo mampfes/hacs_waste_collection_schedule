@@ -312,7 +312,7 @@ class ColourGridCalendarParser(Parser["list[tuple[date, str]]"]):
 
         boxes: list[tuple[int, int]] = []
         prev = 0
-        for cut in sorted(cuts) + [len(runs) - 1]:
+        for cut in [*sorted(cuts), len(runs) - 1]:
             group = runs[prev : cut + 1]
             box_left = group[0][0]
             boxes.append((box_left, group[-1][1] - box_left))

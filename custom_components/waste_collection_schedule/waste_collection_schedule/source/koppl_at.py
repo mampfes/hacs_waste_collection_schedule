@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.RiSKommunalAT import (
@@ -27,11 +27,11 @@ class Source(BaseSource):
     COUNTRY = "at"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Koppl": {},
     }
 
-    PARAMS = []
+    PARAMS = ()
 
     retrieve = RiSKommunalRetriever(
         base_url="https://www.koppl.at",

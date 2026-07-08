@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     alternatives,
@@ -87,9 +89,9 @@ class Source(BaseSource):
     COUNTRY = "de"
     # classify() resolves open-ended German labels via the shared vocabulary,
     # so any canonical type may appear.
-    WASTE_TYPES = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Offenbach Address": {
             "municipality": "Offenbach",
             "street": "Kaiserstraße",
@@ -100,13 +102,13 @@ class Source(BaseSource):
         "Mannheim Location ID": {"municipality": "Mannheim", "location_id": 430650},
     }
 
-    PARAMS = [
+    PARAMS = (
         municipality("municipality"),
         alternatives(
             [location_id("location_id")],
             [street("street"), house_number("hnr")],
         ),
-    ]
+    )
 
     retrieve = InsertItRetriever()
     parse = InsertItParser()

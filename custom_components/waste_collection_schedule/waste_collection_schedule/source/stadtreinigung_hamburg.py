@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -24,11 +24,11 @@ class Source(BaseSource):
     URL = "https://www.stadtreinigung.hamburg"
     COUNTRY = "de"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Zabelweg 1B": {"hnId": 53814},
     }
 
-    PARAMS = [text_field("hnId", "House Number ID"), text_field("asId", optional=True)]
+    PARAMS = (text_field("hnId", "House Number ID"), text_field("asId", optional=True))
 
     # hnId identifies a property; an unknown id yields a feed with no events, so
     # surface that as a bad-argument error rather than a silently-empty calendar.

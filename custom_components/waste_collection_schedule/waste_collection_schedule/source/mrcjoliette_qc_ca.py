@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from typing import TypedDict, final
+from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -86,7 +86,7 @@ class Source(BaseSource):
     API_URL = API_URL
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Joliette Mardi": {"city_id": "Joliette - Mardi"},
         "Saint-Charles-Borromée Mercredi": {
             "city_id": "Saint-Charles-Borromée - Mercredi"
@@ -94,9 +94,9 @@ class Source(BaseSource):
         "Crabtree": {"city_id": "Crabtree"},
     }
 
-    PARAMS = [dropdown("city_id", list(CITIES.values()), label="City/Sector")]
+    PARAMS = (dropdown("city_id", list(CITIES.values()), label="City/Sector"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": "Find your sector on the MRC Joliette collection map at https://mrcjoliette.qc.ca/gmr/carte-des-collectes/ and pick it from the list.",
         "fr": "Trouvez votre secteur sur la carte des collectes de la MRC Joliette (https://mrcjoliette.qc.ca/gmr/carte-des-collectes/) et choisissez-le dans la liste.",
     }

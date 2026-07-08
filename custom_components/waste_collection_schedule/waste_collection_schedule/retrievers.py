@@ -69,7 +69,7 @@ class RetrieverFunc(Protocol):
     method without tripping ``reportIncompatibleVariableOverride``.
     """
 
-    def __call__(self, source: BaseSource) -> Response: ...  # noqa: E704
+    def __call__(self, source: BaseSource) -> Response: ...
 
 
 class _BaseRetriever:

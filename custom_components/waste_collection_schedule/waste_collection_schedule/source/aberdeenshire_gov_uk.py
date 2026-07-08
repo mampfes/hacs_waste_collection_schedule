@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from bs4 import Tag
 from waste_collection_schedule import date_parsers, parsers, retrievers
@@ -31,14 +31,14 @@ class Source(BaseSource):
     URL = "https://aberdeenshire.gov.uk"
     COUNTRY = "uk"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Test_001": {"uprn": "000151124612"},
         "Test_002": {"uprn": "000151004105"},
         "Test_003": {"uprn": "0151035884"},
         "Test_004": {"uprn": 151170625},
     }
 
-    PARAMS = [uprn()]
+    PARAMS = (uprn(),)
 
     retrieve = retrievers.LegacySslHttpGetRetriever(
         url=lambda uprn: (
@@ -51,7 +51,7 @@ class Source(BaseSource):
     parse = parsers.HtmlParser("tr", skip=1, require=["tr td"])
 
     # Explicit WASTE_TYPES: OTHER covers any bin types not in the map below.
-    WASTE_TYPES = [RECYCLABLES, GENERAL_WASTE, OTHER]
+    WASTE_TYPES: ClassVar[list] = [RECYCLABLES, GENERAL_WASTE, OTHER]
 
     transform = HtmlTransformer(
         date_getter=lambda el: _cell_text(el, "td:nth-child(1)").split(" ")[0],

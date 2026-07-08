@@ -1,5 +1,5 @@
 import datetime
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -78,15 +78,15 @@ class Source(BaseSource):
     COUNTRY = "au"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "King Street": {"address": "1 King Street, Newcastle NSW 2300"},
         "Stockton": {"address": "5 Pacific Street, Stockton NSW 2295"},
         "Waratah": {"address": "30 Turton Road, Waratah NSW 2298"},
     }
 
-    PARAMS = [text_field("address", "Street Address")]
+    PARAMS = (text_field("address", "Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address within the City of Newcastle "
             "(e.g. '1 King Street, Newcastle NSW 2300')."

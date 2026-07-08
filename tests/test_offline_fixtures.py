@@ -25,15 +25,15 @@ sys.path.insert(
     ),
 )
 
-from importlib import import_module  # noqa: E402
+from importlib import import_module
 
-import cassette  # noqa: E402
-from fixtures_support import (  # noqa: E402
+import cassette
+from fixtures_support import (
     discover_choice_fixtures,
     discover_fixtures,
     slug,
 )
-from waste_collection_schedule.collection import Collection  # noqa: E402
+from waste_collection_schedule.collection import Collection
 
 _FIXTURES = discover_fixtures()
 _CHOICE_FIXTURES = discover_choice_fixtures()

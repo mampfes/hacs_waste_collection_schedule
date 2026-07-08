@@ -1,7 +1,7 @@
 import datetime
 import logging
 from collections.abc import Iterator
-from typing import Any, final
+from typing import Any, ClassVar, final
 
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import recurrence
@@ -70,10 +70,10 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Kleszczewo/Kostrzyn commune garbage collection"
     URL = "https://www.puk-zys.pl/index.php"
     COUNTRY = "pl"
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Street Name": {
             "city": "Komorniki",
             "street_name": "Komorniki",
@@ -82,14 +82,14 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("commune_name", label="Commune"),
         text_field("city", label="City"),
         text_field("street_name", label="Street"),
         text_field("street_number", label="House Number"),
-    ]
+    )
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter the commune (e.g. 'Kleszczewo'), then your city, street and "
             "house number exactly as they appear in the lookup at "

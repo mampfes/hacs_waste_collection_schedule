@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import field_terms
 from waste_collection_schedule.base_source import BaseSource
@@ -266,7 +266,7 @@ class Source(BaseSource):
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Landshut": {
             "key": "bd0c2d0177a0849a905cded5cb734a6f",
             "f_id_kommune": 2655,
@@ -308,7 +308,7 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         api_key("key"),
         cascading_select(
             ("f_id_kommune", field_terms.MUNICIPALITY),
@@ -317,7 +317,7 @@ class Source(BaseSource):
             ("f_id_strasse_hnr", field_terms.HOUSE_NUMBER),
         ),
         waste_types("f_abfallarten"),
-    ]
+    )
 
     retrieve = AbfallIoRetriever()
     parse = AbfallIoParser()

@@ -7,7 +7,7 @@ and the HOWTO text where present). They do NOT require a byte-identical match
 to the hand-written files, because the prose around the structure varies.
 """
 
-import calendar  # noqa: E402, F401, I001 — stdlib calendar must be imported FIRST
+import calendar  # noqa: F401 — stdlib calendar must be imported FIRST
 import importlib
 import os
 import sys
@@ -28,7 +28,7 @@ sys.path.insert(
 # doc_generator lives at the repo root (next to update_docu_links.py).
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from doc_generator import render_source_doc  # noqa: E402
+from doc_generator import render_source_doc
 
 
 def _load_source(source_id: str):

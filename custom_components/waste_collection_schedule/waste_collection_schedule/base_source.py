@@ -34,7 +34,7 @@ For complex sources that don't fit the standard transformers, implement
 import logging
 from abc import ABC
 from collections.abc import Callable, Iterable
-from typing import Any, Generic, TypeVar
+from typing import Any, ClassVar, Generic, TypeVar
 
 from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
 from waste_collection_schedule.collection import Collection
@@ -62,11 +62,14 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     DESCRIPTION: str = ""
     URL: str = ""
     COUNTRY: str = ""
-    TEST_CASES: dict = {}
-    HOWTO: dict[str, str] = {}  # {"en": "How to find your args...", ...}
+    TEST_CASES: ClassVar[dict] = {}
+    HOWTO: ClassVar[dict[str, str]] = {}  # {"en": "How to find your args...", ...}
 
     # --- Configuration parameters (drives the config flow + validation) ---
-    PARAMS: list[ConfigParam] = []
+    # A fixed sequence, read-only once declared: a tuple both documents that and
+    # keeps ruff's RUF012 (mutable class attribute) quiet without a per-source
+    # annotation.
+    PARAMS: ClassVar[tuple[ConfigParam, ...]] = ()
 
     # --- Regions this one structure covers ---
     # A source is one structure (the pipeline + PARAMS above) applied to one or
@@ -74,7 +77,7 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     # municipality/provider (or a callable returning them, for large external
     # registries) when one structure serves many. Drives the per-region README /
     # sources.json listings. The typed successor to the legacy EXTRA_INFO dicts.
-    REGIONS: "list[Region] | Callable[[], list[Region]]" = []
+    REGIONS: "ClassVar[tuple[Region, ...] | Callable[[], list[Region]]]" = ()
 
     # --- Waste types this source produces ---
     # Auto-derived from transform.waste_types when not explicitly declared.
@@ -82,7 +85,7 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     # relies solely on the shared multilingual resolver could produce any
     # canonical type, so it derives ALL_TYPES. Explicit declaration takes
     # precedence (e.g. classify()-based sources).
-    WASTE_TYPES: list[WasteType] = []
+    WASTE_TYPES: ClassVar[list[WasteType]] = []
 
     def __init_subclass__(cls, **kwargs):
         """Auto-derive WASTE_TYPES from the transform when not explicitly declared."""

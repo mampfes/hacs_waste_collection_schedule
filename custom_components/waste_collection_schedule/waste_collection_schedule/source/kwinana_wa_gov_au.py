@@ -1,6 +1,6 @@
 import datetime
 import re
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -87,14 +87,14 @@ class Source(BaseSource):
     URL = "https://www.kwinana.wa.gov.au"
     COUNTRY = "au"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Kwinana Town Centre": {"address": "1 Chisham Avenue KWINANA TOWN CENTRE"},
         "Wellard": {"address": "25 Breccia Parade WELLARD"},
     }
 
-    PARAMS = [text_field("address", "Street Address")]
+    PARAMS = (text_field("address", "Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address including suburb "
             "(e.g. '25 Breccia Parade WELLARD')."

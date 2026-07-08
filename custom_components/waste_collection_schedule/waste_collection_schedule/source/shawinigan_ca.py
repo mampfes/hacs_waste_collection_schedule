@@ -1,6 +1,6 @@
 import datetime
 import logging
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -238,13 +238,13 @@ class Source(BaseSource):
     COUNTRY = "ca"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Shawinigan": {"address": "1760 Avenue de la Paix, Shawinigan, QC G9N 6H7"},
     }
 
-    PARAMS = [text_field("address", "Street Address")]
+    PARAMS = (text_field("address", "Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address including city and postal code "
             "(e.g. '1760 Avenue de la Paix, Shawinigan, QC G9N 6H7')."

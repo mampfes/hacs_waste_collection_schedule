@@ -28,10 +28,10 @@ sys.path.insert(
     ),
 )
 
-from importlib import import_module  # noqa: E402
+from importlib import import_module
 
-import cassette  # noqa: E402
-from fixtures_support import choices_path, fixture_path, slug  # noqa: E402
+import cassette
+from fixtures_support import choices_path, fixture_path, slug
 
 SOURCE_DIR = os.path.join(
     os.path.dirname(__file__),
@@ -66,7 +66,7 @@ def record(module_name: str) -> None:
                 print(f"  ! {case_key}: fetch returned no collections, skipped")
                 continue
             print(f"  recorded {slug(case_key)} ({len(results)} collections)")
-        except Exception as exc:  # noqa: BLE001 - report and continue
+        except Exception as exc:
             print(f"  ! {case_key}: {type(exc).__name__}: {exc}")
 
 
@@ -113,7 +113,7 @@ def record_cascading_choices(module_name: str) -> bool:
                 source_cls.get_choices(field, dict(selections))
                 selections[field] = expected[field]
         print(f"  recorded cascading choices for {module_name} ({list(expected)})")
-    except Exception as exc:  # noqa: BLE001 - report and continue
+    except Exception as exc:
         if os.path.exists(path):
             os.remove(path)
         print(f"  ! {module_name} choices: {type(exc).__name__}: {exc}")
@@ -159,7 +159,7 @@ def record_choices(module_name: str) -> None:
                 source_cls.get_parent_choices()
             source_cls.get_choices(parent_value)
         print(f"  recorded choices for {module_name} (parent={parent_value!r})")
-    except Exception as exc:  # noqa: BLE001 - report and continue
+    except Exception as exc:
         if os.path.exists(path):
             os.remove(path)
         print(f"  ! {module_name} choices: {type(exc).__name__}: {exc}")

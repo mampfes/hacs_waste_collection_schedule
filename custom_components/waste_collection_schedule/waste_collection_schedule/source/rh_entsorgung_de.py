@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.regions import region
@@ -17,9 +17,9 @@ class Source(JumomindSource):
     URL = "https://www.rh-entsorgung.de"
     COUNTRY = "de"
 
-    REGIONS = [region("Rhein-Hunsrück Entsorgung (RHE)", url=URL)]
+    REGIONS = (region("Rhein-Hunsrück Entsorgung (RHE)", url=URL),)
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Horn": {
             "city": "Rheinböllen",
             "street": "Erbacher Straße",
@@ -35,12 +35,12 @@ class Source(JumomindSource):
 
     # service_id is fixed to "rhe", so it is not a user param here. The optional
     # address_suffix is folded into the house number before the parent runs.
-    PARAMS = [
+    PARAMS = (
         text_field("city", "Ort"),
         text_field("street", "Straße"),
         text_field("house_number", "Hausnummer"),
         text_field("address_suffix", "Hausnummerzusatz", optional=True),
-    ]
+    )
 
     def __init__(
         self, city: str, street: str, house_number: int, address_suffix: str = ""

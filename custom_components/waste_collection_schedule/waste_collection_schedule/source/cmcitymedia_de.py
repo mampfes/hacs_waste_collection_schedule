@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -72,20 +72,20 @@ class Source(BaseSource):
     # which returned []).
     # The transformer resolves open-ended German labels via the shared vocabulary,
     # so any canonical type may appear.
-    WASTE_TYPES = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
 
     # Both cases exercise the enabled Blankenheim provider (district-based and
     # realmid-override paths); disabled providers serve no data so are not tested.
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Blankenheim - Bezirk F: Lindweiler, Rohr": {"hpid": 415, "district": 1371},
         "Blankenheim": {"hpid": 415, "realmid": 41500},
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("hpid", "Homepage ID"),
         text_field("realmid", "Realm ID (optional override)", optional=True),
         district("district", optional=True),
-    ]
+    )
 
     retrieve = CMCityMediaRetriever()
     parse = CMCityMediaParser()

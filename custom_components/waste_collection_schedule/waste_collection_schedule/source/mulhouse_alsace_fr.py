@@ -1,6 +1,6 @@
 import re
 from datetime import date, timedelta
-from typing import final
+from typing import ClassVar, final
 
 import holidays
 from waste_collection_schedule import date_parsers, parsers, recurrence, retrievers
@@ -135,7 +135,7 @@ class Source(BaseSource):
     COUNTRY = "fr"
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Wittelsheim": {"commune": "Wittelsheim"},
         "Mulhouse - Centre Ville": {"commune": "Mulhouse", "quartier": "Centre Ville"},
         "Habsheim": {"commune": "Habsheim"},
@@ -187,12 +187,12 @@ class Source(BaseSource):
         )
     ] + [region("Mulhouse", commune="Mulhouse", quartier="Centre Ville")]
 
-    PARAMS = [
+    PARAMS = (
         text_field("commune", label="Municipality"),
         text_field("quartier", label="District", optional=True),
-    ]
+    )
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "fr": "Indiquez votre commune; pour Mulhouse précisez aussi le quartier.",
         "en": "Provide your municipality; for Mulhouse also provide the district.",
     }

@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -104,7 +104,7 @@ class Source(BaseSource):
     URL = "https://www.muellmax.de"
     COUNTRY = "de"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "USB Freiligrathstraße 55": {
             "service": "Usb",
             "mm_frm_str_sel": "Freiligrathstraße",
@@ -117,12 +117,12 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         service_id("service"),
         city("mm_frm_ort_sel", optional=True),
         street("mm_frm_str_sel", optional=True),
         house_number("mm_frm_hnr_sel", optional=True),
-    ]
+    )
 
     retrieve = MuellmaxRetriever()
     parse = parsers.IcsParser(min_events=1)

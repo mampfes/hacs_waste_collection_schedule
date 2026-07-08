@@ -1,5 +1,5 @@
 import re
-from typing import Any, Iterable, final
+from typing import Any, ClassVar, Iterable, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import lookups, recurrence, retrievers
@@ -55,15 +55,15 @@ class Source(BaseSource):
 
     API_URL = "https://www.cityoflawrence.com/161/Collection-Schedule"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Monday street (Adams Street)": {"street": "Adams Street"},
         "Tuesday street (Bailey Street)": {"street": "Bailey Street"},
         "Friday street (Ames Street)": {"street": "Ames Street"},
     }
 
-    PARAMS = [text_field("street", label="Street Name")]
+    PARAMS = (text_field("street", label="Street Name"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Open the City of Lawrence collection schedule at "
             "https://www.cityoflawrence.com/161/Collection-Schedule and find "
@@ -73,7 +73,7 @@ class Source(BaseSource):
         ),
     }
 
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
 
     RAISE_ON_EMPTY = True
 

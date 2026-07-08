@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -44,18 +44,18 @@ class Source(BaseSource):
     URL = "https://www.cannockchasedc.gov.uk"
     COUNTRY = "uk"
     API_URL = "https://ccdc.opendata.onl/DynamicCall.dll"
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Test_001": {"uprn": "100031640287", "postcode": "WS15 1DN"},
         "Test_002": {"uprn": "100031640289", "postcode": "WS15 1DN"},
         "Test_003": {"uprn": "100031624295", "postcode": "WS11 6DY"},
         "Test_004": {"uprn": "10008163213", "postcode": "WS11 7UD"},
     }
 
-    PARAMS = [uprn(), postcode()]
+    PARAMS = (uprn(), postcode())
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Find your UPRN by visiting https://www.findmyaddress.co.uk/ and "
             "entering your address details, then provide it together with your "
@@ -78,7 +78,7 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%d/%m/%Y %H:%M:%S"),
     )
 
-    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE, FOOD_WASTE]
 
     def __init__(self, uprn: str | int, postcode: str):
         super().__init__(uprn=str(uprn).zfill(12), postcode=postcode)

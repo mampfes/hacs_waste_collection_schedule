@@ -1,4 +1,4 @@
-from typing import TypedDict, final
+from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -71,23 +71,23 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Stirling."
     URL = "https://www.stirling.wa.gov.au"
     COUNTRY = "au"
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
     API_URL = "https://www.stirling.wa.gov.au/bincollectioncheck/getresult"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "by_address": {"address": "100 Cedric Street, Stirling, WA, Australia"},
         "by_coords": {"lat": -31.9034183, "lon": 115.8320855},
         "by_coords_str": {"lat": "-31.8783052", "lon": "115.8157741"},
     }
 
-    PARAMS = [
+    PARAMS = (
         alternatives(
             [text_field("address", label="Street Address")],
             [coords(lat="lat", lon="lon")],
-        )
-    ]
+        ),
+    )
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address including suburb "
             "(e.g. '100 Cedric Street, Stirling, WA, Australia'), "

@@ -11,11 +11,12 @@ collection record creation and customisation:
 6. Source validation: auto-discover new-style sources, run TEST_CASES
 """
 
-import calendar  # noqa: E402, F401, I001 — must import stdlib calendar FIRST
+import calendar  # noqa: F401 — must import stdlib calendar FIRST
 import datetime
 import os
 import sys
 from dataclasses import FrozenInstanceError
+from typing import ClassVar
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -772,7 +773,7 @@ class TestAbfallnaviComponents:
     """AbfallnaviDe (regio iT): multi-request retriever + cross-referencing parser."""
 
     # Canned regio iT REST responses keyed by request path.
-    _RESPONSES = {
+    _RESPONSES: ClassVar[dict] = {
         "orte": [{"id": 1, "name": "Aachen"}],
         "orte/1/strassen": [{"id": 10, "name": "Abteiplatz"}],
         "strassen/10": {"hausNrList": [{"id": 100, "nr": "7"}]},
@@ -867,7 +868,7 @@ class TestAbfallnaviComponents:
 class TestIntraMapsComponents:
     """IntraMaps: stateful-session retriever + panel parser, kept separate."""
 
-    _RESPONSE = {
+    _RESPONSE: ClassVar[dict] = {
         "infoPanels": {
             "info1": {
                 "feature": {
@@ -1597,7 +1598,7 @@ class TestRegions:
             Region(title="B", params={}, url="https://b.example", country="de"),
         ]
         # Accepts a callable (legacy EXTRA_INFO could be a function) and empties.
-        assert from_extra_info(lambda: []) == []
+        assert from_extra_info(list) == []
         assert from_extra_info(None) == []
 
 
@@ -1999,7 +2000,7 @@ class TestBaseSourcePipeline:
                 type_key="bin",
                 type_value_map={"refuse": GENERAL_WASTE},
             )
-            WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, OTHER]
+            WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, OTHER]
 
         assert TestSource.WASTE_TYPES == [GENERAL_WASTE, RECYCLABLES, OTHER]
 

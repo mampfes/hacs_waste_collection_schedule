@@ -1,4 +1,4 @@
-from typing import TypedDict, final
+from typing import ClassVar, TypedDict, final
 
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -67,7 +67,7 @@ class Source(BaseSource):
     URL = "https://reading.gov.uk"
     COUNTRY = "uk"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "known_uprn": {"uprn": "310027679"},
         "known_uprn as number": {"uprn": 310027679},
         "unknown_uprn_by_number": {"postcode": "RG31 5PN", "housenameornumber": "65"},
@@ -77,21 +77,21 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         alternatives(
             [uprn()],
             [postcode(), text_field("housenameornumber", label="House Name or Number")],
-        )
-    ]
+        ),
+    )
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Provide your UPRN, or provide both your postcode and house name "
             "or number. Find your UPRN at https://www.findmyaddress.co.uk/"
         ),
     }
 
-    _TYPE_MAP = {
+    _TYPE_MAP: ClassVar[dict] = {
         "Domestic Waste Collection Service": GENERAL_WASTE,
         "Recycling Collection Service": RECYCLABLES,
         "Food Waste Collection Service": FOOD_WASTE,

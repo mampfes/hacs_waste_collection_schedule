@@ -1,6 +1,6 @@
 import json
 import re
-from typing import Any, final
+from typing import Any, ClassVar, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import date_parsers
@@ -57,14 +57,14 @@ class Source(BaseSource):
     DESCRIPTION = "Source for the municipality of Muttenz, Switzerland."
     URL = "https://www.muttenz.ch"
     COUNTRY = "ch"
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
     API_URL = "https://www.muttenz.ch/abfalldaten"
 
-    TEST_CASES: dict = {"Muttenz": {}}
+    TEST_CASES: ClassVar[dict] = {"Muttenz": {}}
 
-    PARAMS: list = []
+    PARAMS = ()
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Muttenz publishes a single municipality-wide collection calendar, "
             "so no address or other argument is required."
@@ -83,7 +83,7 @@ class Source(BaseSource):
     # "Papiersammlung" would resolve on its own; the map is kept explicit so the
     # produced WASTE_TYPES are pinned and a renamed label is mapped, not silently
     # preserved verbatim.
-    WASTE_TYPES = [PAPER, RECYCLABLES, GARDEN_WASTE, HAZARDOUS]
+    WASTE_TYPES: ClassVar[list] = [PAPER, RECYCLABLES, GARDEN_WASTE, HAZARDOUS]
 
     def parse(self, response: Any, source: "Source") -> list[dict[str, str]]:
         """Pull the schedule out of the table's ``data-entities`` JSON blob.

@@ -1,7 +1,7 @@
 import datetime
 import re
 from collections.abc import Iterable
-from typing import TYPE_CHECKING, final
+from typing import TYPE_CHECKING, ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
@@ -72,18 +72,18 @@ class Source(BaseSource):
     )
     URL = "https://www.stkh.hu"
     COUNTRY = "hu"
-    CODEOWNERS = ["@markvp"]
+    CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Újkér 2026": {
             "url": "https://stkh.hu/wp-content/uploads/2025/12/9472_Ujker_Hulladeknaptar2026.pdf"
         },
     }
 
-    PARAMS = [text_field("url", "Calendar PDF URL")]
+    PARAMS = (text_field("url", "Calendar PDF URL"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Find your municipality's waste calendar (hulladéknaptár) PDF on "
             "https://www.stkh.hu (Szolgáltatásaink), then enter the direct PDF "

@@ -179,7 +179,7 @@ class Source:
                 break
         if mun_link is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "municipality", self._municipality, municipalities + ["Güstrow"]
+                "municipality", self._municipality, [*municipalities, "Güstrow"]
             )
 
         self._letters = mun_link.split("/")[-1].split(".")[0]

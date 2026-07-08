@@ -26,7 +26,7 @@ class DateParser(Protocol):
     ``parse_date`` argument.
     """
 
-    def __call__(self, *args: str) -> datetime.date: ...  # noqa: E704
+    def __call__(self, *args: str) -> datetime.date: ...
 
 
 class DateParserAuto(DateParser):

@@ -1,7 +1,7 @@
 import datetime
 import re
 from collections.abc import Iterable
-from typing import final
+from typing import ClassVar, final
 
 from bs4 import Tag
 from waste_collection_schedule import date_parsers, parsers
@@ -59,15 +59,15 @@ class Source(BaseSource):
     # The former "BIAŁĘŻYN / 1/A" case now returns "Brak harmonogramu" (no
     # schedule) upstream; dropped as stale. RAISE_ON_EMPTY surfaces such a dead
     # lookup as a clear argument error rather than the legacy silent empty list.
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Czerwonak": {"city": "Czerwonak", "street": "Źródlana", "nr": "39"},
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("city", "City"),
         text_field("street", "Street"),
         text_field("nr", "House Number"),
-    ]
+    )
 
     retrieve = HttpGetRetriever(
         url=_BASE_URL,

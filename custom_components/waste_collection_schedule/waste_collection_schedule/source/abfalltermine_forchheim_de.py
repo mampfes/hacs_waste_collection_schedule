@@ -1,5 +1,5 @@
 import urllib.parse
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -29,7 +29,7 @@ class Source(BaseSource):
     URL = "https://www.abfalltermine-forchheim.de/"
     COUNTRY = "de"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Dormitz": {"city": "Dormitz", "area": "Dormitz"},
         "Rüsselbach": {"city": "Igensdorf", "area": "Oberrüsselbach"},
         "Kellerstraße": {
@@ -38,7 +38,7 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [text_field("city", "City"), text_field("area", "Area")]
+    PARAMS = (text_field("city", "City"), text_field("area", "Area"))
 
     retrieve = HttpGetRetriever(url=_ics_url)
     # min_events=1: a valid place returns a feed with events; an unknown

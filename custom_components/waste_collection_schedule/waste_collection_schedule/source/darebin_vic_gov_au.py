@@ -1,5 +1,5 @@
 import datetime
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.base_source import BaseSource
@@ -77,7 +77,7 @@ class Source(BaseSource):
     URL = "https://www.darebin.vic.gov.au/"
     COUNTRY = "au"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "266 Gower Street PRESTON 3072": {
             "property_location": "266 Gower Street PRESTON 3072"
         },
@@ -86,9 +86,9 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [text_field("property_location", "Property Location")]
+    PARAMS = (text_field("property_location", "Property Location"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your full property location as it appears on the council site "
             "(e.g. '266 Gower Street PRESTON 3072')."

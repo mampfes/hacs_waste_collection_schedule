@@ -1,5 +1,5 @@
 import re
-from typing import final
+from typing import ClassVar, final
 from urllib.parse import urlencode
 
 from bs4 import Tag
@@ -70,9 +70,9 @@ class Source(BaseSource):
     URL = "https://www.yarraranges.vic.gov.au"
     COUNTRY = "au"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, ORGANIC]
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, ORGANIC]
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Petstock Lilydale": {
             "street_address": "5/447-449 Maroondah Highway Lilydale 3140"
         },
@@ -81,9 +81,9 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [text_field("street_address", label="Street Address")]
+    PARAMS = (text_field("street_address", label="Street Address"),)
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "en": "Enter your full street address as it appears on the council's "
         "waste collection lookup page (street, suburb and postcode).",
     }

@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -22,7 +22,7 @@ class Source(BaseSource):
     COUNTRY = "de"
     API_URL = "https://www.hschmid24.de/BlaueTonne/php/ajax.php"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Albatsried(Seeg)": {"city": "Albatsried(Seeg)"},
         "Nesselwang > Attlesee": {"city": "Nesselwang", "ortsteil": "Attlesee"},
         "Buchloe > Hausen > Dorfstraße": {
@@ -32,14 +32,14 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("city", "City"),
         text_field("ortsteil", "District", optional=True),
         text_field("strasse", "Street", optional=True),
-    ]
+    )
 
     retrieve = retrievers.http_post
-    WASTE_TYPES = [RECYCLABLES]
+    WASTE_TYPES: ClassVar[list] = [RECYCLABLES]
 
     def __init__(
         self,

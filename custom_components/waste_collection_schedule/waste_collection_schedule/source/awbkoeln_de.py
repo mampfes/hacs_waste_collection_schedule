@@ -1,5 +1,5 @@
 import datetime
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import retrievers
 from waste_collection_schedule.base_source import BaseSource
@@ -35,14 +35,14 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Abfallwirtschaftsbetriebe Köln waste collection."
     URL = "https://www.awbkoeln.de"
     COUNTRY = "de"
-    WASTE_TYPES = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
 
-    TEST_CASES = {"Koeln": {"street_code": 2, "building_number": 50}}
+    TEST_CASES: ClassVar[dict] = {"Koeln": {"street_code": 2, "building_number": 50}}
 
-    PARAMS = [
+    PARAMS = (
         text_field("street_code", label="Straßencode"),
         text_field("building_number", label="Hausnummer"),
-    ]
+    )
 
     retrieve = retrievers.HttpGetRetriever(url=API_URL, params=_calendar_params)
     parse = JsonParser("data")

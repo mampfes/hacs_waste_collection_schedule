@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import api_key, text_field, waste_types
@@ -39,9 +39,9 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
     # The transformer resolves each provider's open-ended German labels through the
     # shared multilingual vocabulary, so any canonical type may appear.
-    WASTE_TYPES = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Altlandsberg": {
             "key": "efb75cbd1f08fae1d4e47ae72a85c655",
             "idHouseNumber": 4136,
@@ -56,11 +56,11 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         api_key("key"),
         text_field("idHouseNumber", "House number ID"),
         waste_types("wasteTypes"),
-    ]
+    )
 
     retrieve = AbfallIoGraphQLRetriever()
     parse = AbfallIoGraphQLParser()

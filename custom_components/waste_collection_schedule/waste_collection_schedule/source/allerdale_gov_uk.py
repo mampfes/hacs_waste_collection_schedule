@@ -1,5 +1,5 @@
 import logging
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
@@ -37,19 +37,19 @@ class Source(BaseSource):
     URL = "https://www.allerdale.gov.uk"
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True
-    WASTE_TYPES = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE]
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, GARDEN_WASTE]
     API_URL = "https://abc-wrp.whitespacews.com/"
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "Keswick": {"address_postcode": "CA12 4HU", "address_name_number": "11"},
         "Workington": {"address_postcode": "CA14 3NS", "address_name_number": "177"},
         "Wigton": {"address_postcode": "CA7 9RS", "address_name_number": "55"},
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("address_postcode", "Postcode"),
         text_field("address_name_number", "House name/number", optional=True),
-    ]
+    )
 
     retrieve = WhitespaceRetriever(
         name_number="address_name_number",

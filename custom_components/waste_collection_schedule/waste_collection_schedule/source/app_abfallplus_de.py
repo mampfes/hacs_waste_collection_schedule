@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule import field_terms
 from waste_collection_schedule.base_source import BaseSource
@@ -38,9 +38,9 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
     # The transformer resolves each app's open-ended German labels through the shared
     # multilingual vocabulary, so any canonical type may appear.
-    WASTE_TYPES = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
 
-    TEST_CASES = {
+    TEST_CASES: ClassVar[dict] = {
         "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
             "app_id": "de.k4systems.abfallappnf",
             "city": "Ahrenviöl",
@@ -103,7 +103,7 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         text_field("app_id", "App ID"),
         cascading_select(
             ("bundesland", field_terms.STATE),
@@ -113,7 +113,7 @@ class Source(BaseSource):
             ("strasse", field_terms.STREET),
             ("hnr", field_terms.HOUSE_NUMBER),
         ),
-    ]
+    )
 
     retrieve = AppAbfallplusRetriever()
     parse = AppAbfallplusParser()
