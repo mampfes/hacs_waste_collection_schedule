@@ -41,6 +41,11 @@ TEST_CASES = {
         "post_code": "5071EN",
         "house_number": 122,
     },
+    "Breda": {
+        "organization": "breda",
+        "post_code": "4762BD",
+        "house_number": 21,
+    },
     "Groningen": {
         "organization": "groningen",
         "post_code": "9733AH",
@@ -57,6 +62,7 @@ Organization = Literal[
     "assen",
     "afvalbeheer",
     "bat",
+    "breda",
     "groningen",
     "rmn",
     "utrecht",
@@ -80,6 +86,12 @@ SERVICE_MAP = [
         "url": "https://www.batafvalbeheer.nl/",
         "uuid": "452048812597339353",
         "organization": "bat",
+    },
+    {
+        "title": "Gemeente Breda",
+        "url": "https://www.breda.nl/",
+        "uuid": "452048812597352613",
+        "organization": "breda",
     },
     {
         "title": "Gemeente Groningen",
