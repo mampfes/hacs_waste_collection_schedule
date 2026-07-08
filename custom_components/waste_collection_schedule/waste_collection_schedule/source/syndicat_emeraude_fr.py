@@ -595,7 +595,7 @@ class Source:
 
     def fetch(self):
         start = date(date.today().year, 1, 1)
-        # there is not realy a limit, but we will limit to 1 year in the future
+        # there is not really a limit, but we will limit to 1 year in the future
         end = date(date.today().year + 1, 12, 31)
         collections = []
         seen = set()
