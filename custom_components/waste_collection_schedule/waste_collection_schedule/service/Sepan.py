@@ -1,4 +1,5 @@
 import datetime
+import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -8,10 +9,11 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentRequiredWithSuggestions,
 )
 
-# Shared client for the "SEPAN" waste-schedule platform, used (via different
-# deployments/base URLs) by sepan_remondis_pl.py, zys_harmonogram_pl.py and
-# alba_com_pl.py. All three expose the identical address-resolution and
-# HTML-report API; see issue #6749 for the consolidation rationale.
+# Shared client for the "SEPAN" (aka "ICHI System") waste-schedule platform,
+# used (via different deployments/base URLs) by sepan_remondis_pl.py,
+# zys_harmonogram_pl.py, alba_com_pl.py and ichisystem_eu.py. All four expose
+# the identical address-resolution API; see issue #6749 for the
+# consolidation rationale and issue #6763 for the /years+token report flow.
 
 POLISH_MONTHS = {
     "STYCZEŃ": 1,
@@ -28,6 +30,37 @@ POLISH_MONTHS = {
     "GRUDZIEŃ": 12,
 }
 
+_PL_DIACRITICS = str.maketrans(
+    {
+        "ą": "a",
+        "Ą": "a",
+        "ć": "c",
+        "Ć": "c",
+        "ę": "e",
+        "Ę": "e",
+        "ł": "l",
+        "Ł": "l",
+        "ń": "n",
+        "Ń": "n",
+        "ó": "o",
+        "Ó": "o",
+        "ś": "s",
+        "Ś": "s",
+        "ź": "z",
+        "Ź": "z",
+        "ż": "z",
+        "Ż": "z",
+    }
+)
+
+
+def normalize_pl(text: str) -> str:
+    """Normalise Polish text for matching: uppercase, drop diacritics,
+    collapse whitespace. This lets e.g. "Swiety Marcin" (diacritics
+    dropped, as many users type) still match a platform's "ŚWIĘTY MARCIN"
+    listing. See issue #6763."""
+    return re.sub(r"\s+", " ", text.translate(_PL_DIACRITICS).upper()).strip()
+
 
 class SepanClient:
     """Client for the SEPAN waste-schedule platform.
@@ -39,6 +72,8 @@ class SepanClient:
 
     def __init__(self, base_urls: list[str]):
         self._base_urls = base_urls
+        self._resolved_base_url: str | None = None
+        self._resolved_number: dict | None = None
 
     def resolve_address(self, city: str, street: str, number: str) -> str:
         """Resolve city/street/number to an address id, trying each base URL
@@ -62,8 +97,8 @@ class SepanClient:
     def _resolve_address_at(
         self, base_url: str, city: str, street: str, number: str
     ) -> str:
-        city = city.upper().strip()
-        street = street.upper().strip()
+        city = normalize_pl(city)
+        street = normalize_pl(street)
         number = str(number).strip()
 
         cities = requests.get(f"{base_url}/addresses/cities", timeout=30).json()
@@ -72,9 +107,7 @@ class SepanClient:
             raise SourceArgumentRequiredWithSuggestions(
                 "city", "Select your city.", city_suggestions
             )
-        city_match = next(
-            (c for c in cities if c["value"].upper().strip() == city), None
-        )
+        city_match = next((c for c in cities if normalize_pl(c["value"]) == city), None)
         if not city_match:
             raise SourceArgumentNotFoundWithSuggestions("city", city, city_suggestions)
         city_id = city_match["id"]
@@ -88,7 +121,7 @@ class SepanClient:
                 "street", "Select your street.", street_suggestions
             )
         street_match = next(
-            (s for s in streets if s["value"].upper().strip() == street), None
+            (s for s in streets if normalize_pl(s["value"]) == street), None
         )
         if not street_match:
             raise SourceArgumentNotFoundWithSuggestions(
@@ -113,23 +146,63 @@ class SepanClient:
             )
 
         self._resolved_base_url = base_url
+        self._resolved_number = number_match
         return number_match["id"]
 
-    def fetch_report_html(self, address_id: str) -> str:
+    def _fetch_years(self) -> list[dict] | None:
+        """Return this deployment's report years (list of {"id", "value"}),
+        or None if it doesn't expose a `/years` endpoint (or the endpoint
+        errors/returns something unexpected). Older/simpler SEPAN
+        deployments only expose the current report via `/reports` without a
+        `yearId`; newer ones (see issue #6763) expose `/years` plus a
+        per-address `token` (already returned alongside the address id by
+        `/addresses/numbers/...`) to fetch any year's report on demand."""
+        if self._resolved_base_url is None:
+            return None
+        try:
+            resp = requests.get(f"{self._resolved_base_url}/years", timeout=30)
+            resp.raise_for_status()
+            years = resp.json()
+        except Exception:  # noqa: BLE001 - treat any failure as "unsupported"
+            return None
+        if not isinstance(years, list) or not years:
+            return None
+        return years
+
+    def fetch_report_html(
+        self,
+        address_id: str,
+        year_id: str | None = None,
+        token: str | None = None,
+    ) -> str:
         """Fetch the raw HTML report for a resolved address id.
 
-        Parsing is intentionally left to the caller: the three known SEPAN
+        If `year_id` (and the matching `token`, as returned alongside the
+        address id by `resolve_address()`'s underlying
+        `/addresses/numbers/...` call) are given, the report for that
+        specific year is requested; otherwise the deployment's
+        default/current report is requested (previous behaviour, still used
+        by deployments without a `/years` endpoint).
+
+        Parsing is intentionally left to the caller: the known SEPAN
         deployments don't all render the report table the same way (see
-        `parse_month_name_table` for the format shared by zys_harmonogram_pl
-        and alba_com_pl; sepan_remondis_pl uses its own positional parser).
+        `parse_month_name_table` for the format shared by zys_harmonogram_pl,
+        alba_com_pl and ichisystem_eu; sepan_remondis_pl uses its own
+        positional parser).
         """
-        base_url = getattr(self, "_resolved_base_url", None)
+        base_url = self._resolved_base_url
         if base_url is None:
             raise Exception("fetch_report_html() called before resolve_address()")
 
+        params: dict[str, str | None] = {"type": "html", "id": address_id}
+        if year_id is not None:
+            params["responseType"] = "json"
+            params["token"] = token
+            params["yearId"] = year_id
+
         report = requests.get(
             f"{base_url}/reports",
-            params={"type": "html", "id": address_id},
+            params=params,
             timeout=30,
         ).json()
         if report.get("status") != "success":
@@ -138,21 +211,63 @@ class SepanClient:
         return requests.get(report["filePath"], timeout=30).content.decode("utf-8")
 
     def fetch_schedule(self, address_id: str) -> list[tuple[datetime.date, str]]:
-        """Fetch and parse the HTML report using the shared month-name table
-        format (see `parse_month_name_table`)."""
-        return parse_month_name_table(self.fetch_report_html(address_id))
+        """Fetch and parse the HTML report(s) using the shared month-name
+        table format (see `parse_month_name_table`).
+
+        If the deployment exposes a `/years` endpoint, every available
+        year's report is fetched (using the `token` returned alongside the
+        address id by `resolve_address()`) and merged, deduplicating
+        entries. This is more robust across a calendar-year rollover than
+        guessing a year-suffixed base URL (see issue #6763). Deployments
+        without a `/years` endpoint fall back to the single "current"
+        report returned by `/reports` (previous behaviour).
+        """
+        years = self._fetch_years()
+        if not years:
+            return parse_month_name_table(self.fetch_report_html(address_id))
+
+        token = (self._resolved_number or {}).get("token")
+        entries: list[tuple[datetime.date, str]] = []
+        seen: set[tuple[datetime.date, str]] = set()
+        for year_entry in years:
+            try:
+                year_value = int(year_entry["value"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            try:
+                html = self.fetch_report_html(
+                    address_id, year_id=year_entry.get("id"), token=token
+                )
+            except Exception:  # noqa: BLE001 - skip years that fail to fetch
+                continue
+            for entry in parse_month_name_table(html, year=year_value):
+                if entry in seen:
+                    continue
+                seen.add(entry)
+                entries.append(entry)
+        return entries
 
 
-def parse_month_name_table(html: str) -> list[tuple[datetime.date, str]]:
-    """Parse a SEPAN report table whose rows are "<Month> <Year>" plus one
-    comma-separated-days cell per waste-type column (the format used by
-    zys_harmonogram_pl and alba_com_pl's deployments).
+def parse_month_name_table(
+    html: str, year: int | None = None
+) -> list[tuple[datetime.date, str]]:
+    """Parse a SEPAN report table whose rows are one comma-separated-days
+    cell per waste-type column, keyed by a leading "<Month>" or
+    "<Month> <Year>" cell (the format used by zys_harmonogram_pl,
+    alba_com_pl and ichisystem_eu's deployments).
 
     Column names are read from the header row itself (rather than assumed
     by position) because some deployments have a two-row <thead> (an outer
     grouping row plus the real per-column names) — only the row that
     actually contains "Miesiąc" is used for header names, so the extra
     grouping row's cells don't get misread as data columns.
+
+    Some deployments (e.g. ichisystem_eu) render just the month name
+    without a year in each row, relying on the report having been requested
+    for a specific year (see `SepanClient.fetch_schedule`'s /years+token
+    flow); pass that year explicitly via `year` for those. If a row's first
+    cell does include a year (as zys_harmonogram_pl / alba_com_pl do), that
+    embedded year always takes precedence over `year`.
     """
     soup = BeautifulSoup(html, "html.parser")
 
@@ -180,13 +295,19 @@ def parse_month_name_table(html: str) -> list[tuple[datetime.date, str]]:
             continue
 
         parts = cells[0].get_text(strip=True).split()
-        if len(parts) < 2:
+        if not parts:
             continue
 
         month = POLISH_MONTHS.get(parts[0].upper())
         if not month:
             continue
-        year = int(parts[-1])
+
+        if len(parts) >= 2 and parts[-1].isdigit():
+            row_year = int(parts[-1])
+        elif year is not None:
+            row_year = year
+        else:
+            continue
 
         for i, cell in enumerate(cells[1:]):
             if i >= len(headers):
@@ -203,7 +324,7 @@ def parse_month_name_table(html: str) -> list[tuple[datetime.date, str]]:
                 try:
                     entries.append(
                         (
-                            datetime.date(year, month, int(day_str)),
+                            datetime.date(row_year, month, int(day_str)),
                             waste_type,
                         )
                     )
