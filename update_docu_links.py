@@ -1151,6 +1151,10 @@ COUNTRYCODES = [
         "name": "Hungary",
     },
     {
+        "code": "is",
+        "name": "Iceland",
+    },
+    {
         "code": "ie",
         "name": "Ireland",
     },
