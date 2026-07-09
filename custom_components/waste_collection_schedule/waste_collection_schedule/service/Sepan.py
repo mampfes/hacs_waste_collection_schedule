@@ -163,7 +163,7 @@ class SepanClient:
             resp = requests.get(f"{self._resolved_base_url}/years", timeout=30)
             resp.raise_for_status()
             years = resp.json()
-        except Exception:  # noqa: BLE001 - treat any failure as "unsupported"
+        except Exception:
             return None
         if not isinstance(years, list) or not years:
             return None
@@ -238,7 +238,7 @@ class SepanClient:
                 html = self.fetch_report_html(
                     address_id, year_id=year_entry.get("id"), token=token
                 )
-            except Exception:  # noqa: BLE001 - skip years that fail to fetch
+            except Exception:
                 continue
             for entry in parse_month_name_table(html, year=year_value):
                 if entry in seen:
