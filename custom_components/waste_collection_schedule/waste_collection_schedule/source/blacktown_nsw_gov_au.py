@@ -15,7 +15,7 @@ TEST_CASES = {
         "street_name": "Jersey Rd",
         "street_number": "260",
     },
-    "Rooty Hill Tennis &amp; Squash Centre": {
+    "Rooty Hill Tennis & Squash Centre": {
         "post_code": "2766",
         "suburb": "Rooty Hill",
         "street_name": "Learmonth St",
@@ -99,7 +99,7 @@ class Source:
 
         entries = []
         for item in services:
-            # test if &lt;div&gt; contains a valid date. If not, is is not a collection item.
+            # test if <div> contains a valid date. If not, is is not a collection item.
             date_text = item.find("div", attrs={"class": "next-service"})
             # The date format currently used on https://www.blacktown.nsw.gov.au/Services/Waste-services-and-collection/Waste-collection-days
             date_format = "%a %d/%m/%Y"
