@@ -88,7 +88,7 @@ class Source:
                 continue
 
             # date format is "11/08/2024, Domenica" - we can get rid of the italian day name
-            date_str, day = date_cell.split(", ")
+            date_str, _day = date_cell.split(", ")
             try:
                 date = datetime.strptime(date_str, "%d/%m/%Y").date()
             except ValueError:
@@ -96,7 +96,7 @@ class Source:
                 continue
 
             collections = []
-            for header, cell in zip(headers, cells[1:]):
+            for header, cell in zip(headers, cells[1:], strict=False):
                 if cell.text.strip():
                     collections.append(header)
 

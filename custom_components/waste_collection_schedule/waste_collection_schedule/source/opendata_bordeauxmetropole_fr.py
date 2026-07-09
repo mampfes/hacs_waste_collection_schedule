@@ -2,6 +2,7 @@ import json
 import urllib.parse
 from datetime import date, datetime, timedelta
 from enum import Enum
+from typing import ClassVar
 
 import requests
 from waste_collection_schedule import Collection, Icons
@@ -198,7 +199,7 @@ class Source:
     geocoder_url = "https://api.publidata.io/v2/geocoder"
     api_url = "https://opendata.bordeaux-metropole.fr/api/explore/v2.1/catalog/datasets/en_frcol_s/exports/json?lang=fr&refine=commune%3A%22{city}%22&timezone=Europe%2FBerlin&use_labels=true&delimiter=%3B"
 
-    INSEE_CODES = {
+    INSEE_CODES: ClassVar = {
         "Bordeaux": 33063,
         "Mérignac": 33281,
         "Gradignan": 33192,

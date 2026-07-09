@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from datetime import datetime
+from typing import ClassVar
 
 import requests
 
@@ -173,7 +174,7 @@ DEFAULT_TIMEOUT = 20
 class AbfallnaviDe:
     # Services where the per-service subdomain DNS is dead;
     # use the shared domain directly to avoid DNS timeout.
-    SHARED_DOMAIN_SERVICES = {
+    SHARED_DOMAIN_SERVICES: ClassVar = {
         "unna",
         "frankenthal",
         "awvlippe",
@@ -279,7 +280,7 @@ class AbfallnaviDe:
         if len(house_numbers) == 0:
             return None
         if len(house_numbers) == 1:
-            return list(house_numbers.keys())[0]
+            return next(iter(house_numbers.keys()))
         if house_number is None:
             raise SourceArgumentRequiredWithSuggestions(
                 "house_number",

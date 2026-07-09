@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule import Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 
@@ -35,7 +37,7 @@ class Source(RiSKommunalSource):
     BASE_URL = "https://www.kronstorf.at"
     ICON_MAP = ICON_MAP
     RAISE_ON_EMPTY = True
-    QUERY_PARAMS = {
+    QUERY_PARAMS: ClassVar = {
         "menuonr": "218754346",
         "bdatum": "31.12.9999",
     }

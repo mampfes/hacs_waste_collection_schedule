@@ -78,7 +78,7 @@ class Source(RiSKommunalSource):
             .replace("'", '"')
         )
 
-        number_dict = dict()
+        number_dict = {}
 
         for idx, street_id in enumerate(possible_numbers):
             number_dict[street_id[0]] = {

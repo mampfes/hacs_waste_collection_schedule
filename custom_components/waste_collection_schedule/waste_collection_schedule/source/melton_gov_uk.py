@@ -59,7 +59,7 @@ class Source:
         r = s.get(
             "https://my.melton.gov.uk/set-location", headers=HEADERS, params=params
         )
-        r.raise_for_status
+        r.raise_for_status()
         soup: BeautifulSoup = BeautifulSoup(r.content, "html.parser")
 
         entries: list = []

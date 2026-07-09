@@ -41,7 +41,7 @@ class Source:
         response.raise_for_status()
         response = session.get(
             "https://digital.wyndham.vic.gov.au/myWyndham/ajax/address-search-suggestions.asp?",
-            params=dict(ASEARCH=self._street_address),
+            params={"ASEARCH": self._street_address},
         )
         response.raise_for_status()
         html = response.content
@@ -60,9 +60,11 @@ class Source:
         _LOGGER.debug("Fetched Property Number: %s", property_number)
         response = session.get(
             "https://digital.wyndham.vic.gov.au/myWyndham/init-map-data.asp",
-            params=dict(
-                propnum=property_number, radius="1000", mapfeatures="23,37,22,33,35"
-            ),
+            params={
+                "propnum": property_number,
+                "radius": "1000",
+                "mapfeatures": "23,37,22,33,35",
+            },
         )
         response.raise_for_status()
         wasteApiResult = response.content

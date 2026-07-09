@@ -439,7 +439,9 @@ def extract_onclicks(
         try:
             to_return.append(json.loads(string))
         except json.decoder.JSONDecodeError:
-            raise Exception(f"Failed to parse '{string}', onclick: '{onclick}'")
+            raise Exception(
+                f"Failed to parse '{string}', onclick: '{onclick}'"
+            ) from None
         if hnr:
             res = re.search(r"\.val\([0-9]+\)", onclick)
             if res:

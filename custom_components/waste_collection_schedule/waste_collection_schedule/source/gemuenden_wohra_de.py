@@ -136,7 +136,7 @@ class Source:
         if col_boundaries is None:
             return []
 
-        col_ends = col_boundaries[1:] + [col_boundaries[-1] + 50]
+        col_ends = [*col_boundaries[1:], col_boundaries[-1] + 50]
         first_col_slice = slice(max(0, col_boundaries[0] - 5), col_boundaries[0] + 35)
 
         entries: list[Collection] = []
@@ -151,7 +151,7 @@ class Source:
             day = int(first_col_m.group(1))
 
             for month_idx, (col_start, col_end) in enumerate(
-                zip(col_boundaries, col_ends)
+                zip(col_boundaries, col_ends, strict=False)
             ):
                 if col_start >= len(line):
                     continue

@@ -50,12 +50,12 @@ class Source:
 
         # Step 1: If no commune is provided, raise an exception with a list of all communes
         if self._commune is None:
-            commune_names = sorted(list(communes.keys()))
+            commune_names = sorted(communes.keys())
             raise SourceArgumentRequiredWithSuggestions("commune", None, commune_names)
 
         # Step 2: If commune is provided, check if it's valid
         if self._commune not in communes:
-            commune_names = sorted(list(communes.keys()))
+            commune_names = sorted(communes.keys())
             raise SourceArgumentNotFoundWithSuggestions(
                 "commune", self._commune, commune_names
             )

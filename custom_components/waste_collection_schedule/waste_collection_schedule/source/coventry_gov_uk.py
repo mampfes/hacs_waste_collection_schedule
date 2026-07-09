@@ -115,13 +115,13 @@ class Source:
             current_date_part: str | None = None
             current_types_parts: list[str] = []
 
-            def flush() -> None:
-                if current_date_part is None:
+            def flush(date_part: str | None, types_parts: list[str]) -> None:
+                if date_part is None:
                     return
 
                 try:
-                    waste_date = self.append_year(current_date_part)
-                    types_part = _normalize_space(" ".join(current_types_parts))
+                    waste_date = self.append_year(date_part)
+                    types_part = _normalize_space(" ".join(types_parts))
                     for waste_type in (
                         t.strip()
                         for t in re.split(r"\s+and\s+", types_part)
@@ -135,7 +135,7 @@ class Source:
                             )
                         )
                 except Exception as e:
-                    _LOGGER.warning(f"Error processing item '{current_date_part}': {e}")
+                    _LOGGER.warning(f"Error processing item '{date_part}': {e}")
 
             for raw_line in editor.get_text("\n", strip=True).splitlines():
                 line = _normalize_space(raw_line)
@@ -143,13 +143,13 @@ class Source:
                     continue
 
                 if ":" in line:
-                    flush()
+                    flush(current_date_part, current_types_parts)
                     date_part, types_part = (p.strip() for p in line.split(":", 1))
                     current_date_part = date_part
                     current_types_parts = [types_part] if types_part else []
                 elif current_date_part is not None:
                     current_types_parts.append(line)
 
-            flush()
+            flush(current_date_part, current_types_parts)
 
         return entries

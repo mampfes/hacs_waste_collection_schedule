@@ -41,7 +41,7 @@ class Source:
 
         # visit webpage to get viewstate info
         r = s.get(API_URL, headers=HEADERS)
-        r.raise_for_status
+        r.raise_for_status()
 
         # update payload and perform address search
         payload = self.get_viewstate(r.content)
@@ -53,7 +53,7 @@ class Source:
             }
         )
         r = s.post(API_URL, data=payload, headers=HEADERS)
-        r.raise_for_status
+        r.raise_for_status()
 
         # search results for address and get unique house code
         soup = BeautifulSoup(r.content, "html.parser")
@@ -72,7 +72,7 @@ class Source:
             }
         )
         r = s.post(API_URL, data=payload, headers=HEADERS)
-        r.raise_for_status
+        r.raise_for_status()
 
         # extract collection dates
         entries = []

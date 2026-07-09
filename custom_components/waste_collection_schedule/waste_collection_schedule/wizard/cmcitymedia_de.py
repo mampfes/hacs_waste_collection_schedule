@@ -101,7 +101,7 @@ def generate_md_file():
     all_districts = get_all_districts()
     # Open file ../../../doc/source/cmcitymedia_de.md and replace content between <!-- cmcitymedia_de --> and <!-- /cmcitymedia_de --> with all_districts
     content_lines = []
-    for found, data in all_districts.items():
+    for _found, data in all_districts.items():
         content_lines.append(f"### {data[0][1][0]['name']}\n")
         content_lines.append(f"* HPID: {data[0][0]}\n")
         content_lines.append("#### Available Waste Types\n")

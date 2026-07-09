@@ -85,9 +85,7 @@ class Source:
         entries = []
         for collection in collections:
             for key in [
-                k
-                for k in collection.keys()
-                if k.endswith("DateCurrent") or k.endswith("DateNext")
+                k for k in collection.keys() if k.endswith(("DateCurrent", "DateNext"))
             ]:
                 date_str = collection[key]
                 try:

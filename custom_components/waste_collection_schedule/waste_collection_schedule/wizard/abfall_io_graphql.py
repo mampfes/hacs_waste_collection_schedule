@@ -163,7 +163,7 @@ def main():
         service_key = answers["key"].strip()
 
     print("Connecting to abfall.io...")
-    api_key, pub_waste_types = get_api_key(service_key)
+    api_key, _pub_waste_types = get_api_key(service_key)
 
     # City search
     while True:

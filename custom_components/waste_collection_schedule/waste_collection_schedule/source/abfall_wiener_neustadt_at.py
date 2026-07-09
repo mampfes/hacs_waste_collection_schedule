@@ -164,7 +164,7 @@ class Source:
             raise Exception(
                 f"Failed to connect to {self._base_url}. "
                 f"Please check your internet connection and verify the website is accessible. Error: {e}"
-            )
+            ) from e
 
         soup = BeautifulSoup(response.text, "html.parser")
 
@@ -232,7 +232,7 @@ class Source:
             raise Exception(
                 f"Failed to retrieve zone information for street '{str_name_full}'. "
                 f"The website may be temporarily unavailable. Error: {e}"
-            )
+            ) from e
 
         reload_soup = BeautifulSoup(reload_response.text, "html.parser")
         tn_ez_zone_input = reload_soup.find(
@@ -306,7 +306,7 @@ class Source:
             raise Exception(
                 f"Failed to fetch collection schedule for street ID '{str_id}'. "
                 f"The website may be temporarily unavailable or the street ID is invalid. Error: {e}"
-            )
+            ) from e
 
         # Parse response
         return self._parse_schedule(response.text)

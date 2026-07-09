@@ -76,13 +76,18 @@ class Source:
         entries = []
         for pickup in pickups[1:]:
             details: list = self.tidytext(pickup.text.split(":"))
-            for detail in details:
+            for _detail in details:
                 if "FOGO" in details[0]:
-                    dt = list(
-                        rrule(
-                            WEEKLY, byweekday=DAYS[details[1]], dtstart=today, count=1
+                    dt = next(
+                        iter(
+                            rrule(
+                                WEEKLY,
+                                byweekday=DAYS[details[1]],
+                                dtstart=today,
+                                count=1,
+                            )
                         )
-                    )[0]
+                    )
                     waste = "FOGO Bin"
                 elif "Bulk" in details[0]:
                     dt = datetime.strptime(details[1], "%d %B %Y")

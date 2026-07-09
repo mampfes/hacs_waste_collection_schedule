@@ -79,7 +79,7 @@ class Source:
 
             except requests.RequestException as e:
                 if attempt == max_retries - 1:
-                    raise Exception(f"Network error: {str(e)}")
+                    raise Exception(f"Network error: {e!s}") from e
                 time.sleep(2**attempt)
 
         raise requests.exceptions.RequestException(
@@ -138,9 +138,11 @@ class Source:
             if "Access Denied" in r.text:
                 raise Exception(
                     "Access denied by Woollahra website. This may be due to bot protection measures. Please try again later."
-                )
+                ) from None
             else:
-                raise Exception("Invalid JSON response from address search API")
+                raise Exception(
+                    "Invalid JSON response from address search API"
+                ) from None
 
         # Find the ID for our address
         if data.get("Items") and len(data["Items"]) > 0:
@@ -170,9 +172,11 @@ class Source:
             if "Access Denied" in r.text:
                 raise Exception(
                     "Access denied by Woollahra website during waste services fetch."
-                )
+                ) from None
             else:
-                raise Exception("Invalid JSON response from waste services API")
+                raise Exception(
+                    "Invalid JSON response from waste services API"
+                ) from None
 
         if not data.get("success") or not data.get("responseContent"):
             raise RuntimeError("Invalid response from waste services API")

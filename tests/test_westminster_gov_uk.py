@@ -25,9 +25,9 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule import Icons  # noqa: E402
-from waste_collection_schedule.exceptions import SourceArgumentNotFound  # noqa: E402
-from waste_collection_schedule.source import westminster_gov_uk  # noqa: E402
+from waste_collection_schedule import Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.source import westminster_gov_uk
 
 # ---------------------------------------------------------------------------
 # Section 1: _parse_days (pure function)

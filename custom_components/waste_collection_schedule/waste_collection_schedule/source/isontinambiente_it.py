@@ -78,7 +78,7 @@ class Source:
             try:
                 year = int(year_str)
             except ValueError:
-                raise Exception(f"Cannot parse year: {year_str}")
+                raise Exception(f"Cannot parse year: {year_str}") from None
 
             legend = calendar.find_next_sibling()
             if not isinstance(legend, Tag):

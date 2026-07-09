@@ -65,7 +65,7 @@ class Source:
             except KeyError:
                 raise SourceArgumentNotFoundWithSuggestions(
                     "street", street, strdict.keys()
-                )
+                ) from None
 
         if district:
             reglist = next(iter([s for s in selects if s["id"] == "reglist"]))
@@ -80,7 +80,7 @@ class Source:
             except KeyError:
                 raise SourceArgumentNotFoundWithSuggestions(
                     "district", district, regdict.keys()
-                )
+                ) from None
 
     def fetch(self):
         LOGGER.warning(

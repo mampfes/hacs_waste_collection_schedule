@@ -88,7 +88,7 @@ def _parse_days(text: str) -> set[int]:
                 result.update(range(s, e + 1))
             else:  # wrap-around range, e.g. Sat-Mon
                 result.update(range(s, 7))
-                result.update(range(0, e + 1))
+                result.update(range(e + 1))
         else:
             v = _WEEKDAYS.get(token[:3])
             if v is not None:

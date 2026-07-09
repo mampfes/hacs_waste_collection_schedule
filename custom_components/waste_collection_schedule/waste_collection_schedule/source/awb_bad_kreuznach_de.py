@@ -207,7 +207,7 @@ class Source:
 
         entries = []
         for cal_entry in data["data"]["calendars"]:
-            collection_dates[cal_entry["name"]] = list(
+            collection_dates[cal_entry["name"]] = [
                 d.date()
                 for d in rrule(
                     freq=DAILY,
@@ -219,7 +219,7 @@ class Source:
                         else to_time
                     ),
                 )
-            )
+            ]
 
         moved: list[(str, date)] = []
 

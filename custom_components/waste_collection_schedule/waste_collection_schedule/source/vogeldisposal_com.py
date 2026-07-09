@@ -1,5 +1,6 @@
 import datetime
 import logging
+from typing import ClassVar
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -60,7 +61,7 @@ API_BASE = "https://www.vogeldisposal.com"
 
 
 class Source:
-    _MONTHS = {
+    _MONTHS: ClassVar = {
         "january": 1,
         "february": 2,
         "march": 3,

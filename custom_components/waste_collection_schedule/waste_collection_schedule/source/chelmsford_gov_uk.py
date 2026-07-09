@@ -61,7 +61,7 @@ class Source:
                 for item in items:
                     it = item.get_text(strip=True)
                     date_str, items = it.split(":")
-                    day, date, month = date_str.split()
+                    _day, date, month = date_str.split()
 
                     year = None
                     for h in heading_items:

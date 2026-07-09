@@ -60,7 +60,7 @@ class Source:
                 timeout=30,
             )
         except Exception as err:
-            raise RuntimeError("Failed to get initial form", err)
+            raise RuntimeError("Failed to get initial form", err) from err
 
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")

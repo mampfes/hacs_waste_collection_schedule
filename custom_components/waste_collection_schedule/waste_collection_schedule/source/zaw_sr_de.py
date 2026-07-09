@@ -116,7 +116,7 @@ class Source:
         parsed = re.findall(
             '<INPUT\\sNAME="([^"]+?)"\\sID="[^"]+?"(?:\\sVALUE="([^"]*?)")?', text
         )
-        result = {k: v for k, v in parsed}
+        result = dict(parsed)
         for sel_block in re.finditer(
             r'<SELECT\sNAME="([^"]+?)".*?</SELECT>', text, re.DOTALL
         ):
@@ -151,7 +151,9 @@ class Source:
             init_request,
             action="CITYCHANGED",
             period=calendar,
-            **{"Ort": self._city, "Strasse": "", "Hausnummer": ""},
+            Ort=self._city,
+            Strasse="",
+            Hausnummer="",
         )
         city_response = session.post(
             API_URL, headers=self._headers(), data=payload, verify=False
@@ -162,7 +164,9 @@ class Source:
             city_response.text,
             action="STREETCHANGED",
             period=calendar,
-            **{"Ort": self._city, "Strasse": self._street, "Hausnummer": ""},
+            Ort=self._city,
+            Strasse=self._street,
+            Hausnummer="",
         )
         street_response = session.post(
             API_URL, headers=self._headers(), data=payload, verify=False

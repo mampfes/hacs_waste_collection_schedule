@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule import Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 
@@ -60,7 +62,7 @@ class Source(RiSKommunalSource):
     )
     LOOKAHEAD_DAYS = 365
     MAX_PAGES = 30
-    QUERY_PARAMS = {
+    QUERY_PARAMS: ClassVar = {
         "menuonr": "225141707",
     }
 

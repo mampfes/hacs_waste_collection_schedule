@@ -56,7 +56,7 @@ class Source:
     def collect_dates(self, start_date, weeks):
         dates = []
         dates.append(start_date)
-        for i in range(1, int(4 / weeks)):
+        for _i in range(1, int(4 / weeks)):
             start_date = start_date + timedelta(days=(weeks * 7))
             dates.append(start_date)
         return dates

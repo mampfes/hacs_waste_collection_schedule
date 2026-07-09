@@ -147,7 +147,7 @@ class Source:
         headings = [td.text.strip() for td in coll_day_rows[0].find_all("td")]
         values = [td.text.strip() for td in coll_day_rows[1].find_all("td")]
 
-        for heading, value in list(zip(headings, values)):
+        for heading, value in list(zip(headings, values, strict=False)):
             if REGEX_GET_BIN_TYPE.match(heading):
                 bin_type_match = REGEX_GET_BIN_TYPE.match(heading)
                 if not bin_type_match:

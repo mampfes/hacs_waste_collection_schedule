@@ -6,8 +6,12 @@ line-length = 88
 # and import sorting (I, equivalent to isort profile=black). E203/E501 were
 # ignored by flake8; E721 is stricter in ruff than pycodestyle, so keep it off
 # to avoid new findings the old tool chain never reported.
-select = ["E", "F", "W", "I"]
-ignore = ["E203", "E501", "E721"]
+# B (bugbear), C4 (comprehensions), PIE and RUF catch real bugs/dead code
+# cheaply across the whole tree, including source/.
+select = ["E", "F", "W", "I", "B", "C4", "PIE", "RUF"]
+# E203/E501/E721: see above. RUF001-003 flag "ambiguous" unicode (en-dashes,
+# curly quotes) that legitimately occurs in non-English provider names/titles.
+ignore = ["E203", "E501", "E721", "RUF001", "RUF002", "RUF003"]
 
 [format]
 quote-style = "double"

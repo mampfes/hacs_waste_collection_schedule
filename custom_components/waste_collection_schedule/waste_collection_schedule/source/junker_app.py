@@ -367,8 +367,8 @@ class Source(Junker):
         except AreaRequired as e:
             raise SourceArgumentRequiredWithSuggestions(
                 "area", "required for this municipality", [a[0] for a in e.areas]
-            )
+            ) from e
         except AreaNotFound as e:
             raise SourceArgumentNotFoundWithSuggestions(
                 "area", self._area, [a[0] for a in e.areas]
-            )
+            ) from e
