@@ -1219,6 +1219,10 @@ COUNTRYCODES = [
         "name": "United States of America",
     },
     {
+        "code": "za",
+        "name": "South Africa",
+    },
+    {
         "code": "uk",
         "name": "United Kingdom",
     },
