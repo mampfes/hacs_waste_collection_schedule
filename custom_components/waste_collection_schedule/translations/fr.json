@@ -5650,6 +5650,33 @@
           "sector": "Votre secteur de collecte des déchets (A, B, C, D, E ou F)"
         }
       },
+      "args_ritl_ca": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Municipalité",
+          "sector": "Secteur"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "municipality": "Nom de la municipalité (ex: Lac-Supérieur, Lantier, Sainte-Agathe-des-Monts...)",
+          "sector": "Nom du secteur (requis uniquement pour les municipalités avec secteurs)"
+        }
+      },
+      "reconfigure_ritl_ca": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Municipalité",
+          "sector": "Secteur"
+        },
+        "data_description": {
+          "municipality": "Nom de la municipalité (ex: Lac-Supérieur, Lantier, Sainte-Agathe-des-Monts...)",
+          "sector": "Nom du secteur (requis uniquement pour les municipalités avec secteurs)"
+        }
+      },
       "args_ics_riviere_beaudette_com": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

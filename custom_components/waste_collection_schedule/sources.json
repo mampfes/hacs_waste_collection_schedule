@@ -5424,6 +5424,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "RITL",
+      "module": "ritl_ca",
+      "default_params": {},
+      "id": "ritl_ca"
+    },
+    {
       "title": "Rivi\u00e8re-Beaudette",
       "module": "ics",
       "default_params": {},
