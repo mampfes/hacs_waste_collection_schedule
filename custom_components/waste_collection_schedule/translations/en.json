@@ -19068,6 +19068,37 @@
         },
         "data_description": {}
       },
+      "args_durban_gov_za": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Collection Area",
+          "recycling_in_even_week": "Recycling collected on even ISO weeks",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "area": "Suburb or collection area slug from the regional schedule DOCX, e.g. hillcrest or drummond_montesseel",
+          "recycling_in_even_week": "Set to True if orange-bag recycling is collected on even ISO week numbers, False if collected on odd ISO week numbers. Check your last recycling collection date to determine this.",
+          "region": "Regional office area, e.g. outer_west, north, south_central, north_central, inner_west, or south"
+        }
+      },
+      "reconfigure_durban_gov_za": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Collection Area",
+          "recycling_in_even_week": "Recycling collected on even ISO weeks",
+          "region": "Region"
+        },
+        "data_description": {
+          "area": "Suburb or collection area slug from the regional schedule DOCX, e.g. hillcrest or drummond_montesseel",
+          "recycling_in_even_week": "Set to True if orange-bag recycling is collected on even ISO week numbers, False if collected on odd ISO week numbers. Check your last recycling collection date to determine this.",
+          "region": "Regional office area, e.g. outer_west, north, south_central, north_central, inner_west, or south"
+        }
+      },
       "args_affarsverken_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

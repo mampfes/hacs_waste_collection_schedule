@@ -18220,6 +18220,30 @@
         },
         "data_description": {}
       },
+      "args_durban_gov_za": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Area",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_durban_gov_za": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Area",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "region": "Region"
+        },
+        "data_description": {}
+      },
       "args_affarsverken_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

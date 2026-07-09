@@ -19413,6 +19413,14 @@
       "id": "snaga_mb_si"
     }
   ],
+  "South Africa": [
+    {
+      "title": "eThekwini Municipality",
+      "module": "durban_gov_za",
+      "default_params": {},
+      "id": "durban_gov_za"
+    }
+  ],
   "Sweden": [
     {
       "title": "Aff\u00e4rsverken",

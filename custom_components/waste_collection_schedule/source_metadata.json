@@ -4007,6 +4007,13 @@
     "howto": {},
     "urls": {}
   },
+  "durban_gov_za": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/durban_gov_za.md",
+    "howto": {
+      "en": "Visit the <a href='https://www.durban.gov.za/page/refuse-collection-schedules'>refuse collection schedules</a> page, open your region's DOCX file, and find your suburb or area under the weekday column. Use the matching <code>region</code> and <code>area</code> values shown in the documentation."
+    },
+    "urls": {}
+  },
   "affarsverken_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/affarsverken_se.md",
     "howto": {},

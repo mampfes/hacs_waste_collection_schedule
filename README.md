@@ -2933,6 +2933,12 @@ If you already have enough information for your municipality/region, you are ver
 </details>
 
 <details>
+<summary>South Africa</summary>
+
+- [eThekwini Municipality](/doc/source/durban_gov_za.md) / durban.gov.za/page/refuse-collection-schedules
+</details>
+
+<details>
 <summary>Sweden</summary>
 
 - [Affärsverken](/doc/source/affarsverken_se.md) / affarsverken.se

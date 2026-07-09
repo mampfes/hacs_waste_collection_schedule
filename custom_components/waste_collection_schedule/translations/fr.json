@@ -18357,6 +18357,30 @@
         },
         "data_description": {}
       },
+      "args_durban_gov_za": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "region": "Région"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_durban_gov_za": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone",
+          "recycling_in_even_week": "Recycling In Even Week",
+          "region": "Région"
+        },
+        "data_description": {}
+      },
       "args_affarsverken_se": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
