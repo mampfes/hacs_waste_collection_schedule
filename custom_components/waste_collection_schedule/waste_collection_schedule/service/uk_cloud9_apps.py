@@ -3,6 +3,7 @@ from datetime import date, datetime
 from typing import Any, Optional, Sequence, cast
 
 from curl_cffi import requests
+from curl_cffi.const import CurlHttpVersion
 
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
@@ -177,7 +178,15 @@ class Cloud9Client:
         ]
         if not self._base_urls:
             raise ValueError("At least one API domain must be configured.")
-        self._session = requests.Session(impersonate="chrome")
+        # The Cloud9 API is fronted by an AWS ELB that sometimes echoes
+        # HTTP/1.1-only response headers (e.g. "keep-alive: timeout=5") on
+        # an HTTP/2 connection. This violates RFC 7540 8.1.2.2 and causes
+        # curl_cffi/nghttp2 to abort with CurlError 92 ("Invalid HTTP
+        # header field was received"). Forcing HTTP/1.1 avoids the strict
+        # HTTP/2 header validation and lets the request succeed.
+        self._session = requests.Session(
+            impersonate="chrome", http_version=CurlHttpVersion.V1_1
+        )
         self._session.headers.update(BASE_HEADERS)
 
     def _request_json(
