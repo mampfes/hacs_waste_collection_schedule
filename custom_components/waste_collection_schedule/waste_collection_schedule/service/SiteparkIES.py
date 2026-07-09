@@ -1,5 +1,4 @@
 import datetime
-from typing import List, Optional, Tuple
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -47,9 +46,9 @@ class SiteparkIES:
         self,
         base_url: str,
         *,
-        refid: Optional[str] = None,
-        download_params: Optional[dict] = None,
-        ics: Optional[ICS] = None,
+        refid: str | None = None,
+        download_params: dict | None = None,
+        ics: ICS | None = None,
     ):
         self._base_url = base_url.rstrip("/")
         self._refid = refid
@@ -64,9 +63,7 @@ class SiteparkIES:
             "X-Requested-With": "XMLHttpRequest",
         }
 
-    def autocomplete(
-        self, term: Optional[str], refid: Optional[str] = None
-    ) -> List[list]:
+    def autocomplete(self, term: str | None, refid: str | None = None) -> list[list]:
         """Query the abto autocomplete endpoint and return ``[[pois, label], ...]``."""
         params = {
             "out": "json",
@@ -94,7 +91,7 @@ class SiteparkIES:
         self,
         ort: str,
         page_url: str,
-        value_prefix: Optional[str] = None,
+        value_prefix: str | None = None,
     ) -> str:
         """Resolve an "Ort" to its refid via the ``sf_locid`` dropdown on a page."""
         r = self._session.get(
@@ -126,9 +123,9 @@ class SiteparkIES:
 
     def get_pois(
         self,
-        strasse: Optional[str] = None,
-        ort: Optional[str] = None,
-        refid: Optional[str] = None,
+        strasse: str | None = None,
+        ort: str | None = None,
+        refid: str | None = None,
     ) -> str:
         """Resolve a street (and optional place) to a single pois id."""
         results = self._query(strasse, refid=refid)
@@ -166,7 +163,7 @@ class SiteparkIES:
 
         return candidates[0][0]
 
-    def _query(self, term: Optional[str], refid: Optional[str]) -> List[list]:
+    def _query(self, term: str | None, refid: str | None) -> list[list]:
         """Autocomplete with a fallback for terms the endpoint cannot match.
 
         The abto endpoint returns an empty result for some inputs (e.g. terms
@@ -186,7 +183,7 @@ class SiteparkIES:
             results = self.autocomplete(short, refid=refid)
         return results
 
-    def fetch_ics(self, pois: str) -> List[Tuple[datetime.date, str]]:
+    def fetch_ics(self, pois: str) -> list[tuple[datetime.date, str]]:
         """Download and parse the ICS calendar for a pois id."""
         params = {"ModID": "48", "call": "ical", "pois": pois}
         params.update(self._download_params)
@@ -202,11 +199,11 @@ class SiteparkIES:
 
     def fetch(
         self,
-        strasse: Optional[str] = None,
-        ort: Optional[str] = None,
-        pois: Optional[str] = None,
-        refid: Optional[str] = None,
-    ) -> List[Tuple[datetime.date, str]]:
+        strasse: str | None = None,
+        ort: str | None = None,
+        pois: str | None = None,
+        refid: str | None = None,
+    ) -> list[tuple[datetime.date, str]]:
         """Resolve the pois (unless given directly) and return parsed dates."""
         if not pois:
             pois = self.get_pois(strasse=strasse, ort=ort, refid=refid)

@@ -297,7 +297,7 @@ class Source:
         # For icote "P" / "I" check if the num_voie is even or odd.
         if secteur["icote"] == "P":
             return num_is_even
-        elif secteur["icote"] == "I":
+        if secteur["icote"] == "I":
             return not num_is_even
 
         # "T" icote or unknown icote means no restriction on num_voie other than the range.

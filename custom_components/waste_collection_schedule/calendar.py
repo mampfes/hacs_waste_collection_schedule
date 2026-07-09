@@ -88,8 +88,7 @@ class WasteCollectionCalendar(CalendarEntity):
 
         if len(collections) == 0:
             return None
-        else:
-            return self._convert(collections[0])
+        return self._convert(collections[0])
 
     async def async_get_events(
         self, hass: HomeAssistant, start_date: datetime, end_date: datetime

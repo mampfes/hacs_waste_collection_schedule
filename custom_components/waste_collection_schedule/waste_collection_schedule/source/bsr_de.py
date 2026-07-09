@@ -19,8 +19,8 @@ TEST_CASES = {
 ENDPOINT_PICKUPS = "https://umnewforms.bsr.de/p/de.bsr.adressen.app/abfuhrEvents"
 FILTERTEMPLATE_PICKUPS = (
     "AddrKey eq '{id}' and "
-    + "DateFrom eq datetime'{year_from}-{month:02d}-01T00:00:00' and "
-    + "DateTo eq datetime'{year_to}-{month:02d}-01T00:00:00'"
+    "DateFrom eq datetime'{year_from}-{month:02d}-01T00:00:00' and "
+    "DateTo eq datetime'{year_to}-{month:02d}-01T00:00:00'"
 )
 
 

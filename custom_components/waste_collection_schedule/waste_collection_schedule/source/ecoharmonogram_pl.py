@@ -389,11 +389,12 @@ class Source:
 
         to_return: list[Street] = []
         for street in streets["streets"]:
-            if street["sides"] == "":
-                to_return.append(street)
-            elif self.additional_sides_matcher_input != "" and (
-                street["sides"].lower().casefold()
-                == self.additional_sides_matcher_input.lower().casefold()
+            if street["sides"] == "" or (
+                self.additional_sides_matcher_input != ""
+                and (
+                    street["sides"].lower().casefold()
+                    == self.additional_sides_matcher_input.lower().casefold()
+                )
             ):
                 to_return.append(street)
 

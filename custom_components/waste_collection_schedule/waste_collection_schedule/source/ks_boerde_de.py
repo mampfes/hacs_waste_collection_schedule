@@ -90,10 +90,10 @@ class Source:
         data_text = requests.post(DATA_URL, data=post_data).text
         data = re.findall(
             r"<li id = '.*?_\d+'onClick='get_value\(\".*?\",\d+,\d+\)'>"
-            + r"<span style = 'display:none;'>(\d+)</span>"
-            + r"<span style = 'display:none;'>(\d+)</span>"
-            + r"<span>(.*?)</span>"
-            + "</li>",
+            r"<span style = 'display:none;'>(\d+)</span>"
+            r"<span style = 'display:none;'>(\d+)</span>"
+            r"<span>(.*?)</span>"
+            "</li>",
             data_text,
         )
         return [data[0][0], data[0][1]]

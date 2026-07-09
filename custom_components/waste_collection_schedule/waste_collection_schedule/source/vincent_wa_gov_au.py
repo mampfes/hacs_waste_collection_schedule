@@ -115,9 +115,9 @@ class Source:
         if "2 x weekly" in frequency or "2x weekly" in frequency:
             # Twice-weekly collection — parse both days
             return Source._twice_weekly_dates(day_info, waste_type, icon)
-        elif "fortnightly" in frequency:
+        if "fortnightly" in frequency:
             return Source._fortnightly_dates(next_date, waste_type, icon)
-        elif "weekly" in frequency:
+        if "weekly" in frequency:
             return Source._weekly_dates(next_date, waste_type, icon)
 
         return []

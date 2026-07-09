@@ -209,9 +209,8 @@ class Source:
                         # ignore if fetch for next year fails
                         pass
                 return entries
-            else:
-                return self.fetch_url(self._url, self._params)
-        elif self._file is not None:
+            return self.fetch_url(self._url, self._params)
+        if self._file is not None:
             return self.fetch_file(self._file)
 
     def fetch_url(self, url, params=None):

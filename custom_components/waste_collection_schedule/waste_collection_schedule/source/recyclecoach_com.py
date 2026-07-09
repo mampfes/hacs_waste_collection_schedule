@@ -472,7 +472,7 @@ class Source:
                 )
             return
 
-        elif len(city_data) > 1:
+        if len(city_data) > 1:
             for city in city_data:
                 if city["city_nm"].upper() == self.city.upper():
                     self.project_id = city["project_id"]

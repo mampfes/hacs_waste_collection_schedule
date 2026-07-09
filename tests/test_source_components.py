@@ -1,10 +1,11 @@
 import os
 import sys
+from collections.abc import Iterable
 from functools import cache
 from importlib import import_module
 from inspect import Parameter, signature
 from types import GeneratorType, ModuleType
-from typing import Any, Iterable, Type
+from typing import Any
 from unittest.mock import patch
 
 import yaml
@@ -21,7 +22,7 @@ SOURCES_TO_EXCLUDE = ["__init__.py", "example.py"]
 SOURCES_EXCLUDE_TEST_CASE_CHECK = ["multiple"]
 
 
-EXTRA_INFO_TYPES: dict[str, Type] = {
+EXTRA_INFO_TYPES: dict[str, type] = {
     "title": str,
     "url": str,
     "country": str,

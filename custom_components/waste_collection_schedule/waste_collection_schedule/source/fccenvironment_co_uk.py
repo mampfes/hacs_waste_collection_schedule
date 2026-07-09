@@ -96,7 +96,7 @@ class Source:
             """
             for type in ICON_MAP:
                 if type in service:
-                    if type in results.keys():
+                    if type in results:
                         if date < results[type]:
                             results[type] = date
                     else:
@@ -155,11 +155,11 @@ class Source:
     def fetch(self) -> list[Collection]:
         if self.region == "harborough":
             return self.harborough()
-        elif self.region == "westdevon":
+        if self.region == "westdevon":
             return self.getcollectiondetails(
                 endpoint="https://westdevon.fccenvironment.co.uk/ajaxprocessor/getcollectiondetails"
             )
-        elif self.region == "southhams":
+        if self.region == "southhams":
             return self.getcollectiondetails(
                 endpoint="https://waste.southhams.gov.uk/mycollections/getcollectiondetails"
             )

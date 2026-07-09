@@ -1,15 +1,14 @@
 import datetime
-from typing import Optional
 
 
 class CollectionBase(dict):  # inherit from dict to enable JSON serialization
     def __init__(
         self,
         date: datetime.date,
-        icon: Optional[str] = None,
-        picture: Optional[str] = None,
-        location: Optional[str] = None,
-        description: Optional[str] = None,
+        icon: str | None = None,
+        picture: str | None = None,
+        location: str | None = None,
+        description: str | None = None,
     ):
         dict.__init__(self, date=date.isoformat(), icon=icon, picture=picture)
         self._date = date  # store date also as python date object
@@ -51,14 +50,14 @@ class CollectionBase(dict):  # inherit from dict to enable JSON serialization
     def description(self):
         return self.get("description")
 
-    def set_location(self, location: Optional[str]):
+    def set_location(self, location: str | None):
         loc = _clean_optional_str(location)
         if loc is None:
             self.pop("location", None)
         else:
             self["location"] = loc
 
-    def set_description(self, description: Optional[str]):
+    def set_description(self, description: str | None):
         desc = _clean_optional_str(description)
         if desc is None:
             self.pop("description", None)
@@ -70,7 +69,7 @@ class CollectionBase(dict):  # inherit from dict to enable JSON serialization
         self["date"] = date.isoformat()
 
 
-def _clean_optional_str(value: Optional[str]) -> Optional[str]:
+def _clean_optional_str(value: str | None) -> str | None:
     if value is None:
         return None
     if not isinstance(value, str):
@@ -84,10 +83,10 @@ class Collection(CollectionBase):
         self,
         date: datetime.date,
         t: str,
-        icon: Optional[str] = None,
-        picture: Optional[str] = None,
-        location: Optional[str] = None,
-        description: Optional[str] = None,
+        icon: str | None = None,
+        picture: str | None = None,
+        location: str | None = None,
+        description: str | None = None,
     ):
         CollectionBase.__init__(
             self,

@@ -73,8 +73,8 @@ class Source:
     def fetch(self):
         locationId = ""
 
-        address = "{} {} {} SA {}".format(
-            self.street_number, self.street_name, self.suburb, self.post_code
+        address = (
+            f"{self.street_number} {self.street_name} {self.suburb} SA {self.post_code}"
         )
 
         q = requote_uri(str(API_URLS["address_search"]).format(address))

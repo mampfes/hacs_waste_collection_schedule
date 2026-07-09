@@ -2,7 +2,6 @@ import logging
 import random
 import re
 from datetime import date, datetime
-from typing import List
 
 import requests
 from bs4 import BeautifulSoup
@@ -225,10 +224,10 @@ class Source:
 
         self._parser_method = parser
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         _LOGGER.debug("Fetching data from %s", self._api_url)
 
-        entries: List[Collection] = []
+        entries: list[Collection] = []
 
         post_data = {"values": self._values}
 
@@ -242,8 +241,8 @@ class Source:
 
         return entries
 
-    def _parse_default(self, soup: BeautifulSoup) -> List[Collection]:
-        entries: List[Collection] = []
+    def _parse_default(self, soup: BeautifulSoup) -> list[Collection]:
+        entries: list[Collection] = []
 
         next_pickup_info = soup.find_all(string=re.compile("Næste tømningsdag:"))
         if not next_pickup_info:
@@ -287,8 +286,8 @@ class Source:
 
         return entries
 
-    def _parse_silkeborg(self, soup: BeautifulSoup) -> List[Collection]:
-        entries: List[Collection] = []
+    def _parse_silkeborg(self, soup: BeautifulSoup) -> list[Collection]:
+        entries: list[Collection] = []
 
         table = soup.find("table")
         if not table:
@@ -330,8 +329,8 @@ class Source:
 
         return entries
 
-    def _parse_favrskov(self, soup: BeautifulSoup) -> List[Collection]:
-        entries: List[Collection] = []
+    def _parse_favrskov(self, soup: BeautifulSoup) -> list[Collection]:
+        entries: list[Collection] = []
 
         strong_tags = soup.find_all("strong")
         if not strong_tags:

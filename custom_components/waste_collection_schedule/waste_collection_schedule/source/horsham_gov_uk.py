@@ -67,23 +67,22 @@ class Source:
                 len(result_row) == 0
             ):  # This removes the first header row, or any rows with no data
                 continue
-            else:
-                date = datetime.strptime(
-                    result_row[1].text, "%d/%m/%Y"
-                ).date()  # Pull out the rows date
+            date = datetime.strptime(
+                result_row[1].text, "%d/%m/%Y"
+            ).date()  # Pull out the rows date
 
-                # The website now uses <li> elements for each bin type
-                list_items = result_row[2].find_all("li")
-                collection_items = [li.get_text(strip=True) for li in list_items]
-                for collection_type in collection_items:
-                    if not collection_type:
-                        continue
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=collection_type,
-                            icon=ICON_MAP.get(collection_type),
-                        )
+            # The website now uses <li> elements for each bin type
+            list_items = result_row[2].find_all("li")
+            collection_items = [li.get_text(strip=True) for li in list_items]
+            for collection_type in collection_items:
+                if not collection_type:
+                    continue
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=collection_type,
+                        icon=ICON_MAP.get(collection_type),
                     )
+                )
 
         return entries

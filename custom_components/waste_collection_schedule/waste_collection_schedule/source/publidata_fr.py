@@ -511,16 +511,15 @@ class Source:
         """
         if self._is_year(part):
             return self._parse_year(part)
-        elif self._is_month(part):
+        if self._is_month(part):
             return self._parse_month(part)
-        elif self._is_week_day(part):
+        if self._is_week_day(part):
             return self._parse_week_day(part)
-        elif self._is_day_number(part):
+        if self._is_day_number(part):
             return self._parse_day_number(part)
-        elif self._is_time(part):
+        if self._is_time(part):
             return {}  # ignore those, the plugin doesn’t support time
-        else:
-            raise ValueError(f"Invalid part: {part}")
+        raise ValueError(f"Invalid part: {part}")
 
     def _parse_week_no(self, input_string):
         week_nos = []

@@ -68,6 +68,5 @@ class Source:
 
         if isinstance(parsed_date, list) and len(parsed_date) == 1:
             return None
-        else:
-            date_obj = datetime.strptime(parsed_date[1].strip(), "%d. %m. %Y")
-            return date_obj.date()
+        date_obj = datetime.strptime(parsed_date[1].strip(), "%d. %m. %Y")
+        return date_obj.date()

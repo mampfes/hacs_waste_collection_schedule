@@ -1,6 +1,5 @@
 import json
 from datetime import datetime
-from typing import List, Tuple
 from urllib.parse import quote, urlencode
 
 import requests
@@ -42,7 +41,7 @@ class Source:
 
         return self.parse_waste_pickup_dates(waste_response)
 
-    def get_address_detail(self) -> Tuple[str, str]:
+    def get_address_detail(self) -> tuple[str, str]:
         address_response = self._session.post(
             self.ADDRESS_URL,
             json={"prefixText": self._address, "count": 12, "contextKey": "test"},
@@ -124,7 +123,7 @@ class Source:
 
     def parse_waste_pickup_dates(
         self, pickup_date_response: requests.Response
-    ) -> List[Collection]:
+    ) -> list[Collection]:
         soup = BeautifulSoup(pickup_date_response.text, "html.parser")
         bin_type_containers = soup.find_all("div", class_="binTypeContainer")
 
@@ -139,20 +138,17 @@ class Source:
             ]
             if date == "Not subscribed":
                 continue  # Skip waste types that aren't being paid for/subscribed to.
+            current_date = datetime.now()
+            pickup_datetime = datetime.strptime(date, "%A %d %B")
+
+            if current_date.month == 12 and pickup_datetime.month == 1:
+                # Date responses have no year, handle adding a year and also year end/new year collections
+                pickup_date = pickup_datetime.replace(
+                    year=datetime.now().year + 1
+                ).date()
+
             else:
-                current_date = datetime.now()
-                pickup_datetime = datetime.strptime(date, "%A %d %B")
-
-                if current_date.month == 12 and pickup_datetime.month == 1:
-                    # Date responses have no year, handle adding a year and also year end/new year collections
-                    pickup_date = pickup_datetime.replace(
-                        year=datetime.now().year + 1
-                    ).date()
-
-                else:
-                    pickup_date = pickup_datetime.replace(
-                        year=datetime.now().year
-                    ).date()
+                pickup_date = pickup_datetime.replace(year=datetime.now().year).date()
 
             for bin_type in bin_types:
                 entries.append(

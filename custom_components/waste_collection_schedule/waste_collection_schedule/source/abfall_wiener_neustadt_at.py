@@ -378,16 +378,16 @@ class Source:
         # Order matters: check "bio" before "müll" to avoid misclassifying "Biomüll"
         if "bio" in waste_lower:
             return "Biotonne"
-        elif "christbaum" in waste_lower or "tannenbaum" in waste_lower:
+        if "christbaum" in waste_lower or "tannenbaum" in waste_lower:
             return "Christbaum"
-        elif "wertstoff" in waste_lower or "gelb" in waste_lower:
+        if "wertstoff" in waste_lower or "gelb" in waste_lower:
             return "Wertstoffe"
-        elif "papier" in waste_lower:
+        if "papier" in waste_lower:
             return "Altpapier"
-        elif "kleider" in waste_lower or "textil" in waste_lower:
+        if "kleider" in waste_lower or "textil" in waste_lower:
             return "Altkleider"
         # Check "rest" and "müll" LAST as they are generic
-        elif any(x in waste_lower for x in ["rest", "müll", "m�ll"]):
+        if any(x in waste_lower for x in ["rest", "müll", "m�ll"]):
             return "Restmüll"
 
         # Default: return original text to avoid losing unknown/new types

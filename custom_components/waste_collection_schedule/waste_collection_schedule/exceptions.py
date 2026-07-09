@@ -1,4 +1,5 @@
-from typing import Any, Generic, Iterable, Type, TypeVar
+from collections.abc import Iterable
+from typing import Any, Generic, TypeVar
 
 T = TypeVar("T")
 
@@ -61,7 +62,7 @@ class SourceArgumentSuggestionsExceptionBase(SourceArgumentException, Generic[T]
         message += f", {message_addition}" if message_addition else ""
         super().__init__(argument=argument, message=message)
         self._suggestions = suggestions
-        self._suggestion_type: Type[T] | None = (
+        self._suggestion_type: type[T] | None = (
             type(next(iter(suggestions))) if suggestions else None
         )
 
@@ -70,7 +71,7 @@ class SourceArgumentSuggestionsExceptionBase(SourceArgumentException, Generic[T]
         return self._suggestions
 
     @property
-    def suggestion_type(self) -> Type[T] | None:
+    def suggestion_type(self) -> type[T] | None:
         return self._suggestion_type
 
     @property

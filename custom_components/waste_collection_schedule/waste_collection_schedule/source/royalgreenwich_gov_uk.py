@@ -1,5 +1,5 @@
 import datetime
-from typing import Mapping, Optional
+from collections.abc import Mapping
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -55,9 +55,9 @@ HEADERS = {
 class Source:
     def __init__(
         self,
-        post_code: Optional[str] = None,
-        house: Optional[str] = None,
-        address: Optional[str] = None,
+        post_code: str | None = None,
+        house: str | None = None,
+        address: str | None = None,
     ):
         self._post_code = post_code
         self._house = house

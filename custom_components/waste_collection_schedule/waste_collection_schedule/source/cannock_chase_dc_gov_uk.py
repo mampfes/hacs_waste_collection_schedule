@@ -77,8 +77,7 @@ class Source:
                 and error_description_element.text is not None
             ):
                 raise Exception(f"API returned error: {error_description_element.text}")
-            else:
-                raise Exception("API returned error")
+            raise Exception("API returned error")
 
         entries = []
 

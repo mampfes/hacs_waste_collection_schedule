@@ -349,19 +349,18 @@ class Source:
                     argument="address",
                     message=f"Multiple values found for the argument 'address' with the value '{self._address}'",
                 )
-            else:
-                # If a kundNr is given, use the one with the matching kundNr
-                for addr in addresses:
-                    if addr["knR"] == str(self._kundNr):
-                        hsG, hsO, knR, abK, nrA = addr.values()
-                        break
+            # If a kundNr is given, use the one with the matching kundNr
+            for addr in addresses:
+                if addr["knR"] == str(self._kundNr):
+                    hsG, hsO, knR, abK, nrA = addr.values()
+                    break
 
-                if not (hsG and hsO and knR and abK and nrA):
-                    # If no matching kundNr is found, raise exception
-                    raise SourceArgumentException(
-                        argument="kundNr",
-                        message=f"No results found for the argument 'kundNr' with the value '{self._kundNr}'. Please check the value and verify the address.",
-                    )
+            if not (hsG and hsO and knR and abK and nrA):
+                # If no matching kundNr is found, raise exception
+                raise SourceArgumentException(
+                    argument="kundNr",
+                    message=f"No results found for the argument 'kundNr' with the value '{self._kundNr}'. Please check the value and verify the address.",
+                )
         else:
             # If no addresses are found, raise exception
             raise SourceArgumentNotFound(

@@ -1,6 +1,5 @@
 import json
 from datetime import datetime
-from typing import List
 from xml.etree import ElementTree
 
 import requests
@@ -59,7 +58,7 @@ class Source:
             }
         )
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         valuation_id = self.get_address_detail()
         bins = self.get_waste_pickup_dates(valuation_id)
         return self.parse_waste_pickup_dates(bins)
@@ -129,8 +128,8 @@ class Source:
         return bins
 
     @staticmethod
-    def parse_waste_pickup_dates(bins: list) -> List[Collection]:
-        entries: List[Collection] = []
+    def parse_waste_pickup_dates(bins: list) -> list[Collection]:
+        entries: list[Collection] = []
         for b in bins:
             bin_type = b.get("BinType", "Unknown")
             next_date_str = b.get("NextPickupDate", "")

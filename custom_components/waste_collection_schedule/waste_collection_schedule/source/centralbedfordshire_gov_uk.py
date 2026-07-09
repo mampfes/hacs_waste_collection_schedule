@@ -160,5 +160,4 @@ class Source:
                     f"403 Forbidden - Central Bedfordshire Council is blocking requests. "
                     f"Try again later or check if your IP is temporarily banned. Error: {e}"
                 ) from e
-            else:
-                raise e
+            raise e

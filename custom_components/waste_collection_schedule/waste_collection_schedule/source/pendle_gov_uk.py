@@ -1,7 +1,7 @@
 import datetime
 import logging
 import re
-from typing import Any, Optional
+from typing import Any
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -93,7 +93,7 @@ class Source:
         self,
         postcode: str,
         address: str,
-        collection_zone: Optional[str] = None,
+        collection_zone: str | None = None,
         garden_waste_bin: bool = False,
         future_collection_dates: bool = False,
     ):
@@ -117,13 +117,13 @@ class Source:
         self._session.headers.update(REQUEST_HEADERS)
 
     @staticmethod
-    def _normalize(value: Optional[str]) -> str:
+    def _normalize(value: str | None) -> str:
         if value is None:
             return ""
         return re.sub(r"[^A-Za-z0-9]", "", value).upper()
 
     @staticmethod
-    def _parse_relative_date(value: Optional[str]) -> Optional[datetime.date]:
+    def _parse_relative_date(value: str | None) -> datetime.date | None:
         if not value:
             return None
 
@@ -171,7 +171,7 @@ class Source:
         return None
 
     @staticmethod
-    def _parse_start_date(value: Optional[str]) -> Optional[datetime.date]:
+    def _parse_start_date(value: str | None) -> datetime.date | None:
         if not value:
             return None
         try:
@@ -181,8 +181,8 @@ class Source:
 
     @staticmethod
     def _next_occurrence_from_anchor(
-        start_date: Optional[datetime.date], frequency_weeks: Optional[int]
-    ) -> Optional[datetime.date]:
+        start_date: datetime.date | None, frequency_weeks: int | None
+    ) -> datetime.date | None:
         if start_date is None:
             return None
 
@@ -196,14 +196,14 @@ class Source:
         return next_date
 
     @staticmethod
-    def _parse_weekday(value: Optional[str]) -> Optional[int]:
+    def _parse_weekday(value: str | None) -> int | None:
         if not value:
             return None
         return WEEKDAYS.get(value.strip().lower())
 
     def _resolve_next_collection_date(
-        self, item: dict[str, Any], title: str, frequency_weeks: Optional[int]
-    ) -> Optional[datetime.date]:
+        self, item: dict[str, Any], title: str, frequency_weeks: int | None
+    ) -> datetime.date | None:
         expected_date = self._next_occurrence_from_anchor(
             self._parse_start_date(item.get("startDate")),
             frequency_weeks,
@@ -253,7 +253,7 @@ class Source:
         return next_date
 
     @staticmethod
-    def _get_icon(title: str) -> Optional[str]:
+    def _get_icon(title: str) -> str | None:
         key = title.strip().lower()
         return ICON_MAP.get(key)
 
@@ -269,7 +269,7 @@ class Source:
 
     @staticmethod
     def _expand_dates(
-        first_date: datetime.date, frequency_weeks: Optional[int]
+        first_date: datetime.date, frequency_weeks: int | None
     ) -> list[datetime.date]:
         if not frequency_weeks or frequency_weeks < 1:
             return [first_date]

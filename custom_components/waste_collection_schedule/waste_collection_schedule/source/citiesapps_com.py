@@ -73,8 +73,7 @@ class Source:
 
         if garbage_plans["is_v2"]:
             return self.convert_v2(garbage_plans["data"])
-        else:
-            return self.convert_v1(garbage_plans["data"])
+        return self.convert_v1(garbage_plans["data"])
 
     def convert_v2(self, garbage_plans):
         entries = []
