@@ -1,8 +1,8 @@
 import datetime
 import json
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Blacktown City Council (NSW)"
@@ -15,7 +15,7 @@ TEST_CASES = {
         "street_name": "Jersey Rd",
         "street_number": "260",
     },
-    "Rooty Hill Tennis & Squash Centre": {
+    "Rooty Hill Tennis &amp; Squash Centre": {
         "post_code": "2766",
         "suburb": "Rooty Hill",
         "street_name": "Learmonth St",
@@ -70,7 +70,7 @@ class Source:
         self.street_number = street_number
 
     def fetch(self):
-        session = requests.Session()
+        session = requests.Session(impersonate="chrome")
         session.headers.update(HEADERS)
 
         # Retrieve suburbs
@@ -99,7 +99,7 @@ class Source:
 
         entries = []
         for item in services:
-            # test if <div> contains a valid date. If not, is is not a collection item.
+            # test if &lt;div&gt; contains a valid date. If not, is is not a collection item.
             date_text = item.find("div", attrs={"class": "next-service"})
             # The date format currently used on https://www.blacktown.nsw.gov.au/Services/Waste-services-and-collection/Waste-collection-days
             date_format = "%a %d/%m/%Y"
