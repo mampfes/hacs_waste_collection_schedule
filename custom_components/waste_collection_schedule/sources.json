@@ -19885,6 +19885,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "\u00d6stersunds kommun",
+      "module": "ostersund_se",
+      "default_params": {},
+      "id": "ostersund_se"
+    },
+    {
       "title": "\u00d6ster\u00e5ker",
       "module": "roslagsvatten_se",
       "default_params": {
