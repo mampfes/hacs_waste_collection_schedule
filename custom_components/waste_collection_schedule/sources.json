@@ -19505,6 +19505,12 @@
       "id": "gastrikeatervinnare_se"
     },
     {
+      "title": "Hedemora Energi",
+      "module": "hedemora_energi_se",
+      "default_params": {},
+      "id": "hedemora_energi_se"
+    },
+    {
       "title": "Herrljunga & V\u00e5rg\u00e5rda kommun",
       "module": "edpevent_se",
       "default_params": {

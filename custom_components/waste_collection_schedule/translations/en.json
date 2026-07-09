@@ -19327,6 +19327,33 @@
         },
         "data_description": {}
       },
+      "args_hedemora_energi_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "pickup_id": "Pickup ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Address to search for. Required only when pickup_id is not provided.",
+          "pickup_id": "Hedemora Energi pickup ID. Preferred when known."
+        }
+      },
+      "reconfigure_hedemora_energi_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "pickup_id": "Pickup ID"
+        },
+        "data_description": {
+          "address": "Address to search for. Required only when pickup_id is not provided.",
+          "pickup_id": "Hedemora Energi pickup ID. Preferred when known."
+        }
+      },
       "args_hudiksvall_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

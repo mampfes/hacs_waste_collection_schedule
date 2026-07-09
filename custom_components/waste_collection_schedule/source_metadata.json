@@ -4065,6 +4065,13 @@
     "howto": {},
     "urls": {}
   },
+  "hedemora_energi_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hedemora_energi_se.md",
+    "howto": {
+      "en": "Use `pickup_id` if known. Otherwise enter the exact address as shown in Hedemora Energi's fetch planner search."
+    },
+    "urls": {}
+  },
   "hudiksvall_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hudiksvall_se.md",
     "howto": {},
