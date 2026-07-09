@@ -266,6 +266,33 @@
         },
         "data_description": {}
       },
+      "args_bathurst_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address (e.g. '230 Howick St')",
+          "suburb": "Suburb (e.g. 'Bathurst')"
+        }
+      },
+      "reconfigure_bathurst_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "address": "Street address (e.g. '230 Howick St')",
+          "suburb": "Suburb (e.g. 'Bathurst')"
+        }
+      },
       "args_impactapps_com_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

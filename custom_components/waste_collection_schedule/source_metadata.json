@@ -48,6 +48,13 @@
     "howto": {},
     "urls": {}
   },
+  "bathurst_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bathurst_nsw_gov_au.md",
+    "howto": {
+      "en": "Enter your street address and suburb (e.g. address '230 Howick St', suburb 'Bathurst'). Search at https://maps.bathurst.nsw.gov.au/IntraMaps23A/ApplicationEngine/frontend/mapbuilder/default.htm?configId=00000000-0000-0000-0000-000000000000&liteConfigId=24d1884e-fc58-45df-bca0-11bddc554781"
+    },
+    "urls": {}
+  },
   "impactapps_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/impactapps_com_au.md",
     "howto": {},

@@ -75,6 +75,12 @@
       "id": "banyule_vic_gov_au"
     },
     {
+      "title": "Bathurst Regional Council",
+      "module": "bathurst_nsw_gov_au",
+      "default_params": {},
+      "id": "bathurst_nsw_gov_au"
+    },
+    {
       "title": "Baw Baw Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
