@@ -2506,6 +2506,13 @@
     },
     "urls": {}
   },
+  "ics_huellhorst_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/huellhorst_de.md",
+    "howto": {
+      "en": "The village community \"Dorfgemeinschaft für ein zukunftsorientiertes Büttendorf\" publishes\nthe waste collection calendar of the whole municipality of Hüllhorst as an ICS file every year.\n\n- Go to <https://www.buettendorf.info/abfuhrkalender/>.\n- Right-click -> copy link address on one of the `Download` buttons\n  (`Abfuhrkalender <year> mit Erinnerung` includes a reminder at 18:00 the day before,\n  `Abfuhrkalender <year> ohne Erinnerung` does not).\n- Use this link as the `url` parameter.\n- Note: a new link is published every year, so you will need to revisit the page\n  and update the `url` parameter once the current year's calendar is no longer valid.\n"
+    },
+    "urls": {}
+  },
   "gfa_lueneburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gfa_lueneburg_de.md",
     "howto": {

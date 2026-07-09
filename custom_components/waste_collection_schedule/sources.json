@@ -9609,6 +9609,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "Gemeinde H\u00fcllhorst",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_huellhorst_de"
+    },
+    {
       "title": "Gemeinde Kalletal",
       "module": "cmcitymedia_de",
       "default_params": {
