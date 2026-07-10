@@ -957,6 +957,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk
 - [Langeland Forsyning](/doc/source/affaldonline_dk.md) / langeland-forsyning.dk
 - [Middelfart Kommune](/doc/source/affaldonline_dk.md) / middelfart.dk
+- [Nem Affaldsservice (Københavns Kommune)](/doc/source/nemaffaldsservice_kk_dk.md) / nemaffaldsservice.kk.dk
 - [Odense Renovation](/doc/source/odenserenovation_dk.md) / odenserenovation.dk
 - [Rebild Kommune](/doc/source/affaldonline_dk.md) / rebild.dk
 - [Reno Djurs](/doc/source/renodjurs_dk.md) / renodjurs.dk
@@ -987,16 +988,22 @@ If you already have enough information for your municipality/region, you are ver
 - [Angers Loire Métropole](/doc/source/data_angers_fr.md) / data.angers.fr
 - [Ansauville](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Ardenne Métropole](/doc/source/publidata_fr.md) / ardenne-metropole.fr
+- [Auteuil-le-Roi](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Autouillet](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Avrainville](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Ayguemorte-les-Graves](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Baldersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Bantzenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Battenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Bazoches-sur-Guyonne](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Beautiran](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Behoust](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Berrwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Beynes](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Bicqueley](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Blanquefort](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bois-de-Haye](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Boissy-sans-Avoir](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Bollwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Bordeaux](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bordeaux Métropole](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
@@ -1016,6 +1023,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Chaudeney-sur-Moselle](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Choloy-Ménillot](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Châteauroux Métropole](/doc/source/publidata_fr.md) / chateauroux-metropole.fr
+- [Coeur d'Yvelines](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Communauté de Communes Pévèle Carembault](/doc/source/publidata_fr.md) / pevelecarembault.fr
 - [Dietwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -1028,16 +1036,22 @@ If you already have enough information for your municipality/region, you are ver
 - [Eysines](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Feldkirch](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Flaxlanden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Flexanville](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Fontenoy-sur-Moselle](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Foug](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Francheville](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Galfingue](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [Galluis](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Gambais](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Garancières](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Gondreville](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Goupillières](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Gradignan](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Grand Besançon Métropole](/doc/source/grandbesancon_fr.md) / grandbesancon.fr
 - [Grand Calais Terres et Mers](/doc/source/publidata_fr.md) / grandcalais.fr
 - [Grand Paris Seine et Oise](/doc/source/publidata_fr.md) / infos-dechets.gpseo.fr
 - [Grand Paris Seine Ouest](/doc/source/publidata_fr.md) / dechets.seineouest.fr
+- [Grosrouvre](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Grosrouvres](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Gye](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Habsheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -1046,8 +1060,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Illzach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Isle Saint-Georges](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Jaillon](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Jouars-Pontchartrain](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Kingersheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [La Brède](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [La Queue-lez-Yvelines](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Lagney](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Laneuveville-derrière-Foug](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Lay-Saint-Rémy](/doc/source/terrestouloises_com.md) / terrestouloises.com
@@ -1055,15 +1071,21 @@ If you already have enough information for your municipality/region, you are ver
 - [Le Haillan](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Le Havre Seine Métropole](/doc/source/publidata_fr.md) / tripratik.lehavreseinemetropole.fr
 - [Le Taillan-Médoc](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Le Tremblay-sur-Mauldre](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Les Mesnuls](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Lucey](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Lutterbach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Léognan](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Mairie de Mamirolle](/doc/source/mamirolle_info.md) / mamirolle.info
 - [Manoncourt-en-Woëvre](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Manonville](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Marcq](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Mareil-le-Guyon](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Martignas-sur-Jalle](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Martillac](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Millemont](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Minorville](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Montfort-l'Amaury](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Montpellier Méditerranée Métropole](/doc/source/data_montpellier3m_fr.md) / data.montpellier3m.fr
 - [Morschwiller-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Mulhouse](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -1071,8 +1093,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Mémotri - Agglomération Pau Béarn Pyrénées](/doc/source/memotri_agglo_pau_fr.md) / memotri.agglo-pau.fr
 - [Ménil-la-Tour](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Mérignac](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Méré](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Métropole de Lyon](/doc/source/data_grandlyon_com.md) / data.grandlyon.com
+- [Métropole du Grand Nancy](/doc/source/publidata_fr.md) / mhdd.grandnancy.eu
 - [Métropole Européenne de Lille](/doc/source/publidata_fr.md) / lillemetropole.fr
+- [Neauphle-le-Château](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Neauphle-le-Vieux](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Niffer](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Noviant-aux-Prés](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Orléans Métropole](/doc/source/publidata_fr.md) / triermondechet.orleans-metropole.fr
@@ -1094,14 +1120,17 @@ If you already have enough information for your municipality/region, you are ver
 - [Ruelisheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Saint Quentin en Yvelines](/doc/source/publidata_fr.md) / saint-quentin-en-yvelines.fr
 - [Saint-Aubin-de-Médoc](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saint-Germain-de-la-Grange](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Saint-Louis-de-Montferrand](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Saint-Morillon](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Médard-d'Eyrans](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Médard-en-Jalles](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
+- [Saint-Rémy-l'Honoré](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Saint-Selve](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Vincent-de-Paul](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Sanzey](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Saucats](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Saulx-Marchais](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Saumur Val de Loire](/doc/source/publidata_fr.md) / saumurvaldeloire.fr
 - [Sausheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [SICTOM de Lons-le-Saunier](/doc/source/sictom_lons_le_saunier_fr.md) / sictom-lons-le-saunier.fr
@@ -1113,6 +1142,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Steinbrunn-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Talence](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Terres Touloises](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Thiverval-Grignon](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Thoiry](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Toulouse Métropole](/doc/source/toulouse_metropole_fr.md) / data.toulouse-metropole.fr
 - [Tours Métropole](/doc/source/publidata_fr.md) / tours-metropole.fr
 - [Tremblecourt](/doc/source/terrestouloises_com.md) / terrestouloises.com
@@ -1122,9 +1153,12 @@ If you already have enough information for your municipality/region, you are ver
 - [ValDem](/doc/source/publidata_fr.md) / valdem.fr
 - [ValEco](/doc/source/publidata_fr.md) / valeco41.fr
 - [Versailles Grand Parc](/doc/source/publidata_fr.md) / versaillesgrandparc.fr
+- [Vicq](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Villenave-d'Ornon](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Villey-le-Sec](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Villey-Saint-Étienne](/doc/source/terrestouloises_com.md) / terrestouloises.com
+- [Villiers-le-Mahieu](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
+- [Villiers-Saint-Frédéric](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Wittelsheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Wittenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Zillisheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
@@ -3555,6 +3589,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Vogel Disposal Service](/doc/source/vogeldisposal_com.md) / vogeldisposal.com
 - [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
 - [Waste Management (WM)](/doc/source/wm_com.md) / wm.com
+</details>
+
+<details>
+<summary>Uruguay</summary>
+
+- [Municipio de Ciudad de la Costa](/doc/source/ciudad_de_la_costa_uy.md) / imcanelones.gub.uy
 </details>
 
 <!--End of country section-->

@@ -6695,6 +6695,29 @@
         },
         "data_description": {}
       },
+      "args_nemaffaldsservice_kk_dk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street name and house number, e.g. 'Nørrebrogade 10'. Must match an address served by Københavns Kommune / Nem Affaldsservice."
+        }
+      },
+      "reconfigure_nemaffaldsservice_kk_dk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Street name and house number, e.g. 'Nørrebrogade 10'. Must match an address served by Københavns Kommune / Nem Affaldsservice."
+        }
+      },
       "args_odenserenovation_dk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -7018,6 +7041,29 @@
           "insee_code": "The 5-digit INSEE code of your commune. Check {url_www_insee_fr} if your commune has merged (communes nouvelles have a new code).",
           "instance_id": "Pre-filled when you select a known service provider. Only needed for unlisted providers (found via network inspector on the provider's waste widget).",
           "public_type": "Housing type filter (optional). Use 'individual_housing' for houses or 'collective_housing' for apartments if your area has different schedules per housing type."
+        }
+      },
+      "args_coeur_yvelines_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "Your municipality within Coeur d'Yvelines: Auteuil-le-Roi, Autouillet, Bazoches-sur-Guyonne, Behoust, Beynes, Boissy-sans-Avoir, Flexanville, Galluis, Gambais, Garancières, Goupillières, Grosrouvre, Jouars-Pontchartrain, La Queue-lez-Yvelines, Le Tremblay-sur-Mauldre, Les Mesnuls, Marcq, Mareil-le-Guyon, Méré, Millemont, Montfort-l'Amaury, Neauphle-le-Château, Neauphle-le-Vieux, Saint-Germain-de-la-Grange, Saint-Rémy-l'Honoré, Saulx-Marchais, Thiverval-Grignon, Thoiry, Vicq, Villiers-le-Mahieu, Villiers-Saint-Frédéric"
+        }
+      },
+      "reconfigure_coeur_yvelines_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "Your municipality within Coeur d'Yvelines: Auteuil-le-Roi, Autouillet, Bazoches-sur-Guyonne, Behoust, Beynes, Boissy-sans-Avoir, Flexanville, Galluis, Gambais, Garancières, Goupillières, Grosrouvre, Jouars-Pontchartrain, La Queue-lez-Yvelines, Le Tremblay-sur-Mauldre, Les Mesnuls, Marcq, Mareil-le-Guyon, Méré, Millemont, Montfort-l'Amaury, Neauphle-le-Château, Neauphle-le-Vieux, Saint-Germain-de-la-Grange, Saint-Rémy-l'Honoré, Saulx-Marchais, Thiverval-Grignon, Thoiry, Vicq, Villiers-le-Mahieu, Villiers-Saint-Frédéric"
         }
       },
       "args_cc-montesquieu_fr": {
@@ -29181,6 +29227,29 @@
           "state": "Two-letter state code (e.g. 'MI')",
           "street": "Street address (e.g. '123 Main St')",
           "zip_code": "5-digit ZIP code"
+        }
+      },
+      "args_ciudad_de_la_costa_uy": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address (or street name) within Ciudad de la Costa, e.g. 'De los Pinos, Ciudad de la Costa' or '1901 Cuba, Ciudad de la Costa'. Adding the neighbourhood (barrio) improves accuracy for common street names."
+        }
+      },
+      "reconfigure_ciudad_de_la_costa_uy": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Street address (or street name) within Ciudad de la Costa, e.g. 'De los Pinos, Ciudad de la Costa' or '1901 Cuba, Ciudad de la Costa'. Adding the neighbourhood (barrio) improves accuracy for common street names."
         }
       }
     },

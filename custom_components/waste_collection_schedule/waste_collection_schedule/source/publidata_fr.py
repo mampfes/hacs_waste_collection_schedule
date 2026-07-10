@@ -46,6 +46,11 @@ TEST_CASES = {
         "insee_code": "37018",
         "instance_id": 65,
     },
+    "Grand Nancy, Laxou": {
+        "address": "1 Rue de l'Embanie",
+        "insee_code": "54304",
+        "instance_id": 1436,
+    },
     # "Saumur Val de Loire, Allones": {
     # "address": "5 rue du Bellay",
     # "insee_code": "49002",
@@ -281,6 +286,11 @@ EXTRA_INFO = [
         "title": "Communauté de Communes Pévèle Carembault",
         "url": "https://www.pevelecarembault.fr/",
         "default_params": {"instance_id": 1141},
+    },
+    {
+        "title": "Métropole du Grand Nancy",
+        "url": "https://mhdd.grandnancy.eu/",
+        "default_params": {"instance_id": 1436},
     },
 ]
 
