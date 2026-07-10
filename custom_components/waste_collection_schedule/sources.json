@@ -15096,6 +15096,14 @@
       "id": "eth_erd_hu"
     }
   ],
+  "Iceland": [
+    {
+      "title": "K\u00f3pavogsb\u00e6r",
+      "module": "kopavogur_is",
+      "default_params": {},
+      "id": "kopavogur_is"
+    }
+  ],
   "Ireland": [
     {
       "title": "Greyhound Recycling",

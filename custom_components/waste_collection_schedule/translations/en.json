@@ -15963,6 +15963,29 @@
         },
         "data_description": {}
       },
+      "args_kopavogur_is": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Collection district (zone) as shown in the calendar legend. Partial, case-insensitive matches are accepted."
+        }
+      },
+      "reconfigure_kopavogur_is": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "district": "Collection district (zone) as shown in the calendar legend. Partial, case-insensitive matches are accepted."
+        }
+      },
       "args_greyhound_ie": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

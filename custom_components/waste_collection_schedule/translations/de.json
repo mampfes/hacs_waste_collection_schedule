@@ -15655,6 +15655,29 @@
         },
         "data_description": {}
       },
+      "args_kopavogur_is": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "district": "Abfuhrbezirk (Zone) wie in der Kalenderlegende angegeben. Teilweise Übereinstimmungen (Groß-/Kleinschreibung wird ignoriert) werden akzeptiert."
+        }
+      },
+      "reconfigure_kopavogur_is": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Bezirk"
+        },
+        "data_description": {
+          "district": "Abfuhrbezirk (Zone) wie in der Kalenderlegende angegeben. Teilweise Übereinstimmungen (Groß-/Kleinschreibung wird ignoriert) werden akzeptiert."
+        }
+      },
       "args_greyhound_ie": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

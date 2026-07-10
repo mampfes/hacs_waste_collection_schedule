@@ -2220,6 +2220,12 @@ If you already have enough information for your municipality/region, you are ver
 </details>
 
 <details>
+<summary>Iceland</summary>
+
+- [Kópavogsbær](/doc/source/kopavogur_is.md) / kopavogur.is
+</details>
+
+<details>
 <summary>Ireland</summary>
 
 - [Greyhound Recycling](/doc/source/greyhound_ie.md) / greyhound.ie
