@@ -1,0 +1,120 @@
+{
+  "recorded_at": "2026-07-11",
+  "interactions": [
+    {
+      "key": "POST https://ecoharmonogram.pl/api/api.php c7db4484db",
+      "method": "POST",
+      "url": "https://ecoharmonogram.pl/api/api.php",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Fri, 10 Jul 2026 23:34:36 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "154",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "na-ls-cache-enabled": "off",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "x-cdn-nazwa.pl-location": "WAS",
+        "x-cdn-nazwa.pl-policyused": "cdn=disabled",
+        "server": "Apache/2"
+      },
+      "content_b64": "77u/eyJ0b3ducyI6W3siaWQiOiI5NjY2IiwiY29tbXVuaXR5SWQiOiIzNzEiLCJuYW1lIjoiTmFkb2xpY2UgV2llbGtpZSIsImRpc3RyaWN0IjoiQ3plcm5pY2EiLCJwcm92aW5jZSI6IkRvbG5vXHUwMTVibFx1MDEwNXNraWUiLCJpY29uIjoiIiwiaXNTdHJObXJSZXEiOiIxIiwic2NoZWR1bGVQZXJpb2RJZCI6MX1dfQ=="
+    },
+    {
+      "key": "POST https://ecoharmonogram.pl/api/api.php dbd8bc01a1",
+      "method": "POST",
+      "url": "https://ecoharmonogram.pl/api/api.php",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Fri, 10 Jul 2026 23:34:37 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "98",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "na-ls-cache-enabled": "off",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "x-cdn-nazwa.pl-location": "WAS",
+        "x-cdn-nazwa.pl-policyused": "cdn=disabled",
+        "server": "Apache/2"
+      },
+      "content_b64": "77u/eyJzY2hlZHVsZVBlcmlvZHMiOlt7ImlkIjoiMTEzMDEiLCJzdGFydERhdGUiOiIyMDI2LTAxLTAxIiwiZW5kRGF0ZSI6IjIwMjYtMTItMzEiLCJjaGFuZ2VEYXRlIjoiMjAyNi0wNy0wOCAwOTo1NToyNyJ9XX0="
+    },
+    {
+      "key": "POST https://ecoharmonogram.pl/api/api.php 11f4ea8da6",
+      "method": "POST",
+      "url": "https://ecoharmonogram.pl/api/api.php",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Fri, 10 Jul 2026 23:34:37 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "339",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "na-ls-cache-enabled": "off",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "x-cdn-nazwa.pl-location": "WAS",
+        "x-cdn-nazwa.pl-policyused": "cdn=disabled",
+        "server": "Apache/2"
+      },
+      "content_b64": "77u/eyJzdHJlZXRzIjpbeyJpZCI6IjMwMzAzMjI2IiwibmFtZSI6Ilpib1x1MDE3Y293YSIsInJlZ2lvbiI6IiIsIm51bWJlcnMiOiIiLCJudW1iZXJGcm9tIjoiIiwibnVtYmVyVG8iOiIiLCJzaWRlcyI6IlphYnVkb3dhIGplZG5vcm9kemlubmEiLCJnMSI6IndzenlzdGtpZSBmcmFrY2plIiwiZzIiOiIiLCJnMyI6IiIsImc0IjoiIiwiZzUiOiIiLCJ0b3duTmFtZSI6Ik5hZG9saWNlIFdpZWxraWUiLCJ0b3duRGlzdHJpY3QiOiJDemVybmljYSIsInRvd25Qcm92aW5jZSI6IkRvbG5vXHUwMTVibFx1MDEwNXNraWUifSx7ImlkIjoiMzAzMDMyMjUiLCJuYW1lIjoiWmJvXHUwMTdjb3dhIiwicmVnaW9uIjoiIiwibnVtYmVycyI6IiIsIm51bWJlckZyb20iOiIiLCJudW1iZXJUbyI6IiIsInNpZGVzIjoiWmFidWRvd2EgamVkbm9yb2R6aW5uYSIsImcxIjoidHlsa28gb2RwYWR5IHptaWVzemFuZSIsImcyIjoiIiwiZzMiOiIiLCJnNCI6IiIsImc1IjoiIiwidG93bk5hbWUiOiJOYWRvbGljZSBXaWVsa2llIiwidG93bkRpc3RyaWN0IjoiQ3plcm5pY2EiLCJ0b3duUHJvdmluY2UiOiJEb2xub1x1MDE1YmxcdTAxMDVza2llIn1dLCJ0eXBlIjo0LCJzZWFyY2giOnsic2NoZWR1bGVQZXJpb2RJZCI6IjExMzAxIiwidG93bklkIjoiOTY2NiIsIm51bWJlciI6IjEiLCJzdHJlZXROYW1lIjoiWmJvXHUwMTdjb3dhIiwiY2hvb3NlZFN0cmVldElkcyI6IiJ9LCJncm91cHMiOnsiaXRlbXMiOlt7InN0cmVldE5hbWUiOiJaYm9cdTAxN2Nvd2EiLCJuYW1lIjoid3N6eXN0a2llIGZyYWtjamUiLCJjaG9vc2VkU3RyZWV0SWRzIjoiMzAzMDMyMjYifSx7InN0cmVldE5hbWUiOiJaYm9cdTAxN2Nvd2EiLCJuYW1lIjoidHlsa28gb2RwYWR5IHptaWVzemFuZSIsImNob29zZWRTdHJlZXRJZHMiOiIzMDMwMzIyNSJ9XSwiZ3JvdXBJZCI6ImcxIn19"
+    },
+    {
+      "key": "POST https://ecoharmonogram.pl/api/api.php 888ce0caac",
+      "method": "POST",
+      "url": "https://ecoharmonogram.pl/api/api.php",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Fri, 10 Jul 2026 23:34:37 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "270",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "na-ls-cache-enabled": "off",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "x-cdn-nazwa.pl-location": "WAS",
+        "x-cdn-nazwa.pl-policyused": "cdn=disabled",
+        "server": "Apache/2"
+      },
+      "content_b64": "77u/eyJzdHJlZXRzIjpbeyJpZCI6IjMwMzAzMjI1IiwibmFtZSI6Ilpib1x1MDE3Y293YSIsInJlZ2lvbiI6IiIsIm51bWJlcnMiOiIiLCJudW1iZXJGcm9tIjoiIiwibnVtYmVyVG8iOiIiLCJzaWRlcyI6IlphYnVkb3dhIGplZG5vcm9kemlubmEiLCJnMSI6IiIsImcyIjoiIiwiZzMiOiIiLCJnNCI6IiIsImc1IjoiIiwidG93bk5hbWUiOiJOYWRvbGljZSBXaWVsa2llIiwidG93bkRpc3RyaWN0IjoiQ3plcm5pY2EiLCJ0b3duUHJvdmluY2UiOiJEb2xub1x1MDE1YmxcdTAxMDVza2llIn1dLCJ0eXBlIjozLCJzZWFyY2giOnsic2NoZWR1bGVQZXJpb2RJZCI6IjExMzAxIiwidG93bklkIjoiOTY2NiIsIm51bWJlciI6IjEiLCJzdHJlZXROYW1lIjoiWmJvXHUwMTdjb3dhIiwiY2hvb3NlZFN0cmVldElkcyI6IjMwMzAzMjI1In0sImdyb3VwcyI6eyJpdGVtcyI6W10sImdyb3VwSWQiOiIifX0="
+    },
+    {
+      "key": "POST https://ecoharmonogram.pl/api/api.php c4cabc4165",
+      "method": "POST",
+      "url": "https://ecoharmonogram.pl/api/api.php",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Fri, 10 Jul 2026 23:34:38 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "content-length": "988",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "na-ls-cache-enabled": "off",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "x-cdn-nazwa.pl-location": "WAS",
+        "x-cdn-nazwa.pl-policyused": "cdn=disabled",
+        "server": "Apache/2"
+      },
+      "content_b64": "77u/eyJzY2hlZHVsZXMiOlt7ImlkIjoiMjI1NzIyMDYiLCJtb250aCI6IjEiLCJkYXlzIjoiMjciLCJ5ZWFyIjoiMjAyNiIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6IjExMTAxMCJ9LHsiaWQiOiIyMjU3MjIwNyIsIm1vbnRoIjoiMTAiLCJkYXlzIjoiMjQiLCJ5ZWFyIjoiMjAyNiIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6IjExMTAxMCJ9LHsiaWQiOiIyMjU3MjIwOCIsIm1vbnRoIjoiMSIsImRheXMiOiIxNSIsInllYXIiOiIyMDI2Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiMTExMDA4In0seyJpZCI6IjIyNTcyMjA5IiwibW9udGgiOiIyIiwiZGF5cyI6IjE1IiwieWVhciI6IjIwMjYiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiIxMTEwMDgifSx7ImlkIjoiMjI1NzIyMTAiLCJtb250aCI6IjMiLCJkYXlzIjoiMTUiLCJ5ZWFyIjoiMjAyNiIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6IjExMTAwOCJ9LHsiaWQiOiIyMjU3MjIxMSIsIm1vbnRoIjoiNCIsImRheXMiOiIxNSIsInllYXIiOiIyMDI2Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiMTExMDA4In0seyJpZCI6IjIyNTcyMjEyIiwibW9udGgiOiI1IiwiZGF5cyI6IjE1IiwieWVhciI6IjIwMjYiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiIxMTEwMDgifSx7ImlkIjoiMjI1NzIyMTMiLCJtb250aCI6IjYiLCJkYXlzIjoiMTUiLCJ5ZWFyIjoiMjAyNiIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6IjExMTAwOCJ9LHsiaWQiOiIyMjU3MjIxNCIsIm1vbnRoIjoiNyIsImRheXMiOiIxNSIsInllYXIiOiIyMDI2Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiMTExMDA4In0seyJpZCI6IjIyNTcyMjE1IiwibW9udGgiOiI4IiwiZGF5cyI6IjE1IiwieWVhciI6IjIwMjYiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiIxMTEwMDgifSx7ImlkIjoiMjI1NzI2NDYiLCJtb250aCI6IjciLCJkYXlzIjoiODsyMiIsInllYXIiOiIyMDI2Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiMTExMDAyIn0seyJpZCI6IjIyNTcyNjQ3IiwibW9udGgiOiI4IiwiZGF5cyI6IjU7MTkiLCJ5ZWFyIjoiMjAyNiIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6IjExMTAwMiJ9LHsiaWQiOiIyMjU3MjY1MCIsIm1vbnRoIjoiMSIsImRheXMiOiIxNDsyMSIsInllYXIiOiIyMDI2Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiMTExMDAyIn0seyJpZCI6IjIyNTcyNjUxIiwibW9udGgiOiIyIiwiZGF5cyI6IjQ7MTgiLCJ5ZWFyIjoiMjAyNiIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6IjExMTAwMiJ9LHsiaWQiOiIyMjU3MjY1MiIsIm1vbnRoIjoiMyIsImRheXMiOiI0OzE4IiwieWVhciI6IjIwMjYiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiIxMTEwMDIifSx7ImlkIjoiMjI1NzI2NTMiLCJtb250aCI6IjQiLCJkYXlzIjoiMTsxNTsyOSIsInllYXIiOiIyMDI2Iiwic2NoZWR1bGVEZXNjcmlwdGlvbklkIjoiMTExMDAyIn0seyJpZCI6IjIyNTcyNjU0IiwibW9udGgiOiI1IiwiZGF5cyI6IjEzOzI3IiwieWVhciI6IjIwMjYiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiIxMTEwMDIifSx7ImlkIjoiMjI1NzI2NTUiLCJtb250aCI6IjYiLCJkYXlzIjoiMTA7MjQiLCJ5ZWFyIjoiMjAyNiIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6IjExMTAwMiJ9XSwic2NoZWR1bGVEZXNjcmlwdGlvbiI6W3siaWQiOiIxMTEwMTAiLCJtb250aCI6IjYiLCJkYXlzIjoiMTA7MjQiLCJ5ZWFyIjoiMjAyNiIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6IjExMTAwMiIsIm5hbWUiOiJtUFNaT0tcL1JhdG93aWNlLCB0ZXJlbiB6cmVrdWx0eXdvd2FuZWdvIHNrXHUwMTQyYWRvd2lza2EiLCJkZXNjcmlwdGlvbiI6IiIsInR5cGVJZCI6IjI5IiwiY29sb3IiOiIjZWIxZGMzIiwibm90aWZpY2F0aW9uVHlwZSI6IjAiLCJub3RpZmljYXRpb25UZXh0IjoiIiwibm90aWZpY2F0aW9uRGF5c0JlZm9yZSI6IjAiLCJ2aXNJbkNvbXBsIjoiMCIsImN1c3RvbVRleHRXaGVuTm9EYXRlcyI6IiIsImRvTm90U2hvd0RhdGVzIjoiMCJ9LHsiaWQiOiIxMTEwMDgiLCJtb250aCI6IjYiLCJkYXlzIjoiMTA7MjQiLCJ5ZWFyIjoiMjAyNiIsInNjaGVkdWxlRGVzY3JpcHRpb25JZCI6IjExMTAwMiIsIm5hbWUiOiJURVJNSU4gUFx1MDE0MUFUTk9cdTAxNWFDSSIsImRlc2NyaXB0aW9uIjoiT3BcdTAxNDJhdFx1MDExOSB6YSBnb3Nwb2Rhcm93YW5pZSBvZHBhZGFtaSBuYWxlXHUwMTdjeSB3cFx1MDE0MmFjYVx1MDEwNyBuYSByYWNodW5layBHbWlueSBcdTIwMTMgemdvZG5pZSB6ZSB6XHUwMTQyb1x1MDE3Y29uXHUwMTA1IGRla2xhcmFjalx1MDEwNSBkbyAxNSBkbmlhIGthXHUwMTdjZGVnbyBtaWVzaVx1MDEwNWNhLiIsInR5cGVJZCI6IjMzIiwiY29sb3IiOiIjRTMwMDAwIiwibm90aWZpY2F0aW9uVHlwZSI6IjEiLCJub3RpZmljYXRpb25UZXh0IjoiMTUuIHVwXHUwMTQyeXdhIHRlcm1pbiBwXHUwMTQyYXRub1x1MDE1YmNpIG9wXHUwMTQyYXR5IHphIGdvc3BvZGFyb3dhbmllIG9kcGFkYW1pIGtvbXVuYWxueW1pLiIsIm5vdGlmaWNhdGlvbkRheXNCZWZvcmUiOiIxIiwidmlzSW5Db21wbCI6IjAiLCJjdXN0b21UZXh0V2hlbk5vRGF0ZXMiOiIiLCJkb05vdFNob3dEYXRlcyI6IjAifSx7ImlkIjoiMTExMDAyIiwibW9udGgiOiI2IiwiZGF5cyI6IjEwOzI0IiwieWVhciI6IjIwMjYiLCJzY2hlZHVsZURlc2NyaXB0aW9uSWQiOiIxMTEwMDIiLCJuYW1lIjoiT0RQQURZIFpNSUVTWkFORSIsImRlc2NyaXB0aW9uIjoiIiwidHlwZUlkIjoiMzEiLCJjb2xvciI6IiM0MTM5MzkiLCJub3RpZmljYXRpb25UeXBlIjoiMCIsIm5vdGlmaWNhdGlvblRleHQiOiIiLCJub3RpZmljYXRpb25EYXlzQmVmb3JlIjoiMCIsInZpc0luQ29tcGwiOiIwIiwiY3VzdG9tVGV4dFdoZW5Ob0RhdGVzIjoiIiwiZG9Ob3RTaG93RGF0ZXMiOiIwIn1dLCJzdHJlZXQiOnsiaWQiOiIzMDMwMzIyNSIsIm5hbWUiOiJaYm9cdTAxN2Nvd2EiLCJyZWdpb24iOiIiLCJudW1iZXJzIjoiIiwibnVtYmVyRnJvbSI6IiIsIm51bWJlclRvIjoiIiwic2lkZXMiOiJaYWJ1ZG93YSBqZWRub3JvZHppbm5hIiwic3RhbXAiOiI2ZTUyNzc4ZDczMzVhNDRmMDdlMWQ5ZTQyNDAyNjI3OSJ9LCJ0b3duIjp7Im5hbWUiOiJOYWRvbGljZSBXaWVsa2llIiwiZGlzdHJpY3QiOiJDemVybmljYSIsInByb3ZpbmNlIjoiRG9sbm9cdTAxNWJsXHUwMTA1c2tpZSJ9LCJzY2hlZHVsZVBlcmlvZCI6eyJzdGFydERhdGUiOiIyMDI2LTAxLTAxIiwiZW5kRGF0ZSI6IjIwMjYtMTItMzEiLCJjaGFuZ2VEYXRlIjoiMjAyNi0wNy0wOCAwOTo1NToyNyJ9LCJuYW1lIjoiUEw7UFNfMTtaTV8xMTtaTV8zMiIsImlkIjoiMTE4OTg2MzAiLCJncm91cG5hbWUiOiJOYWRvbGljZSBXaWVsa2llIiwic2VhcmNoIjp7Im51bWJlciI6bnVsbH0sImZvb3RlciI6IjxwPk5JRSBXWVJaVUNBSiBUQUsgSkFLIExFQ0ksIFBSWkVEIFdSWlVDRU5JRU0gWkdOSUFUQUogXHUwMTVhTUlFQ0khISE8YnJcLz5cclxuUG9qZW1uaWtpIGkgd29ya2kgbmFsZVx1MDE3Y3kgd3lzdGF3aVx1MDEwNyBkbyBnb2R6aW55IDYuMDAgcmFubyB3IGRuaXUgd3l3b3p1LjxcL3A+In0="
+    }
+  ]
+}
