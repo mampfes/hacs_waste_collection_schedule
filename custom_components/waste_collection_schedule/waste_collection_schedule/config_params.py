@@ -7,6 +7,7 @@ Sources declare PARAMS as a list of param types. The framework reads
 these to build the config flow GUI automatically.
 """
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 
 from waste_collection_schedule.exceptions import (
@@ -130,7 +131,7 @@ def _term_label_maps(
     return fields, labels, descriptions
 
 
-def apply_defaults(params: list[ConfigParam], values: dict) -> dict:
+def apply_defaults(params: Sequence[ConfigParam], values: dict) -> dict:
     """Return ``values`` with any missing/empty defaulted field filled in."""
     prepared = dict(values)
     for param in params:
@@ -140,7 +141,7 @@ def apply_defaults(params: list[ConfigParam], values: dict) -> dict:
     return prepared
 
 
-def validate(params: list[ConfigParam], values: dict) -> None:
+def validate(params: Sequence[ConfigParam], values: dict) -> None:
     """Validate user-supplied values against declared PARAMS.
 
     Raises SourceArgumentRequired for any field of a required ConfigParam that

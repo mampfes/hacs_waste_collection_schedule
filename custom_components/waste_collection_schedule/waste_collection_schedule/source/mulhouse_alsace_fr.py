@@ -143,7 +143,7 @@ class Source(BaseSource):
 
     # One structure, many communes: each is a Region (the same pipeline with a
     # different `commune`), surfaced as its own README / sources.json listing.
-    REGIONS = [
+    REGIONS = tuple(
         region(name, commune=name)
         for name in (
             "Bantzenheim",
@@ -185,7 +185,7 @@ class Source(BaseSource):
             "Ruelisheim",
             "Staffelfelden",
         )
-    ] + [region("Mulhouse", commune="Mulhouse", quartier="Centre Ville")]
+    ) + (region("Mulhouse", commune="Mulhouse", quartier="Centre Ville"),)
 
     PARAMS = (
         text_field("commune", label="Municipality"),

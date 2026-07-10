@@ -26,6 +26,7 @@ Revert these with `git checkout upstream/master -- <file>` if found:
 - Exceptions: use SourceArgumentNotFound / SourceArgumentNotFoundWithSuggestions only
 - Every new source needs a `doc/source/<id>.md` file (create it if missing)
 - `COUNTRY` must be a lowercase code from `update_docu_links.py`'s `COUNTRYCODES` list. Common gotchas: UK sources use `"uk"` NOT `"gb"`; Canada uses `"ca"` NOT `"CA"`. The legacy test only validated COUNTRY when the filename suffix was invalid, so case/synonym mismatches used to slip through and silently orphan the source out of README.md / info.md / sources.json. Always grep the actual value.
+- **Pipeline-migration smell:** a `BaseSource` source built on a shared `service/` client that overrides `retrieve()` to reissue the service's request by hand (rebuilding its URL, query params or headers) is fitting a round peg in a square hole. The service should be split into a `Retriever` (HTTP only) + a `Parser`, with the source declaring them, so the conversion shrinks rather than grows. Flag this in the report as a design issue (suggest splitting the service), rather than approving the wrapper. See `doc/contributing_source.md` "Migrating a source built on a shared service".
 
 ### CI-enforced structural invariants (`tests/test_source_components.py`)
 

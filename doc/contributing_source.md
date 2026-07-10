@@ -234,6 +234,7 @@ Before writing a retriever or parser, check whether the provider runs on a platf
 | RiSKommunal (AT) | `RiSKommunalRetriever`, `RiSKommunalParser` | Austrian RiS calendars, paged HTML, fetched lazily. |
 | Abfallnavi / regio iT (DE) | `AbfallnaviRetriever`, `AbfallnaviParser` | Multi-request place resolution plus a separate fraktionen reference map. |
 | IntraMaps | `IntraMapsRetriever`, `IntraMapsPanelParser`, `MapsClientConfig` | Stateful session handshake before any data. |
+| Sitepark IES / abto (DE) | `SiteparkIESRetriever` + `parsers.IcsParser` | Autocomplete street lookup, then a raw ICS download parsed by the shared ICS parser. |
 
 Also check the existing shared YAML and EXTRA_INFO platforms (Recollect, Recycle Coach, ICS YAML, Publidata, c-trace, and the others) before writing anything new. If your provider is covered, add it there instead of writing a new source.
 
@@ -272,6 +273,36 @@ class Source(BaseSource):
     )
 ```
 
+### Migrating a source built on a shared service
+
+Migrating a source to the pipeline is a **re-implementation** in the pipeline's vocabulary, not a wrapper around the old `fetch()`. This matters most when the source is built on a shared `service/` client.
+
+The unit of migration is the **service**, not the individual source. A source built on a shared platform is a thin declaration (`retrieve = <Service>Retriever(...)`, `parse = <shared parser>`, `transform = ...`); the real work is expressing the platform as a `Retriever` (HTTP only) plus a `Parser` (bytes to records). Once the service exposes those, every source on that platform converts declaratively, and each conversion gets smaller, not larger.
+
+The common blocker: many legacy service clients bundle the HTTP request and the parse into one method (e.g. a `fetch_ics()` that does the GET **and** the ICS conversion). Split that first: add a raw entry point that returns the response, and leave the old method delegating to it so existing legacy callers keep working. `SiteparkIES` shows the shape:
+
+```python
+# in the service client
+def fetch_ics_response(self, pois):        # raw: HTTP only, returns the response
+    ...
+    return r
+
+def fetch_ics(self, pois):                 # legacy callers still parse here
+    return self._ics.convert(self.fetch_ics_response(pois).text)
+```
+
+Then the pipeline retriever delegates to the raw entry point and returns the response for the shared parser:
+
+```python
+class SiteparkIESRetriever(RetrieverFunc):
+    def __call__(self, source):
+        client = SiteparkIES(self._base_url, refid=self._refid, ...)
+        pois = client.get_pois(strasse=source.params.get(self._strasse), ...)
+        return client.fetch_ics_response(pois)   # raw response; IcsParser converts it
+```
+
+The tell that a migration went wrong: a `retrieve()` **override** that reissues a shared service's request by hand (rebuilding its URL, query params or headers). That is fitting a round peg in a square hole. It means the service was left in its bundled shape and the source is wrapping it, which is why such conversions grow instead of shrink. Stop and split the service instead. See `abfall_neunkirchen_siegerland_de` (declarative, on `SiteparkIESRetriever`) and `abfallnavi_de` (on `AbfallnaviRetriever`) for the finished shape. Overriding `retrieve` as a method is reserved for a genuinely irregular flow no configured retriever can express (see [Retrievers](#retrievers-waste_collection_scheduleretrievers)), not for re-issuing a service request.
+
 ## The classify() escape hatch
 
 When no standard transformer fits, omit `transform` and implement `classify(self, record)`. It receives one record and returns a `Collection` or `None` to skip it. Use `self.parse_date(...)` for dates and the canonical `WasteType` values:
@@ -298,6 +329,7 @@ These are the old-style habits the pipeline exists to remove. A new or converted
 | `ICON_MAP` / `mdi:*` strings | the icon comes from the canonical `WasteType`; declare none |
 | `self._x = x` in `__init__` that is read back unchanged | read `self.params["x"]` at point of use (keep the `__init__` signature) |
 | a `retrieve` / `parse` method that only injects params or calls `.json()` | a configured retriever + a declared `parse =` parser |
+| a `retrieve()` override that reissues a shared service's request by hand | split the service into a `Retriever` + `Parser` and declare them (see [Migrating a source built on a shared service](#migrating-a-source-built-on-a-shared-service)) |
 | a pass-through `classify()` over already-resolved records | yield `(date, key)` and use a transformer |
 | `EXTRA_INFO` dict list on a new source | `REGIONS = [region(title, **params), ...]` |
 | `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` / `HOW_TO_GET_ARGUMENTS_DESCRIPTION` | typed `PARAMS` (labels) + `HOWTO` |
