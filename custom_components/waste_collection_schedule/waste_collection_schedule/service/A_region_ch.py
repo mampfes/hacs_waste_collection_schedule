@@ -170,9 +170,14 @@ class ARegionRetriever(RetrieverFunc):
                 or download.find("img", class_="svgIconImg")
             ):
                 titles = download.find_all("div", class_="title")
-                if "PDF" in titles:
-                    continue
                 title_strings = [title.string for title in titles]
+                # Skip PDF download tiles: they are not ICS-backed waste types,
+                # and following one feeds a PDF's bytes into the HTML parser
+                # (crashing on some municipalities, e.g. Wolfhalden). The legacy
+                # check `if "PDF" in titles` compared the string against a list
+                # of Tag objects, so it never matched.
+                if any(s and "PDF" in s for s in title_strings):
+                    continue
                 if not title_strings:
                     title_strings = [download.get_text(strip=True)]
                 for title in title_strings:

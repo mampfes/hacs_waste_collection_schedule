@@ -168,9 +168,16 @@ class FirmstepAddressFormRetriever(RetrieverFunc):
             search_nlpg=self.search_nlpg,
             timeout=self.timeout,
         )
-        if not addresses:
-            return response
-        return self._render(source, next(iter(addresses.keys())))
+        # A postcode can resolve to several records, and the first is
+        # sometimes a "Street Record" that carries no collection schedule.
+        # Render each resolved address in turn and return the first that
+        # actually has rows, rather than blindly taking the first key (which
+        # dead-ended postcodes like Bourne/Grantham for south_kesteven).
+        for uprn in addresses:
+            rendered = self._render(source, uprn)
+            if self._has_rows(rendered):
+                return rendered
+        return response
 
     def _render(self, source: "BaseSource", address_value: str) -> Any:
         form_inputs = _get_hidden_form_inputs(
@@ -355,18 +362,19 @@ class RushcliffeAddressRetriever(RetrieverFunc):
         if uprn is None:
             raise SourceArgumentNotFound(self.address_param, address)
 
-        # NOTE: the extra field name below (uprn_field + "FF3518-text")
-        # reproduces the legacy source's literal key exactly (it concatenates
-        # the UPRN field name with a second, hardcoded "FF3518-text" suffix
-        # rather than just "-text"). Preserved verbatim rather than "fixed" to
-        # keep this HTTP-behaviour-preserving against a provider that hasn't
-        # been re-verified live.
+        # Firmstep pairs each field id (e.g. FF3518) with companion fields
+        # "<id>lbltxt" (display label) and "<id>-text" (free-text value). The
+        # legacy source built the last key as `uprn_field + "FF3518-text"`,
+        # doubling the id into "FF3518FF3518-text" (a copy-paste slip). The
+        # server keys the lookup off the UPRN in the field itself, so the
+        # mis-named companion was silently ignored and results still returned;
+        # this restores the intended "<id>-text" companion.
         payload: dict[str, Any] = {
             **self.static_fields,
             "__RequestVerificationToken": token,
             self.uprn_field: uprn,
             f"{self.uprn_field}lbltxt": address,
-            f"{self.uprn_field}FF3518-text": postcode,
+            f"{self.uprn_field}-text": postcode,
         }
         r = source.session.post(self.form_post_url, data=payload, timeout=self.timeout)
         r.raise_for_status()

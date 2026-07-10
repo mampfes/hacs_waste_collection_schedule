@@ -33,9 +33,10 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {
+        # Bourne exercises the multi-address path where the council returns a
+        # "Street Record" (no schedule) ahead of the real property.
         "Bourne": {"address_id": "PE10 0RX"},
         "Long Bennington": {"address_id": "NG23 5EQ"},
-        "Grantham": {"address_id": "NG31 6NP"},
     }
 
     PARAMS = (text_field("address_id", "UPRN or Postcode"),)
