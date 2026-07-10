@@ -1,15 +1,20 @@
 import re
 from datetime import date, datetime
-from typing import Any, Optional, Sequence, cast
+from typing import TYPE_CHECKING, Any, Optional, Sequence, cast
 
-from curl_cffi import requests
 from curl_cffi.const import CurlHttpVersion
 
-from waste_collection_schedule import Collection
+from waste_collection_schedule import response_shape
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.retrievers import RetrieverFunc
+
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
 
 API_DOMAINS = (
     "https://apps.cloud9apps.com",
@@ -66,17 +71,6 @@ def _address_to_string(address: Address) -> str:
         for value in [address.get(key)]
         if value not in (None, "")
     ).strip()
-
-
-def _clean_type_name(name: str) -> str:
-    cleaned = name.strip()
-    if cleaned.lower().endswith("collection"):
-        cleaned = cleaned[: -len("collection")].strip()
-    if cleaned.lower().endswith("bins"):
-        cleaned = cleaned[: -len("bins")].strip()
-    elif cleaned.lower().endswith("bin"):
-        cleaned = cleaned[: -len("bin")].strip()
-    return cleaned or name
 
 
 def _parse_date_string(value: Any) -> Optional[date]:
@@ -161,15 +155,63 @@ def _collection_items(
     return items
 
 
-class Cloud9Client:
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture)
+#
+# The Cloud9 citizen-mobile API (apps.cloud9apps.com / apps.cloud9technologies.com)
+# returns one property's collection schedule keyed by UPRN. A council source
+# either supplies a UPRN directly or a postcode (plus optional address parts) that
+# is resolved to a UPRN via the ``/addresses`` lookup. All of that is acquisition
+# (HTTP across two mirror domains, plus the address match) and lives in
+# Cloud9Retriever; Cloud9Parser does no I/O, turning the raw
+# ``wasteCollectionDates`` payload into ``(date, label)`` rows. Each source then
+# maps its own container labels onto canonical waste types with a RowTransformer.
+# --------------------------------------------------------------------------- #
+
+
+class Cloud9Retriever(RetrieverFunc):
+    """Resolve a property and return its raw Cloud9 waste payload.
+
+    Args are the ``source.params`` field names holding the property identifiers
+    for this council (the wire names differ per source):
+
+    * ``uprn_field``: when set and populated, the UPRN is used directly and no
+      address lookup happens.
+    * ``postcode_field`` / ``name_number_field`` / ``street_field`` /
+      ``town_field``: the address-lookup inputs; the postcode drives the
+      ``/addresses`` query and the rest refine the best-match scoring.
+    * ``address_field``: a single free-text address string (used verbatim as the
+      match query) instead of the separate name/street/town parts.
+    * ``argument_name``: the config argument a lookup failure is reported against.
+
+    The Cloud9 API is fronted by an AWS ELB that sometimes echoes HTTP/1.1-only
+    response headers (e.g. ``keep-alive: timeout=5``) on an HTTP/2 connection.
+    That violates RFC 7540 8.1.2.2 and makes curl_cffi/nghttp2 abort with
+    CurlError 92. Every request is therefore forced to HTTP/1.1 on the shared
+    ``source.session``.
+    """
+
     def __init__(
         self,
         authority: str,
-        icon_keywords: Optional[dict[str, str]] = None,
+        *,
+        uprn_field: Optional[str] = None,
+        postcode_field: Optional[str] = None,
+        name_number_field: Optional[str] = None,
+        street_field: Optional[str] = None,
+        town_field: Optional[str] = None,
+        address_field: Optional[str] = None,
+        argument_name: str = "postcode",
         api_domains: Optional[Sequence[str]] = None,
     ):
-        self._authority = authority
-        self._icon_keywords: dict[str, str] = icon_keywords or {}
+        self.authority = authority
+        self.uprn_field = uprn_field
+        self.postcode_field = postcode_field
+        self.name_number_field = name_number_field
+        self.street_field = street_field
+        self.town_field = town_field
+        self.address_field = address_field
+        self.argument_name = argument_name
         configured_domains = API_DOMAINS if api_domains is None else api_domains
         self._base_urls = [
             f"{domain.rstrip('/')}/{authority}{API_BASE}"
@@ -178,128 +220,89 @@ class Cloud9Client:
         ]
         if not self._base_urls:
             raise ValueError("At least one API domain must be configured.")
-        # The Cloud9 API is fronted by an AWS ELB that sometimes echoes
-        # HTTP/1.1-only response headers (e.g. "keep-alive: timeout=5") on
-        # an HTTP/2 connection. This violates RFC 7540 8.1.2.2 and causes
-        # curl_cffi/nghttp2 to abort with CurlError 92 ("Invalid HTTP
-        # header field was received"). Forcing HTTP/1.1 avoids the strict
-        # HTTP/2 header validation and lets the request succeed.
-        self._session = requests.Session(
-            impersonate="chrome", http_version=CurlHttpVersion.V1_1
+
+    def __call__(self, source: "BaseSource") -> JSONDict:
+        params = source.params
+
+        uprn = params.get(self.uprn_field) if self.uprn_field else None
+        if uprn:
+            return self._fetch_waste(source, str(uprn))
+
+        postcode = params.get(self.postcode_field) if self.postcode_field else None
+        name_number = (
+            params.get(self.name_number_field) if self.name_number_field else None
         )
-        self._session.headers.update(BASE_HEADERS)
+        street = params.get(self.street_field) if self.street_field else None
+        town = params.get(self.town_field) if self.town_field else None
 
-    def _request_json(
-        self, path: str, params: Optional[dict[str, str]] = None
-    ) -> JSONDict:
-        last_error: Optional[Exception] = None
-        for base_url in self._base_urls:
-            try:
-                response = self._session.get(
-                    f"{base_url}{path}",
-                    params=params,
-                    timeout=REQUEST_TIMEOUT,
-                )
-                response.raise_for_status()
-                return cast(JSONDict, response.json())
-            except (
-                requests.exceptions.CertificateVerifyError,
-                requests.exceptions.ConnectionError,
-                requests.exceptions.DNSError,
-                requests.exceptions.SSLError,
-                requests.exceptions.Timeout,
-            ) as err:
-                last_error = err
-        assert last_error is not None
-        raise last_error
-
-    def _resolve_icon(self, label: str) -> Optional[str]:
-        lowered = label.lower()
-        for keyword, icon in self._icon_keywords.items():
-            if keyword in lowered:
-                return icon
-        return None
-
-    def _build_collections(self, payload: JSONDict) -> list[Collection]:
-        collection_data = cast(
-            JSONDict,
-            payload.get("wasteCollectionDates")
-            or payload.get("WasteCollectionDates")
-            or payload,
-        )
-
-        entries: list[Collection] = []
-        seen: set[tuple[date, str]] = set()
-
-        for key, details in _collection_items(collection_data):
-            if not details:
-                continue
-            raw_label = (
-                details.get("containerDescription")
-                or details.get("containerName")
-                or details.get("collectionType")
-                or key
+        if self.address_field:
+            address_string = str(params.get(self.address_field) or "")
+        else:
+            address_string = " ".join(
+                part.strip()
+                for part in (name_number, street, town, postcode)
+                if isinstance(part, str) and part.strip()
             )
-            if not isinstance(raw_label, str):
-                raw_label = str(raw_label)
-            label = _clean_type_name(raw_label)
-            icon = self._resolve_icon(label)
-            for collection_date in _extract_dates(details):
-                identifier = (collection_date, label)
-                if identifier in seen:
-                    continue
-                seen.add(identifier)
-                entries.append(Collection(date=collection_date, t=label, icon=icon))
 
-        return entries
-
-    def _fetch_waste_json(self, uprn: str) -> JSONDict:
-        return self._request_json(f"{WASTE_PATH}/{uprn}")
-
-    def fetch_by_uprn(self, uprn: str) -> list[Collection]:
-        payload = self._fetch_waste_json(uprn)
-        entries = self._build_collections(payload)
-        entries.sort(key=lambda item: item.date)
-        return entries
-
-    def fetch_by_address(
-        self,
-        postcode: Optional[str],
-        address_string: str,
-        address_name_number: Optional[str] = None,
-        address_street: Optional[str] = None,
-        street_town: Optional[str] = None,
-        argument_name: str = "address_postcode",
-    ) -> list[Collection]:
         normalised = normalise_postcode(postcode)
-
         addresses = self._lookup_addresses(
+            source,
             postcode=postcode,
             normalised_postcode=normalised,
-            address_name_number=address_name_number,
-            address_street=address_street,
+            address_name_number=name_number,
+            address_street=street,
             address_string=address_string,
         )
         selected = self._select_address(
             addresses,
             address_string=address_string,
             normalised_postcode=normalised,
-            address_name_number=address_name_number,
-            address_street=address_street,
-            street_town=street_town,
-            argument_name=argument_name,
+            address_name_number=name_number,
+            address_street=street,
+            street_town=town,
         )
-        uprn = selected.get("uprn")
-        if not uprn:
-            raise ValueError("Selected address does not expose a UPRN.")
+        selected_uprn = selected.get("uprn")
+        if not selected_uprn:
+            raise SourceArgumentNotFound(
+                self.argument_name,
+                address_string,
+                "the selected address does not expose a UPRN.",
+            )
+        return self._fetch_waste(source, str(selected_uprn))
 
-        entries = self.fetch_by_uprn(uprn)
-        if not entries:
-            raise ValueError("No collection data returned for the selected address.")
-        return entries
+    def _fetch_waste(self, source: "BaseSource", uprn: str) -> JSONDict:
+        return self._request_json(source, f"{WASTE_PATH}/{uprn}")
+
+    def _request_json(
+        self,
+        source: "BaseSource",
+        path: str,
+        params: Optional[dict[str, str]] = None,
+    ) -> JSONDict:
+        # The two API domains mirror each other; try each in turn and fall
+        # through to the next on ANY failure (DNS, TLS, connection, a bad HTTP
+        # status, or an offline-fixture replay miss for a domain that was
+        # unreachable at recording time), raising only if every domain fails.
+        last_error: Optional[Exception] = None
+        for base_url in self._base_urls:
+            try:
+                response = source.session.get(
+                    f"{base_url}{path}",
+                    params=params,
+                    headers=BASE_HEADERS,
+                    http_version=CurlHttpVersion.V1_1,
+                    timeout=REQUEST_TIMEOUT,
+                )
+                response.raise_for_status()
+                return cast(JSONDict, response.json())
+            except Exception as err:
+                last_error = err
+        assert last_error is not None
+        raise last_error
 
     def _lookup_addresses(
         self,
+        source: "BaseSource",
         postcode: Optional[str],
         normalised_postcode: Optional[str],
         address_name_number: Optional[str],
@@ -331,6 +334,7 @@ class Cloud9Client:
                 continue
             seen.add(key)
             payload_json = self._request_json(
+                source,
                 ADDRESSES_PATH,
                 params={param: cleaned},
             )
@@ -340,7 +344,11 @@ class Cloud9Client:
             if addresses_data:
                 return [cast(Address, a) for a in addresses_data]
 
-        raise ValueError("No matching addresses were returned by the API.")
+        raise SourceArgumentNotFound(
+            self.argument_name,
+            postcode or address_string,
+            "no matching addresses were returned by the API.",
+        )
 
     def _select_address(
         self,
@@ -350,11 +358,7 @@ class Cloud9Client:
         address_name_number: Optional[str],
         address_street: Optional[str],
         street_town: Optional[str],
-        argument_name: str,
     ) -> Address:
-        if not addresses:
-            raise ValueError("Address lookup returned no results.")
-
         query_lower = address_string.lower() if address_string else ""
         postcode_lower = normalised_postcode.lower() if normalised_postcode else None
 
@@ -398,7 +402,7 @@ class Cloud9Client:
         if best_score <= 0:
             suggestions = [_address_to_string(a) for a in addresses]
             raise SourceArgumentNotFoundWithSuggestions(
-                argument=argument_name,
+                argument=self.argument_name,
                 value=address_string,
                 suggestions=suggestions,
             )
@@ -407,9 +411,57 @@ class Cloud9Client:
         if len(top) > 1:
             suggestions = [_address_to_string(a) for a in top]
             raise SourceArgAmbiguousWithSuggestions(
-                argument=argument_name,
+                argument=self.argument_name,
                 value=address_string,
                 suggestions=suggestions,
             )
 
         return top[0]
+
+
+class Cloud9Parser(Parser["list[tuple[date, str]]"]):
+    """Decode a raw ``wasteCollectionDates`` payload into ``(date, label)`` rows.
+
+    Does no I/O, so it runs standalone against a cached payload fixture. Each
+    distinct ``(date, container-label)`` pair becomes one row; the source's
+    RowTransformer then maps the label onto a canonical waste type.
+    """
+
+    def __call__(
+        self,
+        raw: JSONDict,
+        source: "BaseSource | None" = None,
+    ) -> "list[tuple[date, str]]":
+        response_shape.expect(
+            isinstance(raw, dict),
+            source_name=response_shape.source_name(source),
+            detail="Cloud9 response is not a JSON object",
+            raw=raw,
+        )
+
+        collection_data = cast(
+            JSONDict,
+            raw.get("wasteCollectionDates") or raw.get("WasteCollectionDates") or raw,
+        )
+
+        rows: list[tuple[date, str]] = []
+        seen: set[tuple[date, str]] = set()
+        for key, details in _collection_items(collection_data):
+            if not details:
+                continue
+            raw_label = (
+                details.get("containerDescription")
+                or details.get("containerName")
+                or details.get("collectionType")
+                or key
+            )
+            label = raw_label if isinstance(raw_label, str) else str(raw_label)
+            for collection_date in _extract_dates(details):
+                identifier = (collection_date, label)
+                if identifier in seen:
+                    continue
+                seen.add(identifier)
+                rows.append(identifier)
+
+        rows.sort(key=lambda row: row[0])
+        return rows

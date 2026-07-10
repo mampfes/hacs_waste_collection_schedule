@@ -554,7 +554,7 @@ def test_icon_map_uses_canonical_icons() -> None:
             )
 
 
-def test_uk_cloud9_client_falls_back_to_secondary_domain(monkeypatch) -> None:
+def test_uk_cloud9_retriever_falls_back_to_secondary_domain() -> None:
     module = import_module("waste_collection_schedule.service.uk_cloud9_apps")
     requested_urls: list[str] = []
 
@@ -566,24 +566,23 @@ def test_uk_cloud9_client_falls_back_to_secondary_domain(monkeypatch) -> None:
             return {"wasteCollectionDates": {}}
 
     class _Session:
-        def __init__(self) -> None:
-            self.headers: dict[str, str] = {}
-
         def get(self, url: str, **kwargs) -> _Response:
             requested_urls.append(url)
             if "primary.example.invalid" in url:
-                raise module.requests.exceptions.CertificateVerifyError(
-                    "SSL host mismatch", 60, None
-                )
+                raise ConnectionError("SSL host mismatch")
             return _Response()
 
-    monkeypatch.setattr(module.requests, "Session", lambda **kwargs: _Session())
+    class _Source:
+        def __init__(self) -> None:
+            self.params = {"uprn": "100070200377"}
+            self.session = _Session()
 
-    client = module.Cloud9Client(
+    retriever = module.Cloud9Retriever(
         "rugby",
+        uprn_field="uprn",
         api_domains=("https://primary.example.invalid", "https://secondary.example"),
     )
-    payload = client._fetch_waste_json("100070200377")
+    payload = retriever(_Source())
 
     assert payload == {"wasteCollectionDates": {}}
     assert requested_urls == [
@@ -592,11 +591,11 @@ def test_uk_cloud9_client_falls_back_to_secondary_domain(monkeypatch) -> None:
     ]
 
 
-def test_uk_cloud9_client_requires_api_domains() -> None:
+def test_uk_cloud9_retriever_requires_api_domains() -> None:
     module = import_module("waste_collection_schedule.service.uk_cloud9_apps")
 
     try:
-        module.Cloud9Client("rugby", api_domains=())
+        module.Cloud9Retriever("rugby", api_domains=())
         raise AssertionError("Expected ValueError when no API domains are configured")
     except ValueError as err:
         assert "At least one API domain" in str(err)

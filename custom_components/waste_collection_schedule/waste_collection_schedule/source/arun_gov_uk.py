@@ -1,62 +1,71 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentRequired
-from waste_collection_schedule.service.uk_cloud9_apps import Cloud9Client
+from typing import ClassVar, final
 
-TITLE = "Arun District Council"
-DESCRIPTION = "Source for arun.gov.uk services for Arun District, UK."
-URL = "https://www.arun.gov.uk"
-TEST_CASES = {
-    "Test_001": {"postcode": "BN17 5JA", "address": "21A Beach Road, Littlehampton"},
-    "Test_002": {"postcode": "BN16 1AA", "address": "2 Downs Way, East Preston"},
-    "Test_003": {"uprn": 100062180214},
-    "Test_004": {"uprn": "0100062180214"},
-}
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "You can find your UPRN by visiting [Find My Address](https://www.findmyaddress.co.uk) and entering your address details."
-}
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-        "postcode": "Postcode (legacy, use UPRN instead)",
-        "address": "Address (legacy, use UPRN instead)",
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    postcode,
+    text_field,
+    uprn,
+)
+from waste_collection_schedule.service.uk_cloud9_apps import (
+    Cloud9Parser,
+    Cloud9Retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Arun District Council"
+    DESCRIPTION = "Source for arun.gov.uk services for Arun District, UK."
+    URL = "https://www.arun.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {
+            "postcode": "BN17 5JA",
+            "address": "21A Beach Road, Littlehampton",
+        },
+        "Test_002": {"postcode": "BN16 1AA", "address": "2 Downs Way, East Preston"},
+        "Test_003": {"uprn": 100062180214},
+        "Test_004": {"uprn": "0100062180214"},
     }
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-        "postcode": "Postcode (legacy, use UPRN instead)",
-        "address": "Address (legacy, use UPRN instead)",
+
+    PARAMS = (
+        alternatives([uprn()], [postcode()]),
+        text_field("address", "Address", optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Provide your UPRN, or your postcode plus an address to match. "
+            "Find your UPRN at https://www.findmyaddress.co.uk/"
+        ),
     }
-}
-ICON_MAP = {
-    "garden": Icons.GARDEN,
-    "food": Icons.BIO_KITCHEN,
-    "recycl": Icons.RECYCLING,
-    "waste": Icons.GENERAL_WASTE,
-    "rubbish": Icons.GENERAL_WASTE,
-    "refuse": Icons.GENERAL_WASTE,
-}
 
+    retrieve = Cloud9Retriever(
+        "arun",
+        uprn_field="uprn",
+        postcode_field="postcode",
+        address_field="address",
+        argument_name="postcode",
+    )
+    parse = Cloud9Parser()
+    transform = RowTransformer(
+        type_value_map={
+            "General Waste Bins": GENERAL_WASTE,
+            "Recycling Bins": RECYCLABLES,
+            "Food Waste Bins": FOOD_WASTE,
+            "Garden Waste Bins": GARDEN_WASTE,
+        },
+    )
 
-class Source:
-    def __init__(
-        self,
-        uprn: str | int | None = None,
-        postcode: str | None = None,
-        address: str | None = None,
-    ):
-        self._client = Cloud9Client("arun", icon_keywords=ICON_MAP)
-        self._uprn = str(uprn) if uprn else None
-        self._postcode = postcode
-        self._address = address
-
-    def fetch(self) -> list[Collection]:
-        if self._uprn:
-            return self._client.fetch_by_uprn(self._uprn)
-        if not self._postcode:
-            raise SourceArgumentRequired("uprn", "Provide a UPRN or postcode + address")
-        return self._client.fetch_by_address(
-            postcode=self._postcode,
-            address_string=self._address or "",
-            argument_name="postcode",
-        )
+    def __init__(self, uprn=None, postcode=None, address=None):
+        super().__init__(uprn=uprn, postcode=postcode, address=address)
