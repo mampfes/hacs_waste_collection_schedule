@@ -161,7 +161,7 @@ class Source:
         # Fall back to older years if no entry for current year
         current_year = datetime.date.today().year
         sd = None
-        for year_offset in range(0, current_year - 2017):
+        for year_offset in range(current_year - 2017):
             year = current_year - year_offset
             jahr = year - 2000
             candidates = [

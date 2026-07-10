@@ -1712,9 +1712,9 @@ class CitiesApps:
         supported_len = len(supported_dict["supported"])
         for id, city in enumerate(supported_dict["supported"]):
             if city["name"] in [c["title"] for c in SERVICE_MAP]:
-                city_homepage = [
+                city_homepage = next(
                     c["url"] for c in SERVICE_MAP if city["name"] == c["title"]
-                ][0]
+                )
             else:
                 print(f"{id + 1}/{supported_len} {city['name']}")
                 city_homepage = self.get_city_home_page(city)

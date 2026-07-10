@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import ClassVar
+
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
@@ -75,7 +77,7 @@ class Source(RiSKommunalSource):
     ICON_MAP = ICON_MAP
     SELECTION_URL = "https://www.hartbeigraz.at/Service/Muell"
     MAX_PAGES = 25
-    QUERY_PARAMS = {
+    QUERY_PARAMS: ClassVar = {
         "sprache": "1",
         "menuonr": _MENUONR,
         "bdatum": "31.12.9999",

@@ -107,8 +107,13 @@ class WhitespaceClient:
             raise ValueError("Could not find scheduled-collections section on WRP page")
 
         results = []
-        for u1 in scheduled.find_all("u1"):
-            lis = u1.find_all("li", recursive=False)
+        # Some WRP portals emit well-formed "<ul>" list markup, while others
+        # (e.g. Lancaster) emit a malformed "<u1>" tag (digit one instead of
+        # letter "l") for the same list structure. Match both so the shared
+        # client keeps working regardless of which variant a given council's
+        # portal serves.
+        for ul in scheduled.find_all(["ul", "u1"]):
+            lis = ul.find_all("li", recursive=False)
             if len(lis) < 3:
                 continue
 

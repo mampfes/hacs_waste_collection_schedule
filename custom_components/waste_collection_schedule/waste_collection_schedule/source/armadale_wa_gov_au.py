@@ -77,7 +77,7 @@ class Source:
         current_day = current_day + datetime.timedelta(days=diff_to_next)
 
         entries = []
-        for i in range(52):
+        for _i in range(52):
             date = current_day
             start_of_week = date - datetime.timedelta(days=date.weekday())
 

@@ -15,6 +15,21 @@ if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
 
 
+def _mojibake(term: str) -> str:
+    """Re-encode a term to work around a server-side double UTF-8 decode.
+
+    Some Sitepark installations (e.g. hilchenbach.de) mis-decode the
+    ``term`` query parameter, so a correctly UTF-8-encoded term containing
+    umlauts or "ß" never matches (e.g. "Am Bühl" or "Dammstraße" return no
+    results at all). Re-encoding the term as UTF-8 bytes and decoding those
+    bytes as Latin-1 reproduces the same mis-decoding the server applies,
+    which cancels it out and lets the match succeed. Other installations
+    (e.g. ab-peine.de) decode correctly already and this would break them,
+    so it is only tried as a fallback, not applied unconditionally.
+    """
+    return term.encode("utf-8").decode("latin-1")
+
+
 def match_icon(waste_type: str, icon_map: dict):
     """Return the first icon whose key is contained in the waste type.
 
@@ -171,19 +186,25 @@ class SiteparkIES:
         return candidates[0][0]
 
     def _query(self, term: Optional[str], refid: Optional[str]) -> List[list]:
-        """Autocomplete with a fallback for terms the endpoint cannot match.
+        """Autocomplete with fallbacks for terms the endpoint cannot match.
 
-        The abto endpoint returns an empty result for some inputs (e.g. terms
-        containing "ß", a trailing space, parentheses or a comma). When that
-        happens, retry with the leading, more tolerant part of the term and let
-        the caller filter the (broader) result set locally.
+        The abto endpoint returns an empty result for some inputs: umlauts
+        or "ß" on installations affected by the double-decode bug (see
+        ``_mojibake``), or a trailing space, parentheses or a comma on any
+        installation. When that happens, retry with a more tolerant form of
+        the term and let the caller filter the (broader) result set locally.
         """
         results = self.autocomplete(term, refid=refid)
         if results or not term:
             return results
 
+        if not term.isascii():
+            results = self.autocomplete(_mojibake(term), refid=refid)
+            if results:
+                return results
+
         short = term
-        for sep in ("ß", "(", ",", "  "):
+        for sep in ("(", ",", "  "):
             short = short.split(sep)[0]
         short = short.strip()
         if short and short != term:

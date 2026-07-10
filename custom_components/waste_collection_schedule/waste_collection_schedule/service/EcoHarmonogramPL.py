@@ -231,7 +231,7 @@ class Ecoharmonogram:
             matching_towns,
         )
 
-        town = list(matching_towns_district)[0]
+        town = next(iter(matching_towns_district))
 
         schedule_periods_data = self.fetch_scheduled_periods(town)
         schedule_periods = schedule_periods_data["schedulePeriods"]

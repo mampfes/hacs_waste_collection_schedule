@@ -90,8 +90,8 @@ class Source:
                 )
         except (ValueError, TypeError) as e:
             raise Exception(
-                f"Invalid coordinate format. Please provide numeric values. Error: {str(e)}"
-            )
+                f"Invalid coordinate format. Please provide numeric values. Error: {e!s}"
+            ) from e
 
     def fetch(self):
         try:
@@ -102,7 +102,7 @@ class Source:
             raise Exception(
                 f"Coordinates ({self._latitude}, {self._longitude}) not found in any Bendigo collection zone. "
                 "Please check your location at https://www.bendigo.vic.gov.au/residents/general-waste-recycling-and-organics/bin-night",
-            )
+            ) from None
 
         _LOGGER.debug(
             "Found collection zone: %s",

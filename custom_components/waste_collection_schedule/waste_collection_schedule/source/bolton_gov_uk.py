@@ -135,10 +135,8 @@ class Source:
 
         for address in data["data"]:
             label = address["label"]
-            if (
-                label == self._house_number
-                or label.startswith(f"{self._house_number} ")
-                or label.startswith(f"{self._house_number},")
+            if label == self._house_number or label.startswith(
+                (f"{self._house_number} ", f"{self._house_number},")
             ):
                 return address["value"], auth_token
 

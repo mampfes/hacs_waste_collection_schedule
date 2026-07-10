@@ -154,12 +154,20 @@ class SourceInfo:
         url: str,
         country: str,
         params: list[str],
-        extra_info_default_params: dict[str, Any] = {},
-        custom_param_translation: dict[str, dict[str, str]] = {},
-        custom_param_description: dict[str, dict[str, str]] = {},
-        custom_howto: dict[str, str] = {},
+        extra_info_default_params: dict[str, Any] | None = None,
+        custom_param_translation: dict[str, dict[str, str]] | None = None,
+        custom_param_description: dict[str, dict[str, str]] | None = None,
+        custom_howto: dict[str, str] | None = None,
         source_owners: list[str] | None = None,
     ):
+        if custom_howto is None:
+            custom_howto = {}
+        if custom_param_description is None:
+            custom_param_description = {}
+        if custom_param_translation is None:
+            custom_param_translation = {}
+        if extra_info_default_params is None:
+            extra_info_default_params = {}
         self._filename = filename
         self._module = module
         self._title = title
@@ -305,11 +313,15 @@ class IcsSourceInfo(SourceInfo):
         url: str,
         country: str,
         limit_params: list[str],
-        extra_info_default_params: dict[str, Any] = {},
-        custom_howto: dict[str, str] = {},
+        extra_info_default_params: dict[str, Any] | None = None,
+        custom_howto: dict[str, str] | None = None,
         source_owners: list | None = None,
         ics_stem: str | None = None,
     ):
+        if custom_howto is None:
+            custom_howto = {}
+        if extra_info_default_params is None:
+            extra_info_default_params = {}
         _, ics_sources = get_source_by_file("ics")
         ics_source = ics_sources[0]
         params = set(ics_source.params) - set(limit_params)
@@ -436,7 +448,7 @@ def browse_sources() -> list[SourceInfo]:
 
     files = filter(
         lambda x: x != "__init__",
-        map(lambda x: x.stem, SOURCE_DIR.glob("*.py")),
+        (x.stem for x in SOURCE_DIR.glob("*.py")),
     )
 
     modules: dict[str, ModuleType] = {}
@@ -748,7 +760,7 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     source_metadata_by_module: dict[str, dict[str, Any]] = {}
     source_owners_by_module: dict[str, list[str]] = {}
 
-    for country in ["Generic"] + sorted(c for c in countries if c != "Generic"):
+    for country in ["Generic", *sorted(c for c in countries if c != "Generic")]:
         output[country] = []
         for e in sorted(
             countries[country],
@@ -872,8 +884,10 @@ def get_custom_translations(
 
 
 def update_json(
-    countries: dict[str, list[SourceInfo]], generics: list[SourceInfo] = []
+    countries: dict[str, list[SourceInfo]], generics: list[SourceInfo] | None = None
 ):
+    if generics is None:
+        generics = []
     countries = countries.copy()
     countries["Generic"] = generics
     update_sources_json(countries)
@@ -881,7 +895,7 @@ def update_json(
         param_translations,
         param_descriptions,
         source_howto,
-        source_doc_url,
+        _source_doc_url,
     ) = get_custom_translations(countries)
 
     for lang in LANGUAGES:
@@ -913,7 +927,7 @@ def update_json(
         # sorted order of the keys
         step_keys = list(translations["config"]["step"].keys())
         for key in step_keys:
-            if key.startswith("args_") or key.startswith("reconfigure_"):
+            if key.startswith(("args_", "reconfigure_")):
                 translations["config"]["step"].pop(key)
 
         for key, value in (
@@ -1283,6 +1297,10 @@ COUNTRYCODES = [
     {
         "code": "us",
         "name": "United States of America",
+    },
+    {
+        "code": "za",
+        "name": "South Africa",
     },
     {
         "code": "uk",

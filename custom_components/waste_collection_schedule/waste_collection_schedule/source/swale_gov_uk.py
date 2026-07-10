@@ -51,7 +51,7 @@ class Source:
         # If it is, increment the year by 1.
         today: date = datetime.now().date()
         year: int = today.year
-        dt: date = datetime.strptime(f"{d} {str(year)}", "%d %B %Y").date()
+        dt: date = datetime.strptime(f"{d} {year!s}", "%d %B %Y").date()
         if (dt - today) < timedelta(days=-31):
             dt = dt.replace(year=dt.year + 1)
         return dt

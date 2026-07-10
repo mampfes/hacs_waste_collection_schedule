@@ -62,7 +62,7 @@ class SourceArgumentSuggestionsExceptionBase(SourceArgumentException, Generic[T]
         super().__init__(argument=argument, message=message)
         self._suggestions = suggestions
         self._suggestion_type: Type[T] | None = (
-            type(list(suggestions)[0]) if suggestions else None
+            type(next(iter(suggestions))) if suggestions else None
         )
 
     @property

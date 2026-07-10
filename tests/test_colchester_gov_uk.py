@@ -28,8 +28,8 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule import Icons  # noqa: E402
-from waste_collection_schedule.source import colchester_gov_uk  # noqa: E402
+from waste_collection_schedule import Icons
+from waste_collection_schedule.source import colchester_gov_uk
 
 
 class MockResponse:

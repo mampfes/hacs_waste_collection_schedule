@@ -57,7 +57,7 @@ class Source:
             for date_str, bins in binData.items():
                 date = datetime.fromisoformat(date_str).date()
 
-                for bin_name, details in bins.items():
+                for _bin_name, details in bins.items():
                     if details is None:
                         continue  # skip empty bins
 

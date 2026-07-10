@@ -5,7 +5,7 @@ import logging
 import types
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Literal, Tuple, TypedDict, Union, cast, get_origin
+from typing import Any, ClassVar, Literal, Tuple, TypedDict, Union, cast, get_origin
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -329,7 +329,9 @@ def _get_waste_types_for_customize(source_cls) -> list[str]:
     return [wt.names.get("en", wt.id) for wt in waste_types]
 
 
-def get_customize_schema(defaults: dict[str, Any] = {}):
+def get_customize_schema(defaults: dict[str, Any] | None = None):
+    if defaults is None:
+        defaults = {}
     schema = {
         vol.Optional(CONF_ALIAS, default=defaults.get(CONF_ALIAS, UNDEFINED)): str,
         vol.Optional(CONF_SHOW, default=defaults.get(CONF_SHOW, True)): cv.boolean,
@@ -349,7 +351,9 @@ def get_customize_schema(defaults: dict[str, Any] = {}):
     return schema
 
 
-def get_sensor_schema(fetched_types, add_delete=False, defaults: dict = {}):
+def get_sensor_schema(fetched_types, add_delete=False, defaults: dict | None = None):
+    if defaults is None:
+        defaults = {}
     schema = {
         vol.Optional(CONF_NAME, default=defaults.get(CONF_NAME, UNDEFINED)): cv.string,
     }
@@ -470,7 +474,7 @@ def validate_sensor_user_input(
             args.pop(preset_key, None)
             args[key] = sensor_input[preset_key]
 
-        if key in args and args[key]:
+        if args.get(key):
             try:
                 cv.template(args[key])
             except vol.Invalid:
@@ -486,7 +490,7 @@ def validate_sensor_user_input(
     if not args.get(CONF_NAME):
         errors[CONF_NAME] = "sensor_name_empty"
     # enforce unique Name
-    elif any([x[CONF_NAME] == args[CONF_NAME] for x in existing_sensors]):
+    elif any(x[CONF_NAME] == args[CONF_NAME] for x in existing_sensors):
         errors[CONF_NAME] = "name_exists"
 
     return args, errors if args.get("skip", False) is False else {}
@@ -529,8 +533,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     _country: str | None = None
     _source: str | None = None
 
-    _options: dict = {}
-    _sources: dict[str, list[SourceDict]] = {}
+    _options: ClassVar[dict] = {}
+    # Not a ClassVar: the empty dict is only a per-instance "not yet
+    # initialized" sentinel; _async_setup_sources() below rebinds it to the
+    # shared _SOURCES cache on first use.
+    _sources: dict[str, list[SourceDict]] = {}  # noqa: RUF012
     _error_suggestions: dict[str, list[Any]]
 
     async def _async_setup_sources(self) -> None:
@@ -669,11 +676,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     async def __get_type_by_annotation(self, annotation: Any) -> Any:
         if a := await self.__get_simple_annotation_type(annotation):
             return a
-        if (
-            (isinstance(annotation, types.GenericAlias))
-            or (
-                get_origin(annotation) is not None and hasattr(annotation, "__origin__")
-            )
+        if (isinstance(annotation, types.GenericAlias)) or (
+            (get_origin(annotation) is not None and hasattr(annotation, "__origin__"))
             and (a := await self.__get_simple_annotation_type(annotation.__origin__))
         ):
             return a
@@ -725,7 +729,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                         level_options = await self.hass.async_add_executor_job(
                             source_cls.get_choices, field, dict(chosen)
                         )
-                    except Exception as exc:  # noqa: BLE001 - degrade to free text
+                    except Exception as exc:
                         _LOGGER.debug("get_choices(%s) failed: %s", field, exc)
                         continue
                     if level_options:
@@ -739,7 +743,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     options[parent_field] = await self.hass.async_add_executor_job(
                         source_cls.get_parent_choices
                     )
-                except Exception as exc:  # noqa: BLE001 - degrade to free text
+                except Exception as exc:
                     _LOGGER.debug("get_parent_choices failed: %s", exc)
             parent_value = chosen.get(parent_field)
             if parent_value:
@@ -747,7 +751,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     options[child_field] = await self.hass.async_add_executor_job(
                         source_cls.get_choices, parent_value
                     )
-                except Exception as exc:  # noqa: BLE001 - degrade to free text
+                except Exception as exc:
                     _LOGGER.debug("get_choices failed: %s", exc)
         return options
 

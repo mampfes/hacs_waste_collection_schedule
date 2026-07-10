@@ -143,14 +143,14 @@ def select_test_cases(municipalities, mode="random_one_from_each_parser"):
             parser_test_cases[parser].append((name, info))
 
     if mode == "random_one_from_each_parser":
-        for parser, cases in parser_test_cases.items():
+        for _parser, cases in parser_test_cases.items():
             selected_case = random.choice(cases)
             test_cases[selected_case[0]] = {
                 "municipality": selected_case[0],
                 "values": selected_case[1]["values"],
             }
     elif mode == "first_from_each_parser":
-        for parser, cases in parser_test_cases.items():
+        for _parser, cases in parser_test_cases.items():
             selected_case = cases[0]
             test_cases[selected_case[0]] = {
                 "municipality": selected_case[0],
@@ -164,14 +164,14 @@ def select_test_cases(municipalities, mode="random_one_from_each_parser"):
             "values": selected_case[1]["values"],
         }
     elif mode == "first_one":
-        first_parser = list(parser_test_cases.keys())[0]
+        first_parser = next(iter(parser_test_cases.keys()))
         selected_case = parser_test_cases[first_parser][0]
         test_cases[selected_case[0]] = {
             "municipality": selected_case[0],
             "values": selected_case[1]["values"],
         }
     elif mode == "all":
-        for parser, cases in parser_test_cases.items():
+        for _parser, cases in parser_test_cases.items():
             for case in cases:
                 test_cases[case[0]] = {
                     "municipality": case[0],

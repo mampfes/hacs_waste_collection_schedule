@@ -95,7 +95,7 @@ class Source:
 
         r = requests.get(f"https://wsz-moosburg.at/api/address/{municipal_id}")
         addressData = json.loads(r.text)["address"]
-        address = [x for x in addressData if x["address"]["name"] == address][0][
+        address = next(x for x in addressData if x["address"]["name"] == address)[
             "address"
         ]
 
@@ -107,7 +107,7 @@ class Source:
                 f"https://wsz-moosburg.at/api/address/{municipal_id}/{address['id']}"
             )
             streetData = json.loads(r.text)["address"]
-            street = [x for x in streetData if x["address"]["name"] == street][0][
+            street = next(x for x in streetData if x["address"]["name"] == street)[
                 "address"
             ]
             return street["id"]

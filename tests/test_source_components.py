@@ -9,8 +9,8 @@ from unittest.mock import MagicMock, patch
 
 import yaml
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # isort:skip # noqa: E402
-from update_docu_links import (  # isort:skip # noqa: E402
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # isort:skip
+from update_docu_links import (  # isort:skip
     BLACK_LIST,
     COUNTRYCODES,
     LANGUAGES,
@@ -271,7 +271,9 @@ def _test_source_has_necessary_parameters_extra_info(
         try:
             extra_info = extra_info()
         except Exception as e:
-            assert False, f"EXTRA_INFO() function in source {source} failed with {e}"
+            raise AssertionError(
+                f"EXTRA_INFO() function in source {source} failed with {e}"
+            ) from e
 
         # check if is iterable (list, tupüle, set)
         assert isinstance(extra_info, (list, tuple, set, GeneratorType)), (
@@ -519,10 +521,8 @@ SOURCES_ALLOWED_RAW_ICONS: set[str] = {
     "insert_it_de",  # nested {region: {waste_type: {icon, name}}} structure
     "landkreis_helmstedt_de",  # computed keys
     "potsdam_de",  # integer keys
-    "sepan_remondis_pl",  # dynamic ICON_MAP construction
     "wermelskirchen_de",  # dynamic ICON_MAP construction
     "woollahra_nsw_gov_au",  # dynamic ICON_MAP construction
-    "zys_harmonogram_pl",  # dynamic ICON_MAP construction
 }
 
 
@@ -597,7 +597,7 @@ def test_uk_cloud9_client_requires_api_domains() -> None:
 
     try:
         module.Cloud9Client("rugby", api_domains=())
-        assert False, "Expected ValueError when no API domains are configured"
+        raise AssertionError("Expected ValueError when no API domains are configured")
     except ValueError as err:
         assert "At least one API domain" in str(err)
 

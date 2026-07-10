@@ -208,7 +208,7 @@ class Source:
                 "days",
                 days,
                 "Enter a positive number of days to fetch.",
-            )
+            ) from None
         self._calendar_id = None
 
         if self._calendar_type_id not in {"1", "2"}:

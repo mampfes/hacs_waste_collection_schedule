@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule import Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
@@ -51,7 +53,7 @@ VALID_ZONES = ["1", "Wohnhausanlagen"]
 class Source(RiSKommunalSource):
     BASE_URL = "https://www.schlierbach.at"
     ICON_MAP = ICON_MAP
-    QUERY_PARAMS = {
+    QUERY_PARAMS: ClassVar = {
         "sprache": "1",
         "menuonr": "225603725",
     }

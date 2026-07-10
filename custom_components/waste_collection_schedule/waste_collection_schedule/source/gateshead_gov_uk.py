@@ -94,9 +94,9 @@ class Source:
             decoded_data = base64.b64decode(response_data)
             data = json.loads(decoded_data)
         except (binascii.Error, ValueError) as e:
-            raise ValueError(f"Failed to decode base64 data: {e}")
+            raise ValueError(f"Failed to decode base64 data: {e}") from e
         except json.JSONDecodeError as e:
-            raise ValueError(f"Failed to parse JSON data: {e}")
+            raise ValueError(f"Failed to parse JSON data: {e}") from e
 
         if "HOUSEHOLDCOLLECTIONS_1" not in data:
             raise ValueError("HOUSEHOLDCOLLECTIONS_1 not found in response data")

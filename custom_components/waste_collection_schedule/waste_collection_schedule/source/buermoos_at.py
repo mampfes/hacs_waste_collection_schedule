@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule import Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 
@@ -74,7 +76,7 @@ class Source(RiSKommunalSource):
     SELECTION_URL = "https://www.buermoos.at/Service/Aktuelles/Muellkalender"
     LOOKAHEAD_DAYS = 365
     MAX_PAGES = 30
-    QUERY_PARAMS = {
+    QUERY_PARAMS: ClassVar = {
         "sprache": "1",
         "menuonr": "219233420",
     }

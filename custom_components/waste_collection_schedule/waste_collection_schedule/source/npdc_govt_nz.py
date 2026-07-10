@@ -189,11 +189,8 @@ class Source:
             # Blue address → Glass+Landfill on odd (blue glass) weeks
             # Yellow address → Glass+Landfill on even (non-blue glass) weeks
             is_glass_landfill_week = (
-                pick_week_colour == "blue"
-                and blue_glass_week
-                or pick_week_colour == "yellow"
-                and not blue_glass_week
-            )
+                pick_week_colour == "blue" and blue_glass_week
+            ) or (pick_week_colour == "yellow" and not blue_glass_week)
 
             if is_glass_landfill_week:
                 waste_type = "Glass and Landfill"

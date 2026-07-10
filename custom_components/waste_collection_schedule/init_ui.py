@@ -17,8 +17,8 @@ from .waste_collection_schedule.service.DeviceKeyStore import (
 )
 from .wcs_coordinator import WCSCoordinator
 
-from . import const  # type: ignore # isort:skip # noqa: E402
-from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip # noqa: E402
+from . import const  # type: ignore # isort:skip
+from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip
 
 _LOGGER = logging.getLogger(__name__)
 

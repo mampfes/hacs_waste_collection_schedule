@@ -107,7 +107,7 @@ class Source:
             raise Exception("Could not find address form")
 
         headers = black_top_bin_schedule_table.find_all("th")
-        week_column_index = list(map(lambda h: h.text, headers)).index(week_name)
+        week_column_index = [h.text for h in headers].index(week_name)
         if week_column_index < 0:
             raise Exception("Cannot find black top bin collection weeks")
 

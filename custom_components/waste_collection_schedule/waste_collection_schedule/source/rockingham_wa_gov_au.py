@@ -160,7 +160,7 @@ class Source:
                         item for item in fields if item.get("name") == waste_name
                     ]
 
-                    for match in matches:
+                    for _match in matches:
                         # Get the first result, that's all we need
                         raw_value = matches[0]["value"]["value"]
                         if not raw_value:

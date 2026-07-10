@@ -67,4 +67,4 @@ class Source:
                 if x["zip_city"] == self._city and x["address"] == self._address
             )
         except StopIteration:
-            raise SourceArgumentNotFound("address", self._address)
+            raise SourceArgumentNotFound("address", self._address) from None

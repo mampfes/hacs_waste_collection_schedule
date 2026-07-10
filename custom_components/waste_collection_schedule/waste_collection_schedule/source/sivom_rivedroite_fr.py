@@ -54,9 +54,11 @@ class Source:
                 and data[1][0] == "description"
             ):
                 to_return = {data[0][1][0].lower(): data[1][1][0]}
-                for nom in data[0][1][0].lower().split(" et "):
+                for _nom in data[0][1][0].lower().split(" et "):
                     to_return.update(
-                        {d: data[1][1][0] for d in data[0][1][0].lower().split(" et ")}
+                        dict.fromkeys(
+                            data[0][1][0].lower().split(" et "), data[1][1][0]
+                        )
                     )
 
             for d in data:

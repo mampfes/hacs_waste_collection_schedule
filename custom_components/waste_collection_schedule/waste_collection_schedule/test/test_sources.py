@@ -73,7 +73,7 @@ def main():
         # no ICS yaml files given --> test all source files
         source_files = filter(
             lambda x: x != "__init__",
-            map(lambda x: x.stem, source_dir.glob("*.py")),
+            (x.stem for x in source_dir.glob("*.py")),
         )
     else:
         # ICS yaml file(s) given

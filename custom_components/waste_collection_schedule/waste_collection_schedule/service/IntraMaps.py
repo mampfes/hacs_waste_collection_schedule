@@ -35,19 +35,13 @@ if TYPE_CHECKING:
 class IntraMapsError(Exception):
     """Base exception class for all IntraMaps-related failures."""
 
-    pass
-
 
 class IntraMapsSessionError(IntraMapsError):
     """Raised when the client fails to establish or maintain a session token."""
 
-    pass
-
 
 class IntraMapsSearchError(IntraMapsError):
     """Raised when an address lookup fails or returns zero matches."""
-
-    pass
 
 
 # --- Configuration ---
@@ -221,7 +215,7 @@ class MapsClient:
             return self.intramaps_session
 
         except requests.RequestException as e:
-            raise IntraMapsSessionError(f"Failed to connect to IntraMaps: {e}")
+            raise IntraMapsSessionError(f"Failed to connect to IntraMaps: {e}") from e
 
     def _get_form_template_id(self) -> str:
         """

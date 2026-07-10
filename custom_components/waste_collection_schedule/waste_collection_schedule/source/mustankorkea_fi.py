@@ -179,7 +179,7 @@ class Source:
                         raise TypeError(
                             f"Expected allEmptyings to be a dict, not {type(details['allEmptyings'])}"
                         )
-                    for kind, info in details["allEmptyings"].items():
+                    for _kind, info in details["allEmptyings"].items():
                         if not isinstance(info, list):
                             continue
                         for entry in info:

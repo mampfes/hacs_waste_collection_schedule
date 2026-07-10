@@ -57,7 +57,7 @@ class Source:
         try:
             uprn = int(val)
         except (ValueError, TypeError):
-            raise SourceArgumentException("uprn", message)
+            raise SourceArgumentException("uprn", message) from None
         if uprn <= 0:
             raise SourceArgumentException("uprn", message)
         return uprn

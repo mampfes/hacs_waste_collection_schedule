@@ -27,7 +27,7 @@ EXTRA_INFO = [
     },
 ]
 TEST_CASES = {
-    "Random Broadland address": {
+    "Broadland residential address - UPRN payload": {
         "address_payload": {
             "Uprn": "010014355477",
             "Address": "29 Mallard Way, Sprowston, Norwich, Norfolk, NR7 8DN",
@@ -40,11 +40,11 @@ TEST_CASES = {
             "Authority": "2610",
         }
     },
-    "Random Broadland address new Method": {
+    "Broadland residential address - postcode": {
         "postcode": "NR7 8DN",
         "address": "29 Mallard Way, Sprowston, Norfolk, NR7 8DN",
     },
-    "Random South Norfolk address": {
+    "South Norfolk residential address - UPRN payload": {
         "address_payload": {
             "Uprn": "002630130840",
             "Address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
@@ -57,11 +57,11 @@ TEST_CASES = {
             "Authority": "2630",
         }
     },
-    "Random South Norfolk address new Method": {
+    "South Norfolk residential address - postcode": {
         "postcode": "NR14 8BX",
         "address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
     },
-    "Big Tesco": {
+    "Broadland business address (Tesco) - UPRN payload": {
         "address_payload": {
             "Uprn": "100091575309",
             "Address": "Tesco Stores Ltd, Blue Boar Lane, Sprowston, Norwich, Norfolk, NR7 8AB",

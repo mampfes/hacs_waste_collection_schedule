@@ -28,15 +28,15 @@ DAYS = {
     "Sunday": SU,
 }
 HOLIDAYS = {  # website indicates collections falling on these days will be shifted by 1 day
-    "Thanksgiving": list(
-        rrule(YEARLY, bymonth=11, byweekday=TH(4), dtstart=datetime.now())
-    )[0].date(),  # 4th Thursday in November
-    "Christmas Day": list(
-        rrule(YEARLY, bymonth=12, bymonthday=25, dtstart=datetime.now())
-    )[0].date(),  # 25th December
-    "New Years Day": list(
-        rrule(YEARLY, bymonth=1, bymonthday=1, dtstart=datetime.now())
-    )[0].date(),  # 1st January
+    "Thanksgiving": next(
+        iter(rrule(YEARLY, bymonth=11, byweekday=TH(4), dtstart=datetime.now()))
+    ).date(),  # 4th Thursday in November
+    "Christmas Day": next(
+        iter(rrule(YEARLY, bymonth=12, bymonthday=25, dtstart=datetime.now()))
+    ).date(),  # 25th December
+    "New Years Day": next(
+        iter(rrule(YEARLY, bymonth=1, bymonthday=1, dtstart=datetime.now()))
+    ).date(),  # 1st January
 }
 
 
@@ -60,7 +60,7 @@ class Source:
         )
         r.raise_for_status()
         areas = json.loads(r.text)
-        for idx, area in enumerate(areas):
+        for _idx, area in enumerate(areas):
             if self._area.upper() == area["Neighborhood Name"].upper():
                 recycling_zone = area["Recycling Zone"]
 
@@ -72,7 +72,7 @@ class Source:
         )
         r.raise_for_status()
         recycling_schedule = json.loads(r.text)
-        for idx, zone in enumerate(recycling_schedule):
+        for _idx, zone in enumerate(recycling_schedule):
             if recycling_zone == zone["Recycling Zone"]:
                 end_date = datetime.strptime(zone["Date"], "%Y-%m-%d")
                 dt = datetime.strptime(zone["Date"], "%Y-%m-%d").date()
@@ -90,7 +90,7 @@ class Source:
         trash_dates = list(
             rrule(WEEKLY, byweekday=DAYS[trash_day], dtstart=today, until=end_date)
         )
-        for idx, item in enumerate(trash_dates):
+        for _idx, item in enumerate(trash_dates):
             item = self.check_holidays(item.date())
             entries.append(
                 Collection(

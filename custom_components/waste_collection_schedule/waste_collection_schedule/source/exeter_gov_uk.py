@@ -40,7 +40,7 @@ class Source:
         dates = soup.findAll("h3")
 
         entries = []
-        for b, d in zip(bins, dates):
+        for b, d in zip(bins, dates, strict=False):
             raw_date = re.compile(REGEX_ORDINALS).sub("", d.get_text(strip=True))
             for fmt in ("%A, %d %B %Y", "%A %d %B %Y"):
                 try:

@@ -211,11 +211,11 @@ class Source:
 
         addresses = []
         for entry in result:
-            address = [v for v in entry if v["name"] == "Address"][0]["value"]
+            address = next(v for v in entry if v["name"] == "Address")["value"]
             addresses.append(address)
             if self._match_address(address):
-                self._dbkey = [v for v in entry if v["name"] == "dbkey"][0]["value"]
-                self._mapkey = [v for v in entry if v["name"] == "mapkey"][0]["value"]
+                self._dbkey = next(v for v in entry if v["name"] == "dbkey")["value"]
+                self._mapkey = next(v for v in entry if v["name"] == "mapkey")["value"]
                 return self._fetch_map_session(config_id)
 
         raise SourceArgumentNotFoundWithSuggestions(

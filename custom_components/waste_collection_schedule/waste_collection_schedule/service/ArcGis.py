@@ -29,6 +29,7 @@ from __future__ import annotations
 import json
 import logging
 from collections.abc import Callable
+from datetime import date
 from typing import TYPE_CHECKING, Any, TypedDict
 
 import requests
@@ -53,12 +54,21 @@ _LOGGER = logging.getLogger(__name__)
 GEOCODE_URL = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
 
 
+def epoch_ms_to_date(epoch_ms: int | float) -> date:
+    """Convert an ArcGIS epoch-millisecond timestamp to a Python date."""
+    return date.fromtimestamp(epoch_ms / 1000)
+
+
 class ArcGisError(Exception):
     """Base exception for ArcGIS-related failures."""
 
 
 class ArcGisGeocodeError(ArcGisError):
     """Raised when geocoding fails or returns no candidates."""
+
+
+class ArcGisQueryError(ArcGisError):
+    """Raised when a FeatureServer query matches no features."""
 
 
 def geocode(
@@ -168,6 +178,37 @@ def feature_query(
     return requests.get(
         f"{feature_url.rstrip('/')}/query", params=params, timeout=timeout
     )
+
+
+def query_feature_layer(
+    feature_url: str,
+    *,
+    geometry: dict[str, Any] | None = None,
+    where: str | None = None,
+    out_fields: str = "*",
+    in_sr: int = 4326,
+    timeout: int = 20,
+) -> list[dict[str, Any]]:
+    """Query a FeatureServer layer and return the feature attribute dicts.
+
+    Backward-compatible convenience over :func:`feature_query` (which returns the
+    raw Response) plus the standard envelope parse, for legacy sources that
+    consume the attributes directly. Pipeline sources use ``ArcGisFeatureParser``
+    instead. Raises :class:`ArcGisQueryError` when the query matches no features.
+    """
+    response = feature_query(
+        feature_url,
+        geometry=geometry,
+        where=where,
+        out_fields=out_fields,
+        in_sr=in_sr,
+        timeout=timeout,
+    )
+    response.raise_for_status()
+    features = response.json().get("features", [])
+    if not features:
+        raise ArcGisQueryError("No features found for the given query.")
+    return [f.get("attributes", {}) for f in features]
 
 
 class ArcGisFeatureRetriever(RetrieverFunc):

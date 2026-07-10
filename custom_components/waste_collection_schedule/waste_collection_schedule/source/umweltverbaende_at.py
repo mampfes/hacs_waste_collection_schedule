@@ -513,7 +513,7 @@ class Source:
                     return self.fetch_old()
                 except Exception:
                     # If both methods fail, raise the original error from new method
-                    raise e
+                    raise e from None
         return self.fetch_old()
 
     def fetch_old(self) -> list[Collection]:

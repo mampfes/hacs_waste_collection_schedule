@@ -54,7 +54,7 @@ class Source:
             # List contains duplicates, so skip if already added.
             if self.contains(
                 entries,
-                lambda x: (
+                lambda x, job=job, bin_type=bin_type: (
                     x.date
                     == datetime.strptime(
                         job["ScheduledStart"], "%Y-%m-%dT%H:00:00"

@@ -33,7 +33,7 @@ class Source:
             "https://m.winterthur.ch/api/v1/callmethod/trash/asyncLookupStreet?usid=9749&container=1066394&uri=/index.php?apid=737670",
             regex=r"(?:Tour \d{1,2} )?(.*?)(?=\s*ganze Stadt|$)",
         ).fetch()
-        for source in self._ics_sources:
+        for _source in self._ics_sources:
             r"(\d{2}\.\d{2}\.\d{4})"
 
     def fetch(self) -> list[Collection]:

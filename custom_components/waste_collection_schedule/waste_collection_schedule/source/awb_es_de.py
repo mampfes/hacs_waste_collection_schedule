@@ -79,7 +79,7 @@ class Source:
 
         soup = BeautifulSoup(r.text, features="html.parser")
         downloads = soup.find_all("a", href=True)
-        ics_urls = list()
+        ics_urls = []
         for download in downloads:
             href = download.get("href")
             if (

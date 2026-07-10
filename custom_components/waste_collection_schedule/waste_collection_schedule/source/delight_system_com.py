@@ -366,7 +366,7 @@ class Source:
                 self._area_name,
                 "The API rejected this collection area. Check your municipality "
                 "and area name match the ThreeR app.",
-            )
+            ) from None
         return result["user_id"]
 
     def _get_calendar_data(self, user_id: str) -> dict:

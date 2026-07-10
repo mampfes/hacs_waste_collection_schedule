@@ -138,12 +138,12 @@ class Source:
             try:
                 lat = float(lat)
             except ValueError:
-                raise ValueError("Latitude must be a float")
+                raise ValueError("Latitude must be a float") from None
         if not isinstance(lon, float):
             try:
                 lon = float(lon)
             except ValueError:
-                raise ValueError("Longitude must be a float")
+                raise ValueError("Longitude must be a float") from None
 
         self._lat: float = lat
         self._lon: float = lon

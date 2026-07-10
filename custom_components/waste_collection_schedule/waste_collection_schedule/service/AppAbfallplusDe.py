@@ -317,6 +317,7 @@ MAP_APP_USERAGENTS = {
     "abfallMA.ucom.de": "Abfall-Ma",
     "de.ahrweiler.meinawb": "Abfall App",
     "de.abfallwecker": "ABFALL+",
+    "de.abfallplus.ahe": "AHE",
     "de.albagroup.app": "Abfuhrtermine",
     "de.biberach.abfallapp": "Abfall App",
     "de.cmcitymedia.hokwaste": "Abfallinfo HOK",
@@ -467,7 +468,9 @@ def extract_onclicks(
         try:
             to_return.append(json.loads(string))
         except json.decoder.JSONDecodeError:
-            raise Exception(f"Failed to parse '{string}', onclick: '{onclick}'")
+            raise Exception(
+                f"Failed to parse '{string}', onclick: '{onclick}'"
+            ) from None
         if hnr:
             res = re.search(r"\.val\([0-9]+\)", onclick)
             if res:
@@ -832,7 +835,9 @@ class AppAbfallplusDe:
             return
         elif self._strasse_search is None:
             raise SourceArgumentRequiredWithSuggestions(
-                "strasse", "street is required", [s["name"] for s in streets]
+                "strasse",
+                "multiple streets found, please specify one",
+                [s["name"] for s in streets],
             )
 
         for street in streets:
@@ -890,7 +895,9 @@ class AppAbfallplusDe:
             return
         elif self._hnr_search is None:
             raise SourceArgumentRequiredWithSuggestions(
-                "hnr", "house number is required", [hnr["name"] for hnr in hnrs]
+                "hnr",
+                "multiple house numbers found, please specify one",
+                [hnr["name"] for hnr in hnrs],
             )
         for hnr in hnrs:
             if compare(hnr["name"], self._hnr_search, remove_space=True):
