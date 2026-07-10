@@ -49,6 +49,24 @@ TEST_CASES = {
     "Lindir": {"district": "Lindir, Salir, Kórar, Hvörf og Þing"},
 }
 
+PARAM_TRANSLATIONS = {
+    "en": {
+        "district": "District",
+    },
+    "de": {
+        "district": "Bezirk",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "district": "Collection district (zone) as shown in the calendar legend. Partial, case-insensitive matches are accepted.",
+    },
+    "de": {
+        "district": "Abfuhrbezirk (Zone) wie in der Kalenderlegende angegeben. Teilweise Übereinstimmungen (Groß-/Kleinschreibung wird ignoriert) werden akzeptiert.",
+    },
+}
+
 # content stream operators: "r g b rg" (set rgb fill), "v g" (set gray fill),
 # "x y w h re" followed by "f*" (fill rectangle)
 _STREAM_RE = re.compile(
