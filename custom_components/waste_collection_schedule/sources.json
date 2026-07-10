@@ -6512,6 +6512,14 @@
       "id": "data_grandlyon_com"
     },
     {
+      "title": "M\u00e9tropole du Grand Nancy",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1436
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "M\u00e9tropole Europ\u00e9enne de Lille",
       "module": "publidata_fr",
       "default_params": {
@@ -23405,6 +23413,14 @@
       "module": "wm_com",
       "default_params": {},
       "id": "wm_com"
+    }
+  ],
+  "Uruguay": [
+    {
+      "title": "Municipio de Ciudad de la Costa",
+      "module": "ciudad_de_la_costa_uy",
+      "default_params": {},
+      "id": "ciudad_de_la_costa_uy"
     }
   ]
 }

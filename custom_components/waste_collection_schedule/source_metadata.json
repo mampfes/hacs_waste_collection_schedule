@@ -6718,5 +6718,12 @@
       "en": "Enter your WM service address. No account is needed — this uses the same guest lookup as wm.com/us/en/mywm/my-services/view-pickup-eta."
     },
     "urls": {}
+  },
+  "ciudad_de_la_costa_uy": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ciudad_de_la_costa_uy.md",
+    "howto": {
+      "en": "Enter your street address (house number and street, or just the street) within Ciudad de la Costa. The address is geocoded and matched against the municipality's published waste collection zone map (https://www.google.com/maps/d/u/0/viewer?mid=17F0VsWkN9V7hoqMSyQ_H2_rl0SYLlZel). If your street name is common to multiple neighbourhoods, include the neighbourhood (barrio) name for a more accurate match."
+    },
+    "urls": {}
   }
 }

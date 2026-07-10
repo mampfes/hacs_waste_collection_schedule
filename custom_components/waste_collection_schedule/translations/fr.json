@@ -28020,6 +28020,29 @@
           "zip_code": "Code postal"
         },
         "data_description": {}
+      },
+      "args_ciudad_de_la_costa_uy": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Adresse (ou simplement le nom de la rue) à Ciudad de la Costa, par ex. 'De los Pinos, Ciudad de la Costa'. Ajouter le quartier (barrio) améliore la précision pour les noms de rue courants."
+        }
+      },
+      "reconfigure_ciudad_de_la_costa_uy": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Adresse (ou simplement le nom de la rue) à Ciudad de la Costa, par ex. 'De los Pinos, Ciudad de la Costa'. Ajouter le quartier (barrio) améliore la précision pour les noms de rue courants."
+        }
       }
     }
   }

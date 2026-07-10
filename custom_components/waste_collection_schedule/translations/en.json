@@ -29205,6 +29205,29 @@
           "street": "Street address (e.g. '123 Main St')",
           "zip_code": "5-digit ZIP code"
         }
+      },
+      "args_ciudad_de_la_costa_uy": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address (or street name) within Ciudad de la Costa, e.g. 'De los Pinos, Ciudad de la Costa' or '1901 Cuba, Ciudad de la Costa'. Adding the neighbourhood (barrio) improves accuracy for common street names."
+        }
+      },
+      "reconfigure_ciudad_de_la_costa_uy": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Street address (or street name) within Ciudad de la Costa, e.g. 'De los Pinos, Ciudad de la Costa' or '1901 Cuba, Ciudad de la Costa'. Adding the neighbourhood (barrio) improves accuracy for common street names."
+        }
       }
     },
     "error": {

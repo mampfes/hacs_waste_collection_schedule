@@ -1073,6 +1073,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ménil-la-Tour](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Mérignac](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Métropole de Lyon](/doc/source/data_grandlyon_com.md) / data.grandlyon.com
+- [Métropole du Grand Nancy](/doc/source/publidata_fr.md) / mhdd.grandnancy.eu
 - [Métropole Européenne de Lille](/doc/source/publidata_fr.md) / lillemetropole.fr
 - [Niffer](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Noviant-aux-Prés](/doc/source/terrestouloises_com.md) / terrestouloises.com
@@ -3556,6 +3557,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Vogel Disposal Service](/doc/source/vogeldisposal_com.md) / vogeldisposal.com
 - [Waste Connections](/doc/ics/recollect.md) / wasteconnections.com
 - [Waste Management (WM)](/doc/source/wm_com.md) / wm.com
+</details>
+
+<details>
+<summary>Uruguay</summary>
+
+- [Municipio de Ciudad de la Costa](/doc/source/ciudad_de_la_costa_uy.md) / imcanelones.gub.uy
 </details>
 
 <!--End of country section-->

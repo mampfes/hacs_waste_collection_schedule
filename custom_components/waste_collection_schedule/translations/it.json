@@ -27986,6 +27986,29 @@
           "zip_code": "Codice Postale CAP"
         },
         "data_description": {}
+      },
+      "args_ciudad_de_la_costa_uy": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Indirizzo (o solo il nome della via) a Ciudad de la Costa, ad es. 'De los Pinos, Ciudad de la Costa'. Aggiungere il quartiere (barrio) migliora la precisione per i nomi di via comuni."
+        }
+      },
+      "reconfigure_ciudad_de_la_costa_uy": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "address": "Indirizzo"
+        },
+        "data_description": {
+          "address": "Indirizzo (o solo il nome della via) a Ciudad de la Costa, ad es. 'De los Pinos, Ciudad de la Costa'. Aggiungere il quartiere (barrio) migliora la precisione per i nomi di via comuni."
+        }
       }
     },
     "error": {
