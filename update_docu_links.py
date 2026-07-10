@@ -1220,6 +1220,10 @@ COUNTRYCODES = [
         "name": "United States of America",
     },
     {
+        "code": "uy",
+        "name": "Uruguay",
+    },
+    {
         "code": "za",
         "name": "South Africa",
     },

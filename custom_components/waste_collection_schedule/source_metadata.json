@@ -1514,6 +1514,13 @@
     },
     "urls": {}
   },
+  "nemaffaldsservice_kk_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nemaffaldsservice_kk_dk.md",
+    "howto": {
+      "en": "Enter your address exactly as it appears in Denmark, e.g. 'Nørrebrogade 10'. You can verify the spelling by typing your street and house number into the search box on https://nemaffaldsservice.kk.dk/ - if the site offers your address as an autocomplete suggestion, that exact text is what should be used here. If the address cannot be found, the resulting error message will list similar addresses to help you find the correct spelling."
+    },
+    "urls": {}
+  },
   "odenserenovation_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/odenserenovation_dk.md",
     "howto": {},
@@ -1586,6 +1593,11 @@
     "urls": {
       "url_www_insee_fr": "https://www.insee.fr"
     }
+  },
+  "coeur_yvelines_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/coeur_yvelines_fr.md",
+    "howto": {},
+    "urls": {}
   },
   "cc-montesquieu_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc-montesquieu_fr.md",
@@ -2503,6 +2515,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gelsendienste_de.md",
     "howto": {
       "en": "- Go to <https://www.gelsendienste.de/privathaushalte/abfallkalender> and select your location.  \n- Click on `Abfallkalender abonnieren` to open a sub-frame, and then copy the link address.\n- Use this link as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
+  "ics_huellhorst_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/huellhorst_de.md",
+    "howto": {
+      "en": "The village community \"Dorfgemeinschaft für ein zukunftsorientiertes Büttendorf\" publishes\nthe waste collection calendar of the whole municipality of Hüllhorst as an ICS file every year.\n\n- Go to <https://www.buettendorf.info/abfuhrkalender/>.\n- Right-click -> copy link address on one of the `Download` buttons\n  (`Abfuhrkalender <year> mit Erinnerung` includes a reminder at 18:00 the day before,\n  `Abfuhrkalender <year> ohne Erinnerung` does not).\n- Use this link as the `url` parameter.\n- Note: a new link is published every year, so you will need to revisit the page\n  and update the `url` parameter once the current year's calendar is no longer valid.\n"
     },
     "urls": {}
   },
@@ -6702,6 +6721,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wm_com.md",
     "howto": {
       "en": "Enter your WM service address. No account is needed — this uses the same guest lookup as wm.com/us/en/mywm/my-services/view-pickup-eta."
+    },
+    "urls": {}
+  },
+  "ciudad_de_la_costa_uy": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ciudad_de_la_costa_uy.md",
+    "howto": {
+      "en": "Enter your street address (house number and street, or just the street) within Ciudad de la Costa. The address is geocoded and matched against the municipality's published waste collection zone map (https://www.google.com/maps/d/u/0/viewer?mid=17F0VsWkN9V7hoqMSyQ_H2_rl0SYLlZel). If your street name is common to multiple neighbourhoods, include the neighbourhood (barrio) name for a more accurate match."
     },
     "urls": {}
   }

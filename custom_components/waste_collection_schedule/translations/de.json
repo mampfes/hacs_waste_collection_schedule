@@ -6457,6 +6457,26 @@
         },
         "data_description": {}
       },
+      "args_nemaffaldsservice_kk_dk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_nemaffaldsservice_kk_dk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
       "args_odenserenovation_dk": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -6765,6 +6785,29 @@
           "insee_code": "Der 5-stellige INSEE-Code Ihrer Gemeinde. Prüfen Sie {url_www_insee_fr} ob Ihre Gemeinde fusioniert wurde (neuer Code).",
           "instance_id": "Wird automatisch ausgefüllt, wenn Sie einen bekannten Dienstleister wählen. Nur für nicht gelistete Anbieter nötig.",
           "public_type": "Wohnungstyp-Filter (optional). Verwenden Sie 'individual_housing' für Häuser oder 'collective_housing' für Wohnungen, wenn Ihr Gebiet unterschiedliche Abholpläne je Wohnungstyp hat."
+        }
+      },
+      "args_coeur_yvelines_fr": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Gemeinde"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "commune": "Ihre Gemeinde in Coeur d'Yvelines: Auteuil-le-Roi, Autouillet, Bazoches-sur-Guyonne, Behoust, Beynes, Boissy-sans-Avoir, Flexanville, Galluis, Gambais, Garancières, Goupillières, Grosrouvre, Jouars-Pontchartrain, La Queue-lez-Yvelines, Le Tremblay-sur-Mauldre, Les Mesnuls, Marcq, Mareil-le-Guyon, Méré, Millemont, Montfort-l'Amaury, Neauphle-le-Château, Neauphle-le-Vieux, Saint-Germain-de-la-Grange, Saint-Rémy-l'Honoré, Saulx-Marchais, Thiverval-Grignon, Thoiry, Vicq, Villiers-le-Mahieu, Villiers-Saint-Frédéric"
+        }
+      },
+      "reconfigure_coeur_yvelines_fr": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Gemeinde"
+        },
+        "data_description": {
+          "commune": "Ihre Gemeinde in Coeur d'Yvelines: Auteuil-le-Roi, Autouillet, Bazoches-sur-Guyonne, Behoust, Beynes, Boissy-sans-Avoir, Flexanville, Galluis, Gambais, Garancières, Goupillières, Grosrouvre, Jouars-Pontchartrain, La Queue-lez-Yvelines, Le Tremblay-sur-Mauldre, Les Mesnuls, Marcq, Mareil-le-Guyon, Méré, Millemont, Montfort-l'Amaury, Neauphle-le-Château, Neauphle-le-Vieux, Saint-Germain-de-la-Grange, Saint-Rémy-l'Honoré, Saulx-Marchais, Thiverval-Grignon, Thoiry, Vicq, Villiers-le-Mahieu, Villiers-Saint-Frédéric"
         }
       },
       "args_cc-montesquieu_fr": {
@@ -11494,6 +11537,50 @@
         }
       },
       "reconfigure_ics_gelsendienste_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "impersonate": "Zu imitierender Browser (z.B. 'chrome'), um TLS-Fingerprinting-WAFs zu passieren",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {}
+      },
+      "args_ics_huellhorst_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "file": "Datei",
+          "headers": "Headers",
+          "impersonate": "Zu imitierender Browser (z.B. 'chrome'), um TLS-Fingerprinting-WAFs zu passieren",
+          "method": "Methode",
+          "offset": "Offset",
+          "params": "Parameter",
+          "regex": "Regulärer Ausdruck",
+          "split_at": "Trennen bei",
+          "title_template": "Titelvorlage",
+          "url": "URL",
+          "verify_ssl": "SSL-Verifizierung aktivieren",
+          "version": "(Veraltet) Version, hat keine Auswirkung mehr",
+          "year_field": "Jahresfeld"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_ics_huellhorst_de": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
@@ -28206,6 +28293,29 @@
           "zip_code": "PLZ"
         },
         "data_description": {}
+      },
+      "args_ciudad_de_la_costa_uy": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Straßenadresse (oder nur der Straßenname) in Ciudad de la Costa, z. B. 'De los Pinos, Ciudad de la Costa'. Die Angabe des Stadtviertels (barrio) verbessert die Genauigkeit bei häufigen Straßennamen."
+        }
+      },
+      "reconfigure_ciudad_de_la_costa_uy": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Straßenadresse (oder nur der Straßenname) in Ciudad de la Costa, z. B. 'De los Pinos, Ciudad de la Costa'. Die Angabe des Stadtviertels (barrio) verbessert die Genauigkeit bei häufigen Straßennamen."
+        }
       }
     },
     "error": {
