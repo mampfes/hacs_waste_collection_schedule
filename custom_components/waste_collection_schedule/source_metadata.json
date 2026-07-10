@@ -1514,6 +1514,13 @@
     },
     "urls": {}
   },
+  "nemaffaldsservice_kk_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nemaffaldsservice_kk_dk.md",
+    "howto": {
+      "en": "Enter your address exactly as it appears in Denmark, e.g. 'Nørrebrogade 10'. You can verify the spelling by typing your street and house number into the search box on https://nemaffaldsservice.kk.dk/ - if the site offers your address as an autocomplete suggestion, that exact text is what should be used here. If the address cannot be found, the resulting error message will list similar addresses to help you find the correct spelling."
+    },
+    "urls": {}
+  },
   "odenserenovation_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/odenserenovation_dk.md",
     "howto": {},

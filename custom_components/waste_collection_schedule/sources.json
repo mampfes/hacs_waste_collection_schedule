@@ -5697,6 +5697,12 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Nem Affaldsservice (K\u00f8benhavns Kommune)",
+      "module": "nemaffaldsservice_kk_dk",
+      "default_params": {},
+      "id": "nemaffaldsservice_kk_dk"
+    },
+    {
       "title": "Odense Renovation",
       "module": "odenserenovation_dk",
       "default_params": {},
