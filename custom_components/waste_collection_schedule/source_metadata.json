@@ -1594,6 +1594,11 @@
       "url_www_insee_fr": "https://www.insee.fr"
     }
   },
+  "coeur_yvelines_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/coeur_yvelines_fr.md",
+    "howto": {},
+    "urls": {}
+  },
   "cc-montesquieu_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc-montesquieu_fr.md",
     "howto": {},

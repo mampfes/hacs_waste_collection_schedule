@@ -5847,6 +5847,22 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Auteuil-le-Roi",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Auteuil-le-Roi"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Autouillet",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Autouillet"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Avrainville",
       "module": "terrestouloises_com",
       "default_params": {
@@ -5887,6 +5903,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Bazoches-sur-Guyonne",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Bazoches-sur-Guyonne"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Beautiran",
       "module": "cc-montesquieu_fr",
       "default_params": {
@@ -5895,12 +5919,28 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Behoust",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Behoust"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Berrwiller",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Berrwiller"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Beynes",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Beynes"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Bicqueley",
@@ -5925,6 +5965,14 @@
         "commune": "Bois-de-Haye"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Boissy-sans-Avoir",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Boissy-sans-Avoir"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Bollwiller",
@@ -6077,6 +6125,12 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Coeur d'Yvelines",
+      "module": "coeur_yvelines_fr",
+      "default_params": {},
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Communaut\u00e9 de Communes de Montesquieu",
       "module": "cc-montesquieu_fr",
       "default_params": {},
@@ -6171,6 +6225,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Flexanville",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Flexanville"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Fontenoy-sur-Moselle",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6203,12 +6265,44 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Galluis",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Galluis"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Gambais",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Gambais"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Garanci\u00e8res",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Garanci\u00e8res"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Gondreville",
       "module": "terrestouloises_com",
       "default_params": {
         "commune": "Gondreville"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Goupilli\u00e8res",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Goupilli\u00e8res"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Gradignan",
@@ -6247,6 +6341,14 @@
         "instance_id": 101
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Grosrouvre",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Grosrouvre"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Grosrouvres",
@@ -6313,6 +6415,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Jouars-Pontchartrain",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Jouars-Pontchartrain"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Kingersheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -6327,6 +6437,14 @@
         "commune": "La Br\u00e8de"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "La Queue-lez-Yvelines",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "La Queue-lez-Yvelines"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Lagney",
@@ -6385,6 +6503,22 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Le Tremblay-sur-Mauldre",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Le Tremblay-sur-Mauldre"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Les Mesnuls",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Les Mesnuls"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Lucey",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6431,6 +6565,22 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Marcq",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Marcq"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Mareil-le-Guyon",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Mareil-le-Guyon"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Martignas-sur-Jalle",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -6447,12 +6597,28 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Millemont",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Millemont"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Minorville",
       "module": "terrestouloises_com",
       "default_params": {
         "commune": "Minorville"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Montfort-l'Amaury",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Montfort-l'Amaury"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Montpellier M\u00e9diterran\u00e9e M\u00e9tropole",
@@ -6506,6 +6672,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "M\u00e9r\u00e9",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "M\u00e9r\u00e9"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "M\u00e9tropole de Lyon",
       "module": "data_grandlyon_com",
       "default_params": {},
@@ -6526,6 +6700,22 @@
         "instance_id": 876
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Neauphle-le-Ch\u00e2teau",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Neauphle-le-Ch\u00e2teau"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Neauphle-le-Vieux",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Neauphle-le-Vieux"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Niffer",
@@ -6692,6 +6882,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Saint-Germain-de-la-Grange",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Saint-Germain-de-la-Grange"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Saint-Louis-de-Montferrand",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -6724,6 +6922,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Saint-R\u00e9my-l'Honor\u00e9",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Saint-R\u00e9my-l'Honor\u00e9"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Saint-Selve",
       "module": "cc-montesquieu_fr",
       "default_params": {
@@ -6754,6 +6960,14 @@
         "commune": "Saucats"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Saulx-Marchais",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Saulx-Marchais"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Saumur Val de Loire",
@@ -6834,6 +7048,22 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Thiverval-Grignon",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Thiverval-Grignon"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Thoiry",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Thoiry"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Toulouse M\u00e9tropole",
       "module": "toulouse_metropole_fr",
       "default_params": {},
@@ -6904,6 +7134,14 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Vicq",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Vicq"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Villenave-d'Ornon",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -6926,6 +7164,22 @@
         "commune": "Villey-Saint-\u00c9tienne"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Villiers-le-Mahieu",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Villiers-le-Mahieu"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Villiers-Saint-Fr\u00e9d\u00e9ric",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Villiers-Saint-Fr\u00e9d\u00e9ric"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Wittelsheim",
