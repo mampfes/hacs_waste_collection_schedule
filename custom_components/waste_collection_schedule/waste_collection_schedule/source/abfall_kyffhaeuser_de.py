@@ -1,7 +1,6 @@
 import html
 import re
 from datetime import date, timedelta
-from typing import Optional
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -162,6 +161,6 @@ class Source:
         for event in events:
             waste_type = str(event["title"])
             event_date = date.fromisoformat(str(event["start_date"])[:10])
-            icon: Optional[Icons] = ICON_MAP.get(waste_type)
+            icon: Icons | None = ICON_MAP.get(waste_type)
             entries.append(Collection(date=event_date, t=waste_type, icon=icon))
         return entries

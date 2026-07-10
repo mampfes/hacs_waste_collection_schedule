@@ -97,8 +97,8 @@ def _is_parity_match(d: datetime.date, frequence: str) -> bool:
     iso_week = d.isocalendar()[1]
     if frequence == "Paire":
         return iso_week % 2 == 0
-    else:  # Impaire
-        return iso_week % 2 == 1
+    # Impaire
+    return iso_week % 2 == 1
 
 
 def _generate_dates(

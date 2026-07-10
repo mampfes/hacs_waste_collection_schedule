@@ -69,13 +69,12 @@ class Source:
 
                 if r.status_code == 200:
                     return r
-                elif r.status_code == 403 and attempt < max_retries - 1:
+                if r.status_code == 403 and attempt < max_retries - 1:
                     time.sleep(2**attempt)  # Exponential backoff
                     continue
-                else:
-                    raise Exception(
-                        f"Failed to fetch: {r.status_code} (attempt {attempt + 1})"
-                    )
+                raise Exception(
+                    f"Failed to fetch: {r.status_code} (attempt {attempt + 1})"
+                )
 
             except requests.RequestException as e:
                 if attempt == max_retries - 1:
@@ -139,10 +138,7 @@ class Source:
                 raise Exception(
                     "Access denied by Woollahra website. This may be due to bot protection measures. Please try again later."
                 ) from None
-            else:
-                raise Exception(
-                    "Invalid JSON response from address search API"
-                ) from None
+            raise Exception("Invalid JSON response from address search API") from None
 
         # Find the ID for our address
         if data.get("Items") and len(data["Items"]) > 0:
@@ -173,10 +169,7 @@ class Source:
                 raise Exception(
                     "Access denied by Woollahra website during waste services fetch."
                 ) from None
-            else:
-                raise Exception(
-                    "Invalid JSON response from waste services API"
-                ) from None
+            raise Exception("Invalid JSON response from waste services API") from None
 
         if not data.get("success") or not data.get("responseContent"):
             raise RuntimeError("Invalid response from waste services API")

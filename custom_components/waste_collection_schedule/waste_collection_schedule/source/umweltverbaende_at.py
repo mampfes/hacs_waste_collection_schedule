@@ -251,7 +251,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 PARAM_DESCRIPTIONS = {
     "en": {
         "district": "subdomain of the waste collection provider it is one of"
-        + "`"
+        "`"
         + "`, `".join([item["default_params"]["district"] for item in EXTRA_INFO])
         + "`",
         "municipal": "Municipal name",
@@ -266,7 +266,7 @@ PARAM_DESCRIPTIONS = {
     },
     "de": {
         "district": "Subdomain des Abfallwirtschaftsverbandes, einer der folgenden"
-        + "`"
+        "`"
         + "`, `".join([item["default_params"]["district"] for item in EXTRA_INFO])
         + "`",
         "municipal": "Gemeindename",

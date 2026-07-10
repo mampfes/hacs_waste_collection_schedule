@@ -1,6 +1,6 @@
 import re
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -220,7 +220,7 @@ _ICON_KEYWORDS: list[tuple[str, Icons]] = [
 ]
 
 
-def _icon_for(name: str) -> Optional[Icons]:
+def _icon_for(name: str) -> Icons | None:
     lowered = name.lower()
     for keyword, icon in _ICON_KEYWORDS:
         if keyword in lowered:
@@ -232,8 +232,8 @@ class Source:
     def __init__(
         self,
         city: str,
-        street: Optional[str] = None,
-        range_selector: Optional[str] = None,
+        street: str | None = None,
+        range_selector: str | None = None,
     ):
         self._city = city
         self._street = street
@@ -255,7 +255,7 @@ class Source:
         names = [region["name"] for region in regions]
         raise SourceArgumentNotFoundWithSuggestions("city", self._city, names)
 
-    def _resolve_street(self, region_key: str) -> Optional[str]:
+    def _resolve_street(self, region_key: str) -> str | None:
         streets = self._get(f"/{region_key}/streets")
         if not streets:
             # This municipality has a single, region-wide collection schedule.

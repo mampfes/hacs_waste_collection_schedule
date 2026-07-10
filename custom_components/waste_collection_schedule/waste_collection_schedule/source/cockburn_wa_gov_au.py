@@ -93,8 +93,7 @@ class Source:
             # Convert the matched string to a datetime object
             formatted_date = datetime.strptime(original_date, "%d-%b-%Y")
             return formatted_date
-        else:
-            return None
+        return None
 
     def fetch(self) -> list[Collection]:
         entries: list[Collection] = []
@@ -153,7 +152,7 @@ class Source:
             collections.append({"type": "Green Bin", "dates": grn_bin_dates})
 
             for collection in collections:
-                icon = ICON_MAP.get(collection["type"], None)
+                icon = ICON_MAP.get(collection["type"])
                 for d in collection["dates"]:
                     entries.append(
                         Collection(

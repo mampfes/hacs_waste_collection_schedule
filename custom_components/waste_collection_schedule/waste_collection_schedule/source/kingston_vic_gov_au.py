@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 import requests
 from waste_collection_schedule import Collection, Icons
@@ -116,7 +115,7 @@ class Source:
 
         return self._service
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         """Fetch waste collection schedule."""
         service = self._get_service()
         coordinates = self._geocode()

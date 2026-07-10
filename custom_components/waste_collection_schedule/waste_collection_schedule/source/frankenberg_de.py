@@ -177,7 +177,6 @@ class Source:
                     reason="street is required for this district",
                     suggestions=names,
                 )
-            else:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    argument="street", value=self._street, suggestions=names
-                )
+            raise SourceArgumentNotFoundWithSuggestions(
+                argument="street", value=self._street, suggestions=names
+            )

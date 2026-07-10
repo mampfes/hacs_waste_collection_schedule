@@ -265,16 +265,14 @@ class ScheduleSensor(SensorEntity):
         """Return separator string used to join waste types."""
         if self._api:
             return self._api.separator
-        else:
-            return self._coordinator.separator
+        return self._coordinator.separator
 
     @property
     def _include_today(self):
         """Return true if collections for today shall be included in the results."""
         if self._api:
             return dt_util.now().time() < self._api._day_switch_time
-        else:
-            return dt_util.now().time() < self._coordinator.day_switch_time
+        return dt_util.now().time() < self._coordinator.day_switch_time
 
     def _add_refreshtime(self):
         """Add refresh-time (= last fetch time) to device-state-attributes."""
@@ -311,8 +309,7 @@ class ScheduleSensor(SensorEntity):
             return self._date_template.async_render_with_possible_json_value(
                 collection, None
             )
-        else:
-            return collection.date.isoformat()
+        return collection.date.isoformat()
 
     @callback
     def _update_sensor(self):
@@ -321,7 +318,7 @@ class ScheduleSensor(SensorEntity):
         Called if a new data has been fetched from the source.
         """
         if self._aggregator is None:
-            return None
+            return
 
         upcoming1 = self._aggregator.get_upcoming_group_by_day(
             count=1,

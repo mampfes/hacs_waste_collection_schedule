@@ -1,7 +1,7 @@
 import itertools
 import logging
+from collections.abc import Iterable, Sequence
 from datetime import datetime, timedelta
-from typing import Iterable, Sequence
 
 from . import CollectionGroup
 from .collection import Collection

@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime
-from typing import Union
 
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.WhitespaceWRP import WhitespaceClient
@@ -36,9 +35,7 @@ def _clean_collection_type(type_text: str) -> str:
 
 
 class Source:
-    def __init__(
-        self, postcode: str, house_number: Union[int, str, None] = None
-    ) -> None:
+    def __init__(self, postcode: str, house_number: int | str | None = None) -> None:
         self._house_number = house_number
         self._postcode = postcode
         self._client = WhitespaceClient(API_URL)

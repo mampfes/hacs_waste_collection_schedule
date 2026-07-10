@@ -114,8 +114,7 @@ class Source:
 
             return values
 
-        else:
-            return self.fetch_year()
+        return self.fetch_year()
 
     def fetch_year(self, year=None):
         session = requests.session()

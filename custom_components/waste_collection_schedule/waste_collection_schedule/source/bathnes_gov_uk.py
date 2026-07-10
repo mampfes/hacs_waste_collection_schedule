@@ -1,5 +1,6 @@
+from collections.abc import Mapping
 from datetime import datetime
-from typing import Any, List, Mapping, Optional
+from typing import Any
 
 import requests
 from waste_collection_schedule import Collection
@@ -50,7 +51,7 @@ class Source:
                 ("housenameornumber", self._housenameornumber),
             )
 
-    def _sanitise_uprn_val(self, val: Optional[int | str]) -> Optional[int]:
+    def _sanitise_uprn_val(self, val: int | str | None) -> int | None:
         if val is None:
             return None
         message = "UPRN must be a positive integer if provided"
@@ -62,7 +63,7 @@ class Source:
             raise SourceArgumentException("uprn", message)
         return uprn
 
-    def _sanitise_search_val(self, val: Optional[str | int]) -> Optional[str]:
+    def _sanitise_search_val(self, val: str | int | None) -> str | None:
         if val is None:
             return None
         stripped = str(val).strip()
@@ -72,7 +73,7 @@ class Source:
         if missing := [name for name, val in args if not val]:
             raise SourceArgumentExceptionMultiple(missing, message)
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         if self._uprn is None:
             self._uprn = self._get_uprn()
 
@@ -112,7 +113,7 @@ class Source:
             and housenameornumber.casefold() == self._housenameornumber.casefold()
         )
 
-    def _address_housenameornumber(self, address: Mapping[str, Any]) -> Optional[str]:
+    def _address_housenameornumber(self, address: Mapping[str, Any]) -> str | None:
         parts = str(address.get("payment_Address", "")).split("|")
         if len(parts) < 2:
             return None

@@ -69,7 +69,7 @@ class Source:
                 self._address_id = addr["id"]
                 self._address_formatted = ",".join(addr["name"])
                 self._collection_params = addr["collection"]
-                return
+                return None
 
         raise SourceArgAmbiguousWithSuggestions("address", self._address, address_names)
 

@@ -176,9 +176,9 @@ class Source:
             while d <= end_date:
                 iso_week = d.isocalendar()[1]
                 include = True
-                if semaine == "impaires" and iso_week % 2 == 0:
-                    include = False
-                elif semaine == "paires" and iso_week % 2 == 1:
+                if (semaine == "impaires" and iso_week % 2 == 0) or (
+                    semaine == "paires" and iso_week % 2 == 1
+                ):
                     include = False
 
                 if include:

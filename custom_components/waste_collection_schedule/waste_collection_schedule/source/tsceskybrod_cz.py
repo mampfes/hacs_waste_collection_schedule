@@ -162,7 +162,7 @@ class Source:
             raise SourceArgumentNotFoundWithSuggestions(
                 "street",
                 self._street,
-                [normalize_string(s) for s in street_collection_weekdays.keys()],
+                [normalize_string(s) for s in street_collection_weekdays],
             )
 
         start_date = date(2025, 1, 1)

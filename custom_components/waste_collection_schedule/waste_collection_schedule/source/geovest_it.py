@@ -3,7 +3,7 @@
 import re
 import uuid
 from datetime import date, datetime, timedelta
-from typing import Any, List, Optional
+from typing import Any
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -185,11 +185,11 @@ class Source:
         self,
         address_name: str,
         town_id: str,
-        numbers: Optional[str] = None,
+        numbers: str | None = None,
         calendar_type_id: str = CALENDAR_TYPE_ID,
         days: int = 30,
-        device_id: Optional[str] = None,
-        authorization: Optional[str] = None,
+        device_id: str | None = None,
+        authorization: str | None = None,
     ):
         self._address_name = address_name.strip()
         self._town_id = self._normalize_town_id(town_id)
@@ -405,7 +405,7 @@ class Source:
         day_of_month: int,
         weekday_code: str,
         weekday_map: dict[str, int],
-    ) -> Optional[date]:
+    ) -> date | None:
         possible_dates = []
         for month_offset in (-1, 0, 1):
             month = week_start.month + month_offset
@@ -504,7 +504,7 @@ class Source:
 
         return collections
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         calendar_id = self._get_calendar_id()
 
         today = datetime.now()

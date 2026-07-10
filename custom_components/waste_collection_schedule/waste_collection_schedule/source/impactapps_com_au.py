@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from typing import List, Optional, TypedDict, Union, cast
+from typing import TypedDict, cast
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -373,7 +373,7 @@ def EXTRA_INFO():
 class LocalityResponse(TypedDict):
     id: int
     name: str
-    postcode: Optional[int]
+    postcode: int | None
     council: str
 
 
@@ -406,13 +406,13 @@ class RecurringEventResponse(TypedDict):
     color: str
     textColor: str
     borderColor: str
-    dow: List[int]
-    daysOfWeek: List[int]
+    dow: list[int]
+    daysOfWeek: list[int]
 
 
 def generate_recurring_dates(
     event: RecurringEventResponse, start_date: date, end_date: date
-) -> List[date]:
+) -> list[date]:
     # Generate a list of dates for the recurring event
     recurring_dates = []
     # Event days of week are indexed with Monday being 1 (1 = Monday, 7 = Sunday)
@@ -432,7 +432,7 @@ class LocationFinder:
         url = f"{self.api_url}/api/v1/localities.json"
         response = session.get(url)
         response.raise_for_status()
-        suburbs: List[LocalityResponse] = response.json()["localities"]
+        suburbs: list[LocalityResponse] = response.json()["localities"]
         suburb_id = next(
             (item["id"] for item in suburbs if item["name"] == suburb), None
         )
@@ -448,7 +448,7 @@ class LocationFinder:
         url = f"{self.api_url}/api/v1/streets.json"
         response = session.get(url, params={"locality": suburb_id})
         response.raise_for_status()
-        streets: List[StreetResponse] = response.json()["streets"]
+        streets: list[StreetResponse] = response.json()["streets"]
         street_id = next(
             (item["id"] for item in streets if item["name"] == street_name), None
         )
@@ -469,7 +469,7 @@ class LocationFinder:
         url = f"{self.api_url}/api/v1/properties.json"
         response = session.get(url, params={"street": street_id})
         response.raise_for_status()
-        properties: List[PropertyResponse] = response.json()["properties"]
+        properties: list[PropertyResponse] = response.json()["properties"]
         property_id = next(
             (
                 item["id"]
@@ -495,10 +495,10 @@ class Source:
     def __init__(
         self,
         service: str,
-        property_id: Optional[int] = None,
-        suburb: Optional[str] = None,
-        street_name: Optional[str] = None,
-        street_number: Optional[str] = None,
+        property_id: int | None = None,
+        suburb: str | None = None,
+        street_name: str | None = None,
+        street_number: str | None = None,
     ):
         if service in SERVICE_MAP_LOOKUP:
             api_url = SERVICE_MAP_LOOKUP[service]["url"]
@@ -533,7 +533,7 @@ class Source:
             self.street_number = street_number
             self.location_finder = LocationFinder(self.api_url)
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         start_date = date.today()
         end_date = start_date + timedelta(365)
 
@@ -554,18 +554,16 @@ class Source:
         response = session.get(
             url, params={"start": start_date.isoformat(), "end": end_date.isoformat()}
         )
-        events: List[Union[RecurringEventResponse, OneOffEventResponse]] = (
-            response.json()
-        )
+        events: list[RecurringEventResponse | OneOffEventResponse] = response.json()
 
-        collections: List[Collection] = []
+        collections: list[Collection] = []
         for event in events:
             # determine waste type for icon
             try:
                 event_type = event["event_type"]
             except KeyError:  # some entries do not contain a waste collection event, so move to next item in list
                 continue
-            icon = ICON_MAP.get(event_type, None)
+            icon = ICON_MAP.get(event_type)
 
             # determine waste type for title (some entries contain additional info)
             try:

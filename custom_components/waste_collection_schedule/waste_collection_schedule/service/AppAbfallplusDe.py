@@ -576,7 +576,7 @@ class AppAbfallplusDe:
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         if not (inputs := soup.find_all("input")):
-            return
+            return None
 
         for input in inputs:
             if input.attrs["name"] == "f_id_bundesland":
@@ -796,7 +796,7 @@ class AppAbfallplusDe:
             self._strasse_search = streets[0]["name"]
         if self._strasse_search is None and len(streets) == 0:
             return
-        elif self._strasse_search is None:
+        if self._strasse_search is None:
             raise SourceArgumentRequiredWithSuggestions(
                 "strasse",
                 "multiple streets found, please specify one",

@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 from curl_cffi import requests
 from waste_collection_schedule import Collection
@@ -49,7 +48,7 @@ class Source:
         self._uprn = uprn
         self._session = requests.Session(impersonate="chrome124")
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         if self._uprn is None:
             self._uprn = self.get_uprn()
 

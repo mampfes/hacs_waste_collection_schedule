@@ -1,5 +1,6 @@
+from collections.abc import Mapping
 from random import randrange
-from typing import Literal, Mapping, TypedDict, get_args
+from typing import Literal, TypedDict, get_args
 
 import requests
 

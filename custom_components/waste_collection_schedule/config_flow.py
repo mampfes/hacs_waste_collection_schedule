@@ -5,7 +5,7 @@ import logging
 import types
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, ClassVar, Literal, Tuple, TypedDict, Union, cast, get_origin
+from typing import Any, ClassVar, Literal, TypedDict, Union, cast, get_origin
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -263,7 +263,7 @@ def get_sensor_schema(fetched_types, add_delete=False, defaults: dict | None = N
 
 def validate_sensor_user_input(
     sensor_input: dict[str, Any], existing_sensors
-) -> Tuple[dict[str, Any], dict[str, str]]:
+) -> tuple[dict[str, Any], dict[str, str]]:
     """
     Validate sensor user input.
 
@@ -515,7 +515,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         pre_filled: dict[str, Any],
         args_input: dict[str, Any] | None,
         include_title=True,
-    ) -> Tuple[vol.Schema, types.ModuleType]:
+    ) -> tuple[vol.Schema, types.ModuleType]:
         """Get schema for source arguments.
 
         Args:
@@ -667,7 +667,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         args_input: dict[str, Any],
         module: types.ModuleType,
         is_reconfigure: bool = False,
-    ) -> Tuple[dict[str, str], dict[str, str], dict[str, Any]]:
+    ) -> tuple[dict[str, str], dict[str, str], dict[str, Any]]:
         """Validate user input for source arguments.
 
         Args:
@@ -824,10 +824,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             self._show_sensor_config = user_input.get("show_sensor_config", False)
             if self._show_customize_config:
                 return await self.async_step_customize_select()
-            elif self._show_sensor_config:
+            if self._show_sensor_config:
                 return await self.async_step_sensor()
-            else:
-                return await self.finish()
+            return await self.finish()
         return self.async_show_form(step_id="flow_type", data_schema=schema)
 
     async def async_step_customize_select(
@@ -865,8 +864,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if self._customize_index >= len(types):
             if self._show_sensor_config:
                 return await self.async_step_sensor()
-            else:
-                return await self.finish()
+            return await self.finish()
 
         errors = {}
 

@@ -4,7 +4,6 @@ import json
 import logging
 import re
 from datetime import datetime
-from typing import List
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -79,7 +78,7 @@ class Source:
         self._session = requests.Session()
         self._session.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) "
-            + "Gecko/20100101 Firefox/115.0",
+            "Gecko/20100101 Firefox/115.0",
             "Accept-Encoding": "gzip, deflate",
             "Accept": "*/*",
             "Connection": "keep-alive",
@@ -110,7 +109,7 @@ class Source:
 
         return self.__address_id
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         """Fetch data from RenoWeb."""
         _LOGGER.debug("Source.fetch()")
 
@@ -136,7 +135,7 @@ class Source:
             if statusCode in ["AccessDenied"]:
                 _LOGGER.error("Source.fetch(): access denied; data=%s", data)
                 raise ValueError(f"Access denied: {statusMessage}")
-            elif statusCode:
+            if statusCode:
                 _LOGGER.error("Source.fetch(): unknown error; data=%s", data)
                 raise ValueError(f'Unhandled error "{statusCode}": {statusMessage}')
 

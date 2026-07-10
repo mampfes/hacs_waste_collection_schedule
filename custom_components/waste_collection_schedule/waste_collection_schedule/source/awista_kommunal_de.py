@@ -1,6 +1,5 @@
 import json
 import re
-from typing import List, Optional
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -84,15 +83,15 @@ BASE_URL = f"{DOMAIN}/abfallkalender"
 class Source:
     def __init__(
         self,
-        street: Optional[str] = None,
-        house_number: Optional[str] = None,
-        uuid: Optional[str] = None,
+        street: str | None = None,
+        house_number: str | None = None,
+        uuid: str | None = None,
     ):
         self._street = street
         self._house_number = house_number
         self._uuid = uuid
-        self._next_action: Optional[str] = None
-        self._action_candidates: Optional[List[str]] = None
+        self._next_action: str | None = None
+        self._action_candidates: list[str] | None = None
         self._ics = ICS()
 
         if not uuid and not (street and house_number):
@@ -101,7 +100,7 @@ class Source:
                 "either 'uuid' or both 'street' and 'house_number' must be provided.",
             )
 
-    def _action_id_candidates(self, session: requests.Session) -> List[str]:
+    def _action_id_candidates(self, session: requests.Session) -> list[str]:
         """Scrape candidate Next.js server-action ids from the page's JS chunks.
 
         The bundles contain several 40+ hex strings tagged ``searchAddressAction``
@@ -121,7 +120,7 @@ class Source:
             r'src="(/_next/static/chunks/[^"?]+\.js)(?:\?[^"]*)?"', page.text
         )
 
-        candidates: List[str] = []
+        candidates: list[str] = []
         for path in dict.fromkeys(chunk_paths):
             try:
                 chunk = session.get(DOMAIN + path, timeout=30)
@@ -140,7 +139,7 @@ class Source:
 
     def _search_address(
         self, session: requests.Session, action: str, address: str
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """Run the address search for one action id.
 
         Returns the parsed payload if ``action`` is honored by the live
@@ -175,7 +174,7 @@ class Source:
                 c for c in candidates if c != self._next_action
             ]
 
-        payload: Optional[dict] = None
+        payload: dict | None = None
         for action in candidates:
             payload = self._search_address(session, action, address)
             if payload is not None:
@@ -201,7 +200,7 @@ class Source:
 
         return items[0]["id"]
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         session = requests.Session()
 
         uuid = self._uuid or self._resolve_uuid(session)
@@ -211,7 +210,7 @@ class Source:
 
         dates = self._ics.convert(response.text)
 
-        entries: List[Collection] = []
+        entries: list[Collection] = []
         for d, summary in dates:
             # Summaries look like "Restmüll (Vollservice)"; strip the service-tier suffix.
             waste_type = summary.split(" (")[0].strip()

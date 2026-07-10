@@ -94,7 +94,7 @@ class Source:
 
         entries = []
         for event in json["abfall_dates"]:
-            trash_type = trash_types_map_id_to_name.get(event["abfall_type_id"], None)
+            trash_type = trash_types_map_id_to_name.get(event["abfall_type_id"])
             # filter out Sammelstellen, Wertstoffhof and Wertstoffzentrum
             if trash_type is not None and trash_type not in EVENT_BLACKLIST:
                 # filter by city and district if provided

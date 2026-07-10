@@ -47,30 +47,27 @@ class Source:
 
         if not collections_data:
             raise Exception("Failed to get bin collection data")
-        else:
-            try:
-                # Get the text content and parse JSON
-                binData = json.loads(collections_data.string.strip())
-            except json.JSONDecodeError as e:
-                raise Exception("JSON Decode Failed with: " + str(e)) from e
+        try:
+            # Get the text content and parse JSON
+            binData = json.loads(collections_data.string.strip())
+        except json.JSONDecodeError as e:
+            raise Exception("JSON Decode Failed with: " + str(e)) from e
 
-            for date_str, bins in binData.items():
-                date = datetime.fromisoformat(date_str).date()
+        for date_str, bins in binData.items():
+            date = datetime.fromisoformat(date_str).date()
 
-                for _bin_name, details in bins.items():
-                    if details is None:
-                        continue  # skip empty bins
+            for _bin_name, details in bins.items():
+                if details is None:
+                    continue  # skip empty bins
 
-                    collection_type = details[
-                        "ShortName"
-                    ]  # e.g. "Blue", "Brown", "Grey"
+                collection_type = details["ShortName"]  # e.g. "Blue", "Brown", "Grey"
 
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=collection_type,
-                            icon=ICON_MAP.get(collection_type),
-                        )
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=collection_type,
+                        icon=ICON_MAP.get(collection_type),
                     )
+                )
 
         return entries

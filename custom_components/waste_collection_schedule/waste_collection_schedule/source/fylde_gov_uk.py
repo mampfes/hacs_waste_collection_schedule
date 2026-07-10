@@ -197,9 +197,8 @@ class Source:
                     self._uprn,
                     "please check that this property is registered on your waste portal account.",
                 )
-            else:
-                raise Exception(
-                    "No collection events found. Please ensure your property is registered on the waste portal."
-                )
+            raise Exception(
+                "No collection events found. Please ensure your property is registered on the waste portal."
+            )
 
         return entries

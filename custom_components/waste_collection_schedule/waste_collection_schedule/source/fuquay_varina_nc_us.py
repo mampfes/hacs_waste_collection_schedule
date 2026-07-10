@@ -1,6 +1,5 @@
 import re
 from datetime import date, datetime
-from typing import Optional
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -72,7 +71,7 @@ class Source:
 
         return entries
 
-    def _parse_date_from_text(self, date_text: str) -> Optional[date]:
+    def _parse_date_from_text(self, date_text: str) -> date | None:
         """Parse date from text like 'The next garbage pickup date for this address is Monday, January 06'."""
         if not date_text:
             return None
