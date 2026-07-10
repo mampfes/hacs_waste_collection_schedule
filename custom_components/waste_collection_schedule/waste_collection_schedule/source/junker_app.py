@@ -1,21 +1,25 @@
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequiredWithSuggestions,
-)
+from typing import final
+
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality, text_field
+from waste_collection_schedule.regions import region
 from waste_collection_schedule.service.junker_app import (
-    AreaNotFound,
-    AreaRequired,
-    Junker,
+    TYPE_VALUE_MAP,
+    JunkerParser,
+    JunkerRetriever,
 )
+from waste_collection_schedule.transformers import RowTransformer
 
 TITLE = "Junker APP"
-DESCRIPTION = "Source for Jnker APP."
+DESCRIPTION = "Source for Junker APP."
 URL = "https://junker.app"
-TEST_CASES = {"Val della torre": {"municipality": "Val della torre"}}
-
 COUNTRY = "it"
 
-
+# Known providers/operators running on the generic Junker APP platform
+# (differenziata.junkerapp.it). This is an informational directory, not a set
+# of valid ``municipality`` values: the actual argument is the municipality's
+# own name/slug on that platform (see TEST_CASES), which does not always match
+# the operator name below.
 SERVICE_PROVIDERS = {
     "NET SpA - Udine",
     "Unione dei Comuni di Valmalenco",
@@ -329,21 +333,9 @@ SERVICE_PROVIDERS = {
     "Torre de' Passeri",
 }
 
-
-def EXTRA_INFO():
-    for s in SERVICE_PROVIDERS:
-        yield {"title": s, "country": "it"}
-
-
-# MUNICIPALITIES That do return to be supported but do not offer a calendar
-# Do not provide calendar
-# Eco Burgus Srl
-# Acea Pinerolese
-# Egna
-# Pontecorvo
-# Sogliano Cavour - Teknowaste Srl
-# Tarvisio
-
+# MUNICIPALITIES that are known to be supported but do not offer a calendar:
+# Eco Burgus Srl, Acea Pinerolese, Egna, Pontecorvo,
+# Sogliano Cavour - Teknowaste Srl, Tarvisio.
 
 TEST_CASES = {
     "Unione dei Comuni di Valmalenco, Boroneddu": {"municipality": "Boroneddu"},
@@ -357,18 +349,26 @@ TEST_CASES = {
 }
 
 
-class Source(Junker):
-    def __init__(self, municipality: str, area: str | None = None):
-        super().__init__(municipality, area_name=area, use_embed_url=False)
+@final
+class Source(BaseSource):
+    TITLE = TITLE
+    DESCRIPTION = DESCRIPTION
+    URL = URL
+    COUNTRY = COUNTRY
 
-    def fetch(self):
-        try:
-            return super().fetch()
-        except AreaRequired as e:
-            raise SourceArgumentRequiredWithSuggestions(
-                "area", "required for this municipality", [a[0] for a in e.areas]
-            ) from e
-        except AreaNotFound as e:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "area", self._area, [a[0] for a in e.areas]
-            ) from e
+    TEST_CASES = TEST_CASES
+
+    PARAMS = (
+        municipality(field="municipality"),
+        text_field(
+            "area",
+            "Area",
+            optional=True,
+        ),
+    )
+
+    REGIONS = tuple(region(name) for name in SERVICE_PROVIDERS)
+
+    retrieve = JunkerRetriever(use_embed_url=False, area_is_name=True)
+    parse = JunkerParser()
+    transform = RowTransformer(type_value_map=TYPE_VALUE_MAP)
