@@ -1,152 +1,182 @@
 """
-Pozi GIS Service Library.
+Pozi GIS Service platform (BaseSource architecture).
 
-Provides reusable helpers for interacting with Pozi-based council GIS services:
-  - Querying GeoJSON zone layers hosted on connect.pozi.com
-  - Querying QGIS WFS endpoints via Pozi server-side spatial filters
-  - Client-side point-in-polygon matching for GeoJSON zone lookups
-
-Typical workflows:
+Pozi hosts council waste-collection lookups two ways, both resolved by a
+point (lat/lng):
 
   GeoJSON zones (e.g. Frankston, Bendigo):
-      1. Call query_geojson_zones() with the connect.pozi.com URL and coordinates.
-      2. Receive the properties dict of the matching zone feature.
+      A static GeoJSON file of zone polygons is fetched once; the point
+      (given directly, or geocoded from an address first) is matched
+      client-side via point-in-polygon. ``PoziGeoJsonRetriever`` does the
+      acquisition (the GeoJSON GET, plus an optional geocode GET);
+      ``PoziGeoJsonParser`` does the point-in-polygon match (no I/O).
 
   WFS spatial query (e.g. Vincent):
-      1. Call query_wfs_layer() with the QGIS server URL, map path, layer name,
-         and coordinates.
-      2. Receive the properties dict of the matching feature.
+      The point (geocoded from an address via the ArcGIS World GeocodeServer)
+      is sent to a Pozi QGIS WFS endpoint as a server-side spatial-intersects
+      filter. ``PoziWfsRetriever`` issues both requests; ``PoziWfsParser``
+      extracts the matching feature's properties (no I/O).
+
+Both parsers return the matching zone's ``properties`` dict as a 0- or
+1-item list (``[]`` when the point matched nothing), for a source's
+``preprocess = preprocessors.RecurrenceExpander(_describe)`` to expand into
+concrete collection dates. An address/lookup source built on either
+retriever should set ``RAISE_ON_EMPTY = True`` so a point outside every zone
+(or an address WFS finds nothing for) surfaces as a clear argument error
+instead of a silently-empty schedule.
 """
 
 from __future__ import annotations
 
 import logging
-from typing import Any
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any, TypedDict
 
-import requests
+from waste_collection_schedule import response_shape
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.retrievers import RetrieverFunc
+
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
+    from waste_collection_schedule.retrievers import Response
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class PoziError(Exception):
-    """Base exception for Pozi-related failures."""
+class _FeatureCollection(TypedDict):
+    """The GeoJSON/WFS ``FeatureCollection`` shape every parser here relies on."""
+
+    features: list
 
 
-class PoziGeoJsonError(PoziError):
-    """Raised when a GeoJSON zone query fails or returns no match."""
+# --------------------------------------------------------------------------- #
+# GeoJSON zone lookup (client-side point-in-polygon)
+# --------------------------------------------------------------------------- #
 
 
-class PoziWfsError(PoziError):
-    """Raised when a WFS query fails or returns no features."""
+class PoziGeoJsonRetriever(RetrieverFunc):
+    """Fetch a Pozi GeoJSON zone file and return it alongside the query point.
 
+    Two ways to get the point (give exactly one):
 
-def query_geojson_zones(
-    url: str,
-    lat: float,
-    lng: float,
-    *,
-    timeout: int = 20,
-) -> dict[str, Any]:
-    """Fetch GeoJSON zones and find the zone containing the given point.
+    * ``lat`` / ``lon`` -- ``source.params`` field names holding the point
+      directly (e.g. a ``config_params.coords()`` param).
+    * ``address`` -- a ``source.params`` field name holding a free-text
+      address, resolved to a point by ``geocode`` (a
+      ``callable(address, source) -> (lat, lng)``, e.g. :func:`geocode_earth`).
 
-    Args:
-        url: Full URL to a GeoJSON file (typically on connect.pozi.com).
-        lat: Latitude of the point.
-        lng: Longitude of the point.
-        timeout: Request timeout in seconds.
-
-    Returns:
-        Properties dict of the matching feature.
-
-    Raises:
-        PoziGeoJsonError: If no zone contains the point.
+    Returns ``(response, lat, lng)`` raw -- the point-in-polygon match itself
+    is pure computation, done by :class:`PoziGeoJsonParser` with no further
+    I/O. Pair the two.
     """
-    r = requests.get(url, timeout=timeout)
-    r.raise_for_status()
 
-    data = r.json()
-    features = data.get("features", [])
-    if not features:
-        raise PoziGeoJsonError(f"No features found in GeoJSON from {url}")
+    def __init__(
+        self,
+        url: str,
+        *,
+        lat: str | None = "lat",
+        lon: str | None = "lon",
+        address: str | None = None,
+        geocode: Callable[[str, BaseSource], tuple[float, float]] | None = None,
+        timeout: int = 20,
+    ):
+        self.url = url
+        self.lat = None if address is not None else lat
+        self.lon = None if address is not None else lon
+        self.address = address
+        self.geocode = geocode
+        self.timeout = timeout
 
-    for feature in features:
-        geometry = feature.get("geometry", {})
-        if _point_in_geometry(lat, lng, geometry):
-            _LOGGER.debug(
-                "Point (%s, %s) matched zone: %s",
-                lat,
-                lng,
-                feature.get("properties", {}),
-            )
-            return feature.get("properties", {})
+    def __call__(self, source: BaseSource) -> tuple[Response, float, float]:
+        if self.address is not None:
+            if self.geocode is None:
+                raise SourceArgumentNotFound(
+                    self.address, None, "no geocoder configured for this source"
+                )
+            address_value = source.params[self.address]
+            lat, lng = self.geocode(address_value, source)
+        else:
+            assert self.lat is not None and self.lon is not None
+            lat = float(source.params[self.lat])
+            lng = float(source.params[self.lon])
 
-    raise PoziGeoJsonError(f"Point ({lat}, {lng}) not found in any zone from {url}")
+        response = source.session.get(self.url, timeout=self.timeout)
+        return response, lat, lng
 
 
-def query_wfs_layer(
-    base_url: str,
-    map_path: str,
-    typename: str,
-    lat: float,
-    lng: float,
-    *,
-    timeout: int = 20,
-) -> dict[str, Any]:
-    """Query a Pozi QGIS WFS endpoint with a spatial intersects filter.
+class PoziGeoJsonParser(Parser["list[dict[str, Any]]"]):
+    """Match the query point against GeoJSON zone polygons; no I/O.
 
-    Args:
-        base_url: Base URL of the QGIS WFS server
-            (e.g. 'https://mapping.vincent.wa.gov.au/pozi/qgisserver').
-        map_path: Server-side path to the QGIS project file
-            (e.g. 'C:/Pozi/Waste.qgs').
-        typename: WFS typename / layer name (e.g. 'Waste_Collection').
-        lat: Latitude of the point (EPSG:4326).
-        lng: Longitude of the point (EPSG:4326).
-        timeout: Request timeout in seconds.
-
-    Returns:
-        Properties dict of the first matching feature.
-
-    Raises:
-        PoziWfsError: If no features are found.
+    Returns the matching zone's ``properties`` as a 0- or 1-item list: ``[]``
+    when the point falls outside every zone (an address/lookup source then
+    relies on ``RAISE_ON_EMPTY`` to surface that as a clear argument error,
+    rather than this parser guessing which argument was at fault).
     """
-    wfs_filter = (
-        "<Filter>"
-        "<Intersects>"
-        "<PropertyName>geom</PropertyName>"
-        '<Point xmlns="http://www.opengis.net/gml" srsName="EPSG:4326">'
-        f'<pos srsDimension="2">{lng} {lat}</pos>'
-        "</Point>"
-        "</Intersects>"
-        "</Filter>"
-    )
 
-    params: dict[str, str] = {
-        "MAP": map_path,
-        "TYPENAME": typename,
-        "LAYERS": typename.replace("_", " "),
-        "STYLES": "default",
-        "SERVICE": "WFS",
-        "REQUEST": "GetFeature",
-        "VERSION": "1.1.0",
-        "SRSNAME": "EPSG:4326",
-        "OUTPUTFORMAT": "application/json",
-        "FILTER": wfs_filter,
-    }
-
-    r = requests.get(base_url, params=params, timeout=timeout)
-    r.raise_for_status()
-
-    data = r.json()
-    features = data.get("features", [])
-    if not features:
-        raise PoziWfsError(
-            f"No features found for point ({lat}, {lng}) in layer {typename}"
+    def __call__(
+        self,
+        raw: tuple[Response, float, float],
+        source: BaseSource | None = None,
+    ) -> list[dict[str, Any]]:
+        response, lat, lng = raw
+        response.raise_for_status()
+        data = response_shape.validate(
+            response.json(),
+            _FeatureCollection,
+            source_name=response_shape.source_name(source),
+        )
+        features = data["features"]
+        response_shape.expect(
+            bool(features),
+            source_name=response_shape.source_name(source),
+            detail="Pozi GeoJSON zone file has no features",
+            raw=data,
         )
 
-    props = features[0].get("properties", {})
-    _LOGGER.debug("WFS query matched: %s", props)
-    return props
+        for feature in features:
+            if _point_in_geometry(lat, lng, feature.get("geometry", {})):
+                _LOGGER.debug(
+                    "Point (%s, %s) matched zone: %s",
+                    lat,
+                    lng,
+                    feature.get("properties", {}),
+                )
+                return [feature.get("properties", {})]
+        return []
+
+
+def geocode_earth(
+    address: str,
+    source: BaseSource,
+    *,
+    api_key: str,
+    boundary_gid: str | None = None,
+    layers: str = "address,street",
+    timeout: int = 20,
+) -> tuple[float, float]:
+    """Geocode an address via geocode.earth's autocomplete endpoint.
+
+    Ahead of a :class:`PoziGeoJsonRetriever` lookup for a provider whose Pozi
+    widget resolves a point but not an address itself (e.g. Frankston).
+    Returns ``(lat, lng)``. Raises ``SourceArgumentNotFound`` when no
+    candidate is found.
+    """
+    params: dict[str, str] = {"text": address, "api_key": api_key, "layers": layers}
+    if boundary_gid is not None:
+        params["boundary.gid"] = boundary_gid
+
+    response = source.session.get(
+        "https://api.geocode.earth/v1/autocomplete", params=params, timeout=timeout
+    )
+    response.raise_for_status()
+
+    features = response.json().get("features", [])
+    if not features:
+        raise SourceArgumentNotFound("address", address)
+
+    lng, lat = features[0]["geometry"]["coordinates"]
+    return lat, lng
 
 
 def _point_in_geometry(lat: float, lng: float, geometry: dict) -> bool:
@@ -175,6 +205,7 @@ def _point_in_polygon(x: float, y: float, polygon: list[list[float]]) -> bool:
     """
     n = len(polygon)
     inside = False
+    xinters = 0.0
 
     p1x, p1y = polygon[0]
     for i in range(1, n + 1):
@@ -189,3 +220,98 @@ def _point_in_polygon(x: float, y: float, polygon: list[list[float]]) -> bool:
         p1x, p1y = p2x, p2y
 
     return inside
+
+
+# --------------------------------------------------------------------------- #
+# WFS spatial query (server-side intersects filter)
+# --------------------------------------------------------------------------- #
+
+
+class PoziWfsRetriever(RetrieverFunc):
+    """Geocode an address (ArcGIS), then query a Pozi QGIS WFS layer.
+
+    Pozi's WFS endpoint has no address lookup of its own, so this always
+    geocodes first via ``waste_collection_schedule.service.ArcGis.geocode``
+    (the shared ArcGIS World GeocodeServer helper), then issues a
+    spatial-intersects ``GetFeature`` request against the given WFS layer.
+    Returns the raw HTTP Response; pair with :class:`PoziWfsParser`.
+    """
+
+    def __init__(
+        self,
+        base_url: str,
+        map_path: str,
+        typename: str,
+        *,
+        address: str = "address",
+        timeout: int = 20,
+    ):
+        self.base_url = base_url
+        self.map_path = map_path
+        self.typename = typename
+        self.address = address
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource) -> Response:
+        from waste_collection_schedule.service.ArcGis import (
+            ArcGisGeocodeError,
+            geocode,
+        )
+
+        address_value = source.params[self.address]
+        try:
+            location = geocode(address_value)
+        except ArcGisGeocodeError as e:
+            raise SourceArgumentNotFound(self.address, address_value) from e
+
+        wfs_filter = (
+            "<Filter>"
+            "<Intersects>"
+            "<PropertyName>geom</PropertyName>"
+            '<Point xmlns="http://www.opengis.net/gml" srsName="EPSG:4326">'
+            f'<pos srsDimension="2">{location["x"]} {location["y"]}</pos>'
+            "</Point>"
+            "</Intersects>"
+            "</Filter>"
+        )
+        params: dict[str, str] = {
+            "MAP": self.map_path,
+            "TYPENAME": self.typename,
+            "LAYERS": self.typename.replace("_", " "),
+            "STYLES": "default",
+            "SERVICE": "WFS",
+            "REQUEST": "GetFeature",
+            "VERSION": "1.1.0",
+            "SRSNAME": "EPSG:4326",
+            "OUTPUTFORMAT": "application/json",
+            "FILTER": wfs_filter,
+        }
+        return source.session.get(self.base_url, params=params, timeout=self.timeout)
+
+
+class PoziWfsParser(Parser["list[dict[str, Any]]"]):
+    """Extract the first matching feature's properties from a WFS response.
+
+    No I/O. Returns ``[]`` when the spatial filter matched nothing -- a
+    legitimate "address outside the service area" result, not a shape
+    change, so an address/lookup source relies on ``RAISE_ON_EMPTY`` rather
+    than this parser raising.
+    """
+
+    def __call__(
+        self,
+        response: Response,
+        source: BaseSource | None = None,
+    ) -> list[dict[str, Any]]:
+        response.raise_for_status()
+        data = response_shape.validate(
+            response.json(),
+            _FeatureCollection,
+            source_name=response_shape.source_name(source),
+        )
+        features = data["features"]
+        if not features:
+            return []
+        props = features[0].get("properties", {})
+        _LOGGER.debug("WFS query matched: %s", props)
+        return [props]

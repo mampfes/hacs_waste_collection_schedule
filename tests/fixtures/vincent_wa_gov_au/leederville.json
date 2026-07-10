@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-07-10",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 6927d4763f",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Fri, 10 Jul 2026 13:55:09 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "236",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"1cf24ccb\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMTggU3RhbWZvcmQgU3RyZWV0LCBMZWVkZXJ2aWxsZSwgUGVydGgsIFdlc3Rlcm4gQXVzdHJhbGlhLCA2MDA3IiwibG9jYXRpb24iOnsieCI6MTE1Ljg0MDA1OTk3MzIyNSwieSI6LTMxLjkzNTAyOTk3NjA0fSwic2NvcmUiOjEwMCwiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjoxMTUuODM5MDU5OTczMjI1LCJ5bWluIjotMzEuOTM2MDI5OTc2MDQsInhtYXgiOjExNS44NDEwNTk5NzMyMjUsInltYXgiOi0zMS45MzQwMjk5NzYwNH19XX0="
+    },
+    {
+      "key": "GET https://mapping.vincent.wa.gov.au/pozi/qgisserver 1a2089f813",
+      "method": "GET",
+      "url": "https://mapping.vincent.wa.gov.au/pozi/qgisserver",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/vnd.geo+json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0, QGIS FCGI server - QGIS version 3.40.14-Bratislava",
+        "x-powered-by": "ASP.NET",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET,POST,OPTIONS",
+        "date": "Fri, 10 Jul 2026 13:55:09 GMT",
+        "content-length": "1497"
+      },
+      "content_b64": "eyJ0eXBlIjogIkZlYXR1cmVDb2xsZWN0aW9uIiwKICJiYm94IjogWyAxMTUuODIzMzczNDgsIC0zMS45NDk3NjExNywgMTE1Ljg4NTEyNDIxLCAtMzEuOTEzNjkwOTVdLAogImZlYXR1cmVzIjogWwogIHsiYmJveCI6WzExNS44Mzk4NDYsLTMxLjkzNTA4OCwxMTUuODQwMjcxLC0zMS45MzQ5NzZdLCJnZW9tZXRyeSI6eyJjb29yZGluYXRlcyI6W1tbMTE1Ljg0MDI3MSwtMzEuOTM1MDMxXSxbMTE1Ljg0MDI3MSwtMzEuOTM1MDg4XSxbMTE1LjgzOTg0NiwtMzEuOTM1MDg3XSxbMTE1LjgzOTg0NiwtMzEuOTM0OTc2XSxbMTE1Ljg0MDI3MSwtMzEuOTM0OTc3XSxbMTE1Ljg0MDI3MSwtMzEuOTM1MDMxXV1dLCJ0eXBlIjoiUG9seWdvbiJ9LCJpZCI6Ildhc3RlX0NvbGxlY3Rpb24uMjM3NiIsInByb3BlcnRpZXMiOnsiQWRkcmVzcyI6IjE4IFN0YW1mb3JkIFN0LCBMZWVkZXJ2aWxsZSIsIkNvbGxlY3Rpb24gQXJlYSI6IjxwIHN0eWxlPVwiY29sb3I6IGJsYWNrOyBmb250LXdlaWdodDogYm9sZDttYXJnaW4tYm90dG9tOiAwcHg7bWFyZ2luLXRvcDogMHB4O21hcmdpbi1ib3R0b206IDEwcHg7XCI+Q29sbGVjdGlvbiBBcmVhIEE8L3A+IiwiRk9HTyBDb2xsZWN0aW9uIERheSI6IjxwIHN0eWxlPVwiY29sb3I6IGdyZWVuOyBmb250LXdlaWdodDogYm9sZDttYXJnaW4tYm90dG9tOiAwcHg7bWFyZ2luLXRvcDogMHB4O1wiPkZPR08gQ29sbGVjdGlvbiBEYXk6PC9wPjxwIHN0eWxlPVwibWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDBweDtcIj4xMyBKdWwgMjAyNiAtIFdlZWtseSAoTW9uZGF5KTwvcD4iLCJHZW5lcmFsIFdhc3RlIENvbGxlY3Rpb24gRGF5IjoiPHAgc3R5bGU9XCJjb2xvcjogcmVkOyBmb250LXdlaWdodDogYm9sZDttYXJnaW4tYm90dG9tOiAwcHg7XCI+R2VuZXJhbCBXYXN0ZSBDb2xsZWN0aW9uIERheTo8L3A+PHAgc3R5bGU9XCJtYXJnaW4tYm90dG9tOiAwcHg7bWFyZ2luLXRvcDogMHB4O1wiPjEzIEp1bCAyMDI2IC0gRm9ydG5pZ2h0bHkgKE1vbmRheSBXZWVrIDEpPC9wPiIsIlJlY3ljbGluZyBDb2xsZWN0aW9uIERheSI6IjxwIHN0eWxlPVwiY29sb3I6ICNiODg2MGI7IGZvbnQtd2VpZ2h0OiBib2xkO21hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+UmVjeWNsaW5nIENvbGxlY3Rpb24gRGF5OjwvcD48cCBzdHlsZT1cIm1hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+MjAgSnVsIDIwMjYgLSBGb3J0bmlnaHRseSAoTW9uZGF5IFdlZWsgMik8L3A+IiwiVmVyZ2UgVmFsZXQgVmluY2VudCI6IjxwIHN0eWxlPVwiZm9udC13ZWlnaHQ6IGJvbGQ7bWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDEwcHg7XCI+QnVsayBoYXJkIGFuZCBCdWxrIEdyZWVuIENvbGxlY3Rpb25zOjwvcD48cD48YSBocmVmPVwiaHR0cHM6Ly93d3cud21yYy53YS5nb3YuYXUvdmVyZ2V2YWxldC9cIj5WZXJnZSBWYWxldCBWaW5jZW50PC9hPjwvcD4ifSwidHlwZSI6IkZlYXR1cmUifQogXQp9"
+    }
+  ]
+}

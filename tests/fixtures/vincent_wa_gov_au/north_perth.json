@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-07-10",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 4d104ca859",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Fri, 10 Jul 2026 13:55:08 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "233",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"1fbaf0b2\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiOCBLYWRpbmEgU3RyZWV0LCBOb3J0aCBQZXJ0aCwgUGVydGgsIFdlc3Rlcm4gQXVzdHJhbGlhLCA2MDA2IiwibG9jYXRpb24iOnsieCI6MTE1Ljg1MTMwNzU2NTI3NywieSI6LTMxLjkyODQwNTk2NzUwOH0sInNjb3JlIjoxMDAsImF0dHJpYnV0ZXMiOnt9LCJleHRlbnQiOnsieG1pbiI6MTE1Ljg1MDMwNzU2NTI3NywieW1pbiI6LTMxLjkyOTQwNTk2NzUwOCwieG1heCI6MTE1Ljg1MjMwNzU2NTI3NywieW1heCI6LTMxLjkyNzQwNTk2NzUwOH19XX0="
+    },
+    {
+      "key": "GET https://mapping.vincent.wa.gov.au/pozi/qgisserver 272233a506",
+      "method": "GET",
+      "url": "https://mapping.vincent.wa.gov.au/pozi/qgisserver",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/vnd.geo+json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0, QGIS FCGI server - QGIS version 3.40.14-Bratislava",
+        "x-powered-by": "ASP.NET",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET,POST,OPTIONS",
+        "date": "Fri, 10 Jul 2026 13:55:08 GMT",
+        "content-length": "2242"
+      },
+      "content_b64": "eyJ0eXBlIjogIkZlYXR1cmVDb2xsZWN0aW9uIiwKICJiYm94IjogWyAxMTUuODIzMzczNDgsIC0zMS45NDk3NjExNywgMTE1Ljg4NTEyNDIxLCAtMzEuOTEzNjkwOTVdLAogImZlYXR1cmVzIjogWwogIHsiYmJveCI6WzExNS44NTA3MzMsLTMxLjkyODg1NSwxMTUuODUyNDE1LC0zMS45MjgwMzVdLCJnZW9tZXRyeSI6eyJjb29yZGluYXRlcyI6W1tbMTE1Ljg1MTcyOCwtMzEuOTI4ODUzXSxbMTE1Ljg1MTY1NiwtMzEuOTI4ODUzXSxbMTE1Ljg1MTYwNCwtMzEuOTI4ODUzXSxbMTE1Ljg1MTA0NCwtMzEuOTI4ODU0XSxbMTE1Ljg1MDk3LC0zMS45Mjg4NTVdLFsxMTUuODUwOTM4LC0zMS45Mjg4NTVdLFsxMTUuODUwOTM3LC0zMS45Mjg1MzFdLFsxMTUuODUwNzM5LC0zMS45Mjg1MzFdLFsxMTUuODUwNzMzLC0zMS45Mjg1MzFdLFsxMTUuODUwNzMzLC0zMS45Mjg0ODJdLFsxMTUuODUwNzMzLC0zMS45Mjg0NDFdLFsxMTUuODUwNzMzLC0zMS45Mjg0NDFdLFsxMTUuODUwNzMzLC0zMS45MjgwODddLFsxMTUuODUwNzMzLC0zMS45MjgwNjddLFsxMTUuODUwNzMzLC0zMS45MjgwMzhdLFsxMTUuODUwOTksLTMxLjkyODAzN10sWzExNS44NTEwOTYsLTMxLjkyODAzN10sWzExNS44NTExMTksLTMxLjkyODAzN10sWzExNS44NTEyNDksLTMxLjkyODAzN10sWzExNS44NTEyOTUsLTMxLjkyODAzN10sWzExNS44NTE2MjgsLTMxLjkyODAzNl0sWzExNS44NTE2MjksLTMxLjkyODAzNl0sWzExNS44NTE2NjA5OTk5OTk5OSwtMzEuOTI4MDM2XSxbMTE1Ljg1MTY2OCwtMzEuOTI4MDM2XSxbMTE1Ljg1MTc2NCwtMzEuOTI4MDM2XSxbMTE1Ljg1MTg5MywtMzEuOTI4MDM2XSxbMTE1Ljg1MjAyMiwtMzEuOTI4MDM1XSxbMTE1Ljg1MjQxNSwtMzEuOTI4MDM1XSxbMTE1Ljg1MjQxNSwtMzEuOTI4MDg0XSxbMTE1Ljg1MTc1NiwtMzEuOTI4MDg1XSxbMTE1Ljg1MTc1NywtMzEuOTI4Mjk0XSxbMTE1Ljg1MTc1NywtMzEuOTI4NDkzXSxbMTE1Ljg1MTc1NywtMzEuOTI4NTAyXSxbMTE1Ljg1MTc1NywtMzEuOTI4NTI5XSxbMTE1Ljg1MTcyNywtMzEuOTI4NTI5XSxbMTE1Ljg1MTcyNywtMzEuOTI4NTM4XSxbMTE1Ljg1MTcyOCwtMzEuOTI4ODUzXV1dLCJ0eXBlIjoiUG9seWdvbiJ9LCJpZCI6Ildhc3RlX0NvbGxlY3Rpb24uMTA0MzciLCJwcm9wZXJ0aWVzIjp7IkFkZHJlc3MiOiI4IEthZGluYSBTdCwgTm9ydGggUGVydGgiLCJDb2xsZWN0aW9uIEFyZWEiOiI8cCBzdHlsZT1cImNvbG9yOiBibGFjazsgZm9udC13ZWlnaHQ6IGJvbGQ7bWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDBweDttYXJnaW4tYm90dG9tOiAxMHB4O1wiPkNvbGxlY3Rpb24gQXJlYSBBPC9wPiIsIkZPR08gQ29sbGVjdGlvbiBEYXkiOiI8cCBzdHlsZT1cImNvbG9yOiBncmVlbjsgZm9udC13ZWlnaHQ6IGJvbGQ7bWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDBweDtcIj5GT0dPIENvbGxlY3Rpb24gRGF5OjwvcD48cCBzdHlsZT1cIm1hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+MTUgSnVsIDIwMjYgLSBXZWVrbHkgKFdlZG5lc2RheSk8L3A+IiwiR2VuZXJhbCBXYXN0ZSBDb2xsZWN0aW9uIERheSI6IjxwIHN0eWxlPVwiY29sb3I6IHJlZDsgZm9udC13ZWlnaHQ6IGJvbGQ7bWFyZ2luLWJvdHRvbTogMHB4O1wiPkdlbmVyYWwgV2FzdGUgQ29sbGVjdGlvbiBEYXk6PC9wPjxwIHN0eWxlPVwibWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDBweDtcIj4xMCBKdWwgMjAyNiAtIDIgeCB3ZWVrbHkgKFdlZG5lc2RheS9mcmlkYXkpPC9wPiIsIlJlY3ljbGluZyBDb2xsZWN0aW9uIERheSI6IjxwIHN0eWxlPVwiY29sb3I6ICNiODg2MGI7IGZvbnQtd2VpZ2h0OiBib2xkO21hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+UmVjeWNsaW5nIENvbGxlY3Rpb24gRGF5OjwvcD48cCBzdHlsZT1cIm1hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+MTUgSnVsIDIwMjYgLSBXZWVrbHkgIChXZWRuZXNkYXkpPC9wPiIsIlZlcmdlIFZhbGV0IFZpbmNlbnQiOiI8cCBzdHlsZT1cImZvbnQtd2VpZ2h0OiBib2xkO21hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAxMHB4O1wiPkJ1bGsgaGFyZCBhbmQgQnVsayBHcmVlbiBDb2xsZWN0aW9uczo8L3A+PHA+PGEgaHJlZj1cImh0dHBzOi8vd3d3LndtcmMud2EuZ292LmF1L3ZlcmdldmFsZXQvXCI+VmVyZ2UgVmFsZXQgVmluY2VudDwvYT48L3A+In0sInR5cGUiOiJGZWF0dXJlIn0KIF0KfQ=="
+    }
+  ]
+}
