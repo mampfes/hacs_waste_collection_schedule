@@ -37,7 +37,7 @@ Before writing any retriever or parser, check whether the provider runs on a pla
 
 ### Building blocks
 
-- **Metadata** are CLASS attributes: `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES`, `PARAMS`, plus optional `HOWTO`, `RAISE_ON_EMPTY`, `CODEOWNERS`, and `REGIONS` (when one structure covers several municipalities/providers: a `list` of `region(title, **params)` entries, each a README/`sources.json` listing; `EXTRA_INFO` is the legacy dict form). There is no `ICON_MAP` and no `WASTE_TYPES` (derived from the transformer).
+- **Metadata** are CLASS attributes: `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES`, `PARAMS`, plus optional `HOWTO`, `RAISE_ON_EMPTY`, `SOURCE_CODEOWNERS`, and `REGIONS` (when one structure covers several municipalities/providers: a `list` of `region(title, **params)` entries, each a README/`sources.json` listing; `EXTRA_INFO` is the legacy dict form). There is no `ICON_MAP` and no `WASTE_TYPES` (derived from the transformer).
 - **`PARAMS`** uses typed factories from `waste_collection_schedule.config_params`: `coords`, `uprn`, `postcode`, `address`, `municipality`, `dropdown`, `dependent_select`, `multi_value_lookup`, `text_field`, `api_key`, `alternatives`. These drive both the config-flow UI and up-front validation. `text_field`/`api_key` take `default=` to make a field optional and pre-filled (e.g. an embedded public key); `text_field`/`dropdown` take `optional=True` for an optional field with no default (prefer over `dataclasses.replace(..., required=False)`); `alternatives(*groups)` declares mutually-exclusive input groups (validation requires exactly one full group). Reuse canonical field names (`postcode`, `house_number`, `municipality`, `lat`/`lon`, `uprn`, …) so the config-flow labels inherit `default_translations` in every supported language (en, de, it, fr, nl); only a novel field needs a `PARAM_TRANSLATIONS` block, with keys inside that allowlist.
 - **Retrievers** (`waste_collection_schedule.retrievers`): declare none to use the zero-config default GET (curl_cffi; reads `API_URL`, `self._params`, `self._headers`, `TIMEOUT`). Use `http_get` / `http_post`, or `HttpGetRetriever` / `HttpPostRetriever`. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure. For full control, override `retrieve` as a method.
 - **Parsers** (`waste_collection_schedule.parsers`): `JsonParser()`, `JsonParser("key")`, `HtmlParser("tr", skip=1)`, `IcsParser()`, `IcsEventsParser()`, `TextParser()`. A parser may also be a method (`def parse(self, response, source)`).
@@ -82,7 +82,7 @@ class Source(BaseSource):
 
     # Optional, highly encouraged. Add the contributor's GitHub handle so they
     # are notified and assigned on bug reports for this source.
-    # CODEOWNERS = ["@contributor-github-handle"]
+    # SOURCE_CODEOWNERS = ["@contributor-github-handle"]
 
     parse = parsers.JsonParser("collections")
     transform = JsonTransformer(
@@ -125,7 +125,7 @@ Only a **legacy** module-level source still needs a hand-written `doc/source/<mo
 1. Confirm the recommendation is complete (module name, country code, parameters, data feed details, at least one test case). If anything's missing, ask the user.
 2. Check for a reusable service platform or shared YAML / EXTRA_INFO platform that already covers the provider before writing new retrieval code.
 3. Write the source `.py` file as a `BaseSource` subclass using the pipeline template. Declare the retrieve / parse / preprocess / transform steps from reusable components, set `self._params` / `self._headers` in `__init__`, and use a transformer (or `classify()`) rather than a hand-written `fetch()`.
-4. Encourage the contributor to add their GitHub handle to `CODEOWNERS` (the class attribute on a pipeline source; `SOURCE_CODEOWNERS` on a legacy source). Explain that this means they will be automatically notified and assigned on bug reports for their source. If they decline or are not present, leave the commented-out placeholder.
+4. Encourage the contributor to add their GitHub handle to `SOURCE_CODEOWNERS` (a class attribute on a pipeline source, a module-level variable on a legacy source). Explain that this means they will be automatically notified and assigned on bug reports for their source. If they decline or are not present, leave the commented-out placeholder.
 5. Lint/format:
    ```bash
    ruff check --fix <source.py> <if you touched any other .py>

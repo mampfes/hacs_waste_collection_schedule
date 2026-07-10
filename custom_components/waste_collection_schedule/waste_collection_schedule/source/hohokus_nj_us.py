@@ -88,7 +88,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for the Borough of Ho-Ho-Kus, New Jersey, USA."
     URL = "https://www.hhkborough.com"
     COUNTRY = "us"
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {

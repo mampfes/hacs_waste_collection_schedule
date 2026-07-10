@@ -424,8 +424,15 @@ def test_source_has_necessary_parameters() -> None:
                 "PARAM_DESCRIPTIONS",
             )
 
-        if hasattr(module, "SOURCE_CODEOWNERS"):
-            owners = module.SOURCE_CODEOWNERS
+        # SOURCE_CODEOWNERS lives at module level (legacy) or on the Source
+        # class (pipeline sources). Validate whichever is present.
+        source_cls = getattr(module, "Source", None)
+        if hasattr(module, "SOURCE_CODEOWNERS") or hasattr(
+            source_cls, "SOURCE_CODEOWNERS"
+        ):
+            owners = getattr(module, "SOURCE_CODEOWNERS", None)
+            if owners is None:
+                owners = getattr(source_cls, "SOURCE_CODEOWNERS", None)
             assert isinstance(owners, list), (
                 f"SOURCE_CODEOWNERS must be a list in {source}, got {type(owners).__name__}"
             )

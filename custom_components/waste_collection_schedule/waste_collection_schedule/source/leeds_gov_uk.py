@@ -62,7 +62,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Leeds City Council bin collections."
     URL = "https://www.leeds.gov.uk/bins-and-recycling"
     COUNTRY = "uk"
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {

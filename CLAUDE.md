@@ -117,7 +117,7 @@ Optional:
 - `RAISE_ON_EMPTY` (pipeline): set `True` on address/lookup sources so an empty result raises instead of returning `[]`.
 - `HOWTO` (pipeline) / `HOW_TO_GET_ARGUMENTS_DESCRIPTION` (legacy): per-language guidance shown in the config form.
 - `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` (legacy): per-language argument labels and descriptions, read by `update_docu_links.py`. Pipeline sources use `PARAMS` labels and `HOWTO` instead.
-- `CODEOWNERS` (pipeline class attribute) / `SOURCE_CODEOWNERS` (legacy module variable): `list[str]` of GitHub handles (e.g. `["@your-handle"]`), each starting with `@`. `update_docu_links.py` writes these into `.github/source_owners.json`; a GitHub Action pings and assigns the listed owners when a bug report names this source. **Strongly encouraged for all new sources.** ICS YAML providers use the equivalent `codeowners:` key in their `.yaml` file.
+- `SOURCE_CODEOWNERS` (one name for both styles: a pipeline class attribute or a legacy module variable): `list[str]` of GitHub handles (e.g. `["@your-handle"]`), each starting with `@`. `update_docu_links.py` writes these into `.github/source_owners.json`; a GitHub Action pings and assigns the listed owners when a bug report names this source. **Strongly encouraged for all new sources.** ICS YAML providers use the equivalent `codeowners:` key in their `.yaml` file.
 
 ### CI-enforced structural rules
 

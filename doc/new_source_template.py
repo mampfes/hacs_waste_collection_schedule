@@ -41,7 +41,7 @@ class Source(BaseSource):
     DESCRIPTION = "Waste collections for Example Council."  # >>> one line
     URL = "https://example.com"  # >>> provider website
     COUNTRY = "uk"  # >>> lowercase country code (uk, not gb; ca lowercase)
-    CODEOWNERS: ClassVar[list] = ["@your-handle"]  # >>> strongly encouraged
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@your-handle"]  # >>> strongly encouraged
 
     # >>> Where the data comes from. A bare API_URL is enough for the default
     # zero-config GET; override retrieve() for anything more involved.

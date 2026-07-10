@@ -73,7 +73,7 @@ class Source(BaseSource):
         ),
     }
 
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
 
     RAISE_ON_EMPTY = True
 

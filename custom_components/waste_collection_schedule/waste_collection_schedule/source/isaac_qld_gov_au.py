@@ -111,7 +111,7 @@ class Source(BaseSource):
         ),
     }
 
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
 
     REGIONS: ClassVar[list] = [
         region(f"Isaac Regional Council ({town})", url=URL, town=town)

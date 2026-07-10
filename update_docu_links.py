@@ -501,9 +501,9 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
         or getattr(source_cls, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", None)
         or getattr(module, "HOW_TO_GET_ARGUMENTS_DESCRIPTION", {})
     )
-    # New-style sources carry codeowners on the class (CODEOWNERS); legacy
-    # sources use the module-level SOURCE_CODEOWNERS. Read class first.
-    source_owners = getattr(source_cls, "CODEOWNERS", None) or getattr(
+    # SOURCE_CODEOWNERS is one name for both styles: pipeline sources declare it
+    # on the Source class, legacy sources at module level. Read class first.
+    source_owners = getattr(source_cls, "SOURCE_CODEOWNERS", None) or getattr(
         module, "SOURCE_CODEOWNERS", []
     )
 

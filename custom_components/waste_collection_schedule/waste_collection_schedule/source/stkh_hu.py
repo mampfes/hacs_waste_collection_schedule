@@ -72,7 +72,7 @@ class Source(BaseSource):
     )
     URL = "https://www.stkh.hu"
     COUNTRY = "hu"
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {

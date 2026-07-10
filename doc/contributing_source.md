@@ -341,7 +341,7 @@ On a pipeline source the metadata lives on the class:
 | `PARAMS` | list | Typed `ConfigParam` descriptors driving the config flow and validation. |
 | `HOWTO` | dict | Optional per-language guidance shown above the config form. Keys must be in the supported set: `en`, `de`, `it`, `fr`, `nl`. |
 | `RAISE_ON_EMPTY` | bool | Optional. `True` for address/lookup sources so an empty result raises. |
-| `CODEOWNERS` | list | Optional. GitHub handles (each starting with `@`) who maintain this source. Feeds `.github/source_owners.json` and the notify-source-owners workflow. Strongly encouraged. |
+| `SOURCE_CODEOWNERS` | list | Optional. GitHub handles (each starting with `@`) who maintain this source. Feeds `.github/source_owners.json` and the notify-source-owners workflow. Strongly encouraged. |
 | `REGIONS` | list or callable | Optional. The regions one structure covers, as `region(title, **params)` entries (`waste_collection_schedule.regions`); each becomes its own README / `sources.json` listing with its `params` pre-filled. See `mulhouse_alsace_fr.py`. |
 | `EXTRA_INFO` | list or callable | Legacy form of `REGIONS` (dicts with `title`, `url`, `country`, `default_params`). Still supported and adapted into `Region`s internally; prefer `REGIONS` for new sources. |
 
@@ -373,6 +373,8 @@ Debugging inside Home Assistant is slow. Use the command line test script, which
    ```
 
 Useful options: `-l` lists all dates, `-i` adds the icon (with `-l`), `-t` shows full stack traces, `-d` runs fetch twice and checks the results match (use it if fetch mutates the source object).
+
+> **Note on waste-type labels when testing outside Home Assistant.** The displayed `Collection.type` follows the Home Assistant UI language, which the integration sets at startup. Running `test_sources.py` (or instantiating a `Source` directly) happens outside HA, so the display language is never set and labels fall back to English. This is expected, not a bug: a French provider showing `General Waste` here does not mean the source is broken; inside HA the same collection shows `Ordures ménagères`.
 
 ### Offline fixtures (record once, replay in CI)
 

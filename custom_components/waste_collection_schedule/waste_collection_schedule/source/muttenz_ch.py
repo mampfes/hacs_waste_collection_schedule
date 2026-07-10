@@ -57,7 +57,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for the municipality of Muttenz, Switzerland."
     URL = "https://www.muttenz.ch"
     COUNTRY = "ch"
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
     API_URL = "https://www.muttenz.ch/abfalldaten"
 
     TEST_CASES: ClassVar[dict] = {"Muttenz": {}}

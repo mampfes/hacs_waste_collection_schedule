@@ -234,7 +234,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Gemeinde24 municipal app waste collection data."
     URL = "https://www.gemeinde24.at"
     COUNTRY = "at"
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {

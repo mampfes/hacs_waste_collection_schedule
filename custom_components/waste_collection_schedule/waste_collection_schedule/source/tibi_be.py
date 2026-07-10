@@ -66,7 +66,7 @@ class Source(BaseSource):
         ),
     }
 
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
 
     # An unknown commune yields an empty export rather than an error, so surface
     # that to the user as a bad-argument error instead of a silent empty calendar.

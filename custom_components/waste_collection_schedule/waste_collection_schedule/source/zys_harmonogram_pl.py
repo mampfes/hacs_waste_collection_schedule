@@ -70,7 +70,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Kleszczewo/Kostrzyn commune garbage collection"
     URL = "https://www.puk-zys.pl/index.php"
     COUNTRY = "pl"
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {

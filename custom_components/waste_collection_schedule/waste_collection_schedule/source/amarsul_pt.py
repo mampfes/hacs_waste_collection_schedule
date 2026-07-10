@@ -50,7 +50,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Amarsul selective-collection calendars, Portugal."
     URL = "https://www.amarsul.pt"
     COUNTRY = "pt"
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
 
     # A real, confirmed circuit calendar (circuits D230A/D231A/D249A-D254A, 2026).
     _EXAMPLE_CALENDAR_URL = (

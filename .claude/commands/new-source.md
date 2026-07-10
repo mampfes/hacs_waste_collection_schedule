@@ -72,7 +72,7 @@ Before the contributor stages their files, remind them:
 
 > **Take ownership of your source.** Adding your GitHub handle as a code owner means you will be automatically notified and assigned when bug reports are filed for your source. This is how the project keeps sources healthy. It is optional but strongly encouraged.
 >
-> Pipeline (BaseSource) source: add `CODEOWNERS = ["@your-github-handle"]` as a class attribute.
+> Pipeline (BaseSource) source: add `SOURCE_CODEOWNERS = ["@your-github-handle"]` as a class attribute.
 > Legacy module-level source: add `SOURCE_CODEOWNERS = ["@your-github-handle"]` near the top of the `.py` file.
 > ICS YAML: add a `codeowners:` key listing your handle.
 

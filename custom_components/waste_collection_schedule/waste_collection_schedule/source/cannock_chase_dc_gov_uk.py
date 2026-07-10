@@ -44,7 +44,7 @@ class Source(BaseSource):
     URL = "https://www.cannockchasedc.gov.uk"
     COUNTRY = "uk"
     API_URL = "https://ccdc.opendata.onl/DynamicCall.dll"
-    CODEOWNERS: ClassVar[list] = ["@markvp"]
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
 
     TEST_CASES: ClassVar[dict] = {
         "Test_001": {"uprn": "100031640287", "postcode": "WS15 1DN"},
