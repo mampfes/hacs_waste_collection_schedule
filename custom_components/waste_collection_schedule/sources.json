@@ -13704,6 +13704,14 @@
       "id": "c_trace_de"
     },
     {
+      "title": "Stadt B\u00fcnde",
+      "module": "ics",
+      "default_params": {
+        "regex": "B\u00dc (.*): B\u00fcnde"
+      },
+      "id": "ics_buende_de"
+    },
+    {
       "title": "Stadt Cottbus",
       "module": "abfallnavi_de",
       "default_params": {

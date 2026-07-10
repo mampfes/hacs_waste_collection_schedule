@@ -2025,6 +2025,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
 - [Stadt Arnsberg](/doc/source/c_trace_de.md) / arnsberg.de
 - [Stadt Bayreuth](/doc/source/c_trace_de.md) / bayreuth.de
+- [Stadt Bünde](/doc/ics/buende_de.md) / buende.de
 - [Stadt Cottbus](/doc/source/abfallnavi_de.md) / cottbus.de
 - [Stadt Cuxhaven](/doc/source/abfallnavi_de.md) / cuxhaven.de
 - [Stadt Darmstadt](/doc/source/muellmax_de.md) / darmstadt.de
