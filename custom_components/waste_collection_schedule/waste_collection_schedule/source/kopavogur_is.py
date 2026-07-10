@@ -15,6 +15,7 @@ TITLE = "Kópavogsbær"
 DESCRIPTION = "Source for Kópavogur, Iceland (Kubbur collection calendar)"
 URL = "https://www.kopavogur.is"
 COUNTRY = "is"
+SOURCE_CODEOWNERS = ["@rhubarbgarden"]
 
 DISTRICTS = [
     "Vesturbær - Smárahverfi",
