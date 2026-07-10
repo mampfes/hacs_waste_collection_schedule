@@ -1,0 +1,24 @@
+---
+title: Stadt Bünde
+url: https://www.buende.de/
+howto:
+  en: |
+    - Visit <https://www.buende.de/Stadtleben/Umwelt-I-Klima/Abfall/Abfallkalender-online/> and select your street.
+    - Right-click "Export in Kalenderanwendung" and copy the link address to get an ICAL link.
+    - Use this link as the `url` parameter.
+    - Replace the year (`vJ=2025`) with `{%Y}` in the URL.
+    - You may want to set the `regex` parameter to "BÜ (.*): Bünde" to get better titles.
+  de: |
+    - Besuchen Sie <https://www.buende.de/Stadtleben/Umwelt-I-Klima/Abfall/Abfallkalender-online/> und wählen Sie Ihre Straße.
+    - Klicken Sie mit der rechten Maustaste auf "Export in Kalenderanwendung" und kopieren Sie die Linkadresse, um die ICAL-URL zu erhalten.
+    - Verwenden Sie diesen Link als `url`-Parameter.
+    - Ersetzen Sie das Jahr (`vJ=2025`) durch `{%Y}` in der URL.
+    - Sie können den `regex`-Parameter auf "BÜ (.*): Bünde" setzen, um bessere Titel zu erhalten.
+
+default_params:
+  regex: 'BÜ (.*): Bünde'
+
+test_cases:
+  Adalbert-Stifter-Straße:
+    url: https://www.buende.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.3&strasse=2619.2.1&vtyp=2&vMo=1&vJ={%Y}&bMo=12
+    regex: 'BÜ (.*): Bünde'
