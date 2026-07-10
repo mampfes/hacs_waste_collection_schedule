@@ -1,29 +1,44 @@
-from typing import Literal
+import re
+from typing import TYPE_CHECKING, Any
 
-import requests
 from bs4 import BeautifulSoup
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 
 from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
-from waste_collection_schedule.source.ics import Source as ICS
+from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    PAPER,
+    RECYCLABLES,
+)
 
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture)
+#
+# a-region.ch / citymobile.ch is a Swiss municipal waste-widget platform that
+# powers several unrelated providers (A-Region, Köniz, ZAB Bazenheid,
+# Winterthur) from the same "apid"/"apparentid" HTML structure:
+#
+#   region page -> one link per waste-type/tour -> (optionally) one link per
+#   district within that tour -> a single "webcal://...ical.php" calendar.
+#
+# Resolving a region is provider-specific (a static municipality -> href table
+# for A-Region/Köniz/ZAB, a street-name search for Winterthur), but the walk
+# from a resolved region down to each tour's ICS calendar is identical across
+# all four, so it lives once in ARegionRetriever. The label on each returned
+# Collection comes from the ICS feed's own SUMMARY, not from the tour/waste
+# type name used only for site navigation, so ARegionRetriever returns the raw
+# ICS text of every calendar it finds and ARegionIcsParser (no I/O) decodes
+# them into (date, label) rows for ICSTransformer.
+# --------------------------------------------------------------------------- #
 
-def _session() -> requests.Session:
-    s = requests.Session()
-    retry = Retry(
-        total=3,
-        backoff_factor=2,
-        status_forcelist=[429, 500, 502, 503, 504],
-        respect_retry_after_header=True,
-    )
-    s.mount("https://", HTTPAdapter(max_retries=retry))
-    s.mount("http://", HTTPAdapter(max_retries=retry))
-    return s
-
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
 
 SERVICES = {
     "winterthur": "https://m.winterthur.ch",
@@ -31,95 +46,123 @@ SERVICES = {
     "koeniz": "https://koeniz.citymobile.ch",
     "zab": "https://zab.citymobile.ch",
 }
-SERVICES_LITERALS = Literal["winterthur", "a_region", "koeniz", "zab"]
+
+# The raw ICS SUMMARY labels the shared multilingual vocabulary
+# (waste_types.resolve) does not already recognise verbatim (Swiss German
+# spellings, or a canonical bucket the catalogue has no dedicated type for).
+# Anything not listed here and not resolved falls back to
+# waste_types.preserved(), so an unrecognised label is still shown (never
+# silently dropped to OTHER). Consistent with the mapping already used for the
+# same Swiss German labels in muttenz_ch.py.
+TYPE_VALUE_MAP = {
+    "Kehricht": GENERAL_WASTE,
+    "Grünabfuhr": GARDEN_WASTE,
+    "Grüngut": GARDEN_WASTE,
+    "Papier/Karton": PAPER,
+    "Metall": RECYCLABLES,
+    "Altmetall": RECYCLABLES,
+    "Schredderdienst": GARDEN_WASTE,
+    "Häckseldienst": GARDEN_WASTE,
+    "Christbaum": GARDEN_WASTE,
+    "Christbäume": GARDEN_WASTE,
+    "Sperrgut": RECYCLABLES,
+}
 
 
-class A_region_ch:
+class ARegionRetriever(RetrieverFunc):
+    """Resolve a region, then walk its tour/district links down to raw ICS text.
+
+    Region resolution is one of two shapes, selected by which arguments are
+    set:
+
+    * ``municipalities``: a static municipality-name -> href table (A-Region,
+      Köniz, ZAB). ``municipality`` names the ``source.params`` field holding
+      the chosen municipality.
+    * ``search_url``: a live street-name search endpoint (Winterthur, which has
+      no municipality table). ``street`` names the ``source.params`` field
+      holding the street name.
+
+    Once the region page is resolved, every tour link on it is followed; a
+    tour whose page lists several districts is followed further using the
+    ``district`` field in ``source.params`` (required only when more than one
+    district is found and there is no single-district shortcut). Returns the
+    raw ICS text of every calendar found (one per tour).
+    """
+
     def __init__(
         self,
-        service: SERVICES_LITERALS,
-        region_url: str,
-        district: str | None = None,
-        regex: str | None = None,
-        session: requests.Session | None = None,
+        service: str,
+        municipalities: "dict[str, str] | None" = None,
+        municipality: str = "municipality",
+        search_url: "str | None" = None,
+        street: str = "street",
+        district: str = "district",
     ):
-        if service not in SERVICES:
-            raise Exception(f"service '{service}' not found")
-        self._base_url = SERVICES[service]
+        self.service = service
+        self.municipalities = municipalities
+        self.municipality_field = municipality
+        self.search_url = search_url
+        self.street_field = street
+        self.district_field = district
 
-        self._regex = regex
+    def __call__(self, source: "BaseSource") -> "list[str]":
+        base_url = SERVICES[self.service]
+        session = source.session
+        params = source.params
 
-        self._municipality_url = region_url
-        self._district = district
-        self._session = session or _session()
+        if self.search_url is not None:
+            region_url = self._region_url_by_street(session, params[self.street_field])
+        else:
+            municipalities = self.municipalities or {}
+            municipality_value = params[self.municipality_field]
+            if municipality_value not in municipalities:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    self.municipality_field,
+                    municipality_value,
+                    municipalities.keys(),
+                )
+            region_url = municipalities[municipality_value]
 
-    def fetch(self) -> list[ICS]:
-        waste_types = self.get_waste_types(self._municipality_url)
+        district_value = params.get(self.district_field)
+        waste_type_links = self._get_waste_types(session, base_url, region_url)
 
-        entries = []
+        ics_texts: list[str] = []
+        for link in waste_type_links.values():
+            ics_texts += self._get_ics_texts(session, base_url, link, district_value)
+        return ics_texts
 
-        for tour, link in waste_types.items():
-            entries += self.get_ICS_sources(link, tour)
-        return entries
-
-    def get_municipalities(self) -> dict[str, str]:
-        municipalities: dict[str, str] = {}
-
-        # get PHPSESSID
-        session = _session()
-        r = session.get(f"{self._base_url}")
+    def _region_url_by_street(self, session: Any, street: str) -> str:
+        r = session.get(self.search_url, params={"q": street})
         r.raise_for_status()
-
-        # cookies = {'PHPSESSID': requests.utils.dict_from_cookiejar(r.cookies)['PHPSESSID']}
-
-        params: dict[str, str | int] = {"apid": "13875680", "apparentid": "4618613"}
-        r = session.get(f"{self._base_url}/index.php", params=params)
-        r.raise_for_status()
-        self.extract_municipalities(r.text, municipalities)
-
-        page = 1
-        while True:
-            params = {
-                "do": "searchFetchMore",
-                "hash": "606ee79ca61fc6eef434ab4fca0d5956",
-                "p": page,
-            }
-            headers = {
-                "cookie": "PHPSESSID=71v67j0et4ih04qa142d402ebm;"
-            }  # TODO: get cookie from first request
-            r = session.get(
-                f"{self._base_url}/appl/ajax/index.php", params=params, headers=headers
-            )
-            r.raise_for_status()
-            if r.text == "":
-                break
-            self.extract_municipalities(r.text, municipalities)
-            page = page + 1
-        return municipalities
-
-    def extract_municipalities(self, text: str, municipalities: dict[str, str]):
-        soup = BeautifulSoup(text, features="html.parser")
-        downloads = soup.find_all("a", href=True)
-        for download in downloads:
-            # href ::= "/index.hp"
-            href = download.get("href")
-            if "ref=search" in href:
-                for title in download.find_all("div", class_="title"):
-                    # title ::= "Abfallkalender Andwil"
-                    municipalities[title.string.removeprefix("Abfallkalender ")] = href
-
-    def get_waste_types(self, link: str) -> dict[str, str]:
-        if not link.startswith("http"):
-            link = f"{self._base_url}{link}"
-        r = self._session.get(link)
-        r.raise_for_status()
-
-        waste_types = {}
 
         soup = BeautifulSoup(r.text, features="html.parser")
-        downloads = soup.find_all("a", href=True)
-        for download in downloads:
-            # href ::= "/index.php?apid=12731252&amp;apparentid=5011362"
+        anchors = soup.select("a")
+        if not anchors:
+            raise SourceArgumentException(self.street_field, "No streets found")
+
+        streets = []
+        for a in anchors:
+            href = a.get("href")
+            if not isinstance(href, str):
+                continue
+            text = a.get_text(strip=True)
+            streets.append(text)
+            if text.lower().replace(" ", "") == street.lower().replace(" ", ""):
+                return href
+
+        raise SourceArgumentNotFoundWithSuggestions(self.street_field, street, streets)
+
+    def _get_waste_types(
+        self, session: Any, base_url: str, link: str
+    ) -> "dict[str, str]":
+        if not link.startswith("http"):
+            link = f"{base_url}{link}"
+        r = session.get(link)
+        r.raise_for_status()
+
+        waste_types: dict[str, str] = {}
+        soup = BeautifulSoup(r.text, features="html.parser")
+        for download in soup.find_all("a", href=True):
             href = download.get("href")
             if (
                 download.find("div", class_="badgeIcon")
@@ -129,91 +172,101 @@ class A_region_ch:
                 titles = download.find_all("div", class_="title")
                 if "PDF" in titles:
                     continue
-                titles = [title.string for title in titles]
-                if not titles:
-                    titles = [download.get_text(strip=True)]
-                for title in titles:
-                    # title ::= "Altmetall"
-                    waste_types[title] = href
-
+                title_strings = [title.string for title in titles]
+                if not title_strings:
+                    title_strings = [download.get_text(strip=True)]
+                for title in title_strings:
+                    if title:
+                        waste_types[title] = href
         return waste_types
 
-    def get_ICS_sources(self, link: str, tour: str) -> list[ICS]:
+    def _get_ics_texts(
+        self,
+        session: Any,
+        base_url: str,
+        link: str,
+        district_value: "str | None",
+    ) -> "list[str]":
         if not link.startswith("http"):
-            link = f"{self._base_url}{link}"
-        r = self._session.get(link)
+            link = f"{base_url}{link}"
+        r = session.get(link)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
 
         # check for additional districts
-        districts = {}
-        downloads = soup.find_all("a", href=True)
-        for download in downloads:
+        districts: dict[str, str] = {}
+        for download in soup.find_all("a", href=True):
             href = download.get("href")
             if "apparentid" in href:
                 title = download.find("div", class_="title")
-                if title is not None:
-                    # additional district found ->
+                if title is not None and title.string:
                     district_name_split = title.string.split(": ")
                     districts[
                         district_name_split[1 if len(district_name_split) > 1 else 0]
                     ] = href
-        if len(districts) > 0:
+
+        if districts:
             if len(districts) == 1:
                 # only one district found -> use it
-                return self.get_ICS_sources(next(iter(districts.values())), tour)
-            if self._district is None:
+                return self._get_ics_texts(
+                    session, base_url, next(iter(districts.values())), district_value
+                )
+            if district_value is None:
                 raise SourceArgumentRequiredWithSuggestions(
-                    "district",
+                    self.district_field,
                     "Multiple districts found; specify which one to use.",
                     districts.keys(),
                 )
-
-            if self._district not in districts:
+            if district_value not in districts:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "district", self._district, districts.keys()
+                    self.district_field, district_value, districts.keys()
                 )
-            return self.get_ICS_sources(districts[self._district], tour)
+            return self._get_ics_texts(
+                session, base_url, districts[district_value], district_value
+            )
 
-        dates = []
-
-        downloads = soup.find_all("a", href=True)
-        for download in downloads:
-            # href ::= "/appl/ics.php?apid=12731252&amp;from=2022-05-04%2013%3A00%3A00&amp;to=2022-05-04%2013%3A00%3A00"
+        for download in soup.find_all("a", href=True):
+            # href ::= "webcal://.../appl/ics.php?apid=12731252&from=..."
             href = download.get("href")
             if href.startswith("webcal") and "ical.php" in href:
-                dates.append(ICS(url=href, regex=self._regex))
-                break
+                ics_url = re.sub("^webcal", "https", href)
+                ics_response = session.get(ics_url)
+                ics_response.raise_for_status()
+                return [ics_response.text]
 
-        return dates
+        return []
 
 
-def get_region_url_by_street(
-    service: SERVICES_LITERALS,
-    street: str,
-    search_url: str,
-    district: str | None = None,
-    regex: str | None = None,
-) -> A_region_ch:
-    session = _session()
-    r = session.get(search_url, params={"q": street})
-    r.raise_for_status()
+class ARegionIcsParser(Parser["list[tuple[Any, str]]"]):
+    """Decode every raw ICS calendar returned by ARegionRetriever.
 
-    soup = BeautifulSoup(r.text, features="html.parser")
-    as_ = soup.select("a")
-    if len(as_) == 0:
-        raise Exception("No streets found")
-    streets = []
-    for a in as_:
-        href = a.get("href")
-        if not isinstance(href, str):
-            continue
-        streets.append(a.get_text(strip=True))
+    Does no I/O: it only runs the (pure text) ICS conversion over each raw
+    calendar and concatenates the resulting (date, label) rows, so it can be
+    exercised standalone against cached ICS fixtures.
+    """
 
-        if a.get_text(strip=True).lower().replace(" ", "") == street.lower().replace(
-            " ", ""
-        ):
-            return A_region_ch(service, href, district, regex, session=session)
+    def __init__(self, regex: "str | None" = None, min_events: "int | None" = None):
+        self.regex = regex
+        self.min_events = min_events
 
-    raise SourceArgumentNotFoundWithSuggestions("street", street, streets)
+    def __call__(
+        self, raw: "list[str]", source: "BaseSource | None" = None
+    ) -> "list[tuple[Any, str]]":
+        from waste_collection_schedule import response_shape
+        from waste_collection_schedule.service.ICS import ICS
+
+        ics = ICS(regex=self.regex)
+        rows: list[tuple[Any, str]] = []
+        for text in raw:
+            rows += ics.convert(text)
+
+        if self.min_events is not None:
+            response_shape.expect(
+                len(rows) >= self.min_events,
+                source_name=response_shape.source_name(source),
+                detail=f"expected at least {self.min_events} ICS events across "
+                f"{len(raw)} calendar(s), got {len(rows)}",
+                raw="\n---\n".join(raw)[:2000],
+            )
+        return rows

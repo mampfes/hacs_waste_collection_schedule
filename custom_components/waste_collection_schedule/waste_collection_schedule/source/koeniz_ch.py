@@ -1,30 +1,25 @@
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.A_region_ch import A_region_ch
+from typing import final
+
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, municipality
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.service.A_region_ch import (
+    TYPE_VALUE_MAP,
+    ARegionIcsParser,
+    ARegionRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
 TITLE = "Köniz"
 DESCRIPTION = "Source for Köniz"
 URL = "https://koeniz.citymobile.ch"
-
-
-def EXTRA_INFO():
-    return [{"title": m, "default_params": {"municipality": m}} for m in MUNICIPALITIES]
-
+COUNTRY = "ch"
 
 TEST_CASES = {
     "Wabern": {"municipality": "Wabern"},
     "Spiegel": {"municipality": "Spiegel"},
     "Liebefeld": {"municipality": "Liebefeld"},
     "Köniz": {"municipality": "Köniz"},
-}
-
-ICON_MAP = {
-    "Kehricht": Icons.GENERAL_WASTE,
-    "Grünabfuhr": Icons.ORGANIC,
-    "Papier/Karton": Icons.PAPER,
-    "Metall": Icons.METAL,
-    "Schredderdienst": Icons.GARDEN,
-    "Christbaum": Icons.CHRISTMAS_TREE,
 }
 
 MUNICIPALITIES = {
@@ -42,49 +37,22 @@ MUNICIPALITIES = {
 }
 
 
-class Source:
-    def __init__(self, municipality, district=None):
-        self._municipality = municipality
-        self._district = district
-        if municipality not in MUNICIPALITIES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "municipality", municipality, MUNICIPALITIES.keys()
-            )
-        self._municipality_url = MUNICIPALITIES[municipality]
+@final
+class Source(BaseSource):
+    TITLE = TITLE
+    DESCRIPTION = DESCRIPTION
+    URL = URL
+    COUNTRY = COUNTRY
 
-        self._ics_sources = []
+    TEST_CASES = TEST_CASES
 
-    def _get_ics_sources(self):
-        self._ics_sources = A_region_ch(
-            "a_region", self._municipality_url, self._district
-        ).fetch()
+    PARAMS = (
+        municipality(field="municipality"),
+        district(field="district", optional=True),
+    )
 
-    def fetch(self) -> list[Collection]:
-        fresh_sources = False
-        if not self._ics_sources:
-            fresh_sources = True
-            self._get_ics_sources()
+    REGIONS = tuple(region(m, municipality=m) for m in MUNICIPALITIES)
 
-        entries = []
-        for source in self._ics_sources:
-            fresh_sources, e = self._get_dates(source, fresh_sources)
-            entries += e
-        return entries
-
-    def _get_dates(self, source, fresh=False) -> tuple[bool, list[Collection]]:
-        exception = None
-        try:
-            entries = source.fetch()
-        except Exception as e:
-            exception = e
-
-        if exception or not entries:
-            if fresh:
-                if exception:
-                    raise exception
-                return fresh, []
-
-            self._get_ics_sources()
-            return self._get_dates(source, fresh=True)
-
-        return fresh, entries
+    retrieve = ARegionRetriever(service="koeniz", municipalities=MUNICIPALITIES)
+    parse = ARegionIcsParser()
+    transform = ICSTransformer(type_value_map=TYPE_VALUE_MAP)
