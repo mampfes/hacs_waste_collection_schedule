@@ -1,39 +1,68 @@
+"""Abfallwirtschaft Germersheim, Germany.
+
+Demonstrates: a form whose ICS export needs a CSRF-style token and download
+key scraped from a first GET, together with the *current* set of waste-type
+checkboxes it renders (so the POST asks for every type actually offered
+rather than a hardcoded list) -- then that state is POSTed back to the same
+URL to get the ICS. No configured retriever expresses "GET, scrape two hidden
+fields and a dynamic checkbox list, then POST all of it back", hence a
+source-defined retrieve() (the parse step, converting the returned ICS, is
+the plain shared IcsParser).
+"""
+
 import re
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "Abfallwirtschaft Germersheim"
-DESCRIPTION = "Source für Abfallkalender Kreis Germersheim"
-URL = "https://www.abfallwirtschaft-germersheim.de"
-TEST_CASES = {
-    "Bellheim": {"city": "Bellheim", "street": "Albert-Schweitzer-Str."},
-    "Hatzenbuehl": {"city": "Hatzenbühl"},
-    "hoerdt": {"city": "Hördt", "street": ""},
-}
+_API_URL = "https://www.abfallwirtschaft-germersheim.de/online-service/abfall-termine/abfalltermine-ics-export-bis-240-liter.html"
 
-API_URL = "https://www.abfallwirtschaft-germersheim.de/online-service/abfall-termine/abfalltermine-ics-export-bis-240-liter.html"
+_CHECKBOX_LABEL_RE = re.compile(r"id_form_icsabfallart_[0-9][0-9]?")
 
 
-class Source:
-    def __init__(self, city, street=""):
-        self._street = street
-        self._city = city
-        self._ics = ICS()
+@final
+class Source(BaseSource):
+    TITLE = "Abfallwirtschaft Germersheim"
+    DESCRIPTION = "Source für Abfallkalender Kreis Germersheim"
+    URL = "https://www.abfallwirtschaft-germersheim.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        s = requests.Session()
-        params = {
-            "icsortschaft": self._city,
+    TEST_CASES: ClassVar[dict] = {
+        "Bellheim": {"city": "Bellheim", "street": "Albert-Schweitzer-Str."},
+        "Hatzenbuehl": {"city": "Hatzenbühl"},
+        "hoerdt": {"city": "Hördt", "street": ""},
+    }
+
+    PARAMS = (
+        city(field="city"),
+        street(field="street", optional=True),
+    )
+
+    def retrieve(self, source):
+        session = source.session
+        params: dict = {
+            "icsortschaft": self.params["city"],
             "icsabfallart[]": [],
         }
+        street_name = self.params.get("street") or ""
+        if street_name:
+            params["icsstrasse"] = street_name
 
-        if self._street != "":
-            params["icsstrasse"] = self._street
-
-        r = s.get(API_URL, params=params)
+        r = session.get(_API_URL, params=params)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
@@ -44,27 +73,30 @@ class Source:
             "input", {"type": "hidden", "name": "REQUEST_TOKEN"}
         ).get("value")
 
-        checkbox_class = re.compile("id_form_icsabfallart_[0-9][0-9]?")
-        waste_types = soup.find("div", {"class": "ctlg_form_field checkbox"}).find_all(
-            "label",
-            {
-                "for": checkbox_class,
-            },
-        )
-        for waste_type in waste_types:
+        waste_type_labels = soup.find(
+            "div", {"class": "ctlg_form_field checkbox"}
+        ).find_all("label", {"for": _CHECKBOX_LABEL_RE})
+        for waste_type in waste_type_labels:
             params["icsabfallart[]"].append(waste_type.text)
 
-        r = s.post(
-            API_URL,
+        return session.post(
+            _API_URL,
             params=params,
             data={"ICS_DOWNLOAD": ics_download, "REQUEST_TOKEN": request_token},
         )
-        r.raise_for_status()
 
-        entries = []
+    parse = IcsParser()
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmüll": GENERAL_WASTE,
+            "Bioabfall": ORGANIC,
+            "Gelber Sack": RECYCLABLES,
+            "Glasbox": GLASS,
+            "Heckenschnitt": GARDEN_WASTE,
+            "Papier": PAPER,
+            "Problemmüll": HAZARDOUS,
+        }
+    )
 
-        dates = self._ics.convert(r.text)
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-
-        return entries
+    def __init__(self, city: str, street: str = ""):
+        super().__init__(city=city, street=street)
