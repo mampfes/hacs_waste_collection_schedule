@@ -1,124 +1,121 @@
 import re
 from datetime import date, datetime
-from typing import Optional
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service.ArcGis import (
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
-TITLE = "Fuquay-Varina, North Carolina"
-DESCRIPTION = "Source for Fuquay-Varina, NC waste collection via ArcGIS services"
-URL = "https://gis1.fuquay-varina.org/"
-TEST_CASES = {
-    "Test_001": {"street_address": "155 S Main St"},
-    "Test_002": {"street_address": "123 E Vance St"},
+# Fuquay-Varina's Solid_Waste_Information FeatureServer keys one feature per
+# address and reports each stream's *next* pickup date as free text (e.g. "The
+# next garbage pickup date for this address is Monday, January 06") rather
+# than a recurring cadence, so there is nothing for RecurrenceExpander to
+# project: preprocess yields the one resolved (date, key) row per stream
+# directly, and a plain ICSTransformer types it.
+
+FEATURE_URL = "https://gis1.fuquay-varina.org/server/rest/services/Public/Solid_Waste_Information/MapServer/0"
+
+# ArcGIS field -> waste-type key.
+_FIELDS = {
+    "garbage_next_pickup_date": "Garbage",
+    "recycling_next_pickup_date": "Recycling",
 }
 
-API_URL = "https://gis1.fuquay-varina.org/server/rest/services/Public/Solid_Waste_Information/MapServer/0/query"
-
-ICON_MAP = {
-    "GARBAGE": Icons.GENERAL_WASTE,
-    "RECYCLING": Icons.RECYCLING,
+_TYPE_MAP = {
+    "Garbage": GENERAL_WASTE,
+    "Recycling": RECYCLABLES,
 }
 
+_MONTHS = {
+    "january": 1,
+    "february": 2,
+    "march": 3,
+    "april": 4,
+    "may": 5,
+    "june": 6,
+    "july": 7,
+    "august": 8,
+    "september": 9,
+    "october": 10,
+    "november": 11,
+    "december": 12,
+}
 
-class Source:
+_DATE_RE = re.compile(r"([A-Za-z]+),?\s+(\d{1,2})")
+
+
+def _where(**params) -> str:
+    address_query = params["street_address"].strip().lower()
+    return f"LOWER(ADDRESS) LIKE '%{address_query}%'"
+
+
+def _parse_date_from_text(date_text: str) -> date | None:
+    """Parse 'The next ... pickup date ... is Monday, January 06' style text."""
+    if not date_text:
+        return None
+
+    match = _DATE_RE.search(date_text)
+    if not match:
+        return None
+
+    month = _MONTHS.get(match.group(1).lower())
+    if not month:
+        return None
+    day = int(match.group(2))
+
+    current_date = datetime.now().date()
+    current_year = current_date.year
+    try:
+        pickup_date = date(current_year, month, day)
+        # More than 60 days in the past likely means next year's occurrence.
+        if (current_date - pickup_date).days > 60:
+            pickup_date = date(current_year + 1, month, day)
+        return pickup_date
+    except ValueError:
+        return None
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Fuquay-Varina, North Carolina"
+    DESCRIPTION = "Source for Fuquay-Varina, NC waste collection via ArcGIS services"
+    URL = "https://gis1.fuquay-varina.org/"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"street_address": "155 S Main St"},
+        "Test_002": {"street_address": "123 E Vance St"},
+    }
+
+    PARAMS = (text_field("street_address", "Street Address"),)
+
+    retrieve = ArcGisFeatureRetriever(
+        FEATURE_URL,
+        where=_where,
+        out_fields="garbage_next_pickup_date,recycling_next_pickup_date",
+    )
+    parse = ArcGisFeatureParser()
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
     def __init__(self, street_address: str):
-        self._street_address = street_address.strip()
+        super().__init__(street_address=street_address.strip())
 
-    def fetch(self) -> list[Collection]:
-        # Clean and format the address for the query
-        address_query = self._street_address.lower().strip()
+    def preprocess(self, records, source: "Source | None" = None):
+        """Turn each matched feature's free-text pickup fields into (date, key) rows.
 
-        params = {
-            "f": "json",
-            "where": f"LOWER(ADDRESS) LIKE '%{address_query}%'",
-            "outFields": "garbage_next_pickup_date,recycling_next_pickup_date",
-        }
-
-        response = requests.get(API_URL, params=params)
-        response.raise_for_status()
-
-        data = response.json()
-
-        if not data.get("features"):
-            raise SourceArgumentNotFound("street_address", self._street_address)
-
-        # Get the first matching feature
-        feature = data["features"][0]
-        attributes = feature["attributes"]
-
-        entries = []
-
-        # Parse garbage collection
-        garbage_date_text = attributes.get("garbage_next_pickup_date", "")
-        if garbage_date_text:
-            garbage_date = self._parse_date_from_text(garbage_date_text)
-            if garbage_date:
-                entries.append(
-                    Collection(date=garbage_date, t="Garbage", icon=ICON_MAP["GARBAGE"])
-                )
-
-        # Parse recycling collection
-        recycling_date_text = attributes.get("recycling_next_pickup_date", "")
-        if recycling_date_text:
-            recycling_date = self._parse_date_from_text(recycling_date_text)
-            if recycling_date:
-                entries.append(
-                    Collection(
-                        date=recycling_date, t="Recycling", icon=ICON_MAP["RECYCLING"]
-                    )
-                )
-
-        return entries
-
-    def _parse_date_from_text(self, date_text: str) -> Optional[date]:
-        """Parse date from text like 'The next garbage pickup date for this address is Monday, January 06'."""
-        if not date_text:
-            return None
-
-        # Use regex to extract month and day
-        # Pattern matches: "January 06", "February 15", etc.
-        match = re.search(r"([A-Za-z]+),?\s+(\d{1,2})", date_text)
-        if not match:
-            return None
-
-        month_name = match.group(1)
-        day = int(match.group(2))
-
-        # Convert month name to number
-        month_map = {
-            "january": 1,
-            "february": 2,
-            "march": 3,
-            "april": 4,
-            "may": 5,
-            "june": 6,
-            "july": 7,
-            "august": 8,
-            "september": 9,
-            "october": 10,
-            "november": 11,
-            "december": 12,
-        }
-
-        month = month_map.get(month_name.lower())
-        if not month:
-            return None
-
-        # Determine the year - handle year boundary cases
-        current_date = datetime.now().date()
-        current_year = current_date.year
-
-        try:
-            pickup_date = datetime(current_year, month, day).date()
-
-            # If the pickup date is more than 60 days in the past, it's probably next year
-            # This handles Dec->Jan transitions while allowing for API update delays
-            if (current_date - pickup_date).days > 60:
-                pickup_date = datetime(current_year + 1, month, day).date()
-
-            return pickup_date
-        except ValueError:
-            # Invalid date (like February 30)
-            return None
+        Overridden as a method (rather than a shared preprocessor instance)
+        because there is no recurring cadence here to hand to
+        ``RecurrenceExpander``: each field is already a single resolved "next
+        pickup" date, so this is the whole provider-specific projection.
+        """
+        for attrs in records:
+            for field, key in _FIELDS.items():
+                pickup_date = _parse_date_from_text(attrs.get(field, ""))
+                if pickup_date is not None:
+                    yield pickup_date, key
