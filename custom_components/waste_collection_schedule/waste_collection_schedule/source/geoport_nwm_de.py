@@ -1,20 +1,23 @@
 """Landkreis Nordwestmecklenburg (geoport-nwm.de).
 
 Demonstrates: the "year-in-URL, fan out across several per-waste-type ICS
-files and merge" shape. There is no dedicated retriever for this yet (a
-static ``HttpGetRetriever`` only ever returns one response), so the extra
-fetches are done inside a custom ``parse`` override using ``self.session``,
-following the documented "parser does a follow-up fetch" pattern. ``retrieve``
-still uses the declarative ``HttpGetRetriever`` for the one, always-present
-calendar (the district's main "Restmülltonne"-style feed); ``parse`` adds the
-optional per-waste-type feeds (paper, hazardous-waste collection, ...) on
-top, tolerating the ones that 404 for a given district/year.
+files and merge" shape. There is no dedicated retriever for this yet, so the
+whole fetch (main calendar plus the optional per-waste-type feeds) is done in
+a ``retrieve`` override using ``self.session``, tolerating the individual
+feeds that 404 for a given district/year/name-variant.
 
 Preserves the original's date-window quirk: in December the current and the
 following year are both queried (the provider publishes next year's calendar
-early); outside December only the current year is used, and a 404 on the
-*main* feed still propagates (matching the legacy behaviour observed live for
-the "Seefeld" test case, which is not query-year-sensitive).
+early); outside December only the current year is used.
+
+Also fixes a latent bug surfaced by converting this source: the district-name
+transliteration is ambiguous for names with a dash ("Seefeld/ Testorf-
+Steinfort"), so ``_convert_to_arg`` already computes two candidate spellings —
+but the legacy ``fetch_year`` only ever tried the first for the *main*
+calendar (only the optional extra-prefix feeds tried both). For "Seefeld"
+that first spelling 404s live; the second succeeds. The legacy source has
+therefore always failed for this TEST_CASE outside December. This version
+tries every candidate spelling for the main calendar too, which resolves it.
 """
 
 import datetime
@@ -23,7 +26,6 @@ from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district
-from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
 
@@ -73,31 +75,30 @@ class Source(BaseSource):
 
     PARAMS = (district("district"),)
 
-    retrieve = HttpGetRetriever(
-        url=lambda district, **_: _API_URL.format(
-            year=datetime.date.today().year, arg=_convert_to_arg(district)[0]
-        )
-    )
-
-    def parse(self, response, source=None):
+    def retrieve(self, source):
         district_arg = self.params["district"]
         args = _convert_to_arg(district_arg)
         today = datetime.date.today()
         years = [today.year, today.year + 1] if today.month == 12 else [today.year]
 
-        entries: list = []
+        texts: list[str] = []
         for i, year in enumerate(years):
-            if i == 0:
-                # Already fetched by `retrieve`; a failure here is real (no
-                # calendar at all for this district) so it is left to propagate.
-                entries.extend(ICS().convert(response.text))
-            else:
+            main_text = None
+            for arg in args:
                 try:
-                    r = self.session.get(_API_URL.format(year=year, arg=args[0]))
+                    r = self.session.get(_API_URL.format(year=year, arg=arg))
                     r.raise_for_status()
-                    entries.extend(ICS().convert(r.text))
+                    main_text = r.text
+                    break
                 except Exception:
-                    pass
+                    continue
+            if main_text is not None:
+                texts.append(main_text)
+            elif i == 0:
+                # No spelling worked for the required year: nothing to show.
+                raise ValueError(
+                    f"no calendar found for district {district_arg!r} ({year})"
+                )
 
             for prefix in _EXTRA_PREFIXES:
                 for arg in args:
@@ -106,10 +107,16 @@ class Source(BaseSource):
                             _API_URL.format(year=year, arg=f"{prefix}_{arg}")
                         )
                         r.raise_for_status()
-                        entries.extend(ICS().convert(r.text))
+                        texts.append(r.text)
                     except Exception:
                         pass
 
+        return texts
+
+    def parse(self, response, source=None):
+        entries: list = []
+        for text in response:
+            entries.extend(ICS().convert(text))
         return entries
 
     transform = ICSTransformer()
