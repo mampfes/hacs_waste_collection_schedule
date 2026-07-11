@@ -1,60 +1,71 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
+"""Stadt Hilchenbach waste calendar (Sitepark IES platform).
 
-TITLE = "Stadt Hilchenbach"
-DESCRIPTION = "Source for 'Abfallkalender Stadt Hilchenbach'."
-URL = "https://www.hilchenbach.de"
-COUNTRY = "de"
-TEST_CASES = {
-    "Dammstraße (Hilchenbach)": {"strasse": "Dammstr"},
-    "Am Bühl (Allenbach)": {"strasse": "Am Bühl"},
-}
+A declarative BaseSource pipeline. The shared ``SiteparkIESRetriever`` resolves
+the street (and optional Ortsteil) to a pois and returns the raw ICS response;
+the shared ``IcsParser`` + ``ICSTransformer`` do the parsing and typing. This
+module only declares the municipality's base URL, download params and the
+German-to-canonical waste-type map, so there is no ``retrieve`` override, no
+manual request params and no ICON_MAP.
+"""
 
-API_URL = "https://hilchenbach.de"
+from typing import ClassVar, final
 
-ICON_MAP = {
-    "Biomüll": Icons.BIO_KITCHEN,
-    "Papier": Icons.PAPER,
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Astschnitt": Icons.GARDEN,
-    "Schadstoff": Icons.HAZARDOUS,
-    "Weihnachtsbäume": Icons.CHRISTMAS_TREE,
-}
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, street
+from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GARDEN_WASTE, HAZARDOUS
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "strasse": "Straße",
-        "ort": "Ortsteil",
-    },
-    "en": {
-        "strasse": "Street",
-        "ort": "District",
-    },
-}
-PARAM_DESCRIPTIONS = {
-    "de": {
-        "strasse": "Straßenname oder eindeutiger Teil davon.",
-        "ort": "Optionaler Ortsteil zur Eindeutigkeit (der Teil in Klammern, z.B. 'Allenbach').",
-    },
-    "en": {
-        "strasse": "Street name or a unique part of it.",
-        "ort": "Optional district to disambiguate (the part in parentheses, e.g. 'Allenbach').",
-    },
-}
+_BASE_URL = "https://hilchenbach.de"
 
 
-class Source:
-    def __init__(self, strasse: str, ort=None):
-        self._strasse = strasse
-        self._ort = ort
-        self._sitepark = SiteparkIES(
-            API_URL, download_params={"kat": "1", "alarm": "0"}
-        )
+@final
+class Source(BaseSource):
+    TITLE = "Stadt Hilchenbach"
+    DESCRIPTION = "Source for 'Abfallkalender Stadt Hilchenbach'."
+    URL = "https://www.hilchenbach.de"
+    COUNTRY = "de"
 
-    def fetch(self):
-        dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
-        return [
-            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
-            for date, waste_type in dates
-        ]
+    TEST_CASES: ClassVar[dict] = {
+        "Dammstraße (Hilchenbach)": {"strasse": "Dammstr"},
+        "Am Bühl (Allenbach)": {"strasse": "Am Bühl"},
+    }
+
+    PARAMS = (
+        street("strasse"),
+        district("ort", optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Street name or a unique part of it. Optionally add the district "
+            "(the part in parentheses, e.g. 'Allenbach') to disambiguate."
+        ),
+        "de": (
+            "Straßenname oder eindeutiger Teil davon. Optional den Ortsteil "
+            "(der Teil in Klammern, z.B. 'Allenbach') zur Eindeutigkeit angeben."
+        ),
+    }
+
+    RAISE_ON_EMPTY = True
+
+    retrieve = SiteparkIESRetriever(
+        _BASE_URL,
+        download_params={"kat": "1", "alarm": "0"},
+    )
+    parse = parsers.IcsParser()
+    # "Biomüll", "Papier", "Restmüll", "Gelbe Tonne" and (if it occurs)
+    # "Weihnachtsbäume" already auto-resolve against the shared vocabulary;
+    # "Astschnitt" and "Schadstoffsammlung" don't match an alias exactly
+    # (the shared aliases use "...schnitt"-compound / "schadstoff(e)" forms),
+    # so they need an explicit map.
+    transform = ICSTransformer(
+        type_value_map={
+            "Astschnitt": GARDEN_WASTE,
+            "Schadstoffsammlung": HAZARDOUS,
+        }
+    )
+
+    def __init__(self, strasse: str, ort: str | None = None):
+        super().__init__(strasse=strasse, ort=ort)
