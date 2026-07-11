@@ -1,0 +1,77 @@
+{
+  "recorded_at": "2026-07-11",
+  "interactions": [
+    {
+      "key": "GET https://nominatim.openstreetmap.org/search 6edbccdb83",
+      "method": "GET",
+      "url": "https://nominatim.openstreetmap.org/search",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "gunicorn/asgi",
+        "x-nominatim-server": "dulcy.openstreetmap.org",
+        "content-encoding": "br",
+        "accept-ranges": "bytes",
+        "age": "159",
+        "date": "Sat, 11 Jul 2026 05:35:10 GMT",
+        "via": "1.1 varnish",
+        "x-served-by": "cache-per-ypph1920020-PER, cache-per-ypph1920035-PER",
+        "x-cache": "MISS, HIT",
+        "x-cache-hits": "0, 0",
+        "x-timer": "S1783748110.377187,VS0,VE1",
+        "vary": "accept-language, Accept-Encoding",
+        "strict-transport-security": "max-age=300",
+        "alt-svc": "h3=\":443\";ma=86400,h3-29=\":443\";ma=86400,h3-27=\":443\";ma=86400",
+        "content-length": "291"
+      },
+      "content_b64": "W3sicGxhY2VfaWQiOjM0MDEwMTYyLCJsaWNlbmNlIjoiRGF0YSDCqSBPcGVuU3RyZWV0TWFwIGNvbnRyaWJ1dG9ycywgT0RiTCAxLjAuIGh0dHA6Ly9vc20ub3JnL2NvcHlyaWdodCIsIm9zbV90eXBlIjoid2F5Iiwib3NtX2lkIjoxNzI4MzQzMjIsImxhdCI6Ii0zMi4wMzczMTA3IiwibG9uIjoiMTE1Ljc4MDI1NzIiLCJjbGFzcyI6ImhpZ2h3YXkiLCJ0eXBlIjoidHJ1bmsiLCJwbGFjZV9yYW5rIjoyNiwiaW1wb3J0YW5jZSI6MC4wNTM0MDgxODcyMjgxOTg2MzYsImFkZHJlc3N0eXBlIjoicm9hZCIsIm5hbWUiOiJDYW5uaW5nIEhpZ2h3YXkiLCJkaXNwbGF5X25hbWUiOiJDYW5uaW5nIEhpZ2h3YXksIFBhbG15cmEsIFBlcnRoLCBXZXN0ZXJuIEF1c3RyYWxpYSwgNjE1NywgQXVzdHJhbGlhIiwiYm91bmRpbmdib3giOlsiLTMyLjAzODMwNjYiLCItMzIuMDM2MzA0NCIsIjExNS43NzYxMDk2IiwiMTE1Ljc4NDQwMjQiXX1d"
+    },
+    {
+      "key": "GET https://melville.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Integration/api/Reproject 93e2482542",
+      "method": "GET",
+      "url": "https://melville.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Integration/api/Reproject",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "47",
+        "Connection": "keep-alive",
+        "Date": "Sat, 11 Jul 2026 05:35:10 GMT",
+        "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com/ https://cloud.skylineglobe.com/ https://spatialreference.org/ https://ajax.googleapis.com/ajax/libs/ blob:; img-src * data:; style-src 'unsafe-inline' 'self' *; frame-src *; connect-src *; media-src *; font-src 'self' 'unsafe-inline' *; worker-src 'self' 'unsafe-eval' 'unsafe-inline' blob: filesystem:",
+        "Cache-Control": "no-cache",
+        "Expires": "Sat, 11 Jul 2026 05:34:10 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 6dc16eff03b26f95517660856f1482f2.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "PER50-P3",
+        "X-Amz-Cf-Id": "qx9bsAjNBImnFgPUANLFKmzhyfcMbIomh5gYEIjRm3TQZ9gWPvnQ7w=="
+      },
+      "content_b64": "eyJ4IjozODQ4MzEuNjE5NDM5NDQ2NDgsInkiOjY0NTQ3NzguMzI4OTI1MjQ4Mn0="
+    },
+    {
+      "key": "GET https://melville.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Integration/api/search/ 289d71b069",
+      "method": "GET",
+      "url": "https://melville.spatial.t1cloud.com/spatial/intramaps/ApplicationEngine/Integration/api/search/",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "291",
+        "Connection": "keep-alive",
+        "Date": "Sat, 11 Jul 2026 05:35:11 GMT",
+        "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com/ https://cloud.skylineglobe.com/ https://spatialreference.org/ https://ajax.googleapis.com/ajax/libs/ blob:; img-src * data:; style-src 'unsafe-inline' 'self' *; frame-src *; connect-src *; media-src *; font-src 'self' 'unsafe-inline' *; worker-src 'self' 'unsafe-eval' 'unsafe-inline' blob: filesystem:",
+        "Cache-Control": "no-cache",
+        "Expires": "Sat, 11 Jul 2026 05:34:11 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Cache": "Miss from cloudfront",
+        "Via": "1.1 b7b442fe25461fb00e06269a18be6350.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "PER50-P3",
+        "X-Amz-Cf-Id": "X9UbyicaUjtagWSTo4PlXgQrhb6m6MKopVJJG73nSv_G1pqO5s90eA=="
+      },
+      "content_b64": "W1t7Im5hbWUiOiJjb2xsZWN0aW9uX2Rpc3RyaWN0IiwiY2FwdGlvbiI6ImNvbGxlY3Rpb24gZGlzdHJpY3QiLCJ2YWx1ZSI6IlR1ZXNkYXkifSx7Im5hbWUiOiJHcmVlbkxpZCIsImNhcHRpb24iOiJHcmVlbkxpZCIsInZhbHVlIjoiRXZlcnkgVHVlc2RheSJ9LHsibmFtZSI6IlJlZExpZCIsImNhcHRpb24iOiJSZWRMaWQiLCJ2YWx1ZSI6IlR1ZXNkYXksIDE0IEp1bCAyMDI2In0seyJuYW1lIjoiWWVsbG93TGlkIiwiY2FwdGlvbiI6IlllbGxvd0xpZCIsInZhbHVlIjoiVHVlc2RheSwgMjEgSnVsIDIwMjYifV1d"
+    }
+  ]
+}

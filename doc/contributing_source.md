@@ -233,7 +233,7 @@ Before writing a retriever or parser, check whether the provider runs on a platf
 | ArcGIS | `feature_query`, `ArcGisFeatureRetriever` / `ArcGisFeatureParser`, `ArcGisMultiFeatureRetriever` / `ArcGisMultiFeatureParser`, `geocode` | Address or spatial queries against FeatureServer layers. The multi-layer pair tolerates a single failing layer. |
 | RiSKommunal (AT) | `RiSKommunalRetriever`, `RiSKommunalParser` | Austrian RiS calendars, paged HTML, fetched lazily. |
 | Abfallnavi / regio iT (DE) | `AbfallnaviRetriever`, `AbfallnaviParser` | Multi-request place resolution plus a separate fraktionen reference map. |
-| IntraMaps | `IntraMapsRetriever`, `IntraMapsPanelParser`, `MapsClientConfig` | Stateful session handshake before any data. |
+| IntraMaps | `IntraMapsRetriever`, `IntraMapsPanelParser`, `MapsClientConfig` (stateful session handshake) or `IntegrationClientRetriever`, `IntegrationPanelParser`, `IntegrationClientConfig` (apikey REST search) | Two unrelated IntraMaps flows; pick the one the council's site actually calls. |
 | Sitepark IES / abto (DE) | `SiteparkIESRetriever` + `parsers.IcsParser` | Autocomplete street lookup, then a raw ICS download parsed by the shared ICS parser. |
 
 Also check the existing shared YAML and EXTRA_INFO platforms (Recollect, Recycle Coach, ICS YAML, Publidata, c-trace, and the others) before writing anything new. If your provider is covered, add it there instead of writing a new source.

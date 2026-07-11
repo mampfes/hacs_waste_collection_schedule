@@ -1,37 +1,29 @@
-from __future__ import annotations
+from datetime import date, timedelta
+from typing import ClassVar, final
 
-from datetime import date, datetime, timedelta
-
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.IntraMaps import (
-    IntegrationClient,
     IntegrationClientConfig,
-    IntraMapsSearchError,
+    IntegrationClientRetriever,
+    IntegrationPanelParser,
 )
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
-TITLE = "Shire of Serpentine Jarrahdale"
-DESCRIPTION = "Source for www.sjshire.wa.gov.au Waste Collection Services"
-URL = "https://www.sjshire.wa.gov.au"
-
-TEST_CASES = {
-    "Monday": {
-        "address": "5 Pingaring Court BYFORD WA 6122",
-        "predict": True,
-    },
-    "Tuesday": {"address": "865 South Western Highway BYFORD WA 6122"},
-    "Wednesday": {"address": "701 Jarrahdale Road JARRAHDALE WA 6124"},
-    "Thursday": {"address": "6 Paterson Street MUNDIJONG WA 6123"},
-    "Friday": {"address": "1548 Kargotich Road MARDELLA WA 6125"},
-}
-
-ICON_MAP = {
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-}
+# Multiple addresses can share a street/suburb combination, so the search step
+# fetches every candidate (match_field="Address") and the retriever picks the
+# exact one, raising suggestions otherwise -- IntegrationClientRetriever's
+# generic disambiguation, not source-specific code. Rubbish is a bare weekday
+# name (weekly); Recycling is worded "<day> this/next week" (fortnightly).
+#
+# The legacy source took a non-standard `predict` argument that limited the
+# result to a single upcoming occurrence unless the caller asked for more.
+# That is exactly the time-windowing this project's framework owns, not a
+# source: dropped here, and the pipeline always returns the full recurring
+# series (see doc/contributing_source.md, "Empty results and exceptions").
 
 INTRAMAPS_CONFIG = IntegrationClientConfig(
     base_url="https://maps.sjshire.wa.gov.au",
@@ -42,109 +34,83 @@ INTRAMAPS_CONFIG = IntegrationClientConfig(
 SEARCH_FORM = "de2aecaf-1e4d-4d25-8146-b0f0109aa458"
 DETAILS_FORM = "a51626b7-3892-44f4-9fba-b0264486bda5"
 
-WEEKDAYS = {
-    "monday": 0,
-    "tuesday": 1,
-    "wednesday": 2,
-    "thursday": 3,
-    "friday": 4,
-    "saturday": 5,
-    "sunday": 6,
+_TYPE_MAP = {
+    "WasteCollectionDay": GENERAL_WASTE,
+    "RecycleDay": RECYCLABLES,
 }
 
 
-class Source:
-    def __init__(self, address, predict=False):
-        self._address = address
-        self._predict = predict
+def _this_or_next_week(weekday: int, next_week: bool) -> date:
+    """Resolve "<day> this/next week" to a date: that week's Monday + offset.
 
-    def fetch(self):
-        client = IntegrationClient(INTRAMAPS_CONFIG)
+    Matches the wording literally rather than resolving to the next upcoming
+    occurrence: if the named day within "this week" has already passed, the
+    result is that (past) date, same as the legacy source and the council's
+    own site.
+    """
+    today = date.today()
+    week_start = today - timedelta(days=today.weekday())
+    target = week_start + timedelta(days=weekday)
+    if next_week:
+        target += timedelta(days=7)
+    return target
 
-        try:
-            all_results = client.search_all(SEARCH_FORM, self._address)
-        except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
 
-        # Find exact address match
-        match = None
-        addresses = []
-        for result in all_results:
-            addr = result.get("Address", "")
-            addresses.append(addr)
-            if self._address.lower().replace(" ", "").replace(
-                ",", ""
-            ) == addr.lower().replace(" ", "").replace(",", ""):
-                match = result
-                break
+def _describe(record, source):
+    column = record.get("column", "")
+    if column not in _TYPE_MAP:
+        return
+    text = record.get("value", "").strip().lower()
+    if not text:
+        return
 
-        if not match:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, addresses
-            )
-
-        mapkey = match["mapkey"]
-        dbkey = match["dbkey"]
-
-        data = client.search(DETAILS_FORM, f"{mapkey},{dbkey}")
-
-        # Rubbish — weekly on a named day
-        day_rubbish = data.get("WasteCollectionDay", "").strip().lower()
-        rubbish_weekday = WEEKDAYS.get(day_rubbish)
-        if rubbish_weekday is not None:
-            today = datetime.now().date()
-            days_ahead = (rubbish_weekday - today.weekday()) % 7
-            rubbish_date = today + timedelta(days=days_ahead)
-        else:
-            rubbish_date = None
-
-        # Recycling — "[day] this/next week" (fortnightly)
-        day_recycling = data.get("RecycleDay", "").strip().lower()
-        recycle_date = self._parse_this_next_week(day_recycling)
-
-        entries = []
-
-        if rubbish_date:
-            count = 4 if self._predict else 1
-            for i in range(count):
-                entries.append(
-                    Collection(
-                        date=rubbish_date + timedelta(weeks=i),
-                        t="Rubbish",
-                        icon=ICON_MAP["Rubbish"],
-                    )
-                )
-
-        if recycle_date:
-            count = 2 if self._predict else 1
-            for i in range(count):
-                entries.append(
-                    Collection(
-                        date=recycle_date + timedelta(weeks=i * 2),
-                        t="Recycling",
-                        icon=ICON_MAP["Recycling"],
-                    )
-                )
-
-        return entries
-
-    @staticmethod
-    def _parse_this_next_week(text: str) -> date | None:
-        """Parse '[day] this/next week' into a date."""
-        parts = text.split()
-        if not parts:
-            return None
-
-        day = parts[0]
-        weekday = WEEKDAYS.get(day)
+    if column == "WasteCollectionDay":
+        weekday = recurrence.weekday(text)
         if weekday is None:
-            return None
+            return
+        yield Schedule(column, recurrence.next_weekday(weekday), recurrence.WEEKLY, 26)
+        return
 
-        today = datetime.now().date()
-        current_week_start = today - timedelta(days=today.weekday())
-        target = current_week_start + timedelta(days=weekday)
+    # column == "RecycleDay": "<day> this/next week"
+    parts = text.split()
+    if not parts:
+        return
+    weekday = recurrence.weekday(parts[0])
+    if weekday is None:
+        return
+    start = _this_or_next_week(weekday, "next" in text)
+    yield Schedule(column, start, recurrence.FORTNIGHTLY, 13)
 
-        if "next" in text:
-            target += timedelta(days=7)
 
-        return target
+@final
+class Source(BaseSource):
+    TITLE = "Shire of Serpentine Jarrahdale"
+    DESCRIPTION = "Source for www.sjshire.wa.gov.au Waste Collection Services"
+    URL = "https://www.sjshire.wa.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Monday": {"address": "5 Pingaring Court BYFORD WA 6122"},
+        "Tuesday": {"address": "865 South Western Highway BYFORD WA 6122"},
+        "Wednesday": {"address": "701 Jarrahdale Road JARRAHDALE WA 6124"},
+        "Thursday": {"address": "6 Paterson Street MUNDIJONG WA 6123"},
+        "Friday": {"address": "1548 Kargotich Road MARDELLA WA 6125"},
+    }
+
+    PARAMS = (text_field("address", "Street Address"),)
+
+    retrieve = IntegrationClientRetriever(
+        INTRAMAPS_CONFIG,
+        search_form=SEARCH_FORM,
+        details_form=DETAILS_FORM,
+        address="address",
+        match_field="Address",
+    )
+    parse = IntegrationPanelParser()
+    preprocess = RecurrenceExpander(_describe)
+
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
+    def __init__(self, address: str):
+        super().__init__(address=address)
