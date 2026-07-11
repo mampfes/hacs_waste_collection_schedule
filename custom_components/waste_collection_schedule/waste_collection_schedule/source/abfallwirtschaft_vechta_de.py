@@ -1,125 +1,165 @@
+"""AWB Abfallwirtschaft Vechta, Germany.
+
+Demonstrates: a per-street calendar assembled from *two* independent paper-
+collector feeds ("pamo" and "siemer") that must each be resolved (city
+search, then street search, threading the previous step's id through a
+cookie jar) and fetched separately, then merged and de-duplicated. Near
+year-end the provider also publishes the first weeks of the following year,
+best-effort (swallowed if not yet published). No configured retriever
+expresses "resolve an id twice over, fetch two related but separate feeds,
+optionally a third year", hence a source-defined retrieve(); the label
+clean-up (stripping a fixed prefix/suffix and the per-district digit
+suffix) happens before the record reaches ICSTransformer, since a stripped
+digit does not change the record's canonical waste type -- only its
+now-superseded display text.
+"""
+
 import json
 import re
 from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    GLASS,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "AWB Abfallwirtschaft Vechta"
-DESCRIPTION = "Source for AWB Abfallwirtschaft Vechta."
-URL = "https://www.abfallwirtschaft-vechta.de/"
-TEST_CASES = {
-    "Vechta, An der Hasenweide": {"stadt": "Vechta", "strasse": "An der Hasenweide"},
-    "Bakum, Up'n Sande": {"stadt": "Bakum", "strasse": "Up'n Sande"},
-    "Neuenkirchen-Vörden, Braunschweiger Straße": {
-        "stadt": "Neuenkirchen-Vörden",
-        "strasse": "Braunschweiger Straße",
-    },
-    "Goldenstedt, An der Ellenbäke": {
-        "stadt": "Goldenstedt",
-        "strasse": "An der Ellenbäke",
-    },
-}
+_BASE_URL = "https://www.abfallwirtschaft-vechta.de"
+_STADT_SUCHE_URL = f"{_BASE_URL}/CALENDER/inc.suche_stadt.php"
+_STRASSE_SUCHE_URL = f"{_BASE_URL}/CALENDER/inc.suche_strasse.php"
+_ICS_URL = f"{_BASE_URL}/CALENDER/inc.get_calender_ics.php"
 
-
-ICON_MAP = {
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "Bioabfall": Icons.BIO_KITCHEN,
-    "Altpapier": Icons.PAPER,
-    "Altpapier Siemer": Icons.PAPER,
-    "Altpapier Pamo": Icons.PAPER,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-}
+_TITLE_STRIP = ("Abfuhrtermin", "Erinnerung", "für")
+_DIGITS_RE = re.compile(r"[0-9]")
 
 
-class Source:
-    def __init__(self, stadt: str, strasse: str):
-        self._stadt: str = stadt
-        self._strasse: str = strasse
-        self._ics = ICS()
+def _clean_bin_type(title: str) -> str:
+    for phrase in _TITLE_STRIP:
+        title = title.replace(phrase, "")
+    title = _DIGITS_RE.sub("", title).strip().replace("  ", " ")
+    return title
 
-    def fetch(self):
+
+def _fetch_year(session, stadt: str, strasse: str, jahr: int) -> "list[tuple]":
+    entries: list = []
+    seen: set = set()
+
+    for papier_typ in ("pamo", "siemer"):
+        cookies = {"jahr": str(jahr)}
+
+        r = session.get(_STADT_SUCHE_URL, params={"term": stadt}, cookies=cookies)
+        r.raise_for_status()
+        city_id = r.json()[0]["id"]
+        cookies["stadt"] = str(city_id)
+
+        r = session.get(
+            _STRASSE_SUCHE_URL,
+            params={"stadt": city_id, "term": strasse},
+            cookies=cookies,
+        )
+        r.raise_for_status()
+        street_entry = json.loads(r.text[1:-2])["strassen"][0]
+        cookies["stadt"] = str(street_entry["id"])
+        cookies["abfuhrbezirk"] = str(street_entry["abfuhrbezirk"])
+        cookies["abfuhrbezirkpapir"] = str(street_entry[papier_typ])
+        cookies["papier"] = papier_typ
+
+        args = {
+            "stadt": city_id,
+            "strasse": street_entry["id"],
+            "abfuhrbezirkpapier": street_entry[papier_typ],
+            "jahr": jahr,
+            "papier": papier_typ,
+            "trigger": "false",
+            "triggerday": "false",
+            "triggertime": "false",
+        }
+        r = session.get(_ICS_URL, params=args, cookies=cookies)
+        r.raise_for_status()
+        r.encoding = "utf-8"
+
+        # Sometimes has a non-ASCII UID, which would raise while converting.
+        text = r.text.replace("UID:", "NOTUID: ")
+        for date_, title in ICS().convert(text):
+            bin_type = _clean_bin_type(title)
+            key = (date_, bin_type)
+            if key in seen:
+                continue
+            seen.add(key)
+            entries.append(key)
+
+    return entries
+
+
+@final
+class Source(BaseSource):
+    TITLE = "AWB Abfallwirtschaft Vechta"
+    DESCRIPTION = "Source for AWB Abfallwirtschaft Vechta."
+    URL = f"{_BASE_URL}/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Vechta, An der Hasenweide": {
+            "stadt": "Vechta",
+            "strasse": "An der Hasenweide",
+        },
+        "Bakum, Up'n Sande": {"stadt": "Bakum", "strasse": "Up'n Sande"},
+        "Neuenkirchen-Vörden, Braunschweiger Straße": {
+            "stadt": "Neuenkirchen-Vörden",
+            "strasse": "Braunschweiger Straße",
+        },
+        "Goldenstedt, An der Ellenbäke": {
+            "stadt": "Goldenstedt",
+            "strasse": "An der Ellenbäke",
+        },
+    }
+
+    PARAMS = (
+        city(field="stadt"),
+        street(field="strasse"),
+    )
+
+    def retrieve(self, source):
+        session = source.session
+        stadt = self.params["stadt"]
+        strasse = self.params["strasse"]
         now = datetime.now()
-        entries = self.get_data(now.year)
-        if now.month != 12:
-            return entries
-        try:
-            return entries + self.get_data(now.year + 1)
-        except Exception:
-            pass
 
-    def get_data(self, jahr):
-        args = {"stadt": self._stadt, "strasse": self._strasse}
+        entries = _fetch_year(session, stadt, strasse, now.year)
+        if now.month == 12:
+            try:
+                entries = entries + _fetch_year(session, stadt, strasse, now.year + 1)
+            except Exception:
+                pass
+        return entries
 
-        collection_entries = []
-        string_entries = []
+    def parse(self, raw, source):
+        return raw
 
-        for papier_typ in ["pamo", "siemer"]:
-            session = requests.Session()
-            session.cookies.set("jahr", str(jahr))
+    transform = ICSTransformer(
+        type_value_map={
+            "Restabfall": GENERAL_WASTE,
+            "Glass": GLASS,
+            "Glas": GLASS,
+            "Bioabfall": ORGANIC,
+            "Altpapier": PAPER,
+            "Altpapier Siemer": PAPER,
+            "Altpapier Pamo": PAPER,
+            "Gelbe Tonne": RECYCLABLES,
+            "Altkleider": RECYCLABLES,
+            "Altkleider (Außer Langförden)": RECYCLABLES,
+            "Mobile Schadstoff.": HAZARDOUS,
+        }
+    )
 
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_stadt.php",
-                params={"term": self._stadt},
-            )
-            r.raise_for_status()
-            city_id = r.json()[0]["id"]
-            session.cookies.set("stadt", str(city_id))
-
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_strasse.php",
-                params={"stadt": city_id, "term": self._strasse},
-            )
-            r.raise_for_status()
-            street = json.loads(r.text[1:-2])["strassen"][0]
-            session.cookies.set("stadt", str(street["id"]))
-            session.cookies.set("abfuhrbezirk", str(street["abfuhrbezirk"]))
-            session.cookies.set("abfuhrbezirkpapir", str(street[papier_typ]))
-            session.cookies.set("papier", papier_typ)
-
-            args = {
-                "stadt": city_id,
-                "strasse": street["id"],
-                "abfuhrbezirkpapier": street[papier_typ],
-                "jahr": jahr,
-                "papier": papier_typ,
-                "trigger": "false",
-                "triggerday": "false",
-                "triggertime": "false",
-            }
-
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.get_calender_ics.php",
-                params=args,
-            )
-            r.raise_for_status()
-            r.encoding = "utf-8"
-
-            # sometimes has a not ascii UID this would raise an Exception while converting
-            dates = self._ics.convert(r.text.replace("UID:", "NOTUID: "))
-
-            for d in dates:
-                bin_type = (
-                    d[1]
-                    .replace("Abfuhrtermin", "")
-                    .replace("Erinnerung", "")
-                    .replace("für", "")
-                    .strip()
-                )
-
-                if f"{bin_type} {d[0]!s}" in string_entries:
-                    continue
-                string_entries.append(f"{bin_type} {d[0]!s}")
-
-                collection_entries.append(
-                    Collection(
-                        d[0],
-                        bin_type,
-                        ICON_MAP.get(
-                            re.sub("[0-9]", "", bin_type).strip().replace("  ", " ")
-                        ),
-                    )
-                )
-        return collection_entries
+    def __init__(self, stadt: str, strasse: str):
+        super().__init__(stadt=stadt, strasse=strasse)
