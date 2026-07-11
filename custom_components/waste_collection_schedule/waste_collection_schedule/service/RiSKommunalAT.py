@@ -31,12 +31,13 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
-from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.parsers import IcsParser, Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
 from waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defined]
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
+    from waste_collection_schedule.retrievers import Response
 
 # Assembly-qualified name token required by every RiSKommunal CalendarService.ashx
 # endpoint. It is a platform constant (base64 of
@@ -674,3 +675,134 @@ class RiSKommunalParser(Parser[Iterator["tuple[date, str]"]]):
             # window (mirrors the legacy per-page early exit).
             if end_date is not None and rows[-1][0] > end_date:
                 break
+
+
+# --------------------------------------------------------------------------- #
+# Multi-feed ICS pipeline components
+#
+# Some RiSKommunal municipalities don't publish a single combined calendar at
+# all: they instead expose one CalendarService.ashx feed per waste type, or
+# per zone selection. Two converted sources (rohrbach_lafnitz_at, badaussee_at)
+# shared a near-identical hand-rolled retrieve()/parse() pair for this shape
+# before RiSKommunalMultiIcsRetriever/RiSKommunalMultiIcsParser existed:
+#
+#     retrieve = RiSKommunalMultiIcsRetriever(
+#         base_url=..., gnr=..., feeds={label: do, ...},
+#     )
+#     parse = RiSKommunalMultiIcsParser()
+#
+# The retriever fetches every configured feed (via source.session) and pairs
+# each response with an optional fixed label; the parser runs the shared
+# parsers.IcsParser over each pair and yields (date, label) rows, falling
+# back to the feed's own ICS SUMMARY when no fixed label was given. Feed
+# selection covers the three shapes seen so far, any combination of which may
+# be supplied together:
+#
+#   * ``feeds``      -- fixed ``{label: do}``, always fetched, always
+#                        re-tagged with ``label`` (rohrbach_lafnitz_at: every
+#                        feed's own SUMMARY is generic/unhelpful).
+#   * ``do_ids``      -- fixed list of "do" ids, always fetched, feed's own
+#                        SUMMARY kept as the label (badaussee_at's fixed
+#                        Gelber Sack calendar).
+#   * ``zone_feeds``  -- ``{param_name: {zone_value: do}}``; for each entry,
+#                        fetched only if ``source.params[param_name]``
+#                        matches a configured zone value (badaussee_at's
+#                        Restmüll/Biomüll/Altpapier zone calendars). Feed's
+#                        own SUMMARY kept as the label, same as ``do_ids``.
+#
+# Output feeds straight into ICSTransformer (or RowTransformer), same as
+# RiSKommunalParser.
+# --------------------------------------------------------------------------- #
+
+
+class RiSKommunalMultiIcsRetriever(RetrieverFunc):
+    """Fetch several RiSKommunal ICS feeds ("do" ids) via the shared session.
+
+    Covers municipalities that publish one calendar per waste type, or per
+    zone selection, instead of a single combined calendar. Configure with:
+
+    Args:
+        base_url: Municipality root URL, e.g. ``https://www.badaussee.at``.
+        gnr: RiSKommunal ``gnr`` token for this municipality.
+        feeds: Fixed ``{label: do}`` mapping, always fetched. Each response
+            is paired with its label so :class:`RiSKommunalMultiIcsParser`
+            can re-tag the feed's events (for installs whose own ICS
+            ``SUMMARY`` is generic/unhelpful).
+        do_ids: Fixed list of "do" ids, always fetched. Paired with
+            ``label=None`` so the parser keeps each feed's own ``SUMMARY``.
+        zone_feeds: ``{param_name: {zone_value: do}}``. For each entry, if
+            ``source.params[param_name]`` (stringified) matches a key in its
+            map, that "do" id is fetched (paired with ``label=None``); a
+            blank or unrecognised zone value is silently skipped -- matching
+            the legacy per-source behaviour.
+        sprache: ICS feed language token, passed through to every URL.
+        timeout: Request timeout in seconds, passed through to every request.
+    """
+
+    def __init__(
+        self,
+        base_url: str,
+        gnr: str,
+        feeds: dict[str, str] | None = None,
+        do_ids: list[str] | None = None,
+        zone_feeds: dict[str, dict[str, str]] | None = None,
+        sprache: str = "1",
+        timeout: int = 30,
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.gnr = gnr
+        self.feeds = dict(feeds or {})
+        self.do_ids = list(do_ids or [])
+        self.zone_feeds = dict(zone_feeds or {})
+        self.sprache = sprache
+        self.timeout = timeout
+
+    def _ics_url(self, do: str) -> str:
+        params = {"aqn": ICS_AQN, "sprache": self.sprache, "gnr": self.gnr, "do": do}
+        query = "&".join(f"{k}={v}" for k, v in params.items())
+        return self.base_url + ICS_PATH + "?" + query
+
+    def __call__(self, source: BaseSource) -> list[tuple[str | None, Response]]:
+        session = source.session
+        results: list[tuple[str | None, Response]] = []
+
+        for label, do in self.feeds.items():
+            results.append(
+                (label, session.get(self._ics_url(do), timeout=self.timeout))
+            )
+        for do in self.do_ids:
+            results.append((None, session.get(self._ics_url(do), timeout=self.timeout)))
+        for field_name, zone_map in self.zone_feeds.items():
+            zone = str(source.params.get(field_name) or "")
+            if zone in zone_map:
+                results.append(
+                    (
+                        None,
+                        session.get(
+                            self._ics_url(zone_map[zone]), timeout=self.timeout
+                        ),
+                    )
+                )
+
+        return results
+
+
+class RiSKommunalMultiIcsParser(Parser["Iterator[tuple[date, str]]"]):
+    """Parse the feeds produced by :class:`RiSKommunalMultiIcsRetriever`.
+
+    Runs the shared ``parsers.IcsParser`` over each ``(label, response)``
+    pair, yielding ``(date, label)`` rows -- ``label`` is the fixed label when
+    one was supplied, otherwise the feed's own ICS ``SUMMARY``. Feeds straight
+    into ``ICSTransformer`` (or ``RowTransformer``), same as
+    :class:`RiSKommunalParser`.
+    """
+
+    def __call__(
+        self,
+        raw: list[tuple[str | None, Response]],
+        source: BaseSource | None = None,
+    ) -> Iterator[tuple[date, str]]:
+        ics_parser = IcsParser()
+        for label, response in raw:
+            for event_date, summary in ics_parser(response, source):
+                yield event_date, label if label is not None else summary
