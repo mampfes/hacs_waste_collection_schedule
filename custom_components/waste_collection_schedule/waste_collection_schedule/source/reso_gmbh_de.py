@@ -1,77 +1,114 @@
+"""RESO GmbH (reso-gmbh.de).
+
+Demonstrates: a static, param-built ICS POST whose feed is generated one
+calendar year at a time. Near year-end the provider's own calendar app also
+shows the first weeks of the following year, so this mirrors that by fetching
+the next year too (best-effort: swallowed if the following year isn't
+published yet) once the current month reaches December. No configured
+retriever expresses "POST, then conditionally POST again for a second year",
+hence a source-defined retrieve()/parse() pair; parsing itself is the plain
+IcsParser with the same ``split_at`` the legacy ``ICS()`` call used.
+"""
+
 from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, municipality
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "RESO"
-DESCRIPTION = "Source for RESO."
-URL = "https://reso-gmbh.de"
-TEST_CASES = {
-    "Reichelsheim Kerngemeinde": {"ort": "Reichelsheim", "ortsteil": "Kerngemeinde"}
-}
+_API_URL = "https://reso-gmbh.abfallkalender.services/php/Kalender-2-ICS.php"
 
-
-ICON_MAP = {
-    "restmüll": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "biotonne": Icons.BIO_KITCHEN,
-    "papiertonne": Icons.PAPER,
-    "gelber-sack": Icons.RECYCLING,
-}
-
-
-EXTRA_INFO = [
-    {"title": "Bad-König", "default_params": {"ort": "Bad-König"}},
-    {"title": "Brensbach", "default_params": {"ort": "Brensbach"}},
-    {"title": "Breuberg", "default_params": {"ort": "Breuberg"}},
-    {"title": "Brombachtal", "default_params": {"ort": "Brombachtal"}},
-    {"title": "Erbach", "default_params": {"ort": "Erbach"}},
-    {"title": "Fränkisch-Crumbach", "default_params": {"ort": "Fränkisch-Crumbach"}},
-    {"title": "Höchst", "default_params": {"ort": "Höchst"}},
-    {"title": "Lützelbach", "default_params": {"ort": "Lützelbach"}},
-    {"title": "Michelstadt", "default_params": {"ort": "Michelstadt"}},
-    {"title": "Mossautal", "default_params": {"ort": "Mossautal"}},
-    {"title": "Oberzent", "default_params": {"ort": "Oberzent"}},
-    {"title": "Reichelsheim", "default_params": {"ort": "Reichelsheim"}},
-]
+_TOWNS = (
+    "Bad-König",
+    "Brensbach",
+    "Breuberg",
+    "Brombachtal",
+    "Erbach",
+    "Fränkisch-Crumbach",
+    "Höchst",
+    "Lützelbach",
+    "Michelstadt",
+    "Mossautal",
+    "Oberzent",
+    "Reichelsheim",
+)
 
 
-API_URL = "https://reso-gmbh.abfallkalender.services/php/Kalender-2-ICS.php"
+def _post_args(ort: str, ortsteil: str, year: int) -> dict:
+    return {
+        "Ort": ort,
+        "Ortsteil": ortsteil,
+        "Jahr": year,
+        "art": 1,
+        "downOderurl2": "Semikolon",
+    }
 
 
-class Source:
-    def __init__(self, ort: str, ortsteil: str):
-        self._ort: str = ort
-        self._ortsteil: str = ortsteil
-        self._ics = ICS(split_at=r" \+ ")
+@final
+class Source(BaseSource):
+    TITLE = "RESO"
+    DESCRIPTION = "Source for RESO."
+    URL = "https://reso-gmbh.de"
+    COUNTRY = "de"
 
-    def fetch(self) -> list[Collection]:
+    TEST_CASES: ClassVar[dict] = {
+        "Reichelsheim Kerngemeinde": {
+            "ort": "Reichelsheim",
+            "ortsteil": "Kerngemeinde",
+        },
+    }
+
+    REGIONS = tuple(region(town, ort=town) for town in _TOWNS)
+
+    PARAMS = (
+        municipality(field="ort"),
+        district(field="ortsteil"),
+    )
+
+    def retrieve(self, source):
+        ort = source.params["ort"]
+        ortsteil = source.params["ortsteil"]
         now = datetime.now()
-        entries = self.get_data(now.year)
+
+        responses = [
+            source.session.post(_API_URL, data=_post_args(ort, ortsteil, now.year))
+        ]
         if now.month == 12:
             try:
-                entries.extend(self.get_data(now.year + 1))
+                extra = source.session.post(
+                    _API_URL, data=_post_args(ort, ortsteil, now.year + 1)
+                )
+                extra.raise_for_status()
+                responses.append(extra)
             except Exception:
                 pass
-        return entries
+        return responses
 
-    def get_data(self, year):
-        args = {
-            "Ort": self._ort,
-            "Ortsteil": self._ortsteil,
-            "Jahr": year,
-            "art": 1,
-            "downOderurl2": "Semikolon",
-        }
-
-        # get json file
-        r = requests.post(API_URL, data=args)
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
+    def parse(self, raw, source):
+        ics_parser = IcsParser(split_at=r" \+ ")
         entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1].lower())))
-
+        for response in raw:
+            response.raise_for_status()
+            entries.extend(ics_parser(response, source))
         return entries
+
+    transform = ICSTransformer(
+        type_value_map={
+            "restmüll": GENERAL_WASTE,
+            "biotonne": ORGANIC,
+            "papiertonne": PAPER,
+            "gelber-sack": RECYCLABLES,
+        }
+    )
+
+    def __init__(self, ort: str, ortsteil: str):
+        super().__init__(ort=ort, ortsteil=ortsteil)
