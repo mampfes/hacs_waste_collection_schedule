@@ -1,81 +1,94 @@
-import datetime
-import time
+from collections.abc import Iterable
+from datetime import date
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
-TITLE = "Stevenage Borough Council"
-DESCRIPTION = "Source for Stevenage."
-URL = "https://www.stevenage.gov.uk/"
-TEST_CASES = {
-    "Chepstow Close": {"uprn": "100080879233"},
-    "Rectory Lane": {"uprn": "100081137566"},
-    "Neptune Gate": {"uprn": "200000585910"},
-}
-
-ICON_MAP = {
-    "general waste": Icons.GENERAL_WASTE,
-    "recycling": Icons.RECYCLING,
-}
-
-BASE_URL = "https://stevenage-self.achieveservice.com"
-INITIAL_URL = f"{BASE_URL}/en/service/Check_your_household_bin_collection_days"
-AUTH_URL = f"{BASE_URL}/authapi/isauthenticated"
-TOKEN_URL = f"{BASE_URL}/apibroker/runLookup?id=5e55337a540d4"
-API_URL = f"{BASE_URL}/apibroker/runLookup"
-LOOKUP_ID = "64ba8cee353e6"
 HOSTNAME = "stevenage-self.achieveservice.com"
+BASE_URL = f"https://{HOSTNAME}"
+TOKEN_LOOKUP_ID = "5e55337a540d4"
+COLLECTION_LOOKUP_ID = "64ba8cee353e6"
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn)
+def _extract_token(response: dict, context: dict) -> None:
+    rows = response.get("integration", {}).get("transformed", {}).get("rows_data", {})
+    context["token"] = rows.get("0", {}).get("token", "")
 
-    def fetch(self):
-        session = requests.Session()
-        sid = init_session(session, INITIAL_URL, AUTH_URL, HOSTNAME)
 
-        # Stevenage-specific: GET a one-time token before the main lookup
-        t = session.get(TOKEN_URL)
-        t.raise_for_status()
-        token = t.json()["integration"]["transformed"]["rows_data"]["0"]["token"]
+def _collection_form_values(context: dict, source: Any) -> dict:
+    today = date.today()
+    # A year-ahead date built by incrementing the year on the same month/day,
+    # matching the original string arithmetic (not calendar-accurate on a
+    # leap day, but that is the provider's existing behaviour, not ours to fix).
+    max_date = f"{today.year + 1}-{today.month:02d}-{today.day:02d}"
+    return {
+        "token": {"value": context["token"]},
+        "LLPGUPRN": {"value": source.params["uprn"]},
+        "MinimumDateLookAhead": {"value": today.isoformat()},
+        "MaximumDateLookAhead": {"value": max_date},
+    }
 
-        form_values = {
-            "Section 1": {
-                "token": {"value": token},
-                "LLPGUPRN": {"value": self._uprn},
-                "MinimumDateLookAhead": {"value": time.strftime("%Y-%m-%d")},
-                "MaximumDateLookAhead": {
-                    "value": str(int(time.strftime("%Y")) + 1)
-                    + time.strftime("-%m-%d"),
-                },
-            }
-        }
 
-        result = run_lookup(session, API_URL, sid, LOOKUP_ID, form_values)
-        rows_data = result["integration"]["transformed"]["rows_data"]
-        if not isinstance(rows_data, dict):
-            raise ValueError("Invalid data returned from API")
+@final
+class Source(BaseSource):
+    TITLE = "Stevenage Borough Council"
+    DESCRIPTION = "Source for Stevenage."
+    URL = "https://www.stevenage.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        entries = []
-        for key in rows_data:
-            value = rows_data[key]
-            bin_type = value["bintype"].strip()
+    TEST_CASES: ClassVar[dict] = {
+        "Chepstow Close": {"uprn": "100080879233"},
+        "Rectory Lane": {"uprn": "100081137566"},
+        "Neptune Gate": {"uprn": "200000585910"},
+    }
 
-            try:
-                date = datetime.datetime.strptime(
-                    value["collectiondate"], "%A %d %B %Y"
-                ).date()
-            except ValueError:
-                continue
+    PARAMS = (uprn(),)
 
-            entries.append(
-                Collection(
-                    date=date,
-                    t=bin_type,
-                    icon=ICON_MAP.get(bin_type.lower()),
-                )
-            )
+    # Stevenage fetches a one-time token via a GET-mode runLookup call before
+    # the real POST lookup, which needs that token as a form field.
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        service_page="Check_your_household_bin_collection_days",
+        steps=[
+            LookupStep(
+                TOKEN_LOOKUP_ID,
+                method="GET",
+                extract=_extract_token,
+            ),
+            LookupStep(
+                COLLECTION_LOOKUP_ID,
+                form_values=_collection_form_values,
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    transform = JsonTransformer(
+        date_key="collectiondate",
+        type_key="bintype",
+        parse_date=date_parsers.for_format("%A %d %B %Y"),
+        type_value_map={
+            "general waste": GENERAL_WASTE,
+            "recycling": RECYCLABLES,
+        },
+    )
 
-        return entries
+    def __init__(self, uprn: str | int):
+        super().__init__(uprn=str(uprn))
+
+    def preprocess(
+        self, rows: Any, source: "BaseSource | None" = None
+    ) -> "Iterable[dict]":
+        # rows_data is a dict keyed by row index ({"0": {...}, "1": {...}}),
+        # one row per collection; JsonTransformer needs each row, not the
+        # whole rows_data dict as a single record.
+        yield from (rows.values() if isinstance(rows, dict) else rows)
