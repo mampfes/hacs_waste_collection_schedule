@@ -807,6 +807,126 @@ class TestRiSKommunalComponents:
         assert "2026-07-12" in days  # "Gemeinde Alle" always kept
         assert "2026-07-11" not in days  # Zone B filtered out
 
+    def test_retriever_lookahead_days_sets_vdatum_and_bdatum(self):
+        """lookahead_days adds a dynamically computed vdatum/bdatum window."""
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        outer = self
+        captured: dict = {}
+
+        class FakeSession:
+            def get(self, url, params=None, headers=None, timeout=None):
+                captured.update(params)
+                return outer._response(outer._EMPTY)
+
+        source = MagicMock()
+        source.params = {}
+        retriever = R.RiSKommunalRetriever(
+            base_url="https://example.at",
+            query_params={},
+            lookahead_days=30,
+            max_pages=1,
+        )
+        with patch.object(R.requests, "Session", return_value=FakeSession()):
+            list(retriever(source))
+
+        today = datetime.date.today()
+        assert captured["vdatum"] == today.strftime("%d.%m.%Y")
+        expected_bdatum = today + datetime.timedelta(days=30)
+        assert captured["bdatum"] == expected_bdatum.strftime("%d.%m.%Y")
+
+    def test_retriever_default_omits_vdatum_and_bdatum(self):
+        """Default (lookahead_days=None) preserves current behaviour exactly."""
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        outer = self
+        captured: dict = {}
+
+        class FakeSession:
+            def get(self, url, params=None, headers=None, timeout=None):
+                captured.update(params)
+                return outer._response(outer._EMPTY)
+
+        source = MagicMock()
+        source.params = {}
+        retriever = R.RiSKommunalRetriever(
+            base_url="https://example.at", query_params={}, max_pages=1
+        )
+        with patch.object(R.requests, "Session", return_value=FakeSession()):
+            list(retriever(source))
+
+        assert "vdatum" not in captured
+        assert "bdatum" not in captured
+
+    def test_parser_paginate_list_keeps_paging(self):
+        """paginate_list=True pages through list-style renderings across pages."""
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        div_id = R._LIST_DIV_ID
+        page1 = (
+            f'<div id="{div_id}">'
+            "<h2>01.07.2026</h2><ul><li><span>Restmüll</span></li></ul>"
+            "</div>"
+        )
+        page2 = (
+            f'<div id="{div_id}">'
+            "<h2>08.07.2026</h2><ul><li><span>Bioabfall</span></li></ul>"
+            "</div>"
+        )
+        source = MagicMock()
+        source.params = {}
+        parser = R.RiSKommunalParser(paginate_list=True)
+        rows = list(parser([page1, page2, self._EMPTY], source))
+        days = {d.isoformat() for d, _ in rows}
+        assert days == {"2026-07-01", "2026-07-08"}
+
+    def test_parser_default_stops_after_first_list_page(self):
+        """Default behaviour (paginate_list=False) still stops after page one."""
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        div_id = R._LIST_DIV_ID
+        page1 = (
+            f'<div id="{div_id}">'
+            "<h2>01.07.2026</h2><ul><li><span>Restmüll</span></li></ul>"
+            "</div>"
+        )
+        page2 = (
+            f'<div id="{div_id}">'
+            "<h2>08.07.2026</h2><ul><li><span>Bioabfall</span></li></ul>"
+            "</div>"
+        )
+        source = MagicMock()
+        source.params = {}
+        parser = R.RiSKommunalParser()
+        rows = list(parser([page1, page2, self._EMPTY], source))
+        days = {d.isoformat() for d, _ in rows}
+        assert days == {"2026-07-01"}  # second page never consumed
+
+    def test_parser_lookahead_days_drops_rows_past_window_and_stops(self):
+        """lookahead_days filters rows past the window even when the server
+        doesn't honour bdatum as a hard filter (observed live for Saalfelden:
+        the server kept returning rows years past the requested window)."""
+        from waste_collection_schedule.service import RiSKommunalAT as R
+
+        today = datetime.date.today()
+        in_window = (today + datetime.timedelta(days=10)).strftime("%d.%m.%Y")
+        past_window = (today + datetime.timedelta(days=400)).strftime("%d.%m.%Y")
+        page = (
+            '<table class="ris_table">'
+            f"<tr><td>{in_window}</td><td><a>Restmüll</a></td></tr>"
+            f"<tr><td>{past_window}</td><td><a>Bioabfall</a></td></tr>"
+            "</table>"
+        )
+        source = MagicMock()
+        source.params = {}
+        parser = R.RiSKommunalParser(lookahead_days=365)
+        # A second page proves pagination stopped: it must remain unconsumed
+        # once the first page's last row runs past the window.
+        pages = iter([page, self._EMPTY])
+        rows = list(parser(pages, source))
+        assert [t for _, t in rows] == ["Restmüll"]
+        assert next(pages) == self._EMPTY  # second page was never pulled
+
 
 class TestAbfallnaviComponents:
     """AbfallnaviDe (regio iT): multi-request retriever + cross-referencing parser."""

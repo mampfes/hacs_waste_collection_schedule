@@ -1,70 +1,60 @@
-from typing import ClassVar
+from typing import ClassVar, final
 
-from waste_collection_schedule import Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.service.RiSKommunalAT import (
+    RiSKommunalParser,
+    RiSKommunalRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Elsbethen"
-DESCRIPTION = "Source for Elsbethen waste collection."
-URL = "https://www.gde-elsbethen.at"
-COUNTRY = "at"
-SOURCE_CODEOWNERS = ["@bbr111"]
-
-TEST_CASES = {
-    "Überfuhrstraße 2": {"strasse": "Überfuhrstraße", "hausnummer": "2"},
-}
-
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Biomüll": Icons.BIO_KITCHEN,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Altpapier": Icons.PAPER,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "strasse": "Street name as listed in the Elsbethen waste calendar.",
-        "hausnummer": "House number as listed in the Elsbethen waste calendar.",
-    },
-    "de": {
-        "strasse": "Straßenname wie im Elsbethener Abfallkalender aufgelistet.",
-        "hausnummer": "Hausnummer wie im Elsbethener Abfallkalender aufgelistet.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "strasse": "Street",
-        "hausnummer": "House number",
-    },
-    "de": {
-        "strasse": "Straße",
-        "hausnummer": "Hausnummer",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Visit https://www.gde-elsbethen.at/Buergerservice/Abfall-Recycling/Abfallkalender, "
-        "pick your street and house number from the dropdowns, and use the same values here."
-    ),
-    "de": (
-        "Öffnen Sie https://www.gde-elsbethen.at/Buergerservice/Abfall-Recycling/Abfallkalender, "
-        "wählen Sie Ihre Straße und Hausnummer aus, und verwenden Sie dieselben Werte hier."
-    ),
-}
+_BASE_URL = "https://www.gde-elsbethen.at"
 
 
-class Source(RiSKommunalSource):
-    BASE_URL = "https://www.gde-elsbethen.at"
-    ICON_MAP = ICON_MAP
-    SELECTION_URL = (
-        "https://www.gde-elsbethen.at/system/web/kalender.aspx?menuonr=223627736"
-    )
-    LOOKAHEAD_DAYS = 365
-    MAX_PAGES = 30
-    QUERY_PARAMS: ClassVar = {
-        "menuonr": "225141707",
+@final
+class Source(BaseSource):
+    TITLE = "Elsbethen"
+    DESCRIPTION = "Source for Elsbethen waste collection."
+    URL = _BASE_URL
+    COUNTRY = "at"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Überfuhrstraße 2": {"strasse": "Überfuhrstraße", "hausnummer": "2"},
     }
 
-    def __init__(self, strasse, hausnummer):
-        super().__init__(strasse=strasse, hausnummer=hausnummer)
+    PARAMS = (
+        street("strasse"),
+        house_number("hausnummer"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit https://www.gde-elsbethen.at/Buergerservice/Abfall-Recycling/Abfallkalender, "
+            "pick your street and house number from the dropdowns, and use the same values here."
+        ),
+        "de": (
+            "Öffnen Sie https://www.gde-elsbethen.at/Buergerservice/Abfall-Recycling/Abfallkalender, "
+            "wählen Sie Ihre Straße und Hausnummer aus, und verwenden Sie dieselben Werte hier."
+        ),
+    }
+
+    retrieve = RiSKommunalRetriever(
+        base_url=_BASE_URL,
+        query_params={
+            "menuonr": "225141707",
+        },
+        strasse_param="strasse",
+        hausnummer_param="hausnummer",
+        selection_url=(
+            "https://www.gde-elsbethen.at/system/web/kalender.aspx?menuonr=223627736"
+        ),
+        lookahead_days=365,
+        max_pages=30,
+    )
+    parse = RiSKommunalParser(lookahead_days=365)
+
+    # Restmüll, Biomüll, Gelber Sack and Altpapier all resolve via the shared
+    # multilingual vocabulary; no explicit type_value_map entries are needed.
+    transform = ICSTransformer()

@@ -1,71 +1,62 @@
-from typing import ClassVar
+from typing import ClassVar, final
 
-from waste_collection_schedule import Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.service.RiSKommunalAT import (
+    RiSKommunalParser,
+    RiSKommunalRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Oberndorf bei Schwanenstadt"
-DESCRIPTION = "Source for Oberndorf bei Schwanenstadt waste collection."
-URL = "https://www.oberndorf.ooe.gv.at"
-COUNTRY = "at"
-SOURCE_CODEOWNERS = ["@bbr111"]
-
-TEST_CASES = {
-    "Am Hang 2": {"strasse": "Am Hang", "hausnummer": "2"},
-    "Bergstraße 5": {"strasse": "Bergstraße", "hausnummer": "5"},
-}
-
-ICON_MAP = {
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Bioabfall": Icons.BIO_KITCHEN,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Altpapier": Icons.PAPER,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "strasse": "Street name as listed in the Oberndorf bei Schwanenstadt waste calendar.",
-        "hausnummer": "House number as listed in the Oberndorf bei Schwanenstadt waste calendar.",
-    },
-    "de": {
-        "strasse": "Straßenname wie im Abfallkalender von Oberndorf bei Schwanenstadt aufgelistet.",
-        "hausnummer": "Hausnummer wie im Abfallkalender von Oberndorf bei Schwanenstadt aufgelistet.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "strasse": "Street",
-        "hausnummer": "House number",
-    },
-    "de": {
-        "strasse": "Straße",
-        "hausnummer": "Hausnummer",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Visit https://www.oberndorf.ooe.gv.at, pick your street and house number "
-        "from the waste-calendar dropdowns on the homepage, and use the same values here."
-    ),
-    "de": (
-        "Öffnen Sie https://www.oberndorf.ooe.gv.at, wählen Sie Ihre Straße und "
-        "Hausnummer aus den Abfallkalender-Auswahlfeldern auf der Startseite, und "
-        "verwenden Sie dieselben Werte hier."
-    ),
-}
+_BASE_URL = "https://www.oberndorf.ooe.gv.at"
 
 
-class Source(RiSKommunalSource):
-    BASE_URL = "https://www.oberndorf.ooe.gv.at"
-    ICON_MAP = ICON_MAP
-    SELECTION_URL = "https://www.oberndorf.ooe.gv.at"
-    LOOKAHEAD_DAYS = 365
-    MAX_PAGES = 30
-    QUERY_PARAMS: ClassVar = {
-        "sprache": "1",
-        "menuonr": "227435354",
+@final
+class Source(BaseSource):
+    TITLE = "Oberndorf bei Schwanenstadt"
+    DESCRIPTION = "Source for Oberndorf bei Schwanenstadt waste collection."
+    URL = _BASE_URL
+    COUNTRY = "at"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Am Hang 2": {"strasse": "Am Hang", "hausnummer": "2"},
+        "Bergstraße 5": {"strasse": "Bergstraße", "hausnummer": "5"},
     }
 
-    def __init__(self, strasse: str, hausnummer: str | int):
-        super().__init__(strasse=strasse, hausnummer=hausnummer)
+    PARAMS = (
+        street("strasse"),
+        house_number("hausnummer"),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit https://www.oberndorf.ooe.gv.at, pick your street and house number "
+            "from the waste-calendar dropdowns on the homepage, and use the same values here."
+        ),
+        "de": (
+            "Öffnen Sie https://www.oberndorf.ooe.gv.at, wählen Sie Ihre Straße und "
+            "Hausnummer aus den Abfallkalender-Auswahlfeldern auf der Startseite, und "
+            "verwenden Sie dieselben Werte hier."
+        ),
+    }
+
+    retrieve = RiSKommunalRetriever(
+        base_url=_BASE_URL,
+        query_params={
+            "sprache": "1",
+            "menuonr": "227435354",
+        },
+        strasse_param="strasse",
+        hausnummer_param="hausnummer",
+        selection_url=_BASE_URL,
+        lookahead_days=365,
+        max_pages=30,
+    )
+    parse = RiSKommunalParser(lookahead_days=365)
+
+    # Restabfall, Bioabfall, Gelber Sack and Altpapier all resolve via the
+    # shared multilingual vocabulary; no explicit type_value_map entries are
+    # needed.
+    transform = ICSTransformer()
