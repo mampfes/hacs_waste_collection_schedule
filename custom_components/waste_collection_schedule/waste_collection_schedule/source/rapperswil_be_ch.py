@@ -1,57 +1,73 @@
-import requests
+"""Rapperswil (rapperswil-be.ch), Switzerland.
+
+Demonstrates: a parameter-less, single-municipality source built with
+``TwoStepRetriever`` -- the calendar page is scraped for its "icalTermine"
+download link, which is then fetched directly. ``parse`` still needs a
+source-defined override because the feed ships a malformed
+``X-WR-TIMEZONE`` line that must be stripped before ``ICS`` can read it.
+"""
+
+from typing import ClassVar, final
+
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
-TITLE = "Rapperswil"
-DESCRIPTION = "Source for Rapperswil."
-URL = "https://www.rapperswil-be.ch/"
-TEST_CASES: dict[str, dict[str, str]] = {
-    "Rapperswil": {},
-}
+_BASE_URL = "https://www.rapperswil-be.ch"
+_API_URL = f"{_BASE_URL}/de/abfallwirtschaft/abfallkalender/"
 
 
-ICON_MAP = {
-    "Hauskehricht": Icons.GENERAL_WASTE,
-    "Grüngut": Icons.ORGANIC,
-    "Papier und Karton": Icons.PAPER,
-}
+def _pick_ics_url(lookup, source) -> str:
+    soup = BeautifulSoup(lookup.text, "html.parser")
+    ical_div = soup.select_one("div#icalTermine")
+    if ical_div is None:
+        raise ValueError("No icalTermine found")
+    link = ical_div.select_one("a")
+    if link is None:
+        raise ValueError("No ical link found")
 
-BASE_URL = "https://www.rapperswil-be.ch"
-API_URL = f"{BASE_URL}/de/abfallwirtschaft/abfallkalender/"
+    href = link["href"]
+    if not isinstance(href, str):
+        raise ValueError("No href found")
+
+    if href.startswith("/"):
+        return _BASE_URL + href
+    if not href.startswith("http"):
+        return _API_URL + href
+    return href
 
 
-class Source:
+@final
+class Source(BaseSource):
+    TITLE = "Rapperswil"
+    DESCRIPTION = "Source for Rapperswil."
+    URL = "https://www.rapperswil-be.ch/"
+    COUNTRY = "ch"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Rapperswil": {},
+    }
+
+    retrieve = TwoStepRetriever(
+        lookup_url=_API_URL,
+        extract=_pick_ics_url,
+        schedule_url=lambda key, **_: key,
+    )
+
+    def parse(self, response, source=None):
+        text = response.text.replace("X-WR-TIMEZONE','EUROPE/BERLIN:", "")
+        return ICS().convert(text)
+
+    transform = ICSTransformer(
+        type_value_map={
+            "Hauskehricht": GENERAL_WASTE,
+            "Grüngut": ORGANIC,
+            "Papier und Karton": PAPER,
+        }
+    )
+
     def __init__(self):
-        self._ics = ICS()
-
-    def fetch(self) -> list[Collection]:
-        # get json file
-        r = requests.get(API_URL)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        ical_div = soup.select_one("div#icalTermine")
-        if ical_div is None:
-            raise Exception("No icalTermine found")
-        ical_link_a = ical_div.select_one("a")
-        if ical_link_a is None:
-            raise Exception("No ical link found")
-
-        href = ical_link_a["href"]
-        if not isinstance(href, str):
-            raise Exception("No href found")
-
-        if href.startswith("/"):
-            href = BASE_URL + href
-        if not href.startswith("http"):
-            href = API_URL + href
-
-        r = requests.get(href)
-
-        dates = self._ics.convert(r.text.replace("X-WR-TIMEZONE','EUROPE/BERLIN:", ""))
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1])))
-
-        return entries
+        super().__init__()
