@@ -1,168 +1,188 @@
-from datetime import date, datetime
+"""1Coast - Central Coast (1coast.com.au), Australia.
 
-import requests
+Demonstrates: a source whose data has two independent shapes depending on
+provider state. Getting to the schedule needs an address search (which may
+return one exact match, several candidates to disambiguate, or none), then a
+GET of the address's collection page. That page always carries a short
+"legend" preview (a handful of upcoming collections rendered as HTML,
+labelled by full bin name) and a link to a fuller ICS calendar -- but the
+linked ICS file 404s in practice about as often as it works (the provider's
+own comment: "ics url is sometimes broken"), so the HTML preview is the
+usable fallback rather than a rare edge case. No configured retriever
+expresses "resolve an address, fetch a page, then conditionally prefer a
+second feed over data already on that page", hence a source-defined
+retrieve()/parse() pair.
+
+Also fixes a latent bug surfaced by converting this source: the legacy
+``_set_address_id`` returned the sole candidate's id when the search found
+exactly one match, but that return value was discarded by its caller
+(``self._set_address_id()``), leaving the address unresolved and the next
+step crashing on an assertion. This version treats a single search result as
+the match directly, as the loop below it already does for an exact multi-
+candidate match.
+"""
+
+from datetime import date, datetime
+from typing import ClassVar, final
+
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
 )
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "1Coast - Central Coast"
-DESCRIPTION = "Source for 1Coast - Central Coast."
-URL = "https://1coast.com.au/"
-TEST_CASES = {
-    "RHODIN DR, LONG JETTY, CENTRAL COAST 2261": {
-        "address": "9 RHODIN DR, LONG JETTY CENTRAL COAST 2261"
-    },
-    "GERMAINE AVE, BATEAU BAY, CENTRAL COAST 2261": {
-        "address": "12 GERMAINE AVE BATEAU BAY CENTRAL COAST 2261"
-    },
-}
-
-
-ICON_MAP = {
-    "Trash": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "Bio": Icons.ORGANIC,
-    "Paper": Icons.PAPER,
-    "Recycle": Icons.RECYCLING,
-    "240L Yellow Lid Recycle Bin": Icons.RECYCLING,
-    "140L Red Lid General Waste Bin": Icons.GENERAL_WASTE,
-    "240L Green Lid Garden Vegetation Bin": Icons.GARDEN,
-}
-
-
-SEARCH_URL = "https://1coast.com.au/ajax.php"
-COLLECTION_URL = (
+_SEARCH_URL = "https://1coast.com.au/ajax.php"
+_COLLECTION_URL = (
     "https://1coast.com.au/bin-collection/bin-collection-day-address-details"
 )
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address: str = address
-        self._address_id: str | None = None
-        self._address_formatted: str | None = None
-        self._collection_params: dict[str, str] | None = None
-        self._ics = ICS()
+def _normalise(address: str) -> str:
+    return address.lower().replace(" ", "").replace(",", "").replace(".", "")
 
-    def _set_address_id(self) -> None:
-        r = requests.get(SEARCH_URL, params={"a": "search", "s": self._address})
-        r.raise_for_status()
-        data = r.json()
-        if len(data) == 0:
-            raise SourceArgumentNotFound("address", self._address)
-        if len(data) == 1:
-            return data[0]["id"]
 
-        address_names = []
-        for addr in data:
-            addr_name = " ".join(addr["name"])
-            address_names.append(addr_name)
-            if addr_name.lower().replace(" ", "").replace(",", "").replace(
-                ".", ""
-            ) == self._address.lower().replace(" ", "").replace(",", "").replace(
-                ".", ""
-            ):
-                self._address_id = addr["id"]
-                self._address_formatted = ",".join(addr["name"])
-                self._collection_params = addr["collection"]
-                return
+def _resolve_address(session, address: str) -> "tuple[str, str, dict]":
+    """Resolve an address to (address_id, formatted_address, collection_params)."""
+    r = session.get(_SEARCH_URL, params={"a": "search", "s": address})
+    r.raise_for_status()
+    data = r.json()
 
-        raise SourceArgAmbiguousWithSuggestions("address", self._address, address_names)
+    if not data:
+        raise SourceArgumentNotFound("address", address)
 
-    def fetch(self) -> list[Collection]:
-        fresh_id = False
-        if self._address_id is None:
-            self._set_address_id()
+    if len(data) == 1:
+        addr = data[0]
+        return addr["id"], ",".join(addr["name"]), addr["collection"]
 
-        try:
-            return self._get_collections()
-        except Exception as e:
-            if fresh_id:
-                raise e
-            self._set_address_id()
-            return self._get_collections()
+    address_names = []
+    for addr in data:
+        addr_name = " ".join(addr["name"])
+        address_names.append(addr_name)
+        if _normalise(addr_name) == _normalise(address):
+            return addr["id"], ",".join(addr["name"]), addr["collection"]
 
-    def _get_collections(self) -> list[Collection]:
-        assert self._address_id is not None
-        assert self._address_formatted is not None
-        assert self._collection_params is not None
+    raise SourceArgAmbiguousWithSuggestions("address", address, address_names)
+
+
+def _is_ics_link(tag) -> bool:
+    return (
+        isinstance(tag, Tag)
+        and tag.name == "a"
+        and bool(tag.attrs.get("href"))
+        and str(tag.attrs["href"]).endswith("ics")
+    )
+
+
+def _fallback_entries(soup: BeautifulSoup) -> "list[tuple[date, str]]":
+    """The short HTML "legend" preview, used when the ICS link 404s."""
+    legend_wrappers = soup.find_all("span", {"class": "booking-list--legend-wrapper"})
+    next_collections = soup.find_all("span", {"class": "booking-list--collection-grey"})
+    dates = [item.text.split(", ")[1] for item in next_collections if "-" in item.text]
+    entries = []
+    for idx, item in enumerate(legend_wrappers):
+        entries.append((datetime.strptime(dates[idx], "%d-%b-%Y").date(), item.text))
+    return entries
+
+
+def _ics_entries(text: str) -> "list[tuple[date, str]]":
+    """Convert the ICS response, tolerating several VCALENDAR blocks concatenated
+    into one response (an observed provider quirk), and dropping duplicates."""
+    ics = ICS()
+    if text.count("BEGIN:VCALENDAR") == 1:
+        collections = ics.convert(text)
+    else:
+        collections = []
+        for calendar in text.split("BEGIN:VCALENDAR")[1:]:
+            collections += ics.convert("BEGIN:VCALENDAR" + calendar)
+
+    entries: list = []
+    seen: set = set()
+    for entry in collections:
+        if entry in seen:
+            continue
+        seen.add(entry)
+        entries.append(entry)
+    return entries
+
+
+@final
+class Source(BaseSource):
+    TITLE = "1Coast - Central Coast"
+    DESCRIPTION = "Source for 1Coast - Central Coast."
+    URL = "https://1coast.com.au/"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "RHODIN DR, LONG JETTY, CENTRAL COAST 2261": {
+            "address": "9 RHODIN DR, LONG JETTY CENTRAL COAST 2261"
+        },
+        "GERMAINE AVE, BATEAU BAY, CENTRAL COAST 2261": {
+            "address": "12 GERMAINE AVE BATEAU BAY CENTRAL COAST 2261"
+        },
+    }
+
+    PARAMS = (text_field("address", "Address"),)
+
+    def retrieve(self, source):
+        session = source.session
+        address = self.params["address"]
+
+        address_id, address_formatted, collection_params = _resolve_address(
+            session, address
+        )
 
         args = {
             "a": "unauth-address-search",
-            "address": self._address_id,
-            self._address_formatted: "",
-            "collection[frequency]": self._collection_params["frequency"],
-            "collection[day]": self._collection_params["day"],
+            "address": address_id,
+            address_formatted: "",
+            "collection[frequency]": collection_params["frequency"],
+            "collection[day]": collection_params["day"],
         }
+        page = session.get(_COLLECTION_URL, params=args)
+        page.raise_for_status()
 
-        # get collections page
-        r = requests.get(COLLECTION_URL, params=args)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # extract limited set of waste collections from this page
-        legend_wrappers = soup.find_all(
-            "span", {"class": "booking-list--legend-wrapper"}
-        )
-        next_collections = soup.find_all(
-            "span", {"class": "booking-list--collection-grey"}
-        )
-        next_collections = [
-            item.text.split(", ")[1] for item in next_collections if "-" in item.text
-        ]
-        entries = []
-        for idx, item in enumerate(legend_wrappers):
-            entries.append(
-                Collection(
-                    date=datetime.strptime(next_collections[idx], "%d-%b-%Y").date(),
-                    t=item.text,
-                    icon=ICON_MAP.get(item.text),
-                )
-            )
-
-        # look for link to ics file download option
-        def check_tag(tag):
-            return (
-                isinstance(tag, Tag)
-                and tag.name == "a"
-                and tag.attrs.get("href")
-                and tag.attrs["href"].endswith("ics")
-            )
-
-        ics_url = (
-            soup.find(
-                check_tag,
-            )
-            or {}
-        ).get("href")
+        soup = BeautifulSoup(page.text, "html.parser")
+        ics_link = soup.find(_is_ics_link)
+        ics_url = ics_link.get("href") if ics_link else None
         if not ics_url:
-            raise Exception("Could not find ICS URL")
+            raise SourceArgumentNotFound(
+                "address", address, "could not find a collection calendar link."
+            )
 
-        # try and get ics file
-        r = requests.get(ics_url)
-        if r.status_code != 404:  # ics url is sometimes broken
-            # extract more comprehensive schedule from ics file
-            collections = []
-            if r.text.count("BEGIN:VCALENDAR") == 1:
-                collections = self._ics.convert(r.text)
-            else:
-                for calendar in r.text.split("BEGIN:VCALENDAR")[1:]:
-                    collections += self._ics.convert("BEGIN:VCALENDAR" + calendar)
-            entries = []
-            added: set[tuple[date, str]] = set()
-            for date_, bin in collections:
-                if (date_, bin) in added:
-                    continue
-                added.add((date_, bin))
-                icon = ICON_MAP.get(bin.lower())
-                entries.append(Collection(date=date_, t=bin, icon=icon))
+        ics_response = session.get(ics_url)
+        return page, ics_response
 
-        return entries
+    def parse(self, raw, source):
+        page_response, ics_response = raw
+        if ics_response.status_code == 404:  # the ICS link is sometimes broken
+            return _fallback_entries(BeautifulSoup(page_response.text, "html.parser"))
+        return _ics_entries(ics_response.text)
 
+    transform = ICSTransformer(
+        type_value_map={
+            "Trash": GENERAL_WASTE,
+            "Glass": GLASS,
+            "Bio": ORGANIC,
+            "Paper": PAPER,
+            "Recycle": RECYCLABLES,
+            "240L Yellow Lid Recycle Bin": RECYCLABLES,
+            "140L Red Lid General Waste Bin": GENERAL_WASTE,
+            "240L Green Lid Garden Vegetation Bin": GARDEN_WASTE,
+        }
+    )
 
-# https://1coast.com.au/bin-collection/bin-collection-day-address-details/?a=unauth-address-search&address=711491&12,GERMAINE%20AVE,BATEAU%20BAY,CENTRAL%20COAST,2261=&collection%5Bfrequency%5D=W21&collection%5Bday%5D=FRI
-# https://1coast.com.au/bin-collection/bin-collection-day-address-details/?a=unauth-address-search&address=711491&12,GERMAINE%20AVE,BATEAU%20BAY,CENTRAL%20COAST,2261&collection[frequency]=W21&collection[day]=FRI
+    def __init__(self, address: str):
+        super().__init__(address=address)
