@@ -1,127 +1,122 @@
-import re
+"""SAB Magdeburg (magdeburg.de).
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+Demonstrates: a single static ICS GET that, only on an *empty* result, falls
+back to a second lookup request for street-name suggestions. That secondary
+request only fires on the error path, so it lives in a source-defined
+``parse`` override (which also strips the feed's stray ``DTEND`` lines and its
+title prefix) rather than in ``retrieve``.
+"""
+
+import re
+from typing import ClassVar, final
+
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
 )
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "Städtischer Abfallwirtschaftsbetrieb Magdeburg"
-DESCRIPTION = "Source for SAB Magdeburg waste collection schedule."
-URL = "https://www.magdeburg.de"
-COUNTRY = "de"
-
-ICS_URL = "https://st-magdeburg.server.smart-village.app/waste_calendar/export"
-STREET_LIST_URL = "https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
-
-TEST_CASES = {
-    "Halberstädter Chaussee 66": {"street": "Halberstädter Chaussee 66"},
-    "Agnetenstraße 10": {"street": "Agnetenstraße 10"},
-}
-
-EXTRA_INFO = [
-    {
-        "title": "SAB Magdeburg Abfuhrkalender",
-        "url": "https://sab.ssl.metageneric.de/app/sab_i_tp/index.php",
-        "country": "de",
-    },
-]
-
-ICON_MAP = {
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Altpapier": Icons.PAPER,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Bioabfall": Icons.BIO_KITCHEN,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street name and house number as shown on the "
-    "SAB Magdeburg website (e.g. 'Halberstädter Chaussee 66'). "
-    "Search at https://sab.ssl.metageneric.de/app/sab_i_tp/index.php",
-    "de": "Geben Sie Ihren Straßennamen und die Hausnummer ein, wie auf der "
-    "SAB Magdeburg Webseite angezeigt (z.B. 'Halberstädter Chaussee 66'). "
-    "Suchen Sie unter https://sab.ssl.metageneric.de/app/sab_i_tp/index.php",
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street": "Street and house number",
-    },
-    "de": {
-        "street": "Straße und Hausnummer",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street name and house number (e.g. 'Halberstädter Chaussee 66')",
-    },
-    "de": {
-        "street": "Straßenname und Hausnummer (z.B. 'Halberstädter Chaussee 66')",
-    },
-}
-
-PREFIX = "Abfallkalender: "
+_ICS_URL = "https://st-magdeburg.server.smart-village.app/waste_calendar/export"
+_STREET_LIST_URL = "https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
+_PREFIX = "Abfallkalender: "
 
 
-class Source:
-    def __init__(self, street: str):
-        if not street:
-            raise SourceArgumentRequired(
-                "street", "A street name and house number is required"
-            )
-        self._street = street.strip()
-
-    def fetch(self) -> list[Collection]:
-        r = requests.get(
-            ICS_URL,
-            params={"street": self._street, "city": "Magdeburg"},
-            timeout=30,
-        )
+def _street_suggestions(session, street: str) -> list[str]:
+    try:
+        r = session.get(_STREET_LIST_URL, timeout=15)
         r.raise_for_status()
+    except Exception:
+        return []
+    streets = re.findall(r'option value="([^"]+)"', r.text)
+    query = street.split()[0].lower() if street else ""
+    return [s for s in streets if query in s.lower()][:20]
 
-        # Remove DTEND lines — they use datetime format while DTSTART uses date-only,
-        # which causes icalevents comparison errors. DTEND is not needed for parsing.
-        ics_data = re.sub(r"DTEND:[^\r\n]+\r?\n", "", r.text)
 
-        ics = ICS()
-        dates = ics.convert(ics_data)
+@final
+class Source(BaseSource):
+    TITLE = "Städtischer Abfallwirtschaftsbetrieb Magdeburg"
+    DESCRIPTION = "Source for SAB Magdeburg waste collection schedule."
+    URL = "https://www.magdeburg.de"
+    COUNTRY = "de"
 
-        if not dates:
-            suggestions = self._get_street_suggestions()
+    TEST_CASES: ClassVar[dict] = {
+        "Halberstädter Chaussee 66": {"street": "Halberstädter Chaussee 66"},
+        "Agnetenstraße 10": {"street": "Agnetenstraße 10"},
+    }
+
+    REGIONS = (
+        region(
+            "SAB Magdeburg Abfuhrkalender",
+            url="https://sab.ssl.metageneric.de/app/sab_i_tp/index.php",
+            country="de",
+        ),
+    )
+
+    PARAMS = (text_field("street", label="Street and house number"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street name and house number as shown on the SAB "
+            "Magdeburg website (e.g. 'Halberstädter Chaussee 66'). Search at "
+            "https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
+        ),
+        "de": (
+            "Geben Sie Ihren Straßennamen und die Hausnummer ein, wie auf der "
+            "SAB Magdeburg Webseite angezeigt (z.B. 'Halberstädter Chaussee "
+            "66'). Suchen Sie unter "
+            "https://sab.ssl.metageneric.de/app/sab_i_tp/index.php"
+        ),
+    }
+
+    RAISE_ON_EMPTY = True
+
+    retrieve = HttpGetRetriever(
+        url=_ICS_URL,
+        params=lambda street, **_: {"street": street, "city": "Magdeburg"},
+    )
+
+    def parse(self, response, source=None):
+        # Remove DTEND lines — they use datetime format while DTSTART uses
+        # date-only, which causes icalevents comparison errors. DTEND is not
+        # needed for parsing.
+        text = re.sub(r"DTEND:[^\r\n]+\r?\n", "", response.text)
+        events = ICS().convert(text)
+
+        if not events and source is not None:
+            street = source.params["street"]
+            suggestions = _street_suggestions(source.session, street)
             if suggestions:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "street", self._street, suggestions
+                    "street", street, suggestions
                 )
-            raise SourceArgumentNotFound("street", self._street)
+            raise SourceArgumentNotFound("street", street)
 
-        entries = []
-        for dt, waste_type in dates:
-            if waste_type.startswith(PREFIX):
-                waste_type = waste_type[len(PREFIX) :]
+        return events
 
-            icon = None
-            for key, value in ICON_MAP.items():
-                if key in waste_type:
-                    icon = value
-                    break
+    transform = ICSTransformer(
+        type_value_map={
+            "Restabfall": GENERAL_WASTE,
+            "Altpapier": PAPER,
+            "Gelbe Tonne": RECYCLABLES,
+            "Bioabfall": ORGANIC,
+        },
+        clean=lambda label: (
+            "Gelbe Tonne"
+            if "Gelbe Tonne" in label.removeprefix(_PREFIX)
+            else label.removeprefix(_PREFIX)
+        ),
+    )
 
-            entries.append(Collection(date=dt, t=waste_type, icon=icon))
-
-        return entries
-
-    def _get_street_suggestions(self) -> list[str]:
-        try:
-            r = requests.get(STREET_LIST_URL, timeout=15)
-            r.raise_for_status()
-        except Exception:
-            return []
-
-        import re
-
-        streets = re.findall(r'option value="([^"]+)"', r.text)
-        query = self._street.split()[0].lower() if self._street else ""
-        return [s for s in streets if query in s.lower()][:20]
+    def __init__(self, street: str):
+        super().__init__(street=street)
