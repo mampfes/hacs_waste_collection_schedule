@@ -1,56 +1,50 @@
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.service.ICS import ICS
+"""Peterborough City Council (peterborough.gov.uk).
 
-TITLE = "Peterborough City Council"
-DESCRIPTION = "Source for peterborough.gov.uk services for Peterborough"
-URL = "https://peterborough.gov.uk"
-TEST_CASES = {
-    "houseUprn": {"post_code": "PE57AX", "uprn": "100090214774"},
-}
+Demonstrates: the plain-vanilla ICS shape — a single static GET whose URL is
+built from two required params (postcode + UPRN), no session/state/lookup of
+any kind. HttpGetRetriever + IcsParser + ICSTransformer do all the work; this
+module only supplies the URL template and the waste-type map.
+"""
 
-API_URLS = {
-    "collection": "https://report.peterborough.gov.uk/waste/{post_code}:{uprn}/calendar.ics",
-}
+from typing import ClassVar, final
 
-ICON_MAP = {
-    "Empty Bin 240L Black": Icons.GENERAL_WASTE,
-    "Empty Bin 240L Green": Icons.RECYCLING,
-    "Empty Bin 240L Brown": Icons.ORGANIC,
-}
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
+
+_ICS_URL = "https://report.peterborough.gov.uk/waste/{post_code}:{uprn}/calendar.ics"
 
 
-class Source:
-    def __init__(self, post_code, uprn):
-        self._post_code = post_code
-        self._uprn = uprn
-        self._ics = ICS()
+@final
+class Source(BaseSource):
+    TITLE = "Peterborough City Council"
+    DESCRIPTION = "Source for peterborough.gov.uk services for Peterborough."
+    URL = "https://peterborough.gov.uk"
+    COUNTRY = "uk"
 
-    def fetch(self):
-        if not self._post_code:
-            raise SourceArgumentNotFound("post_code", "Postcode is required")
+    TEST_CASES: ClassVar[dict] = {
+        "houseUprn": {"post_code": "PE57AX", "uprn": "100090214774"},
+    }
 
-        if not self._uprn:
-            raise SourceArgumentNotFound("uprn", "UPRN is required")
+    PARAMS = (
+        postcode("post_code"),
+        uprn("uprn"),
+    )
 
-        ics_url = API_URLS["collection"].format(
-            post_code=self._post_code, uprn=self._uprn
-        )
-        r = requests.get(ics_url, timeout=10)
-        r.raise_for_status()
+    retrieve = HttpGetRetriever(
+        url=lambda post_code, uprn, **_: _ICS_URL.format(post_code=post_code, uprn=uprn)
+    )
+    parse = parsers.IcsParser()
+    transform = ICSTransformer(
+        type_value_map={
+            "Empty Bin 240L Black": GENERAL_WASTE,
+            "Empty Bin 240L Green": RECYCLABLES,
+            "Empty Bin 240L Brown": ORGANIC,
+        }
+    )
 
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for item in dates:
-            bin_type = item[1]
-            entries.append(
-                Collection(
-                    date=item[0],
-                    t=bin_type,
-                    icon=ICON_MAP.get(bin_type),
-                )
-            )
-
-        return entries
+    def __init__(self, post_code: str, uprn: str):
+        super().__init__(post_code=post_code, uprn=uprn)

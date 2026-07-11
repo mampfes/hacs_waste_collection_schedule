@@ -1,106 +1,90 @@
+"""Nem Affaldsservice (Københavns Kommune), Denmark.
+
+Demonstrates: a genuinely bespoke multi-step retrieve that does not fit any
+existing retriever. Getting to the ICS feed needs, in order: an address
+autocomplete GET (to validate/normalise the address and offer suggestions on
+a mismatch), a plain GET of the homepage to scrape a CSRF
+(``__RequestVerificationToken``) value out of the HTML, a POST that submits
+the matched address together with that token and redirects to a URL carrying
+the resolved ``customerId`` query parameter, and finally the calendar GET
+itself. Four sequential requests with state threaded between each (a matched
+address, then a token, then a redirect-derived id) is a shape
+``TwoStepRetriever`` (exactly one lookup + one schedule request) does not
+cover; this is expressed as a plain ``retrieve`` method instead.
+"""
+
 import re
+from typing import ClassVar, final
 from urllib.parse import parse_qs, urlparse
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    ELECTRONICS,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "Nem Affaldsservice (Københavns Kommune)"
-DESCRIPTION = "Source for Nem Affaldsservice, the waste collection schedule service of Københavns Kommune (City of Copenhagen), Denmark."
-URL = "https://nemaffaldsservice.kk.dk"
-COUNTRY = "dk"
-TEST_CASES = {
-    "Nørrebrogade 10": {"address": "Nørrebrogade 10"},
-    "Amagerbrogade 10": {"address": "Amagerbrogade 10"},
-    "Rådhuspladsen 1": {"address": "Rådhuspladsen 1"},
-}
+_BASE_URL = "https://nemaffaldsservice.kk.dk"
+_ADDRESS_LOOKUP_URL = f"{_BASE_URL}/WasteHome/AddressByTerm/"
+_CUSTOMER_LOOKUP_URL = f"{_BASE_URL}/WasteHome/SearchCustomerRelation"
+_CALENDAR_URL = f"{_BASE_URL}/Calendar/GetICaldendar"
 
-BASE_URL = "https://nemaffaldsservice.kk.dk"
-ADDRESS_LOOKUP_URL = f"{BASE_URL}/WasteHome/AddressByTerm/"
-CUSTOMER_LOOKUP_URL = f"{BASE_URL}/WasteHome/SearchCustomerRelation"
-CALENDAR_URL = f"{BASE_URL}/Calendar/GetICaldendar"
-
-HEADERS = {"User-Agent": "Mozilla/5.0"}
-
-TOKEN_RE = re.compile(
+_TOKEN_RE = re.compile(
     r'name="__RequestVerificationToken"\s+type="hidden"\s+value="([^"]+)"'
 )
 
-ICON_MAP = {
-    "Restaffald": Icons.GENERAL_WASTE,
-    "Madaffald": Icons.BIO_KITCHEN,
-    "Bioposer": Icons.BIO_KITCHEN,
-    "Papir": Icons.PAPER,
-    "Pap": Icons.PAPER,
-    "Glas": Icons.GLASS,
-    "Metal": Icons.METAL,
-    "Plast": Icons.PLASTIC_PACKAGING,
-    "Elektronik": Icons.ELECTRONICS,
-    "Farligt affald": Icons.HAZARDOUS,
-    "Tekstil": Icons.TEXTILE,
-    "Storskrald": Icons.BULKY,
-    "Haveaffald": Icons.GARDEN,
-}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Enter your address exactly as it appears in Denmark, e.g. "
-        "'Nørrebrogade 10'. You can verify the spelling by typing your street "
-        "and house number into the search box on "
-        "https://nemaffaldsservice.kk.dk/ - if the site offers your address as "
-        "an autocomplete suggestion, that exact text is what should be used "
-        "here. If the address cannot be found, the resulting error message "
-        "will list similar addresses to help you find the correct spelling."
-    ),
-}
+@final
+class Source(BaseSource):
+    TITLE = "Nem Affaldsservice (Københavns Kommune)"
+    DESCRIPTION = (
+        "Source for Nem Affaldsservice, the waste collection schedule service "
+        "of Københavns Kommune (City of Copenhagen), Denmark."
+    )
+    URL = _BASE_URL
+    COUNTRY = "dk"
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": (
-            "Street name and house number, e.g. 'Nørrebrogade 10'. Must match "
-            "an address served by Københavns Kommune / Nem Affaldsservice."
+    TEST_CASES: ClassVar[dict] = {
+        "Nørrebrogade 10": {"address": "Nørrebrogade 10"},
+        "Amagerbrogade 10": {"address": "Amagerbrogade 10"},
+        "Rådhuspladsen 1": {"address": "Rådhuspladsen 1"},
+    }
+
+    PARAMS = (
+        text_field(
+            "address",
+            "Address",
         ),
-    },
-}
+    )
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Address",
-    },
-}
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your address exactly as it appears in Denmark, e.g. "
+            "'Nørrebrogade 10'. You can verify the spelling by typing your street "
+            "and house number into the search box on "
+            "https://nemaffaldsservice.kk.dk/ - if the site offers your address "
+            "as an autocomplete suggestion, that exact text is what should be "
+            "used here. If the address cannot be found, the resulting error "
+            "message will list similar addresses to help you find the correct "
+            "spelling."
+        ),
+    }
 
+    def retrieve(self, source):
+        session = self.session
+        address = self.params["address"]
 
-class Source:
-    def __init__(self, address: str):
-        self._address: str = address.strip()
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update(HEADERS)
-
-        customer_id = self._get_customer_id(session, self._address)
-
-        r = session.get(CALENDAR_URL, params={"customerId": customer_id})
-        r.raise_for_status()
-
-        ics = ICS()
-        entries = []
-        for ev in ics.convert_events(r.text):
-            entries.append(
-                Collection(
-                    ev.date,
-                    ev.title,
-                    icon=ICON_MAP.get(ev.title),
-                )
-            )
-        return entries
-
-    def _get_customer_id(self, session: requests.Session, address: str) -> str:
-        # Resolve/validate the address against the site's own autocomplete
-        # endpoint first, so we can offer useful suggestions on a typo/mismatch
-        # instead of silently searching for a wrong address.
-        suggestions_r = session.get(ADDRESS_LOOKUP_URL, params={"term": address})
+        suggestions_r = session.get(_ADDRESS_LOOKUP_URL, params={"term": address})
         suggestions_r.raise_for_status()
         suggestions = suggestions_r.json() or []
 
@@ -118,19 +102,15 @@ class Source:
         if matched_address is None:
             raise SourceArgumentNotFoundWithSuggestions("address", address, labels)
 
-        home_r = session.get(BASE_URL)
+        home_r = session.get(_BASE_URL)
         home_r.raise_for_status()
-        token_match = TOKEN_RE.search(home_r.text)
+        token_match = _TOKEN_RE.search(home_r.text)
         if token_match is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                address,
-                [],
-            )
+            raise SourceArgumentNotFoundWithSuggestions("address", address, [])
         token = token_match.group(1)
 
         search_r = session.post(
-            CUSTOMER_LOOKUP_URL,
+            _CUSTOMER_LOOKUP_URL,
             data={
                 "SearchTerm": matched_address,
                 "__RequestVerificationToken": token,
@@ -138,10 +118,34 @@ class Source:
         )
         search_r.raise_for_status()
 
-        customer_id = parse_qs(urlparse(search_r.url).query).get("customerId")
+        customer_id = parse_qs(urlparse(str(search_r.url)).query).get("customerId")
         if not customer_id:
             raise SourceArgumentNotFoundWithSuggestions(
                 "address", address, [matched_address]
             )
 
-        return customer_id[0]
+        r = session.get(_CALENDAR_URL, params={"customerId": customer_id[0]})
+        r.raise_for_status()
+        return r
+
+    parse = parsers.IcsParser()
+    transform = ICSTransformer(
+        type_value_map={
+            "Restaffald": GENERAL_WASTE,
+            "Madaffald": ORGANIC,
+            "Bioposer": ORGANIC,
+            "Papir": PAPER,
+            "Pap": PAPER,
+            "Glas": GLASS,
+            "Metal": RECYCLABLES,
+            "Plast": RECYCLABLES,
+            "Elektronik": ELECTRONICS,
+            "Farligt affald": HAZARDOUS,
+            "Tekstil": RECYCLABLES,
+            "Storskrald": BULKY_WASTE,
+            "Haveaffald": GARDEN_WASTE,
+        }
+    )
+
+    def __init__(self, address: str):
+        super().__init__(address=address.strip())

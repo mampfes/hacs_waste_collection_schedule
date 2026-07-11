@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-07-11",
+  "interactions": [
+    {
+      "key": "GET https://report.peterborough.gov.uk/waste/PE57AX:100090214774/calendar.ics ",
+      "method": "GET",
+      "url": "https://report.peterborough.gov.uk/waste/PE57AX:100090214774/calendar.ics",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Sat, 11 Jul 2026 10:48:25 GMT",
+        "content-type": "text/calendar; charset=UTF-8",
+        "content-length": "858",
+        "cache-control": "max-age=86400",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "strict-transport-security": "max-age=63072000; includeSubDomains",
+        "x-url": "/waste/PE57AX:100090214774/calendar.ics",
+        "x-host": "report.peterborough.gov.uk",
+        "age": "37192",
+        "accept-ranges": "bytes"
+      },
+      "content_b64": "QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KQ0FMU0NBTEU6R1JFR09SSUFODQpNRVRIT0Q6UFVCTElTSA0KUFJPRElEOi8vRml4TXlTdHJlZXQvL0JpbiBDb2xsZWN0aW9uIENhbGVuZGFycy8vRU4NClJFRlJFU0gtSU5URVJWQUw7VkFMVUU9RFVSQVRJT046UDFEDQpTT1VSQ0U7VkFMVUU9VVJJOmh0dHBzOi8vcmVwb3J0LnBldGVyYm9yb3VnaC5nb3YudWsvd2FzdGUvUEU1N0FYOjEwMDA5MDIxNDcNCiA3NC9jYWxlbmRhci5pY3MNClVSTDpodHRwczovL3JlcG9ydC5wZXRlcmJvcm91Z2guZ292LnVrL3dhc3RlL1BFNTdBWDoxMDAwOTAyMTQ3NzQNClgtUFVCTElTSEVELVRUTDpQMUQNClgtV1ItQ0FMTkFNRTpCaW4gY2FsZW5kYXINClgtV1ItVElNRVpPTkU6RXVyb3BlL0xvbmRvbg0KQkVHSU46VkVWRU5UDQpERVNDUklQVElPTjoNCkRURU5EO1ZBTFVFPURBVEU6MjAyNjA3MjINCkRUU1RBTVA6MjAyNjA3MTFUMDAyODMyWg0KRFRTVEFSVDtWQUxVRT1EQVRFOjIwMjYwNzIxDQpTVU1NQVJZOkVtcHR5IEJpbiAyNDBMIEdyZWVuDQpVSUQ6OThhM2FhMWZiOTk2ODM4ODE0ZWQ4NWU5NDQyNTYzMWYyYmZkNTM1NEByZXBvcnQucGV0ZXJib3JvdWdoLmdvdi51aw0KRU5EOlZFVkVOVA0KQkVHSU46VkVWRU5UDQpERVNDUklQVElPTjoNCkRURU5EO1ZBTFVFPURBVEU6MjAyNjA3MTUNCkRUU1RBTVA6MjAyNjA3MTFUMDAyODMyWg0KRFRTVEFSVDtWQUxVRT1EQVRFOjIwMjYwNzE0DQpTVU1NQVJZOkVtcHR5IEJpbiAyNDBMIEJsYWNrDQpVSUQ6NGI5YmQ2ZTU0NWZjMTcxMTExZDI5NTIyOGJhNmQyNDA1NjJmMjM3MkByZXBvcnQucGV0ZXJib3JvdWdoLmdvdi51aw0KRU5EOlZFVkVOVA0KRU5EOlZDQUxFTkRBUg0K"
+    }
+  ]
+}
