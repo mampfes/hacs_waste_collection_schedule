@@ -28,14 +28,12 @@ AUTH_TEST_URL = f"{BASE_URL}/apibroker/domain/my.crawley.gov.uk"
 API_URL = f"{BASE_URL}/apibroker/runLookup"
 LOOKUP_ID = "5b4f0ec5f13f4"
 
-# The legacy source (cloned from elmbridge_gov_uk, see credit above) passes
-# this Elmbridge tenant hostname as the `hostname` query-string value on the
-# isauthenticated call, rather than my.crawley.gov.uk. Every other URL in the
-# chain (initial/auth/auth_test/api) is Crawley's own domain -- only this one
-# query value differs. Preserved as-is (HTTP-behaviour-preserving conversion);
-# flagged for a maintainer to confirm whether it's a genuine shared-tenant
-# arrangement or a leftover copy/paste from the elmbridge source.
-_AUTH_HOSTNAME = "elmbridge-self.achieveservice.com"
+# The `hostname` query value on the isauthenticated call. The legacy source
+# (cloned from elmbridge_gov_uk, see credit above) left Elmbridge's tenant
+# hostname here by copy/paste while every other URL in the chain is Crawley's
+# own domain; corrected to Crawley's own host (verified live: authentication
+# and collections are unaffected).
+_AUTH_HOSTNAME = "my.crawley.gov.uk"
 
 # `rubbishDateCurrent`/`rubbishDateNext`, `recycleDateCurrent`/`recycleDateNext`,
 # `greenDateCurrent`/`greenDateNext` -- confirmed against a live response (the
