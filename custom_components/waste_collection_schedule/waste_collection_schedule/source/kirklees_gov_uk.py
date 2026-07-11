@@ -1,261 +1,257 @@
-from datetime import date, datetime, timedelta
-from time import time_ns
-from typing import Any
+"""Kirklees Council - Manage your bins.
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+Kirklees runs its own AchieveForms lookup chain: a postcode lookup returns the
+addresses at that postcode (keyed by UPRN), a property-type lookup resolves
+the council's internal "GovDeliveryCategorye" for the chosen UPRN, a
+token-validation call sets that category on the session, and a final lookup
+returns the actual collection dates. Each call after the first reuses (and
+extends) the same "Search" form section, so the chain is expressed as four
+LookupSteps threaded through a shared context dict.
+"""
+
+from collections.abc import Iterable
+from datetime import date, timedelta
+from typing import Any, ClassVar, final
+
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, text_field, uprn
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "Kirklees Council"
-DESCRIPTION = "Source for waste collections for Kirklees Council (my.kirklees.gov.uk)"
-URL = "https://www.kirklees.gov.uk"
-TEST_CASES = {
-    "Midgebottom House": {"uprn": "83074265", "postcode": "HD9 7HA"},
-    "HD8 8NA test": {"uprn": "83194785", "postcode": "HD8 8NA"},
-}
-
-BASE_URL = "https://my.kirklees.gov.uk"
-SERVICE_PATH = "/service/Bins_and_recycling___Manage_your_bins"
-FORM_ID = "AF-Form-0d9c96d0-4067-4bea-9a5b-06f32a675be6"
-
-LOOKUP_ADDRESS = "58049013ca4c9"  # postcode → address list (keyed by UPRN)
-LOOKUP_PROP_TYPE = "659c2c2386104"  # UPRN → GovDeliveryCategorye / PropertyType
-LOOKUP_UPRN_VALID = "631615c4bd3b7"  # set session validatedUPRN token
-LOOKUP_COLLECTIONS = (
-    "65e08e60b299d"  # UPRN → bin collection dates (rows keyed by service ID)
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
 )
 
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/124.0.0.0 Safari/537.36"
-    ),
-    "Accept": "application/json, text/javascript, */*; q=0.01",
-    "X-Requested-With": "XMLHttpRequest",
-    "Referer": f"{BASE_URL}{SERVICE_PATH}",
-}
+# Live-verified (2026-07): the standard AchieveForms handshake
+# (init_session -> authapi/isauthenticated, using the un-prefixed service path
+# below verbatim, without the legacy source's separate apibroker/domain
+# warm-up GET) authenticates my.kirklees.gov.uk. No service-layer change
+# needed.
+HOSTNAME = "my.kirklees.gov.uk"
+INITIAL_URL = f"https://{HOSTNAME}/service/Bins_and_recycling___Manage_your_bins"
 
-ICON_MAP = {
-    "recycling": Icons.RECYCLING,
-    "domestic": Icons.GENERAL_WASTE,
-    "garden": Icons.GARDEN,
-    "green": Icons.RECYCLING,
-    "grey": Icons.GENERAL_WASTE,
-    "brown": Icons.ORGANIC,
-    "blue": Icons.RECYCLING,
-}
+LOOKUP_ADDRESS = "58049013ca4c9"  # postcode -> address list (keyed by UPRN)
+LOOKUP_PROP_TYPE = "659c2c2386104"  # UPRN -> GovDeliveryCategorye / PropertyType
+LOOKUP_UPRN_VALID = "631615c4bd3b7"  # set session validatedUPRN token
+LOOKUP_COLLECTIONS = "65e08e60b299d"  # UPRN -> bin collection dates
 
 
-def _icon(waste_type: str) -> str:
-    t = waste_type.lower()
-    for k, v in ICON_MAP.items():
-        if k in t:
-            return v
-    return "mdi:trash-can"
+def _address_form_values(ctx: dict, source: "BaseSource") -> dict:
+    ctx["uprn"] = source.params["uprn"]
+    ctx["postcode"] = source.params["postcode"]
+    return {"Postcode": {"value": source.params["postcode"]}}
 
 
-def _run_lookup(s: requests.Session, sid: str, lookup_id: str, payload: dict) -> dict:
-    ts = time_ns() // 1_000_000
-    url = (
-        f"{BASE_URL}/apibroker/runLookup"
-        f"?id={lookup_id}&repeat_against=&noRetry=false"
-        f"&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self"
-        f"&_={ts}&sid={sid}"
-    )
-    r = s.post(url, headers=HEADERS, json=payload, timeout=30)
-    r.raise_for_status()
-    return r.json()
-
-
-def _rows(data: dict) -> dict:
-    """Normalise rows_data to a dict regardless of whether the API returned a list or dict."""
-    raw = data.get("integration", {}).get("transformed", {}).get("rows_data", {})
-    if isinstance(raw, dict):
-        return raw
-    return {str(r.get("name", i)): r for i, r in enumerate(raw)}
-
-
-class Source:
-    def __init__(self, uprn: str | int, postcode: str, predict: bool = False):
-        self._uprn = str(uprn)
-        pc = postcode.strip().upper().replace(" ", "")
-        self._postcode = pc[:-3] + " " + pc[-3:] if len(pc) >= 5 else pc
-        self._predict = predict
-
-    def fetch(self) -> list[Collection]:
-        s = requests.Session()
-
-        # 1. Init session cookies
-        ts = time_ns() // 1_000_000
-        s.get(
-            f"{BASE_URL}/apibroker/domain/my.kirklees.gov.uk?_={ts}",
-            headers=HEADERS,
-            timeout=30,
-        ).raise_for_status()
-
-        # 2. Obtain auth-session SID
-        auth_url = (
-            f"{BASE_URL}/authapi/isauthenticated"
-            f"?uri=https%3A%2F%2Fmy.kirklees.gov.uk%2Fservice%2FBins_and_recycling___Manage_your_bins"
-            f"&hostname=my.kirklees.gov.uk&withCredentials=true"
+def _extract_address(response: dict, ctx: dict) -> None:
+    rows = response.get("integration", {}).get("transformed", {}).get("rows_data", {})
+    if not isinstance(rows, dict):
+        rows = {}
+    target_uprn = ctx["uprn"]
+    if target_uprn not in rows:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "uprn", target_uprn, list(rows.keys())
         )
-        sid_r = s.get(auth_url, headers=HEADERS, timeout=30)
-        sid_r.raise_for_status()
-        sid = sid_r.json().get("auth-session")
-        if not sid:
-            raise ValueError("Kirklees API: failed to obtain session ID")
+    row = rows[target_uprn]
+    ctx["prop_ref"] = row.get("PropertyReference", "")
+    ctx["house"] = row.get("Premise", "")
+    ctx["street"] = row.get("Street", "")
+    ctx["town"] = row.get("Town", "")
+    ctx["full_addr"] = row.get("display", "")
 
-        # 3. Postcode lookup — validate the UPRN is at this postcode
-        addr_data = _run_lookup(
-            s,
-            sid,
-            LOOKUP_ADDRESS,
-            {
-                "formId": FORM_ID,
-                "formValues": {"Section 1": {"Postcode": {"value": self._postcode}}},
-            },
-        )
-        addr_rows = _rows(addr_data)
-        if self._uprn not in addr_rows:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "uprn", self._uprn, list(addr_rows.keys())
-            )
 
-        # 4. Build shared "Search" form section (mirrors browser state after address selection)
-        prop_ref = addr_rows[self._uprn].get("PropertyReference", "")
-        house = addr_rows[self._uprn].get("Premise", "")
-        street = addr_rows[self._uprn].get("Street", "")
-        town = addr_rows[self._uprn].get("Town", "")
-        full_addr = addr_rows[self._uprn].get("display", "")
-        pc_len = str(len(self._postcode))
+def _extract_prop_type(response: dict, ctx: dict) -> None:
+    rows = response.get("integration", {}).get("transformed", {}).get("rows_data", {})
+    gov_cat = ""
+    prop_type = "Residential"
+    if isinstance(rows, dict) and rows:
+        first = next(iter(rows.values()))
+        gov_cat = first.get("GovDeliveryCategorye", "")
+        prop_type = first.get("PropertyType", "Residential") or "Residential"
+    ctx["gov_cat"] = gov_cat
+    ctx["prop_type"] = prop_type
 
-        search_section: dict[str, Any] = {
-            "PowerSuite_Available": {"value": "True"},
-            "PowerSuite_Available1": {"value": "True"},
-            "productName": {"value": "Self"},
-            "uprn2": {"value": self._uprn},
-            "validatedUPRN": {"value": self._uprn},
-            "suppliedUPRN": {"value": self._uprn},
-            "uprnFinal": {"value": self._uprn},
-            "validPropertyFlag": {"value": "yes"},
-            "sSection": {"value": "1"},
-            "flatOrSubBuildingFinal": {"value": ""},
-            "houseFinal": {"value": house},
-            "streetFinal": {"value": street},
-            "townFinal": {"value": town},
-            "postcodeFinal": {"value": self._postcode},
-            "fullAddressFinal": {"value": full_addr},
-            "customerAddress": {
-                "value": {
-                    "Section 1": {
-                        "searchForAddress": {"value": "yes"},
-                        "Postcode": {"value": self._postcode},
-                        "List": {"value": self._uprn},
-                        "House": {"value": house},
-                        "Street": {"value": street},
-                        "Town": {"value": town},
-                        "UPRN": {"value": self._uprn},
-                        "PropertyReference": {"value": prop_ref},
-                        "postcode": {"value": ""},
-                        "house": {"value": ""},
-                        "flat": {"value": ""},
-                        "street": {"value": ""},
-                        "town": {"value": ""},
-                        "fullAddress": {"value": full_addr},
-                        "lengthPostCode": {"value": pc_len},
-                    }
-                }
-            },
-        }
 
-        # 5. Get GovDeliveryCategorye for this property
-        prop_data = _run_lookup(
-            s,
-            sid,
-            LOOKUP_PROP_TYPE,
-            {
-                "formId": FORM_ID,
-                "formValues": {"Search": search_section},
-            },
-        )
-        prop_rows = _rows(prop_data)
-        gov_cat = ""
-        prop_type = "Residential"
-        if prop_rows:
-            first = next(iter(prop_rows.values()))
-            gov_cat = first.get("GovDeliveryCategorye", "")
-            prop_type = first.get("PropertyType", "Residential") or "Residential"
-
-        search_section["binsPropertyType"] = {
+def _search_section(ctx: dict, *, include_prop_type: bool) -> dict:
+    """Build the "Search" form section, mirroring browser state after address
+    selection. Kirklees' later lookups are tolerant of every field being sent
+    under one flat section (live-verified), so the "Your bins" fields a real
+    browser sends as a sibling section are simply added onto this one by the
+    caller instead."""
+    section: dict[str, Any] = {
+        "PowerSuite_Available": {"value": "True"},
+        "PowerSuite_Available1": {"value": "True"},
+        "productName": {"value": "Self"},
+        "uprn2": {"value": ctx["uprn"]},
+        "validatedUPRN": {"value": ctx["uprn"]},
+        "suppliedUPRN": {"value": ctx["uprn"]},
+        "uprnFinal": {"value": ctx["uprn"]},
+        "validPropertyFlag": {"value": "yes"},
+        "sSection": {"value": "1"},
+        "flatOrSubBuildingFinal": {"value": ""},
+        "houseFinal": {"value": ctx["house"]},
+        "streetFinal": {"value": ctx["street"]},
+        "townFinal": {"value": ctx["town"]},
+        "postcodeFinal": {"value": ctx["postcode"]},
+        "fullAddressFinal": {"value": ctx["full_addr"]},
+        "customerAddress": {
             "value": {
                 "Section 1": {
-                    "PropertyType": {"value": prop_type},
-                    "GovDeliveryCategorye": {"value": gov_cat},
+                    "searchForAddress": {"value": "yes"},
+                    "Postcode": {"value": ctx["postcode"]},
+                    "List": {"value": ctx["uprn"]},
+                    "House": {"value": ctx["house"]},
+                    "Street": {"value": ctx["street"]},
+                    "Town": {"value": ctx["town"]},
+                    "UPRN": {"value": ctx["uprn"]},
+                    "PropertyReference": {"value": ctx["prop_ref"]},
+                    "postcode": {"value": ""},
+                    "house": {"value": ""},
+                    "flat": {"value": ""},
+                    "street": {"value": ""},
+                    "town": {"value": ""},
+                    "fullAddress": {"value": ctx["full_addr"]},
+                    "lengthPostCode": {"value": str(len(ctx["postcode"]))},
+                }
+            }
+        },
+    }
+    if include_prop_type:
+        section["binsPropertyType"] = {
+            "value": {
+                "Section 1": {
+                    "PropertyType": {"value": ctx["prop_type"]},
+                    "GovDeliveryCategorye": {"value": ctx["gov_cat"]},
                 }
             }
         }
-        search_section["GovDeliveryCategorye"] = {"value": gov_cat}
-        search_section["PropertyType"] = {"value": prop_type}
+        section["GovDeliveryCategorye"] = {"value": ctx["gov_cat"]}
+        section["PropertyType"] = {"value": ctx["prop_type"]}
+    return section
 
-        # 6. Set session validatedUPRN token
-        _run_lookup(
-            s,
-            sid,
-            LOOKUP_UPRN_VALID,
-            {
-                "formId": FORM_ID,
-                "formValues": {"Search": search_section},
-            },
+
+def _collections_form_values(ctx: dict, source: "BaseSource") -> dict:
+    section = _search_section(ctx, include_prop_type=True)
+    today = date.today()
+    section["NextCollectionFromDate"] = {
+        "value": (today - timedelta(days=7)).strftime("%d/%m/%Y")
+    }
+    section["NextCollectionToDate"] = {
+        "value": (today + timedelta(days=28)).strftime("%d/%m/%Y")
+    }
+    return section
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Kirklees Council"
+    DESCRIPTION = (
+        "Source for waste collections for Kirklees Council (my.kirklees.gov.uk)"
+    )
+    URL = "https://www.kirklees.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Midgebottom House": {"uprn": "83074265", "postcode": "HD9 7HA"},
+        "HD8 8NA test": {"uprn": "83194785", "postcode": "HD8 8NA"},
+    }
+
+    PARAMS = (
+        postcode(),
+        uprn(),
+        text_field(
+            "predict",
+            "Predict future collections",
+            default="false",
+            optional=True,
+        ),
+    )
+
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        initial_url=INITIAL_URL,
+        steps=[
+            LookupStep(
+                LOOKUP_ADDRESS,
+                form_values=_address_form_values,
+                extract=_extract_address,
+            ),
+            LookupStep(
+                LOOKUP_PROP_TYPE,
+                section="Search",
+                form_values=lambda ctx, source: _search_section(
+                    ctx, include_prop_type=False
+                ),
+                extract=_extract_prop_type,
+            ),
+            LookupStep(
+                LOOKUP_UPRN_VALID,
+                section="Search",
+                form_values=lambda ctx, source: _search_section(
+                    ctx, include_prop_type=True
+                ),
+            ),
+            LookupStep(
+                LOOKUP_COLLECTIONS,
+                section="Search",
+                form_values=_collections_form_values,
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    transform = RowTransformer(
+        type_value_map={
+            "grey wheelie bin": GENERAL_WASTE,
+            "green wheelie bin": RECYCLABLES,
+            "brown wheelie bin": GARDEN_WASTE,
+            "blue wheelie bin": RECYCLABLES,
+        },
+    )
+
+    def __init__(self, uprn: str | int, postcode: str, predict: str | bool = False):
+        pc = postcode.strip().upper().replace(" ", "")
+        normalised_postcode = pc[:-3] + " " + pc[-3:] if len(pc) >= 5 else pc
+        super().__init__(
+            uprn=str(uprn),
+            postcode=normalised_postcode,
+            predict=str(predict).strip().lower() in {"true", "yes", "1"},
         )
 
-        # 7. Fetch collection dates
-        today = date.today()
-        from_date = (today - timedelta(days=7)).strftime("%d/%m/%Y")
-        to_date = (today + timedelta(days=28)).strftime("%d/%m/%Y")
-
-        col_data = _run_lookup(
-            s,
-            sid,
-            LOOKUP_COLLECTIONS,
-            {
-                "formId": FORM_ID,
-                "formValues": {
-                    "Search": search_section,
-                    "Your bins": {
-                        "GovDeliveryCategorye": {"value": gov_cat},
-                        "NextCollectionFromDate": {"value": from_date},
-                        "NextCollectionToDate": {"value": to_date},
-                    },
-                },
-            },
-        )
-        col_rows = _rows(col_data)
-
-        if not col_rows:
-            raise ValueError(
-                f"Kirklees: no collection data returned for UPRN {self._uprn}."
-            )
-
-        entries: list[Collection] = []
-        for row in col_rows.values():
-            date_str = row.get("NextCollectionDate", "")
-            bin_type = row.get("label", "") or row.get("ServiceItemName", "")
-            if not date_str or not bin_type:
+    def preprocess(
+        self, rows: Any, source: "BaseSource | None" = None
+    ) -> "Iterable[tuple[Any, str]]":
+        values: Iterable[Any]
+        if isinstance(rows, dict):
+            values = rows.values()
+        elif isinstance(rows, list):
+            values = rows
+        else:
+            return
+        predict = bool(self.params.get("predict"))
+        for row in values:
+            if not isinstance(row, dict):
                 continue
-            # API returns ISO format "2026-04-20T00:00:00"
+            date_str = row.get("NextCollectionDate")
+            label = row.get("label") or row.get("ServiceItemName")
+            if not date_str or not label:
+                continue
             try:
-                col_date = datetime.fromisoformat(date_str).date()
-            except ValueError:
+                base_date = date_parsers.auto(str(date_str))
+            except (ValueError, TypeError):
                 continue
-            # Kirklees residential collections are fortnightly
-            dates = [col_date]
-            if self._predict:
-                for i in range(1, 365 // 14):
-                    dates.append(col_date + timedelta(days=14 * i))
-            for d in dates:
-                entries.append(
-                    Collection(date=d, t=str(bin_type), icon=_icon(str(bin_type)))
+            dates = [base_date]
+            if predict:
+                # Kirklees residential collections are fortnightly; mirrors the
+                # legacy source's 365-day look-ahead window.
+                dates.extend(
+                    base_date + timedelta(days=14 * i) for i in range(1, 365 // 14)
                 )
-
-        return entries
+            for collection_date in dates:
+                yield collection_date, str(label)
