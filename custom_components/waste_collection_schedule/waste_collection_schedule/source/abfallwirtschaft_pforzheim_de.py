@@ -1,130 +1,112 @@
-from datetime import datetime
-from html.parser import HTMLParser
+"""Abfallwirtschaft Pforzheim (abfallwirtschaft-pforzheim.de).
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+Demonstrates: the Athos "WasteManagementServlet" wizard's plain German
+shape (one field-setting step, one container-selection step, one download
+step; see the ``awn_de`` docstring), with the quirk that this deployment has
+no separate city field: ``Ort`` is derived from the street name's first
+letter (``street[0].upper()``), exactly as the legacy source computed it.
 
-# Source code based on rh_entsorgung_de.md
-TITLE = "Abfallwirtschaft Pforzheim"
-DESCRIPTION = "Source for Abfallwirtschaft Pforzheim."
-URL = "https://www.abfallwirtschaft-pforzheim.de"
-TEST_CASES = {
-    "Abnobstraße": {
-        "street": "Abnobastraße",
-        "house_number": 3,
-        "address_suffix": "",
-    },
-    "Im Buchbusch": {
-        "street": "Im Buchbusch",
-        "house_number": 12,
-    },
-    "Eisenbahnstraße": {
-        "street": "Eisenbahnstraße",
-        "house_number": 29,
-        "address_suffix": "-33",
-    },
-}
+Known gap (documented, not reproduced here, matching the precedent set by
+``bielefeld_de``): the legacy source additionally re-fetched a second
+calendar year (``Zeitraum: "Jahresübersicht <year+1>"``) when run in
+December, merging both years' events. ``AthosWasteManagementRetriever``
+runs the wizard's steps exactly once per fetch, so that December-only
+second pass is not reproduced; the single fetch already covers the current
+Jahresübersicht.
+"""
 
-ICON_MAP = {
-    "Restmuell": Icons.GENERAL_WASTE,
-    "Biobehaelter": Icons.ORGANIC,
-    "Papierbehaelter": Icons.PAPER,
-    "Gelbe": Icons.RECYCLING,
-    "Grossmuellbehaelter": Icons.GENERAL_WASTE,
-}
+from typing import ClassVar, final
+
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street, text_field
+from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
+
+_SERVLET = "https://onlineservices.abfallwirtschaft-pforzheim.de/WasteManagementPforzheim/WasteManagementServlet"
 
 
-API_URL = "https://onlineservices.abfallwirtschaft-pforzheim.de/WasteManagementPforzheim/WasteManagementServlet"
+@final
+class Source(BaseSource):
+    TITLE = "Abfallwirtschaft Pforzheim"
+    DESCRIPTION = "Source for Abfallwirtschaft Pforzheim."
+    URL = "https://www.abfallwirtschaft-pforzheim.de"
+    COUNTRY = "de"
 
-# Parser for HTML input (hidden) text
+    TEST_CASES: ClassVar[dict] = {
+        "Abnobstraße": {
+            "street": "Abnobastraße",
+            "house_number": 3,
+            "address_suffix": "",
+        },
+        "Im Buchbusch": {
+            "street": "Im Buchbusch",
+            "house_number": 12,
+        },
+        "Eisenbahnstraße": {
+            "street": "Eisenbahnstraße",
+            "house_number": 29,
+            "address_suffix": "-33",
+        },
+    }
 
+    PARAMS = (
+        street(),
+        house_number(),
+        text_field("address_suffix", "Address suffix", default=""),
+    )
 
-class HiddenInputParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._args = {}
+    retrieve = AthosWasteManagementRetriever(
+        url=_SERVLET,
+        initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        steps=[
+            {
+                "submit_action": "CITYCHANGED",
+                "fields": lambda street, house_number, address_suffix="", **_: {
+                    "Ort": street[0].upper(),
+                    "Strasse": street,
+                    "Hausnummer": str(house_number),
+                    "Hausnummerzusatz": address_suffix,
+                },
+            },
+            {
+                "submit_action": "forward",
+                "fields": lambda **_: {
+                    f"ContainerGewaehlt_{i}": "on" for i in range(1, 8)
+                },
+            },
+            {
+                "submit_action": "filedownload_ICAL",
+                "fields": lambda **_: {
+                    "ApplicationName": "com.athos.nl.mvc.abfterm.AbfuhrTerminModel",
+                },
+            },
+        ],
+    )
+    parse = parsers.IcsParser()
+    transform = ICSTransformer(
+        # The feed appends a variable frequency/size suffix to some summaries
+        # (e.g. "Restmuell 7-taeglich", "Grossmuellbehaelter 1100 L"); the
+        # legacy source's icon lookup used only the first word
+        # (``d[1].split(" ")[0]``) for the same reason. Mirror that here so
+        # every variant still resolves to its canonical type.
+        clean=lambda label: label.split()[0] if label.split() else label,
+        type_value_map={
+            "Restmuell": GENERAL_WASTE,
+            "Biobehaelter": ORGANIC,
+            "Papierbehaelter": PAPER,
+            "Gelbe": RECYCLABLES,
+            "Grossmuellbehaelter": GENERAL_WASTE,
+        },
+    )
 
-    @property
-    def args(self):
-        return self._args
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "input":
-            d = dict(attrs)
-            if str(d["type"]).lower() == "hidden":
-                self._args[d["name"]] = d["value"] if "value" in d else ""
-
-
-class Source:
     def __init__(self, street: str, house_number: int, address_suffix: str = ""):
-        self._street = street
-        self._hnr = house_number
-        self._suffix = address_suffix
-        self._ics = ICS()
-
-    def fetch(self):
-        now = datetime.now()
-        entries = self.get_data(now.year)
-        if now.month == 12:
-            try:
-                entries += self.get_data(now.year + 1)
-            except Exception:
-                pass
-        return entries
-
-    def get_data(self, year):
-        session = requests.session()
-
-        r = session.get(
-            API_URL,
-            params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        super().__init__(
+            street=street, house_number=house_number, address_suffix=address_suffix
         )
-        r.raise_for_status()
-        r.encoding = "utf-8"
-
-        parser = HiddenInputParser()
-        parser.feed(r.text)
-
-        args = parser.args
-        args["Ort"] = self._street[0].upper()
-        args["Strasse"] = self._street
-        args["Hausnummer"] = str(self._hnr)
-        args["Hausnummerzusatz"] = self._suffix
-        args["SubmitAction"] = "CITYCHANGED"
-        args["Zeitraum"] = f"Jahresübersicht {year}"
-        r = session.post(
-            API_URL,
-            data=args,
-        )
-        r.raise_for_status()
-
-        args["SubmitAction"] = "forward"
-        args["ContainerGewaehlt_1"] = "on"
-        args["ContainerGewaehlt_2"] = "on"
-        args["ContainerGewaehlt_3"] = "on"
-        args["ContainerGewaehlt_4"] = "on"
-        args["ContainerGewaehlt_5"] = "on"
-        args["ContainerGewaehlt_6"] = "on"
-        args["ContainerGewaehlt_7"] = "on"
-        r = session.post(
-            API_URL,
-            data=args,
-        )
-        r.raise_for_status()
-
-        args["ApplicationName"] = "com.athos.nl.mvc.abfterm.AbfuhrTerminModel"
-        args["SubmitAction"] = "filedownload_ICAL"
-
-        r = session.post(
-            API_URL,
-            data=args,
-        )
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1], ICON_MAP.get(d[1].split(" ")[0])))
-        return entries
