@@ -1,50 +1,59 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
+"""Abfallwirtschaftsbetrieb Ilm-Kreis waste calendar (Sitepark IES platform).
 
-TITLE = "Abfallwirtschaftsbetrieb Ilm-Kreis"
-DESCRIPTION = "Source for Abfallwirtschaftsbetrieb Ilm-Kreis waste collection."
-URL = "https://www.ilm-kreis.de"
-COUNTRY = "de"
-TEST_CASES = {
-    "Gerhart-Hauptmann-Straße (Arnstadt)": {
-        "strasse": "Gerhart-Hauptmann-Straße",
-        "ort": "Arnstadt",
-    },
-    "Ackermannstraße (Ilmenau)": {"strasse": "Ackermannstraße", "ort": "Ilmenau"},
-}
+A declarative BaseSource pipeline. The shared ``SiteparkIESRetriever`` resolves
+the street (and optional Ort) to a pois and returns the raw ICS response; the
+shared ``IcsParser`` + ``ICSTransformer`` do the parsing and typing. This
+module only declares the municipality's base URL (a subdomain distinct from
+the public ``URL``) and the German-to-canonical waste-type map, so there is no
+``retrieve`` override, no manual request params and no ICON_MAP.
+"""
 
-API_URL = "https://aik.ilm-kreis.de"
+from typing import ClassVar, final
 
-ICON_MAP = {
-    "Bioabfall": Icons.BIO_KITCHEN,
-    "Elektroschrott": Icons.ELECTRONICS,
-    "Leichtverpackung": Icons.PLASTIC_PACKAGING,
-    "Papier": Icons.PAPER,
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Sonderabfall": Icons.HAZARDOUS,
-}
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, street
+from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import PAPER, RECYCLABLES
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "strasse": "Straße",
-        "ort": "Ort",
-    },
-    "en": {
-        "strasse": "Street",
-        "ort": "Place",
-    },
-}
+_BASE_URL = "https://aik.ilm-kreis.de"
 
 
-class Source:
-    def __init__(self, strasse, ort=None):
-        self._strasse = strasse
-        self._ort = ort
-        self._sitepark = SiteparkIES(API_URL)
+@final
+class Source(BaseSource):
+    TITLE = "Abfallwirtschaftsbetrieb Ilm-Kreis"
+    DESCRIPTION = "Source for Abfallwirtschaftsbetrieb Ilm-Kreis waste collection."
+    URL = "https://www.ilm-kreis.de"
+    COUNTRY = "de"
 
-    def fetch(self):
-        dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
-        return [
-            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
-            for date, waste_type in dates
-        ]
+    TEST_CASES: ClassVar[dict] = {
+        "Gerhart-Hauptmann-Straße (Arnstadt)": {
+            "strasse": "Gerhart-Hauptmann-Straße",
+            "ort": "Arnstadt",
+        },
+        "Ackermannstraße (Ilmenau)": {"strasse": "Ackermannstraße", "ort": "Ilmenau"},
+    }
+
+    PARAMS = (
+        street("strasse"),
+        district("ort", optional=True),
+    )
+
+    RAISE_ON_EMPTY = True
+
+    retrieve = SiteparkIESRetriever(_BASE_URL)
+    parse = parsers.IcsParser()
+    # "Bioabfall", "Elektroschrott", "Restabfall" and "Sonderabfall" already
+    # auto-resolve against the shared vocabulary; "Leichtverpackung" (singular)
+    # and "Papier/Pappe" don't match an alias exactly, so they need an
+    # explicit map.
+    transform = ICSTransformer(
+        type_value_map={
+            "Leichtverpackung": RECYCLABLES,
+            "Papier/Pappe": PAPER,
+        }
+    )
+
+    def __init__(self, strasse: str, ort: str | None = None):
+        super().__init__(strasse=strasse, ort=ort)
