@@ -1,6 +1,6 @@
-# Whitehorse City Counfil
+# Whitehorse City Council
 
-Support for schedules provided by [Whitehorse City Counfil](https://www.whitehorse.vic.gov.au), serving Whitehorse, Australia.
+Support for schedules provided by [Whitehorse City Council](https://www.whitehorse.vic.gov.au), serving Whitehorse, Australia.
 
 ## Configuration via configuration.yaml
 
