@@ -1,78 +1,94 @@
-import time
-from datetime import datetime
+from collections.abc import Iterable
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
-TITLE = "Portsmouth City Council"
-DESCRIPTION = "Source for waste collection services for Portsmouth City Council"
-URL = "https://www.portsmouth.gov.uk"
-TEST_CASES = {
-    "Fawcett Road - number": {"uprn": 1775027540},
-    "Fawcett Road - string": {"uprn": "1775027540"},
-    "Westbourne Road - number": {"uprn": 1775084532},
-    "Westbourne Road - string": {"uprn": "1775084532"},
-}
+HOSTNAME = "my.portsmouth.gov.uk"
+INITIAL_URL = (
+    "https://my.portsmouth.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://"
+    "AF-Process-26e27e70-f771-47b1-a34d-af276075cede/"
+    "AF-Stage-cd7cc291-2e59-42cc-8c3f-1f93e132a2c9/definition.json"
+    "&redirectlink=%2F&cancelRedirectLink=%2F"
+)
+LOOKUP_ID = "5e81ed10c0241"
 
-API_URLS = {
-    "session": "https://my.portsmouth.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-26e27e70-f771-47b1-a34d-af276075cede/AF-Stage-cd7cc291-2e59-42cc-8c3f-1f93e132a2c9/definition.json&redirectlink=%2F&cancelRedirectLink=%2F",
-    "auth": "https://my.portsmouth.gov.uk/authapi/isauthenticated?uri=https%3A%2F%2Fmy.portsmouth.gov.uk%2Fen%2FAchieveForms%2F%3Fform_uri%3Dsandbox-publish%3A%2F%2FAF-Process-26e27e70-f771-47b1-a34d-af276075cede%2FAF-Stage-cd7cc291-2e59-42cc-8c3f-1f93e132a2c9%2Fdefinition.json%26redirectlink%3D%252F%26cancelRedirectLink%3D%252F&hostname=my.portsmouth.gov.uk&withCredentials=true",
-    "schedule": "https://my.portsmouth.gov.uk/apibroker/runLookup?id=5e81ed10c0241&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_=1682697046055&sid=93c73ba547e8c23e85a50a1de67a5ca7",
-}
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
+# (row field, waste-type label). Each field is a "<br />"-joined list of date
+# strings (not a table of rows), one per bin type.
+DATE_FIELDS: tuple[tuple[str, str], ...] = (
+    ("listRefDatesHTML", "refuse bin"),
+    ("listRecDatesHTML", "recycling bin"),
+)
 
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "Portsmouth City Council"
+    DESCRIPTION = "Source for waste collection services for Portsmouth City Council."
+    URL = "https://www.portsmouth.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        s = requests.Session()
+    TEST_CASES: ClassVar[dict] = {
+        "Fawcett Road - number": {"uprn": 1775027540},
+        "Fawcett Road - string": {"uprn": "1775027540"},
+        "Westbourne Road - number": {"uprn": 1775084532},
+        "Westbourne Road - string": {"uprn": "1775084532"},
+    }
 
-        # This request sets up the cookies
-        r0 = s.get(API_URLS["session"], headers=HEADERS)
-        r0.raise_for_status()
+    PARAMS = (uprn(),)
 
-        # This request gets the session key from the PHPSESSID (in the cookies)
-        authRequest = s.get(API_URLS["auth"], headers=HEADERS)
-        authData = authRequest.json()
-        sessionKey = authData["auth-session"]
-        now = time.time_ns() // 1_000_000
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        initial_url=INITIAL_URL,
+        steps=[
+            LookupStep(
+                LOOKUP_ID,
+                no_retry="true",
+                form_values=lambda ctx, source: {
+                    "col_uprn": {"value": source.params["uprn"]}
+                },
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%A %d %B %Y"),
+        type_value_map={
+            "refuse bin": GENERAL_WASTE,
+            "recycling bin": RECYCLABLES,
+        },
+    )
 
-        # now query using the uprn
-        payload = {"formValues": {"Section 1": {"col_uprn": {"value": self._uprn}}}}
-        scheduleRequest = s.post(
-            API_URLS["schedule"] + "&_" + str(now) + "&sid=" + sessionKey,
-            headers=HEADERS,
-            json=payload,
-        )
-        data = scheduleRequest.json()["integration"]["transformed"]["rows_data"]["0"]
+    def __init__(self, uprn: str | int):
+        super().__init__(uprn=str(uprn))
 
-        rubbishDates = data["listRefDatesHTML"].split("<p>")[0].split("<br />")
-        recyclingDates = data["listRecDatesHTML"].split("<p>")[0].split("<br />")
-
-        entries = []
-        for date in rubbishDates:
-            if len(date) > 0:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(date.rstrip("* "), "%A %d %B %Y").date(),
-                        t="refuse bin",
-                        icon="mdi:trash-can",
-                    )
-                )
-
-        for date in recyclingDates:
-            if len(date) > 0:
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(date.rstrip("* "), "%A %d %B %Y").date(),
-                        t="recycling bin",
-                        icon="mdi:recycle",
-                    )
-                )
-
-        return entries
+    def preprocess(
+        self, rows: Any, source: "BaseSource | None" = None
+    ) -> "Iterable[tuple[Any, str]]":
+        if isinstance(rows, dict) and "0" in rows:
+            row = rows["0"]
+        elif isinstance(rows, dict):
+            row = rows
+        elif rows:
+            row = rows[0]
+        else:
+            row = {}
+        if not isinstance(row, dict):
+            return
+        for field_name, label in DATE_FIELDS:
+            raw = row.get(field_name)
+            if not raw:
+                continue
+            for entry in raw.split("<p>")[0].split("<br />"):
+                if not entry:
+                    continue
+                yield entry.rstrip("* "), label
