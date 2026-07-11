@@ -1,57 +1,63 @@
-import time
+"""London Borough of Bromley (bromley.gov.uk).
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+Demonstrates: the UK htmx polling shape (same shell as bexley_gov_uk). The
+property page kicks off server-side calendar generation; the site's own page
+polls the ``.ics`` endpoint every 2 seconds (``hx-trigger="every 2s"``) until
+it's ready. ``PollingIcsRetriever`` mirrors that polling; ``IcsParser`` +
+``ICSTransformer`` do the rest. The only source-specific code is the URL
+template, a " collection" suffix strip (every summary ends with it, e.g.
+"Food Waste collection"), and the waste-type map.
+"""
 
-TITLE = "London Borough of Bromley"
-DESCRIPTION = "Source for bromley.gov.uk services for London Borough of Bromley, UK."
-URL = "https://bromley.gov.uk"
-TEST_CASES = {
-    "Test_001": {"property": 6328436},
-    "Test_002": {"property": "6146611"},
-    "Test_003": {"property": 6283460},
-}
+from typing import ClassVar, final
 
-ICON_MAP = {
-    "NON-RECYCLABLE": Icons.GENERAL_WASTE,
-    "FOOD": Icons.BIO_KITCHEN,
-    "GARDEN": Icons.GARDEN,
-    "PAPER": Icons.PAPER,
-    "MIXED": Icons.GLASS,
-}
-
-MAX_COUNT = 15
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import PollingIcsRetriever
+from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    PAPER,
+)
 
 
-class Source:
-    def __init__(self, property):
-        self._property = str(property)
-        self._ics = ICS()
+@final
+class Source(BaseSource):
+    TITLE = "London Borough of Bromley"
+    DESCRIPTION = (
+        "Source for bromley.gov.uk services for London Borough of Bromley, UK."
+    )
+    URL = "https://bromley.gov.uk"
+    COUNTRY = "uk"
 
-    def fetch(self):
-        s = requests.Session()
-        r = s.get(f"https://recyclingservices.bromley.gov.uk/waste/{self._property}")
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"property": 6328436},
+        "Test_002": {"property": "6146611"},
+        "Test_003": {"property": 6283460},
+    }
 
-        for _ in range(MAX_COUNT):
-            r = s.get(
-                f"https://recyclingservices.bromley.gov.uk/waste/{self._property}/calendar.ics"
-            )
-            try:
-                dates = self._ics.convert(r.text)
-                break
-            except ValueError:
-                time.sleep(2)  # identical to website behaviour (hx-trigger="every 2s")
+    PARAMS = (uprn(field_name="property"),)
 
-        entries = []
-        for item in dates:
-            bin_type = item[1].replace(" collection", "")
-            entries.append(
-                Collection(
-                    date=item[0],
-                    t=bin_type,
-                    icon=ICON_MAP.get(bin_type.split(" ")[0].upper()),
-                )
-            )
+    retrieve = PollingIcsRetriever(
+        url=lambda property, **_: (
+            f"https://recyclingservices.bromley.gov.uk/waste/{property}"
+        )
+    )
+    parse = parsers.IcsParser()
+    transform = ICSTransformer(
+        type_value_map={
+            "Non-Recyclable Refuse": GENERAL_WASTE,
+            "Food Waste": FOOD_WASTE,
+            "Garden Waste": GARDEN_WASTE,
+            "Paper & Cardboard": PAPER,
+            "Mixed Recycling (Cans, Plastics & Glass)": GLASS,
+        },
+        clean=label_cleaner(strip_suffixes=[" collection"]),
+    )
 
-        return entries
+    def __init__(self, property: str):
+        super().__init__(property=property)
