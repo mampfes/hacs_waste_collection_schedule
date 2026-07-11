@@ -1,55 +1,71 @@
+"""Kumberg (kumberg.gv.at).
+
+Not a TwoStepRetriever shape: there is no user-supplied lookup key at all. The
+calendar index page lists a fixed, small set of per-waste-type ICS feed URLs
+(one per ``i.fa-calendar-plus`` icon whose link contains "abfalltyp"); every
+feed is fetched and combined. A source-defined ``retrieve``/``parse`` pair
+covers this (no shared retriever fits "scrape an index page for N feed URLs,
+fetch every one").
+"""
+
 import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.ICS import ICS
-
-TITLE = "Kumberg"
-DESCRIPTION = "Source for Kumberg."
-URL = "https://www.kumberg.gv.at"
-TEST_CASES: dict[str, dict] = {"Whole Kumberg": {}}
-
-
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Bio": Icons.ORGANIC,
-    "Papier": Icons.PAPER,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Sperrmüll": Icons.BULKY,
-}
-
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 API_URL = "https://www.kumberg.gv.at/kalender/"
 
+# Strips a time-range suffix like "7.00 - 9.30 Uhr" from a bin type label.
+_TIME_RANGE = re.compile(r"\d{1,2}\.\d{2} - \d{1,2}\.\d{2} Uhr")
 
-class Source:
+
+@final
+class Source(BaseSource):
+    TITLE = "Kumberg"
+    DESCRIPTION = "Source for Kumberg."
+    URL = "https://www.kumberg.gv.at"
+    COUNTRY = "at"
+
+    TEST_CASES: ClassVar[dict] = {"Whole Kumberg": {}}
+
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmüll": GENERAL_WASTE,
+            "Bio": ORGANIC,
+            "Papier": PAPER,
+            "Gelber Sack": RECYCLABLES,
+            "Sperrmüll": BULKY_WASTE,
+        },
+    )
+
+    def retrieve(self, source):
+        index = source.session.get(API_URL)
+        soup = BeautifulSoup(index.text, "html.parser")
+        urls: set[str] = set()
+        for icon in soup.select("i.fa-calendar-plus"):
+            parent = icon.parent
+            href = parent.get("href") if isinstance(parent, Tag) else None
+            if isinstance(href, str) and "abfalltyp" in href:
+                urls.add(href)
+        return [source.session.get(url) for url in urls]
+
+    def parse(self, responses, source=None):
+        ics = ICS()
+        events: list[tuple] = []
+        for response in responses:
+            for date_, bin_type in ics.convert(response.text):
+                events.append((date_, _TIME_RANGE.sub("", bin_type).strip()))
+        return events
+
     def __init__(self):
-        self._ics_urls = set[str]()
-        self._ics = ICS()
-
-    def _first_setup(self):
-        r = requests.get(API_URL)
-        soup = BeautifulSoup(r.text, "html.parser")
-        cal_icons = soup.select("i.fa-calendar-plus")
-        for icon in cal_icons:
-            if "abfalltyp" in icon.parent["href"]:
-                self._ics_urls.add(icon.parent["href"])
-
-    def fetch(self) -> list[Collection]:
-        if not self._ics_urls:
-            self._first_setup()
-
-        collections = []
-        for ics_url in self._ics_urls:
-            r = requests.get(ics_url)
-            for date_, bin_type in self._ics.convert(r.text):
-                # remove time like "7.00 - 9.30 Uhr" from bin_type
-                if re.search(r"\d{1,2}\.\d{2} - \d{1,2}\.\d{2} Uhr", bin_type):
-                    bin_type = re.sub(
-                        r"\d{1,2}\.\d{2} - \d{1,2}\.\d{2} Uhr", "", bin_type
-                    ).strip()
-
-                icon = ICON_MAP.get(bin_type)
-                collections.append(Collection(date_, bin_type, icon))
-        return collections
+        super().__init__()
