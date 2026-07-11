@@ -1,27 +1,39 @@
-from waste_collection_schedule import Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
+from typing import ClassVar, final
 
-TITLE = "Ort im Innkreis"
-DESCRIPTION = "Waste collection schedule for Ort im Innkreis, Austria."
-URL = "https://www.ort-im-innkreis.at"
-COUNTRY = "at"
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.service.RiSKommunalAT import (
+    RiSKommunalParser,
+    RiSKommunalRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE
 
-TEST_CASES: dict[str, dict] = {
-    "Default": {},
-}
-
-ICON_MAP = {
-    "Bioabfall": Icons.ORGANIC,
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Altpapier": Icons.PAPER,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Altglas": Icons.GLASS,
-    "Sperrmüll": Icons.BULKY,
-    "Problemstoff": Icons.HAZARDOUS,
-}
+_BASE_URL = "https://www.ort-im-innkreis.at"
 
 
-class Source(RiSKommunalSource):
-    BASE_URL = "https://www.ort-im-innkreis.at"
-    ICON_MAP = ICON_MAP
+@final
+class Source(BaseSource):
+    TITLE = "Ort im Innkreis"
+    DESCRIPTION = "Waste collection schedule for Ort im Innkreis, Austria."
+    URL = _BASE_URL
+    COUNTRY = "at"
     RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Default": {},
+    }
+
+    PARAMS = ()
+
+    retrieve = RiSKommunalRetriever(base_url=_BASE_URL)
+    parse = RiSKommunalParser()
+
+    # Only the frequency-suffixed residual-waste labels need an explicit
+    # entry; every other label (Bioabfall, Altpapier, Gelber Sack, Altglas,
+    # Sperrmüll, Problemstoff) is classified by the shared vocabulary.
+    transform = ICSTransformer(
+        type_value_map={
+            "Restabfall 2-wöchentlich": GENERAL_WASTE,
+            "Restabfall 4-wöchentlich": GENERAL_WASTE,
+        },
+    )
