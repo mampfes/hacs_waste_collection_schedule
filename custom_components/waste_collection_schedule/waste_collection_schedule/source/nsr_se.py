@@ -1,148 +1,154 @@
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+"""NSR - Nordvästra Skånes Renhållnings AB (nsr.se).
+
+Demonstrates: an address-search lookup (optionally filtered by a trailing
+", City") feeding an ICS-download request, via ``TwoStepRetriever``. The feed
+itself duplicates every event, so ``parse`` is a source-defined override that
+de-duplicates after conversion.
+"""
+
+from typing import ClassVar, final
+from urllib.parse import urlencode
+
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
 )
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.retrievers import TwoStepRetriever
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    HAZARDOUS,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "NSR - Nordvästra Skånes Renhållnings AB"
-DESCRIPTION = "Source for NSR waste collection schedule in northwest Skåne, Sweden."
-URL = "https://nsr.se"
-COUNTRY = "se"
-
-API_URL = "https://nsr.se/api/wastecalendar"
-
-TEST_CASES = {
-    "Kattarp villa": {"address": "Signestorpsvägen 1"},
-    "Helsingborg city": {"address": "Drottninggatan 100, Helsingborg"},
-    "Kattarp with garden waste": {"address": "Signestorpsvägen 13"},
-}
-
-EXTRA_INFO = [
-    {
-        "title": "NSR Tömningskalender",
-        "url": "https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/",
-        "country": "se",
-    },
-]
-
-ICON_MAP = {
-    "KÄRL 1": Icons.GENERAL_WASTE,
-    "KÄRL 2": Icons.RECYCLING,
-    "Trädgårdsavfall": Icons.GARDEN,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address as shown on the NSR website "
-    "(e.g. 'Storgatan 1'). Do not include postal code. "
-    "Search at https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/",
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street name and number (e.g. 'Storgatan 1')",
-    },
-}
+_API_URL = "https://nsr.se/api/wastecalendar"
 
 
-class Source:
-    def __init__(self, address: str):
-        if not address:
-            raise SourceArgumentRequired("address", "A street address is required")
-        self._address = address.strip()
+def _split(full_address: str) -> tuple[str, str]:
+    """Split "Street 1, City" into street and optional city filter."""
+    if "," in full_address:
+        street, city_filter = (p.strip() for p in full_address.split(",", maxsplit=1))
+        return street, city_filter
+    return full_address, ""
 
-    def fetch(self) -> list[Collection]:
-        # Split "Street 1, City" into street and optional city filter
-        if "," in self._address:
-            street, city_filter = (
-                p.strip() for p in self._address.split(",", maxsplit=1)
-            )
-        else:
-            street = self._address
-            city_filter = ""
 
-        # Step 1: Search for the address (API only accepts street, not city)
-        r = requests.get(
-            f"{API_URL}/search",
-            params={"query": street},
-            timeout=30,
-        )
-        r.raise_for_status()
+def _pick_address_id(lookup, source) -> str:
+    full_address = source.params["address"]
+    street, city_filter = _split(full_address)
 
-        data = r.json()
-        results = data.get("fp", [])
+    results = lookup.json().get("fp", [])
+    if not results:
+        raise SourceArgumentNotFound("address", full_address)
 
-        if not results:
-            raise SourceArgumentNotFound("address", self._address)
+    if city_filter:
+        filtered = [
+            e for e in results if e.get("Ort", "").lower() == city_filter.lower()
+        ]
+        if filtered:
+            results = filtered
 
-        # Step 2: Filter by city if provided
-        if city_filter:
-            filtered = [
-                e for e in results if e.get("Ort", "").lower() == city_filter.lower()
-            ]
-            if filtered:
-                results = filtered
+    match = next(
+        (e for e in results if e.get("Adress", "").lower() == street.lower()), None
+    )
+    if match is not None:
+        return match["id"]
+    if len(results) == 1:
+        return results[0]["id"]
 
-        # Step 3: Find exact match or suggest alternatives
-        match = None
-        for entry in results:
-            addr = entry.get("Adress", "")
-            if addr.lower() == street.lower():
-                match = entry
-                break
+    suggestions = [f"{e['Adress']}, {e['Ort']}" for e in results if "Adress" in e]
+    raise SourceArgumentNotFoundWithSuggestions("address", full_address, suggestions)
 
-        if match is None:
-            if len(results) == 1:
-                match = results[0]
-            else:
-                suggestions = [
-                    f"{e['Adress']}, {e['Ort']}" for e in results if "Adress" in e
-                ]
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "address", self._address, suggestions
-                )
 
-        # Step 4: Fetch ICS calendar
-        address_id = match["id"]
-        r = requests.get(
-            f"{API_URL}/calendar",
-            params={
-                "query": street,
-                "id": address_id,
-                "calendar_type": "ical",
-                "action": "fetchDataFromFetchPlannerCalendar",
-                "level": "ajax",
-                "type": "json",
-            },
-            timeout=30,
-        )
-        r.raise_for_status()
+def _schedule_url(address_id: str, address: str, **_) -> str:
+    street, _city_filter = _split(address)
+    query = urlencode(
+        {
+            "query": street,
+            "id": address_id,
+            "calendar_type": "ical",
+            "action": "fetchDataFromFetchPlannerCalendar",
+            "level": "ajax",
+            "type": "json",
+        }
+    )
+    return f"{_API_URL}/calendar?{query}"
 
-        # Step 5: Parse ICS data (NSR feed duplicates every event)
-        ics = ICS()
-        dates = ics.convert(r.text)
 
-        seen = set()
+@final
+class Source(BaseSource):
+    TITLE = "NSR - Nordvästra Skånes Renhållnings AB"
+    DESCRIPTION = "Source for NSR waste collection schedule in northwest Skåne, Sweden."
+    URL = "https://nsr.se"
+    COUNTRY = "se"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Kattarp villa": {"address": "Signestorpsvägen 1"},
+        "Helsingborg city": {"address": "Drottninggatan 100, Helsingborg"},
+        "Kattarp with garden waste": {"address": "Signestorpsvägen 13"},
+    }
+
+    REGIONS = (
+        region(
+            "NSR Tömningskalender",
+            url="https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/",
+            country="se",
+        ),
+    )
+
+    PARAMS = (text_field("address", label="Street Address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address as shown on the NSR website (e.g. "
+            "'Storgatan 1'). Do not include postal code. Search at "
+            "https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/"
+        ),
+    }
+
+    RAISE_ON_EMPTY = True
+
+    retrieve = TwoStepRetriever(
+        lookup_url=lambda address, **_: (
+            f"{_API_URL}/search?{urlencode({'query': _split(address)[0]})}"
+        ),
+        extract=_pick_address_id,
+        schedule_url=_schedule_url,
+    )
+
+    def parse(self, response, source=None):
+        seen: set = set()
         entries = []
-        for dt, waste_type in dates:
-            key = (dt, waste_type)
-            if key in seen:
+        for entry in ICS().convert(response.text):
+            if entry in seen:
                 continue
-            seen.add(key)
-            entries.append(
-                Collection(
-                    date=dt,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
+            seen.add(entry)
+            entries.append(entry)
         return entries
+
+    transform = ICSTransformer(
+        type_value_map={
+            "KÄRL 1": GENERAL_WASTE,
+            "KÄRL 2": RECYCLABLES,
+            "Trädgårdsavfall": GARDEN_WASTE,
+            "Restavfall": GENERAL_WASTE,
+            "Matavfall": FOOD_WASTE,
+            "Pappersförpackningar": PAPER,
+            "Tidningar": PAPER,
+            "Ofärgat glas": GLASS,
+            "Färgat glas": GLASS,
+            "Plastförpackningar": RECYCLABLES,
+            "Metallförpackningar": RECYCLABLES,
+            "Miljöfarligt avfall": HAZARDOUS,
+        }
+    )
+
+    def __init__(self, address: str):
+        super().__init__(address=address)
