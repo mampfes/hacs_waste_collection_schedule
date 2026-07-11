@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-07-12",
+  "interactions": [
+    {
+      "key": "GET https://wellington.govt.nz/~/ical/ 31f4cf4462",
+      "method": "GET",
+      "url": "https://wellington.govt.nz/~/ical/",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 11 Jul 2026 22:11:33 GMT",
+        "content-type": "text/calendar",
+        "content-length": "653",
+        "cache-control": "private",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ASP.NET_SessionId=edvevvey0cqfriz4osax51h1; path=/; HttpOnly; SameSite=Lax",
+        "content-disposition": "attachment; filename=\"Rubbish and Recycling Calendar - Campbell Street.ics\"",
+        "access-control-allow-origin": "https://search.wellington.govt.nz",
+        "access-control-allow-methods": "GET,PUT,POST,OPTIONS",
+        "access-control-allow-headers": "Content-Type",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": "frame-ancestors 'self'",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "feature-policy": "accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'"
+      },
+      "content_b64": "QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL2RkYXlzb2Z0d2FyZS5jb20vL05PTlNHTUwgRERheS5pQ2FsIDEuMC8vRU4NCkJFR0lOOlZFVkVOVA0KREVTQ1JJUFRJT046Q29sbGVjdGlvbiBpcyBmcm9tIDcuMDBhbS4gUHV0IG91dCB5b3VyIGdsYXNzIGNyYXRlIGZvciByZWN5Y2xpDQogbmcuDQpEVEVORDoyMDI2MDcxNVQwNzAwMDANCkRUU1RBTVA6MjAyNjA3MTFUMjIxMTMzWg0KRFRTVEFSVDoyMDI2MDcxNVQwNzAwMDANCkxPQ0FUSU9OOkNhbXBiZWxsIFN0cmVldFwsIEthcm9yaQ0KUlJVTEU6RlJFUT1XRUVLTFk7SU5URVJWQUw9Mg0KU0VRVUVOQ0U6MA0KU1VNTUFSWTpHbGFzcyBjcmF0ZSAmIFJ1YmJpc2ggQ29sbGVjdGlvbg0KVUlEOjdiMTE3YzkwLWI2OGYtNDczNS05NjRjLWE4MzcwOGUyYWQzZA0KQkVHSU46VkFMQVJNDQpBQ1RJT046RGlzcGxheQ0KREVTQ1JJUFRJT046UGxhY2UgeW91ciBydWJiaXNoIGFuZCByZWN5Y2xpbmcgb24gdGhlIGtlcmIgZm9yIGNvbGxlY3Rpb24NClRSSUdHRVI6LVBUMUgNCkVORDpWQUxBUk0NCkVORDpWRVZFTlQNCkJFR0lOOlZFVkVOVA0KREVTQ1JJUFRJT046Q29sbGVjdGlvbiBpcyBmcm9tIDcuMDBhbS4gUHV0IG91dCB5b3VyIHdoZWVsaWUgYmluIG9yIHJlY3ljbGluDQogZyBiYWdzIGZvciByZWN5Y2xpbmcuDQpEVEVORDoyMDI2MDcyMlQwNzAwMDANCkRUU1RBTVA6MjAyNjA3MTFUMjIxMTMzWg0KRFRTVEFSVDoyMDI2MDcyMlQwNzAwMDANCkxPQ0FUSU9OOkNhbXBiZWxsIFN0cmVldFwsIEthcm9yaQ0KUlJVTEU6RlJFUT1XRUVLTFk7SU5URVJWQUw9Mg0KU0VRVUVOQ0U6MA0KU1VNTUFSWTpXaGVlbGllIGJpbiBvciByZWN5Y2xpbmcgYmFncyAmIFJ1YmJpc2ggQ29sbGVjdGlvbg0KVUlEOjlkMmE4N2RjLTliNjQtNGE3YS1iYWIwLWQ4ZDY0ZDBiZGQzYw0KQkVHSU46VkFMQVJNDQpBQ1RJT046RGlzcGxheQ0KREVTQ1JJUFRJT046UGxhY2UgeW91ciBydWJiaXNoIGFuZCByZWN5Y2xpbmcgb24gdGhlIGtlcmIgZm9yIGNvbGxlY3Rpb24NClRSSUdHRVI6LVBUMUgNCkVORDpWQUxBUk0NCkVORDpWRVZFTlQNCkVORDpWQ0FMRU5EQVINCg=="
+    }
+  ]
+}
