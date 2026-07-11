@@ -1,0 +1,89 @@
+{
+  "recorded_at": "2026-07-11",
+  "interactions": [
+    {
+      "key": "GET https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1/query 63f51cab2c",
+      "method": "GET",
+      "url": "https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1/query",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json;charset=utf-8",
+        "Content-Length": "391",
+        "Connection": "keep-alive",
+        "Date": "Sat, 11 Jul 2026 07:04:13 GMT",
+        "Server": "ArcGIS Online",
+        "X-Content-Type-Options": "nosniff",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Cache-Control": "max-age=3600",
+        "ETag": "\"1db8ad7b\"",
+        "Content-Encoding": "gzip",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Powered-By": "ASP.NET",
+        "Vary": "Origin",
+        "X-Cache": "Hit from cloudfront",
+        "Via": "1.1 b7b442fe25461fb00e06269a18be6350.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "PER50-P3",
+        "X-Amz-Cf-Id": "_UdpzNdroSAdBy0K04jel6LvY7lSEpIpqLr2WBxHQFuTKSN97sRaLA==",
+        "Age": "328"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwiZ2xvYmFsSWRGaWVsZE5hbWUiOiIiLCJnZW9tZXRyeVR5cGUiOiJlc3JpR2VvbWV0cnlQb2x5Z29uIiwic3BhdGlhbFJlZmVyZW5jZSI6eyJ3a2lkIjoxMDM1MTIsImxhdGVzdFdraWQiOjEwMzUxMiwidmNzV2tpZCI6MTA1NzAzLCJsYXRlc3RWY3NXa2lkIjo2MzYwfSwiZmllbGRzIjpbeyJuYW1lIjoiT0JKRUNUSUQiLCJhbGlhcyI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQifSx7Im5hbWUiOiJST1VURSIsImFsaWFzIjoiUm91dGUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImxlbmd0aCI6MjB9LHsibmFtZSI6IlBJQ0tVUERBWSIsImFsaWFzIjoiUGlja3VwIERheSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwibGVuZ3RoIjoyMH0seyJuYW1lIjoiU0VSVklDRV9QUk9WSURFUiIsImFsaWFzIjoiU2VydmljZSBQcm92aWRlciIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwibGVuZ3RoIjozMH0seyJuYW1lIjoiU2hhcGVfX0FyZWEiLCJhbGlhcyI6IkFyZWEiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURvdWJsZSJ9LHsibmFtZSI6IlNoYXBlX19MZW5ndGgiLCJhbGlhcyI6Ikxlbmd0aCIsInR5cGUiOiJlc3JpRmllbGRUeXBlRG91YmxlIn1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJPQkpFQ1RJRCI6MSwiUk9VVEUiOiI1MzIiLCJQSUNLVVBEQVkiOiJGcmlkYXkiLCJTRVJWSUNFX1BST1ZJREVSIjoiT2tsYWhvbWEgQ2l0eSIsIlNoYXBlX19BcmVhIjoxMzQ5Mzk5NS42MjY2MDA0MiwiU2hhcGVfX0xlbmd0aCI6MTY0OTIuMTQ1Mzg4NzI5ODN9fV19"
+    },
+    {
+      "key": "GET https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3/query 34e7ea7ae0",
+      "method": "GET",
+      "url": "https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3/query",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json;charset=utf-8",
+        "Content-Length": "379",
+        "Connection": "keep-alive",
+        "Date": "Sat, 11 Jul 2026 07:04:14 GMT",
+        "Server": "ArcGIS Online",
+        "X-Content-Type-Options": "nosniff",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Cache-Control": "max-age=3600",
+        "ETag": "\"99e6027b\"",
+        "Content-Encoding": "gzip",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Powered-By": "ASP.NET",
+        "Vary": "Origin",
+        "X-Cache": "Hit from cloudfront",
+        "Via": "1.1 313121a9d9425c6a980dd2bbe64fb5dc.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "PER50-P3",
+        "X-Amz-Cf-Id": "R__8HDx3rZp3wqXP5NOTrAYWboBPlwItjjYRKtaKPlWLz97_1jOAKA==",
+        "Age": "327"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwiZ2xvYmFsSWRGaWVsZE5hbWUiOiIiLCJnZW9tZXRyeVR5cGUiOiJlc3JpR2VvbWV0cnlQb2x5Z29uIiwic3BhdGlhbFJlZmVyZW5jZSI6eyJ3a2lkIjoxMDM1MTIsImxhdGVzdFdraWQiOjEwMzUxMiwidmNzV2tpZCI6MTA1NzAzLCJsYXRlc3RWY3NXa2lkIjo2MzYwfSwiZmllbGRzIjpbeyJuYW1lIjoiT0JKRUNUSUQiLCJhbGlhcyI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQifSx7Im5hbWUiOiJSb3V0ZSIsImFsaWFzIjoiUm91dGUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImxlbmd0aCI6MjB9LHsibmFtZSI6IlBpY2t1cERheSIsImFsaWFzIjoiUGlja3VwIERheSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiU2VydmljZVByb3ZpZGVyIiwiYWxpYXMiOiJTZXJ2aWNlIFByb3ZpZGVyIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJsZW5ndGgiOjE2fSx7Im5hbWUiOiJTaGFwZV9fQXJlYSIsImFsaWFzIjoiQXJlYSIsInR5cGUiOiJlc3JpRmllbGRUeXBlRG91YmxlIn0seyJuYW1lIjoiU2hhcGVfX0xlbmd0aCIsImFsaWFzIjoiTGVuZ3RoIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEb3VibGUifV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7Ik9CSkVDVElEIjoxMjE1LCJSb3V0ZSI6Ik8xQUgiLCJQaWNrdXBEYXkiOiJNb25kYXkiLCJTZXJ2aWNlUHJvdmlkZXIiOiJXYXN0ZSBNYW5hZ2VtZW50IiwiU2hhcGVfX0FyZWEiOjY2MTExNjcxLjI5MzA5MDM5NiwiU2hhcGVfX0xlbmd0aCI6MTExMjM4Ljc0MTI2MjYxMjc2fX1dfQ=="
+    },
+    {
+      "key": "GET https://utility.arcgis.com/usrsvcs/servers/c4455716f4bf4d1dafe6806e0e619de8/rest/services/OpenData/Utilities/FeatureServer/2/query 63f51cab2c",
+      "method": "GET",
+      "url": "https://utility.arcgis.com/usrsvcs/servers/c4455716f4bf4d1dafe6806e0e619de8/rest/services/OpenData/Utilities/FeatureServer/2/query",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json;charset=utf-8",
+        "Content-Length": "394",
+        "Connection": "keep-alive",
+        "Date": "Sat, 11 Jul 2026 07:04:14 GMT",
+        "Server": "ArcGIS Online",
+        "X-Content-Type-Options": "nosniff",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Cache-Control": "max-age=3600",
+        "ETag": "\"69f46ffc\"",
+        "Content-Encoding": "gzip",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Powered-By": "ASP.NET",
+        "Vary": "Origin",
+        "X-Cache": "Hit from cloudfront",
+        "Via": "1.1 3f610d669d03929351454d6cd2bc0b4c.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "PER50-P3",
+        "X-Amz-Cf-Id": "HNrYIPS7_g-7slbPrEUjGifZCkBzjgIoeAEGKzQmxLo-bpSFFlq1Rg==",
+        "Age": "327"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwiZ2xvYmFsSWRGaWVsZE5hbWUiOiIiLCJnZW9tZXRyeVR5cGUiOiJlc3JpR2VvbWV0cnlQb2x5Z29uIiwic3BhdGlhbFJlZmVyZW5jZSI6eyJ3a2lkIjoxMDM1MTIsImxhdGVzdFdraWQiOjEwMzUxMiwidmNzV2tpZCI6MTA1NzAzLCJsYXRlc3RWY3NXa2lkIjo2MzYwfSwiZmllbGRzIjpbeyJuYW1lIjoiT0JKRUNUSUQiLCJhbGlhcyI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQifSx7Im5hbWUiOiJST1VURSIsImFsaWFzIjoiUm91dGUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImxlbmd0aCI6MjB9LHsibmFtZSI6IlBJQ0tVUERBWSIsImFsaWFzIjoiUGlja3VwIERheSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwibGVuZ3RoIjoyMH0seyJuYW1lIjoiU0VSVklDRV9QUk9WSURFUiIsImFsaWFzIjoiU2VydmljZSBQcm92aWRlciIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwibGVuZ3RoIjoxMDB9LHsibmFtZSI6IlNoYXBlX19BcmVhIiwiYWxpYXMiOiJBcmVhIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEb3VibGUifSx7Im5hbWUiOiJTaGFwZV9fTGVuZ3RoIiwiYWxpYXMiOiJMZW5ndGgiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURvdWJsZSJ9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiT0JKRUNUSUQiOjEsIlJPVVRFIjoiNE0iLCJQSUNLVVBEQVkiOiI0dGggTW9uZGF5IiwiU0VSVklDRV9QUk9WSURFUiI6Ik9rbGFob21hIENpdHkiLCJTaGFwZV9fQXJlYSI6MTUyMjg1ODQ5LjM1NjQ1MjYxLCJTaGFwZV9fTGVuZ3RoIjo1MjYwMy4wNDU1NzU3Njc0NjR9fV19"
+    }
+  ]
+}

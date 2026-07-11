@@ -19,11 +19,20 @@ work out the start date and cadence. Once you have those, use these helpers::
 
     # a cycle pinned to a historical anchor date
     dates = recurrence.recurring_from_anchor(anchor, recurrence.FORTNIGHTLY, 13)
+
+    # "the 2nd Tuesday of the month" -> the next occurrence, or a run of them
+    second_tuesday = recurrence.monthly_nth_weekday(1, 2)
+    next_year = recurrence.monthly_nth_weekdays(1, 2, 12)
+
+    # US federal holidays (for a HolidayShift preprocess), for one state's rules
+    tn_holidays = recurrence.us_federal_holidays(range(2026, 2028), subdiv="TN")
 """
 
 import datetime
 import unicodedata
+from collections.abc import Iterable
 
+import holidays as _holidays
 from babel import Locale
 
 WEEKLY = datetime.timedelta(weeks=1)
@@ -210,3 +219,107 @@ def most_recent_weekday(
     """
     base = on_or_before or datetime.date.today()
     return base - datetime.timedelta(days=(base.weekday() - weekday + 7) % 7)
+
+
+def _nth_weekday_of_month(
+    year: int, month: int, weekday: int, n: int
+) -> datetime.date | None:
+    """Date of the n-th (``n == -1``: last) ``weekday`` in a given month.
+
+    Returns ``None`` when that month has no n-th occurrence (e.g. a 5th
+    Monday in a month with only four).
+    """
+    first = datetime.date(year, month, 1)
+    next_month = (
+        datetime.date(year + 1, 1, 1)
+        if month == 12
+        else datetime.date(year, month + 1, 1)
+    )
+    if n == -1:
+        last_day = next_month - datetime.timedelta(days=1)
+        return last_day - datetime.timedelta(days=(last_day.weekday() - weekday) % 7)
+    if n < 1:
+        raise ValueError("n must be 1-5 (the n-th occurrence), or -1 for the last")
+    candidate = first + datetime.timedelta(
+        days=(weekday - first.weekday()) % 7 + 7 * (n - 1)
+    )
+    return candidate if candidate.month == month else None
+
+
+def monthly_nth_weekday(
+    weekday: int, n: int, *, on_or_after: datetime.date | None = None
+) -> datetime.date:
+    """Return the first "n-th weekday of a month" on/after a date.
+
+    ``weekday`` is 0=Mon .. 6=Sun; ``n`` is 1-5 for the n-th occurrence within
+    the month, or -1 for the last occurrence (which may be a 4th or 5th,
+    depending on the month/year — e.g. "last Monday of May"). ``on_or_after``
+    defaults to today.
+
+    The reusable building block for a "2nd Tuesday of the month" style
+    cadence, and for a US-federal-holiday rule such as "3rd Monday in
+    January" (Martin Luther King Jr. Day) or "4th Thursday in November"
+    (Thanksgiving) — though :func:`us_federal_holidays` already computes
+    those for you via the ``holidays`` library.
+    """
+    base = on_or_after or datetime.date.today()
+    year, month = base.year, base.month
+    for _ in range(24):  # at most two years ahead
+        candidate = _nth_weekday_of_month(year, month, weekday, n)
+        if candidate is not None and candidate >= base:
+            return candidate
+        month += 1
+        if month > 12:
+            month = 1
+            year += 1
+    raise ValueError(
+        f"no {n!r}-th weekday {weekday!r} found within 24 months of {base}"
+    )
+
+
+def monthly_nth_weekdays(
+    weekday: int,
+    n: int,
+    count: int,
+    *,
+    on_or_after: datetime.date | None = None,
+) -> list[datetime.date]:
+    """Return ``count`` consecutive monthly occurrences of the n-th weekday.
+
+    Each occurrence anchors the search for the next, so this returns one date
+    per month (in order) rather than every "n-th weekday" that happens to
+    fall within a fixed window (months are not a fixed-length step, so this
+    is not expressible via :func:`recurring`).
+    """
+    base = on_or_after or datetime.date.today()
+    dates: list[datetime.date] = []
+    for _ in range(count):
+        found = monthly_nth_weekday(weekday, n, on_or_after=base)
+        dates.append(found)
+        base = found + datetime.timedelta(days=1)
+    return dates
+
+
+def us_federal_holidays(
+    years: Iterable[int] | int,
+    *,
+    subdiv: str | None = None,
+    observed: bool = True,
+) -> set[datetime.date]:
+    """US federal holiday dates for the given year(s), via the ``holidays`` library.
+
+    A thin, shared wrapper so sources compute the same calendar rather than
+    each hand-rolling "n-th weekday of the month" arithmetic for Martin
+    Luther King Jr. Day, Presidents'/Washington's Birthday, Memorial Day,
+    Labor Day, Columbus Day and Thanksgiving (plus the fixed-date holidays'
+    weekend-observed shift).
+
+    ``subdiv`` selects a state/territory subdivision, which can change the
+    set (e.g. Tennessee's calendar adds Good Friday and drops Columbus Day).
+    ``observed`` mirrors the ``holidays`` library's own flag: when True
+    (the default) a fixed-date holiday landing on a weekend also yields its
+    shifted weekday as a second entry; pass ``observed=False`` for the raw
+    calendar dates only.
+    """
+    year_list = [years] if isinstance(years, int) else list(years)
+    return set(_holidays.US(years=year_list, subdiv=subdiv, observed=observed).keys())

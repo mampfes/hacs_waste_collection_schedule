@@ -1226,6 +1226,114 @@ class TestRecurrence:
         )
         assert dates == []
 
+    def test_monthly_nth_weekday_first_occurrence_in_month(self):
+        from waste_collection_schedule import recurrence
+
+        # July 2026: Tuesdays fall on 7, 14, 21, 28 -> 2nd Tuesday is the 14th.
+        result = recurrence.monthly_nth_weekday(
+            1, 2, on_or_after=datetime.date(2026, 7, 1)
+        )
+        assert result == datetime.date(2026, 7, 14)
+
+    def test_monthly_nth_weekday_rolls_to_next_month_when_passed(self):
+        from waste_collection_schedule import recurrence
+
+        # Asking on/after the 15th means July's 2nd Tuesday (14th) has passed.
+        result = recurrence.monthly_nth_weekday(
+            1, 2, on_or_after=datetime.date(2026, 7, 15)
+        )
+        assert result == datetime.date(2026, 8, 11)
+
+    def test_monthly_nth_weekday_on_the_day_itself_is_inclusive(self):
+        from waste_collection_schedule import recurrence
+
+        result = recurrence.monthly_nth_weekday(
+            1, 2, on_or_after=datetime.date(2026, 7, 14)
+        )
+        assert result == datetime.date(2026, 7, 14)
+
+    def test_monthly_nth_weekday_last_occurrence(self):
+        from waste_collection_schedule import recurrence
+
+        # Memorial Day: last Monday in May 2026 is the 25th (not the 4th Monday).
+        result = recurrence.monthly_nth_weekday(
+            0, -1, on_or_after=datetime.date(2026, 5, 1)
+        )
+        assert result == datetime.date(2026, 5, 25)
+
+    def test_monthly_nth_weekday_skips_a_month_without_a_fifth_occurrence(self):
+        from waste_collection_schedule import recurrence
+
+        # February 2026 (28 days, starts on a Sunday) has only four Mondays
+        # (2, 9, 16, 23): no 5th Monday, so this must roll to the next month
+        # that has one (March 2026: Mondays 2, 9, 16, 23, 30).
+        result = recurrence.monthly_nth_weekday(
+            0, 5, on_or_after=datetime.date(2026, 2, 1)
+        )
+        assert result == datetime.date(2026, 3, 30)
+
+    def test_monthly_nth_weekday_invalid_n_raises(self):
+        from waste_collection_schedule import recurrence
+
+        with pytest.raises(ValueError):
+            recurrence.monthly_nth_weekday(0, 0, on_or_after=datetime.date(2026, 1, 1))
+
+    def test_monthly_nth_weekdays_returns_one_per_consecutive_month(self):
+        from waste_collection_schedule import recurrence
+
+        dates = recurrence.monthly_nth_weekdays(
+            1, 2, 3, on_or_after=datetime.date(2026, 7, 1)
+        )
+        assert dates == [
+            datetime.date(2026, 7, 14),
+            datetime.date(2026, 8, 11),
+            datetime.date(2026, 9, 8),
+        ]
+        assert all(d.weekday() == 1 for d in dates)
+
+    def test_us_federal_holidays_matches_known_2026_dates(self):
+        from waste_collection_schedule import recurrence
+
+        days = recurrence.us_federal_holidays(2026)
+        assert datetime.date(2026, 1, 1) in days  # New Year's Day
+        assert datetime.date(2026, 1, 19) in days  # MLK Day (3rd Mon Jan)
+        assert datetime.date(2026, 5, 25) in days  # Memorial Day (last Mon May)
+        assert datetime.date(2026, 9, 7) in days  # Labor Day (1st Mon Sep)
+        assert datetime.date(2026, 10, 12) in days  # Columbus Day (2nd Mon Oct)
+        assert datetime.date(2026, 11, 26) in days  # Thanksgiving (4th Thu Nov)
+
+    def test_us_federal_holidays_observed_shift_for_weekend_dates(self):
+        from waste_collection_schedule import recurrence
+
+        # July 4 2026 falls on a Saturday; observed=True (default) also
+        # yields the Friday-before as a no-collection day.
+        with_observed = recurrence.us_federal_holidays(2026)
+        assert datetime.date(2026, 7, 3) in with_observed
+        assert datetime.date(2026, 7, 4) in with_observed
+
+        without_observed = recurrence.us_federal_holidays(2026, observed=False)
+        assert datetime.date(2026, 7, 3) not in without_observed
+        assert datetime.date(2026, 7, 4) in without_observed
+
+    def test_us_federal_holidays_subdiv_changes_the_calendar(self):
+        from waste_collection_schedule import recurrence
+
+        # Tennessee's calendar adds Good Friday and drops Columbus Day.
+        tn = recurrence.us_federal_holidays(2026, subdiv="TN")
+        assert datetime.date(2026, 4, 3) in tn  # Good Friday 2026
+        assert datetime.date(2026, 10, 12) not in tn  # no Columbus Day
+
+        default = recurrence.us_federal_holidays(2026)
+        assert datetime.date(2026, 4, 3) not in default
+        assert datetime.date(2026, 10, 12) in default
+
+    def test_us_federal_holidays_accepts_a_year_range(self):
+        from waste_collection_schedule import recurrence
+
+        days = recurrence.us_federal_holidays(range(2026, 2028))
+        assert datetime.date(2026, 12, 25) in days
+        assert datetime.date(2027, 12, 25) in days
+
 
 class TestPdfImageCalendarBoxMapping:
     """Grid box -> (year, month) mapping incl. financial-year calendars (Gap 4)."""

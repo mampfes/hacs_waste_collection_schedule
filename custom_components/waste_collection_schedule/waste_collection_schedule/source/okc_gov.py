@@ -1,39 +1,33 @@
+import datetime
 import re
-from datetime import date, datetime, timedelta
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.service.ArcGis import (
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+)
 
-TITLE = "City of Oklahoma City"
-DESCRIPTION = "Source for the City of Oklahoma City Open Data Portal (ArcGIS) waste collection zones."
-URL = "https://www.okc.gov"
-COUNTRY = "us"
-TEST_CASES = {
-    "Trash Fri / Recycle Mon / Bulky 4th Mon": {
-        "trashObjectID": 1,
-        "recycleObjectID": 1215,
-        "bulkyObjectID": 1,
-    },
-    "Recycle every other week (anchored)": {
-        "recycleObjectID": 1215,
-        "recycle_reference_date": "2026-06-15",
-    },
-    "Recycle Fri every other week (anchored, live zone)": {
-        "recycleObjectID": 1366,
-        "recycle_reference_date": "2026-06-19",
-    },
-    "Trash only": {
-        "trashObjectID": 2,
-    },
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:118.0) Gecko/20100101 Firefox/118.0",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-    "Accept-Language": "en,en-GB;q=0.7,en-US;q=0.3",
-    "Upgrade-Insecure-Requests": "1",
-}
-# OKC Open Data Portal ArcGIS FeatureServer endpoints
+# City of Oklahoma City Open Data Portal: three independently-optional
+# FeatureServer layers (trash / recycling / bulky), each queried by attribute
+# (``where=OBJECTID=...``) rather than an address geocode+spatial lookup. Each
+# layer publishes its cadence as free text on a PickupDay-like field: a bare
+# weekday (weekly), an "Nth Weekday" ordinal (monthly -- the new
+# recurrence.monthly_nth_weekday()), or an explicit date. Recycling runs
+# fortnightly but the layer only reports a weekday, so an optional
+# recycle_reference_date pins which week via the existing anchor-cadence
+# support (Schedule(..., anchor=True)).
+
 TRASH_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1"
 RECYCLE_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3"
 BULKY_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/c4455716f4bf4d1dafe6806e0e619de8/rest/services/OpenData/Utilities/FeatureServer/2"
@@ -44,41 +38,123 @@ WASTE_LAYERS = {
     "RECYCLE": (RECYCLE_ZONES_URL, "recycleObjectID"),
     "BULKY": (BULKY_ZONES_URL, "bulkyObjectID"),
 }
-WEEKDAY_INDEX = {
-    "monday": 0,
-    "tuesday": 1,
-    "wednesday": 2,
-    "thursday": 3,
-    "friday": 4,
-    "saturday": 5,
-    "sunday": 6,
-}
-ICON_MAP = {
-    "TRASH": Icons.GENERAL_WASTE,
-    "RECYCLE": Icons.RECYCLING,
-    "BULKY": Icons.BULKY,
+
+_TYPE_MAP = {
+    "TRASH": GENERAL_WASTE,
+    "RECYCLE": RECYCLABLES,
+    "BULKY": BULKY_WASTE,
 }
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal.",
-        "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
-        "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
-        "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Provide the OBJECTID of one or more of your collection zones from the OKC Open "
-    "Data Portal (trashObjectID, recycleObjectID, bulkyObjectID). At least one is required. "
-    "Open the FeatureServer layers linked in the documentation, use the Query page to locate "
-    "the zone that covers your address, and read its OBJECTID. Recycling is collected every "
-    "other week and the portal only reports the weekday, so also set recycle_reference_date "
-    "to one date you know recycling was (or will be) collected to pin the correct week."
-}
+_ORDINAL_RE = re.compile(
+    r"^(?P<nth>[1-5])(st|nd|rd|th)\s+"
+    r"(?P<weekday>monday|tuesday|wednesday|thursday|friday|saturday|sunday)$"
+)
+_EXPLICIT_DATE_FORMATS = ("%b %d, %Y", "%B %d, %Y", "%Y-%m-%d")
 
 
-class Source:
+def _resolve_pickup_date(pickup_rule: str, today: datetime.date) -> datetime.date:
+    """Turn a layer's free-text pickup rule into the next collection date."""
+    normalized = pickup_rule.strip()
+    lower = normalized.lower()
+
+    weekday = recurrence.weekday(lower)
+    if weekday is not None:
+        return recurrence.next_weekday(weekday, on_or_after=today)
+
+    ordinal_match = _ORDINAL_RE.match(lower)
+    if ordinal_match:
+        nth = int(ordinal_match.group("nth"))
+        weekday = recurrence.weekday(ordinal_match.group("weekday"))
+        assert weekday is not None  # the regex only matches known weekday names
+        return recurrence.monthly_nth_weekday(weekday, nth, on_or_after=today)
+
+    for date_format in _EXPLICIT_DATE_FORMATS:
+        try:
+            return datetime.datetime.strptime(normalized, date_format).date()
+        except ValueError:
+            continue
+
+    raise ValueError(f"Unsupported pickup rule returned by API: '{pickup_rule}'")
+
+
+def _describe(record: tuple, source: Any):
+    waste_type, attrs = record
+    today = datetime.date.today()
+
+    if waste_type == "RECYCLE":
+        raw_reference = source.params.get("recycle_reference_date")
+        if raw_reference:
+            reference = datetime.datetime.strptime(raw_reference, "%Y-%m-%d").date()
+            yield Schedule("RECYCLE", reference, recurrence.FORTNIGHTLY, anchor=True)
+            return
+
+    pickup_day = None
+    for field_name in ("PickupDay", "PickUpDay", "PICKUPDAY"):
+        value = attrs.get(field_name)
+        if value:
+            pickup_day = str(value).strip()
+            break
+    if not pickup_day:
+        return
+
+    yield Schedule(waste_type, _resolve_pickup_date(pickup_day, today), count=1)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "City of Oklahoma City"
+    DESCRIPTION = "Source for the City of Oklahoma City Open Data Portal (ArcGIS) waste collection zones."
+    URL = "https://www.okc.gov"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Trash Fri / Recycle Mon / Bulky 4th Mon": {
+            "trashObjectID": 1,
+            "recycleObjectID": 1215,
+            "bulkyObjectID": 1,
+        },
+        "Recycle every other week (anchored)": {
+            "recycleObjectID": 1215,
+            "recycle_reference_date": "2026-06-15",
+        },
+        "Recycle Fri every other week (anchored, live zone)": {
+            "recycleObjectID": 1366,
+            "recycle_reference_date": "2026-06-19",
+        },
+        "Trash only": {
+            "trashObjectID": 2,
+        },
+    }
+
+    PARAMS = (
+        text_field("trashObjectID", "Trash Zone OBJECTID", optional=True),
+        text_field("recycleObjectID", "Recycling Zone OBJECTID", optional=True),
+        text_field("bulkyObjectID", "Bulky Waste Zone OBJECTID", optional=True),
+        text_field(
+            "recycle_reference_date",
+            "Known Recycling Pickup Date (YYYY-MM-DD)",
+            optional=True,
+        ),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Provide the OBJECTID of one or more of your collection zones from "
+            "the OKC Open Data Portal (trashObjectID, recycleObjectID, "
+            "bulkyObjectID). At least one is required. Open the FeatureServer "
+            "layers linked in the documentation, use the Query page to locate "
+            "the zone that covers your address, and read its OBJECTID. "
+            "Recycling is collected every other week and the portal only "
+            "reports the weekday, so also set recycle_reference_date to one "
+            "date you know recycling was (or will be) collected to pin the "
+            "correct week."
+        ),
+    }
+
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
     def __init__(
         self,
         trashObjectID: str | int = "",
@@ -86,18 +162,14 @@ class Source:
         bulkyObjectID: str | int = "",
         recycle_reference_date: str = "",
     ):
-        self._record_ids = {
-            "TRASH": str(trashObjectID).strip(),
-            "RECYCLE": str(recycleObjectID).strip(),
-            "BULKY": str(bulkyObjectID).strip(),
-        }
+        trash = str(trashObjectID).strip()
+        recycle = str(recycleObjectID).strip()
+        bulky = str(bulkyObjectID).strip()
+        reference = str(recycle_reference_date).strip()
 
-        self._recycle_reference_date: date | None = None
-        if str(recycle_reference_date).strip():
+        if reference:
             try:
-                self._recycle_reference_date = datetime.strptime(
-                    str(recycle_reference_date).strip(), "%Y-%m-%d"
-                ).date()
+                datetime.datetime.strptime(reference, "%Y-%m-%d")
             except ValueError as exc:
                 raise SourceArgumentNotFound(
                     "recycle_reference_date",
@@ -105,151 +177,44 @@ class Source:
                     "must be an ISO date (YYYY-MM-DD) of a known recycling pickup.",
                 ) from exc
 
-        if not any(self._record_ids.values()):
+        if not (trash or recycle or bulky):
             raise SourceArgumentNotFound(
                 "trashObjectID",
                 "",
                 "provide at least one of trashObjectID, recycleObjectID or bulkyObjectID.",
             )
 
-    def _query_object_id(self, layer_url: str, object_id: str, argument: str) -> dict:
-        """Query a waste layer for a specific OBJECTID using the ArcGIS FeatureServer."""
-        params = {
-            "where": f"OBJECTID={object_id}",
-            "outFields": "*",
-            "returnGeometry": "false",
-            "f": "json",
+        super().__init__(
+            trashObjectID=trash,
+            recycleObjectID=recycle,
+            bulkyObjectID=bulky,
+            recycle_reference_date=reference,
+        )
+
+    def retrieve(self, source: "Source"):
+        record_ids = {
+            "TRASH": source.params.get("trashObjectID") or "",
+            "RECYCLE": source.params.get("recycleObjectID") or "",
+            "BULKY": source.params.get("bulkyObjectID") or "",
         }
-
-        response = requests.get(
-            f"{layer_url}/query",
-            params=params,
-            headers=HEADERS,
-            timeout=30,
-        )
-        response.raise_for_status()
-
-        json_data = response.json()
-        features = json_data.get("features", [])
-        if not features:
-            raise SourceArgumentNotFound(
-                argument,
-                object_id,
-                "no zone found with this OBJECTID in the OKC Open Data Portal.",
-            )
-        return features[0].get("attributes", {})
-
-    def _parse_pickup_dates(self, attributes: dict, waste_type: str) -> list:
-        """Parse the pickup schedule from ArcGIS attributes into Collections."""
-        today = datetime.now().date()
-        entries: list = []
-
-        # Recycling runs every other week, but the ArcGIS layer only exposes a
-        # weekday name (PickupDay) with no date or week-parity field. When the
-        # user supplies a known recycling date, project the fortnightly cadence
-        # from it instead of returning the next occurrence of the weekday.
-        if waste_type == "RECYCLE" and self._recycle_reference_date is not None:
-            entries.append(
-                Collection(
-                    date=self._next_biweekly(self._recycle_reference_date, today),
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-            return entries
-
-        pickup_day = None
-        for field_name in ("PickupDay", "PickUpDay", "PICKUPDAY"):
-            value = attributes.get(field_name)
-            if value:
-                pickup_day = str(value).strip()
-                break
-
-        if pickup_day:
-            next_date = self._resolve_pickup_date(pickup_day, today)
-            entries.append(
-                Collection(
-                    date=next_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
-
-    def _next_weekday(self, weekday_name: str, today: date) -> date:
-        target_weekday = WEEKDAY_INDEX[weekday_name.lower()]
-        days_ahead = (target_weekday - today.weekday()) % 7
-        return today + timedelta(days=days_ahead)
-
-    def _next_biweekly(self, reference_date: date, today: date) -> date:
-        """Return the next pickup on or after today on the same 14-day cycle as reference_date."""
-        offset = (today - reference_date).days % 14
-        if offset == 0:
-            return today
-        return today + timedelta(days=14 - offset)
-
-    def _nth_weekday_of_month(
-        self, year: int, month: int, weekday_index: int, nth: int
-    ) -> date | None:
-        first_day = date(year, month, 1)
-        delta_to_weekday = (weekday_index - first_day.weekday()) % 7
-        candidate = first_day + timedelta(days=delta_to_weekday + (nth - 1) * 7)
-        if candidate.month != month:
-            return None
-        return candidate
-
-    def _next_nth_weekday(self, nth: int, weekday_name: str, today: date) -> date:
-        weekday_index = WEEKDAY_INDEX[weekday_name.lower()]
-        year = today.year
-        month = today.month
-
-        for _ in range(24):
-            candidate = self._nth_weekday_of_month(year, month, weekday_index, nth)
-            if candidate is not None and candidate >= today:
-                return candidate
-
-            month += 1
-            if month > 12:
-                month = 1
-                year += 1
-
-        raise ValueError(
-            f"Unable to calculate next '{nth}' '{weekday_name}' date from {today}."
-        )
-
-    def _resolve_pickup_date(self, pickup_rule: str, today: date) -> date:
-        normalized_rule = pickup_rule.strip()
-        normalized_rule_lower = normalized_rule.lower()
-
-        if normalized_rule_lower in WEEKDAY_INDEX:
-            return self._next_weekday(normalized_rule_lower, today)
-
-        ordinal_match = re.match(
-            r"^(?P<nth>[1-5])(st|nd|rd|th)\s+(?P<weekday>monday|tuesday|wednesday|thursday|friday|saturday|sunday)$",
-            normalized_rule_lower,
-        )
-        if ordinal_match:
-            nth = int(ordinal_match.group("nth"))
-            weekday = ordinal_match.group("weekday")
-            return self._next_nth_weekday(nth, weekday, today)
-
-        for date_format in ("%b %d, %Y", "%B %d, %Y", "%Y-%m-%d"):
-            try:
-                return datetime.strptime(normalized_rule, date_format).date()
-            except ValueError:
-                continue
-
-        raise ValueError(f"Unsupported pickup rule returned by API: '{pickup_rule}'")
-
-    def fetch(self):
-        entries: list = []
-
-        for waste_type, object_id in self._record_ids.items():
+        responses = {}
+        for waste_type, object_id in record_ids.items():
             if not object_id:
                 continue
-            layer_url, argument = WASTE_LAYERS[waste_type]
-            attributes = self._query_object_id(layer_url, object_id, argument)
-            entries.extend(self._parse_pickup_dates(attributes, waste_type))
+            url, argument = WASTE_LAYERS[waste_type]
+            retriever = ArcGisFeatureRetriever(url, where=f"OBJECTID={object_id}")
+            responses[waste_type] = (retriever(source), argument, object_id)
+        return responses
 
-        return entries
+    def parse(self, raw, source: "Source | None" = None):
+        records = []
+        for waste_type, (response, argument, object_id) in raw.items():
+            features = ArcGisFeatureParser()(response, source)
+            if not features:
+                raise SourceArgumentNotFound(
+                    argument,
+                    object_id,
+                    "no zone found with this OBJECTID in the OKC Open Data Portal.",
+                )
+            records.append((waste_type, features[0]))
+        return records
