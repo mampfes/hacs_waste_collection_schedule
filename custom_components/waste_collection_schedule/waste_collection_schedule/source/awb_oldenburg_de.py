@@ -1,107 +1,125 @@
-import logging
+"""AWB Oldenburg (oldenburg.de).
+
+Demonstrates: a TYPO3 "collectioncalendar" extension's ICS export -- a GET
+scrapes the calendar form's street ``<select>`` and its hidden TYPO3 security
+tokens (``__csrf`` et al.), a POST resubmits those tokens together with the
+resolved street index, house number and every waste-type flag, and the
+response embeds a per-request ``exportIcs`` download link (carrying its own
+cHash) that must then be fetched. Three sequential, state-threading requests
+is not a shape any configured retriever expresses, hence a source-defined
+``retrieve`` method.
+
+The provider marks an estimated/uncertain collection date with a trailing
+"``: !``" in the ICS summary; ``regex`` on ``IcsParser`` strips it, mirroring
+the legacy source's ``ICS(regex=r"(.*)\\:\\s*\\!")``. "Bioabfall" and
+"Restabfall" already resolve against the standard German aliases;
+"Altpapier", "Gelber Sack/Tonne" and "Sommerbiotonne" are Oldenburg-specific
+phrasings mapped explicitly.
+"""
+
 from datetime import date
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import ORGANIC, PAPER, RECYCLABLES
 
-TITLE = "AWB Oldenburg"
-DESCRIPTION = "Source for 'Abfallwirtschaftsbetrieb Stadt Oldenburg (Oldb)'."
-URL = "https://www.oldenburg.de"
-TEST_CASES = {
-    "Polizeiinspektion Oldenburg": {"street": "Friedhofsweg", "house_number": 30}
-}
-
-BASE_URL = "https://www.oldenburg.de"
-API_URL = (
-    BASE_URL
+_BASE_URL = "https://www.oldenburg.de"
+_API_URL = (
+    _BASE_URL
     + "/startseite/stadtraum/umwelt/abfall-entsorgung/awb-von-a-bis-z/abfuhrkalender.html"
 )
+_FORM_FIELD = "tx_collectioncalendar_collectioncalendar"
 
-_LOGGER = logging.getLogger(__name__)
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
+@final
+class Source(BaseSource):
+    TITLE = "AWB Oldenburg"
+    DESCRIPTION = "Source for 'Abfallwirtschaftsbetrieb Stadt Oldenburg (Oldb)'."
+    URL = _BASE_URL
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Polizeiinspektion Oldenburg": {"street": "Friedhofsweg", "house_number": 30}
     }
-}
 
+    PARAMS = (
+        street(field="street"),
+        house_number(field="house_number"),
+    )
 
-class Source:
-    def __init__(self, street, house_number):
-        self._street = street
-        self._house_number = house_number
-        self._ics = ICS(regex=r"(.*)\:\s*\!")
+    parse = IcsParser(regex=r"(.*)\:\s*\!")
+    transform = ICSTransformer(
+        type_value_map={
+            "altpapier": PAPER,
+            "gelber sack/tonne": RECYCLABLES,
+            "sommerbiotonne": ORGANIC,
+        }
+    )
 
-    def fetch(self):
-        s = requests.Session()
-        r = s.get(API_URL)
+    def __init__(self, street: str, house_number: "str | int"):
+        super().__init__(street=street, house_number=str(house_number))
+
+    def retrieve(self, source):
+        session = source.session
+        street_value = source.params["street"]
+        house_number_value = source.params["house_number"]
+
+        r = session.get(_API_URL)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
 
-        # Calendar form is the second form on the page
+        # The calendar form is the second form on the page.
         form = soup.find_all("form")[1]
 
-        # Build street mapping from the street <select> element
-        street_select = form.find(
-            "select",
-            {"name": "tx_collectioncalendar_collectioncalendar[street]"},
-        )
+        street_select = form.find("select", {"name": f"{_FORM_FIELD}[street]"})
         mapping = {
             opt.text.strip(): opt["value"]
             for opt in street_select.find_all("option")
             if opt.get("value")
         }
-
-        if self._street not in mapping:
+        if street_value not in mapping:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, list(mapping.keys())
+                "street", street_value, list(mapping.keys())
             )
-        street_idx = mapping[self._street]
+        street_idx = mapping[street_value]
 
-        # Collect TYPO3 security tokens from hidden inputs
+        # Collect the TYPO3 security tokens from the form's hidden inputs.
         data = {
             inp["name"]: inp.get("value", "")
             for inp in form.find_all("input", {"name": True})
         }
-
-        data["tx_collectioncalendar_collectioncalendar[year]"] = str(date.today().year)
-        data["tx_collectioncalendar_collectioncalendar[wasteTypes][1]"] = "1"
-        data["tx_collectioncalendar_collectioncalendar[wasteTypes][2]"] = "2"
-        data["tx_collectioncalendar_collectioncalendar[wasteTypes][3]"] = "3"
-        data["tx_collectioncalendar_collectioncalendar[wasteTypes][4]"] = "4"
-        data["tx_collectioncalendar_collectioncalendar[wasteTypes][5]"] = "5"
-        data["tx_collectioncalendar_collectioncalendar[street]"] = street_idx
-        data["tx_collectioncalendar_collectioncalendar[houseNumber]"] = str(
-            self._house_number
-        )
-        data["tx_collectioncalendar_collectioncalendar[privacyPolicy-checkbox]"] = "1"
+        data[f"{_FORM_FIELD}[year]"] = str(date.today().year)
+        for waste_type_id in range(1, 6):
+            data[f"{_FORM_FIELD}[wasteTypes][{waste_type_id}]"] = str(waste_type_id)
+        data[f"{_FORM_FIELD}[street]"] = street_idx
+        data[f"{_FORM_FIELD}[houseNumber]"] = str(house_number_value)
+        data[f"{_FORM_FIELD}[privacyPolicy-checkbox]"] = "1"
 
         action = form.get("action", "")
-        post_url = BASE_URL + action if action.startswith("/") else action
+        post_url = _BASE_URL + action if action.startswith("/") else action
 
-        r2 = s.post(post_url, data=data)
+        r2 = session.post(post_url, data=data)
         r2.raise_for_status()
         soup2 = BeautifulSoup(r2.text, "html.parser")
 
-        # Find the ICS export link generated by the server (includes cHash)
         ics_link = None
         for a in soup2.find_all("a", href=True):
             if "exportIcs" in a["href"]:
                 href = a["href"]
-                ics_link = BASE_URL + href if href.startswith("/") else href
+                ics_link = _BASE_URL + href if href.startswith("/") else href
                 break
 
         if not ics_link:
-            raise Exception("ICS export link not found. Check street and house number.")
+            raise SourceArgumentNotFoundWithSuggestions(
+                "house_number", house_number_value, []
+            )
 
-        r3 = s.get(ics_link)
+        r3 = session.get(ics_link)
         r3.raise_for_status()
-
-        entries = []
-        for d in self._ics.convert(r3.text):
-            entries.append(Collection(d[0], d[1]))
-        return entries
+        return r3
