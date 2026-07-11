@@ -1,80 +1,105 @@
-import datetime
-import logging
+"""StadtService Brühl (stadtservice-bruehl.de).
 
-import requests
+Demonstrates: a two-POST resolve-then-download shape where the first POST's
+only job is to scrape a hidden ``post_district`` field out of the response
+HTML, which the second POST then needs alongside the street/house number and
+a fixed set of "include every waste type" checkboxes. Both calls are POSTs
+(not the GET+GET ``TwoStepRetriever`` supports), hence a source-defined
+``retrieve()``.
+
+Labels carry a trailing bin colour (e.g. "Hausmüll (Grau)", "Biotonne
+(Braun)"), stripped by ``clean`` before mapping/resolving.
+"""
+
+from datetime import date
+from typing import ClassVar, final
+
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
+from waste_collection_schedule.waste_types import GARDEN_WASTE
 
-TITLE = "StadtService Brühl"
-DESCRIPTION = "Source für Abfallkalender StadtService Brühl"
-URL = "https://stadtservice-bruehl.de"
-TEST_CASES = {"TEST1": {"strasse": "Badorfer Straße", "hnr": "1"}}
+_DISTRICT_URL = "https://services.stadtservice-bruehl.de/abfallkalender/"
+_CALENDAR_URL = (
+    "https://services.stadtservice-bruehl.de/abfallkalender/"
+    "individuellen-abfuhrkalender-herunterladen/"
+)
 
-_LOGGER = logging.getLogger(__name__)
+_clean_type = label_cleaner(
+    strip_suffixes=[" (Grau)", " (Braun)", " (Gelb)", " (Blau)"]
+)
 
 
-class Source:
-    def __init__(self, strasse, hnr):
-        self._strasse = strasse
-        self._hnr = hnr
-        self._ics = ICS(regex="(.*?) \\- ", split_at=", ")
+@final
+class Source(BaseSource):
+    TITLE = "StadtService Brühl"
+    DESCRIPTION = "Source für Abfallkalender StadtService Brühl"
+    URL = "https://stadtservice-bruehl.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
+    TEST_CASES: ClassVar[dict] = {
+        "TEST1": {"strasse": "Badorfer Straße", "hnr": "1"},
+    }
 
-        today = datetime.date.today()
-        year = today.year
-        # Get District
-        data = {
-            "street": self._strasse,
-            "street_number": self._hnr,
-            "send_street_and_nummber_data": "",
-        }
+    PARAMS = (
+        street(field="strasse"),
+        house_number(field="hnr"),
+    )
 
-        r = requests.post(
-            "https://services.stadtservice-bruehl.de/abfallkalender/", data=data
+    parse = IcsParser(regex=r"(.*?) \- ", split_at=", ")
+    transform = ICSTransformer(
+        clean=_clean_type,
+        type_value_map={"Straßenlaub": GARDEN_WASTE},
+    )
+
+    def __init__(self, strasse: str, hnr: str):
+        super().__init__(strasse=strasse, hnr=hnr)
+
+    def retrieve(self, source):
+        session = source.session
+        strasse = self.params["strasse"]
+        hnr = self.params["hnr"]
+
+        r = session.post(
+            _DISTRICT_URL,
+            data={
+                "street": strasse,
+                "street_number": hnr,
+                "send_street_and_nummber_data": "",
+            },
         )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-
+        post_district = None
         for tag in soup.find_all("input", type="hidden"):
-            # print(tag["name"])
-            # print(tag["value"])
-            if tag["name"] == "post_district":
-                post_district = tag["value"]
+            if tag.get("name") == "post_district":
+                post_district = tag.get("value")
 
-        if post_district == "":
-            raise Exception("Unable to get district")
+        if not post_district:
+            raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, [])
 
-        # print(post_district);
-        # Get ICAL
-        data = {
-            "post_year": year,
-            "post_district": post_district,
-            "post_street_name": self._strasse,
-            "post_street_number": self._hnr,
-            "checked_waste_type_hausmuell": "on",
-            "checked_waste_type_gelber_sack": "on",
-            "checked_waste_type_altpapier": "on",
-            "checked_waste_type_bio": "on",
-            "checked_waste_type_weihnachtsbaeume": "on",
-            "checked_waste_type_strassenlaub": "on",
-            "form_page_id": "9",
-            "reminder_time": "8",
-            "send_ics_download_configurator_data": "",
-        }
-
-        r = requests.post(
-            "https://services.stadtservice-bruehl.de/abfallkalender/individuellen-abfuhrkalender-herunterladen/",
-            data=data,
+        r = session.post(
+            _CALENDAR_URL,
+            data={
+                "post_year": date.today().year,
+                "post_district": post_district,
+                "post_street_name": strasse,
+                "post_street_number": hnr,
+                "checked_waste_type_hausmuell": "on",
+                "checked_waste_type_gelber_sack": "on",
+                "checked_waste_type_altpapier": "on",
+                "checked_waste_type_bio": "on",
+                "checked_waste_type_weihnachtsbaeume": "on",
+                "checked_waste_type_strassenlaub": "on",
+                "form_page_id": "9",
+                "reminder_time": "8",
+                "send_ics_download_configurator_data": "",
+            },
         )
         r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-
-        return entries
+        return r
