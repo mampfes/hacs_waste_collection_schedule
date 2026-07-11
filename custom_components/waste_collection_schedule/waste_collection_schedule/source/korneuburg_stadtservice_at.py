@@ -1,199 +1,195 @@
-import json
+from typing import ClassVar, final
 from urllib.parse import urljoin
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street, text_field
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Stadtservice Korneuburg"
-DESCRIPTION = "Source for Stadtservice Korneuburg"
-URL = "https://www.korneuburg.gv.at"
-COUNTRY = "at"
-TEST_CASES = {
-    "Rathaus": {"street_name": "Hauptplatz", "street_number": 39},  # Teilgebiet 4
-    "Rathaus using Teilgebiet": {
-        "street_name": "SomeStreet",
-        "street_number": "1A",
-        "teilgebiet": "4",
-    },  # Teilgebiet 4
-    "Werft": {"street_name": "Am Hafen", "street_number": 6},  # Teilgebiet 2
-}
+# Demonstrates: a RiSKommunal municipality whose calendar is not exposed
+# through the platform's usual kalender.aspx table/list rendering at all.
+# Korneuburg instead resolves a "Teilgebiet" (subarea, 1-4) from the address
+# via the same street-dropdown + strassenArr address picker every RiSKommunal
+# install exposes (so RiSKommunalSource's parsing of those is reused rather
+# than re-implemented), then scrapes four fixed per-subarea pages for a
+# piwik_download_tracker iCal link each, and finally downloads those iCal
+# feeds. No configured retriever expresses "resolve an id, then scrape N
+# unrelated pages for a download link each, then fetch every one of those" --
+# hence a source-defined retrieve()/parse() pair.
 
-# Mapping of teilgebiete to calendar urls
-WASTE_TYPE_URLS = {
+_BASE_URL = "https://www.korneuburg.gv.at"
+_ADDRESS_URL = urljoin(_BASE_URL, "Rathaus/Buergerservice/Muellabfuhr")
+_CALENDAR_URL = urljoin(_BASE_URL, "system/web/kalender.aspx")
+_MENUONR = "225991280"
+
+# Per-Teilgebiet (subarea) waste-type pages; each carries one
+# piwik_download_tracker iCal link for that round.
+_WASTE_TYPE_PATHS: dict[str, tuple[str, ...]] = {
     "1": ("Biomuell_3", "Restmuell_3", "Papier_2", "Gelber_Sack_4"),
     "2": ("Biomuell_4", "Restmuell_2", "Papier_3", "Gelber_Sack_1"),
     "3": ("Biomuell_1", "Restmuell_1", "Papier_1", "Gelber_Sack_2"),
     "4": ("Biomuell_2", "Restmuell", "Papier", "Gelber_Sack_3"),
 }
 
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street_name": "Straßenname",
-        "street_number": "Hausnummer",
-        "teilgebiet": "Teilgebiet",
-    },
-    "en": {
-        "street_name": "Street Name",
-        "street_number": "Street Number",
-        "teilgebiet": "Subarea",
-    },
-}
+# Accepts the cookie-consent banner; required before the RIS CMS serves the
+# address-picker page.
+_BASE_COOKIES: dict[str, str] = {"ris_cookie_setting": "g7750"}
 
 
-class Source(RiSKommunalSource):
-    BASE_URL = "https://www.korneuburg.gv.at"
+def _valid_teilgebiet(value: object) -> str | None:
+    """Return the Teilgebiet number as a string if it's a direct 1-4 override."""
+    try:
+        number = int(str(value))
+    except (TypeError, ValueError):
+        return None
+    return str(number) if 0 < number <= 4 else None
 
-    def __init__(self, street_name, street_number, teilgebiet=-1):
-        super().__init__()
-        self.street_name = street_name
-        self.street_number = street_number
-        self.teilgebiet = teilgebiet
 
-        self._region = None
-        self._street_name_id = -1
-        self._street_number_id = -1
-        self._headers = {"User-Agent": "Mozilla/5.0"}
-        self._cookies = {"ris_cookie_setting": "g7750"}  # Accept Cookie Consent
+def _extract_teilgebiet(soup: BeautifulSoup) -> str | None:
+    """Read the "Teilgebiet N" label off the resolved-address overview page."""
+    for span in soup.find_all("span"):
+        if (
+            span.parent is not None
+            and span.parent.name == "td"
+            and span.string
+            and "teilgebiet" in span.string.lower()
+        ):
+            return span.string.split(" ")[1]
+    return None
 
-    @staticmethod
-    def extract_street_numbers(soup):
-        scripts = soup.findAll("script", {"type": "text/javascript"})
 
-        street_number_idx = 0
-        for s in scripts:
-            if s.string and "var strassenArr" in s.string:
-                break
-            street_number_idx += 1
+def _resolve_teilgebiet(
+    source: BaseSource, session, cookies: dict[str, str]
+) -> tuple[str, dict[str, str]]:
+    """Resolve the Teilgebiet for the configured street/house number.
 
-        possible_numbers = json.loads(
-            scripts[street_number_idx]
-            .string[19:]
-            .replace("\r\n", "")
-            .replace(", ]", "]")
-            .replace("'", '"')
+    Reuses RiSKommunalSource's street-dropdown and strassenArr parsing (the
+    same address picker every RiSKommunal install exposes) to turn the
+    street/house number into a "typids" value and a selection cookie, then
+    scrapes the resulting overview page for its Teilgebiet label. Returns the
+    Teilgebiet plus the cookies to keep using for every later request (the
+    selection cookie the CMS expects to see from here on).
+    """
+    street_name = source.params["street_name"]
+    street_number = str(source.params["street_number"])
+
+    page = session.get(_ADDRESS_URL, cookies=cookies, timeout=source.TIMEOUT)
+    page.raise_for_status()
+    html = page.text
+
+    street_map = RiSKommunalSource._parse_street_dropdown(html)
+    street_id = street_map.get(street_name)
+    if street_id is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street_name", street_name, sorted(street_map)
         )
 
-        number_dict = {}
+    number_id = None
+    typids = None
+    labels: list[str] = []
+    for entry in RiSKommunalSource._parse_strassen_arr(html):
+        if entry[0] != street_id:
+            continue
+        for hnr in entry[1]:
+            label = str(hnr[1])
+            labels.append(label)
+            if label == street_number:
+                number_id, typids = hnr[0], hnr[2]
+        break
 
-        for idx, street_id in enumerate(possible_numbers):
-            number_dict[street_id[0]] = {
-                e[1]: (e[0], e[2]) for _idx, e in enumerate(possible_numbers[idx][1])
-            }
-
-        return number_dict
-
-    @staticmethod
-    def extract_street_names(soup):
-        street_selector = soup.find(
-            "select", {"id": "225991280_boxmuellkalenderstrassedd"}
-        ).findAll("option")
-        available_streets = {
-            street.string: int(street["value"])
-            for _idx, street in enumerate(street_selector)
-        }
-
-        return available_streets
-
-    @staticmethod
-    def extract_region(soup):
-        region = -1
-
-        for span in soup.findAll("span"):
-            if span.parent.name == "td" and "teilgebiet" in span.string.lower():
-                region = span.string.split(" ")[1]
-                break
-
-        return region
-
-    def determine_region(self):
-        """Find the target region for the street and street number."""
-        if 0 < int(self.teilgebiet) <= 4:
-            return str(self.teilgebiet)
-
-        # request address selection form
-        url = urljoin(URL, "Rathaus/Buergerservice/Muellabfuhr")
-        page = requests.get(url=url, headers=self._headers, cookies=self._cookies)
-        soup = BeautifulSoup(page.content, "html.parser")
-
-        # extract possible street and number combinations from html source
-        available_streets = self.extract_street_names(soup)
-        number_dict = self.extract_street_numbers(soup)
-
-        street_found = self.street_name in available_streets.keys()
-
-        if not street_found:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_name", self.street_name, list(available_streets.keys())
-            )
-
-        self._street_name_id = available_streets.get(self.street_name)
-
-        self._street_number_id, street_number_link = number_dict.get(
-            available_streets.get(self.street_name)
-        ).get(str(self.street_number), (-1, "not found"))
-
-        if street_number_link == "not found":
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_number",
-                self.street_number,
-                list(number_dict.get(available_streets.get(self.street_name)).keys()),
-            )
-
-        # add selection cookie
-        self._cookies["riscms_muellkalender"] = str(
-            f"{self._street_name_id}_{self._street_number_id}"
+    if typids is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street_number", street_number, labels
         )
 
-        # request overview with address selection to get the region
-        url = urljoin(URL, "system/web/kalender.aspx")
-        page = requests.get(
-            url=url,
-            headers=self._headers,
-            cookies=self._cookies,
-            params={
-                "sprache": "1",
-                "menuonr": "225991280",
-                "typids": street_number_link,
-            },
+    cookies = dict(cookies, riscms_muellkalender=f"{street_id}_{number_id}")
+    overview = session.get(
+        _CALENDAR_URL,
+        cookies=cookies,
+        params={"sprache": "1", "menuonr": _MENUONR, "typids": typids},
+        timeout=source.TIMEOUT,
+    )
+    overview.raise_for_status()
+
+    teilgebiet = _extract_teilgebiet(BeautifulSoup(overview.text, "html.parser"))
+    if teilgebiet is None:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street_number", street_number, labels
         )
-        soup = BeautifulSoup(page.content, "html.parser")
+    return teilgebiet, cookies
 
-        region = self.extract_region(soup)
 
-        if region == -1:
-            raise Exception("Region could not be found")
+def _region_ical_urls(session, teilgebiet: str, cookies: dict[str, str]) -> list[str]:
+    """Scrape each of a Teilgebiet's waste-type pages for its iCal link."""
+    urls = []
+    for path in _WASTE_TYPE_PATHS[teilgebiet]:
+        page = session.get(urljoin(_BASE_URL, path), cookies=cookies, timeout=30)
+        page.raise_for_status()
+        soup = BeautifulSoup(page.text, "html.parser")
+        link = soup.find(
+            "a",
+            {"class": "piwik_download_tracker", "data-trackingtyp": "iCal/Kalender"},
+        )
+        if link is not None:
+            urls.append(urljoin(_BASE_URL, link.get("href")))
+    return urls
 
-        return str(region)
 
-    def get_region_links(self):
-        """Traverse the waste-type pages and collect the iCal download links."""
-        if self._region is None:
-            self._region = self.determine_region()
+@final
+class Source(BaseSource):
+    TITLE = "Stadtservice Korneuburg"
+    DESCRIPTION = "Source for Stadtservice Korneuburg, Austria."
+    URL = _BASE_URL
+    COUNTRY = "at"
+    RAISE_ON_EMPTY = True
 
-        # create waste type urls
-        ical_urls = []
-        urls = [urljoin(URL, u) for u in WASTE_TYPE_URLS.get(self._region)]
+    TEST_CASES: ClassVar[dict] = {
+        "Rathaus": {"street_name": "Hauptplatz", "street_number": 39},  # Teilgebiet 4
+        "Rathaus using Teilgebiet": {
+            "street_name": "SomeStreet",
+            "street_number": "1A",
+            "teilgebiet": "4",
+        },  # Teilgebiet 4
+        "Werft": {"street_name": "Am Hafen", "street_number": 6},  # Teilgebiet 2
+    }
 
-        for u in urls:
-            r = requests.get(url=u, headers=self._headers, cookies=self._cookies)
-            soup = BeautifulSoup(r.content, "html.parser")
-            download_link = soup.findAll(
-                "a",
-                {
-                    "class": "piwik_download_tracker",
-                    "data-trackingtyp": "iCal/Kalender",
-                },
-            )
-            if len(download_link):
-                ical_urls.append(urljoin(URL, download_link[0].get("href")))
+    PARAMS = (
+        street(field="street_name"),
+        house_number(field="street_number"),
+        text_field("teilgebiet", "Subarea", optional=True),
+    )
 
-        return ical_urls
+    transform = ICSTransformer()
 
-    def fetch(self):
-        ical_urls = self.get_region_links()
-        return self.parse_ics_urls(ical_urls, cookies=self._cookies)
+    def __init__(
+        self,
+        street_name: str,
+        street_number: "str | int",
+        teilgebiet: "str | int | None" = None,
+    ):
+        super().__init__(
+            street_name=street_name,
+            street_number=street_number,
+            teilgebiet=teilgebiet,
+        )
+
+    def retrieve(self, source):
+        session = source.session
+        cookies = dict(_BASE_COOKIES)
+
+        teilgebiet = _valid_teilgebiet(source.params.get("teilgebiet"))
+        if teilgebiet is None:
+            teilgebiet, cookies = _resolve_teilgebiet(source, session, cookies)
+
+        return [
+            session.get(url, cookies=cookies, timeout=source.TIMEOUT)
+            for url in _region_ical_urls(session, teilgebiet, cookies)
+        ]
+
+    def parse(self, raw, source):
+        ics_parser = IcsParser()
+        for response in raw:
+            yield from ics_parser(response, source)
