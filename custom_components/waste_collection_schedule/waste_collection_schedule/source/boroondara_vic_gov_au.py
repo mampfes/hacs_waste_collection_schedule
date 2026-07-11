@@ -1,43 +1,28 @@
 import json
-import logging
 import re
 from datetime import date, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import ArcGisError, geocode
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
-TITLE = "City of Boroondara"
-DESCRIPTION = "Source for City of Boroondara waste collection."
-URL = "https://www.boroondara.vic.gov.au"
-TEST_CASES = {
-    "211 Mont Albert Road Surrey Hills": {
-        "address": "211 Mont Albert Road, Surrey Hills"
-    },
-    "60 Barkers Road Hawthorn East": {"address": "60 Barkers Road, Hawthorn East"},
-    "1 Kew Boulevard Kew": {"address": "1 Kew Boulevard, Kew"},
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "FOGO": Icons.BIO_KITCHEN,
-    "Recycling": Icons.RECYCLING,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address within Boroondara (e.g. '211 Mont Albert Road, Surrey Hills')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-_LOGGER = logging.getLogger(__name__)
+# Boroondara has no FeatureServer to query: the ArcGIS World GeocodeServer
+# resolves the address to a point (the one thing the shared ArcGis service
+# still contributes here), but the collection zone comes from a bespoke
+# JS-embedded GeoJSON bundle (main-v2.min.js) matched by point-in-polygon, not
+# an ArcGIS /query. That combination -- a hand-rolled JS-object-literal parse
+# plus a point-in-polygon match -- is a genuinely irregular flow no configured
+# retriever/parser expresses, so retrieve/parse are overridden as methods
+# (same shape as jacksonville_fl_us.py). Once the matched zone (day + A/B
+# week) is known, the recurring weekly/fortnightly cadence it describes is
+# projected via the shared RecurrenceExpander rather than hand-rolled date
+# maths.
 
 JS_URL = "https://cdn.boroondara.vic.gov.au/binday/js/main-v2.min.js"
 
@@ -53,21 +38,19 @@ _WEEKDAYS = {
     "Friday": 4,
 }
 
+# Waste-type keys emitted by _describe -> canonical WasteType.
+RECYCLING = "Recycling"
+FOGO = "FOGO"
+GENERAL = "General Waste"
 
-def _fetch_zones() -> list:
-    r = requests.get(JS_URL, timeout=30)
-    r.raise_for_status()
-    data = r.text
+_TYPE_MAP = {
+    RECYCLING: RECYCLABLES,
+    FOGO: ORGANIC,
+    GENERAL: GENERAL_WASTE,
+}
 
-    start = data.find("const polygonData=") + len("const polygonData=")
-    end_match = re.search(r'week:"[AB]"\}\}\]\}', data)
-    if not end_match:
-        raise ValueError("Could not locate polygon data in Boroondara JS")
-    geojson_js = data[start : end_match.end()]
-
-    # Convert JS object literal (unquoted keys) to valid JSON
-    geojson_str = re.sub(r'(?<!["\w])([a-zA-Z_]\w*):', r'"\1":', geojson_js)
-    return json.loads(geojson_str)["features"]
+# Number of collections to project for each stream (matches the legacy default).
+WEEKS_AHEAD = 8
 
 
 def _point_in_polygon(x: float, y: float, polygon: list) -> bool:
@@ -93,61 +76,73 @@ def _get_week_type(d: date) -> str:
     return "A" if weeks % 2 == 0 else "B"
 
 
-def _next_weekly(day_name: str, weeks_ahead: int = 8) -> list[date]:
-    target = _WEEKDAYS[day_name]
-    today = date.today()
-    days_ahead = (target - today.weekday()) % 7 or 7
-    first = today + timedelta(days=days_ahead)
-    return [first + timedelta(weeks=i) for i in range(weeks_ahead)]
+def _describe(zone: dict, source):
+    weekday = _WEEKDAYS[zone["day"]]
+    weekly_start = recurrence.next_weekday(weekday)
+    yield Schedule(RECYCLING, weekly_start, recurrence.WEEKLY, WEEKS_AHEAD)
+    yield Schedule(FOGO, weekly_start, recurrence.WEEKLY, WEEKS_AHEAD)
+
+    fortnight_start = weekly_start
+    if _get_week_type(fortnight_start) != zone["week"]:
+        fortnight_start += timedelta(weeks=1)
+    yield Schedule(GENERAL, fortnight_start, recurrence.FORTNIGHTLY, WEEKS_AHEAD)
 
 
-def _next_fortnightly(
-    day_name: str, zone_week: str, weeks_ahead: int = 8
-) -> list[date]:
-    target = _WEEKDAYS[day_name]
-    today = date.today()
-    days_ahead = (target - today.weekday()) % 7 or 7
-    candidate = today + timedelta(days=days_ahead)
-    if _get_week_type(candidate) != zone_week:
-        candidate += timedelta(weeks=1)
-    return [candidate + timedelta(weeks=2 * i) for i in range(weeks_ahead)]
+@final
+class Source(BaseSource):
+    TITLE = "City of Boroondara"
+    DESCRIPTION = "Source for City of Boroondara waste collection."
+    URL = "https://www.boroondara.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
+    TEST_CASES: ClassVar[dict] = {
+        "211 Mont Albert Road Surrey Hills": {
+            "address": "211 Mont Albert Road, Surrey Hills"
+        },
+        "60 Barkers Road Hawthorn East": {"address": "60 Barkers Road, Hawthorn East"},
+        "1 Kew Boulevard Kew": {"address": "1 Kew Boulevard, Kew"},
+    }
 
-class Source:
+    PARAMS = (text_field("address", "Street Address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": "Street address within Boroondara (e.g. '211 Mont Albert Road, Surrey Hills').",
+    }
+
+    preprocess = RecurrenceExpander(_describe)
+    transform = RowTransformer(type_value_map=_TYPE_MAP)
+
     def __init__(self, address: str):
-        self._address = address.strip()
+        super().__init__(address=address.strip())
 
-    def fetch(self) -> list[Collection]:
+    def retrieve(self, source: "Source"):
+        return self.session.get(JS_URL, timeout=30)
+
+    def parse(self, response, source: "Source | None" = None) -> list[dict]:
+        address = self.params["address"]
         try:
-            loc = geocode(f"{self._address}, Victoria, Australia")
+            location = geocode(f"{address}, Victoria, Australia")
         except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            raise SourceArgumentNotFound("address", address) from e
 
-        lat, lng = loc["y"], loc["x"]
+        data = response.text
+        start = data.find("const polygonData=") + len("const polygonData=")
+        end_match = re.search(r'week:"[AB]"\}\}\]\}', data)
+        if not end_match:
+            raise SourceArgumentNotFound(
+                "address", address, "could not read the collection zone data."
+            )
+        geojson_js = data[start : end_match.end()]
 
-        features = _fetch_zones()
-        zone = None
+        # Convert JS object literal (unquoted keys) to valid JSON
+        geojson_str = re.sub(r'(?<!["\w])([a-zA-Z_]\w*):', r'"\1":', geojson_js)
+        features = json.loads(geojson_str)["features"]
+
+        lat, lng = location["y"], location["x"]
         for feature in features:
             coords = feature["geometry"]["coordinates"][0]
             if _point_in_polygon(lng, lat, coords):
-                zone = feature["properties"]
-                break
+                return [feature["properties"]]
 
-        if zone is None:
-            raise SourceArgumentNotFound("address", self._address)
-
-        _LOGGER.debug("Address %s → zone %s", self._address, zone)
-
-        day = zone["day"]
-        week = zone["week"]
-
-        entries: list[Collection] = []
-
-        for d in _next_weekly(day):
-            entries.append(Collection(d, "Recycling", ICON_MAP["Recycling"]))
-            entries.append(Collection(d, "FOGO", ICON_MAP["FOGO"]))
-
-        for d in _next_fortnightly(day, week):
-            entries.append(Collection(d, "General Waste", ICON_MAP["General Waste"]))
-
-        return entries
+        raise SourceArgumentNotFound("address", address)

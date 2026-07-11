@@ -68,6 +68,9 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/calgary_ca.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/eko_tom_pl.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/muellmax_de.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/source/abfall_io.py"
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/abfall_io.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/boroondara_vic_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/merri_bek_vic_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/selwyn_govt_nz.py"
   ]
 }
