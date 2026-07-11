@@ -1,60 +1,59 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
+"""Landkreis Mecklenburgische Seenplatte waste calendar (Sitepark IES platform).
 
-TITLE = "Landkreis Mecklenburgische Seenplatte"
-DESCRIPTION = "Source for Landkreis Mecklenburgische Seenplatte waste collection."
-URL = "https://www.lk-mecklenburgische-seenplatte.de"
-COUNTRY = "de"
-TEST_CASES = {
-    "Atelierstraße (Neubrandenburg)": {
-        "ort": "Neubrandenburg",
-        "strasse": "Atelierstraße",
-    },
-    "Dargun": {"ort": "Dargun", "strasse": "Dargun"},
-    # legacy parameter names must keep working
-    "Ahornweg (Altentreptow) [legacy]": {"city": "Altentreptow", "street": "Ahornweg"},
-}
+A declarative BaseSource pipeline. The shared ``SiteparkIESRetriever`` resolves
+the street (and optional Ort) to a pois and returns the raw ICS response; the
+shared ``IcsParser`` + ``ICSTransformer`` do the parsing and typing. This
+module only declares the municipality's base URL and the German-to-canonical
+waste-type map, so there is no ``retrieve`` override, no manual request params
+and no ICON_MAP.
+"""
 
-ICON_MAP = {
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Papiertonne": Icons.PAPER,
-    "Restmüll": Icons.GENERAL_WASTE,
-}
+from typing import ClassVar, final
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "ort": "Ort",
-        "strasse": "Straße",
-    },
-    "en": {
-        "ort": "City",
-        "strasse": "Street",
-    },
-}
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, street
+from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "ort": "Optional municipality name to disambiguate streets that exist in several places.",
-        "strasse": "Street or district name. For entries shown with parentheses (e.g. 'Dargun (Dargun)') use only the part before the parenthesis (e.g. 'Dargun').",
-    },
-    "de": {
-        "ort": "Optionaler Gemeindename zur Eindeutigkeit, falls die Straße in mehreren Orten vorkommt.",
-        "strasse": "Straßen- oder Ortsteilname. Bei Einträgen mit Klammern (z.B. 'Dargun (Dargun)') nur den Teil vor der Klammer verwenden (z.B. 'Dargun').",
-    },
-}
+_BASE_URL = "https://www.lk-mecklenburgische-seenplatte.de"
 
 
-class Source:
-    def __init__(self, strasse=None, ort=None, street=None, city=None):
-        # ``street`` / ``city`` are the legacy parameter names.
-        self._strasse = strasse or street
-        self._ort = ort or city
-        self._sitepark = SiteparkIES(URL)
+@final
+class Source(BaseSource):
+    TITLE = "Landkreis Mecklenburgische Seenplatte"
+    DESCRIPTION = "Source for Landkreis Mecklenburgische Seenplatte waste collection."
+    URL = _BASE_URL
+    COUNTRY = "de"
 
-    def fetch(self):
-        dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
-        return [
-            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
-            for date, waste_type in dates
-        ]
+    TEST_CASES: ClassVar[dict] = {
+        "Atelierstraße (Neubrandenburg)": {
+            "ort": "Neubrandenburg",
+            "strasse": "Atelierstraße",
+        },
+        "Dargun": {"ort": "Dargun", "strasse": "Dargun"},
+    }
+
+    PARAMS = (
+        street("strasse"),
+        district("ort", optional=True),
+    )
+
+    RAISE_ON_EMPTY = True
+
+    retrieve = SiteparkIESRetriever(_BASE_URL)
+    parse = parsers.IcsParser()
+    # "Biotonne", "Gelbe Tonne" and "Papiertonne" already auto-resolve against
+    # the shared vocabulary; "Restmülltonne" carries a rhythm suffix (e.g.
+    # "14-täglichen Rhythmus") that doesn't match the alias exactly, so each
+    # observed variant needs an explicit map.
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmülltonne 14-täglichen Rhythmus": GENERAL_WASTE,
+            "Restmülltonne 28-täglichen Rhythmus": GENERAL_WASTE,
+        }
+    )
+
+    def __init__(self, strasse: str, ort: str | None = None):
+        super().__init__(strasse=strasse, ort=ort)

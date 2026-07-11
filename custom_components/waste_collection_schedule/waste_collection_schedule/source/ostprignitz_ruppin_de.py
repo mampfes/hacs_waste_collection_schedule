@@ -1,58 +1,71 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
+"""Ostprignitz-Ruppin waste calendar (Sitepark IES platform).
 
-TITLE = "Ostprignitz-Ruppin"
-DESCRIPTION = "Source for Ostprignitz-Ruppin waste collection."
-URL = "https://www.ostprignitz-ruppin.de"
-COUNTRY = "de"
+A declarative BaseSource pipeline. The shared ``SiteparkIESRetriever`` resolves
+the street (and optional Ort) to a pois and returns the raw ICS response; the
+shared ``IcsParser`` + ``ICSTransformer`` do the parsing and typing. This
+module only declares the municipality's base URL, download params and the
+German-to-canonical waste-type map, so there is no ``retrieve`` override, no
+manual request params and no ICON_MAP.
+"""
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street as `strasse`. If the street name exists in several places, add the place name as `ort` to disambiguate.",
-    "de": "Geben Sie Ihre Straße als `strasse` ein. Kommt der Straßenname in mehreren Orten vor, geben Sie zusätzlich den Ort als `ort` an.",
-}
+from typing import ClassVar, final
 
-TEST_CASES = {
-    "Am alten Gymnasium (Neuruppin)": {
-        "ort": "Neuruppin",
-        "strasse": "Am alten Gymnasium",
-    },
-    # legacy parameter names must keep working
-    "Legacy: location/street": {
-        "location": "Neuruppin",
-        "street": "Bahnhofstraße",
-    },
-}
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, street
+from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GARDEN_WASTE
 
-ICON_MAP = {
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Blaue Tonne": Icons.PAPER,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Schadstoff": Icons.HAZARDOUS,
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "strasse": "Straße",
-        "ort": "Ort",
-    },
-    "en": {
-        "strasse": "Street",
-        "ort": "Place",
-    },
-}
+_BASE_URL = "https://www.ostprignitz-ruppin.de"
 
 
-class Source:
-    def __init__(self, strasse=None, ort=None, street=None, location=None):
-        # ``street`` / ``location`` are the legacy parameter names.
-        self._strasse = strasse or street
-        self._ort = ort or location
-        self._sitepark = SiteparkIES(URL, download_params={"monat": "", "alarm": "0"})
+@final
+class Source(BaseSource):
+    TITLE = "Ostprignitz-Ruppin"
+    DESCRIPTION = "Source for Ostprignitz-Ruppin waste collection."
+    URL = _BASE_URL
+    COUNTRY = "de"
 
-    def fetch(self):
-        dates = self._sitepark.fetch(strasse=self._strasse, ort=self._ort)
-        return [
-            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
-            for date, waste_type in dates
-        ]
+    TEST_CASES: ClassVar[dict] = {
+        "Am alten Gymnasium (Neuruppin)": {
+            "ort": "Neuruppin",
+            "strasse": "Am alten Gymnasium",
+        },
+    }
+
+    PARAMS = (
+        street("strasse"),
+        district("ort", optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street. If the street name exists in several places, "
+            "add the place name to disambiguate."
+        ),
+        "de": (
+            "Geben Sie Ihre Straße ein. Kommt der Straßenname in mehreren "
+            "Orten vor, geben Sie zusätzlich den Ort zur Eindeutigkeit an."
+        ),
+    }
+
+    RAISE_ON_EMPTY = True
+
+    retrieve = SiteparkIESRetriever(
+        _BASE_URL,
+        download_params={"monat": "", "alarm": "0"},
+    )
+    parse = parsers.IcsParser()
+    # "Restmülltonne", "Biotonne", "Gelbe Tonne", "Blaue Tonne" and
+    # "Schadstoffmobil" already auto-resolve against the shared vocabulary;
+    # only "Grünabfallsammlung" doesn't match an alias exactly (the shared
+    # aliases use the bare "grünabfall" form), so it needs an explicit map.
+    transform = ICSTransformer(
+        type_value_map={
+            "Grünabfallsammlung": GARDEN_WASTE,
+        }
+    )
+
+    def __init__(self, strasse: str, ort: str | None = None):
+        super().__init__(strasse=strasse, ort=ort)
