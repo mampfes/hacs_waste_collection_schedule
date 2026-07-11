@@ -1,69 +1,69 @@
+"""Dillingen Saar (dillingen-saar.de).
+
+Demonstrates: a static, year-templated ICS GET whose title is truncated at the
+first "..." (the feed appends extra detail after it, e.g. "Restmüll
+Abfuhr...Behälter 120L"). ``HttpGetRetriever`` + the extended ``IcsParser``
+(``regex`` captures everything before the first "...") + ``ICSTransformer`` do
+all the work; this module only supplies the URL template and the waste-type
+map.
+
+NOTE: the ``service-dillingen-saar.fbo.de`` backend returned 404 for every
+path (including its root) when this conversion was verified, both with and
+without TLS verification — a pre-existing outage on the legacy source too,
+not something this conversion introduced. Live TEST_CASES could not be
+confirmed against a live response; the URL/params/regex are carried over
+unchanged from the legacy ``fetch()``.
+"""
+
 from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER, RECYCLABLES
 
-TITLE = "Dillingen Saar"  # Title will show up in README.md and info.md
-DESCRIPTION = (
-    "Source script for waste collection Dillingen Saar"  # Describe your source
-)
-URL = "https://www.dillingen-saar.de/"  # Insert url to service homepage. URL will show up in README.md and info.md
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Am Fischerberg": {
-        "street": "Am Fischerberg"
-    },  # https://service-dillingen-saar.fbo.de/date/Am%20Fischerberg/2023-01-01/+1%20year/?format=ics&type=rm,gs,bio,pa
-    "Odilienplatz": {
-        "street": "Odilienplatz"
-    },  # https://service-dillingen-saar.fbo.de/date/Odilienplatz/2023-01-01/+1%20year/?format=ics&type=rm,gs,bio,pa
-    "Lilienstraße": {
-        "street": "Lilienstraße"
-    },  # https://service-dillingen-saar.fbo.de/date/Lilienstra%C3%9Fe/2023-01-01/+1%20year/?format=ics&type=rm,gs,bio,pa
-    "Joseph-Roederer-Straße": {
-        "street": "Joseph-Roederer-Straße"
-    },  # https://service-dillingen-saar.fbo.de/date/Joseph-Roederer-Stra%C3%9Fe/2023-01-01/+1%20year/?format=ics&type=rm,gs,bio,pa
-}
+_API_URL = "https://service-dillingen-saar.fbo.de/date/"
 
-API_URL = "https://service-dillingen-saar.fbo.de/date/"
 
-ICON_MAP = {
-    "Papier Entsorgung": Icons.PAPER,
-    "Restmüll Abfuhr": Icons.GENERAL_WASTE,
-    "Tonnen Abfuhr": Icons.GENERAL_WASTE,
-    "Gelbesäcke Abholung": Icons.RECYCLING,
-}
+def _build_url(street: str) -> str:
+    year = datetime.now().year
+    # Preserves the legacy double slash after "date" (API_URL already ends in
+    # "/", the template adds another) — harmless, and kept for exact parity.
+    return f"{_API_URL}/{street}/{year!s}-01-01/+1%20year/"
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
+
+@final
+class Source(BaseSource):
+    TITLE = "Dillingen Saar"
+    DESCRIPTION = "Source script for waste collection Dillingen Saar"
+    URL = "https://www.dillingen-saar.de/"
+    COUNTRY = "de"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Am Fischerberg": {"street": "Am Fischerberg"},
+        "Odilienplatz": {"street": "Odilienplatz"},
+        "Lilienstraße": {"street": "Lilienstraße"},
+        "Joseph-Roederer-Straße": {"street": "Joseph-Roederer-Straße"},
     }
-}
 
+    PARAMS = (street("street"),)
 
-class Source:
+    retrieve = HttpGetRetriever(
+        url=lambda street, **_: _build_url(street),
+        params={"format": "ics", "type": "rm,gs,bio,pa"},
+    )
+    parse = parsers.IcsParser(regex=r"^(.*?)\.\.\.")
+    transform = ICSTransformer(
+        type_value_map={
+            "Papier Entsorgung": PAPER,
+            "Restmüll Abfuhr": GENERAL_WASTE,
+            "Tonnen Abfuhr": GENERAL_WASTE,
+            "Gelbesäcke Abholung": RECYCLABLES,
+        }
+    )
+
     def __init__(self, street: str):
-        self._street = street
-        self._ics = ICS()
-
-    def fetch(self):
-        # the url contains the current year, but this doesn't really seems to matter at least for the ical, since the result is always the same
-        # still replace it for compatibility sake
-        now = datetime.now()
-
-        params = {"format": "ics", "type": "rm,gs,bio,pa"}
-        r = requests.get(
-            f"{API_URL}/{self._street}/{now.year!s}-01-01/+1%20year/", params=params
-        )
-        r.raise_for_status()
-
-        # Convert ICS String to events
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            t = d[1].split("...")[
-                0
-            ]  # string of all characters up to but not including the first "..."
-            entries.append(Collection(date=d[0], t=t, icon=ICON_MAP.get(t)))
-
-        return entries
+        super().__init__(street=street)
