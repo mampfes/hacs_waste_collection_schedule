@@ -3907,6 +3907,13 @@
     },
     "urls": {}
   },
+  "koma_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/koma_pl.md",
+    "howto": {
+      "en": "Open https://koma.pl/harmonogram-odpadow/ and step through the dropdowns (Wybierz Miasto -> miejscowość -> ulica -> numer domu) to find the exact spelling of your gmina, town, street and house number."
+    },
+    "urls": {}
+  },
   "sepan_remondis_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
     "howto": {},

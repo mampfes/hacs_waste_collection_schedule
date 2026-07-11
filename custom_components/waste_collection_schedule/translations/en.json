@@ -18658,6 +18658,41 @@
         },
         "data_description": {}
       },
+      "args_koma_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gmina": "Commune (gmina)",
+          "miejscowosc": "Town",
+          "numer_domu": "House number",
+          "ulica": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "gmina": "Name of the commune (gmina) as listed on koma.pl.",
+          "miejscowosc": "Name of the town/village.",
+          "numer_domu": "House number.",
+          "ulica": "Street name (leave empty for towns without streets)."
+        }
+      },
+      "reconfigure_koma_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gmina": "Commune (gmina)",
+          "miejscowosc": "Town",
+          "numer_domu": "House number",
+          "ulica": "Street"
+        },
+        "data_description": {
+          "gmina": "Name of the commune (gmina) as listed on koma.pl.",
+          "miejscowosc": "Name of the town/village.",
+          "numer_domu": "House number.",
+          "ulica": "Street name (leave empty for towns without streets)."
+        }
+      },
       "args_sepan_remondis_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

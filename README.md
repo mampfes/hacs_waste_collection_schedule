@@ -2911,6 +2911,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Klient Szablonowy - Ekostrażnik](/doc/source/sims_pl.md) / sisms.pl
 - [Klient Szablonowy - Karty Usług](/doc/source/sims_pl.md) / sisms.pl
 - [KOM-LUB (Luboń, PL)](/doc/source/kom_lub_com_pl.md) / kom-lub.com.pl/aktualny-harmonogram-wywozow
+- [KOMA](/doc/source/koma_pl.md) / koma.pl
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Miasto i Gmina Morawica](/doc/source/sims_pl.md) / sisms.pl

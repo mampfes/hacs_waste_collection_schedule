@@ -19385,6 +19385,12 @@
       "id": "kom_lub_com_pl"
     },
     {
+      "title": "KOMA",
+      "module": "koma_pl",
+      "default_params": {},
+      "id": "koma_pl"
+    },
+    {
       "title": "KOMUS",
       "module": "sims_pl",
       "default_params": {

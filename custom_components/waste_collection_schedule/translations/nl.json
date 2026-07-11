@@ -17839,6 +17839,32 @@
         },
         "data_description": {}
       },
+      "args_koma_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gmina": "Gmina",
+          "miejscowosc": "Miejscowosc",
+          "numer_domu": "Numer Domu",
+          "ulica": "Ulica"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_koma_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gmina": "Gmina",
+          "miejscowosc": "Miejscowosc",
+          "numer_domu": "Numer Domu",
+          "ulica": "Ulica"
+        },
+        "data_description": {}
+      },
       "args_sepan_remondis_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
