@@ -230,17 +230,52 @@ class IcsParser(Parser[list[tuple[datetime.date, str]]]):
     Pass ``min_events`` (a minimum event count) to assert the feed parsed as
     expected; fewer events (e.g. the provider returned an HTML error page) logs
     the response and raises ``ResponseShapeError``.
+
+    The remaining arguments are forwarded to ``service.ICS.ICS`` unchanged and
+    shape how each VEVENT's summary becomes the ``(date, summary)`` tuple; see
+    that class for the exact semantics:
+
+    * ``offset`` — shift every date by this many days (a provider whose feed
+      is dated one day off from the actual collection day).
+    * ``regex`` — a pattern matched against the rendered title; when it
+      matches, the title becomes the pattern's first capture group (trims a
+      fixed prefix/suffix the provider adds around the bin name).
+    * ``split_at`` — a pattern splitting one VEVENT's title into several
+      entries on the same date (a combined round listed as one event, e.g.
+      "Restmüll / Gelber Sack").
+    * ``title_template`` — a Jinja2 template rendered with ``date`` bound to
+      the ``icalevents`` event object (default ``"{{date.summary}}"``); use
+      this to build the title from a field other than SUMMARY.
+
+    All four default to ``ICS()``'s own defaults, so existing callers that
+    only pass ``min_events`` are unaffected.
     """
 
-    def __init__(self, min_events: "int | None" = None):
+    def __init__(
+        self,
+        min_events: "int | None" = None,
+        offset: "int | None" = None,
+        regex: "str | None" = None,
+        split_at: "str | None" = None,
+        title_template: str = "{{date.summary}}",
+    ):
         self.min_events = min_events
+        self.offset = offset
+        self.regex = regex
+        self.split_at = split_at
+        self.title_template = title_template
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[tuple[datetime.date, str]]:
         from waste_collection_schedule.service.ICS import ICS
 
-        events = ICS().convert(response.text)
+        events = ICS(
+            offset=self.offset,
+            regex=self.regex,
+            split_at=self.split_at,
+            title_template=self.title_template,
+        ).convert(response.text)
         _expect_min_events(events, self.min_events, response.text, source)
         return events
 
@@ -260,18 +295,35 @@ class IcsEventsParser(Parser[list[IcsEvent]]):
             return Collection(date=record.date, waste_type=...)
 
     Pass ``min_events`` (a minimum event count) to assert the feed parsed as
-    expected.
+    expected. ``offset``, ``regex``, ``split_at`` and ``title_template`` are
+    forwarded to ``service.ICS.ICS`` exactly as in :class:`IcsParser`.
     """
 
-    def __init__(self, min_events: "int | None" = None):
+    def __init__(
+        self,
+        min_events: "int | None" = None,
+        offset: "int | None" = None,
+        regex: "str | None" = None,
+        split_at: "str | None" = None,
+        title_template: str = "{{date.summary}}",
+    ):
         self.min_events = min_events
+        self.offset = offset
+        self.regex = regex
+        self.split_at = split_at
+        self.title_template = title_template
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[IcsEvent]:
         from waste_collection_schedule.service.ICS import ICS
 
-        events = ICS().convert_events(response.text)
+        events = ICS(
+            offset=self.offset,
+            regex=self.regex,
+            split_at=self.split_at,
+            title_template=self.title_template,
+        ).convert_events(response.text)
         _expect_min_events(events, self.min_events, response.text, source)
         return events
 

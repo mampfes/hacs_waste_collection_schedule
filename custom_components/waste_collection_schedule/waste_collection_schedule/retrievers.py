@@ -33,10 +33,12 @@ problem):
 
 from __future__ import annotations
 
+import time
 from collections.abc import Callable, Mapping
 from typing import TYPE_CHECKING, Any, Protocol, TypeAlias, TypeVar, cast
 
 import requests as _plain_requests
+from bs4 import BeautifulSoup
 
 if TYPE_CHECKING:
     from curl_cffi import requests as _cffi_requests
@@ -211,6 +213,254 @@ class TwoStepRetriever(_BaseRetriever):
         return source.session.get(
             self.schedule_url(key, **source.params), headers=headers
         )
+
+
+# One step of an AthosWasteManagementRetriever wizard: a dict with keys
+#
+#   submit_action -- (required) the ``SubmitAction`` form value posted for
+#       this step: a literal str, or ``callable(**source.params) -> str``.
+#   fields        -- (optional) ``callable(**source.params) -> dict[str, Any]``
+#       returning field overrides/additions merged into the running form
+#       state before this step's POST. Omit for a step that only advances
+#       ``SubmitAction`` (e.g. a plain "forward").
+#   remove        -- (optional) iterable of field names dropped from the
+#       running state before this step's POST (a step that must not resend
+#       fields an earlier step set, e.g. the final step of the bmv_at
+#       variant).
+#
+# Not a TypedDict: `submit_action` is required while `fields`/`remove` are
+# not, and PEP 655 Required/NotRequired needs a newer typing than this
+# module's pyright target -- a plain dict keeps step access unchecked but
+# simple; see AthosWasteManagementRetriever's docstring for the worked shape.
+AthosStep: TypeAlias = "dict[str, Any]"
+
+
+def _scrape_hidden_inputs(html: str) -> dict[str, str]:
+    """Return ``{name: value}`` for every ``<input type=hidden>`` in ``html``.
+
+    Shared by every Athos "WasteManagementServlet" deployment to seed the
+    wizard's form state from the initial GET. Matches ``type`` case-
+    insensitively: most deployments emit lowercase ``hidden``, at least one
+    (bmv_at) emits uppercase ``HIDDEN``.
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    fields: dict[str, str] = {}
+    for tag in soup.find_all("input"):
+        if str(tag.get("type", "")).lower() != "hidden":
+            continue
+        name = tag.get("name")
+        if name:
+            fields[name] = tag.get("value", "")
+    return fields
+
+
+class AthosWasteManagementRetriever(_BaseRetriever):
+    """Data-driven engine for the Athos "WasteManagementServlet" wizard.
+
+    Shared mechanics behind ~15 German/Austrian providers (awn_de, bielefeld_de,
+    bmv_at, ...): an initial GET returns a page seeded with ``<input
+    type=hidden>`` form state; the site then advances through a small, fixed
+    number of POSTs (changing city/street, selecting containers, ...) before a
+    final POST downloads the ICS calendar. Every deployment follows the same
+    request/response shape; only the field names, field values and number of
+    steps differ (see the bmv_at variant, which uses ``Focus``-driven steps
+    instead of ``CITYCHANGED``/``STREETCHANGED``/``forward``). The whole flow
+    is therefore expressed as data (``steps``), not per-source control flow.
+
+    Mechanics:
+
+    1. GET ``url`` with ``initial_params``. If it 404s and ``fallback_url`` is
+       set, retry there instead (a servlet that moved host/path while old
+       deployments still link the previous one).
+    2. Scrape the response's ``<input type=hidden>`` fields into the running
+       form state (the wizard's server-side session key/values).
+    3. For each entry in ``steps`` (in order): merge ``fields(**source.params)``
+       into the running state, drop any ``remove`` keys, set
+       ``SubmitAction`` to ``submit_action`` (resolved against
+       ``source.params`` if callable), then POST the accumulated state back to
+       the servlet URL.
+    4. Return the *last* step's response (the ICS download) unparsed; pair
+       with ``parsers.IcsParser()`` / ``parsers.IcsEventsParser()``.
+
+    The form state accumulates across steps (a later step inherits every
+    earlier step's fields unless a step's ``remove`` drops them) because the
+    servlet is itself stateless between POSTs — the growing form *is* the
+    session.
+
+    Example (the awn_de shape: one field-setting step, one container-selection
+    step, one download step)::
+
+        retrieve = AthosWasteManagementRetriever(
+            url="https://athos.awn-online.de/WasteManagementNeckarOdenwald/WasteManagementServlet",
+            initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+            steps=[
+                {
+                    "submit_action": "CITYCHANGED",
+                    "fields": lambda city, street, house_number, address_suffix="", **_: {
+                        "Ort": city,
+                        "Strasse": street,
+                        "Hausnummer": str(house_number),
+                        "Hausnummerzusatz": address_suffix,
+                    },
+                },
+                {
+                    "submit_action": "forward",
+                    "fields": lambda **_: {
+                        f"ContainerGewaehlt_{i}": "on" for i in range(1, 8)
+                    },
+                },
+                {
+                    "submit_action": "filedownload_ICAL",
+                    "fields": lambda **_: {
+                        "ApplicationName": "com.athos.kd.neckarodenwald.abfuhrtermine.AbfuhrTerminModel",
+                    },
+                },
+            ],
+        )
+
+    Args:
+        url: the servlet URL (``callable(**source.params) -> str``, or a literal).
+        steps: ordered list of :class:`AthosStep` dicts (see above). Must not
+            be empty.
+        initial_params: query params for the initial GET (default:
+            ``{"SubmitAction": "wasteDisposalServices"}``).
+        fallback_url: optional second URL (callable or literal), retried if
+            the initial GET 404s.
+        headers: optional headers applied to every request (GET and POST).
+        encoding: response encoding forced on every response before reading
+            ``.text`` (default ``"utf-8"``; several deployments mis-declare
+            their charset, corrupting umlauts otherwise). Pass ``None`` to
+            leave the transport's auto-detected encoding alone.
+    """
+
+    def __init__(
+        self,
+        *,
+        url: UrlArgs,
+        steps: list[AthosStep],
+        initial_params: ParamsType = None,
+        fallback_url: UrlArgs | None = None,
+        headers: HeadersArgs = None,
+        encoding: str | None = "utf-8",
+    ):
+        if not steps:
+            raise ValueError("AthosWasteManagementRetriever requires at least one step")
+        self.url = url
+        self.steps = steps
+        self.initial_params = (
+            initial_params
+            if initial_params is not None
+            else {"SubmitAction": "wasteDisposalServices"}
+        )
+        self.fallback_url = fallback_url
+        self.headers = headers
+        self.encoding = encoding
+
+    def _apply_encoding(self, response: Response) -> Response:
+        if self.encoding is not None:
+            response.encoding = self.encoding
+        return response
+
+    def __call__(self, source: BaseSource) -> Response:
+        headers = self._resolve(self.headers, source)
+        url = self._resolve(self.url, source)
+
+        initial = source.session.get(url, params=self.initial_params, headers=headers)
+        if initial.status_code == 404 and self.fallback_url is not None:
+            url = self._resolve(self.fallback_url, source)
+            initial = source.session.get(
+                url, params=self.initial_params, headers=headers
+            )
+        initial.raise_for_status()
+        self._apply_encoding(initial)
+
+        state: dict[str, Any] = _scrape_hidden_inputs(initial.text)
+
+        response = initial
+        for step in self.steps:
+            state.update(step["fields"](**source.params) if "fields" in step else {})
+            for key in step.get("remove", ()):
+                state.pop(key, None)
+            state["SubmitAction"] = self._resolve(step["submit_action"], source)
+            # A fresh copy per POST: state is mutated further by later steps,
+            # and callers (session mocks in tests, request logging, retry
+            # wrappers) may hold onto the `data` they were given rather than
+            # consuming it immediately.
+            response = source.session.post(url, data=dict(state), headers=headers)
+            response.raise_for_status()
+            self._apply_encoding(response)
+
+        return response
+
+
+class PollingIcsRetriever(_BaseRetriever):
+    """GET a property page, poll an async calendar job, then fetch the ``.ics``.
+
+    Common UK council shape: the property page kicks off server-side
+    calendar generation; the client polls the ``.ics`` endpoint (the site's
+    own JS does this via an htmx ``hx-trigger="every 2s"`` element) until the
+    job finishes, exactly mirroring the polling the website itself performs.
+
+    Mechanics:
+
+    1. GET ``url`` once, to establish whatever session/cookie state the
+       property page sets up server-side (some deployments key the async job
+       off it).
+    2. GET ``url`` + ``calendar_suffix`` repeatedly (up to ``max_attempts``
+       times, sleeping ``delay`` seconds between attempts) until ``is_ready``
+       returns ``True`` for a response, or attempts are exhausted.
+    3. Return the last response received (ready or not; a parser's
+       ``min_events`` catches a genuinely exhausted poll).
+
+    Args:
+        url: the property page URL (``callable(**source.params) -> str``, or
+            a literal); also the base the calendar URL is built from.
+        calendar_suffix: appended to ``url`` to build the polling endpoint
+            (default ``"/calendar.ics"``).
+        max_attempts: maximum polls before giving up (default 15).
+        delay: seconds slept between attempts (default 2, matching the
+            ``hx-trigger="every 2s"`` cadence observed on these sites).
+        is_ready: ``callable(response) -> bool`` deciding whether a poll
+            response is the finished calendar. Default: a ``VEVENT`` block is
+            present (a real, populated ICS body rather than a pending stub).
+            This is a shallow text check, not an ICS parse — parsing is still
+            the parser's job.
+        headers: optional headers applied to every request.
+    """
+
+    def __init__(
+        self,
+        *,
+        url: UrlArgs,
+        calendar_suffix: str = "/calendar.ics",
+        max_attempts: int = 15,
+        delay: float = 2,
+        is_ready: Callable[[Response], bool] | None = None,
+        headers: HeadersArgs = None,
+    ):
+        self.url = url
+        self.calendar_suffix = calendar_suffix
+        self.max_attempts = max_attempts
+        self.delay = delay
+        self.is_ready = is_ready or (lambda response: "BEGIN:VEVENT" in response.text)
+        self.headers = headers
+
+    def __call__(self, source: BaseSource) -> Response:
+        headers = self._resolve(self.headers, source)
+        base_url = self._resolve(self.url, source)
+        calendar_url = f"{base_url}{self.calendar_suffix}"
+
+        # Establishes any session state the property page's async job keys off.
+        source.session.get(base_url, headers=headers)
+
+        # Attempt 1 of max_attempts (no leading sleep).
+        response = source.session.get(calendar_url, headers=headers)
+        for _ in range(self.max_attempts - 1):
+            if self.is_ready(response):
+                return response
+            time.sleep(self.delay)
+            response = source.session.get(calendar_url, headers=headers)
+        return response
 
 
 class LegacyHttpGetRetriever(HttpGetRetriever):

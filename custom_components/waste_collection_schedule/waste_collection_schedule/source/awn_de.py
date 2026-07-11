@@ -1,156 +1,107 @@
-from html.parser import HTMLParser
+"""Abfallwirtschaft Neckar-Odenwald-Kreis (awn-online.de).
 
-import requests
-import urllib3
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+Demonstrates: the Athos "WasteManagementServlet" wizard, the plain German
+shape — one field-setting step (city/street/house number), one
+container-selection step, one download step. Wired entirely through
+``AthosWasteManagementRetriever``; this module only supplies the servlet URL,
+the step data and the (empty) waste-type map, exactly like the legacy
+source's plain ``Collection(d[0], d[1])`` with no icon map.
 
-# With verify=True the POST fails due to a SSLCertVerificationError.
-# Using verify=False works, but is not ideal. The following links may provide a better way of dealing with this:
-# https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
-# https://urllib3.readthedocs.io/en/1.26.x/user-guide.html#ssl
-# This line suppresses the InsecureRequestWarning when using verify=False
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+The legacy source exposed a boolean per container stream
+(``restmuell``/``bioenergietonne``/...) to opt individual streams out. The
+pipeline always returns every stream for every waste type (filtering is a
+framework/HA concern, not a source one — see ``doc/contributing_source.md``),
+so those toggles are dropped and every ``ContainerGewaehlt_N`` is selected.
+"""
 
+from typing import ClassVar, final
 
-TITLE = "Abfallwirtschaft Neckar-Odenwald-Kreis"
-DESCRIPTION = "Source for AWN (Abfallwirtschaft Neckar-Odenwald-Kreis)."
-URL = "https://www.awn-online.de"
-TEST_CASES = {
-    "Adelsheim": {
-        "city": "Adelsheim",
-        "street": "Badstr.",
-        "house_number": 1,
-    },
-    "Mosbach": {
-        "city": "Mosbach",
-        "street": "Hauptstr.",
-        "house_number": 53,
-        "address_suffix": "/1",
-    },
-    "Billigheim": {
-        "city": "Billigheim",
-        "street": "Marienhöhe",
-        "house_number": 5,
-        "address_suffix": "A",
-    },
-}
-SERVLET = (
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    city,
+    house_number,
+    street,
+    text_field,
+)
+from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+
+_SERVLET = (
     "https://athos.awn-online.de/WasteManagementNeckarOdenwald/WasteManagementServlet"
 )
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-        "house_number": "Hausnummer",
-        "address_suffix": "Hausnummerzusatz",
+
+@final
+class Source(BaseSource):
+    TITLE = "Abfallwirtschaft Neckar-Odenwald-Kreis"
+    DESCRIPTION = "Source for AWN (Abfallwirtschaft Neckar-Odenwald-Kreis)."
+    URL = "https://www.awn-online.de"
+    COUNTRY = "de"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Adelsheim": {"city": "Adelsheim", "street": "Badstr.", "house_number": 1},
+        "Mosbach": {
+            "city": "Mosbach",
+            "street": "Hauptstr.",
+            "house_number": 53,
+            "address_suffix": "/1",
+        },
+        "Billigheim": {
+            "city": "Billigheim",
+            "street": "Marienhöhe",
+            "house_number": 5,
+            "address_suffix": "A",
+        },
     }
-}
 
+    PARAMS = (
+        city(),
+        street(),
+        house_number(),
+        text_field("address_suffix", "Address suffix", default=""),
+    )
 
-# Parser for HTML input (hidden) text
-class HiddenInputParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._args = {}
+    retrieve = AthosWasteManagementRetriever(
+        url=_SERVLET,
+        initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        steps=[
+            {
+                "submit_action": "CITYCHANGED",
+                "fields": lambda city, street, house_number, address_suffix="", **_: {
+                    "Ort": city,
+                    "Strasse": street,
+                    "Hausnummer": str(house_number),
+                    "Hausnummerzusatz": address_suffix,
+                },
+            },
+            {
+                "submit_action": "forward",
+                "fields": lambda **_: {
+                    f"ContainerGewaehlt_{i}": "on" for i in range(1, 8)
+                },
+            },
+            {
+                "submit_action": "filedownload_ICAL",
+                "fields": lambda **_: {
+                    "ApplicationName": "com.athos.kd.neckarodenwald.abfuhrtermine.AbfuhrTerminModel",
+                },
+            },
+        ],
+    )
+    parse = parsers.IcsParser()
+    transform = ICSTransformer()
 
-    @property
-    def args(self):
-        return self._args
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "input":
-            d = dict(attrs)
-            if str(d["type"]).lower() == "hidden":
-                self._args[d["name"]] = d["value"] if "value" in d else ""
-
-
-class Source:
     def __init__(
         self,
         city: str,
         street: str,
         house_number: int,
         address_suffix: str = "",
-        restmuell: bool = True,
-        bioenergietonne: bool = True,
-        altpapier_papiertonne: bool = True,
-        altpapier_buendelsammlung: bool = True,
-        verpackungstonne: bool = True,
-        altkleider_schuhe: bool = True,
-        schadstoffe: bool = True,
     ):
-        self._city = city
-        self._street = street
-        self._hnr = house_number
-        self._suffix = address_suffix
-        self._ics = ICS()
-        self._container_selection = {
-            1: restmuell,
-            2: bioenergietonne,
-            3: altpapier_papiertonne,
-            4: altpapier_buendelsammlung,
-            5: verpackungstonne,
-            6: altkleider_schuhe,
-            7: schadstoffe,
-        }
-
-    def fetch(self):
-        session = requests.session()
-
-        r = session.get(
-            SERVLET,
-            params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
-            verify=False,
+        super().__init__(
+            city=city,
+            street=street,
+            house_number=house_number,
+            address_suffix=address_suffix,
         )
-        r.raise_for_status()
-        r.encoding = "utf-8"
-
-        parser = HiddenInputParser()
-        parser.feed(r.text)
-
-        args = parser.args
-        args["Ort"] = self._city
-        args["Strasse"] = self._street
-        args["Hausnummer"] = str(self._hnr)
-        args["Hausnummerzusatz"] = self._suffix
-        args["SubmitAction"] = "CITYCHANGED"
-        r = session.post(
-            SERVLET,
-            data=args,
-            verify=False,
-        )
-        r.raise_for_status()
-
-        args["SubmitAction"] = "forward"
-
-        for idx, selected in self._container_selection.items():
-            if selected:
-                args[f"ContainerGewaehlt_{idx}"] = "on"
-
-        r = session.post(
-            SERVLET,
-            data=args,
-            verify=False,
-        )
-        r.raise_for_status()
-
-        args["ApplicationName"] = (
-            "com.athos.kd.neckarodenwald.abfuhrtermine.AbfuhrTerminModel"
-        )
-        args["SubmitAction"] = "filedownload_ICAL"
-        r = session.post(
-            SERVLET,
-            data=args,
-            verify=False,
-        )
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-
-        return entries

@@ -605,6 +605,66 @@ class TestParsers:
             assert result == expected
             assert result[0].location == "Route 1"
 
+    def test_ics_parser_default_forwards_ics_defaults(self):
+        """With no args, IcsParser must construct ICS() with its own defaults
+        (offset/regex/split_at=None, title_template="{{date.summary}}"), so
+        existing callers passing only min_events see no behaviour change."""
+        from waste_collection_schedule.parsers import IcsParser
+
+        resp = MagicMock()
+        resp.text = "BEGIN:VCALENDAR\nEND:VCALENDAR"
+
+        with patch("waste_collection_schedule.service.ICS.ICS") as mock_ics_cls:
+            mock_ics_cls.return_value.convert.return_value = []
+            IcsParser()(resp)
+            mock_ics_cls.assert_called_once_with(
+                offset=None,
+                regex=None,
+                split_at=None,
+                title_template="{{date.summary}}",
+            )
+
+    def test_ics_parser_forwards_offset_regex_split_at_title_template(self):
+        """IcsParser forwards offset/regex/split_at/title_template to ICS()."""
+        from waste_collection_schedule.parsers import IcsParser
+
+        resp = MagicMock()
+        resp.text = "BEGIN:VCALENDAR\nEND:VCALENDAR"
+
+        with patch("waste_collection_schedule.service.ICS.ICS") as mock_ics_cls:
+            mock_ics_cls.return_value.convert.return_value = [
+                (datetime.date(2026, 1, 1), "General Waste")
+            ]
+            parser = IcsParser(
+                min_events=1,
+                offset=-1,
+                regex=r"^Prefix: (.*)",
+                split_at=r" & ",
+                title_template="{{date.summary}}x",
+            )
+            parser(resp)
+            mock_ics_cls.assert_called_once_with(
+                offset=-1,
+                regex=r"^Prefix: (.*)",
+                split_at=r" & ",
+                title_template="{{date.summary}}x",
+            )
+
+    def test_ics_events_parser_forwards_options(self):
+        """IcsEventsParser forwards the same options to ICS()."""
+        from waste_collection_schedule.parsers import IcsEventsParser
+
+        resp = MagicMock()
+        resp.text = "BEGIN:VCALENDAR\nEND:VCALENDAR"
+
+        with patch("waste_collection_schedule.service.ICS.ICS") as mock_ics_cls:
+            mock_ics_cls.return_value.convert_events.return_value = []
+            parser = IcsEventsParser(offset=1, regex=r"(.*)", split_at="/")
+            parser(resp)
+            mock_ics_cls.assert_called_once_with(
+                offset=1, regex=r"(.*)", split_at="/", title_template="{{date.summary}}"
+            )
+
 
 class TestArcGisComponents:
     """ArcGis service contributes a Retriever and a Parser, kept independent."""
@@ -1723,6 +1783,274 @@ class TestRetrievers:
                 headers=None,
                 timeout=30,
             )
+
+
+class TestAthosWasteManagementRetriever:
+    """Data-driven engine for the Athos "WasteManagementServlet" wizard."""
+
+    def _source(self, **params):
+        source = MagicMock()
+        source.params = params
+        return source
+
+    def _hidden_input_page(self, **fields):
+        inputs = "".join(
+            f'<input type="hidden" name="{name}" value="{value}">'
+            for name, value in fields.items()
+        )
+        return f"<html><body><form>{inputs}</form></body></html>"
+
+    def test_scrapes_hidden_inputs_and_runs_steps(self):
+        """Initial GET scraped for hidden inputs; each step merges its own
+        fields, sets SubmitAction, and POSTs the accumulated state."""
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        source = self._source(city="Adelsheim", street="Badstr.", house_number=1)
+
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = self._hidden_input_page(SessionId="abc123", FormToken="xyz")
+        final = MagicMock()
+        source.session.get.return_value = initial
+        source.session.post.return_value = final
+
+        retriever = AthosWasteManagementRetriever(
+            url="https://example.com/Servlet",
+            steps=[
+                {
+                    "submit_action": "CITYCHANGED",
+                    "fields": lambda city, street, house_number, **_: {
+                        "Ort": city,
+                        "Strasse": street,
+                        "Hausnummer": str(house_number),
+                    },
+                },
+                {
+                    "submit_action": "filedownload_ICAL",
+                    "fields": lambda **_: {"ApplicationName": "x.y.z"},
+                },
+            ],
+        )
+        result = retriever(source)
+
+        assert result is final
+        source.session.get.assert_called_once_with(
+            "https://example.com/Servlet",
+            params={"SubmitAction": "wasteDisposalServices"},
+            headers=None,
+        )
+        assert source.session.post.call_count == 2
+        first_call, second_call = source.session.post.call_args_list
+        # Step 1: scraped hidden state + step fields + SubmitAction.
+        assert first_call.kwargs["data"] == {
+            "SessionId": "abc123",
+            "FormToken": "xyz",
+            "Ort": "Adelsheim",
+            "Strasse": "Badstr.",
+            "Hausnummer": "1",
+            "SubmitAction": "CITYCHANGED",
+        }
+        # Step 2: state accumulates across steps (Ort/Strasse/Hausnummer carry
+        # forward) and gains this step's own field + new SubmitAction.
+        assert second_call.kwargs["data"] == {
+            "SessionId": "abc123",
+            "FormToken": "xyz",
+            "Ort": "Adelsheim",
+            "Strasse": "Badstr.",
+            "Hausnummer": "1",
+            "ApplicationName": "x.y.z",
+            "SubmitAction": "filedownload_ICAL",
+        }
+
+    def test_step_remove_drops_fields_before_posting(self):
+        """A step's `remove` list drops fields from the running state (the
+        bmv_at variant's final step, which must not resend the address)."""
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        source = self._source(ort="Wien")
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = self._hidden_input_page()
+        source.session.get.return_value = initial
+        source.session.post.return_value = MagicMock()
+
+        retriever = AthosWasteManagementRetriever(
+            url="https://example.com/Servlet",
+            steps=[
+                {
+                    "submit_action": "changedEvent",
+                    "fields": lambda ort, **_: {"Ort": ort, "Focus": "Ort"},
+                },
+                {
+                    "submit_action": "filedownload_ICAL",
+                    "fields": lambda **_: {"IsLastPage": "true"},
+                    "remove": ("Ort",),
+                },
+            ],
+        )
+        retriever(source)
+
+        final_call = source.session.post.call_args_list[-1]
+        assert "Ort" not in final_call.kwargs["data"]
+        assert final_call.kwargs["data"]["IsLastPage"] == "true"
+
+    def test_fallback_url_retried_on_404(self):
+        """A 404 on the primary URL retries the fallback URL for the GET."""
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        source = self._source()
+        not_found = MagicMock()
+        not_found.status_code = 404
+        found = MagicMock()
+        found.status_code = 200
+        found.text = self._hidden_input_page()
+        source.session.get.side_effect = [not_found, found]
+        source.session.post.return_value = MagicMock()
+
+        retriever = AthosWasteManagementRetriever(
+            url="https://old.example.com/Servlet",
+            fallback_url="https://new.example.com/Servlet",
+            steps=[{"submit_action": "forward"}],
+        )
+        retriever(source)
+
+        assert source.session.get.call_count == 2
+        urls_called = [c.args[0] for c in source.session.get.call_args_list]
+        assert urls_called == [
+            "https://old.example.com/Servlet",
+            "https://new.example.com/Servlet",
+        ]
+        # The POST goes to the fallback URL that actually resolved.
+        assert (
+            source.session.post.call_args.args[0] == "https://new.example.com/Servlet"
+        )
+
+    def test_requires_at_least_one_step(self):
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        with pytest.raises(ValueError):
+            AthosWasteManagementRetriever(url="https://example.com/Servlet", steps=[])
+
+    def test_forces_utf8_encoding_by_default(self):
+        """Every response's encoding is forced to utf-8 (umlaut safety) unless
+        the source explicitly opts out with encoding=None."""
+        from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+
+        source = self._source()
+        initial = MagicMock()
+        initial.status_code = 200
+        initial.text = self._hidden_input_page()
+        final = MagicMock()
+        source.session.get.return_value = initial
+        source.session.post.return_value = final
+
+        retriever = AthosWasteManagementRetriever(
+            url="https://example.com/Servlet", steps=[{"submit_action": "forward"}]
+        )
+        retriever(source)
+
+        assert initial.encoding == "utf-8"
+        assert final.encoding == "utf-8"
+
+
+class TestPollingIcsRetriever:
+    """GET a property page, poll an async job, then GET the finished .ics."""
+
+    def _source(self):
+        source = MagicMock()
+        source.params = {"uprn": "12345"}
+        return source
+
+    def test_polls_until_ready_then_returns_response(self):
+        from waste_collection_schedule.retrievers import PollingIcsRetriever
+
+        source = self._source()
+        property_page = MagicMock()
+        not_ready = MagicMock()
+        not_ready.text = "pending..."
+        ready = MagicMock()
+        ready.text = "BEGIN:VCALENDAR\nBEGIN:VEVENT\nEND:VEVENT\nEND:VCALENDAR"
+        source.session.get.side_effect = [property_page, not_ready, not_ready, ready]
+
+        with patch("waste_collection_schedule.retrievers.time.sleep") as mock_sleep:
+            retriever = PollingIcsRetriever(
+                url=lambda uprn, **_: f"https://example.com/waste/{uprn}",
+                max_attempts=15,
+                delay=2,
+            )
+            result = retriever(source)
+
+        assert result is ready
+        assert mock_sleep.call_count == 2
+        mock_sleep.assert_called_with(2)
+        # 1 property-page GET + 3 calendar polls.
+        assert source.session.get.call_count == 4
+        calendar_calls = source.session.get.call_args_list[1:]
+        for call in calendar_calls:
+            assert call.args[0] == "https://example.com/waste/12345/calendar.ics"
+
+    def test_gives_up_after_max_attempts_returns_last_response(self):
+        """If the job never becomes ready, the last (unready) response is
+        still returned — a parser's min_events catches the exhausted poll."""
+        from waste_collection_schedule.retrievers import PollingIcsRetriever
+
+        source = self._source()
+        property_page = MagicMock()
+        never_ready = MagicMock()
+        never_ready.text = "still pending"
+        source.session.get.side_effect = [property_page] + [never_ready] * 3
+
+        with patch("waste_collection_schedule.retrievers.time.sleep"):
+            retriever = PollingIcsRetriever(
+                url=lambda uprn, **_: f"https://example.com/waste/{uprn}",
+                max_attempts=3,
+                delay=1,
+            )
+            result = retriever(source)
+
+        assert result is never_ready
+        # 1 property-page GET + exactly max_attempts calendar polls, no more.
+        assert source.session.get.call_count == 4
+
+    def test_custom_calendar_suffix(self):
+        from waste_collection_schedule.retrievers import PollingIcsRetriever
+
+        source = self._source()
+        property_page = MagicMock()
+        ready = MagicMock()
+        ready.text = "BEGIN:VEVENT"
+        source.session.get.side_effect = [property_page, ready]
+
+        retriever = PollingIcsRetriever(
+            url=lambda uprn, **_: f"https://example.com/waste/{uprn}",
+            calendar_suffix="/export.ics",
+        )
+        retriever(source)
+
+        assert (
+            source.session.get.call_args_list[1].args[0]
+            == "https://example.com/waste/12345/export.ics"
+        )
+
+    def test_custom_is_ready_predicate(self):
+        """A source may supply its own readiness check instead of the
+        BEGIN:VEVENT default (e.g. a status code or header check)."""
+        from waste_collection_schedule.retrievers import PollingIcsRetriever
+
+        source = self._source()
+        property_page = MagicMock()
+        pending = MagicMock(status_code=202)
+        done = MagicMock(status_code=200)
+        source.session.get.side_effect = [property_page, pending, done]
+
+        with patch("waste_collection_schedule.retrievers.time.sleep"):
+            retriever = PollingIcsRetriever(
+                url=lambda uprn, **_: f"https://example.com/waste/{uprn}",
+                is_ready=lambda response: response.status_code == 200,
+            )
+            result = retriever(source)
+
+        assert result is done
 
 
 # =====================================================================
