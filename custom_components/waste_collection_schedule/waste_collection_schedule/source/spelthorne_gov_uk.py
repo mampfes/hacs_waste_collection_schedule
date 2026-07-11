@@ -1,169 +1,117 @@
 import datetime
-import time
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.service.AchieveForms import init_session
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsFieldMapPreprocessor,
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    GetStep,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+)
 
-TITLE = "Spelthorne Borough Council"
-DESCRIPTION = "Source for Spelthorne Borough Council, Surrey, UK."
-URL = "https://www.spelthorne.gov.uk"
-TEST_CASES = {
-    "241 Thames Side Chertsey": {"uprn": "33042469"},
-}
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Find your UPRN by visiting "
-        "https://spelthorne-self.achieveservice.com/service/Waste_Collections "
-        "and searching for your address. Your UPRN can also be found at "
-        "https://www.findmyaddress.co.uk/."
-    )
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN) for your address.",
-    }
-}
-
-BASE_URL = "https://spelthorne-self.achieveservice.com"
-SERVICE_URL = f"{BASE_URL}/service/Waste_Collections"
-AUTH_URL = f"{BASE_URL}/authapi/isauthenticated"
-AUTH_TEST_URL = f"{BASE_URL}/apibroker/domain/spelthorne-self.achieveservice.com"
-API_URL = f"{BASE_URL}/apibroker/runLookup"
 HOSTNAME = "spelthorne-self.achieveservice.com"
-
+BASE_URL = f"https://{HOSTNAME}"
 TOKEN_LOOKUP_ID = "5f97e6e09fedd"
 COLLECTION_LOOKUP_ID = "66042a164c9a5"
 
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden Waste": Icons.GARDEN,
-}
 
-_WASTE_FIELDS = [
-    ("GwPrevCollection", "GwNextCollection", "Garden Waste"),
-    ("RefPrevCollection", "RefNextCollection", "Refuse"),
-    ("RecPrevCollection", "RecNextCollection", "Recycling"),
-]
+def _extract_csrf(response: dict, context: dict) -> None:
+    context["csrf"] = response.get("data", {}).get("csrfToken", "")
 
 
-class Source:
+def _extract_token_string(response: dict, context: dict) -> None:
+    rows = response.get("integration", {}).get("transformed", {}).get("rows_data", {})
+    context["token"] = rows.get("0", {}).get("tokenString", "")
+
+
+def _collection_form_values(context: dict, source: Any) -> dict:
+    today = datetime.date.today()
+    return {
+        "token": {"value": context["token"]},
+        "uprn1": {"value": source.params["uprn"]},
+        "last2Weeks": {"value": (today - datetime.timedelta(days=14)).isoformat()},
+        "endDate": {"value": (today + datetime.timedelta(days=90)).isoformat()},
+    }
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Spelthorne Borough Council"
+    DESCRIPTION = "Source for Spelthorne Borough Council, Surrey, UK."
+    URL = "https://www.spelthorne.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "241 Thames Side Chertsey": {"uprn": "33042469"},
+    }
+
+    PARAMS = (uprn(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN by visiting "
+            "https://spelthorne-self.achieveservice.com/service/Waste_Collections "
+            "and searching for your address. Your UPRN can also be found at "
+            "https://www.findmyaddress.co.uk/."
+        ),
+    }
+
+    # Spelthorne needs a bare GET to a council-specific CSRF endpoint (not a
+    # runLookup call at all -- GetStep), then a GET-mode runLookup to fetch a
+    # one-time token (LookupStep(method="GET")), before the real POST lookup,
+    # which must carry the CSRF token as a request header rather than a form
+    # field (LookupStep(headers=...)).
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        service_page="Waste_Collections",
+        auth_test_url=f"{BASE_URL}/apibroker/domain/{HOSTNAME}",
+        steps=[
+            GetStep(
+                f"{BASE_URL}/api/nextref",
+                extract=_extract_csrf,
+            ),
+            LookupStep(
+                TOKEN_LOOKUP_ID,
+                method="GET",
+                no_retry="true",
+                extract=_extract_token_string,
+            ),
+            LookupStep(
+                COLLECTION_LOOKUP_ID,
+                section="Property details",
+                no_retry="true",
+                form_values=_collection_form_values,
+                headers=lambda ctx, source: {"X-CSRF-Token": ctx["csrf"]},
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    preprocess = AchieveFormsFieldMapPreprocessor(
+        fields=[
+            ("GwPrevCollection", "Garden Waste"),
+            ("GwNextCollection", "Garden Waste"),
+            ("RefPrevCollection", "Refuse"),
+            ("RefNextCollection", "Refuse"),
+            ("RecPrevCollection", "Recycling"),
+            ("RecNextCollection", "Recycling"),
+        ],
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "garden waste": GARDEN_WASTE,
+            "refuse": GENERAL_WASTE,
+            "recycling": RECYCLABLES,
+        },
+    )
+
     def __init__(self, uprn: str | int):
-        self._uprn = str(uprn).strip()
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-                "Accept": "application/json, text/javascript, */*; q=0.01",
-                "X-Requested-With": "XMLHttpRequest",
-            }
-        )
-
-        sid = init_session(
-            session,
-            SERVICE_URL,
-            AUTH_URL,
-            HOSTNAME,
-            auth_test_url=AUTH_TEST_URL,
-        )
-
-        csrf_resp = session.get(
-            f"{BASE_URL}/api/nextref", params={"sid": sid}, timeout=30
-        )
-        csrf_resp.raise_for_status()
-        csrf = csrf_resp.json()["data"]["csrfToken"]
-
-        # Spelthorne requires a server-generated one-time token fetched before lookup
-        tok_resp = session.get(
-            API_URL,
-            params={
-                "id": TOKEN_LOOKUP_ID,
-                "repeat_against": "",
-                "noRetry": "true",
-                "getOnlyTokens": "undefined",
-                "log_id": "",
-                "app_name": "AF-Renderer::Self",
-                "_": int(time.time() * 1000),
-                "sid": sid,
-            },
-            timeout=30,
-        )
-        tok_resp.raise_for_status()
-        token_string = (
-            tok_resp.json()
-            .get("integration", {})
-            .get("transformed", {})
-            .get("rows_data", {})
-            .get("0", {})
-            .get("tokenString", "")
-        )
-        if not token_string:
-            raise ValueError(
-                "Failed to retrieve authentication token from Spelthorne API"
-            )
-
-        today = datetime.date.today()
-        last2weeks = (today - datetime.timedelta(days=14)).isoformat()
-        end_date = (today + datetime.timedelta(days=90)).isoformat()
-
-        resp = session.post(
-            API_URL,
-            params={
-                "id": COLLECTION_LOOKUP_ID,
-                "repeat_against": "",
-                "noRetry": "true",
-                "getOnlyTokens": "undefined",
-                "log_id": "",
-                "app_name": "AF-Renderer::Self",
-                "_": int(time.time() * 1000),
-                "sid": sid,
-            },
-            json={
-                "formValues": {
-                    "Property details": {
-                        "token": {"value": token_string},
-                        "uprn1": {"value": self._uprn},
-                        "last2Weeks": {"value": last2weeks},
-                        "endDate": {"value": end_date},
-                    }
-                }
-            },
-            headers={"X-CSRF-Token": csrf},
-            timeout=30,
-        )
-        resp.raise_for_status()
-
-        row = (
-            resp.json()
-            .get("integration", {})
-            .get("transformed", {})
-            .get("rows_data", {})
-            .get("0", {})
-        )
-
-        if row.get("NoRecordMessage", "").strip():
-            raise SourceArgumentNotFound("uprn", self._uprn)
-
-        entries = []
-        for prev_field, next_field, waste_type in _WASTE_FIELDS:
-            for date_str in (row.get(prev_field, ""), row.get(next_field, "")):
-                date_str = date_str.strip()
-                if not date_str:
-                    continue
-                try:
-                    collection_date = datetime.date.fromisoformat(date_str)
-                except ValueError:
-                    continue
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
-                )
-
-        return entries
+        super().__init__(uprn=str(uprn).strip())

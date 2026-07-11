@@ -83,6 +83,59 @@ class DateParserFromEpoch(DateParser):
         return datetime.datetime.fromtimestamp(seconds, tz=self.tz).date()
 
 
+class DateParserNextWeekday(DateParser):
+    """Resolve a date string with no year to its next on/after-today occurrence.
+
+    For providers that publish a collection date without a year because it's
+    always in the near future -- either:
+
+    * a bare weekday name (``"Monday"``) -- resolved via the shared
+      multilingual ``recurrence.weekday()`` lookup, returning the next
+      occurrence of that weekday; or
+    * a ``fmt`` with no ``%Y`` (e.g. ``"%A %d %B"`` for ``"Friday 10 July"``)
+      -- parsed via ``strptime`` for the month/day, then rolled to whichever
+      of this year / next year puts the result on or after today (or
+      ``on_or_after``).
+
+    The last positional argument is always treated as the date string.
+    """
+
+    def __init__(
+        self,
+        fmt: "str | None" = None,
+        *,
+        on_or_after: "datetime.date | None" = None,
+    ):
+        if fmt is not None and "%Y" in fmt:
+            raise ValueError("next_weekday's fmt must not include a year (%Y)")
+        self.fmt = fmt
+        self.on_or_after = on_or_after
+
+    def __call__(self, *args: str) -> datetime.date:
+        from waste_collection_schedule import recurrence
+
+        date_str = str(args[-1]).strip()
+        base = self.on_or_after or datetime.date.today()
+
+        if self.fmt is None or self.fmt.strip() in ("%A", "%a"):
+            weekday = recurrence.weekday(date_str)
+            if weekday is None:
+                raise ValueError(f"Unrecognised weekday name: {date_str!r}")
+            return recurrence.next_weekday(weekday, on_or_after=base)
+
+        parsed = datetime.datetime.strptime(date_str, self.fmt)
+        for year in (base.year, base.year + 1):
+            try:
+                candidate = parsed.replace(year=year).date()
+            except ValueError:
+                continue  # e.g. 29 February in a non-leap year
+            if candidate >= base:
+                return candidate
+        # Shouldn't normally be reached (next year's candidate is always >=
+        # base), but fall back to this year's date rather than raising.
+        return parsed.replace(year=base.year).date()
+
+
 # Ergonomic module-level aliases.
 auto = DateParserAuto()
 
@@ -98,3 +151,17 @@ def from_epoch(
 ) -> DateParserFromEpoch:
     """Return a DateParser for Unix timestamps (``unit`` is ``"s"`` or ``"ms"``)."""
     return DateParserFromEpoch(unit=unit, tz=tz)
+
+
+def next_weekday(
+    fmt: "str | None" = None,
+    *,
+    on_or_after: "datetime.date | None" = None,
+) -> DateParserNextWeekday:
+    """Return a DateParser resolving a year-less date to its next occurrence.
+
+    Pass no ``fmt`` (or ``"%A"``/``"%a"``) for a bare weekday name; pass a
+    ``strptime`` format with no ``%Y`` (e.g. ``"%A %d %B"``) for a
+    weekday-plus-day-plus-month string. See :class:`DateParserNextWeekday`.
+    """
+    return DateParserNextWeekday(fmt, on_or_after=on_or_after)

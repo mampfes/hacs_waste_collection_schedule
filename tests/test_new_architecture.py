@@ -473,6 +473,45 @@ class TestDateParsers:
         with pytest.raises(ValueError):
             parser(None, "2026-04-10")  # ISO format, not dd/mm/yyyy
 
+    def test_next_weekday_bare_name_rolls_to_next_occurrence(self):
+        from waste_collection_schedule.date_parsers import next_weekday
+
+        # 2026-06-15 is a Monday; "Friday" should resolve to that same week.
+        parser = next_weekday(on_or_after=datetime.date(2026, 6, 15))
+        assert parser("Friday") == datetime.date(2026, 6, 19)
+
+    def test_next_weekday_bare_name_on_the_day_itself(self):
+        from waste_collection_schedule.date_parsers import next_weekday
+
+        parser = next_weekday(on_or_after=datetime.date(2026, 6, 15))  # a Monday
+        assert parser("Monday") == datetime.date(2026, 6, 15)
+
+    def test_next_weekday_unrecognised_name_raises(self):
+        from waste_collection_schedule.date_parsers import next_weekday
+
+        parser = next_weekday(on_or_after=datetime.date(2026, 6, 15))
+        with pytest.raises(ValueError):
+            parser("Notaday")
+
+    def test_next_weekday_day_month_same_year(self):
+        from waste_collection_schedule.date_parsers import next_weekday
+
+        parser = next_weekday("%A %d %B", on_or_after=datetime.date(2026, 7, 1))
+        assert parser("Friday 10 July") == datetime.date(2026, 7, 10)
+
+    def test_next_weekday_day_month_rolls_to_next_year(self):
+        from waste_collection_schedule.date_parsers import next_weekday
+
+        # "10 January" on/after 1 July should resolve to next year, not a past date.
+        parser = next_weekday("%d %B", on_or_after=datetime.date(2026, 7, 1))
+        assert parser("10 January") == datetime.date(2027, 1, 10)
+
+    def test_next_weekday_rejects_fmt_with_year(self):
+        from waste_collection_schedule.date_parsers import next_weekday
+
+        with pytest.raises(ValueError):
+            next_weekday("%Y-%m-%d")
+
 
 class TestParsers:
     """JsonParser, TextParser, HtmlParser, IcsParser, IcsEventsParser."""

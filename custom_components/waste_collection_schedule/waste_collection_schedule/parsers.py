@@ -160,6 +160,16 @@ class HtmlParser(Parser[list[Tag]]):
                   OCAPI ``wasteservices`` endpoint many AU councils use::
 
                       parse = parsers.HtmlParser("article", from_json_key="responseContent")
+
+                  ``response`` may also already be a plain ``dict``/``list``
+                  (no ``.json()`` method) rather than an HTTP response object,
+                  as returned by a retriever that pre-decodes JSON itself, e.g.
+                  ``AchieveFormsRetriever`` -- the path is read straight off it::
+
+                      parse = parsers.HtmlParser(
+                          "tr", skip=1,
+                          from_json_key=("integration", "transformed", "rows_data", "0", "UpcomingCollections"),
+                      )
     """
 
     def __init__(
@@ -178,7 +188,13 @@ class HtmlParser(Parser[list[Tag]]):
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[Tag]:
         if self.from_json_key is not None:
-            data = response.json()
+            # A retriever may already return decoded JSON (a dict/list) rather
+            # than an HTTP response object (e.g. AchieveFormsRetriever, whose
+            # runLookup call is itself a JSON POST/GET) -- use it directly in
+            # that case instead of calling a nonexistent .json().
+            data: Any = (
+                response if isinstance(response, (dict, list)) else response.json()
+            )
             keys = (
                 (self.from_json_key,)
                 if isinstance(self.from_json_key, str)
