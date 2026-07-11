@@ -156,7 +156,7 @@ class Source(BaseSource):
 
         soup = BeautifulSoup(page.text, "html.parser")
         ics_link = soup.find(_is_ics_link)
-        ics_url = ics_link.get("href") if ics_link else None
+        ics_url = ics_link.get("href") if isinstance(ics_link, Tag) else None
         if not ics_url:
             raise SourceArgumentNotFound(
                 "address", address, "could not find a collection calendar link."

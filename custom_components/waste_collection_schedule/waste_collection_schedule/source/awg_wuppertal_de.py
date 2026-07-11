@@ -30,6 +30,10 @@ _BASE_URL = "https://awg-wuppertal.de"
 _API_URL = f"{_BASE_URL}/privatkunden/abfallkalender.html"
 
 
+def _is_ical_link_text(text: "str | None") -> bool:
+    return text is not None and text.lower().strip().endswith("als ical")
+
+
 def _search_street(session, term: str) -> list[str]:
     r = session.get(
         _API_URL, params={"eID": "wastecalendar_autocomplete", "term": term}
@@ -88,12 +92,7 @@ class Source(BaseSource):
         result = session.post(action, data=data)
         soup = BeautifulSoup(result.text, "html.parser")
 
-        ical_links = soup.find_all(
-            "a",
-            string=lambda text: (
-                bool(text) and text.lower().strip().endswith("als ical")
-            ),
-        )
+        ical_links = soup.find_all("a", string=_is_ical_link_text)
         responses = []
         for link in ical_links:
             href = link["href"]

@@ -15,7 +15,7 @@ ICSTransformer using the same map.
 from datetime import datetime
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city_id, location_id
 from waste_collection_schedule.parsers import IcsParser
@@ -50,7 +50,7 @@ def _fetch_year(session, city: str, street: str, year: int):
     if not input_element:
         raise ValueError("Didn't find the input named ics.")
     form = input_element.find_parent("form")
-    if not form:
+    if not isinstance(form, Tag):
         raise ValueError("Didn't find the ics request form.")
 
     form_data = {}
@@ -58,7 +58,10 @@ def _fetch_year(session, city: str, street: str, year: int):
         name = input_tag.get("name")
         value = input_tag.get("value", "")
         form_data[name] = value
-    action_url = _BASE_URL + form.get("action")
+    action = form.get("action")
+    if not isinstance(action, str):
+        raise ValueError("Didn't find the ics form action URL.")
+    action_url = _BASE_URL + action
 
     result = session.post(action_url, data=form_data)
     result.raise_for_status()

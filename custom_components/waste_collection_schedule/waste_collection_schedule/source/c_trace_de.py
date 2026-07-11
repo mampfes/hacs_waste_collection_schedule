@@ -42,7 +42,7 @@ _ABFALL_ALL = "|".join(str(i) for i in range(300))
 # lekarowarschau-abfallkalender
 # web.torgauoschatz2015
 
-SERVICE_MAP: dict = {
+SERVICE_MAP: dict[str, dict[str, str]] = {
     "bremenabfallkalender": {
         "title": "Bremer Stadtreinigung",
         "url": "https://www.die-bremer-stadtreinigung.de/",

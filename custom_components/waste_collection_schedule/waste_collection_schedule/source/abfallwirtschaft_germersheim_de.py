@@ -13,9 +13,10 @@ the plain shared IcsParser).
 import re
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
@@ -66,16 +67,27 @@ class Source(BaseSource):
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        ics_download = soup.find(
+        ics_download_tag = soup.find(
             "input", {"type": "hidden", "name": "ICS_DOWNLOAD"}
-        ).get("value")
-        request_token = soup.find(
+        )
+        request_token_tag = soup.find(
             "input", {"type": "hidden", "name": "REQUEST_TOKEN"}
-        ).get("value")
+        )
+        checkbox_container = soup.find("div", {"class": "ctlg_form_field checkbox"})
+        if (
+            not isinstance(ics_download_tag, Tag)
+            or not isinstance(request_token_tag, Tag)
+            or not isinstance(checkbox_container, Tag)
+        ):
+            raise SourceArgumentNotFound(
+                "city", self.params["city"], "could not find the ICS export form."
+            )
+        ics_download = ics_download_tag.get("value")
+        request_token = request_token_tag.get("value")
 
-        waste_type_labels = soup.find(
-            "div", {"class": "ctlg_form_field checkbox"}
-        ).find_all("label", {"for": _CHECKBOX_LABEL_RE})
+        waste_type_labels = checkbox_container.find_all(
+            "label", {"for": _CHECKBOX_LABEL_RE}
+        )
         for waste_type in waste_type_labels:
             params["icsabfallart[]"].append(waste_type.text)
 

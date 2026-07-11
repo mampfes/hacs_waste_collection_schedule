@@ -28,6 +28,7 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.regions import region
+from waste_collection_schedule.retrievers import Response
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
@@ -298,7 +299,7 @@ class Source(BaseSource):
 
     def _request_all(
         self, session, field: str, url: str, data: dict, params: dict
-    ) -> object:
+    ) -> Response:
         r = session.post(
             url, data=_urlencode_form(data), params=params, headers=_FORM_HEADERS
         )

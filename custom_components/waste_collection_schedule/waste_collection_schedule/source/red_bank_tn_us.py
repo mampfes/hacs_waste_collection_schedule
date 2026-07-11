@@ -175,6 +175,9 @@ class Source(BaseSource):
 
     PARAMS = (text_field("street_address", "Street Address"),)
 
+    # Stashed by retrieve() per fetch, read back by _adjust() via HolidayShift.
+    _holidays: set[datetime.date]
+
     HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address as it appears in Red Bank (e.g. '1107 "

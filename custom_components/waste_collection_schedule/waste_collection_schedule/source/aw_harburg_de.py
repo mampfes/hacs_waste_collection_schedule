@@ -18,7 +18,7 @@ labels are Harburg-specific phrasings mapped explicitly.
 
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import field_terms
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import cascading_select
@@ -45,7 +45,7 @@ def _level_options(html: str, level: int) -> dict[str, str]:
     """Return {display name: id} for a level's <select id="strukturEbeneN">."""
     soup = BeautifulSoup(html, "html.parser")
     select = soup.find("select", id=f"strukturEbene{level}")
-    if select is None:
+    if not isinstance(select, Tag):
         return {}
     return {
         _normalize_name(option.text): option["value"]

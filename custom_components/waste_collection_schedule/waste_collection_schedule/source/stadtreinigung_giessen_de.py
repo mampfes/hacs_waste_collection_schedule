@@ -15,7 +15,7 @@ the bare category before it is mapped/resolved.
 
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -54,7 +54,7 @@ def _load_streets_for_letter(session, letter: str) -> dict[str, str]:
     soup = BeautifulSoup(r.text, "html.parser")
     select = soup.find("select", {"name": "strasse"})
     streets: dict[str, str] = {}
-    if select is not None:
+    if isinstance(select, Tag):
         for option in select.find_all("option"):
             name = option.text.strip()
             value = option.get("value")

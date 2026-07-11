@@ -23,7 +23,10 @@ from typing import ClassVar, final
 from bs4 import BeautifulSoup
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
-from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentRequired,
+)
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import GARDEN_WASTE, PAPER, RECYCLABLES
@@ -104,7 +107,10 @@ class Source(BaseSource):
         }
         r = session.post(_PROXY_URL, data=args)
         r.raise_for_status()
-        street_id = BeautifulSoup(r.text, "html.parser").find("span").text.strip()
+        street_span = BeautifulSoup(r.text, "html.parser").find("span")
+        if street_span is None:
+            raise SourceArgumentNotFound("street", street)
+        street_id = street_span.text.strip()
 
         args["str_id"] = street_id
         args["url"] = 3

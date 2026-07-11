@@ -58,8 +58,11 @@ class _FormStateParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
         if tag == "select" and "name" in attributes:
+            name = attributes["name"]
+            if name is None:
+                return
             self._finalize_option()
-            self._current_select = attributes["name"]
+            self._current_select = name
             self.select_options.setdefault(self._current_select, [])
         elif tag == "option" and self._current_select is not None:
             self._finalize_option()

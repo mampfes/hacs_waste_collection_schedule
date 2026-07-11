@@ -33,7 +33,11 @@ _OPTION_RE = re.compile(
 
 
 def _proxy_lookup(
-    session, field: str, value: str, village: int = 0, street: int = 0
+    session,
+    field: str,
+    value: str,
+    village: "int | str" = 0,
+    street: "int | str" = 0,
 ) -> tuple[str, str]:
     """Resolve one field of the address cascade via the "aturis eko" proxy.
 

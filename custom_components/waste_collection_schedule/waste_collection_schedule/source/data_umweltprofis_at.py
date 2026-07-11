@@ -21,11 +21,21 @@ from xml.dom.minidom import parseString
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import alternatives, text_field
+from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
 
 _REFRESH_INTERVAL_FIX = ("REFRESH - INTERVAL; VALUE = ", "REFRESH-INTERVAL;VALUE=")
+
+
+def _resolve_url(
+    url: "str | None" = None, xmlurl: "str | None" = None, **_: object
+) -> str:
+    resolved = url or xmlurl
+    if not resolved:
+        raise SourceArgumentRequired("url", "either url or xmlurl must be provided")
+    return resolved
 
 
 def _element_text(element) -> str:
@@ -86,7 +96,7 @@ class Source(BaseSource):
         ),
     )
 
-    retrieve = HttpGetRetriever(url=lambda url=None, xmlurl=None, **_: url or xmlurl)
+    retrieve = HttpGetRetriever(url=_resolve_url)
 
     def parse(self, response, source=None):
         text = response.text

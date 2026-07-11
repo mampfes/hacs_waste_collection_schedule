@@ -1,7 +1,7 @@
 from typing import ClassVar, final
 from urllib.parse import urljoin
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -133,8 +133,10 @@ def _region_ical_urls(session, teilgebiet: str, cookies: dict[str, str]) -> list
             "a",
             {"class": "piwik_download_tracker", "data-trackingtyp": "iCal/Kalender"},
         )
-        if link is not None:
-            urls.append(urljoin(_BASE_URL, link.get("href")))
+        if isinstance(link, Tag):
+            href = link.get("href")
+            if isinstance(href, str):
+                urls.append(urljoin(_BASE_URL, href))
     return urls
 
 

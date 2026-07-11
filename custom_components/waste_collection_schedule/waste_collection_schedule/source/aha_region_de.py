@@ -20,7 +20,7 @@ source's ``d[1].replace("Abfuhr", "").strip().replace(" *", "")``.
 
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
     house_number,
@@ -124,11 +124,12 @@ class Source(BaseSource):
         )
         r.raise_for_status()
 
-        selects = (
-            BeautifulSoup(r.text, "html.parser")
-            .find("select", {"id": "strasse"})
-            .find_all("option")
+        strasse_select = BeautifulSoup(r.text, "html.parser").find(
+            "select", {"id": "strasse"}
         )
+        if not isinstance(strasse_select, Tag):
+            raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, [])
+        selects = strasse_select.find_all("option")
         strassen_id = None
         for select in selects:
             if _normalize(select.text) == _normalize(strasse):
@@ -159,7 +160,7 @@ class Source(BaseSource):
 
         if not ladeort_single:
             ladeort_select = soup.find("select", {"name": "ladeort"})
-            if not ladeort_select:
+            if not isinstance(ladeort_select, Tag):
                 raise SourceArgumentNotFoundWithSuggestions("strasse", strasse, [])
             ladeort_options = ladeort_select.find_all("option")
             if not ladeort_wanted:
@@ -179,6 +180,8 @@ class Source(BaseSource):
                     [option.text for option in ladeort_options],
                 )
 
+        if not isinstance(ladeort_single, Tag):
+            raise SourceArgumentNotFoundWithSuggestions("ladeort", ladeort_wanted, [])
         del args["anzeigen"]
         args["ladeort"] = ladeort_single["value"]
         args["ical"] = "ICAL Jahresübersicht"

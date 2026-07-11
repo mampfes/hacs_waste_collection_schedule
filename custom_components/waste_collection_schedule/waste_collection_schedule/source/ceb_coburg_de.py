@@ -70,7 +70,7 @@ class Source(BaseSource):
                 name = a.get_text(strip=True)
                 href = a["href"]
                 if name and href:
-                    street_map[name] = href
+                    street_map[name] = str(href)
 
         if street_name not in street_map:
             raise SourceArgumentNotFoundWithSuggestions(

@@ -12,7 +12,7 @@ import re
 from datetime import datetime
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street, text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -111,7 +111,10 @@ class Source(BaseSource):
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
-        bezirk_options = soup.find("select", {"name": "ak_bezirk"}).find_all("option")
+        bezirk_select = soup.find("select", {"name": "ak_bezirk"})
+        if not isinstance(bezirk_select, Tag):
+            raise SourceArgumentNotFoundWithSuggestions("bezirk", bezirk, [])
+        bezirk_options = bezirk_select.find_all("option")
         bezirk_id = None
         for option in bezirk_options:
             if option.text.lower() == bezirk.lower():

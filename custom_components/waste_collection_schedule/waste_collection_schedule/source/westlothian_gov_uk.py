@@ -18,7 +18,7 @@ from datetime import datetime
 from typing import Any, ClassVar, final
 from urllib.parse import parse_qs, urlparse
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, uprn
 from waste_collection_schedule.exceptions import SourceArgumentException
@@ -99,10 +99,15 @@ class Source(BaseSource):
 
         soup = BeautifulSoup(address_page.text, "html.parser")
         form = soup.find(id="WLBINCOLLECTION_FORM")
-        goss_ids = _goss_ids(form["action"])
+        if not isinstance(form, Tag):
+            raise SourceArgumentException(
+                "postcode", "could not find the bin collection form on the page"
+            )
+        action_url = str(form["action"])
+        goss_ids = _goss_ids(action_url)
 
         response = session.post(
-            form["action"],
+            action_url,
             allow_redirects=True,
             headers=_HEADERS,
             data={
