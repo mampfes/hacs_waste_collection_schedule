@@ -1,70 +1,59 @@
-from typing import ClassVar
+from typing import ClassVar, final
 
-from waste_collection_schedule import Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.service.RiSKommunalAT import (
+    RiSKommunalParser,
+    RiSKommunalRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Stadtbetriebe Steyr GmbH"
-DESCRIPTION = "Source for Stadtbetriebe Steyr GmbH waste collection schedule."
-URL = "https://www.steyr.at"
-COUNTRY = "at"
-
-SOURCE_CODEOWNERS = ["@bbr111"]
-
-TEST_CASES = {
-    "Wolfernstraße 7": {
-        "strasse": "Wolfernstraße",
-        "hausnummer": "7",
-    },
-    "Aichetgasse 1": {
-        "strasse": "Aichetgasse",
-        "hausnummer": "1",
-    },
-}
-
-ICON_MAP = {
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Bioabfall": Icons.ORGANIC,
-    "Altpapier": Icons.PAPER,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Altglas": Icons.GLASS,
-    "Problemstoff": Icons.HAZARDOUS,
-    "Sperrmüll": Icons.BULKY,
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "strasse": "Street",
-        "hausnummer": "House number",
-    },
-    "de": {
-        "strasse": "Straße",
-        "hausnummer": "Hausnummer",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "strasse": "Street name as listed in the Steyr waste calendar.",
-        "hausnummer": "House number as listed in the Steyr waste calendar.",
-    },
-    "de": {
-        "strasse": "Straßenname wie im Steyrer Abfallkalender aufgelistet.",
-        "hausnummer": "Hausnummer wie im Steyrer Abfallkalender aufgelistet.",
-    },
-}
+_BASE_URL = "https://www.steyr.at"
 
 
-class Source(RiSKommunalSource):
-    BASE_URL = "https://www.steyr.at"
-    ICON_MAP = ICON_MAP
-    SELECTION_URL = (
-        "https://www.steyr.at/system/web/kalender.aspx?sprache=1&menuonr=227376864"
-    )
+@final
+class Source(BaseSource):
+    TITLE = "Stadtbetriebe Steyr GmbH"
+    DESCRIPTION = "Source for Stadtbetriebe Steyr GmbH waste collection schedule."
+    URL = _BASE_URL
+    COUNTRY = "at"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     RAISE_ON_EMPTY = True
-    QUERY_PARAMS: ClassVar = {
-        "sprache": "1",
-        "menuonr": "227376864",
+
+    TEST_CASES: ClassVar[dict] = {
+        "Wolfernstraße 7": {
+            "strasse": "Wolfernstraße",
+            "hausnummer": "7",
+        },
+        "Aichetgasse 1": {
+            "strasse": "Aichetgasse",
+            "hausnummer": "1",
+        },
     }
 
-    def __init__(self, strasse: str, hausnummer: str | int):
+    PARAMS = (
+        street("strasse"),
+        house_number("hausnummer"),
+    )
+
+    retrieve = RiSKommunalRetriever(
+        base_url=_BASE_URL,
+        query_params={
+            "sprache": "1",
+            "menuonr": "227376864",
+        },
+        strasse_param="strasse",
+        hausnummer_param="hausnummer",
+        selection_url=(
+            "https://www.steyr.at/system/web/kalender.aspx?sprache=1&menuonr=227376864"
+        ),
+    )
+    parse = RiSKommunalParser()
+
+    # Every observed label (Restabfall, Bioabfall, Altpapier, Gelber Sack,
+    # Sperrmüll, Altglas, Problemstoff) resolves against the shared vocabulary
+    # unmapped; no type_value_map needed.
+    transform = ICSTransformer()
+
+    def __init__(self, strasse: str, hausnummer: str):
         super().__init__(strasse=strasse, hausnummer=hausnummer)
