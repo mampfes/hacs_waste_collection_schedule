@@ -99,6 +99,8 @@ Notes:
 | `LegacyHttpGetRetriever` / `LegacyHttpPostRetriever` | plain requests | Only if curl_cffi causes a documented problem. |
 | `LegacySslHttpGetRetriever` | plain requests + SSL compat | `UNSAFE_LEGACY_RENEGOTIATION` endpoints. |
 | `TwoStepRetriever(lookup_url, extract, schedule_url, direct_key=..., headers=...)` | curl_cffi | Two-call sources: a lookup (e.g. postcode to id) feeds the schedule fetch. `direct_key` short-circuits when the id is already supplied; `headers` (e.g. `Accept: application/json`) apply to both calls. |
+| `AthosWasteManagementRetriever(url, steps=[...], fallback_url=..., encoding=...)` | curl_cffi | The "WasteManagementServlet" (Athos) multi-step wizard shared by ~15 DE/AT councils: GET, scrape the response's hidden inputs, POST each configured step, download the ICS. Steps are pure data (`{submit_action, fields(**params), remove}`), no per-source control flow. |
+| `PollingIcsRetriever(url, calendar_suffix="/calendar.ics", max_attempts=15, delay=2, is_ready=...)` | curl_cffi | UK htmx portals that build the calendar asynchronously: GET the property page, then poll `url + calendar_suffix` until ready (default: an ICS body appears). |
 
 Always try curl_cffi (the default) first. It impersonates Chrome and clears most Cloudflare blocks. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure. Never call `requests.get` / `curl_cffi` directly in a source: every retriever runs through the shared `source.session`, so a `Legacy*` retriever is the one visible, named way to use plain requests.
 
@@ -136,6 +138,8 @@ Each parser accepts an optional validation argument named for what it checks, so
 - `JsonParser(shape=...)`: a `TypedDict` / `list[...]` validated structurally (required keys and element types).
 - `HtmlParser(require=[...])` / `CsvParser(require=[...])`: CSS selectors / column names that must be present.
 - `IcsParser(min_events=N)` / `IcsEventsParser(min_events=N)`, `XmlParser(path, min_nodes=N)`, `PdfTextParser(min_chars=N)` / `TextParser(min_chars=N)`: a minimum count below which the response is treated as empty or changed.
+
+`IcsParser` / `IcsEventsParser` also accept `offset`, `regex`, `split_at` and `title_template`, forwarded to the underlying `ICS` engine (a day `offset`; a `regex` to pull the type out of the summary; `split_at` to split a multi-type summary; a `title_template`). Prefer these over calling `service.ICS.ICS` directly in a source.
 
 ### Preprocessors (`waste_collection_schedule.preprocessors`)
 
@@ -204,6 +208,8 @@ For schedules published as a weekday plus a cadence rather than explicit dates:
 - `WEEKDAYS` / `MONTHS`: name-to-number maps sourced from Babel's CLDR data across many locales (including inflected forms such as Polish genitive months), so worded dates resolve in any of those languages without hand-maintained tables. To cover a new language, add its code to `_LOCALES` in `recurrence.py`; do not carry a private dict in the source.
 - `weekday(name)` / `month(name)`: tolerant lookups returning `int` or `None`.
 - `recurring(start, step, count)`, `recurring_from_anchor(anchor, step, count)`, `next_weekday(weekday)`, `most_recent_weekday(weekday)`.
+- `monthly_nth_weekday(weekday, n)` / `monthly_nth_weekdays(weekday, n, count)`: the Nth weekday of the month (`n=-1` is the last), for "2nd Tuesday of the month" schedules.
+- `us_federal_holidays(years, subdiv=None, observed=True)`: US federal holiday dates (via the `holidays` library), for holiday-shift rules.
 - `WEEKLY`, `FORTNIGHTLY` step constants.
 
 Do not carry a private weekday or month dict in your source. Use these shared, multilingual helpers.
@@ -231,7 +237,8 @@ Before writing a retriever or parser, check whether the provider runs on a platf
 | Platform | Components | Notes |
 |---|---|---|
 | ArcGIS | `feature_query`, `ArcGisFeatureRetriever` / `ArcGisFeatureParser`, `ArcGisMultiFeatureRetriever` / `ArcGisMultiFeatureParser`, `geocode` | Address or spatial queries against FeatureServer layers. The multi-layer pair tolerates a single failing layer. |
-| RiSKommunal (AT) | `RiSKommunalRetriever`, `RiSKommunalParser` | Austrian RiS calendars, paged HTML, fetched lazily. |
+| RiSKommunal (AT) | `RiSKommunalRetriever` (`lookahead_days`), `RiSKommunalParser` (`paginate_list`), `RiSKommunalMultiIcsRetriever` / `RiSKommunalMultiIcsParser` | Austrian RiS calendars, paged HTML fetched lazily; `lookahead_days` bounds the date window, `paginate_list` pages through list-mode; the multi-ICS pair fetches several labelled ICS feeds. |
+| AchieveForms / Firmstep (UK) | `AchieveFormsRetriever` (session handshake + a `LookupStep`/`GetStep` chain, `collect_all`), `AchieveFormsRowsParser`, `AchieveFormsFieldMapPreprocessor` / `AchieveFormsDynamicRowsPreprocessor` | UK council `apibroker/runLookup` portals; data-driven lookup steps decode to `(date, label)` rows. `FirmstepSelfService` (`renderform`) is the sibling for the older self-service variant. |
 | Abfallnavi / regio iT (DE) | `AbfallnaviRetriever`, `AbfallnaviParser` | Multi-request place resolution plus a separate fraktionen reference map. |
 | IntraMaps | `IntraMapsRetriever`, `IntraMapsPanelParser`, `MapsClientConfig` (stateful session handshake) or `IntegrationClientRetriever`, `IntegrationPanelParser`, `IntegrationClientConfig` (apikey REST search) | Two unrelated IntraMaps flows; pick the one the council's site actually calls. |
 | Sitepark IES / abto (DE) | `SiteparkIESRetriever` + `parsers.IcsParser` | Autocomplete street lookup, then a raw ICS download parsed by the shared ICS parser. |
