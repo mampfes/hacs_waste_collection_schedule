@@ -9,6 +9,7 @@ these to build the config flow GUI automatically.
 
 from collections.abc import Sequence
 from dataclasses import dataclass, field
+from typing import Any
 
 from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
@@ -51,7 +52,14 @@ class ConfigParam:
     # Description per language
     descriptions: dict[str, dict[str, str]] = field(default_factory=dict)
 
-    # The widget type the config flow should render
+    # The widget type the config flow should render. One of: "text", "select",
+    # "map", "uprn_lookup", "postcode", "address", "dependent_select",
+    # "cascading_select", "alternatives", "integer" (NumberSelector, box mode),
+    # "boolean" (BooleanSelector), "object" (ObjectSelector, arbitrary
+    # dict/YAML). This is the discriminator the config-flow schema builder
+    # switches on to pick a selector; add new widget kinds additively (never
+    # repurpose an existing string), so existing PARAMS keep rendering
+    # unchanged.
     widget: str = "text"
 
     # Whether the user must provide a value for every field in this param.
@@ -59,7 +67,9 @@ class ConfigParam:
 
     # Default values per field ({field_name: default}). Applied before
     # validation, so a field with a default is satisfied without user input.
-    defaults: dict[str, str] = field(default_factory=dict)
+    # Typed Any (not just str) so a boolean()/integer() default keeps its
+    # native type through apply_defaults into Source.__init__.
+    defaults: dict[str, Any] = field(default_factory=dict)
 
     # Mutually-exclusive input groups, each a tuple of field names. When set
     # (see ``alternatives``), validation requires exactly one group to be fully
@@ -476,6 +486,77 @@ def api_key(
         (API_KEY, field_name),
         optional=default is not None,
         defaults={field_name: default} if default is not None else None,
+    )
+
+
+def integer(
+    field_name: str,
+    label: str | None = None,
+    *,
+    optional: bool = True,
+    default: int | None = None,
+) -> ConfigParam:
+    """A free-form integer field (e.g. a day-count offset).
+
+    An opaque/advanced field with no standard concept behind it, so the label
+    is English-only (pass ``label=`` for a friendlier name than the
+    Title-Cased field name). Optional by default, since a numeric refinement
+    a source can do without usually has a sensible zero/None behaviour;
+    pass ``optional=False`` for a genuinely mandatory count.
+    """
+    display = _title(field_name, label)
+    return ConfigParam(
+        fields={field_name: display},
+        widget="integer",
+        labels={"en": {field_name: display}},
+        defaults={field_name: default} if default is not None else {},
+        required=default is None and not optional,
+    )
+
+
+def boolean(
+    field_name: str,
+    label: str | None = None,
+    *,
+    default: bool | None = None,
+) -> ConfigParam:
+    """A true/false toggle (e.g. verify_ssl).
+
+    An opaque/advanced field with no standard concept behind it, so the label
+    is English-only. Always optional in the form: HA's BooleanSelector always
+    submits a concrete True/False, so there is no "missing value" case to
+    require against; pass ``default=`` for the value used when the field is
+    left at its initial state.
+    """
+    display = _title(field_name, label)
+    return ConfigParam(
+        fields={field_name: display},
+        widget="boolean",
+        labels={"en": {field_name: display}},
+        defaults={field_name: default} if default is not None else {},
+        required=False,
+    )
+
+
+def raw_object(
+    field_name: str,
+    label: str | None = None,
+    *,
+    optional: bool = True,
+) -> ConfigParam:
+    """An arbitrary object/mapping (e.g. extra POST params or HTTP headers).
+
+    Rendered as Home Assistant's free-form object/YAML editor (ObjectSelector);
+    the value reaches ``Source.__init__`` as a plain ``dict``. An opaque/
+    advanced field with no standard concept behind it, so the label is
+    English-only.
+    """
+    display = _title(field_name, label)
+    return ConfigParam(
+        fields={field_name: display},
+        widget="object",
+        labels={"en": {field_name: display}},
+        required=not optional,
     )
 
 
