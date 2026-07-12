@@ -31,6 +31,14 @@ sys.path.insert(
         "../custom_components/waste_collection_schedule",
     ),
 )
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+from update_docu_links import BLACK_LIST  # isort:skip
+
+# Shared generic-engine allowance: modules documenting a shared engine (ics,
+# static, ...) rather than one provider — same BLACK_LIST test_source_components.py
+# uses to exempt these from a required COUNTRY. A generic engine has no single
+# provider TITLE/COUNTRY/URL/waste-type vocabulary to declare, by design.
+_GENERIC_ENGINE_SOURCES = {g.split("/")[-1].removesuffix(".md") for g in BLACK_LIST}
 
 
 # =====================================================================
@@ -2135,6 +2143,71 @@ class TestConfigParams:
         assert p.widget == "text"
         assert p.fields["api_key"] == "API Key"
 
+    def test_integer(self):
+        from waste_collection_schedule.config_params import integer, validate
+
+        # Optional by default (no default value): not required, no defaults.
+        p = integer("offset", label="Offset")
+        assert p.widget == "integer"
+        assert p.fields["offset"] == "Offset"
+        assert p.required is False
+        assert p.defaults == {}
+        validate([p], {})  # optional field absent from values still passes
+
+        # A default makes it optional and pre-fills the value.
+        d = integer("offset", default=3)
+        assert d.required is False
+        assert d.defaults == {"offset": 3}
+        assert d.labels["en"]["offset"] == "Offset"
+
+        # optional=False with no default is a genuinely mandatory count.
+        from waste_collection_schedule.exceptions import SourceArgumentRequired
+
+        m = integer("count", optional=False)
+        assert m.required is True
+        with pytest.raises(SourceArgumentRequired):
+            validate([m], {})
+        validate([m], {"count": 5})
+
+    def test_boolean(self):
+        from waste_collection_schedule.config_params import (
+            apply_defaults,
+            boolean,
+            validate,
+        )
+
+        p = boolean("verify_ssl", label="Verify SSL", default=True)
+        assert p.widget == "boolean"
+        assert p.fields["verify_ssl"] == "Verify SSL"
+        # Always optional: a BooleanSelector always submits a concrete value.
+        assert p.required is False
+        assert p.defaults == {"verify_ssl": True}
+        assert apply_defaults([p], {}) == {"verify_ssl": True}
+        assert apply_defaults([p], {"verify_ssl": False}) == {"verify_ssl": False}
+        validate([p], {})  # never raises: required is always False
+
+        # No default => no pre-filled value, still optional.
+        no_default = boolean("flag")
+        assert no_default.required is False
+        assert no_default.defaults == {}
+
+    def test_raw_object(self):
+        from waste_collection_schedule.config_params import raw_object, validate
+
+        p = raw_object("params", label="Parameters")
+        assert p.widget == "object"
+        assert p.fields["params"] == "Parameters"
+        assert p.required is False
+        validate([p], {})  # optional, absent value passes
+
+        m = raw_object("headers", optional=False)
+        assert m.required is True
+        from waste_collection_schedule.exceptions import SourceArgumentRequired
+
+        with pytest.raises(SourceArgumentRequired):
+            validate([m], {})
+        validate([m], {"headers": {"X-Test": "1"}})
+
     def test_multilingual_labels(self):
         from waste_collection_schedule.config_params import coords
 
@@ -3073,18 +3146,26 @@ class TestNewStyleSourceMetadata:
 
     def test_has_title(self, source_info):
         name, cls = source_info
+        if name in _GENERIC_ENGINE_SOURCES:
+            pytest.skip(f"{name}: generic engine, TITLE lives at module level")
         assert getattr(cls, "TITLE", ""), f"{name}: missing TITLE"
 
     def test_has_country(self, source_info):
         name, cls = source_info
+        if name in _GENERIC_ENGINE_SOURCES:
+            pytest.skip(f"{name}: generic engine, no single provider COUNTRY")
         assert getattr(cls, "COUNTRY", ""), f"{name}: missing COUNTRY"
 
     def test_has_url(self, source_info):
         name, cls = source_info
+        if name in _GENERIC_ENGINE_SOURCES:
+            pytest.skip(f"{name}: generic engine, no single provider URL")
         assert getattr(cls, "URL", ""), f"{name}: missing URL"
 
     def test_has_waste_types(self, source_info):
         name, cls = source_info
+        if name in _GENERIC_ENGINE_SOURCES:
+            pytest.skip(f"{name}: generic engine, arbitrary passthrough titles")
         wt = getattr(cls, "WASTE_TYPES", [])
         assert len(wt) > 0, f"{name}: WASTE_TYPES is empty"
 
