@@ -150,7 +150,7 @@ If a site returns 403 with regular `requests`, switch to `curl_cffi` — it bypa
 - ❌ `if __name__ == "__main__":` blocks or standalone-script boilerplate.
 - ❌ Dummy parameters (e.g. `_`) just to satisfy the config GUI.
 - ❌ Login-required sources. The project only supports publicly accessible endpoints.
-- ❌ Sources for providers already covered by a shared platform — check `recollect.yaml`, `mein_abfallkalender_online.yaml`, `recyclecoach_com.py`'s `EXTRA_INFO` list, `c_trace_de`, and the other shared platforms first.
+- ❌ Sources for providers already covered by a shared platform: check `recollect.yaml`, `mein_abfallkalender_online.yaml`, `recyclecoach_com.py`'s `EXTRA_INFO` list, `c_trace_de`, and the other shared platforms first. This now includes the componentised pipeline platforms in `waste_collection_schedule/service/`: ArcGIS, RiSKommunal (AT), AchieveForms / FirmstepSelfService (UK), IntraMaps, Abfallnavi / regio iT (DE), Sitepark IES (DE), Pozi (AU), WhatBinDay (AU), Sepan (PL), Junker app (IT), A Region (CH), Ecoharmonogram (PL), Cloud9 apps (UK), and the whole ICS platform (the generic `ics` source plus the `doc/ics/yaml/*.yaml` providers it folds in). See `doc/contributing_source.md`'s "Reusable service platforms" table for the full, current list.
 
 ---
 

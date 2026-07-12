@@ -36,11 +36,21 @@ Check, in order:
    - `custom_components/waste_collection_schedule/waste_collection_schedule/source/citiesapps_com.py` → `SERVICE_MAP` (CitiesApps, AT)
    - `custom_components/waste_collection_schedule/waste_collection_schedule/source/app_abfallplus_de.py` → `SUPPORTED_SERVICES` (App Abfall+, DE)
    - Other `doc/ics/yaml/*.yaml` files for ICS providers.
-3. **Reusable service platforms**. These now have pipeline components in `waste_collection_schedule.service`. If the target runs on one of them, recommend reusing the retriever / parser instead of writing new fetch code:
+3. **Reusable service platforms**. These now have pipeline components in `waste_collection_schedule.service`. Every one of them is fully componentised (retriever + parser) and every source that used to hand-roll it has been converted, so a new provider on any of these is a purely declarative addition. If the target runs on one of them, recommend reusing the retriever / parser instead of writing new fetch code:
    - ArcGIS (`service/ArcGis.py`): address or spatial queries against FeatureServer layers. Look for ArcGIS FeatureServer / MapServer URLs.
-   - RiSKommunal AT (`service/RiSKommunalAT.py`): Austrian RiS calendars served as paged HTML.
-   - Abfallnavi / regio iT DE (`service/AbfallnaviDe.py`): regio iT place resolution plus a fraktionen reference map (look for `SERVICE_DOMAINS` in `source/abfallnavi_de.py`).
+   - RiSKommunal AT (`service/RiSKommunalAT.py`): Austrian RiS calendars served as paged HTML, including the multi-ICS-feed variant.
+   - AchieveForms / Firmstep (UK) (`service/AchieveForms.py`, `service/FirmstepSelfService.py`): UK council `apibroker/runLookup` (AchieveForms) or `renderform` (Firmstep self-service) portals.
    - IntraMaps (`service/IntraMaps.py`): stateful map sessions; look for `intramaps.com` or ArcGIS map server URLs. See `doc/source/intramaps.md` for the supported list.
+   - Abfallnavi / regio iT DE (`service/AbfallnaviDe.py`): regio iT place resolution plus a fraktionen reference map (look for `SERVICE_DOMAINS` in `source/abfallnavi_de.py`).
+   - Sitepark IES / abto DE (`service/SiteparkIES.py`): autocomplete street lookup followed by a raw ICS download.
+   - Pozi (AU) (`service/Pozi.py`): Australian council GIS portals; GeoJSON or WFS spatial queries.
+   - WhatBinDay (AU) (`service/WhatBinDay.py`): the WhatBinDay app backend, device-key-keyed session.
+   - Sepan (PL) (`service/Sepan.py`): Polish Sepan waste portals, an HTML report table.
+   - Junker app (IT) (`service/junker_app.py`): the Junker app backend shared by several Italian municipalities.
+   - A Region (CH) (`service/A_region_ch.py`): Swiss "A Region" ICS-based calendars.
+   - Ecoharmonogram (PL) (`service/EcoHarmonogramPL.py`): town/street lookup then a schedule fetch.
+   - Cloud9 apps (UK) (`service/uk_cloud9_apps.py`): address-based lookup shared by several UK councils.
+   - The generic ICS engine (`source/ics.py`) itself is a `BaseSource`, and the 178 `doc/ics/yaml/*.yaml` providers fold into its `REGIONS`; check those YAML files (below) before assuming a new ICS provider needs a new source.
 4. **Other generic platforms** if you see characteristic markers:
    - Publidata (`api.publidata.io`): see `publidata_*.py`.
    - OCAPI: see `doc/source/ocapi.md`.
@@ -64,7 +74,7 @@ For each feed you find, note which reusable pipeline pieces fit it, so the imple
 - ICS feed: `IcsParser` (or `IcsEventsParser` when the type lives in the LOCATION/DESCRIPTION fields) plus `ICSTransformer`.
 - HTML page: `HtmlParser` plus `HtmlTransformer`.
 - A recurring weekday-plus-cadence schedule: the `RecurrenceExpander` preprocessor.
-- A provider running on a known service platform (ArcGIS, RiSKommunal AT, Abfallnavi / regio iT, IntraMaps): the matching retriever / parser from `waste_collection_schedule.service`, so almost no new code is needed.
+- A provider running on a known service platform (see the full list in Step 1 above: ArcGIS, RiSKommunal AT, AchieveForms / FirmstepSelfService, IntraMaps, Abfallnavi / regio iT, Sitepark IES, Pozi, WhatBinDay, Sepan, Junker app, A Region, Ecoharmonogram, Cloud9 apps): the matching retriever / parser from `waste_collection_schedule.service`, so almost no new code is needed.
 
 See `doc/contributing_source.md` for the full component catalogue. The default retriever is curl_cffi `http_get`, so most JSON / HTML feeds need no custom retrieve step.
 
@@ -109,7 +119,7 @@ OR
 [One of:
   - Add location to shared ICS YAML (recollect.yaml etc.)
   - Add location to shared Python source EXTRA_INFO
-  - Reuse a service platform (ArcGIS, RiSKommunal AT, Abfallnavi / regio iT, IntraMaps) in a BaseSource source
+  - Reuse a service platform (ArcGIS, RiSKommunal AT, AchieveForms / FirmstepSelfService, IntraMaps, Abfallnavi / regio iT, Sitepark IES, Pozi, WhatBinDay, Sepan, Junker app, A Region, Ecoharmonogram, Cloud9 apps) in a BaseSource source
   - New ICS YAML (preferred for ICS-only providers)
   - New BaseSource pipeline source, JSON API
   - New BaseSource pipeline source, HTML scrape

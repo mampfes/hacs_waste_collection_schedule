@@ -168,7 +168,9 @@ All accept an optional `parse_date` (a `date_parsers` callable; default is `date
 
 `PARAMS` is a list of typed `ConfigParam` descriptors. They drive both the config flow (the UI form) and up-front validation, so retrievers and transformers can assume clean arguments.
 
-Available factories: `coords(lat, lon)`, `uprn()`, `postcode()`, `address()`, `municipality()`, `dropdown()`, `dependent_select()`, `cascading_select(*levels)`, `multi_value_lookup()`, `text_field(name, label, default=...)`, `api_key(name, label, default=...)`, `alternatives(*groups)`.
+Available factories: `coords(lat, lon)`, `uprn()`, `postcode()`, `address()`, `municipality()`, `dropdown()`, `dependent_select()`, `cascading_select(*levels)`, `multi_value_lookup()`, `text_field(name, label, default=...)`, `api_key(name, label, default=...)`, `integer(name, label=..., optional=True, default=...)`, `boolean(name, label=..., default=...)`, `raw_object(name, label=..., optional=True)`, `alternatives(*groups)`.
+
+`integer()`, `boolean()` and `raw_object()` are for an opaque, advanced field with no standard concept behind it (a day-count offset, a `verify_ssl` toggle, a free-form dict of extra request params or headers): the label is English-only. `integer()` and `boolean()` render as HA's `NumberSelector` / `BooleanSelector`; `raw_object()` renders as the free-form object/YAML editor (`ObjectSelector`) and reaches `__init__` as a plain `dict`. See `source/ics.py`'s generic engine (`raw_object("params")`, `raw_object("headers")`) for a worked example.
 
 A param is required by default. Three ways to relax that:
 
@@ -242,6 +244,13 @@ Before writing a retriever or parser, check whether the provider runs on a platf
 | Abfallnavi / regio iT (DE) | `AbfallnaviRetriever`, `AbfallnaviParser` | Multi-request place resolution plus a separate fraktionen reference map. |
 | IntraMaps | `IntraMapsRetriever`, `IntraMapsPanelParser`, `MapsClientConfig` (stateful session handshake) or `IntegrationClientRetriever`, `IntegrationPanelParser`, `IntegrationClientConfig` (apikey REST search) | Two unrelated IntraMaps flows; pick the one the council's site actually calls. |
 | Sitepark IES / abto (DE) | `SiteparkIESRetriever` + `parsers.IcsParser` | Autocomplete street lookup, then a raw ICS download parsed by the shared ICS parser. |
+| Pozi (AU) | `PoziGeoJsonRetriever` / `PoziGeoJsonParser`, `PoziWfsRetriever` / `PoziWfsParser`, `geocode_earth` | Australian council GIS portals built on Pozi; a GeoJSON or WFS spatial query, address-geocoded via Geocode Earth. |
+| WhatBinDay (AU) | `WhatBinDayRetriever` / `WhatBinDayParser` | The WhatBinDay app backend shared by several AU councils; a device-key-keyed session (`DeviceKeyStore`). |
+| Sepan (PL) | `SepanRetriever`, `SepanReportParser` / `SepanPositionalReportParser` | Polish Sepan waste portals; a month-name or positional HTML report table. |
+| Junker app (IT) | `JunkerRetriever` / `JunkerParser` | The Junker app backend shared by several Italian municipalities. |
+| A Region (CH) | `ARegionRetriever` / `ARegionIcsParser` | Swiss "A Region" ICS-based calendars. |
+| Ecoharmonogram (PL) | `EcoharmonogramClient`, `EcoharmonogramRetriever` / `EcoharmonogramParser` | Polish Ecoharmonogram portals; town/street lookup then a schedule fetch. |
+| Cloud9 apps (UK) | `Cloud9Retriever` / `Cloud9Parser` | The Cloud9 apps backend shared by several UK councils; address-based lookup. |
 
 Also check the existing shared YAML and EXTRA_INFO platforms (Recollect, Recycle Coach, ICS YAML, Publidata, c-trace, and the others) before writing anything new. If your provider is covered, add it there instead of writing a new source.
 
