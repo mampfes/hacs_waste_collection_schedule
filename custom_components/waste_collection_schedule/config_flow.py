@@ -22,6 +22,9 @@ from homeassistant.helpers.selector import (
     DurationSelector,
     DurationSelectorConfig,
     IconSelector,
+    NumberSelector,
+    NumberSelectorConfig,
+    NumberSelectorMode,
     ObjectSelector,
     SelectOptionDict,
     SelectSelector,
@@ -312,6 +315,18 @@ def _build_schema_from_params(
                         custom_value=True,
                     )
                 )
+            elif param.widget == "integer":
+                # config_params.integer(): a free-form whole-number field.
+                vol_args[key] = NumberSelector(
+                    NumberSelectorConfig(mode=NumberSelectorMode.BOX, step=1)
+                )
+            elif param.widget == "boolean":
+                # config_params.boolean(): a true/false toggle.
+                vol_args[key] = BooleanSelector()
+            elif param.widget == "object":
+                # config_params.raw_object(): an arbitrary dict/YAML field
+                # (e.g. extra POST params or HTTP headers).
+                vol_args[key] = ObjectSelector()
             else:
                 vol_args[key] = cv.string
 
