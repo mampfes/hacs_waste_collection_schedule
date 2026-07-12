@@ -37,6 +37,13 @@ BLACK_LIST = {
     "/doc/source/example.md",
 }
 
+# Every ICS YAML provider's SourceInfo carries a Region.doc_filename of this
+# form (see source/ics.py:_load_ics_yaml_regions), pointing at its own
+# generated doc/ics/<stem>.md rather than the generic doc/source/ics.md. Used
+# to recover the per-provider identity that a dedicated IcsSourceInfo/ics_stem
+# used to carry, now that the listing comes through the generic REGIONS path.
+ICS_DOC_PREFIX = "/doc/ics/"
+
 START_COUNTRY_SECTION = "<!--Begin of country section-->"
 END_COUNTRY_SECTION = "<!--End of country section-->"
 
@@ -305,56 +312,6 @@ class SourceInfo:
         return self._source_owners
 
 
-class IcsSourceInfo(SourceInfo):
-    def __init__(
-        self,
-        filename: str,
-        title: str,
-        url: str,
-        country: str,
-        limit_params: list[str],
-        extra_info_default_params: dict[str, Any] | None = None,
-        custom_howto: dict[str, str] | None = None,
-        source_owners: list | None = None,
-        ics_stem: str | None = None,
-    ):
-        if custom_howto is None:
-            custom_howto = {}
-        if extra_info_default_params is None:
-            extra_info_default_params = {}
-        _, ics_sources = get_source_by_file("ics")
-        ics_source = ics_sources[0]
-        params = set(ics_source.params) - set(limit_params)
-        translations = ics_source.custom_param_translation
-        descriptions = ics_source.custom_param_description
-        for translation in [*translations.values(), *descriptions.values()]:
-            for param in list(translation.keys()):
-                if param not in params:
-                    translation.pop(param)
-
-        super().__init__(
-            filename=filename,
-            module=None,
-            title=title,
-            url=url,
-            country=country,
-            params=list(params),
-            extra_info_default_params=extra_info_default_params,
-            custom_param_translation=translations,
-            custom_param_description=descriptions,
-            custom_howto=custom_howto,
-            source_owners=source_owners,
-        )
-        # ics_stem: the YAML file stem (e.g. "ab_peine_de") used as the key in
-        # source_owners.json so that the notify workflow can match what a bug reporter
-        # types in the "Source Name" field.
-        self._ics_stem = ics_stem
-
-    @property
-    def ics_stem(self) -> str | None:
-        return self._ics_stem
-
-
 class Section:
     def __init__(self, section):
         self._section = section
@@ -410,7 +367,14 @@ def main() -> None:
     sources: list[SourceInfo] = []
 
     sources += browse_sources()
-    sources += browse_ics_yaml()
+    # The ICS YAML providers' listings now come from ics.REGIONS, folded into
+    # `sources` above via browse_sources() -> get_source_by_file("ics"). Only
+    # the per-provider doc/ics/<stem>.md pages (write_ics_yaml_docs) and the
+    # doc/source/ics.md service-table section (update_ics_md) still need a
+    # dedicated pass, driven off the very entries browse_sources() produced so
+    # the two stay in lockstep.
+    write_ics_yaml_docs()
+    update_ics_md([s for s in sources if s.filename.startswith(ICS_DOC_PREFIX)])
 
     # sort into countries
     country_code_map = make_country_code_map()
@@ -566,7 +530,11 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     for r in region_list:
         sources.append(
             SourceInfo(
-                filename=filename,
+                # A region may override the listing's doc link, howto and
+                # codeowners (e.g. the ICS YAML providers, each documented on
+                # its own generated doc/ics/<stem>.md page rather than the
+                # source's own doc/source/<id>.md).
+                filename=r.doc_filename or filename,
                 module=file,
                 title=r.title or title or "",
                 url=r.url or url,
@@ -575,8 +543,8 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
                 custom_param_translation=param_translations,
                 custom_param_description=param_descriptions,
                 extra_info_default_params=r.params,
-                custom_howto=howto,
-                source_owners=source_owners,
+                custom_howto=r.howto or howto,
+                source_owners=r.source_owners or source_owners,
             )
         )
     return module, sources
@@ -612,14 +580,20 @@ def generate_base_source_doc(file: str, source_cls: Any) -> None:
         f.write(md)
 
 
-def browse_ics_yaml() -> list[SourceInfo]:
-    """Browse all .yaml files which are descriptions for the ICS source"""
+def write_ics_yaml_docs() -> None:
+    """Write doc/ics/<stem>.md for every ICS YAML provider (doc/ics/yaml/*.yaml).
+
+    Doc-generation only: the listing entries themselves (README / sources.json
+    / source_owners.json) now come from ics.REGIONS via browse_sources(), so
+    this function no longer builds or returns SourceInfo/IcsSourceInfo objects
+    -- it only renders each provider's own doc/ics/<stem>.md page, exactly as
+    the listing-producing browse_ics_yaml() used to alongside its listing work.
+    """
     doc_dir = Path(__file__).resolve().parents[0] / "doc"
     yaml_dir = doc_dir / "ics" / "yaml"
     md_dir = doc_dir / "ics"
 
     files = yaml_dir.glob("*.yaml")
-    sources: list[SourceInfo] = []
     for f in files:
         with open(f, encoding="utf-8") as stream:
             # write markdown file
@@ -634,48 +608,6 @@ def browse_ics_yaml() -> list[SourceInfo]:
                 data["howto"] = {"en": howto}
 
             write_ics_md_file(filename, data)
-            howto = data.get("howto", {})
-            if isinstance(howto, str):
-                print(
-                    f"howto in {f} is a string, it should be a dictionary with language keys"
-                )
-                howto = {"en": howto}
-
-            country = data.get("country", f.stem.split("_")[-1])
-            # extract country code
-            ics_owners = _normalize_owners(data.get("codeowners", []))
-            sources.append(
-                IcsSourceInfo(
-                    filename=f"/doc/ics/{filename.name}",
-                    title=data["title"],
-                    url=data["url"],
-                    country=country,
-                    limit_params=[],
-                    extra_info_default_params=data.get("default_params", {}),
-                    custom_howto=howto,
-                    source_owners=ics_owners,
-                    ics_stem=f.stem,
-                )
-            )
-            if "extra_info" in data:
-                for e in data["extra_info"]:
-                    sources.append(
-                        IcsSourceInfo(
-                            filename=f"/doc/ics/{filename.name}",
-                            title=e.get("title", data["title"]),
-                            url=e.get("url", data["url"]),
-                            country=e.get("country", country),
-                            limit_params=[],
-                            extra_info_default_params=data.get("default_params", {}),
-                            custom_howto=howto,
-                            source_owners=ics_owners,
-                            ics_stem=f.stem,
-                        )
-                    )
-
-    update_ics_md(sources)
-
-    return sources
 
 
 def write_ics_md_file(filename: Path, data: IcsSourceData) -> None:
@@ -796,8 +728,12 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
             # ICS providers are keyed by their YAML file stem (e.g. "ab_peine_de")
             # so the notify workflow can match what a bug reporter types in the
             # "Source Name" field (module == "ics" for all ICS providers).
-            if isinstance(e, IcsSourceInfo) and e.ics_stem is not None:
-                owner_key = e.ics_stem
+            # Derived from the doc filename (each ICS YAML region points at its
+            # own generated /doc/ics/<stem>.md via Region.doc_filename) rather
+            # than a dedicated class/attribute, since the listing itself is now
+            # just a SourceInfo produced through the generic REGIONS path.
+            if e.filename.startswith(ICS_DOC_PREFIX):
+                owner_key = e.filename.split("/")[-1].removesuffix(".md")
             else:
                 owner_key = module
             source_owners_by_module.setdefault(owner_key, [])
@@ -858,7 +794,10 @@ def get_custom_translations(
             key=lambda e: (e.title.lower(), beautify_url(e.url), e.filename),
         ):
             module = e.module
-            if e.module is None:  # ICS source
+            if e.filename.startswith(ICS_DOC_PREFIX):  # ICS YAML provider
+                # Each provider gets its own config-flow args_/reconfigure_
+                # step (and howto) keyed off its doc filename's stem, exactly
+                # as when these came from a dedicated IcsSourceInfo.
                 module = "ics_" + e.filename.split("/")[-1].removesuffix(".md")
 
             source_doc_url[module] = DOC_URL_BASE + e.filename

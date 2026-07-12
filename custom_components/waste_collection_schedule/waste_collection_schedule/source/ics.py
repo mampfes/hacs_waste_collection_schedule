@@ -37,6 +37,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.regions import Region
 from waste_collection_schedule.service.ICS import ICS, IcsEvent
 
 # Kept as module-level constants (rather than moved onto the class) so that
@@ -220,9 +221,102 @@ def _fetch_file(file: str) -> str:
         ) from e
 
 
+def _normalize_ics_codeowners(owners: Any) -> "list[str]":
+    """Normalise a YAML ``codeowners:`` value into a sorted list of @handles.
+
+    Mirrors update_docu_links.py's private ``_normalize_owners`` exactly, so
+    the ``.github/source_owners.json`` entries this produces (via REGIONS)
+    are unchanged from the ones the old ``browse_ics_yaml()`` listing path
+    produced. Duplicated rather than imported: this module is the standalone,
+    HA-runtime-importable core library and must not depend on the repo-root
+    maintainer script.
+    """
+    if not owners:
+        return []
+    if isinstance(owners, str):
+        owners = [owners]
+    result: list[str] = []
+    for entry in owners:
+        if not isinstance(entry, str) or not entry.strip():
+            continue
+        handle = entry.strip()
+        if not handle.startswith("@"):
+            handle = f"@{handle}"
+        result.append(handle)
+    return sorted(set(result))
+
+
+def _load_ics_yaml_regions() -> "list[Region]":
+    """Build the Region listing for the ICS YAML providers (doc/ics/yaml/*.yaml).
+
+    Build-time only: called by update_docu_links.py (via the generic
+    REGIONS handling in get_source_by_file()) to generate the README /
+    sources.json / source_owners.json listings and the per-provider
+    doc/ics/<stem>.md pages. Never read at HA runtime -- a HACS install only
+    ships custom_components/, not the repo's doc/ tree -- hence the
+    directory-existence guard below returning [] rather than raising.
+
+    Mirrors, region for region, the listing expansion the now doc-generation-
+    only update_docu_links.py:browse_ics_yaml() used to perform directly: one
+    Region per YAML file, plus one additional Region per each of that file's
+    optional "extra_info" entries, so folding this into ics.REGIONS changes
+    nothing about the generated output.
+    """
+    yaml_dir = Path(__file__).resolve().parents[4] / "doc" / "ics" / "yaml"
+    if not yaml_dir.is_dir():
+        return []
+
+    import yaml as _yaml
+
+    regions: list[Region] = []
+    for f in yaml_dir.glob("*.yaml"):
+        with open(f, encoding="utf-8") as stream:
+            data = _yaml.safe_load(stream)
+
+        howto_raw = data["howto"]
+        howto = {"en": howto_raw} if isinstance(howto_raw, str) else howto_raw
+
+        country = data.get("country", f.stem.split("_")[-1])
+        params = data.get("default_params", {})
+        doc_filename = f"/doc/ics/{f.stem}.md"
+        source_owners = _normalize_ics_codeowners(data.get("codeowners", []))
+
+        regions.append(
+            Region(
+                title=data["title"],
+                params=params,
+                url=data["url"],
+                country=country,
+                doc_filename=doc_filename,
+                howto=howto,
+                source_owners=source_owners,
+            )
+        )
+
+        for e in data.get("extra_info", []):
+            regions.append(
+                Region(
+                    title=e.get("title", data["title"]),
+                    params=params,
+                    url=e.get("url", data["url"]),
+                    country=e.get("country", country),
+                    doc_filename=doc_filename,
+                    howto=howto,
+                    source_owners=source_owners,
+                )
+            )
+
+    return regions
+
+
 @final
 class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = TEST_CASES
+
+    # Callable (rather than an inline list): the ~178 ICS YAML providers
+    # (doc/ics/yaml/*.yaml) are a large external registry, loaded lazily from
+    # those files at doc-generation time only. Never read at HA runtime.
+    REGIONS = _load_ics_yaml_regions
 
     PARAMS = (
         alternatives(

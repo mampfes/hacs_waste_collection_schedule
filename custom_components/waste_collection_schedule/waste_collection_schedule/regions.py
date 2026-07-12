@@ -30,12 +30,23 @@ class Region:
         params: The source's ``PARAMS`` values that select this region.
         url: Optional listing URL override (defaults to the source's ``URL``).
         country: Optional country-code override (defaults to ``COUNTRY``).
+        doc_filename: Optional per-region listing doc-link override (defaults
+            to the source's own ``/doc/source/<id>.md``). Lets a source whose
+            regions are documented on separate pages (e.g. one generated page
+            per external provider) point each region's listing at its own doc.
+        howto: Optional per-region custom howto override (``{lang: text}``),
+            defaulting to the source's own ``HOWTO``/``HOW_TO_GET_ARGUMENTS_DESCRIPTION``.
+        source_owners: Optional per-region codeowners override (``["@handle"]``),
+            defaulting to the source's own ``SOURCE_CODEOWNERS``.
     """
 
     title: str
     params: dict[str, Any] = field(default_factory=dict)
     url: str | None = None
     country: str | None = None
+    doc_filename: str | None = None
+    howto: dict[str, str] | None = None
+    source_owners: list[str] | None = None
 
 
 def region(
@@ -43,17 +54,28 @@ def region(
     *,
     url: str | None = None,
     country: str | None = None,
+    doc_filename: str | None = None,
+    howto: dict[str, str] | None = None,
+    source_owners: list[str] | None = None,
     **params: Any,
 ) -> Region:
     """Declare one region a source covers.
 
-    Keyword args (other than ``url`` / ``country``) are the region's PARAMS
-    values, e.g.::
+    Keyword args (other than ``url`` / ``country`` / ``doc_filename`` /
+    ``howto`` / ``source_owners``) are the region's PARAMS values, e.g.::
 
         region("Mulhouse", commune="Mulhouse", quartier="Centre Ville")
         REGIONS = [region(name, commune=name) for name in COMMUNES]
     """
-    return Region(title=title, params=params, url=url, country=country)
+    return Region(
+        title=title,
+        params=params,
+        url=url,
+        country=country,
+        doc_filename=doc_filename,
+        howto=howto,
+        source_owners=source_owners,
+    )
 
 
 def from_extra_info(entries: Any) -> list[Region]:
