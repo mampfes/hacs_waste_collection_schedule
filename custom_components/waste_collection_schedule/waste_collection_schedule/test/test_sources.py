@@ -94,9 +94,18 @@ def main():
                 return getattr(module, key)
             return getattr(source_cls, key, None)
 
+        def has_meta(key, module=module, source_cls=source_cls):
+            # A module-level declaration counts even when falsy: a generic
+            # engine (e.g. ics: URL = None, it has no single provider site)
+            # deliberately declares it that way. Mirrors
+            # test_source_components.py's _has_source_meta.
+            if hasattr(module, key):
+                return True
+            return bool(getattr(source_cls, key, None))
+
         # test if all mandatory names exist
         for key in ("TITLE", "DESCRIPTION", "URL", "TEST_CASES"):
-            assert get_meta(key) is not None, f"{f} is missing {key}"
+            assert has_meta(key), f"{f} is missing {key}"
 
         # run through all test-cases
         for name, tc in get_meta("TEST_CASES").items():
