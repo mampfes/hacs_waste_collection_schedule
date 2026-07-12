@@ -425,11 +425,13 @@ def browse_sources() -> list[SourceInfo]:
         sources += sources_out
 
     update_awido_de(modules)
-    update_ctrace_de(modules)
     update_citiesapps_com(modules)
-    update_app_abfallplus_de(modules)
-    update_abfallnavi_de(modules)
     update_edpevent_se(modules)
+    # c_trace_de, app_abfallplus_de and abfallnavi_de are now BaseSource
+    # pipeline sources: their provider lists come from REGIONS and their docs
+    # are auto-generated, so the old hand-maintained service-section patchers
+    # (which read the now-removed SERVICE_MAP/SUPPORTED_SERVICES/SERVICE_DOMAINS
+    # and wrote into deleted doc/source/*.md) were removed.
 
     return sources
 
@@ -458,6 +460,13 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     params = [param.name for param in sig.parameters.values()]
     if "self" in params:
         params.remove("self")
+    # A BaseSource that does not override __init__ inherits BaseSource's generic
+    # (self, **kwargs), so introspection yields ["kwargs"] rather than the real
+    # fields (e.g. the generic ics engine). For a pipeline source the
+    # authoritative param list is PARAMS, so use its field names instead, so the
+    # listing/translation keys match the source's actual parameters.
+    if params == ["kwargs"] and getattr(source_cls, "PARAMS", None):
+        params = [field for p in source_cls.PARAMS for field in p.fields]
     # New-style (BaseSource) sources carry per-field labels/descriptions on
     # their typed PARAMS instead of PARAM_TRANSLATIONS/PARAM_DESCRIPTIONS dicts.
     # Both have the same {lang: {field: text}} shape, so derive the legacy form
@@ -1055,22 +1064,6 @@ def update_awido_de(modules: dict[str, ModuleType]):
     _patch_file("doc/source/awido_de.md", "service", str)
 
 
-def update_ctrace_de(modules: dict[str, ModuleType]):
-    module = modules.get("c_trace_de")
-    if not module:
-        print("ctrace_de not found")
-        return
-    services = getattr(module, "SERVICE_MAP", {})
-
-    str = "|Municipality|service|\n|-|-|\n"
-    for service in sorted(
-        services.keys(), key=lambda service: services[service]["title"]
-    ):
-        str += f"| {services[service]['title']} | `{service}` |\n"
-
-    _patch_file("doc/source/c_trace_de.md", "service", str)
-
-
 def update_citiesapps_com(modules: dict[str, ModuleType]):
     module = modules.get("citiesapps_com")
     if not module:
@@ -1083,35 +1076,6 @@ def update_citiesapps_com(modules: dict[str, ModuleType]):
         str += f"| {service['title']} | [{beautify_url(service['url'])}]({service['url']}) |\n"
 
     _patch_file("doc/source/citiesapps_com.md", "service", str)
-
-
-def update_app_abfallplus_de(modules: dict[str, ModuleType]):
-    module = modules.get("app_abfallplus_de")
-    if not module:
-        print("app_abfallplus_de not found")
-        return
-    services = getattr(module, "SUPPORTED_SERVICES", {})
-
-    str = "|app_id|supported regions|\n|-|-|\n"
-    for app_id, region in services.items():
-        regions = ", ".join(region)
-        str += f"| {app_id} | {regions} |\n"
-
-    _patch_file("doc/source/app_abfallplus_de.md", "service", str)
-
-
-def update_abfallnavi_de(modules: dict[str, ModuleType]):
-    module = modules.get("abfallnavi_de")
-    if not module:
-        print("app_abfallplus_de not found")
-        return
-    services = getattr(module, "SERVICE_DOMAINS", {})
-
-    str = "|Region|service|\n|-|-|\n"
-    for region in services:
-        str += f"| {region['title']} | {region['service_id']} |\n"
-
-    _patch_file("doc/source/abfallnavi_de.md", "service", str)
 
 
 def _patch_file(filename, section_id, str):
