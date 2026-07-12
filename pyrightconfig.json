@@ -142,6 +142,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/hoover_al_us.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/hounslow_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/ichisystem_eu.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/ics.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/ilm_kreis_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/imst_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/infeo_at.py",

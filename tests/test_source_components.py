@@ -450,11 +450,25 @@ def test_source_has_necessary_parameters() -> None:
 
 def test_ics_source_has_necessary_parameters():
     sources = _get_ics_sources()
-    init_params = signature(ICS_MODULE.Source.__init__).parameters
-    init_params_names = set(init_params.keys()) - {"self"}
-    mandatory_init_params_names = {
-        name for name, param in init_params.items() if param.default is Parameter.empty
-    } - {"self"}
+    # ics.py is a BaseSource pipeline source relying on BaseSource.__init__
+    # (**kwargs): its accepted/mandatory parameter names come from PARAMS, the
+    # same fallback test_source_components.py's own structural test uses (see
+    # _uses_base_source_init above).
+    if _uses_base_source_init(ICS_MODULE.Source):
+        init_params_names = set()
+        mandatory_init_params_names = set()
+        for cfg_param in getattr(ICS_MODULE.Source, "PARAMS", []):
+            init_params_names.update(cfg_param.fields.keys())
+            if getattr(cfg_param, "required", True):
+                mandatory_init_params_names.update(cfg_param.fields.keys())
+    else:
+        init_params = signature(ICS_MODULE.Source.__init__).parameters
+        init_params_names = set(init_params.keys()) - {"self"}
+        mandatory_init_params_names = {
+            name
+            for name, param in init_params.items()
+            if param.default is Parameter.empty
+        } - {"self"}
     for source in sources:
         data = _load_ics_yaml(source)
         assert isinstance(data, dict), f"yaml file {source}.yaml must be a dictionary"

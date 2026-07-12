@@ -523,8 +523,12 @@ def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
 
     # New-architecture (BaseSource) sources derive their doc/source/<id>.md from
     # class metadata, so contributors no longer hand-write it. Legacy sources
-    # keep their hand-written file untouched.
-    if title is not None and _is_base_source(source_cls):
+    # keep their hand-written file untouched. A generic engine's doc file
+    # (ics.md, static.md — see GENERICS/BLACK_LIST) stays hand-written even
+    # after a BaseSource conversion: it documents the shared engine, not one
+    # provider, and doc_generator.py has no way to render the per-provider
+    # ICS-YAML table or the "generic engine" framing that file needs.
+    if title is not None and _is_base_source(source_cls) and filename not in BLACK_LIST:
         generate_base_source_doc(file, source_cls)
 
     sources = []
