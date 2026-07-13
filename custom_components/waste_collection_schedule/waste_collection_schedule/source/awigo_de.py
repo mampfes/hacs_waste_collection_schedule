@@ -97,9 +97,10 @@ class Source:
                 [option.text for option in soup.findAll("option")],
             )
 
-        args["calendar[method]"] = "getNumbers"
-        r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
-        soup = BeautifulSoup(r.text, features="html.parser")
+args["calendar[method]"] = "getNumbers"
+r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
+r.raise_for_status()
+soup = BeautifulSoup(r.text, features="html.parser")
         for option in soup.findAll("option"):
             if option.text.lower().strip().replace(
                 " ", ""
@@ -111,10 +112,13 @@ class Source:
                 "hnr", self._hnr, [option.text for option in soup.findAll("option")]
             )
 
-        args["calendar[method]"] = "getICSfile"
-        r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
-        r = s.get(r.text)
-        r.encoding = "utf-8"
+args["calendar[method]"] = "getICSfile"
+r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
+r.raise_for_status()
+ics_url = r.text.strip()
+r = s.get(ics_url)
+r.raise_for_status()
+r.encoding = "utf-8"
 
         dates = self._ics.convert(r.text)
         for d in dates:
