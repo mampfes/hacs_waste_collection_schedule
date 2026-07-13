@@ -3484,6 +3484,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Swansea Council](/doc/source/swansea_gov_uk.md) / swansea.gov.uk
 - [Swindon Borough Council](/doc/source/swindon_gov_uk.md) / swindon.gov.uk
 - [Tameside Metropolitan Borough Council](/doc/source/tameside_gov_uk.md) / tameside.gov.uk
+- [Tandridge District Council](/doc/source/tandridge_gov_uk.md) / tandridge.gov.uk
 - [Teignbridge District Council](/doc/source/teignbridge_gov_uk.md) / teignbridge.gov.uk
 - [Telford and Wrekin Council](/doc/source/telford_gov_uk.md) / telford.gov.uk
 - [Tendring District Council](/doc/source/tendring_gov_uk.md) / tendringdc.gov.uk
