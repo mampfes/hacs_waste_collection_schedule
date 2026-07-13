@@ -13169,6 +13169,49 @@
           "street": "Straßenname wie im digitalen Abfallkalender Monheim am Rhein angegeben."
         }
       },
+      "args_mywastewatcher_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "app_path": "App-Pfad (z.B. abfallkalenderdk)",
+          "bemerkung": "Bemerkung (z.B. Hausnummern)",
+          "oguid": "OGUID (Kennung des Entsorgungsgebiets)",
+          "ort": "Ort",
+          "ortsteil": "Ortsteil",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "app_path": "Pfad-Segment der Anbieter-URL (z.B. 'abfallkalenderdk'). Der Standardwert wählt Hamminkeln aus.",
+          "bemerkung": "Bemerkungsfeld aus der Straßenliste (z.B. Hausnummernbereiche wie '1-50'). Angeben, wenn mehrere Einträge für dieselbe Straße existieren.",
+          "oguid": "Eindeutige Kennung des Entsorgungsgebiets (OGUID), in der URL der Anbieterseite sichtbar. Der Standardwert wählt Hamminkeln aus.",
+          "ort": "Ortsname genau wie auf der Webseite angezeigt.",
+          "ortsteil": "Ortsteil (optional), wenn mehrere Ortsteile denselben Straßennamen haben.",
+          "strasse": "Straßenname genau wie auf der Webseite angezeigt."
+        }
+      },
+      "reconfigure_mywastewatcher_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "app_path": "App-Pfad (z.B. abfallkalenderdk)",
+          "bemerkung": "Bemerkung (z.B. Hausnummern)",
+          "oguid": "OGUID (Kennung des Entsorgungsgebiets)",
+          "ort": "Ort",
+          "ortsteil": "Ortsteil",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "app_path": "Pfad-Segment der Anbieter-URL (z.B. 'abfallkalenderdk'). Der Standardwert wählt Hamminkeln aus.",
+          "bemerkung": "Bemerkungsfeld aus der Straßenliste (z.B. Hausnummernbereiche wie '1-50'). Angeben, wenn mehrere Einträge für dieselbe Straße existieren.",
+          "oguid": "Eindeutige Kennung des Entsorgungsgebiets (OGUID), in der URL der Anbieterseite sichtbar. Der Standardwert wählt Hamminkeln aus.",
+          "ort": "Ortsname genau wie auf der Webseite angezeigt.",
+          "ortsteil": "Ortsteil (optional), wenn mehrere Ortsteile denselben Straßennamen haben.",
+          "strasse": "Straßenname genau wie auf der Webseite angezeigt."
+        }
+      },
       "args_mzvhegau_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

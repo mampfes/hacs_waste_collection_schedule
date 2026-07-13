@@ -13476,6 +13476,49 @@
           "street": "Street name as shown in the Monheim am Rhein waste calendar."
         }
       },
+      "args_mywastewatcher_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "app_path": "App path (e.g. abfallkalenderdk)",
+          "bemerkung": "Remark (e.g. house numbers)",
+          "oguid": "OGUID (waste management area identifier)",
+          "ort": "City",
+          "ortsteil": "District",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "app_path": "Path segment of the provider URL (e.g. 'abfallkalenderdk'). The default selects Hamminkeln.",
+          "bemerkung": "Remark field shown in the street list (e.g. house number ranges like '1-50'). Use when multiple entries exist for the same street.",
+          "oguid": "Unique identifier for the waste management area (OGUID), visible in the URL of the provider's page. The default selects Hamminkeln.",
+          "ort": "City name exactly as shown on the website.",
+          "ortsteil": "District name (optional), used when multiple districts share the same street name.",
+          "strasse": "Street name exactly as shown on the website."
+        }
+      },
+      "reconfigure_mywastewatcher_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "app_path": "App path (e.g. abfallkalenderdk)",
+          "bemerkung": "Remark (e.g. house numbers)",
+          "oguid": "OGUID (waste management area identifier)",
+          "ort": "City",
+          "ortsteil": "District",
+          "strasse": "Street"
+        },
+        "data_description": {
+          "app_path": "Path segment of the provider URL (e.g. 'abfallkalenderdk'). The default selects Hamminkeln.",
+          "bemerkung": "Remark field shown in the street list (e.g. house number ranges like '1-50'). Use when multiple entries exist for the same street.",
+          "oguid": "Unique identifier for the waste management area (OGUID), visible in the URL of the provider's page. The default selects Hamminkeln.",
+          "ort": "City name exactly as shown on the website.",
+          "ortsteil": "District name (optional), used when multiple districts share the same street name.",
+          "strasse": "Street name exactly as shown on the website."
+        }
+      },
       "args_mzvhegau_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

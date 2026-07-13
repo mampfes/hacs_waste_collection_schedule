@@ -2827,6 +2827,14 @@
     },
     "urls": {}
   },
+  "mywastewatcher_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mywastewatcher_de.md",
+    "howto": {
+      "de": "Die vorausgefüllten Werte für oguid und app_path wählen Hamminkeln aus — dann nur noch Ort und Straße genau wie auf der Webseite angezeigt eingeben. Für eine andere Kommune deren Abfallkalender-Seite auf https://www.mywastewatcher.de öffnen (z.B. über den Link des Entsorgungsbetriebs): Das erste Pfad-Segment der URL ist der App-Pfad (z.B. 'abfallkalenderdk'), die OGUID ist der Wert des URL-Parameters 'oguid'.",
+      "en": "The pre-filled oguid and app_path select Hamminkeln — then just enter city and street exactly as shown on the website. For another municipality, open its calendar page on https://www.mywastewatcher.de (e.g. via the link from your local waste authority): the first path segment of the URL is the app_path (e.g. 'abfallkalenderdk'), and the oguid is the value of the 'oguid' parameter in the URL."
+    },
+    "urls": {}
+  },
   "mzvhegau_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzvhegau_de.md",
     "howto": {

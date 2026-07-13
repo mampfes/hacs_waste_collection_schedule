@@ -12574,6 +12574,12 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "myWasteWatcher (WasteWatcher.NET)",
+      "module": "mywastewatcher_de",
+      "default_params": {},
+      "id": "mywastewatcher_de"
+    },
+    {
       "title": "MZV Biedenkopf",
       "module": "buergerportal_de",
       "default_params": {
