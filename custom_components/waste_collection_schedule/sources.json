@@ -9262,6 +9262,14 @@
       "id": "123abfallkalender_de"
     },
     {
+      "title": "EBU Ulm",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "ebu"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "ebwo - Entsorgungs- und Baubetrieb Anstalt des \u00f6ffentlichen Rechts der Stadt Worms",
       "module": "ics",
       "default_params": {},
@@ -22305,6 +22313,12 @@
       "module": "midsussex_gov_uk",
       "default_params": {},
       "id": "midsussex_gov_uk"
+    },
+    {
+      "title": "Mid Ulster District Council",
+      "module": "midulstercouncil_org",
+      "default_params": {},
+      "id": "midulstercouncil_org"
     },
     {
       "title": "Middlesbrough Council",

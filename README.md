@@ -1447,6 +1447,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ebersberg](/doc/source/awido_de.md) / lra-ebe.de
 - [Eboldshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Ebsdorf](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/3-ebsdorf
+- [EBU Ulm](/doc/source/awido_de.md) / ebu-ulm.de
 - [ebwo - Entsorgungs- und Baubetrieb Anstalt des öffentlichen Rechts der Stadt Worms](/doc/ics/worms_de.md) / worms.de/de/web/ebwo
 - [Echte](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Edemissen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
@@ -3378,6 +3379,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mid Devon District Council](/doc/source/mid_devon_gov_uk.md) / middevon.gov.uk
 - [Mid Suffolk District Council](/doc/source/babergh_midsuffolk_gov_uk.md) / midsuffolk.gov.uk/check-your-collection-day
 - [Mid Sussex District Council (Whitespace WRP)](/doc/source/midsussex_gov_uk.md) / midsussex.gov.uk/waste-and-recycling
+- [Mid Ulster District Council](/doc/source/midulstercouncil_org.md) / midulstercouncil.org
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
 - [Midlothian Council](/doc/source/midlothian_gov_uk.md) / my.midlothian.gov.uk
 - [Milton Keynes council](/doc/source/milton_keynes_gov_uk.md) / milton-keynes.gov.uk
