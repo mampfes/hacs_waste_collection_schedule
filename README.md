@@ -2565,6 +2565,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Saprodir](/doc/source/junker_app.md) / junker.app
 - [Sardegna Ecology - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Sasom](/doc/source/junker_app.md) / junker.app
+- [Scalea](/doc/source/junker_app.md) / junker.app
 - [Scandicci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Scanzorosciate](/doc/source/junker_app.md) / junker.app
 - [Scarperia e San Piero](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it

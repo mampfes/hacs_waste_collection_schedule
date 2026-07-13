@@ -17222,6 +17222,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Scalea",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Scandicci",
       "module": "aliaserviziambientali_it",
       "default_params": {
