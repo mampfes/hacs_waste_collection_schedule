@@ -107,6 +107,13 @@
     "howto": {},
     "urls": {}
   },
+  "cassowarycoast_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cassowarycoast_qld_gov_au.md",
+    "howto": {
+      "en": "Enter the full service address used by Cassowary Coast Regional Council, for example '10 Bombala Street, Mourilyan, 4858'."
+    },
+    "urls": {}
+  },
   "albany_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/albany_wa_gov_au.md",
     "howto": {},
@@ -6187,7 +6194,7 @@
   "staffsmoorlands_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/staffsmoorlands_gov_uk.md",
     "howto": {
-      "en": "Your UPRN can be found by searching your postcode at https://www.staffsmoorlands.gov.uk/findyourbinday and selecting your address. The value shown in the address dropdown is your UPRN. Alternatively, find your UPRN at https://www.findmyaddress.co.uk/"
+      "en": "Your UPRN can be found by searching your postcode at https://www.staffsmoorlands.gov.uk/findyourbinday (which redirects to the council's Public Dashboard) and selecting your address. The value shown in the address dropdown is your UPRN. Alternatively, find your UPRN at https://www.findmyaddress.co.uk/"
     },
     "urls": {}
   },
