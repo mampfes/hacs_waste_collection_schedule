@@ -1324,12 +1324,6 @@
       "id": "willoughby_nsw_gov_au"
     },
     {
-      "title": "Wingecarribee Shire Council",
-      "module": "wingecarribee_nsw_gov_au",
-      "default_params": {},
-      "id": "wingecarribee_nsw_gov_au"
-    },
-    {
       "title": "Wollondilly Shire Council",
       "module": "wollondilly_nsw_gov_au",
       "default_params": {},
@@ -19389,6 +19383,12 @@
       "module": "kom_lub_com_pl",
       "default_params": {},
       "id": "kom_lub_com_pl"
+    },
+    {
+      "title": "KOMA",
+      "module": "koma_pl",
+      "default_params": {},
+      "id": "koma_pl"
     },
     {
       "title": "KOMUS",
