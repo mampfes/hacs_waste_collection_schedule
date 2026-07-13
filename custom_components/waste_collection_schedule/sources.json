@@ -19839,6 +19839,12 @@
       "id": "roslagsvatten_se"
     },
     {
+      "title": "Falu Energi & Vatten (FEV)",
+      "module": "fev_se",
+      "default_params": {},
+      "id": "fev_se"
+    },
+    {
       "title": "G\u00e4strike \u00c5tervinnare",
       "module": "gastrikeatervinnare_se",
       "default_params": {},

@@ -3002,6 +3002,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bräcke](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se/bracke/avfall-och-atervinning/avfallshamtning/nar-kommer-sopbilen
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
 - [Ekerö](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
+- [Falu Energi & Vatten (FEV)](/doc/source/fev_se.md) / fev.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
 - [Hedemora Energi](/doc/source/hedemora_energi_se.md) / hedemoraenergi.se
 - [Herrljunga & Vårgårda kommun](/doc/source/edpevent_se.md) / remondisrecycling.se/hushallsavfall/herrljunga-vargarda

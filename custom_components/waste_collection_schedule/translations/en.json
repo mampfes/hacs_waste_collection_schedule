@@ -19613,6 +19613,29 @@
           "street_address": "Street Address (e.g., Andromedavägen 1, Åkersberga)"
         }
       },
+      "args_fev_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address including house number, exactly as it appears on fev.se, e.g. 'Rådmansvägen 3'."
+        }
+      },
+      "reconfigure_fev_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Street address including house number, exactly as it appears on fev.se, e.g. 'Rådmansvägen 3'."
+        }
+      },
       "args_gastrikeatervinnare_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

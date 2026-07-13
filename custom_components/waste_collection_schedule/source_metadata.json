@@ -4128,6 +4128,13 @@
     "howto": {},
     "urls": {}
   },
+  "fev_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fev_se.md",
+    "howto": {
+      "en": "Go to https://fev.se/atervinning/sophamtning.html, search for your address and copy the street name and house number exactly as shown in the results, e.g. 'Rådmansvägen 3'."
+    },
+    "urls": {}
+  },
   "gastrikeatervinnare_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gastrikeatervinnare_se.md",
     "howto": {},
