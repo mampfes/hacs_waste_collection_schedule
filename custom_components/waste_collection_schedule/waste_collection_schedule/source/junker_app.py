@@ -327,6 +327,7 @@ SERVICE_PROVIDERS = {
     "San Cipriano Po",
     "Stradella",
     "Torre de' Passeri",
+    "Scalea",
 }
 
 
@@ -354,6 +355,7 @@ TEST_CASES = {
         "municipality": "Torre de' Passeri",
         "area": "Utenze domestiche",
     },
+    "Scalea": {"municipality": "Scalea"},
 }
 
 
