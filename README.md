@@ -2808,6 +2808,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
 - [Czerwonak, Murowana Goślina, Oborniki](/doc/source/eko_tom_pl.md) / eko-tom.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
+- [EcoSzczecin](/doc/source/ecoszczecin_pl.md) / ecoszczecin.pl
 - [Gdańsk](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Gdynia](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Gmina Bardo](/doc/source/sims_pl.md) / sisms.pl

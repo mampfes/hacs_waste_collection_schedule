@@ -18569,6 +18569,12 @@
       "id": "ecoharmonogram_pl"
     },
     {
+      "title": "EcoSzczecin",
+      "module": "ecoszczecin_pl",
+      "default_params": {},
+      "id": "ecoszczecin_pl"
+    },
+    {
       "title": "Gda\u0144sk",
       "module": "smiecioplan_pl",
       "default_params": {

@@ -18511,6 +18511,33 @@
           "town": "Town"
         }
       },
+      "args_ecoszczecin_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "House number for the given street, as shown on ecoszczecin.pl (e.g. '7A').",
+          "street": "Street name in Szczecin, as shown on ecoszczecin.pl (e.g. 'TCZEWSKA'). Not case-sensitive."
+        }
+      },
+      "reconfigure_ecoszczecin_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "house_number": "House number for the given street, as shown on ecoszczecin.pl (e.g. '7A').",
+          "street": "Street name in Szczecin, as shown on ecoszczecin.pl (e.g. 'TCZEWSKA'). Not case-sensitive."
+        }
+      },
       "args_smiecioplan_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
