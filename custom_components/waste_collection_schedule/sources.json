@@ -18280,6 +18280,12 @@
       "id": "hvcgroep_nl"
     },
     {
+      "title": "Straatbeeld Online",
+      "module": "straatbeeld_online",
+      "default_params": {},
+      "id": "straatbeeld_online"
+    },
+    {
       "title": "Twente Milieu",
       "module": "ximmio_nl",
       "default_params": {

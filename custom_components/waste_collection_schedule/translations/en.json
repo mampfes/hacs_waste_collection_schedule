@@ -17489,6 +17489,41 @@
           "toevoeging": "House letter or addition (only required when more than one address shares the postcode/huisnummer)"
         }
       },
+      "args_straatbeeld_online": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_letter": "House letter/addition",
+          "house_number": "House number",
+          "municipality": "Municipality",
+          "postal_code": "Postal code"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_letter": "House letter or addition, if applicable (optional, only needed when multiple addresses share the same postal code and house number)",
+          "house_number": "House number, e.g. 28",
+          "municipality": "Subdomain of the municipality's waste calendar, e.g. 'drimmelen' for {url_drimmelen_afvalkalender_straatbeeld_online}",
+          "postal_code": "Dutch postal code, e.g. 4926CW"
+        }
+      },
+      "reconfigure_straatbeeld_online": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_letter": "House letter/addition",
+          "house_number": "House number",
+          "municipality": "Municipality",
+          "postal_code": "Postal code"
+        },
+        "data_description": {
+          "house_letter": "House letter or addition, if applicable (optional, only needed when multiple addresses share the same postal code and house number)",
+          "house_number": "House number, e.g. 28",
+          "municipality": "Subdomain of the municipality's waste calendar, e.g. 'drimmelen' for {url_drimmelen_afvalkalender_straatbeeld_online}",
+          "postal_code": "Dutch postal code, e.g. 4926CW"
+        }
+      },
       "args_ics_offalkalinder_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
