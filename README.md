@@ -1605,6 +1605,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Holtensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Holtershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Holtgast (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
+- [Homburg](/doc/ics/mein_abfallkalender_online.md) / homburg.de
 - [Hoppensen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [HubertSchmid Recycling und Umweltschutz GmbH](/doc/source/api_hubert_schmid_de.md) / hschmid24.de/BlaueTonne
 - [Hullersen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de

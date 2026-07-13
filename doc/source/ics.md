@@ -331,6 +331,7 @@ This source has been successfully tested with the following service providers:
 - [Heusenstamm](/doc/ics/mein_abfallkalender_online.md) / heusenstamm.de
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
+- [Homburg](/doc/ics/mein_abfallkalender_online.md) / homburg.de
 - [Karben](/doc/ics/mein_abfallkalender_online.md) / karben.de
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
 - [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de

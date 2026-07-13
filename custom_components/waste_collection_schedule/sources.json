@@ -10480,6 +10480,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Homburg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
+    },
+    {
       "title": "Hoppensen",
       "module": "nerdbridge_de",
       "default_params": {
