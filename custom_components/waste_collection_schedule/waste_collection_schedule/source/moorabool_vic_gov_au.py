@@ -3,10 +3,10 @@
 import datetime
 import json
 from typing import TypedDict
+from urllib.parse import quote
 
-import requests
 from bs4 import BeautifulSoup
-from requests.utils import requote_uri
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -73,7 +73,7 @@ class Source:
 
     @staticmethod
     def search_address(address: str, session: requests.Session) -> ApiResult:
-        q = requote_uri(str(API_URLS["address_search"]).format(address))
+        q = API_URLS["address_search"].format(quote(address))
 
         # Retrieve suburbs
         r = session.get(q)
@@ -81,7 +81,7 @@ class Source:
         return json.loads(r.text)
 
     def fetch(self) -> list[Collection]:
-        session = requests.Session()
+        session = requests.Session(impersonate="chrome")
         session.headers.update(HEADERS)
         locationId = ""
 
@@ -118,7 +118,7 @@ class Source:
             )
 
         # Retrieve the upcoming collections for our property
-        q = requote_uri(str(API_URLS["collection"]).format(locationId))
+        q = API_URLS["collection"].format(quote(str(locationId)))
 
         r = session.get(q)
 
