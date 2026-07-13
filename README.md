@@ -109,6 +109,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of South Perth](/doc/source/southperth_wa_gov_au.md) / southperth.wa.gov.au
 - [City of Subiaco](/doc/source/subiaco_wa_gov_au.md) / subiaco.wa.gov.au
 - [City of Swan](/doc/source/swan_wa_gov_au.md) / swan.wa.gov.au
+- [City of Sydney](/doc/source/cityofsydney_nsw_gov_au.md) / cityofsydney.nsw.gov.au
 - [City of Tea Tree Gully](/doc/source/teatreegully_sa_gov_au.md) / teatreegully.sa.gov.au
 - [City of Victor Harbor](/doc/source/frwa_com_au.md) / victor.sa.gov.au
 - [City of Vincent](/doc/source/vincent_wa_gov_au.md) / vincent.wa.gov.au

@@ -303,6 +303,13 @@
     },
     "urls": {}
   },
+  "cityofsydney_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cityofsydney_nsw_gov_au.md",
+    "howto": {
+      "en": "Enter your street address including suburb (e.g. '17 Junction Street, Forest Lodge'), as it would appear on https://www.cityofsydney.nsw.gov.au/waste-recycling-services/find-my-bin-collection-day"
+    },
+    "urls": {}
+  },
   "teatreegully_sa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/teatreegully_sa_gov_au.md",
     "howto": {
