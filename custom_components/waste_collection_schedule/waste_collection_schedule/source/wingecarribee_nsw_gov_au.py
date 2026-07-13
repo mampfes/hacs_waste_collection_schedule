@@ -9,6 +9,7 @@ TITLE = "Wingecarribee Shire Council"
 DESCRIPTION = "Source for Wingecarribee Shire Council (NSW) waste collection."
 URL = "https://www.wsc.nsw.gov.au"
 COUNTRY = "au"
+SOURCE_CODEOWNERS = ["@m1ckyb"]
 
 TEST_CASES = {
     "Willow Road": {"address": "8 Willow Road, Bowral NSW 2576"},
