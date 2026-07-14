@@ -250,7 +250,7 @@ def _scrape_hidden_inputs(html: str) -> dict[str, str]:
             continue
         name = tag.get("name")
         if name:
-            fields[name] = tag.get("value", "")
+            fields[str(name)] = str(tag.get("value", ""))
     return fields
 
 

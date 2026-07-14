@@ -20,7 +20,7 @@ phrasings mapped explicitly.
 from datetime import date
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
@@ -78,8 +78,10 @@ class Source(BaseSource):
         form = soup.find_all("form")[1]
 
         street_select = form.find("select", {"name": f"{_FORM_FIELD}[street]"})
+        if not isinstance(street_select, Tag):
+            raise SourceArgumentNotFoundWithSuggestions("street", street_value, [])
         mapping = {
-            opt.text.strip(): opt["value"]
+            opt.text.strip(): str(opt["value"])
             for opt in street_select.find_all("option")
             if opt.get("value")
         }
@@ -101,7 +103,7 @@ class Source(BaseSource):
         data[f"{_FORM_FIELD}[houseNumber]"] = str(house_number_value)
         data[f"{_FORM_FIELD}[privacyPolicy-checkbox]"] = "1"
 
-        action = form.get("action", "")
+        action = str(form.get("action", ""))
         post_url = _BASE_URL + action if action.startswith("/") else action
 
         r2 = session.post(post_url, data=data)
@@ -111,7 +113,7 @@ class Source(BaseSource):
         ics_link = None
         for a in soup2.find_all("a", href=True):
             if "exportIcs" in a["href"]:
-                href = a["href"]
+                href = str(a["href"])
                 ics_link = _BASE_URL + href if href.startswith("/") else href
                 break
 

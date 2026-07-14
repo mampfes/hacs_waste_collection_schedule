@@ -90,7 +90,7 @@ class Source(BaseSource):
         soup = BeautifulSoup(r.text, features="html.parser")
         ics_urls: list[str] = []
         for download in soup.find_all("a", href=True):
-            href = download["href"]
+            href = str(download["href"])
             # The website lists the same url multiple times; keep it once.
             if "t=ics" in href and href not in ics_urls:
                 ics_urls.append(href)

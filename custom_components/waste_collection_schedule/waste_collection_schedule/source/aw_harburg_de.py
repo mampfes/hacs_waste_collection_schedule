@@ -48,7 +48,7 @@ def _level_options(html: str, level: int) -> dict[str, str]:
     if not isinstance(select, Tag):
         return {}
     return {
-        _normalize_name(option.text): option["value"]
+        _normalize_name(option.text): str(option["value"])
         for option in select.find_all("option")
         if option.get("value") != "0"
     }

@@ -107,7 +107,7 @@ class Source(BaseSource):
         ics_url = None
         for link in BeautifulSoup(r.text, "html.parser").find_all("a"):
             if "ICal herunterladen" in link.text:
-                ics_url = link["href"]
+                ics_url = str(link["href"])
                 break
         if ics_url is None:
             raise SourceArgumentNotFoundWithSuggestions("number", number_value, [])

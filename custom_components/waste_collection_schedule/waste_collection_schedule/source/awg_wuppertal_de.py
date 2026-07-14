@@ -95,7 +95,7 @@ class Source(BaseSource):
         ical_links = soup.find_all("a", string=_is_ical_link_text)
         responses = []
         for link in ical_links:
-            href = link["href"]
+            href = str(link["href"])
             if href.startswith("/"):
                 href = _BASE_URL + href
             r = session.get(href)

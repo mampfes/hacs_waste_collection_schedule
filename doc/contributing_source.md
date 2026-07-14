@@ -402,7 +402,7 @@ A source must not silently return an empty list when the input did not resolve:
 Distinguish one malformed record from a provider whose whole response shape has
 changed. They call for opposite responses:
 
-- **A single malformed record is skipped, not fatal.** One unparseable row must
+- **A single malformed record is skipped, not fatal.** One unparsable row must
   not fail the whole fetch. A transformer returns `None` for a record it cannot
   use (a getter returning `None`, or `skip_unparseable_dates=True` for a date
   that will not parse), and the pipeline drops it.

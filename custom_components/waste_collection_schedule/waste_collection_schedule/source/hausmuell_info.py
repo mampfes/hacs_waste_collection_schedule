@@ -371,8 +371,8 @@ class Source(BaseSource):
 
         soup = BeautifulSoup(r.text, "html.parser")
         for i in soup.find_all("input"):
-            name = i.get("name")
-            if name and name.startswith("showBins"):
+            name = str(i.get("name") or "")
+            if name.startswith("showBins"):
                 args[name] = "on"
 
         if p["ort"]:

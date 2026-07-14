@@ -19,7 +19,8 @@ from datetime import datetime
 from typing import ClassVar, final
 from urllib.parse import urlencode
 
-from bs4 import BeautifulSoup, NavigableString, Tag
+from bs4 import BeautifulSoup, Tag
+from bs4.element import NavigableString
 from waste_collection_schedule import retrievers
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality, street, text_field

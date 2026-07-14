@@ -59,7 +59,7 @@ def _load_streets_for_letter(session, letter: str) -> dict[str, str]:
             name = option.text.strip()
             value = option.get("value")
             if name and value is not None:
-                streets[name] = value
+                streets[name] = str(value)
     return streets
 
 

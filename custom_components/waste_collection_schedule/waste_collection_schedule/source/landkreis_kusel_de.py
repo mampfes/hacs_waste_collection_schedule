@@ -13,7 +13,8 @@ geoport_nwm_de for its own multi-feed merge.
 from datetime import datetime, timedelta
 from typing import ClassVar, final
 
-from bs4 import BeautifulSoup, NavigableString
+from bs4 import BeautifulSoup
+from bs4.element import NavigableString
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions

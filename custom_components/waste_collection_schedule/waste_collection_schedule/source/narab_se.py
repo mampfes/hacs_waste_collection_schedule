@@ -198,7 +198,7 @@ class Source(BaseSource):
 
                 # Loop over all spans in this cell (multiple trash types possible).
                 for span in day_cell.find_all("span"):
-                    classes = span.get("class", [])
+                    classes = span.get("class") or []
                     trash_type = classes[0] if classes else None
                     if trash_type:
                         pickup_data.append(
