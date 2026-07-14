@@ -1342,6 +1342,12 @@
       "id": "willoughby_nsw_gov_au"
     },
     {
+      "title": "Wingecarribee Shire Council",
+      "module": "wingecarribee_nsw_gov_au",
+      "default_params": {},
+      "id": "wingecarribee_nsw_gov_au"
+    },
+    {
       "title": "Wollondilly Shire Council",
       "module": "wollondilly_nsw_gov_au",
       "default_params": {},

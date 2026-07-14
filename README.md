@@ -243,6 +243,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Whitehorse City Counfil](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
 - [Willoughby City Council](/doc/source/willoughby_nsw_gov_au.md) / willoughby.nsw.gov.au
+- [Wingecarribee Shire Council](/doc/source/wingecarribee_nsw_gov_au.md) / wsc.nsw.gov.au
 - [Wollondilly Shire Council](/doc/source/wollondilly_nsw_gov_au.md) / wollondilly.nsw.gov.au
 - [Wollongong City Council](/doc/source/impactapps_com_au.md) / wollongong.vic.gov.au
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
