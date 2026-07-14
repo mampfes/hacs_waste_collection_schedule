@@ -214,6 +214,14 @@ Key workflow rules:
 - **After merge, clean up.** `/cleanup` syncs `master` with upstream, deletes merged branches locally and on origin, removes any contributor fork remotes.
 - **Never ask users for their address or identifying information.** Use existing TEST_CASES or ask for known-good public examples.
 
+### Versioning and deprecation
+
+The project follows **strict semantic versioning** (Option A, agreed in [discussion #6622](https://github.com/mampfes/hacs_waste_collection_schedule/discussions/6622)). Full policy: `doc/versioning.md`.
+
+- **Bump = highest-severity change.** Patch: fixes, deps, docs/infra. Minor: additions (new sources, platforms, params, countries) and new deprecations. Major: breaking changes (removals, config-schema or entity-ID changes, waste-type label changes, dropping an HA version).
+- **A pipeline source migration is breaking (major),** because it changes waste-type labels; migrations are batched behind one major, shipped first as an `X.0.0-alpha`/`beta`. The legacy `fetch()` contract stays supported as the per-source rollback path.
+- **Deprecation lifecycle:** keep a compat shim only when removal would change entity IDs; announce via a one-time runtime warning, a CHANGELOG `Deprecated` entry, and a `DEPRECATIONS.md` row; keep for at least two minor releases; batch removals into the next major.
+
 ---
 
 ## Project resources

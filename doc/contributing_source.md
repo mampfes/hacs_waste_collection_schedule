@@ -397,6 +397,28 @@ A source must not silently return an empty list when the input did not resolve:
 | `SourceArgumentRequired` | a required argument is missing |
 | `SourceArgumentRequiredWithSuggestions` | as above, with suggested values |
 
+### Error handling policy: a bad record vs a changed response
+
+Distinguish one malformed record from a provider whose whole response shape has
+changed. They call for opposite responses:
+
+- **A single malformed record is skipped, not fatal.** One unparseable row must
+  not fail the whole fetch. A transformer returns `None` for a record it cannot
+  use (a getter returning `None`, or `skip_unparseable_dates=True` for a date
+  that will not parse), and the pipeline drops it.
+- **An unknown waste-type label is preserved, not dropped.** A label that is not
+  in `type_value_map` and does not resolve against the shared vocabulary is kept
+  verbatim (a warning is logged), never silently collapsed to `OTHER`, so no
+  collection is lost.
+- **A changed provider response is loud.** When the response no longer has the
+  expected shape, raise rather than return partial data: declare a response
+  shape (`parsers.JsonParser(shape=...)`) or a minimum count (`min_events`,
+  `min_nodes`, `min_chars`) so the pipeline logs the response and raises
+  `ResponseShapeError`. That surfaces the breakage instead of quietly returning
+  an empty or truncated schedule.
+
+Rule of thumb: skip the row, preserve the unknown, raise on the shape.
+
 ## Metadata attributes
 
 On a pipeline source the metadata lives on the class:
@@ -431,6 +453,13 @@ Set the class metadata correctly so generation produces the right entries. An in
 
 The earlier contract is still supported and powers most existing sources. A module defines `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES`, an `ICON_MAP` of `Icons` enum members, optional `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS`, and a `Source` class with `__init__(**kwargs)` and `fetch() -> list[Collection]` that returns `Collection(date, t, icon=...)`. The CI-enforced rules (icon enum, country allowlist, the `en`/`de`/`it`/`fr`/`nl` language allowlist) apply to both styles. New sources should prefer the pipeline, but a bug fix to an existing legacy source does not need to convert it.
 
+## Versioning and deprecation
+
+The project follows strict semantic versioning; see [`doc/versioning.md`](versioning.md) for the full policy. Two points that affect source work:
+
+- **A new source is a minor bump; a fix to an existing source is a patch.** Neither needs user action, so neither is breaking.
+- **Converting a legacy source to the pipeline is a breaking change (a major bump).** It changes the waste-type labels from the author's strings to the canonical `WasteType` names, which breaks type-based filters and customisation even though the config arguments are unchanged. Migrations are collected behind a single major release. When you deprecate a source in favour of a replacement, follow the deprecation lifecycle in the policy and add a row to `DEPRECATIONS.md`.
+
 ## Test the new source file
 
 Debugging inside Home Assistant is slow. Use the command line test script, which runs every `TEST_CASES` entry and prints results.
@@ -461,6 +490,16 @@ This runs each `TEST_CASES` entry once and writes
 the recording date). Commit those. `tests/test_offline_fixtures.py` then replays
 them with the clock frozen to the recording date, so the run is deterministic.
 Re-record when a provider changes its response.
+
+**Minimum fixture coverage (required).** A new or migrated source must ship a
+recorded cassette covering its `TEST_CASES`, so the gating CI exercises it
+offline. A source built on a **shared service** additionally keeps one cassette
+per distinct response shape that service produces (for example an address-lookup
+step plus a schedule step, or a provider variant with a different payload), so
+the whole platform stays covered as sources are added. If a `TEST_CASES` entry
+genuinely cannot be recorded (the provider rate-limits or gates automated
+access from CI), mark it live-only and say so in the PR rather than dropping the
+coverage silently.
 
 For JSON sources, also declare the response shape and pass it to the parser
 (`parse = parsers.JsonParser(shape=MyResponse)`). A `TypedDict`/`list[...]`

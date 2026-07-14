@@ -109,6 +109,8 @@ No `retrieve` is declared, so the zero-config GET is used. Set `self._params` / 
 - If the contributor (or a user) "just prefers" a different MDI icon for a waste type, they should use the per-user icon override in their YAML configuration (the `customise`-style override), not change the canonical default. Don't pick a non-canonical type to satisfy a stated preference.
 - Reach for a reusable service platform or shared YAML / EXTRA_INFO platform before writing new retrieval code.
 - For empty results on an address or lookup source, set `RAISE_ON_EMPTY = True` rather than returning `[]`. Where you raise explicitly, use the predefined exceptions from `waste_collection_schedule.exceptions` (`SourceArgumentNotFound`, `SourceArgumentNotFoundWithSuggestions`, `SourceArgumentExceptionMultiple`, etc.), never a bare `Exception`.
+- Follow the error-handling policy (`doc/contributing_source.md` "Error handling policy"): skip a single malformed record (return `None`), preserve an unknown waste-type label verbatim (never collapse to `OTHER`), and raise `ResponseShapeError` (via a declared response shape or a `min_*` count) when the provider's whole response shape has changed.
+- **Converting an existing legacy source to the pipeline is a breaking change** (it changes the waste-type labels), so it is a major-version change under the versioning policy (`doc/versioning.md`). Note it as breaking in the report so it is batched into a major release, and if it replaces/deprecates another source, follow the deprecation lifecycle and add a `DEPRECATIONS.md` row.
 - Do not add options to filter waste types or limit the time frame. Return all data for the entire available period; filtering is a framework feature.
 - No `if __name__ == "__main__":` blocks. No standalone-script boilerplate.
 - No hardcoded dates or schedules. Fetch live from the provider.
@@ -144,7 +146,12 @@ Only a **legacy** module-level source still needs a hand-written `doc/source/<mo
    python test_sources.py -s <module> -l
    ```
    Expect non-empty `Collection` lists. Iterate if the parser is off. For address or lookup sources, confirm `RAISE_ON_EMPTY = True` raises a clear error on bad input rather than returning an empty list.
-8. Type-check before handing back. `pyright` covers pipeline sources, so run the full pre-commit set (or at least mypy and pyright):
+8. Record the offline fixture (required coverage). Once it works live, record a cassette so the gating CI exercises the source offline:
+   ```bash
+   python tests/record_fixtures.py <module>
+   ```
+   Commit the recorded `tests/fixtures/<module>/*.json`. Every source must ship one covering its `TEST_CASES`; a shared-service source keeps one per distinct response shape. If a case genuinely cannot be recorded (CI-gated/rate-limited provider), mark it live-only and call it out in the report rather than dropping coverage. See `doc/contributing_source.md` "Offline fixtures".
+9. Type-check before handing back. `pyright` covers pipeline sources, so run the full pre-commit set (or at least mypy and pyright):
    ```bash
    pre-commit run --all-files
    ```
