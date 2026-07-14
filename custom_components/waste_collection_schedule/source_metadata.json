@@ -5444,6 +5444,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "inverclyde_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/inverclyde_gov_uk.md",
+    "howto": {
+      "en": "Visit https://maps.inverclyde.gov.uk/noticeboard8/noticeboard.aspx, search for your postcode and note down your address exactly as it is shown in the address list, e.g. '10 St John's Road'."
+    },
+    "urls": {}
+  },
   "ipswich_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ipswich_gov_uk.md",
     "howto": {

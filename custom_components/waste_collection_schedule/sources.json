@@ -22077,6 +22077,12 @@
       "id": "iapp_itouchvision_com"
     },
     {
+      "title": "Inverclyde Council",
+      "module": "inverclyde_gov_uk",
+      "default_params": {},
+      "id": "inverclyde_gov_uk"
+    },
+    {
       "title": "Ipswich Borough Council",
       "module": "ipswich_gov_uk",
       "default_params": {},
