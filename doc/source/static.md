@@ -95,7 +95,9 @@ Used to define the weekday for weekly or monthly frequencies. A weekday is speci
    weekdays: { MO: 1, FR: -2 }
    ```
 
-   The additional numerical argument means the nth occurrence of this weekday in the specified frequency (normally only MONTHLY makes sense here). If frequency is set to `MONTHLY`, `MO: 1` represents the first Monday of the month. `FR: -2` represents the 2nd last Friday of the month.
+   The additional numerical argument means the nth occurrence of this weekday in the specified frequency. If frequency is set to `MONTHLY`, `MO: 1` represents the first Monday of the month. `FR: -2` represents the 2nd last Friday of the month.
+
+   The dictionary format can also be used to select **more than one weekday per week** when `frequency` is `WEEKLY`. In that case the numerical argument is ignored, so `1` is a safe default for every weekday. For example, `weekdays: { TU: 1, TH: 1 }` produces a schedule that recurs every Tuesday **and** every Thursday.
 
    **IMPORTANT**: The colon must be followed by a space!
 
@@ -134,6 +136,20 @@ waste_collection_schedule:
         type: Altpapier
         frequency: WEEKLY
         weekdays: WE
+```
+
+---
+
+Defines a schedule that recurs every Tuesday and every Thursday (e.g. for a watering schedule with two collections per week).
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: static
+      args:
+        type: Watering
+        frequency: WEEKLY
+        weekdays: {TU: 1, TH: 1}
 ```
 
 ---
