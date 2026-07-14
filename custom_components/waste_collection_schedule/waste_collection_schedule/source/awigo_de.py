@@ -1,5 +1,5 @@
 import re
-import urllib
+import urllib.parse
 
 import requests
 from bs4 import BeautifulSoup
@@ -64,20 +64,20 @@ class Source:
         }
 
         for wt in waste_types:
-            args[f"calendar[{wt}]"] = 1
+            args[f"calendar[{wt}]"] = "1"
 
         r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
 
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
-        for option in soup.findAll("option"):
+        for option in soup.find_all("option"):
             if compare_cities(self._ort, option.text):
-                args["calendar[cityID]"] = option.get("value")
+                args["calendar[cityID]"] = str(option.get("value"))
                 break
         if "calendar[cityID]" not in args:
             raise SourceArgumentNotFoundWithSuggestions(
-                "ort", self._ort, [option.text for option in soup.findAll("option")]
+                "ort", self._ort, [option.text for option in soup.find_all("option")]
             )
 
         args["calendar[method]"] = "getStreets"
@@ -86,39 +86,43 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
-        for option in soup.findAll("option"):
+        for option in soup.find_all("option"):
             if option.text.lower().strip() == self._strasse.lower().strip():
-                args["calendar[streetID]"] = option.get("value")
+                value = option.get("value")
+                if value:
+                    args["calendar[streetID]"] = str(value)
                 break
         if "calendar[streetID]" not in args:
             raise SourceArgumentNotFoundWithSuggestions(
                 "strasse",
                 self._strasse,
-                [option.text for option in soup.findAll("option")],
+                [option.text for option in soup.find_all("option")],
             )
 
-args["calendar[method]"] = "getNumbers"
-r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
-r.raise_for_status()
-soup = BeautifulSoup(r.text, features="html.parser")
-        for option in soup.findAll("option"):
+        args["calendar[method]"] = "getNumbers"
+        r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, features="html.parser")
+        for option in soup.find_all("option"):
             if option.text.lower().strip().replace(
                 " ", ""
             ) == self._hnr.lower().strip().replace(" ", ""):
-                args["calendar[locationID]"] = option.get("value")
+                value = option.get("value")
+                if value:
+                    args["calendar[locationID]"] = str(value)
                 break
         if "calendar[locationID]" not in args:
             raise SourceArgumentNotFoundWithSuggestions(
-                "hnr", self._hnr, [option.text for option in soup.findAll("option")]
+                "hnr", self._hnr, [option.text for option in soup.find_all("option")]
             )
 
-args["calendar[method]"] = "getICSfile"
-r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
-r.raise_for_status()
-ics_url = r.text.strip()
-r = s.get(ics_url)
-r.raise_for_status()
-r.encoding = "utf-8"
+        args["calendar[method]"] = "getICSfile"
+        r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
+        r.raise_for_status()
+        ics_url = r.text.strip()
+        r = s.get(ics_url)
+        r.raise_for_status()
+        r.encoding = "utf-8"
 
         dates = self._ics.convert(r.text)
         for d in dates:
