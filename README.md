@@ -2086,6 +2086,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
 - [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
 - [Stadtwerke Rösrath](/doc/source/stadtwerke_roesrath_de.md) / stadtwerke-roesrath.de/service/abfuhrkalender
+- [Stadtwerke Singen](/doc/source/stadtwerke_singen_de.md) / stadtwerke-singen.de
 - [Stadtwerke Speyer](/doc/ics/gipsprojekt_de.md) / stadtwerke-speyer.de/muellkalender
 - [Steinheim](/doc/source/lobbe_app.md) / lobbe.app
 - [Steinhöring](/doc/source/awido_de.md) / lra-ebe.de

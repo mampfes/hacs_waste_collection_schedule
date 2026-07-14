@@ -15113,6 +15113,33 @@
         },
         "data_description": {}
       },
+      "args_stadtwerke_singen_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street or district"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "House number. Only required if the street is split into several address ranges with different collection days (e.g. 'Alemannenstraße').",
+          "street": "Street name as listed in the Stadtwerke Singen waste calendar street directory, or one of the outlying districts (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+        }
+      },
+      "reconfigure_stadtwerke_singen_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street or district"
+        },
+        "data_description": {
+          "house_number": "House number. Only required if the street is split into several address ranges with different collection days (e.g. 'Alemannenstraße').",
+          "street": "Street name as listed in the Stadtwerke Singen waste calendar street directory, or one of the outlying districts (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+        }
+      },
       "args_staedteservice_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

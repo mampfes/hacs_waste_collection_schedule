@@ -3150,6 +3150,11 @@
     "howto": {},
     "urls": {}
   },
+  "stadtwerke_singen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtwerke_singen_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "staedteservice_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/staedteservice_de.md",
     "howto": {},

@@ -14136,6 +14136,12 @@
       "id": "stadtwerke_roesrath_de"
     },
     {
+      "title": "Stadtwerke Singen",
+      "module": "stadtwerke_singen_de",
+      "default_params": {},
+      "id": "stadtwerke_singen_de"
+    },
+    {
       "title": "Stadtwerke Speyer",
       "module": "ics",
       "default_params": {},
