@@ -46,7 +46,7 @@ class Source:
         )
         data = json.loads(r.text)
 
-        if data["features"]:
+        if data.get("features"):
             collection_day = data["features"][0]["attributes"]["Rubbish_Collection"]
             recycling_week = data["features"][0]["attributes"]["Recycling_Collection"]
             green_waste_week = data["features"][0]["attributes"][
@@ -60,7 +60,7 @@ class Source:
             )
             data = json.loads(r.text)
 
-            if not data["features"]:
+            if not data.get("features"):
                 raise SourceArgumentNotFound(
                     "property_location", self.property_location
                 )
