@@ -68,27 +68,30 @@ ICON_MAP = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "recordID": "Record ID for the unofficial okc.schizo.dev source. This single ID covers trash, recycling and bulky waste. Look up your address at https://okc.schizo.dev/ to find it. This is the easiest option and is recommended.",
-        "trashObjectID": "OBJECTID of your trash collection zone from the official OKC Open Data Portal (ArcGIS). Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
-        "recycleObjectID": "OBJECTID of your recycling zone from the official OKC Open Data Portal (ArcGIS). Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
-        "bulkyObjectID": "OBJECTID of your bulky waste zone from the official OKC Open Data Portal (ArcGIS). Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+        "recordID": "Record ID for the unofficial okc.schizo.dev source. This single ID covers trash, recycling and bulky waste. Go to https://okc.schizo.dev and type in your address to get it. This is the easiest option and is recommended.",
+        "trashObjectID": "OBJECTID of your trash collection zone. Go to https://open-okc.hub.arcgis.com/datasets/45426e5e1b31489db9afea603870f724_1/explore?location=35.566301%2C-97.260765%2C10 , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+        "recycleObjectID": "OBJECTID of your recycling zone. Go to https://open-okc.hub.arcgis.com/datasets/0f286e1243ca4bb39a70e323b1608222_3/explore?location=35.486250%2C-97.582400%2C11 , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+        "bulkyObjectID": "OBJECTID of your bulky waste zone. Go to https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map , find your house on the map, then switch to the Table view and filter by map to read your OBJECTID. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
         "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the official data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly. Not needed when using recordID.",
     },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Recommended: open https://okc.schizo.dev/ , type in your address, and copy the record ID it "
+    "en": "Recommended: go to https://okc.schizo.dev , type in your address, and copy the record ID it "
     "shows into recordID. That single ID covers trash, recycling and bulky waste. If your address "
     "isn't found, try variations (e.g. drop a leading 'N'/'North' so '1234 N Sample St' becomes "
     "'1234 Sample St'). "
-    "Alternatively, use the official OKC Open Data Portal (ArcGIS): open the FeatureServer layers "
-    "linked in the documentation, use the Query page to locate the zone that covers your address, "
-    "and read its OBJECTID for each of trashObjectID, recycleObjectID and bulkyObjectID. With the "
-    "official method, recycling is collected every other week and the portal only reports the "
-    "weekday, so also set recycle_reference_date to one date you know recycling was (or will be) "
-    "collected to pin the correct week. If both recordID and official OBJECTIDs are provided, the "
-    "unofficial recordID source is used first and falls back to the official OBJECTIDs if it fails "
-    "or returns nothing."
+    "Alternatively, use the official OKC data portals to find one OBJECTID per waste type: "
+    "for trash, open https://open-okc.hub.arcgis.com/datasets/45426e5e1b31489db9afea603870f724_1/explore?location=35.566301%2C-97.260765%2C10 , "
+    "zoom into your house, click your zone and read the OBJECTID from the info popup. "
+    "For recycling, do the same at https://open-okc.hub.arcgis.com/datasets/0f286e1243ca4bb39a70e323b1608222_3/explore?location=35.486250%2C-97.582400%2C11 . "
+    "For bulky waste, open https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map , "
+    "find your house on the map, then switch to the Table view and filter by map to read your OBJECTID. "
+    "With the official method, recycling is collected every other week and the portal only reports "
+    "the weekday, so also set recycle_reference_date to one date you know recycling was (or will "
+    "be) collected to pin the correct week. If both recordID and official OBJECTIDs are provided, "
+    "the unofficial recordID source is used first and falls back to the official OBJECTIDs if it "
+    "fails or returns nothing."
 }
 
 

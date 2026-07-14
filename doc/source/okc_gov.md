@@ -70,7 +70,7 @@ waste_collection_schedule:
 
 ## How to find your `recordID` (recommended)
 
-1. Open [https://okc.schizo.dev/](https://okc.schizo.dev/).
+1. Open [https://okc.schizo.dev](https://okc.schizo.dev).
 2. Type in your address and select it.
 3. Copy the record ID it shows into the `recordID` field.
 
@@ -78,10 +78,10 @@ If your address isn't found, try variations — the underlying OKC database some
 
 ## How to find your Object IDs (official source)
 
-The official method reads the following ArcGIS FeatureServer layers from the OKC Open Data Portal:
+**Trash** — open the [Trash Collection Zones map](https://open-okc.hub.arcgis.com/datasets/45426e5e1b31489db9afea603870f724_1/explore?location=35.566301%2C-97.260765%2C10), zoom into your house, and click your zone. The `OBJECTID` is shown in the info popup — enter it as `trashObjectID`.
 
-- [Trash Collection Zones](https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1)
-- [Recycle Zones](https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3)
-- [Bulky Waste Zones](https://utility.arcgis.com/usrsvcs/servers/c4455716f4bf4d1dafe6806e0e619de8/rest/services/OpenData/Utilities/FeatureServer/2)
+**Recycling** — open the [Recycle Zones map](https://open-okc.hub.arcgis.com/datasets/0f286e1243ca4bb39a70e323b1608222_3/explore?location=35.486250%2C-97.582400%2C11) and do the same as for trash: zoom into your house, click your zone, and read the `OBJECTID` from the info popup. Enter it as `recycleObjectID`.
 
-Open each link above, use the "Query" page to locate the zone polygon that covers your address, and read its `OBJECTID`. Enter those IDs in the corresponding configuration fields. Because recycling is every other week and the portal only reports the weekday, also set `recycle_reference_date` to a date you know recycling was collected.
+**Bulky waste** — open the [Bulky Waste Zones viewer](https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map), find your house on the map, then switch to the **Table** tab and filter by map to read your `OBJECTID`. Enter it as `bulkyObjectID`.
+
+Because recycling is every other week and the portal only reports the weekday, also set `recycle_reference_date` to a date you know recycling was collected.
