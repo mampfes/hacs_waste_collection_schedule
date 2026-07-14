@@ -11950,6 +11950,29 @@
         },
         "data_description": {}
       },
+      "args_hasselroth_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "The Hasselroth district (Ortsteil), e.g. 'Neuenhasslau', 'Niedermittlau' or 'Gondsroth'"
+        }
+      },
+      "reconfigure_hasselroth_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "district": "The Hasselroth district (Ortsteil), e.g. 'Neuenhasslau', 'Niedermittlau' or 'Gondsroth'"
+        }
+      },
       "args_ics_huellhorst_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

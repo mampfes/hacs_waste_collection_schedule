@@ -9909,6 +9909,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "Gemeinde Hasselroth",
+      "module": "hasselroth_de",
+      "default_params": {},
+      "id": "hasselroth_de"
+    },
+    {
       "title": "Gemeinde H\u00fcllhorst",
       "module": "ics",
       "default_params": {},
