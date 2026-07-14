@@ -53,6 +53,11 @@ TEST_CASES = {
         "frequency": "WEEKLY",
         "weekdays": "FR",
     },
+    "Recurrence weekly on multiple weekdays": {
+        "type": "Every Tuesday and Thursday",
+        "frequency": "WEEKLY",
+        "weekdays": {"TU": 1, "TH": 1},
+    },
     "Recurrence with exclude date range": {
         "type": "Weekly excluding summer break",
         "frequency": "WEEKLY",
