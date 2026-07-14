@@ -289,6 +289,11 @@ TEST_CASES = {
         "municipal": "Hernstein",
         "calendar": "ICS Hernstein",
     },  # old version (as of 29.12.2024)
+    "Baden - Berndorf Abfuhrbereich II": {
+        "district": "baden",
+        "municipal": "Berndorf",
+        "calendar": "Abfuhrbereich II",
+    },  # regression test for issue #4675: municipal scoping + Roman numeral collision (II vs III)
     "Gmünd": {
         "district": "gmuend",
         "municipal": "Weitra",
@@ -554,7 +559,7 @@ class Source:
 
         entries: list[Collection] = []
         for day in schedule:
-            txt = day.text.strip().split(" \u00a0")
+            txt = day.text.strip().split("  ")
             if len(txt) == 1:
                 txt = day.text.strip().split(" ")
                 txt = [
@@ -651,23 +656,68 @@ class Source:
     def get_ort(self, s: requests.Session, data: dict[str, str]) -> dict[str, str]:
         return self.get_genereic(s, data, "town", self._town, "ort", self.get_plz)
 
-    def _fetch_new_from_list(self, soup: BeautifulSoup) -> list[Collection]:
-        """Fetch ICS links directly from the page, e.g. for Korneuburg."""
-        # Find all <a>-Tags with .ics-Links
-        ics_links = {}
-        for a in soup.find_all("a", href=True):
+    def _collect_ics_links(self, scope: BeautifulSoup) -> dict[str, str]:
+        """Collect all .ics links (and their link text) within a soup scope."""
+        links: dict[str, str] = {}
+        for a in scope.find_all("a", href=True):
             href = a["href"]
-            if href.endswith(".ics"):
-                # Calendarname from Linktext
-                cal_name = a.text.strip()
-                # build full URL
-                if href.startswith("/"):
-                    url = self._district_url.rstrip("/") + href
-                elif href.startswith("http"):
-                    url = href
-                else:
-                    url = self._district_url.rstrip("/") + "/" + href
-                ics_links[cal_name] = url
+            if not href.endswith(".ics"):
+                continue
+            # Calendarname from Linktext
+            cal_name = a.text.strip()
+            # build full URL
+            if href.startswith("/"):
+                url = self._district_url.rstrip("/") + href
+            elif href.startswith("http"):
+                url = href
+            else:
+                url = self._district_url.rstrip("/") + "/" + href
+            links[cal_name] = url
+        return links
+
+    @staticmethod
+    def _bounded_substring_match(needle: str, haystack: str) -> bool:
+        """Substring match that requires non-alphanumeric (or string-edge)
+        boundaries around the match, so e.g. "Abfuhrbereich II" does not
+        spuriously match "Abfuhrbereich III" (see issue #4675)."""
+        pattern = r"(?<![a-z0-9])" + re.escape(needle.lower()) + r"(?![a-z0-9])"
+        return re.search(pattern, haystack.lower()) is not None
+
+    def _fetch_new_from_list(self, soup: BeautifulSoup) -> list[Collection]:
+        """Fetch ICS links directly from the page, e.g. for Korneuburg/Baden."""
+        # Some websites (e.g. Baden) group all calendars for a municipality
+        # inside an accordion item (`div.el-item` with an `a.el-title`
+        # heading). When this structure is present and a municipal was
+        # specified, scope the ICS search to the matching accordion item(s)
+        # only. Without this scoping, different municipalities offering
+        # identically-named calendars (e.g. both Berndorf and Ebreichsdorf
+        # offer an "Abfuhrbereich II") leak into each other, see issue #4675.
+        accordion_items = soup.select("div.el-item")
+        municipal_sections = [
+            item for item in accordion_items if item.select_one("a.el-title")
+        ]
+
+        if municipal_sections and self._municipal:
+            matched_sections = [
+                item
+                for item in municipal_sections
+                if (title := item.select_one("a.el-title"))
+                and self.compare(self._municipal, title.get_text())
+            ]
+            if not matched_sections:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "municipal",
+                    self._municipal,
+                    [
+                        section.select_one("a.el-title").get_text().strip()  # type: ignore[union-attr]
+                        for section in municipal_sections
+                    ],
+                )
+            ics_links: dict[str, str] = {}
+            for section in matched_sections:
+                ics_links.update(self._collect_ics_links(section))
+        else:
+            ics_links = self._collect_ics_links(soup)
 
         if not ics_links:
             raise Exception("Could not find any ics links on the page")
@@ -675,12 +725,21 @@ class Source:
         matched_links = []
         # If calendar(s) are specified, filter for them
         if self._calendars and any(self._calendars):
+            # 1. Prefer an exact (whitespace/punctuation-insensitive) match.
             for cal in self._calendars:
                 for name, url in ics_links.items():
-                    # More tolerant: substring match
-                    if cal.lower() in name.lower():
+                    if self.compare(cal, name):
                         matched_links.append(url)
-            # If no match, but only one ICS link exists, use that one
+            # 2. Fall back to a boundary-safe substring match. This stays
+            # tolerant (e.g. lets users omit an "ICS " prefix) while avoiding
+            # the Roman-numeral collision from plain substring matching.
+            if not matched_links:
+                for cal in self._calendars:
+                    for name, url in ics_links.items():
+                        if self._bounded_substring_match(cal, name):
+                            matched_links.append(url)
+            # If no match, but only one ICS link exists (within the possibly
+            # municipal-scoped selection), use that one
             if not matched_links and len(ics_links) == 1:
                 matched_links = list(ics_links.values())
         else:
