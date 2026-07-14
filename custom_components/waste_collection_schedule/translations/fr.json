@@ -17963,6 +17963,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "building_type": "Building Type",
           "city": "Ville",
           "house": "Maison",
           "street": "Rue"
@@ -17976,6 +17977,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "building_type": "Building Type",
           "city": "Ville",
           "house": "Maison",
           "street": "Rue"

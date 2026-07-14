@@ -17836,6 +17836,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
           "city": "City",
           "house": "House",
           "street": "Street"
@@ -17849,6 +17850,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
           "city": "City",
           "house": "House",
           "street": "Street"

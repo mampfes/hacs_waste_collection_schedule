@@ -18215,6 +18215,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "building_type": "Gebäudetyp",
           "city": "Stadt",
           "house": "Hausnummer",
           "street": "Straße"
@@ -18228,6 +18229,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "building_type": "Gebäudetyp",
           "city": "Stadt",
           "house": "Hausnummer",
           "street": "Straße"

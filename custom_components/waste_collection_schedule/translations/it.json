@@ -17926,6 +17926,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "building_type": "Building Type",
           "city": "Città",
           "house": "Casa",
           "street": "Strada"
@@ -17939,6 +17940,7 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
+          "building_type": "Building Type",
           "city": "Città",
           "house": "Casa",
           "street": "Strada"

@@ -18674,12 +18674,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
           "city": "City",
           "house": "House Number",
           "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "building_type": "Optional. Some addresses (e.g. in Gdynia) have separate schedules for single-family (single) and multi-family (multi) buildings. Leave empty if your address only has one schedule.",
           "city": "City name (szczecin, gdansk, gdynia, or sopot).",
           "house": "House number.",
           "street": "Street name in uppercase as shown on SmiecioPlan."
@@ -18690,11 +18692,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
           "city": "City",
           "house": "House Number",
           "street": "Street"
         },
         "data_description": {
+          "building_type": "Optional. Some addresses (e.g. in Gdynia) have separate schedules for single-family (single) and multi-family (multi) buildings. Leave empty if your address only has one schedule.",
           "city": "City name (szczecin, gdansk, gdynia, or sopot).",
           "house": "House number.",
           "street": "Street name in uppercase as shown on SmiecioPlan."
