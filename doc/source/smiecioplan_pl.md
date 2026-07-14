@@ -22,6 +22,8 @@ waste_collection_schedule:
 
 **house** *(string) (required)*: House number.
 
+**building_type** *(string) (optional)*: Some addresses (e.g. in Gdynia) have separate schedules for single-family (`single`) and multi-family (`multi`) buildings. Leave empty if your address only has one schedule. If your imported schedule seems to contain duplicate or extra collection dates, try setting this to `single` or `multi` to see which one matches your address on the SmiecioPlan website.
+
 ## Example
 
 ```yaml
@@ -32,4 +34,15 @@ waste_collection_schedule:
         city: "gdansk"
         street: "ABRAHAMA"
         house: "1"
+```
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: smiecioplan_pl
+      args:
+        city: "gdynia"
+        street: "ŹRÓDŁO MARII"
+        house: "19H"
+        building_type: "single"
 ```
