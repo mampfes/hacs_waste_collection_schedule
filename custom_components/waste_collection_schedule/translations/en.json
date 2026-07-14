@@ -24417,11 +24417,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number / Name / UPRN",
           "post_code": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "House number, house name, or UPRN (Unique Property Reference Number) of the property. If your property only has a name and no number, enter the name; if it is still not found, the error message will list the full addresses found for your postcode so you can copy the UPRN or exact wording from there.",
+          "post_code": "Postcode of the property, e.g. HR4 9JS"
         }
       },
       "reconfigure_herefordshire_gov_uk": {
@@ -24429,10 +24431,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number / Name / UPRN",
           "post_code": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "House number, house name, or UPRN (Unique Property Reference Number) of the property. If your property only has a name and no number, enter the name; if it is still not found, the error message will list the full addresses found for your postcode so you can copy the UPRN or exact wording from there.",
+          "post_code": "Postcode of the property, e.g. HR4 9JS"
+        }
       },
       "args_highpeak_gov_uk": {
         "title": "Configure Source",
