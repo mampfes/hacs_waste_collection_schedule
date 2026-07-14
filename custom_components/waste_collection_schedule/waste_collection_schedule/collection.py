@@ -152,6 +152,29 @@ class Collection:
         for k, v in d.items():
             self[k] = v
 
+    # Read-side Mapping protocol. The pre-refactor Collection subclassed ``dict``
+    # ("to enable JSON serialization"), so ``dict(c)``, ``{**c}``, ``len(c)``,
+    # iteration and ``c.items()/keys()/values()`` all worked — chiefly for
+    # user-authored value/date templates that receive the collection as their
+    # variable. This restores that surface over ``as_dict()`` without
+    # reintroducing dict inheritance (which would clash with the custom
+    # __eq__/__hash__). Note: ``json.dumps(c)`` still needs ``c.as_dict()`` — a
+    # plain object is not JSON-encodable the way a dict subclass was.
+    def keys(self):
+        return self.as_dict().keys()
+
+    def values(self):
+        return self.as_dict().values()
+
+    def items(self):
+        return self.as_dict().items()
+
+    def __iter__(self):
+        return iter(self.as_dict())
+
+    def __len__(self):
+        return len(self.as_dict())
+
     @property
     def _identity_key(self) -> str:
         """Stable, locale-independent identity for equality and hashing.
@@ -357,8 +380,29 @@ class CollectionGroup:
     def __getitem__(self, key):
         return self.as_dict()[key]
 
+    def __contains__(self, key):
+        return key in self.as_dict()
+
     def get(self, key, default=None):
         return self.as_dict().get(key, default)
+
+    # Read-side Mapping protocol, as on Collection (the pre-refactor
+    # CollectionGroup also subclassed dict). Restores dict(g), {**g}, len(g),
+    # iteration and g.items()/keys()/values() for templates.
+    def keys(self):
+        return self.as_dict().keys()
+
+    def values(self):
+        return self.as_dict().values()
+
+    def items(self):
+        return self.as_dict().items()
+
+    def __iter__(self):
+        return iter(self.as_dict())
+
+    def __len__(self):
+        return len(self.as_dict())
 
     def __repr__(self):
         return f"CollectionGroup{{date={self.date}, types={self.types}}}"

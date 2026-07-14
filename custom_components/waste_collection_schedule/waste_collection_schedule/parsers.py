@@ -284,15 +284,27 @@ class IcsEventsParser(Parser[list[IcsEvent]]):
     """Parse response as an iCalendar feed, exposing full event fields.
 
     Like :class:`IcsParser`, but returns ``IcsEvent(date, title, location,
-    description)`` records instead of bare ``(date, summary)`` tuples. Use this
-    with ``classify()`` when the source must inspect the ICS ``LOCATION`` or
-    ``DESCRIPTION`` fields — for example to filter events by collection route::
+    description)`` records instead of bare ``(date, summary)`` tuples. Reach for
+    it when the ICS ``LOCATION``/``DESCRIPTION`` matter.
+
+    To simply *preserve* LOCATION and DESCRIPTION on the calendar event, pair it
+    with the standard :class:`~waste_collection_schedule.transformers.ICSTransformer`;
+    it carries both through automatically, no extra config::
+
+        parse = parsers.IcsEventsParser()
+        transform = ICSTransformer(type_value_map={...})
+
+    Use ``classify()`` instead when the source must *inspect* those fields — for
+    example to filter events by collection route::
 
         parse = parsers.IcsEventsParser()
 
         def classify(self, record) -> Collection | None:
             # record.title / record.location / record.description available
             return Collection(date=record.date, waste_type=...)
+
+    (Plain :class:`IcsParser` remains the default when metadata is not needed:
+    it yields lighter ``(date, summary)`` tuples.)
 
     Pass ``min_events`` (a minimum event count) to assert the feed parsed as
     expected. ``offset``, ``regex``, ``split_at`` and ``title_template`` are

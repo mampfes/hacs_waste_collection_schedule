@@ -31,6 +31,14 @@ Every transformer also accepts:
   * ``date_key``/``type_key`` as a callable (not just a string), to reach a
     nested value (``lambda r: r["wasteType"]["name"]``) or assemble a date from
     several fields — so a non-flat record needn't drop to classify().
+  * ``location_key``/``description_key`` (string or callable, like ``date_key``)
+    to carry per-event metadata onto the Collection, surfaced on Home Assistant
+    calendar events. For a combined round (one record, several types) the same
+    metadata is copied to each emitted Collection. ``HtmlTransformer`` spells
+    these ``location_getter``/``description_getter`` (callables), matching its
+    ``date_getter``/``type_getter``. ``ICSTransformer`` needs neither: paired
+    with ``parsers.IcsEventsParser`` it carries the ICS LOCATION/DESCRIPTION
+    through automatically.
   * ``clean=`` — a label normaliser applied before mapping/resolving; build one
     with ``label_cleaner(strip_suffixes=..., remap=...)``.
   * a date value that is already a ``datetime.date`` (used as-is, not parsed).
@@ -48,6 +56,7 @@ from bs4 import Tag
 
 from . import date_parsers
 from .collection import Collection
+from .service.ICS import IcsEvent
 from .waste_types import WasteType, preserved, resolve
 
 _LOGGER = logging.getLogger(__name__)
@@ -68,6 +77,8 @@ class BaseTransformer(ABC, Generic[T]):
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
         skip_unparseable_dates: bool = False,
+        location_key: "str | Callable[[Any], Any] | None" = None,
+        description_key: "str | Callable[[Any], Any] | None" = None,
     ):
         self._type_value_map: dict[str, TypeMapValue] = (
             {k.strip().lower(): v for k, v in type_value_map.items()}
@@ -84,6 +95,11 @@ class BaseTransformer(ABC, Generic[T]):
         # When True, a record whose date won't parse is skipped (returns None)
         # rather than raising, so one malformed row doesn't fail the whole fetch.
         self._skip_unparseable_dates = skip_unparseable_dates
+        # Optional per-event metadata carried onto the Collection (a field name
+        # or a callable, read the same way as date_key/type_key). Surfaced on HA
+        # calendar events; copied to each Collection of a combined round.
+        self._location_key = location_key
+        self._description_key = description_key
 
     def _to_date(self, value: Any) -> datetime.date | None:
         """Coerce a record's date value to a date: pass a ``date`` through,
@@ -102,12 +118,14 @@ class BaseTransformer(ABC, Generic[T]):
         return self._parse_date(str(value))
 
     @staticmethod
-    def _get(record: Mapping[str, Any], key: "str | Callable[..., Any]") -> Any:
+    def _get(record: Any, key: "str | Callable[..., Any]") -> Any:
         """Read a field by key, or compute it with a callable.
 
-        A plain string reads ``record[key]``; a callable receives the whole
-        record, so a source can reach a nested value (``r["wasteType"]["name"]``)
-        or assemble a date from several fields without a custom transformer."""
+        A plain string reads ``record.get(key)`` (so the record must be a
+        Mapping); a callable receives the whole record, so a source can reach a
+        nested value (``r["wasteType"]["name"]``), read an attribute off a
+        non-dict record (an XML Element, an ``IcsEvent``), or assemble a date
+        from several fields without a custom transformer."""
         if callable(key):
             return key(record)
         return record.get(key)
@@ -156,21 +174,55 @@ class BaseTransformer(ABC, Generic[T]):
         )
         return preserved(label)
 
+    def _meta(self, record: Any) -> tuple[Any, Any]:
+        """Read optional location/description from a record.
+
+        Uses ``location_key``/``description_key`` (a field name or a callable,
+        read the same way as ``date_key``/``type_key``). Returns ``(None, None)``
+        when neither is configured, so transformers that carry no metadata are
+        unaffected.
+        """
+        location = (
+            self._get(record, self._location_key)
+            if self._location_key is not None
+            else None
+        )
+        description = (
+            self._get(record, self._description_key)
+            if self._description_key is not None
+            else None
+        )
+        return location, description
+
     @staticmethod
     def _collections(
-        date: datetime.date, resolved: TypeMapValue | None
+        date: datetime.date,
+        resolved: TypeMapValue | None,
+        location: Any = None,
+        description: Any = None,
     ) -> Collection | list[Collection] | None:
         """Build the Collection(s) for a resolved type on a given date.
 
         Returns None to skip, a single Collection for a scalar type (byte
-        identical to the pre-multi-type behaviour), or one Collection per type
-        for a list-valued mapping (a combined round).
+        identical to the pre-multi-type behaviour when no metadata is set), or
+        one Collection per type for a list-valued mapping (a combined round).
+        Any ``location``/``description`` is applied to every emitted Collection
+        (``Collection.set_*`` strips whitespace and treats empty as unset).
         """
         if resolved is None:
             return None
+
+        def build(waste_type: WasteType) -> Collection:
+            collection = Collection(date=date, waste_type=waste_type)
+            if location is not None:
+                collection.set_location(location)
+            if description is not None:
+                collection.set_description(description)
+            return collection
+
         if isinstance(resolved, list):
-            return [Collection(date=date, waste_type=wt) for wt in resolved]
-        return Collection(date=date, waste_type=resolved)
+            return [build(wt) for wt in resolved]
+        return build(resolved)
 
     @abstractmethod
     def __call__(self, record: T) -> Collection | list[Collection] | None:
@@ -213,8 +265,17 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
         skip_unparseable_dates: bool = False,
+        location_key: "str | Callable[[Any], Any] | None" = None,
+        description_key: "str | Callable[[Any], Any] | None" = None,
     ):
-        super().__init__(type_value_map, parse_date, clean, skip_unparseable_dates)
+        super().__init__(
+            type_value_map,
+            parse_date,
+            clean,
+            skip_unparseable_dates,
+            location_key,
+            description_key,
+        )
         self._date_key = date_key
         self._type_key = type_key
 
@@ -226,7 +287,8 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
             return None
         raw_type = str(self._get(record, self._type_key) or "")
         resolved = self._resolve_type(raw_type)
-        return self._collections(date, resolved)
+        location, description = self._meta(record)
+        return self._collections(date, resolved, location, description)
 
 
 class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
@@ -259,8 +321,16 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
         name_field: str = "name",
         value_field: str = "value",
         clean: Callable[[str], str] | None = None,
+        location_key: "str | Callable[[Any], Any] | None" = None,
+        description_key: "str | Callable[[Any], Any] | None" = None,
     ):
-        super().__init__(type_value_map, parse_date, clean)
+        super().__init__(
+            type_value_map,
+            parse_date,
+            clean,
+            location_key=location_key,
+            description_key=description_key,
+        )
         self._date_key = date_key
         self._type_key = type_key
         self._name_field = name_field
@@ -279,19 +349,32 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
             return None
         raw_type = str(fields.get(self._type_key, ""))
         resolved = self._resolve_type(raw_type)
-        return self._collections(self._parse_date(date_str), resolved)
+        # Read metadata from the flattened name/value pairs, not the raw list.
+        location, description = self._meta(fields)
+        return self._collections(
+            self._parse_date(date_str), resolved, location, description
+        )
 
 
-class ICSTransformer(BaseTransformer[tuple[datetime.date, str]]):
-    """Transform a (date, summary) tuple record from parsers.IcsParser.
+class ICSTransformer(BaseTransformer["tuple[datetime.date, str] | IcsEvent"]):
+    """Transform an ICS record into a Collection.
 
-    Use with ``parse = parsers.IcsParser()``. The date is already a
-    datetime.date object so no date parsing is needed::
+    Accepts either a ``(date, summary)`` tuple from ``parsers.IcsParser`` or an
+    ``IcsEvent(date, title, location, description)`` from
+    ``parsers.IcsEventsParser``. The date is already a datetime.date object so
+    no date parsing is needed::
 
         parse = parsers.IcsParser()
         transform = ICSTransformer(
             type_value_map={"General Waste": GENERAL_WASTE, "Recycling": RECYCLABLES},
         )
+
+    To preserve the ICS LOCATION and DESCRIPTION on the calendar event, pair it
+    with the events parser instead — no extra transformer config is needed, the
+    metadata is carried through automatically::
+
+        parse = parsers.IcsEventsParser()
+        transform = ICSTransformer(type_value_map={...})
 
     Summaries not in ``type_value_map`` are resolved against the shared
     multilingual vocabulary, and otherwise preserved verbatim (never collapsed
@@ -299,21 +382,40 @@ class ICSTransformer(BaseTransformer[tuple[datetime.date, str]]):
 
     Args:
         type_value_map: Maps summary strings (case-insensitive) to WasteTypes.
+        location_key/description_key: rarely needed with the events parser (it
+            supplies both), but available to override the source of the metadata.
     """
 
     def __init__(
         self,
         type_value_map: Mapping[str, TypeMapValue] | None = None,
         clean: Callable[[str], str] | None = None,
+        location_key: "str | Callable[[Any], Any] | None" = None,
+        description_key: "str | Callable[[Any], Any] | None" = None,
     ):
-        super().__init__(type_value_map, clean=clean)
+        super().__init__(
+            type_value_map,
+            clean=clean,
+            location_key=location_key,
+            description_key=description_key,
+        )
 
     def __call__(
-        self, record: tuple[datetime.date, str]
+        self, record: "tuple[datetime.date, str] | IcsEvent"
     ) -> Collection | list[Collection] | None:
-        date, summary = record
+        if isinstance(record, IcsEvent):
+            date, summary = record.date, record.title
+            location, description = record.location, record.description
+        else:
+            date, summary = record
+            location = description = None
+        # An explicit key overrides the event's own field when configured.
+        if self._location_key is not None:
+            location = self._get(record, self._location_key)
+        if self._description_key is not None:
+            description = self._get(record, self._description_key)
         resolved = self._resolve_type(summary)
-        return self._collections(date, resolved)
+        return self._collections(date, resolved, location, description)
 
 
 class RowTransformer(BaseTransformer[tuple[Any, str]]):
@@ -338,15 +440,28 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
         skip_unparseable_dates: bool = False,
+        location_key: "str | Callable[[Any], Any] | None" = None,
+        description_key: "str | Callable[[Any], Any] | None" = None,
     ):
-        super().__init__(type_value_map, parse_date, clean, skip_unparseable_dates)
+        super().__init__(
+            type_value_map,
+            parse_date,
+            clean,
+            skip_unparseable_dates,
+            location_key,
+            description_key,
+        )
 
     def __call__(self, record: tuple[Any, str]) -> Collection | list[Collection] | None:
         raw_date, label = record
         date = self._to_date(raw_date)
         if date is None:
             return None
-        return self._collections(date, self._resolve_type(str(label)))
+        # A row is a tuple, so location_key/description_key must be callables.
+        location, description = self._meta(record)
+        return self._collections(
+            date, self._resolve_type(str(label)), location, description
+        )
 
 
 class HtmlTransformer(BaseTransformer[Tag]):
@@ -368,6 +483,9 @@ class HtmlTransformer(BaseTransformer[Tag]):
         type_getter:   Callable(element) → type string.
         type_value_map: Maps raw type strings (case-insensitive) to WasteTypes.
         parse_date:    A ``date_parsers`` callable. Defaults to ``date_parsers.auto``.
+        location_getter/description_getter: optional Callable(element) → metadata
+            string, carried onto the Collection (HTML's spelling of
+            ``location_key``/``description_key``).
     """
 
     def __init__(
@@ -377,8 +495,16 @@ class HtmlTransformer(BaseTransformer[Tag]):
         type_value_map: Mapping[str, TypeMapValue] | None = None,
         parse_date: date_parsers.DateParser | None = None,
         clean: Callable[[str], str] | None = None,
+        location_getter: Callable[[Tag], Any] | None = None,
+        description_getter: Callable[[Tag], Any] | None = None,
     ):
-        super().__init__(type_value_map, parse_date, clean)
+        super().__init__(
+            type_value_map,
+            parse_date,
+            clean,
+            location_key=location_getter,
+            description_key=description_getter,
+        )
         self._date_getter = date_getter
         self._type_getter = type_getter
 
@@ -386,6 +512,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
         try:
             raw_date = self._date_getter(record)
             raw_type = self._type_getter(record)
+            location, description = self._meta(record)
         except Exception as e:
             _LOGGER.debug("HtmlTransformer: failed to extract fields: %s", e)
             return None
@@ -399,7 +526,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
             date = self._parse_date(str(raw_date))
 
         resolved = self._resolve_type(str(raw_type))
-        return self._collections(date, resolved)
+        return self._collections(date, resolved, location, description)
 
 
 def label_cleaner(

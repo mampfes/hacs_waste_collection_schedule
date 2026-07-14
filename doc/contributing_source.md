@@ -164,6 +164,28 @@ The default preprocessor wraps a single dict into a one-item list and passes exi
 
 All accept an optional `parse_date` (a `date_parsers` callable; default is `date_parsers.auto`). All accept an optional `type_value_map`. A map value may be a single `WasteType` or a `list[WasteType]` for a combined round that covers several types on one date (e.g. a glass-plus-paper collection); the transformer then emits one `Collection` per type. See the next section for how a label becomes a `WasteType`.
 
+#### Carrying event metadata (location and description)
+
+Home Assistant calendar events can show a `location` and a `description`. To preserve these declaratively, pass `location_key`/`description_key` to any transformer (a field name or a callable, read exactly like `date_key`/`type_key`); the value is set on the resulting `Collection`, and copied to each one of a combined round. `HtmlTransformer` spells these `location_getter`/`description_getter` (callables), to match its `date_getter`/`type_getter`.
+
+```python
+transform = JsonTransformer(
+    date_key="date", type_key="binType",
+    location_key="zone",
+    description_key=lambda r: r["notes"]["kerbside"],
+    type_value_map={...},
+)
+```
+
+ICS is the special case. `IcsParser` yields lightweight `(date, summary)` tuples and carries no metadata. To preserve the ICS `LOCATION`/`DESCRIPTION`, pair `IcsEventsParser` with the standard `ICSTransformer`, which carries both through automatically (no extra config):
+
+```python
+parse = parsers.IcsEventsParser()
+transform = ICSTransformer(type_value_map={...})   # LOCATION/DESCRIPTION preserved
+```
+
+Use `IcsEventsParser` with `classify()` only when the source must *inspect* those fields (e.g. filter events by route); use plain `IcsParser` when metadata is not needed.
+
 ### Config params (`waste_collection_schedule.config_params`)
 
 `PARAMS` is a list of typed `ConfigParam` descriptors. They drive both the config flow (the UI form) and up-front validation, so retrievers and transformers can assume clean arguments.

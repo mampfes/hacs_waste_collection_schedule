@@ -265,6 +265,39 @@ class TestCollection:
         c.set_location(None)
         assert c.location is None
 
+    def test_dict_read_protocol_matches_as_dict(self):
+        # The pre-refactor Collection was a dict subclass; templates could
+        # iterate/unpack it. Restore that read surface over as_dict().
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 15), waste_type=GENERAL_WASTE)
+        c.set_location("Zone A")
+        expected = c.as_dict()
+
+        assert dict(c) == expected
+        assert {**c} == expected
+        assert set(c.keys()) == set(expected)
+        assert set(c) == set(expected)
+        assert len(c) == len(expected)
+        assert dict(c.items()) == expected
+        assert list(c.values()) == list(expected.values())
+        assert "date" in c and "location" in c
+
+    def test_collection_group_dict_read_protocol(self):
+        from waste_collection_schedule.collection import Collection, CollectionGroup
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+
+        c1 = Collection(date=datetime.date(2026, 1, 15), waste_type=GENERAL_WASTE)
+        c2 = Collection(date=datetime.date(2026, 1, 15), waste_type=RECYCLABLES)
+        g = CollectionGroup.create([c1, c2])
+        expected = g.as_dict()
+
+        assert dict(g) == expected
+        assert {**g} == expected
+        assert len(g) == len(expected)
+        assert "types" in g
+
 
 class TestLegacyCollection:
     """LegacyCollection — adapter for old-style sources using t= and icon=."""
@@ -2908,6 +2941,153 @@ class TestTransformers:
         )
         result = t({})
         assert result.date == datetime.date(2026, 6, 1)
+
+    # --- location/description metadata (declarative, #6819) ---
+
+    def test_json_transformer_carries_location_and_description(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer(
+            "date",
+            "bin",
+            {"refuse": GENERAL_WASTE},
+            location_key="zone",
+            description_key="note",
+        )
+        result = t(
+            {
+                "date": "2026-01-15",
+                "bin": "refuse",
+                "zone": "Zone A",
+                "note": "Kerbside by 6am",
+            }
+        )
+        assert result is not None
+        assert result.location == "Zone A"
+        assert result.description == "Kerbside by 6am"
+
+    def test_json_transformer_location_key_callable(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer(
+            "date",
+            "bin",
+            {"refuse": GENERAL_WASTE},
+            location_key=lambda r: r["addr"]["suburb"],
+        )
+        result = t(
+            {"date": "2026-01-15", "bin": "refuse", "addr": {"suburb": "Fremantle"}}
+        )
+        assert result.location == "Fremantle"
+
+    def test_metadata_absent_leaves_collection_unchanged(self):
+        # No location_key/description_key: byte-identical to before.
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = JsonTransformer("date", "bin", {"refuse": GENERAL_WASTE})
+        result = t({"date": "2026-01-15", "bin": "refuse"})
+        assert result.location is None
+        assert result.description is None
+
+    def test_metadata_copied_to_each_collection_of_combined_round(self):
+        from waste_collection_schedule.transformers import JsonTransformer
+        from waste_collection_schedule.waste_types import GLASS, PAPER
+
+        t = JsonTransformer(
+            "date",
+            "type",
+            {"V / PC": [GLASS, PAPER]},
+            location_key="zone",
+        )
+        result = t({"date": "2026-01-15", "type": "V / PC", "zone": "Zone A"})
+        assert isinstance(result, list)
+        assert [c.waste_type for c in result] == [GLASS, PAPER]
+        assert all(c.location == "Zone A" for c in result)
+
+    def test_key_value_transformer_carries_metadata(self):
+        from waste_collection_schedule.transformers import KeyValueTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = KeyValueTransformer(
+            "date",
+            "type",
+            {"red": GENERAL_WASTE},
+            location_key="zone",
+        )
+        record = [
+            {"name": "date", "value": "2026-01-15"},
+            {"name": "type", "value": "red"},
+            {"name": "zone", "value": "North"},
+        ]
+        result = t(record)
+        assert result.location == "North"
+
+    def test_html_transformer_metadata_getters(self):
+        from waste_collection_schedule.transformers import HtmlTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = HtmlTransformer(
+            date_getter=lambda el: el["date"],
+            type_getter=lambda el: el["type"],
+            type_value_map={"refuse": GENERAL_WASTE},
+            location_getter=lambda el: el.get("loc"),
+            description_getter=lambda el: el.get("desc"),
+        )
+        result = t(
+            {"date": "2026-01-15", "type": "refuse", "loc": "Depot 2", "desc": "AM"}
+        )
+        assert result.location == "Depot 2"
+        assert result.description == "AM"
+
+    def test_ics_transformer_preserves_event_location_and_description(self):
+        # The standard IcsEventsParser -> ICSTransformer combination carries
+        # ICS LOCATION/DESCRIPTION through with no extra config.
+        from waste_collection_schedule.service.ICS import IcsEvent
+        from waste_collection_schedule.transformers import ICSTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = ICSTransformer({"general waste": GENERAL_WASTE})
+        event = IcsEvent(
+            date=datetime.date(2026, 3, 1),
+            title="General Waste",
+            location="Route 7",
+            description="Present bin the night before",
+        )
+        result = t(event)
+        assert result is not None
+        assert result.date == datetime.date(2026, 3, 1)
+        assert result.waste_type is GENERAL_WASTE
+        assert result.location == "Route 7"
+        assert result.description == "Present bin the night before"
+
+    def test_ics_transformer_tuple_still_has_no_metadata(self):
+        # The plain (date, summary) tuple path is unchanged.
+        from waste_collection_schedule.transformers import ICSTransformer
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        t = ICSTransformer({"general waste": GENERAL_WASTE})
+        result = t((datetime.date(2026, 3, 1), "General Waste"))
+        assert result.location is None
+        assert result.description is None
+
+    def test_ics_transformer_event_metadata_copied_to_combined_round(self):
+        from waste_collection_schedule.service.ICS import IcsEvent
+        from waste_collection_schedule.transformers import ICSTransformer
+        from waste_collection_schedule.waste_types import GLASS, PAPER
+
+        t = ICSTransformer({"glass and paper": [GLASS, PAPER]})
+        event = IcsEvent(
+            date=datetime.date(2026, 3, 1),
+            title="Glass and Paper",
+            location="Route 7",
+            description=None,
+        )
+        result = t(event)
+        assert isinstance(result, list)
+        assert all(c.location == "Route 7" for c in result)
 
 
 # =====================================================================
