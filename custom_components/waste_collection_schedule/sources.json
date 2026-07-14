@@ -3228,6 +3228,12 @@
       "id": "goessendorf_at"
     },
     {
+      "title": "Marktgemeinde Kaltenleutgeben",
+      "module": "kaltenleutgeben_gv_at",
+      "default_params": {},
+      "id": "kaltenleutgeben_gv_at"
+    },
+    {
       "title": "Marktgemeinde Kirchberg am Wechsel",
       "module": "ics",
       "default_params": {},
