@@ -46,6 +46,11 @@ TEST_CASES = {
         "house_number": "397",
         "service": "sliedrecht",
     },
+    "Spaarnelanden": {
+        "postal_code": "2013EA",
+        "house_number": "1",
+        "service": "spaarnelanden",
+    },
     "Tollebeek": {"postal_code": "8309AV", "house_number": "1"},
     "Hvcgroep: Tollebeek": {
         "postal_code": "8309AV",
