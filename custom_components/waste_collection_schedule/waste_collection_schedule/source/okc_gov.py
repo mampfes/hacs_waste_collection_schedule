@@ -69,9 +69,9 @@ ICON_MAP = {
 PARAM_DESCRIPTIONS = {
     "en": {
         "recordID": "Record ID for the unofficial okc.schizo.dev source. This single ID covers trash, recycling and bulky waste. Look up your address at https://okc.schizo.dev/ to find it. This is the easiest option and is recommended.",
-        "trashObjectID": "OBJECTID of your trash collection zone from the official OKC Open Data Portal (ArcGIS). Only needed if you are not using recordID.",
-        "recycleObjectID": "OBJECTID of your recycling zone from the official OKC Open Data Portal (ArcGIS). Only needed if you are not using recordID.",
-        "bulkyObjectID": "OBJECTID of your bulky waste zone from the official OKC Open Data Portal (ArcGIS). Only needed if you are not using recordID.",
+        "trashObjectID": "OBJECTID of your trash collection zone from the official OKC Open Data Portal (ArcGIS). Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+        "recycleObjectID": "OBJECTID of your recycling zone from the official OKC Open Data Portal (ArcGIS). Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+        "bulkyObjectID": "OBJECTID of your bulky waste zone from the official OKC Open Data Portal (ArcGIS). Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
         "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the official data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly. Not needed when using recordID.",
     },
 }
@@ -87,7 +87,8 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
     "official method, recycling is collected every other week and the portal only reports the "
     "weekday, so also set recycle_reference_date to one date you know recycling was (or will be) "
     "collected to pin the correct week. If both recordID and official OBJECTIDs are provided, the "
-    "official source is used first and falls back to the unofficial recordID if it returns nothing."
+    "unofficial recordID source is used first and falls back to the official OBJECTIDs if it fails "
+    "or returns nothing."
 }
 
 
@@ -372,12 +373,20 @@ class Source:
         return entries
 
     def fetch(self):
-        # When official OBJECTIDs are configured, use them first. If they resolve
-        # to nothing (e.g. every zone reports "unknown" on collection day) and an
-        # unofficial recordID is also configured, fall back to it automatically.
-        if any(self._object_ids.values()):
-            entries = self._fetch_official()
-            if entries or not self._record_id:
+        # Prefer the unofficial okc.schizo.dev API (single recordID, explicit
+        # dates, most reliable feed). If it errors or returns nothing and
+        # official OBJECTIDs are also configured, fall back to the official
+        # ArcGIS zones automatically.
+        has_official = any(self._object_ids.values())
+
+        if self._record_id:
+            try:
+                entries = self._fetch_unofficial()
+            except Exception:
+                if not has_official:
+                    raise
+                entries = []
+            if entries or not has_official:
                 return entries
 
-        return self._fetch_unofficial()
+        return self._fetch_official()

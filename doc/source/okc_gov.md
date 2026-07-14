@@ -7,7 +7,7 @@ This source supports two methods:
 1. **Unofficial community API (`okc.schizo.dev`) — recommended.** A single `recordID` covers trash, recycling and bulky waste, and the API returns explicit upcoming dates.
 2. **Official OKC Open Data Portal (ArcGIS FeatureServer).** Requires a separate OBJECTID for each zone (trash, recycling, bulky) and, for recycling, a reference date so the every-other-week cadence can be calculated.
 
-If you configure both, the official source is used first and automatically falls back to the unofficial `recordID` when the official zones return no upcoming collections.
+If you configure both, the unofficial `recordID` source is used first and automatically falls back to the official ArcGIS zones if the unofficial source fails or returns no upcoming collections.
 
 ## Configuration via configuration.yaml
 
