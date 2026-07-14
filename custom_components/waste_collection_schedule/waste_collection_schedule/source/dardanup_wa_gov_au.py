@@ -180,9 +180,10 @@ class Source:
                             cleaned = _clean_street(raw)
                             if cleaned:
                                 all_streets.append(cleaned)
-                                if cleaned.lower() == street_lower:
-                                    found_weekday = current_day
-                                elif street_lower in cleaned.lower():
+                                if (
+                                    cleaned.lower() == street_lower
+                                    or street_lower in cleaned.lower()
+                                ):
                                     found_weekday = current_day
 
         if found_weekday is None:

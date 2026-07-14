@@ -331,6 +331,7 @@ SERVICE_PROVIDERS = {
     "San Cipriano Po",
     "Stradella",
     "Torre de' Passeri",
+    "Scalea",
 }
 
 # MUNICIPALITIES that are known to be supported but do not offer a calendar:
@@ -346,6 +347,7 @@ TEST_CASES = {
         "municipality": "Torre de' Passeri",
         "area": "Utenze domestiche",
     },
+    "Scalea": {"municipality": "Scalea"},
 }
 
 

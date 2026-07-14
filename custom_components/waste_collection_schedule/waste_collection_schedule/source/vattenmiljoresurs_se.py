@@ -153,9 +153,9 @@ def _collection_dates(freq_code: str) -> list[date]:
         if interval_key == "h1":
             results.append(candidate)
         elif interval_key == "h2":
-            if odd_even == "1" and week_number % 2 == 1:
-                results.append(candidate)
-            elif odd_even == "2" and week_number % 2 == 0:
+            if (odd_even == "1" and week_number % 2 == 1) or (
+                odd_even == "2" and week_number % 2 == 0
+            ):
                 results.append(candidate)
         elif interval_key == "h4":
             # Every 4 weeks: the odd_even digit encodes which week-mod-4 class

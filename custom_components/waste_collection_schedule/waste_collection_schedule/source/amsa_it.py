@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 import requests
 from waste_collection_schedule import Collection, Icons
@@ -79,7 +79,7 @@ PARAM_TRANSLATIONS = {
 
 
 class Source:
-    def __init__(self, address: Any, house_number: Any, city: Optional[Any] = None):
+    def __init__(self, address: Any, house_number: Any, city: Any | None = None):
         """Create a new source for AMSA and validate inputs.
 
         Validation rules:
@@ -87,7 +87,7 @@ class Source:
         - `house_number` is required and must be a non-empty string or int.
         - `city` is optional. If provided it must be a non-empty string.
         """
-        errors: List[Tuple[str, str]] = []
+        errors: list[tuple[str, str]] = []
 
         # Validate address
         if address is None or not isinstance(address, str) or address.strip() == "":
@@ -126,7 +126,7 @@ class Source:
         self._address = str(address).strip()
         self._house_number = str(house_number).strip()
         self._city = str(city).strip() if city is not None else None
-        self._session: Optional[requests.Session] = None
+        self._session: requests.Session | None = None
 
     def _build_address_query(self) -> str:
         address_query = f"{self._address} {self._house_number}"
@@ -134,7 +134,7 @@ class Source:
             address_query = f"{address_query}, {self._city}"
         return address_query
 
-    def collect_waste_collection_schedule(self) -> Dict[str, List[str]]:
+    def collect_waste_collection_schedule(self) -> dict[str, list[str]]:
         """
         Fetch calendar items by emulating the site's XHR API calls (no Selenium).
 
@@ -210,7 +210,7 @@ class Source:
             ) from e
 
         try:
-            data: Dict[str, Any] = j2.get("data") or {}
+            data: dict[str, Any] = j2.get("data") or {}
             geociv = data.get("idCivico") or data.get("place_id") or suggestion_id
             if geociv is None:
                 raise SourceArgumentNotFound("house_number", self._house_number)
@@ -230,7 +230,7 @@ class Source:
         except Exception as e:
             raise Exception("Could not fetch calendar items: " + str(e)) from e
 
-        collections: Dict[str, List[str]] = {}
+        collections: dict[str, list[str]] = {}
         try:
             items = j3.get("data", [])
             for item in items:
@@ -248,8 +248,8 @@ class Source:
                     desc = desc[len("raccolta ") :]
                 desc = desc.strip()
 
-                matched: List[str] = []
-                for key in ICON_MAP.keys():
+                matched: list[str] = []
+                for key in ICON_MAP:
                     if key in desc:
                         matched.append(key)
                 if not matched:
@@ -266,10 +266,10 @@ class Source:
 
         return collections
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         calendar_data = self.collect_waste_collection_schedule()
 
-        entries: List[Collection] = []
+        entries: list[Collection] = []
         for date_str, events in calendar_data.items():
             try:
                 date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()

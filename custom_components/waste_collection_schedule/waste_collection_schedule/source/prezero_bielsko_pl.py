@@ -1,7 +1,7 @@
 import json
 import re
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any
 
 import requests
 from waste_collection_schedule import Collection, Icons
@@ -89,7 +89,7 @@ class Source:
         self._street = street
         self._house_number = house_number
 
-    def _extract_json_from_response(self, response_text: str) -> Dict[str, Any]:
+    def _extract_json_from_response(self, response_text: str) -> dict[str, Any]:
         match = re.search(r"eval\((.*)\)", response_text)
         if not match:
             raise Exception("Server response does not match expected format.")
@@ -103,7 +103,7 @@ class Source:
                 f"JSON parsing error: {e}\nReceived content: {json_data}"
             ) from e
 
-    def _post_request(self, payload: Dict[str, str]) -> Dict[str, Any]:
+    def _post_request(self, payload: dict[str, str]) -> dict[str, Any]:
         headers = {
             "accept": "*/*",
             "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -119,14 +119,14 @@ class Source:
         return self._extract_json_from_response(response.text)
 
     def _validate_api_response_data(
-        self, data: Dict[str, Any], data_description: str
+        self, data: dict[str, Any], data_description: str
     ) -> None:
         if "dane" not in data or not isinstance(data["dane"], list):
             raise Exception(
                 f"Error downloading {data_description}. Incorrect API response structure: {data}"
             )
 
-    def _get_streets(self) -> List[str]:
+    def _get_streets(self) -> list[str]:
         payload = {
             "option": "com_sita",
             "view": "ulice",
@@ -138,7 +138,7 @@ class Source:
 
         return [street["ulica"] for street in data["dane"] if "ulica" in street]
 
-    def _get_house_numbers(self) -> List[str]:
+    def _get_house_numbers(self) -> list[str]:
         payload = {
             "option": "com_sita",
             "view": "numery",
@@ -193,7 +193,7 @@ class Source:
 
         return data["dane"][0]["symbol"]
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         symbol = self._get_symbol()
 
         payload = {

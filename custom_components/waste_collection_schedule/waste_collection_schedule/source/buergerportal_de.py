@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
-from typing import List, Literal, Optional, TypedDict, Union
+from typing import Literal, TypedDict
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -117,13 +117,13 @@ PARAM_TRANSLATIONS = {
 class CollectionEntry:
     date: date
     waste_type: str
-    icon: Optional[str]
+    icon: str | None
 
     def export(self) -> Collection:
         return Collection(self.date, self.waste_type, self.icon)
 
 
-def quote_none(value: Optional[str]) -> str:
+def quote_none(value: str | None) -> str:
     if value is None:
         return "null"
 
@@ -140,8 +140,8 @@ class Source:
         operator: Operator,
         district: str,
         street: str,
-        subdistrict: Optional[str] = None,
-        number: Union[int, str, None] = None,
+        subdistrict: str | None = None,
+        number: int | str | None = None,
         show_volume: bool = False,
     ):
         self.api_url = get_api_map()[operator]
@@ -272,12 +272,11 @@ class Source:
                         if entry["Ortsname"] == self.district
                     ],
                 ) from None
-            else:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "district",
-                    self.district,
-                    {entry["Ortsname"] for entry in payload["d"]},
-                ) from None
+            raise SourceArgumentNotFoundWithSuggestions(
+                "district",
+                self.district,
+                {entry["Ortsname"] for entry in payload["d"]},
+            ) from None
 
     def fetch_street_id(self, session: requests.Session, district_id: int):
         res = session.get(
@@ -310,11 +309,11 @@ class Source:
 class DistrictRes(TypedDict):
     OrteId: int
     Ortsname: str
-    Ortsteilname: Optional[str]
+    Ortsteilname: str | None
 
 
 class DistrictsRes(TypedDict):
-    d: List[DistrictRes]
+    d: list[DistrictRes]
 
 
 class StreetRes(TypedDict):
@@ -324,7 +323,7 @@ class StreetRes(TypedDict):
 
 
 class StreetsRes(TypedDict):
-    d: List[StreetRes]
+    d: list[StreetRes]
 
 
 class Capacity(TypedDict):
@@ -373,4 +372,4 @@ class CollectionRes(TypedDict):
 
 
 class CollectionsRes(TypedDict):
-    d: List[CollectionRes]
+    d: list[CollectionRes]

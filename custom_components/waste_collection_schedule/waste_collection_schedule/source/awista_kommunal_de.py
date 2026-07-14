@@ -99,8 +99,8 @@ class Source(BaseSource):
         uuid: "str | None" = None,
     ):
         super().__init__(street=street, house_number=house_number, uuid=uuid)
-        self._action_candidates: "list[str] | None" = None
-        self._next_action: "str | None" = None
+        self._action_candidates: list[str] | None = None
+        self._next_action: str | None = None
 
     def _action_id_candidates(self, session) -> "list[str]":
         if self._action_candidates is not None:
@@ -154,7 +154,7 @@ class Source(BaseSource):
                 c for c in candidates if c != self._next_action
             ]
 
-        payload: "dict | None" = None
+        payload: dict | None = None
         for action in candidates:
             payload = self._search_address(session, action, address)
             if payload is not None:

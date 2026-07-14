@@ -193,8 +193,7 @@ class Source:
         """Fetch pickup days using the appropriate API."""
         if self._registrationNumber:
             return self._fetch_by_registration_number()
-        else:
-            return self._fetch_by_street()
+        return self._fetch_by_street()
 
     def _is_date_in_season(
         self, date: datetime.date, season: tuple[tuple[int, int], tuple[int, int]]
@@ -211,8 +210,7 @@ class Source:
         if end_date < start_date:
             # Season spans year boundary
             return date >= start_date or date <= end_date
-        else:
-            return start_date <= date <= end_date
+        return start_date <= date <= end_date
 
     def _parse_days(self, element: str) -> list[int]:
         """Parse a frequency element into a list of weekday numbers (1-7).

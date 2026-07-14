@@ -34,11 +34,12 @@ from __future__ import annotations
 import calendar
 import re
 from collections import Counter, defaultdict
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import date
 from io import BytesIO
 from statistics import median
-from typing import TYPE_CHECKING, Any, Callable, NamedTuple
+from typing import TYPE_CHECKING, Any, NamedTuple
 
 from waste_collection_schedule.exceptions import SourceArgumentException
 from waste_collection_schedule.parsers import Parser

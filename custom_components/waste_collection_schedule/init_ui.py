@@ -132,7 +132,7 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
     _LOGGER.debug("minor version %s", config_entry.minor_version)
 
     # Version number has gone backwards
-    if const.CONFIG_VERSION < config_entry.version:
+    if config_entry.version > const.CONFIG_VERSION:
         _LOGGER.error(
             "Backwards migration not possible. Please update the integration."
         )

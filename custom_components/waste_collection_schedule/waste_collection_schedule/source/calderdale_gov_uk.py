@@ -65,8 +65,7 @@ class Source:
                     self._uprn,
                     "Could not find collection information for the provided UPRN and postcode combination. Please verify both values are correct.",
                 )
-            else:
-                raise Exception("Could not find collection schedule table in response")
+            raise Exception("Could not find collection schedule table in response")
 
         entries = []
 

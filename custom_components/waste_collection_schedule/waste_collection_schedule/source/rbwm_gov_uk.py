@@ -1,5 +1,3 @@
-from typing import Optional
-
 import requests
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
@@ -49,7 +47,7 @@ HEADERS = {
 
 class Source:
     # postcode was previously required by this source. This is no longer the case but argument kept for backwards compatibility
-    def __init__(self, uprn: str | int, postcode: Optional[str] = None):
+    def __init__(self, uprn: str | int, postcode: str | None = None):
         self._uprn: str = str(uprn).zfill(12)
 
     def fetch(self):

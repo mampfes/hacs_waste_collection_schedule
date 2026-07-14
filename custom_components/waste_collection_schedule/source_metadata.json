@@ -107,6 +107,13 @@
     "howto": {},
     "urls": {}
   },
+  "cassowarycoast_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cassowarycoast_qld_gov_au.md",
+    "howto": {
+      "en": "Enter the full service address used by Cassowary Coast Regional Council, for example '10 Bombala Street, Mourilyan, 4858'."
+    },
+    "urls": {}
+  },
   "albany_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/albany_wa_gov_au.md",
     "howto": {},
@@ -293,6 +300,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swan_wa_gov_au.md",
     "howto": {
       "en": "Enter your street address including suburb (e.g. '34 Oldenburg Pass Stratton'). Search at https://www.swan.wa.gov.au/waste-and-sustainability/waste-and-recycling-services/bins/find-my-bin-day"
+    },
+    "urls": {}
+  },
+  "cityofsydney_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cityofsydney_nsw_gov_au.md",
+    "howto": {
+      "en": "Enter your street address including suburb (e.g. '17 Junction Street, Forest Lodge'), as it would appear on https://www.cityofsydney.nsw.gov.au/waste-recycling-services/find-my-bin-collection-day"
     },
     "urls": {}
   },
@@ -2813,6 +2827,14 @@
     },
     "urls": {}
   },
+  "mywastewatcher_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mywastewatcher_de.md",
+    "howto": {
+      "de": "Die vorausgefüllten Werte für oguid und app_path wählen Hamminkeln aus — dann nur noch Ort und Straße genau wie auf der Webseite angezeigt eingeben. Für eine andere Kommune deren Abfallkalender-Seite auf https://www.mywastewatcher.de öffnen (z.B. über den Link des Entsorgungsbetriebs): Das erste Pfad-Segment der URL ist der App-Pfad (z.B. 'abfallkalenderdk'), die OGUID ist der Wert des URL-Parameters 'oguid'.",
+      "en": "The pre-filled oguid and app_path select Hamminkeln — then just enter city and street exactly as shown on the website. For another municipality, open its calendar page on https://www.mywastewatcher.de (e.g. via the link from your local waste authority): the first path segment of the URL is the app_path (e.g. 'abfallkalenderdk'), and the oguid is the value of the 'oguid' parameter in the URL."
+    },
+    "urls": {}
+  },
   "mzvhegau_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mzvhegau_de.md",
     "howto": {
@@ -2949,6 +2971,14 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/siegen_stadt_de.md",
     "howto": {
       "en": "- Visit <https://www.siegen-stadt.de/abfallkalender/> and select your location.  \n- Right click -> copy link address on `Abfallkalender als iCAL` below `Druckansichten` to get the ics link.\n- Use this link as the `url` parameter.\n- Replace the year in the link with `{%Y}` to always get the current year.\n"
+    },
+    "urls": {}
+  },
+  "ics_buende_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/buende_de.md",
+    "howto": {
+      "de": "- Besuchen Sie <https://www.buende.de/Stadtleben/Umwelt-I-Klima/Abfall/Abfallkalender-online/> und wählen Sie Ihre Straße.\n- Klicken Sie mit der rechten Maustaste auf \"Export in Kalenderanwendung\" und kopieren Sie die Linkadresse, um die ICAL-URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n- Ersetzen Sie das Jahr (`vJ=2025`) durch `{%Y}` in der URL.\n- Sie können den `regex`-Parameter auf \"BÜ (.*): Bünde\" setzen, um bessere Titel zu erhalten.\n",
+      "en": "- Visit <https://www.buende.de/Stadtleben/Umwelt-I-Klima/Abfall/Abfallkalender-online/> and select your street.\n- Right-click \"Export in Kalenderanwendung\" and copy the link address to get an ICAL link.\n- Use this link as the `url` parameter.\n- Replace the year (`vJ=2025`) with `{%Y}` in the URL.\n- You may want to set the `regex` parameter to \"BÜ (.*): Bünde\" to get better titles.\n"
     },
     "urls": {}
   },
@@ -3308,6 +3338,11 @@
     "howto": {},
     "urls": {}
   },
+  "kopavogur_is": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kopavogur_is.md",
+    "howto": {},
+    "urls": {}
+  },
   "greyhound_ie": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/greyhound_ie.md",
     "howto": {
@@ -3621,6 +3656,15 @@
     },
     "urls": {}
   },
+  "straatbeeld_online": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/straatbeeld_online.md",
+    "howto": {
+      "en": "Open your municipality's Straatbeeld Online waste calendar (e.g. https://drimmelen.afvalkalender.straatbeeld.online), the 'municipality' argument is the first part of that URL (e.g. 'drimmelen'). Use the same postal code and house number you would enter on that page."
+    },
+    "urls": {
+      "url_drimmelen_afvalkalender_straatbeeld_online": "https://drimmelen.afvalkalender.straatbeeld.online"
+    }
+  },
   "ics_offalkalinder_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/offalkalinder_nl.md",
     "howto": {
@@ -3838,6 +3882,13 @@
     },
     "urls": {}
   },
+  "ecoszczecin_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoszczecin_pl.md",
+    "howto": {
+      "en": "Open https://ecoszczecin.pl/harmonogramy/, choose your street and house number from the dropdowns, and copy their values exactly as shown."
+    },
+    "urls": {}
+  },
   "smiecioplan_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/smiecioplan_pl.md",
     "howto": {
@@ -3891,6 +3942,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kom_lub_com_pl.md",
     "howto": {
       "en": "Enter your district number (1–7). Your district (R I through R VII) is printed on your bin collection notice or can be found on the KOM-LUB website (https://kom-lub.com.pl)."
+    },
+    "urls": {}
+  },
+  "koma_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/koma_pl.md",
+    "howto": {
+      "en": "Open https://koma.pl/harmonogram-odpadow/ and step through the dropdowns (Wybierz Miasto -> miejscowość -> ulica -> numer domu) to find the exact spelling of your gmina, town, street and house number."
     },
     "urls": {}
   },
@@ -4077,6 +4135,13 @@
   "roslagsvatten_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roslagsvatten_se.md",
     "howto": {},
+    "urls": {}
+  },
+  "fev_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fev_se.md",
+    "howto": {
+      "en": "Go to https://fev.se/atervinning/sophamtning.html, search for your address and copy the street name and house number exactly as shown in the results, e.g. 'Rådmansvägen 3'."
+    },
     "urls": {}
   },
   "gastrikeatervinnare_se": {
@@ -5612,6 +5677,13 @@
     },
     "urls": {}
   },
+  "midulstercouncil_org": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midulstercouncil_org.md",
+    "howto": {},
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
+  },
   "midlothian_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midlothian_gov_uk.md",
     "howto": {
@@ -6167,7 +6239,7 @@
   "staffsmoorlands_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/staffsmoorlands_gov_uk.md",
     "howto": {
-      "en": "Your UPRN can be found by searching your postcode at https://www.staffsmoorlands.gov.uk/findyourbinday and selecting your address. The value shown in the address dropdown is your UPRN. Alternatively, find your UPRN at https://www.findmyaddress.co.uk/"
+      "en": "Your UPRN can be found by searching your postcode at https://www.staffsmoorlands.gov.uk/findyourbinday (which redirects to the council's Public Dashboard) and selecting your address. The value shown in the address dropdown is your UPRN. Alternatively, find your UPRN at https://www.findmyaddress.co.uk/"
     },
     "urls": {}
   },
@@ -6248,6 +6320,13 @@
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
+  },
+  "tandridge_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tandridge_gov_uk.md",
+    "howto": {
+      "en": "Enter your postcode and your house number/name exactly as it appears when you look up your address at https://tdcws01.tandridge.gov.uk/TDCWebAppsPublic/tfaBranded/408 (e.g. '14A')."
+    },
+    "urls": {}
   },
   "teignbridge_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/teignbridge_gov_uk.md",

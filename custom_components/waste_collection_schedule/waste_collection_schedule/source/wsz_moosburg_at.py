@@ -111,5 +111,4 @@ class Source:
                 "address"
             ]
             return street["id"]
-        else:
-            return address["id"]
+        return address["id"]

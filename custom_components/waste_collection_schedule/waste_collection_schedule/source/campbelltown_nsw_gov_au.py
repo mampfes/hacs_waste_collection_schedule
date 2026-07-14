@@ -54,9 +54,7 @@ class Source:
     def fetch(self):
         locationId = ""
 
-        address = "{} {} {} NSW {}".format(
-            self.street_number, self.street_name, self.suburb, self.post_code
-        )
+        address = f"{self.street_number} {self.street_name} {self.suburb} NSW {self.post_code}"
 
         session = requests.Session(impersonate="chrome")
 

@@ -1,6 +1,7 @@
 import re
+from collections.abc import Sequence
 from datetime import date, datetime
-from typing import TYPE_CHECKING, Any, Optional, Sequence, cast
+from typing import TYPE_CHECKING, Any, cast
 
 from curl_cffi.const import CurlHttpVersion
 
@@ -55,7 +56,7 @@ Address = dict[str, Any]
 JSONDict = dict[str, Any]
 
 
-def normalise_postcode(text: Optional[str]) -> Optional[str]:
+def normalise_postcode(text: str | None) -> str | None:
     if not text:
         return None
     match = POSTCODE_PATTERN.search(text)
@@ -73,7 +74,7 @@ def _address_to_string(address: Address) -> str:
     ).strip()
 
 
-def _parse_date_string(value: Any) -> Optional[date]:
+def _parse_date_string(value: Any) -> date | None:
     if value is None:
         return None
     if isinstance(value, datetime):
@@ -138,7 +139,7 @@ def _collection_items(
     collection_data: JSONDict,
 ) -> list[tuple[str, dict[str, Any]]]:
     collections_section = cast(
-        Optional[dict[str, dict[str, Any]]], collection_data.get("collections")
+        dict[str, dict[str, Any]] | None, collection_data.get("collections")
     )
     if collections_section:
         return list(collections_section.items())
@@ -195,14 +196,14 @@ class Cloud9Retriever(RetrieverFunc):
         self,
         authority: str,
         *,
-        uprn_field: Optional[str] = None,
-        postcode_field: Optional[str] = None,
-        name_number_field: Optional[str] = None,
-        street_field: Optional[str] = None,
-        town_field: Optional[str] = None,
-        address_field: Optional[str] = None,
+        uprn_field: str | None = None,
+        postcode_field: str | None = None,
+        name_number_field: str | None = None,
+        street_field: str | None = None,
+        town_field: str | None = None,
+        address_field: str | None = None,
         argument_name: str = "postcode",
-        api_domains: Optional[Sequence[str]] = None,
+        api_domains: Sequence[str] | None = None,
     ):
         self.authority = authority
         self.uprn_field = uprn_field
@@ -277,13 +278,13 @@ class Cloud9Retriever(RetrieverFunc):
         self,
         source: "BaseSource",
         path: str,
-        params: Optional[dict[str, str]] = None,
+        params: dict[str, str] | None = None,
     ) -> JSONDict:
         # The two API domains mirror each other; try each in turn and fall
         # through to the next on ANY failure (DNS, TLS, connection, a bad HTTP
         # status, or an offline-fixture replay miss for a domain that was
         # unreachable at recording time), raising only if every domain fails.
-        last_error: Optional[Exception] = None
+        last_error: Exception | None = None
         for base_url in self._base_urls:
             try:
                 response = source.session.get(
@@ -303,10 +304,10 @@ class Cloud9Retriever(RetrieverFunc):
     def _lookup_addresses(
         self,
         source: "BaseSource",
-        postcode: Optional[str],
-        normalised_postcode: Optional[str],
-        address_name_number: Optional[str],
-        address_street: Optional[str],
+        postcode: str | None,
+        normalised_postcode: str | None,
+        address_name_number: str | None,
+        address_street: str | None,
         address_string: str,
     ) -> list[Address]:
         address_line = " ".join(
@@ -316,7 +317,7 @@ class Cloud9Retriever(RetrieverFunc):
         )
 
         seen: set[tuple[str, str]] = set()
-        attempts: list[tuple[str, Optional[str]]] = [
+        attempts: list[tuple[str, str | None]] = [
             ("postcode", normalised_postcode),
             ("postcode", postcode),
             ("address", address_string),
@@ -338,9 +339,7 @@ class Cloud9Retriever(RetrieverFunc):
                 ADDRESSES_PATH,
                 params={param: cleaned},
             )
-            addresses_data = cast(
-                Optional[list[Address]], payload_json.get("addresses")
-            )
+            addresses_data = cast(list[Address] | None, payload_json.get("addresses"))
             if addresses_data:
                 return [cast(Address, a) for a in addresses_data]
 
@@ -354,10 +353,10 @@ class Cloud9Retriever(RetrieverFunc):
         self,
         addresses: Sequence[Address],
         address_string: str,
-        normalised_postcode: Optional[str],
-        address_name_number: Optional[str],
-        address_street: Optional[str],
-        street_town: Optional[str],
+        normalised_postcode: str | None,
+        address_name_number: str | None,
+        address_street: str | None,
+        street_town: str | None,
     ) -> Address:
         query_lower = address_string.lower() if address_string else ""
         postcode_lower = normalised_postcode.lower() if normalised_postcode else None

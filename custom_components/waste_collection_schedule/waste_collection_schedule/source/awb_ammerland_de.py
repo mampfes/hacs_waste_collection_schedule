@@ -1,6 +1,5 @@
 import datetime
 import json
-from typing import Optional
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -91,7 +90,7 @@ class Source:
         self,
         city: str,
         street: str,
-        street_section: Optional[str] = None,
+        street_section: str | None = None,
         four_weekly_rest: bool = False,
     ):
         self._city = city

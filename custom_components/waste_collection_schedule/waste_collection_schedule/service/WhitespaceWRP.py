@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any
 
 import requests
 from bs4 import BeautifulSoup
@@ -25,11 +25,11 @@ class WhitespaceClient:
 
     def fetch_schedule(
         self,
-        address_name_number: Union[str, int, None],
+        address_name_number: str | int | None,
         address_postcode: str,
         *,
-        address_street: Optional[str] = None,
-        street_town: Optional[str] = None,
+        address_street: str | None = None,
+        street_town: str | None = None,
     ) -> list:
         """Perform the full 4-step WRP scrape.
 
@@ -177,9 +177,9 @@ class WhitespaceRetriever(RetrieverFunc):
         *,
         name_number: str = "house_number",
         postcode: str = "postcode",
-        street: Optional[str] = None,
-        town: Optional[str] = None,
-        base_url: Optional[str] = None,
+        street: str | None = None,
+        town: str | None = None,
+        base_url: str | None = None,
     ):
         self.name_number = name_number
         self.postcode = postcode

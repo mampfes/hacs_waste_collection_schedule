@@ -1,4 +1,8 @@
-target-version = "py313"
+# CI (validate.yaml) runs the test/lint suite on Python 3.10, so that's the
+# real floor - keep this in sync with that workflow, not with the (newer)
+# devcontainer interpreter, so UP/pyupgrade fixes don't introduce syntax that
+# breaks on the version CI actually runs.
+target-version = "py310"
 line-length = 88
 
 [lint]
@@ -8,10 +12,19 @@ line-length = 88
 # to avoid new findings the old tool chain never reported.
 # B (bugbear), C4 (comprehensions), PIE and RUF catch real bugs/dead code
 # cheaply across the whole tree, including source/.
-select = ["E", "F", "W", "I", "B", "C4", "PIE", "RUF"]
+# UP (pyupgrade) replaces the standalone pyupgrade pre-commit hook - one tool,
+# one target-version. ISC (implicit string concat) and RET (flake8-return)
+# resolved fully clean across the whole tree with zero manual fixes needed.
+# SIM/PERF/T20 were evaluated too, but almost every hit there has no automatic
+# fix and would mean hand-rewriting hundreds of loops/prints across source/ -
+# deferred to a separate, deliberate cleanup effort rather than bundled here.
+select = ["E", "F", "W", "I", "B", "C4", "PIE", "RUF", "UP", "ISC", "RET"]
 # E203/E501/E721: see above. RUF001-003 flag "ambiguous" unicode (en-dashes,
 # curly quotes) that legitimately occurs in non-English provider names/titles.
-ignore = ["E203", "E501", "E721", "RUF001", "RUF002", "RUF003"]
+# RET503/RET504 have no automatic fix and would require hand-rewriting return
+# statements across dozens of source/ files for a purely stylistic gain -
+# not worth the manual diff right now.
+ignore = ["E203", "E501", "E721", "RUF001", "RUF002", "RUF003", "RET503", "RET504"]
 
 [format]
 quote-style = "double"

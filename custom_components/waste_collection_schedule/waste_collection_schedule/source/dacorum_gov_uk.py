@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime
-from typing import Dict
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -45,14 +44,14 @@ class Source:
         self._postcode: str = postcode.strip()
         self._uprn: str = str(uprn)
 
-    def _get_form_args(self, soup: BeautifulSoup) -> Dict[str, str]:
+    def _get_form_args(self, soup: BeautifulSoup) -> dict[str, str]:
         return {
             i.get("name"): i.get("value")
             for i in soup.find_all(["input", "select"])
             if i.get("id") in FORM_ARG_IDS
         }
 
-    def _parse_address_list(self, select_element: Tag) -> Dict[str, str]:
+    def _parse_address_list(self, select_element: Tag) -> dict[str, str]:
         uprn_addresses = {}
         for row in select_element.children:
             # Ensure child element is a Tag

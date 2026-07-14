@@ -186,7 +186,7 @@ def _point_in_geometry(lat: float, lng: float, geometry: dict) -> bool:
 
     if geom_type == "Polygon":
         return _point_in_polygon(lng, lat, coords[0])
-    elif geom_type == "MultiPolygon":
+    if geom_type == "MultiPolygon":
         return any(_point_in_polygon(lng, lat, ring[0]) for ring in coords)
 
     return False

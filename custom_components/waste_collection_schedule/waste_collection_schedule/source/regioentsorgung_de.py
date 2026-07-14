@@ -38,8 +38,8 @@ class _FormStateParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.select_options: dict[str, list[tuple[str, str]]] = {}
-        self._current_select: "str | None" = None
-        self._current_option_value: "str | None" = None
+        self._current_select: str | None = None
+        self._current_option_value: str | None = None
         self._current_option_text: list[str] = []
 
     def _finalize_option(self):

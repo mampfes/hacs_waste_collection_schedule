@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 import requests
 from bs4 import BeautifulSoup
@@ -37,7 +36,7 @@ class Source:
     def __init__(self, uprn):
         self._uprn = uprn
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         entries = []
         with requests.Session() as sess:
             url = "https://www.wakefield.gov.uk/where-i-live/"  # the a parameter is needed for page to load but contents doesn't matter

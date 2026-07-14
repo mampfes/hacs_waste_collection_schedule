@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 import requests
 from waste_collection_schedule import Collection, Icons
@@ -101,7 +101,7 @@ class Source:
         - `house_number` is required and must be a non-empty string or int.
         - `city` is required and must be a non-empty string.
         """
-        errors: List[Tuple[str, str]] = []
+        errors: list[tuple[str, str]] = []
 
         # Validate address
         if address is None or not isinstance(address, str) or address.strip() == "":
@@ -144,7 +144,7 @@ class Source:
     def _build_address_query(self) -> str:
         return f"{self._address} {self._house_number}, {self._city}"
 
-    def collect_waste_collection_schedule(self) -> Dict[str, List[str]]:
+    def collect_waste_collection_schedule(self) -> dict[str, list[str]]:
         """
         Fetch calendar items by emulating the site's XHR API calls.
 
@@ -221,7 +221,7 @@ class Source:
             ) from e
 
         try:
-            data: Dict[str, Any] = j2.get("data") or {}
+            data: dict[str, Any] = j2.get("data") or {}
             geociv = data.get("idCivico") or data.get("place_id") or suggestion_id
             if geociv is None:
                 raise SourceArgumentNotFound("house_number", self._house_number)
@@ -241,7 +241,7 @@ class Source:
         except Exception as e:
             raise Exception("Could not fetch calendar items: " + str(e)) from e
 
-        collections: Dict[str, List[str]] = {}
+        collections: dict[str, list[str]] = {}
         try:
             items = j3.get("data", [])
             for item in items:
@@ -282,10 +282,10 @@ class Source:
 
         return collections
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         calendar_data = self.collect_waste_collection_schedule()
 
-        entries: List[Collection] = []
+        entries: list[Collection] = []
         for date_str, events in calendar_data.items():
             try:
                 date = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()

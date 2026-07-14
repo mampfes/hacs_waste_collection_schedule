@@ -253,6 +253,11 @@ SERVICE_MAP = [
         "service_id": "koenigstein",
     },
     {
+        "title": "EBU Ulm",
+        "url": "https://www.ebu-ulm.de/",
+        "service_id": "ebu",
+    },
+    {
         "title": "Anzing",
         "url": "https://www.lra-ebe.de/",
         "service_id": "ebe",
@@ -463,6 +468,11 @@ TEST_CASES = {
         "customer": "gotha",
         "city": "Drei Gleichen OT Günthersleben",
         "street": "Mittelstr",
+    },
+    "Ulm, Bahnhofplatz": {
+        "customer": "ebu",
+        "city": "Ulm",
+        "street": "Bahnhofplatz",
     },
 }
 

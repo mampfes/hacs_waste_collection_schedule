@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import datetime
 import logging
-from typing import TYPE_CHECKING, Any, Callable, ClassVar
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from waste_collection_schedule import response_shape
 from waste_collection_schedule.exceptions import SourceArgumentNotFound

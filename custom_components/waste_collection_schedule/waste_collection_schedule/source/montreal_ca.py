@@ -181,7 +181,7 @@ class Source:
         entries = []
         # Searching for the weekday in the sentence
         collection_day = None
-        for day in WEEKDAYS.keys():
+        for day in WEEKDAYS:
             if re.search(day, schedule_message, re.IGNORECASE):
                 collection_day = WEEKDAYS[day]
                 break  # Stop searching if the day is found

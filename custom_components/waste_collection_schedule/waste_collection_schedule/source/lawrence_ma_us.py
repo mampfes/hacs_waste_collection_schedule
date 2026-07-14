@@ -1,5 +1,6 @@
 import re
-from typing import Any, ClassVar, Iterable, final
+from collections.abc import Iterable
+from typing import Any, ClassVar, final
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import lookups, recurrence, retrievers

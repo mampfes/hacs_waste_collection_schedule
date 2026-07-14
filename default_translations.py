@@ -1,5 +1,5 @@
 import json
-from typing import Iterable
+from collections.abc import Iterable
 
 DEFAULT_PARAM_TRANSLATIONS = {
     "en": {

@@ -1,6 +1,6 @@
 import datetime
 import logging
-from typing import TYPE_CHECKING, Any, Optional, Union, overload
+from typing import TYPE_CHECKING, Any, Union, overload
 
 from .waste_types import WasteType, display_name
 
@@ -38,10 +38,10 @@ class Collection:
             self,
             date: datetime.date,
             t: str,
-            icon: Optional[str] = ...,
-            picture: Optional[str] = ...,
-            location: Optional[str] = ...,
-            description: Optional[str] = ...,
+            icon: str | None = ...,
+            picture: str | None = ...,
+            location: str | None = ...,
+            description: str | None = ...,
         ): ...
 
         def __init__(self, date: datetime.date, *args: Any, **kwargs: Any): ...
@@ -54,11 +54,11 @@ class Collection:
     def _init_impl(self, date: datetime.date, waste_type: WasteType):
         self._date = date
         self._waste_type = waste_type
-        self._type_override: Optional[str] = None
-        self._icon_override: Optional[str] = None
-        self._picture: Optional[str] = None
-        self._location: Optional[str] = None
-        self._description: Optional[str] = None
+        self._type_override: str | None = None
+        self._icon_override: str | None = None
+        self._picture: str | None = None
+        self._location: str | None = None
+        self._description: str | None = None
 
     @property
     def date(self) -> datetime.date:
@@ -269,10 +269,10 @@ class _CollectionMeta:
     # is evaluated at definition time, so the instance must support ``|`` like a
     # real class would. Delegate to the underlying Collection class.
     def __or__(self, other):
-        return Union[Collection, other]
+        return Union[Collection, other]  # noqa: UP007
 
     def __ror__(self, other):
-        return Union[other, Collection]
+        return Union[other, Collection]  # noqa: UP007
 
 
 if TYPE_CHECKING:
@@ -294,8 +294,8 @@ class CollectionGroup:
 
     def __init__(self, date: datetime.date):
         self._date = date
-        self._icon: Optional[str] = None
-        self._picture: Optional[str] = None
+        self._icon: str | None = None
+        self._picture: str | None = None
         self._types: list[str] = []
         self._locations: list[str] = []
         self._descriptions: list[str] = []

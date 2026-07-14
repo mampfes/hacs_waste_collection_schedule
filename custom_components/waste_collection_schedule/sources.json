@@ -211,6 +211,12 @@
       "id": "cardinia_vic_gov_au"
     },
     {
+      "title": "Cassowary Coast Regional Council",
+      "module": "cassowarycoast_qld_gov_au",
+      "default_params": {},
+      "id": "cassowarycoast_qld_gov_au"
+    },
+    {
       "title": "City of Adelaide",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -483,6 +489,12 @@
       "module": "swan_wa_gov_au",
       "default_params": {},
       "id": "swan_wa_gov_au"
+    },
+    {
+      "title": "City of Sydney",
+      "module": "cityofsydney_nsw_gov_au",
+      "default_params": {},
+      "id": "cityofsydney_nsw_gov_au"
     },
     {
       "title": "City of Tea Tree Gully",
@@ -9250,6 +9262,14 @@
       "id": "123abfallkalender_de"
     },
     {
+      "title": "EBU Ulm",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "ebu"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "ebwo - Entsorgungs- und Baubetrieb Anstalt des \u00f6ffentlichen Rechts der Stadt Worms",
       "module": "ics",
       "default_params": {},
@@ -10466,6 +10486,12 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Homburg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Hoppensen",
@@ -12562,6 +12588,12 @@
       "id": "reso_gmbh_de"
     },
     {
+      "title": "myWasteWatcher (WasteWatcher.NET)",
+      "module": "mywastewatcher_de",
+      "default_params": {},
+      "id": "mywastewatcher_de"
+    },
+    {
       "title": "MZV Biedenkopf",
       "module": "buergerportal_de",
       "default_params": {
@@ -13702,6 +13734,14 @@
         "service": "bayreuthstadt-abfallkalender"
       },
       "id": "c_trace_de"
+    },
+    {
+      "title": "Stadt B\u00fcnde",
+      "module": "ics",
+      "default_params": {
+        "regex": "B\u00dc (.*): B\u00fcnde"
+      },
+      "id": "ics_buende_de"
     },
     {
       "title": "Stadt Cottbus",
@@ -15094,6 +15134,14 @@
       "module": "eth_erd_hu",
       "default_params": {},
       "id": "eth_erd_hu"
+    }
+  ],
+  "Iceland": [
+    {
+      "title": "K\u00f3pavogsb\u00e6r",
+      "module": "kopavogur_is",
+      "default_params": {},
+      "id": "kopavogur_is"
     }
   ],
   "Ireland": [
@@ -17174,6 +17222,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Scalea",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Scandicci",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -18226,6 +18280,12 @@
       "id": "hvcgroep_nl"
     },
     {
+      "title": "Straatbeeld Online",
+      "module": "straatbeeld_online",
+      "default_params": {},
+      "id": "straatbeeld_online"
+    },
+    {
       "title": "Twente Milieu",
       "module": "ximmio_nl",
       "default_params": {
@@ -18527,6 +18587,12 @@
       "module": "ecoharmonogram_pl",
       "default_params": {},
       "id": "ecoharmonogram_pl"
+    },
+    {
+      "title": "EcoSzczecin",
+      "module": "ecoszczecin_pl",
+      "default_params": {},
+      "id": "ecoszczecin_pl"
     },
     {
       "title": "Gda\u0144sk",
@@ -19369,6 +19435,12 @@
       "id": "kom_lub_com_pl"
     },
     {
+      "title": "KOMA",
+      "module": "koma_pl",
+      "default_params": {},
+      "id": "koma_pl"
+    },
+    {
       "title": "KOMUS",
       "module": "sims_pl",
       "default_params": {
@@ -19771,6 +19843,12 @@
         "municipality": "ekero"
       },
       "id": "roslagsvatten_se"
+    },
+    {
+      "title": "Falu Energi & Vatten (FEV)",
+      "module": "fev_se",
+      "default_params": {},
+      "id": "fev_se"
     },
     {
       "title": "G\u00e4strike \u00c5tervinnare",
@@ -22255,6 +22333,12 @@
       "id": "midsussex_gov_uk"
     },
     {
+      "title": "Mid Ulster District Council",
+      "module": "midulstercouncil_org",
+      "default_params": {},
+      "id": "midulstercouncil_org"
+    },
+    {
       "title": "Middlesbrough Council",
       "module": "ics",
       "default_params": {
@@ -22927,6 +23011,12 @@
       "module": "tameside_gov_uk",
       "default_params": {},
       "id": "tameside_gov_uk"
+    },
+    {
+      "title": "Tandridge District Council",
+      "module": "tandridge_gov_uk",
+      "default_params": {},
+      "id": "tandridge_gov_uk"
     },
     {
       "title": "Teignbridge District Council",

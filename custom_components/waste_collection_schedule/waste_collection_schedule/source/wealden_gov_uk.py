@@ -53,7 +53,7 @@ class Source:
         json_data = json.loads(r.text)["collection"]
         entries = []
 
-        for collection in ICON_MAP.keys():
+        for collection in ICON_MAP:
             try:
                 entries.append(
                     Collection(

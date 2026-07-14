@@ -1,7 +1,6 @@
 from datetime import date as datetime_date
 from datetime import datetime as datetime_datetime
 from datetime import timedelta
-from typing import Dict, List
 
 import requests
 from icalendar import Calendar
@@ -19,7 +18,7 @@ COUNTRY = "ca"
 SOURCE_CODEOWNERS = ["@Jean-PascalComeau"]
 
 # List of all supported municipalities and their sectors
-MUNICIPALITIES: Dict[str, Dict[str, List[int]]] = {
+MUNICIPALITIES: dict[str, dict[str, list[int]]] = {
     "Ivry-sur-le-Lac": {
         "all": [29, 30, 31],
     },
@@ -209,7 +208,7 @@ class Source:
 
         _, self._cat_ids = norm_sectors[chosen_sector_norm]
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         cat_ids_str = ",".join(str(cid) for cid in self._cat_ids)
         params = {
             "plugin": "all-in-one-event-calendar",

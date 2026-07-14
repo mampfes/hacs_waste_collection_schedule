@@ -7,10 +7,10 @@ import json
 import re
 import site
 import sys
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 from types import ModuleType
-from typing import Any, Tuple, TypedDict, TypeVar
+from typing import Any, TypedDict, TypeVar
 
 if sys.version_info >= (3, 11):
     from typing import NotRequired
@@ -80,7 +80,7 @@ def sort_lang_param_dict(d: dict[str, dict[str, T]]) -> dict[str, dict[str, T]]:
     return d
 
 
-def extract_urls_from_text(text: str) -> Tuple[str, dict[str, str]]:
+def extract_urls_from_text(text: str) -> tuple[str, dict[str, str]]:
     """Extract URLs from text and return cleaned text with placeholder.
 
     Removes both plain URLs (http://.../https://...) and Markdown links ([text](url)).
@@ -436,7 +436,7 @@ def browse_sources() -> list[SourceInfo]:
     return sources
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     # iterate through all *.py files in waste_collection_schedule/source
     module = importlib.import_module(f"waste_collection_schedule.source.{file}")
@@ -778,7 +778,7 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
 
 def get_custom_translations(
     countries: dict[str, list[SourceInfo]],
-) -> Tuple[
+) -> tuple[
     dict[str, dict[str, dict[str, str | None]]],
     dict[str, dict[str, dict[str, str | None]]],
     dict[str, dict[str, str | None]],
@@ -1136,6 +1136,10 @@ COUNTRYCODES = [
     {
         "code": "hu",
         "name": "Hungary",
+    },
+    {
+        "code": "is",
+        "name": "Iceland",
     },
     {
         "code": "ie",

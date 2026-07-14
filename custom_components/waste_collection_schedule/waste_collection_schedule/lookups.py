@@ -15,7 +15,8 @@ with ``recurrence.next_weekday`` and a ``Schedule`` in the source's describe().
 from __future__ import annotations
 
 import re
-from typing import Mapping, TypeVar
+from collections.abc import Mapping
+from typing import TypeVar
 
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 

@@ -21,8 +21,9 @@ from __future__ import annotations
 
 import ast
 import re
+from collections.abc import Iterable, Iterator
 from datetime import date, datetime, timedelta
-from typing import TYPE_CHECKING, ClassVar, Iterable, Iterator
+from typing import TYPE_CHECKING, ClassVar
 
 import requests
 from bs4 import BeautifulSoup, Tag

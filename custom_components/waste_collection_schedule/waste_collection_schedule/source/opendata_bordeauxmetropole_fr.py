@@ -286,7 +286,7 @@ class Source:
 
         if _type == "Polygon":
             return is_point_in_polygon((point_lon, point_lat), polygon)
-        elif _type == "MultiPolygon":
+        if _type == "MultiPolygon":
             for poly in polygon:
                 if is_point_in_polygon((point_lon, point_lat), poly):
                     return True
