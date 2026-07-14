@@ -23398,6 +23398,14 @@
       "id": "chesapeake_va_us"
     },
     {
+      "title": "City of Apopka, FL",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of Austin, TX",
       "module": "ics",
       "default_params": {
