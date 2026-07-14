@@ -22,52 +22,29 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://collections-ardsandnorthdown.azurewebsites.net/WSCollExternal.asmx"
-
-# council seems to always be ARD no matter what the old council was
-PAYLOAD = """<?xml version="1.0" encoding="utf-8" ?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-    <soap:Body>
-        <getRoundCalendarForUPRN  xmlns="http://webaspx-collections.azurewebsites.net/">
-            <council>ARD</council>
-            <UPRN>{uprn}</UPRN>
-            <from>Chtml</from>
-        </getRoundCalendarForUPRN >
-    </soap:Body>
-</soap:Envelope>
-"""
+API_URL = (
+    "https://ardsandnorthdownbincalendar.azurewebsites.net/api/calendarhtml/{uprn}"
+)
 
 
 class Source:
     def __init__(self, uprn: str | int):
-        self._payload = PAYLOAD.format(uprn=str(uprn).strip())
+        self._uprn = str(uprn).strip()
 
     def fetch(self) -> list[Collection]:
-        # get json file
-        r = requests.post(
-            API_URL,
-            data=self._payload,
-            headers={"Content-Type": "text/xml; charset=utf-8"},
-        )
+        r = requests.get(API_URL.format(uprn=self._uprn))
         r.raise_for_status()
 
-        # xml parser
-        entries: list[Collection] = []
-        # html unescape text
-        text = (
-            (r.text.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&"))
-            .split("<getRoundCalendarForUPRNResult>")[-1]
-            .split("</getRoundCalendarForUPRNResult>")[0]
-        )
+        html = r.json().get("calendarHTML", "")
 
-        soup = BeautifulSoup(text, "html.parser")
-        # find b where text start with Key:
+        entries: list[Collection] = []
+
+        soup = BeautifulSoup(html, "html.parser")
+        # find b/strong tag where text starts with "Key:"
 
         self._bin_type_translation: dict[str, str] = {}
 
-        keys = soup.find_all("b")
+        keys = soup.find_all(["b", "strong"])
 
         key = None
         for k in keys:
