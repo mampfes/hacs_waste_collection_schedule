@@ -185,6 +185,12 @@
       "id": "byron_nsw_gov_au"
     },
     {
+      "title": "Cairns Regional Council",
+      "module": "cairns_qld_gov_au",
+      "default_params": {},
+      "id": "cairns_qld_gov_au"
+    },
+    {
       "title": "Campbelltown City Council",
       "module": "app_my_local_services_au",
       "default_params": {},

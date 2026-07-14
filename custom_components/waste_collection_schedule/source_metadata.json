@@ -97,6 +97,14 @@
     },
     "urls": {}
   },
+  "cairns_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cairns_qld_gov_au.md",
+    "howto": {
+      "de": "Rufe die Seite 'Find my bin day' des Cairns Regional Council auf (https://www.cairns.qld.gov.au/water-waste-roads/waste-and-recycling/bin-collection/find-bin-day), gib deine Adresse ein und wähle sie aus der Autovervollständigung aus. Verwende für das Argument `address` das gleiche Format 'HAUSNUMMER STRASSE, VORORT' wie im Vorschlag angezeigt.",
+      "en": "Go to the Cairns Regional Council 'Find my bin day' page (https://www.cairns.qld.gov.au/water-waste-roads/waste-and-recycling/bin-collection/find-bin-day), start typing your address and pick it from the autocomplete list. Use the same 'STREET NUMBER STREET NAME, SUBURB' format shown in the suggestion for the `address` argument."
+    },
+    "urls": {}
+  },
   "campbelltown_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/campbelltown_nsw_gov_au.md",
     "howto": {},

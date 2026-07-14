@@ -59,6 +59,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bundaberg Regional Council](/doc/source/bundaberg_qld_gov_au.md) / bundaberg.qld.gov.au
 - [Burwood City Council](/doc/source/impactapps_com_au.md) / burwood.nsw.gov.au
 - [Byron Shire Council](/doc/source/byron_nsw_gov_au.md) / byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules
+- [Cairns Regional Council](/doc/source/cairns_qld_gov_au.md) / cairns.qld.gov.au
 - [Campbelltown City Council](/doc/source/app_my_local_services_au.md) / campbelltown.sa.gov.au
 - [Campbelltown City Council (NSW)](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
 - [Campbeltown City Council](/doc/source/impactapps_com_au.md) / campbelltown.vic.gov.au
