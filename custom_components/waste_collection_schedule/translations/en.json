@@ -7065,6 +7065,37 @@
           "commune": "Your commune within the Terres Touloises area: Aingeray, Andilly, Ansauville, Avrainville, Bicqueley, Bois-de-Haye, Boucq, Bouvron, Bruley, Charmes-la-Côte, Chaudeney-sur-Moselle, Choloy-Ménillot, Domèvre-en-Haye, Domgermain, Dommartin-lès-Toul, Écrouves, Fontenoy-sur-Moselle, Foug, Francheville, Gondreville, Grosrouvres, Gye, Jaillon, Lagney, Laneuveville-derrière-Foug, Lay-Saint-Rémy, Lucey, Manoncourt-en-Woëvre, Manonville, Ménil-la-Tour, Minorville, Noviant-aux-Prés, Pagney-derrière-Barine, Pierre-la-Treiche, Royaumeix, Sanzey, Tremblecourt, Trondes, Villey-le-Sec, Villey-Saint-Étienne"
         }
       },
+      "args_sudestavenir_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Commune",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "Your commune within the GPSEA territory: Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
+          "house_number": "Your house number",
+          "street": "Your street name"
+        }
+      },
+      "reconfigure_sudestavenir_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Commune",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "commune": "Your commune within the GPSEA territory: Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
+          "house_number": "Your house number",
+          "street": "Your street name"
+        }
+      },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

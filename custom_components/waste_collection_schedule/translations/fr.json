@@ -6714,6 +6714,37 @@
           "commune": "Votre commune du territoire des Terres Touloises : Aingeray, Andilly, Ansauville, Avrainville, Bicqueley, Bois-de-Haye, Boucq, Bouvron, Bruley, Charmes-la-Côte, Chaudeney-sur-Moselle, Choloy-Ménillot, Domèvre-en-Haye, Domgermain, Dommartin-lès-Toul, Écrouves, Fontenoy-sur-Moselle, Foug, Francheville, Gondreville, Grosrouvres, Gye, Jaillon, Lagney, Laneuveville-derrière-Foug, Lay-Saint-Rémy, Lucey, Manoncourt-en-Woëvre, Manonville, Ménil-la-Tour, Minorville, Noviant-aux-Prés, Pagney-derrière-Barine, Pierre-la-Treiche, Royaumeix, Sanzey, Tremblecourt, Trondes, Villey-le-Sec, Villey-Saint-Étienne"
         }
       },
+      "args_sudestavenir_fr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune",
+          "house_number": "Numéro",
+          "street": "Voie"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "commune": "Votre commune du territoire GPSEA : Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
+          "house_number": "Votre numéro de voie",
+          "street": "Le nom de votre voie"
+        }
+      },
+      "reconfigure_sudestavenir_fr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune",
+          "house_number": "Numéro",
+          "street": "Voie"
+        },
+        "data_description": {
+          "commune": "Votre commune du territoire GPSEA : Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
+          "house_number": "Votre numéro de voie",
+          "street": "Le nom de votre voie"
+        }
+      },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

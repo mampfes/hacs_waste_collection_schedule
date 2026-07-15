@@ -5831,6 +5831,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Alfortville",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Alfortville"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Ambar\u00e8s-et-Lagrave",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -5997,6 +6005,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Boissy-Saint-L\u00e9ger",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Boissy-Saint-L\u00e9ger"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Boissy-sans-Avoir",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -6011,6 +6027,14 @@
         "commune": "Bollwiller"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Bonneuil-sur-Marne",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Bonneuil-sur-Marne"
+      },
+      "id": "sudestavenir_fr"
     },
     {
       "title": "Bordeaux",
@@ -6139,6 +6163,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Chennevi\u00e8res-sur-Marne",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Chennevi\u00e8res-sur-Marne"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Choloy-M\u00e9nillot",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6173,6 +6205,14 @@
         "instance_id": 1141
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Cr\u00e9teil",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Cr\u00e9teil"
+      },
+      "id": "sudestavenir_fr"
     },
     {
       "title": "Dietwiller",
@@ -6373,6 +6413,12 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Grand Paris Sud Est Avenir (GPSEA)",
+      "module": "sudestavenir_fr",
+      "default_params": {},
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Grosrouvre",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -6469,6 +6515,14 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "La Queue-en-Brie",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "La Queue-en-Brie"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "La Queue-lez-Yvelines",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -6525,6 +6579,14 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Le Plessis-Tr\u00e9vise",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Le Plessis-Tr\u00e9vise"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Le Taillan-M\u00e9doc",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -6547,6 +6609,14 @@
         "commune": "Les Mesnuls"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Limeil-Br\u00e9vannes",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Limeil-Br\u00e9vannes"
+      },
+      "id": "sudestavenir_fr"
     },
     {
       "title": "Lucey",
@@ -6756,6 +6826,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Noiseau",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Noiseau"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Noviant-aux-Pr\u00e9s",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6770,6 +6848,14 @@
         "instance_id": 100
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Ormesson-sur-Marne",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Ormesson-sur-Marne"
+      },
+      "id": "sudestavenir_fr"
     },
     {
       "title": "Ottmarsheim",
@@ -7062,6 +7148,14 @@
         "commune": "Steinbrunn-le-Bas"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Sucy-en-Brie",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Sucy-en-Brie"
+      },
+      "id": "sudestavenir_fr"
     },
     {
       "title": "Talence",

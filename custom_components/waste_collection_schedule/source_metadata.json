@@ -1605,6 +1605,11 @@
     "howto": {},
     "urls": {}
   },
+  "sudestavenir_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sudestavenir_fr.md",
+    "howto": {},
+    "urls": {}
+  },
   "opendata_bordeauxmetropole_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/opendata_bordeauxmetropole_fr.md",
     "howto": {},
