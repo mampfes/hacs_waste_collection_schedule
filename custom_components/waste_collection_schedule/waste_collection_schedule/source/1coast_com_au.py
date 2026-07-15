@@ -1,4 +1,3 @@
-import re
 from datetime import date, datetime
 
 import requests
@@ -22,7 +21,7 @@ TEST_CASES = {
     },
     "56 EVERGLADES CR, WOY WOY. CENTRAL COAST 2256": {
         "address": "56 EVERGLADES CR, WOY WOY. CENTRAL COAST 2256"
-    }
+    },
 }
 
 
@@ -42,8 +41,6 @@ SEARCH_URL = "https://1coast.com.au/ajax.php"
 COLLECTION_URL = (
     "https://1coast.com.au/bin-collection/bin-collection-day-address-details"
 )
-
-DATE_PATTERN = re.compile(r"\b\d{2}-[A-Za-z]{3}-\d{4}\b")
 
 
 class Source:
@@ -110,30 +107,42 @@ class Source:
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
 
-        # extract limited set of waste collections from this page
-        legend_wrappers = soup.find_all(
-            "span", {"class": "booking-list--legend-wrapper"}
+        collections = soup.find_all(
+            "div", {"class": "booking-list--collection-details"}
         )
-        next_collections = soup.find_all(
-            "span", {"class": "booking-list--collection-grey"}
-        )
-        next_collections = [
-            item.text.split(", ")[1]
-            for item in next_collections
-            if DATE_PATTERN.search(item.text)
-        ]
+
         entries = []
-        for idx, item in enumerate(legend_wrappers):
-            if len(item.text):
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(
-                            next_collections[idx], "%d-%b-%Y"
-                        ).date(),
-                        t=item.text,
-                        icon=ICON_MAP.get(item.text),
-                    )
+        for collection in collections:
+            # bin name
+            bin_name = collection.find("span", class_="booking-list--legend-wrapper")
+
+            if bin_name is None:
+                continue
+
+            bin_name = bin_name.get_text(strip=True)
+
+            if len(bin_name) == 0:
+                continue
+
+            # next collection date
+            next_collection = collection.find("span", string="Next Collection")
+
+            if next_collection is None:
+                continue
+
+            next_collection = next_collection.find_next_sibling("span").get_text(
+                strip=True
+            )
+
+            # remove the day of the week
+            collection_date = next_collection.split(", ", 1)[1]
+
+            entries.append(
+                Collection(
+                    date=datetime.strptime(collection_date, "%d-%b-%Y").date(),
+                    t=bin_name,
                 )
+            )
 
         # look for link to ics file download option
         def check_tag(tag):
