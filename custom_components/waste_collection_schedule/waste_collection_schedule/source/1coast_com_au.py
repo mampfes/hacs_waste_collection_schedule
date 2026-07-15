@@ -1,3 +1,4 @@
+import re
 from datetime import date, datetime
 
 import requests
@@ -19,6 +20,9 @@ TEST_CASES = {
     "GERMAINE AVE, BATEAU BAY, CENTRAL COAST 2261": {
         "address": "12 GERMAINE AVE BATEAU BAY CENTRAL COAST 2261"
     },
+    "56 EVERGLADES CR, WOY WOY. CENTRAL COAST 2256": {
+        "address": "56 EVERGLADES CR, WOY WOY. CENTRAL COAST 2256"
+    }
 }
 
 
@@ -38,6 +42,8 @@ SEARCH_URL = "https://1coast.com.au/ajax.php"
 COLLECTION_URL = (
     "https://1coast.com.au/bin-collection/bin-collection-day-address-details"
 )
+
+DATE_PATTERN = re.compile(r"\b\d{2}-[A-Za-z]{3}-\d{4}\b")
 
 
 class Source:
@@ -112,17 +118,22 @@ class Source:
             "span", {"class": "booking-list--collection-grey"}
         )
         next_collections = [
-            item.text.split(", ")[1] for item in next_collections if "-" in item.text
+            item.text.split(", ")[1]
+            for item in next_collections
+            if DATE_PATTERN.search(item.text)
         ]
         entries = []
         for idx, item in enumerate(legend_wrappers):
-            entries.append(
-                Collection(
-                    date=datetime.strptime(next_collections[idx], "%d-%b-%Y").date(),
-                    t=item.text,
-                    icon=ICON_MAP.get(item.text),
+            if len(item.text):
+                entries.append(
+                    Collection(
+                        date=datetime.strptime(
+                            next_collections[idx], "%d-%b-%Y"
+                        ).date(),
+                        t=item.text,
+                        icon=ICON_MAP.get(item.text),
+                    )
                 )
-            )
 
         # look for link to ics file download option
         def check_tag(tag):
