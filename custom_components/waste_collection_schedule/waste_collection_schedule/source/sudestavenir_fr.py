@@ -158,7 +158,7 @@ def _parse_precisi_dates(precisi: str, year: int) -> list[date]:
 
 
 def _weekly_dates(jour: str, start: date, end: date) -> list[date]:
-    weekdays = [DAY_MAP[d] for d in jour.split() if d in DAY_MAP]
+    weekdays = [DAY_MAP[d] for d in map(_normalize, jour.split()) if d in DAY_MAP]
     dates: list[date] = []
     for weekday in weekdays:
         d = start + timedelta(days=(weekday - start.weekday()) % 7)
@@ -169,7 +169,7 @@ def _weekly_dates(jour: str, start: date, end: date) -> list[date]:
 
 
 def _biweekly_dates(jour: str, pairimp: str, start: date, end: date) -> list[date]:
-    weekdays = [DAY_MAP[d] for d in jour.split() if d in DAY_MAP]
+    weekdays = [DAY_MAP[d] for d in map(_normalize, jour.split()) if d in DAY_MAP]
     dates: list[date] = []
     for weekday in weekdays:
         d = start + timedelta(days=(weekday - start.weekday()) % 7)
@@ -215,6 +215,7 @@ class Source:
             f"{API_BASE}/filters/getData",
             params={"dummy": int(time.time() * 1000)},
             data=data,
+            timeout=30,
         )
         r.raise_for_status()
         result = r.json()
@@ -273,7 +274,7 @@ class Source:
     def fetch(self) -> list[Collection]:
         session = requests.Session()
 
-        r = session.get(f"{APP_BASE}/index.html")
+        r = session.get(f"{APP_BASE}/index.html", timeout=30)
         r.raise_for_status()
         m = re.search(r"bgSessionId\s*=\s*'([^']+)'", r.text)
         if not m:
@@ -346,6 +347,7 @@ class Source:
                 "searchIds": SOURCE_ID,
                 "filters": json.dumps(search_filters),
             },
+            timeout=30,
         )
         r.raise_for_status()
         features = r.json().get("features", [])
@@ -364,6 +366,7 @@ class Source:
                 "idValue": feature_id,
                 "srs": "EPSG:3857",
             },
+            timeout=30,
         )
         r.raise_for_status()
         properties = r.json().get("properties", {})
