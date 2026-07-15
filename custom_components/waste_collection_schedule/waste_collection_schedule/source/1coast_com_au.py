@@ -141,6 +141,7 @@ class Source:
                 Collection(
                     date=datetime.strptime(collection_date, "%d-%b-%Y").date(),
                     t=bin_name,
+                    icon=ICON_MAP.get(bin_name),
                 )
             )
 
