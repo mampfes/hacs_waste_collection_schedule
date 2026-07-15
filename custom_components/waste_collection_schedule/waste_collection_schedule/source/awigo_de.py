@@ -1,14 +1,16 @@
 """AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH (awigo.de).
 
-Demonstrates: a stateless PHP wizard queried once per waste type (rest,
-paper, yellow, brown, mobile) via a chain of "legacy_eID" POSTs
+Demonstrates: a stateless PHP wizard driven by a chain of "legacy_eID" POSTs
 (getCities -> getStreets -> getNumbers -> getICSfile), each request fully
 specifying the previously resolved ids as parameters rather than relying on
-server-side session state. The final getICSfile call itself returns a
-follow-up download URL as plain text (not the ICS body), which must be
-fetched separately. No configured retriever expresses this five-times-
-repeated four-step resolve-then-download shape, hence a source-defined
-retrieve()/parse() pair.
+server-side session state. All waste types (rest, paper, yellow, brown,
+mobile) are enabled in a single pass: the API returns an events-free ICS
+(headers only) when just one type is requested, so at least two must be
+enabled together, and each ICS event already carries its own waste-type name
+(issue #4562). The final getICSfile call itself returns a follow-up download
+URL as plain text (not the ICS body), which must be fetched separately. No
+configured retriever expresses this four-step resolve-then-download shape,
+hence a source-defined retrieve()/parse() pair.
 """
 
 import re
@@ -84,68 +86,68 @@ class Source(BaseSource):
         strasse = source.params["strasse"]
         hnr = str(source.params["hnr"]).lower().strip().replace(" ", "")
 
-        responses = []
-        for active_type in _WASTE_TYPE_KEYS:
-            args: dict = {
-                "legacy_eID": "awigoCalendar",
-                "calendar[method]": "getCities",
-            }
-            for wt in _WASTE_TYPE_KEYS:
-                args[f"calendar[{wt}]"] = 1 if wt == active_type else 0
+        # Enable every waste type in one pass: a single-type request returns
+        # an events-free ICS, so at least two must be requested together. Each
+        # ICS event carries its own waste-type name, so nothing is lost by
+        # doing so. See GitHub issue #4562.
+        args: dict = {
+            "legacy_eID": "awigoCalendar",
+            "calendar[method]": "getCities",
+        }
+        for wt in _WASTE_TYPE_KEYS:
+            args[f"calendar[{wt}]"] = 1
 
-            r = _post(session, args)
-            options = _options(r.text)
-            city_id = next(
-                (o.get("value") for o in options if _compare_cities(ort, o.text)),
-                None,
+        r = _post(session, args)
+        options = _options(r.text)
+        city_id = next(
+            (o.get("value") for o in options if _compare_cities(ort, o.text)),
+            None,
+        )
+        if city_id is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "ort", ort, [o.text for o in options]
             )
-            if city_id is None:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "ort", ort, [o.text for o in options]
-                )
-            args["calendar[cityID]"] = city_id
+        args["calendar[cityID]"] = city_id
 
-            args["calendar[method]"] = "getStreets"
-            r = _post(session, args)
-            options = _options(r.text)
-            street_id = next(
-                (
-                    o.get("value")
-                    for o in options
-                    if o.text.lower().strip() == strasse.lower().strip()
-                ),
-                None,
+        args["calendar[method]"] = "getStreets"
+        r = _post(session, args)
+        options = _options(r.text)
+        street_id = next(
+            (
+                o.get("value")
+                for o in options
+                if o.text.lower().strip() == strasse.lower().strip()
+            ),
+            None,
+        )
+        if street_id is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "strasse", strasse, [o.text for o in options]
             )
-            if street_id is None:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "strasse", strasse, [o.text for o in options]
-                )
-            args["calendar[streetID]"] = street_id
+        args["calendar[streetID]"] = street_id
 
-            args["calendar[method]"] = "getNumbers"
-            r = _post(session, args)
-            options = _options(r.text)
-            location_id = next(
-                (
-                    o.get("value")
-                    for o in options
-                    if o.text.lower().strip().replace(" ", "") == hnr
-                ),
-                None,
+        args["calendar[method]"] = "getNumbers"
+        r = _post(session, args)
+        options = _options(r.text)
+        location_id = next(
+            (
+                o.get("value")
+                for o in options
+                if o.text.lower().strip().replace(" ", "") == hnr
+            ),
+            None,
+        )
+        if location_id is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "hnr", source.params["hnr"], [o.text for o in options]
             )
-            if location_id is None:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "hnr", source.params["hnr"], [o.text for o in options]
-                )
-            args["calendar[locationID]"] = location_id
+        args["calendar[locationID]"] = location_id
 
-            args["calendar[method]"] = "getICSfile"
-            r = _post(session, args)
-            ics_response = session.get(r.text)
-            ics_response.encoding = "utf-8"
-            responses.append(ics_response)
-
-        return responses
+        args["calendar[method]"] = "getICSfile"
+        r = _post(session, args)
+        ics_response = session.get(r.text.strip())
+        ics_response.encoding = "utf-8"
+        return [ics_response]
 
     def parse(self, raw, source):
         ics_parser = IcsParser()

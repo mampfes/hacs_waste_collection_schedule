@@ -23,6 +23,18 @@ TEST_CASES = {
         "street": "ABRAHAMA",
         "house": "1",
     },
+    "Gdynia, Zrodlo Marii 19H (multi-family)": {
+        "city": "gdynia",
+        "street": "ŹRÓDŁO MARII",
+        "house": "19H",
+        "building_type": "multi",
+    },
+    "Gdynia, Zrodlo Marii 19H (single-family)": {
+        "city": "gdynia",
+        "street": "ŹRÓDŁO MARII",
+        "house": "19H",
+        "building_type": "single",
+    },
 }
 
 ICON_MAP = {
@@ -69,6 +81,7 @@ PARAM_DESCRIPTIONS = {
         "city": "City name (szczecin, gdansk, gdynia, or sopot).",
         "street": "Street name in uppercase as shown on SmiecioPlan.",
         "house": "House number.",
+        "building_type": "Optional. Some addresses (e.g. in Gdynia) have separate schedules for single-family (single) and multi-family (multi) buildings. Leave empty if your address only has one schedule.",
     },
 }
 
@@ -77,13 +90,18 @@ PARAM_TRANSLATIONS = {
         "city": "City",
         "street": "Street",
         "house": "House Number",
+        "building_type": "Building Type",
     },
     "de": {
         "city": "Stadt",
         "street": "Straße",
         "house": "Hausnummer",
+        "building_type": "Gebäudetyp",
     },
 }
+
+
+BUILDING_TYPES = ("single", "multi")
 
 
 def _get_icon(summary: str) -> str | None:
@@ -95,7 +113,13 @@ def _get_icon(summary: str) -> str | None:
 
 
 class Source:
-    def __init__(self, city: str, street: str, house: str | int):
+    def __init__(
+        self,
+        city: str,
+        street: str,
+        house: str | int,
+        building_type: str | None = None,
+    ):
         if not city:
             raise SourceArgumentRequired("city", "City is required.")
         if not street:
@@ -106,6 +130,14 @@ class Source:
         self._city = city.strip().lower()
         self._street = street.strip().upper()
         self._house = str(house).strip()
+
+        if building_type:
+            building_type = building_type.strip().lower()
+            if building_type not in BUILDING_TYPES:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "building_type", building_type, suggestions=list(BUILDING_TYPES)
+                )
+        self._building_type = building_type or None
 
     def fetch(self) -> list[Collection]:
         # Validate street exists
@@ -149,14 +181,18 @@ class Source:
             )
 
         # Fetch ICS
+        ics_params: dict[str, str] = {
+            "street": self._street,
+            "house": self._house,
+            "city": self._city,
+            "types": "mixed,segregated,bio,bulky",
+        }
+        if self._building_type:
+            ics_params["building_type"] = self._building_type
+
         r = requests.get(
             f"{API_URL}/export/ics",
-            params={
-                "street": self._street,
-                "house": self._house,
-                "city": self._city,
-                "types": "mixed,segregated,bio,bulky",
-            },
+            params=ics_params,
             timeout=30,
         )
         r.raise_for_status()

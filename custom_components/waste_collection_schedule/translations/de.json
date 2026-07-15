@@ -465,6 +465,29 @@
         },
         "data_description": {}
       },
+      "args_cairns_qld_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Vollständige Adresse, z. B. '7 Keats Close, MOUNT SHERIDAN' (genau wie in der Autovervollständigung der Webseite angezeigt)."
+        }
+      },
+      "reconfigure_cairns_qld_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Vollständige Adresse, z. B. '7 Keats Close, MOUNT SHERIDAN' (genau wie in der Autovervollständigung der Webseite angezeigt)."
+        }
+      },
       "args_campbelltown_nsw_gov_au": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -2911,6 +2934,26 @@
         },
         "data_description": {}
       },
+      "args_wingecarribee_nsw_gov_au": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_wingecarribee_nsw_gov_au": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {}
+      },
       "args_wollondilly_nsw_gov_au": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -4309,6 +4352,24 @@
           "hausnummer": "Hausnummer",
           "strasse": "Straße",
           "zone": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_kaltenleutgeben_gv_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_kaltenleutgeben_gv_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel"
         },
         "data_description": {}
       },
@@ -11597,6 +11658,29 @@
         },
         "data_description": {}
       },
+      "args_hasselroth_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Ortsteil"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "district": "Der Hasselrother Ortsteil, z. B. 'Neuenhasslau', 'Niedermittlau' oder 'Gondsroth'"
+        }
+      },
+      "reconfigure_hasselroth_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Ortsteil"
+        },
+        "data_description": {
+          "district": "Der Hasselrother Ortsteil, z. B. 'Neuenhasslau', 'Niedermittlau' oder 'Gondsroth'"
+        }
+      },
       "args_ics_huellhorst_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -14736,6 +14820,33 @@
           "street": "Straße"
         },
         "data_description": {}
+      },
+      "args_stadtwerke_singen_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße oder Ortsteil"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Hausnummer. Nur erforderlich, wenn die Straße in mehrere Adressbereiche mit unterschiedlichen Abfuhrterminen aufgeteilt ist (z. B. 'Alemannenstraße').",
+          "street": "Straßenname wie im Straßenverzeichnis des Abfallkalenders der Stadtwerke Singen, oder einer der Stadtteile (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+        }
+      },
+      "reconfigure_stadtwerke_singen_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "street": "Straße oder Ortsteil"
+        },
+        "data_description": {
+          "house_number": "Hausnummer. Nur erforderlich, wenn die Straße in mehrere Adressbereiche mit unterschiedlichen Abfuhrterminen aufgeteilt ist (z. B. 'Alemannenstraße').",
+          "street": "Straßenname wie im Straßenverzeichnis des Abfallkalenders der Stadtwerke Singen, oder einer der Stadtteile (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+        }
       },
       "args_staedteservice_de": {
         "title": "Quelle konfigurieren",
@@ -18122,6 +18233,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "building_type": "Gebäudetyp",
           "city": "Stadt",
           "house": "Hausnummer",
           "street": "Straße"
@@ -18135,6 +18247,7 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
+          "building_type": "Gebäudetyp",
           "city": "Stadt",
           "house": "Hausnummer",
           "street": "Straße"
@@ -23750,6 +23863,28 @@
         "data_description": {
           "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
         }
+      },
+      "args_inverclyde_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "postcode": "PLZ"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_inverclyde_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "postcode": "PLZ"
+        },
+        "data_description": {}
       },
       "args_ipswich_gov_uk": {
         "title": "Quelle konfigurieren",

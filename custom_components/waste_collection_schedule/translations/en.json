@@ -482,6 +482,29 @@
         },
         "data_description": {}
       },
+      "args_cairns_qld_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full street address, e.g. '7 Keats Close, MOUNT SHERIDAN' (exactly as shown in the website's address autocomplete)."
+        }
+      },
+      "reconfigure_cairns_qld_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Full street address, e.g. '7 Keats Close, MOUNT SHERIDAN' (exactly as shown in the website's address autocomplete)."
+        }
+      },
       "args_campbelltown_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -3089,6 +3112,29 @@
           "address": "Street address, for example: 18 Crabbes Avenue, North Willoughby, NSW 2068"
         }
       },
+      "args_wingecarribee_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address within the Wingecarribee Shire (e.g. '8 Willow Road, Bowral NSW 2576')"
+        }
+      },
+      "reconfigure_wingecarribee_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Street address within the Wingecarribee Shire (e.g. '8 Willow Road, Bowral NSW 2576')"
+        }
+      },
       "args_wollondilly_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -4487,6 +4533,24 @@
           "hausnummer": "House Number",
           "strasse": "Street",
           "zone": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_kaltenleutgeben_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kaltenleutgeben_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title"
         },
         "data_description": {}
       },
@@ -11904,6 +11968,29 @@
         },
         "data_description": {}
       },
+      "args_hasselroth_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "The Hasselroth district (Ortsteil), e.g. 'Neuenhasslau', 'Niedermittlau' or 'Gondsroth'"
+        }
+      },
+      "reconfigure_hasselroth_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "district": "The Hasselroth district (Ortsteil), e.g. 'Neuenhasslau', 'Niedermittlau' or 'Gondsroth'"
+        }
+      },
       "args_ics_huellhorst_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -15043,6 +15130,33 @@
           "street": "Street"
         },
         "data_description": {}
+      },
+      "args_stadtwerke_singen_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street or district"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "House number. Only required if the street is split into several address ranges with different collection days (e.g. 'Alemannenstraße').",
+          "street": "Street name as listed in the Stadtwerke Singen waste calendar street directory, or one of the outlying districts (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+        }
+      },
+      "reconfigure_stadtwerke_singen_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street or district"
+        },
+        "data_description": {
+          "house_number": "House number. Only required if the street is split into several address ranges with different collection days (e.g. 'Alemannenstraße').",
+          "street": "Street name as listed in the Stadtwerke Singen waste calendar street directory, or one of the outlying districts (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+        }
       },
       "args_staedteservice_de": {
         "title": "Configure Source",
@@ -18578,12 +18692,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
           "city": "City",
           "house": "House Number",
           "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "building_type": "Optional. Some addresses (e.g. in Gdynia) have separate schedules for single-family (single) and multi-family (multi) buildings. Leave empty if your address only has one schedule.",
           "city": "City name (szczecin, gdansk, gdynia, or sopot).",
           "house": "House number.",
           "street": "Street name in uppercase as shown on SmiecioPlan."
@@ -18594,11 +18710,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
           "city": "City",
           "house": "House Number",
           "street": "Street"
         },
         "data_description": {
+          "building_type": "Optional. Some addresses (e.g. in Gdynia) have separate schedules for single-family (single) and multi-family (multi) buildings. Leave empty if your address only has one schedule.",
           "city": "City name (szczecin, gdansk, gdynia, or sopot).",
           "house": "House number.",
           "street": "Street name in uppercase as shown on SmiecioPlan."
@@ -24299,11 +24417,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number / Name / UPRN",
           "post_code": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "House number, house name, or UPRN (Unique Property Reference Number) of the property. If your property only has a name and no number, enter the name; if it is still not found, the error message will list the full addresses found for your postcode so you can copy the UPRN or exact wording from there.",
+          "post_code": "Postcode of the property, e.g. HR4 9JS"
         }
       },
       "reconfigure_herefordshire_gov_uk": {
@@ -24311,10 +24431,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number / Name / UPRN",
           "post_code": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "House number, house name, or UPRN (Unique Property Reference Number) of the property. If your property only has a name and no number, enter the name; if it is still not found, the error message will list the full addresses found for your postcode so you can copy the UPRN or exact wording from there.",
+          "post_code": "Postcode of the property, e.g. HR4 9JS"
+        }
       },
       "args_highpeak_gov_uk": {
         "title": "Configure Source",
@@ -24456,6 +24579,33 @@
         },
         "data_description": {
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+        }
+      },
+      "args_inverclyde_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "The first line of the address exactly as returned by the council's address search, e.g. '10 St John's Road'",
+          "postcode": "The postcode of the property, e.g. 'PA16 0FG'"
+        }
+      },
+      "reconfigure_inverclyde_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "address": "The first line of the address exactly as returned by the council's address search, e.g. '10 St John's Road'",
+          "postcode": "The postcode of the property, e.g. 'PA16 0FG'"
         }
       },
       "args_ipswich_gov_uk": {

@@ -489,6 +489,7 @@ This source has been successfully tested with the following service providers:
 ### United States of America
 
 - [Atlantic Waste Services, GA](/doc/ics/recollect.md) / atlanticwaste.com
+- [City of Apopka, FL](/doc/ics/recollect.md) / apopka.gov/319/Solid-Waste
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
