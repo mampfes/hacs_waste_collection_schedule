@@ -19,6 +19,7 @@ import datetime
 from typing import (
     TYPE_CHECKING,
     Any,
+    NamedTuple,
     Protocol,
     TypeAlias,
     TypeVar,
@@ -380,6 +381,123 @@ class PdfTextParser(Parser[str]):
                 raw=text[:500],
             )
         return text
+
+
+class PdfWord(NamedTuple):
+    """A run of text on a PDF page with its horizontal span (PDF points)."""
+
+    text: str
+    x0: float
+    x1: float
+
+
+class PdfRow(NamedTuple):
+    """One horizontal line of a PDF table: its page, vertical position and words.
+
+    ``y`` is the pdfminer baseline (larger = higher up the page). ``words`` are
+    the runs of text sharing this line, sorted left-to-right by ``x0``.
+    """
+
+    page: int
+    y: float
+    words: tuple[PdfWord, ...]
+
+
+class PdfTableParser(Parser["list[PdfRow]"]):
+    """Extract positioned text from a text PDF, grouped into rows (pdfminer.six).
+
+    For a text PDF laid out as a table or grid whose columns plain
+    ``extract_text`` collapses (e.g. a calendar showing several months
+    side-by-side). Rather than guess column boundaries from character offsets,
+    this reads each text run's real coordinates and clusters runs sharing a
+    horizontal line into a :class:`PdfRow`. A source's ``preprocess`` /
+    ``classify`` then bins each row's words into columns by ``x0`` -- which is
+    the only genuinely provider-specific part (which x range is which month /
+    column), so it stays in the source::
+
+        parse = parsers.PdfTableParser(min_words=50)
+
+        def preprocess(self, rows, source=None):
+            for row in rows:
+                for word in row.words:
+                    ...  # assign word.x0 to a column, read the day/waste type
+
+    No OCR. Pass ``min_words`` (a minimum total run count) to flag an
+    image-only/empty PDF, which is logged and raises ``ResponseShapeError``
+    rather than yielding nothing.
+
+    Args:
+        y_tolerance: runs whose baselines differ by at most this many points
+            are treated as the same row (default 3.0).
+        min_words: minimum total text runs expected across the document.
+    """
+
+    def __init__(self, *, y_tolerance: float = 3.0, min_words: "int | None" = None):
+        self.y_tolerance = y_tolerance
+        self.min_words = min_words
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[PdfRow]":
+        from io import BytesIO
+
+        from pdfminer.high_level import extract_pages
+        from pdfminer.layout import LAParams, LTTextContainer, LTTextLineHorizontal
+
+        # (page, y1, x0, x1, text) for every text run on every page.
+        runs: list[tuple[int, float, float, float, str]] = []
+        for page_no, layout in enumerate(
+            extract_pages(BytesIO(response.content), laparams=LAParams())
+        ):
+            for element in layout:
+                if not isinstance(element, LTTextContainer):
+                    continue
+                for line in element:
+                    if not isinstance(line, LTTextLineHorizontal):
+                        continue
+                    text = line.get_text().strip()
+                    if text:
+                        runs.append((page_no, line.y1, line.x0, line.x1, text))
+
+        if self.min_words is not None:
+            response_shape.expect(
+                len(runs) >= self.min_words,
+                source_name=response_shape.source_name(source),
+                detail=(
+                    f"PDF yielded {len(runs)} text runs, under {self.min_words} "
+                    "(image-only PDF?)"
+                ),
+                raw=" ".join(r[4] for r in runs)[:500],
+            )
+
+        # Cluster runs into rows: same page, baselines within y_tolerance.
+        rows: list[PdfRow] = []
+        current: list[tuple[int, float, float, float, str]] = []
+
+        def flush() -> None:
+            if not current:
+                return
+            page = current[0][0]
+            y = current[0][1]
+            words = tuple(
+                PdfWord(text, x0, x1)
+                for _, _, x0, x1, text in sorted(current, key=lambda r: r[2])
+            )
+            rows.append(PdfRow(page=page, y=y, words=words))
+
+        # Top-to-bottom, then left-to-right within a page.
+        for run in sorted(runs, key=lambda r: (r[0], -r[1], r[2])):
+            if (
+                current
+                and run[0] == current[0][0]
+                and abs(run[1] - current[0][1]) <= self.y_tolerance
+            ):
+                current.append(run)
+            else:
+                flush()
+                current = [run]
+        flush()
+        return rows
 
 
 class XmlParser(Parser["list[Any]"]):

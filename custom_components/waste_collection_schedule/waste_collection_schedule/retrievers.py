@@ -33,9 +33,12 @@ problem):
 
 from __future__ import annotations
 
+import datetime
+import re
 import time
 from collections.abc import Callable, Mapping
 from typing import TYPE_CHECKING, Any, Protocol, TypeAlias, TypeVar, cast
+from urllib.parse import urljoin
 
 import requests as _plain_requests
 from bs4 import BeautifulSoup
@@ -213,6 +216,109 @@ class TwoStepRetriever(_BaseRetriever):
         return source.session.get(
             self.schedule_url(key, **source.params), headers=headers
         )
+
+
+class PdfLinkRetriever(_BaseRetriever):
+    """Find a document link on an HTML index page, then download it.
+
+    For a provider whose calendar file (typically a PDF) is linked from a
+    stable landing page under a URL that rotates -- usually per year, often on
+    an opaque host or hashed path. Rather than hardcode a URL that breaks every
+    January, this fetches the index page, scans its ``<a href>`` values for
+    ``pattern``, picks one, resolves it against the index URL, and GETs it. Both
+    requests use the shared curl_cffi session.
+
+    Like :class:`TwoStepRetriever` this reads the first response's body (to find
+    the link); that is the sanctioned exception to "a retriever only does HTTP".
+
+        retrieve = retrievers.PdfLinkRetriever(
+            index_url="https://www.berdorf.lu/service-citoyens/dechets",
+            pattern=r"offallkalenner-(\\d{4})\\.pdf",
+        )
+
+    The chosen PDF's URL travels back on the returned response (``response.url``),
+    so a parser can read the calendar year off it without a second lookup.
+
+    Args:
+        index_url: the stable landing page (literal or
+            ``callable(**source.params) -> str``).
+        pattern: regex searched against each ``href`` (case-insensitive). A
+            capturing group's text drives ``select`` (typically a 4-digit year);
+            without a group, ``select`` sees the whole matched href.
+        select: which match to keep when several hrefs match. ``"newest_current"``
+            (default): read the captured group as an int and pick the largest
+            that is ``>=`` the current year, so a future calendar wins and a
+            stale past-year link is ignored (falls back to the newest overall if
+            none are current). ``"max"``: largest captured int overall.
+            ``"first"``: first in document order. Or a
+            ``callable(list[re.Match]) -> re.Match``.
+        headers: optional headers applied to both requests.
+        timeout: per-request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        *,
+        index_url: UrlArgs,
+        pattern: str,
+        select: str | Callable[[list[re.Match]], re.Match] = "newest_current",
+        headers: HeadersArgs = None,
+        timeout: int = 30,
+    ):
+        self.index_url = index_url
+        self.pattern = re.compile(pattern, re.IGNORECASE)
+        self.select = select
+        self.headers = headers
+        self.timeout = timeout
+
+    @staticmethod
+    def _captured_int(match: re.Match) -> int | None:
+        try:
+            return int(match.group(1))
+        except (IndexError, ValueError):
+            return None
+
+    def _choose(self, matches: list[re.Match]) -> re.Match:
+        if callable(self.select):
+            return self.select(matches)
+        if self.select == "first":
+            return matches[0]
+        keyed = [(self._captured_int(m), m) for m in matches]
+        valid = [(value, m) for value, m in keyed if value is not None]
+        if self.select == "max":
+            return max(valid, key=lambda vm: vm[0])[1] if valid else matches[0]
+        if self.select == "newest_current":
+            current_year = datetime.date.today().year
+            current = [(value, m) for value, m in valid if value >= current_year]
+            if current:
+                return max(current, key=lambda vm: vm[0])[1]
+            # No current-or-future link: fall back to the newest we saw.
+            return max(valid, key=lambda vm: vm[0])[1] if valid else matches[0]
+        raise ValueError(f"unknown PdfLinkRetriever select strategy {self.select!r}")
+
+    def __call__(self, source: BaseSource) -> Response:
+        headers = self._resolve(self.headers, source)
+        index_url = self._resolve(self.index_url, source)
+
+        index = source.session.get(index_url, headers=headers, timeout=self.timeout)
+        index.raise_for_status()
+
+        soup = BeautifulSoup(index.text, "html.parser")
+        matches = [
+            match
+            for tag in soup.find_all("a", href=True)
+            if (match := self.pattern.search(str(tag["href"])))
+        ]
+        if not matches:
+            raise ValueError(
+                f"no link matching {self.pattern.pattern!r} found on {index_url}; "
+                "the page layout may have changed."
+            )
+
+        pdf_url = urljoin(index_url, self._choose(matches).string)
+        pdf = source.session.get(pdf_url, headers=headers, timeout=self.timeout)
+        pdf.raise_for_status()
+        return pdf
 
 
 # One step of an AthosWasteManagementRetriever wizard: a dict with keys

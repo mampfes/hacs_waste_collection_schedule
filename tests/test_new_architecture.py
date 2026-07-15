@@ -16,6 +16,7 @@ import datetime
 import os
 import sys
 from dataclasses import FrozenInstanceError
+from types import SimpleNamespace
 from typing import ClassVar
 from unittest.mock import MagicMock, patch
 
@@ -3490,3 +3491,152 @@ class TestNewStyleSourceTestCases:
         assert not undeclared, (
             f"{name}::{tc_name}: returned undeclared waste types: {undeclared}"
         )
+
+
+class TestPdfLinkRetriever:
+    """PdfLinkRetriever finds the current PDF on an index page and downloads it."""
+
+    @staticmethod
+    def _index(html):
+        resp = MagicMock()
+        resp.text = html
+        resp.raise_for_status.return_value = None
+        return resp
+
+    def _run(self, retriever, html):
+        from waste_collection_schedule import retrievers
+
+        source = MagicMock()
+        source.params = {}
+        index_resp = self._index(html)
+        pdf_resp = MagicMock()
+        calls = []
+
+        def fake_get(url, headers=None, timeout=None):
+            calls.append(url)
+            return index_resp if len(calls) == 1 else pdf_resp
+
+        source.session.get.side_effect = fake_get
+        with patch.object(retrievers.datetime, "date") as fake_date:
+            fake_date.today.return_value.year = 2026
+            result = retriever(source)
+        return result, pdf_resp, calls
+
+    def test_picks_newest_current_year_and_resolves_relative_href(self):
+        from waste_collection_schedule import retrievers
+
+        html = (
+            '<a href="/f/cal-2024.pdf">old</a>'
+            '<a href="/f/cal-2026.pdf">this year</a>'
+            '<a href="/f/cal-2025.pdf">last year</a>'
+        )
+        retriever = retrievers.PdfLinkRetriever(
+            index_url="https://x.example/index", pattern=r"cal-(\d{4})\.pdf"
+        )
+        result, pdf_resp, calls = self._run(retriever, html)
+        assert result is pdf_resp
+        assert calls[0] == "https://x.example/index"
+        # Relative href resolved against the index URL; 2026 (current) chosen.
+        assert calls[1] == "https://x.example/f/cal-2026.pdf"
+
+    def test_newest_current_prefers_future_over_current(self):
+        from waste_collection_schedule import retrievers
+
+        html = '<a href="cal-2026.pdf">a</a><a href="cal-2028.pdf">b</a>'
+        retriever = retrievers.PdfLinkRetriever(
+            index_url="https://x.example/i", pattern=r"cal-(\d{4})\.pdf"
+        )
+        _, _, calls = self._run(retriever, html)
+        assert calls[1] == "https://x.example/cal-2028.pdf"
+
+    def test_newest_current_falls_back_when_none_current(self):
+        from waste_collection_schedule import retrievers
+
+        html = '<a href="cal-2023.pdf">a</a><a href="cal-2024.pdf">b</a>'
+        retriever = retrievers.PdfLinkRetriever(
+            index_url="https://x.example/i", pattern=r"cal-(\d{4})\.pdf"
+        )
+        _, _, calls = self._run(retriever, html)
+        assert calls[1] == "https://x.example/cal-2024.pdf"
+
+    def test_select_first(self):
+        from waste_collection_schedule import retrievers
+
+        html = '<a href="cal-2020.pdf">a</a><a href="cal-2030.pdf">b</a>'
+        retriever = retrievers.PdfLinkRetriever(
+            index_url="https://x.example/i",
+            pattern=r"cal-(\d{4})\.pdf",
+            select="first",
+        )
+        _, _, calls = self._run(retriever, html)
+        assert calls[1] == "https://x.example/cal-2020.pdf"
+
+    def test_no_matching_link_raises(self):
+        from waste_collection_schedule import retrievers
+
+        retriever = retrievers.PdfLinkRetriever(
+            index_url="https://x.example/i", pattern=r"cal-(\d{4})\.pdf"
+        )
+        with pytest.raises(ValueError, match="no link matching"):
+            self._run(retriever, "<a href='other.html'>x</a>")
+
+
+class TestPdfTableParser:
+    """PdfTableParser clusters positioned text runs into rows (pdfminer stubbed)."""
+
+    class _FakeLine:
+        def __init__(self, text, x0, x1, y1):
+            self._text, self.x0, self.x1, self.y1 = text, x0, x1, y1
+
+        def get_text(self):
+            return self._text
+
+    class _FakeContainer(list):
+        pass
+
+    def _pages(self, *pages):
+        # Each page is a list of (text, x0, x1, y1); wrap into one container/page.
+        out = []
+        for lines in pages:
+            container = self._FakeContainer(
+                self._FakeLine(t, x0, x1, y1) for t, x0, x1, y1 in lines
+            )
+            out.append([container])
+        return out
+
+    def _run(self, pages, **kwargs):
+        from waste_collection_schedule.parsers import PdfTableParser
+
+        with (
+            patch("pdfminer.high_level.extract_pages", return_value=pages),
+            patch("pdfminer.layout.LTTextContainer", self._FakeContainer),
+            patch("pdfminer.layout.LTTextLineHorizontal", self._FakeLine),
+        ):
+            return PdfTableParser(**kwargs)(SimpleNamespace(content=b"%PDF-"))
+
+    def test_clusters_rows_by_y_and_sorts_by_x(self):
+        pages = self._pages(
+            [("B", 50, 60, 100.0), ("A", 10, 20, 101.0), ("C", 30, 40, 80.0)],
+        )
+        rows = self._run(pages, y_tolerance=3.0)
+        assert len(rows) == 2
+        # First row: the two runs within y-tolerance, sorted left-to-right.
+        assert [w.text for w in rows[0].words] == ["A", "B"]
+        assert rows[0].page == 0
+        # Second row is the lower line on the page.
+        assert [w.text for w in rows[1].words] == ["C"]
+
+    def test_rows_do_not_merge_across_pages(self):
+        pages = self._pages(
+            [("P0", 10, 20, 100.0)],
+            [("P1", 10, 20, 100.0)],
+        )
+        rows = self._run(pages)
+        assert [(r.page, r.words[0].text) for r in rows] == [(0, "P0"), (1, "P1")]
+
+    def test_min_words_flags_image_only_pdf(self):
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        pages = self._pages([("only", 10, 20, 100.0)])
+        with pytest.raises(ResponseShapeError):
+            self._run(pages, min_words=5)
