@@ -15,7 +15,6 @@ custom_components/waste_collection_schedule/waste_collection_schedule/test/secre
 # Tracked agents, commands, and project-shared settings live under .claude/.
 .claude/settings.local.json
 .claude/worktrees/
-.omc
 
 # Personal overrides on top of the tracked CLAUDE.md.
 CLAUDE.local.md
