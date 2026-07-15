@@ -2,6 +2,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Haringey Council"
 DESCRIPTION = "Source for haringey.gov.uk services for Haringey Council, UK."
@@ -40,11 +41,12 @@ class Source:
                 "councilId": COUNCIL_ID,
                 "pointType": "PointAddress",
             },
+            timeout=30,
         )
         address_response.raise_for_status()
         addresses = address_response.json().get("data", [])
         if not addresses:
-            raise Exception(f"No address found for UPRN {self._uprn}")
+            raise SourceArgumentNotFound("uprn", self._uprn)
         point_id = addresses[0]["id"]
 
         # Step 2: fetch the collection schedule for that point id.
@@ -55,6 +57,7 @@ class Source:
                 "pointType": "PointAddress",
                 "councilId": COUNCIL_ID,
             },
+            timeout=30,
         )
         collection_response.raise_for_status()
         services = collection_response.json().get("activeServices", [])
@@ -68,7 +71,9 @@ class Source:
                     continue
                 entries.append(
                     Collection(
-                        date=datetime.fromisoformat(date_str).date(),
+                        date=datetime.fromisoformat(
+                            date_str.replace("Z", "+00:00")
+                        ).date(),
                         t=waste_type,
                         icon=ICON_MAP.get(waste_type),
                     )
