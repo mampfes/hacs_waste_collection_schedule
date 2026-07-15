@@ -311,6 +311,10 @@ TEST_CASES = {
         "town": "Obernalb",
         "street": "Zum weissen Engel",
     },
+    "Hollabrunn - Zellerndorf": {
+        "district": "hollabrunn",
+        "municipal": "Zellerndorf",
+    },  # regression test for #4909: API returns a zone with a fraktion but no "dates" key
     "Horn": {
         "district": "horn",
         "municipal": "Japons",
@@ -940,8 +944,13 @@ class Source:
 
         entries: list[Collection] = []
         for zone in zones:
-            bin_type = zone["fraktion"]
-            for date_dict in zone["dates"]:
+            bin_type = zone.get("fraktion")
+            dates = zone.get("dates")
+            # Some zones (e.g. Zellerndorf/Hollabrunn) are returned by the API
+            # with a fraktion but no "dates" key at all, or an empty one.
+            if not bin_type or not dates:
+                continue
+            for date_dict in dates:
                 date_str = date_dict["date"]
                 date_ = datetime.strptime(date_str, "%Y-%m-%d").date()
                 entries.append(

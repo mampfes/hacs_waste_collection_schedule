@@ -185,6 +185,12 @@
       "id": "byron_nsw_gov_au"
     },
     {
+      "title": "Cairns Regional Council",
+      "module": "cairns_qld_gov_au",
+      "default_params": {},
+      "id": "cairns_qld_gov_au"
+    },
+    {
       "title": "Campbelltown City Council",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -1334,6 +1340,12 @@
       "module": "willoughby_nsw_gov_au",
       "default_params": {},
       "id": "willoughby_nsw_gov_au"
+    },
+    {
+      "title": "Wingecarribee Shire Council",
+      "module": "wingecarribee_nsw_gov_au",
+      "default_params": {},
+      "id": "wingecarribee_nsw_gov_au"
     },
     {
       "title": "Wollondilly Shire Council",
@@ -3214,6 +3226,12 @@
       "module": "goessendorf_at",
       "default_params": {},
       "id": "goessendorf_at"
+    },
+    {
+      "title": "Marktgemeinde Kaltenleutgeben",
+      "module": "kaltenleutgeben_gv_at",
+      "default_params": {},
+      "id": "kaltenleutgeben_gv_at"
     },
     {
       "title": "Marktgemeinde Kirchberg am Wechsel",
@@ -9897,6 +9915,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "Gemeinde Hasselroth",
+      "module": "hasselroth_de",
+      "default_params": {},
+      "id": "hasselroth_de"
+    },
+    {
       "title": "Gemeinde H\u00fcllhorst",
       "module": "ics",
       "default_params": {},
@@ -14118,6 +14142,12 @@
       "id": "stadtwerke_roesrath_de"
     },
     {
+      "title": "Stadtwerke Singen",
+      "module": "stadtwerke_singen_de",
+      "default_params": {},
+      "id": "stadtwerke_singen_de"
+    },
+    {
       "title": "Stadtwerke Speyer",
       "module": "ics",
       "default_params": {},
@@ -17222,6 +17252,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Scalea",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Scandicci",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -18272,6 +18308,12 @@
         "service": "spaarnelanden"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Straatbeeld Online",
+      "module": "straatbeeld_online",
+      "default_params": {},
+      "id": "straatbeeld_online"
     },
     {
       "title": "Twente Milieu",
@@ -19831,6 +19873,12 @@
         "municipality": "ekero"
       },
       "id": "roslagsvatten_se"
+    },
+    {
+      "title": "Falu Energi & Vatten (FEV)",
+      "module": "fev_se",
+      "default_params": {},
+      "id": "fev_se"
     },
     {
       "title": "G\u00e4strike \u00c5tervinnare",
@@ -22035,6 +22083,12 @@
       "id": "iapp_itouchvision_com"
     },
     {
+      "title": "Inverclyde Council",
+      "module": "inverclyde_gov_uk",
+      "default_params": {},
+      "id": "inverclyde_gov_uk"
+    },
+    {
       "title": "Ipswich Borough Council",
       "module": "ipswich_gov_uk",
       "default_params": {},
@@ -23372,6 +23426,14 @@
       "module": "chesapeake_va_us",
       "default_params": {},
       "id": "chesapeake_va_us"
+    },
+    {
+      "title": "City of Apopka, FL",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "City of Austin, TX",

@@ -482,6 +482,29 @@
         },
         "data_description": {}
       },
+      "args_cairns_qld_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full street address, e.g. '7 Keats Close, MOUNT SHERIDAN' (exactly as shown in the website's address autocomplete)."
+        }
+      },
+      "reconfigure_cairns_qld_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Full street address, e.g. '7 Keats Close, MOUNT SHERIDAN' (exactly as shown in the website's address autocomplete)."
+        }
+      },
       "args_campbelltown_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -3089,6 +3112,29 @@
           "address": "Street address, for example: 18 Crabbes Avenue, North Willoughby, NSW 2068"
         }
       },
+      "args_wingecarribee_nsw_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address within the Wingecarribee Shire (e.g. '8 Willow Road, Bowral NSW 2576')"
+        }
+      },
+      "reconfigure_wingecarribee_nsw_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Street address within the Wingecarribee Shire (e.g. '8 Willow Road, Bowral NSW 2576')"
+        }
+      },
       "args_wollondilly_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -4487,6 +4533,24 @@
           "hausnummer": "House Number",
           "strasse": "Street",
           "zone": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_kaltenleutgeben_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_kaltenleutgeben_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title"
         },
         "data_description": {}
       },
@@ -11904,6 +11968,29 @@
         },
         "data_description": {}
       },
+      "args_hasselroth_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "The Hasselroth district (Ortsteil), e.g. 'Neuenhasslau', 'Niedermittlau' or 'Gondsroth'"
+        }
+      },
+      "reconfigure_hasselroth_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "district": "The Hasselroth district (Ortsteil), e.g. 'Neuenhasslau', 'Niedermittlau' or 'Gondsroth'"
+        }
+      },
       "args_ics_huellhorst_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -15044,6 +15131,33 @@
         },
         "data_description": {}
       },
+      "args_stadtwerke_singen_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street or district"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "House number. Only required if the street is split into several address ranges with different collection days (e.g. 'Alemannenstraße').",
+          "street": "Street name as listed in the Stadtwerke Singen waste calendar street directory, or one of the outlying districts (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+        }
+      },
+      "reconfigure_stadtwerke_singen_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street": "Street or district"
+        },
+        "data_description": {
+          "house_number": "House number. Only required if the street is split into several address ranges with different collection days (e.g. 'Alemannenstraße').",
+          "street": "Street name as listed in the Stadtwerke Singen waste calendar street directory, or one of the outlying districts (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+        }
+      },
       "args_staedteservice_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -17489,6 +17603,41 @@
           "toevoeging": "House letter or addition (only required when more than one address shares the postcode/huisnummer)"
         }
       },
+      "args_straatbeeld_online": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_letter": "House letter/addition",
+          "house_number": "House number",
+          "municipality": "Municipality",
+          "postal_code": "Postal code"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_letter": "House letter or addition, if applicable (optional, only needed when multiple addresses share the same postal code and house number)",
+          "house_number": "House number, e.g. 28",
+          "municipality": "Subdomain of the municipality's waste calendar, e.g. 'drimmelen' for {url_drimmelen_afvalkalender_straatbeeld_online}",
+          "postal_code": "Dutch postal code, e.g. 4926CW"
+        }
+      },
+      "reconfigure_straatbeeld_online": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_letter": "House letter/addition",
+          "house_number": "House number",
+          "municipality": "Municipality",
+          "postal_code": "Postal code"
+        },
+        "data_description": {
+          "house_letter": "House letter or addition, if applicable (optional, only needed when multiple addresses share the same postal code and house number)",
+          "house_number": "House number, e.g. 28",
+          "municipality": "Subdomain of the municipality's waste calendar, e.g. 'drimmelen' for {url_drimmelen_afvalkalender_straatbeeld_online}",
+          "postal_code": "Dutch postal code, e.g. 4926CW"
+        }
+      },
       "args_ics_offalkalinder_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -18543,12 +18692,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
           "city": "City",
           "house": "House Number",
           "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "building_type": "Optional. Some addresses (e.g. in Gdynia) have separate schedules for single-family (single) and multi-family (multi) buildings. Leave empty if your address only has one schedule.",
           "city": "City name (szczecin, gdansk, gdynia, or sopot).",
           "house": "House number.",
           "street": "Street name in uppercase as shown on SmiecioPlan."
@@ -18559,11 +18710,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
           "city": "City",
           "house": "House Number",
           "street": "Street"
         },
         "data_description": {
+          "building_type": "Optional. Some addresses (e.g. in Gdynia) have separate schedules for single-family (single) and multi-family (multi) buildings. Leave empty if your address only has one schedule.",
           "city": "City name (szczecin, gdansk, gdynia, or sopot).",
           "house": "House number.",
           "street": "Street name in uppercase as shown on SmiecioPlan."
@@ -19611,6 +19764,29 @@
         "data_description": {
           "municipality": "Municipality, one of: 'osteraker', 'vaxholm', or 'ekero'",
           "street_address": "Street Address (e.g., Andromedavägen 1, Åkersberga)"
+        }
+      },
+      "args_fev_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address including house number, exactly as it appears on fev.se, e.g. 'Rådmansvägen 3'."
+        }
+      },
+      "reconfigure_fev_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Street address including house number, exactly as it appears on fev.se, e.g. 'Rådmansvägen 3'."
         }
       },
       "args_gastrikeatervinnare_se": {
@@ -24241,11 +24417,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number / Name / UPRN",
           "post_code": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "number": "House number, house name, or UPRN (Unique Property Reference Number) of the property. If your property only has a name and no number, enter the name; if it is still not found, the error message will list the full addresses found for your postcode so you can copy the UPRN or exact wording from there.",
+          "post_code": "Postcode of the property, e.g. HR4 9JS"
         }
       },
       "reconfigure_herefordshire_gov_uk": {
@@ -24253,10 +24431,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "number": "Number",
+          "number": "House Number / Name / UPRN",
           "post_code": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "House number, house name, or UPRN (Unique Property Reference Number) of the property. If your property only has a name and no number, enter the name; if it is still not found, the error message will list the full addresses found for your postcode so you can copy the UPRN or exact wording from there.",
+          "post_code": "Postcode of the property, e.g. HR4 9JS"
+        }
       },
       "args_highpeak_gov_uk": {
         "title": "Configure Source",
@@ -24398,6 +24579,33 @@
         },
         "data_description": {
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+        }
+      },
+      "args_inverclyde_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "The first line of the address exactly as returned by the council's address search, e.g. '10 St John's Road'",
+          "postcode": "The postcode of the property, e.g. 'PA16 0FG'"
+        }
+      },
+      "reconfigure_inverclyde_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "address": "The first line of the address exactly as returned by the council's address search, e.g. '10 St John's Road'",
+          "postcode": "The postcode of the property, e.g. 'PA16 0FG'"
         }
       },
       "args_ipswich_gov_uk": {
@@ -28958,16 +29166,18 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
+          "recordID": "Record Id",
           "recycleObjectID": "Recycle Object Id",
           "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
-          "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
-          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
-          "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
+          "bulkyObjectID": "OBJECTID of your bulky waste zone. Go to {url_data_okc_gov_portal_page_viewer_datasetname_bulky_20waste_20zones_view_map} , find your house on the map, then switch to the Table view and filter by map to read your OBJECTID. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recordID": "Record ID for the unofficial okc.schizo.dev source. This single ID covers trash, recycling and bulky waste. Go to {url_okc_schizo_dev} and type in your address to get it. This is the easiest option and is recommended.",
+          "recycleObjectID": "OBJECTID of your recycling zone. Go to {url_af8ffb4a12} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the official data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly. Not needed when using recordID.",
+          "trashObjectID": "OBJECTID of your trash collection zone. Go to {url_7ffdabbb07} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable."
         }
       },
       "reconfigure_okc_gov": {
@@ -28976,15 +29186,17 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
+          "recordID": "Record Id",
           "recycleObjectID": "Recycle Object Id",
           "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {
-          "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
-          "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
-          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
-          "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
+          "bulkyObjectID": "OBJECTID of your bulky waste zone. Go to {url_data_okc_gov_portal_page_viewer_datasetname_bulky_20waste_20zones_view_map} , find your house on the map, then switch to the Table view and filter by map to read your OBJECTID. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recordID": "Record ID for the unofficial okc.schizo.dev source. This single ID covers trash, recycling and bulky waste. Go to {url_okc_schizo_dev} and type in your address to get it. This is the easiest option and is recommended.",
+          "recycleObjectID": "OBJECTID of your recycling zone. Go to {url_af8ffb4a12} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the official data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly. Not needed when using recordID.",
+          "trashObjectID": "OBJECTID of your trash collection zone. Go to {url_7ffdabbb07} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable."
         }
       },
       "args_phila_gov": {

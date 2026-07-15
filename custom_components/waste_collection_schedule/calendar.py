@@ -118,6 +118,8 @@ class WasteCollectionCalendar(CalendarEntity):
             summary=collection.type,
             start=collection.date,
             end=collection.date + timedelta(days=1),
+            description=collection.description,
+            location=collection.location,
             uid=uuid.uuid4(),
         )
 

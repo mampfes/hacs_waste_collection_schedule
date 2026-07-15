@@ -57,6 +57,7 @@ known to work with:
 |City of Coquitlam, BC|Canada|[coquitlam.ca](https://www.coquitlam.ca/157/Collection-Calendar-and-Guidelines)|
 |Atlantic Waste Services, GA|USA|[atlanticwaste.com](https://atlanticwaste.com)|
 |Newcastle upon Tyne|UK|[new.newcastle.gov.uk](https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day)|
+|City of Apopka, FL|USA|[apopka.gov](https://www.apopka.gov/319/Solid-Waste)|
 
 and probably a lot more.
 

@@ -59,6 +59,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bundaberg Regional Council](/doc/source/bundaberg_qld_gov_au.md) / bundaberg.qld.gov.au
 - [Burwood City Council](/doc/source/impactapps_com_au.md) / burwood.nsw.gov.au
 - [Byron Shire Council](/doc/source/byron_nsw_gov_au.md) / byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules
+- [Cairns Regional Council](/doc/source/cairns_qld_gov_au.md) / cairns.qld.gov.au
 - [Campbelltown City Council](/doc/source/app_my_local_services_au.md) / campbelltown.sa.gov.au
 - [Campbelltown City Council (NSW)](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
 - [Campbeltown City Council](/doc/source/impactapps_com_au.md) / campbelltown.vic.gov.au
@@ -242,6 +243,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Whitehorse City Counfil](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
 - [Willoughby City Council](/doc/source/willoughby_nsw_gov_au.md) / willoughby.nsw.gov.au
+- [Wingecarribee Shire Council](/doc/source/wingecarribee_nsw_gov_au.md) / wsc.nsw.gov.au
 - [Wollondilly Shire Council](/doc/source/wollondilly_nsw_gov_au.md) / wollondilly.nsw.gov.au
 - [Wollongong City Council](/doc/source/impactapps_com_au.md) / wollongong.vic.gov.au
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
@@ -553,6 +555,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Marktgemeinde Edlitz](/doc/source/edlitz_at.md) / edlitz.at
 - [Marktgemeinde Eggelsberg](/doc/source/eggelsberg_at.md) / eggelsberg.at
 - [Marktgemeinde Gössendorf](/doc/source/goessendorf_at.md) / goessendorf.com
+- [Marktgemeinde Kaltenleutgeben](/doc/source/kaltenleutgeben_gv_at.md) / kaltenleutgeben.gv.at
 - [Marktgemeinde Kirchberg am Wechsel](/doc/ics/kirchberg_am_wechsel_at.md) / kirchberg-am-wechsel.at
 - [Marktgemeinde Obdach](/doc/source/obdach_at.md) / obdach.gv.at
 - [Marktgemeinde Schlierbach](/doc/source/schlierbach_at.md) / schlierbach.at
@@ -1531,6 +1534,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Groß Pankow (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
 - [Gemeinde Gründau](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/gruendau/abfallkalender
 - [Gemeinde Gumtow (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
+- [Gemeinde Hasselroth](/doc/source/hasselroth_de.md) / hasselroth.de
 - [Gemeinde Hüllhorst](/doc/ics/huellhorst_de.md) / huellhorst.de
 - [Gemeinde Kalletal](/doc/source/cmcitymedia_de.md) / cmcitymedia.de
 - [Gemeinde Karstädt (Landkreis Prignitz)](/doc/source/abfall_io.md) / landkreis-prignitz.de
@@ -2083,6 +2087,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
 - [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de
 - [Stadtwerke Rösrath](/doc/source/stadtwerke_roesrath_de.md) / stadtwerke-roesrath.de/service/abfuhrkalender
+- [Stadtwerke Singen](/doc/source/stadtwerke_singen_de.md) / stadtwerke-singen.de
 - [Stadtwerke Speyer](/doc/ics/gipsprojekt_de.md) / stadtwerke-speyer.de/muellkalender
 - [Steinheim](/doc/source/lobbe_app.md) / lobbe.app
 - [Steinhöring](/doc/source/awido_de.md) / lra-ebe.de
@@ -2565,6 +2570,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Saprodir](/doc/source/junker_app.md) / junker.app
 - [Sardegna Ecology - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Sasom](/doc/source/junker_app.md) / junker.app
+- [Scalea](/doc/source/junker_app.md) / junker.app
 - [Scandicci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Scanzorosciate](/doc/source/junker_app.md) / junker.app
 - [Scarperia e San Piero](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -2747,6 +2753,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Rova](/doc/source/rova_nl.md) / rova.nl
 - [Saver](/doc/source/saver_nl.md) / saver.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
+- [Straatbeeld Online](/doc/source/straatbeeld_online.md) / afvalkalender.straatbeeld.online
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
 - [Waardlanden](/doc/source/ximmio_nl.md) / waardlanden.nl
 - [Woerden / Oudewater](/doc/source/ximmio_nl.md) / woerden.nl
@@ -3001,6 +3008,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bräcke](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se/bracke/avfall-och-atervinning/avfallshamtning/nar-kommer-sopbilen
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
 - [Ekerö](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
+- [Falu Energi & Vatten (FEV)](/doc/source/fev_se.md) / fev.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
 - [Hedemora Energi](/doc/source/hedemora_energi_se.md) / hedemoraenergi.se
 - [Herrljunga & Vårgårda kommun](/doc/source/edpevent_se.md) / remondisrecycling.se/hushallsavfall/herrljunga-vargarda
@@ -3334,6 +3342,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hull City Council](/doc/source/hull_gov_uk.md) / hull.gov.uk
 - [Huntingdonshire District Council](/doc/source/huntingdonshire_gov_uk.md) / huntingdonshire.gov.uk
 - [Hyndburn Borough Council](/doc/source/iapp_itouchvision_com.md) / hyndburnbc.gov.uk
+- [Inverclyde Council](/doc/source/inverclyde_gov_uk.md) / inverclyde.gov.uk
 - [Ipswich Borough Council](/doc/source/ipswich_gov_uk.md) / ipswich.gov.uk
 - [Islington Council](/doc/source/islington_gov_uk.md) / islington.gov.uk
 - [iTouchVision Source using the encrypted API](/doc/source/iapp_itouchvision_com.md) / itouchvision.com
@@ -3553,6 +3562,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Baltimore County](/doc/source/baltimore_county_md_us.md) / baltimorecountymd.gov/departments/public-works/solid-waste/collection-schedule
 - [Baton Rouge, LA](/doc/source/baton_rouge_la_us.md) / brla.gov/337/Garbage-Collection
 - [Chesapeake, VA](/doc/source/chesapeake_va_us.md) / cityofchesapeake.net
+- [City of Apopka, FL](/doc/ics/recollect.md) / apopka.gov/319/Solid-Waste
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov
