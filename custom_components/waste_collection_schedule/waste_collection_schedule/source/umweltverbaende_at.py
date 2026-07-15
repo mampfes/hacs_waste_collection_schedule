@@ -559,7 +559,10 @@ class Source:
 
         entries: list[Collection] = []
         for day in schedule:
-            txt = day.text.strip().split("  ")
+            # Split on a run of 2+ whitespace characters (regular spaces
+            # and/or non-breaking spaces), so both the old NBSP-delimited
+            # markup and the newer double-space markup work.
+            txt = re.split(r"[  ]{2,}", day.text.strip())
             if len(txt) == 1:
                 txt = day.text.strip().split(" ")
                 txt = [
@@ -677,11 +680,12 @@ class Source:
 
     @staticmethod
     def _bounded_substring_match(needle: str, haystack: str) -> bool:
-        """Substring match that requires non-alphanumeric (or string-edge)
-        boundaries around the match, so e.g. "Abfuhrbereich II" does not
-        spuriously match "Abfuhrbereich III" (see issue #4675)."""
-        pattern = r"(?<![a-z0-9])" + re.escape(needle.lower()) + r"(?![a-z0-9])"
-        return re.search(pattern, haystack.lower()) is not None
+        """Substring match that requires non-word (or string-edge) boundaries
+        around the match, so e.g. "Abfuhrbereich II" does not spuriously match
+        "Abfuhrbereich III" (see issue #4675). Uses casefold() and Unicode-aware
+        \\w boundaries so umlauts/non-ASCII are handled like compare()."""
+        pattern = r"(?<!\w)" + re.escape(needle.casefold()) + r"(?!\w)"
+        return re.search(pattern, haystack.casefold()) is not None
 
     def _fetch_new_from_list(self, soup: BeautifulSoup) -> list[Collection]:
         """Fetch ICS links directly from the page, e.g. for Korneuburg/Baden."""
@@ -725,7 +729,7 @@ class Source:
         matched_links = []
         # If calendar(s) are specified, filter for them
         if self._calendars and any(self._calendars):
-            # 1. Prefer an exact (whitespace/punctuation-insensitive) match.
+            # 1. Prefer an exact match (compare() ignores spaces and commas).
             for cal in self._calendars:
                 for name, url in ics_links.items():
                     if self.compare(cal, name):
