@@ -27,6 +27,21 @@ FILTER_STREET_CONFIRM = "e3fd1e85-5188-11ea-9e88-250d8464572d"
 FILTER_NUMBER = "af552d94-f185-11e9-9256-e1c42467b095"
 INFOSHEET_ID = "2215b34d-11f1-11eb-8a48-9979b5aed361"
 
+# Communes covered by the GPSEA territory, as returned by the commune filter.
+COMMUNES = [
+    "Alfortville",
+    "Boissy-Saint-Léger",
+    "Bonneuil-sur-Marne",
+    "Chennevières-sur-Marne",
+    "Créteil",
+    "Limeil-Brévannes",
+    "Noiseau",
+    "Ormesson-sur-Marne",
+    "Le Plessis-Trévise",
+    "La Queue-en-Brie",
+    "Sucy-en-Brie",
+]
+
 WASTE_TYPES = {
     "om": "Ordures ménagères",
     "em": "Emballages",
@@ -70,6 +85,15 @@ MONTH_MAP = {
 
 WEEKLY_FREQUENCIES = {"HEBDOMADAIRE", "BIHEBDOMADAIRE", "TRIHEBDOMADAIRE"}
 
+EXTRA_INFO = [
+    {
+        "title": commune,
+        "url": URL,
+        "default_params": {"commune": commune},
+    }
+    for commune in COMMUNES
+]
+
 TEST_CASES = {
     "1 Place du Grand Pavois, Creteil": {
         "commune": "Creteil",
@@ -80,17 +104,17 @@ TEST_CASES = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "commune": "Your commune within the GPSEA territory",
+        "commune": "Your commune within the GPSEA territory: " + ", ".join(COMMUNES),
         "street": "Your street name",
         "house_number": "Your house number",
     },
     "fr": {
-        "commune": "Votre commune du territoire GPSEA",
+        "commune": "Votre commune du territoire GPSEA : " + ", ".join(COMMUNES),
         "street": "Le nom de votre voie",
         "house_number": "Votre numéro de voie",
     },
     "de": {
-        "commune": "Ihre Gemeinde im GPSEA-Gebiet",
+        "commune": "Ihre Gemeinde im GPSEA-Gebiet: " + ", ".join(COMMUNES),
         "street": "Ihr Straßenname",
         "house_number": "Ihre Hausnummer",
     },

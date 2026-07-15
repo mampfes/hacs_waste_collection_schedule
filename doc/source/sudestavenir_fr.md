@@ -1,6 +1,18 @@
 # Grand Paris Sud Est Avenir (GPSEA)
 
-Support for waste collection schedules provided by [Grand Paris Sud Est Avenir (GPSEA)](https://sudestavenir.fr/), an intercommunal territory in the Val-de-Marne department of France, covering communes including Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie and Sucy-en-Brie.
+Support for waste collection schedules provided by [Grand Paris Sud Est Avenir (GPSEA)](https://sudestavenir.fr/), an intercommunal territory in the Val-de-Marne department of France, serving the following communes:
+
+- Alfortville
+- Boissy-Saint-Léger
+- Bonneuil-sur-Marne
+- Chennevières-sur-Marne
+- Créteil
+- Limeil-Brévannes
+- Noiseau
+- Ormesson-sur-Marne
+- Le Plessis-Trévise
+- La Queue-en-Brie
+- Sucy-en-Brie
 
 Collection days depend on the exact address (commune, street and house number) and are looked up live against GPSEA's interactive collection map.
 
