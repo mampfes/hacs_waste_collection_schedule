@@ -34,6 +34,26 @@ they are collected behind a single major (shipped first as an
 `X.0.0-alpha`/`beta`) rather than dribbled out. The legacy `fetch()` contract
 stays supported indefinitely, so an individual source can revert if needed.
 
+Because the label is what users filter and template against, every major that
+migrates sources must say so plainly. The release notes lead with a callout
+that canonical (and localised) waste-type labels have changed, and that
+automations or templates comparing exact label strings may need updating. The
+same note goes in the affected source's doc.
+
+## Pre-release promotion criteria
+
+A migrating major ships as a pre-release first so users can verify against
+their own configs before it lands. The bar for each stage:
+
+| Stage | Criteria to enter |
+|---|---|
+| **`X.0.0-alpha`** | Every migrated source passes the offline suite against its recorded fixtures (one cassette per source, one per distinct response shape for a shared service). Pyright clean. No known label regression. |
+| **`X.0.0-beta`** | The migrated set is live-verified (a real fetch per source, or per representative region for large registries), with waste-type labels confirmed against the provider. Any source that cannot be live-verified is documented as such. |
+| **`X.0.0` (stable)** | The beta has run one full release cycle with no rollback of a migrated source to legacy `fetch()`, and no unresolved label-regression report. |
+
+A source that fails its stage bar reverts to the legacy `fetch()` contract for
+that release rather than holding back the whole major.
+
 ## Deprecation lifecycle
 
 - **When to keep a compatibility shim.** Only when removal would change entity
