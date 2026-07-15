@@ -35,7 +35,9 @@ Present the recommendation to the user.
 
 If the recommendation is **"already supported via shared platform"**: explain how to add the location to the shared config (the recommendation will name the exact file). Either guide them through the one-line edit, or invoke `source-implementer` with the location-add task.
 
-If the recommendation is **"not feasible"** (login wall, no public feed, PDF-only with no resident-facing tooling): explain why, and suggest alternatives: encourage them to ask the provider for a public feed, or to attempt the PDF approach themselves with `pypdf` (see `mpo_krakow_pl.py`).
+If the recommendation is **"not feasible"** (login wall, no public feed): explain why, and suggest alternatives: encourage them to ask the provider for a public feed, or look for a third-party aggregator. A **scanned/OCR-only or unstructured** PDF also lands here: defer it (leave the source request open under a status label) rather than hardcoding a schedule.
+
+A **PDF-only** provider is otherwise a normal new source, not a blocker: the pipeline has reusable PDF components (`PdfTextParser` for a text list, `PdfTableParser` for a columnar/grid calendar, `PdfImageCalendar` for a colour-coded raster calendar, and `PdfLinkRetriever` for a rotating per-year URL). Treat it as a new source and continue to Step 2. See `doc/contributing_source.md` "PDF sources".
 
 If the recommendation is **a new source**: confirm with the user that the approach (ICS YAML / Python source / etc.) matches their understanding. Then continue to Step 2.
 

@@ -101,6 +101,7 @@ Notes:
 | `TwoStepRetriever(lookup_url, extract, schedule_url, direct_key=..., headers=...)` | curl_cffi | Two-call sources: a lookup (e.g. postcode to id) feeds the schedule fetch. `direct_key` short-circuits when the id is already supplied; `headers` (e.g. `Accept: application/json`) apply to both calls. |
 | `AthosWasteManagementRetriever(url, steps=[...], fallback_url=..., encoding=...)` | curl_cffi | The "WasteManagementServlet" (Athos) multi-step wizard shared by ~15 DE/AT councils: GET, scrape the response's hidden inputs, POST each configured step, download the ICS. Steps are pure data (`{submit_action, fields(**params), remove}`), no per-source control flow. |
 | `PollingIcsRetriever(url, calendar_suffix="/calendar.ics", max_attempts=15, delay=2, is_ready=...)` | curl_cffi | UK htmx portals that build the calendar asynchronously: GET the property page, then poll `url + calendar_suffix` until ready (default: an ICS body appears). |
+| `PdfLinkRetriever(index_url, pattern, select="newest_current")` | curl_cffi | A calendar PDF whose URL rotates (usually per year) but is linked from a stable page: scrape the index, pick the current link by regex, download it. See [PDF sources](#pdf-sources). |
 
 Always try curl_cffi (the default) first. It impersonates Chrome and clears most Cloudflare blocks. Drop to a `Legacy*` retriever only when curl_cffi is the documented cause of a failure. Never call `requests.get` / `curl_cffi` directly in a source: every retriever runs through the shared `source.session`, so a `Legacy*` retriever is the one visible, named way to use plain requests.
 
@@ -127,7 +128,8 @@ def retrieve(self, source):
 | `IcsParser()` | `list[(date, summary)]` |
 | `IcsEventsParser()` | `list[IcsEvent(date, title, location, description)]`; use when the type lives in the LOCATION/DESCRIPTION fields |
 | `TextParser()` | `response.text` |
-| `PdfTextParser()` | text extracted from a PDF response |
+| `PdfTextParser()` | whole-document text extracted from a PDF response (see [PDF sources](#pdf-sources)) |
+| `PdfTableParser()` | positioned text runs from a PDF, grouped into rows (`PdfRow(page, y, words)`) for a columnar/grid calendar |
 | `XmlParser(namespaces=...)` | parsed XML (ElementTree), namespaces optional |
 | `CsvParser()` | CSV rows (handles a `utf-8-sig` BOM) |
 
@@ -137,9 +139,28 @@ Each parser accepts an optional validation argument named for what it checks, so
 
 - `JsonParser(shape=...)`: a `TypedDict` / `list[...]` validated structurally (required keys and element types).
 - `HtmlParser(require=[...])` / `CsvParser(require=[...])`: CSS selectors / column names that must be present.
-- `IcsParser(min_events=N)` / `IcsEventsParser(min_events=N)`, `XmlParser(path, min_nodes=N)`, `PdfTextParser(min_chars=N)` / `TextParser(min_chars=N)`: a minimum count below which the response is treated as empty or changed.
+- `IcsParser(min_events=N)` / `IcsEventsParser(min_events=N)`, `XmlParser(path, min_nodes=N)`, `PdfTextParser(min_chars=N)` / `PdfTableParser(min_words=N)` / `TextParser(min_chars=N)`: a minimum count below which the response is treated as empty or changed (for the PDF parsers this also flags an image-only/scanned PDF).
 
 `IcsParser` / `IcsEventsParser` also accept `offset`, `regex`, `split_at` and `title_template`, forwarded to the underlying `ICS` engine (a day `offset`; a `regex` to pull the type out of the summary; `split_at` to split a multi-type summary; a `title_template`). Prefer these over calling `service.ICS.ICS` directly in a source.
+
+### PDF sources
+
+Many providers publish only a PDF calendar. These are ordinary pipeline sources, not a special case: pick the component that matches how the PDF is built, and the reusable component does the extraction while a short `preprocess` / `classify()` handles the provider-specific layout.
+
+| PDF style | What it looks like | retrieve / parse | Examples |
+|---|---|---|---|
+| **Text list** | a text-layer PDF whose schedule reads top-to-bottom (a date, then its waste types) | `parse = PdfTextParser()` + a small `preprocess` | `redbridge_gov_uk`, `mpo_krakow_pl`, `stkh_hu` |
+| **Coordinate table** | a text-layer grid whose columns collapse in plain text (e.g. several months side by side) | `parse = PdfTableParser()` + a `preprocess` that bins runs into columns by `x0` | `seab_biella_it`, `gemuenden_wohra_de`, `gruppoveritas_it` |
+| **Colour image calendar** | a raster (image-only) page with colour-filled day cells and no text layer | `PdfImageRetriever` + `ColourGridCalendarParser` (`service.PdfImageCalendar`) | `amarsul_pt` |
+
+Two building blocks compose with any of the above:
+
+- **`PdfLinkRetriever(index_url=..., pattern=r"...(\d{4})...")`**: when the PDF URL rotates (usually per year) but is linked from a stable page. It scrapes the index, picks the current link by regex (`select="newest_current"` keeps the newest year that is this year or later), resolves it and downloads it, so you never hardcode a URL that breaks every January. See `berdorf_lu`, `gemuenden_wohra_de`.
+- **Image-only detection**: `PdfTextParser(min_chars=N)` / `PdfTableParser(min_words=N)` raise `ResponseShapeError` when the text layer is missing (a scanned PDF), so an unsupported PDF fails loudly instead of returning nothing.
+
+`PdfTextParser` returns the whole document text; `PdfTableParser` returns `list[PdfRow]`, each `PdfRow(page, y, words)` a horizontal line whose `PdfWord`s carry `text`, `x0`, `x1`. A columnar source detects its columns from a header row's x-positions and bins each row's words into them (see `seab_biella_it` for the pattern). When the grid is regular, yield `(date, label)` tuples and let `ICSTransformer` map the labels; reach for `classify()` only for genuinely irregular per-cell logic (suspension/postponement, tour filtering; see `gruppoveritas_it`, `gemuenden_wohra_de`).
+
+Not every PDF is derivable. A scanned/OCR-only PDF with no text layer (and no colour-coded grid), or a one-off unstructured poster, has no reliable machine-readable structure: defer it (leave the source request open under a status label) rather than hardcoding a schedule. See the PDF triage in [discussion #6856](https://github.com/mampfes/hacs_waste_collection_schedule/discussions/6856).
 
 ### Preprocessors (`waste_collection_schedule.preprocessors`)
 
