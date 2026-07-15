@@ -29166,16 +29166,18 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
+          "recordID": "Record Id",
           "recycleObjectID": "Recycle Object Id",
           "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
-          "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
-          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
-          "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
+          "bulkyObjectID": "OBJECTID of your bulky waste zone. Go to {url_data_okc_gov_portal_page_viewer_datasetname_bulky_20waste_20zones_view_map} , find your house on the map, then switch to the Table view and filter by map to read your OBJECTID. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recordID": "Record ID for the unofficial okc.schizo.dev source. This single ID covers trash, recycling and bulky waste. Go to {url_okc_schizo_dev} and type in your address to get it. This is the easiest option and is recommended.",
+          "recycleObjectID": "OBJECTID of your recycling zone. Go to {url_af8ffb4a12} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the official data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly. Not needed when using recordID.",
+          "trashObjectID": "OBJECTID of your trash collection zone. Go to {url_7ffdabbb07} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable."
         }
       },
       "reconfigure_okc_gov": {
@@ -29184,15 +29186,17 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
+          "recordID": "Record Id",
           "recycleObjectID": "Recycle Object Id",
           "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {
-          "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
-          "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
-          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
-          "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
+          "bulkyObjectID": "OBJECTID of your bulky waste zone. Go to {url_data_okc_gov_portal_page_viewer_datasetname_bulky_20waste_20zones_view_map} , find your house on the map, then switch to the Table view and filter by map to read your OBJECTID. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recordID": "Record ID for the unofficial okc.schizo.dev source. This single ID covers trash, recycling and bulky waste. Go to {url_okc_schizo_dev} and type in your address to get it. This is the easiest option and is recommended.",
+          "recycleObjectID": "OBJECTID of your recycling zone. Go to {url_af8ffb4a12} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the official data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly. Not needed when using recordID.",
+          "trashObjectID": "OBJECTID of your trash collection zone. Go to {url_7ffdabbb07} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable."
         }
       },
       "args_phila_gov": {
