@@ -24,6 +24,7 @@ SOURCE_CODEOWNERS = ["@marcjay"]
 API = "https://wastecollections.haringey.gov.uk/api"
 COUNCIL_ID = "45"
 
+
 class Source:
     def __init__(self, uprn):
         self._uprn = str(uprn).zfill(12)
