@@ -386,7 +386,7 @@ class Source:
 
         for bin_type in r.json():
             bin_name_map[bin_type["name"]] = bin_type["title"]
-            if not bin_type["_name"] in bin_name_map:
+            if bin_type["_name"] not in bin_name_map:
                 bin_name_map[bin_type["_name"]] = bin_type["title"]
 
         r = session.get(
@@ -408,7 +408,7 @@ class Source:
 def print_md_table():
     table = "|service_id|cities|\n|---|---|\n"
 
-    for service, data in sorted(SERVICE_MAP.items()):
+    for service, _data in sorted(SERVICE_MAP.items()):
         print(f"service: {service}")
         args = {"r": "cities"}
         r = requests.get(f"https://{service}.jumomind.com/mmapp/api.php", params=args)

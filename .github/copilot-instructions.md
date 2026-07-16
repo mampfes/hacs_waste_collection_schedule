@@ -2,7 +2,7 @@
 
 These are project-specific instructions for GitHub Copilot when assisting contributors. The full set of contributor guidance lives in [`AGENTS.md`](../AGENTS.md) at the repo root — that file applies equally here.
 
-For the human-facing guide, see [`doc/contributing.md`](../doc/contributing.md).
+For the human-facing guide, see [`CONTRIBUTING.md`](../CONTRIBUTING.md).
 
 ## Quick reference
 
@@ -24,16 +24,33 @@ For the human-facing guide, see [`doc/contributing.md`](../doc/contributing.md).
 - Adding language keys to `HOW_TO_GET_ARGUMENTS_DESCRIPTION` that the contributor did not write — it is fine to provide the description in only one language. Reviewers and AI agents must not inject translations for languages the contributor did not include.
 - Committing generated files (`README.md`, `sources.json`, etc.) — CI handles these post-merge.
 - Silent `[]` returns on HTTP errors (masks failures as "no upcoming collections").
-- Unformatted code — always run `python -m black <path> && python -m isort --profile black <path>` before committing.
+- Unformatted code — always run `ruff check --fix <path> && ruff format <path>` before committing.
 
 ## Useful commands
 
 ```bash
 python -m pytest tests/                                          # run automated test suite
 python custom_components/.../test/test_sources.py -s <name> -l  # test one source
-python -m black <path> && python -m isort --profile black <path> # format before committing
-python -m flake8 --extend-ignore=D100,D101,D102,D103,D104,D105,D106,D107,E501,W503,E203 <path>
+ruff check --fix <path> && ruff format <path>                    # lint + format before committing (replaces flake8, isort, black)
 pre-commit install                                               # activate git hook (run once after cloning)
 ```
 
 PRs target `master` of `mampfes/hacs_waste_collection_schedule`.
+
+## Copilot commands and agents
+
+Copilot now mirrors the Claude command/agent setup through repository-scoped prompt and chatmode files:
+
+- Commands (`.github/prompts/`):
+  - `new-source.prompt.md`
+  - `review-pr.prompt.md`
+  - `review-issue.prompt.md`
+  - `cleanup.prompt.md`
+- Agent equivalents (`.github/chatmodes/`):
+  - `source-investigator.chatmode.md`
+  - `source-implementer.chatmode.md`
+  - `pr-reviewer.chatmode.md`
+  - `pr-executor.chatmode.md`
+  - `issue-triager.chatmode.md`
+  - `issue-executor.chatmode.md`
+  - `repo-cleanup.chatmode.md`

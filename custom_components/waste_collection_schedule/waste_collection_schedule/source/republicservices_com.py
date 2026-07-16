@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 
 import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Republic Services"
@@ -101,7 +101,7 @@ class Source:
 
                     if (
                         period_unit
-                        and period_unit.lower() == "week"
+                        and period_unit.lower() in ("w", "week")
                         and item.get("nextServiceDays")
                     ):
                         # Project recurring weekly/fortnightly schedule from seed date
@@ -180,14 +180,14 @@ class Source:
         if self._method == 1:
             for item in schedule:
                 if "RECYCLE" in item["waste_description"]:
-                    icon = "mdi:recycle"
+                    icon = Icons.RECYCLING
                 elif (
                     "YARD" in item["waste_description"]
                     or "ORGANICS" in item["waste_description"]
                 ):
-                    icon = "mdi:leaf"
+                    icon = Icons.ORGANIC
                 else:
-                    icon = "mdi:trash-can"
+                    icon = Icons.GENERAL_WASTE
                 entries.append(
                     Collection(
                         date=item["date"],
@@ -201,16 +201,16 @@ class Source:
                     "YARD" in item["waste_description"]
                     or "ORGANICS" in item["waste_description"]
                 ):
-                    icon = "mdi:leaf"
+                    icon = Icons.ORGANIC
                     waste_type = "Yard Waste"
                 elif "BULK SERVICE" in item["waste_description"]:
-                    icon = "mdi:leaf"
+                    icon = Icons.BULKY
                     waste_type = "Bulk Waste"
                 elif "RECYCLE" in item["waste_description"]:
-                    icon = "mdi:recycle"
+                    icon = Icons.RECYCLING
                     waste_type = "Recycle"
                 else:
-                    icon = "mdi:trash-can"
+                    icon = Icons.GENERAL_WASTE
                     waste_type = "Solid Waste"
 
                 entries.append(

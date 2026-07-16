@@ -94,9 +94,12 @@ class WasteSensorConfigSwitch(SwitchEntity):
     def sensor_config(self) -> Mapping[str, Any]:
         """Return the latest stored configuration for this sensor."""
         return next(
-            sensor
-            for sensor in self._entry.options.get(CONF_SENSORS, [])
-            if sensor.get(CONF_SENSOR_ID) == self._sensor_id
+            (
+                sensor
+                for sensor in self._entry.options.get(CONF_SENSORS, [])
+                if sensor.get(CONF_SENSOR_ID) == self._sensor_id
+            ),
+            {},
         )
 
     @property

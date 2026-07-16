@@ -11,17 +11,25 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Gästrike Återvinnare"
 DESCRIPTION = "Source for Gästrike Återvinnare waste collection"
 URL = "https://gastrikeatervinnare.se/"
+COUNTRY = "se"
 API_URL = "https://gastrikeatervinnare.se/wp-admin/admin-ajax.php"
 TEST_CASES = {
     "Groceries Årsunda": {"street": "Nedre Vägen 52", "city": "Årsunda"},
     "Police Sandviken": {"street": "Bryggargatan 6", "city": "Sandviken"},
     "Police Gävle": {"street": "Södra Centralgatan 1", "city": "Gävle"},
     "Library Ockelbo": {"street": "Södra Åsgatan 30D", "city": "Ockelbo"},
+    "Storgatan Gävle (plastic and paper bins)": {
+        "street": "Storgatan 10",
+        "city": "Gävle",
+    },
 }
 ICON_MAP = {
     "Restavfall": Icons.GENERAL_WASTE,
     "Matavfall": Icons.BIO_KITCHEN,
     "Blandat": Icons.GENERAL_WASTE,
+    "Pappersförpackningar": Icons.PAPER,
+    "Plastförpackningar": Icons.PLASTIC_PACKAGING,
+    "Trädgårdsavfall": Icons.GARDEN,
 }
 
 
@@ -41,7 +49,7 @@ class Source:
         cities = []
         streets = []
 
-        for addressTag, info in zip(addresses, infos):
+        for addressTag, info in zip(addresses, infos, strict=False):
             street = addressTag.text.split(",")[0].strip().lower()
             city = (
                 addressTag.find("span", attrs={"class": "pickup-locality"})

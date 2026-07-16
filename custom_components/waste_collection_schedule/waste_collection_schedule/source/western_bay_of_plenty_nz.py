@@ -1,6 +1,5 @@
 import json
 from datetime import datetime
-from typing import List
 from xml.etree import ElementTree
 
 import requests
@@ -59,7 +58,7 @@ class Source:
             }
         )
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         valuation_id = self.get_address_detail()
         bins = self.get_waste_pickup_dates(valuation_id)
         return self.parse_waste_pickup_dates(bins)
@@ -129,8 +128,8 @@ class Source:
         return bins
 
     @staticmethod
-    def parse_waste_pickup_dates(bins: list) -> List[Collection]:
-        entries: List[Collection] = []
+    def parse_waste_pickup_dates(bins: list) -> list[Collection]:
+        entries: list[Collection] = []
         for b in bins:
             bin_type = b.get("BinType", "Unknown")
             next_date_str = b.get("NextPickupDate", "")
@@ -157,7 +156,7 @@ if __name__ == "__main__":
 
     # Ensure the local package is importable when running directly
     try:
-        from waste_collection_schedule import Collection  # noqa: F811
+        from waste_collection_schedule import Collection
     except ModuleNotFoundError:
         sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
@@ -183,7 +182,7 @@ if __name__ == "__main__":
         collections = src.fetch()
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
-        raise SystemExit(1)
+        raise SystemExit(1) from e
 
     if not collections:
         print("No collections found for the provided address.")

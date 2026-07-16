@@ -97,7 +97,7 @@ class Source:
         entries: list[Collection] = []
 
         for day, month, year, bin_type in zip(
-            date_day, date_month, date_year, types_list
+            date_day, date_month, date_year, types_list, strict=False
         ):
             try:
                 entries.append(

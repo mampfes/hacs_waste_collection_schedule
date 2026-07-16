@@ -9,6 +9,7 @@ custom_components/waste_collection_schedule/waste_collection_schedule/test/secre
 .venv/
 .idea/
 .python-version
+.devcontainer/devcontainer-lock.json
 
 # Per-user Claude Code state (personal permissions, personal hooks, internal worktree state).
 # Tracked agents, commands, and project-shared settings live under .claude/.

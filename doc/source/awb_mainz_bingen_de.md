@@ -1,18 +1,19 @@
-# Abfallwirtschaftsbetrieb LK Mainz-Bingen
+# Abfallwirtschaftsbetrieb LK Mainz-Bingen (Deprecated)
 
-Support for schedules provided by [Abfallwirtschaftsbetrieb LK Mainz-Bingen](https://www.awb-mainz-bingen.de/), serving Landkreis Mainz-Bingen, Germany.
+This source is deprecated and kept for existing configurations. Please use [KAW Mainz und Mainz-Bingen AöR](./kaw_mainz_bingen_de.md) for new setups.
+
+Existing `awb_mainz_bingen_de` configurations use the current [KAW Abfallkalender](https://lk.kaw-mainz-bingen.de/de/Abfallentsorgung/Abfallkalender) internally.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: awb_mainz_bingen_de
-      args:
-        bezirk: Abfuhrbezirk
-        ort: Ortschaft
-        strasse: Straße
-        
+        - name: awb_mainz_bingen_de
+          args:
+            bezirk: Abfuhrbezirk
+            ort: Ort
+
 ```
 
 ### Configuration Variables
@@ -24,21 +25,20 @@ waste_collection_schedule:
 *(String) (required)*
 
 **strasse**  
-*(String) (optional)*
+*(String) (optional, legacy parameter; ignored by the current website)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
     sources:
-    - name: awb_mainz_bingen_de
-      args:
-        bezirk: Stadt Ingelheim
-        ort: Ingelheim Süd
-        strasse: Albert-Schweitzer-Straße
-        
+        - name: awb_mainz_bingen_de
+          args:
+            bezirk: Stadt Ingelheim
+            ort: Ingelheim Süd
+
 ```
 
 ## How to get the source argument
 
-Find the parameter of your address using [https://abfallkalender.awb-mainz-bingen.de/](https://abfallkalender.awb-mainz-bingen.de/) and copy them exactly misspelled arguments or additional or missing spaces will result in an Exception.
+Find the parameters using [the KAW Abfallkalender](https://lk.kaw-mainz-bingen.de/de/Abfallentsorgung/Abfallkalender). Select your `Abfuhrbezirk` and `Ort` and copy the names exactly.

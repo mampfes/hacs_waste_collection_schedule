@@ -52,7 +52,7 @@ class Source:
 
         params = {"format": "ics", "type": "rm,gs,bio,pa"}
         r = requests.get(
-            f"{API_URL}/{self._street}/{str(now.year)}-01-01/+1%20year/", params=params
+            f"{API_URL}/{self._street}/{now.year!s}-01-01/+1%20year/", params=params
         )
         r.raise_for_status()
 

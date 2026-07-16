@@ -10,25 +10,30 @@ import requests
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import device_registry as dr, entity_registry as er
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers import entity_registry as er
 
-from .service import get_fetch_all_service
 from .sensor_config_helpers import (
+    build_create_combined_ui_sensor_action_unique_id,
+    build_create_ui_sensor_action_unique_id,
     build_removed_sensor_options,
     build_ui_sensor_device_identifier,
     configured_sensor_ids,
     ensure_sensor_ids,
+    has_combined_sensor,
     iter_ui_sensor_unique_id_migrations,
+    missing_collection_types,
     parse_stable_ui_sensor_id,
     parse_ui_sensor_device_id,
 )
+from .service import get_fetch_all_service
 from .waste_collection_schedule.service.DeviceKeyStore import (
     initialize_device_key_store,
 )
 from .wcs_coordinator import WCSCoordinator
 
-from . import const  # type: ignore # isort:skip # noqa: E402
-from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip # noqa: E402
+from . import const  # type: ignore # isort:skip
+from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -36,20 +41,24 @@ PLATFORMS = ["button", "calendar", "sensor", "select", "switch", "text"]
 
 
 async def async_remove_legacy_config_entities(
-    hass: HomeAssistant, entry: ConfigEntry
+    hass: HomeAssistant, entry: ConfigEntry, active_create_unique_ids: set[str]
 ) -> None:
-    """Remove the abandoned per-sensor config entities from the registry."""
+    """Remove abandoned config entities and stale sensor-creation actions."""
     registry = er.async_get(hass)
     for entity_entry in er.async_entries_for_config_entry(registry, entry.entry_id):
         unique_id = entity_entry.unique_id
         if not unique_id:
             continue
 
-        if (
+        is_abandoned_config_entity = (
             "_ui_sensor_config_" in unique_id
             or "_ui_sensor_action_remove_" in unique_id
-            or "_ui_sensor_action_create_" in unique_id
-        ):
+        )
+        is_stale_create_action = (
+            "_ui_sensor_action_create_" in unique_id
+            and unique_id not in active_create_unique_ids
+        )
+        if is_abandoned_config_entity or is_stale_create_action:
             registry.async_remove(entity_entry.entity_id)
 
 
@@ -221,7 +230,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(const.DOMAIN, {})[entry.entry_id] = coordinator
-    await async_remove_legacy_config_entities(hass, entry)
+    active_create_unique_ids = {
+        build_create_ui_sensor_action_unique_id(shell.unique_id, collection_type)
+        for collection_type in missing_collection_types(
+            coordinator._aggregator.types,
+            options.get(const.CONF_SENSORS, []),
+            shell._customize,
+        )
+    }
+    if not has_combined_sensor(options.get(const.CONF_SENSORS, [])):
+        active_create_unique_ids.add(
+            build_create_combined_ui_sensor_action_unique_id(shell.unique_id)
+        )
+    await async_remove_legacy_config_entities(
+        hass, entry, active_create_unique_ids=active_create_unique_ids
+    )
 
     # Pre-import platforms in parallel to avoid blocking I/O in the event loop
     await asyncio.gather(
@@ -274,7 +297,9 @@ async def async_remove_config_entry_device(
     if sensor_id is None:
         return False
 
-    if sensor_id not in configured_sensor_ids(entry.options.get(const.CONF_SENSORS, [])):
+    if sensor_id not in configured_sensor_ids(
+        entry.options.get(const.CONF_SENSORS, [])
+    ):
         return False
 
     _LOGGER.debug(
@@ -295,7 +320,7 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
     _LOGGER.debug("minor version %s", config_entry.minor_version)
 
     # Version number has gone backwards
-    if const.CONFIG_VERSION < config_entry.version:
+    if config_entry.version > const.CONFIG_VERSION:
         _LOGGER.error(
             "Backwards migration not possible. Please update the integration."
         )

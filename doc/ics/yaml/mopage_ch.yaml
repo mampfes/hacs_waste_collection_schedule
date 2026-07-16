@@ -14,4 +14,4 @@ howto:
     - Use the URL as the `url` parameter.
 test_cases:
   Wiedlisbach:
-    url: "webcal://wiedlisbach.mopage.ch/appl/ical.php?apid=1366535605&calhome=1341293566"
+    url: webcal://wiedlisbach.mopage.ch/appl/ical.php?apid=1366535605&calhome=1341293566

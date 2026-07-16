@@ -14,10 +14,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street_address**
+**street_address**  
 *(string) (optional)*
 
-**geolocation_id**
+**geolocation_id**  
 *(string) (optional)*
 
 At least one argument must be provided.

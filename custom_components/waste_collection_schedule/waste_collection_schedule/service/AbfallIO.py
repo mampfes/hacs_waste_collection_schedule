@@ -162,4 +162,64 @@ SERVICE_MAP = [
         "url": "https://www.avr-kommunal.de/",
         "service_id": "914fb9d000a9a05af4fd54cfba478860",
     },
+    {
+        "title": "AWG Abfallwirtschaft Landkreis Calw",
+        "url": "https://www.awg-info.de/",
+        "service_id": "0813ea99f520c462373386564a99a51e",
+    },
+    {
+        "title": "Amt Bad Wilsnack/Weisen (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "1e9592418582666e2a5d1c62b2683435",
+    },
+    {
+        "title": "Gemeinde Groß Pankow (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "af91b65d2753a219309072837d8ea4e1",
+    },
+    {
+        "title": "Gemeinde Gumtow (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "3cefa45ab357d231891bb497253c630f",
+    },
+    {
+        "title": "Gemeinde Karstädt (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "798f59a75627f5d7686dab0c7226c877",
+    },
+    {
+        "title": "Amt Lenzen-Elbtalaue (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "bb937857acd951dfc8de5be8b8a49f6d",
+    },
+    {
+        "title": "Amt Meyenburg (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "4638881e7bebe6869e2e86de5f8aa09e",
+    },
+    {
+        "title": "Stadt Perleberg (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "9fb3e2e5498e825250105ee272102a7b",
+    },
+    {
+        "title": "Gemeinde Plattenburg (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "a0461612534502273c518e28d4f6f1e4",
+    },
+    {
+        "title": "Stadt Pritzwalk (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "d92f59ef4066ae6d299478996d1d8430",
+    },
+    {
+        "title": "Amt Putlitz/Berge (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "4f06df48f154246415e57ce12b26abe5",
+    },
+    {
+        "title": "Stadt Wittenberge (Landkreis Prignitz)",
+        "url": "https://www.landkreis-prignitz.de/",
+        "service_id": "b870ecfa6e1f882680758d374ba3fa2d",
+    },
 ]

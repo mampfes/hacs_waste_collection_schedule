@@ -14,5 +14,4 @@ howto:
     - Ersetzen Sie das Jahr in der URL durch `{%Y}`, das immer durch das aktuelle Jahr ersetzt wird.
 test_cases:
   Ahornstraße 3:
-    url: 
-      https://sds.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/Raw/Name/{%Y}/List/744769/779,780,781,782/54/Print/ics/Default/Abfuhrtermine.ics
+    url: https://sds.wastebox.gemos-management.de/Gemos/WasteBox/Frontend/TourSchedule/Raw/Name/{%Y}/List/744769/779,780,781,782/54/Print/ics/Default/Abfuhrtermine.ics

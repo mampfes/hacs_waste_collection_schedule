@@ -1,12 +1,10 @@
-from datetime import datetime
-
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 
 TITLE = "Marktgemeinde Obdach"
-DESCRIPTION = "Source for Marktgeneinde Obdach, AT"
+DESCRIPTION = "Source for Marktgemeinde Obdach, AT"
 URL = "https://www.obdach.gv.at/"
+COUNTRY = "at"
 TEST_CASES: dict[str, dict[str, str]] = {"TestSource": {}}
 ICON_MAP = {
     "Biomüll": Icons.BIO_KITCHEN,
@@ -17,32 +15,6 @@ ICON_MAP = {
 }
 
 
-class Source:
-    def __init__(self):
-        pass
-
-    def fetch(self):
-        s = requests.Session()
-        r = s.get("https://www.obdach.gv.at/system/web/kalender.aspx")
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        div = soup.find(
-            id="ctl00_ctl00_ctl00_cph_col_a_cph_content_cph_content_list_style"
-        )
-
-        dts = div.find_all("h2")
-        wst = div.find_all("span")
-
-        entries = []
-        for i in range(0, len(dts)):
-            entries.append(
-                Collection(
-                    date=datetime.strptime(
-                        dts[i].text.split(" ")[0].strip(), "%d.%m.%Y"
-                    ).date(),
-                    t=wst[i].text.strip()[1:-1],
-                    icon=ICON_MAP.get(wst[i].text.strip()[1:-1]),
-                )
-            )
-
-        return entries
+class Source(RiSKommunalSource):
+    BASE_URL = "https://www.obdach.gv.at"
+    ICON_MAP = ICON_MAP

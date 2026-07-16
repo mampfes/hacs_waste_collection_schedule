@@ -111,7 +111,7 @@ class Source:
             r.raise_for_status()
         except Exception:
             if year == today.year:
-                raise Exception("Could not get data from URL")
+                raise Exception("Could not get data from URL") from None
             return None
 
         try:
@@ -175,7 +175,7 @@ class Source:
         )
 
     def __date_is_collection5_6(self, node, day: datetime) -> bool:
-        if not node["typ"] in (5, 6):
+        if node["typ"] not in (5, 6):
             return False
         termin1 = datetime.fromisoformat(node["termin1"].replace("Z", "+00:00")).date()
         termin2 = datetime.fromisoformat(node["termin2"].replace("Z", "+00:00")).date()
@@ -266,23 +266,25 @@ class Source:
             )
             or (
                 (
-                    (node["rhythmus"] == 4)
-                    and self.__typematch(
-                        day.strftime("%m"),
-                        day.strftime("%d"),
-                        node["typ"],
-                        1,
-                        self._rhythms[1],
-                        self._rhythms[2],
-                        self._rhythms[4],
+                    (
+                        (node["rhythmus"] == 4)
+                        and self.__typematch(
+                            day.strftime("%m"),
+                            day.strftime("%d"),
+                            node["typ"],
+                            1,
+                            self._rhythms[1],
+                            self._rhythms[2],
+                            self._rhythms[4],
+                        )
+                    )
+                    and (
+                        (node["tag1"] == dow)
+                        or ((node["tag2"] > 0) and (node["tag2"] == dow))
                     )
                 )
-                and (
-                    (node["tag1"] == dow)
-                    or ((node["tag2"] > 0) and (node["tag2"] == dow))
-                )
+                and (weekno >= node["beginn"])
             )
-            and (weekno >= node["beginn"])
         )
 
     def fetch(self):

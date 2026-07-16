@@ -1,15 +1,21 @@
 import re
+from collections.abc import Sequence
 from datetime import date, datetime
-from typing import Any, Optional, Sequence, cast
+from typing import Any, cast
 
 from curl_cffi import requests
+from curl_cffi.const import CurlHttpVersion
+
 from waste_collection_schedule import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
 )
 
-API_DOMAIN = "https://apps.cloud9technologies.com"
+API_DOMAINS = (
+    "https://apps.cloud9apps.com",
+    "https://apps.cloud9technologies.com",
+)
 API_BASE = "/citizenmobile/mobileapi"
 ADDRESSES_PATH = "/addresses"
 WASTE_PATH = "/wastecollections"
@@ -45,7 +51,7 @@ Address = dict[str, Any]
 JSONDict = dict[str, Any]
 
 
-def normalise_postcode(text: Optional[str]) -> Optional[str]:
+def normalise_postcode(text: str | None) -> str | None:
     if not text:
         return None
     match = POSTCODE_PATTERN.search(text)
@@ -74,7 +80,7 @@ def _clean_type_name(name: str) -> str:
     return cleaned or name
 
 
-def _parse_date_string(value: Any) -> Optional[date]:
+def _parse_date_string(value: Any) -> date | None:
     if value is None:
         return None
     if isinstance(value, datetime):
@@ -139,7 +145,7 @@ def _collection_items(
     collection_data: JSONDict,
 ) -> list[tuple[str, dict[str, Any]]]:
     collections_section = cast(
-        Optional[dict[str, dict[str, Any]]], collection_data.get("collections")
+        dict[str, dict[str, Any]] | None, collection_data.get("collections")
     )
     if collections_section:
         return list(collections_section.items())
@@ -160,15 +166,55 @@ class Cloud9Client:
     def __init__(
         self,
         authority: str,
-        icon_keywords: Optional[dict[str, str]] = None,
+        icon_keywords: dict[str, str] | None = None,
+        api_domains: Sequence[str] | None = None,
     ):
         self._authority = authority
         self._icon_keywords: dict[str, str] = icon_keywords or {}
-        self._base_url = f"{API_DOMAIN}/{authority}{API_BASE}"
-        self._session = requests.Session(impersonate="chrome")
+        configured_domains = API_DOMAINS if api_domains is None else api_domains
+        self._base_urls = [
+            f"{domain.rstrip('/')}/{authority}{API_BASE}"
+            for domain in configured_domains
+            if domain and domain.strip()
+        ]
+        if not self._base_urls:
+            raise ValueError("At least one API domain must be configured.")
+        # The Cloud9 API is fronted by an AWS ELB that sometimes echoes
+        # HTTP/1.1-only response headers (e.g. "keep-alive: timeout=5") on
+        # an HTTP/2 connection. This violates RFC 7540 8.1.2.2 and causes
+        # curl_cffi/nghttp2 to abort with CurlError 92 ("Invalid HTTP
+        # header field was received"). Forcing HTTP/1.1 avoids the strict
+        # HTTP/2 header validation and lets the request succeed.
+        self._session = requests.Session(
+            impersonate="chrome", http_version=CurlHttpVersion.V1_1
+        )
         self._session.headers.update(BASE_HEADERS)
 
-    def _resolve_icon(self, label: str) -> Optional[str]:
+    def _request_json(
+        self, path: str, params: dict[str, str] | None = None
+    ) -> JSONDict:
+        last_error: Exception | None = None
+        for base_url in self._base_urls:
+            try:
+                response = self._session.get(
+                    f"{base_url}{path}",
+                    params=params,
+                    timeout=REQUEST_TIMEOUT,
+                )
+                response.raise_for_status()
+                return cast(JSONDict, response.json())
+            except (
+                requests.exceptions.CertificateVerifyError,
+                requests.exceptions.ConnectionError,
+                requests.exceptions.DNSError,
+                requests.exceptions.SSLError,
+                requests.exceptions.Timeout,
+            ) as err:
+                last_error = err
+        assert last_error is not None
+        raise last_error
+
+    def _resolve_icon(self, label: str) -> str | None:
         lowered = label.lower()
         for keyword, icon in self._icon_keywords.items():
             if keyword in lowered:
@@ -209,10 +255,7 @@ class Cloud9Client:
         return entries
 
     def _fetch_waste_json(self, uprn: str) -> JSONDict:
-        url = f"{self._base_url}{WASTE_PATH}/{uprn}"
-        response = self._session.get(url, timeout=REQUEST_TIMEOUT)
-        response.raise_for_status()
-        return cast(JSONDict, response.json())
+        return self._request_json(f"{WASTE_PATH}/{uprn}")
 
     def fetch_by_uprn(self, uprn: str) -> list[Collection]:
         payload = self._fetch_waste_json(uprn)
@@ -222,11 +265,11 @@ class Cloud9Client:
 
     def fetch_by_address(
         self,
-        postcode: Optional[str],
+        postcode: str | None,
         address_string: str,
-        address_name_number: Optional[str] = None,
-        address_street: Optional[str] = None,
-        street_town: Optional[str] = None,
+        address_name_number: str | None = None,
+        address_street: str | None = None,
+        street_town: str | None = None,
         argument_name: str = "address_postcode",
     ) -> list[Collection]:
         normalised = normalise_postcode(postcode)
@@ -258,14 +301,12 @@ class Cloud9Client:
 
     def _lookup_addresses(
         self,
-        postcode: Optional[str],
-        normalised_postcode: Optional[str],
-        address_name_number: Optional[str],
-        address_street: Optional[str],
+        postcode: str | None,
+        normalised_postcode: str | None,
+        address_name_number: str | None,
+        address_street: str | None,
         address_string: str,
     ) -> list[Address]:
-        url = f"{self._base_url}{ADDRESSES_PATH}"
-
         address_line = " ".join(
             part.strip()
             for part in (address_name_number, address_street)
@@ -273,7 +314,7 @@ class Cloud9Client:
         )
 
         seen: set[tuple[str, str]] = set()
-        attempts: list[tuple[str, Optional[str]]] = [
+        attempts: list[tuple[str, str | None]] = [
             ("postcode", normalised_postcode),
             ("postcode", postcode),
             ("address", address_string),
@@ -290,16 +331,11 @@ class Cloud9Client:
             if key in seen:
                 continue
             seen.add(key)
-            response = self._session.get(
-                url,
+            payload_json = self._request_json(
+                ADDRESSES_PATH,
                 params={param: cleaned},
-                timeout=REQUEST_TIMEOUT,
             )
-            response.raise_for_status()
-            payload_json = cast(JSONDict, response.json())
-            addresses_data = cast(
-                Optional[list[Address]], payload_json.get("addresses")
-            )
+            addresses_data = cast(list[Address] | None, payload_json.get("addresses"))
             if addresses_data:
                 return [cast(Address, a) for a in addresses_data]
 
@@ -309,10 +345,10 @@ class Cloud9Client:
         self,
         addresses: Sequence[Address],
         address_string: str,
-        normalised_postcode: Optional[str],
-        address_name_number: Optional[str],
-        address_street: Optional[str],
-        street_town: Optional[str],
+        normalised_postcode: str | None,
+        address_name_number: str | None,
+        address_street: str | None,
+        street_town: str | None,
         argument_name: str,
     ) -> Address:
         if not addresses:

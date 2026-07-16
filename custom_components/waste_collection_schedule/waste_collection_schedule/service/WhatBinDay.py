@@ -2,7 +2,8 @@
 
 import datetime
 import logging
-from typing import TYPE_CHECKING, Callable, Dict, List, Optional
+from collections.abc import Callable
+from typing import TYPE_CHECKING, ClassVar, Optional
 
 import requests
 
@@ -12,7 +13,7 @@ if TYPE_CHECKING:
     from .DeviceKeyStore import DeviceKeyStore
 
 
-_device_key_store_method: Optional[Callable[[], Optional["DeviceKeyStore"]]] = None
+_device_key_store_method: Callable[[], Optional["DeviceKeyStore"]] | None = None
 
 
 def get_device_key_store() -> Optional["DeviceKeyStore"]:
@@ -36,12 +37,12 @@ class WhatBinDayService:
     and regions, primarily in Australia.
     """
 
-    API_URLS = {
+    API_URLS: ClassVar = {
         "register_device": "https://api.whatbinday.com/V3/Device",
         "services": "https://api.whatbinday.com/V3/Device/{}/Services",
     }
 
-    HEADERS = {
+    HEADERS: ClassVar = {
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Linux; Android 11; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Mobile Safari/537.36",
         "Accept": "application/json",
@@ -49,13 +50,13 @@ class WhatBinDayService:
         "Accept-Language": "en-US,en;q=0.9",
     }
 
-    DEFAULT_ICON_MAP = {
+    DEFAULT_ICON_MAP: ClassVar = {
         "WasteBin": "mdi:trash-can",
         "RecycleBin": "mdi:recycle",
         "GreenBin": "mdi:leaf",
     }
 
-    DEFAULT_BIN_NAMES = {
+    DEFAULT_BIN_NAMES: ClassVar = {
         "WasteBin": "General waste (landfill)",
         "RecycleBin": "Recycling",
         "GreenBin": "Food and garden waste",
@@ -64,8 +65,8 @@ class WhatBinDayService:
     def __init__(
         self,
         location_key: str,
-        icon_map: Optional[Dict[str, str]] = None,
-        bin_names: Optional[Dict[str, str]] = None,
+        icon_map: dict[str, str] | None = None,
+        bin_names: dict[str, str] | None = None,
         app_package: str = "com.socketsoftware.whatbinday.binston",
     ):
         """
@@ -166,8 +167,8 @@ class WhatBinDayService:
         post_code: str,
         state: str = "VIC",
         country: str = "Australia",
-        coordinates: Optional[Dict[str, float]] = None,
-    ) -> Dict:
+        coordinates: dict[str, float] | None = None,
+    ) -> dict:
         """
         Build address data structure from user input.
 
@@ -229,7 +230,7 @@ class WhatBinDayService:
             "geometry": {"location": coordinates, "location_type": "APPROXIMATE"},
         }
 
-    def get_collection_schedule(self, location_data: Dict) -> List[Collection]:
+    def get_collection_schedule(self, location_data: dict) -> list[Collection]:
         """
         Get bin collection schedule for the location.
 
@@ -296,8 +297,8 @@ class WhatBinDayService:
         post_code: str,
         state: str = "VIC",
         country: str = "Australia",
-        coordinates: Optional[Dict[str, float]] = None,
-    ) -> List[Collection]:
+        coordinates: dict[str, float] | None = None,
+    ) -> list[Collection]:
         """
         Fetch waste collection schedule for an address.
 
@@ -331,8 +332,8 @@ class WhatBinDayService:
             return entries
 
         except requests.RequestException as e:
-            raise Exception(f"Network error: {e}")
+            raise Exception(f"Network error: {e}") from e
         except KeyError as e:
-            raise Exception(f"Unexpected API response format: {e}")
+            raise Exception(f"Unexpected API response format: {e}") from e
         except Exception as e:
-            raise Exception(f"Error fetching collection schedule: {e}")
+            raise Exception(f"Error fetching collection schedule: {e}") from e

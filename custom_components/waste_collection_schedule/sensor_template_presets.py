@@ -12,6 +12,7 @@ PRESET_LANGUAGE_OPTIONS: dict[str, str] = {
     "English": "en",
     "Français": "fr",
     "Italiano": "it",
+    "Nederlands": "nl",
     "Polski": "pl",
 }
 PRESET_LANGUAGE_LABELS = {
@@ -34,6 +35,10 @@ IT_RELATIVE_TEMPLATE = (
     "{% if value.daysTo == 0 %}Oggi{% elif value.daysTo == 1 %}Domani"
     "{% else %}tra {{value.daysTo}} giorni{% endif %}"
 )
+NL_RELATIVE_TEMPLATE = (
+    "{% if value.daysTo == 0 %}Vandaag{% elif value.daysTo == 1 %}Morgen"
+    "{% else %}over {{value.daysTo}} dagen{% endif %}"
+)
 PL_RELATIVE_TEMPLATE = (
     "{% if value.daysTo == 0 %}Dzisiaj{% elif value.daysTo == 1 %}Jutro"
     "{% else %}za {{value.daysTo}} dni{% endif %}"
@@ -45,6 +50,7 @@ VALUE_TEMPLATE_PRESET_DEFINITIONS: list[dict[str, tuple[str, str]]] = [
         "en": ("in 13 days", "in {{value.daysTo}} days"),
         "fr": ("dans 13 jours", "dans {{value.daysTo}} jours"),
         "it": ("tra 13 giorni", "tra {{value.daysTo}} giorni"),
+        "nl": ("over 13 dagen", "over {{value.daysTo}} dagen"),
         "pl": ("za 13 dni", "za {{value.daysTo}} dni"),
     },
     {
@@ -61,6 +67,10 @@ VALUE_TEMPLATE_PRESET_DEFINITIONS: list[dict[str, tuple[str, str]]] = [
             "Bio tra 13 giorni",
             '{{value.types|join(", ")}} tra {{value.daysTo}} giorni',
         ),
+        "nl": (
+            "Bio over 13 dagen",
+            '{{value.types|join(", ")}} over {{value.daysTo}} dagen',
+        ),
         "pl": ("Bio za 13 dni", '{{value.types|join(", ")}} za {{value.daysTo}} dni'),
     },
     {
@@ -68,6 +78,7 @@ VALUE_TEMPLATE_PRESET_DEFINITIONS: list[dict[str, tuple[str, str]]] = [
         "en": ("13", "{{value.daysTo}}"),
         "fr": ("13", "{{value.daysTo}}"),
         "it": ("13", "{{value.daysTo}}"),
+        "nl": ("13", "{{value.daysTo}}"),
         "pl": ("13", "{{value.daysTo}}"),
     },
     {
@@ -75,6 +86,7 @@ VALUE_TEMPLATE_PRESET_DEFINITIONS: list[dict[str, tuple[str, str]]] = [
         "en": ("Today / Tomorrow / in 13 days", EN_RELATIVE_TEMPLATE),
         "fr": ("Aujourd'hui / Demain / dans 13 jours", FR_RELATIVE_TEMPLATE),
         "it": ("Oggi / Domani / tra 13 giorni", IT_RELATIVE_TEMPLATE),
+        "nl": ("Vandaag / Morgen / over 13 dagen", NL_RELATIVE_TEMPLATE),
         "pl": ("Dzisiaj / Jutro / za 13 dni", PL_RELATIVE_TEMPLATE),
     },
     {
@@ -85,6 +97,7 @@ VALUE_TEMPLATE_PRESET_DEFINITIONS: list[dict[str, tuple[str, str]]] = [
         ),
         "fr": ("le 14/04/2026", 'le {{value.date.strftime("%d/%m/%Y")}}'),
         "it": ("il 14/04/2026", 'il {{value.date.strftime("%d/%m/%Y")}}'),
+        "nl": ("op 14-04-2026", 'op {{value.date.strftime("%d-%m-%Y")}}'),
         "pl": ("14.04.2026", '{{value.date.strftime("%d.%m.%Y")}}'),
     },
     {
@@ -95,6 +108,7 @@ VALUE_TEMPLATE_PRESET_DEFINITIONS: list[dict[str, tuple[str, str]]] = [
         ),
         "fr": ("2026-04-14", '{{value.date.strftime("%Y-%m-%d")}}'),
         "it": ("2026-04-14", '{{value.date.strftime("%Y-%m-%d")}}'),
+        "nl": ("2026-04-14", '{{value.date.strftime("%Y-%m-%d")}}'),
         "pl": ("2026-04-14", '{{value.date.strftime("%Y-%m-%d")}}'),
     },
     {
@@ -102,6 +116,7 @@ VALUE_TEMPLATE_PRESET_DEFINITIONS: list[dict[str, tuple[str, str]]] = [
         "en": ("Bio", '{{value.types|join(", ")}}'),
         "fr": ("Bio", '{{value.types|join(", ")}}'),
         "it": ("Bio", '{{value.types|join(", ")}}'),
+        "nl": ("Bio", '{{value.types|join(", ")}}'),
         "pl": ("Bio", '{{value.types|join(", ")}}'),
     },
 ]
@@ -112,6 +127,7 @@ GROUPED_VALUE_TEMPLATE_LABELS: dict[int, dict[str, str]] = {
         "en": "Waste types in 13 days",
         "fr": "Types de déchets dans 13 jours",
         "it": "Tipi di rifiuti tra 13 giorni",
+        "nl": "Afvalsoorten over 13 dagen",
         "pl": "Typy odpadów za 13 dni",
     },
     6: {
@@ -119,6 +135,7 @@ GROUPED_VALUE_TEMPLATE_LABELS: dict[int, dict[str, str]] = {
         "en": "Waste types",
         "fr": "Types de déchets",
         "it": "Tipi di rifiuti",
+        "nl": "Afvalsoorten",
         "pl": "Typy odpadów",
     },
 }
@@ -225,6 +242,12 @@ def format_default_state_text(
         if days_to == 1:
             return f"{type_text} domani"
         return f"{type_text} tra {days_to} giorni"
+    if language == "nl":
+        if days_to == 0:
+            return f"{type_text} vandaag"
+        if days_to == 1:
+            return f"{type_text} morgen"
+        return f"{type_text} over {days_to} dagen"
     if language == "pl":
         if days_to == 0:
             return f"{type_text} dzisiaj"

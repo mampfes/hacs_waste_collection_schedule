@@ -1,6 +1,5 @@
 import logging
 from datetime import date, datetime
-from typing import Optional
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -20,7 +19,25 @@ SRV_URL = (
 
 TEST_CASES = {
     "Test_001": {"street": "town hall, lancaster road"},
-    "Test_002": {"street": "", "uprn": "10002220003"},
+    "Test_002": {"street": "PR1 2RL", "uprn": "10002220003"},
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "street": "Street / Postcode",
+        "uprn": "UPRN (optional)",
+    }
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "street": "Your street name or postcode (required). Used to search for your address.",
+        "uprn": "Your Unique Property Reference Number (optional). When provided alongside street/postcode, it picks the exact matching property from the search results. Leave blank if you are unsure.",
+    }
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "Enter your postcode or street name in the 'Street / Postcode' field. If your postcode returns multiple properties, find your UPRN at https://www.findmyaddress.co.uk/ and enter it in the optional 'UPRN' field to select the exact property."
 }
 
 ICON_MAP = {
@@ -67,6 +84,12 @@ class Source:
         self._uprn = str(uprn)
 
     def fetch(self) -> list:
+        if not self._street:
+            raise SourceArgumentNotFound(
+                argument="street",
+                value=self._street,
+            )
+
         session = requests.Session(impersonate="chrome")
 
         # Step 1: GET the initial page to obtain session cookies and hidden ASP.NET fields
@@ -74,14 +97,12 @@ class Source:
         r0.raise_for_status()
         soup0 = BeautifulSoup(r0.text, features="html.parser")
 
-        # Step 2: POST the search request with address/UPRN
+        # Step 2: POST the search request with address/postcode
         params1 = _extract_hidden_inputs(soup0)
         params1["__EVENTTARGET"] = "ctl00$MainContent$btnSearch"
         params1["__EVENTARGUMENT"] = ""
         params1["ctl00$MainContent$hdnService"] = "bins"
-        params1["ctl00$MainContent$txtAddress"] = (
-            self._street if self._street else self._uprn
-        )
+        params1["ctl00$MainContent$txtAddress"] = self._street
         params1["ctl00$MainContent$hdnUPRN"] = self._uprn
 
         r1 = session.post(SRV_URL, data=params1)
@@ -97,8 +118,8 @@ class Source:
         select_el = soup1.find("select", {"name": "ctl00$MainContent$ddlSearchResults"})
         if not select_el:
             raise SourceArgumentNotFound(
-                argument="street" if self._street else "uprn",
-                value=self._street if self._street else self._uprn,
+                argument="street",
+                value=self._street,
             )
 
         options = [
@@ -115,12 +136,6 @@ class Source:
                 for opt in select_el.find_all("option")
                 if opt.get("value", "") not in ("Make a selection from the list", "")
             ]
-            if self._uprn:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    argument="uprn",
-                    value=self._uprn,
-                    suggestions=all_opts,
-                )
             raise SourceArgumentNotFoundWithSuggestions(
                 argument="street",
                 value=self._street,
@@ -148,9 +163,7 @@ class Source:
         params2["__EVENTTARGET"] = "ctl00$MainContent$ddlSearchResults"
         params2["__EVENTARGUMENT"] = ""
         params2["ctl00$MainContent$hdnService"] = "bins"
-        params2["ctl00$MainContent$txtAddress"] = (
-            self._street if self._street else self._uprn
-        )
+        params2["ctl00$MainContent$txtAddress"] = self._street
         params2["ctl00$MainContent$ddlSearchResults"] = selected_value
 
         r2 = session.post(SRV_URL, data=params2)
@@ -160,14 +173,14 @@ class Source:
         cnt = soup2.select_one("span#MainContent_lblMoreCollectionDates")
         if not cnt or not cnt.find_all("div", {"id": "container"}):
             raise SourceArgumentNotFound(
-                argument="street" if self._street else "uprn",
-                value=self._street if self._street else self._uprn,
+                argument="street",
+                value=self._street,
             )
 
         return self._parse(cnt)
 
     @staticmethod
-    def _date(date_string: str) -> Optional[date]:
+    def _date(date_string: str) -> date | None:
         try:
             return datetime.strptime(date_string, "%A %d/%m/%Y").date()
         except ValueError:

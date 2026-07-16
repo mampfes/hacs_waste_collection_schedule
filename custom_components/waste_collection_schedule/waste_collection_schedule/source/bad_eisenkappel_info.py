@@ -77,8 +77,8 @@ class Source:
                     entries.append(Collection(date=date, t=bin_type, icon=icon))
 
         regions.remove("Gesamtes Gemeindegebiet")
-        if self._region.lower().replace(" ", "") not in map(
-            lambda x: x.lower().replace(" ", ""), regions
+        if self._region.lower().replace(" ", "") not in (
+            x.lower().replace(" ", "") for x in regions
         ):
             raise SourceArgumentNotFoundWithSuggestions(
                 argument="region",

@@ -60,9 +60,7 @@ class Source:
         calendars = soup.select("table.calendar")
 
         collections = []
-        for (
-            calendar
-        ) in (
+        for calendar in (
             calendars
         ):  # Probably only one but just in case there are more at the end of a month
             prev_sibling = calendar.find_previous_sibling()
@@ -80,7 +78,7 @@ class Source:
             try:
                 year = int(year_str)
             except ValueError:
-                raise Exception(f"Cannot parse year: {year_str}")
+                raise Exception(f"Cannot parse year: {year_str}") from None
 
             legend = calendar.find_next_sibling()
             if not isinstance(legend, Tag):

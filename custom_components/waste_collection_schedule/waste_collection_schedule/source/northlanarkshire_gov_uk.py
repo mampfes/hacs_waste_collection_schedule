@@ -61,13 +61,13 @@ class Source:
         r = s.get(
             f"https://www.northlanarkshire.gov.uk/bin-collection-dates/{self._uprn}/{self._usrn}"
         )
-        r.raise_for_status
+        r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
         containers = soup.findAll("div", {"class": "waste-type-container"})
 
         entries = []
-        for idx, container in enumerate(containers):
+        for _idx, container in enumerate(containers):
             waste_type = container.find("h3").text
             waste_days = container.findAll("p")
             for day in waste_days:

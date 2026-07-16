@@ -53,6 +53,11 @@ TEST_CASES = {
         "frequency": "WEEKLY",
         "weekdays": "FR",
     },
+    "Recurrence weekly on multiple weekdays": {
+        "type": "Every Tuesday and Thursday",
+        "frequency": "WEEKLY",
+        "weekdays": {"TU": 1, "TH": 1},
+    },
     "Recurrence with exclude date range": {
         "type": "Weekly excluding summer break",
         "frequency": "WEEKLY",
@@ -223,7 +228,9 @@ class Source:
         self._start = (
             start
             if isinstance(start, datetime.date)
-            else parser.isoparse(start).date() if start else None
+            else parser.isoparse(start).date()
+            if start
+            else None
         )
         if until:
             self._until: datetime.date | None = (

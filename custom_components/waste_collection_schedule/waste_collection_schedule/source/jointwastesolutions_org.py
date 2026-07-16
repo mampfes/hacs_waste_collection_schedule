@@ -131,7 +131,7 @@ class Source:
         waste_dates = schedule[::2]
 
         entries = []
-        for i in range(0, len(waste_dates)):
+        for i in range(len(waste_dates)):
             entries.append(
                 Collection(
                     date=datetime.strptime(waste_dates[i].text, "%d/%m/%Y").date(),

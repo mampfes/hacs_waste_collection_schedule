@@ -87,7 +87,7 @@ class Source:
             return entries + self._get_collections(year)
         except Exception:
             if exception:
-                raise exception
+                raise exception from None
             return entries
 
     def _get_collections(self, year: int) -> list[Collection]:

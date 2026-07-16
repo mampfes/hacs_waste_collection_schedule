@@ -16,5 +16,4 @@ howto:
     - Der Link beinhaltet einen Abfrageparameter namens `timeperiod`, welcher das Start- und Enddatum des ausgewählten Jahres definiert. Sie müssen dessen Wert von z.B. `20250101-20251231` zu `{%Y}0101-{%Y}1231` abändern.
 test_cases:
   Reutlingen:
-    url:
-      https://api.abfall.io/?key=1bf5dd3852fd8c24ec5679c53f678540&mode=export&idhousenumber=658&wastetypes=27,50,66,65,31,3061,169&timeperiod={%Y}0101-{%Y}1231&showinactive=false&type=ics
+    url: https://api.abfall.io/?key=1bf5dd3852fd8c24ec5679c53f678540&mode=export&idhousenumber=658&wastetypes=27,50,66,65,31,3061,169&timeperiod={%Y}0101-{%Y}1231&showinactive=false&type=ics

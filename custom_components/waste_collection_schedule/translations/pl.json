@@ -202,8 +202,7 @@
       "preset_selected": "Nie można jednocześnie wybrać gotowego stylu i podać własnej wartości.",
       "sensor_name_empty": "Nazwa sensora nie może być pusta.",
       "dedicated_calendar_title_without_use_dedicated_calendar": "Nie można podać tytułu dedykowanego kalendarza bez włączenia dedykowanego kalendarza."
-    },
-    "abort": {}
+    }
   },
   "options": {
     "step": {

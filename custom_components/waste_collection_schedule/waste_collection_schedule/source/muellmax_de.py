@@ -23,11 +23,6 @@ def EXTRA_INFO():
 
 
 TEST_CASES = {
-    # "Rhein-Sieg-Kreis, Alfter": {
-    #     "service": "Rsa",
-    #     "mm_frm_ort_sel": "Alfter",
-    #     "mm_frm_str_sel": "Ahrweg (105-Ende/94-Ende)",
-    # },
     # "Münster, Achatiusweg": {"service": "Awm", "mm_frm_str_sel": "Achatiusweg"},
     # "Hal, Postweg": {"service": "Hal", "mm_frm_str_sel": "Postweg"},
     # "giessen": {
@@ -249,7 +244,7 @@ class Source:
             dates = self._ics.convert(r.text)
         except ValueError as e:
             raise ValueError(
-                "Got invalid response from the server, " "please recheck your arguments"
+                "Got invalid response from the server, please recheck your arguments"
             ) from e
 
         entries = []

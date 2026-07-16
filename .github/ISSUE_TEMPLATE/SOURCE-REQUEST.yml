@@ -1,7 +1,8 @@
+---
 name: Source Request
 description: Request that a municipality or region is supported
-title: "[Source Request]: "
-labels: ["source request"]
+title: '[Source Request]: '
+labels: [source request]
 body:
   - type: markdown
     attributes:
@@ -20,7 +21,7 @@ body:
 
         **The good news:** you don't need to be a programmer. Free AI coding agents (Claude, Copilot, Cursor, Codex, etc.) can often implement a new source in under an hour — even if you've never written Python before. This repository includes a dedicated guide for exactly this:
 
-        👉 **[AGENTS.md](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/AGENTS.md)** — step-by-step instructions written for AI assistants. Point your coding agent at this file and describe your waste provider. Then open a [pull request](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/contributing.md).
+        👉 **[AGENTS.md](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/AGENTS.md)** — step-by-step instructions written for AI assistants. Point your coding agent at this file and describe your waste provider. Then open a [pull request](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/CONTRIBUTING.md).
 
         If your attempt didn't work out, that's absolutely fine — paste what you tried in the Additional Information field below and it will help whoever picks this up.
   - type: input
@@ -94,7 +95,8 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: I have searched the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) and my provider is not already supported
+        - label: I have searched the [source list](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/README.md) and my provider is not
+            already supported
           required: true
         - label: I have provided a working example address (not my own) for testing
           required: true

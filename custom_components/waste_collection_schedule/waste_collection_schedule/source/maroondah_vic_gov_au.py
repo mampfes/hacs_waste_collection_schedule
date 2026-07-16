@@ -2,8 +2,8 @@ import logging
 import re
 from datetime import datetime
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Maroondah City Council"
@@ -36,9 +36,20 @@ TEST_CASES = {
 _LOGGER = logging.getLogger(__name__)
 
 ICON_MAP = {
+    "General waste": Icons.GENERAL_WASTE,
     "Food and Garden organics": Icons.BIO_KITCHEN,
     "Hard Waste": Icons.BULKY,
     "Recycling": Icons.RECYCLING,
+}
+
+# The council website sits behind Akamai bot protection, which rejects
+# python's TLS fingerprint with 403. Impersonating a browser via curl_cffi
+# and sending XHR-style headers gets through (same approach as
+# blacktown_nsw_gov_au and ryde_nsw_gov_au).
+HEADERS = {
+    "Accept": "text/plain, */*; q=0.01",
+    "Referer": "https://www.maroondah.vic.gov.au/Residents-property/Waste-rubbish/Waste-collection-schedule",
+    "X-Requested-With": "XMLHttpRequest",
 }
 
 
@@ -47,7 +58,8 @@ class Source:
         self._street_address = address
 
     def fetch(self):
-        session = requests.Session()
+        session = requests.Session(impersonate="chrome")
+        session.headers.update(HEADERS)
 
         response = session.get(
             "https://www.maroondah.vic.gov.au/Residents-property/Waste-rubbish/Waste-collection-schedule"
@@ -89,7 +101,9 @@ class Source:
         for article in soup.find_all("article"):
             waste_type = article.h3.string
             icon = ICON_MAP.get(waste_type)
-            next_pickup = article.find(class_="next-service").string.strip()
+            next_pickup = (
+                article.find("div", {"class": "next-service"}).getText().strip()
+            )
             if re.match(r"[^\s]* \d{1,2}\/\d{1,2}\/\d{4}", next_pickup):
                 next_pickup_date = datetime.strptime(
                     next_pickup.split(sep=" ")[1], "%d/%m/%Y"

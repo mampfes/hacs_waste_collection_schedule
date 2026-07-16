@@ -91,10 +91,12 @@ class Source:
 
         soup = BeautifulSoup(r.content, "html.parser")
         links = soup.find_all(
-            lambda tag: tag
-            and tag.name == "a"
-            and tag.get("href")
-            and "entsorgung.php?ort=" in tag["href"]
+            lambda tag: (
+                tag
+                and tag.name == "a"
+                and tag.get("href")
+                and "entsorgung.php?ort=" in tag["href"]
+            )
         )
         return [link["href"].split("?ort=")[1] for link in links]
 
@@ -115,12 +117,12 @@ class Source:
                     "city",
                     self._city,
                     "make sure the city is spelled exactly like in the link of the website https://www.mzv-rotenburg-bebra.de//webapp.html",
-                )
+                ) from None
             raise SourceArgumentNotFoundWithSuggestions(
                 "city",
                 self._city,
                 cities,
-            )
+            ) from None
 
         entries = []
 
@@ -131,20 +133,30 @@ class Source:
 
             summary = component.get("SUMMARY")
             location = component.get("LOCATION")
+            description = component.get("DESCRIPTION")
 
             summary_text = ics_prop_to_str(summary).strip()
             location_text = ics_prop_to_str(location).strip()
+            description_text = ics_prop_to_str(description).strip()
+            route_context = " ".join(
+                part for part in (summary_text, location_text, description_text) if part
+            ).lower()
 
-            bin_type = summary_text.removeprefix("Entsorgung ").strip()
+            raw_bin_type = summary_text.removeprefix("Entsorgung ").strip()
+            raw_bin_type_lower = raw_bin_type.lower()
+            bin_type = raw_bin_type
+            if raw_bin_type_lower.startswith("gelbe tonne"):
+                bin_type = "Gelbe Tonne"
+            elif raw_bin_type_lower.startswith("papier"):
+                bin_type = "Papier"
             bin_type_cmp = bin_type.lower()
-            location_cmp = location_text.lower()
 
             if bin_type_cmp == "gelbe tonne" and self._yellow_route:
-                if self._yellow_route.lower() not in location_cmp:
+                if self._yellow_route.lower() not in route_context:
                     continue
 
             if bin_type_cmp == "papier" and self._paper_route:
-                if self._paper_route.lower() not in location_cmp:
+                if self._paper_route.lower() not in route_context:
                     continue
 
             entries.append(

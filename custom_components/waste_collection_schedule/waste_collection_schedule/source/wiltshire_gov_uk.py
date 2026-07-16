@@ -49,7 +49,7 @@ class Source:
         fetch_month = date.today().replace(day=1)
 
         entries = []
-        for i in range(0, 7):
+        for _i in range(7):
             entries.extend(self.fetch_month(fetch_month))
             fetch_month = add_month(fetch_month)
 

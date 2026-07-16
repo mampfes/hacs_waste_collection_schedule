@@ -1,6 +1,11 @@
 # Borough Council of King's Lynn & West Norfolk
 
-Support for schedules provided by [Borough Council of King's Lynn & West Norfolk](https://www.west-norfolk.gov.uk), serving Borough Council of King's Lynn & West Norfolk, UK.
+Support for schedules provided by [Borough Council of King's Lynn & West Norfolk](https://www.west-norfolk.gov.uk), serving the Borough of King's Lynn & West Norfolk, UK.
+
+## Local Government Reorganisation note
+This source **only** serves the areas covered by the **existing** King's Lynn & West Norfolk Council, and not the upcoming West Norfolk Council.
+
+During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new West Norfolk council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 

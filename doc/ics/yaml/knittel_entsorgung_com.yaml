@@ -9,4 +9,6 @@ howto:
     - Use this URL as the `url` parameter.
 test_cases:
   Nersingen:
-    url: "https://www.knittel-entsorgung.com/wp-content/uploads/2025/11/NERSINGEN_Nersingen_Leibi_Ober-Unterfahlheim_Strass_2026.ics"
+    url: https://www.knittel-entsorgung.com/wp-content/uploads/2025/11/NERSINGEN_Nersingen_Leibi_Ober-Unterfahlheim_Strass_2026.ics
+  Illertissen-Ost:
+    url: https://www.knittel-entsorgung.com/wp-content/uploads/2025/11/ILLERTISSEN_Illertissen-OST_2026.ics

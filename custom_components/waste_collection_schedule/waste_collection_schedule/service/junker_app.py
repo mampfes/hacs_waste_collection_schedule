@@ -4,6 +4,7 @@ import unicodedata
 from datetime import datetime
 
 import requests
+
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 
 EMBED_URL = "https://differenziata.junker.app/embed/{municipality}/calendario"
@@ -38,7 +39,7 @@ class AreaNotFound(Exception):
         super().__init__("Area not found")
 
 
-class AreaRequired(AreaNotFound): ...  # noqa: E701
+class AreaRequired(AreaNotFound): ...
 
 
 def replace_accents(text: str) -> str:
@@ -61,8 +62,10 @@ class Junker:
         area: int | None = None,
         area_name: str | None = None,
         use_embed_url: bool = True,
-        municipalities_with_area: dict[str, list[int]] = {},
+        municipalities_with_area: dict[str, list[int]] | None = None,
     ):
+        if municipalities_with_area is None:
+            municipalities_with_area = {}
         self._municipality: str = municipality
         self._area: int | None = area
         self._municipalities_with_area = municipalities_with_area
@@ -98,11 +101,7 @@ class Junker:
                         " ", ""
                     ).replace(",", "").replace("'", "") == replace_accents(
                         self._area_name
-                    ).lower().strip().replace(
-                        " ", ""
-                    ).replace(
-                        ",", ""
-                    ).replace(
+                    ).lower().strip().replace(" ", "").replace(",", "").replace(
                         "'", ""
                     ):
                         if self._area in (str(area[1]), area[1]):

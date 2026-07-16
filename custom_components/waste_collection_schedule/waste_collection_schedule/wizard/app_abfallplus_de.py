@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import site
 from pathlib import Path
-from typing import Tuple
 
 import inquirer
 
@@ -86,13 +85,15 @@ def select_city(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
 
 def select_bezirk(
     app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool
-) -> Tuple[str, bool]:
+) -> tuple[str, bool]:
     bezirke = app.get_bezirke()
     questions = [
         inquirer.List(
             "bezirk",
-            choices=sorted([(s["name"], s["name"]) for s in bezirke])
-            + [("BACK", "BACK")],
+            choices=[
+                *sorted([(s["name"], s["name"]) for s in bezirke]),
+                ("BACK", "BACK"),
+            ],
             message="Select your Bezirk",
         )
     ]
@@ -120,8 +121,10 @@ def select_street(app: AppAbfallplusDe.AppAbfallplusDe, bund_select: bool):
         questions = [
             inquirer.List(
                 "street",
-                choices=sorted([(s["name"], s["name"]) for s in streets])
-                + [("BACK", "BACK")],
+                choices=[
+                    *sorted([(s["name"], s["name"]) for s in streets]),
+                    ("BACK", "BACK"),
+                ],
                 message="Select your Street",
             )
         ]

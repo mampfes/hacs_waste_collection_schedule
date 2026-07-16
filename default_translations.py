@@ -1,5 +1,5 @@
 import json
-from typing import Iterable
+from collections.abc import Iterable
 
 DEFAULT_PARAM_TRANSLATIONS = {
     "en": {
@@ -335,12 +335,15 @@ DEFAULT_PARAM_DESCRIPTIONS = {
     },
 }
 
+DEFAULT_PARAM_TRANSLATIONS["nl"] = dict(DEFAULT_PARAM_TRANSLATIONS["en"])
+DEFAULT_PARAM_DESCRIPTIONS["nl"] = dict(DEFAULT_PARAM_DESCRIPTIONS["en"])
+
 
 def default_translations(args: Iterable[str]) -> dict[str, dict[str, str]]:
     translation: dict[str, dict[str, str]] = {}
     for arg in args:
         for lang, translations in DEFAULT_PARAM_TRANSLATIONS.items():
-            if not lang in translation:
+            if lang not in translation:
                 translation[lang] = {}
             if arg in translations:
                 translation[lang][arg] = translations[arg]
@@ -351,7 +354,7 @@ def default_descriptions(args: Iterable[str]) -> dict[str, dict[str, str]]:
     translation: dict[str, dict[str, str]] = {}
     for arg in args:
         for lang, translations in DEFAULT_PARAM_DESCRIPTIONS.items():
-            if not lang in translation:
+            if lang not in translation:
                 translation[lang] = {}
             if arg in translations:
                 translation[lang][arg] = translations[arg]

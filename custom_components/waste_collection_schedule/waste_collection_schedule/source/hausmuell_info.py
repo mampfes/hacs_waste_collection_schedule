@@ -260,14 +260,14 @@ class Source:
             requests.Response: the successful response
         """
         r = requests.post(url, data=data, params=params)
-        if "kein Eintrag gefunden" not in r.text and not "<ul></ul>" == r.text.strip():
+        if "kein Eintrag gefunden" not in r.text and not r.text.strip() == "<ul></ul>":
             return r
         r = requests.post(
             url,
             data=replace_special_chars_args(data),
             params=replace_special_chars_args(params),
         )
-        if "kein Eintrag gefunden" not in r.text and not "<ul></ul>" == r.text.strip():
+        if "kein Eintrag gefunden" not in r.text and not r.text.strip() == "<ul></ul>":
             return r
         r = requests.post(
             url,
@@ -276,7 +276,7 @@ class Source:
             ),
             params=replace_special_chars_args(params),
         )
-        if "kein Eintrag gefunden" not in r.text and not "<ul></ul>" == r.text.strip():
+        if "kein Eintrag gefunden" not in r.text and not r.text.strip() == "<ul></ul>":
             return r
         raise Exception(error_message)
 

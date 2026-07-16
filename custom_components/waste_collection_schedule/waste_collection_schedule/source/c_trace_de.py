@@ -227,7 +227,7 @@ class Source:
         self.ical_url_file = ical_url_file
         self._ics = ICS(regex=r"Abfuhr: (.*)")
         if not abfall:
-            abfall = "|".join(str(i) for i in range(0, 300))
+            abfall = "|".join(str(i) for i in range(300))
         self._abfall = abfall
 
     def fetch(self):

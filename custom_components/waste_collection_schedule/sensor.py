@@ -42,7 +42,7 @@ from .sensor_config_helpers import (
 )
 from .sensor_template_presets import format_default_state_text
 from .waste_collection_api import WasteCollectionApi
-from .waste_collection_schedule import Collection, CollectionGroup, Icons
+from .waste_collection_schedule import Collection, CollectionGroup
 from .wcs_coordinator import WCSCoordinator
 
 # fmt: on
@@ -108,7 +108,7 @@ def render_sensor_preview(
 ) -> tuple[Any, dict[str, Any], str, str | None]:
     """Render the current sensor state and attributes for UI preview and entities."""
     details_format = details_format or DetailsFormat.upcoming
-    include_today = datetime.datetime.now().time() < day_switch_time
+    include_today = dt_util.now().time() < day_switch_time
 
     upcoming1 = aggregator.get_upcoming_group_by_day(
         count=1,
@@ -117,26 +117,31 @@ def render_sensor_preview(
         start_index=event_index,
     )
 
-    if len(upcoming1) == 0:
-        return None, {}, "mdi:trash-can", None
+    collection = upcoming1[0] if upcoming1 else None
+    value: Any = None
+    icon = "mdi:trash-can"
+    picture = None
+    if collection is not None:
+        if value_template is not None:
+            value = value_template.async_render_with_possible_json_value(
+                collection, None
+            )
+        else:
+            value = format_default_state_text(
+                collection.types,
+                collection.daysTo,
+                separator,
+                preset_language,
+            )
+        icon = collection.icon or icon
+        picture = collection.picture
 
-    collection = upcoming1[0]
-    if value_template is not None:
-        value = value_template.async_render_with_possible_json_value(collection, None)
-    else:
-        value = format_default_state_text(
-            collection.types,
-            collection.daysTo,
-            separator,
-            preset_language,
-        )
-
-    def render_date(entry: Collection):
+    def render_date(entry: Collection | CollectionGroup):
         if date_template is not None:
             return date_template.async_render_with_possible_json_value(entry, None)
         return entry.date.isoformat()
 
-    attributes = {}
+    attributes: dict[str, Any] = {}
     available_collection_types = (
         sorted(aggregator.types) if collection_types is None else collection_types
     )
@@ -150,7 +155,10 @@ def render_sensor_preview(
     )
 
     if details_format != DetailsFormat.hidden:
-        attributes["next_pickup"] = serialize_collection_group(collection, separator)
+        if collection is not None:
+            attributes["next_pickup"] = serialize_collection_group(
+                collection, separator
+            )
         attributes["upcoming_pickups"] = [
             serialize_collection_group(upcoming_collection, separator)
             for upcoming_collection in grouped_upcoming
@@ -185,10 +193,10 @@ def render_sensor_preview(
             refreshtime = aggregator.refreshtime.isoformat(timespec="seconds")
         attributes["last_update"] = refreshtime
 
-    if add_days_to:
+    if add_days_to and collection is not None:
         attributes["daysTo"] = collection.daysTo
 
-    return value, attributes, collection.icon or "mdi:trash-can", collection.picture
+    return value, attributes, icon, picture
 
 
 # Config flow setup
@@ -205,15 +213,11 @@ async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
         date_template = sensor.get(CONF_DATE_TEMPLATE)
         try:
             value_template = cv.template(value_template)
-        except (
-            vol.Invalid
-        ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
+        except vol.Invalid:  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
             value_template = None
         try:
             date_template = cv.template(date_template)
-        except (
-            vol.Invalid
-        ):  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
+        except vol.Invalid:  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
             date_template = None
         details_format = sensor.get(CONF_DETAILS_FORMAT)
         if details_format is None:
@@ -419,16 +423,14 @@ class ScheduleSensor(SensorEntity):
         """Return separator string used to join waste types."""
         if self._api:
             return self._api.separator
-        else:
-            return self._coordinator.separator
+        return self._coordinator.separator
 
     @property
     def _include_today(self):
         """Return true if collections for today shall be included in the results."""
         if self._api:
             return dt_util.now().time() < self._api._day_switch_time
-        else:
-            return dt_util.now().time() < self._coordinator.day_switch_time
+        return dt_util.now().time() < self._coordinator.day_switch_time
 
     def _add_refreshtime(self):
         """Add refresh-time (= last fetch time) to device-state-attributes."""
@@ -437,40 +439,6 @@ class ScheduleSensor(SensorEntity):
             refreshtime = self._aggregator.refreshtime.strftime("%x %X")
         self._attr_attribution = f"Last update: {refreshtime}"
 
-    def _set_state(self, upcoming: list[CollectionGroup]):
-        """Set entity state with default format."""
-        if len(upcoming) == 0:
-            self._value = None
-            self._attr_icon = Icons.GENERAL_WASTE
-            self._attr_entity_picture = None
-            return
-
-        collection = upcoming[0]
-        # collection::=CollectionGroup{date=2020-04-01, types=['Type1', 'Type2']}
-
-        if self._value_template is not None:
-            self._value = self._value_template.async_render_with_possible_json_value(
-                collection, None
-            )
-        else:
-            self._value = format_default_state_text(
-                collection.types,
-                collection.daysTo,
-                self._separator,
-                self._preset_language,
-            )
-
-        self._attr_icon = collection.icon or Icons.GENERAL_WASTE
-        self._attr_entity_picture = collection.picture
-
-    def _render_date(self, collection: Collection):
-        if self._date_template is not None:
-            return self._date_template.async_render_with_possible_json_value(
-                collection, None
-            )
-        else:
-            return collection.date.isoformat()
-
     @callback
     def _update_sensor(self):
         """Update the state and the device-state-attributes of the entity.
@@ -478,7 +446,7 @@ class ScheduleSensor(SensorEntity):
         Called if a new data has been fetched from the source.
         """
         if self._aggregator is None:
-            return None
+            return
         (
             self._value,
             self._attr_extra_state_attributes,

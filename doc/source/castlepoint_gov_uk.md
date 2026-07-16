@@ -1,6 +1,9 @@
 # Castle Point Borough Council
 
-Support for schedules provided by [Castle Point Borough Council](https://www.castlepoint.gov.uk), serving the Castle Point district, UK.
+Support for schedules provided by [Castle Point Borough Council](https://www.castlepoint.gov.uk), serving the Castle Point district in Essex, UK.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Essex, please continue to use the source for your current area as long as it's still working. New sources for the new South East Essex Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 
@@ -15,10 +18,10 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**roadID**
+**roadID**  
 *(string) (optional)*
 
-**street_name**
+**street_name**  
 *(string) (optional)*
 
 Either `roadID` or `street_name` is required.

@@ -140,7 +140,9 @@ class Source:
                 if current_month is None or current_year is None:
                     continue  # <dl> before any recognisable month heading
 
-                for dt, dd in zip(element.find_all("dt"), element.find_all("dd")):
+                for dt, dd in zip(
+                    element.find_all("dt"), element.find_all("dd"), strict=False
+                ):
                     bin_name, icon = _classify(dt.get_text(strip=True))
                     for day in _parse_days(dd.get_text(strip=True)):
                         try:

@@ -1,0 +1,110 @@
+{
+  "default": [],
+  "sources": {
+    "abfall_neunkirchen_siegerland_de": [
+      "@bbr111"
+    ],
+    "alba_com_pl": [
+      "@kamilos-dev"
+    ],
+    "alexandria_va_us": [
+      "@lpukatch"
+    ],
+    "awista_kommunal_de": [
+      "@Zaunei"
+    ],
+    "bathurst_nsw_gov_au": [
+      "@Wolfieeewolf"
+    ],
+    "baumkirchen_gv_at": [
+      "@bbr111"
+    ],
+    "berndorf_gv_at": [
+      "@bbr111"
+    ],
+    "buermoos_at": [
+      "@bbr111"
+    ],
+    "durban_gov_za": [
+      "@robtesch"
+    ],
+    "elsbethen_at": [
+      "@bbr111"
+    ],
+    "enns_at": [
+      "@bbr111"
+    ],
+    "felixdorf_gv_at": [
+      "@bbr111"
+    ],
+    "haringey_gov_uk": [
+      "@marcjay"
+    ],
+    "hartbeigraz_at": [
+      "@bbr111"
+    ],
+    "imst_at": [
+      "@bbr111"
+    ],
+    "jacksonville_fl_us": [
+      "@biggiebytes"
+    ],
+    "jochberg_gv_at": [
+      "@bbr111"
+    ],
+    "kiedyodpady_pl": [
+      "@dominik-korsa"
+    ],
+    "kopavogur_is": [
+      "@rhubarbgarden"
+    ],
+    "kronstorf_at": [
+      "@bbr111"
+    ],
+    "muehlenkreis_de": [
+      "@bbr111"
+    ],
+    "mywastewatcher_de": [
+      "@ItsMly"
+    ],
+    "oberndorf_schwanenstadt_at": [
+      "@bbr111"
+    ],
+    "ocarcims_ocfl_net": [
+      "@rbusquet"
+    ],
+    "puchbeihallein_gv_at": [
+      "@nerdoc"
+    ],
+    "ritl_ca": [
+      "@Jean-PascalComeau"
+    ],
+    "schlierbach_at": [
+      "@bbr111"
+    ],
+    "sictomvds_com": [
+      "@KingKemar"
+    ],
+    "st_margarethen_salzburg_at": [
+      "@bbr111"
+    ],
+    "steyr_at": [
+      "@bbr111"
+    ],
+    "stirling_wa_gov_au": [
+      "@markvp"
+    ],
+    "toulouse_metropole_fr": [
+      "@fangedhex"
+    ],
+    "vogeldisposal_com": [
+      "@jcarr"
+    ],
+    "westminster_gov_uk": [
+      "@parmymansam"
+    ],
+    "wingecarribee_nsw_gov_au": [
+      "@m1ckyb"
+    ]
+  }
+}

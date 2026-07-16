@@ -47,6 +47,11 @@ TEST_CASES = {
         "ort": "Norderstedt",
         "strasse": "Distelweg",
     },
+    "nds Norderstedt Friedrichsgaber Weg (house number range as street)": {
+        "service": "nds",
+        "ort": "Norderstedt",
+        "strasse": "Friedrichsgaber Weg 1 - 57",
+    },
     "una Bergkamen, Agnes-Miegel-Str.": {
         "service": "unna",
         "ort": "Bergkamen",

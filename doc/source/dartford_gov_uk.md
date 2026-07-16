@@ -1,6 +1,6 @@
-# North Norfolk District Council
+# Dartford Borough Council
 
-Support for schedules provided by [Dartford Borough Council](https://www.dartford.gov.uk/waste-recycling/collection-day), serving Darford, UK.
+Support for schedules provided by [Dartford Borough Council](https://www.dartford.gov.uk/waste-recycling/collection-day), serving Dartford, UK.
 
 ## Configuration via configuration.yaml
 

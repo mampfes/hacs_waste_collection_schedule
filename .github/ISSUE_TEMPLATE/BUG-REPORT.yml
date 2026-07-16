@@ -1,7 +1,8 @@
+---
 name: Integration Bug
 description: Report a bug with the core integration (not a specific source or sensor configuration)
-title: "[Bug]: "
-labels: ["bug"]
+title: '[Bug]: '
+labels: [bug]
 body:
   - type: markdown
     attributes:

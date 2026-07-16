@@ -27,9 +27,9 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule import Icons  # noqa: E402
-from waste_collection_schedule.exceptions import SourceArgumentNotFound  # noqa: E402
-from waste_collection_schedule.source import hillingdon_gov_uk  # noqa: E402
+from waste_collection_schedule import Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.source import hillingdon_gov_uk
 
 # ---------------------------------------------------------------------------
 # Shared fixtures and helpers
@@ -224,9 +224,9 @@ def test_fetch_all_dates_on_correct_weekday(mock_requests, mock_bh):
 
     assert len(entries) == 8
     for entry in entries:
-        assert (
-            entry.date.weekday() == 2
-        ), f"Expected Wednesday (weekday 2), got {entry.date} (weekday {entry.date.weekday()})"
+        assert entry.date.weekday() == 2, (
+            f"Expected Wednesday (weekday 2), got {entry.date} (weekday {entry.date.weekday()})"
+        )
 
 
 @patch(
@@ -265,9 +265,9 @@ def test_fetch_strips_subscription_expiry_suffix(mock_requests, mock_bh):
 
     waste_types = {e.type for e in entries}
     assert "Garden Waste" in waste_types
-    assert not any(
-        "( -" in t for t in waste_types
-    ), "Raw suffix should have been stripped from waste type"
+    assert not any("( -" in t for t in waste_types), (
+        "Raw suffix should have been stripped from waste type"
+    )
 
 
 @patch(

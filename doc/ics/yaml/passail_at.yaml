@@ -1,0 +1,18 @@
+---
+title: Gemeinde Passail
+url: https://www.passail.at
+country: at
+howto:
+  en: |
+    - Visit <https://www.passail.at/muellentsorgung/>.
+    - Right-click the ICS download link for your collection area and copy the link address.
+    - Use this link as the `url` parameter.
+  de: |
+    - Besuchen Sie <https://www.passail.at/muellentsorgung/>.
+    - Klicken Sie mit der rechten Maustaste auf den ICS-Download-Link für Ihren Abfuhrbereich und kopieren Sie den Link.
+    - Verwenden Sie diesen Link als `url`-Parameter.
+test_cases:
+  Passail, Plenzengreith, teilw. Arzberg:
+    url: https://www.passail.at/wp-content/uploads/sites/18/2025/12/Kalender-von-Mülltermine-Passail-Plenzengreith-teilw.-Arzberg.ics
+  Hohenau, Neudorf, Rest Arzberg:
+    url: https://www.passail.at/wp-content/uploads/sites/18/2025/12/Kalender-von-Mülltermine-Hohenau-Neudorf-Rest-Arzberg.ics

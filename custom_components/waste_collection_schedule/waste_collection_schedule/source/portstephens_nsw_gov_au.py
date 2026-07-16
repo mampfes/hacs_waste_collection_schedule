@@ -59,9 +59,11 @@ def get_id(
     url_key: str,
     val_key: str,
     name: str,
-    params: dict = {},
+    params: dict | None = None,
     init_param_name: str | None = None,
 ):
+    if params is None:
+        params = {}
     response = s.get(API_URLS[url_key], params=params, headers=HEADERS)
     data = json.loads(response.text)
     for val in data[val_key]:

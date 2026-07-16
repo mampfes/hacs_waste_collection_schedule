@@ -15,10 +15,12 @@ sys.path.insert(
     ),
 )
 
-from waste_collection_schedule.collection import Collection  # noqa: E402
-from waste_collection_schedule.collection_aggregator import CollectionAggregator  # noqa: E402
-from waste_collection_schedule.source_shell import Customize  # noqa: E402
-from waste_collection_schedule.type_aliases import (  # noqa: E402
+from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.collection_aggregator import (
+    CollectionAggregator,
+)
+from waste_collection_schedule.source_shell import Customize
+from waste_collection_schedule.type_aliases import (
     get_customize_label,
     get_uncustomized_types,
 )

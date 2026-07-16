@@ -207,7 +207,7 @@ class Source:
 
         entries = []
         for cal_entry in data["data"]["calendars"]:
-            collection_dates[cal_entry["name"]] = list(
+            collection_dates[cal_entry["name"]] = [
                 d.date()
                 for d in rrule(
                     freq=DAILY,
@@ -219,7 +219,7 @@ class Source:
                         else to_time
                     ),
                 )
-            )
+            ]
 
         moved: list[(str, date)] = []
 
@@ -229,7 +229,7 @@ class Source:
                 for collection in collections:
                     if (
                         collection == holiday_date
-                        and not (collection_name, collection) in moved
+                        and (collection_name, collection) not in moved
                     ):
                         new_date = datetime.fromtimestamp(
                             holiday["shiftTo"] / 1000

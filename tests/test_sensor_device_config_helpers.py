@@ -1,24 +1,24 @@
 import os
 import sys
-import json
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from custom_components.waste_collection_schedule.sensor_config_helpers import (  # noqa: E402
+from custom_components.waste_collection_schedule.sensor_config_helpers import (
     COMBINED_SENSOR_NAME,
-    build_added_combined_sensor_options,
     build_added_collection_type_sensor_options,
+    build_added_combined_sensor_options,
     build_combined_waste_sensor,
+    build_create_combined_ui_sensor_action_unique_id,
+    build_create_ui_sensor_action_unique_id,
     build_legacy_ui_sensor_unique_id,
-    build_remove_ui_sensor_action_unique_id,
     build_removed_sensor_options,
-    build_stable_ui_sensor_unique_id,
     build_sensor_for_collection_type,
+    build_stable_ui_sensor_unique_id,
     build_ui_sensor_control_unique_id,
     build_ui_sensor_device_identifier,
     build_ui_sensor_unique_id,
-    configured_sensor_ids,
     configured_collection_types,
+    configured_sensor_ids,
     ensure_sensor_ids,
     has_combined_sensor,
     iter_ui_sensor_unique_id_migrations,
@@ -27,14 +27,13 @@ from custom_components.waste_collection_schedule.sensor_config_helpers import ( 
     parse_ui_sensor_device_id,
     parse_ui_sensor_device_identifier,
     remove_sensor_config_by_id,
-    replace_sensor_config,
-    update_sensor_config_list,
     update_sensor_config_list_by_id,
 )
-from custom_components.waste_collection_schedule.sensor_template_presets import (  # noqa: E402
-    PL_RELATIVE_TEMPLATE,
+from custom_components.waste_collection_schedule.sensor_template_presets import (
     CUSTOM_OPTION,
     DEFAULT_OPTION,
+    NL_RELATIVE_TEMPLATE,
+    PL_RELATIVE_TEMPLATE,
     PRESET_LANGUAGE_OPTIONS,
     VALUE_TEMPLATE_PRESETS,
     convert_value_template_language,
@@ -94,32 +93,16 @@ def test_display_language_options_cover_translation_files():
     assert set(PRESET_LANGUAGE_OPTIONS.values()) == translation_languages
 
 
-def test_display_language_translation_keys_exist_for_all_translations():
-    translations_dir = os.path.join(
-        os.path.dirname(__file__),
-        "..",
-        "custom_components",
-        "waste_collection_schedule",
-        "translations",
-    )
-
-    for filename in os.listdir(translations_dir):
-        if not filename.endswith(".json"):
-            continue
-        with open(os.path.join(translations_dir, filename), encoding="utf-8") as file:
-            translation = json.load(file)
-        sensor_step = translation["config"]["step"]["sensor"]
-        if "sections" in sensor_step:
-            sensor_data = sensor_step["sections"]["display"]["data"]
-        else:
-            sensor_data = sensor_step.get("data", {})
-        assert "preset_language" in sensor_data
+def test_display_language_presets_exist_for_all_supported_languages():
+    for language in PRESET_LANGUAGE_OPTIONS.values():
+        assert get_value_template_presets(language)
 
 
 def test_default_state_text_supports_all_display_languages():
     assert format_default_state_text(["Bio"], 2, ", ", "de") == "Bio in 2 Tagen"
     assert format_default_state_text(["Bio"], 2, ", ", "fr") == "Bio dans 2 jours"
     assert format_default_state_text(["Bio"], 2, ", ", "it") == "Bio tra 2 giorni"
+    assert format_default_state_text(["Bio"], 2, ", ", "nl") == "Bio over 2 dagen"
     assert format_default_state_text(["Bio"], 2, ", ", "pl") == "Bio za 2 dni"
 
 
@@ -132,39 +115,14 @@ def test_convert_value_template_language_maps_known_preset():
         )
         == PL_RELATIVE_TEMPLATE
     )
+    assert (
+        convert_value_template_language(PL_RELATIVE_TEMPLATE, "nl")
+        == NL_RELATIVE_TEMPLATE
+    )
 
 
 def test_get_preset_option_returns_custom_for_unknown_template():
     assert get_preset_option("{{value.date}}", VALUE_TEMPLATE_PRESETS) == CUSTOM_OPTION
-
-
-def test_update_sensor_config_list_updates_only_matching_sensor():
-    sensors = [
-        {CONF_NAME: "Bio", CONF_VALUE_TEMPLATE: "old"},
-        {CONF_NAME: "Paper"},
-    ]
-
-    updated = update_sensor_config_list(
-        sensors,
-        sensor_name="Bio",
-        updates={CONF_VALUE_TEMPLATE: "new"},
-    )
-
-    assert updated[0][CONF_VALUE_TEMPLATE] == "new"
-    assert CONF_VALUE_TEMPLATE not in updated[1]
-    assert sensors[0][CONF_VALUE_TEMPLATE] == "old"
-
-
-def test_update_sensor_config_list_can_remove_keys():
-    sensors = [{CONF_NAME: "Bio", CONF_VALUE_TEMPLATE: "old"}]
-
-    updated = update_sensor_config_list(
-        sensors,
-        sensor_name="Bio",
-        removals=(CONF_VALUE_TEMPLATE,),
-    )
-
-    assert CONF_VALUE_TEMPLATE not in updated[0]
 
 
 def test_update_sensor_config_list_by_id_updates_only_matching_sensor():
@@ -194,24 +152,6 @@ def test_remove_sensor_config_by_id_removes_only_matching_sensor():
 
     assert updated == [{CONF_NAME: "Paper", CONF_SENSOR_ID: "paper-id"}]
     assert len(sensors) == 2
-
-
-def test_replace_sensor_config_replaces_only_target_sensor():
-    sensors = [
-        {CONF_NAME: "Bio", CONF_VALUE_TEMPLATE: "old"},
-        {CONF_NAME: "Paper"},
-    ]
-
-    updated = replace_sensor_config(
-        sensors,
-        original_sensor_name="Bio",
-        replacement={CONF_NAME: "Bio Friendly", CONF_VALUE_TEMPLATE: "new"},
-    )
-
-    assert updated[0][CONF_NAME] == "Bio Friendly"
-    assert updated[0][CONF_VALUE_TEMPLATE] == "new"
-    assert updated[1][CONF_NAME] == "Paper"
-    assert sensors[0][CONF_NAME] == "Bio"
 
 
 def test_ensure_sensor_ids_only_fills_missing_ids():
@@ -283,12 +223,13 @@ def test_build_combined_waste_sensor_creates_all_type_sensor():
 
 def test_build_removed_sensor_options_removes_sensor_from_entry_options():
     class Entry:
-        options = {
-            "sensors": [
-                {CONF_NAME: "Bio", CONF_SENSOR_ID: "bio-id"},
-                {CONF_NAME: "Paper", CONF_SENSOR_ID: "paper-id"},
-            ]
-        }
+        def __init__(self):
+            self.options = {
+                "sensors": [
+                    {CONF_NAME: "Bio", CONF_SENSOR_ID: "bio-id"},
+                    {CONF_NAME: "Paper", CONF_SENSOR_ID: "paper-id"},
+                ]
+            }
 
     options = build_removed_sensor_options(Entry(), "paper-id")
 
@@ -297,7 +238,8 @@ def test_build_removed_sensor_options_removes_sensor_from_entry_options():
 
 def test_build_added_collection_type_sensor_options_appends_new_sensor():
     class Entry:
-        options = {"sensors": [{CONF_NAME: "Bio", CONF_SENSOR_ID: "bio-id"}]}
+        def __init__(self):
+            self.options = {"sensors": [{CONF_NAME: "Bio", CONF_SENSOR_ID: "bio-id"}]}
 
     options = build_added_collection_type_sensor_options(
         Entry(), "Paper", id_factory=lambda: "paper-id"
@@ -316,7 +258,8 @@ def test_build_added_collection_type_sensor_options_appends_new_sensor():
 
 def test_build_added_combined_sensor_options_appends_new_sensor():
     class Entry:
-        options = {"sensors": [{CONF_NAME: "Bio", CONF_SENSOR_ID: "bio-id"}]}
+        def __init__(self):
+            self.options = {"sensors": [{CONF_NAME: "Bio", CONF_SENSOR_ID: "bio-id"}]}
 
     options = build_added_combined_sensor_options(
         Entry(), id_factory=lambda: "combined-id"
@@ -379,7 +322,9 @@ def test_parse_ui_sensor_device_identifier_returns_stable_sensor_id():
 
 
 def test_parse_ui_sensor_device_identifier_ignores_other_identifiers():
-    assert parse_ui_sensor_device_identifier("source-1", "other_sensor_sensor-1") is None
+    assert (
+        parse_ui_sensor_device_identifier("source-1", "other_sensor_sensor-1") is None
+    )
     assert parse_ui_sensor_device_identifier("source-1", "source-1") is None
 
 
@@ -402,28 +347,41 @@ def test_build_ui_sensor_control_unique_id_uses_stable_sensor_id():
     )
 
 
-def test_build_remove_ui_sensor_action_unique_id_uses_stable_sensor_id():
-    assert build_remove_ui_sensor_action_unique_id("source-1", "sensor-1") == (
-        "source-1_ui_sensor_action_remove_sensor-1"
+def test_build_create_ui_sensor_action_unique_ids_are_stable():
+    assert (
+        build_create_combined_ui_sensor_action_unique_id("source-1")
+        == "source-1_ui_sensor_action_create_combined"
+    )
+    assert (
+        build_create_ui_sensor_action_unique_id("source-1", "Bio")
+        == "source-1_ui_sensor_action_create_Bio"
     )
 
 
 def test_parse_stable_ui_sensor_id_supports_sensor_and_control_entities():
-    assert parse_stable_ui_sensor_id(
-        "source-1", "source-1_ui_sensor_sensor-1"
-    ) == "sensor-1"
-    assert parse_stable_ui_sensor_id(
-        "source-1", "source-1_ui_sensor_control_sensor-1_mode"
-    ) == "sensor-1"
-    assert parse_stable_ui_sensor_id(
-        "source-1", "source-1_ui_sensor_action_remove_sensor-1"
-    ) == "sensor-1"
+    assert (
+        parse_stable_ui_sensor_id("source-1", "source-1_ui_sensor_sensor-1")
+        == "sensor-1"
+    )
+    assert (
+        parse_stable_ui_sensor_id(
+            "source-1", "source-1_ui_sensor_control_sensor-1_mode"
+        )
+        == "sensor-1"
+    )
+    assert (
+        parse_stable_ui_sensor_id(
+            "source-1", "source-1_ui_sensor_action_remove_sensor-1"
+        )
+        == "sensor-1"
+    )
 
 
 def test_parse_stable_ui_sensor_id_ignores_other_unique_ids():
-    assert parse_stable_ui_sensor_id(
-        "source-1", "source-1_ui_sensor_action_create_Bio"
-    ) is None
+    assert (
+        parse_stable_ui_sensor_id("source-1", "source-1_ui_sensor_action_create_Bio")
+        is None
+    )
     assert parse_stable_ui_sensor_id("source-1", "other_ui_sensor_sensor-1") is None
 
 

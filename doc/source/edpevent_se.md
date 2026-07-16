@@ -14,7 +14,6 @@ This integration now also supports the municipalities of Boden and Skellefteå.
 - `ljungby-kommun`: Ljungby kommun
 - `lycksele-kommun`: Lycksele Kommun
 - `marks-kommun`: Marks kommun
-- `nodra`: Nodra
 - `nvoa`: NVOA - Nacka Vatten och Avfall
 - `orebro-kommun`: Örebro kommun
 - `orust-kommun`: Orust kommun

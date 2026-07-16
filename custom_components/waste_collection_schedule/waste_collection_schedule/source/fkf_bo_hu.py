@@ -55,10 +55,8 @@ class Source:
         communal_divs = soup.find_all("div", attrs={"class": "communal"})
 
         selective = soup.find_all("div", attrs={"class": "selective"})
-        communal = [
-            i for i in filter(lambda div: div.text == "Kommunális", communal_divs)
-        ]
-        green = [i for i in filter(lambda div: div.text == "Zöld", communal_divs)]
+        communal = list(filter(lambda div: div.text == "Kommunális", communal_divs))
+        green = list(filter(lambda div: div.text == "Zöld", communal_divs))
 
         for element in communal:
             entries.append(

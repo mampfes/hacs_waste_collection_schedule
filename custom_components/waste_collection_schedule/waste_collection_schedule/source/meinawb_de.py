@@ -91,7 +91,7 @@ class Source:
         parsed = re.findall(
             '<INPUT\\sNAME="([^"]+?)"\\sID="[^"]+?"(?:\\sVALUE="([^"]*?)")?', text
         )
-        return {k: v for k, v in parsed}
+        return dict(parsed)
 
     def _address(self):
         return {

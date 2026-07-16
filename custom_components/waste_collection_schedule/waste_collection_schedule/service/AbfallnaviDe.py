@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 from datetime import datetime
+from typing import ClassVar
 
 import requests
+
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
@@ -159,6 +161,11 @@ SERVICE_DOMAINS = [
         "url": "https://www.kranenburg.de/",
         "service_id": "kranenburg",
     },
+    {
+        "title": "Stadt Porta Westfalica",
+        "url": "https://www.portawestfalica.de/",
+        "service_id": "portawestfalica",
+    },
 ]
 
 DEFAULT_TIMEOUT = 20
@@ -167,7 +174,7 @@ DEFAULT_TIMEOUT = 20
 class AbfallnaviDe:
     # Services where the per-service subdomain DNS is dead;
     # use the shared domain directly to avoid DNS timeout.
-    SHARED_DOMAIN_SERVICES = {
+    SHARED_DOMAIN_SERVICES: ClassVar = {
         "unna",
         "frankenthal",
         "awvlippe",
@@ -178,7 +185,7 @@ class AbfallnaviDe:
         self._service_domain = service_domain
         if service_domain in self.SHARED_DOMAIN_SERVICES:
             self._service_url = (
-                "https://abfallapp.regioit.de/" f"abfall-app-{service_domain}/rest"
+                f"https://abfallapp.regioit.de/abfall-app-{service_domain}/rest"
             )
             self._service_url_fallback = (
                 f"https://{service_domain}"
@@ -192,7 +199,7 @@ class AbfallnaviDe:
                 f"abfall-app-{service_domain}/rest"
             )
             self._service_url_fallback = (
-                "https://abfallapp.regioit.de/" f"abfall-app-{service_domain}/rest"
+                f"https://abfallapp.regioit.de/abfall-app-{service_domain}/rest"
             )
         self._session = requests.Session()
 
@@ -229,8 +236,14 @@ class AbfallnaviDe:
         cities = self.get_cities()
         city_id = self._find_in_inverted_dict(cities, city)
         if not city_id:
+            # NOTE: the "argument" passed to SourceArgumentNotFoundWithSuggestions
+            # must match the corresponding Source.__init__ keyword exactly
+            # ("ort"), not some other internal name ("city"). The config flow
+            # UI matches errors/suggestions back to the form field by this
+            # name; a mismatch means the UI silently fails to show any error
+            # or suggestion to the user (see issue #4426).
             raise SourceArgumentNotFoundWithSuggestions(
-                "city", city, list(cities.values())
+                "ort", city, list(cities.values())
             )
         return city_id
 
@@ -248,13 +261,15 @@ class AbfallnaviDe:
         if len(streets) == 1:
             return list(streets.keys())
         if street is None:
+            # NOTE: the "argument" must match the Source.__init__ keyword
+            # exactly ("strasse"), see comment in get_city_id above.
             raise SourceArgumentRequiredWithSuggestions(
-                "street", "street is required of this city", list(streets.values())
+                "strasse", "street is required of this city", list(streets.values())
             )
         matches = [id for id, name in streets.items() if name == street]
         if len(matches) == 0:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street", street, list(streets.values())
+                "strasse", street, list(streets.values())
             )
         return matches
 
@@ -273,17 +288,19 @@ class AbfallnaviDe:
         if len(house_numbers) == 0:
             return None
         if len(house_numbers) == 1:
-            return list(house_numbers.keys())[0]
+            return next(iter(house_numbers.keys()))
         if house_number is None:
+            # NOTE: the "argument" must match the Source.__init__ keyword
+            # exactly ("hausnummer"), see comment in get_city_id above.
             raise SourceArgumentRequiredWithSuggestions(
-                "house_number",
+                "hausnummer",
                 "house number is required for this street",
                 list(house_numbers.values()),
             )
         house_number_id = self._find_in_inverted_dict(house_numbers, house_number)
         if house_number_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "house_number", house_number, list(house_numbers.values())
+                "hausnummer", house_number, list(house_numbers.values())
             )
 
         return house_number_id

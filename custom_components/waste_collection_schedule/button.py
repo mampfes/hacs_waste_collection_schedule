@@ -10,8 +10,10 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .const import CONF_SENSORS, DOMAIN
 from .sensor_config_helpers import (
-    build_added_combined_sensor_options,
     build_added_collection_type_sensor_options,
+    build_added_combined_sensor_options,
+    build_create_combined_ui_sensor_action_unique_id,
+    build_create_ui_sensor_action_unique_id,
     has_combined_sensor,
     missing_collection_types,
 )
@@ -56,8 +58,8 @@ class CreateCombinedWasteSensorButton(ButtonEntity):
     ) -> None:
         self._entry = entry
         self._attr_name = "Create combined next pickup sensor"
-        self._attr_unique_id = (
-            f"{coordinator.shell.unique_id}_ui_sensor_action_create_combined"
+        self._attr_unique_id = build_create_combined_ui_sensor_action_unique_id(
+            coordinator.shell.unique_id
         )
         self._attr_device_info = coordinator.device_info
 
@@ -86,8 +88,8 @@ class CreateWasteSensorButton(ButtonEntity):
         self._entry = entry
         self._collection_type = collection_type
         self._attr_name = f"Create {collection_type} sensor"
-        self._attr_unique_id = (
-            f"{coordinator.shell.unique_id}_ui_sensor_action_create_{collection_type}"
+        self._attr_unique_id = build_create_ui_sensor_action_unique_id(
+            coordinator.shell.unique_id, collection_type
         )
         self._attr_device_info = coordinator.device_info
 

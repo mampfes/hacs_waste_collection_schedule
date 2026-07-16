@@ -28,6 +28,7 @@ Support for schedules provided by [App CITIES](https://citiesapps.com), serving 
 | Birkfeld | [birkfeld.at](http://www.birkfeld.at) |
 | Bischofshofen | [bischofshofen.at](https://www.bischofshofen.at) |
 | Blindenmarkt | [blindenmarkt.gv.at](blindenmarkt.gv.at/) |
+| Breitenau | [breitenau.gv.at](https://www.breitenau.gv.at) |
 | Breitenbrunn am Neusiedler See | [breitenbrunn.at](http://www.breitenbrunn.at) |
 | Breitenstein | [breitenstein.at](https://www.breitenstein.at) |
 | Bromberg | [bromberg.at](http://www.bromberg.at) |

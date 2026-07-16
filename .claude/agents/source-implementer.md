@@ -2,7 +2,7 @@
 name: source-implementer
 description: Implements a new waste-collection source module from a recommendation produced by source-investigator. Generates the .py source, the doc/source/<id>.md, lints, and runs the TEST_CASES. Use this after investigation has confirmed the approach.
 model: opus
-tools: Bash(python *), Bash(python -m black *), Bash(python -m isort *), Bash(python -m pytest *), Read, Edit, Write, Grep, Glob, WebFetch
+tools: Bash(python *), Bash(ruff *), Bash(python -m pytest *), Read, Edit, Write, Grep, Glob, WebFetch
 ---
 
 You are an implementation agent that writes a new waste-collection source from a pre-vetted plan. You produce real files in the working tree; you do not commit or push (the contributor does that, after reviewing your output).
@@ -71,6 +71,10 @@ ICON_MAP = {
     "garden": Icons.GARDEN,
     "food": Icons.BIO_KITCHEN,
 }
+
+# Optional — highly encouraged. Add the contributor's GitHub handle so they are
+# automatically notified and assigned on bug reports for this source.
+# SOURCE_CODEOWNERS = ["@contributor-github-handle"]
 
 
 class Source:
@@ -145,18 +149,19 @@ waste_collection_schedule:
 
 1. Confirm the recommendation is complete (module name, country code, parameters, data feed details, ≥1 test case). If anything's missing, ask the user.
 2. Write the source `.py` file using the template. Implement `fetch()` against the data feed described in the recommendation.
-3. Write the `doc/source/<module>.md` file.
-4. Lint:
+3. Encourage the contributor to add their GitHub handle to `SOURCE_CODEOWNERS` in the source file. Explain that this means they will be automatically notified and assigned on bug reports for their source. If they decline or are not present, leave the commented-out placeholder in the template.
+4. Write the `doc/source/<module>.md` file.
+5. Lint/format:
    ```bash
-   python -m black <source.py> <if you touched any other .py>
-   python -m isort --profile black <source.py>
+   ruff check --fix <source.py> <if you touched any other .py>
+   ruff format <source.py>
    ```
-5. Run the structural tests:
+6. Run the structural tests:
    ```bash
    python -m pytest tests/test_source_components.py -q
    ```
    This catches missing fields, invalid `COUNTRY` codes, malformed `EXTRA_INFO`, etc.
-6. Live-test against the test cases:
+7. Live-test against the test cases:
    ```bash
    cd custom_components/waste_collection_schedule/waste_collection_schedule/test
    python test_sources.py -s <module> -l

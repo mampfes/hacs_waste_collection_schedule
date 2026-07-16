@@ -13,9 +13,18 @@ TEST_CASES = {
     "20 Peel Crescent": {"house_number": "20", "post_code": "CM7 2RS"},
     "Causeway House": {"house_number": "Causeway House", "post_code": "CM7 9HB"},
 }
+NAME_MAP = {
+    "Non-recyclable waste(grey bin)": "Grey Bin",
+    "Outdoorfood caddy": "Food Bin",
+    "Outdoor food caddy": "Food Bin",
+    "Mixed recycling(blue-lidded bin)": "Mixed Recycling",
+    "Paper and card recycling(red-lidded bin)": "Paper & Card",
+    "Garden bin(green bin)": "Garden Bin",
+}
 ICON_MAP = {
     "Grey Bin": Icons.GENERAL_WASTE,
-    "Clear Sack": Icons.RECYCLING,
+    "Mixed Recycling": Icons.RECYCLING,
+    "Paper & Card": Icons.PAPER,
     "Garden Bin": Icons.GARDEN,
     "Food Bin": Icons.BIO_KITCHEN,
 }
@@ -58,7 +67,9 @@ class Source:
         ):
             try:
                 collection_info = results.text.strip().split("\n")
-                collection_type = collection_info[0].strip()
+                collection_type = NAME_MAP.get(
+                    collection_info[0].strip(), collection_info[0].strip()
+                )
 
                 # Skip if no collection date is found
                 if len(collection_info) < 2:

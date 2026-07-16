@@ -5,9 +5,11 @@ import time
 import uuid
 from collections import Counter, OrderedDict
 from datetime import date, datetime
+from urllib.parse import unquote
 
 import requests
 from bs4 import BeautifulSoup, Tag
+
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
@@ -136,7 +138,17 @@ SUPPORTED_SERVICES = {
         "Tübingen",
     ],
     "de.k4systems.abfallinfocw": ["Kreis Calw"],
-    "de.k4systems.abfallinfoapp": ["Mechernich und Kommunen"],
+    "de.k4systems.abfallinfoapp": [
+        "Kreis Euskirchen",
+        "Bad Münstereifel",
+        "Dahlem",
+        "Hellenthal",
+        "Kall",
+        "Mechernich",
+        "Schleiden",
+        "Weilerswist",
+        "Zülpich",
+    ],
     "de.k4systems.abfallappes": ["Landkreis Esslingen"],
     "de.k4systems.egst": ["Kreis Steinfurt"],
     "de.idcontor.abfallwbd": ["Duisburg"],
@@ -276,6 +288,7 @@ MAP_APP_USERAGENTS = {
     "abfallMA.ucom.de": "Abfall-Ma",
     "de.ahrweiler.meinawb": "Abfall App",
     "de.abfallwecker": "ABFALL+",
+    "de.abfallplus.ahe": "AHE",
     "de.albagroup.app": "Abfuhrtermine",
     "de.biberach.abfallapp": "Abfall App",
     "de.cmcitymedia.hokwaste": "Abfallinfo HOK",
@@ -426,7 +439,9 @@ def extract_onclicks(
         try:
             to_return.append(json.loads(string))
         except json.decoder.JSONDecodeError:
-            raise Exception(f"Failed to parse '{string}', onclick: '{onclick}'")
+            raise Exception(
+                f"Failed to parse '{string}', onclick: '{onclick}'"
+            ) from None
         if hnr:
             res = re.search(r"\.val\([0-9]+\)", onclick)
             if res:
@@ -457,7 +472,7 @@ class AppAbfallplusDe:
         bezirk_id="",
         strasse_id=None,
         hnr_id=None,
-    ):
+    ) -> None:
         self._client = str(uuid.uuid4())
 
         self._app_id = app_id
@@ -561,7 +576,7 @@ class AppAbfallplusDe:
         r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         if not (inputs := soup.find_all("input")):
-            return
+            return None
 
         for input in inputs:
             if input.attrs["name"] == "f_id_bundesland":
@@ -781,9 +796,11 @@ class AppAbfallplusDe:
             self._strasse_search = streets[0]["name"]
         if self._strasse_search is None and len(streets) == 0:
             return
-        elif self._strasse_search is None:
-            SourceArgumentRequiredWithSuggestions(
-                "strasse", [s["name"] for s in streets]
+        if self._strasse_search is None:
+            raise SourceArgumentRequiredWithSuggestions(
+                "strasse",
+                "multiple streets found, please specify one",
+                [s["name"] for s in streets],
             )
 
         for street in streets:
@@ -820,7 +837,7 @@ class AppAbfallplusDe:
             hnrs.append(
                 {
                     "id": a[0],
-                    "name": a[0].split("|")[0],
+                    "name": unquote(a[0]).split("|")[0],
                     "f_id_strasse": a[6] if len(a) > 6 else None,
                 }
             )
@@ -836,7 +853,9 @@ class AppAbfallplusDe:
             return
         elif self._hnr_search is None:
             raise SourceArgumentRequiredWithSuggestions(
-                "hnr", [hnr["name"] for hnr in hnrs]
+                "hnr",
+                "multiple house numbers found, please specify one",
+                [hnr["name"] for hnr in hnrs],
             )
         for hnr in hnrs:
             if compare(hnr["name"], self._hnr_search, remove_space=True):
@@ -988,8 +1007,9 @@ class AppAbfallplusDe:
 
         categories = {}
         for cat_id, name, subtitle in raw_categories:
-            if any(s_id in cat_id for s_id in self._needs_subtitle) or (
-                name_counts[name] > 1 and subtitle
+            if subtitle and (
+                any(s_id in cat_id for s_id in self._needs_subtitle)
+                or name_counts[name] > 1
             ):
                 name += " - " + subtitle
             categories[cat_id] = name

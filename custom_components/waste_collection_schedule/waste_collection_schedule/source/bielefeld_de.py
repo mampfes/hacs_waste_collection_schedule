@@ -52,13 +52,13 @@ class HiddenInputParser(HTMLParser):
             if str(d["type"]).lower() == "hidden":
                 self._args[d["name"]] = d["value"] if "value" in d else ""
             if str(d["type"]).lower() == "radio":
-                if "value" in d and d["value"]:
+                if d.get("value"):
                     if not self._radio_args:
                         self._radio_args.append({d["name"]: d["value"]})
                     else:
                         new_radio = self._radio_args.copy()
                         for args in self._radio_args:
-                            if not d["name"] in args:
+                            if d["name"] not in args:
                                 args[d["name"]] = d["value"]
                             else:
                                 args_copy = args.copy()

@@ -1,6 +1,9 @@
 # Havant Borough Council
 
-Support for schedules provided by [Havant Borough Council](https://waste.havant.gov.uk/), serving Havant Borough Council, United Kingdom.
+Support for schedules provided by [Havant Borough Council](https://waste.havant.gov.uk/), serving Havant Borough Council, Hampshire, United Kingdom.
+
+## Local Government Reorganisation note
+During the ongoing local government reorganisation (LGR) in Hampshire, please continue to use the source for your current area as long as it's still working. New sources for the new South East Hampshire Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
 
 ## Configuration via configuration.yaml
 

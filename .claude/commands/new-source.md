@@ -63,6 +63,13 @@ If `test_sources.py` returned errors, work through them with the user — the im
 
 ## Step 3 — Submit the PR
 
+Before the contributor stages their files, remind them:
+
+> **Take ownership of your source.** Adding your GitHub handle to `SOURCE_CODEOWNERS` (for Python sources) or `codeowners:` (for ICS YAML) means you will be automatically notified and assigned when bug reports are filed for your source. This is how the project keeps sources healthy. It is optional but strongly encouraged.
+>
+> Python source: add `SOURCE_CODEOWNERS = ["@your-github-handle"]` near the top of the `.py` file.
+> ICS YAML: add a `codeowners:` key listing your handle.
+
 The contributor handles the git steps themselves (you can guide). Walk them through:
 
 1. **Check the diff is clean** — no generated files. Quick check:

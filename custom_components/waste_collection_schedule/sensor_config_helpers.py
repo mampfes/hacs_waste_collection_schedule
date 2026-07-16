@@ -7,12 +7,8 @@ from copy import deepcopy
 from typing import TYPE_CHECKING, Any
 from uuid import uuid4
 
-try:
-    from .const import CONF_DETAILS_FORMAT, CONF_SENSOR_ID, CONF_SENSORS, DOMAIN
-    from .waste_collection_schedule.type_aliases import expand_requested_types
-except ImportError:  # pragma: no cover - fallback for direct test imports
-    from const import CONF_DETAILS_FORMAT, CONF_SENSOR_ID, CONF_SENSORS, DOMAIN
-    from waste_collection_schedule.type_aliases import expand_requested_types
+from .const import CONF_DETAILS_FORMAT, CONF_SENSOR_ID, CONF_SENSORS, DOMAIN
+from .waste_collection_schedule.type_aliases import expand_requested_types
 
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigEntry
@@ -66,11 +62,16 @@ def build_ui_sensor_control_unique_id(
     return f"{shell_unique_id}_ui_sensor_control_{sensor_id}_{key_suffix}"
 
 
-def build_remove_ui_sensor_action_unique_id(
-    shell_unique_id: str, sensor_id: str
+def build_create_combined_ui_sensor_action_unique_id(shell_unique_id: str) -> str:
+    """Return the stable unique ID for the combined-sensor creation action."""
+    return f"{shell_unique_id}_ui_sensor_action_create_combined"
+
+
+def build_create_ui_sensor_action_unique_id(
+    shell_unique_id: str, collection_type: str
 ) -> str:
-    """Return the stable unique ID for a per-sensor remove action."""
-    return f"{shell_unique_id}_ui_sensor_action_remove_{sensor_id}"
+    """Return the stable unique ID for a collection-type creation action."""
+    return f"{shell_unique_id}_ui_sensor_action_create_{collection_type}"
 
 
 def parse_stable_ui_sensor_id(shell_unique_id: str, unique_id: str) -> str | None:
@@ -126,33 +127,8 @@ def iter_ui_sensor_unique_id_migrations(
 def configured_sensor_ids(sensors: list[dict[str, Any]]) -> set[str]:
     """Return stable sensor IDs that are still configured."""
     return {
-        sensor_id
-        for sensor in sensors
-        if (sensor_id := sensor.get(CONF_SENSOR_ID))
+        sensor_id for sensor in sensors if (sensor_id := sensor.get(CONF_SENSOR_ID))
     }
-
-
-def update_sensor_config_list(
-    sensors: list[dict[str, Any]],
-    sensor_name: str,
-    updates: dict[str, Any] | None = None,
-    removals: tuple[str, ...] = (),
-) -> list[dict[str, Any]]:
-    """Return a new sensor list with updates applied to one sensor by name."""
-    updated_sensors = deepcopy(sensors)
-    for sensor in updated_sensors:
-        if sensor.get(CONF_NAME) != sensor_name:
-            continue
-
-        for key in removals:
-            sensor.pop(key, None)
-
-        if updates:
-            sensor.update(updates)
-
-        return updated_sensors
-
-    raise KeyError(f"Sensor '{sensor_name}' not found")
 
 
 def update_sensor_config_list_by_id(
@@ -231,9 +207,7 @@ def missing_collection_types(
 ) -> list[str]:
     """Return available collection types not already covered by a sensor."""
     configured_types = configured_collection_types(sensors)
-    expanded_configured_types = expand_requested_types(
-        configured_types, customizations
-    )
+    expanded_configured_types = expand_requested_types(configured_types, customizations)
     return sorted(available_types - (expanded_configured_types or set()))
 
 
@@ -263,40 +237,6 @@ def build_combined_waste_sensor(
     }
 
 
-def replace_sensor_config(
-    sensors: list[dict[str, Any]],
-    original_sensor_name: str,
-    replacement: dict[str, Any],
-) -> list[dict[str, Any]]:
-    """Return a new sensor list with one sensor fully replaced by name."""
-    updated_sensors = deepcopy(sensors)
-    for idx, sensor in enumerate(updated_sensors):
-        if sensor.get(CONF_NAME) != original_sensor_name:
-            continue
-
-        updated_sensors[idx] = deepcopy(replacement)
-        return updated_sensors
-
-    raise KeyError(f"Sensor '{original_sensor_name}' not found")
-
-
-def build_updated_options(
-    entry: ConfigEntry,
-    sensor_name: str,
-    updates: dict[str, Any] | None = None,
-    removals: tuple[str, ...] = (),
-) -> dict[str, Any]:
-    """Build a new config entry options payload for one sensor update."""
-    options = deepcopy(dict(entry.options))
-    options[CONF_SENSORS] = update_sensor_config_list(
-        options.get(CONF_SENSORS, []),
-        sensor_name=sensor_name,
-        updates=updates,
-        removals=removals,
-    )
-    return options
-
-
 def build_updated_options_by_sensor_id(
     entry: ConfigEntry,
     sensor_id: str,
@@ -310,21 +250,6 @@ def build_updated_options_by_sensor_id(
         sensor_id=sensor_id,
         updates=updates,
         removals=removals,
-    )
-    return options
-
-
-def build_replaced_sensor_options(
-    entry: ConfigEntry,
-    original_sensor_name: str,
-    replacement: dict[str, Any],
-) -> dict[str, Any]:
-    """Build a new config entry options payload with one sensor fully replaced."""
-    options = deepcopy(dict(entry.options))
-    options[CONF_SENSORS] = replace_sensor_config(
-        options.get(CONF_SENSORS, []),
-        original_sensor_name=original_sensor_name,
-        replacement=replacement,
     )
     return options
 

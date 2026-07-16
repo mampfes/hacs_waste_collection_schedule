@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import date, datetime
-from typing import Iterable
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]

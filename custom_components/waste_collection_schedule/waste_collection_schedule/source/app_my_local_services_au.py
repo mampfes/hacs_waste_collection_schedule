@@ -138,12 +138,12 @@ class Source:
             try:
                 lat = float(lat)
             except ValueError:
-                raise ValueError("Latitude must be a float")
+                raise ValueError("Latitude must be a float") from None
         if not isinstance(lon, float):
             try:
                 lon = float(lon)
             except ValueError:
-                raise ValueError("Longitude must be a float")
+                raise ValueError("Longitude must be a float") from None
 
         self._lat: float = lat
         self._lon: float = lon
@@ -163,8 +163,8 @@ class Source:
                 waste_type: str = data["Waste_Type"]
 
                 weekday_int: int = (
-                    data["Col_Day"] + -2
-                ) % 7  # Normalise to 0(monday)-6(sunday) as response is 1(sunday)-7(saturday)
+                    (data["Col_Day"] + -2) % 7
+                )  # Normalise to 0(monday)-6(sunday) as response is 1(sunday)-7(saturday)
                 freq: int = data["Col_Freq"]
                 offset: int = data["Col_Offset"]
 

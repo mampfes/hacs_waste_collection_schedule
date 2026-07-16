@@ -31,10 +31,20 @@ TEST_CASES = {
         "house_number": 2,
         "addition": "A",
     },
+    "Barendrecht Albrandswaard Ridderkerk": {
+        "organization": "afvalbeheer",
+        "post_code": "2991AA",
+        "house_number": 1,
+    },
     "BAT Tilburg": {
         "organization": "bat",
         "post_code": "5071EN",
         "house_number": 122,
+    },
+    "Breda": {
+        "organization": "breda",
+        "post_code": "4762BD",
+        "house_number": 21,
     },
     "Groningen": {
         "organization": "groningen",
@@ -48,7 +58,15 @@ TEST_CASES = {
     },
 }
 
-Organization = Literal["assen", "bat", "groningen", "rmn", "utrecht"]
+Organization = Literal[
+    "assen",
+    "afvalbeheer",
+    "bat",
+    "breda",
+    "groningen",
+    "rmn",
+    "utrecht",
+]
 
 SERVICE_MAP = [
     {
@@ -58,10 +76,22 @@ SERVICE_MAP = [
         "organization": "assen",
     },
     {
+        "title": "Barendrecht Albrandswaard Ridderkerk",
+        "url": "https://www.bar-afvalbeheer.nl/",
+        "uuid": "138204213564933497",
+        "organization": "afvalbeheer",
+    },
+    {
         "title": "BAT Tilburg",
         "url": "https://www.batafvalbeheer.nl/",
         "uuid": "452048812597339353",
         "organization": "bat",
+    },
+    {
+        "title": "Gemeente Breda",
+        "url": "https://www.breda.nl/",
+        "uuid": "452048812597352613",
+        "organization": "breda",
     },
     {
         "title": "Gemeente Groningen",
@@ -113,8 +143,8 @@ class Source:
             f"https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key={self._api_key}"
         )
         payload = res.json()
-        if not payload:
-            _LOGGER.error("Unable to fetch refresh token!")
+        if not payload or "refreshToken" not in payload:
+            _LOGGER.error(f"Unable to fetch refresh token: {payload}")
             return
 
         self._refresh_token = payload["refreshToken"]
@@ -150,7 +180,7 @@ class Source:
 
         for address in payload:
             if "addition" in address and address["addition"] == self._addition.upper():
-                self.address_id = address["addressId"]
+                self._address_id = address["addressId"]
 
         if not self._address_id:
             self._address_id = payload[-1]["addressId"]
@@ -159,12 +189,16 @@ class Source:
         # get refresh token and id token
         if not self._refresh_token:
             self._set_refresh_token()
+            if not self._refresh_token:
+                raise ValueError("Authentication token could not be retrieved")
         else:
             self._set_id_token()
 
         # get address id
         if not self._address_id:
             self._set_address_id()
+            if not self._address_id:
+                raise ValueError("Address ID could not be retrieved")
 
         headers = {"authorization": self._id_token}
         res = requests.get(

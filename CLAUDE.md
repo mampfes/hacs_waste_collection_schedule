@@ -63,7 +63,7 @@ python -m pytest tests/test_source_components.py -k "test_name"
 cd custom_components/waste_collection_schedule/waste_collection_schedule/test
 python test_sources.py -s <source_name> -l
 
-# All pre-commit hooks (black, flake8, isort, mypy, codespell, bandit, pyupgrade, yamlfmt)
+# All pre-commit hooks (ruff lint + format, mypy, codespell, bandit, pyupgrade, yamlfmt)
 pre-commit run --all-files
 
 # Install dependencies
@@ -76,9 +76,7 @@ pip install -r requirements.txt
 
 ## Linting and formatting
 
-- **black**: `--safe --quiet`
-- **flake8** ignores: D100–D107, E501, W503, E203
-- **isort**: profile=black, multi-line=3, trailing-comma
+- **ruff** (replaces black, flake8 and isort): line-length 88, lint select `E,F,W,I` (pycodestyle + pyflakes + isort, profile=black), ignore `E203,E501,E721`. `ruff format` mirrors black; `ruff check` mirrors flake8 + isort. Config lives in `.pre-commit-config.yaml` / `pyproject.toml`.
 - **mypy**: `--ignore-missing-imports --explicit-package-bases`
 - **bandit**: config at `tests/bandit.yaml`
 - **pyupgrade**: targets Python 3.7+
@@ -87,8 +85,8 @@ pip install -r requirements.txt
 For a single source file edit:
 
 ```bash
-python -m black <file>
-python -m isort --profile black <file>
+ruff check --fix <file>
+ruff format <file>
 ```
 
 ---
@@ -112,6 +110,7 @@ Optional:
 - `TITLE_LANG` / `EXTRA_INFO_LANG` — non-English titles.
 - `HOW_TO_GET_ARGUMENTS_DESCRIPTION` — per-language guidance shown in the config wizard.
 - `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` — per-language argument labels and descriptions. Currently still required on master (read by `update_docu_links.py` to generate `translations/en.json`). A future i18n YAML migration will replace these but is not yet merged — keep them.
+- `SOURCE_CODEOWNERS` — `list[str]` of GitHub handles (e.g. `["@your-handle"]`) who maintain this source. Each entry must start with `@`. `update_docu_links.py` writes these into `.github/source_owners.json`; a GitHub Action pings+assigns the listed owners when a bug report names this source. **Strongly encouraged for all new sources.** ICS YAML providers use the equivalent `codeowners:` key in their `.yaml` file.
 
 ### CI-enforced structural rules
 

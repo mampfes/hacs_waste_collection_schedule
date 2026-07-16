@@ -1,7 +1,8 @@
+---
 name: Source Defect
 description: A previously working source has stopped working or returns incorrect data
-title: "[Source Defect]: "
-labels: ["source defect"]
+title: '[Source Defect]: '
+labels: [source defect]
 body:
   - type: markdown
     attributes:

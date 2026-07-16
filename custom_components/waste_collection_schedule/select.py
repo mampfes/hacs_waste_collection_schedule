@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any
+from typing import Any, ClassVar
 
 from homeassistant.components.select import SelectEntity
 from homeassistant.config_entries import ConfigEntry
@@ -13,8 +13,8 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .const import (
-    CONF_COUNT,
     CONF_COLLECTION_TYPES,
+    CONF_COUNT,
     CONF_DATE_TEMPLATE,
     CONF_DETAILS_FORMAT,
     CONF_EVENT_INDEX,
@@ -164,6 +164,7 @@ async def async_setup_entry(
 class WasteSensorConfigEntity:
     """Common behavior for per-sensor configuration entities."""
 
+    hass: HomeAssistant
     _attr_should_poll = False
     _attr_entity_category = EntityCategory.CONFIG
     _attr_has_entity_name = True
@@ -205,9 +206,12 @@ class WasteSensorConfigEntity:
     def sensor_config(self) -> Mapping[str, Any]:
         """Return the latest stored configuration for this sensor."""
         return next(
-            sensor
-            for sensor in self._entry.options.get(CONF_SENSORS, [])
-            if sensor.get(CONF_SENSOR_ID) == self._sensor_id
+            (
+                sensor
+                for sensor in self._entry.options.get(CONF_SENSORS, [])
+                if sensor.get(CONF_SENSOR_ID) == self._sensor_id
+            ),
+            {},
         )
 
     async def _async_save(
@@ -230,7 +234,7 @@ class WasteSensorConfigEntity:
 class WasteSensorLayoutSelect(WasteSensorConfigEntity, SelectEntity):
     """Select for choosing the more-info layout of a waste sensor."""
 
-    _attr_options = list(LAYOUT_VALUES.keys())
+    _attr_options: ClassVar[list[str]] = list(LAYOUT_VALUES.keys())
 
     def __init__(
         self,
@@ -267,7 +271,7 @@ class WasteSensorLayoutSelect(WasteSensorConfigEntity, SelectEntity):
 class WasteSensorLanguageSelect(WasteSensorConfigEntity, SelectEntity):
     """Select for choosing the language used by display presets."""
 
-    _attr_options = list(PRESET_LANGUAGE_OPTIONS.keys())
+    _attr_options: ClassVar[list[str]] = list(PRESET_LANGUAGE_OPTIONS.keys())
 
     def __init__(
         self,
@@ -374,7 +378,7 @@ class WasteSensorNumberPresetSelect(WasteSensorConfigEntity, SelectEntity):
         key: str,
         key_suffix: str,
         label: str,
-        options: dict[str, int | None],
+        options: Mapping[str, int | None],
         default_option: str,
         icon: str,
     ) -> None:
@@ -389,9 +393,12 @@ class WasteSensorNumberPresetSelect(WasteSensorConfigEntity, SelectEntity):
             enabled_default=False,
         )
         self._key = key
-        self._options = options
+        self._options = dict(options)
         self._default_option = default_option
-        self._attr_options = list(options.keys())
+        current_value = self.sensor_config.get(key)
+        if current_value is not None and current_value not in self._options.values():
+            self._options[f"Current: {current_value}"] = current_value
+        self._attr_options = list(self._options.keys())
 
     @property
     def current_option(self) -> str | None:

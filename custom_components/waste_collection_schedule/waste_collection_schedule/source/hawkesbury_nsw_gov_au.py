@@ -87,7 +87,7 @@ class Source:
     def fetch(self):
         # check address values are not abbreviated
         address = self._street
-        for key in STREETNAMES.keys():
+        for key in STREETNAMES:
             regex = rf"\b{key.lower()}\b"
             address = re.sub(
                 pattern=regex, repl=STREETNAMES[key], string=address.lower()

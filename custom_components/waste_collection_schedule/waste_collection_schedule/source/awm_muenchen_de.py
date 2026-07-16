@@ -2,7 +2,6 @@ import logging
 import re
 import urllib.parse
 from html.parser import HTMLParser
-from typing import Tuple
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -246,9 +245,7 @@ class Source:
                             ],
                         )
                     )
-                else:
-                    # NO, not required. Don't add anything to the array.
-                    pass
+                # NO, not required. Don't add anything to the array.
             else:
                 # Ok, option was set in UI, e.g., to:
                 # * """'12345678' for XYZ-Street 12""" from a suggestion, and with regex "\d+" we get 12345678
@@ -376,9 +373,7 @@ class Source:
                             ],
                         )
                     )
-                else:
-                    # NO, not required. Don't add anything to the array.
-                    pass
+                # NO, not required. Don't add anything to the array.
             else:
                 # Ok, option was set in UI, e.g. to:
                 # * """'001;U' for 1x pro Woche""", and with regex "(?:\d{3}|\d\/\d);[A-Z]" we get 001;U
@@ -467,7 +462,7 @@ class Source:
             bin_type = d[1].split(",")[0].replace("Achtung:", "").strip()
             entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
 
-    def _get_html_form_infos(self, html: str, form_name: str) -> Tuple[str, dict]:
+    def _get_html_form_infos(self, html: str, form_name: str) -> tuple[str, dict]:
         """Return a tuple with form action url and hidden form fields."""
         # collect the url where we post to
         page_soup = BeautifulSoup(html, "html.parser")

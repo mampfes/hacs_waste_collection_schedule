@@ -1,8 +1,8 @@
 import datetime
 import json
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons
 
 TITLE = "City of Ryde (NSW)"
@@ -45,6 +45,7 @@ ICON_MAP = {
     "General Waste": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
     "Green Waste": Icons.GARDEN,
+    "Garden Organics": Icons.GARDEN,
 }
 
 
@@ -60,12 +61,14 @@ class Source:
     def fetch(self):
         locationId = 0
 
-        address = "{} {} {} {}".format(
-            self.street_number, self.street_name, self.suburb, self.post_code
+        address = (
+            f"{self.street_number} {self.street_name} {self.suburb} {self.post_code}"
         )
 
+        session = requests.Session(impersonate="chrome")
+
         # Retrieve suburbs
-        r = requests.get(
+        r = session.get(
             API_URLS["address_search"], params={"keywords": address}, headers=HEADERS
         )
 
@@ -82,7 +85,7 @@ class Source:
             )
 
         # Retrieve the upcoming collections for our property
-        r = requests.get(
+        r = session.get(
             API_URLS["collection"],
             params={"geolocationid": locationId, "ocsvclang": "en-AU"},
             headers=HEADERS,

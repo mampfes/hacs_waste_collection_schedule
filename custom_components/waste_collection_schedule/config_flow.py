@@ -3,10 +3,9 @@ import inspect
 import json
 import logging
 import types
-from copy import deepcopy
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Literal, Tuple, TypedDict, Union, cast, get_origin
+from typing import Any, ClassVar, Literal, TypedDict, Union, cast, get_origin, overload
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -16,7 +15,6 @@ from homeassistant.config_entries import (
     ConfigFlowResult,
     OptionsFlow,
 )
-from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import section
 from homeassistant.helpers.selector import (
@@ -29,7 +27,6 @@ from homeassistant.helpers.selector import (
     SelectSelector,
     SelectSelectorConfig,
     SelectSelectorMode,
-    TemplateSelector,
     TextSelector,
     TextSelectorConfig,
     TextSelectorType,
@@ -37,6 +34,7 @@ from homeassistant.helpers.selector import (
 )
 from homeassistant.helpers.translation import async_get_translations
 from voluptuous.schema_builder import UNDEFINED
+
 from waste_collection_schedule.collection import Collection
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -46,20 +44,14 @@ from waste_collection_schedule.exceptions import (
 )
 
 from .const import (
-    CONF_ADD_DAYS_TO,
     CONF_ALIAS,
-    CONF_COLLECTION_TYPES,
-    CONF_COUNT,
     CONF_COUNTRY_NAME,
     CONF_CUSTOMIZE,
-    CONF_DATE_TEMPLATE,
     CONF_DAY_OFFSET,
     CONF_DAY_OFFSET_DEFAULT,
     CONF_DAY_SWITCH_TIME,
     CONF_DAY_SWITCH_TIME_DEFAULT,
     CONF_DEDICATED_CALENDAR_TITLE,
-    CONF_DETAILS_FORMAT,
-    CONF_EVENT_INDEX,
     CONF_FETCH_INTERVAL_DAYS,
     CONF_FETCH_INTERVAL_DAYS_DEFAULT,
     CONF_FETCH_TIME,
@@ -67,7 +59,6 @@ from .const import (
     CONF_ICON,
     CONF_IGNORE_DUPLICATES,
     CONF_IGNORE_DUPLICATES_DEFAULT,
-    CONF_LEADTIME,
     CONF_PICTURE,
     CONF_RANDOM_FETCH_TIME_OFFSET,
     CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
@@ -85,12 +76,10 @@ from .const import (
     DOMAIN,
 )
 from .init_ui import WCSCoordinator
-from .sensor import DetailsFormat
 from .sensor_config_helpers import (
     build_combined_waste_sensor,
     build_sensor_for_collection_type,
 )
-from .waste_collection_schedule import Customize
 from .waste_collection_schedule.type_aliases import (
     get_customize_label,
     get_uncustomized_types,
@@ -148,6 +137,16 @@ def _get_source_metadata(source: str) -> dict[str, Any]:
     return _SOURCE_METADATA.get(source, {})
 
 
+@overload
+def flatten_section_input(user_input: None, section_names: set[str]) -> None: ...
+
+
+@overload
+def flatten_section_input(
+    user_input: dict[str, Any], section_names: set[str]
+) -> dict[str, Any]: ...
+
+
 def flatten_section_input(
     user_input: dict[str, Any] | None, section_names: set[str]
 ) -> dict[str, Any] | None:
@@ -162,27 +161,6 @@ def flatten_section_input(
         else:
             flattened[key] = value
     return flattened
-
-
-def get_customize_objects(
-    customize_options: dict[str, dict[str, Any]] | None,
-) -> dict[str, Customize]:
-    """Convert stored customization dictionaries into runtime Customize objects."""
-    if not customize_options:
-        return {}
-
-    return {
-        waste_type: Customize(
-            waste_type=waste_type,
-            alias=customize.get(CONF_ALIAS),
-            show=customize.get(CONF_SHOW, True),
-            icon=customize.get(CONF_ICON),
-            picture=customize.get(CONF_PICTURE),
-            use_dedicated_calendar=customize.get(CONF_USE_DEDICATED_CALENDAR, False),
-            dedicated_calendar_title=customize.get(CONF_DEDICATED_CALENDAR_TITLE),
-        )
-        for waste_type, customize in customize_options.items()
-    }
 
 
 SUPPORTED_ARG_TYPES = {
@@ -206,7 +184,11 @@ SUPPORTED_ARG_TYPES = {
 }
 
 
-def get_customize_schema(defaults: dict[str, Any] = {}, add_delete: bool = False):
+def get_customize_schema(
+    defaults: dict[str, Any] | None = None, add_delete: bool = False
+):
+    if defaults is None:
+        defaults = {}
     schema = {
         vol.Required(SECTION_CUSTOMIZE_BASIC): section(
             vol.Schema(
@@ -300,164 +282,6 @@ def get_detected_types_schema(fetched_types: list[str]) -> vol.Schema:
     )
 
 
-def get_sensor_schema(fetched_types, add_delete=False, defaults: dict = {}):
-    schema = {
-        vol.Optional(CONF_NAME, default=defaults.get(CONF_NAME, UNDEFINED)): cv.string,
-    }
-    if add_delete:
-        schema[vol.Optional("delete")] = cv.boolean
-
-    schema.update(
-        {
-            vol.Optional(
-                CONF_DETAILS_FORMAT,
-                default=defaults.get(CONF_DETAILS_FORMAT, "upcoming"),
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    options=[
-                        SelectOptionDict(
-                            label=k,
-                            value=k,
-                        )
-                        for k in DetailsFormat.__members__.keys()
-                    ],
-                    translation_key="details_format",
-                )
-            ),
-            vol.Optional(
-                CONF_COUNT, default=defaults.get(CONF_COUNT, UNDEFINED)
-            ): vol.All(vol.Coerce(int), vol.Range(min=1)),
-            vol.Optional(
-                CONF_LEADTIME, default=defaults.get(CONF_LEADTIME, UNDEFINED)
-            ): int,
-            vol.Optional(
-                CONF_VALUE_TEMPLATE + "_preset",
-                default=defaults.get(CONF_VALUE_TEMPLATE + "_preset", UNDEFINED),
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    options=[
-                        SelectOptionDict(label=f"{k}: {v}", value=v)
-                        for k, v in EXAMPLE_VALUE_TEMPLATES.items()
-                    ],
-                    mode=SelectSelectorMode.DROPDOWN,
-                    custom_value=False,
-                    multiple=False,
-                )
-            ),
-            vol.Optional(
-                CONF_VALUE_TEMPLATE,
-                default=defaults.get(CONF_VALUE_TEMPLATE, UNDEFINED),
-            ): TemplateSelector(),
-            vol.Optional(
-                CONF_DATE_TEMPLATE, default=defaults.get(CONF_DATE_TEMPLATE, UNDEFINED)
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    options=[
-                        SelectOptionDict(label=f"{k}: {v}", value=v)
-                        for k, v in EXAMPLE_DATE_TEMPLATES.items()
-                    ],
-                    mode=SelectSelectorMode.DROPDOWN,
-                    custom_value=True,
-                    multiple=False,
-                )
-            ),
-            vol.Optional(
-                CONF_DATE_TEMPLATE + "_preset",
-                default=defaults.get(CONF_DATE_TEMPLATE + "_preset", UNDEFINED),
-            ): TemplateSelector(),
-            vol.Optional(
-                CONF_ADD_DAYS_TO, default=defaults.get(CONF_ADD_DAYS_TO, UNDEFINED)
-            ): cv.boolean,
-            vol.Optional(
-                CONF_EVENT_INDEX, default=defaults.get(CONF_EVENT_INDEX, UNDEFINED)
-            ): int,
-            vol.Optional(
-                CONF_COLLECTION_TYPES,
-                default=defaults.get(CONF_COLLECTION_TYPES, UNDEFINED),
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    options=fetched_types,
-                    mode=SelectSelectorMode.DROPDOWN,
-                    custom_value=True,
-                    multiple=True,
-                )
-            ),
-        }
-    )
-    if not add_delete:
-        schema[vol.Optional("skip", default=False)] = cv.boolean
-        schema[vol.Optional("additional", default=False)] = cv.boolean
-
-    return vol.Schema(schema)
-
-
-def validate_sensor_user_input(
-    sensor_input: dict[str, Any], existing_sensors
-) -> Tuple[dict[str, Any], dict[str, str]]:
-    """
-    Validate sensor user input.
-
-    Args:
-        sensor_input (dict[str, Any]): user input
-
-    Returns:
-        Tuple[dict, dict]: errors, extracted args
-    """
-    errors: dict[str, str] = {}
-    args = sensor_input.copy()
-
-    # validate value_template and date_template against cv.template
-    for key in [CONF_VALUE_TEMPLATE, CONF_DATE_TEMPLATE]:
-        if key + "_preset" in sensor_input and sensor_input[key + "_preset"]:
-            if key in sensor_input:
-                errors[key] = "preset_selected"
-                errors[key + "_preset"] = "preset_selected"
-                continue
-            args.pop(key + "_preset", None)
-            args[key] = sensor_input[key + "_preset"]
-
-        if key in sensor_input and key:
-            try:
-                cv.template(args[key])
-            except vol.Invalid:
-                errors[key] = "invalid_template"
-
-    if sensor_input.get("skip", False) and sensor_input.get("additional", False):
-        errors["base"] = "skip_additional"
-
-    if CONF_DETAILS_FORMAT in args:
-        args[CONF_DETAILS_FORMAT] = DetailsFormat[args[CONF_DETAILS_FORMAT]]
-
-    if not args.get(CONF_NAME):
-        errors[CONF_NAME] = "sensor_name_empty"
-    elif any([x[CONF_NAME] == args[CONF_NAME] for x in existing_sensors]):
-        errors[CONF_NAME] = "name_exists"
-
-    return args, errors if args.get("skip", False) is False else {}
-
-
-EXAMPLE_VALUE_TEMPLATES = {
-    "": "",
-    "in .. days": "in {{value.daysTo}} days",
-    ".. in .. days": '{{value.types|join(", ")}} in {{value.daysTo}} days',
-    "numeric daysTo": "{{value.daysTo}}",
-    "in .. days / Tomorrow / Today": "{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}in {{value.daysTo}} days{% endif %}",
-    "on Weekday, dd.mm.yyyy": 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
-    "on Weekday, yyyy-mm-dd": 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%Y-%m-%d")}}',
-    "next collections": '{{value.types|join(", ")}}',
-}
-
-EXAMPLE_DATE_TEMPLATES = {
-    "": "",
-    "20.03.2020": '{{value.date.strftime("%d.%m.%Y")}}',
-    "Fri, 20.03.2020": '{{value.date.strftime("%a, %d.%m.%Y")}}',
-    "03/20/2020": '{{value.date.strftime("%m/%d/%Y")}}',
-    "Fri, 03/20/2020": '{{value.date.strftime("%a, %m/%d/%Y")}}',
-    "2020-03-20": '{{value.date.strftime("%Y-%m-%d")}}',
-    "Fri, 2020-03-20": '{{value.date.strftime("%a, %Y-%m-%d")}}',
-}
-
-
 class SourceDict(TypedDict):
     title: str
     module: str
@@ -473,8 +297,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     _country: str | None = None
     _source: str | None = None
 
-    _options: dict = {}
-    _sources: dict[str, list[SourceDict]] = {}
+    _options: ClassVar[dict] = {}
+    # Not a ClassVar: the empty dict is only a per-instance "not yet
+    # initialized" sentinel; _async_setup_sources() below rebinds it to the
+    # shared _SOURCES cache on first use.
+    _sources: dict[str, list[SourceDict]] = {}  # noqa: RUF012
     _error_suggestions: dict[str, list[Any]]
 
     async def _async_setup_sources(self) -> None:
@@ -608,11 +435,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     async def __get_type_by_annotation(self, annotation: Any) -> Any:
         if a := await self.__get_simple_annotation_type(annotation):
             return a
-        if (
-            (isinstance(annotation, types.GenericAlias))
-            or (
-                get_origin(annotation) is not None and hasattr(annotation, "__origin__")
-            )
+        if (isinstance(annotation, types.GenericAlias)) or (
+            (get_origin(annotation) is not None and hasattr(annotation, "__origin__"))
             and (a := await self.__get_simple_annotation_type(annotation.__origin__))
         ):
             return a
@@ -638,7 +462,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         pre_filled: dict[str, Any],
         args_input: dict[str, Any] | None,
         include_title=True,
-    ) -> Tuple[vol.Schema, types.ModuleType]:
+    ) -> tuple[vol.Schema, types.ModuleType]:
         """Get schema for source arguments.
 
         Args:
@@ -775,9 +599,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                         default=UNDEFINED if default is None else default,
                         description=description,
                     )
-                ] = (
-                    field_type or cv.string
-                )
+                ] = field_type or cv.string
             else:
                 _LOGGER.debug(
                     f"Unsupported type: {type(default)}: {arg_name}: {default}: {field_type}"
@@ -792,7 +614,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         args_input: dict[str, Any],
         module: types.ModuleType,
         is_reconfigure: bool = False,
-    ) -> Tuple[dict[str, str], dict[str, str], dict[str, Any]]:
+    ) -> tuple[dict[str, str], dict[str, str], dict[str, Any]]:
         """Validate user input for source arguments.
 
         Args:
@@ -832,8 +654,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             resp: list[Collection] = await self.hass.async_add_executor_job(
                 instance.fetch
             )
-            self._preview_collections = deepcopy(resp)
-
             if len(resp) == 0:
                 errors["base"] = "fetch_empty"
             self._fetched_types = list({x.type.strip() for x in resp})
@@ -980,8 +800,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             self._show_customize_config = user_input.get("show_customize_config", False)
             if self._show_customize_config:
                 return await self.async_step_customize_select()
-            else:
-                return await self.finish()
+            return await self.finish()
         return self.async_show_form(step_id="flow_type", data_schema=schema)
 
     async def async_step_customize_select(
@@ -1166,23 +985,6 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                     multiple=True,
                 )
             )
-        manage_fields[vol.Optional("sensor_select")] = SelectSelector(
-            SelectSelectorConfig(
-                translation_key="sensor_select",
-                options=[
-                    *[
-                        SelectOptionDict(label=x[CONF_NAME], value=x[CONF_NAME])
-                        for x in self._entry.options.get(CONF_SENSORS, [])
-                    ],
-                    SelectOptionDict(
-                        label="add_new_sensor", value="sensor_select_add_new"
-                    ),
-                ],
-                custom_value=False,
-                multiple=True,
-            )
-        )
-
         SCHEMA = vol.Schema(
             {
                 vol.Required(SECTION_GENERAL): section(
@@ -1283,6 +1085,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                     + user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["minutes"]
                 )
                 self._options = user_input
+                self._options[CONF_SENSORS] = self._entry.options.get(CONF_SENSORS, [])
 
                 self._customize_select = user_input.get("customize_select", [])
                 self._customize_select_idx = 0
@@ -1291,13 +1094,6 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                     for k, v in self._entry.options.get(CONF_CUSTOMIZE, {}).items()
                     if k not in self._customize_select
                 }
-                self._sensor_select = user_input.get("sensor_select", [])
-                self._sensor_select_idx = 0
-                self._options[CONF_SENSORS] = [
-                    sensor
-                    for sensor in self._entry.options.get(CONF_SENSORS, [])
-                    if sensor[CONF_NAME] not in self._sensor_select
-                ]
                 return await self.async_step_customize()
 
         return self.async_show_form(step_id="init", data_schema=SCHEMA, errors=errors)
@@ -1306,7 +1102,8 @@ class WasteCollectionOptionsFlow(OptionsFlow):
         if self._customize_select is None or self._customize_select_idx >= len(
             self._customize_select
         ):
-            return await self.async_step_sensor()
+            _LOGGER.debug("self._options: %s", self._options)
+            return self.async_create_entry(data=self._options)
 
         defaults = self._entry.options.get(CONF_CUSTOMIZE, {}).get(
             self._customize_select[self._customize_select_idx], {}
@@ -1345,65 +1142,5 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                 "index": str(self._customize_select_idx + 1),
                 "total": str(len(self._customize_select)),
                 "type": self._customize_select[self._customize_select_idx],
-            },
-        )
-
-    def get_types_of_sensors_and_customizations(self):
-        fetched_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
-        for sensor in self._entry.options.get(CONF_SENSORS, []):
-            sensor_types = sensor.get(CONF_COLLECTION_TYPES, sensor.get(CONF_TYPE))
-            if sensor_types:
-                fetched_types.extend(
-                    sensor_types if isinstance(sensor_types, list) else [sensor_types]
-                )
-        return list(set(fetched_types))
-
-    async def async_step_sensor(self, user_input: dict[str, Any] | None = None):
-        if self._sensor_select is None or self._sensor_select_idx >= len(
-            self._sensor_select
-        ):
-            _LOGGER.debug("self._options: %s", self._options)
-            return self.async_create_entry(data=self._options)
-
-        original_sensor = next(
-            (
-                sensor
-                for sensor in self._entry.options.get(CONF_SENSORS, [])
-                if sensor[CONF_NAME] == self._sensor_select[self._sensor_select_idx]
-            ),
-            None,
-        )
-
-        schema = self.add_suggested_values_to_schema(
-            get_sensor_schema(
-                self.get_types_of_sensors_and_customizations(),
-                add_delete=True,
-                defaults=original_sensor or {},
-            ),
-            user_input,
-        )
-        errors: dict[str, str] = {}
-
-        if user_input is not None:
-            if user_input.get("delete", False):
-                self._sensor_select_idx += 1
-                return await self.async_step_sensor()
-
-            user_input.pop("delete", None)
-            args, errors = validate_sensor_user_input(
-                user_input, self._options[CONF_SENSORS]
-            )
-
-            if len(errors) == 0:
-                self._options[CONF_SENSORS].append(args)
-                self._sensor_select_idx += 1
-                return await self.async_step_sensor()
-
-        return self.async_show_form(
-            step_id="sensor",
-            errors=errors,
-            data_schema=schema,
-            description_placeholders={
-                "sensor_number": str(self._sensor_select_idx + 1),
             },
         )

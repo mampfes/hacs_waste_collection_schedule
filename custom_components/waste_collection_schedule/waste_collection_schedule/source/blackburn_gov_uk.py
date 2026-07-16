@@ -45,7 +45,7 @@ class Source:
         year = date.year
         month = date.month
         entries = []
-        for i in range(1, 13):
+        for _i in range(1, 13):
             PARAMS = {
                 "month": month,
                 "year": year,

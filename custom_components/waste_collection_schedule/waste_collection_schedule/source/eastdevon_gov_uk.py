@@ -36,7 +36,7 @@ class Source:
         dates = soup.findAll("em")
 
         entries = []
-        for b, d in zip(bins, dates):
+        for b, d in zip(bins, dates, strict=False):
             # check cases where no date is given for a collection
             if d:
                 bin_type = b.text.replace(" collection", "").replace("Your ", "")

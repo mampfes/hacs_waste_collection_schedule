@@ -5,7 +5,7 @@ from datetime import date, timedelta
 # Insert repo root to sys.path for absolute imports to work
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from custom_components.waste_collection_schedule.waste_collection_schedule.source import (  # noqa: E402
+from custom_components.waste_collection_schedule.waste_collection_schedule.source import (
     darebin_vic_gov_au,
 )
 
@@ -96,7 +96,7 @@ def test_get_previous_date_for_day_of_week_monday(monkeypatch):
         darebin_vic_gov_au.WEEKDAY_MAP[collection_day]
     )
     assert results == expected, (
-        f"Expected {expected} for day_of_week={collection_day}, " f"but got {results}"
+        f"Expected {expected} for day_of_week={collection_day}, but got {results}"
     )
 
 
@@ -109,7 +109,7 @@ def test_get_previous_date_for_day_of_week_tuesday(monkeypatch):
         darebin_vic_gov_au.WEEKDAY_MAP[collection_day]
     )
     assert results == expected, (
-        f"Expected {expected} for day_of_week={collection_day}, " f"but got {results}"
+        f"Expected {expected} for day_of_week={collection_day}, but got {results}"
     )
 
 
@@ -122,7 +122,7 @@ def test_get_previous_date_for_day_of_week_wednesday(monkeypatch):
         darebin_vic_gov_au.WEEKDAY_MAP[collection_day]
     )
     assert results == expected, (
-        f"Expected {expected} for day_of_week={collection_day}, " f"but got {results}"
+        f"Expected {expected} for day_of_week={collection_day}, but got {results}"
     )
 
 
@@ -135,7 +135,7 @@ def test_get_previous_date_for_day_of_week_thursday(monkeypatch):
         darebin_vic_gov_au.WEEKDAY_MAP[collection_day]
     )
     assert results == expected, (
-        f"Expected {expected} for day_of_week={collection_day}, " f"but got {results}"
+        f"Expected {expected} for day_of_week={collection_day}, but got {results}"
     )
 
 
@@ -148,7 +148,7 @@ def test_get_previous_date_for_day_of_week_friday(monkeypatch):
         darebin_vic_gov_au.WEEKDAY_MAP[collection_day]
     )
     assert results == expected, (
-        f"Expected {expected} for day_of_week={collection_day}, " f"but got {results}"
+        f"Expected {expected} for day_of_week={collection_day}, but got {results}"
     )
 
 
@@ -161,7 +161,7 @@ def test_get_previous_date_for_day_of_week_saturday(monkeypatch):
         darebin_vic_gov_au.WEEKDAY_MAP[collection_day]
     )
     assert results == expected, (
-        f"Expected {expected} for day_of_week={collection_day}, " f"but got {results}"
+        f"Expected {expected} for day_of_week={collection_day}, but got {results}"
     )
 
 
@@ -174,5 +174,5 @@ def test_get_previous_date_for_day_of_week_sunday(monkeypatch):
         darebin_vic_gov_au.WEEKDAY_MAP[collection_day]
     )
     assert results == expected, (
-        f"Expected {expected} for day_of_week={collection_day},  " f"but got {results}"
+        f"Expected {expected} for day_of_week={collection_day},  but got {results}"
     )

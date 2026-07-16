@@ -113,6 +113,7 @@ _LOGGER = logging.getLogger(__name__)
 PARAM_TRANSLATIONS = {
     "en": {
         "version": "(Deprecated) Version, has no effect anymore",
+        "impersonate": "Browser to impersonate (e.g. 'chrome') to pass TLS-fingerprinting WAFs",
     },
     "de": {
         "url": "URL",
@@ -127,6 +128,7 @@ PARAM_TRANSLATIONS = {
         "version": "(Veraltet) Version, hat keine Auswirkung mehr",
         "verify_ssl": "SSL-Verifizierung aktivieren",
         "headers": "Headers",
+        "impersonate": "Zu imitierender Browser (z.B. 'chrome'), um TLS-Fingerprinting-WAFs zu passieren",
     },
 }
 
@@ -145,8 +147,11 @@ class Source:
         split_at: str | None = None,
         version: int | None = None,
         verify_ssl: bool = True,
-        headers: dict = {},
+        headers: dict | None = None,
+        impersonate: str | None = None,
     ):
+        if headers is None:
+            headers = {}
         self._url = re.sub("^webcal", "https", url) if url else None
         self._file = file
         if bool(self._url is not None) == bool(self._file is not None):
@@ -170,6 +175,7 @@ class Source:
         self._verify_ssl = verify_ssl
         self._headers = HEADERS
         self._headers.update(headers)
+        self._impersonate = impersonate
 
     def fetch(self):
         if self._url is not None:
@@ -203,9 +209,8 @@ class Source:
                         # ignore if fetch for next year fails
                         pass
                 return entries
-            else:
-                return self.fetch_url(self._url, self._params)
-        elif self._file is not None:
+            return self.fetch_url(self._url, self._params)
+        if self._file is not None:
             return self.fetch_file(self._file)
 
     def fetch_url(self, url, params=None):
@@ -227,6 +232,7 @@ class Source:
                 params=flat_params,
                 headers=self._headers,
                 verify=self._verify_ssl,
+                impersonate=self._impersonate,
             )
         elif self._method == "POST":
             r = requests.post(
@@ -234,6 +240,7 @@ class Source:
                 data=flat_params,
                 headers=self._headers,
                 verify=self._verify_ssl,
+                impersonate=self._impersonate,
             )
         else:
             raise SourceArgumentNotFoundWithSuggestions(

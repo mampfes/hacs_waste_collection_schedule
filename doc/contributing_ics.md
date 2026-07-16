@@ -28,6 +28,8 @@ url: URL
 country: COUNTRY
 howto: HOWTO
 test_cases: TEST_CASES
+codeowners:  # Optional — list of @handles who maintain this provider
+  - "@your-github-handle"
 ```
 
 | Attribute | Type | Description |
@@ -37,6 +39,7 @@ test_cases: TEST_CASES
 | country | String | [Optional] Overwrite default country code which is derived from yaml file name. |
 | howto | Dictionary[String, String] | Adictionary of `language`: A multi-line string in markdown format which describes the steps to configure the ICS source. |
 | test_cases | Dict | A dictionary with test-cases. The key of an entry represents the name of the test-case which will be displayed during testing. The item contains a dictionary of the source arguments. |
+| codeowners | List of Strings | [Optional] List of GitHub handles (e.g. `["@your-user"]`) who maintain this ICS provider. Each entry must start with `@`. Used by `update_docu_links.py` to generate `.github/source_owners.json`, which routes source-related bug reports to the right maintainer. If you add a new ICS YAML, consider adding your handle here so you are automatically notified of issues. |
 
 Example:
 
