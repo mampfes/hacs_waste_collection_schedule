@@ -75,6 +75,13 @@ _WEEKDAY_MAP = {
     "sunday": 6,
 }
 
+# Reference Monday used to anchor the fortnightly recycling/garden-waste
+# alternation. In the week of this Monday, Zone 2 places out recycling and
+# Zone 1 places out garden waste (verified against the council's own
+# 2026/27 Zone 1 and Zone 2 collection calendars). The two zones are always
+# on opposite fortnights.
+_REFERENCE_MONDAY = date(2026, 7, 13)
+
 _SCHEDULE_WEEKS = 52
 
 
@@ -92,9 +99,9 @@ def _generate_collections(
     """Generate all collection dates between start and end.
 
     Recycling and garden waste alternate fortnightly. Which type falls on a
-    given occurrence is determined by the ISO week number's parity together
-    with the zone number, mirroring the calculation performed by the
-    council's own "next collection" widget.
+    given occurrence is determined by the number of whole weeks since a fixed
+    reference Monday together with the zone number. Zone 2 recycles in the
+    reference fortnight; Zone 1 is offset by one week.
     """
     entries: list[Collection] = []
     cur = _next_weekday(start, weekday)
@@ -102,8 +109,9 @@ def _generate_collections(
     while cur <= end:
         entries.append(Collection(date=cur, t="Garbage", icon=ICON_MAP["Garbage"]))
 
-        iso_week_even = cur.isocalendar()[1] % 2 == 0
-        recycling_this_week = (zone_no == 1) == iso_week_even
+        weeks_since_ref = (cur - _REFERENCE_MONDAY).days // 7
+        reference_fortnight = weeks_since_ref % 2 == 0
+        recycling_this_week = (zone_no == 2) == reference_fortnight
         if recycling_this_week:
             waste_type = "Recycling"
         else:
