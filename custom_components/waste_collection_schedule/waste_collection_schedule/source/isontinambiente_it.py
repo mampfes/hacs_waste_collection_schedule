@@ -3,19 +3,59 @@ import datetime
 import requests
 from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
-TITLE = "isontina ambiente: Ronchi dei legionari"
-DESCRIPTION = "Source for isontina ambiente, serving Ronchi dei legionari."
+TITLE = "Isontina Ambiente"
+DESCRIPTION = "Source for Isontina Ambiente, serving municipalities in the province of Gorizia, Italy."
 URL = "https://isontinambiente.it"
 TEST_CASES = {
     "PIAZZA FURLAN, Ronchi dei Legionari Area B": {"address_id": 1172},
-    "VIA DANTE  , Ronchi dei Legionari Area C": {"address_id": 75},
-    "VIA GORIZIA  , Ronchi dei Legionari Area F": {"address_id": 147},
+    "VIA DANTE, Ronchi dei Legionari Area C": {
+        "city": "ronchi-dei-legionari",
+        "address_id": 75,
+    },
+    "ANDRONA DELLA PERGOLA, Gorizia Area B": {"city": "Gorizia", "address_id": 488},
+    "ANDRONA AQUILEIA, Monfalcone Area Monfalcone Ovest": {
+        "city": "monfalcone",
+        "address_id": 819,
+    },
+    "Capriva del Friuli (single zone)": {"city": "capriva-del-friuli"},
+    "Villesse (single zone)": {"city": "villesse"},
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> and select your address. The address ID is the number at the end of the URL. e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` the address ID is `1172`.",
-    "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> e seleziona il tuo indirizzo. L'ID dell'indirizzo è il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo è `1172`.",
+    "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/> and select your municipality. The `city` argument is the last part of the URL, e.g. for `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/gorizia/` the `city` is `gorizia`. If your municipality's page shows an address dropdown, also select your address there; the `address_id` is the number at the end of the URL, e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/gorizia/?indirizzo=488` the `address_id` is `488`. If there is no address dropdown, `address_id` can be omitted.",
+    "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/> e seleziona il tuo comune. L'argomento `city` è l'ultima parte dell'URL, es. per `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/gorizia/` il `city` è `gorizia`. Se la pagina del tuo comune mostra un menu per selezionare l'indirizzo, seleziona anche il tuo indirizzo; l'ID dell'indirizzo è il numero alla fine dell'URL, es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/gorizia/?indirizzo=488` l'ID dell'indirizzo è `488`. Se non è presente un menu per l'indirizzo, `address_id` può essere omesso.",
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "city": "Municipality",
+        "address_id": "Address ID",
+    },
+    "it": {
+        "city": "Comune",
+        "address_id": "ID indirizzo",
+    },
+    "de": {
+        "city": "Gemeinde",
+        "address_id": "Adress-ID",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "city": "The municipality slug, see 'How to get the source argument'.",
+        "address_id": "The address ID, see 'How to get the source argument'. Not required for municipalities without an address selection.",
+    },
+    "it": {
+        "city": "Lo slug del comune, vedi 'Come ottenere l'argomento'.",
+        "address_id": "L'ID dell'indirizzo, vedi 'Come ottenere l'argomento'. Non richiesto per i comuni senza selezione dell'indirizzo.",
+    },
+    "de": {
+        "city": "Der Gemeinde-Slug, siehe 'Wie man das Quellenargument erhält'.",
+        "address_id": "Die Adress-ID, siehe 'Wie man das Quellenargument erhält'. Nicht erforderlich für Gemeinden ohne Adressauswahl.",
+    },
 }
 
 
@@ -41,19 +81,64 @@ ITALIAN_MONTHS = {
     "dicembre": 12,
 }
 
+# Municipalities served by Isontina Ambiente that expose a collection
+# calendar. `Duino Aurisina` is deliberately excluded: it is served by
+# street-side bins ("cassonetti di prossimità") and has no calendar page.
+CITIES = {
+    "capriva-del-friuli": "Capriva del Friuli",
+    "cormons": "Cormons",
+    "doberdo-del-lago": "Doberdò del Lago",
+    "dolegna-del-collio": "Dolegna del Collio",
+    "farra-disonzo": "Farra d'Isonzo",
+    "fogliano-redipuglia": "Fogliano Redipuglia",
+    "gorizia": "Gorizia",
+    "gradisca-disonzo": "Gradisca d'Isonzo",
+    "grado": "Grado",
+    "mariano-del-friuli": "Mariano del Friuli",
+    "medea": "Medea",
+    "monfalcone": "Monfalcone",
+    "monrupino": "Monrupino",
+    "moraro": "Moraro",
+    "mossa": "Mossa",
+    "romans-disonzo": "Romans d'Isonzo",
+    "ronchi-dei-legionari": "Ronchi dei Legionari",
+    "sagrado": "Sagrado",
+    "san-canzian-disonzo": "San Canzian d'Isonzo",
+    "san-floriano-del-collio": "San Floriano del Collio",
+    "san-lorenzo-isontino": "San Lorenzo Isontino",
+    "san-pier-disonzo": "San Pier d'Isonzo",
+    "savogna-disonzo": "Savogna d'Isonzo",
+    "sgonico-zgonik": "Sgonico - Zgonik",
+    "staranzano": "Staranzano",
+    "turriaco": "Turriaco",
+    "villesse": "Villesse",
+}
 
-API_URL = "https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/"
+
+API_URL = "https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/{city}/"
 
 
 class Source:
-    def __init__(self, address_id: str | int):
-        self._address_id: str | int = address_id
+    def __init__(
+        self,
+        address_id: str | int | None = None,
+        city: str = "ronchi-dei-legionari",
+    ):
+        city_normalized = city.strip().lower().replace(" ", "-")
+        if city_normalized not in CITIES:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", city, list(CITIES.keys())
+            )
+        self._city: str = city_normalized
+        self._address_id: str | int | None = address_id
 
     def fetch(self) -> list[Collection]:
-        args = {"indirizzo": self._address_id}
+        args = {}
+        if self._address_id is not None:
+            args["indirizzo"] = self._address_id
 
-        # get json file
-        r = requests.get(API_URL, params=args)
+        # get calendar page
+        r = requests.get(API_URL.format(city=self._city), params=args)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
