@@ -21,6 +21,34 @@ from waste_collection_schedule import Customize  # type: ignore # isort:skip # n
 
 _LOGGER = logging.getLogger(__name__)
 
+
+def _time_value(value):
+    """Validate a time-of-day config value.
+
+    Works around a YAML 1.1 quirk: PyYAML's implicit "sexagesimal" (base60)
+    resolver turns an *unquoted* ``HH:MM`` value such as ``10:00`` into the
+    integer ``600`` (10 * 60 + 0) instead of the string ``"10:00"``, which
+    then fails Home Assistant's ``cv.time`` validator. Times with a leading
+    zero (e.g. ``09:59``) are unaffected because the resolver requires the
+    first digit to be 1-9, so this only bites hours 10-23.
+
+    If we receive such an integer, reconstruct the original ``HH:MM`` (or
+    ``HH:MM:SS``) string before validating. The two possible value ranges
+    (60-1439 for ``H:MM``, 3600-86399 for ``H:MM:SS``) never overlap, so the
+    original format can be recovered unambiguously.
+
+    See https://github.com/mampfes/hacs_waste_collection_schedule/issues/5065
+    """
+    if isinstance(value, int) and not isinstance(value, bool):
+        if 60 <= value <= 1439:
+            value = f"{value // 60:02d}:{value % 60:02d}:00"
+        elif 3600 <= value <= 86399:
+            hours, remainder = divmod(value, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            value = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+    return cv.time(value)
+
+
 CUSTOMIZE_CONFIG = vol.Schema(
     {
         vol.Optional(const.CONF_TYPE): cv.string,
@@ -74,7 +102,7 @@ CONFIG_SCHEMA = vol.Schema(
                 ): cv.string,
                 vol.Optional(
                     const.CONF_FETCH_TIME, default=const.CONF_FETCH_TIME_DEFAULT
-                ): cv.time,
+                ): _time_value,
                 vol.Optional(
                     const.CONF_FETCH_INTERVAL_DAYS,
                     default=const.CONF_FETCH_INTERVAL_DAYS_DEFAULT,
@@ -86,7 +114,7 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Optional(
                     const.CONF_DAY_SWITCH_TIME,
                     default=const.CONF_DAY_SWITCH_TIME_DEFAULT,
-                ): cv.time,
+                ): _time_value,
                 vol.Optional(const.CONF_SENSORS, default=[]): vol.All(
                     cv.ensure_list, [SENSOR_CONFIG]
                 ),
