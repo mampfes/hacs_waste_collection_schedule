@@ -250,10 +250,12 @@ class Source:
         and either an empty `<ul>` or a `<li>Keinen Eintrag gefunden</li>`
         (no `onclick`) when nothing matches.
         """
-        li = BeautifulSoup(response_text, "html.parser").find("li")
-        if not li:
-            return False
-        return bool(li.get("onclick"))
+        return (
+            BeautifulSoup(response_text, "html.parser").find(
+                "li", attrs={"onclick": True}
+            )
+            is not None
+        )
 
     def request_all(
         self, url: str, data: dict, params: dict, argument: str, value: str
