@@ -971,6 +971,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
 - [RenoWeb](/doc/source/renoweb_dk.md) / renoweb.dk
 - [RessourceIndsamling.dk](/doc/source/ressourceindsamling_dk.md) / ressourceindsamling.dk
+- [Revas (Viborg Kommune)](/doc/source/affaldonline_dk.md) / revas.dk
 - [Silkeborg Forsyning](/doc/source/affaldonline_dk.md) / silkeborgforsyning.dk
 - [Vejle Kommune](/doc/source/affaldonline_dk.md) / vejle.dk
 - [Vestforbrænding](/doc/source/vestfor_dk.md) / selvbetjening.vestfor.dk

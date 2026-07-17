@@ -5783,6 +5783,14 @@
       "id": "ressourceindsamling_dk"
     },
     {
+      "title": "Revas (Viborg Kommune)",
+      "module": "affaldonline_dk",
+      "default_params": {
+        "municipality": "viborg"
+      },
+      "id": "affaldonline_dk"
+    },
+    {
       "title": "Silkeborg Forsyning",
       "module": "affaldonline_dk",
       "default_params": {
