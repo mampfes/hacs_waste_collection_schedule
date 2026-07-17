@@ -3602,6 +3602,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
 - [Jacksonville, FL](/doc/source/jacksonville_fl_us.md) / myjax.custhelp.com/app/hauler
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
+- [Marysville, WA](/doc/source/marysville_wa_us.md) / marysvillewa.gov/172/Solid-Waste-Recycling
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
 - [New Rochelle (NY)](/doc/source/recyclecoach_com.md) / newrochelleny.gov/791/Collection-Dates
 - [New York City](/doc/source/nyc_gov.md) / nyc.gov
