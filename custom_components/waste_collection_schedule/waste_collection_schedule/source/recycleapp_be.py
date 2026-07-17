@@ -41,6 +41,11 @@ TEST_CASES = {
         "street": "Abelendreef",
         "house_number": 1,
     },
+    "9040 Gent (Ivago), Krekelberg 1": {
+        "postcode": 9040,
+        "street": "Krekelberg",
+        "house_number": 1,
+    },
     "8700 Abeelstraat 1": {
         "postcode": 8700,
         "street": "Abeelstraat",

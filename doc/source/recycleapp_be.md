@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Recycle / recycleapp.be](https://www.recycleapp.be/).
 
+This source works for any Belgian municipality on the Fost Plus / RecycleApp.be platform — including local operators that present their own branded collection calendar on top of the same backend, e.g. [Ivago](https://www.ivago.be/) (Gent). If your local waste operator isn't listed by name anywhere in this repo, try this source with your postcode/street/house number before requesting a new one — it likely already works.
+
 ## Configuration via configuration.yaml
 
 ```yaml
