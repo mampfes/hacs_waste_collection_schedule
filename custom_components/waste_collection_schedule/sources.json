@@ -12024,6 +12024,14 @@
       "id": "rv_de"
     },
     {
+      "title": "Landkreis Reutlingen",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "15f69fab91c4cae50d9dbb5bcfd383f0"
+      },
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Landkreis Rh\u00f6n Grabfeld",
       "module": "landkreis_rhoen_grabfeld",
       "default_params": {},
