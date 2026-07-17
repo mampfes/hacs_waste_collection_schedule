@@ -16927,6 +16927,7 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Civico",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Codice Postale CAP"
         },
         "data_description": {
@@ -16939,6 +16940,7 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "house_number": "Civico",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Codice Postale CAP"
         },
         "data_description": {}

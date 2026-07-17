@@ -16837,6 +16837,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Postal Code"
         },
         "data_description": {
@@ -16849,6 +16850,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Postal Code"
         },
         "data_description": {}

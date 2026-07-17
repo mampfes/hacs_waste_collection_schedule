@@ -16971,6 +16971,7 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "Numéro civique",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Code postal"
         },
         "data_description": {
@@ -16983,6 +16984,7 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "Numéro civique",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Code postal"
         },
         "data_description": {}

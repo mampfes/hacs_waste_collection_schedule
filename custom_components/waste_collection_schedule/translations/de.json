@@ -17223,6 +17223,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Postal Code"
         },
         "data_description": {
@@ -17235,6 +17236,7 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Postal Code"
         },
         "data_description": {}
