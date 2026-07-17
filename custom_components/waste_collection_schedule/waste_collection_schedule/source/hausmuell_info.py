@@ -3,6 +3,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "hausmüll.info"
@@ -242,8 +243,20 @@ class Source:
         to_return = [i.strip() for i in ids if i.strip().isdigit()]
         return to_return
 
+    def _has_result(self, response_text: str) -> bool:
+        """Check whether a search response actually contains a matching entry.
+
+        The API returns a `<li>` with an `onclick` attribute for a real match,
+        and either an empty `<ul>` or a `<li>Keinen Eintrag gefunden</li>`
+        (no `onclick`) when nothing matches.
+        """
+        li = BeautifulSoup(response_text, "html.parser").find("li")
+        if not li:
+            return False
+        return bool(li.get("onclick"))
+
     def request_all(
-        self, url: str, data: dict, params: dict, error_message: str
+        self, url: str, data: dict, params: dict, argument: str, value: str
     ) -> requests.Response:
         """Request url with data if not successful retry with different kinds of replaced special chars.
 
@@ -251,23 +264,24 @@ class Source:
             url (str): url to request
             data (dict): data to send
             params (dict): params to send
-            error_message (str): error message to raise if all requests fail
+            argument (str): name of the source argument being searched for (as in Source.__init__)
+            value (str): value of that source argument, used for the error message
 
         Raises:
-            Exception: if all requests fail
+            SourceArgumentNotFound: if all requests fail to find a match
 
         Returns:
             requests.Response: the successful response
         """
         r = requests.post(url, data=data, params=params)
-        if "kein Eintrag gefunden" not in r.text and not r.text.strip() == "<ul></ul>":
+        if self._has_result(r.text):
             return r
         r = requests.post(
             url,
             data=replace_special_chars_args(data),
             params=replace_special_chars_args(params),
         )
-        if "kein Eintrag gefunden" not in r.text and not r.text.strip() == "<ul></ul>":
+        if self._has_result(r.text):
             return r
         r = requests.post(
             url,
@@ -276,9 +290,9 @@ class Source:
             ),
             params=replace_special_chars_args(params),
         )
-        if "kein Eintrag gefunden" not in r.text and not r.text.strip() == "<ul></ul>":
+        if self._has_result(r.text):
             return r
-        raise Exception(error_message)
+        raise SourceArgumentNotFound(argument, value)
 
     def fetch(self):
         args = {
@@ -316,7 +330,8 @@ class Source:
                 self._search_url + "search_orte.php",
                 args,
                 {"input": self._ort, "ort_id": "0"},
-                "Ort provided but not found in search results.",
+                "ort",
+                self._ort,
             )
 
             ids = self._get_elemts(r.text)
@@ -329,7 +344,8 @@ class Source:
                 self._search_url + "search_ortsteile.php",
                 args,
                 {"input": self._ortsteil, "ort_id": args["ort_id"]},
-                "Ortsteil provided but not found in search results.",
+                "ortsteil",
+                self._ortsteil,
             )
 
             ids = self._get_elemts(r.text)
@@ -345,7 +361,8 @@ class Source:
                 self._search_url + "search_strassen.php",
                 args,
                 {"input": self._strasse, "str_id": "0", "ort_id": args["ort_id"]},
-                "Strasse provided but not found in search results.",
+                "strasse",
+                self._strasse,
             )
             ids = self._get_elemts(r.text)
             args["hidden_id_str"] = args["str_id"] = ids[0]
@@ -358,7 +375,8 @@ class Source:
                 self._search_url + "search_hnr.php",
                 args,
                 {"input": self._hausnummer, "hnr_id": "0", "str_id": args["str_id"]},
-                "hausnummer provided but not found in search results.",
+                "hausnummer",
+                self._hausnummer,
             )
 
             ids = self._get_elemts(r.text)
