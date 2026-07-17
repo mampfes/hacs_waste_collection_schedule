@@ -16416,6 +16416,33 @@
         },
         "data_description": {}
       },
+      "args_cem_ambiente_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "The municipality served by CEM Ambiente (e.g. 'Vimodrone').",
+          "street": "The street name as listed by CEM Ambiente for the selected municipality (e.g. 'Via Aldo Moro')."
+        }
+      },
+      "reconfigure_cem_ambiente_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "The municipality served by CEM Ambiente (e.g. 'Vimodrone').",
+          "street": "The street name as listed by CEM Ambiente for the selected municipality (e.g. 'Via Aldo Moro')."
+        }
+      },
       "args_amsa_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

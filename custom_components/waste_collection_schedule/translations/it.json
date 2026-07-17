@@ -15759,6 +15759,33 @@
         },
         "data_description": {}
       },
+      "args_cem_ambiente_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Comune",
+          "street": "Via"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "Il comune servito da CEM Ambiente (ad esempio 'Vimodrone').",
+          "street": "Il nome della via come indicato da CEM Ambiente per il comune selezionato (ad esempio 'Via Aldo Moro')."
+        }
+      },
+      "reconfigure_cem_ambiente_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "city": "Comune",
+          "street": "Via"
+        },
+        "data_description": {
+          "city": "Il comune servito da CEM Ambiente (ad esempio 'Vimodrone').",
+          "street": "Il nome della via come indicato da CEM Ambiente per il comune selezionato (ad esempio 'Via Aldo Moro')."
+        }
+      },
       "args_amsa_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

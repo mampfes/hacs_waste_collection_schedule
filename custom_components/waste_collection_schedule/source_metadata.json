@@ -3417,6 +3417,14 @@
     },
     "urls": {}
   },
+  "cem_ambiente_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cem_ambiente_it.md",
+    "howto": {
+      "en": "Enter the municipality (comune) and street (via) exactly as they are known to CEM Ambiente, e.g. as shown on https://www.cemambiente.it/cemfacile/. If the exact spelling isn't found, the error message will list the closest matching street names for your municipality.",
+      "it": "Inserisci il comune e la via esattamente come sono indicati da CEM Ambiente, ad esempio come mostrato su https://www.cemambiente.it/cemfacile/. Se l'ortografia esatta non viene trovata, il messaggio di errore elencherà le vie più simili per il tuo comune."
+    },
+    "urls": {}
+  },
   "amsa_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
     "howto": {

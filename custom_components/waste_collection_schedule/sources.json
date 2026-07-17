@@ -15350,6 +15350,18 @@
       "id": "junker_app"
     },
     {
+      "title": "Agrate Brianza",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Aicurzio",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Alia Servizi Ambientali S.p.A.",
       "module": "aliaserviziambientali_it",
       "default_params": {},
@@ -15434,6 +15446,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Arcore",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Ardea - DM Technology Srl",
@@ -15576,6 +15594,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Basiano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Bassano Romano",
       "module": "junker_app",
       "default_params": {},
@@ -15588,10 +15612,28 @@
       "id": "junker_app"
     },
     {
+      "title": "Bellinzago Lombardo",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Bellunum Srl",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Bellusco",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Bernareggio",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Bientina",
@@ -15616,6 +15658,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Borgo San Giovanni",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Borgo San Lorenzo",
@@ -15662,6 +15710,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Brugherio",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Bubbiano",
       "module": "junker_app",
       "default_params": {},
@@ -15686,6 +15740,24 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Burago Di Molgora",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Busnago",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Bussero",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "C.C.S. - Consorzio Campale Stabile",
@@ -15728,6 +15800,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Cambiago",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Camerino",
       "module": "junker_app",
       "default_params": {},
@@ -15738,6 +15816,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Camparada",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Campi Bisenzio",
@@ -15780,6 +15864,12 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Caponago",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Capraia e Limite",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -15808,10 +15898,22 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Carnate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Caronno Pertusella - Econord",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Carpiano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Carpignano Salentino",
@@ -15826,16 +15928,52 @@
       "id": "junker_app"
     },
     {
+      "title": "Carugate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Casale Marittimo",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
+      "title": "Casaletto Lodigiano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Casalmaiocco",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Casavatore - Ecology Srl",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Caselle Lurani",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Cassano D'Adda",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Cassina De' Pecchi",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Castel Gandolfo - Coop 134",
@@ -15908,12 +16046,36 @@
       "id": "junker_app"
     },
     {
+      "title": "Cavenago Di Brianza",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "CEM Ambiente",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Cernusco Sul Naviglio",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Cerreto Guidi",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Cerreto Guidi"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Cerro Al Lambro",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Cerro Maggiore - Agesp Spa",
@@ -15928,6 +16090,12 @@
         "municipality": "Certaldo"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Cervignano D'Adda",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Cesa - DM Technology Srl",
@@ -16028,10 +16196,28 @@
       "id": "junker_app"
     },
     {
+      "title": "Cologno Monzese",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Cologno Monzese - CEM Ambiente",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Colturano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Comazzo",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Comune.Digital",
@@ -16076,6 +16262,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Concorezzo",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Consac",
       "module": "junker_app",
       "default_params": {},
@@ -16102,6 +16294,18 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Cornate D'Adda",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Correzzana",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Cosir Srl",
@@ -16164,6 +16368,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Dresano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Ecoambiente Srl",
@@ -16354,6 +16564,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Gessate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Gestione Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
@@ -16390,12 +16606,24 @@
       "id": "junker_app"
     },
     {
+      "title": "Gorgonzola",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Greve in Chianti",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Greve in Chianti"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Grezzago",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Gruppo Veritas",
@@ -16446,6 +16674,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Inzago",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Iren Ambiente",
@@ -16568,6 +16802,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Lesmo",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Letino",
       "module": "junker_app",
       "default_params": {},
@@ -16584,6 +16824,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Liscate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Lodi",
@@ -16614,6 +16860,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Macherio",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Mandas - C.A.P.R.I.",
@@ -16654,12 +16906,24 @@
       "id": "junker_app"
     },
     {
+      "title": "Masate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Massa e Cozzile",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Massa e Cozzile"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Massalengo",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Massalengo",
@@ -16674,6 +16938,24 @@
       "id": "junker_app"
     },
     {
+      "title": "Mediglia",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Melegnano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Melzo",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Mentana - Paoletti Ecologia",
       "module": "junker_app",
       "default_params": {},
@@ -16686,10 +16968,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Merlino",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Messina - Messinaservizi Bene Comune",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Mezzago",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Minerva Ambiente",
@@ -16892,6 +17186,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Mulazzano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Muraca Srl",
       "module": "junker_app",
       "default_params": {},
@@ -16948,6 +17248,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Ornago",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Orosei - Sceas - Ciclat",
       "module": "junker_app",
       "default_params": {},
@@ -16978,6 +17284,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Pantigliate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Passerano Marmorito",
       "module": "junker_app",
       "default_params": {},
@@ -16988,6 +17300,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Paullo",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Paullo",
@@ -17014,6 +17332,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Pessano Con Bornago",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Piazza Brembana",
@@ -17082,6 +17406,18 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Pozzo D'Adda",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Pozzuolo Martesana",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Prato",
@@ -17224,6 +17560,24 @@
       "id": "junker_app"
     },
     {
+      "title": "Rodano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Roncello",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Ronco Briantino",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Rosora",
       "module": "junker_app",
       "default_params": {},
@@ -17254,6 +17608,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Salerano sul Lambro",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Salerno - Salerno Pulita Spa",
@@ -17312,6 +17672,12 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "San Zenone Al Lambro",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Sanremo - Amaie Energia e Servizi Srl",
       "module": "junker_app",
       "default_params": {},
@@ -17324,6 +17690,12 @@
         "town_id": "13"
       },
       "id": "geovest_it"
+    },
+    {
+      "title": "Sant'Angelo Lodigiano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Santa Lucia del Mela",
@@ -17448,6 +17820,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Settala",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Sezze - SPL",
       "module": "junker_app",
       "default_params": {},
@@ -17498,6 +17876,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Sordio",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Spoltore - Rieco",
       "module": "junker_app",
       "default_params": {},
@@ -17520,6 +17904,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Sulbiate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Suno",
@@ -17582,6 +17972,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Torrevecchia Pia",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Traona",
       "module": "junker_app",
       "default_params": {},
@@ -17592,6 +17988,24 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Trezzano Rosa",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Trezzo Sull'Adda",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Tribiano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Tricase",
@@ -17610,6 +18024,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Truccazzano",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Turate - Turcato Snc",
@@ -17672,6 +18092,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Usmate Velate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Ussita",
       "module": "junker_app",
       "default_params": {},
@@ -17720,10 +18146,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Vaprio D'Adda",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Vasto - Pulchra Ambiente Srl",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Vedano Al Lambro",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Vernio",
@@ -17766,6 +18204,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Vignate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Villanterio",
       "module": "junker_app",
       "default_params": {},
@@ -17784,10 +18228,28 @@
       "id": "junker_app"
     },
     {
+      "title": "Villasanta",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
       "title": "Villaspeciosa",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Vimercate",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Vimodrone",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Vinci",
@@ -17808,6 +18270,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Vizzolo Predabissi",
+      "module": "cem_ambiente_it",
+      "default_params": {},
+      "id": "cem_ambiente_it"
     },
     {
       "title": "Volsca Ambiente",
