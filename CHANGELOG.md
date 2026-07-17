@@ -4,6 +4,106 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.31.0] - 2026-07-17
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@biggiebytes, @blueciii, @camrun91, @CanadianEngineer, @chris-clearvue, @crazyboy89,
+@cycsmail, @FlareLine, @gmenard, @ItsMly, @JeanPascalDC, @m1ckyb, @namtonthat,
+@rhubarbgarden, @robtesch and @Wolfieeewolf. 🎉
+Thanks as well to our returning contributors (@bbr111, @Coderzz69, @CRZTFR, @danzel,
+@jamesonuk, @marcjay, @vchatela) for the fixes and new sources below.
+
+### Added Sources
+
+- added Landkreis Reutlingen (Wannweil) to abfall.io GraphQL source, DE (#6881)
+- added Marysville, WA (marysville_wa_us), US (#6879)
+- added Mildura Rural City Council (mildura_vic_gov_au), AU (#6875)
+- added City of Moreton Bay (moretonbay_qld_gov_au), AU (thanks @CRZTFR) (#6869)
+- added Grand Paris Sud Est Avenir / GPSEA (sudestavenir_fr), FR (#6868)
+- added Marktgemeinde Kaltenleutgeben (kaltenleutgeben_gv_at), AT (#6855)
+- added Illertissen to Knittel Entsorgung ICS platform, DE (#6854)
+- added Inverclyde Council (inverclyde_gov_uk), UK (#6851)
+- added Stadtwerke Singen (stadtwerke_singen_de), DE (#6850)
+- added Gemeinde Hasselroth (hasselroth_de), DE (#6849)
+- added City of Apopka, FL to ReCollect shared platform, US (#6846)
+- added Cairns Regional Council (cairns_qld_gov_au), AU (#6845)
+- added Straatbeeld Online (straatbeeld_online), NL (Gemeente Drimmelen and others) (#6835)
+- added Falu Energi & Vatten (fev_se), SE (#6834)
+- added Scalea to Junker APP source, IT (#6833)
+- added Mid Ulster District Council (midulstercouncil_org), UK (#6831)
+- added EcoSzczecin (ecoszczecin_pl), PL (#6830)
+- added Homburg (Saarpfalzkreis) to Mein-Abfallkalender.online, DE (#6829)
+- added Tandridge District Council (tandridge_gov_uk), UK (#6827)
+- added City of Sydney (cityofsydney_nsw_gov_au), AU (#6824)
+- added Cassowary Coast Regional Council (cassowarycoast_qld_gov_au), AU (#6823)
+- added calendar: expose collection description and location on calendar events (thanks @ItsMly) (#6819)
+- added myWasteWatcher / WasteWatcher.NET (mywastewatcher_de), DE (thanks @ItsMly) (#6818)
+- added Wingecarribee Shire Council (wingecarribee_nsw_gov_au), AU (thanks @m1ckyb) (#6812)
+- added Stadt Bünde to generic ICS provider list, DE (#6811)
+- added Coeur d'Yvelines (coeur_yvelines_fr), FR (#6810)
+- added Nem Affaldsservice for Københavns Kommune (nemaffaldsservice_kk_dk), DK (#6809)
+- added Ciudad de la Costa, Canelones (ciudad_de_la_costa_uy), UY (#6808)
+- added Kópavogsbær / Kópavogur (kopavogur_is), IS (thanks @rhubarbgarden) (#6806)
+- added Gemeinde Hüllhorst to generic ICS provider list, DE (#6804)
+- added Östersunds kommun (ostersund_se), SE (#6794)
+- added Bathurst Regional Council (bathurst_nsw_gov_au), AU (thanks @Wolfieeewolf) (#6792)
+- added eThekwini Municipality / Durban (durban_gov_za), ZA (thanks @robtesch) (#6791)
+- added Abfallwirtschaft Kyffhäuserkreis (abfall_kyffhaeuser_de), DE (#6786)
+- added Müllmann-App (muellmann_app_de), DE (Radolfzell, Konstanz and 13 other Bodensee-area municipalities) (#6783)
+- added Jacksonville, FL (jacksonville_fl_us), US (thanks @biggiebytes) (#6781)
+- added Hedemora Energi (hedemora_energi_se), SE (thanks @crazyboy89) (#6779)
+- added RITL / Régie intermunicipale des Trois-Lacs (ritl_ca), CA (thanks @JeanPascalDC) (#6774)
+- added New Rochelle, NY to RecycleCoach EXTRA_INFO, US (thanks @gmenard) (#6769)
+- added KOMA (koma_pl), PL (thanks @cycsmail) (#6718)
+
+### Fixed Sources
+
+- fixed rd4_nl: add house_number_extension parameter support (#6878)
+- fixed hausmuell_info: correctly detect "no match" search responses (#6877)
+- fixed wanneroo_wa_gov_au: improve address matching for human-formatted input (thanks @chris-clearvue) (#6873)
+- fixed schweinfurt_de: correctly coerce showmobile string values ("False" was always truthy) (#6866)
+- fixed abfallnavi_de: match SourceArgumentNotFoundWithSuggestions argument names so the Norderstedt GUI wizard no longer silently fails (#6865)
+- fixed okc_gov: fix data source and improve docs (thanks @camrun91) (#6864)
+- fixed haringey_gov_uk: replace web-scraping with API calls (thanks @marcjay) (#6862)
+- fixed 1coast_com_au: don't fail on collection entries with a blank description (thanks @blueciii) (#6860)
+- fixed umweltverbaende_at: scope Baden ICS lookup to municipality, fix Roman-numeral collision (#6858)
+- fixed herefordshire_gov_uk: accept UPRN and house name for properties without a number (#6857)
+- fixed smiecioplan_pl: add optional building_type param for Gdynia dual-schedule addresses (#6853)
+- fixed shellharbourwaste_com_au: bypass Cloudflare block and fix renamed waste-type labels (#6852)
+- fixed ardsandnorthdown_gov_uk: migrate to new calendarhtml REST endpoint (#6848)
+- fixed logan_qld_gov_au: fall through to fallback API when the primary ArcGIS endpoint errors (#6843)
+- fixed montecospa_it: remove note-only and duplicate calendar entries (#6838)
+- fixed awigo_de: request all waste types together to work around AWIGO API bug (#6837)
+- fixed umweltverbaende_at: skip zones with missing collection dates (#6836)
+- fixed moorabool_vic_gov_au: use curl_cffi to bypass Akamai edge block (#6832)
+- fixed awido_de: add EBU Ulm (ebu) customer after dedicated ebu_ulm_de source went dark (#6828)
+- fixed sutherlandshire_nsw_gov_au: adapt to new services-map address-search widget (#6825)
+- fixed staffsmoorlands_gov_uk: follow council migration to Bartec Public Dashboard (#6821)
+- fixed maroondah_vic_gov_au: use curl_cffi to bypass Akamai bot protection (thanks @namtonthat) (#6820)
+- fixed publidata_fr: add Métropole du Grand Nancy (Laxou) (#6807)
+- fixed SiteparkIES: correctly decode street names containing umlauts or "ß" (#6803)
+- fixed kingston_vic_gov_au: geocode address instead of using a fixed coordinate (#6801)
+- fixed blacktown_nsw_gov_au: use curl_cffi to bypass Akamai bot protection (#6799, #6800)
+- fixed waverley_gov_uk: match both `<ul>` and malformed `<u1>` tags in WhitespaceWRP (#6798)
+- fixed uk_cloud9_apps: fix HTTP/2 header violation breaking sources on this platform (#6797)
+- fixed ryde_nsw_gov_au: use curl_cffi to bypass Akamai 403 on City of Ryde API (#6796)
+- fixed burgerportaal_nl: add Gemeente Breda organisation now that BurgerPortaal has activated its data (#6784)
+- fixed hcc_govt_nz: API endpoint moved to a new domain (thanks @danzel) (#6771)
+- fixed memotri_agglo_pau_fr: replace BunkerWeb PoW with CSRF POST flow and curl_cffi (thanks @vchatela) (#6770)
+- fixed birmingham_gov_uk: restore working collection lookup (thanks @jamesonuk) (#6754)
+- fixed sunderland_gov_uk: update scraper for new portal (thanks @Coderzz69) (#6735)
+- fixed recyclecoach_com: remove invalid prompt=undefined query param that broke zone-ID lookup (thanks @CanadianEngineer) (#6724)
+
+### Other
+
+- added missing hvcgroep_nl (Spaarnelanden) test case for regression coverage (#6847)
+- clarified that the static source's weekdays dict supports multiple days for WEEKLY recurrence (#6844)
+- fixed typo in the Whitehorse City Council doc header (thanks @FlareLine) (#6814)
+- expanded ruff to UP, ISC and RET rule sets; dropped the redundant pyupgrade hook (#6802)
+- refactored SepanClient with a /years+token flow and migrated ichisystem_eu onto it (#6795)
+- expanded ruff lint scope to source/, enabling bugbear/comprehensions/pie/ruf rules (#6787)
+- consolidated SEPAN-platform sources (sepan_remondis_pl, zys_harmonogram_pl, alba_com_pl) into a shared service (#6762)
+
 ## [2.30.0] - 2026-07-06
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
