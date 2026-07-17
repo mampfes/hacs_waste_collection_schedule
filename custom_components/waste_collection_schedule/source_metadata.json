@@ -267,6 +267,13 @@
     "howto": {},
     "urls": {}
   },
+  "moretonbay_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moretonbay_qld_gov_au.md",
+    "howto": {
+      "en": "Enter your house number, street name and suburb exactly as they appear on the City of Moreton Bay bin-day lookup at https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days. The street name may be given with or without its street type (e.g. 'Pumicestone' or 'Pumicestone Street')."
+    },
+    "urls": {}
+  },
   "newcastle_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newcastle_nsw_gov_au.md",
     "howto": {},

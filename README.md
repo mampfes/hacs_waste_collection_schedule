@@ -96,6 +96,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Mitcham](/doc/source/app_my_local_services_au.md) / mitchamcouncil.sa.gov.au
 - [City of Monash](/doc/source/monash_vic_gov_au.md) / monash.vic.gov.au
 - [City of Moonee Valley](/doc/source/moonee_valley_vic_gov_au.md) / mvcc.vic.gov.au
+- [City of Moreton Bay](/doc/source/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
 - [City of Mount Gambier](/doc/source/app_my_local_services_au.md) / mountgambier.sa.gov.au
 - [City of Newcastle](/doc/source/newcastle_nsw_gov_au.md) / newcastle.nsw.gov.au
 - [City of Norwood Payneham and St Peters](/doc/source/app_my_local_services_au.md) / npsp.sa.gov.au

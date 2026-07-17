@@ -413,6 +413,12 @@
       "id": "moonee_valley_vic_gov_au"
     },
     {
+      "title": "City of Moreton Bay",
+      "module": "moretonbay_qld_gov_au",
+      "default_params": {},
+      "id": "moretonbay_qld_gov_au"
+    },
+    {
       "title": "City of Mount Gambier",
       "module": "app_my_local_services_au",
       "default_params": {},

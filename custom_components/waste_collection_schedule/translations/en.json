@@ -1145,6 +1145,37 @@
         },
         "data_description": {}
       },
+      "args_moretonbay_qld_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street_name": "Street name",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "The house/unit number, e.g. '25'",
+          "street_name": "The street name, e.g. 'Pumicestone' or 'Pumicestone Street'",
+          "suburb": "The suburb, e.g. 'Bellara'"
+        }
+      },
+      "reconfigure_moretonbay_qld_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street_name": "Street name",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "house_number": "The house/unit number, e.g. '25'",
+          "street_name": "The street name, e.g. 'Pumicestone' or 'Pumicestone Street'",
+          "suburb": "The suburb, e.g. 'Bellara'"
+        }
+      },
       "args_newcastle_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
