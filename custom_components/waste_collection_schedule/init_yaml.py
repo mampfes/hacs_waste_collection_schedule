@@ -41,7 +41,7 @@ def _time_value(value):
     """
     if isinstance(value, int) and not isinstance(value, bool):
         if 60 <= value <= 1439:
-            value = f"{value // 60:02d}:{value % 60:02d}:00"
+            value = f"{value // 60:02d}:{value % 60:02d}"
         elif 3600 <= value <= 86399:
             hours, remainder = divmod(value, 3600)
             minutes, seconds = divmod(remainder, 60)
