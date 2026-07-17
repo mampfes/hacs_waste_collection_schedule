@@ -6829,6 +6829,11 @@
     "howto": {},
     "urls": {}
   },
+  "prince_georges_county_md_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prince_georges_county_md_us.md",
+    "howto": {},
+    "urls": {}
+  },
   "red_bank_tn_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/red_bank_tn_us.md",
     "howto": {
