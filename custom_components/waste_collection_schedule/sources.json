@@ -942,6 +942,12 @@
       "id": "midcoast_nsw_gov_au"
     },
     {
+      "title": "Mildura Rural City Council",
+      "module": "mildura_vic_gov_au",
+      "default_params": {},
+      "id": "mildura_vic_gov_au"
+    },
+    {
       "title": "Mitchell Shire Council",
       "module": "mitchellshire_vic_gov_au",
       "default_params": {},

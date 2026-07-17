@@ -180,6 +180,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mid Murray Council](/doc/source/app_my_local_services_au.md) / mid-murray.sa.gov.au
 - [Mid-Western Regional Council](/doc/source/midwestern_nsw_gov_au.md) / midwestern.nsw.gov.au
 - [MidCoast Council](/doc/source/midcoast_nsw_gov_au.md) / midcoast.nsw.gov.au
+- [Mildura Rural City Council](/doc/source/mildura_vic_gov_au.md) / mildura.vic.gov.au
 - [Mitchell Shire Council](/doc/source/mitchellshire_vic_gov_au.md) / mitchellshire.vic.gov.au
 - [Moira Shire Council](/doc/source/impactapps_com_au.md) / moira.vic.gov.au
 - [Moorabool Shire Council](/doc/source/moorabool_vic_gov_au.md) / moorabool.vic.gov.au
