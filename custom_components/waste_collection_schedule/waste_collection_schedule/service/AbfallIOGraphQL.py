@@ -10,4 +10,9 @@ SERVICE_MAP = [
         "service_id": "1c230a689579b6d3ddb9ceb5a56c6072",
         "country": "at",
     },
+    {
+        "title": "Landkreis Reutlingen",
+        "url": "https://www.kreis-reutlingen.de/",
+        "service_id": "15f69fab91c4cae50d9dbb5bcfd383f0",
+    },
 ]
