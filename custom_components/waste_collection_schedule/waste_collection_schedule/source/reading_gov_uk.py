@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 import requests
 from waste_collection_schedule import Collection
@@ -60,7 +59,7 @@ class Source:
                 "Must provide either a UPRN or both the Postcode and House Name or Number",
             )
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         if self._uprn is None:
             self._uprn = self.get_uprn()
         resp = requests.get(f"{SEARCH_URLS['COLLECTION']}/{self._uprn}")

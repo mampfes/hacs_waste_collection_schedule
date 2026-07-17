@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from waste_collection_schedule import Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 
@@ -23,7 +25,7 @@ class Source(RiSKommunalSource):
     ICON_MAP = ICON_MAP
     GNR = "2371"
     # Calendar IDs (do parameter) for each waste type
-    ICS_CALENDARS = {
+    ICS_CALENDARS: ClassVar = {
         "Biomüll": "MjI1MTc2NDk0",
         "Leichtverpackungen": "MjI1MTc2NDg4",
         "Restmüll": "MjI1MTc2NDky",

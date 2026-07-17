@@ -1,5 +1,4 @@
 import datetime
-from typing import List, Optional, Tuple
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -9,6 +8,21 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.service.ICS import ICS
+
+
+def _mojibake(term: str) -> str:
+    """Re-encode a term to work around a server-side double UTF-8 decode.
+
+    Some Sitepark installations (e.g. hilchenbach.de) mis-decode the
+    ``term`` query parameter, so a correctly UTF-8-encoded term containing
+    umlauts or "ß" never matches (e.g. "Am Bühl" or "Dammstraße" return no
+    results at all). Re-encoding the term as UTF-8 bytes and decoding those
+    bytes as Latin-1 reproduces the same mis-decoding the server applies,
+    which cancels it out and lets the match succeed. Other installations
+    (e.g. ab-peine.de) decode correctly already and this would break them,
+    so it is only tried as a fallback, not applied unconditionally.
+    """
+    return term.encode("utf-8").decode("latin-1")
 
 
 def match_icon(waste_type: str, icon_map: dict):
@@ -47,9 +61,9 @@ class SiteparkIES:
         self,
         base_url: str,
         *,
-        refid: Optional[str] = None,
-        download_params: Optional[dict] = None,
-        ics: Optional[ICS] = None,
+        refid: str | None = None,
+        download_params: dict | None = None,
+        ics: ICS | None = None,
     ):
         self._base_url = base_url.rstrip("/")
         self._refid = refid
@@ -64,9 +78,7 @@ class SiteparkIES:
             "X-Requested-With": "XMLHttpRequest",
         }
 
-    def autocomplete(
-        self, term: Optional[str], refid: Optional[str] = None
-    ) -> List[list]:
+    def autocomplete(self, term: str | None, refid: str | None = None) -> list[list]:
         """Query the abto autocomplete endpoint and return ``[[pois, label], ...]``."""
         params = {
             "out": "json",
@@ -94,7 +106,7 @@ class SiteparkIES:
         self,
         ort: str,
         page_url: str,
-        value_prefix: Optional[str] = None,
+        value_prefix: str | None = None,
     ) -> str:
         """Resolve an "Ort" to its refid via the ``sf_locid`` dropdown on a page."""
         r = self._session.get(
@@ -126,9 +138,9 @@ class SiteparkIES:
 
     def get_pois(
         self,
-        strasse: Optional[str] = None,
-        ort: Optional[str] = None,
-        refid: Optional[str] = None,
+        strasse: str | None = None,
+        ort: str | None = None,
+        refid: str | None = None,
     ) -> str:
         """Resolve a street (and optional place) to a single pois id."""
         results = self._query(strasse, refid=refid)
@@ -166,27 +178,33 @@ class SiteparkIES:
 
         return candidates[0][0]
 
-    def _query(self, term: Optional[str], refid: Optional[str]) -> List[list]:
+    def _query(self, term: str | None, refid: str | None) -> list[list]:
         """Autocomplete with a fallback for terms the endpoint cannot match.
 
-        The abto endpoint returns an empty result for some inputs (e.g. terms
-        containing "ß", a trailing space, parentheses or a comma). When that
-        happens, retry with the leading, more tolerant part of the term and let
-        the caller filter the (broader) result set locally.
+        The abto endpoint returns an empty result for some inputs: umlauts
+        or "ß" on installations affected by the double-decode bug (see
+        ``_mojibake``), or a trailing space, parentheses or a comma on any
+        installation. When that happens, retry with a more tolerant form of
+        the term and let the caller filter the (broader) result set locally.
         """
         results = self.autocomplete(term, refid=refid)
         if results or not term:
             return results
 
+        if not term.isascii():
+            results = self.autocomplete(_mojibake(term), refid=refid)
+            if results:
+                return results
+
         short = term
-        for sep in ("ß", "(", ",", "  "):
+        for sep in ("(", ",", "  "):
             short = short.split(sep)[0]
         short = short.strip()
         if short and short != term:
             results = self.autocomplete(short, refid=refid)
         return results
 
-    def fetch_ics(self, pois: str) -> List[Tuple[datetime.date, str]]:
+    def fetch_ics(self, pois: str) -> list[tuple[datetime.date, str]]:
         """Download and parse the ICS calendar for a pois id."""
         params = {"ModID": "48", "call": "ical", "pois": pois}
         params.update(self._download_params)
@@ -202,11 +220,11 @@ class SiteparkIES:
 
     def fetch(
         self,
-        strasse: Optional[str] = None,
-        ort: Optional[str] = None,
-        pois: Optional[str] = None,
-        refid: Optional[str] = None,
-    ) -> List[Tuple[datetime.date, str]]:
+        strasse: str | None = None,
+        ort: str | None = None,
+        pois: str | None = None,
+        refid: str | None = None,
+    ) -> list[tuple[datetime.date, str]]:
         """Resolve the pois (unless given directly) and return parsed dates."""
         if not pois:
             pois = self.get_pois(strasse=strasse, ort=ort, refid=refid)

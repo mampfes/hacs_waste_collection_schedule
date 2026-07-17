@@ -57,7 +57,7 @@ class Source:
 
         entries = []
         for key, value in rows_data.items():
-            if not (key.endswith("NextDate") or key.endswith(next_date_key)):
+            if not (key.endswith(("NextDate", next_date_key))):
                 continue
 
             bin_type = key.split("NextDate")[0]

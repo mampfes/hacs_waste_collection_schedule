@@ -183,7 +183,7 @@ class WasteInformation:
         self._include_relevant_postponements(postponement_data)
 
     def get_collection_dates(self) -> list[datetime.date]:
-        return list(map(lambda x: x.date(), list(self._collection_ruleset)))
+        return [x.date() for x in list(self._collection_ruleset)]
 
 
 class Source:

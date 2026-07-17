@@ -1,22 +1,16 @@
 ---
 repos:
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.21.2
-    hooks:
-      - id: pyupgrade
-        args: [--py37-plus]
+  # pyupgrade is covered by ruff's UP rule set now (see ruff.toml target-version).
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.17
     hooks:
-      # Linting (replaces flake8 + isort). Source modules carry pre-existing
-      # issues out of scope here, matching what flake8 excluded.
+      # Linting (replaces flake8 + isort).
       - id: ruff
         args: [--fix]
-        files: ^(custom_components|script|tests)/.+\.py$
-        exclude: ^custom_components/waste_collection_schedule/waste_collection_schedule/source/
+        files: ^(custom_components|script|tests)/.+\.py$|^[^/]+\.py$
       # Formatting (replaces black). Runs on the full tree, like black did.
       - id: ruff-format
-        files: ^(custom_components|script|tests)/.+\.py$
+        files: ^(custom_components|script|tests)/.+\.py$|^[^/]+\.py$
   - repo: https://github.com/codespell-project/codespell
     rev: v2.4.2
     hooks:
@@ -35,7 +29,7 @@ repos:
           - --quiet
           - --format=custom
           - --configfile=tests/bandit.yaml
-        files: ^(custom_components|script|tests)/.+\.py$
+        files: ^(custom_components|script|tests)/.+\.py$|^[^/]+\.py$
         # Source modules carry pre-existing bandit warnings (mostly
         # xml.etree.ElementTree usage) that are out of scope for the
         # canonical-icons migration. Source-level security review is

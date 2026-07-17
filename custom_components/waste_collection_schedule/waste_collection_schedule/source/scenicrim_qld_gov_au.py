@@ -73,7 +73,7 @@ class Source:
             byweekday=(weekday),
             dtstart=date_start,
         )
-        dates = [dt for dt in rr.between(date_start, date_end, inc=True)]
+        dates = list(rr.between(date_start, date_end, inc=True))
         return dates
 
     def fetch(self):

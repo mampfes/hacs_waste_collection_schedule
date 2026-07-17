@@ -1,6 +1,5 @@
 import logging
 import re
-import typing
 from datetime import datetime
 
 from bs4 import BeautifulSoup
@@ -49,8 +48,8 @@ class Source:
 
     def __init__(
         self,
-        street_address: typing.Optional[str] = None,
-        geolocation_id: typing.Optional[str] = None,
+        street_address: str | None = None,
+        geolocation_id: str | None = None,
     ):
         if street_address is None and geolocation_id is None:
             raise SourceArgumentExceptionMultiple(
@@ -61,7 +60,7 @@ class Source:
         self._street_address = street_address
         self._geolocation_id = geolocation_id
 
-    def fetch(self) -> typing.List[Collection]:
+    def fetch(self) -> list[Collection]:
         # Use curl_cffi session to bypass Incapsula bot protection
         session = requests.Session(impersonate="chrome124")
 

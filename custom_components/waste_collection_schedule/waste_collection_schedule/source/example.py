@@ -32,7 +32,7 @@ class Source:
         ap_type = 0
 
         for day in range(self._days):
-            for idx in range(self._per_day):
+            for _idx in range(self._per_day):
                 waste_type = f"Type{(ap_type % self._types) + 1}"
                 entries.append(
                     Collection(

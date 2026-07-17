@@ -149,11 +149,11 @@ def _generate_dates(
         candidate = first + datetime.timedelta(weeks=i)
         iso_week = candidate.isocalendar()[1]
 
-        if frequency is None:
-            dates.append(candidate)
-        elif frequency == "even" and iso_week % 2 == 0:
-            dates.append(candidate)
-        elif frequency == "odd" and iso_week % 2 != 0:
+        if (
+            frequency is None
+            or (frequency == "even" and iso_week % 2 == 0)
+            or (frequency == "odd" and iso_week % 2 != 0)
+        ):
             dates.append(candidate)
 
     return dates

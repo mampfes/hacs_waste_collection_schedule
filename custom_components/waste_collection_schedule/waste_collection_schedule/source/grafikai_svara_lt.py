@@ -108,7 +108,7 @@ def _seroval_decode(node):
         p = node.get("p") or {}
         keys = p.get("k", [])
         vals = p.get("v", [])
-        return {k: _seroval_decode(v) for k, v in zip(keys, vals)}
+        return {k: _seroval_decode(v) for k, v in zip(keys, vals, strict=False)}
     return None
 
 
@@ -212,7 +212,7 @@ class Source:
             raise SourceArgumentException(
                 "waste_object_ids",
                 "waste_object_ids must be a list of numeric values",
-            )
+            ) from None
         # Cached server-fn id, populated lazily on first fetch and
         # invalidated when an upstream redeploy makes the cached id stale.
         self._fn_id: str | None = None
@@ -266,7 +266,7 @@ class Source:
                     raise Exception(
                         f"grafikai.svara.lt rejected request to {api_path!r} "
                         "even after re-discovering the server-function id"
-                    )
+                    ) from None
         raise AssertionError("unreachable")
 
     def fetch(self) -> list[Collection]:

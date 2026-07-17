@@ -4,6 +4,18 @@
     "abfall_neunkirchen_siegerland_de": [
       "@bbr111"
     ],
+    "alba_com_pl": [
+      "@kamilos-dev"
+    ],
+    "alexandria_va_us": [
+      "@lpukatch"
+    ],
+    "awista_kommunal_de": [
+      "@Zaunei"
+    ],
+    "bathurst_nsw_gov_au": [
+      "@Wolfieeewolf"
+    ],
     "baumkirchen_gv_at": [
       "@bbr111"
     ],
@@ -12,6 +24,9 @@
     ],
     "buermoos_at": [
       "@bbr111"
+    ],
+    "durban_gov_za": [
+      "@robtesch"
     ],
     "elsbethen_at": [
       "@bbr111"
@@ -22,11 +37,17 @@
     "felixdorf_gv_at": [
       "@bbr111"
     ],
+    "haringey_gov_uk": [
+      "@marcjay"
+    ],
     "hartbeigraz_at": [
       "@bbr111"
     ],
     "imst_at": [
       "@bbr111"
+    ],
+    "jacksonville_fl_us": [
+      "@biggiebytes"
     ],
     "jochberg_gv_at": [
       "@bbr111"
@@ -34,17 +55,32 @@
     "kiedyodpady_pl": [
       "@dominik-korsa"
     ],
+    "kopavogur_is": [
+      "@rhubarbgarden"
+    ],
     "kronstorf_at": [
       "@bbr111"
+    ],
+    "moretonbay_qld_gov_au": [
+      "@CRZTFR"
     ],
     "muehlenkreis_de": [
       "@bbr111"
     ],
+    "mywastewatcher_de": [
+      "@ItsMly"
+    ],
     "oberndorf_schwanenstadt_at": [
       "@bbr111"
     ],
+    "ocarcims_ocfl_net": [
+      "@rbusquet"
+    ],
     "puchbeihallein_gv_at": [
       "@nerdoc"
+    ],
+    "ritl_ca": [
+      "@Jean-PascalComeau"
     ],
     "schlierbach_at": [
       "@bbr111"
@@ -66,6 +102,12 @@
     ],
     "vogeldisposal_com": [
       "@jcarr"
+    ],
+    "westminster_gov_uk": [
+      "@parmymansam"
+    ],
+    "wingecarribee_nsw_gov_au": [
+      "@m1ckyb"
     ]
   }
 }

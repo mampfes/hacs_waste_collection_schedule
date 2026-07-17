@@ -46,6 +46,11 @@ TEST_CASES = {
         "insee_code": "37018",
         "instance_id": 65,
     },
+    "Grand Nancy, Laxou": {
+        "address": "1 Rue de l'Embanie",
+        "insee_code": "54304",
+        "instance_id": 1436,
+    },
     # "Saumur Val de Loire, Allones": {
     # "address": "5 rue du Bellay",
     # "insee_code": "49002",
@@ -282,6 +287,11 @@ EXTRA_INFO = [
         "url": "https://www.pevelecarembault.fr/",
         "default_params": {"instance_id": 1141},
     },
+    {
+        "title": "Métropole du Grand Nancy",
+        "url": "https://mhdd.grandnancy.eu/",
+        "default_params": {"instance_id": 1436},
+    },
 ]
 
 _CALENDAR_DAY_VERY_ABBR = {
@@ -511,16 +521,15 @@ class Source:
         """
         if self._is_year(part):
             return self._parse_year(part)
-        elif self._is_month(part):
+        if self._is_month(part):
             return self._parse_month(part)
-        elif self._is_week_day(part):
+        if self._is_week_day(part):
             return self._parse_week_day(part)
-        elif self._is_day_number(part):
+        if self._is_day_number(part):
             return self._parse_day_number(part)
-        elif self._is_time(part):
+        if self._is_time(part):
             return {}  # ignore those, the plugin doesn’t support time
-        else:
-            raise ValueError(f"Invalid part: {part}")
+        raise ValueError(f"Invalid part: {part}")
 
     def _parse_week_no(self, input_string):
         week_nos = []
@@ -682,8 +691,8 @@ class Source:
             if part == "week":
                 kwargs["freq"] = WEEKLY
                 kwargs.update(self._parse_week_no(parts.pop(0)))
-            elif (
-                part.startswith("off") or part.startswith('"')
+            elif part.startswith(
+                ("off", '"')
             ):  # schedule should be of type "closed" or "closing_exception", or part should be a comment
                 continue
             else:

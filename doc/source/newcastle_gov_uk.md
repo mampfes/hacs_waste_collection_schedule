@@ -4,6 +4,12 @@ Support for schedules provided by [Newcastle City Council](https://community.new
 
 **Note**: Collection schedule will only show the next date, not all future dates
 
+**Deprecation notice**: Newcastle City Council has retired the `community.newcastle.gov.uk` bin
+lookup that this source depends on. It now always returns an empty result. The council has
+moved bin collection information to [ReCollect](https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day)
+(area `NewcastleUponTyneUK`). Please switch to the shared [ReCollect ICS source](ics.md) instead
+— see [doc/ics/recollect.md](../ics/recollect.md) for setup instructions.
+
 ## Configuration via configuration.yaml
 
 ```yaml

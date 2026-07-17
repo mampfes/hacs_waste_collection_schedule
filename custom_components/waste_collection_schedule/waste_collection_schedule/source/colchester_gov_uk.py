@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from typing import Optional
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -88,14 +87,14 @@ def _normalise_postcode(postcode: str) -> str:
 class Source:
     def __init__(
         self,
-        llpgid: Optional[str] = None,
-        postcode: Optional[str] = None,
-        house: Optional[str] = None,
+        llpgid: str | None = None,
+        postcode: str | None = None,
+        house: str | None = None,
     ):
         if llpgid:
-            self._llpgid: Optional[str] = llpgid
-            self._postcode: Optional[str] = None
-            self._house: Optional[str] = None
+            self._llpgid: str | None = llpgid
+            self._postcode: str | None = None
+            self._house: str | None = None
         elif postcode and house is not None and str(house).strip():
             self._llpgid = None
             self._postcode = _normalise_postcode(postcode)

@@ -78,7 +78,7 @@ class Source:
         except Exception as e:
             raise ValueError(
                 f"Failed while locating address: {self._address} with error: {e}"
-            )
+            ) from e
 
     def fetch(self):
         v, s, r = self.fetch_property_details()
@@ -93,7 +93,7 @@ class Source:
             response.raise_for_status()
             data = response.json()
         except requests.RequestException as e:
-            raise ValueError(f"API request failed: {e}")
+            raise ValueError(f"API request failed: {e}") from e
 
         if not data.get("success", False):
             raise ValueError("API response indicates failure.")

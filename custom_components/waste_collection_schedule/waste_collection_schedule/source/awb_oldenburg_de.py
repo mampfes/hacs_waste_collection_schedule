@@ -1,10 +1,10 @@
 import logging
-import urllib
 from datetime import date
 
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWB Oldenburg"
@@ -14,10 +14,13 @@ TEST_CASES = {
     "Polizeiinspektion Oldenburg": {"street": "Friedhofsweg", "house_number": 30}
 }
 
-API_URL = "https://www.oldenburg.de/startseite/leben-umwelt/awb/awb-von-a-bis-z/abfuhrkalender.html"
+BASE_URL = "https://www.oldenburg.de"
+API_URL = (
+    BASE_URL
+    + "/startseite/stadtraum/umwelt/abfall-entsorgung/awb-von-a-bis-z/abfuhrkalender.html"
+)
 
 _LOGGER = logging.getLogger(__name__)
-
 
 PARAM_TRANSLATIONS = {
     "de": {
@@ -34,67 +37,71 @@ class Source:
         self._ics = ICS(regex=r"(.*)\:\s*\!")
 
     def fetch(self):
-        street_idx = self.get_street_idx(self._street)
-        if street_idx == -1:
-            _LOGGER.error("Error: Street not found..")
-            return []
-        year = date.today().year
-
-        args = {
-            "tx_collectioncalendar_abfuhrkalender[action]": "exportIcs",
-            "tx_collectioncalendar_abfuhrkalender[controller]": r"Frontend\Export",
-            "tx_collectioncalendar_abfuhrkalender[houseNumber]": str(
-                self._house_number
-            ).encode("utf-8"),
-            "tx_collectioncalendar_abfuhrkalender[street]": str(street_idx).encode(
-                "utf-8"
-            ),
-            "tx_collectioncalendar_abfuhrkalender[wasteTypes][1]": 1,
-            "tx_collectioncalendar_abfuhrkalender[wasteTypes][2]": 2,
-            "tx_collectioncalendar_abfuhrkalender[wasteTypes][3]": 3,
-            "tx_collectioncalendar_abfuhrkalender[wasteTypes][4]": 4,
-            "tx_collectioncalendar_abfuhrkalender[wasteTypes][5]": 5,
-            "tx_collectioncalendar_abfuhrkalender[year]": year,
-        }
-
-        # use '%20' instead of '+' in API_URL
-        # https://stackoverflow.com/questions/21823965/use-20-instead-of-for-space-in-python-query-parameters
-        args = urllib.parse.urlencode(args, quote_via=urllib.parse.quote)
-
-        # post request
-        r = requests.get(API_URL, params=args)
-
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
-
-    def get_street_mapping(
-        self,
-    ):  # thanks @dt215git (https://github.com/mampfes/hacs_waste_collection_schedule/issues/539#issuecomment-1371413297)
         s = requests.Session()
         r = s.get(API_URL)
-
+        r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
-        items = soup.find_all("option")
-        items = items[2:]  # first two values are not street addresses so remove them
 
-        streets = []
-        ids = []
-        for item in items:
-            streets.append(item.text)  # street name
-            ids.append(item.attrs["value"])  # dropdown value
-        mapping = {k: v for (k, v) in zip(streets, ids)}
+        # Calendar form is the second form on the page
+        form = soup.find_all("form")[1]
 
-        return mapping
+        # Build street mapping from the street <select> element
+        street_select = form.find(
+            "select",
+            {"name": "tx_collectioncalendar_collectioncalendar[street]"},
+        )
+        mapping = {
+            opt.text.strip(): opt["value"]
+            for opt in street_select.find_all("option")
+            if opt.get("value")
+        }
 
-    def get_street_idx(self, street):
-        mapping = self.get_street_mapping()
+        if self._street not in mapping:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, list(mapping.keys())
+            )
+        street_idx = mapping[self._street]
 
-        for _street, idx in mapping.items():
-            if _street == street:
-                return idx
+        # Collect TYPO3 security tokens from hidden inputs
+        data = {
+            inp["name"]: inp.get("value", "")
+            for inp in form.find_all("input", {"name": True})
+        }
 
-        return -1
+        data["tx_collectioncalendar_collectioncalendar[year]"] = str(date.today().year)
+        data["tx_collectioncalendar_collectioncalendar[wasteTypes][1]"] = "1"
+        data["tx_collectioncalendar_collectioncalendar[wasteTypes][2]"] = "2"
+        data["tx_collectioncalendar_collectioncalendar[wasteTypes][3]"] = "3"
+        data["tx_collectioncalendar_collectioncalendar[wasteTypes][4]"] = "4"
+        data["tx_collectioncalendar_collectioncalendar[wasteTypes][5]"] = "5"
+        data["tx_collectioncalendar_collectioncalendar[street]"] = street_idx
+        data["tx_collectioncalendar_collectioncalendar[houseNumber]"] = str(
+            self._house_number
+        )
+        data["tx_collectioncalendar_collectioncalendar[privacyPolicy-checkbox]"] = "1"
+
+        action = form.get("action", "")
+        post_url = BASE_URL + action if action.startswith("/") else action
+
+        r2 = s.post(post_url, data=data)
+        r2.raise_for_status()
+        soup2 = BeautifulSoup(r2.text, "html.parser")
+
+        # Find the ICS export link generated by the server (includes cHash)
+        ics_link = None
+        for a in soup2.find_all("a", href=True):
+            if "exportIcs" in a["href"]:
+                href = a["href"]
+                ics_link = BASE_URL + href if href.startswith("/") else href
+                break
+
+        if not ics_link:
+            raise Exception("ICS export link not found. Check street and house number.")
+
+        r3 = s.get(ics_link)
+        r3.raise_for_status()
+
+        entries = []
+        for d in self._ics.convert(r3.text):
+            entries.append(Collection(d[0], d[1]))
+        return entries

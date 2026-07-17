@@ -1,7 +1,7 @@
 import json
 import re
+from collections.abc import Iterable
 from datetime import date
-from typing import Iterable
 
 import requests
 from dateutil.parser import parse as date_parse

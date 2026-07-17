@@ -5,7 +5,7 @@ import logging
 import types
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, Literal, Tuple, TypedDict, Union, cast, get_origin
+from typing import Any, ClassVar, Literal, TypedDict, Union, cast, get_origin
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -146,7 +146,9 @@ SUPPORTED_ARG_TYPES = {
 }
 
 
-def get_customize_schema(defaults: dict[str, Any] = {}):
+def get_customize_schema(defaults: dict[str, Any] | None = None):
+    if defaults is None:
+        defaults = {}
     schema = {
         vol.Optional(CONF_ALIAS, default=defaults.get(CONF_ALIAS, UNDEFINED)): str,
         vol.Optional(CONF_SHOW, default=defaults.get(CONF_SHOW, True)): cv.boolean,
@@ -166,7 +168,9 @@ def get_customize_schema(defaults: dict[str, Any] = {}):
     return schema
 
 
-def get_sensor_schema(fetched_types, add_delete=False, defaults: dict = {}):
+def get_sensor_schema(fetched_types, add_delete=False, defaults: dict | None = None):
+    if defaults is None:
+        defaults = {}
     schema = {
         vol.Optional(CONF_NAME, default=defaults.get(CONF_NAME, UNDEFINED)): cv.string,
     }
@@ -259,7 +263,7 @@ def get_sensor_schema(fetched_types, add_delete=False, defaults: dict = {}):
 
 def validate_sensor_user_input(
     sensor_input: dict[str, Any], existing_sensors
-) -> Tuple[dict[str, Any], dict[str, str]]:
+) -> tuple[dict[str, Any], dict[str, str]]:
     """
     Validate sensor user input.
 
@@ -287,7 +291,7 @@ def validate_sensor_user_input(
             args.pop(preset_key, None)
             args[key] = sensor_input[preset_key]
 
-        if key in args and args[key]:
+        if args.get(key):
             try:
                 cv.template(args[key])
             except vol.Invalid:
@@ -303,7 +307,7 @@ def validate_sensor_user_input(
     if not args.get(CONF_NAME):
         errors[CONF_NAME] = "sensor_name_empty"
     # enforce unique Name
-    elif any([x[CONF_NAME] == args[CONF_NAME] for x in existing_sensors]):
+    elif any(x[CONF_NAME] == args[CONF_NAME] for x in existing_sensors):
         errors[CONF_NAME] = "name_exists"
 
     return args, errors if args.get("skip", False) is False else {}
@@ -346,8 +350,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     _country: str | None = None
     _source: str | None = None
 
-    _options: dict = {}
-    _sources: dict[str, list[SourceDict]] = {}
+    _options: ClassVar[dict] = {}
+    # Not a ClassVar: the empty dict is only a per-instance "not yet
+    # initialized" sentinel; _async_setup_sources() below rebinds it to the
+    # shared _SOURCES cache on first use.
+    _sources: dict[str, list[SourceDict]] = {}  # noqa: RUF012
     _error_suggestions: dict[str, list[Any]]
 
     async def _async_setup_sources(self) -> None:
@@ -481,11 +488,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     async def __get_type_by_annotation(self, annotation: Any) -> Any:
         if a := await self.__get_simple_annotation_type(annotation):
             return a
-        if (
-            (isinstance(annotation, types.GenericAlias))
-            or (
-                get_origin(annotation) is not None and hasattr(annotation, "__origin__")
-            )
+        if (isinstance(annotation, types.GenericAlias)) or (
+            (get_origin(annotation) is not None and hasattr(annotation, "__origin__"))
             and (a := await self.__get_simple_annotation_type(annotation.__origin__))
         ):
             return a
@@ -511,7 +515,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         pre_filled: dict[str, Any],
         args_input: dict[str, Any] | None,
         include_title=True,
-    ) -> Tuple[vol.Schema, types.ModuleType]:
+    ) -> tuple[vol.Schema, types.ModuleType]:
         """Get schema for source arguments.
 
         Args:
@@ -663,7 +667,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         args_input: dict[str, Any],
         module: types.ModuleType,
         is_reconfigure: bool = False,
-    ) -> Tuple[dict[str, str], dict[str, str], dict[str, Any]]:
+    ) -> tuple[dict[str, str], dict[str, str], dict[str, Any]]:
         """Validate user input for source arguments.
 
         Args:
@@ -820,10 +824,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             self._show_sensor_config = user_input.get("show_sensor_config", False)
             if self._show_customize_config:
                 return await self.async_step_customize_select()
-            elif self._show_sensor_config:
+            if self._show_sensor_config:
                 return await self.async_step_sensor()
-            else:
-                return await self.finish()
+            return await self.finish()
         return self.async_show_form(step_id="flow_type", data_schema=schema)
 
     async def async_step_customize_select(
@@ -861,8 +864,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if self._customize_index >= len(types):
             if self._show_sensor_config:
                 return await self.async_step_sensor()
-            else:
-                return await self.finish()
+            return await self.finish()
 
         errors = {}
 

@@ -27,9 +27,9 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule import Icons  # noqa: E402
-from waste_collection_schedule.exceptions import SourceArgumentNotFound  # noqa: E402
-from waste_collection_schedule.source import hillingdon_gov_uk  # noqa: E402
+from waste_collection_schedule import Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.source import hillingdon_gov_uk
 
 # ---------------------------------------------------------------------------
 # Shared fixtures and helpers

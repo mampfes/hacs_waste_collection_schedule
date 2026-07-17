@@ -110,7 +110,7 @@ class Source:
         # First GET: server returns 302 with JSESSIONID in the first Set-Cookie header.
         # The server sends two Set-Cookie headers; the second is a malformed "Secure; HttpOnly"
         # that would overwrite JSESSIONID in a dict.  We use raw header iteration instead.
-        status, raw_headers, _ = self._get(conn, FORM_PATH)
+        _status, raw_headers, _ = self._get(conn, FORM_PATH)
         jsessionid = None
         for k, v in raw_headers:
             if k.lower() == "set-cookie" and "JSESSIONID=" in v:
@@ -123,11 +123,11 @@ class Source:
 
         # Second GET: follows the location from the 302
         loc1 = self._header(raw_headers, "location") or FORM_PATH
-        status, raw_headers, _ = self._get(conn, f"/ufs/{loc1}", jsessionid)
+        _status, raw_headers, _ = self._get(conn, f"/ufs/{loc1}", jsessionid)
 
         # Third GET: follows to the parameterised form URL (ebd=0&ebp=10&ebz=...)
         loc2 = self._header(raw_headers, "location") or loc1
-        status, raw_headers, body = self._get(conn, f"/ufs/{loc2}", jsessionid)
+        _status, raw_headers, body = self._get(conn, f"/ufs/{loc2}", jsessionid)
 
         soup = BeautifulSoup(body, "html.parser")
         form = soup.find("form")

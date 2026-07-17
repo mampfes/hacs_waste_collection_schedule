@@ -43,7 +43,7 @@ class Source:
         r = s.get(
             f"https://www.eastdunbarton.gov.uk/services/a-z-of-services/bins-waste-and-recycling/bins-and-recycling/collections/?uprn={self._uprn}"
         )
-        r.raise_for_status
+        r.raise_for_status()
         soup = BeautifulSoup(r.content, "html.parser")
 
         entries = []

@@ -1,5 +1,4 @@
 import re
-from typing import List
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
@@ -47,11 +46,11 @@ AREA_NAME_PATTERN = re.compile(r"- (EB .+?)\.ics$")
 
 
 class Source:
-    def __init__(self, areas: List[str]):
+    def __init__(self, areas: list[str]):
         self._areas = areas
         self._ics = ICS()
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         # Fetch the waste calendar page
         r = requests.get(
             CALENDAR_PAGE_URL,
@@ -69,7 +68,7 @@ class Source:
                 area_name = m.group(1)
                 available[area_name] = ics_url
 
-        entries: List[Collection] = []
+        entries: list[Collection] = []
         for area in self._areas:
             # Case-insensitive match
             matched_url = None

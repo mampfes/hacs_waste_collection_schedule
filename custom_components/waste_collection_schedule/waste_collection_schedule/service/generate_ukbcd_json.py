@@ -17,10 +17,10 @@ FILENAME = "test_ukbcd.json"
 WASTES = ["Refuse", "Recycling", "Garden", "Food", "Paper & Cardboard", "Batteries"]
 
 data: dict = {"bins": []}
-year = datetime.date.today().year
-for year in range(year, year + 6):
+start_year = datetime.date.today().year
+for year in range(start_year, start_year + 6):
     for month in range(1, 13):
-        for days in range(0, 4):
+        for _days in range(4):
             day = randint(1, 28)
             dt = f"{day:02d}" + "/" + f"{month:02d}" + "/" + f"{year:04d}"
             dict_data = {"type": choice(WASTES), "collectionDate": dt}

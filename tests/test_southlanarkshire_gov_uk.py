@@ -17,11 +17,11 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule.exceptions import (  # noqa: E402
+from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
-from waste_collection_schedule.source import southlanarkshire_gov_uk  # noqa: E402
+from waste_collection_schedule.source import southlanarkshire_gov_uk
 
 _PREMISES_JSON = json.dumps(
     [

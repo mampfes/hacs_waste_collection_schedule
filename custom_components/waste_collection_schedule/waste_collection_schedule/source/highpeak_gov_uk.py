@@ -1,10 +1,14 @@
+import json
 import logging
 import re
 from datetime import datetime
 
 import requests
-from bs4 import BeautifulSoup, Tag
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,114 +20,123 @@ TEST_CASES = {
     "S33 7ZA, 10010747174": {"postcode": "S33 7ZA", "uprn": "10010747174"},
     " SK13 2AD, 10010734345": {"postcode": "SK13 2AD", "uprn": "10010734345"},
 }
-BIN_TYPE_SPLIT_REGEX = re.compile(r"\b and \b|\b with \b|\b \& \b")
 
 ICON_MAP = {
     "Rubbish": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
+    "Organic": Icons.BIO_KITCHEN,
     "Food": Icons.BIO_KITCHEN,
     "Garden": Icons.GARDEN,
 }
 
+# High Peak Borough Council migrated their bin day lookup from a standalone
+# form (article/6348/Find-your-bin-day, now 404) to a Bartec Municipal
+# "Public Dashboard" portal. See southlanarkshire_gov_uk.py /
+# scotborders_gov_uk.py for other sources using the same Bartec platform.
+API_URL = "https://bins.highpeak.gov.uk/PublicDashboard"
 
-API_URL = "https://www.highpeak.gov.uk/article/6348/Find-your-bin-day"
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+}
+
+TOKEN_REGEX = re.compile(r'name="__RequestVerificationToken"[^>]*value="([^"]+)"')
+DATASOURCE_REGEX = re.compile(
+    r'dataSource":\s*ejs\.data\.DataUtil\.parse\.isJson\(\s*(\[.*?\])\s*\)',
+    re.DOTALL,
+)
 
 
 class Source:
     def __init__(self, postcode: str, uprn: str | int):
-        self._postcode: str = postcode
-        self._uprn: str = str(uprn)
+        self._postcode: str = postcode.strip()
+        self._uprn: str = str(uprn).strip()
 
-    def _extract_all_form_data(
-        self, soup: BeautifulSoup
-    ) -> tuple[dict[str, str | list[str]], str]:
-        form_data = {}
-        inputs = soup.select("input") + soup.select("select")
-        for input in inputs:
-            if input.get("name"):
-                name = input["name"]
-                if not isinstance(name, str) or name == "go":
-                    continue
-                if name is not None:
-                    form_data[name] = input.get("value", "")
-                if name.lower().endswith("postcode"):
-                    form_data[name] = self._postcode
-                if name.lower().endswith("address"):
-                    form_data[name] = ["", self._uprn]
-                if name.lower().endswith("_variables"):
-                    form_data[name] = "e30="
-        form_url_tag = soup.find("form", id="FINDBINDAYSHIGHPEAK_FORM")
-        form_url = form_url_tag.get("action") if isinstance(form_url_tag, Tag) else None
+    @staticmethod
+    def _get_token(html: str) -> str:
+        match = TOKEN_REGEX.search(html)
+        if not match:
+            raise Exception(
+                "Could not find verification token on High Peak bin day lookup page."
+            )
+        return match.group(1)
 
-        return form_data, form_url  # type: ignore[return-value]
+    @staticmethod
+    def _extract_json_blocks(html: str) -> list[list[dict]]:
+        blocks = []
+        for raw in DATASOURCE_REGEX.findall(html):
+            try:
+                data = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(data, list):
+                blocks.append(data)
+        return blocks
 
     def fetch(self) -> list[Collection]:
-        s = requests.Session()
+        session = requests.Session()
+        session.headers.update(HEADERS)
 
-        r = s.get(API_URL)
+        # Step 1: load the dashboard to obtain the anti-forgery token
+        r = session.get(API_URL)
         r.raise_for_status()
-        s.headers.update(
-            {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            }
+        token = self._get_token(r.text)
+
+        # Step 2: search for the postcode to obtain the list of premises
+        r = session.post(
+            f"{API_URL}?handler=SearchPostcode",
+            data={
+                "__RequestVerificationToken": token,
+                "SelectedPostcode": self._postcode,
+            },
+        )
+        r.raise_for_status()
+        token = self._get_token(r.text)
+
+        premises_blocks = [
+            block
+            for block in self._extract_json_blocks(r.text)
+            if block and "UPRN" in block[0]
+        ]
+        if not premises_blocks:
+            raise SourceArgumentNotFound("postcode", self._postcode)
+
+        known_uprns = sorted(
+            {str(int(item["UPRN"])) for item in premises_blocks[0] if "UPRN" in item}
         )
 
-        BASE_URL = "https://" + r.url.replace("https://", "").split("/")[0]
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        form_data, next_url = self._extract_all_form_data(soup)
-
-        form_data["FINDBINDAYSHIGHPEAK_FORMACTION_NEXT"] = (
-            "FINDBINDAYSHIGHPEAK_POSTCODESELECT_PAGE1NEXT"
+        # Step 3: select the premises (by UPRN) to obtain the collection schedule
+        r = session.post(
+            f"{API_URL}?handler=SelectPrem",
+            data={
+                "__RequestVerificationToken": token,
+                "SelectedPostcode": self._postcode,
+                "SelectedPremises": self._uprn,
+            },
         )
-
-        if next_url.startswith("/"):
-            next_url = BASE_URL + next_url
-
-        r = s.post(next_url, data=form_data)
         r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
 
-        form_data, next_url = self._extract_all_form_data(soup)
+        schedule_blocks = [
+            block
+            for block in self._extract_json_blocks(r.text)
+            if block and "Subject" in block[0]
+        ]
+        if not schedule_blocks:
+            raise SourceArgumentNotFoundWithSuggestions("uprn", self._uprn, known_uprns)
 
-        form_data["FINDBINDAYSHIGHPEAK_FORMACTION_NEXT"] = (
-            "FINDBINDAYSHIGHPEAK_ADDRESSSELECT_ADDRESSSELECTNEXTBTN"
-        )
-
-        if next_url.startswith("/"):
-            next_url = BASE_URL + next_url
-        r = s.post(next_url, data=form_data)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
         entries = []
-        for month_heading in soup.select("h3.bin-collection__title--month"):
-            month = month_heading.text.strip()
-            collections_panel = month_heading.find_next(
-                "ol", class_="bin-collection__list"
-            )
-            if not isinstance(collections_panel, Tag):
-                _LOGGER.warning(
-                    "Could not find collections panel for month %s, skipping", month
-                )
+        for item in schedule_blocks[0]:
+            subject = item.get("Subject")
+            date_str = item.get("StartTime")
+            if not subject or not date_str:
                 continue
-            for day_tag in collections_panel.find_all(
-                "span", class_="bin-collection__number"
-            ):
-                day = day_tag.text.strip()
-                bin_type_tag = day_tag.find_next("span", class_="bin-collection__type")
-                bin_type = bin_type_tag.text.strip()
-                try:
-                    date_ = datetime.strptime(f"{day} {month}", "%d %B %Y").date()
-                except ValueError:
-                    _LOGGER.warning("Could not parse date %s %s", day, month)
-                    continue
+            try:
+                date_ = datetime.fromisoformat(date_str).date()
+            except ValueError:
+                _LOGGER.warning("Could not parse date %s", date_str)
+                continue
 
-                for bin_type_split in re.split(BIN_TYPE_SPLIT_REGEX, bin_type):
-                    bin_type_split = bin_type_split.strip().capitalize()
-                    icon = ICON_MAP.get(bin_type_split)
-                    entries.append(Collection(date=date_, t=bin_type_split, icon=icon))
+            entries.append(
+                Collection(date=date_, t=subject, icon=ICON_MAP.get(subject))
+            )
 
         return entries

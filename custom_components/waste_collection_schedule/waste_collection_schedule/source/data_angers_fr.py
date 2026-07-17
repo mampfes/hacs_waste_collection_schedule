@@ -216,7 +216,7 @@ CONFIG_FLOW_TYPES = {
     },
     "city": {
         "type": "SELECT",
-        "values": [f for f in CITY_NAME],
+        "values": list(CITY_NAME),
         "multiple": False,
     },
     "num_voie": {
@@ -297,7 +297,7 @@ class Source:
         # For icote "P" / "I" check if the num_voie is even or odd.
         if secteur["icote"] == "P":
             return num_is_even
-        elif secteur["icote"] == "I":
+        if secteur["icote"] == "I":
             return not num_is_even
 
         # "T" icote or unknown icote means no restriction on num_voie other than the range.
@@ -321,7 +321,7 @@ class Source:
         except requests.RequestException as e:
             raise SourceArgumentException(
                 "address", f"Error fetching address data: {e}"
-            )
+            ) from e
 
         entries: list[EntryType] = []
         for id_secteur in id_secteurs:
@@ -352,7 +352,7 @@ class Source:
             except requests.RequestException as e:
                 raise SourceArgumentException(
                     "city", f"Error fetching collection data: {e}"
-                )
+                ) from e
         final_entries = []
         # print(entries)
         for entry in entries:

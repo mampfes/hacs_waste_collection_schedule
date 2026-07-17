@@ -3,7 +3,8 @@ import fnmatch
 import importlib
 import logging
 import traceback
-from typing import Dict, Iterable, List, Optional, Protocol
+from collections.abc import Iterable
+from typing import Protocol
 
 from .collection import Collection
 
@@ -18,7 +19,7 @@ def _is_glob(key: str) -> bool:
 
 
 def match_customize(
-    customize: Dict[str, "Customize"], waste_type: str
+    customize: dict[str, "Customize"], waste_type: str
 ) -> "Customize | None":
     """Return the Customize entry for a waste type.
 
@@ -38,7 +39,7 @@ def match_customize(
 
 
 class Fetchable(Protocol):
-    def fetch(self) -> list[Collection]: ...  # noqa: E704
+    def fetch(self) -> list[Collection]: ...
 
 
 class SourceModule(Protocol):
@@ -102,15 +103,14 @@ class Customize:
         return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}}}"
 
 
-def filter_function(entry: Collection, customize: Dict[str, Customize]):
+def filter_function(entry: Collection, customize: dict[str, Customize]):
     c = match_customize(customize, entry.type)
     if c is None:
         return True
-    else:
-        return c.show
+    return c.show
 
 
-def customize_function(entry: Collection, customize: Dict[str, Customize]):
+def customize_function(entry: Collection, customize: dict[str, Customize]):
     c = match_customize(customize, entry.type)
     if c is not None:
         if c.alias is not None:
@@ -131,11 +131,11 @@ class SourceShell:
     def __init__(
         self,
         source: Fetchable,
-        customize: Dict[str, Customize],
+        customize: dict[str, Customize],
         title: str,
         description: str,
-        url: Optional[str],
-        calendar_title: Optional[str],
+        url: str | None,
+        calendar_title: str | None,
         unique_id: str,
         day_offset: int,
         ignore_duplicates: bool = False,
@@ -148,7 +148,7 @@ class SourceShell:
         self._calendar_title = calendar_title
         self._unique_id = unique_id
         self._refreshtime: datetime.datetime | None = None
-        self._entries: List[Collection] = []
+        self._entries: list[Collection] = []
         self._day_offset = day_offset
         self._ignore_duplicates = ignore_duplicates
 
@@ -200,18 +200,18 @@ class SourceShell:
         entries = filter(lambda x: filter_function(x, self._customize), entries)
 
         # customize fetched entries
-        entries = map(lambda x: customize_function(x, self._customize), entries)
+        entries = (customize_function(x, self._customize) for x in entries)
 
         # apply day offset
         if self._day_offset != 0:
-            entries = map(lambda x: apply_day_offset(x, self._day_offset), entries)
+            entries = (apply_day_offset(x, self._day_offset) for x in entries)
 
         result = list(entries)
 
         # remove duplicate (date, type) pairs, keeping first occurrence
         if self._ignore_duplicates:
             seen: set[tuple] = set()
-            unique: List[Collection] = []
+            unique: list[Collection] = []
             for e in result:
                 key = (e.date, e.type)
                 if key not in seen:
@@ -256,9 +256,9 @@ class SourceShell:
     @staticmethod
     def create(
         source_name: str,
-        customize: Dict[str, Customize],
+        customize: dict[str, Customize],
         source_args,
-        calendar_title: Optional[str] = None,
+        calendar_title: str | None = None,
         day_offset: int = 0,
         ignore_duplicates: bool = False,
     ) -> "SourceShell | None":

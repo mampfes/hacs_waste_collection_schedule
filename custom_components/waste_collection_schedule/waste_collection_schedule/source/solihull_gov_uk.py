@@ -85,6 +85,5 @@ class Source:
                             )
                     except Exception as e:
                         _LOGGER.warning(f"Error predicting next collection: {e}")
-                        pass
 
         return entries

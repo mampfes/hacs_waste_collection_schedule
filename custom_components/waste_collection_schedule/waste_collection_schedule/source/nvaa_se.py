@@ -68,7 +68,7 @@ def parse_date(next_pickup_date):
             "november": 11,
             "december": 12,
         }
-        day, day_number, month, year = next_pickup_date.split()
+        _day, day_number, month, year = next_pickup_date.split()
         month = swedish_months[month]
         date_obj = datetime.strptime(f"{year}-{month}-{day_number}", "%Y-%m-%d").date()
 

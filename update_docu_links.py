@@ -7,10 +7,11 @@ import json
 import re
 import site
 import sys
-from functools import lru_cache
+from collections.abc import Callable
+from functools import cache
 from pathlib import Path
 from types import ModuleType
-from typing import Any, Callable, Tuple, TypedDict, TypeVar
+from typing import Any, TypedDict, TypeVar
 
 if sys.version_info >= (3, 11):
     from typing import NotRequired
@@ -71,7 +72,7 @@ def sort_lang_param_dict(d: dict[str, dict[str, T]]) -> dict[str, dict[str, T]]:
     return d
 
 
-def extract_urls_from_text(text: str) -> Tuple[str, dict[str, str]]:
+def extract_urls_from_text(text: str) -> tuple[str, dict[str, str]]:
     """Extract URLs from text and return cleaned text with placeholder.
 
     Removes both plain URLs (http://.../https://...) and Markdown links ([text](url)).
@@ -152,12 +153,20 @@ class SourceInfo:
         url: str,
         country: str,
         params: list[str],
-        extra_info_default_params: dict[str, Any] = {},
-        custom_param_translation: dict[str, dict[str, str]] = {},
-        custom_param_description: dict[str, dict[str, str]] = {},
-        custom_howto: dict[str, str] = {},
+        extra_info_default_params: dict[str, Any] | None = None,
+        custom_param_translation: dict[str, dict[str, str]] | None = None,
+        custom_param_description: dict[str, dict[str, str]] | None = None,
+        custom_howto: dict[str, str] | None = None,
         source_owners: list[str] | None = None,
     ):
+        if custom_howto is None:
+            custom_howto = {}
+        if custom_param_description is None:
+            custom_param_description = {}
+        if custom_param_translation is None:
+            custom_param_translation = {}
+        if extra_info_default_params is None:
+            extra_info_default_params = {}
         self._filename = filename
         self._module = module
         self._title = title
@@ -303,11 +312,15 @@ class IcsSourceInfo(SourceInfo):
         url: str,
         country: str,
         limit_params: list[str],
-        extra_info_default_params: dict[str, Any] = {},
-        custom_howto: dict[str, str] = {},
+        extra_info_default_params: dict[str, Any] | None = None,
+        custom_howto: dict[str, str] | None = None,
         source_owners: list | None = None,
         ics_stem: str | None = None,
     ):
+        if custom_howto is None:
+            custom_howto = {}
+        if extra_info_default_params is None:
+            extra_info_default_params = {}
         _, ics_sources = get_source_by_file("ics")
         ics_source = ics_sources[0]
         params = set(ics_source.params) - set(limit_params)
@@ -434,7 +447,7 @@ def browse_sources() -> list[SourceInfo]:
 
     files = filter(
         lambda x: x != "__init__",
-        map(lambda x: x.stem, SOURCE_DIR.glob("*.py")),
+        (x.stem for x in SOURCE_DIR.glob("*.py")),
     )
 
     modules: dict[str, ModuleType] = {}
@@ -456,7 +469,7 @@ def browse_sources() -> list[SourceInfo]:
     return sources
 
 
-@lru_cache(maxsize=None)
+@cache
 def get_source_by_file(file: str) -> tuple[ModuleType, list[SourceInfo]]:
     # iterate through all *.py files in waste_collection_schedule/source
     module = importlib.import_module(f"waste_collection_schedule.source.{file}")
@@ -668,7 +681,7 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
     source_metadata_by_module: dict[str, dict[str, Any]] = {}
     source_owners_by_module: dict[str, list[str]] = {}
 
-    for country in ["Generic"] + sorted(c for c in countries if c != "Generic"):
+    for country in ["Generic", *sorted(c for c in countries if c != "Generic")]:
         output[country] = []
         for e in sorted(
             countries[country],
@@ -737,7 +750,7 @@ def update_sources_json(countries: dict[str, list[SourceInfo]]) -> None:
 
 def get_custom_translations(
     countries: dict[str, list[SourceInfo]],
-) -> Tuple[
+) -> tuple[
     dict[str, dict[str, dict[str, str | None]]],
     dict[str, dict[str, dict[str, str | None]]],
     dict[str, dict[str, str | None]],
@@ -792,8 +805,10 @@ def get_custom_translations(
 
 
 def update_json(
-    countries: dict[str, list[SourceInfo]], generics: list[SourceInfo] = []
+    countries: dict[str, list[SourceInfo]], generics: list[SourceInfo] | None = None
 ):
+    if generics is None:
+        generics = []
     countries = countries.copy()
     countries["Generic"] = generics
     update_sources_json(countries)
@@ -801,7 +816,7 @@ def update_json(
         param_translations,
         param_descriptions,
         source_howto,
-        source_doc_url,
+        _source_doc_url,
     ) = get_custom_translations(countries)
 
     for lang in LANGUAGES:
@@ -833,7 +848,7 @@ def update_json(
         # sorted order of the keys
         step_keys = list(translations["config"]["step"].keys())
         for key in step_keys:
-            if key.startswith("args_") or key.startswith("reconfigure_"):
+            if key.startswith(("args_", "reconfigure_")):
                 translations["config"]["step"].pop(key)
 
         for key, value in (
@@ -858,20 +873,20 @@ def update_json(
 
         for module, module_params in param_translations.items():
             translations["config"]["step"][f"args_{module}"] = keys_for_all_args.copy()
-            translations["config"]["step"][
-                f"reconfigure_{module}"
-            ] = keys_for_all_reconfigure.copy()
+            translations["config"]["step"][f"reconfigure_{module}"] = (
+                keys_for_all_reconfigure.copy()
+            )
 
-            translations["config"]["step"][f"args_{module}"][
-                "data"
-            ] = translation_for_all.copy()
-            translations["config"]["step"][f"reconfigure_{module}"][
-                "data"
-            ] = translation_for_all.copy()
+            translations["config"]["step"][f"args_{module}"]["data"] = (
+                translation_for_all.copy()
+            )
+            translations["config"]["step"][f"reconfigure_{module}"]["data"] = (
+                translation_for_all.copy()
+            )
 
-            translations["config"]["step"][f"args_{module}"][
-                "data_description"
-            ] = description_for_all_args.copy()
+            translations["config"]["step"][f"args_{module}"]["data_description"] = (
+                description_for_all_args.copy()
+            )
             translations["config"]["step"][f"reconfigure_{module}"][
                 "data_description"
             ] = description_for_all_reconfigure.copy()
@@ -1137,6 +1152,10 @@ COUNTRYCODES = [
         "name": "Hungary",
     },
     {
+        "code": "is",
+        "name": "Iceland",
+    },
+    {
         "code": "ie",
         "name": "Ireland",
     },
@@ -1203,6 +1222,14 @@ COUNTRYCODES = [
     {
         "code": "us",
         "name": "United States of America",
+    },
+    {
+        "code": "uy",
+        "name": "Uruguay",
+    },
+    {
+        "code": "za",
+        "name": "South Africa",
     },
     {
         "code": "uk",

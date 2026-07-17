@@ -53,9 +53,9 @@ class Source:
             week_modulus = week % 2
 
             # return true if the week modulus corresponds to the collection interval
-            if (interval == "EVEN") and (week_modulus == 0):
-                return True
-            elif (interval == "ODD") and (week_modulus == 1):
+            if ((interval == "EVEN") and (week_modulus == 0)) or (
+                (interval == "ODD") and (week_modulus == 1)
+            ):
                 return True
         return False
 

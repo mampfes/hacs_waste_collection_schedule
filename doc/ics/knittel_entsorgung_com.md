@@ -20,3 +20,12 @@ waste_collection_schedule:
       args:
         url: https://www.knittel-entsorgung.com/wp-content/uploads/2025/11/NERSINGEN_Nersingen_Leibi_Ober-Unterfahlheim_Strass_2026.ics
 ```
+### Illertissen-Ost
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.knittel-entsorgung.com/wp-content/uploads/2025/11/ILLERTISSEN_Illertissen-OST_2026.ics
+```

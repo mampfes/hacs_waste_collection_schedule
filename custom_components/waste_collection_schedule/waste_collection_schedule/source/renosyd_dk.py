@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -36,7 +35,7 @@ class Source:
         house_number = str(house_number).zfill(6)
         self._api_url = f"https://skoda-selvbetjeningsapi.renosyd.dk/api/v1/toemmekalender?nummer={house_number}"
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         response = requests.get(self._api_url)
         response.raise_for_status()
         data = response.json()

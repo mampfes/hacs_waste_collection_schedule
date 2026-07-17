@@ -24,7 +24,7 @@ def ask_city():
         )
     ]
     city_id = inquirer.prompt(questions)["city"]
-    city = [c["name"] for c in cities if c["_id"] == city_id][0]
+    city = next(c["name"] for c in cities if c["_id"] == city_id)
 
     return [city_id, city]
 

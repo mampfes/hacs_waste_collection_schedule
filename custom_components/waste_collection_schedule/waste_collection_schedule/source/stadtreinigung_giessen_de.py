@@ -124,9 +124,8 @@ class Source:
         if letter == "Z":
             # For Z, use [ which comes after Z in ASCII
             return (letter, "[")
-        else:
-            next_letter = chr(ord(letter) + 1)
-            return (letter, next_letter)
+        next_letter = chr(ord(letter) + 1)
+        return (letter, next_letter)
 
     def _load_streets_for_letter(
         self, session: requests.Session, letter: str

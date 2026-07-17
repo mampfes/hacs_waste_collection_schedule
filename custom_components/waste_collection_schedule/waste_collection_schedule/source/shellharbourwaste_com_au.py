@@ -1,7 +1,7 @@
 from datetime import datetime
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons
 
 TITLE = "Shellharbour City Council"
@@ -13,18 +13,18 @@ TEST_CASES = {"TestName1": {"zoneID": "Monday A"}, "TestName2": {"zoneID": "Frid
 API_URL = "https://www.shellharbourwaste.com.au/waste-collection"
 
 ICON_MAP = {
-    "Waste": Icons.GENERAL_WASTE,
-    "FOGO": Icons.BIO_KITCHEN,
+    "General Waste": Icons.GENERAL_WASTE,
+    "Garden Waste": Icons.GARDEN,
     "Recycling": Icons.RECYCLING,
 }
 
 
-def findUrl(zoneID):
+def findUrl(zoneID, session):
     # Take Zone ID and find url to parse
-    r = requests.get(
+    r = session.get(
         f"https://www.shellharbourwaste.com.au/wp-json/rb_co/v1/get-waste-url?zone={zoneID}"
     )
-    r.raise_for_status
+    r.raise_for_status()
     d = r.json()
     return d["url"]
 
@@ -34,22 +34,29 @@ class Source:
         self._zoneID = zoneID
 
     def fetch(self):
-        data = {"Referer": "https://www.shellharbourwaste.com.au/find-my-bin-day/"}
-        pageurl = findUrl(self._zoneID)
-        r = requests.get(f"{pageurl}", data=data)
+        session = requests.Session(impersonate="chrome")
+        pageurl = findUrl(self._zoneID, session)
+        r = session.get(
+            pageurl,
+            headers={
+                "Referer": "https://www.shellharbourwaste.com.au/find-my-bin-day/"
+            },
+        )
         r.raise_for_status()
         soup = BeautifulSoup(r.content, "html.parser")
         collections = soup.select("div.waste-block__content")
         entries = []
         for entry in collections:
-            waste_type = entry.find("h3", class_="waste-block__title").text
+            waste_type = entry.find("h3", class_="waste-block__title").text.strip()
+            # Strip trailing bin-colour hint, e.g. "General Waste (Red lid)" -> "General Waste"
+            waste_type = waste_type.split(" (")[0]
             date_string = entry.find("time", class_="waste-block__time").text.strip()
             pickupdate = datetime.strptime(date_string, "%d/%m/%Y")
             entries.append(
                 Collection(
                     date=pickupdate.date(),
-                    t=waste_type.split("/")[0],
-                    icon=ICON_MAP.get(waste_type.split("/")[0]),
+                    t=waste_type,
+                    icon=ICON_MAP.get(waste_type),
                 )
             )
         return entries

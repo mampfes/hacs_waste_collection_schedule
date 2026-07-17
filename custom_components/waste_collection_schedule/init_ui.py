@@ -17,8 +17,8 @@ from .waste_collection_schedule.service.DeviceKeyStore import (
 )
 from .wcs_coordinator import WCSCoordinator
 
-from . import const  # type: ignore # isort:skip # noqa: E402
-from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip # noqa: E402
+from . import const  # type: ignore # isort:skip
+from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -127,7 +127,7 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
     _LOGGER.debug("minor version %s", config_entry.minor_version)
 
     # Version number has gone backwards
-    if const.CONFIG_VERSION < config_entry.version:
+    if config_entry.version > const.CONFIG_VERSION:
         _LOGGER.error(
             "Backwards migration not possible. Please update the integration."
         )

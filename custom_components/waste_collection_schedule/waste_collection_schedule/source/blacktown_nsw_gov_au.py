@@ -1,8 +1,8 @@
 import datetime
 import json
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
 TITLE = "Blacktown City Council (NSW)"
@@ -70,7 +70,7 @@ class Source:
         self.street_number = street_number
 
     def fetch(self):
-        session = requests.Session()
+        session = requests.Session(impersonate="chrome")
         session.headers.update(HEADERS)
 
         # Retrieve suburbs

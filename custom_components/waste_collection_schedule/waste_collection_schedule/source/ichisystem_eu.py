@@ -3,7 +3,6 @@
 import re
 from datetime import date, datetime
 from html.parser import HTMLParser
-from typing import List, Optional
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -128,7 +127,7 @@ def _strip_pl(text: str) -> str:
     return re.sub(r"\s+", " ", text.translate(table).lower()).strip()
 
 
-def _icon_for(waste_type: str) -> Optional[str]:
+def _icon_for(waste_type: str) -> str | None:
     key = _strip_pl(waste_type)
     for needle, icon in ICON_MAP.items():
         if needle in key:
@@ -151,10 +150,10 @@ class _ScheduleTableParser(HTMLParser):
         self._in_tbody = False
         self._in_tr = False
         self._in_cell = False
-        self._cell_text: List[str] = []
-        self._current_row: List[str] = []
-        self.headers: List[str] = []
-        self.rows: List[List[str]] = []
+        self._cell_text: list[str] = []
+        self._current_row: list[str] = []
+        self.headers: list[str] = []
+        self.rows: list[list[str]] = []
         self._captured = False
 
     def handle_starttag(self, tag: str, attrs):  # type: ignore[override]
@@ -223,7 +222,7 @@ class Source:
             arg_name, target, suggestions=suggestions
         )
 
-    def fetch(self) -> List[Collection]:
+    def fetch(self) -> list[Collection]:
         cities = self._get_json("/addresses/cities")
         city = self._find(cities, self._city, "city")
 
@@ -238,7 +237,7 @@ class Source:
             return []
 
         today = date.today()
-        entries: List[Collection] = []
+        entries: list[Collection] = []
         seen: set = set()
 
         for year_entry in years:
@@ -277,7 +276,7 @@ class Source:
         return entries
 
     @staticmethod
-    def _parse_schedule(html: str, year: int) -> List[Collection]:
+    def _parse_schedule(html: str, year: int) -> list[Collection]:
         parser = _ScheduleTableParser()
         parser.feed(html)
 
@@ -286,7 +285,7 @@ class Source:
 
         # First header column is the month name; remaining are waste types.
         waste_types = parser.headers[1:]
-        results: List[Collection] = []
+        results: list[Collection] = []
 
         for row in parser.rows:
             if not row:

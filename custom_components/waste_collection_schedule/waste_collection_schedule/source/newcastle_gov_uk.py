@@ -44,6 +44,16 @@ class Source:
         entries = []
         res = requests.get(f"{API_URL}?uprn={self._uprn}")
 
+        if "not currently available" in res.text:
+            _LOGGER.warning(
+                "Newcastle City Council has retired the community.newcastle.gov.uk "
+                "bin lookup used by this source. Bin collection info is now provided "
+                "via ReCollect (area 'NewcastleUponTyneUK') on "
+                "https://new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day "
+                "- please switch to the shared ReCollect ICS source, see "
+                "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md"
+            )
+
         for section_match in SECTION_RE.finditer(res.text):
             collection_type = section_match.group(1)
             section_text = section_match.group(2)

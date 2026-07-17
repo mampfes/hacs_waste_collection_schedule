@@ -1,5 +1,4 @@
 import logging
-from typing import Optional, Union
 
 import requests
 from bs4 import BeautifulSoup
@@ -20,11 +19,11 @@ class WhitespaceClient:
 
     def fetch_schedule(
         self,
-        address_name_number: Union[str, int, None],
+        address_name_number: str | int | None,
         address_postcode: str,
         *,
-        address_street: Optional[str] = None,
-        street_town: Optional[str] = None,
+        address_street: str | None = None,
+        street_town: str | None = None,
     ) -> list:
         """Perform the full 4-step WRP scrape.
 
@@ -102,8 +101,13 @@ class WhitespaceClient:
             raise ValueError("Could not find scheduled-collections section on WRP page")
 
         results = []
-        for u1 in scheduled.find_all("u1"):
-            lis = u1.find_all("li", recursive=False)
+        # Some WRP portals emit well-formed "<ul>" list markup, while others
+        # (e.g. Lancaster) emit a malformed "<u1>" tag (digit one instead of
+        # letter "l") for the same list structure. Match both so the shared
+        # client keeps working regardless of which variant a given council's
+        # portal serves.
+        for ul in scheduled.find_all(["ul", "u1"]):
+            lis = ul.find_all("li", recursive=False)
             if len(lis) < 3:
                 continue
 

@@ -125,7 +125,9 @@ class Source:
             try:
                 track_token = dynamic_link.split("Track=")[1].split("&")[0]  # type: ignore[union-attr]
             except IndexError:
-                raise ValueError("Could not parse dynamic Track token in Step 1.")
+                raise ValueError(
+                    "Could not parse dynamic Track token in Step 1."
+                ) from None
 
             # --- STEP 2: Submit the Address ---
             post_url = f"{BASE_URL}/mop.php?serviceID=A&Track={track_token}&seq=2"

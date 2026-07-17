@@ -181,7 +181,7 @@ class Source:
         entries = []
         # Searching for the weekday in the sentence
         collection_day = None
-        for day in WEEKDAYS.keys():
+        for day in WEEKDAYS:
             if re.search(day, schedule_message, re.IGNORECASE):
                 collection_day = WEEKDAYS[day]
                 break  # Stop searching if the day is found
@@ -242,7 +242,7 @@ class Source:
             elif re.match(r"(.*\d+.*){1,}", line):
                 # Multiple dates ?
                 dates_defined = True
-                for month, month_id in MONTHS.items():
+                for month in MONTHS:
                     if re.search(rf"{month}", line, re.IGNORECASE):
                         months_found.append(month)
 

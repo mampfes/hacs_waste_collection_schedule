@@ -1,16 +1,17 @@
 import os
 import sys
+from collections.abc import Iterable
 from functools import cache
 from importlib import import_module
 from inspect import Parameter, signature
 from types import GeneratorType, ModuleType
-from typing import Any, Iterable, Type
+from typing import Any
 from unittest.mock import patch
 
 import yaml
 
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # isort:skip # noqa: E402
-from update_docu_links import (  # isort:skip # noqa: E402
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # isort:skip
+from update_docu_links import (  # isort:skip
     BLACK_LIST,
     COUNTRYCODES,
     LANGUAGES,
@@ -21,7 +22,7 @@ SOURCES_TO_EXCLUDE = ["__init__.py", "example.py"]
 SOURCES_EXCLUDE_TEST_CASE_CHECK = ["multiple"]
 
 
-EXTRA_INFO_TYPES: dict[str, Type] = {
+EXTRA_INFO_TYPES: dict[str, type] = {
     "title": str,
     "url": str,
     "country": str,
@@ -223,7 +224,9 @@ def _test_source_has_necessary_parameters_extra_info(
         try:
             extra_info = extra_info()
         except Exception as e:
-            assert False, f"EXTRA_INFO() function in source {source} failed with {e}"
+            raise AssertionError(
+                f"EXTRA_INFO() function in source {source} failed with {e}"
+            ) from e
 
         # check if is iterable (list, tupüle, set)
         assert isinstance(extra_info, (list, tuple, set, GeneratorType)), (
@@ -422,10 +425,8 @@ SOURCES_ALLOWED_RAW_ICONS: set[str] = {
     "insert_it_de",  # nested {region: {waste_type: {icon, name}}} structure
     "landkreis_helmstedt_de",  # computed keys
     "potsdam_de",  # integer keys
-    "sepan_remondis_pl",  # dynamic ICON_MAP construction
     "wermelskirchen_de",  # dynamic ICON_MAP construction
     "woollahra_nsw_gov_au",  # dynamic ICON_MAP construction
-    "zys_harmonogram_pl",  # dynamic ICON_MAP construction
 }
 
 
@@ -495,12 +496,67 @@ def test_uk_cloud9_client_falls_back_to_secondary_domain(monkeypatch) -> None:
     ]
 
 
+def test_koma_pl_resolves_house_number_and_parses_schedule() -> None:
+    module = _get_module("koma_pl")
+
+    posesje = [
+        {"numer_posesji": "ND00050", "numer_domu": "4/1", "ulica": "Kanałowa"},
+        {"numer_posesji": "1941", "numer_domu": "5", "ulica": "Kanałowa"},
+    ]
+    schedule = {
+        "rok": "2026",
+        "odbior": [
+            {"data": "2026-01-07", "typ": "Bio"},
+            {"data": "2026-01-15", "typ": "Zmieszane"},
+            {"data": "bad-date", "typ": "Papier"},
+        ],
+    }
+
+    class _Response:
+        def __init__(self, payload):
+            self._payload = payload
+
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self):
+            return self._payload
+
+    requested = []
+
+    class _Session:
+        def get(self, url, params=None, timeout=None):
+            requested.append((url, params))
+            if "apiharmonogram" in url:
+                return _Response(schedule)
+            return _Response(posesje)
+
+    with patch.object(module.requests, "Session", lambda **kwargs: _Session()):
+        entries = module.Source(
+            gmina="Nowy Dwór Gdański",
+            miejscowosc="Nowy Dwór Gdański",
+            ulica="Kanałowa",
+            numer_domu="5",
+        ).fetch()
+
+    # House number "5" must resolve to property id 1941 in the schedule request.
+    assert any(
+        params and params.get("value") == "Nowy Dwór Gdański/1941"
+        for _, params in requested
+    )
+    # Valid dates parsed, invalid date skipped.
+    assert [(entry.date.isoformat(), entry.type) for entry in entries] == [
+        ("2026-01-07", "Bio"),
+        ("2026-01-15", "Zmieszane"),
+    ]
+
+
 def test_uk_cloud9_client_requires_api_domains() -> None:
     module = import_module("waste_collection_schedule.service.uk_cloud9_apps")
 
     try:
         module.Cloud9Client("rugby", api_domains=())
-        assert False, "Expected ValueError when no API domains are configured"
+        raise AssertionError("Expected ValueError when no API domains are configured")
     except ValueError as err:
         assert "At least one API domain" in str(err)
 

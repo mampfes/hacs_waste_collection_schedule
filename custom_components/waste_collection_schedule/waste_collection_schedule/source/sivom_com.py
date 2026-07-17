@@ -2,7 +2,6 @@ import datetime
 import logging
 import re
 import unicodedata
-from typing import Optional
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -212,7 +211,7 @@ class Source:
 
         # Find matching street (case-insensitive exact match first)
         street_lower = self._street.lower()
-        match: Optional[dict] = None
+        match: dict | None = None
         for entry in data["data"]:
             if entry.get("rue", "").lower() == street_lower:
                 match = entry

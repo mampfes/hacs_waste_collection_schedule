@@ -77,7 +77,7 @@ class Source:
             data = response.json()
 
         except RequestException as ex:
-            raise Exception(f"Error fetching collection data: {str(ex)}")
+            raise Exception(f"Error fetching collection data: {ex!s}") from ex
 
         # Verify Address was found
         if data["status"] != "exactMatch":

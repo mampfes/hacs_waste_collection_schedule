@@ -3,6 +3,7 @@ from __future__ import annotations
 import datetime
 import re
 from dataclasses import dataclass
+from typing import ClassVar
 
 import requests
 from bs4 import BeautifulSoup
@@ -62,10 +63,10 @@ ICON_MAP = {
 }
 
 
-class FailedToFindTokensError(Exception): ...  # noqa: E701
+class FailedToFindTokensError(Exception): ...
 
 
-class FailedToFindCollections(Exception): ...  # noqa: E701
+class FailedToFindCollections(Exception): ...
 
 
 _DAY_MONTH_RE = re.compile(
@@ -98,7 +99,7 @@ class Source:
     """
 
     _BASE_URL = f"{URL}bins-and-recycling/equipment-and-collections/bin-day-finder/"
-    _HEADERS = {
+    _HEADERS: ClassVar = {
         "User-Agent": "Mozilla/5.0",
         "Referer": _BASE_URL,
         "Origin": URL,

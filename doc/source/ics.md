@@ -321,6 +321,7 @@ This source has been successfully tested with the following service providers:
 - [Friedrichsdorf](/doc/ics/mein_abfallkalender_online.md) / friedrichsdorf.de
 - [Gelber Sack Stuttgart](/doc/ics/gelbersack_stuttgart_de.md) / gelbersack-stuttgart.de
 - [Gelsendienste Gelsenkirchen](/doc/ics/gelsendienste_de.md) / gelsendienste.de
+- [Gemeinde Hüllhorst](/doc/ics/huellhorst_de.md) / huellhorst.de
 - [Ginsheim-Gustavsburg](/doc/ics/gigu_de.md) / gigu.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Gräfelfing](/doc/ics/mein_abfallkalender_online.md) / graefelfing.de
@@ -330,6 +331,7 @@ This source has been successfully tested with the following service providers:
 - [Heusenstamm](/doc/ics/mein_abfallkalender_online.md) / heusenstamm.de
 - [Hochheim](/doc/ics/mein_abfallkalender_online.md) / hochheim.de
 - [Hofheim](/doc/ics/mein_abfallkalender_online.md) / hofheim.de
+- [Homburg](/doc/ics/mein_abfallkalender_online.md) / homburg.de
 - [Karben](/doc/ics/mein_abfallkalender_online.md) / karben.de
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
 - [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
@@ -380,6 +382,7 @@ This source has been successfully tested with the following service providers:
 - [Siegen](/doc/ics/siegen_stadt_de.md) / siegen-stadt.de
 - [St Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [St. Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
+- [Stadt Bünde](/doc/ics/buende_de.md) / buende.de
 - [Stadt Delmenhorst](/doc/ics/stadt_delmenhorst_de.md) / delmenhorst.de
 - [Stadt Detmold](/doc/ics/detmold_de.md) / detmold.de
 - [Stadt Enger](/doc/ics/enger_de.md) / enger.de
@@ -475,6 +478,7 @@ This source has been successfully tested with the following service providers:
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
 - [London Borough of Merton (New)](/doc/ics/merton_gov_uk.md) / merton.gov.uk
 - [Middlesbrough Council](/doc/ics/recollect.md) / middlesbrough.gov.uk
+- [Newcastle upon Tyne](/doc/ics/recollect.md) / new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day
 - [North Tyneside Council](/doc/ics/northtyneside_gov_uk.md) / northtyneside.gov.uk
 - [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
 - [Stirling Council, UK](/doc/ics/recollect.md) / stirling.gov.uk
@@ -485,6 +489,7 @@ This source has been successfully tested with the following service providers:
 ### United States of America
 
 - [Atlantic Waste Services, GA](/doc/ics/recollect.md) / atlanticwaste.com
+- [City of Apopka, FL](/doc/ics/recollect.md) / apopka.gov/319/Solid-Waste
 - [City of Austin, TX](/doc/ics/recollect.md) / austintexas.gov
 - [City of Bloomington](/doc/ics/recollect.md) / bloomington.in.gov
 - [City of Cambridge](/doc/ics/recollect.md) / cambridgema.gov

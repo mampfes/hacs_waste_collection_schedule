@@ -9,22 +9,28 @@ waste_collection_schedule:
     sources:
     - name: ahe_de
       args:
-        plz: POSTLEITZAHL
+        city: STADT
         strasse: STRAßE
         hnr: HAUSNUMMER
-        
 ```
 
 ### Configuration Variables
 
-**plz**  
-*(String | Integer) (required)*
-
-**strasse**  
+**city**
 *(String) (required)*
 
-**hnr**  
-*(String | Integer) (required)*
+City name. Supported cities: Breckerfeld, Ennepetal, Gevelsberg, Hagen, Hattingen, Herdecke, Schwelm, Sprockhövel, Wetter, Witten.
+
+**strasse**
+*(String) (required)*
+
+**hnr**
+*(String | Integer) (optional)*
+
+**bezirk**
+*(String) (optional)*
+
+Required for some streets that are divided into named districts.
 
 ## Example
 
@@ -33,12 +39,13 @@ waste_collection_schedule:
     sources:
     - name: ahe_de
       args:
-        plz: 58300
+        city: Wetter
         strasse: Ahornstraße
         hnr: 1
-        
 ```
 
 ## How to get the source argument
 
-Find the parameter of your address using [https://ahe.atino.net/pickup-dates](https://ahe.atino.net/pickup-dates) and write them exactly like on the web page.
+Visit [https://ahe.de/abfallkalender/](https://ahe.de/abfallkalender/) and select your city and street.
+
+> **Migration note (from pre-July 2026 config):** The old `plz` (postal code) parameter is no longer supported. Replace it with `city` (city name, e.g. `Wetter`, `Herdecke`).

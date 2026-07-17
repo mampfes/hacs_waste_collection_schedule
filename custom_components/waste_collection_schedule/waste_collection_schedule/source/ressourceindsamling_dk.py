@@ -92,7 +92,7 @@ class Source:
             response_data = address_response.json()
         except json.JSONDecodeError as e:
             _LOGGER.error("Failed to parse address lookup JSON response: %s", e)
-            raise ValueError(f"Failed to parse address lookup response: {e}")
+            raise ValueError(f"Failed to parse address lookup response: {e}") from e
 
         _LOGGER.debug(f"Address search response: {response_data}")
 

@@ -109,9 +109,9 @@ class Source:
                     .strip()
                 )
 
-                if f"{bin_type} {str(d[0])}" in string_entries:
+                if f"{bin_type} {d[0]!s}" in string_entries:
                     continue
-                string_entries.append(f"{bin_type} {str(d[0])}")
+                string_entries.append(f"{bin_type} {d[0]!s}")
 
                 collection_entries.append(
                     Collection(

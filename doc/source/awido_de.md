@@ -96,6 +96,7 @@ List of customers (2021-07-09):
 - `ebe`: Markt Schwaben
 - `ebe`: Pöring (Zorneding)
 - `ebe`: Wolfesing (Zorneding)
+- `ebu`: EBU Ulm
 - `erding`: Landkreis Erding
 - `eww-suew`: Landkreis Südliche Weinstraße
 - `ffb`: AWB Landkreis Fürstenfeldbruck

@@ -56,7 +56,7 @@ class Source:
     def fetch(self):
         if self._url is not None:
             return self.fetch_ics()
-        elif self._xmlurl is not None:
+        if self._xmlurl is not None:
             return self.fetch_xml()
 
     def fetch_ics(self):

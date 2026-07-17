@@ -11,7 +11,7 @@ TEST_CASES = {
     "221b fox Street": {"address": "221b fox Street"},
 }
 
-API_URL = "https://api.hcc.govt.nz/FightTheLandFill/get_Collection_Dates"
+API_URL = "https://api2.hcc.govt.nz/FightTheLandFill/get_Collection_Dates"
 ICON_MAP = {
     "Rubbish": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,

@@ -408,7 +408,7 @@ class Source:
 def print_md_table():
     table = "|service_id|cities|\n|---|---|\n"
 
-    for service, data in sorted(SERVICE_MAP.items()):
+    for service, _data in sorted(SERVICE_MAP.items()):
         print(f"service: {service}")
         args = {"r": "cities"}
         r = requests.get(f"https://{service}.jumomind.com/mmapp/api.php", params=args)

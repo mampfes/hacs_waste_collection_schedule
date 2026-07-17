@@ -75,6 +75,12 @@
       "id": "banyule_vic_gov_au"
     },
     {
+      "title": "Bathurst Regional Council",
+      "module": "bathurst_nsw_gov_au",
+      "default_params": {},
+      "id": "bathurst_nsw_gov_au"
+    },
+    {
       "title": "Baw Baw Shire Council",
       "module": "impactapps_com_au",
       "default_params": {
@@ -179,6 +185,12 @@
       "id": "byron_nsw_gov_au"
     },
     {
+      "title": "Cairns Regional Council",
+      "module": "cairns_qld_gov_au",
+      "default_params": {},
+      "id": "cairns_qld_gov_au"
+    },
+    {
       "title": "Campbelltown City Council",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -203,6 +215,12 @@
       "module": "cardinia_vic_gov_au",
       "default_params": {},
       "id": "cardinia_vic_gov_au"
+    },
+    {
+      "title": "Cassowary Coast Regional Council",
+      "module": "cassowarycoast_qld_gov_au",
+      "default_params": {},
+      "id": "cassowarycoast_qld_gov_au"
     },
     {
       "title": "City of Adelaide",
@@ -395,6 +413,12 @@
       "id": "moonee_valley_vic_gov_au"
     },
     {
+      "title": "City of Moreton Bay",
+      "module": "moretonbay_qld_gov_au",
+      "default_params": {},
+      "id": "moretonbay_qld_gov_au"
+    },
+    {
       "title": "City of Mount Gambier",
       "module": "app_my_local_services_au",
       "default_params": {},
@@ -477,6 +501,12 @@
       "module": "swan_wa_gov_au",
       "default_params": {},
       "id": "swan_wa_gov_au"
+    },
+    {
+      "title": "City of Sydney",
+      "module": "cityofsydney_nsw_gov_au",
+      "default_params": {},
+      "id": "cityofsydney_nsw_gov_au"
     },
     {
       "title": "City of Tea Tree Gully",
@@ -912,6 +942,12 @@
       "id": "midcoast_nsw_gov_au"
     },
     {
+      "title": "Mildura Rural City Council",
+      "module": "mildura_vic_gov_au",
+      "default_params": {},
+      "id": "mildura_vic_gov_au"
+    },
+    {
       "title": "Mitchell Shire Council",
       "module": "mitchellshire_vic_gov_au",
       "default_params": {},
@@ -1316,6 +1352,12 @@
       "module": "willoughby_nsw_gov_au",
       "default_params": {},
       "id": "willoughby_nsw_gov_au"
+    },
+    {
+      "title": "Wingecarribee Shire Council",
+      "module": "wingecarribee_nsw_gov_au",
+      "default_params": {},
+      "id": "wingecarribee_nsw_gov_au"
     },
     {
       "title": "Wollondilly Shire Council",
@@ -3196,6 +3238,12 @@
       "module": "goessendorf_at",
       "default_params": {},
       "id": "goessendorf_at"
+    },
+    {
+      "title": "Marktgemeinde Kaltenleutgeben",
+      "module": "kaltenleutgeben_gv_at",
+      "default_params": {},
+      "id": "kaltenleutgeben_gv_at"
     },
     {
       "title": "Marktgemeinde Kirchberg am Wechsel",
@@ -5424,6 +5472,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "RITL",
+      "module": "ritl_ca",
+      "default_params": {},
+      "id": "ritl_ca"
+    },
+    {
       "title": "Rivi\u00e8re-Beaudette",
       "module": "ics",
       "default_params": {},
@@ -5685,6 +5739,12 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Nem Affaldsservice (K\u00f8benhavns Kommune)",
+      "module": "nemaffaldsservice_kk_dk",
+      "default_params": {},
+      "id": "nemaffaldsservice_kk_dk"
+    },
+    {
       "title": "Odense Renovation",
       "module": "odenserenovation_dk",
       "default_params": {},
@@ -5775,6 +5835,22 @@
   ],
   "France": [
     {
+      "title": "Aingeray",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Aingeray"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Alfortville",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Alfortville"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Ambar\u00e8s-et-Lagrave",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -5791,10 +5867,26 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Andilly",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Andilly"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Angers Loire M\u00e9tropole",
       "module": "data_angers_fr",
       "default_params": {},
       "id": "data_angers_fr"
+    },
+    {
+      "title": "Ansauville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Ansauville"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Ardenne M\u00e9tropole",
@@ -5803,6 +5895,30 @@
         "instance_id": 670
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Auteuil-le-Roi",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Auteuil-le-Roi"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Autouillet",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Autouillet"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Avrainville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Avrainville"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Ayguemorte-les-Graves",
@@ -5837,12 +5953,28 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Bazoches-sur-Guyonne",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Bazoches-sur-Guyonne"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Beautiran",
       "module": "cc-montesquieu_fr",
       "default_params": {
         "commune": "Beautiran"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Behoust",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Behoust"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Berrwiller",
@@ -5853,6 +5985,22 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Beynes",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Beynes"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Bicqueley",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Bicqueley"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Blanquefort",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -5861,12 +6009,44 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Bois-de-Haye",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Bois-de-Haye"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Boissy-Saint-L\u00e9ger",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Boissy-Saint-L\u00e9ger"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Boissy-sans-Avoir",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Boissy-sans-Avoir"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Bollwiller",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Bollwiller"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Bonneuil-sur-Marne",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Bonneuil-sur-Marne"
+      },
+      "id": "sudestavenir_fr"
     },
     {
       "title": "Bordeaux",
@@ -5883,6 +6063,22 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Boucq",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Boucq"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Bouvron",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Bouvron"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Bruebach",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -5897,6 +6093,14 @@
         "city": "Bruges"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Bruley",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Bruley"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Brunstatt-Didenheim",
@@ -5955,12 +6159,50 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Charmes-la-C\u00f4te",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Charmes-la-C\u00f4te"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Chaudeney-sur-Moselle",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Chaudeney-sur-Moselle"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Chennevi\u00e8res-sur-Marne",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Chennevi\u00e8res-sur-Marne"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Choloy-M\u00e9nillot",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Choloy-M\u00e9nillot"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Ch\u00e2teauroux M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 897
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Coeur d'Yvelines",
+      "module": "coeur_yvelines_fr",
+      "default_params": {},
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Communaut\u00e9 de Communes de Montesquieu",
@@ -5977,12 +6219,44 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Cr\u00e9teil",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Cr\u00e9teil"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Dietwiller",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Dietwiller"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Domgermain",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Domgermain"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Dommartin-l\u00e8s-Toul",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Dommartin-l\u00e8s-Toul"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Dom\u00e8vre-en-Haye",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Dom\u00e8vre-en-Haye"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Dreux Agglom\u00e9ration",
@@ -6033,12 +6307,84 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Flexanville",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Flexanville"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Fontenoy-sur-Moselle",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Fontenoy-sur-Moselle"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Foug",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Foug"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Francheville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Francheville"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Galfingue",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Galfingue"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Galluis",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Galluis"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Gambais",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Gambais"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Garanci\u00e8res",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Garanci\u00e8res"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Gondreville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Gondreville"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Goupilli\u00e8res",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Goupilli\u00e8res"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Gradignan",
@@ -6077,6 +6423,36 @@
         "instance_id": 101
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Grand Paris Sud Est Avenir (GPSEA)",
+      "module": "sudestavenir_fr",
+      "default_params": {},
+      "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Grosrouvre",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Grosrouvre"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Grosrouvres",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Grosrouvres"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Gye",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Gye"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Habsheim",
@@ -6119,6 +6495,22 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Jaillon",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Jaillon"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Jouars-Pontchartrain",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Jouars-Pontchartrain"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Kingersheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -6133,6 +6525,46 @@
         "commune": "La Br\u00e8de"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "La Queue-en-Brie",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "La Queue-en-Brie"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
+      "title": "La Queue-lez-Yvelines",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "La Queue-lez-Yvelines"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Lagney",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Lagney"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Laneuveville-derri\u00e8re-Foug",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Laneuveville-derri\u00e8re-Foug"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Lay-Saint-R\u00e9my",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Lay-Saint-R\u00e9my"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Le Bouscat",
@@ -6159,12 +6591,52 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Le Plessis-Tr\u00e9vise",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Le Plessis-Tr\u00e9vise"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Le Taillan-M\u00e9doc",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Le Taillan-M\u00e9doc"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Le Tremblay-sur-Mauldre",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Le Tremblay-sur-Mauldre"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Les Mesnuls",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Les Mesnuls"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Limeil-Br\u00e9vannes",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Limeil-Br\u00e9vannes"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Lucey",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Lucey"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Lutterbach",
@@ -6189,6 +6661,38 @@
       "id": "mamirolle_info"
     },
     {
+      "title": "Manoncourt-en-Wo\u00ebvre",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Manoncourt-en-Wo\u00ebvre"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Manonville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Manonville"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Marcq",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Marcq"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Mareil-le-Guyon",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Mareil-le-Guyon"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Martignas-sur-Jalle",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -6203,6 +6707,30 @@
         "commune": "Martillac"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Millemont",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Millemont"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Minorville",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Minorville"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Montfort-l'Amaury",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Montfort-l'Amaury"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Montpellier M\u00e9diterran\u00e9e M\u00e9tropole",
@@ -6240,6 +6768,14 @@
       "id": "memotri_agglo_pau_fr"
     },
     {
+      "title": "M\u00e9nil-la-Tour",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "M\u00e9nil-la-Tour"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "M\u00e9rignac",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -6248,10 +6784,26 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "M\u00e9r\u00e9",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "M\u00e9r\u00e9"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "M\u00e9tropole de Lyon",
       "module": "data_grandlyon_com",
       "default_params": {},
       "id": "data_grandlyon_com"
+    },
+    {
+      "title": "M\u00e9tropole du Grand Nancy",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1436
+      },
+      "id": "publidata_fr"
     },
     {
       "title": "M\u00e9tropole Europ\u00e9enne de Lille",
@@ -6262,12 +6814,44 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Neauphle-le-Ch\u00e2teau",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Neauphle-le-Ch\u00e2teau"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Neauphle-le-Vieux",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Neauphle-le-Vieux"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Niffer",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Niffer"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Noiseau",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Noiseau"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Noviant-aux-Pr\u00e9s",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Noviant-aux-Pr\u00e9s"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Orl\u00e9ans M\u00e9tropole",
@@ -6278,12 +6862,28 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Ormesson-sur-Marne",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Ormesson-sur-Marne"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Ottmarsheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Ottmarsheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Pagney-derri\u00e8re-Barine",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Pagney-derri\u00e8re-Barine"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Parempuyre",
@@ -6316,6 +6916,14 @@
         "commune": "Pfastatt"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Pierre-la-Treiche",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Pierre-la-Treiche"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Publidata generic source",
@@ -6364,6 +6972,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Royaumeix",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Royaumeix"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Rueil-Malmaison",
       "module": "rueil_malmaison_fr",
       "default_params": {},
@@ -6392,6 +7008,14 @@
         "city": "Saint-Aubin-de-M\u00e9doc"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Saint-Germain-de-la-Grange",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Saint-Germain-de-la-Grange"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Saint-Louis-de-Montferrand",
@@ -6426,6 +7050,14 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Saint-R\u00e9my-l'Honor\u00e9",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Saint-R\u00e9my-l'Honor\u00e9"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Saint-Selve",
       "module": "cc-montesquieu_fr",
       "default_params": {
@@ -6442,12 +7074,28 @@
       "id": "opendata_bordeauxmetropole_fr"
     },
     {
+      "title": "Sanzey",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Sanzey"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
       "title": "Saucats",
       "module": "cc-montesquieu_fr",
       "default_params": {
         "commune": "Saucats"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Saulx-Marchais",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Saulx-Marchais"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Saumur Val de Loire",
@@ -6514,12 +7162,42 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Sucy-en-Brie",
+      "module": "sudestavenir_fr",
+      "default_params": {
+        "commune": "Sucy-en-Brie"
+      },
+      "id": "sudestavenir_fr"
+    },
+    {
       "title": "Talence",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Talence"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Terres Touloises",
+      "module": "terrestouloises_com",
+      "default_params": {},
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Thiverval-Grignon",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Thiverval-Grignon"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Thoiry",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Thoiry"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Toulouse M\u00e9tropole",
@@ -6534,6 +7212,22 @@
         "instance_id": 65
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Tremblecourt",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Tremblecourt"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Trondes",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Trondes"
+      },
+      "id": "terrestouloises_com"
     },
     {
       "title": "Ungersheim",
@@ -6576,12 +7270,52 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Vicq",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Vicq"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
       "title": "Villenave-d'Ornon",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
         "city": "Villenave-d'Ornon"
       },
       "id": "opendata_bordeauxmetropole_fr"
+    },
+    {
+      "title": "Villey-le-Sec",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Villey-le-Sec"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Villey-Saint-\u00c9tienne",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "Villey-Saint-\u00c9tienne"
+      },
+      "id": "terrestouloises_com"
+    },
+    {
+      "title": "Villiers-le-Mahieu",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Villiers-le-Mahieu"
+      },
+      "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Villiers-Saint-Fr\u00e9d\u00e9ric",
+      "module": "coeur_yvelines_fr",
+      "default_params": {
+        "commune": "Villiers-Saint-Fr\u00e9d\u00e9ric"
+      },
+      "id": "coeur_yvelines_fr"
     },
     {
       "title": "Wittelsheim",
@@ -6614,6 +7348,14 @@
         "commune": "Zimmersheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "\u00c9crouves",
+      "module": "terrestouloises_com",
+      "default_params": {
+        "commune": "\u00c9crouves"
+      },
+      "id": "terrestouloises_com"
     }
   ],
   "Germany": [
@@ -6622,6 +7364,14 @@
       "module": "123abfallkalender_de",
       "default_params": {},
       "id": "123abfallkalender_de"
+    },
+    {
+      "title": "Aach",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Aach"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Aballwirtschaft Ludwigslust-Parchim A\u00f6R",
@@ -6843,6 +7593,12 @@
       "module": "kreis_ploen_de",
       "default_params": {},
       "id": "kreis_ploen_de"
+    },
+    {
+      "title": "Abfallwirtschaft Kyffh\u00e4userkreis",
+      "module": "abfall_kyffhaeuser_de",
+      "default_params": {},
+      "id": "abfall_kyffhaeuser_de"
     },
     {
       "title": "Abfallwirtschaft Lahn-Dill-Kreises",
@@ -7240,6 +7996,14 @@
         "state": "Hessen"
       },
       "id": "lobbe_app"
+    },
+    {
+      "title": "Allensbach",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Allensbach"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Allensbach am Bodensee",
@@ -7653,6 +8417,12 @@
       "id": "awigo_de"
     },
     {
+      "title": "AWISTA Kommunal GmbH (D\u00fcsseldorf)",
+      "module": "awista_kommunal_de",
+      "default_params": {},
+      "id": "awista_kommunal_de"
+    },
+    {
       "title": "AWISTA LOGISTIK Stadt Remscheid",
       "module": "monaloga_de",
       "default_params": {},
@@ -8049,6 +8819,14 @@
         "municipality": "Bodenfelde"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "Bodman-Ludwigshafen",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Bodman-Ludwigshafen"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Bogensch\u00fctz Entsorgung",
@@ -8608,6 +9386,14 @@
       "id": "123abfallkalender_de"
     },
     {
+      "title": "EBU Ulm",
+      "module": "awido_de",
+      "default_params": {
+        "customer": "ebu"
+      },
+      "id": "awido_de"
+    },
+    {
       "title": "ebwo - Entsorgungs- und Baubetrieb Anstalt des \u00f6ffentlichen Rechts der Stadt Worms",
       "module": "ics",
       "default_params": {},
@@ -9143,6 +9929,14 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Gailingen am Hochrhein",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Gailingen am Hochrhein"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Gaimersheim",
       "module": "heimat_info_de",
       "default_params": {
@@ -9225,6 +10019,18 @@
         "key": "3cefa45ab357d231891bb497253c630f"
       },
       "id": "abfall_io"
+    },
+    {
+      "title": "Gemeinde Hasselroth",
+      "module": "hasselroth_de",
+      "default_params": {},
+      "id": "hasselroth_de"
+    },
+    {
+      "title": "Gemeinde H\u00fcllhorst",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_huellhorst_de"
     },
     {
       "title": "Gemeinde Kalletal",
@@ -9747,6 +10553,14 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Hohenfels",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Hohenfels"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Hohenlinden",
       "module": "awido_de",
       "default_params": {
@@ -9802,6 +10616,12 @@
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "Homburg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_mein_abfallkalender_online"
     },
     {
       "title": "Hoppensen",
@@ -10012,6 +10832,15 @@
       "id": "ics_mein_abfallkalender_online"
     },
     {
+      "title": "Karlsruhe",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Karlsruhe",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Kastl (Lkr. A\u00d6)",
       "module": "heimat_info_de",
       "default_params": {
@@ -10106,6 +10935,15 @@
       "module": "ks_boerde_de",
       "default_params": {},
       "id": "ks_boerde_de"
+    },
+    {
+      "title": "Konstanz",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Konstanz",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Korbach",
@@ -11847,6 +12685,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Moos",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Moos"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Moosach",
       "module": "awido_de",
       "default_params": {
@@ -11870,6 +12716,12 @@
         "ort": "Mossautal"
       },
       "id": "reso_gmbh_de"
+    },
+    {
+      "title": "myWasteWatcher (WasteWatcher.NET)",
+      "module": "mywastewatcher_de",
+      "default_params": {},
+      "id": "mywastewatcher_de"
     },
     {
       "title": "MZV Biedenkopf",
@@ -11912,12 +12764,28 @@
       "id": "muehlenkreis_de"
     },
     {
+      "title": "M\u00fchlhausen-Ehingen",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "M\u00fchlhausen-Ehingen"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "M\u00fchlheim am Main (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
         "service_id": "mymuell"
       },
       "id": "jumomind_de"
+    },
+    {
+      "title": "M\u00fchlingen",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "M\u00fchlingen"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "M\u00fcllabfuhr Deutschland",
@@ -11940,6 +12808,12 @@
         "municipality": "M\u00fcllershausen"
       },
       "id": "nerdbridge_de"
+    },
+    {
+      "title": "M\u00fcllmann-App",
+      "module": "muellmann_app_de",
+      "default_params": {},
+      "id": "muellmann_app_de"
     },
     {
       "title": "M\u00fcllmax",
@@ -12255,6 +13129,14 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Orsingen-Nenzingen",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Orsingen-Nenzingen"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Ortenaukreis",
       "module": "app_abfallplus_de",
       "default_params": {
@@ -12439,6 +13321,15 @@
       "id": "awido_de"
     },
     {
+      "title": "Radolfzell am Bodensee",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Radolfzell",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Rauischholzhausen",
       "module": "123abfallkalender_de",
       "default_params": {
@@ -12467,6 +13358,14 @@
         "ort": "Reichelsheim"
       },
       "id": "reso_gmbh_de"
+    },
+    {
+      "title": "Reichenau",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Reichenau"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Relliehausen",
@@ -12914,6 +13813,15 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Singen (Hohentwiel)",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Singen (Hohentwiel)",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
+    },
+    {
       "title": "Sohlingen",
       "module": "nerdbridge_de",
       "default_params": {
@@ -12956,6 +13864,14 @@
         "service": "bayreuthstadt-abfallkalender"
       },
       "id": "c_trace_de"
+    },
+    {
+      "title": "Stadt B\u00fcnde",
+      "module": "ics",
+      "default_params": {
+        "regex": "B\u00dc (.*): B\u00fcnde"
+      },
+      "id": "ics_buende_de"
     },
     {
       "title": "Stadt Cottbus",
@@ -13332,6 +14248,12 @@
       "id": "stadtwerke_roesrath_de"
     },
     {
+      "title": "Stadtwerke Singen",
+      "module": "stadtwerke_singen_de",
+      "default_params": {},
+      "id": "stadtwerke_singen_de"
+    },
+    {
       "title": "Stadtwerke Speyer",
       "module": "ics",
       "default_params": {},
@@ -13362,6 +14284,15 @@
         "service": "stl"
       },
       "id": "abfallnavi_de"
+    },
+    {
+      "title": "Stockach",
+      "module": "muellmann_app_de",
+      "default_params": {
+        "city": "Stockach",
+        "street": "REPLACE_WITH_YOUR_STREET"
+      },
+      "id": "muellmann_app_de"
     },
     {
       "title": "Stolberg",
@@ -14339,6 +15270,14 @@
       "module": "eth_erd_hu",
       "default_params": {},
       "id": "eth_erd_hu"
+    }
+  ],
+  "Iceland": [
+    {
+      "title": "K\u00f3pavogsb\u00e6r",
+      "module": "kopavogur_is",
+      "default_params": {},
+      "id": "kopavogur_is"
     }
   ],
   "Ireland": [
@@ -16419,6 +17358,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Scalea",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Scandicci",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -17123,6 +18068,14 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Barendrecht Albrandswaard Ridderkerk",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "afvalbeheer"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "BAT Tilburg",
       "module": "burgerportaal_nl",
       "default_params": {
@@ -17211,6 +18164,14 @@
       "id": "ics_afvalkalender_borsele_nl"
     },
     {
+      "title": "Gemeente Breda",
+      "module": "burgerportaal_nl",
+      "default_params": {
+        "organization": "breda"
+      },
+      "id": "burgerportaal_nl"
+    },
+    {
       "title": "Gemeente Cranendonck",
       "module": "hvcgroep_nl",
       "default_params": {
@@ -17271,6 +18232,14 @@
       "module": "hvcgroep_nl",
       "default_params": {
         "service": "schouwen-duiveland"
+      },
+      "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Gemeente Sliedrecht",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "sliedrecht"
       },
       "id": "hvcgroep_nl"
     },
@@ -17445,6 +18414,12 @@
         "service": "spaarnelanden"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Straatbeeld Online",
+      "module": "straatbeeld_online",
+      "default_params": {},
+      "id": "straatbeeld_online"
     },
     {
       "title": "Twente Milieu",
@@ -17720,6 +18695,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "ALBA Swarz\u0119dz",
+      "module": "alba_com_pl",
+      "default_params": {},
+      "id": "alba_com_pl"
+    },
+    {
       "title": "App Moje Odpady",
       "module": "moje_odpady_pl",
       "default_params": {},
@@ -17742,6 +18723,12 @@
       "module": "ecoharmonogram_pl",
       "default_params": {},
       "id": "ecoharmonogram_pl"
+    },
+    {
+      "title": "EcoSzczecin",
+      "module": "ecoszczecin_pl",
+      "default_params": {},
+      "id": "ecoszczecin_pl"
     },
     {
       "title": "Gda\u0144sk",
@@ -18584,6 +19571,12 @@
       "id": "kom_lub_com_pl"
     },
     {
+      "title": "KOMA",
+      "module": "koma_pl",
+      "default_params": {},
+      "id": "koma_pl"
+    },
+    {
       "title": "KOMUS",
       "module": "sims_pl",
       "default_params": {
@@ -18902,12 +19895,26 @@
       "id": "snaga_mb_si"
     }
   ],
+  "South Africa": [
+    {
+      "title": "eThekwini Municipality",
+      "module": "durban_gov_za",
+      "default_params": {},
+      "id": "durban_gov_za"
+    }
+  ],
   "Sweden": [
     {
       "title": "Aff\u00e4rsverken",
       "module": "affarsverken_se",
       "default_params": {},
       "id": "affarsverken_se"
+    },
+    {
+      "title": "Aneby Milj\u00f6 & Vatten",
+      "module": "aen_minasidor_se",
+      "default_params": {},
+      "id": "aen_minasidor_se"
     },
     {
       "title": "Avfall & \u00c5tervinning Skaraborg",
@@ -18974,10 +19981,22 @@
       "id": "roslagsvatten_se"
     },
     {
+      "title": "Falu Energi & Vatten (FEV)",
+      "module": "fev_se",
+      "default_params": {},
+      "id": "fev_se"
+    },
+    {
       "title": "G\u00e4strike \u00c5tervinnare",
       "module": "gastrikeatervinnare_se",
       "default_params": {},
       "id": "gastrikeatervinnare_se"
+    },
+    {
+      "title": "Hedemora Energi",
+      "module": "hedemora_energi_se",
+      "default_params": {},
+      "id": "hedemora_energi_se"
     },
     {
       "title": "Herrljunga & V\u00e5rg\u00e5rda kommun",
@@ -19372,6 +20391,12 @@
         "service_provider": "orebro-kommun"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "\u00d6stersunds kommun",
+      "module": "ostersund_se",
+      "default_params": {},
+      "id": "ostersund_se"
     },
     {
       "title": "\u00d6ster\u00e5ker",
@@ -21164,6 +22189,12 @@
       "id": "iapp_itouchvision_com"
     },
     {
+      "title": "Inverclyde Council",
+      "module": "inverclyde_gov_uk",
+      "default_params": {},
+      "id": "inverclyde_gov_uk"
+    },
+    {
       "title": "Ipswich Borough Council",
       "module": "ipswich_gov_uk",
       "default_params": {},
@@ -21444,6 +22475,12 @@
       "id": "midsussex_gov_uk"
     },
     {
+      "title": "Mid Ulster District Council",
+      "module": "midulstercouncil_org",
+      "default_params": {},
+      "id": "midulstercouncil_org"
+    },
+    {
       "title": "Middlesbrough Council",
       "module": "ics",
       "default_params": {
@@ -21510,6 +22547,14 @@
       "module": "newcastle_staffs_gov_uk",
       "default_params": {},
       "id": "newcastle_staffs_gov_uk"
+    },
+    {
+      "title": "Newcastle upon Tyne",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "Newport City Council",
@@ -22110,6 +23155,12 @@
       "id": "tameside_gov_uk"
     },
     {
+      "title": "Tandridge District Council",
+      "module": "tandridge_gov_uk",
+      "default_params": {},
+      "id": "tandridge_gov_uk"
+    },
+    {
       "title": "Teignbridge District Council",
       "module": "teignbridge_gov_uk",
       "default_params": {},
@@ -22324,6 +23375,12 @@
       "id": "westsuffolk_gov_uk"
     },
     {
+      "title": "Westminster City Council",
+      "module": "westminster_gov_uk",
+      "default_params": {},
+      "id": "westminster_gov_uk"
+    },
+    {
       "title": "Westmorland & Furness Council, Barrow area",
       "module": "ics",
       "default_params": {},
@@ -22445,6 +23502,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Alexandria, VA",
+      "module": "alexandria_va_us",
+      "default_params": {},
+      "id": "alexandria_va_us"
+    },
+    {
       "title": "Atlantic Waste Services, GA",
       "module": "ics",
       "default_params": {
@@ -22469,6 +23532,14 @@
       "module": "chesapeake_va_us",
       "default_params": {},
       "id": "chesapeake_va_us"
+    },
+    {
+      "title": "City of Apopka, FL",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
     },
     {
       "title": "City of Austin, TX",
@@ -22631,6 +23702,12 @@
       "id": "hoover_al_us"
     },
     {
+      "title": "Jacksonville, FL",
+      "module": "jacksonville_fl_us",
+      "default_params": {},
+      "id": "jacksonville_fl_us"
+    },
+    {
       "title": "Louisville, Kentucky, USA",
       "module": "recyclecoach_com",
       "default_params": {
@@ -22640,10 +23717,25 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Marysville, WA",
+      "module": "marysville_wa_us",
+      "default_params": {},
+      "id": "marysville_wa_us"
+    },
+    {
       "title": "Minneapolis MN USA",
       "module": "apps_ci_minneapolis_mn_us",
       "default_params": {},
       "id": "apps_ci_minneapolis_mn_us"
+    },
+    {
+      "title": "New Rochelle (NY)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "NEWRO",
+        "project_id": "3015"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "New York City",
@@ -22674,6 +23766,12 @@
         "state": "Washington"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Orange County, FL",
+      "module": "ocarcims_ocfl_net",
+      "default_params": {},
+      "id": "ocarcims_ocfl_net"
     },
     {
       "title": "Palm Coast, FL",
@@ -22815,6 +23913,14 @@
       "module": "wm_com",
       "default_params": {},
       "id": "wm_com"
+    }
+  ],
+  "Uruguay": [
+    {
+      "title": "Municipio de Ciudad de la Costa",
+      "module": "ciudad_de_la_costa_uy",
+      "default_params": {},
+      "id": "ciudad_de_la_costa_uy"
     }
   ]
 }

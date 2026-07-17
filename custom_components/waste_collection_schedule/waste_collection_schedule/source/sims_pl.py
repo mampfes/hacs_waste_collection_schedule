@@ -270,7 +270,7 @@ class Source:
                     break
             if owner_id is None:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "owner", owner, [o_name for o_name in OWNER_IDS.values()]
+                    "owner", owner, list(OWNER_IDS.values())
                 )
         self._owner_id: str = str(owner_id)
 

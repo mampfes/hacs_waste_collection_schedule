@@ -74,9 +74,9 @@ class Source:
 
     def get_address_details(self, a: str) -> str:
         matches = re.findall(REGEX["details"], a, flags=re.IGNORECASE | re.DOTALL)
-        temp_id: str = [
+        temp_id: str = next(
             did.strip() for addr, did in matches if self._name_or_number in addr
-        ][0]
+        )
         return temp_id
 
     def fetch(self) -> Collection:

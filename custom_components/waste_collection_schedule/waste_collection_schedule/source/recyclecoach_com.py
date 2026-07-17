@@ -314,6 +314,12 @@ EXTRA_INFO = [
         "country": "ca",
         "default_params": {"project_id": "3194", "district_id": "GUEL"},
     },
+    {
+        "title": "New Rochelle (NY)",
+        "url": "https://www.newrochelleny.gov/791/Collection-Dates",
+        "country": "us",
+        "default_params": {"project_id": "3015", "district_id": "NEWRO"},
+    },
 ]
 
 TEST_CASES = {
@@ -419,6 +425,11 @@ TEST_CASES = {
         "project_id": 583,
         "zone_id": "zone-z9942",
     },
+    "New Rochelle, NY, USA (with district_id, project_id & zone_id)": {
+        "district_id": "NEWRO",
+        "project_id": 3015,
+        "zone_id": "zone-z19582-z19705",
+    },
 }
 
 
@@ -461,7 +472,7 @@ class Source:
                 )
             return
 
-        elif len(city_data) > 1:
+        if len(city_data) > 1:
             for city in city_data:
                 if city["city_nm"].upper() == self.city.upper():
                     self.project_id = city["project_id"]

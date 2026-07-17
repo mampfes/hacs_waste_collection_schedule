@@ -192,9 +192,8 @@ class Source:
         streets = self._get_streets()
 
         # switch to Sammelgebiete if API either returns no streets or one dummy street
-        if (
-            not streets
-            or len(streets) == 1
+        if not streets or (
+            len(streets) == 1
             and streets[0].get("STRname") is None
             and streets[0].get("SAGEid") is not None
         ):
