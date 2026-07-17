@@ -16701,12 +16701,180 @@
     },
     {
       "title": "Isontina Ambiente",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
-      "title": "isontina ambiente: Ronchi dei legionari",
+      "title": "Isontina Ambiente: Capriva del Friuli",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Cormons",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Doberd\u00f2 del Lago",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Dolegna del Collio",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Duino Aurisina",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Farra d'Isonzo",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Fogliano Redipuglia",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Gorizia",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Gradisca d'Isonzo",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Grado",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Mariano del Friuli",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Medea",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Monfalcone",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Monrupino",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Moraro",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Mossa",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Romans d'Isonzo",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Ronchi dei Legionari",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Sagrado",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: San Canzian d'Isonzo",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: San Floriano del Collio",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: San Lorenzo Isontino",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: San Pier d'Isonzo",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Savogna d'Isonzo",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Sgonico - Zgonik",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Staranzano",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Turriaco",
+      "module": "isontinambiente_it",
+      "default_params": {},
+      "id": "isontinambiente_it"
+    },
+    {
+      "title": "Isontina Ambiente: Villesse",
       "module": "isontinambiente_it",
       "default_params": {},
       "id": "isontinambiente_it"

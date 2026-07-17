@@ -2483,8 +2483,36 @@ If you already have enough information for your municipality/region, you are ver
 - [Iren Ambiente](/doc/source/irenambiente_it.md) / servizi.irenambiente.it
 - [Isola del Liri - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
 - [Isole Tremiti - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
+- [Isontina Ambiente](/doc/source/isontinambiente_it.md) / isontinambiente.it
 - [Isontina Ambiente](/doc/source/junker_app.md) / junker.app
-- [isontina ambiente: Ronchi dei legionari](/doc/source/isontinambiente_it.md) / isontinambiente.it
+- [Isontina Ambiente: Capriva del Friuli](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/capriva-del-friuli
+- [Isontina Ambiente: Cormons](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/cormons
+- [Isontina Ambiente: Doberdò del Lago](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/doberdo-del-lago
+- [Isontina Ambiente: Dolegna del Collio](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/dolegna-del-collio
+- [Isontina Ambiente: Duino Aurisina](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/duino-aurisina
+- [Isontina Ambiente: Farra d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/farra-disonzo
+- [Isontina Ambiente: Fogliano Redipuglia](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/fogliano-redipuglia
+- [Isontina Ambiente: Gorizia](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/gorizia
+- [Isontina Ambiente: Gradisca d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/gradisca-disonzo
+- [Isontina Ambiente: Grado](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/grado
+- [Isontina Ambiente: Mariano del Friuli](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/mariano-del-friuli
+- [Isontina Ambiente: Medea](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/medea
+- [Isontina Ambiente: Monfalcone](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/monfalcone
+- [Isontina Ambiente: Monrupino](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/monrupino
+- [Isontina Ambiente: Moraro](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/moraro
+- [Isontina Ambiente: Mossa](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/mossa
+- [Isontina Ambiente: Romans d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/romans-disonzo
+- [Isontina Ambiente: Ronchi dei Legionari](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari
+- [Isontina Ambiente: Sagrado](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/sagrado
+- [Isontina Ambiente: San Canzian d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/san-canzian-disonzo
+- [Isontina Ambiente: San Floriano del Collio](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/san-floriano-del-collio
+- [Isontina Ambiente: San Lorenzo Isontino](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/san-lorenzo-isontino
+- [Isontina Ambiente: San Pier d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/san-pier-disonzo
+- [Isontina Ambiente: Savogna d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/savogna-disonzo
+- [Isontina Ambiente: Sgonico - Zgonik](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/sgonico-zgonik
+- [Isontina Ambiente: Staranzano](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/staranzano
+- [Isontina Ambiente: Turriaco](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/turriaco
+- [Isontina Ambiente: Villesse](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/villesse
 - [Ispica - Impregico Srl](/doc/source/junker_app.md) / junker.app
 - [Itri - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Junker](/doc/source/junker_app.md) / junker.app

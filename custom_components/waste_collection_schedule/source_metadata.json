@@ -3507,8 +3507,8 @@
   "isontinambiente_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/isontinambiente_it.md",
     "howto": {
-      "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> and select your address. The address ID is the number at the end of the URL. e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` the address ID is `1172`.",
-      "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> e seleziona il tuo indirizzo. L'ID dell'indirizzo è il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo è `1172`."
+      "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/>, pick your municipality from the list, and select your address. The address ID is the number at the end of the URL. e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` the address ID is `1172`.",
+      "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/>, scegli il tuo comune dall'elenco e seleziona il tuo indirizzo. L'ID dell'indirizzo è il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo è `1172`."
     },
     "urls": {}
   },
