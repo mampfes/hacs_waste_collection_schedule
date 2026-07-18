@@ -4,7 +4,11 @@ Support for schedules provided by [PreZero](https://abfallkalender.prezero.netwo
 
 Currently supported cities:
 - **Bad Oeynhausen** - [abfallkalender.prezero.network/bad-oeynhausen](https://abfallkalender.prezero.network/bad-oeynhausen)
-- **Willich** - [abfallkalender.prezero.network/willich](https://abfallkalender.prezero.network/willich)
+
+> **Note:** Willich was previously served by PreZero, but PreZero no longer serves Willich (the
+> `abfallkalender.prezero.network/willich` page now returns 404). Willich's waste collection is
+> covered by the [AbfallNavi (RegioIT.de)](abfallnavi_de.md) source via Kreis Viersen
+> (`service: viersen`, `ort: Willich`).
 
 ## Configuration via configuration.yaml
 
@@ -33,7 +37,7 @@ House number as a string (e.g., "1", "12a").
 **city**
 *(string) (optional)*
 
-City identifier from the PreZero URL. Defaults to `bad-oeynhausen`. Supported values: `bad-oeynhausen`, `willich`.
+City identifier from the PreZero URL. Defaults to `bad-oeynhausen`. Currently the only supported value is `bad-oeynhausen`.
 
 ## Examples
 
@@ -48,29 +52,12 @@ waste_collection_schedule:
         house_number: "1"
 ```
 
-### Willich
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: abfallkalender_prezero_network
-      args:
-        street: Aachener Straße
-        house_number: "1"
-        city: willich
-```
-
 ## How to Find Your Configuration
 
 ### For Bad Oeynhausen
 1. Go to [https://abfallkalender.prezero.network/bad-oeynhausen](https://abfallkalender.prezero.network/bad-oeynhausen)
 2. Enter your street name and house number on the website to verify they are correct
 3. Use these exact values in your configuration (the city parameter is already set to Bad Oeynhausen by default)
-
-### For Willich
-1. Go to [https://abfallkalender.prezero.network/willich](https://abfallkalender.prezero.network/willich)
-2. Enter your street name and house number on the website to verify they are correct
-3. Use these exact values in your configuration with `city: willich`
 
 ## Waste Types
 
