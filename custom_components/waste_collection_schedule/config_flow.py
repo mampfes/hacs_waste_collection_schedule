@@ -154,7 +154,20 @@ def _discover_new_style_sources() -> dict[str, list[Any]]:
     """Discover new-style sources at runtime by scanning the source directory.
 
     New-style sources (with PARAMS) are self-describing — their metadata
-    is read from the Source class, not from generated JSON files.
+    is read from the Source class, not from generated JSON files. This lets a
+    new-style source show up in the picker before ``sources.json`` has been
+    regenerated (that file is only rebuilt by CI after merge to master, and
+    contributors are asked not to run the generator themselves in a PR
+    branch) — useful during this alpha while the pipeline migration is still
+    in progress and PRs get UI-tested pre-merge.
+
+    ALPHA-ONLY: importing every source module at startup to check for PARAMS
+    is a real setup-time cost once ``sources.json`` reliably covers all
+    new-style sources (it already does as of this writing — see the caller,
+    which treats it as authoritative and only falls back to this scan for
+    ids it's missing). Remove this function and the fallback in
+    ``_async_setup_sources`` for the stable release; a precompiled
+    ``sources.json`` is faster to load than a live directory scan.
     """
     sources: dict[str, list[Any]] = {}
 
@@ -559,13 +572,19 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if len(self._sources) > 0:
             return
 
-        # Start with legacy sources from sources.json
+        # sources.json is authoritative — it already covers new-style
+        # (PARAMS-based) sources once they've been through
+        # update_docu_links.py. Start from it, then only fill in ids it's
+        # missing from the runtime scan (e.g. a new-style source added in a
+        # not-yet-merged PR); never duplicate an id it already has.
         self._sources = {k: list(v) for k, v in _SOURCES.items()}
 
-        # Discover and merge new-style sources at runtime
         new_style = await self.hass.async_add_executor_job(_discover_new_style_sources)
         for country, entries in new_style.items():
-            self._sources.setdefault(country, []).extend(entries)
+            existing_ids = {e["id"] for e in self._sources.get(country, [])}
+            self._sources.setdefault(country, []).extend(
+                entry for entry in entries if entry["id"] not in existing_ids
+            )
 
         async def args_method(args_input):
             return await self.async_step_args(args_input)
