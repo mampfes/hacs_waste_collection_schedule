@@ -21360,6 +21360,12 @@
       "id": "ics_hochfelden_ch"
     },
     {
+      "title": "Gemeinde Muttenz",
+      "module": "muttenz_ch",
+      "default_params": {},
+      "id": "muttenz_ch"
+    },
+    {
       "title": "Gemeinde W\u00fcrenlos",
       "module": "ics",
       "default_params": {},

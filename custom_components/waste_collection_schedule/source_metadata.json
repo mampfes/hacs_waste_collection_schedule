@@ -4547,6 +4547,14 @@
     },
     "urls": {}
   },
+  "muttenz_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/muttenz_ch.md",
+    "howto": {
+      "de": "Die reguläre Haus- und Gewerbekehrichtabfuhr erfolgt einmal pro Woche an einem fixen Wochentag, der davon abhängt, wo in Muttenz Sie wohnen. Diese Quelle lädt bei jeder Aktualisierung den aktuellen offiziellen Abfallkalender und liest die dort aufgeführten Wochentage direkt aus, anstatt eine feste Aufteilung anzunehmen. Den für Ihre Adresse zutreffenden Wochentag finden Sie im offiziellen Abfallkalender, verlinkt ab https://www.muttenz.ch/abfalldaten. Geben Sie diesen Wochentag (z.B. 'Dienstag' oder 'Mittwoch') hier ein.",
+      "en": "The regular household/commercial refuse collection ('Haus- und Gewerbekehrichtabfuhr') runs once a week, on a fixed German weekday that depends on where in Muttenz you live. This source fetches the current official 'Abfallkalender' on every update and reads the weekday(s) it lists there directly, rather than assuming a fixed split. Check the official calendar linked from https://www.muttenz.ch/abfalldaten to find out which weekday applies to your address, then enter that German weekday name (e.g. 'Dienstag' or 'Mittwoch') here."
+    },
+    "urls": {}
+  },
   "ics_wuerenlos_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerenlos_ch.md",
     "howto": {

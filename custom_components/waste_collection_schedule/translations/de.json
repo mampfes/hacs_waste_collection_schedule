@@ -20691,6 +20691,29 @@
         },
         "data_description": {}
       },
+      "args_muttenz_ch": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Abfuhrtag"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "zone": "Der deutsche Wochentagsname Ihres regulären Kehrichtabfuhrtags (z.B. 'Dienstag' oder 'Mittwoch'), wie er aktuell für Ihre Adresse im offiziellen Abfallkalender aufgeführt ist. Wird bei jeder Aktualisierung gegen den aktuellen Kalender neu validiert."
+        }
+      },
+      "reconfigure_muttenz_ch": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Abfuhrtag"
+        },
+        "data_description": {
+          "zone": "Der deutsche Wochentagsname Ihres regulären Kehrichtabfuhrtags (z.B. 'Dienstag' oder 'Mittwoch'), wie er aktuell für Ihre Adresse im offiziellen Abfallkalender aufgeführt ist. Wird bei jeder Aktualisierung gegen den aktuellen Kalender neu validiert."
+        }
+      },
       "args_ics_wuerenlos_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
