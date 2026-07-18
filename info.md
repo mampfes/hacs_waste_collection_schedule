@@ -10,6 +10,18 @@
 
 Waste collection schedules from service provider web sites are updated daily, derived from local ICS/iCal files, or generated from user-specified dates or regularly repeating date patterns. The Home Assistant built-in Calendar is automatically populated with schedules, and there is a high degree of flexibility in how information can be format and displayed in entity cards or pop-ups. The framework can easily be extended to support additional waste collection service providers, or other services which provide schedules.
 
+> ### 📣 Test the new source architecture (3.0.0 pre-release)
+>
+> We are previewing a major rework of how sources are built, and we would value your help testing it. The benefits:
+>
+> - **Less duplicated code, more reuse:** sources are composed from shared, typed building blocks (retrieve, parse, transform) instead of bespoke code, so a fix in one place benefits every provider that reuses it.
+> - **Easier to add and manage sources:** most new sources are now a short, declarative definition with canonical waste types, typed parameters and built-in response validation, rather than a hand-written fetch routine.
+> - **Consistent waste-type labels and icons** across providers, shown in your Home Assistant language.
+>
+> It is available now as an opt-in pre-release, and your existing setup is not affected. To try it, enable "Show beta versions" for this integration in HACS and update to `3.0.0-alpha.1`. Please report anything that looks wrong (especially changed waste-type labels) on the [architecture RFC (#6561)](https://github.com/mampfes/hacs_waste_collection_schedule/issues/6561).
+>
+> Note: for migrated sources this is a breaking change. Canonical waste-type labels differ from the old hand-written strings, so automations or templates that match an exact label may need updating. Catching those cases early is exactly the feedback we need before the stable 3.0.0.
+
 ## Supported Service Providers
 
 | Country | Service Providers |
