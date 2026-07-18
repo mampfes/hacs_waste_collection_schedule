@@ -3190,6 +3190,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Söderköping](/doc/source/avfallsapp_se.md) / soderkoping.se
 - [Teknik i Väst (Arvika/Eda)](/doc/source/avfallsapp_se.md) / teknikivast.se
 - [Telge Återvinning](/doc/source/telge_se.md) / telge.se
+- [Timrå kommun](/doc/source/timra_se.md) / timra.se
 - [Upplands-Bro](/doc/source/avfallsapp_se.md) / upplands-bro.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se

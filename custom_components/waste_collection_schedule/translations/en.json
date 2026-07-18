@@ -20522,6 +20522,29 @@
           "address": "Exact address as shown in the Telge autocomplete (uppercase, e.g. BERGSGATAN 22, SÖDERTÄLJE)"
         }
       },
+      "args_timra_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Property address as used by Timrå kommun (Belägenhetsadress), e.g. 'Aspen 195'."
+        }
+      },
+      "reconfigure_timra_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Property address as used by Timrå kommun (Belägenhetsadress), e.g. 'Aspen 195'."
+        }
+      },
       "args_uppsalavatten_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

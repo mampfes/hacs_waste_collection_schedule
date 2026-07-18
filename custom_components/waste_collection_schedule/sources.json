@@ -20955,6 +20955,12 @@
       "id": "telge_se"
     },
     {
+      "title": "Timr\u00e5 kommun",
+      "module": "timra_se",
+      "default_params": {},
+      "id": "timra_se"
+    },
+    {
       "title": "Upplands-Bro",
       "module": "avfallsapp_se",
       "default_params": {

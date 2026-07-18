@@ -4356,6 +4356,13 @@
     },
     "urls": {}
   },
+  "timra_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/timra_se.md",
+    "howto": {
+      "en": "Enter the property address exactly as shown on the Timrå kommun waste collection map (Belägenhetsadress), e.g. 'Aspen 195'. You can look up the address at https://kartor.timra.se/portal/apps/experiencebuilder/experience/?id=186668f9efeb458c926d85a978fe85de"
+    },
+    "urls": {}
+  },
   "uppsalavatten_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/uppsalavatten_se.md",
     "howto": {},
