@@ -2209,7 +2209,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Wilhelmshaven (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Willebadessen](/doc/source/lobbe_app.md) / lobbe.app
 - [Willershausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
-- [Willich](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network/willich
 - [Willingen](/doc/source/lobbe_app.md) / lobbe.app
 - [Wilnsdorf](/doc/ics/wilnsdorf_de.md) / wilnsdorf.de
 - [Winterberg](/doc/source/lobbe_app.md) / lobbe.app

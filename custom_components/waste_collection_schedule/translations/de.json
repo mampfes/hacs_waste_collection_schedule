@@ -10217,7 +10217,7 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Stadt-Kennung (Standard: 'bad-oeynhausen'; unterstützte Werte: 'bad-oeynhausen', 'willich')",
+          "city": "Stadt-Kennung (Standard und einzig unterstützter Wert: 'bad-oeynhausen')",
           "house_number": "Hausnummer (z.B. '1')",
           "street": "Straßenname (z.B. 'Aalstraße')"
         }
@@ -10232,7 +10232,7 @@
           "street": "Straße"
         },
         "data_description": {
-          "city": "Stadt-Kennung (Standard: 'bad-oeynhausen'; unterstützte Werte: 'bad-oeynhausen', 'willich')",
+          "city": "Stadt-Kennung (Standard und einzig unterstützter Wert: 'bad-oeynhausen')",
           "house_number": "Hausnummer (z.B. '1')",
           "street": "Straßenname (z.B. 'Aalstraße')"
         }

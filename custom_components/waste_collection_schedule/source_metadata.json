@@ -2300,8 +2300,8 @@
   "abfallkalender_prezero_network": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallkalender_prezero_network.md",
     "howto": {
-      "de": "Geben Sie Ihre Straße und Hausnummer ein. Die Stadt ist standardmäßig auf Bad Oeynhausen eingestellt (unterstützt: Bad Oeynhausen, Willich).",
-      "en": "Enter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich)."
+      "de": "Geben Sie Ihre Straße und Hausnummer ein. Diese Quelle unterstützt derzeit nur Bad Oeynhausen.",
+      "en": "Enter your street and house number. This source currently only supports Bad Oeynhausen."
     },
     "urls": {}
   },
