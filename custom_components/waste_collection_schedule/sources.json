@@ -5681,6 +5681,12 @@
       "id": "api_golemio_cz"
     },
     {
+      "title": "P\u0159edm\u011b\u0159ice nad Labem",
+      "module": "predmerice_nad_labem_cz",
+      "default_params": {},
+      "id": "predmerice_nad_labem_cz"
+    },
+    {
       "title": "Rudna u Prahy",
       "module": "mestorudna_cz",
       "default_params": {},

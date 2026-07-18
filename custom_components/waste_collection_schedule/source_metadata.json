@@ -1534,6 +1534,11 @@
     "howto": {},
     "urls": {}
   },
+  "predmerice_nad_labem_cz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/predmerice_nad_labem_cz.md",
+    "howto": {},
+    "urls": {}
+  },
   "mestorudna_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mestorudna_cz.md",
     "howto": {

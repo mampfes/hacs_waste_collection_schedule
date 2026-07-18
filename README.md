@@ -963,6 +963,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Lázně Bohdaneč](/doc/source/laznebohdanec_cz.md) / lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523
 - [OZO Ostrava](/doc/source/ozoostrava_cz.md) / ozoostrava.cz
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
+- [Předměřice nad Labem](/doc/source/predmerice_nad_labem_cz.md) / predmericenl.cz/odpady
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
 - [Technické služby Český Brod](/doc/source/tsceskybrod_cz.md) / tsceskybrod.cz
 </details>
