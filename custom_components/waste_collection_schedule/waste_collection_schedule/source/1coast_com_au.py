@@ -102,10 +102,13 @@ def _fallback_entries(soup: BeautifulSoup) -> "list[tuple[date, str]]":
         bin_name = bin_name_tag.get_text(strip=True)
         if not bin_name:
             continue
-        next_collection = collection.find("span", string="Next Collection")
-        if next_collection is None:
+        label = collection.find("span", string="Next Collection")
+        if label is None:
             continue
-        next_collection = next_collection.find_next_sibling("span").get_text(strip=True)
+        sibling = label.find_next_sibling("span")
+        if sibling is None:
+            continue
+        next_collection = sibling.get_text(strip=True)
         # remove the day of the week
         collection_date = next_collection.split(", ", 1)[1]
         entries.append(
