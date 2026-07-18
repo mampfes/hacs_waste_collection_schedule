@@ -3631,6 +3631,7 @@ If you already have enough information for your municipality/region, you are ver
 - [South Staffordshire Council](/doc/source/sstaffs_gov_uk.md) / sstaffs.gov.uk
 - [South Tyneside Council](/doc/source/southtyneside_gov_uk.md) / southtyneside.gov.uk
 - [Southampton City Council](/doc/source/southampton_gov_uk.md) / southampton.gov.uk
+- [Southend-on-Sea City Council](/doc/source/southend_gov_uk.md) / southend.gov.uk
 - [Spelthorne Borough Council](/doc/source/spelthorne_gov_uk.md) / spelthorne.gov.uk
 - [St Albans City & District Council](/doc/source/stalbans_gov_uk.md) / stalbans.gov.uk
 - [St Helens Council](/doc/source/st_helens_gov_uk.md) / sthelens.gov.uk
