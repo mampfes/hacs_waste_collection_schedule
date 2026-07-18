@@ -20223,6 +20223,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "GOAP Pozna\u0144",
+      "module": "goap_poznan_pl",
+      "default_params": {},
+      "id": "goap_poznan_pl"
+    },
+    {
       "title": "Gospodarka Odpadami - Pelplin",
       "module": "sims_pl",
       "default_params": {

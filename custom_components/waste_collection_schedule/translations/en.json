@@ -19172,6 +19172,45 @@
           "location_id": "Unique location id (LOCATION_ID)"
         }
       },
+      "args_goap_poznan_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
+          "city": "City",
+          "house_number": "House Number",
+          "location_type": "Location Type",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "building_type": "Optional, only needed if the address is ambiguous. One of: J (single-family building), W (multi-family building).",
+          "city": "City/village name exactly as used on the GOAP calendar (usually upper case), e.g. 'MUROWANA GOŚLINA'.",
+          "house_number": "House number, including any letter/slash suffix exactly as shown on the GOAP calendar (e.g. '5' or '5/A').",
+          "location_type": "Optional, only needed if the address is ambiguous. One of: Z (inhabited), N (uninhabited), M (mixed), R (recreational).",
+          "street": "Street name exactly as used on the GOAP calendar (usually upper case). For villages without named streets this is often the same as the city."
+        }
+      },
+      "reconfigure_goap_poznan_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "building_type": "Building Type",
+          "city": "City",
+          "house_number": "House Number",
+          "location_type": "Location Type",
+          "street": "Street"
+        },
+        "data_description": {
+          "building_type": "Optional, only needed if the address is ambiguous. One of: J (single-family building), W (multi-family building).",
+          "city": "City/village name exactly as used on the GOAP calendar (usually upper case), e.g. 'MUROWANA GOŚLINA'.",
+          "house_number": "House number, including any letter/slash suffix exactly as shown on the GOAP calendar (e.g. '5' or '5/A').",
+          "location_type": "Optional, only needed if the address is ambiguous. One of: Z (inhabited), N (uninhabited), M (mixed), R (recreational).",
+          "street": "Street name exactly as used on the GOAP calendar (usually upper case). For villages without named streets this is often the same as the city."
+        }
+      },
       "args_ichisystem_eu": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

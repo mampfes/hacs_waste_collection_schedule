@@ -4035,6 +4035,11 @@
     },
     "urls": {}
   },
+  "goap_poznan_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/goap_poznan_pl.md",
+    "howto": {},
+    "urls": {}
+  },
   "ichisystem_eu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ichisystem_eu.md",
     "howto": {
