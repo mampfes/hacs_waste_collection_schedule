@@ -10,6 +10,9 @@
     "alexandria_va_us": [
       "@lpukatch"
     ],
+    "amarsul_pt": [
+      "@markvp"
+    ],
     "awista_kommunal_de": [
       "@Zaunei"
     ],
@@ -25,6 +28,9 @@
     "buermoos_at": [
       "@bbr111"
     ],
+    "cannock_chase_dc_gov_uk": [
+      "@markvp"
+    ],
     "durban_gov_za": [
       "@robtesch"
     ],
@@ -37,14 +43,23 @@
     "felixdorf_gv_at": [
       "@bbr111"
     ],
+    "gemeinde24_at": [
+      "@markvp"
+    ],
     "haringey_gov_uk": [
       "@marcjay"
     ],
     "hartbeigraz_at": [
       "@bbr111"
     ],
+    "hohokus_nj_us": [
+      "@markvp"
+    ],
     "imst_at": [
       "@bbr111"
+    ],
+    "isaac_qld_gov_au": [
+      "@markvp"
     ],
     "jacksonville_fl_us": [
       "@biggiebytes"
@@ -61,11 +76,20 @@
     "kronstorf_at": [
       "@bbr111"
     ],
+    "lawrence_ma_us": [
+      "@markvp"
+    ],
+    "leeds_gov_uk": [
+      "@markvp"
+    ],
     "moretonbay_qld_gov_au": [
       "@CRZTFR"
     ],
     "muehlenkreis_de": [
       "@bbr111"
+    ],
+    "muttenz_ch": [
+      "@markvp"
     ],
     "mywastewatcher_de": [
       "@ItsMly"
@@ -97,6 +121,12 @@
     "stirling_wa_gov_au": [
       "@markvp"
     ],
+    "stkh_hu": [
+      "@markvp"
+    ],
+    "tibi_be": [
+      "@markvp"
+    ],
     "toulouse_metropole_fr": [
       "@fangedhex"
     ],
@@ -108,6 +138,9 @@
     ],
     "wingecarribee_nsw_gov_au": [
       "@m1ckyb"
+    ],
+    "zys_harmonogram_pl": [
+      "@markvp"
     ]
   }
 }
