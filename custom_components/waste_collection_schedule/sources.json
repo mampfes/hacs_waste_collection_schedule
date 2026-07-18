@@ -21756,6 +21756,12 @@
       "id": "a_region_ch"
     },
     {
+      "title": "SUIBR",
+      "module": "suibr_ch",
+      "default_params": {},
+      "id": "suibr_ch"
+    },
+    {
       "title": "Teufen",
       "module": "a_region_ch",
       "default_params": {

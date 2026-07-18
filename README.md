@@ -3303,6 +3303,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
 - [Stein](/doc/source/a_region_ch.md) / a-region.ch
 - [Steinach](/doc/source/a_region_ch.md) / a-region.ch
+- [SUIBR](/doc/source/suibr_ch.md) / suibr.ch
 - [Teufen](/doc/source/a_region_ch.md) / a-region.ch
 - [Thal](/doc/source/a_region_ch.md) / a-region.ch
 - [Therwil](/doc/source/localcities_ch.md) / therwil.ch
