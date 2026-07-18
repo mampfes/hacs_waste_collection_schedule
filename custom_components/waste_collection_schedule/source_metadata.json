@@ -719,7 +719,7 @@
   "sutherlandshire_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sutherlandshire_nsw_gov_au.md",
     "howto": {
-      "en": "Enter your suburb, street name and house number as they normally appear in your address. These are looked up automatically via the Sutherland Shire online services map, so they don't need to match any particular list."
+      "en": "Use the address exactly as it appears on council correspondence — street type spelled out in full (Street, Place, Avenue). You can check your address on the map at https://www.sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/bin-collection"
     },
     "urls": {}
   },

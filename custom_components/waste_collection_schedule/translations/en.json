@@ -2915,9 +2915,9 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "House number (e.g. 5).",
-          "street": "Street name, as normally written (e.g. Cleveland Place).",
-          "suburb": "Suburb name, as normally written (e.g. Bonnet Bay)."
+          "house_number": "House number, e.g. 5.",
+          "street": "Street name spelled out in full, e.g. Cleveland Place.",
+          "suburb": "Suburb, e.g. BONNET BAY."
         }
       },
       "reconfigure_sutherlandshire_nsw_gov_au": {
@@ -2930,9 +2930,9 @@
           "suburb": "Suburb"
         },
         "data_description": {
-          "house_number": "House number (e.g. 5).",
-          "street": "Street name, as normally written (e.g. Cleveland Place).",
-          "suburb": "Suburb name, as normally written (e.g. Bonnet Bay)."
+          "house_number": "House number, e.g. 5.",
+          "street": "Street name spelled out in full, e.g. Cleveland Place.",
+          "suburb": "Suburb, e.g. BONNET BAY."
         }
       },
       "args_hawkesbury_nsw_gov_au": {
