@@ -1,6 +1,8 @@
-# Stadt Dillingen Saar Abfuhr
+# Dillingen Saar
 
-Support for schedules provided by <https://www.dillingen-saar.de/rathaus/buergerservice/abfuhrkalender/>.
+Support for schedules provided by [Dillingen Saar](https://www.dillingen-saar.de/).
+
+Source script for waste collection Dillingen Saar
 
 ## Configuration via configuration.yaml
 
@@ -9,32 +11,20 @@ waste_collection_schedule:
   sources:
     - name: dillingen_saar_de
       args:
-        street: <Straße>
+        street: STREET
 ```
 
 ### Configuration Variables
 
 **street**  
-_(string) (required)_
-
+*(string) (required)*
 
 ## Example
-
-
-**Configuration via configuration.yaml**
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: dillingen_saar_de
       args:
-        street: "Odilienplatz"
+        street: Am Fischerberg
 ```
-
-
-## How to get the source arguments
-
-1. Open <https://www.dillingen-saar.de/rathaus/buergerservice/abfuhrkalender/>.
-2. Fill out the search field "Straßenname" to verify your street can be found (field is found below the colored icons).
-3. Click on the proposed street name in the call out box displayed after entering of (2).
-4. Copy the _complete_ name of the street of this field and paste it to the field `street` in your config.yaml of wastecalendar

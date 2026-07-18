@@ -9,7 +9,10 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule.collection import Collection
+# Use the package-level Collection factory so the legacy ``t=`` keyword
+# dispatches to a LegacyCollection (the new-style collection.Collection
+# requires waste_type=).
+from waste_collection_schedule import Collection
 from waste_collection_schedule.source_shell import (
     Customize,
     customize_function,

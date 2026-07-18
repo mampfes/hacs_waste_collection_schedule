@@ -1,6 +1,8 @@
-# AWSH
+# Abfallwirtschaft Südholstein
 
-Support for schedules provided by [AWSH](https://www.awsh.de)
+Support for schedules provided by [Abfallwirtschaft Südholstein](https://www.awsh.de).
+
+Source for Abfallwirtschaft Südholstein
 
 ## Configuration via configuration.yaml
 

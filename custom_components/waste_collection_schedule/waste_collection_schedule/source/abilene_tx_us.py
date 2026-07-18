@@ -1,108 +1,104 @@
+import datetime
 import re
-from datetime import date, timedelta
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import (
-    ArcGisError,
-    geocode,
-    query_feature_layer,
+    ArcGisMultiFeatureParser,
+    ArcGisMultiFeatureRetriever,
 )
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GARDEN_WASTE, GENERAL_WASTE
 
-TITLE = "Abilene, TX"
-DESCRIPTION = "Source for Abilene, TX solid waste and yard waste collection."
-URL = "https://abilenetx.gov/426/Solid-Waste-Recycling"
-COUNTRY = "us"
-
-TEST_CASES = {
-    "Chimney Rock Rd (Mon/Thu trash, 4th-Monday yard)": {
-        "address": "3601 Chimney Rock Rd, Abilene, TX"
-    },
-    "City Hall area (Tue/Fri trash)": {"address": "555 Walnut St, Abilene, TX"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Full street address including city and state (e.g. '3601 Chimney Rock Rd, Abilene, TX')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
+# Abilene publishes trash and yard-waste collection as two separate ArcGIS
+# layers. A point-in-polygon query against each layer returns:
+#   * Trash_Pickup -> "Name" = e.g. "Monday/Thursday" (one or more weekly days)
+#   * Yard_Waste_Pickup -> "Pickup_Time" = "Nth DAY | ... | Odd/Even Months"
+# The declarative multi-layer retriever geocodes once and runs the spatial query
+# against every layer; each layer's raw /query Response is tagged with a label
+# carrying its waste type and the attribute field to read, so _describe() can
+# project concrete dates without the source hand-rolling retrieve()/parse():
+# weekly schedules for trash, and per-occurrence one-off schedules for the
+# irregular monthly-parity yard-waste pattern.
 
 TRASH_URL = "https://services6.arcgis.com/iBFmWI3dYPQqS1KF/arcgis/rest/services/Trash_Pickup/FeatureServer/0"
 YARD_WASTE_URL = "https://services6.arcgis.com/iBFmWI3dYPQqS1KF/arcgis/rest/services/Yard_Waste_Pickup/FeatureServer/0"
 
-ICON_MAP = {
-    "Trash": Icons.GENERAL_WASTE,
-    "Yard Waste": Icons.GARDEN,
+# Each layer: a (waste_type, field) label paired with the FeatureServer URL and
+# the out_fields to request. The label is the waste-type string the layer emits
+# (the legacy t= value) paired with the attribute field whose value drives the
+# schedule. ArcGisMultiFeatureRetriever carries the label through to each
+# (label, attrs) record so _describe() can recover both without re-deriving them
+# from the URL.
+LAYERS = [
+    (("Trash", "Name"), TRASH_URL, "Name"),
+    (("Yard Waste", "Pickup_Time"), YARD_WASTE_URL, "Pickup_Time"),
+]
+
+_TYPE_MAP = {
+    "Trash": GENERAL_WASTE,
+    "Yard Waste": GARDEN_WASTE,
 }
 
-WEEKDAYS = {
-    "monday": 0,
-    "tuesday": 1,
-    "wednesday": 2,
-    "thursday": 3,
-    "friday": 4,
-    "saturday": 5,
-    "sunday": 6,
-}
-
+# Number of weekly trash collections to project (matches the legacy WEEKS_AHEAD).
 WEEKS_AHEAD = 26
 
 
-def _weekly_dates(day_name: str, waste_type: str) -> list[Collection]:
-    """Generate ~26 weeks of Collection entries for a given weekday."""
-    weekday_idx = WEEKDAYS.get(day_name.lower())
-    if weekday_idx is None:
-        return []
-    today = date.today()
-    days_ahead = (weekday_idx - today.weekday()) % 7
-    next_date = today + timedelta(days=days_ahead)
-    icon = ICON_MAP.get(waste_type)
-    return [
-        Collection(
-            date=next_date + timedelta(weeks=i),
-            t=waste_type,
-            icon=icon,
-        )
-        for i in range(WEEKS_AHEAD)
-    ]
-
-
-def _nth_weekday_of_month(year: int, month: int, weekday: int, n: int) -> date:
-    """Return the nth occurrence (1-based) of weekday (0=Mon) in the given month/year."""
-    first = date(year, month, 1)
+def _nth_weekday_of_month(year: int, month: int, weekday: int, n: int) -> datetime.date:
+    """Return the nth occurrence (1-based) of weekday (0=Mon) in the given month."""
+    first = datetime.date(year, month, 1)
     offset = (weekday - first.weekday()) % 7
-    first_occurrence = first + timedelta(days=offset)
-    return first_occurrence + timedelta(weeks=n - 1)
+    first_occurrence = first + datetime.timedelta(days=offset)
+    return first_occurrence + datetime.timedelta(weeks=n - 1)
 
 
-def _parse_yard_waste(pickup_time: str) -> list[Collection]:
-    """Parse 'Nth DAY | ... | Odd/Even Months' into Collection dates."""
+def _describe(record, source):
+    """Project a layer's matched attribute into Schedule descriptors.
+
+    ``record`` is the ``(label, attrs)`` pair produced by
+    :class:`ArcGisMultiFeatureParser`, where ``label`` is the
+    ``(waste_type, field)`` tuple this source tagged each layer with: the
+    waste-type string the layer emits and the attribute field to read.
+    """
+    (waste_type, field), attrs = record
+    value = (attrs.get(field) or "").strip()
+    if not value:
+        return
+
+    if waste_type == "Trash":
+        # "Name" is one or more weekdays separated by "/", each weekly.
+        for part in value.split("/"):
+            weekday_idx = recurrence.WEEKDAYS.get(part.strip().lower())
+            if weekday_idx is None:
+                continue
+            yield Schedule(
+                waste_type,
+                recurrence.next_weekday(weekday_idx),
+                recurrence.WEEKLY,
+                WEEKS_AHEAD,
+            )
+        return
+
+    # Yard Waste: "Nth DAY | ... | Odd/Even Months" — irregular nth-weekday of
+    # months of a given parity. Each occurrence is a one-off (future-only).
     match = re.match(
         r"(\d+)(?:st|nd|rd|th)\s+(\w+)\s*\|.*?(Odd|Even)\s+Months",
-        pickup_time,
+        value,
         re.IGNORECASE,
     )
     if not match:
-        return []
+        return
 
     n = int(match.group(1))
-    day_name = match.group(2).lower()
+    weekday_idx = recurrence.WEEKDAYS.get(match.group(2).lower())
+    if weekday_idx is None:
+        return
     parity = match.group(3).lower()
 
-    weekday_idx = WEEKDAYS.get(day_name)
-    if weekday_idx is None:
-        return []
-
-    today = date.today()
-    icon = ICON_MAP.get("Yard Waste")
-    entries: list[Collection] = []
-
+    today = datetime.date.today()
     for year in range(today.year, today.year + 2):
         for month in range(1, 13):
             month_is_odd = month % 2 == 1
@@ -115,49 +111,40 @@ def _parse_yard_waste(pickup_time: str) -> list[Collection]:
             except ValueError:
                 continue
             if d >= today:
-                entries.append(
-                    Collection(
-                        date=d,
-                        t="Yard Waste",
-                        icon=icon,
-                    )
-                )
-
-    return entries
+                yield Schedule(waste_type, d, recurrence.WEEKLY, 1)
 
 
-class Source:
+@final
+class Source(BaseSource):
+    TITLE = "Abilene, TX"
+    DESCRIPTION = "Source for Abilene, TX solid waste and yard waste collection."
+    URL = "https://abilenetx.gov/426/Solid-Waste-Recycling"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Chimney Rock Rd (Mon/Thu trash, 4th-Monday yard)": {
+            "address": "3601 Chimney Rock Rd, Abilene, TX"
+        },
+        "City Hall area (Tue/Fri trash)": {"address": "555 Walnut St, Abilene, TX"},
+    }
+
+    PARAMS = (text_field("address", "Street Address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your full street address including city and state "
+            "(e.g. '3601 Chimney Rock Rd, Abilene, TX')."
+        ),
+    }
+
+    # Declarative pipeline: geocode once, spatially query every layer, tag each
+    # response with its (waste_type, field) label, then keep only layers that
+    # matched a feature. _describe() projects each match into concrete dates.
+    retrieve = ArcGisMultiFeatureRetriever(LAYERS, address="address")
+    parse = ArcGisMultiFeatureParser()
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
     def __init__(self, address: str):
-        self._address = address.strip()
-
-    def fetch(self) -> list[Collection]:
-        try:
-            location = geocode(self._address)
-        except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
-
-        entries: list[Collection] = []
-
-        try:
-            features = query_feature_layer(
-                TRASH_URL, geometry=location, out_fields="Name"
-            )
-            name = (features[0].get("Name") or "").strip()
-            for day in name.split("/"):
-                entries.extend(_weekly_dates(day.strip(), "Trash"))
-        except ArcGisError:
-            pass
-
-        try:
-            features = query_feature_layer(
-                YARD_WASTE_URL, geometry=location, out_fields="Pickup_Time"
-            )
-            pickup_time = (features[0].get("Pickup_Time") or "").strip()
-            entries.extend(_parse_yard_waste(pickup_time))
-        except ArcGisError:
-            pass
-
-        if not entries:
-            raise SourceArgumentNotFound("address", self._address)
-
-        return entries
+        super().__init__(address=address.strip())

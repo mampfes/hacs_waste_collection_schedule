@@ -1,27 +1,31 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.SiteparkIES import SiteparkIES, match_icon
+"""Landkreis Wittmund waste calendar (Sitepark IES platform).
 
-TITLE = "Landkreis Wittmund"
-DESCRIPTION = "Source for Landkreis Wittmund waste collection."
-URL = "https://www.landkreis-wittmund.de"
-COUNTRY = "de"
-TEST_CASES = {
-    "CityWithoutStreet": {
-        "ort": "Werdum",
-    },
-    "CityWithStreet": {
-        "ort": "Werdum",
-        "strasse": "alle Straßen",
-    },
-    # legacy parameter names must keep working
-    "Legacy city/street": {
-        "city": "Werdum",
-        "street": "alle Straßen",
-    },
-}
+A BaseSource pipeline with a source-defined ``retrieve()``. Most Sitepark IES
+installations resolve a pois from a static, construction-time ``refid`` (or
+none at all), which the shared ``SiteparkIESRetriever`` supports directly.
+Wittmund's installation instead requires a *dynamic* per-request refid: it is
+looked up from a live ``<select id="sf_locid">`` dropdown on the collection
+calendar page (``SiteparkIES.resolve_refid``) for the Ort the user entered,
+then used to resolve the street to a pois. No configured retriever expresses
+a lookup-before-lookup like this, so ``retrieve`` is overridden here,
+mirroring the legacy ``fetch()``'s two-call shape. The method returns the raw
+ICS response, so ``parse``/``transform`` stay declarative.
+"""
 
-API_URL = "https://www.landkreis-wittmund.de/Leben-Wohnen/Wohnen/Abfall/Abfuhrkalender/"
-DOWNLOAD_PARAMS = {
+from typing import ClassVar, final
+
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, street
+from waste_collection_schedule.service.SiteparkIES import SiteparkIES
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+_BASE_URL = "https://www.landkreis-wittmund.de"
+_API_URL = (
+    "https://www.landkreis-wittmund.de/Leben-Wohnen/Wohnen/Abfall/Abfuhrkalender/"
+)
+_DOWNLOAD_PARAMS = {
     "ArtID[0]": "3105.1",
     "ArtID[1]": "1.4",
     "ArtID[2]": "1.2",
@@ -31,34 +35,41 @@ DOWNLOAD_PARAMS = {
 }
 
 
-ICON_MAP = {
-    "Baum- und Strauchschnitt": Icons.GARDEN,
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Papier": Icons.PAPER,
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Wertstoff": Icons.RECYCLING,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Landkreis Wittmund"
+    DESCRIPTION = "Source for Landkreis Wittmund waste collection."
+    URL = _BASE_URL
+    COUNTRY = "de"
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "ort": "Ort",
-        "strasse": "Straße",
+    TEST_CASES: ClassVar[dict] = {
+        "CityWithoutStreet": {"ort": "Werdum"},
+        "CityWithStreet": {"ort": "Werdum", "strasse": "alle Straßen"},
     }
-}
 
+    PARAMS = (
+        district("ort"),
+        street("strasse", optional=True),
+    )
 
-class Source:
-    def __init__(self, ort=None, strasse=None, city=None, street=None):
-        # ``city`` / ``street`` are the legacy parameter names.
-        self._ort = ort or city
-        self._strasse = strasse or street
-        self._sitepark = SiteparkIES(URL, download_params=DOWNLOAD_PARAMS)
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        refid = self._sitepark.resolve_refid(self._ort, API_URL)
-        pois = self._sitepark.get_pois(strasse=self._strasse, refid=refid)
-        dates = self._sitepark.fetch_ics(pois)
-        return [
-            Collection(date, waste_type, match_icon(waste_type, ICON_MAP))
-            for date, waste_type in dates
-        ]
+    parse = parsers.IcsParser()
+    # "Baum- und Strauchschnitt", "Biotonne", "Papiertonne" and "Wertstofftonne"
+    # already auto-resolve against the shared vocabulary; "Restabfalltonne"
+    # doesn't match an alias exactly (the shared aliases use the bare
+    # "restabfall" form), so it needs an explicit map.
+    transform = ICSTransformer(
+        type_value_map={
+            "Restabfalltonne": GENERAL_WASTE,
+        }
+    )
+
+    def __init__(self, ort: str, strasse: str | None = None):
+        super().__init__(ort=ort, strasse=strasse)
+
+    def retrieve(self, source):
+        client = SiteparkIES(_BASE_URL, download_params=_DOWNLOAD_PARAMS)
+        refid = client.resolve_refid(source.params.get("ort"), _API_URL)
+        pois = client.get_pois(strasse=source.params.get("strasse"), refid=refid)
+        return client.fetch_ics_response(pois)

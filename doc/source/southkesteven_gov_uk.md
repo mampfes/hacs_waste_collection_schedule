@@ -1,12 +1,14 @@
 # South Kesteven District Council
 
-Support for schedules provided by [South Kesteven District Council](https://southkesteven.gov.uk)
+Support for schedules provided by [South Kesteven District Council](https://southkesteven.gov.uk).
+
+Source for southkesteven.gov.uk services for South Kesteven, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: southkesteven_gov_uk
       args:
         address_id: ADDRESS_ID
@@ -15,18 +17,18 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **address_id**  
-*(int|string) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: southkesteven_gov_uk
       args:
-        address_id: "33399"
+        address_id: PE10 0RX
 ```
 
-## How to find your `address_id`
+## How to get the source arguments
 
-Go to the [South Kesteven bin collection](https://pre.southkesteven.gov.uk/BinSearch.aspx) website and open search for your address. Either inspect the page where you would select your address (after postcode search) where you can find the `address_id` as value of the `value` attribute of the `option` tag containing your address. Alternatively, you can switch to the network tab of your browser's developer tools and click on "View your bin days" to see the request to the server. The `address_id` is in the payload of the request.
+Your property's UPRN, find it at https://www.findmyaddress.co.uk/. You can also use a Postcode.

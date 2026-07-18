@@ -1,16 +1,18 @@
 # West Lothian Council
 
-Support for schedules provided by [West Lothian Council](https://www.westlothian.gov.uk/bin-collections).
+Support for schedules provided by [West Lothian Council](https://www.westlothian.gov.uk).
+
+Source for services for West Lothian
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: westlothian_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -25,13 +27,9 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: westlothian_gov_uk
       args:
-        postcode: "EH55 8FJ"
-        uprn: "135051417"
+        postcode: EH48+4DD
+        uprn: '135007799'
 ```
-
-## How to find your `UPRN`
-
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.

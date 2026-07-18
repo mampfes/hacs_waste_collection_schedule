@@ -1,6 +1,8 @@
 # City of Bayswater
 
-Support for schedules provided by [City of Bayswater](https://www.bayswater.wa.gov.au/bins).
+Support for schedules provided by [City of Bayswater](https://www.bayswater.wa.gov.au).
+
+Source for City of Bayswater waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [City of Bayswater bins page](https://www.bayswater.wa.gov.au/bins) and search for your address. The address should match the format used in the lookup, e.g. "9 Wholley St Bayswater".
+Enter your street address including suburb (e.g. '9 Wholley St Bayswater').

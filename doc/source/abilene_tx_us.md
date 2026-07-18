@@ -1,6 +1,8 @@
 # Abilene, TX
 
-Support for schedules provided by [City of Abilene Solid Waste & Recycling](https://abilenetx.gov/426/Solid-Waste-Recycling).
+Support for schedules provided by [Abilene, TX](https://abilenetx.gov/426/Solid-Waste-Recycling).
+
+Source for Abilene, TX solid waste and yard waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -14,10 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
-
-Full street address including city and state.
 
 ## Example
 
@@ -31,7 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Use your full street address including city and state. This source returns:
-
-- **Trash** — twice-weekly residential trash pickup (Monday/Thursday or Tuesday/Friday depending on your zone).
-- **Yard Waste** — monthly curbside brush and bulky pickup (odd months only; the specific week of month varies by zone).
+Enter your full street address including city and state (e.g. '3601 Chimney Rock Rd, Abilene, TX').

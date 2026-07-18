@@ -1,6 +1,8 @@
 # Schärding
 
-Support for waste collection schedules provided by [Stadtgemeinde Schärding](https://www.schaerding.ooe.gv.at), Austria.
+Support for schedules provided by [Schärding](https://www.schaerding.ooe.gv.at).
+
+Source for Schärding, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -9,21 +11,17 @@ waste_collection_schedule:
   sources:
     - name: schaerding_ooe_gv_at
       args:
-        strasse: STREET
-        hausnummer: HOUSE_NUMBER
+        strasse: STRASSE
+        hausnummer: HAUSNUMMER
 ```
 
 ### Configuration Variables
 
-**strasse**
+**strasse**  
 *(string) (required)*
 
-Street name as listed in the Schärding waste calendar dropdown (case-insensitive).
-
-**hausnummer**
-*(string | integer) (required)*
-
-House number as listed in the Schärding waste calendar dropdown.
+**hausnummer**  
+*(string) (required)*
 
 ## Example
 
@@ -32,10 +30,6 @@ waste_collection_schedule:
   sources:
     - name: schaerding_ooe_gv_at
       args:
-        strasse: "Adalbert-Stifter-Straße"
-        hausnummer: "1"
+        strasse: "Adalbert-Stifter-Stra\xDFe"
+        hausnummer: '1'
 ```
-
-## How to get the source arguments
-
-Open <https://www.schaerding.ooe.gv.at/system/web/kalender.aspx?menuonr=226878372>, choose your street and house number from the dropdowns, and use the same values for `strasse` and `hausnummer`.

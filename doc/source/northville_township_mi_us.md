@@ -1,6 +1,8 @@
 # Northville Township, MI
 
-Support for schedules provided by [Northville Township, MI](https://www.twp.northville.mi.us/services/public-services/solid-waste-collection-recycling).
+Support for schedules provided by [Northville Township, MI](https://www.twp.northville.mi.us).
+
+Source for Northville Township, MI waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Northville Township Collection Schedule](https://www.arcgis.com/apps/webappviewer/index.html?id=ea82cac1dac745518c87a2ed45825460) page and search for your address. Use the street number and street name (e.g. "16795 Northville Rd"). Note that numbered mile roads should use the number form (e.g. "6 Mile" not "Six Mile").
+Enter your street address (e.g. '16795 Northville Rd').

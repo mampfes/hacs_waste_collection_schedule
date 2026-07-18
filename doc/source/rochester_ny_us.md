@@ -1,6 +1,8 @@
 # Rochester, NY
 
-Support for schedules provided by [Rochester, NY](https://www.cityofrochester.gov/departments/department-environmental-services/refuse-and-recycling-collection-schedule).
+Support for schedules provided by [Rochester, NY](https://www.cityofrochester.gov).
+
+Source for Rochester, NY waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Rochester Service Locator](http://maps.cityofrochester.gov/ServiceLocator/) and search for your address. Use your full street address including city and state (e.g. "124 Parsells Ave, Rochester, NY").
+Enter your street address within the City of Rochester (e.g. '124 Parsells Ave, Rochester, NY').

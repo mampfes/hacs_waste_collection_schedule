@@ -1,6 +1,8 @@
 # Müllmax
 
-Support for schedules provided by [muellmax.de](https://www.muellmax.de).
+Support for schedules provided by [Müllmax](https://www.muellmax.de).
+
+Source for Müllmax waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -10,9 +12,9 @@ waste_collection_schedule:
     - name: muellmax_de
       args:
         service: SERVICE
-        mm_frm_ort_sel: ORT_SEL
-        mm_frm_str_sel: STR_SEL
-        mm_frm_hnr_sel: HNR_SEL
+        mm_frm_ort_sel: MM_FRM_ORT_SEL
+        mm_frm_str_sel: MM_FRM_STR_SEL
+        mm_frm_hnr_sel: MM_FRM_HNR_SEL
 ```
 
 ### Configuration Variables
@@ -24,10 +26,10 @@ waste_collection_schedule:
 *(string) (optional)*
 
 **mm_frm_str_sel**  
-*(string) (optional)* Street name only — do **not** include house numbers. The value must match exactly what appears in the Müllmax street dropdown.
+*(string) (optional)*
 
 **mm_frm_hnr_sel**  
-*(string) (optional)* House number selection value. Only needed if the Müllmax form shows a house number dropdown after selecting your street. The format is typically `zipcode;district;number;` (e.g. `60596;Sachsenhausen;2;`).
+*(string) (optional)*
 
 ## Example
 
@@ -36,15 +38,7 @@ waste_collection_schedule:
   sources:
     - name: muellmax_de
       args:
-        service: Fes
-        mm_frm_str_sel: Achenbachstraße
-        mm_frm_hnr_sel: 60596;Sachsenhausen;2;
+        service: Usb
+        mm_frm_str_sel: "Freiligrathstra\xDFe"
+        mm_frm_hnr_sel: 44791;Innenstadt;55;
 ```
-
-## How to get the source arguments
-
-There is a script with an interactive command line interface which generates the required source configuration:
-
-[https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/muellmax_de.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/muellmax_de.py).
-
-First, install the Python module `inquirer`. Then run this script from a shell and answer the questions.

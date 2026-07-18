@@ -1,6 +1,8 @@
 # Stadtbetriebe Steyr GmbH
 
-Support for waste collection schedules provided by [Stadtbetriebe Steyr GmbH](https://www.steyr.at), Austria.
+Support for schedules provided by [Stadtbetriebe Steyr GmbH](https://www.steyr.at).
+
+Source for Stadtbetriebe Steyr GmbH waste collection schedule.
 
 ## Configuration via configuration.yaml
 
@@ -9,21 +11,17 @@ waste_collection_schedule:
   sources:
     - name: steyr_at
       args:
-        strasse: STREET
-        hausnummer: HOUSE_NUMBER
+        strasse: STRASSE
+        hausnummer: HAUSNUMMER
 ```
 
 ### Configuration Variables
 
-**strasse**
+**strasse**  
 *(string) (required)*
 
-Street name as listed in the Steyr waste calendar dropdown (case-insensitive).
-
-**hausnummer**
-*(string | integer) (required)*
-
-House number as listed in the Steyr waste calendar dropdown.
+**hausnummer**  
+*(string) (required)*
 
 ## Example
 
@@ -32,10 +30,6 @@ waste_collection_schedule:
   sources:
     - name: steyr_at
       args:
-        strasse: "Wolfernstraße"
-        hausnummer: "7"
+        strasse: "Wolfernstra\xDFe"
+        hausnummer: '7'
 ```
-
-## How to get the source arguments
-
-Open <https://www.steyr.at/system/web/kalender.aspx?sprache=1&menuonr=227376864>, choose your street and house number from the dropdowns, and use the same values for `strasse` and `hausnummer`.

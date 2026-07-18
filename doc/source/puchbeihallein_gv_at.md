@@ -1,6 +1,8 @@
 # Puch bei Hallein
 
-Support for waste collection schedules provided by [Gemeinde Puch bei Hallein](https://www.puchbeihallein.gv.at/Buergerservice/Aktuelles/Abfallkalender), Salzburg, Austria.
+Support for schedules provided by [Puch bei Hallein](https://www.puchbeihallein.gv.at).
+
+Waste collection schedule for Puch bei Hallein, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -9,21 +11,17 @@ waste_collection_schedule:
   sources:
     - name: puchbeihallein_gv_at
       args:
-        strasse: STREET
-        hausnummer: HOUSE_NUMBER
+        strasse: STRASSE
+        hausnummer: HAUSNUMMER
 ```
 
 ### Configuration Variables
 
-**strasse**
+**strasse**  
 *(string) (required)*
 
-Street name as listed in the Puch bei Hallein waste calendar dropdown (case-insensitive).
-
-**hausnummer**
-*(string | integer) (required)*
-
-House number as listed in the Puch bei Hallein waste calendar dropdown (e.g. `3`, `4a`).
+**hausnummer**  
+*(string) (required)*
 
 ## Example
 
@@ -32,10 +30,10 @@ waste_collection_schedule:
   sources:
     - name: puchbeihallein_gv_at
       args:
-        strasse: "Ahornstraße"
-        hausnummer: "3"
+        strasse: "Ahornstra\xDFe"
+        hausnummer: '3'
 ```
 
 ## How to get the source arguments
 
-Visit <https://www.puchbeihallein.gv.at/Buergerservice/Aktuelles/Abfallkalender>, choose your street and house number from the dropdowns, and use the same values for `strasse` and `hausnummer`. House numbers may include a letter suffix (e.g. `4a`) — match exactly what the dropdown shows.
+Visit https://www.puchbeihallein.gv.at/Buergerservice/Aktuelles/Abfallkalender, pick your street and house number from the dropdowns, and use the same values for 'strasse' and 'hausnummer'.

@@ -1,6 +1,8 @@
 # Kronstorf
 
-Support for waste collection schedules provided by [Marktgemeinde Kronstorf](https://www.kronstorf.at), Austria.
+Support for schedules provided by [Kronstorf](https://www.kronstorf.at).
+
+Source for Kronstorf (Marktgemeinde Kronstorf), Austria.
 
 ## Configuration via configuration.yaml
 
@@ -12,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-No arguments required — the source fetches the municipality-wide calendar automatically.
+No configuration arguments are required.
 
 ## Example
 

@@ -1,429 +1,315 @@
-from datetime import datetime
-from typing import Any
+from collections.abc import Mapping
+from typing import Any, ClassVar, TypedDict, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dependent_select
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequired,
 )
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    ELECTRONICS,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "Gemeinde24"
-DESCRIPTION = "Source for Gemeinde24 municipal app waste collection data"
-COUNTRY = "at"
-URL = "https://www.gemeinde24.at"
-TEST_CASES = {
-    "Gaal by IDs": {
-        "gemeinde_id": "114",
-        "street_id": "4321",
-    },
-    "Gaal by names": {
-        "gemeinde": "Gaal",
-        "strasse": "Gaal",
-    },
-    "St. Marien - Pachersdorf Straße (3-wöchentlich)": {
-        "gemeinde_id": "83",
-        "street_id": "4129",
-    },
-    "St. Marien - Pachersdorf Straße (6-wöchentlich)": {
-        "gemeinde_id": "83",
-        "street_id": "3911",
-    },
-}
+# Demonstrates: the config_params.dependent_select(parent, child) PARAM and the
+# get_choices() contract it relies on, on the BaseSource pipeline.
+#
+# Gemeinde24 is a cascading provider: the user first chooses a municipality
+# (Gemeinde), then a street/local area (Strasse) whose option list is valid only
+# within that municipality. The street list is fetched LIVE per municipality, so
+# this is the textbook two-level dependent_select cascade.
+#
+# dependent_select("gemeinde", "strasse") declares that pairing. The framework
+# collects the parent value, then calls Source.get_choices(parent_value) to
+# populate the child selector. get_choices() here resolves the municipality name
+# to its GemeindeID and fetches that municipality's streets from wastesetup_v2.
 
 API_BASE_URL = "https://www.gemeinde24.at/admin/API"
 API_KEY = "justanapp"
 APP_VERSION = "20251020"
-REQUEST_TIMEOUT = 30
+# gemeinden.php sorts by distance from a coordinate but returns every
+# municipality, so a fixed central-Austria point yields the full list.
 SEARCH_LATITUDE = "47.5000"
 SEARCH_LONGITUDE = "14.5000"
 
-ICON_MAP = {
-    "rm": Icons.GENERAL_WASTE,
-    "bm": Icons.ORGANIC,
-    "lf": Icons.RECYCLING,
-    "ap": Icons.PAPER,
-    "ag": Icons.GLASS_COLORED,
-    "am": Icons.ELECTRONICS,
-    "sp": Icons.BULKY,
-    "gs": Icons.GARDEN,
-    "ps": Icons.HAZARDOUS,
-    "el": Icons.ELECTRONICS,
-    "frei1": Icons.HAZARDOUS,
-    "frei2": Icons.PLASTIC_PACKAGING,
-}
-
-TITLE_ICON_MAP = {
-    "restmuell": "mdi:trash-can",
-    "biomuell": "mdi:leaf",
-    "gelber sack": "mdi:recycle",
-    "altpapier": "mdi:package-variant",
-    "altglas": "mdi:glass-wine",
-    "altmetall": "mdi:iron-outline",
-    "sperrmuell": "mdi:sofa",
-    "gruenschnitt": "mdi:tree",
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Use the Gemeinde24 app flow: choose municipality, then choose street. "
-        "You can configure either municipality/street names or the numeric IDs."
-    ),
-    "de": (
-        "Nutzen Sie den Gemeinde24-Ablauf: zuerst Gemeinde wählen, dann Straße. "
-        "Sie können entweder Namen oder die numerischen IDs eintragen."
-    ),
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "gemeinde": "Municipality name as shown in Gemeinde24.",
-        "strasse": "Street/local area name as shown in Gemeinde24.",
-        "gemeinde_id": (
-            "Numeric GemeindeID from Gemeinde24 "
-            "(optional alternative to the municipality field)."
-        ),
-        "street_id": (
-            "Numeric streetID from Gemeinde24 "
-            "(optional alternative to the street field)."
-        ),
-    },
-    "de": {
-        "gemeinde": "Gemeindename wie in Gemeinde24 angezeigt.",
-        "strasse": "Strassen-/Ortsteilname wie in Gemeinde24 angezeigt.",
-        "gemeinde_id": (
-            "Numerische GemeindeID aus Gemeinde24 (optional statt des Gemeinde-Feldes)."
-        ),
-        "street_id": (
-            "Numerische streetID aus Gemeinde24 (optional statt des Straßen-Feldes)."
-        ),
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "gemeinde": "Municipality",
-        "strasse": "Street",
-        "gemeinde_id": "Municipality ID",
-        "street_id": "Street ID",
-    },
-    "de": {
-        "gemeinde": "Gemeinde",
-        "strasse": "Strasse",
-        "gemeinde_id": "Gemeinde ID",
-        "street_id": "Strassen ID",
-    },
+# Map the gemeinde24 wasteID code to a canonical WasteType. The human title is
+# also resolved against the shared German vocabulary; the code map is the
+# authoritative override (titles are free text and occasionally custom).
+_CODE_MAP = {
+    "rm": GENERAL_WASTE,
+    "bm": ORGANIC,
+    "lf": RECYCLABLES,
+    "ap": PAPER,
+    "ag": GLASS,
+    "am": ELECTRONICS,
+    "sp": BULKY_WASTE,
+    "gs": GARDEN_WASTE,
+    "ps": HAZARDOUS,
+    "el": ELECTRONICS,
 }
 
 
-class Source:
-    def __init__(
-        self,
-        gemeinde: str | None = None,
-        strasse: str | None = None,
-        gemeinde_id: str | int | None = None,
-        street_id: str | int | None = None,
-    ):
-        self._gemeinde = self._clean(gemeinde)
-        self._strasse = self._clean(strasse)
-        self._gemeinde_id = self._clean(gemeinde_id)
-        self._street_id = self._clean(street_id)
+class _WasteItem(TypedDict):
+    """The fields read from each waste_list.php entry."""
 
-        self._session = requests.Session()
-        self._session.headers.update(
-            {
-                "User-Agent": "g24_230827/251029 CFNetwork/3860.500.112 Darwin/25.4.0",
-                "Accept": "*/*",
-            }
+    datum: str
+    title: str
+    wasteID: str
+
+
+def _clean(value: Any) -> str:
+    return "" if value is None else str(value).strip()
+
+
+def _schedule_date(record: Mapping[str, Any]) -> str:
+    """Strip the German weekday prefix from ``datum`` (``Do-2026-07-02``).
+
+    Returns the ``YYYY-MM-DD`` tail, or ``""`` when there is no prefix to split
+    (the transformer then skips the record as date-less).
+    """
+    return _clean(record.get("datum")).partition("-")[2]
+
+
+def _waste_label(record: Mapping[str, Any]) -> str:
+    """Resolve the record's waste label, preferring the wasteID code map.
+
+    A known ``wasteID`` code wins over the free-text ``title`` (titles are
+    occasionally custom): it is rewritten to the canonical German name so the
+    transformer resolves it onto the right WasteType. Unknown codes fall back to
+    the title verbatim.
+    """
+    mapped = _CODE_MAP.get(_clean(record.get("wasteID")).lower())
+    return mapped.names["de"] if mapped is not None else _clean(record.get("title"))
+
+
+def _normalize(value: str) -> str:
+    normalized = value.casefold().strip()
+    normalized = (
+        normalized.replace("ß", "ss")
+        .replace("ä", "ae")
+        .replace("ö", "oe")
+        .replace("ü", "ue")
+    )
+    normalized = normalized.replace("-", " ")
+    return " ".join(normalized.split())
+
+
+def _deduplicate(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result = []
+    for value in values:
+        if value and value not in seen:
+            seen.add(value)
+            result.append(value)
+    return result
+
+
+def _suggestions(value: str, candidates: list[str]) -> list[str]:
+    unique = _deduplicate(candidates)
+    query = _normalize(value)
+    if not unique:
+        return []
+    starts = [c for c in unique if _normalize(c).startswith(query)]
+    contains = [c for c in unique if query and query in _normalize(c)]
+    return _deduplicate(starts + contains + unique)[:20]
+
+
+def _gemeinden(session) -> list[dict]:
+    """Fetch the full municipality list (live)."""
+    resp = session.post(
+        f"{API_BASE_URL}/gemeinden.php",
+        params={"apiKEY": API_KEY},
+        data={"lat": SEARCH_LATITUDE, "long": SEARCH_LONGITUDE, "apiKEY": API_KEY},
+        timeout=30,
+    )
+    payload = resp.json()
+    if str(payload.get("code", "")).upper() != "OK":
+        raise SourceArgumentNotFoundWithSuggestions("gemeinde", "", [])
+    reports = payload.get("reports")
+    return (
+        [r for r in reports if isinstance(r, dict)] if isinstance(reports, list) else []
+    )
+
+
+def _resolve_gemeinde_id(session, gemeinde: str) -> str:
+    """Resolve a municipality name to its GemeindeID (live)."""
+    if not gemeinde:
+        raise SourceArgumentRequired(
+            "gemeinde", "or provide 'gemeinde_id' as an alternative."
         )
+    reports = _gemeinden(session)
+    all_names = [_clean(r.get("Gemeindename")) for r in reports if r.get("GemeindeID")]
+    matches = [
+        (
+            _clean(r.get("GemeindeID")),
+            _clean(r.get("Gemeindename")),
+            _clean(r.get("zip")),
+        )
+        for r in reports
+        if _clean(r.get("GemeindeID"))
+        and _normalize(_clean(r.get("Gemeindename"))) == _normalize(gemeinde)
+    ]
+    if len(matches) == 1:
+        return matches[0][0]
+    if len(matches) > 1:
+        raise SourceArgAmbiguousWithSuggestions(
+            "gemeinde",
+            gemeinde,
+            _deduplicate(
+                [f"{name} ({zip_}, GemeindeID={gid})" for gid, name, zip_ in matches]
+            ),
+        )
+    raise SourceArgumentNotFoundWithSuggestions(
+        "gemeinde", gemeinde, _suggestions(gemeinde, all_names)
+    )
 
-    def fetch(self) -> list[Collection]:
-        gemeinde_id = self._resolve_gemeinde_id()
-        street_id = self._resolve_street_id(gemeinde_id)
 
-        payload = self._request_json(
-            method="GET",
-            endpoint="content2.php",
+def _streets(session, gemeinde_id: str) -> list[tuple[str, str]]:
+    """Fetch (street name, streetID) pairs for a municipality (live)."""
+    resp = session.get(
+        f"{API_BASE_URL}/wastesetup_v2.php",
+        params={"GemeindeID": gemeinde_id, "apiKEY": API_KEY},
+        timeout=30,
+    )
+    payload = resp.json()
+    if str(payload.get("code", "")).upper() != "OK":
+        raise SourceArgumentNotFoundWithSuggestions("strasse", "", [])
+    streets = payload.get("strassen")
+    if not isinstance(streets, list):
+        return []
+    pairs = []
+    for street in streets:
+        if not isinstance(street, dict):
+            continue
+        name = _clean(street.get("street"))
+        sid = _clean(street.get("streetID"))
+        if name and sid:
+            pairs.append((name, sid))
+    return pairs
+
+
+def _resolve_street_id(session, gemeinde_id: str, strasse: str, street_id: str) -> str:
+    """Resolve a street name (or validate a street_id) within a municipality."""
+    pairs = _streets(session, gemeinde_id)
+    if street_id:
+        if any(sid == street_id for _, sid in pairs):
+            return street_id
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street_id",
+            street_id,
+            [f"{name} (streetID={sid})" for name, sid in pairs],
+        )
+    if not strasse:
+        raise SourceArgumentRequired(
+            "strasse", "or provide 'street_id' as an alternative."
+        )
+    matches = [(n, s) for n, s in pairs if _normalize(n) == _normalize(strasse)]
+    if len(matches) == 1:
+        return matches[0][1]
+    if len(matches) > 1:
+        raise SourceArgAmbiguousWithSuggestions(
+            "strasse",
+            strasse,
+            [f"{name} (streetID={sid})" for name, sid in matches],
+        )
+    raise SourceArgumentNotFoundWithSuggestions(
+        "strasse", strasse, _suggestions(strasse, [n for n, _ in pairs])
+    )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Gemeinde24"
+    DESCRIPTION = "Source for Gemeinde24 municipal app waste collection data."
+    URL = "https://www.gemeinde24.at"
+    COUNTRY = "at"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Gaal": {"gemeinde": "Gaal", "strasse": "Gaal"},
+    }
+
+    PARAMS = (dependent_select("gemeinde", "strasse", child_label="Street"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Choose your municipality (Gemeinde), then choose your street/local "
+            "area (Strasse) from the list that loads for that municipality."
+        ),
+        "de": (
+            "Wählen Sie Ihre Gemeinde, dann Ihre Straße/Ihren Ortsteil aus der "
+            "Liste, die für diese Gemeinde geladen wird."
+        ),
+    }
+
+    parse = parsers.JsonParser("waste_list.php", shape=list[_WasteItem])
+
+    # The date split (weekday prefix) and the wasteID code override are folded
+    # into the transformer's date/type callables, so no preprocess step is needed.
+    transform = JsonTransformer(
+        date_key=_schedule_date,
+        type_key=_waste_label,
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+    )
+
+    def __init__(self, gemeinde: str | None = None, strasse: str | None = None):
+        # validate() (in super) enforces the required gemeinde + strasse cascade.
+        super().__init__(gemeinde=gemeinde, strasse=strasse)
+        self._gemeinde = _clean(gemeinde)
+        self._strasse = _clean(strasse)
+
+    @classmethod
+    def get_parent_choices(cls) -> list[str]:
+        """Return the full list of municipality (Gemeinde) names.
+
+        Implements the optional parent half of the dependent_select contract:
+        the framework calls this to populate the parent (Gemeinde) selector.
+        gemeinden.php returns every municipality (sorted by distance from a
+        fixed point), so this is the complete option list.
+        """
+        from curl_cffi import requests as _cffi
+
+        session = _cffi.Session(impersonate="chrome")
+        names = [_clean(r.get("Gemeindename")) for r in _gemeinden(session)]
+        return _deduplicate(sorted(n for n in names if n))
+
+    @classmethod
+    def get_choices(cls, parent_value: str) -> list[str]:
+        """Return the street names available within a municipality.
+
+        Implements the config_params.dependent_select() contract: the framework
+        calls this with the chosen parent (Gemeinde) value to populate the child
+        (Strasse) selector. Resolves the municipality name to its GemeindeID,
+        then fetches that municipality's streets live.
+        """
+        from curl_cffi import requests as _cffi
+
+        session = _cffi.Session(impersonate="chrome")
+        gemeinde_id = _resolve_gemeinde_id(session, _clean(parent_value))
+        return _deduplicate([name for name, _ in _streets(session, gemeinde_id)])
+
+    def retrieve(self, source):
+        gemeinde_id = _resolve_gemeinde_id(source.session, self._gemeinde)
+        street_id = _resolve_street_id(source.session, gemeinde_id, self._strasse, "")
+        return source.session.get(
+            f"{API_BASE_URL}/content2.php",
             params={
                 "GemeindeID": gemeinde_id,
                 "apiKEY": API_KEY,
                 "StreetID": street_id,
                 "appversion": APP_VERSION,
             },
+            timeout=30,
         )
-
-        waste_list = payload.get("waste_list.php")
-        if not isinstance(waste_list, list):
-            raise Exception(
-                "Unexpected response from content2.php: missing or invalid 'waste_list.php'."
-            )
-
-        entries = []
-        for item in waste_list:
-            if not isinstance(item, dict):
-                continue
-
-            date_obj = self._parse_date(item.get("datum"))
-            if date_obj is None:
-                continue
-
-            title = self._clean(item.get("title"))
-            if not title:
-                continue
-
-            waste_id = self._clean(item.get("wasteID")).lower()
-            icon = ICON_MAP.get(waste_id)
-            if icon is None:
-                icon = TITLE_ICON_MAP.get(self._normalize(title))
-
-            entries.append(Collection(date=date_obj, t=title, icon=icon))
-
-        return entries
-
-    def _resolve_gemeinde_id(self) -> str:
-        if self._gemeinde_id:
-            return self._gemeinde_id
-
-        if not self._gemeinde:
-            raise SourceArgumentRequired(
-                "gemeinde", "or provide 'gemeinde_id' as an alternative."
-            )
-
-        payload = self._request_json(
-            method="POST",
-            endpoint="gemeinden.php",
-            params={"apiKEY": API_KEY},
-            data={
-                "lat": SEARCH_LATITUDE,
-                "long": SEARCH_LONGITUDE,
-                "apiKEY": API_KEY,
-            },
-        )
-
-        if str(payload.get("code", "")).upper() != "OK":
-            raise Exception("gemeinden.php did not return code 'OK'.")
-
-        reports = payload.get("reports")
-        if not isinstance(reports, list):
-            raise Exception(
-                "Unexpected response from gemeinden.php: missing 'reports'."
-            )
-
-        exact_matches_with_id: list[tuple[str, str, str]] = []
-        all_names_with_id = []
-
-        for report in reports:
-            if not isinstance(report, dict):
-                continue
-
-            name = self._clean(report.get("Gemeindename"))
-            this_gemeinde_id = self._clean(report.get("GemeindeID"))
-            zip_code = self._clean(report.get("zip"))
-
-            if not name:
-                continue
-
-            if this_gemeinde_id:
-                all_names_with_id.append(name)
-
-            if (
-                self._normalize(name) == self._normalize(self._gemeinde)
-                and this_gemeinde_id
-            ):
-                exact_matches_with_id.append((this_gemeinde_id, name, zip_code))
-
-        if len(exact_matches_with_id) == 1:
-            return exact_matches_with_id[0][0]
-
-        if len(exact_matches_with_id) > 1:
-            suggestions = [
-                self._format_gemeinde_suggestion(match[0], match[1], match[2])
-                for match in exact_matches_with_id
-            ]
-            raise SourceArgAmbiguousWithSuggestions(
-                "gemeinde", self._gemeinde, self._deduplicate(suggestions)
-            )
-
-        raise SourceArgumentNotFoundWithSuggestions(
-            "gemeinde",
-            self._gemeinde,
-            self._build_suggestions(self._gemeinde, all_names_with_id),
-        )
-
-    def _resolve_street_id(self, gemeinde_id: str) -> str:
-        payload = self._request_json(
-            method="GET",
-            endpoint="wastesetup_v2.php",
-            params={"GemeindeID": gemeinde_id, "apiKEY": API_KEY},
-        )
-
-        if str(payload.get("code", "")).upper() != "OK":
-            raise Exception("wastesetup_v2.php did not return code 'OK'.")
-
-        streets = payload.get("strassen")
-        if not isinstance(streets, list):
-            raise Exception(
-                "Unexpected response from wastesetup_v2.php: missing 'strassen'."
-            )
-
-        street_pairs = []
-        for street in streets:
-            if not isinstance(street, dict):
-                continue
-            street_name = self._clean(street.get("street"))
-            street_id = self._clean(street.get("streetID"))
-            if street_name and street_id:
-                street_pairs.append((street_name, street_id))
-
-        if self._street_id:
-            if any(street_id == self._street_id for _, street_id in street_pairs):
-                return self._street_id
-
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_id",
-                self._street_id,
-                [
-                    self._format_street_suggestion(name, sid)
-                    for name, sid in street_pairs
-                ],
-            )
-
-        if not self._strasse:
-            raise SourceArgumentRequired(
-                "strasse", "or provide 'street_id' as an alternative."
-            )
-
-        exact_matches = [
-            (name, sid)
-            for name, sid in street_pairs
-            if self._normalize(name) == self._normalize(self._strasse)
-        ]
-
-        if len(exact_matches) == 1:
-            return exact_matches[0][1]
-
-        if len(exact_matches) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "strasse",
-                self._strasse,
-                [
-                    self._format_street_suggestion(name, sid)
-                    for name, sid in exact_matches
-                ],
-            )
-
-        raise SourceArgumentNotFoundWithSuggestions(
-            "strasse",
-            self._strasse,
-            self._build_suggestions(self._strasse, [name for name, _ in street_pairs]),
-        )
-
-    def _request_json(
-        self,
-        method: str,
-        endpoint: str,
-        params: dict[str, Any] | None = None,
-        data: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        url = f"{API_BASE_URL}/{endpoint}"
-
-        try:
-            response = self._session.request(
-                method=method,
-                url=url,
-                params=params,
-                data=data,
-                timeout=REQUEST_TIMEOUT,
-            )
-            response.raise_for_status()
-        except requests.exceptions.RequestException as exc:
-            raise Exception(f"Failed request to '{endpoint}': {exc}") from exc
-
-        try:
-            payload = response.json()
-        except ValueError as exc:
-            raise Exception(f"Invalid JSON response from '{endpoint}'.") from exc
-
-        if not isinstance(payload, dict):
-            raise Exception(f"Unexpected JSON payload type from '{endpoint}'.")
-
-        return payload
-
-    @staticmethod
-    def _clean(value: Any) -> str:
-        if value is None:
-            return ""
-        return str(value).strip()
-
-    @staticmethod
-    def _normalize(value: str) -> str:
-        normalized = value.casefold().strip()
-        normalized = (
-            normalized.replace("ß", "ss")
-            .replace("ä", "ae")
-            .replace("ö", "oe")
-            .replace("ü", "ue")
-        )
-        normalized = normalized.replace("-", " ")
-        normalized = " ".join(normalized.split())
-        return normalized
-
-    @staticmethod
-    def _deduplicate(values: list[str]) -> list[str]:
-        seen = set()
-        result = []
-        for value in values:
-            if value in seen:
-                continue
-            seen.add(value)
-            result.append(value)
-        return result
-
-    def _build_suggestions(self, value: str, candidates: list[str]) -> list[str]:
-        unique_candidates = self._deduplicate(
-            [candidate for candidate in candidates if candidate]
-        )
-        query = self._normalize(value)
-
-        if not unique_candidates:
-            return []
-
-        starts_with = [
-            candidate
-            for candidate in unique_candidates
-            if self._normalize(candidate).startswith(query)
-        ]
-        contains = [
-            candidate
-            for candidate in unique_candidates
-            if query and query in self._normalize(candidate)
-        ]
-
-        ordered = self._deduplicate(starts_with + contains + unique_candidates)
-        return ordered[:20]
-
-    @staticmethod
-    def _format_gemeinde_suggestion(gemeinde_id: str, name: str, zip_code: str) -> str:
-        if zip_code:
-            return f"{name} ({zip_code}, GemeindeID={gemeinde_id})"
-        return f"{name} (GemeindeID={gemeinde_id})"
-
-    @staticmethod
-    def _format_street_suggestion(name: str, street_id: str) -> str:
-        return f"{name} (streetID={street_id})"
-
-    @staticmethod
-    def _parse_date(raw_date: Any):
-        if not isinstance(raw_date, str):
-            return None
-
-        # Expected format from API: 'Fr-2026-04-24'
-        _, separator, date_value = raw_date.partition("-")
-        if not separator or not date_value:
-            return None
-
-        try:
-            return datetime.strptime(date_value, "%Y-%m-%d").date()
-        except ValueError:
-            return None

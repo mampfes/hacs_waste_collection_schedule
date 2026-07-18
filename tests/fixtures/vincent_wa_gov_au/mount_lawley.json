@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-07-10",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 69a90bfc22",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Fri, 10 Jul 2026 13:55:10 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "231",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"5fac395a\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMjggUnVieSBTdHJlZXQsIE5vcnRoIFBlcnRoLCBQZXJ0aCwgV2VzdGVybiBBdXN0cmFsaWEsIDYwMDYiLCJsb2NhdGlvbiI6eyJ4IjoxMTUuODU1MDgwMDA4NDM5LCJ5IjotMzEuOTI0OTkwMDA2Njg4fSwic2NvcmUiOjEwMCwiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjoxMTUuODU0MDgwMDA4NDM5LCJ5bWluIjotMzEuOTI1OTkwMDA2Njg4LCJ4bWF4IjoxMTUuODU2MDgwMDA4NDM5LCJ5bWF4IjotMzEuOTIzOTkwMDA2Njg4fX1dfQ=="
+    },
+    {
+      "key": "GET https://mapping.vincent.wa.gov.au/pozi/qgisserver 857df38a4e",
+      "method": "GET",
+      "url": "https://mapping.vincent.wa.gov.au/pozi/qgisserver",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/vnd.geo+json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0, QGIS FCGI server - QGIS version 3.40.14-Bratislava",
+        "x-powered-by": "ASP.NET",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET,POST,OPTIONS",
+        "date": "Fri, 10 Jul 2026 13:55:11 GMT",
+        "content-length": "1543"
+      },
+      "content_b64": "eyJ0eXBlIjogIkZlYXR1cmVDb2xsZWN0aW9uIiwKICJiYm94IjogWyAxMTUuODIzMzczNDgsIC0zMS45NDk3NjExNywgMTE1Ljg4NTEyNDIxLCAtMzEuOTEzNjkwOTVdLAogImZlYXR1cmVzIjogWwogIHsiYmJveCI6WzExNS44NTQ5ODcsLTMxLjkyNTE3LDExNS44NTUxNDUsLTMxLjkyNDgwNl0sImdlb21ldHJ5Ijp7ImNvb3JkaW5hdGVzIjpbW1sxMTUuODU1MDE2LC0zMS45MjQ4MDZdLFsxMTUuODU1MTQ1LC0zMS45MjQ4MDddLFsxMTUuODU1MTQyLC0zMS45MjUxN10sWzExNS44NTUwMTMsLTMxLjkyNTE2OV0sWzExNS44NTQ5ODcsLTMxLjkyNTE2OV0sWzExNS44NTQ5ODksLTMxLjkyNDk4OF0sWzExNS44NTUwMTUsLTMxLjkyNDk4OF0sWzExNS44NTUwMTYsLTMxLjkyNDgwNl1dXSwidHlwZSI6IlBvbHlnb24ifSwiaWQiOiJXYXN0ZV9Db2xsZWN0aW9uLjEyMzg3IiwicHJvcGVydGllcyI6eyJBZGRyZXNzIjoiMjggUnVieSBTdCwgTm9ydGggUGVydGgiLCJDb2xsZWN0aW9uIEFyZWEiOiI8cCBzdHlsZT1cImNvbG9yOiBibGFjazsgZm9udC13ZWlnaHQ6IGJvbGQ7bWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDBweDttYXJnaW4tYm90dG9tOiAxMHB4O1wiPkNvbGxlY3Rpb24gQXJlYSBCPC9wPiIsIkZPR08gQ29sbGVjdGlvbiBEYXkiOiI8cCBzdHlsZT1cImNvbG9yOiBncmVlbjsgZm9udC13ZWlnaHQ6IGJvbGQ7bWFyZ2luLWJvdHRvbTogMHB4O21hcmdpbi10b3A6IDBweDtcIj5GT0dPIENvbGxlY3Rpb24gRGF5OjwvcD48cCBzdHlsZT1cIm1hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+MTQgSnVsIDIwMjYgLSBXZWVrbHkgKFR1ZXNkYXkpPC9wPiIsIkdlbmVyYWwgV2FzdGUgQ29sbGVjdGlvbiBEYXkiOiI8cCBzdHlsZT1cImNvbG9yOiByZWQ7IGZvbnQtd2VpZ2h0OiBib2xkO21hcmdpbi1ib3R0b206IDBweDtcIj5HZW5lcmFsIFdhc3RlIENvbGxlY3Rpb24gRGF5OjwvcD48cCBzdHlsZT1cIm1hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+MjEgSnVsIDIwMjYgLSBGb3J0bmlnaHRseSAoVHVlc2RheSBXZWVrIDIpPC9wPiIsIlJlY3ljbGluZyBDb2xsZWN0aW9uIERheSI6IjxwIHN0eWxlPVwiY29sb3I6ICNiODg2MGI7IGZvbnQtd2VpZ2h0OiBib2xkO21hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+UmVjeWNsaW5nIENvbGxlY3Rpb24gRGF5OjwvcD48cCBzdHlsZT1cIm1hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAwcHg7XCI+MTQgSnVsIDIwMjYgLSBGb3J0bmlnaHRseSAoVHVlc2RheSBXZWVrIDEpPC9wPiIsIlZlcmdlIFZhbGV0IFZpbmNlbnQiOiI8cCBzdHlsZT1cImZvbnQtd2VpZ2h0OiBib2xkO21hcmdpbi1ib3R0b206IDBweDttYXJnaW4tdG9wOiAxMHB4O1wiPkJ1bGsgaGFyZCBhbmQgQnVsayBHcmVlbiBDb2xsZWN0aW9uczo8L3A+PHA+PGEgaHJlZj1cImh0dHBzOi8vd3d3LndtcmMud2EuZ292LmF1L3ZlcmdldmFsZXQvXCI+VmVyZ2UgVmFsZXQgVmluY2VudDwvYT48L3A+In0sInR5cGUiOiJGZWF0dXJlIn0KIF0KfQ=="
+    }
+  ]
+}

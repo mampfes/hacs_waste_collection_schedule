@@ -1,121 +1,164 @@
-import logging
+"""AWM München, Germany.
+
+Demonstrates: a large, genuinely branching TYPO3 form wizard. Posting the
+address may return the ICS download link directly, or the site may first
+need a location id per waste-stream (when an address has more than one
+container location) and/or a collection-cycle string per waste-stream (when a
+stream can be emptied on more than one schedule) -- each a separate POST only
+required when the previous response's HTML contains that stream's <select>.
+None of this branching, nor the "one response can carry several
+`a.downloadics` links to fetch and merge", fits a configured retriever, so it
+stays a source-defined ``retrieve``/``parse`` pair.
+"""
+
 import re
 import urllib.parse
-from html.parser import HTMLParser
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentRequiredWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street, text_field
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequiredWithSuggestions,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "AWM München"
-DESCRIPTION = "Source for AWM München."
-URL = "https://www.awm-muenchen.de"
-TEST_CASES = {
-    "Waltenbergerstr. 1": {
-        "street": "Waltenbergerstr.",
-        "house_number": "1",
-    },
-    "Geretsrieder Str. 10a": {
-        "street": "Geretsrieder Str.",
-        "house_number": "10a",
-    },
-    "Bellinzonastraße 19": {
-        "street": "Bellinzonastr.",
-        "house_number": "19",
-        "r_location_id": "70050134",
-        "b_location_id": "70050134",
-        "p_location_id": "70050134",
-    },
-    "Marienplatz 1": {
-        "street": "Marienplatz",
-        "house_number": "1",
-        "r_collection_cycle_string": "001;U",
-        "p_collection_cycle_string": "002;U",
-    },
-}
+_DOMAIN = "https://www.awm-muenchen.de"
+_HEADERS = {"Origin": _DOMAIN}  # the backend checks Origin on every POST.
 
-ICON_MAP = {
-    "Restmülltonne": Icons.GENERAL_WASTE,
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Papiertonne": Icons.PAPER,
-    "Wertstofftonne": Icons.RECYCLING,
-}
+_FORM_NAME = "abfuhrkalender"
+_FIELD = "tx_awmabfuhrkalender_abfuhrkalender"
 
-BASE_URL = "https://www.awm-muenchen.de"
+_LOCATION_ID_RE = r"\d+"
+_CYCLE_STRING_RE = r"(?:\d{3}|\d\/\d);[A-Z]"
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Fill in the street and house number, then submit. The form fields are tested one after the other and offer a selection of permitted values if necessary. Alternatively, enter known values directly. More details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
-    "de": "Straße und Hausnummer ausfüllen, dann abschicken. Die Formularfelder werden nacheinander getested und bieten ggf. eine Auswahl der zulässigen Werte an. Alternativ bekannt Werte direkt eingeben. Mehr Details: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
-    "it": "Compilare la via e il numero civico, quindi inviare. I campi del modulo vengono testati uno dopo l'altro e possono offrire una selezione di valori consentiti. In alternativa, è possibile inserire direttamente i valori noti. Ulteriori dettagli: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
-    "fr": "Remplir la rue et le numéro, puis envoyer. Les champs du formulaire sont testés les uns après les autres et proposent, le cas échéant, un choix de valeurs autorisées. Sinon, connu Saisir directement les valeurs. Plus de détails : https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awm_muenchen_de.md",
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "r_collection_cycle_string": "Residual waste emptying cycle (e.g. '1/2;G' or forum selection)",
-        "b_collection_cycle_string": "Organic waste garbage can emptying cycle (e.g. '1/2;G' or form selection)",
-        "p_collection_cycle_string": "Paper garbage can emptying cycle (e.g. '1/2;G' or form selection)",
-        "r_location_id": "Residual waste location ID (e.g. '70027977' or forum selection)",
-        "b_location_id": "Organic waste garbage can location ID (e.g. '70027977' or forum selection)",
-        "p_location_id": "Paper garbage can location ID (e.g. '70027977' or forum selection)",
-        "house_number": "House number",
-        "street": "Street",
-    },
-    "de": {
-        "r_collection_cycle_string": "Restmüll Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
-        "b_collection_cycle_string": "Biotonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
-        "p_collection_cycle_string": "Papiertonne Leerungszyklus (z.B. '1/2;G' oder Forumularauswahl)",
-        "r_location_id": "Restmüll Standort-ID (z.B. '70027977' oder Forumularauswahl)",
-        "b_location_id": "Biotonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
-        "p_location_id": "Papiertonne Standort-ID (z.B. '70027977' oder Forumularauswahl)",
-        "house_number": "Hausnummer",
-        "street": "Straße",
-    },
-    "it": {
-        "r_collection_cycle_string": "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
-        "b_collection_cycle_string": "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
-        "p_collection_cycle_string": "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
-        "r_location_id": "ID de site des déchets résiduels (par exemple, '70027977' ou sélection de formulaire)",
-        "b_location_id": "ID de site de la poubelle bio (par exemple, '70027977' ou sélection du formulaire)",
-        "p_location_id": "ID du site de la poubelle à papier (par exemple, '70027977' ou sélection du formulaire)",
-        "house_number": "numéro de maison",
-        "street": "rue",
-    },
-    "fr": {
-        "r_collection_cycle_string": "cycle de vidage des déchets résiduels (par ex. '1/2;G' ou choix du formulaire)",
-        "b_collection_cycle_string": "Cycle de vidage des biodéchets (par ex. '1/2;G' ou sélection du formulaire)",
-        "p_collection_cycle_string": "Cycle de vidage de la poubelle à papier (par ex. '1/2;G' ou sélection du formulaire)",
-        "r_location_id": "ID de site des déchets résiduels (par exemple, '70027977' ou sélection de formulaire)",
-        "b_location_id": "ID de site de la poubelle bio (par exemple, '70027977' ou sélection du formulaire)",
-        "p_location_id": "ID du site de la poubelle à papier (par exemple, '70027977' ou sélection du formulaire)",
-        "house_number": "numéro de maison",
-        "street": "rue",
-    },
-}
-
-_LOGGER = logging.getLogger(__name__)
+# (location-id param, stellplatz key, cycle-string param, leerungszyklus key)
+_STREAMS = (
+    ("r_location_id", "restmuell", "r_collection_cycle_string", "R"),
+    ("b_location_id", "bio", "b_collection_cycle_string", "B"),
+    ("p_location_id", "papier", "p_collection_cycle_string", "P"),
+)
 
 
-# Parser for HTML input (hidden) text
-class HiddenInputParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._args = {}
-
-    @property
-    def args(self):
-        return self._args
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "input":
-            d = dict(attrs)
-            if str(d["type"]).lower() == "hidden":
-                self._args[d["name"]] = d["value"] if "value" in d else ""
+def _clean_label(label: str) -> str:
+    return label.split(",")[0].replace("Achtung:", "").strip()
 
 
-class Source:
+def _form_info(html_text: str, form_name: str) -> "tuple[str, dict]":
+    """Return the form's action URL and its hidden input fields."""
+    soup = BeautifulSoup(html_text, "html.parser")
+    form = soup.find("form", id=form_name)
+    if not isinstance(form, Tag):
+        raise SourceArgumentNotFoundWithSuggestions("street", form_name, [])
+    action = form.get("action")
+    action_url = f"{_DOMAIN}{urllib.parse.unquote(str(action))}"
+    hidden = {}
+    for tag in form.find_all("input"):
+        if isinstance(tag, Tag) and str(tag.get("type", "")).lower() == "hidden":
+            hidden[tag.get("name")] = tag.get("value", "")
+    return action_url, hidden
+
+
+def _options(soup: BeautifulSoup, attr_name: str, attr_value: str) -> list:
+    select = soup.find("select", {attr_name: attr_value})
+    return select.find_all("option") if isinstance(select, Tag) else []
+
+
+@final
+class Source(BaseSource):
+    TITLE = "AWM München"
+    DESCRIPTION = "Source for AWM München."
+    URL = _DOMAIN
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Waltenbergerstr. 1": {
+            "street": "Waltenbergerstr.",
+            "house_number": "1",
+        },
+        "Geretsrieder Str. 10a": {
+            "street": "Geretsrieder Str.",
+            "house_number": "10a",
+        },
+        "Bellinzonastraße 19": {
+            "street": "Bellinzonastr.",
+            "house_number": "19",
+            "r_location_id": "70050134",
+            "b_location_id": "70050134",
+            "p_location_id": "70050134",
+        },
+        "Marienplatz 1": {
+            "street": "Marienplatz",
+            "house_number": "1",
+            "r_collection_cycle_string": "001;U",
+            "p_collection_cycle_string": "002;U",
+        },
+    }
+
+    PARAMS = (
+        street(field="street"),
+        house_number(field="house_number"),
+        text_field("r_location_id", "Residual waste location ID", optional=True),
+        text_field("b_location_id", "Organic waste location ID", optional=True),
+        text_field("p_location_id", "Paper location ID", optional=True),
+        text_field(
+            "r_collection_cycle_string",
+            "Residual waste emptying cycle",
+            optional=True,
+        ),
+        text_field(
+            "b_collection_cycle_string", "Organic waste emptying cycle", optional=True
+        ),
+        text_field("p_collection_cycle_string", "Paper emptying cycle", optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Fill in the street and house number, then submit. If the address "
+            "has more than one container location or emptying cycle per "
+            "waste stream, the fetch error lists the valid values to enter "
+            "for the corresponding *_location_id / *_collection_cycle_string "
+            "argument."
+        ),
+        "de": (
+            "Straße und Hausnummer ausfüllen, dann abschicken. Falls die "
+            "Adresse mehrere Standorte oder Leerungszyklen pro Abfallart "
+            "hat, listet die Fehlermeldung die gültigen Werte für das "
+            "jeweilige Argument *_location_id / *_collection_cycle_string auf."
+        ),
+        "it": (
+            "Compilare la via e il numero civico, quindi inviare. Se "
+            "l'indirizzo ha più posizioni del contenitore o cicli di "
+            "svuotamento per flusso di rifiuti, l'errore elenca i valori "
+            "validi per l'argomento *_location_id / *_collection_cycle_string."
+        ),
+        "fr": (
+            "Remplir la rue et le numéro, puis envoyer. Si l'adresse a "
+            "plusieurs emplacements de conteneur ou cycles de vidage par "
+            "flux de déchets, l'erreur liste les valeurs valides pour "
+            "l'argument *_location_id / *_collection_cycle_string concerné."
+        ),
+    }
+
+    transform = ICSTransformer(
+        clean=_clean_label,
+        type_value_map={
+            "Restmülltonne": GENERAL_WASTE,
+            "Biotonne": ORGANIC,
+            "Papiertonne": PAPER,
+            "Wertstofftonne": RECYCLABLES,
+        },
+    )
+
     def __init__(
         self,
         street: str,
@@ -127,350 +170,126 @@ class Source:
         b_collection_cycle_string: str = "",
         p_collection_cycle_string: str = "",
     ):
-        self._street = street
-        self._hnr = house_number
-        self._ics = ICS()
-        self._r_location_id = r_location_id
-        self._b_location_id = b_location_id
-        self._p_location_id = p_location_id
-        self._r_collection_cycle_string = r_collection_cycle_string
-        self._b_collection_cycle_string = b_collection_cycle_string
-        self._p_collection_cycle_string = p_collection_cycle_string
+        super().__init__(
+            street=street,
+            house_number=house_number,
+            r_location_id=r_location_id,
+            b_location_id=b_location_id,
+            p_location_id=p_location_id,
+            r_collection_cycle_string=r_collection_cycle_string,
+            b_collection_cycle_string=b_collection_cycle_string,
+            p_collection_cycle_string=p_collection_cycle_string,
+        )
 
-    def fetch(self):
-        s = requests.session()
+    def _fetch_links(self, session, links: list) -> list:
+        responses = []
+        for link in links:
+            href = link.get("href")
+            r = session.get(f"{_DOMAIN}{urllib.parse.unquote(href)}", headers=_HEADERS)
+            r.raise_for_status()
+            responses.append(r)
+        return responses
 
-        # special request header is required, server backend checks for Origin
-        headers = {
-            "Origin": "https://www.awm-muenchen.de",
-        }
-        s.headers.update(headers)
+    def _apply_choice(
+        self,
+        args: dict,
+        field: str,
+        value: str,
+        options: list,
+        param_name: str,
+        pattern: str,
+    ) -> None:
+        if not value:
+            if options:
+                raise SourceArgumentRequiredWithSuggestions(
+                    param_name,
+                    "multiple choices returned from AWM service.",
+                    [f"'{o.get('value')}' for {o.text}" for o in options],
+                )
+            return
+        match = re.findall(pattern, value)
+        if match:
+            args[field] = match[0]
 
-        # request default page
-        r = s.get(f"{BASE_URL}/entsorgen/abfuhrkalender")
+    def retrieve(self, source):
+        session = self.session
+        p = self.params
+
+        r = session.get(f"{_DOMAIN}/entsorgen/abfuhrkalender", headers=_HEADERS)
         r.raise_for_status()
         r.encoding = "utf-8"
 
-        step1_action_url, args = self._get_html_form_infos(r.text, "abfuhrkalender")
+        action_url, args = _form_info(r.text, _FORM_NAME)
+        args[f"{_FIELD}[strasse]"] = p["street"]
+        args[f"{_FIELD}[hausnummer]"] = p["house_number"]
+        args[f"{_FIELD}[section]"] = "address"
+        args[f"{_FIELD}[submitAbfuhrkalender]"] = "true"
 
-        # add the address information
-        args["tx_awmabfuhrkalender_abfuhrkalender[strasse]"] = self._street
-        args["tx_awmabfuhrkalender_abfuhrkalender[hausnummer]"] = self._hnr
-        args["tx_awmabfuhrkalender_abfuhrkalender[section]"] = "address"
-        args["tx_awmabfuhrkalender_abfuhrkalender[submitAbfuhrkalender]"] = "true"
-
-        # ready for step 1 - we post the address
-        r = s.post(
-            step1_action_url,
-            data=args,
-        )
+        r = session.post(action_url, data=args, headers=_HEADERS)
         r.raise_for_status()
-        _LOGGER.debug("got first response after address.")
-
-        # We have POSTed the address. Now there are four follow-up options (error paths excluded):
-        # 1. Download ICS already
-        # 2. Enter location ids -> POST and download
-        # 3. Enter collection cycle strings -> POST and download
-        # 4. Enter location ids -> POST, collection cycle strings -> POST and download
-        entries = []
         page_soup = BeautifulSoup(r.text, "html.parser")
-        if download_links := page_soup.find_all("a", {"class": "downloadics"}):
-            # This means we have found the ICS download link right away and can download.
-            for download_link in download_links:
-                self._retrieve_and_append_entries(s, download_link, entries)
-            if len(entries) == 0:
-                raise ValueError(
-                    "The provided arguments (street and house number) were accepted by the AWM server, but 0 calendar entries were retrieved. This may be a temporary issue."
-                )
-            _LOGGER.info("Got ICS with " + str(len(entries)) + " entries.")
-            return entries
 
-        _LOGGER.debug("No ICS-Link, continuing in code...")
+        links = page_soup.find_all("a", {"class": "downloadics"})
+        if links:
+            return self._fetch_links(session, links)
 
-        # This means we must provide the form with additional arguments
-        # * depending on the address: stellplatz[bio|papier|restmuell]: location IDs, from the selections in the web forms
-        # * depending on the address: leerungszyklus[B|P|R]: collection cycle strings, from the selections in the web forms
-        action_url, args = self._get_html_form_infos(r.text, "abfuhrkalender")
+        action_url, args = _form_info(r.text, _FORM_NAME)
 
-        # So, let's see if we need to collect / provide the location IDs...
-        # =================================================================
-        r_location_id_options = []
-        b_location_id_options = []
-        p_location_id_options = []
-        try:
-            r_location_id_options = page_soup.find(
-                "select",
-                id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]",
-            ).find_all("option")
-        except Exception:
-            pass
-        try:
-            b_location_id_options = page_soup.find(
-                "select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][bio]"
-            ).find_all("option")
-        except Exception:
-            pass
-        try:
-            p_location_id_options = page_soup.find(
-                "select", id="tx_awmabfuhrkalender_abfuhrkalender[stellplatz][papier]"
-            ).find_all("option")
-        except Exception:
-            pass
-        _LOGGER.debug("Location-ID options:")
-        _LOGGER.debug(str(r_location_id_options))
-        _LOGGER.debug(str(b_location_id_options))
-        _LOGGER.debug(str(p_location_id_options))
-
-        if (
-            len(r_location_id_options) > 0
-            or len(b_location_id_options) > 0
-            or len(p_location_id_options) > 0
-        ):
-            _LOGGER.debug("Ok, we need location IDs.")
-            # YES. We need to provide these, because at least one of R, B or P needs a selection.
-            # Collect which ever are needed from the input and POST.
-            # Note: We'll use a very dirty hack to extract the value we want from the HA form input / select. See comment below.
-            # First, the Restmuell...
-            if self._r_location_id == "":
-                # Great, no location ID set, but do we really need one?
-                if len(r_location_id_options) > 0:
-                    # YES! Therefore, user must enter a value or select it from the drop down.
-                    raise (
-                        SourceArgumentRequiredWithSuggestions(
-                            argument="r_location_id",
-                            reason="multiple choices returned from AWM service.",
-                            suggestions=[
-                                f"'{option.get('value')}' for {option.text}"
-                                for option in r_location_id_options
-                            ],
-                        )
-                    )
-                # NO, not required. Don't add anything to the array.
-            else:
-                # Ok, option was set in UI, e.g., to:
-                # * """'12345678' for XYZ-Street 12""" from a suggestion, and with regex "\d+" we get 12345678
-                # * """11122233""", because the user knows their location ID already, then with regex "\d+" we get 11122233
-                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][restmuell]"] = (
-                    re.findall("\\d+", self._r_location_id)[0]
+        location_options = {
+            key: _options(page_soup, "id", f"{_FIELD}[stellplatz][{key}]")
+            for _loc, key, _cyc, _leer in _STREAMS
+        }
+        if any(location_options.values()):
+            for loc_param, key, _cyc, _leer in _STREAMS:
+                self._apply_choice(
+                    args,
+                    f"{_FIELD}[stellplatz][{key}]",
+                    p[loc_param],
+                    location_options[key],
+                    loc_param,
+                    _LOCATION_ID_RE,
                 )
 
-            # Second, the Biomuell...
-            if self._b_location_id == "":
-                if len(b_location_id_options) > 0:
-                    raise (
-                        SourceArgumentRequiredWithSuggestions(
-                            argument="b_location_id",
-                            reason="multiple choices returned from AWM service.",
-                            suggestions=[
-                                f"'{option.get('value')}' for {option.text}"
-                                for option in b_location_id_options
-                            ],
-                        )
-                    )
-            else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][bio]"] = (
-                    re.findall("\\d+", self._b_location_id)[0]
-                )
-
-            # Third and last, the Papermuell...
-            if self._p_location_id == "":
-                if len(p_location_id_options) > 0:
-                    raise (
-                        SourceArgumentRequiredWithSuggestions(
-                            argument="p_location_id",
-                            reason="multiple choices returned from AWM service.",
-                            suggestions=[
-                                f"'{option.get('value')}' for {option.text}"
-                                for option in p_location_id_options
-                            ],
-                        )
-                    )
-            else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[stellplatz][papier]"] = (
-                    re.findall("\\d+", self._p_location_id)[0]
-                )
-            _LOGGER.debug("Location-ID path, POSTing args:")
-            _LOGGER.debug(str(args))
-
-            r = s.post(
-                action_url,
-                data=args,
-            )
+            r = session.post(action_url, data=args, headers=_HEADERS)
             r.raise_for_status()
-            _LOGGER.debug("got second response after address + location IDs.")
-
-            # Careful here: remember the scope of the variable "page_soup":
-            # if we needed to provide location ids, this code here will overwrite the page_soup.
-            # Therefore, now there are only two  options:
-            # 1. download ICS right away
-            # 2. new HTML contains selection for collection cycle strings
             page_soup = BeautifulSoup(r.text, "html.parser")
-            if download_links := page_soup.find_all("a", {"class": "downloadics"}):
-                # This means we have found the ICS download link after the location id selection and can download.
-                for download_link in download_links:
-                    self._retrieve_and_append_entries(s, download_link, entries)
-                if len(entries) == 0:
-                    raise ValueError(
-                        "The provided arguments (street and house number, and location ids) were accepted by the AWM server, but 0 calendar entries were retrieved. This may be a temporary issue."
-                    )
-                _LOGGER.info("Got ICS with " + str(len(entries)) + " entries.")
-                return entries
-            action_url, args = self._get_html_form_infos(r.text, "abfuhrkalender")
-            _LOGGER.debug("No ICS-Link, continuing in code...")
 
-        # Ok, either the location IDs were not required, or not enough.
-        # Let's see if we need to provide collection cycle strings...
-        # =================================================================
-        r_collection_cycle_options = []
-        b_collection_cycle_options = []
-        p_collection_cycle_options = []
-        try:
-            r_collection_cycle_options = page_soup.find(
-                "select",
-                {"name": "tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][R]"},
-            ).find_all("option")
-        except Exception:
-            pass
-        try:
-            b_collection_cycle_options = page_soup.find(
-                "select",
-                {"name": "tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][B]"},
-            ).find_all("option")
-        except Exception:
-            pass
-        try:
-            p_collection_cycle_options = page_soup.find(
-                "select",
-                {"name": "tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][P]"},
-            ).find_all("option")
-        except Exception:
-            pass
-        _LOGGER.debug("Collection Cycle String options:")
-        _LOGGER.debug(str(r_collection_cycle_options))
-        _LOGGER.debug(str(b_collection_cycle_options))
-        _LOGGER.debug(str(p_collection_cycle_options))
+            links = page_soup.find_all("a", {"class": "downloadics"})
+            if links:
+                return self._fetch_links(session, links)
 
-        if (
-            len(r_collection_cycle_options) > 0
-            or len(b_collection_cycle_options) > 0
-            or len(p_collection_cycle_options) > 0
-        ):
-            # YES. We need to provide these, because either R, B or P needs a selection.
-            # Collect which ever are needed from the input and POST.
-            # Note: We'll use a very dirty hack to extract the value we want from the HA form input / select. See comment below.
-            # First, the Restmuell...
-            if self._r_collection_cycle_string == "":
-                # Great, no collection cycle string set, but do we really need one?
-                if len(r_collection_cycle_options) > 0:
-                    # YES! Therefore, user must enter a value or select it from the drop down.
-                    raise (
-                        SourceArgumentRequiredWithSuggestions(
-                            argument="r_collection_cycle_string",
-                            reason="multiple choices returned from AWM service.",
-                            suggestions=[
-                                f"'{option.get('value')}' for {option.text}"
-                                for option in r_collection_cycle_options
-                            ],
-                        )
-                    )
-                # NO, not required. Don't add anything to the array.
-            else:
-                # Ok, option was set in UI, e.g. to:
-                # * """'001;U' for 1x pro Woche""", and with regex "(?:\d{3}|\d\/\d);[A-Z]" we get 001;U
-                # * ""'1/2;G""", because the user knows their collection cycle string already, then with regex "(?:\d{3}|\d\/\d);[A-Z]" we get 1/2;G
-                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][R]"] = (
-                    re.findall(
-                        "(?:\\d{3}|\\d\\/\\d);[A-Z]", self._r_collection_cycle_string
-                    )[0]
+            action_url, args = _form_info(r.text, _FORM_NAME)
+
+        cycle_options = {
+            leer: _options(page_soup, "name", f"{_FIELD}[leerungszyklus][{leer}]")
+            for _loc, _key, _cyc, leer in _STREAMS
+        }
+        if any(cycle_options.values()):
+            for _loc, _key, cyc_param, leer in _STREAMS:
+                self._apply_choice(
+                    args,
+                    f"{_FIELD}[leerungszyklus][{leer}]",
+                    p[cyc_param],
+                    cycle_options[leer],
+                    cyc_param,
+                    _CYCLE_STRING_RE,
                 )
 
-            # Second, the Biomuell...
-            if self._b_collection_cycle_string == "":
-                if len(b_collection_cycle_options) > 0:
-                    raise (
-                        SourceArgumentRequiredWithSuggestions(
-                            argument="b_collection_cycle_string",
-                            reason="multiple choices returned from AWM service.",
-                            suggestions=[
-                                f"'{option.get('value')}' for {option.text}"
-                                for option in b_collection_cycle_options
-                            ],
-                        )
-                    )
-            else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][B]"] = (
-                    re.findall(
-                        "(?:\\d{3}|\\d\\/\\d);[A-Z]", self._b_collection_cycle_string
-                    )[0]
-                )
-
-            # Third, the Papermuell...
-            if self._p_collection_cycle_string == "":
-                if len(p_collection_cycle_options) > 0:
-                    raise (
-                        SourceArgumentRequiredWithSuggestions(
-                            argument="p_collection_cycle_string",
-                            reason="multiple choices returned from AWM service.",
-                            suggestions=[
-                                f"'{option.get('value')}' for {option.text}"
-                                for option in p_collection_cycle_options
-                            ],
-                        )
-                    )
-            else:
-                args["tx_awmabfuhrkalender_abfuhrkalender[leerungszyklus][P]"] = (
-                    re.findall(
-                        "(?:\\d{3}|\\d\\/\\d);[A-Z]", self._p_collection_cycle_string
-                    )[0]
-                )
-
-            r = s.post(
-                action_url,
-                data=args,
-            )
+            r = session.post(action_url, data=args, headers=_HEADERS)
             r.raise_for_status()
-            _LOGGER.debug(
-                "got third response after address [+ location IDs ?] + collection cycle strings."
-            )
-
-            # After this POST, there must be the link for the ICS.
             page_soup = BeautifulSoup(r.text, "html.parser")
-            if download_links := page_soup.find_all("a", {"class": "downloadics"}):
-                # This means we have found the ICS download link after the location id selection, and the collection-cycle-string input and can download.
-                for download_link in download_links:
-                    self._retrieve_and_append_entries(s, download_link, entries)
-                if len(entries) == 0:
-                    raise ValueError(
-                        "The provided arguments (street and house number, location ids, and collection cycles) were accepted by the AWM server, but 0 calendar entries were retrieved. This may be a temporary issue."
-                    )
-                return entries
 
-        raise ValueError(
-            "Unknown error getting ICS link with calendar entries from AWM server."
+            links = page_soup.find_all("a", {"class": "downloadics"})
+            if links:
+                return self._fetch_links(session, links)
+
+        raise SourceArgumentNotFoundWithSuggestions(
+            "house_number", f"{p['street']} {p['house_number']}", []
         )
 
-    def _retrieve_and_append_entries(
-        self, s: requests.Session, download_link: Tag, entries: list
-    ):
-        ics_action_url = download_link.get("href")
-        r = s.get(f"{URL}{urllib.parse.unquote(ics_action_url)}")
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
-
-        for d in dates:
-            bin_type = d[1].split(",")[0].replace("Achtung:", "").strip()
-            entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
-
-    def _get_html_form_infos(self, html: str, form_name: str) -> tuple[str, dict]:
-        """Return a tuple with form action url and hidden form fields."""
-        # collect the url where we post to
-        page_soup = BeautifulSoup(html, "html.parser")
-        form_soup = page_soup.find("form", id=form_name)
-        action_url = f"{URL}{urllib.parse.unquote(form_soup.get('action'))}"
-
-        # collect the hidden input fields
-        parser = HiddenInputParser()
-        parser.feed(page_soup.find("form", id=form_name).decode_contents())
-
-        return action_url, parser.args
+    def parse(self, raw, source=None):
+        ics_parser = parsers.IcsParser()
+        entries: list = []
+        for response in raw:
+            entries.extend(ics_parser(response, source))
+        return entries

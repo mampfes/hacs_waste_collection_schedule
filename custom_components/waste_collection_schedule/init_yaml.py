@@ -99,6 +99,11 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up the component. config contains data from configuration.yaml."""
+    from waste_collection_schedule.waste_types import set_display_language
+
+    # Show canonical waste-type names in the Home Assistant UI language.
+    set_display_language(hass.config.language)
+
     # Skip for config flow
     if const.DOMAIN not in config:
         return True

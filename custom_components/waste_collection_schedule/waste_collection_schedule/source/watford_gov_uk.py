@@ -1,217 +1,161 @@
-import re
-import time
-from datetime import date
-from html import unescape
+"""Watford Borough Council - Bin Collections.
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentExceptionMultiple,
+Watford's AchieveForms lookup chain resolves an "echoAddressPoint" token for
+the property (from a UPRN or an already-selected address token), then fetches
+a summary row whose "dispHTML" field embeds a rendered HTML fragment (one
+``<li class="binItem">`` per bin, with the bin name in an ``<h3>`` and the
+next collection date inside a ``<strong>``) rather than structured rows_data --
+so the pipeline reads it with parsers.HtmlParser's ``from_json_key``, the same
+mechanism used for the OCAPI ``wasteservices`` HTML-in-JSON shape.
+"""
+
+import re
+from typing import Any, ClassVar, final
+
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import alternatives, text_field, uprn
+from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.parsers import HtmlParser
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsRetriever,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import HtmlTransformer
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
 )
 
-TEST_CASES = {
-    "1 Coningsby Drive, Watford": {
-        "uprn": "100080932722",
-    }
-}
-
-TITLE = "Watford Borough Council"
-DESCRIPTION = "Source for waste collection services for Watford Borough Council"
-URL = "https://www.watford.gov.uk/"
-
-BASE_URL = "https://watfordbc-self.achieveservice.com"
-INITIAL_URL = f"{BASE_URL}/en/service/Bin_Collections?accept=yes&consentMessageIds[]=9"
-API_URL = f"{BASE_URL}/apibroker/runLookup"
+# Live-verified (2026-07): the standard AchieveForms handshake
+# (init_session -> authapi/isauthenticated on the service landing page)
+# authenticates watfordbc-self.achieveservice.com without the legacy source's
+# regex-scrape of the landing page's embedded `auth-session` value. No
+# service-layer change needed.
+HOSTNAME = "watfordbc-self.achieveservice.com"
+INITIAL_URL = (
+    f"https://{HOSTNAME}/en/service/Bin_Collections?accept=yes&consentMessageIds[]=9"
+)
 
 LOOKUP_ADDRESS_POINT = "5e57d2f638e6d"
 LOOKUP_NEXT_COLLECTIONS = "5e79edf15b2ec"
-LOOKUP_CALENDAR = "6750598d8b177"
-FORM_ID = "AF-Form-a139d516-46fc-4e1d-a94e-5e072681bcf0"
-REQUEST_TIMEOUT = 30
 
-ICON_MAP = {
-    "garden": Icons.GARDEN,
-    "black": Icons.GENERAL_WASTE,
-    "non-recyclable": Icons.GENERAL_WASTE,
-    "blue-lidded": Icons.RECYCLING,
-    "recycling": Icons.RECYCLING,
-    "brown": Icons.BIO_KITCHEN,
-    "food": Icons.BIO_KITCHEN,
-}
+# The bin name always carries a parenthesised category ("Black bin
+# (non-recyclable waste)", "Green Bin (garden waste)", "Blue-lidded bin
+# (recycling)", "Brown bin (food waste)"); keying on that phrase is more
+# robust than the bin colour/casing, which the legacy source matched loosely.
+_CATEGORY_RE = re.compile(r"\(([^)]+)\)")
 
 
-class Source:
-    """Watford source.
+def _clean_bin_label(label: str) -> str:
+    match = _CATEGORY_RE.search(label)
+    return (match.group(1) if match else label).strip()
 
-    Watford's public postcode lookup currently appears unreliable/broken when called
-    directly, but once the property token / UPRN is known the subsequent collection
-    lookups work consistently.
 
-    Preferred argument:
-      - uprn: property UPRN / selected address value from the Watford form
+def _date_getter(el: Any) -> "str | None":
+    strong = el.select_one("strong")
+    return strong.get_text(strip=True) if strong else None
 
-    Optional:
-      - address: explicit selected address token from the Watford form
-    """
 
-    def __init__(self, uprn: str | int | None = None, address: str | int | None = None):
-        self._uprn = str(uprn).strip() if uprn is not None else None
-        self._address = str(address).strip() if address is not None else None
-        self._session = requests.Session()
+def _type_getter(el: Any) -> str:
+    h3 = el.select_one("h3")
+    return h3.get_text(strip=True) if h3 else ""
 
-        if not self._uprn and not self._address:
-            raise SourceArgumentExceptionMultiple(
-                ["uprn", "address"],
-                "Either uprn or address must be provided.",
-            )
 
-    def _init_session(self) -> str:
-        r = self._session.get(INITIAL_URL, timeout=REQUEST_TIMEOUT)
-        r.raise_for_status()
-        match = re.search(r'"auth-session":"([^"]+)"', r.text)
-        if not match:
-            raise ValueError("Failed to obtain Watford auth session")
-        return match.group(1)
+def _address_point_form_values(ctx: dict, source: "BaseSource") -> dict:
+    # Preferred argument is uprn; address is the fallback (an already-selected
+    # address token from the Watford form), matching the legacy source.
+    arg_name = "uprn" if source.params.get("uprn") else "address"
+    address_token = source.params.get("address") or source.params.get("uprn")
+    uprn_value = source.params.get("uprn") or source.params.get("address")
+    ctx["arg_name"] = arg_name
+    ctx["address_token"] = str(address_token)
+    ctx["uprn_value"] = str(uprn_value).lstrip("0")
+    return {
+        "echoUprn": {"value": ctx["uprn_value"]},
+        "address": {"value": ctx["address_token"]},
+    }
 
-    def _run_lookup(self, sid: str, lookup_id: str, form_values: dict) -> dict:
-        params = {
-            "id": lookup_id,
-            "repeat_against": "",
-            "noRetry": "false",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-        payload = {"formId": FORM_ID, "formValues": form_values}
-        r = self._session.post(
-            API_URL, params=params, json=payload, timeout=REQUEST_TIMEOUT
-        )
-        r.raise_for_status()
-        data = r.json()
-        transformed = data.get("integration", {}).get("transformed", {})
-        if data.get("status") == "error" or transformed.get("error"):
-            raise ValueError(
-                f"Watford lookup {lookup_id} failed: {data.get('error') or transformed.get('error') or data.get('data')}"
-            )
-        return transformed
 
-    def _resolve_identifiers(self, sid: str) -> tuple[str, str, str]:
-        address_token = self._address or self._uprn
-        uprn_value = self._uprn or self._address
-        # Normalise UPRN once: strip leading zeros for the echoUprn field and
-        # reuse the same normalised value in all subsequent lookups.
-        normalised_uprn = str(uprn_value).lstrip("0")
-        transformed = self._run_lookup(
-            sid,
-            LOOKUP_ADDRESS_POINT,
-            {
-                "Address": {
-                    "echoUprn": {"value": normalised_uprn},
-                    "address": {"value": str(address_token)},
-                }
-            },
-        )
-        row = transformed.get("rows_data", {}).get("0", {})
-        echo_address_point = row.get("echoAddressPoint")
-        if not echo_address_point:
-            raise ValueError("Watford source could not resolve echoAddressPoint")
-        return str(address_token), normalised_uprn, str(echo_address_point)
-
-    def _fetch_collections(
-        self, sid: str, address_token: str, uprn_value: str, echo_address_point: str
-    ) -> dict:
-        return self._run_lookup(
-            sid,
-            LOOKUP_NEXT_COLLECTIONS,
-            {
-                "Address": {
-                    "address": {"value": address_token},
-                    "echoUprn": {"value": uprn_value},
-                    "echoAddressPoint": {"value": echo_address_point},
-                }
-            },
-        )
-
-    def _fetch_calendar(
-        self, sid: str, address_token: str, uprn_value: str, echo_address_point: str
-    ) -> dict:
-        return self._run_lookup(
-            sid,
-            LOOKUP_CALENDAR,
-            {
-                "Address": {
-                    "address": {"value": address_token},
-                    "echoUprn": {"value": uprn_value},
-                    "echoAddressPoint": {"value": echo_address_point},
-                }
-            },
-        )
-
-    def _extract_collections_from_html(self, html_text: str) -> list[Collection]:
-        html_text = unescape(html_text)
-        items = re.findall(
-            r'<li class="binItem">(.*?)</li>', html_text, flags=re.DOTALL
-        )
-        entries = []
-
-        for item in items:
-            title_match = re.search(r"<h3>(.*?)</h3>", item, flags=re.DOTALL)
-            date_match = re.search(r"(\d{2}/\d{2}/\d{4})", item)
-            if not title_match or not date_match:
-                continue
-
-            waste_type = re.sub(r"\s+", " ", unescape(title_match.group(1))).strip()
-            day, month, year = date_match.group(1).split("/")
-            icon = None
-            lowered = waste_type.lower()
-            for token, mapped_icon in ICON_MAP.items():
-                if token in lowered:
-                    icon = mapped_icon
-                    break
-
-            entries.append(
-                Collection(
-                    date=date(int(year), int(month), int(day)),
-                    t=waste_type,
-                    icon=icon,
-                )
-            )
-
-        return entries
-
-    def fetch(self) -> list[Collection]:
-        sid = self._init_session()
-        address_token, uprn_value, echo_address_point = self._resolve_identifiers(sid)
-
-        collections_data = self._fetch_collections(
-            sid, address_token, uprn_value, echo_address_point
-        )
-
-        row = collections_data.get("rows_data", {}).get("0", {})
-        html_text = row.get("dispHTML", "")
-        entries = self._extract_collections_from_html(html_text)
-
-        if entries:
-            return entries
-
-        # Report errors against whichever argument the user actually configured.
-        arg = "uprn" if self._uprn else "address"
-
-        # Only fetch the calendar when needed (to diagnose why no entries were returned).
-        if row.get("lastCollection") == "NaN-aN-aN":
-            calendar_data = self._fetch_calendar(
-                sid, address_token, uprn_value, echo_address_point
-            )
-            calendar = calendar_data.get("rows_data", {}).get("0", {}).get("calendar")
-            raise SourceArgumentException(
-                arg,
-                f"Watford did not return collection data for this property token (calendar: {calendar or 'unknown'}).",
-            )
-
+def _extract_address_point(response: dict, ctx: dict) -> None:
+    rows = response.get("integration", {}).get("transformed", {}).get("rows_data", {})
+    row = rows.get("0", {}) if isinstance(rows, dict) else {}
+    echo_address_point = row.get("echoAddressPoint") if isinstance(row, dict) else None
+    if not echo_address_point:
         raise SourceArgumentException(
-            arg,
-            "Watford returned an unexpected response for this property token.",
+            ctx["arg_name"],
+            "Watford source could not resolve echoAddressPoint for this property token.",
+        )
+    ctx["echo_address_point"] = echo_address_point
+
+
+def _collections_form_values(ctx: dict, source: "BaseSource") -> dict:
+    return {
+        "address": {"value": ctx["address_token"]},
+        "echoUprn": {"value": ctx["uprn_value"]},
+        "echoAddressPoint": {"value": ctx["echo_address_point"]},
+    }
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Watford Borough Council"
+    DESCRIPTION = "Source for waste collection services for Watford Borough Council"
+    URL = "https://www.watford.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "1 Coningsby Drive, Watford": {"uprn": "100080932722"},
+    }
+
+    PARAMS = (
+        alternatives(
+            [uprn()],
+            [text_field("address", "Address token", optional=True)],
+        ),
+    )
+
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        initial_url=INITIAL_URL,
+        steps=[
+            LookupStep(
+                LOOKUP_ADDRESS_POINT,
+                section="Address",
+                form_values=_address_point_form_values,
+                extract=_extract_address_point,
+            ),
+            LookupStep(
+                LOOKUP_NEXT_COLLECTIONS,
+                section="Address",
+                form_values=_collections_form_values,
+            ),
+        ],
+    )
+    parse = HtmlParser(
+        "li.binItem",
+        from_json_key=("integration", "transformed", "rows_data", "0", "dispHTML"),
+    )
+    transform = HtmlTransformer(
+        date_getter=_date_getter,
+        type_getter=_type_getter,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        clean=_clean_bin_label,
+        type_value_map={
+            "non-recyclable waste": GENERAL_WASTE,
+            "garden waste": GARDEN_WASTE,
+            "recycling": RECYCLABLES,
+            "food waste": FOOD_WASTE,
+        },
+    )
+
+    def __init__(
+        self, uprn: "str | int | None" = None, address: "str | int | None" = None
+    ):
+        super().__init__(
+            uprn=str(uprn).strip() if uprn is not None else None,
+            address=str(address).strip() if address is not None else None,
         )

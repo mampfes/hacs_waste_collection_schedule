@@ -1,6 +1,8 @@
 # Landkreis Kusel
 
-Support for schedules provided by [Landkreis Kusel](https://www.landkreis-kusel.de/), Germany.
+Support for schedules provided by [Landkreis Kusel](https://www.landkreis-kusel.de/).
+
+Source for Landkreis Kusel.
 
 ## Configuration via configuration.yaml
 
@@ -15,7 +17,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **ortsgemeinde**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
@@ -26,7 +28,3 @@ waste_collection_schedule:
       args:
         ortsgemeinde: Adenbach
 ```
-
-## How to get the source argument
-
-Go to <https://www.landkreis-kusel.de/buergerservice-und-verwaltung/themen/abfallwirtschaft/abfall-app-abfallkalender/> and select your `Ortsgemeinde` and use this as `ortsgemeinde` parameter. Copy it exactly from the web page.

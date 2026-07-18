@@ -1,6 +1,8 @@
-# AWB Esslingen
+# Abfallwirtschaftsbetrieb Esslingen
 
-Support for schedules provided by [awb-es.de](https://www.awb-es.de) located in Baden Württemberg, Germany.
+Support for schedules provided by [Abfallwirtschaftsbetrieb Esslingen](https://www.awb-es.de).
+
+Source for AWB Esslingen, Germany
 
 ## Configuration via configuration.yaml
 
@@ -9,8 +11,8 @@ waste_collection_schedule:
   sources:
     - name: awb_es_de
       args:
-        city: Aichwald
-        street: Alte Dorfstrasse
+        city: CITY
+        street: STREET
 ```
 
 ### Configuration Variables
@@ -19,8 +21,15 @@ waste_collection_schedule:
 *(string) (required)*
 
 **street**  
-*(string) (required)*
+*(string) (optional)*
 
-## How to get the source arguments
+## Example
 
-Visit [Abfuhrtermine](`https://www.awb-es.de/abfuhr/abfuhrtermine/__Abfuhrtermine.html`) and search for your address. The `city` and `street` argument should exactly match the autocomplete result.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: awb_es_de
+      args:
+        city: Aichwald
+        street: "Alte Dorfstra\xDFe Alle Hausnummern"
+```

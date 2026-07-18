@@ -1,88 +1,48 @@
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+"""C-Trace (c-trace.de), Germany: a multi-tenant ASP.NET calendar platform.
+
+Demonstrates: a shared platform serving many independent operators
+(municipalities/Landkreise), each a "service" under its own path on one of a
+few subdomains. Getting to the ICS feed needs a first GET (without following
+the redirect) to mint an ASP.NET session id from the ``Location`` header,
+then a second GET assembling that session id into the calendar path. No
+configured retriever expresses "GET without redirects, read a session id out
+of the Location header, GET again with it spliced into the URL", so this
+stays a source-defined ``retrieve``.
+
+Every operator in ``SERVICE_MAP`` is preserved as its own ``Region`` (the
+typed successor to the legacy ``EXTRA_INFO`` callable), so none of the towns
+this source covers are dropped by the conversion.
+"""
+
+from typing import ClassVar, final
+
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    district,
+    house_number,
+    municipality,
+    street,
+    text_field,
+)
 from waste_collection_schedule.exceptions import SourceArgumentRequired
-from waste_collection_schedule.service.ICS import ICS
-
-TITLE = "C-Trace"
-DESCRIPTION = "Source for C-Trace.de."
-URL = "https://c-trace.de/"
-
-
-def EXTRA_INFO():
-    return [
-        {"title": s["title"], "url": s["url"], "default_params": {"service": key}}
-        for key, s in SERVICE_MAP.items()
-    ]
-
-
-TEST_CASES = {
-    "Bremen": {"ort": "Bremen", "strasse": "Abbentorstraße", "hausnummer": 5},
-    "AugsburgLand": {
-        "ort": "Königsbrunn",
-        "strasse": "Marktplatz",
-        "hausnummer": 7,
-        "service": "augsburglandkreis",
-    },
-    "landau": {
-        "strasse": "Am Kindergarten",
-        "hausnummer": 1,
-        "service": "landau",
-    },
-    "WZV": {
-        "ort": "Bark",
-        "strasse": "Birkenweg",
-        "hausnummer": 1,
-        "service": "segebergwzv-abfallkalender",
-    },
-    "oberursel": {
-        "service": "oberursel",
-        "strasse": "Ahornweg",
-        "hausnummer": "8a",
-    },
-    "roth": {
-        "ort": "Georgensgmünd",
-        "strasse": "Mauk",
-        "hausnummer": 2,
-        "service": "roth",
-    },
-    "Groß-Gerau landkreis: Gernsheim (without ortsteil)": {
-        "ort": "Gernsheim am Rhein",
-        "strasse": "Alsbacher Straße",
-        "hausnummer": 4,
-        "service": "grossgeraulandkreis-abfallkalender",
-    },
-    "Groß-Gerau landkreis: Riedstadt (with ortsteil)": {
-        "ort": "Riedstadt",
-        "ortsteil": "Crumstadt",
-        "strasse": "Am Lohrrain",
-        "hausnummer": 3,
-        "service": "grossgeraulandkreis-abfallkalender",
-    },
-    "Aurich Kirchdorf": {
-        "ort": "Kirchdorf",
-        "gemeinde": "Aurich",
-        "strasse": "Am Reidigermeer",
-        "hausnummer": "2d/e",
-        "service": "aurich-abfallkalender",
-    },
-    "MainTauber 4-weekly": {
-        "ort": "Tauberbischofsheim",
-        "strasse": "Hauptstraße",
-        "hausnummer": 1,
-        "service": "maintauberkreis-abfallkalender",
-        "abfall": "0|1|2|5",
-    },
-}
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.transformers import ICSTransformer
 
 DEFAULT_SUBDOMAIN = "web"
 DEFAULT_ICAL_URL_FILE = "cal"
+
+BASE_URL = "https://{subdomain}.c-trace.de"
+
+# All waste-type ids: the provider returns every collection when none are
+# filtered out, matching the legacy default of "0|1|2|...|299".
+_ABFALL_ALL = "|".join(str(i) for i in range(300))
 
 # Do not support Ical Download:
 # lekarowarschau-abfallkalender
 # web.torgauoschatz2015
 
-
-SERVICE_MAP = {
+SERVICE_MAP: dict[str, dict[str, str]] = {
     "bremenabfallkalender": {
         "title": "Bremer Stadtreinigung",
         "url": "https://www.die-bremer-stadtreinigung.de/",
@@ -145,12 +105,6 @@ SERVICE_MAP = {
         "full_service_name": "web.stwendel",
         "ical_url_file": "downloadcal",
     },
-    #    "lekarowarschau-abfallkalender": {
-    #        "title": "Lekaro Warszawa",
-    #        "url": "https:lekaro.pl",
-    #        "subdomain": "apps",
-    #        "full_service_name": "web.lekarowarschau-abfallkalender",
-    #    },
     "oberursel": {
         "title": "Bau & Service Oberursel",
         "url": "https://www.bso-oberursel.de/",
@@ -159,112 +113,187 @@ SERVICE_MAP = {
     },
 }
 
-BASE_URL = "https://{subdomain}.c-trace.de"
+
+def _resolve_service(ort: str, service: "str | None") -> tuple[str, str, str]:
+    """Resolve the (service, subdomain, ical_url_file) triple for a request.
+
+    Mirrors the legacy Source.__init__ resolution exactly, including the
+    Bremen compatibility default (the first supported district, historically
+    the only one that didn't require an explicit ``service``).
+    """
+    if service is None:
+        if ort == "Bremen":
+            service = "bremenabfallkalender"
+        else:
+            raise SourceArgumentRequired(
+                "service", "service is required if ort is not Bremen"
+            )
+
+    subdomain = DEFAULT_SUBDOMAIN
+    ical_url_file = DEFAULT_ICAL_URL_FILE
+    entry = SERVICE_MAP.get(service)
+    if entry is not None:
+        subdomain = entry.get("subdomain", subdomain)
+        ical_url_file = entry.get("ical_url_file", ical_url_file)
+        service = entry.get("full_service_name", service)
+    return service, subdomain, ical_url_file
 
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "abfall": "Pipe-separated waste type IDs to fetch (e.g. '0|1|2|5'). "
-        "Leave empty to fetch all types. Visit your provider's calendar page "
-        "to see which IDs correspond to which waste types.",
-    },
-}
+@final
+class Source(BaseSource):
+    TITLE = "C-Trace"
+    DESCRIPTION = "Source for C-Trace.de."
+    URL = "https://c-trace.de/"
+    COUNTRY = "de"
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "strasse": "Street",
-        "hausnummer": "House number",
-        "gemeinde": "Municipality",
-        "ort": "District",
-        "ortsteil": "Subdistrict",
-        "service": "Operator",
-        "abfall": "Waste type IDs",
+    TEST_CASES: ClassVar[dict] = {
+        "Bremen": {"ort": "Bremen", "strasse": "Abbentorstraße", "hausnummer": 5},
+        "AugsburgLand": {
+            "ort": "Königsbrunn",
+            "strasse": "Marktplatz",
+            "hausnummer": 7,
+            "service": "augsburglandkreis",
+        },
+        "landau": {
+            "strasse": "Am Kindergarten",
+            "hausnummer": 1,
+            "service": "landau",
+        },
+        "WZV": {
+            "ort": "Bark",
+            "strasse": "Birkenweg",
+            "hausnummer": 1,
+            "service": "segebergwzv-abfallkalender",
+        },
+        "oberursel": {
+            "service": "oberursel",
+            "strasse": "Ahornweg",
+            "hausnummer": "8a",
+        },
+        "roth": {
+            "ort": "Georgensgmünd",
+            "strasse": "Mauk",
+            "hausnummer": 2,
+            "service": "roth",
+        },
+        "Groß-Gerau landkreis: Gernsheim (without ortsteil)": {
+            "ort": "Gernsheim am Rhein",
+            "strasse": "Alsbacher Straße",
+            "hausnummer": 4,
+            "service": "grossgeraulandkreis-abfallkalender",
+        },
+        "Groß-Gerau landkreis: Riedstadt (with ortsteil)": {
+            "ort": "Riedstadt",
+            "ortsteil": "Crumstadt",
+            "strasse": "Am Lohrrain",
+            "hausnummer": 3,
+            "service": "grossgeraulandkreis-abfallkalender",
+        },
+        "Aurich Kirchdorf": {
+            "ort": "Kirchdorf",
+            "gemeinde": "Aurich",
+            "strasse": "Am Reidigermeer",
+            "hausnummer": "2d/e",
+            "service": "aurich-abfallkalender",
+        },
+        "MainTauber 4-weekly": {
+            "ort": "Tauberbischofsheim",
+            "strasse": "Hauptstraße",
+            "hausnummer": 1,
+            "service": "maintauberkreis-abfallkalender",
+            "abfall": "0|1|2|5",
+        },
     }
-}
 
+    # One structure, many independent operators: preserve every one of
+    # SERVICE_MAP's towns as its own Region so none are dropped from the
+    # generated README / sources.json listings.
+    REGIONS = tuple(
+        region(entry["title"], url=entry["url"], service=key)
+        for key, entry in SERVICE_MAP.items()
+    )
 
-class Source:
+    PARAMS = (
+        street(field="strasse"),
+        house_number(field="hausnummer"),
+        municipality(field="gemeinde", optional=True),
+        district(field="ort", optional=True),
+        text_field("ortsteil", "Subdistrict", optional=True),
+        text_field("service", "Operator", optional=True),
+        text_field("abfall", "Waste type IDs", optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "'service' selects your operator (e.g. 'landau', "
+            "'augsburglandkreis'); leave it empty only if 'ort' is 'Bremen'. "
+            "'abfall' is a pipe-separated list of waste-type ids (e.g. "
+            "'0|1|2|5') to restrict which types are fetched; leave it empty "
+            "to fetch all types. Visit your provider's calendar page to see "
+            "which ids correspond to which waste types."
+        ),
+    }
+
+    parse = parsers.IcsParser(regex=r"Abfuhr: (.*)")
+    transform = ICSTransformer()
+
     def __init__(
         self,
-        strasse,
-        hausnummer,
-        gemeinde="",
-        ort="",
-        ortsteil="",
-        service=None,
-        abfall="",
+        strasse: str,
+        hausnummer: "str | int",
+        gemeinde: str = "",
+        ort: str = "",
+        ortsteil: str = "",
+        service: "str | None" = None,
+        abfall: str = "",
     ):
-        # Compatibility handling for Bremen which was the first supported
-        # district and didn't require to set a service name.
-        if service is None:
-            if ort == "Bremen":
-                service = "bremenabfallkalender"
-            else:
-                raise SourceArgumentRequired(
-                    "service", "service is required if ort is not Bremen"
-                )
-
-        subdomain = DEFAULT_SUBDOMAIN
-        ical_url_file = DEFAULT_ICAL_URL_FILE
-
-        if service in SERVICE_MAP:
-            if "subdomain" in SERVICE_MAP[service]:
-                subdomain = SERVICE_MAP[service]["subdomain"]
-            if "ical_url_file" in SERVICE_MAP[service]:
-                ical_url_file = SERVICE_MAP[service]["ical_url_file"]
-            if "full_service_name" in SERVICE_MAP[service]:
-                service = SERVICE_MAP[service]["full_service_name"]
-
-        self._service = service
-        self._ort = ort
+        service, subdomain, ical_url_file = _resolve_service(ort, service)
         if not gemeinde:
             gemeinde = ort
-        self._gemeinde = gemeinde
-        self._ortsteil = ortsteil
-        self._strasse = strasse
-        self._hausnummer = hausnummer
-        self._base_url = BASE_URL.format(subdomain=subdomain)
-        self.ical_url_file = ical_url_file
-        self._ics = ICS(regex=r"Abfuhr: (.*)")
         if not abfall:
-            abfall = "|".join(str(i) for i in range(300))
-        self._abfall = abfall
+            abfall = _ABFALL_ALL
+        super().__init__(
+            strasse=strasse,
+            hausnummer=hausnummer,
+            gemeinde=gemeinde,
+            ort=ort,
+            ortsteil=ortsteil,
+            service=service,
+            abfall=abfall,
+            subdomain=subdomain,
+            ical_url_file=ical_url_file,
+        )
 
-    def fetch(self):
-        session = requests.session()
+    def retrieve(self, source):
+        p = self.params
+        base_url = BASE_URL.format(subdomain=p["subdomain"])
 
-        # get session url
-        r = session.get(
-            f"{self._base_url}/{self._service}/Abfallkalender",
-            allow_redirects=False,
+        r = self.session.get(
+            f"{base_url}/{p['service']}/Abfallkalender", allow_redirects=False
         )
 
         session_id = ""
-        if "location" in r.headers:
-            session_id = r.headers["location"].split("/")[
-                2
-            ]  # session_id like "(S(r3bme50igdgsp2lstgxxhvs2))"
+        location = r.headers.get("location")
+        if location:
+            # session_id like "(S(r3bme50igdgsp2lstgxxhvs2))"
+            parts = location.split("/")
+            if len(parts) > 2:
+                session_id = parts[2]
 
         args = {
-            "Ort": self._ort,
-            "Gemeinde": self._gemeinde,
-            "Strasse": self._strasse,
-            "Hausnr": self._hausnummer,
-            "Abfall": self._abfall,
+            "Ort": p["ort"],
+            "Gemeinde": p["gemeinde"],
+            "Strasse": p["strasse"],
+            "Hausnr": p["hausnummer"],
+            "Abfall": p["abfall"],
         }
-        if self._ortsteil:
-            args["Ortsteil"] = self._ortsteil
-        r = session.get(
-            f"{self._base_url}/{self._service}/{session_id}/abfallkalender/{self.ical_url_file}",
+        if p["ortsteil"]:
+            args["Ortsteil"] = p["ortsteil"]
+
+        r = self.session.get(
+            f"{base_url}/{p['service']}/{session_id}/abfallkalender/{p['ical_url_file']}",
             params=args,
         )
         r.raise_for_status()
-
-        # parse ics file
         r.encoding = "utf-8-sig"
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
+        return r

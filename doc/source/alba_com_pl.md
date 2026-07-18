@@ -1,6 +1,8 @@
 # ALBA Swarzędz
 
-Support for schedules provided by [ALBA Swarzędz](https://www.alba.com.pl/odbior_odpadow_wywoz_smieci/swarzedz).
+Support for schedules provided by [ALBA Swarzędz](https://www.alba.com.pl).
+
+Source for ALBA waste collection in Swarzędz municipality, Poland.
 
 ## Configuration via configuration.yaml
 
@@ -16,20 +18,14 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**city**
-*(string) (required)*
+**city**  
+*(string) (optional)*
 
-City name in uppercase, e.g. `SWARZĘDZ`.
+**street**  
+*(string) (optional)*
 
-**street**
-*(string) (required)*
-
-Street name in uppercase, e.g. `JÓZEFA RIVOLIEGO`.
-
-**number**
-*(string) (required)*
-
-House or building number, e.g. `2`.
+**number**  
+*(string) (optional)*
 
 ## Example
 
@@ -38,11 +34,11 @@ waste_collection_schedule:
   sources:
     - name: alba_com_pl
       args:
-        city: SWARZĘDZ
-        street: JÓZEFA RIVOLIEGO
-        number: "2"
+        city: BOGUCIN
+        street: BOCZNA
+        number: '7'
 ```
 
-## How to get the arguments
+## How to get the source arguments
 
-Open [https://www.alba.com.pl/odbior_odpadow_wywoz_smieci/swarzedz](https://www.alba.com.pl/odbior_odpadow_wywoz_smieci/swarzedz) and use the schedule search form. Select your city, street and house number from the dropdowns. Use the exact values shown (in uppercase) as the source arguments.
+Open https://www.alba.com.pl/odbior_odpadow_wywoz_smieci/swarzedz and use the schedule search form. Select your city, street and house number from the dropdowns and use those exact values (uppercase) as the source arguments.

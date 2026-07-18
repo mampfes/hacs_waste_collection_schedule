@@ -1,6 +1,8 @@
-# Zweckverband Abfallwirtschaft Werra-Meißner-Kreis
+# Abfallwirtschaft Werra-Meißner-Kreis
 
-Support für Werra-Meißner-Kreis located in Hesse, Germany
+Support for schedules provided by [Abfallwirtschaft Werra-Meißner-Kreis](https://www.zva-wmk.de/).
+
+Source for Zweckverband Abfallwirtschaft Werra-Meißner-Kreis
 
 ## Configuration via configuration.yaml
 
@@ -18,9 +20,16 @@ waste_collection_schedule:
 **city**  
 *(string) (required)*
 
-**street**
-*(street) (required)*
+**street**  
+*(string) (required)*
 
-### How to get the source arguments
+## Example
 
-Visit [zva-wmk.de](https://www.zva-wmk.de/termine/schnellsuche-2023) and search for your locality. Use the value from the "Ort" dropdown as `city` argument and the one from "Ortsteil/Straße" as `street` as shown.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: zva_wmk_de
+      args:
+        city: Berkatal - Frankenhain
+        street: Teichhof
+```

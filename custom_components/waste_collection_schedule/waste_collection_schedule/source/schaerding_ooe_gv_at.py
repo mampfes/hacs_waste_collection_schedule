@@ -1,76 +1,68 @@
-from typing import ClassVar
+from typing import ClassVar, final
 
-from waste_collection_schedule import Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.service.RiSKommunalAT import (
+    RiSKommunalParser,
+    RiSKommunalRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE
 
-TITLE = "Schärding"
-DESCRIPTION = "Source for Schärding, Austria."
-URL = "https://www.schaerding.ooe.gv.at"
-COUNTRY = "at"
-
-TEST_CASES = {
-    "Adalbert-Stifter-Straße 1": {
-        "strasse": "Adalbert-Stifter-Straße",
-        "hausnummer": "1",
-    },
-    "Aigerdinger Straße 2": {
-        "strasse": "Aigerdinger Straße",
-        "hausnummer": 2,
-    },
-}
-
-ICON_MAP = {
-    "Restabfall wöchentlich": Icons.GENERAL_WASTE,
-    "Restabfall 2-wöchentlich": Icons.GENERAL_WASTE,
-    "Restabfall 4-wöchentlich": Icons.GENERAL_WASTE,
-    "Restabfall 6-wöchentlich": Icons.GENERAL_WASTE,
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Bioabfall": Icons.BIO_KITCHEN,
-    "Biomüll": Icons.BIO_KITCHEN,
-    "Altpapier": Icons.PAPER,
-    "Papier": Icons.PAPER,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Sperrmüll": Icons.BULKY,
-    "Altglas": Icons.GLASS,
-    "Problemstoff": Icons.HAZARDOUS,
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "strasse": "Street",
-        "hausnummer": "House number",
-    },
-    "de": {
-        "strasse": "Straße",
-        "hausnummer": "Hausnummer",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "strasse": "Street name as listed in the Schärding waste calendar.",
-        "hausnummer": "House number as listed in the Schärding waste calendar.",
-    },
-    "de": {
-        "strasse": "Straßenname wie im Schärdinger Abfallkalender aufgelistet.",
-        "hausnummer": "Hausnummer wie im Schärdinger Abfallkalender aufgelistet.",
-    },
-}
+_BASE_URL = "https://www.schaerding.ooe.gv.at"
 
 
-class Source(RiSKommunalSource):
-    BASE_URL = "https://www.schaerding.ooe.gv.at"
-    ICON_MAP = ICON_MAP
-    SELECTION_URL = (
-        "https://www.schaerding.ooe.gv.at/system/web/kalender.aspx?menuonr=226878372"
-    )
+@final
+class Source(BaseSource):
+    TITLE = "Schärding"
+    DESCRIPTION = "Source for Schärding, Austria."
+    URL = _BASE_URL
+    COUNTRY = "at"
     RAISE_ON_EMPTY = True
-    QUERY_PARAMS: ClassVar = {
-        "sprache": "1",
-        "menuonr": "226878372",
+
+    TEST_CASES: ClassVar[dict] = {
+        "Adalbert-Stifter-Straße 1": {
+            "strasse": "Adalbert-Stifter-Straße",
+            "hausnummer": "1",
+        },
+        "Aigerdinger Straße 2": {
+            "strasse": "Aigerdinger Straße",
+            "hausnummer": 2,
+        },
     }
 
-    def __init__(self, strasse, hausnummer):
+    PARAMS = (
+        street("strasse"),
+        house_number("hausnummer"),
+    )
+
+    retrieve = RiSKommunalRetriever(
+        base_url=_BASE_URL,
+        query_params={
+            "sprache": "1",
+            "menuonr": "226878372",
+        },
+        strasse_param="strasse",
+        hausnummer_param="hausnummer",
+        selection_url=(
+            "https://www.schaerding.ooe.gv.at/system/web/kalender.aspx"
+            "?menuonr=226878372"
+        ),
+    )
+    parse = RiSKommunalParser()
+
+    # "Restabfall N-wöchentlich" is cadence-suffixed and does not match the
+    # shared vocabulary's plain "restabfall" alias verbatim. Restabfall,
+    # Restmüll, Bioabfall, Biomüll, Altpapier, Papier, Gelber Sack, Gelbe
+    # Tonne, Sperrmüll, Altglas and Problemstoff all resolve unmapped.
+    transform = ICSTransformer(
+        type_value_map={
+            "Restabfall wöchentlich": GENERAL_WASTE,
+            "Restabfall 2-wöchentlich": GENERAL_WASTE,
+            "Restabfall 4-wöchentlich": GENERAL_WASTE,
+            "Restabfall 6-wöchentlich": GENERAL_WASTE,
+        },
+    )
+
+    def __init__(self, strasse: str, hausnummer: str | int):
         super().__init__(strasse=strasse, hausnummer=hausnummer)

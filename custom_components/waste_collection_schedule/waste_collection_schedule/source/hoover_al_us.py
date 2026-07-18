@@ -1,91 +1,73 @@
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import (
-    ArcGisError,
-    geocode,
-    query_feature_layer,
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
 )
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE
 
-TITLE = "Hoover, AL"
-DESCRIPTION = "Source for Hoover, AL garbage collection."
-URL = "https://hooveralabama.gov"
-COUNTRY = "us"
+# ArcGis single spatial query -> one feature with a "Trashday" string such as
+# "Monday / Thursday". Each named day projects a weekly garbage schedule.
+# Acquisition + parse are the shared ArcGis components; the only source-specific
+# code is _describe (splitting Trashday into weekly schedules).
 
-TEST_CASES = {
-    "Tyler Rd (Mon/Thu)": {"address": "2255 Tyler Rd, Hoover, AL"},
-    "Cobblestone Ln (Tue/Fri)": {"address": "101 Cobblestone Ln, Hoover, AL"},
-}
+FEATURE_URL = "https://services8.arcgis.com/LmhR4UJYxC4YhccG/arcgis/rest/services/Hoover_Garbage_Pickup_WFL1/FeatureServer/2"
 
-ICON_MAP = {
-    "Garbage": Icons.GENERAL_WASTE,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. '2255 Tyler Rd, Hoover, AL')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-GARBAGE_ZONE_URL = "https://services8.arcgis.com/LmhR4UJYxC4YhccG/arcgis/rest/services/Hoover_Garbage_Pickup_WFL1/FeatureServer/2"
-
-WEEKDAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
+_TYPE_MAP = {
+    "Garbage": GENERAL_WASTE,
 }
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address = address.strip()
+def _describe(attrs, source):
+    trashday = (attrs.get("Trashday") or "").strip()
+    if not trashday:
+        return
 
-    def fetch(self) -> list[Collection]:
-        try:
-            location = geocode(self._address)
-            features = query_feature_layer(GARBAGE_ZONE_URL, geometry=location)
-        except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
-
-        attrs = features[0]
-        trashday = (attrs.get("Trashday") or "").strip()
-        if not trashday:
-            raise SourceArgumentNotFound("address", self._address)
-
-        # Parse "Monday / Thursday" or "Tuesday / Friday"
-        days = [d.strip() for d in trashday.split("/")]
-
-        entries: list[Collection] = []
-        for day_name in days:
-            if day_name in WEEKDAYS:
-                entries.extend(self._weekly_dates(day_name, "Garbage"))
-
-        if not entries:
-            raise SourceArgumentNotFound("address", self._address)
-
-        return entries
-
-    @staticmethod
-    def _weekly_dates(day_name: str, waste_type: str) -> list[Collection]:
-        weekday = WEEKDAYS[day_name]
-        today = datetime.now().date()
-        days_ahead = (weekday - today.weekday()) % 7
-        next_date = today + timedelta(days=days_ahead)
-        icon = ICON_MAP.get(waste_type)
-        return [
-            Collection(
-                date=next_date + timedelta(weeks=i),
-                t=waste_type,
-                icon=icon,
+    for part in trashday.split("/"):
+        day = part.strip().lower()
+        if day in recurrence.WEEKDAYS:
+            yield Schedule(
+                "Garbage",
+                recurrence.next_weekday(recurrence.WEEKDAYS[day]),
+                recurrence.WEEKLY,
+                26,
             )
-            for i in range(26)
-        ]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Hoover, AL"
+    DESCRIPTION = "Source for Hoover, AL garbage collection."
+    URL = "https://hooveralabama.gov"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Tyler Rd (Mon/Thu)": {"address": "2255 Tyler Rd, Hoover, AL"},
+        "Cobblestone Ln (Tue/Fri)": {"address": "101 Cobblestone Ln, Hoover, AL"},
+    }
+
+    PARAMS = (text_field("address", "Street Address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address within Hoover, AL "
+            "(e.g. '2255 Tyler Rd, Hoover, AL')."
+        ),
+    }
+
+    retrieve = ArcGisFeatureRetriever(
+        FEATURE_URL, address="address", out_fields="Trashday"
+    )
+    parse = ArcGisFeatureParser()
+    preprocess = RecurrenceExpander(_describe)
+
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
+    def __init__(self, address: str):
+        super().__init__(address=address)

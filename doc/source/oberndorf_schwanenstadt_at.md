@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Oberndorf bei Schwanenstadt](https://www.oberndorf.ooe.gv.at).
 
+Source for Oberndorf bei Schwanenstadt waste collection.
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -9,19 +11,17 @@ waste_collection_schedule:
   sources:
     - name: oberndorf_schwanenstadt_at
       args:
-        strasse: STREET
-        hausnummer: HOUSE_NUMBER
+        strasse: STRASSE
+        hausnummer: HAUSNUMMER
 ```
 
 ### Configuration Variables
 
-**strasse**
+**strasse**  
 *(string) (required)*
-Street name as listed in the Oberndorf bei Schwanenstadt waste calendar.
 
-**hausnummer**
-*(string | integer) (required)*
-House number as listed in the Oberndorf bei Schwanenstadt waste calendar.
+**hausnummer**  
+*(string) (required)*
 
 ## Example
 
@@ -30,10 +30,10 @@ waste_collection_schedule:
   sources:
     - name: oberndorf_schwanenstadt_at
       args:
-        strasse: "Am Hang"
-        hausnummer: "2"
+        strasse: Am Hang
+        hausnummer: '2'
 ```
 
-## How to get the arguments
+## How to get the source arguments
 
-Visit [https://www.oberndorf.ooe.gv.at](https://www.oberndorf.ooe.gv.at), pick your street and house number from the waste-calendar dropdowns on the homepage, and use the same values here.
+Visit https://www.oberndorf.ooe.gv.at, pick your street and house number from the waste-calendar dropdowns on the homepage, and use the same values here.

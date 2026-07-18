@@ -1,133 +1,114 @@
-import time
-from datetime import datetime, timedelta
+import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.Pozi import query_geojson_zones
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.service.Pozi import (
+    PoziGeoJsonParser,
+    PoziGeoJsonRetriever,
+    geocode_earth,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Frankston City Council"  # Title will show up in README.md and info.md
-DESCRIPTION = "Source script for frankston.vic.gov.au"  # Describe your source
-URL = "https://frankston.gov.au"  # Insert url to service homepage. URL will show up in README.md and info.md
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "45r Wedge Rd": {"address": "45r Wedge Rd, Carrum Downs Vic"},  # Monday
-    "300 Wedge Rd": {
-        "address": "300 Wedge Rd, Skye Vic"
-    },  # Monday, but inverse recycling week to 45r Wedge Rd
-    "66 Skye Rd": {"address": "66 Skye Rd, Skye Vic"},  # Tuesday
-    "160 North Rd": {"address": "160 North Road, Langwarrin Vic"},  # Wednesday
-    "65 Golf Links Rd": {"address": "65 Golf Links Rd, Frankston Vic"},  # Thursday
-    "107 Nepean Highway": {"address": "107 Nepean Highway, Seaford Vic"},  # Friday
-}
+# Demonstrates: a Pozi GeoJSON zone lookup by address, geocoded first via
+# geocode.earth (Frankston's Pozi widget has no address lookup of its own).
+# The zone's properties carry, per waste type, a weekday, a weekly/fortnightly
+# cadence and a cycle start date; _describe() aligns the next collection date
+# to both the weekday and the cadence phase. Labels ("Rubbish", "Recycling",
+# "Green Waste", "Glass") all resolve against the shared multilingual
+# vocabulary, so no type_value_map is needed.
 
-API_URL = "https://www.frankston.vic.gov.au/My-Property/Waste-and-recycling/My-bins/Bin-collections"
-ICON_MAP = {
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Green Waste": Icons.GARDEN,
-    "Glass": Icons.GLASS,
-}
+ZONES_URL = "https://connect.pozi.com/userdata/frankston-publisher/Community/Kerbside_Garbage_Collection_(Widget).json"
+GEOCODE_API_KEY = "ge-39bfbedc55be11c0"
+GEOCODE_BOUNDARY_GID = "whosonfirst:county:102048609"
+
+# zone property prefix -> waste-type label.
+_COLLECTIONS = (
+    ("rub", "Rubbish"),
+    ("rec", "Recycling"),
+    ("grn", "Green Waste"),
+    ("gls", "Glass"),
+)
 
 
-class Source:
-    def __init__(
-        self, address
-    ):  # argX correspond to the args dict in the source configuration
-        self._address = address
+def _next_aligned_collection(
+    weekday: int, weeks: int, start: datetime.date
+) -> datetime.date:
+    """The next date on ``weekday`` that also stays in phase with the cadence.
 
-    def get_collections(self, collection_day, weeks, start_date):
-        weeks = int(weeks)
-        collection_day = time.strptime(collection_day, "%A").tm_wday
-        today = datetime.now().date()
-        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+    Frankston publishes a cycle start date and a weekly/fortnightly cadence
+    separately from the collection weekday; the next real collection is the
+    nearest ``weekday`` on/after today whose distance from ``start`` is a
+    whole number of cycles.
+    """
+    today = datetime.date.today()
+    next_collect = today + datetime.timedelta(days=(weekday - today.weekday()) % 7)
+    cycle = weeks * 7
+    remainder = (next_collect - start).days % cycle
+    if remainder != 0:
+        next_collect += datetime.timedelta(days=cycle - remainder)
+    return next_collect
 
-        # Calculate days until the next collection day
-        days_until_next_collection = (collection_day - today.weekday() + 7) % 7
-        next_collect = today + timedelta(days=days_until_next_collection)
 
-        # Calculate the number of days from the start date to the next collection day
-        days_from_start = (next_collect - start_date).days
+def _describe(zone, source):
+    for prefix, label in _COLLECTIONS:
+        day_name = zone.get(f"{prefix}_day")
+        weeks_raw = zone.get(f"{prefix}_weeks")
+        start_raw = zone.get(f"{prefix}_start")
+        if not day_name or not weeks_raw or not start_raw:
+            continue
 
-        # Adjust the next collection day if not aligned with the collection cycle
-        if days_from_start % (weeks * 7) != 0:
-            days_until_aligned = (weeks * 7) - (days_from_start % (weeks * 7))
-            next_collect += timedelta(days=days_until_aligned)
+        weekday = recurrence.weekday(day_name)
+        if weekday is None:
+            continue
+        try:
+            weeks = int(weeks_raw)
+            start = datetime.datetime.strptime(start_raw, "%Y-%m-%d").date()
+        except (TypeError, ValueError):
+            continue
+        if weeks <= 0:
+            continue
 
-        next_dates = [next_collect]
+        next_collect = _next_aligned_collection(weekday, weeks, start)
+        yield Schedule(label, next_collect, datetime.timedelta(weeks=weeks), 4 // weeks)
 
-        # Generate the subsequent collection dates
-        for _i in range(1, 4 // weeks):
-            next_collect += timedelta(days=weeks * 7)
-            next_dates.append(next_collect)
 
-        return next_dates
+@final
+class Source(BaseSource):
+    TITLE = "Frankston City Council"
+    DESCRIPTION = "Source script for frankston.vic.gov.au"
+    URL = "https://frankston.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        # Get latitude & longitude of address
-        url = (
-            "https://api.geocode.earth/v1/autocomplete?text="
-            + self._address
-            + "&layers=address,street&boundary.gid=whosonfirst:county:102048609&api_key=ge-39bfbedc55be11c0"
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "45r Wedge Rd": {"address": "45r Wedge Rd, Carrum Downs Vic"},  # Monday
+        "300 Wedge Rd": {
+            "address": "300 Wedge Rd, Skye Vic"
+        },  # Monday, but inverse recycling week to 45r Wedge Rd
+        "66 Skye Rd": {"address": "66 Skye Rd, Skye Vic"},  # Tuesday
+        "160 North Rd": {"address": "160 North Road, Langwarrin Vic"},  # Wednesday
+        "65 Golf Links Rd": {"address": "65 Golf Links Rd, Frankston Vic"},  # Thursday
+        "107 Nepean Highway": {"address": "107 Nepean Highway, Seaford Vic"},  # Friday
+    }
 
-        r = requests.get(url)
-        r.raise_for_status()
+    PARAMS = (text_field("address", "Street Address"),)
 
-        long_lat = r.json()["features"][0]["geometry"]["coordinates"]
-        zoneUrl = "https://connect.pozi.com/userdata/frankston-publisher/Community/Kerbside_Garbage_Collection_(Widget).json"
+    retrieve = PoziGeoJsonRetriever(
+        ZONES_URL,
+        address="address",
+        geocode=lambda address, source: geocode_earth(
+            address,
+            source,
+            api_key=GEOCODE_API_KEY,
+            boundary_gid=GEOCODE_BOUNDARY_GID,
+        ),
+    )
+    parse = PoziGeoJsonParser()
+    preprocess = RecurrenceExpander(_describe)
+    transform = RowTransformer()
 
-        waste_schedule = query_geojson_zones(zoneUrl, long_lat[1], long_lat[0])
-
-        entries = []
-        for next_date in self.get_collections(
-            waste_schedule["rub_day"],
-            waste_schedule["rub_weeks"],
-            waste_schedule["rub_start"],
-        ):
-            entries.append(
-                Collection(
-                    date=next_date,
-                    t="Rubbish",
-                    icon=ICON_MAP.get("Rubbish"),
-                )
-            )
-
-        for next_date in self.get_collections(
-            waste_schedule["rec_day"],
-            waste_schedule["rec_weeks"],
-            waste_schedule["rec_start"],
-        ):
-            entries.append(
-                Collection(
-                    date=next_date,
-                    t="Recycling",
-                    icon=ICON_MAP.get("Recycling"),
-                )
-            )
-
-        for next_date in self.get_collections(
-            waste_schedule["grn_day"],
-            waste_schedule["grn_weeks"],
-            waste_schedule["grn_start"],
-        ):
-            entries.append(
-                Collection(
-                    date=next_date,
-                    t="Green Waste",
-                    icon=ICON_MAP.get("Green Waste"),
-                )
-            )
-
-        for next_date in self.get_collections(
-            waste_schedule["gls_day"],
-            waste_schedule["gls_weeks"],
-            waste_schedule["gls_start"],
-        ):
-            entries.append(
-                Collection(
-                    date=next_date,
-                    t="Glass",
-                    icon=ICON_MAP.get("Glass"),
-                )
-            )
-
-        return entries
+    def __init__(self, address: str):
+        super().__init__(address=address)

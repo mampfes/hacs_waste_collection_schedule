@@ -1,132 +1,104 @@
-from datetime import datetime
-from html.parser import HTMLParser
+"""ZKE Saarbrücken (zke-sb.de).
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+Athos "WasteManagementServlet" wizard: CITYCHANGED, STREETCHANGED, a
+container-selection ``forward``, then download.
 
-# Source code based on ZKE Saarbrücken
-TITLE = "ZKE Saarbrücken"
-DESCRIPTION = "Source for Zentraler Kommunaler Entsorgungsbetrieb (ZKE) Saarbrücken."
-URL = "https://www.zke-sb.de"
-TEST_CASES = {
-    "Harthweg": {
-        "street": "Harthweg",
-        "house_number": 7,
-    },
-    "Jahnweg": {
-        "street": "Jahnweg",
-        "house_number": 6,
-    },
-    "Netzbachtal": {
-        "street": "Netzbachtal",
-        "house_number": 1,
-    },
-}
+Known gap (documented, not reproduced here): the legacy source re-scrapes
+hidden inputs after every step, and a live comparison found one field that
+genuinely changes along the way -- ``ApplicationName`` starts as the
+address-wizard's own model and becomes
+``com.athos.kd.saarbruecken.abfuhrtermine.AbfuhrTerminModel`` once the
+"Terminliste" page is reached after ``forward``. The retriever never
+re-scrapes, so that value is hardcoded on the download step instead of
+picked up dynamically (confirmed live: 75 collections, matching the legacy
+source's "Harthweg 7" TEST_CASE exactly).
+"""
 
-ICON_MAP = {
-    "Restmuell:": Icons.GENERAL_WASTE,
-    "Biomuell": Icons.ORGANIC,
-    "Papiertonne": Icons.PAPER,
-    "Gelbe": Icons.RECYCLING,
-}
+from typing import ClassVar, final
 
-API_URL = "https://info.zke-sb.de/WasteManagementSaarbruecken/WasteManagementServlet"
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
+
+_SERVLET = "https://info.zke-sb.de/WasteManagementSaarbruecken/WasteManagementServlet"
 
 
-class HiddenInputParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._args = {}
+@final
+class Source(BaseSource):
+    TITLE = "ZKE Saarbrücken"
+    DESCRIPTION = (
+        "Source for Zentraler Kommunaler Entsorgungsbetrieb (ZKE) Saarbrücken."
+    )
+    URL = "https://www.zke-sb.de"
+    COUNTRY = "de"
 
-    @property
-    def args(self):
-        return self._args
+    RAISE_ON_EMPTY = True
 
-    def handle_starttag(self, tag, attrs):
-        if tag == "input":
-            d = dict(attrs)
-            if str(d.get("type", "")).lower() == "hidden" and "name" in d:
-                self._args[d["name"]] = d["value"] if "value" in d else ""
+    TEST_CASES: ClassVar[dict] = {
+        "Harthweg": {
+            "street": "Harthweg",
+            "house_number": 7,
+        },
+        "Jahnweg": {
+            "street": "Jahnweg",
+            "house_number": 6,
+        },
+        "Netzbachtal": {
+            "street": "Netzbachtal",
+            "house_number": 1,
+        },
+    }
 
+    PARAMS = (
+        street(),
+        house_number(),
+    )
 
-class Source:
-    def __init__(self, street: str, house_number: str):
-        self._street = street
-        self._hnr = house_number
-        self._ics = ICS()
+    retrieve = AthosWasteManagementRetriever(
+        url=_SERVLET,
+        initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        steps=[
+            {
+                "submit_action": "CITYCHANGED",
+                "fields": lambda street, **_: {"Ort": street[0].upper()},
+            },
+            {
+                "submit_action": "STREETCHANGED",
+                "fields": lambda street, **_: {"Strasse": street},
+            },
+            {
+                "submit_action": "forward",
+                "fields": lambda house_number, **_: {
+                    "Hausnummer": str(house_number),
+                    **{f"ContainerGewaehlt_{i}": "on" for i in range(1, 7)},
+                },
+            },
+            {
+                "submit_action": "filedownload_ICAL",
+                "fields": lambda **_: {
+                    "ApplicationName": "com.athos.kd.saarbruecken.abfuhrtermine.AbfuhrTerminModel",
+                },
+            },
+        ],
+    )
+    parse = parsers.IcsParser()
+    transform = ICSTransformer(
+        clean=lambda label: label.split(":")[0].strip(),
+        type_value_map={
+            "restmuell": GENERAL_WASTE,
+            "biomuell": ORGANIC,
+            "papiertonne": PAPER,
+            "gelbe tonne": RECYCLABLES,
+        },
+    )
 
-    def fetch(self):
-        now = datetime.now()
-        entries = self.get_data(now.year)
-        if now.month == 12:
-            try:
-                entries += self.get_data(now.year + 1)
-            except Exception:
-                pass
-        return entries
-
-    def get_data(self, year):
-        session = requests.session()
-
-        # 1) GET: "Abfallkalender"
-        r = session.get(
-            API_URL,
-            params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
-        )
-        r.raise_for_status()
-        r.encoding = "utf-8"
-        parser = HiddenInputParser()
-        parser.feed(r.text)
-        args = parser.args
-
-        # 2) CITYCHANGED
-        args["Ort"] = self._street[0].upper()
-        args["SubmitAction"] = "CITYCHANGED"
-        r = session.post(API_URL, data=args)
-        r.raise_for_status()
-
-        parser = HiddenInputParser()
-        parser.feed(r.text)
-        args = parser.args
-
-        # 3) STREETCHANGED
-        args["Strasse"] = self._street
-        args["SubmitAction"] = "STREETCHANGED"
-        r = session.post(API_URL, data=args)
-        r.raise_for_status()
-
-        parser = HiddenInputParser()
-        parser.feed(r.text)
-        args = parser.args
-
-        # 4) forward
-        args["Hausnummer"] = str(self._hnr)
-        args["SubmitAction"] = "forward"
-        args["ContainerGewaehlt_1"] = "on"
-        args["ContainerGewaehlt_2"] = "on"
-        args["ContainerGewaehlt_3"] = "on"
-        args["ContainerGewaehlt_4"] = "on"
-        args["ContainerGewaehlt_5"] = "on"
-        args["ContainerGewaehlt_6"] = "on"
-        r = session.post(API_URL, data=args)
-        r.raise_for_status()
-
-        parser = HiddenInputParser()
-        parser.feed(r.text)
-        args = parser.args
-
-        # 5) ICS-Download
-        args["SubmitAction"] = "filedownload_ICAL"
-        r = session.post(API_URL, data=args)
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            bin_type = d[1].strip()
-            entries.append(
-                Collection(d[0], bin_type, ICON_MAP.get(bin_type.split(" ")[0]))
-            )
-        return entries
+    def __init__(self, street: str, house_number: "str | int"):
+        super().__init__(street=street, house_number=house_number)

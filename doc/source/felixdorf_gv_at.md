@@ -1,6 +1,8 @@
 # Gemeinde Felixdorf
 
-Support for waste collection schedules provided by [Gemeinde Felixdorf](https://www.felixdorf.gv.at), Lower Austria.
+Support for schedules provided by [Gemeinde Felixdorf](https://www.felixdorf.gv.at).
+
+Source for Gemeinde Felixdorf, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -9,14 +11,13 @@ waste_collection_schedule:
   sources:
     - name: felixdorf_gv_at
       args:
-        zone: Rayon 1  # optional: Rayon 1 or Rayon 2; omit for all zones
+        zone: ZONE
 ```
 
-### Arguments
+### Configuration Variables
 
-| Argument | Description |
-|---|---|
-| `zone` | *(optional)* Collection zone: `Rayon 1` or `Rayon 2`. Omit to receive entries for all zones. |
+**zone**  
+*(string) (optional)*
 
 ## Example
 
@@ -25,5 +26,9 @@ waste_collection_schedule:
   sources:
     - name: felixdorf_gv_at
       args:
-        zone: Rayon 2
+        zone: Rayon 1
 ```
+
+## How to get the source arguments
+
+Select your collection zone (Rayon 1 or Rayon 2). Leave blank to receive all zones.

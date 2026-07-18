@@ -1,6 +1,8 @@
 # Stadtreinigung Hamburg
 
-Add support for schedules provided by [stadtreinigung.hamburg](https://www.stadtreinigung.hamburg/).
+Support for schedules provided by [Stadtreinigung Hamburg](https://www.stadtreinigung.hamburg).
+
+Source for Stadtreinigung Hamburg waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -10,12 +12,16 @@ waste_collection_schedule:
     - name: stadtreinigung_hamburg
       args:
         hnId: HNID
+        asId: ASID
 ```
 
 ### Configuration Variables
 
 **hnId**  
 *(string) (required)*
+
+**asId**  
+*(string) (optional)*
 
 ## Example
 
@@ -24,17 +30,5 @@ waste_collection_schedule:
   sources:
     - name: stadtreinigung_hamburg
       args:
-        hnId: 113084
+        hnId: 53814
 ```
-
-## How to get the source arguments
-
-Open [stadtreinigung.hamburg](https://www.stadtreinigung.hamburg/abfuhrkalender/) and search for schedules for your location.
-
-Check the URL and extract the number after field `housenumber%5D`.
-
-Example:
-
-`https://www.stadtreinigung.hamburg/abfuhrkalender/?tx_srh_pickups%5Bstreet%5D=2586&tx_srh_pickups%5Bhousenumber%5D=53814`
-
-The resulting `hnId` is `53814`.

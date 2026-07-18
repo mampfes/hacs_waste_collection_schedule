@@ -1,200 +1,178 @@
+"""Stadt Gemünden (Wohra), Germany.
+
+Demonstrates: both new PDF components composed on one source. The annual
+calendar PDF is linked (under a rotating hashed URL) from a stable page, so
+``PdfLinkRetriever`` finds it; the PDF is a twelve-month grid, so
+``PdfTableParser`` returns its positioned runs. This source detects the twelve
+month columns from the header row and bins each row's runs into them, reading
+the day cell and the ``<code> <tour>`` collection tokens from each cell. The
+provider-specific part is the tour filter (a resident's collection tour selects
+which tokens apply; ``1/2`` means both) and the tour-independent tyre (AR) and
+hazardous (SO) rounds -- expressed here rather than in a generic transformer.
+"""
+
+import datetime
 import re
-import urllib.parse
-from datetime import date
-from io import BytesIO
+from collections.abc import Iterable
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from pypdf import PdfReader
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import integer
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "Stadt Gemünden (Wohra)"
-DESCRIPTION = "Source for Stadt Gemünden (Wohra) waste collection schedule."
-URL = "https://www.gemuenden-wohra.de"
-COUNTRY = "de"
+from waste_collection_schedule.parsers import PdfRow, PdfTableParser
+from waste_collection_schedule.retrievers import PdfLinkRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _SCHEDULE_URL = (
     "https://www.gemuenden-wohra.de/seite/461536/abfallentsorgung-abfuhrtermine.html"
 )
-_PDF_YEAR_RE = re.compile(r"Abfallkalender[_-]?(\d{4})\.pdf", re.IGNORECASE)
-_WEEKDAY_RE = re.compile(r"(\d{2})\s+(Mo|Di|Mi|Do|Fr|Sa|So)")
-_COLLECTION_RE = re.compile(r"([BRGP])\s+(1/2|[12])")
-_AR_RE = re.compile(r"\bAR\b")
-_SO_RE = re.compile(r"\bSO\b")
 
-_CODE_MAP = {
+_MONTHS = {
+    "JANUAR": 1,
+    "FEBRUAR": 2,
+    "MÄRZ": 3,
+    "APRIL": 4,
+    "MAI": 5,
+    "JUNI": 6,
+    "JULI": 7,
+    "AUGUST": 8,
+    "SEPTEMBER": 9,
+    "OKTOBER": 10,
+    "NOVEMBER": 11,
+    "DEZEMBER": 12,
+}
+# A day cell, e.g. "01 Do" (optionally followed by a holiday name).
+_DAY_RE = re.compile(r"(\d{1,2})\s+(?:Mo|Di|Mi|Do|Fr|Sa|So)")
+# A collection token: waste code + tour digit ("B 1", "P 2", "G 1/2").
+_CODE_RE = re.compile(r"([BRGP])\s+(1/2|[12])")
+_AR_RE = re.compile(r"\bAR\b")  # Altreifensammlung (waste tyres), tour-independent
+_SO_RE = re.compile(r"\bSO\b")  # Sonderabfall (hazardous), tour-independent
+_YEAR_RE = re.compile(r"\(Wohra\)\s*(\d{4})")
+
+# The single-letter grid codes, spelled out as the labels the transform maps.
+_CODE_LABELS = {
     "B": "Bioabfall",
     "R": "Restmüll",
     "G": "Gelbe Tonne",
     "P": "Altpapier",
 }
 
-ICON_MAP = {
-    "Bioabfall": Icons.ORGANIC,
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Altpapier": Icons.PAPER,
-    "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Altreifensammlung": Icons.GENERAL_WASTE,
-    "Sonderabfall": Icons.HAZARDOUS,
-}
 
-TEST_CASES = {
-    "Tour 1 (Schiffelbach, Ellnrode, Grüsen etc.)": {"tour": 1},
-    "Tour 2 (Kernstadt Gemünden)": {"tour": 2},
-}
+def _month_columns(page_rows: list[PdfRow]) -> "tuple[list[float], list[int]] | None":
+    """Detect the month header row; return its column x-positions and months."""
+    for row in page_rows:
+        found = sorted(
+            (w.x0, _MONTHS[w.text.upper()])
+            for w in row.words
+            if w.text.upper() in _MONTHS
+        )
+        if len(found) >= 6:
+            return [x for x, _ in found], [m for _, m in found]
+    return None
 
-PARAM_TRANSLATIONS = {
-    "en": {"tour": "Collection tour"},
-    "de": {"tour": "Abfuhrtour"},
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "tour": (
+@final
+class Source(BaseSource):
+    TITLE = "Stadt Gemünden (Wohra)"
+    DESCRIPTION = "Source for Stadt Gemünden (Wohra) waste collection schedule."
+    URL = "https://www.gemuenden-wohra.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Tour 1 (Schiffelbach, Ellnrode, Grüsen etc.)": {"tour": 1},
+        "Tour 2 (Kernstadt Gemünden)": {"tour": 2},
+    }
+
+    PARAMS = (integer("tour"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
             "Tour 1: Schiffelbach, Ellnrode, Grüsen, Sehlen, Herbelhausen, "
             "Lehnhausen and areas west of the former railway line. "
-            "Tour 2: Rest of Gemünden town centre."
-        )
-    },
-    "de": {
-        "tour": (
+            "Tour 2: rest of the Gemünden town centre."
+        ),
+        "de": (
             "Tour 1: Schiffelbach, Ellnrode, Grüsen, Sehlen, Herbelhausen, "
             "Lehnhausen und alle Grundstücke westlich der ehemaligen Bahntrasse. "
             "Tour 2: Rest der Kernstadt Gemünden."
-        )
-    },
-}
+        ),
+    }
 
+    retrieve = PdfLinkRetriever(
+        index_url=_SCHEDULE_URL, pattern=r"Abfallkalender[_-]?(\d{4})\.pdf"
+    )
+    parse = PdfTableParser(min_words=20)
 
-class Source:
+    transform = ICSTransformer(
+        type_value_map={
+            "Bioabfall": ORGANIC,
+            "Restmüll": GENERAL_WASTE,
+            "Altpapier": PAPER,
+            "Gelbe Tonne": RECYCLABLES,
+            "Sonderabfall": HAZARDOUS,
+        }
+    )
+
     def __init__(self, tour: int) -> None:
         if tour not in (1, 2):
             raise SourceArgumentNotFoundWithSuggestions("tour", str(tour), ["1", "2"])
-        self._tour = tour
+        super().__init__(tour=tour)
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update(
-            {"User-Agent": "Mozilla/5.0 (compatible; HomeAssistant)"}
+    def preprocess(
+        self, rows: list[PdfRow], source=None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        """Bin the grid into month columns; yield (date, label) per collection."""
+        tour = self.params["tour"]
+        text = " ".join(w.text for r in rows for w in r.words)
+        year_match = _YEAR_RE.search(text)
+        year = int(year_match.group(1)) if year_match else datetime.date.today().year
+
+        # The calendar grid is on the first page.
+        page_rows = [r for r in rows if r.page == 0]
+        columns = _month_columns(page_rows)
+        if not columns:
+            return
+        xs, months = columns
+        header_y = next(
+            r.y
+            for r in page_rows
+            if sum(w.text.upper() in _MONTHS for w in r.words) >= 6
         )
+        mids = [(xs[i] + xs[i + 1]) / 2 for i in range(len(xs) - 1)]
 
-        response = session.get(_SCHEDULE_URL, timeout=30)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
+        def column_of(x: float) -> int:
+            return sum(1 for mid in mids if x >= mid)
 
-        current_year = date.today().year
-        pdf_links: dict[int, str] = {}
-
-        for a in soup.find_all("a", href=True):
-            href = str(a["href"])
-            m = _PDF_YEAR_RE.search(href)
-            if m:
-                year = int(m.group(1))
-                if year >= current_year:
-                    pdf_links[year] = urllib.parse.urljoin(_SCHEDULE_URL, href)
-
-        entries: list[Collection] = []
-        for year, pdf_url in sorted(pdf_links.items()):
-            pdf_response = session.get(pdf_url, timeout=30)
-            pdf_response.raise_for_status()
-            reader = PdfReader(BytesIO(pdf_response.content))
-            layout_text = reader.pages[0].extract_text(extraction_mode="layout") or ""
-            entries.extend(self._parse_layout(layout_text, year))
-
-        return entries
-
-    def _parse_layout(self, text: str, year: int) -> list[Collection]:
-        lines = text.split("\n")
-
-        # Find the calendar header line (contains both "Januar" and "Februar")
-        header_idx = next(
-            (
-                i
-                for i, line in enumerate(lines)
-                if "Januar" in line and "Februar" in line
-            ),
-            None,
-        )
-        if header_idx is None:
-            return []
-
-        # Determine column start positions from the first day line that has all
-        # 12 months at evenly-spaced positions (holiday text can shift a column
-        # on affected day lines, so we look for a clean reference line).
-        col_boundaries: list[int] | None = None
-        for line in lines[header_idx + 1 :]:
-            matches = list(_WEEKDAY_RE.finditer(line))
-            if len(matches) != 12:
+        for row in page_rows:
+            # Rows above the header are the title and the Dec-preamble; skip them.
+            if row.y >= header_y:
                 continue
-            positions = [m.start() for m in matches]
-            gaps = [positions[j + 1] - positions[j] for j in range(11)]
-            if all(30 <= g <= 55 for g in gaps):
-                col_boundaries = positions
-                break
-
-        if col_boundaries is None:
-            return []
-
-        col_ends = [*col_boundaries[1:], col_boundaries[-1] + 50]
-        first_col_slice = slice(max(0, col_boundaries[0] - 5), col_boundaries[0] + 35)
-
-        entries: list[Collection] = []
-        for line in lines[header_idx + 1 :]:
-            if not _WEEKDAY_RE.search(line):
-                continue
-
-            # Confirm the line starts with a day entry in the first month's column
-            first_col_m = _WEEKDAY_RE.search(line[first_col_slice])
-            if not first_col_m:
-                continue
-            day = int(first_col_m.group(1))
-
-            for month_idx, (col_start, col_end) in enumerate(
-                zip(col_boundaries, col_ends, strict=False)
-            ):
-                if col_start >= len(line):
+            cells: dict[int, list[str]] = {}
+            for word in row.words:
+                cells.setdefault(column_of(word.x0), []).append(word.text)
+            for col, texts in cells.items():
+                chunk = " ".join(texts)
+                day_match = _DAY_RE.search(chunk)
+                if not day_match:
                     continue
-                cell = line[col_start:col_end]
-                month = month_idx + 1
-
-                cell_m = _WEEKDAY_RE.search(cell)
-                if not cell_m or int(cell_m.group(1)) != day:
-                    continue
-
                 try:
-                    d = date(year, month, day)
+                    collection_date = datetime.date(
+                        year, months[col], int(day_match.group(1))
+                    )
                 except ValueError:
                     continue
-
-                for cm in _COLLECTION_RE.finditer(cell):
-                    tour_group = cm.group(2)
-                    if tour_group == "1/2" or int(tour_group) == self._tour:
-                        waste_type = _CODE_MAP.get(cm.group(1), cm.group(1))
-                        entries.append(
-                            Collection(
-                                date=d,
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-
-                # AR and SO events are not tour-specific
-                if _AR_RE.search(cell):
-                    entries.append(
-                        Collection(
-                            date=d,
-                            t="Altreifensammlung",
-                            icon=ICON_MAP.get("Altreifensammlung"),
-                        )
-                    )
-                if _SO_RE.search(cell):
-                    entries.append(
-                        Collection(
-                            date=d,
-                            t="Sonderabfall",
-                            icon=ICON_MAP.get("Sonderabfall"),
-                        )
-                    )
-
-        return entries
+                for code, tour_digit in _CODE_RE.findall(chunk):
+                    if tour_digit == "1/2" or int(tour_digit) == tour:
+                        yield collection_date, _CODE_LABELS[code]
+                if _AR_RE.search(chunk):
+                    yield collection_date, "Altreifensammlung"
+                if _SO_RE.search(chunk):
+                    yield collection_date, "Sonderabfall"

@@ -1,132 +1,174 @@
+"""AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH (awigo.de).
+
+Demonstrates: a stateless PHP wizard driven by a chain of "legacy_eID" POSTs
+(getCities -> getStreets -> getNumbers -> getICSfile), each request fully
+specifying the previously resolved ids as parameters rather than relying on
+server-side session state. All waste types (rest, paper, yellow, brown,
+mobile) are enabled in a single pass: the API returns an events-free ICS
+(headers only) when just one type is requested, so at least two must be
+enabled together, and each ICS event already carries its own waste-type name
+(issue #4562). The final getICSfile call itself returns a follow-up download
+URL as plain text (not the ICS body), which must be fetched separately. No
+configured retriever expresses this four-step resolve-then-download shape,
+hence a source-defined retrieve()/parse() pair.
+"""
+
 import re
-import urllib.parse
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, municipality, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    GLASS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
 )
-from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH"
-DESCRIPTION = "Source for AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH."
-URL = "https://www.awigo.de/"
-TEST_CASES = {
-    "Bippen Am Bad 4": {"ort": "Bippen", "strasse": "Am Bad", "hnr": 4},
-    "fürstenau, Am Gültum, 9": {"ort": "Fürstenau", "strasse": "Am Gültum", "hnr": 9},
-    "Melle, Allee, 78-80": {"ort": "Melle", "strasse": "Allee", "hnr": "78-80"},
-    "Berge": {"ort": "Berge", "strasse": "Poststr.", "hnr": 3},
-}
+_API_URL = "https://www.awigo.de/index.php"
+_WASTE_TYPE_KEYS = ("rest", "paper", "yellow", "brown", "mobile")
 
 
-ICON_MAP = {
-    "Restmülltonne": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "Bio-Tonne": Icons.ORGANIC,
-    "Papiermülltonne": Icons.PAPER,
-    "Gelbe Tonne/Gelben Sack": Icons.PLASTIC_PACKAGING,
-}
-
-
-API_URL = "https://www.awigo.de/index.php"
-
-
-def compare_cities(a: str, b: str) -> bool:
+def _compare_cities(a: str, b: str) -> bool:
     return (
         re.sub(r"\([0-9]+\)", "", a.lower()).strip()
         == re.sub(r"\([0-9]+\)", "", b.lower()).strip()
     )
 
 
-class Source:
-    def __init__(self, ort: str, strasse: str, hnr: str | int):
-        self._ort: str = str(ort)
-        self._strasse: str = strasse
-        self._hnr: str = str(hnr)
-        self._ics = ICS()
+def _post(session, args: dict):
+    # The bracketed PHP array keys (e.g. "calendar[rest]") are sent as literal
+    # query params -- curl_cffi percent-encodes the brackets itself, which the
+    # endpoint accepts identically to the raw form the legacy `requests`-based
+    # urlencode(..., safe="[]") produced.
+    r = session.post(_API_URL, params=args)
+    r.raise_for_status()
+    return r
 
-    def fetch(self):
-        entries = []
-        waste_types = ["rest", "paper", "yellow", "brown", "mobile"]
 
-        # Note: the AWIGO API has a bug where requesting getICSfile with only
-        # a single waste type enabled (e.g. only "rest" or only "paper")
-        # returns an ICS file containing only headers and no events. As soon
-        # as at least two waste types are requested together, it works fine.
-        # We therefore always request all waste types together in a single
-        # call; each ICS event already carries its own waste-type name, so no
-        # server-side filtering is lost by doing this. See GitHub issue #4562.
-        s = requests.Session()
-        args = {
+def _options(html: str) -> list:
+    return BeautifulSoup(html, "html.parser").find_all("option")
+
+
+@final
+class Source(BaseSource):
+    TITLE = "AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH"
+    DESCRIPTION = "Source for AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH."
+    URL = "https://www.awigo.de/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Bippen Am Bad 4": {"ort": "Bippen", "strasse": "Am Bad", "hnr": 4},
+        "fürstenau, Am Gültum, 9": {
+            "ort": "Fürstenau",
+            "strasse": "Am Gültum",
+            "hnr": 9,
+        },
+        "Melle, Allee, 78-80": {"ort": "Melle", "strasse": "Allee", "hnr": "78-80"},
+        "Berge": {"ort": "Berge", "strasse": "Poststr.", "hnr": 3},
+    }
+
+    PARAMS = (
+        municipality(field="ort"),
+        street(field="strasse"),
+        house_number(field="hnr"),
+    )
+
+    def retrieve(self, source):
+        session = source.session
+        ort = source.params["ort"]
+        strasse = source.params["strasse"]
+        hnr = str(source.params["hnr"]).lower().strip().replace(" ", "")
+
+        # Enable every waste type in one pass: a single-type request returns
+        # an events-free ICS, so at least two must be requested together. Each
+        # ICS event carries its own waste-type name, so nothing is lost by
+        # doing so. See GitHub issue #4562.
+        args: dict = {
             "legacy_eID": "awigoCalendar",
             "calendar[method]": "getCities",
         }
+        for wt in _WASTE_TYPE_KEYS:
+            args[f"calendar[{wt}]"] = 1
 
-        for wt in waste_types:
-            args[f"calendar[{wt}]"] = "1"
-
-        r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
-
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, features="html.parser")
-        for option in soup.find_all("option"):
-            if compare_cities(self._ort, option.text):
-                args["calendar[cityID]"] = str(option.get("value"))
-                break
-        if "calendar[cityID]" not in args:
+        r = _post(session, args)
+        options = _options(r.text)
+        city_id = next(
+            (o.get("value") for o in options if _compare_cities(ort, o.text)),
+            None,
+        )
+        if city_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "ort", self._ort, [option.text for option in soup.find_all("option")]
+                "ort", ort, [o.text for o in options]
             )
+        args["calendar[cityID]"] = city_id
 
         args["calendar[method]"] = "getStreets"
-
-        r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, features="html.parser")
-        for option in soup.find_all("option"):
-            if option.text.lower().strip() == self._strasse.lower().strip():
-                value = option.get("value")
-                if value:
-                    args["calendar[streetID]"] = str(value)
-                break
-        if "calendar[streetID]" not in args:
+        r = _post(session, args)
+        options = _options(r.text)
+        street_id = next(
+            (
+                o.get("value")
+                for o in options
+                if o.text.lower().strip() == strasse.lower().strip()
+            ),
+            None,
+        )
+        if street_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "strasse",
-                self._strasse,
-                [option.text for option in soup.find_all("option")],
+                "strasse", strasse, [o.text for o in options]
             )
+        args["calendar[streetID]"] = street_id
 
         args["calendar[method]"] = "getNumbers"
-        r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, features="html.parser")
-        for option in soup.find_all("option"):
-            if option.text.lower().strip().replace(
-                " ", ""
-            ) == self._hnr.lower().strip().replace(" ", ""):
-                value = option.get("value")
-                if value:
-                    args["calendar[locationID]"] = str(value)
-                break
-        if "calendar[locationID]" not in args:
+        r = _post(session, args)
+        options = _options(r.text)
+        location_id = next(
+            (
+                o.get("value")
+                for o in options
+                if o.text.lower().strip().replace(" ", "") == hnr
+            ),
+            None,
+        )
+        if location_id is None:
             raise SourceArgumentNotFoundWithSuggestions(
-                "hnr", self._hnr, [option.text for option in soup.find_all("option")]
+                "hnr", source.params["hnr"], [o.text for o in options]
             )
+        args["calendar[locationID]"] = location_id
 
         args["calendar[method]"] = "getICSfile"
-        r = s.post(API_URL, params=urllib.parse.urlencode(args, safe="[]"))
-        r.raise_for_status()
-        ics_url = r.text.strip()
-        r = s.get(ics_url)
-        r.raise_for_status()
-        r.encoding = "utf-8"
+        r = _post(session, args)
+        ics_response = session.get(r.text.strip())
+        ics_response.encoding = "utf-8"
+        return [ics_response]
 
-        dates = self._ics.convert(r.text)
-        for d in dates:
-            bin_type = d[1].replace("wird abgeholt.", "").strip()
-            entries.append(Collection(d[0], bin_type, ICON_MAP.get(bin_type)))
-
+    def parse(self, raw, source):
+        ics_parser = IcsParser()
+        entries = []
+        for response in raw:
+            entries.extend(ics_parser(response, source))
         return entries
+
+    def preprocess(self, entries, source):
+        for date_, name in entries:
+            yield (date_, name.replace("wird abgeholt.", "").strip())
+
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmülltonne": GENERAL_WASTE,
+            "Glass": GLASS,
+            "Bio-Tonne": ORGANIC,
+            "Papiermülltonne": PAPER,
+            "Gelbe Tonne/Gelben Sack": RECYCLABLES,
+        }
+    )
+
+    def __init__(self, ort: str, strasse: str, hnr: "str | int"):
+        super().__init__(ort=ort, strasse=strasse, hnr=hnr)

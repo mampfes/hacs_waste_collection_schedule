@@ -1,29 +1,27 @@
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.recurrence import WEEKLY
 from waste_collection_schedule.service.IntraMaps import (
-    IntraMapsSearchError,
-    MapsClient,
+    IntraMapsPanelParser,
+    IntraMapsRetriever,
     MapsClientConfig,
-    extract_panel_fields,
 )
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GLASS, RECYCLABLES
 
-TITLE = "Waipa District Council"
-DESCRIPTION = (
-    "Source for Waipa District Council. Finds both general and glass recycling dates."
-)
-URL = "https://www.waipadc.govt.nz/"
-TEST_CASES = {
-    "10 Queen Street": {"address": "10 Queen Street"},  # Monday
-    "1 Acacia Avenue": {"address": "1 Acacia Avenue"},  # Wednesday
-}
-
-ICON_MAP = {
-    "Recycling": Icons.RECYCLING,
-    "Glass": Icons.GLASS,
-}
+# Waipa publishes several explicit dates per field rather than a cadence
+# (e.g. "Will be collected on 15-Jul-2026, and then ... on 29-Jul-2026"), so
+# there is no recurrence to project: _describe just regexes every date out of
+# the matching column's text and yields one single-occurrence Schedule per
+# date. The "Mixed Recycling" / "Glass Recycling" columns are matched by
+# substring (their full column text is the long verbose caption, e.g.
+# "Mixed Recycling (YELLOW bin - Plastic 1 2 5, Paper, Cardboard, Cans):"),
+# still keyed on ``column`` rather than a separate caption field.
 
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://waipadc.spatial.t1cloud.com",
@@ -34,45 +32,59 @@ INTRAMAPS_CONFIG = MapsClientConfig(
     default_selection_layer="e7163a17-2f10-42b1-8dbf-8c53adf089a8",
 )
 
-# Match field names containing "Recycling" or "Glass" (they have verbose names)
-RECYCLING_PATTERN = re.compile(r"Mixed Recycling", re.IGNORECASE)
-GLASS_PATTERN = re.compile(r"Glass Recycling", re.IGNORECASE)
+# Internal schedule keys -> canonical waste type (decoupled from the verbose
+# IntraMaps column text so the transformer's map stays short and stable).
+_TYPE_MAP = {
+    "recycling": RECYCLABLES,
+    "glass": GLASS,
+}
 
-# Extract dates in format "DD-Mon-YYYY"
-DATE_PATTERN = re.compile(r"\b(\d{1,2}-[A-Za-z]{3}-\d{4})\b")
+_RECYCLING_COLUMN_RE = re.compile(r"Mixed Recycling", re.IGNORECASE)
+_GLASS_COLUMN_RE = re.compile(r"Glass Recycling", re.IGNORECASE)
+
+# Extract dates in format "DD-Mon-YYYY".
+_DATE_RE = re.compile(r"\b(\d{1,2}-[A-Za-z]{3}-\d{4})\b")
+_parse_date = date_parsers.for_format("%d-%b-%Y")
 
 
-class Source:
-    def __init__(self, address):
-        self._address = address
+def _describe(record, source):
+    column = record.get("column", "")
+    if _RECYCLING_COLUMN_RE.search(column):
+        key = "recycling"
+    elif _GLASS_COLUMN_RE.search(column):
+        key = "glass"
+    else:
+        return
 
-    def fetch(self):
+    text = record.get("value", "")
+    for date_str in _DATE_RE.findall(text):
         try:
-            with MapsClient(INTRAMAPS_CONFIG) as client:
-                result = client.select_address(self._address)
-        except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
+            collection_date = _parse_date(date_str)
+        except (ValueError, TypeError):
+            continue
+        yield Schedule(key, collection_date, WEEKLY, 1)
 
-        fields = extract_panel_fields(result["response"])
 
-        entries = []
-        for field_name, field_value in fields.items():
-            if RECYCLING_PATTERN.search(field_name):
-                entries.extend(self._parse_dates(field_value, "Recycling"))
-            elif GLASS_PATTERN.search(field_name):
-                entries.extend(self._parse_dates(field_value, "Glass"))
+@final
+class Source(BaseSource):
+    TITLE = "Waipa District Council"
+    DESCRIPTION = "Source for Waipa District Council. Finds both general and glass recycling dates."
+    URL = "https://www.waipadc.govt.nz/"
+    COUNTRY = "nz"
+    RAISE_ON_EMPTY = True
 
-        return entries
+    TEST_CASES: ClassVar[dict] = {
+        "10 Queen Street": {"address": "10 Queen Street"},  # Monday
+        "1 Acacia Avenue": {"address": "1 Acacia Avenue"},  # Wednesday
+    }
 
-    @staticmethod
-    def _parse_dates(text: str, collection_type: str) -> list[Collection]:
-        icon = ICON_MAP.get(collection_type)
-        dates = DATE_PATTERN.findall(text)
-        entries = []
-        for date_str in dates:
-            try:
-                d = datetime.strptime(date_str, "%d-%b-%Y").date()
-                entries.append(Collection(date=d, t=collection_type, icon=icon))
-            except ValueError:
-                continue
-        return entries
+    PARAMS = (text_field("address", "Street Address"),)
+
+    retrieve = IntraMapsRetriever(INTRAMAPS_CONFIG, address="address")
+    parse = IntraMapsPanelParser()
+    preprocess = RecurrenceExpander(_describe)
+
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
+    def __init__(self, address: str):
+        super().__init__(address=address)

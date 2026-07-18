@@ -1,7 +1,8 @@
 # Kommunalservice Landkreis Börde AöR
 
-Support for schedules provided by
-[Kommunalservice Landkreis Börde AöR](https://ks-boerde.de)
+Support for schedules provided by [Kommunalservice Landkreis Börde AöR](https://ks-boerde.de).
+
+Source for KS Börde.
 
 ## Configuration via configuration.yaml
 
@@ -17,13 +18,13 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**VILLAGE**  
+**village**  
 *(string) (required)*
 
-**STREET**  
+**street**  
 *(string) (required)*
 
-**HOUSE_NUMBER**  
+**house_number**  
 *(string) (required)*
 
 ## Example
@@ -34,11 +35,6 @@ waste_collection_schedule:
     - name: ks_boerde_de
       args:
         village: Irxleben
-        street: Bördestraße
-        house_number: 8
+        street: "B\xF6rdestra\xDFe"
+        house_number: '8'
 ```
-
-## How to get the source argument
-
-Use village, street and house number as you would enter them at
-https://www.ks-boerde.de/index.php?id=25

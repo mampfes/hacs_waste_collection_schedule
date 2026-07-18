@@ -1,6 +1,8 @@
 # UBZ Umwelt- und Servicebetrieb Zweibrücken
 
-Support for schedules provided by [UBZ Zweibrücken](https://www.ubzzw.com), Germany.
+Support for schedules provided by [UBZ Umwelt- und Servicebetrieb Zweibrücken](https://www.ubzzw.com).
+
+Source for UBZ Zweibrücken waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -18,12 +20,8 @@ waste_collection_schedule:
 **street**  
 *(string) (required)*
 
-Full street name as shown on the UBZ online collection calendar (e.g. `Vogesenstraße`). The spelling must match exactly.
-
 **house_number**  
 *(string) (required)*
-
-House number, optionally including a suffix (e.g. `75` or `1 a`).
 
 ## Example
 
@@ -32,12 +30,6 @@ waste_collection_schedule:
   sources:
     - name: ubzzw_de
       args:
-        street: "Vogesenstraße"
-        house_number: "75"
+        street: "Vogesenstra\xDFe"
+        house_number: '75'
 ```
-
-## How to get the source arguments
-
-1. Go to [https://www.ubzzw.com/servicebereiche/abfall/abfallkalender/](https://www.ubzzw.com/servicebereiche/abfall/abfallkalender/) and click **Zum Online Abfallkalender**.
-2. In the popup, select your street's first letter, then your street name, then your house number.
-3. Use the street name and house number exactly as they appear in the dropdowns.

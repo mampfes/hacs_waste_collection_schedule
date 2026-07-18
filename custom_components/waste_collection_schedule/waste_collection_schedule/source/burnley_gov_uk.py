@@ -1,99 +1,81 @@
-import json
-from datetime import datetime
-from time import time_ns
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+)
 
-TITLE = "Burnley Council"
-DESCRIPTION = "Source for burnley.gov.uk services for the Burnley, UK."
-URL = "https://burnley.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "100010341681"},
-    "Test_002": {"uprn": 100010358864},
-    "Test_003": {"uprn": "100010357864"},
-    "Test_004": {"uprn": 100010327003},
-}
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-ICON_MAP = {
-    "REFUSE": Icons.GENERAL_WASTE,
-    "RECYCLING": Icons.RECYCLING,
-    "GARDEN": Icons.GARDEN,
-}
-MONTHS = {
-    "January": 1,
-    "February": 2,
-    "March": 3,
-    "April": 4,
-    "May": 5,
-    "June": 6,
-    "July": 7,
-    "August": 8,
-    "September": 9,
-    "October": 10,
-    "November": 11,
-    "December": 12,
-}
+HOSTNAME = "your.burnley.gov.uk"
+INITIAL_URL = (
+    "https://your.burnley.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://"
+    "AF-Process-b41dcd03-9a98-41be-93ba-6c172ba9f80c/"
+    "AF-Stage-edb97458-fc4d-4316-b6e0-85598ec7fce8/definition.json"
+    "&redirectlink=%2Fen&cancelRedirectLink=%2Fen&consentMessage=yes"
+)
+LOOKUP_ID = "607fe757df87c"
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+@final
+class Source(BaseSource):
+    TITLE = "Burnley Council"
+    DESCRIPTION = "Source for burnley.gov.uk services for the Burnley, UK."
+    URL = "https://burnley.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "100010341681"},
+        "Test_002": {"uprn": 100010358864},
+        "Test_003": {"uprn": "100010357864"},
+        "Test_004": {"uprn": 100010327003},
+    }
 
-        s = requests.Session()
+    PARAMS = (uprn(),)
 
-        # Set up session
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        s.get(
-            f"https://your.burnley.gov.uk/apibroker/domain/your.burnley.gov.uk?_={timestamp}",
-            headers=HEADERS,
-        )
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        initial_url=INITIAL_URL,
+        skip_landing_page=True,
+        auth_test_url=f"https://{HOSTNAME}/apibroker/domain/{HOSTNAME}",
+        steps=[
+            LookupStep(
+                LOOKUP_ID,
+                form_values=lambda ctx, source: {
+                    "case_uprn1": {"value": source.params["uprn"]}
+                },
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    # `display` is a single "<type> - <weekday> <day> <month>" string with no
+    # year (the collection is always in the near future); date_parsers.next_weekday
+    # rolls it to whichever of this/next year puts it on/after today.
+    transform = JsonTransformer(
+        date_key=lambda r: r["display"].split(" - ")[1],
+        type_key=lambda r: r["display"].split(" - ")[0],
+        parse_date=date_parsers.next_weekday("%A %d %B"),
+        type_value_map={
+            "refuse": GENERAL_WASTE,
+            "recycling": RECYCLABLES,
+            "garden": GARDEN_WASTE,
+        },
+    )
 
-        # This request gets the session ID
-        sid_request = s.get(
-            "https://your.burnley.gov.uk/authapi/isauthenticated?uri=https%253A%252F%252Fyour.burnley.gov.uk%252Fen%252FAchieveForms%252F%253Fform_uri%253Dsandbox-publish%253A%252F%252FAF-Process-b41dcd03-9a98-41be-93ba-6c172ba9f80c%252FAF-Stage-edb97458-fc4d-4316-b6e0-85598ec7fce8%252Fdefinition.json%2526redirectlink%253D%25252Fen%2526cancelRedirectLink%253D%25252Fen%2526consentMessage%253Dyes&hostname=your.burnley.gov.uk&withCredentials=true",
-            headers=HEADERS,
-        )
-        sid_data = sid_request.json()
-        sid = sid_data["auth-session"]
+    def __init__(self, uprn: str | int):
+        super().__init__(uprn=str(uprn).zfill(12))
 
-        # This request retrieves the schedule
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        payload = {"formValues": {"Section 1": {"case_uprn1": {"value": self._uprn}}}}
-        schedule_request = s.post(
-            f"https://your.burnley.gov.uk/apibroker/runLookup?id=607fe757df87c&repeat_against=&noRetry=false&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
-            headers=HEADERS,
-            json=payload,
-        )
-        rowdata = json.loads(schedule_request.content)["integration"]["transformed"][
-            "rows_data"
-        ]
-
-        # Extract bin types and next collection dates
-        # Website doesn't return a year, so compare months to deal with collection spanning a year-end
-        entries = []
-        current_month = datetime.strftime(datetime.now(), "%B")
-        current_year = int(datetime.strftime(datetime.now(), "%Y"))
-        for item in rowdata:
-            info = rowdata[item]["display"].split(" - ")
-            waste = info[0]
-            dt = info[1]
-            bin_month = dt.split(" ")[-1]
-            if MONTHS[bin_month] < MONTHS[current_month]:
-                bin_year = current_year + 1
-                dt = dt + str(bin_year)
-            else:
-                dt = dt + str(current_year)
-            entries.append(
-                Collection(
-                    t=waste,
-                    date=datetime.strptime(dt, "%A %d %B%Y").date(),
-                    icon=ICON_MAP.get(waste.upper()),
-                )
-            )
-
-        return entries
+    def preprocess(self, rows, source=None):
+        # rows_data is a dict keyed by row index ({"0": {...}, "1": {...}}),
+        # one row per collection; JsonTransformer needs each row, not the
+        # whole rows_data dict as a single record.
+        yield from (rows.values() if isinstance(rows, dict) else rows)

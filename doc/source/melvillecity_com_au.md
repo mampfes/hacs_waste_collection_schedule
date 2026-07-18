@@ -1,6 +1,8 @@
 # City of Melville
 
-Support for schedules provided by [City of Melville](https://www.melvillecity.com.au/waste-and-environment/waste-recycling-fogo/residential-bins), Western Australia.
+Support for schedules provided by [City of Melville](https://www.melvillecity.com.au).
+
+Source for City of Melville waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -14,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
 
 ## Example
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: melvillecity_com_au
       args:
-        address: "43 Williams Road, Melville, WA"
+        address: 43 Williams Road, Melville, WA
 ```
 
 ## How to get the source arguments
 
-Visit the [City of Melville residential bins](https://www.melvillecity.com.au/waste-and-environment/waste-recycling-fogo/residential-bins) page and search for your address. Use the street address including suburb.
+Enter your street address including suburb (e.g. '43 Williams Road, Melville, WA'). Search at https://www.melvillecity.com.au/waste-and-environment/waste-recycling-fogo/residential-bins

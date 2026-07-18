@@ -84,17 +84,31 @@ def main():
         print(f"Testing source {f} ...")
         module = importlib.import_module(f"waste_collection_schedule.source.{f}")
 
-        # get all names within module
-        names = set(dir(module))
+        # Metadata lives at module level (legacy sources) or on the Source class
+        # (pipeline / BaseSource sources). Read the module first, fall back to
+        # the class so both styles work through this one tool.
+        source_cls = getattr(module, "Source", None)
+
+        def get_meta(key, module=module, source_cls=source_cls):
+            if hasattr(module, key):
+                return getattr(module, key)
+            return getattr(source_cls, key, None)
+
+        def has_meta(key, module=module, source_cls=source_cls):
+            # A module-level declaration counts even when falsy: a generic
+            # engine (e.g. ics: URL = None, it has no single provider site)
+            # deliberately declares it that way. Mirrors
+            # test_source_components.py's _has_source_meta.
+            if hasattr(module, key):
+                return True
+            return bool(getattr(source_cls, key, None))
 
         # test if all mandatory names exist
-        assert "TITLE" in names
-        assert "DESCRIPTION" in names
-        assert "URL" in names
-        assert "TEST_CASES" in names
+        for key in ("TITLE", "DESCRIPTION", "URL", "TEST_CASES"):
+            assert has_meta(key), f"{f} is missing {key}"
 
         # run through all test-cases
-        for name, tc in module.TEST_CASES.items():
+        for name, tc in get_meta("TEST_CASES").items():
             # replace secrets in arguments
             replace_secret(secrets, tc)
 

@@ -1,47 +1,24 @@
-from dateutil.parser import parse as dateparse
-from dateutil.rrule import WEEKLY, rrule
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+import re
+from typing import ClassVar, final
+
+from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.IntraMaps import (
-    IntraMapsSearchError,
-    MapsClient,
+    IntraMapsPanelParser,
+    IntraMapsRetriever,
     MapsClientConfig,
-    extract_panel_fields,
 )
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
-TITLE = "City of Swan"
-DESCRIPTION = "Source for City of Swan waste collection."
-URL = "https://www.swan.wa.gov.au"
-COUNTRY = "au"
-
-TEST_CASES = {
-    "Stratton": {"address": "34 Oldenburg Pass Stratton"},
-    "Midland": {"address": "307 Great Eastern Highway Midland"},
-}
-
-ICON_MAP = {
-    "FOGO": Icons.BIO_KITCHEN,
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address including suburb "
-    "(e.g. '34 Oldenburg Pass Stratton'). "
-    "Search at https://www.swan.wa.gov.au/waste-and-sustainability/waste-and-recycling-services/bins/find-my-bin-day",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '34 Oldenburg Pass Stratton')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
+# Simplest IntraMaps shape: every collection is fortnightly with an explicit
+# "next date" value, keyed by column (IntraMapsRetriever + IntraMapsPanelParser
+# handle the stateful session handshake and field extraction). The only
+# source-specific code is _describe, which parses the free-text date out of
+# each column's value; a non-date placeholder (e.g. a future FOGO rollout
+# notice) simply fails to parse and is skipped, matching the live provider.
 
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://swan.spatial.t1cloud.com",
@@ -53,48 +30,66 @@ INTRAMAPS_CONFIG = MapsClientConfig(
     default_selection_layer="efd1a218-d9c4-43ec-b1bb-17514d03c3a3",
 )
 
+# IntraMaps column name -> canonical waste type. One map: selects the
+# collection fields (others ignored) and types them.
+_TYPE_MAP = {
+    "Next_General_Waste_Collection": GENERAL_WASTE,
+    "Next_Recycling_Collection": RECYCLABLES,
+    "Next_FOGO_Collection": ORGANIC,
+}
 
-class Source:
+# Values are free text such as "Friday, 17 July 2026"; pull out just the date
+# rather than parsing the whole string, so incidental wording (or a
+# non-date placeholder, e.g. a future FOGO rollout notice) can't derail it.
+_DATE_RE = re.compile(r"(\d{1,2}\s+\w+\s+\d{4})")
+
+
+def _describe(record, source):
+    column = record.get("column", "")
+    if column not in _TYPE_MAP:
+        return
+
+    match = _DATE_RE.search(record.get("value", ""))
+    if not match:
+        return
+
+    try:
+        next_date = date_parsers.auto(match.group(1))
+    except (ValueError, TypeError):
+        return
+
+    yield Schedule(column, next_date, recurrence.FORTNIGHTLY, 13)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "City of Swan"
+    DESCRIPTION = "Source for City of Swan waste collection."
+    URL = "https://www.swan.wa.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Stratton": {"address": "34 Oldenburg Pass Stratton"},
+        "Midland": {"address": "307 Great Eastern Highway Midland"},
+    }
+
+    PARAMS = (text_field("address", "Street Address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address including suburb "
+            "(e.g. '34 Oldenburg Pass Stratton'). "
+            "Search at https://www.swan.wa.gov.au/waste-and-sustainability/"
+            "waste-and-recycling-services/bins/find-my-bin-day"
+        ),
+    }
+
+    retrieve = IntraMapsRetriever(INTRAMAPS_CONFIG, address="address")
+    parse = IntraMapsPanelParser()
+    preprocess = RecurrenceExpander(_describe)
+
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
     def __init__(self, address: str):
-        self._address = address.strip()
-
-    def fetch(self) -> list[Collection]:
-        try:
-            with MapsClient(INTRAMAPS_CONFIG) as client:
-                result = client.select_address(self._address)
-        except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
-
-        response = result["response"]
-        if not isinstance(response, dict):
-            raise SourceArgumentNotFound("address", self._address)
-
-        fields = extract_panel_fields(response)
-
-        entries: list[Collection] = []
-
-        self._add_fortnightly(
-            entries, fields.get("Next General Waste Collection", ""), "General Waste"
-        )
-        self._add_fortnightly(
-            entries, fields.get("Next Recycling Collection", ""), "Recycling"
-        )
-        self._add_fortnightly(entries, fields.get("Next FOGO Collection", ""), "FOGO")
-
-        return entries
-
-    @staticmethod
-    def _add_fortnightly(
-        entries: list[Collection], date_str: str, waste_type: str
-    ) -> None:
-        if not date_str:
-            return
-        try:
-            next_date = dateparse(date_str, dayfirst=True).date()
-        except (ValueError, TypeError):
-            return
-
-        for d in rrule(WEEKLY, interval=2, dtstart=next_date, count=13):
-            entries.append(
-                Collection(date=d.date(), t=waste_type, icon=ICON_MAP.get(waste_type))
-            )
+        super().__init__(address=address)

@@ -1,6 +1,8 @@
 # Greater Dandenong City Council
 
-Support for schedules provided by [Greater Dandenong City Council](https://www.greaterdandenong.vic.gov.au/find-my-bin-day).
+Support for schedules provided by [Greater Dandenong City Council](https://www.greaterdandenong.vic.gov.au).
+
+Source for greaterdandenong.vic.gov.au waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -15,7 +17,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **address**  
-*(string) (required)* Street address
+*(string) (required)*
 
 ## Example
 
@@ -29,11 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Find My Bin Day](https://www.greaterdandenong.vic.gov.au/find-my-bin-day) page and search for your address.
-
-Collection types:
-
-- **Waste** — collected weekly
-- **Recycling** — collected fortnightly
-- **Garden** — collected fortnightly
-- **Street Sweep** — scheduled date
+Enter your address as it appears on the <a href='https://www.greaterdandenong.vic.gov.au/find-my-bin-day'>Find My Bin Day</a> page.

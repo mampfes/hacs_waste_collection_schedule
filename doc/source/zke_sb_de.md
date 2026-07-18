@@ -1,6 +1,8 @@
-# ZKE Zentraler Kommunaler Entsorgungsbetrieb Saarbrücken
+# ZKE Saarbrücken
 
-Support for schedules provided by [ZKE Saarbrücken](https://www.zke-sb.de), Germany.
+Support for schedules provided by [ZKE Saarbrücken](https://www.zke-sb.de).
+
+Source for Zentraler Kommunaler Entsorgungsbetrieb (ZKE) Saarbrücken.
 
 ## Configuration via configuration.yaml
 
@@ -10,16 +12,16 @@ waste_collection_schedule:
     - name: zke_sb_de
       args:
         street: STREET
-        house_number: HNR
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **street**  
-_(string) (required)_
+*(string) (required)*
 
 **house_number**  
-_(string) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -28,10 +30,6 @@ waste_collection_schedule:
   sources:
     - name: zke_sb_de
       args:
-        street: "Marieneck"
-        house_number: "9 A"
+        street: Harthweg
+        house_number: 7
 ```
-
-## How to get the source arguments
-
-These values are the location you want to query for. Make sure, the writing is exactly as it is on [https://www.zke-sb.de/service/abfuhrtermine/abfuhrkalender](https://www.zke-sb.de/service/abfuhrtermine/abfuhrkalender). Typos may result in an Exception. `house_number` expects a string input **with** address suffixes included.

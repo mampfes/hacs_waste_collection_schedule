@@ -1,6 +1,8 @@
 # Koppl
 
-Support for waste collection schedules provided by [Gemeinde Koppl](https://www.koppl.at), Austria.
+Support for schedules provided by [Koppl](https://www.koppl.at).
+
+Waste collection schedule for Koppl, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -12,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-No configuration arguments are required. The Koppl waste calendar covers the entire municipality.
+No configuration arguments are required.
 
 ## Example
 

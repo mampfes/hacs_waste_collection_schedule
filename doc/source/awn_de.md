@@ -1,6 +1,8 @@
-# Abfallwirtschaft Neckar-Odenwald-Kreis (AWN)
+# Abfallwirtschaft Neckar-Odenwald-Kreis
 
-Support for schedules provided by [Abfallwirtschaft Neckar-Odenwald-Kreis](https://www.awn-online.de/) located in Baden-Württemberg, Germany.
+Support for schedules provided by [Abfallwirtschaft Neckar-Odenwald-Kreis](https://www.awn-online.de).
+
+Source for AWN (Abfallwirtschaft Neckar-Odenwald-Kreis).
 
 ## Configuration via configuration.yaml
 
@@ -11,8 +13,8 @@ waste_collection_schedule:
       args:
         city: CITY
         street: STREET
-        house_number: HNR
-        address_suffix: HNR_SUFFIX
+        house_number: HOUSE_NUMBER
+        address_suffix: ADDRESS_SUFFIX
 ```
 
 ### Configuration Variables
@@ -24,10 +26,10 @@ waste_collection_schedule:
 *(string) (required)*
 
 **house_number**  
-*(integer) (required)*
+*(string) (required)*
 
 **address_suffix**  
-*(string) (optional) (default: "")*
+*(string) (optional)*
 
 ## Example
 
@@ -36,13 +38,7 @@ waste_collection_schedule:
   sources:
     - name: awn_de
       args:
-        city: "Billigheim"
-        street: "Marienhöhe"
-        house_number: 5
-        address_suffix: "A"
+        city: Adelsheim
+        street: Badstr.
+        house_number: 1
 ```
-
-## How to get the source arguments
-
-These values are the location you want to query for. Make sure, the writing is exactly as it is on [https://www.awn-online.de/abfuhrtermine](https://www.awn-online.de/abfuhrtermine). Typos will result in an parsing error which is printed in the log. As `house_number` expects a numeric input, address suffixes have to be provided via the `address_suffix` argument.
-`address_suffix` could be for example an alphanumeric character "A" or a additional house number like "/1".

@@ -1,52 +1,56 @@
 # Landkreis Rostock
 
-Support for schedules provided by [Landkreis Rostock](https://www.abfall-lro.de/), serving Landkreis Rostock, Germany.
+Support for schedules provided by [Landkreis Rostock](https://www.abfall-lro.de/).
+
+Source for Landkreis Rostock.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: abfall_lro_de
       args:
-        municipality: MUNICIPALITY (Gemeinde)
-        black_rhythm: BLACK BIN RHYTHM
-        green_rhythm: GREEN BIN RHYTHM
-        black_seasonal: GREEN BIN SEASONAL (Optional)
-        green_seasonal: GREEN BIN SEASONAL (Optional)
+        municipality: MUNICIPALITY
+        street: STREET
+        black_rhythm: BLACK_RHYTHM
+        green_rhythm: GREEN_RHYTHM
+        black_seasonal: BLACK_SEASONAL
+        green_seasonal: GREEN_SEASONAL
 ```
 
 ### Configuration Variables
 
 **municipality**  
-*(String) (required)*
+*(string) (required)*
+
+**street**  
+*(string) (optional)*
 
 **black_rhythm**  
-*(String) (required)* Rhythm of the black bin, Should be `2w`, `4w` or empty string ("")
+*(string) (optional)*
 
 **green_rhythm**  
-*(String) (required)* Rhythm of the green bin, Should be `2w`, `4w` or empty string ("")
+*(string) (optional)*
 
-**black_seasonal**
-*(Boolean) (optional)* Weather black bins are only collected Seasonal, Should be `True` or `False`
+**black_seasonal**  
+*(string) (optional)*
 
-**green_seasonal**
-*(Boolean) (optional)* Weather green bins are only collected Seasonal, Should be `True` or `False`
+**green_seasonal**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: abfall_lro_de
       args:
-        municipality: Alt Kätwin
-        black_rythm: 2w
-        green_rythm: 2w
-        black_seasonal: False
-        green_seasonal: False
+        municipality: "Alt K\xE4twin"
+        black_rhythm: 2w
+        green_rhythm: 4w
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Find the parameter of your address using [https://www.abfall-lro.de/de/abfuhrtermine/](https://www.abfall-lro.de/de/abfuhrtermine/) and write them exactly like on the web page.
+Provide the municipality name as shown at https://www.abfall-lro.de/de/abfuhrtermine/ (including any sub region in brackets). Use 'Güstrow' with a street for Güstrow city streets. black_rhythm/green_rhythm are '2w', '4w' or blank, as shown for your municipality on that page; tick black_seasonal / green_seasonal if that bin is only collected seasonally.

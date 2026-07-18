@@ -57,6 +57,8 @@ There are 2 ways to add support for a new service provider:
 
    This is the fallback if the preferred way via the generic ICS source doesn't work.
 
+   New dedicated sources should use the `BaseSource` pipeline. You subclass `BaseSource` and declare which standard, reusable steps to use (retrieve, parse, preprocess, transform) as class attributes; for most providers the only source-specific code is `__init__`. This removes most of the boilerplate (no hand-written `fetch()`, no per-source icon map, no manual date parsing) and reuses tested components. The older module-level `fetch()` style still works and powers most of the ~600 existing sources, so a bug fix to one of those does not need converting, but please prefer the pipeline for anything new. The [dedicated source guide](doc/contributing_source.md) is the full reference: the pipeline, the reusable retrievers / parsers / transformers, the canonical waste types, and the reusable service platforms (ArcGIS, RiSKommunal AT, AchieveForms / FirmstepSelfService, IntraMaps, Abfallnavi / regio iT, Sitepark IES, Pozi, WhatBinDay, Sepan, Junker app, A Region, Ecoharmonogram, Cloud9 apps, and the whole ICS platform) worth checking before you write any new code.
+
 ### Example Implementations
 
 If you want to contribute a new source, these existing implementations can be used as practical examples:
@@ -64,6 +66,8 @@ If you want to contribute a new source, these existing implementations can be us
 - **HTML parsing (BeautifulSoup / bs4):** [`birmingham_gov_uk.py`](/custom_components/waste_collection_schedule/waste_collection_schedule/source/birmingham_gov_uk.py)
 - **ICS-based implementation:** [`stadtreinigung_hamburg.py`](/custom_components/waste_collection_schedule/waste_collection_schedule/source/stadtreinigung_hamburg.py)
 - **JSON/API implementation:** [`toronto_ca.py`](/custom_components/waste_collection_schedule/waste_collection_schedule/source/toronto_ca.py)
+
+For the full list of pipeline building blocks and worked pipeline examples, see the [dedicated source guide](doc/contributing_source.md).
 
 ### Using AI coding assistants
 

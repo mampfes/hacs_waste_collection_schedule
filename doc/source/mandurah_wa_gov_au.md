@@ -1,6 +1,8 @@
 # City of Mandurah
 
-Support for schedules provided by [City of Mandurah](https://www.mandurah.wa.gov.au/live/waste-and-recycling/bin-collections), Western Australia.
+Support for schedules provided by [City of Mandurah](https://www.mandurah.wa.gov.au/live/waste-and-recycling/bin-collections).
+
+Source for City of Mandurah waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -14,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
 
 ## Example
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: mandurah_wa_gov_au
       args:
-        address: "3 Peel ST MANDURAH"
+        address: Estuary RD BOUVARD
 ```
 
 ## How to get the source arguments
 
-Visit the [City of Mandurah bin collections](https://www.mandurah.wa.gov.au/live/waste-and-recycling/bin-collections) page and search for your address.
+Enter your street address including suburb. Search at https://www.mandurah.wa.gov.au/live/waste-and-recycling/bin-collections

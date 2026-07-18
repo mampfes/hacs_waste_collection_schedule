@@ -1,6 +1,8 @@
 # Landkreis Helmstedt
 
-Support for schedules provided by [Landkreis Helmstedt](https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html), Germany.
+Support for schedules provided by [Landkreis Helmstedt](landkreis-helmstedt.de).
+
+Source for Landkreis Helmstedt.
 
 ## Configuration via configuration.yaml
 
@@ -9,46 +11,44 @@ waste_collection_schedule:
   sources:
     - name: landkreis_helmstedt_de
       args:
-        municipal: GEMEINDE
-        restabfall: RESTABFALL_ABFUHR_GEBIET
-        bioabfall: BIOABFALL_ABFUHR_GEBIET
-        gelber_sack: GELBER_SACK_ABFUHR_GEBIET
-        altpapier: ALTPAPIER_ABFUHR_GEBIET
+        municipal: MUNICIPAL
+        restabfall: RESTABFALL
+        altpapier: ALTPAPIER
+        gelber_sack: GELBER_SACK
+        bioabfall: BIOABFALL
 ```
 
 ### Configuration Variables
 
 **municipal**  
-*(String) (required)* - Name of the ICS calendar on the calendar website without year. Currently, the following values (without quotes) are valid:
-- `"Grasleben und Velpke"`
-- `"Schöningen und Heeseberg"`
-- `"Nord-Elm und Königslutter Ortsteile"`
-- `"Lehre"`
-- `"Königslutter Stadtgebiet"`
-- `"Helmstedt und Ortsteile"`
+*(string) (required)*
 
-**restabfall** 
-_(int) (required)_: Number from the PDF calendar from the calendar website for your municipal
+**restabfall**  
+*(string) (required)*
 
-**bioabfall** 
-_(int) (required)_ : Number from the PDF calendar from the calendar website for your municipal
+**altpapier**  
+*(string) (required)*
 
-**gelber_sack**
-_(int) (required)_ : Number from the PDF calendar from the calendar website for your municipal
+**gelber_sack**  
+*(string) (required)*
 
-**altpapier**
-_(int) (required)_ : Number from the PDF calendar from the calendar website for your municipal
+**bioabfall**  
+*(string) (required)*
 
-## Example for Rhode 2025
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: landkreis_helmstedt_de
       args:
-        municipal: "Nord-Elm und Königslutter Ortsteile"
-        restabfall: 2
-        bioabfall: 2
-        gelber_sack: 1
-        altpapier: 2
+        municipal: Grasleben und Velpke
+        restabfall: 1
+        bioabfall: 1
+        gelber_sack: 3
+        altpapier: 5
 ```
+
+## How to get the source arguments
+
+Visit https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.

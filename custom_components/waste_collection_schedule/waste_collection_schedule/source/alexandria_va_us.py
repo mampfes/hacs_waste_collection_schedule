@@ -1,144 +1,111 @@
-from datetime import date, timedelta
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import (
-    ArcGisError,
+    ArcGisMultiFeatureParser,
+    ArcGisMultiFeatureRetriever,
     epoch_ms_to_date,
-    geocode,
-    query_feature_layer,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
 )
 
-TITLE = "Alexandria, VA"
-DESCRIPTION = "Source for City of Alexandria, VA trash, recycling and leaf collection."
-URL = "https://www.alexandriava.gov/RefuseCollection"
-COUNTRY = "us"
+# City of Alexandria alx311Info MapServer, three independent zone layers:
+# layer 3 = Refuse Day Zone (DAYSERVED, weekly; every serviced address has
+# one), layer 2 = Recycle Zones (PICKUPDAY, weekly; not every address is
+# eligible), layer 16 = Leaf Zones (PassDate, one feature per seasonal
+# vacuum-leaf pass with an explicit date, only populated in season). One
+# geocode, then a spatial query against all three layers via the shared
+# multi-layer retriever; the only source-specific code is _describe(), which
+# reads each layer's field and picks weekly-recurring vs. one-off projection.
 
-TEST_CASES = {
-    "City Hall, 301 King St": {"address": "301 King St, Alexandria, VA 22314"},
-}
-
-SOURCE_CODEOWNERS = ["@lpukatch"]
-
-ICON_MAP = {
-    "Trash": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Leaf Collection": Icons.ORGANIC,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Full street address including city and state (e.g. '301 King St, Alexandria, VA 22314')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
-
-# City of Alexandria alx311Info MapServer.
-# Layer 3 = Refuse Day Zone (field DAYSERVED), layer 2 = Recycle Zones (field PICKUPDAY),
-# layer 16 = Leaf Zones (field PassDate, one feature per seasonal collection pass).
 MAPSERVER = "https://maps.alexandriava.gov/alexmaps/rest/services/alx311Info/MapServer"
-REFUSE_URL = f"{MAPSERVER}/3"
-RECYCLE_URL = f"{MAPSERVER}/2"
-LEAF_URL = f"{MAPSERVER}/16"
 
-WEEKDAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
-    "Saturday": 5,
-    "Sunday": 6,
+# label -> (feature_url, out_fields) for the multi-layer retriever.
+LAYERS = [
+    ("Trash", f"{MAPSERVER}/3", "DAYSERVED"),
+    ("Recycling", f"{MAPSERVER}/2", "PICKUPDAY"),
+    ("Leaf Collection", f"{MAPSERVER}/16", "PassDate"),
+]
+
+# label -> attribute field _describe() reads from that layer's feature.
+_FIELDS = {
+    "Trash": "DAYSERVED",
+    "Recycling": "PICKUPDAY",
+    "Leaf Collection": "PassDate",
 }
 
+_TYPE_MAP = {
+    "Trash": GENERAL_WASTE,
+    "Recycling": RECYCLABLES,
+    "Leaf Collection": GARDEN_WASTE,
+}
+
+# Number of weekly collections to project (matches the legacy WEEKS_AHEAD).
 WEEKS_AHEAD = 26
 
 
-class Source:
+def _describe(record, source):
+    """Project a layer's matched feature into its Schedule descriptor(s).
+
+    ``record`` is the ``(label, attrs)`` pair produced by
+    :class:`ArcGisMultiFeatureParser`. Trash and Recycling carry a collection
+    weekday and recur weekly; Leaf Collection carries an explicit one-off
+    pass date (the layer only holds the current season, so a mismatched
+    address simply yields nothing outside that window, as before).
+    """
+    label, attrs = record
+    if label == "Leaf Collection":
+        pass_date = attrs.get("PassDate")
+        if pass_date:
+            yield Schedule(label, epoch_ms_to_date(pass_date))
+        return
+
+    weekday = recurrence.weekday(attrs.get(_FIELDS[label], ""))
+    if weekday is None:
+        return
+    yield Schedule(
+        label, recurrence.next_weekday(weekday), recurrence.WEEKLY, WEEKS_AHEAD
+    )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Alexandria, VA"
+    DESCRIPTION = (
+        "Source for City of Alexandria, VA trash, recycling and leaf collection."
+    )
+    URL = "https://www.alexandriava.gov/RefuseCollection"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@lpukatch"]
+
+    TEST_CASES: ClassVar[dict] = {
+        "City Hall, 301 King St": {"address": "301 King St, Alexandria, VA 22314"},
+    }
+
+    PARAMS = (text_field("address", "Street Address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your full street address including city and state "
+            "(e.g. '301 King St, Alexandria, VA 22314')."
+        ),
+    }
+
+    # Declarative pipeline: geocode once, spatially query every layer, tag
+    # each response with its label, then keep only layers that matched a
+    # feature. _describe() projects each match into concrete dates.
+    retrieve = ArcGisMultiFeatureRetriever(LAYERS, address="address")
+    parse = ArcGisMultiFeatureParser()
+    preprocess = RecurrenceExpander(_describe)
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
     def __init__(self, address: str):
-        self._address = address.strip()
-
-    def fetch(self) -> list[Collection]:
-        try:
-            location = geocode(self._address)
-        except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
-
-        entries: list[Collection] = []
-
-        # Trash / refuse — every eligible address falls in a refuse day zone.
-        refuse_day = self._query_day(location, REFUSE_URL, "DAYSERVED")
-        if refuse_day is None:
-            # No refuse zone means the address could not be matched at all.
-            raise SourceArgumentNotFound("address", self._address)
-        entries += self._weekly_dates(refuse_day, "Trash")
-
-        # Recycling — not every address is eligible for city recycling
-        # (e.g. commercial buildings return PICKUPDAY "None"); skip if absent.
-        recycle_day = self._query_day(location, RECYCLE_URL, "PICKUPDAY")
-        if recycle_day is not None:
-            entries += self._weekly_dates(recycle_day, "Recycling")
-
-        # Leaf collection — seasonal vacuum-leaf passes with explicit dates.
-        # The layer only holds the current season, so this yields nothing
-        # outside the fall/winter leaf-collection period.
-        entries += self._leaf_dates(location)
-
-        return entries
-
-    @staticmethod
-    def _query_day(location: dict[str, float], url: str, field: str) -> str | None:
-        try:
-            features = query_feature_layer(url, geometry=location, out_fields=field)
-        except ArcGisError:
-            return None
-
-        value = (features[0].get(field) or "").strip().title()
-        if value not in WEEKDAYS:
-            return None
-        return value
-
-    @staticmethod
-    def _leaf_dates(location: dict[str, float]) -> list[Collection]:
-        try:
-            features = query_feature_layer(
-                LEAF_URL, geometry=location, out_fields="PassDate"
-            )
-        except ArcGisError:
-            return []
-
-        icon = ICON_MAP.get("Leaf Collection")
-        entries: list[Collection] = []
-        for attrs in features:
-            pass_date = attrs.get("PassDate")
-            if not pass_date:
-                continue
-            entries.append(
-                Collection(
-                    date=epoch_ms_to_date(pass_date),
-                    t="Leaf Collection",
-                    icon=icon,
-                )
-            )
-        return entries
-
-    @staticmethod
-    def _weekly_dates(day_name: str, waste_type: str) -> list[Collection]:
-        weekday = WEEKDAYS[day_name]
-        today = date.today()
-        days_ahead = (weekday - today.weekday()) % 7
-        next_date = today + timedelta(days=days_ahead)
-        icon = ICON_MAP.get(waste_type)
-        return [
-            Collection(
-                date=next_date + timedelta(weeks=i),
-                t=waste_type,
-                icon=icon,
-            )
-            for i in range(WEEKS_AHEAD)
-        ]
+        super().__init__(address=address.strip())

@@ -1,97 +1,112 @@
-import logging
-from datetime import datetime
+"""Umweltprofis (umweltprofis.at).
+
+Demonstrates: a single provider exposing two unrelated static GET feeds under
+one source -- a deprecated personal ICS export (``url``) and its replacement,
+a personal XML export (``xmlurl``) -- selected via ``alternatives()`` so the
+config flow accepts exactly one. ``retrieve`` fetches whichever URL was
+given; ``parse`` sniffs the body (an ICS export starts with
+``BEGIN:VCALENDAR``, everything else here is the XML export) and hands off to
+the matching parser: the plain ``ICS()`` service class (after undoing a
+provider quirk in the ``REFRESH-INTERVAL`` property no ICS library accepts as
+written) for the ICS branch, or a small XML walk for the other. Both branches
+produce the same ``(date, summary)`` shape ``ICSTransformer`` expects. No
+``type_value_map``: the legacy source never mapped a type either, and the
+shared multilingual resolver already recognises most of this provider's
+labels, so nothing is lost by not hand-mapping the rest.
+"""
+
+import datetime
+from typing import ClassVar, final
 from xml.dom.minidom import parseString
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import alternatives, text_field
+from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Umweltprofis"
-DESCRIPTION = "Source for Umweltprofis"
-URL = "https://www.umweltprofis.at"
-TEST_CASES = {
-    "Ebensee": {
-        "url": "https://data.umweltprofis.at/OpenData/AppointmentService/AppointmentService.asmx/GetIcalWastePickupCalendar?key=KXX_K0bIXDdk0NrTkk3xWqLM9-bsNgIVBE6FMXDObTqxmp9S39nIqwhf9LTIAX9shrlpfCYU7TG_8pS9NjkAJnM_ruQ1SYm3V9YXVRfLRws1"
-    },
-    "Rohrbach": {
-        "xmlurl": "https://data.umweltprofis.at/opendata/AppointmentService/AppointmentService.asmx/GetTermineForLocationSecured?Key=TEMPKeyabvvMKVCic0cMcmsTEMPKey&StreetNr=118213&HouseNr=Alle&intervall=Alle"
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "You need to generate your personal XML link before you can start using this source. Go to [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) and fill out the form. At the end at step 6 you get a link to a XML file. Copy this link use it as xmlurl parameter.",
-    "de": "Sie müssen zuerst Ihren persönlichen XML-Link generieren, bevor Sie diese Quelle verwenden können. Gehen Sie zu [https://data.umweltprofis.at/opendata/AppointmentService/index.aspx](https://data.umweltprofis.at/opendata/AppointmentService/index.aspx) und füllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie einen Link zu einer XML-Datei. Kopieren Sie diesen Link und verwenden Sie ihn als xmlurl-Parameter.",
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "url": "URL (Deprecated do not use)",
-        "xmlurl": "XML URL",
-    },
-    "de": {
-        "url": "URL (Veraltet nicht verwenden)",
-        "xmlurl": "XML URL",
-    },
-}
-
-_LOGGER = logging.getLogger(__name__)
+_REFRESH_INTERVAL_FIX = ("REFRESH - INTERVAL; VALUE = ", "REFRESH-INTERVAL;VALUE=")
 
 
-def getText(element):
-    s = ""
-    for e in element.childNodes:
-        if e.nodeType == e.TEXT_NODE:
-            s += e.nodeValue
-    return s
+def _resolve_url(
+    url: "str | None" = None, xmlurl: "str | None" = None, **_: object
+) -> str:
+    resolved = url or xmlurl
+    if not resolved:
+        raise SourceArgumentRequired("url", "either url or xmlurl must be provided")
+    return resolved
 
 
-class Source:
-    def __init__(self, url=None, xmlurl=None):
-        self._url = url
-        self._xmlurl = xmlurl
-        self._ics = ICS()
-        if url is None and xmlurl is None:
-            raise Exception("either url or xmlurl needs to be specified")
+def _element_text(element) -> str:
+    return "".join(
+        node.nodeValue for node in element.childNodes if node.nodeType == node.TEXT_NODE
+    )
 
-    def fetch(self):
-        if self._url is not None:
-            return self.fetch_ics()
-        if self._xmlurl is not None:
-            return self.fetch_xml()
 
-    def fetch_ics(self):
-        try:
-            r = requests.get(self._url)
-        except requests.exceptions.ConnectionError as e:
-            raise Exception("Could not establish connection to the server") from e
-        r.raise_for_status()
+def _parse_xml(text: str) -> list[tuple[datetime.date, str]]:
+    doc = parseString(text)  # nosec B318
+    entries = []
+    for appointment in doc.getElementsByTagName("AppointmentEntry"):
+        date_str = _element_text(appointment.getElementsByTagName("Datum")[0])
+        waste_type = _element_text(appointment.getElementsByTagName("WasteType")[0])
+        entries.append((datetime.datetime.fromisoformat(date_str).date(), waste_type))
+    return entries
 
-        fixed_text = r.text.replace(
-            "REFRESH - INTERVAL; VALUE = ", "REFRESH-INTERVAL;VALUE="
-        )
 
-        dates = self._ics.convert(fixed_text)
+@final
+class Source(BaseSource):
+    TITLE = "Umweltprofis"
+    DESCRIPTION = "Source for Umweltprofis"
+    URL = "https://www.umweltprofis.at"
+    COUNTRY = "at"
+    RAISE_ON_EMPTY = True
 
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
+    TEST_CASES: ClassVar[dict] = {
+        "Ebensee": {
+            "url": "https://data.umweltprofis.at/OpenData/AppointmentService/AppointmentService.asmx/GetIcalWastePickupCalendar?key=KXX_K0bIXDdk0NrTkk3xWqLM9-bsNgIVBE6FMXDObTqxmp9S39nIqwhf9LTIAX9shrlpfCYU7TG_8pS9NjkAJnM_ruQ1SYm3V9YXVRfLRws1"
+        },
+        "Rohrbach": {
+            "xmlurl": "https://data.umweltprofis.at/opendata/AppointmentService/AppointmentService.asmx/GetTermineForLocationSecured?Key=TEMPKeyabvvMKVCic0cMcmsTEMPKey&StreetNr=118213&HouseNr=Alle&intervall=Alle"
+        },
+    }
 
-    def fetch_xml(self):
-        try:
-            r = requests.get(self._xmlurl)
-        except requests.exceptions.ConnectionError as e:
-            raise Exception("Could not establish connection to the server") from e
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "You need to generate your personal XML link before you can start "
+            "using this source. Go to "
+            "https://data.umweltprofis.at/opendata/AppointmentService/index.aspx "
+            "and fill out the form. At the end, step 6 gives you a link to an "
+            "XML file. Copy this link and use it as the XML URL."
+        ),
+        "de": (
+            "Sie müssen zuerst Ihren persönlichen XML-Link generieren, bevor Sie "
+            "diese Quelle verwenden können. Gehen Sie zu "
+            "https://data.umweltprofis.at/opendata/AppointmentService/index.aspx "
+            "und füllen Sie das Formular aus. Am Ende von Schritt 6 erhalten Sie "
+            "einen Link zu einer XML-Datei. Kopieren Sie diesen Link und "
+            "verwenden Sie ihn als XML-URL."
+        ),
+    }
 
-        r.raise_for_status()
+    PARAMS = (
+        alternatives(
+            [text_field("url", "URL (Deprecated do not use)")],
+            [text_field("xmlurl", "XML URL")],
+        ),
+    )
 
-        doc = parseString(r.text)  # nosec B318
-        appointments = doc.getElementsByTagName("AppointmentEntry")
+    retrieve = HttpGetRetriever(url=_resolve_url)
 
-        entries = []
-        for a in appointments:
-            date_string = getText(a.getElementsByTagName("Datum")[0])
-            date = datetime.fromisoformat(date_string).date()
-            waste_type = getText(a.getElementsByTagName("WasteType")[0])
-            entries.append(Collection(date, waste_type))
-        return entries
+    def parse(self, response, source=None):
+        text = response.text
+        if text.lstrip().startswith("BEGIN:VCALENDAR"):
+            for broken, fixed in (_REFRESH_INTERVAL_FIX,):
+                text = text.replace(broken, fixed)
+            return ICS().convert(text)
+        return _parse_xml(text)
+
+    transform = ICSTransformer()
+
+    def __init__(self, url: "str | None" = None, xmlurl: "str | None" = None):
+        super().__init__(url=url, xmlurl=xmlurl)

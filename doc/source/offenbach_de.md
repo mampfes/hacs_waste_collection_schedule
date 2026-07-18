@@ -1,7 +1,8 @@
-# Offenbach.de 
+# Abfallkalender Offenbach am Main (deprecated)
 
+Support for schedules provided by [Abfallkalender Offenbach am Main (deprecated)](https://www.offenbach.de).
 
-## offenbach_de source is deprecated, please use [insert_it_de](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/insert_it_de.md) as new source.
+Source für Abfallkalender Offenbach (deprecated)
 
 ## Configuration via configuration.yaml
 
@@ -10,14 +11,13 @@ waste_collection_schedule:
   sources:
     - name: offenbach_de
       args:
-        f_id_location: LocationID
+        f_id_location: F_ID_LOCATION
 ```
 
 ### Configuration Variables
 
 **f_id_location**  
-*(integer) (required)*
-
+*(string) (optional)*
 
 ## Example
 

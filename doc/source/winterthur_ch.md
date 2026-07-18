@@ -1,33 +1,30 @@
 # Winterthur
 
-Support for schedules provided by [Winterthur](https://winterthur.ch/), serving Winterthur, Switzerland.
+Support for schedules provided by [Winterthur](https://winterthur.ch/).
+
+Source for Winterthur.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: winterthur_ch
       args:
-        street: STREET (Straße)
-        
+        street: STREET
 ```
 
 ### Configuration Variables
 
 **street**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: winterthur_ch
       args:
         street: Am Iberghang
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://m.winterthur.ch/index.php?apid=1066394](https://m.winterthur.ch/index.php?apid=1066394) and write them exactly like on the web page.

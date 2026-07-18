@@ -2,6 +2,8 @@
 
 Support for schedules provided by [City of Rockingham](https://rockingham.wa.gov.au/your-services/waste-and-recycling/bin-collection).
 
+Source for the City of Rockingham rubbish collection.
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -33,9 +35,6 @@ waste_collection_schedule:
     - name: rockingham_wa_gov_au
       args:
         suburb: Baldivis
-        street_name: Settlers Avenue
-        street_number: 20
+        street_name: Makybe Drive
+        street_number: '59'
 ```
-
-## How to get the source arguments
-

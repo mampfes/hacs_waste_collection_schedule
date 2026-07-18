@@ -1,6 +1,8 @@
 # City of South Perth
 
-Support for schedules provided by [City of South Perth](https://southperth.wa.gov.au/residents/home-and-neighbourhood/see-what's-near-me).
+Support for schedules provided by [City of South Perth](https://southperth.wa.gov.au).
+
+Source for City of South Perth waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [City of South Perth](https://southperth.wa.gov.au/residents/home-and-neighbourhood/see-what's-near-me) and search for your address. The address should match the format used in the lookup, e.g. "156 Lansdowne Road KENSINGTON".
+Enter your street address including suburb (e.g. '156 Lansdowne Road KENSINGTON').

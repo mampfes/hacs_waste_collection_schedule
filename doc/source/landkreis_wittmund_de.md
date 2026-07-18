@@ -1,6 +1,8 @@
-# Landkreis-Wittmund.de
+# Landkreis Wittmund
 
-Support for schedules provided by [Landkreis-Wittmund.de](https://www.landkreis-wittmund.de) located in Lower Saxony, Germany.
+Support for schedules provided by [Landkreis Wittmund](https://www.landkreis-wittmund.de).
+
+Source for Landkreis Wittmund waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -9,17 +11,16 @@ waste_collection_schedule:
   sources:
     - name: landkreis_wittmund_de
       args:
-        city: Werdum
-        # optional
-        # street: street name
+        ort: ORT
+        strasse: STRASSE
 ```
 
 ### Configuration Variables
 
-**city**  
+**ort**  
 *(string) (required)*
 
-**street**  
+**strasse**  
 *(string) (optional)*
 
 ## Example
@@ -29,24 +30,5 @@ waste_collection_schedule:
   sources:
     - name: landkreis_wittmund_de
       args:
-        city: Werdum
-```
-
-Use `sources.customize` to filter or rename the waste types:
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: landkreis_wittmund_de
-      args:
-        city: Werdum
-      calendar_title: Abfallkalender
-      customize:
-        # rename types to shorter name
-        - type: Restmülltonne
-          alias: Restmüll
-        
-        # hide unwanted types
-        - type: Baum- und Strauchschnitt
-          show: false
+        ort: Werdum
 ```

@@ -1,6 +1,8 @@
 # St. Kanzian am Klopeiner See
 
-Support for waste collection schedules provided by [St. Kanzian am Klopeiner See](https://www.kanzian.at).
+Support for schedules provided by [St. Kanzian am Klopeiner See](https://www.kanzian.at).
+
+Source for St. Kanzian am Klopeiner See, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -10,4 +12,14 @@ waste_collection_schedule:
     - name: kanzian_at
 ```
 
-No further configuration is required; the source returns all collection types listed in the municipal waste calendar.
+### Configuration Variables
+
+No configuration arguments are required.
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: kanzian_at
+```

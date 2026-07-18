@@ -1,10 +1,12 @@
 # Reading Council
 
-Support for schedules provided by [Reading Council](https://www.reading.gov.uk/).
+Support for schedules provided by [Reading Council](https://reading.gov.uk).
 
-If collection data is available for the address provided, it will return rubbish and recycling waste collection dates.
+Source for reading.gov.uk services for Reading Council.
 
 ## Configuration via configuration.yaml
+
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
@@ -14,38 +16,53 @@ waste_collection_schedule:
         uprn: UPRN
 ```
 
+### Using postcode and housenameornumber
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: reading_gov_uk
+      args:
+        postcode: POSTCODE
+        housenameornumber: HOUSENAMEORNUMBER
+```
+
 ### Configuration Variables
 
-**postcode**
-_(string) (optional)_
+**uprn**  
+*(string) (alternative)*
 
-**housenameornumber**
-_(string|int) (optional)_
+**postcode**  
+*(string) (alternative)*
 
-**uprn**
-_(string) (optional)_
+**housenameornumber**  
+*(string) (alternative)*
 
-Either the postcode _and_ housenameornumber or the UPRN should be supplied in the arguments
+Provide one of: `uprn` or `postcode` + `housenameornumber`.
 
-## Examples
+## Example
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: reading_gov_uk
-      args:
-        uprn: "310027679"
-```
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: reading_gov_uk
       args:
-        postcode: "RG31 5PN"
-        housenameornumber: "65"
+        uprn: '310027679'
 ```
 
-## How to find your UPRN
+### Using postcode and housenameornumber
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providing your address details.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: reading_gov_uk
+      args:
+        postcode: RG31 5PN
+        housenameornumber: '65'
+```
+
+## How to get the source arguments
+
+Provide your UPRN, or provide both your postcode and house name or number. Find your UPRN at https://www.findmyaddress.co.uk/

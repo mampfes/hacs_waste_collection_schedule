@@ -1,6 +1,8 @@
 # Stadtreinigung Dresden
 
-Add support for schedules provided by [https://www.dresden.de/](https://www.dresden.de/apps_ext/AbfallApp/wastebins?0).
+Support for schedules provided by [Stadtreinigung Dresden](https://www.dresden.de).
+
+Source for Stadtreinigung Dresden waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: stadtreinigung_dresden_de
       args:
-        standort: STANDORT_ID
+        standort: STANDORT
 ```
 
 ### Configuration Variables
@@ -29,12 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Open [https://www.dresden.de/](https://www.dresden.de/apps_ext/AbfallApp/wastebins?0) and search for schedules for your location.
-
-Check the Link-URL for downloading the schedules as *.PDF and extract the number after field `STANDORT`.
-
-Example:
-
-`https://stadtplan.dresden.de/project/cardo3Apps/IDU_DDStadtplan/abfall/kalender.ashx?STANDORT=80542&DUMMY=637834733764191577`
-
-The resulting `STANDORT_ID` is `80542`.
+Open https://www.dresden.de/apps_ext/AbfallApp/wastebins and search for your address. Then download the PDF calendar: the URL will contain '?STANDORT=<number>'. Use that number as the location ID.

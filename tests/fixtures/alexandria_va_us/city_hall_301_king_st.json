@@ -1,0 +1,93 @@
+{
+  "recorded_at": "2026-07-11",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates b91ea4aee8",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 11 Jul 2026 06:30:24 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "219",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"16274d65\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMzAxIEtpbmcgU3QsIEFsZXhhbmRyaWEsIFZpcmdpbmlhLCAyMjMxNCIsImxvY2F0aW9uIjp7IngiOi03Ny4wNDI5NjQ5Mzc2NTEsInkiOjM4LjgwNTIzMzEwOTE4Nn0sInNjb3JlIjoxMDAsImF0dHJpYnV0ZXMiOnt9LCJleHRlbnQiOnsieG1pbiI6LTc3LjA0Mzk2NDkzNzY1MSwieW1pbiI6MzguODA0MjMzMTA5MTg2LCJ4bWF4IjotNzcuMDQxOTY0OTM3NjUxLCJ5bWF4IjozOC44MDYyMzMxMDkxODZ9fV19"
+    },
+    {
+      "key": "GET https://maps.alexandriava.gov/alexmaps/rest/services/alx311Info/MapServer/3/query 056a5fabd3",
+      "method": "GET",
+      "url": "https://maps.alexandriava.gov/alexmaps/rest/services/alx311Info/MapServer/3/query",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "947a4fd",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0, ",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 11 Jul 2026 06:30:22 GMT",
+        "Content-Length": "150"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiREFZU0VSVkVEIiwiZmllbGRBbGlhc2VzIjp7IkRBWVNFUlZFRCI6IkRBWVNFUlZFRCJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJEQVlTRVJWRUQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiREFZU0VSVkVEIiwibGVuZ3RoIjoxMH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJEQVlTRVJWRUQiOiJNb25kYXkifX1dfQ=="
+    },
+    {
+      "key": "GET https://maps.alexandriava.gov/alexmaps/rest/services/alx311Info/MapServer/2/query 3543cf805c",
+      "method": "GET",
+      "url": "https://maps.alexandriava.gov/alexmaps/rest/services/alx311Info/MapServer/2/query",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "8c661b9f",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0, ",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 11 Jul 2026 06:30:24 GMT",
+        "Content-Length": "150"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiUElDS1VQREFZIiwiZmllbGRBbGlhc2VzIjp7IlBJQ0tVUERBWSI6IlBJQ0tVUERBWSJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJQSUNLVVBEQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUElDS1VQREFZIiwibGVuZ3RoIjoxMH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJQSUNLVVBEQVkiOiJNb25kYXkifX1dfQ=="
+    },
+    {
+      "key": "GET https://maps.alexandriava.gov/alexmaps/rest/services/alx311Info/MapServer/16/query d1190cda17",
+      "method": "GET",
+      "url": "https://maps.alexandriava.gov/alexmaps/rest/services/alx311Info/MapServer/16/query",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "private, must-revalidate, max-age=0",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "cffc8602",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0, ",
+        "X-Content-Type-Options": "nosniff",
+        "X-XSS-Protection": "1; mode=block",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 11 Jul 2026 06:30:26 GMT",
+        "Content-Length": "170"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiWk9ORSIsImZpZWxkQWxpYXNlcyI6eyJQYXNzRGF0ZSI6IlBhc3NEYXRlIn0sImZpZWxkcyI6W3sibmFtZSI6IlBhc3NEYXRlIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVEYXRlIiwiYWxpYXMiOiJQYXNzRGF0ZSIsImxlbmd0aCI6OH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJQYXNzRGF0ZSI6MTc2MjczMjgwMDAwMH19LHsiYXR0cmlidXRlcyI6eyJQYXNzRGF0ZSI6MTc2NTQxMTIwMDAwMH19LHsiYXR0cmlidXRlcyI6eyJQYXNzRGF0ZSI6MTc2ODM0ODgwMDAwMH19XX0="
+    }
+  ]
+}

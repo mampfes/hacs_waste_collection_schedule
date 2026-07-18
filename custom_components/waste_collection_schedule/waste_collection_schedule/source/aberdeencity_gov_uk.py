@@ -1,82 +1,42 @@
 import datetime
 import re
-import time
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-    SourceArgumentNotFound,
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsDynamicRowsPreprocessor,
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
 )
-
-TITLE = "Aberdeen City Council"
-DESCRIPTION = (
-    "Source script for the Aberdeen City Council bin collection calendar "
-    "(integration.aberdeencity.gov.uk Granicus Firmstep self-service form)."
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    RECYCLABLES,
 )
-URL = "https://www.aberdeencity.gov.uk/"
-COUNTRY = "uk"
 
 # The Firmstep "AchieveForms" platform exposes the bin lookup as a two-step
 # apibroker/runLookup flow. Each step is keyed by a hardcoded lookup id that
 # the council embeds in the form's compiled definition. These were captured
 # from the live form's network traffic; they're stable until the council
 # republishes the form.
+HOSTNAME = "integration.aberdeencity.gov.uk"
+# The service landing page 403s a bare GET (bot-check in front of the page),
+# so `skip_landing_page=True` uses it verbatim as the auth call's `uri` value,
+# matching the legacy source's hand-built (double-encoded) SESSION_URL.
+INITIAL_URL = f"https://{HOSTNAME}/service/bin_collection_calendar___view"
 LOOKUP_ID_GET_TOKEN = "583c08ffc47fe"
 LOOKUP_ID_GET_SCHEDULE = "5a3141caf4016"
 
-SESSION_URL = (
-    "https://integration.aberdeencity.gov.uk/authapi/isauthenticated"
-    "?uri=https%253A%252F%252Fintegration.aberdeencity.gov.uk%252Fservice"
-    "%252Fbin_collection_calendar___view"
-    "&hostname=integration.aberdeencity.gov.uk&withCredentials=true"
-)
-API_URL = "https://integration.aberdeencity.gov.uk/apibroker/runLookup"
-
-TEST_CASES = {
-    "179 Skene Street, AB10 1QN": {"uprn": "9051064786"},
-}
-
-# Aberdeen reports waste types as compact identifiers (no spaces) — the
-# API returns rows keyed `GeneralDate1`, `RecyclingDate1`, `GardenDate1`,
-# etc. plus matching `Count<type>` totals. Verified by hitting the live
-# endpoint with a known-invalid UPRN: returns `CountGarden`, `CountRecycling`,
-# `CountGeneral` so those three are the canonical streams. Map covers
-# observed types plus reasonable guesses for households that subscribe to
-# additional services (food, mixed recycling) — extra unmapped names just
-# return without an icon, no breakage.
-ICON_MAP = {
-    "General": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Mixed Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
-    "Food": Icons.BIO_KITCHEN,
-    "Food and Garden": Icons.ORGANIC,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Find your UPRN (Unique Property Reference Number) for your address "
-        "using https://www.findmyaddress.co.uk/ or your council documents."
-    ),
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (required)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "UPRN",
-    },
-}
-
-
-# `GeneralWasteDate1`, `MixedRecyclingDate2`, etc. — bin type prefix + DateN.
-_DATE_KEY_RE = re.compile(r"^(.*?)Date\d+$")
-_COUNT_KEY_RE = re.compile(r"^Count")
+# Both runLookup calls set `noRetry=true` (not the framework default `false`)
+# to match the legacy source's `token_params`/`sched_params` exactly.
+_NO_RETRY = "true"
 
 _HEADERS = {
     "Content-Type": "application/json",
@@ -89,144 +49,88 @@ _HEADERS = {
     ),
 }
 
-
-def _split_camel(name: str) -> str:
-    """`GeneralWaste` -> `General Waste`, `MixedRecycling` -> `Mixed Recycling`.
-
-    The API returns waste-type names as Pascal-case identifiers; split them
-    on capital-letter boundaries so the icon map and user-visible labels
-    line up.
-    """
-    return re.sub(r"(?<!^)(?=[A-Z])", " ", name).strip()
+# `GeneralDate1`, `MixedRecyclingDate2`, etc. — bin type prefix + DateN. The
+# matching `Count<type>` rows don't end in `Date\d+` so they're skipped
+# without a separate filter.
+_DATE_KEY_RE = re.compile(r"^(.+?)Date\d+$")
 
 
-class Source:
+def _extract_token(response: dict, context: dict[str, Any]) -> None:
+    rows = response.get("integration", {}).get("transformed", {}).get("rows_data", {})
+    row = rows.get("0") if isinstance(rows, dict) else None
+    token = row.get("token") if isinstance(row, dict) else None
+    if not token:
+        raise SourceArgumentException(
+            "uprn", "Could not establish a session token with Aberdeen's form."
+        )
+    context["token"] = token
+
+
+def _schedule_form_values(context: dict[str, Any], source: BaseSource) -> dict:
+    today = datetime.date.today()
+    return {
+        "nauprn": {"value": source.params["uprn"]},
+        "token": {"value": context["token"]},
+        "mindate": {"value": today.strftime("%Y-%m-%d")},
+        "maxdate": {
+            "value": (today + datetime.timedelta(days=60)).strftime("%Y-%m-%d")
+        },
+    }
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Aberdeen City Council"
+    DESCRIPTION = (
+        "Source script for the Aberdeen City Council bin collection calendar "
+        "(integration.aberdeencity.gov.uk Granicus Firmstep self-service form)."
+    )
+    URL = "https://www.aberdeencity.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "179 Skene Street, AB10 1QN": {"uprn": "9051064786"},
+    }
+
+    PARAMS = (uprn(),)
+
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        initial_url=INITIAL_URL,
+        skip_landing_page=True,
+        steps=[
+            LookupStep(
+                LOOKUP_ID_GET_TOKEN,
+                extract=_extract_token,
+                no_retry=_NO_RETRY,
+                headers=lambda ctx, source: _HEADERS,
+            ),
+            LookupStep(
+                LOOKUP_ID_GET_SCHEDULE,
+                form_values=_schedule_form_values,
+                no_retry=_NO_RETRY,
+                headers=lambda ctx, source: _HEADERS,
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    preprocess = AchieveFormsDynamicRowsPreprocessor(
+        _DATE_KEY_RE,
+        split_label=True,
+        parse_date=date_parsers.for_format("%A %d %B %Y"),
+    )
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%A %d %B %Y"),
+        type_value_map={
+            "general": GENERAL_WASTE,
+            "recycling": RECYCLABLES,
+            "mixed recycling": RECYCLABLES,
+            "garden": GARDEN_WASTE,
+            "food": FOOD_WASTE,
+            "food and garden": ORGANIC,
+        },
+    )
+
     def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-
-        # Step 1: obtain a sid + a request-specific token. The token is
-        # returned by the first runLookup call and bound to this session.
-        auth_resp = session.get(SESSION_URL, headers=_HEADERS, timeout=30)
-        auth_resp.raise_for_status()
-        try:
-            sid = auth_resp.json()["auth-session"]
-        except (ValueError, KeyError) as err:
-            raise SourceArgumentException(
-                "uprn",
-                f"Could not establish session with Aberdeen form: {err}",
-            ) from err
-
-        token_params = {
-            "id": LOOKUP_ID_GET_TOKEN,
-            "repeat_against": "",
-            "noRetry": "true",
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": str(int(time.time() * 1000)),
-            "sid": sid,
-        }
-        token_resp = session.post(
-            API_URL, headers=_HEADERS, params=token_params, timeout=30
-        )
-        token_resp.raise_for_status()
-        try:
-            token_row = token_resp.json()["integration"]["transformed"]["rows_data"][
-                "0"
-            ]
-            token = token_row["token"]
-        except (ValueError, KeyError, TypeError) as err:
-            raise SourceArgumentException(
-                "uprn",
-                f"Aberdeen token request returned unexpected payload: {err}",
-            ) from err
-
-        # Step 2: fetch the schedule for the UPRN.
-        today = datetime.date.today()
-        payload = {
-            "formValues": {
-                "Section 1": {
-                    "nauprn": {"value": self._uprn},
-                    "token": {"value": token},
-                    "mindate": {"value": today.strftime("%Y-%m-%d")},
-                    "maxdate": {
-                        "value": (today + datetime.timedelta(days=60)).strftime(
-                            "%Y-%m-%d"
-                        )
-                    },
-                }
-            }
-        }
-        sched_params = dict(token_params)
-        sched_params["id"] = LOOKUP_ID_GET_SCHEDULE
-        sched_params["_"] = str(int(time.time() * 1000))
-
-        sched_resp = session.post(
-            API_URL,
-            headers=_HEADERS,
-            params=sched_params,
-            json=payload,
-            timeout=30,
-        )
-        sched_resp.raise_for_status()
-        try:
-            rows = sched_resp.json()["integration"]["transformed"]["rows_data"]["0"]
-        except (ValueError, KeyError, TypeError) as err:
-            raise SourceArgumentException(
-                "uprn",
-                f"Aberdeen schedule request returned unexpected payload: {err}",
-            ) from err
-
-        if not isinstance(rows, dict) or not rows:
-            raise SourceArgumentNotFound(
-                "uprn",
-                self._uprn,
-                "No collection data returned for this UPRN.",
-            )
-
-        # Aberdeen's API responds to an *invalid* UPRN with only `Count<type>`
-        # rows holding `"0"` and zero `<type>Date<n>` keys. Distinguish that
-        # case from a real "API changed" failure: if no date keys exist at
-        # all, it's a not-found, not a parsing bug.
-        has_date_keys = any(_DATE_KEY_RE.match(k) for k in rows)
-        if not has_date_keys:
-            raise SourceArgumentNotFound(
-                "uprn",
-                self._uprn,
-                "No collections found for this UPRN. Check the number is "
-                "correct and that the property is within the City of Aberdeen.",
-            )
-
-        entries: list[Collection] = []
-        for key, value in rows.items():
-            if _COUNT_KEY_RE.match(key):
-                continue
-            m = _DATE_KEY_RE.match(key)
-            if not m or not value:
-                continue
-            bin_type_camel = m.group(1)
-            bin_type = _split_camel(bin_type_camel)
-            try:
-                # API returns "Tuesday 28 January 2026" — locale-stable English
-                date = datetime.datetime.strptime(value, "%A %d %B %Y").date()
-            except (ValueError, TypeError):
-                continue
-            entries.append(
-                Collection(
-                    date=date,
-                    t=bin_type,
-                    icon=ICON_MAP.get(bin_type),
-                )
-            )
-
-        if not entries:
-            raise SourceArgumentException(
-                "uprn",
-                f"Aberdeen returned {len(rows)} rows including date keys but "
-                "none parsed. The API format may have changed.",
-            )
-
-        return entries
+        super().__init__(uprn=str(uprn))

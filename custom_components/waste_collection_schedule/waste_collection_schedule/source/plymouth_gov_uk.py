@@ -1,79 +1,77 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
-TITLE = "Plymouth City Council"
-DESCRIPTION = "Source for waste collection services for Plymouth City Council"
-URL = "https://www.plymouth.gov.uk/"
-
-TEST_CASES = {
-    "Test_001": {"uprn": 100040429524},
-    "Test_002": {"uprn": "100040425325"},
-    "Test_003": {"uprn": 100040472543},
-    "Test_004": {"uprn": "100040462838"},
-    "Test_005": {"uprn": 100040461084},
-}
-
-FORM_ID = "5c99439d85f83"
 HOSTNAME = "plymouth-self.achieveservice.com"
-BASE_URL = f"https://{HOSTNAME}"
-INITIAL_URL = f"{BASE_URL}/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-084d6742-3572-41ba-ac1a-430750451f9d/AF-Stage-67ba684d-0a5b-48f8-9c50-1c01cc43c396/definition.json&redirectlink=%2Fen&cancelRedirectLink=%2Fen&consentMessage=yes"
-AUTH_URL = f"{BASE_URL}/authapi/isauthenticated"
-AUTH_TEST = f"{BASE_URL}/apibroker/domain/{HOSTNAME}"
-API_URL = f"{BASE_URL}/apibroker/runLookup"
-
-ICON_MAP = {
-    "DO": Icons.GENERAL_WASTE,
-    "RE": Icons.RECYCLING,
-}
-
-COLLECTION_TYPE = {
-    "DO": "Domestic Brown Bin",
-    "RE": "Recycling Green Bin",
-}
+INITIAL_URL = (
+    "https://plymouth-self.achieveservice.com/en/AchieveForms/?form_uri=sandbox-publish://"
+    "AF-Process-084d6742-3572-41ba-ac1a-430750451f9d/"
+    "AF-Stage-67ba684d-0a5b-48f8-9c50-1c01cc43c396/definition.json"
+    "&redirectlink=%2Fen&cancelRedirectLink=%2Fen&consentMessage=yes"
+)
+LOOKUP_ID = "5c99439d85f83"
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn).strip()
+@final
+class Source(BaseSource):
+    TITLE = "Plymouth City Council"
+    DESCRIPTION = "Source for waste collection services for Plymouth City Council"
+    URL = "https://www.plymouth.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def get_collections(
-        self, session_key: str, session: requests.Session
-    ) -> list[Collection]:
-        result = run_lookup(
-            session,
-            API_URL,
-            session_key,
-            FORM_ID,
-            {
-                "Section 1": {
-                    "number1": {"value": self._uprn},
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": 100040429524},
+        "Test_002": {"uprn": "100040425325"},
+        "Test_003": {"uprn": 100040472543},
+        "Test_004": {"uprn": "100040462838"},
+        "Test_005": {"uprn": 100040461084},
+    }
+
+    PARAMS = (uprn(),)
+
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        initial_url=INITIAL_URL,
+        auth_test_url=f"https://{HOSTNAME}/apibroker/domain/{HOSTNAME}",
+        steps=[
+            LookupStep(
+                LOOKUP_ID,
+                form_values=lambda ctx, source: {
+                    "number1": {"value": source.params["uprn"]},
                     "nextncoll": {"value": "9"},
-                }
-            },
-        )
-        return list(result["integration"]["transformed"]["rows_data"].values())
+                },
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    # Round_Type is a short provider code (DO = Domestic Brown Bin, RE =
+    # Recycling Green Bin); an unmapped code is preserved verbatim rather than
+    # collapsed, in case the council introduces a new round type.
+    transform = JsonTransformer(
+        date_key="Date",
+        type_key="Round_Type",
+        parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
+        type_value_map={
+            "DO": GENERAL_WASTE,
+            "RE": RECYCLABLES,
+        },
+    )
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session_key = init_session(
-            session,
-            INITIAL_URL,
-            AUTH_URL,
-            HOSTNAME,
-            auth_test_url=AUTH_TEST,
-        )
-        collections = self.get_collections(session_key, session)
+    def __init__(self, uprn: str | int):
+        super().__init__(uprn=str(uprn).strip())
 
-        entries = []
-        for collection in collections:
-            date_string = collection["Date"]
-            date = datetime.strptime(date_string, "%Y-%m-%dT%H:%M:%S").date()
-            service = collection["Round_Type"]
-            icon = ICON_MAP.get(service)
-            collection_type = COLLECTION_TYPE[service]
-            entries.append(Collection(date=date, t=collection_type, icon=icon))
-
-        return entries
+    def preprocess(self, rows, source=None):
+        # rows_data is a dict keyed by row index ({"0": {...}, "1": {...}}),
+        # one row per collection; JsonTransformer needs each row, not the
+        # whole rows_data dict as a single record.
+        yield from (rows.values() if isinstance(rows, dict) else rows)

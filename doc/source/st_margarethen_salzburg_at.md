@@ -1,6 +1,8 @@
 # St. Margarethen im Lungau
 
-Support for waste collection schedules provided by [Gemeinde St. Margarethen im Lungau](https://www.st.margarethen.salzburg.at), Austria.
+Support for schedules provided by [St. Margarethen im Lungau](https://www.st.margarethen.salzburg.at).
+
+Waste collection schedule for St. Margarethen im Lungau, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -10,4 +12,14 @@ waste_collection_schedule:
     - name: st_margarethen_salzburg_at
 ```
 
-No configuration arguments are required. The waste calendar covers the entire municipality.
+### Configuration Variables
+
+No configuration arguments are required.
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: st_margarethen_salzburg_at
+```

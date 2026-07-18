@@ -1,34 +1,30 @@
 # Sutton Council, London
 
-Support for schedules provided by [Sutton Council, London](https://sutton.gov.uk), serving Sutton Council, London, UK.
+Support for schedules provided by [Sutton Council, London](https://sutton.gov.uk).
+
+Source for Sutton Council, London.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sutton_gov_uk
       args:
-        id: "ID"
-        
+        id: ID
 ```
 
 ### Configuration Variables
 
 **id**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sutton_gov_uk
       args:
-        id: "4721996"
-        
+        id: 4721996
 ```
-
-## How to get the source argument
-
-Go to [https://waste-services.sutton.gov.uk/waste](https://waste-services.sutton.gov.uk/waste) and select your location. Your address bar should show the internal ID of your address. Use this ID as the source argument. (e.g. `https://waste-services.sutton.gov.uk/waste/4721996` the ID is `4721996`)

@@ -1,151 +1,96 @@
-import json
-from datetime import datetime
-from time import time_ns
+from collections.abc import Iterable
+from typing import Any, ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.parsers import HtmlParser
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsRetriever,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+)
 
-TITLE = "Wrexham County Borough Council"
-DESCRIPTION = "Source for Wrexham County Borough Council."
-URL = "https://www.wrexham.gov.uk/"
-TEST_CASES = {
-    "Duck Farm, Gresford, LL12 8YT": {"uprn": "100100940408"},
-    "Regent St, Wrexham, LL11 1SA": {"uprn": "10096241365"},
-    "Hill Crest, Wrexham, LL13 8RN": {"uprn": "100100860092"},
-}
-
-API_URL = "https://www.wrexham.gov.uk/service/when-are-my-bins-collected"
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-
-ICON_MAP = {
-    "recycling": Icons.RECYCLING,
-    "food": Icons.BIO_KITCHEN,
-    "general": Icons.GENERAL_WASTE,
-    "garden": Icons.GARDEN,
-}
-
-TYPE_MAP = {
-    "recycling": "Recycling",
-    "food": "Food Waste",
-    "general": "General Waste",
-    "garden": "Garden Waste",
-}
+HOSTNAME = "myaccount.wrexham.gov.uk"
+INITIAL_URL = (
+    "https://myaccount.wrexham.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://"
+    "AF-Process-ceb55423-9f5d-4124-b713-805ac7a73e3e/"
+    "AF-Stage-854336b9-1221-4e6a-88d7-785fb2f8e340/definition.json"
+    "&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes&noLoginPrompt=1"
+)
+LOOKUP_ID = "5beab9a792bb5"
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+@final
+class Source(BaseSource):
+    TITLE = "Wrexham County Borough Council"
+    DESCRIPTION = "Source for Wrexham County Borough Council."
+    URL = "https://www.wrexham.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        s = requests.Session()
-        s.headers.update(HEADERS)
+    TEST_CASES: ClassVar[dict] = {
+        "Duck Farm, Gresford, LL12 8YT": {"uprn": "100100940408"},
+        "Regent St, Wrexham, LL11 1SA": {"uprn": "10096241365"},
+        "Hill Crest, Wrexham, LL13 8RN": {"uprn": "100100860092"},
+    }
 
-        # This request gets the session ID
-        sid_request = s.get(
-            "https://myaccount.wrexham.gov.uk/authapi/isauthenticated",
-            params={
-                "uri": "https://myaccount.wrexham.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-ceb55423-9f5d-4124-b713-805ac7a73e3e/AF-Stage-854336b9-1221-4e6a-88d7-785fb2f8e340/definition.json&redirectlink=/en&cancelRedirectLink=/en&consentMessage=yes&noLoginPrompt=1",
-                "hostname": "myaccount.wrexham.gov.uk",
-                "withCredentials": True,
-            },
-        )
-        sid_data = sid_request.json()
-        sid = sid_data["auth-session"]
+    PARAMS = (uprn(),)
 
-        # Set up session
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        s.get(
-            "https://myaccount.wrexham.gov.uk/apibroker/domain/myaccount.wrexham.gov.uk",
-            params={"_": timestamp, "sid": sid},
-        )
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        initial_url=INITIAL_URL,
+        auth_test_url=f"https://{HOSTNAME}/apibroker/domain/{HOSTNAME}",
+        steps=[
+            LookupStep(
+                LOOKUP_ID,
+                form_values=lambda ctx, source: {
+                    "UPRN": {"value": source.params["uprn"]},
+                    "NoWeeks": {"name": "NoWeeks", "value": "2"},
+                },
+            ),
+        ],
+    )
+    # The schedule is an HTML table embedded inside a JSON field of the
+    # runLookup response; HtmlParser's from_json_key drills straight to it
+    # (the raw dict from AchieveFormsRetriever needs no .json() call).
+    parse = HtmlParser(
+        "tr",
+        skip=1,
+        from_json_key=(
+            "integration",
+            "transformed",
+            "rows_data",
+            "0",
+            "UpcomingCollections",
+        ),
+    )
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        # A single <li> can name a combined round ("Recycling / food").
+        type_value_map={
+            "recycling / food": [RECYCLABLES, FOOD_WASTE],
+            "garden waste": GARDEN_WASTE,
+            "general waste": GENERAL_WASTE,
+        },
+    )
 
-        # This request retrieves the schedule
-        timestamp = time_ns() // 1_000_000  # epoch time in milliseconds
-        payload = {
-            "formValues": {
-                "Section 1": {
-                    "UPRN": {"value": self._uprn},
-                    "NoWeeks": {
-                        "name": "NoWeeks",
-                        "value": "2",
-                    },
-                }
-            }
-        }
-        params = {
-            "id": "5beab9a792bb5",
-            "repeat_against": "",
-            "noRetry": False,
-            "getOnlyTokens": "undefined",
-            "log_id": "",
-            "app_name": "AF-Renderer::Self",
-            "_": timestamp,
-            "sid": sid,
-        }
+    def __init__(self, uprn: str | int):
+        super().__init__(uprn=str(uprn).zfill(12))
 
-        schedule_request = s.post(
-            "https://myaccount.wrexham.gov.uk/apibroker/runLookup",
-            params=params,
-            json=payload,
-        )
-
-        rowdata = json.loads(schedule_request.content)["integration"]["transformed"][
-            "rows_data"
-        ]
-
-        html_content = rowdata["0"]["UpcomingCollections"]
-
-        soup = BeautifulSoup(html_content, "html.parser")
-
-        entries = []
-
-        # Loop through the whole table and convert to bin days
-        for row in soup.find_all("tr")[1:]:
+    def preprocess(
+        self, rows: Any, source: "BaseSource | None" = None
+    ) -> "Iterable[tuple[str, str]]":
+        for row in rows:
             cells = row.find_all("td")
-            if len(cells) >= 2:
-                date_str = cells[0].text.strip()
-                bins = cells[1].find_all("li")
-
-                for bin_item in bins:
-                    text = bin_item.get_text(strip=True).lower()
-
-                    date = datetime.strptime(date_str, "%d/%m/%Y").date()
-
-                    if "recycling" in text:
-                        entries.append(
-                            Collection(
-                                t=TYPE_MAP["recycling"],
-                                date=date,
-                                icon=ICON_MAP["recycling"],
-                            )
-                        )
-                    if "food" in text:
-                        entries.append(
-                            Collection(
-                                t=TYPE_MAP["food"],
-                                date=date,
-                                icon=ICON_MAP["food"],
-                            )
-                        )
-                    if "garden" in text:
-                        entries.append(
-                            Collection(
-                                t=TYPE_MAP["garden"],
-                                date=date,
-                                icon=ICON_MAP["garden"],
-                            )
-                        )
-                    if "general" in text:
-                        entries.append(
-                            Collection(
-                                t=TYPE_MAP["general"],
-                                date=date,
-                                icon=ICON_MAP["general"],
-                            )
-                        )
-
-        return entries
+            if len(cells) < 2:
+                continue
+            date_str = cells[0].get_text(strip=True)
+            for li in cells[1].find_all("li"):
+                yield date_str, li.get_text(strip=True)

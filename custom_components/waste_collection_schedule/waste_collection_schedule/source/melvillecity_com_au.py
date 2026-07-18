@@ -1,52 +1,27 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from dateutil.parser import parse as dateparse
-from dateutil.rrule import WEEKLY, rrule
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentRequired,
-)
+from dateutil.parser import parse as _dateutil_parse
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.service.IntraMaps import (
-    IntegrationClient,
     IntegrationClientConfig,
-    IntraMapsSearchError,
+    IntegrationClientRetriever,
+    IntegrationPanelParser,
+    nominatim_reproject,
 )
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
-TITLE = "City of Melville"
-DESCRIPTION = "Source for City of Melville waste collection."
-URL = "https://www.melvillecity.com.au"
-COUNTRY = "au"
-
-TEST_CASES = {
-    "Williams Road": {"address": "43 Williams Road, Melville, WA"},
-    "Canning Highway": {"address": "356 Canning Highway, Bicton, WA"},
-}
-
-ICON_MAP = {
-    "FOGO": Icons.BIO_KITCHEN,
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter your street address including suburb "
-    "(e.g. '43 Williams Road, Melville, WA'). "
-    "Search at https://www.melvillecity.com.au/waste-and-environment/waste-recycling-fogo/residential-bins",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address with suburb (e.g. '43 Williams Road, Melville, WA')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
+# The only Integration API council of the three that needs a geocode step
+# first: its single search form takes reprojected map coordinates rather than
+# a free-text address, and returns the collection fields directly (no
+# separate mapkey/dbkey details form). GreenLid (FOGO) is a weekly collection
+# whose weekday lives in a SEPARATE "collection_district" field, so it can't
+# be read from one column alone the way RecurrenceExpander's per-record
+# describe() assumes; preprocess is overridden as a method instead, reading
+# the whole field set at once. RedLid/YellowLid each carry their own explicit
+# next-collection date (fortnightly).
 
 INTRAMAPS_CONFIG = IntegrationClientConfig(
     base_url="https://melville.spatial.t1cloud.com",
@@ -57,102 +32,82 @@ INTRAMAPS_CONFIG = IntegrationClientConfig(
 )
 
 WASTE_FORM_ID = "0e72c05c-0181-428a-b4e0-e2be69cf69dc"
-NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
 
-WEEKDAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
-    "Saturday": 5,
-    "Sunday": 6,
+_TYPE_MAP = {
+    "FOGO": ORGANIC,
+    "General Waste": GENERAL_WASTE,
+    "Recycling": RECYCLABLES,
 }
 
 
-class Source:
+@final
+class Source(BaseSource):
+    TITLE = "City of Melville"
+    DESCRIPTION = "Source for City of Melville waste collection."
+    URL = "https://www.melvillecity.com.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Williams Road": {"address": "43 Williams Road, Melville, WA"},
+        "Canning Highway": {"address": "356 Canning Highway, Bicton, WA"},
+    }
+
+    PARAMS = (text_field("address", "Street Address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address including suburb "
+            "(e.g. '43 Williams Road, Melville, WA'). "
+            "Search at https://www.melvillecity.com.au/waste-and-environment/"
+            "waste-recycling-fogo/residential-bins"
+        ),
+    }
+
+    retrieve = IntegrationClientRetriever(
+        INTRAMAPS_CONFIG,
+        search_form=WASTE_FORM_ID,
+        geocode=nominatim_reproject(
+            "address", epsg_out="epsg:7850", country_codes="au"
+        ),
+    )
+    parse = IntegrationPanelParser()
+
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
     def __init__(self, address: str):
-        if not address:
-            raise SourceArgumentRequired("address", "A street address is required")
-        self._address = address.strip()
+        super().__init__(address=address)
 
-    def fetch(self) -> list[Collection]:
-        client = IntegrationClient(INTRAMAPS_CONFIG)
+    def preprocess(self, records, source=None):
+        """Combine GreenLid's presence with its weekday from a sibling field.
 
-        # Step 1: Geocode address via Nominatim
-        r = requests.get(
-            NOMINATIM_URL,
-            params={
-                "q": self._address,
-                "format": "json",
-                "limit": "1",
-                "countrycodes": "au",
-            },
-            headers={"User-Agent": "hacs_waste_collection_schedule"},
-            timeout=30,
-        )
-        r.raise_for_status()
-        results = r.json()
-        if not results:
-            raise SourceArgumentNotFound("address", self._address)
+        The one place in this source that needs more than a single column:
+        GreenLid's own value only signals "this address has a FOGO service",
+        the weekday it runs on is a separate "collection_district" field.
+        """
+        fields = {r.get("column", ""): r.get("value", "") for r in records}
 
-        lat = float(results[0]["lat"])
-        lng = float(results[0]["lon"])
-
-        # Step 2: Reproject from EPSG:4326 to EPSG:7850
-        proj = client.reproject(lng, lat, "epsg:4326", "epsg:7850")
-
-        # Step 3: Query waste collection zone
-        try:
-            fields = client.search(WASTE_FORM_ID, f"{proj['x']},{proj['y']}")
-        except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
-
-        entries = []
-
-        # GreenLid (FOGO) — weekly
-        if "GreenLid" in fields:
-            day_name = fields.get("collection_district", "")
-            weekday = WEEKDAYS.get(day_name)
+        if fields.get("GreenLid"):
+            weekday = recurrence.weekday(fields.get("collection_district", ""))
             if weekday is not None:
-                for d in rrule(
-                    WEEKLY,
-                    byweekday=weekday,
-                    dtstart=datetime.now(),
-                    count=26,
+                start = recurrence.next_weekday(weekday)
+                for collection_date in recurrence.recurring(
+                    start, recurrence.WEEKLY, 26
                 ):
-                    entries.append(
-                        Collection(date=d.date(), t="FOGO", icon=ICON_MAP["FOGO"])
-                    )
+                    yield collection_date, "FOGO"
 
-        # RedLid (General Waste) — fortnightly, next date given
-        if fields.get("RedLid"):
+        for column, key in (("RedLid", "General Waste"), ("YellowLid", "Recycling")):
+            text = fields.get(column, "").strip()
+            if not text:
+                continue
             try:
-                next_red = dateparse(fields["RedLid"], dayfirst=True).date()
-                for d in rrule(WEEKLY, interval=2, dtstart=next_red, count=13):
-                    entries.append(
-                        Collection(
-                            date=d.date(),
-                            t="General Waste",
-                            icon=ICON_MAP["General Waste"],
-                        )
-                    )
+                # dayfirst=True: the provider's next-collection date is
+                # day/month/year, which dateutil's default US-style guess
+                # would otherwise misread.
+                start = _dateutil_parse(text, dayfirst=True).date()
             except (ValueError, TypeError):
-                pass
-
-        # YellowLid (Recycling) — fortnightly, next date given
-        if fields.get("YellowLid"):
-            try:
-                next_yellow = dateparse(fields["YellowLid"], dayfirst=True).date()
-                for d in rrule(WEEKLY, interval=2, dtstart=next_yellow, count=13):
-                    entries.append(
-                        Collection(
-                            date=d.date(),
-                            t="Recycling",
-                            icon=ICON_MAP["Recycling"],
-                        )
-                    )
-            except (ValueError, TypeError):
-                pass
-
-        return entries
+                continue
+            for collection_date in recurrence.recurring(
+                start, recurrence.FORTNIGHTLY, 13
+            ):
+                yield collection_date, key

@@ -1,53 +1,60 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import retrievers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.waste_types import RECYCLABLES
 
-TITLE = "HubertSchmid Recycling und Umweltschutz GmbH"
-DESCRIPTION = "Abfuhrtermine Blaue Tonne"
-URL = "https://www.hschmid24.de/BlaueTonne/"
-API_URL = "https://www.hschmid24.de/BlaueTonne/php/ajax.php"
+# Demonstrates: http_post retriever + classify() escape hatch
+# Notable: the API returns a flat date array (no bin type field), so JsonTransformer
+# can't be used — classify() receives each date string and returns a fixed type.
+# _data (not _json) is used because the endpoint expects form-encoded POST data.
 
-TEST_CASES = {
-    "Albatsried(Seeg)": {"city": "Albatsried(Seeg)"},
-    "Nesselwang > Attlesee": {"city": "Nesselwang", "ortsteil": "Attlesee"},
-    "Buchloe > Hausen > Dorfstraße": {
-        "city": "Buchloe",
-        "ortsteil": "Hausen",
-        "strasse": "Dorfstraße",
-    },
-}
+SENTINEL = "0000-00-00"
 
 
-class Source:
+@final
+class Source(BaseSource):
+    TITLE = "HubertSchmid Recycling und Umweltschutz GmbH"
+    DESCRIPTION = "Abfuhrtermine Blaue Tonne"
+    URL = "https://www.hschmid24.de/BlaueTonne/"
+    COUNTRY = "de"
+    API_URL = "https://www.hschmid24.de/BlaueTonne/php/ajax.php"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Albatsried(Seeg)": {"city": "Albatsried(Seeg)"},
+        "Nesselwang > Attlesee": {"city": "Nesselwang", "ortsteil": "Attlesee"},
+        "Buchloe > Hausen > Dorfstraße": {
+            "city": "Buchloe",
+            "ortsteil": "Hausen",
+            "strasse": "Dorfstraße",
+        },
+    }
+
+    PARAMS = (
+        text_field("city", "City"),
+        text_field("ortsteil", "District", optional=True),
+        text_field("strasse", "Street", optional=True),
+    )
+
+    retrieve = retrievers.http_post
+    WASTE_TYPES: ClassVar[list] = [RECYCLABLES]
+
     def __init__(
         self,
         city: str,
         ortsteil: str | None = None,
         strasse: str | None = None,
     ):
-        self._city = city
-        self._ortsteil = ortsteil
-        self._strasse = strasse
+        super().__init__(city=city, ortsteil=ortsteil, strasse=strasse)
+        # Form-encoded POST body (not JSON): use _data, not _json.
+        self._data = {"l": 3, "p1": city, "p2": ortsteil, "p3": strasse}
 
-    def fetch(self):
-        r = requests.post(
-            f"{API_URL}",
-            data={"l": 3, "p1": self._city, "p2": self._ortsteil, "p3": self._strasse},
-        )
+    def parse(self, response, source):
+        # API returns {"cal": ["YYYY-MM-DD", ...]} with "0000-00-00" as a no-date sentinel.
+        return [d for d in response.json()["cal"] if d != SENTINEL]
 
-        r.raise_for_status()
-        calendarEntries = r.json()["cal"]
-
-        entries = []
-        for entry in calendarEntries:
-            if entry != "0000-00-00":
-                entries.append(
-                    Collection(
-                        date=datetime.strptime(entry, "%Y-%m-%d").date(),
-                        t="Blaue Tonne",
-                        icon="mdi:package-variant",
-                    )
-                )
-
-        return entries
+    def classify(self, record) -> Collection | None:
+        # Each record is a plain date string; the only collection type is Blaue Tonne.
+        return Collection(date=self.parse_date(record), waste_type=RECYCLABLES)

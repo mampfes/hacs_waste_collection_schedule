@@ -1,6 +1,8 @@
-# Köniz, Switzerland
+# Köniz
 
-Support for schedules provided by [Köniz.ch](https://koeniz.citymobile.ch)
+Support for schedules provided by [Köniz](https://koeniz.citymobile.ch).
+
+Source for Köniz
 
 ## Configuration via configuration.yaml
 
@@ -10,12 +12,16 @@ waste_collection_schedule:
     - name: koeniz_ch
       args:
         municipality: MUNICIPALITY
+        district: DISTRICT
 ```
 
 ### Configuration Variables
 
 **municipality**  
 *(string) (required)*
+
+**district**  
+*(string) (optional)*
 
 ## Example
 
@@ -26,7 +32,3 @@ waste_collection_schedule:
       args:
         municipality: Wabern
 ```
-
-## How to get the source argument
-
-Open [Abfallkalender Köniz](https://koeniz.citymobile.ch/index.php?apid=6297623&apparentid=9293364) which shows a list of all municipalities. Select your municipality from the list.

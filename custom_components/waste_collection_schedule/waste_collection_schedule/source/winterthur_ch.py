@@ -1,66 +1,40 @@
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import final
+
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street
 from waste_collection_schedule.service.A_region_ch import (
-    get_region_url_by_street,
+    TYPE_VALUE_MAP,
+    ARegionIcsParser,
+    ARegionRetriever,
 )
+from waste_collection_schedule.transformers import ICSTransformer
 
 TITLE = "Winterthur"
 DESCRIPTION = "Source for Winterthur."
 URL = "https://winterthur.ch/"
+COUNTRY = "ch"
+
 TEST_CASES = {"Am Iberghang": {"street": "Am Iberghang"}}
 
+SEARCH_URL = "https://m.winterthur.ch/api/v1/callmethod/trash/asyncLookupStreet?usid=9749&container=1066394&uri=/index.php?apid=737670"
 
-ICON_MAP = {
-    "Trash": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "Bio": Icons.ORGANIC,
-    "Paper": Icons.PAPER,
-    "Recycle": Icons.RECYCLING,
-}
+# Winterthur's ICS summaries carry a "Tour N " prefix and a "ganze Stadt"
+# suffix that no other A-Region/CityMobile provider has; trim them so the
+# label passed to the transformer is the bare waste-type name.
+TITLE_REGEX = r"(?:Tour \d{1,2} )?(.*?)(?=\s*ganze Stadt|$)"
 
 
-API_URL = "https://m.winterthur.ch/index.php?apid=1066394"
+@final
+class Source(BaseSource):
+    TITLE = TITLE
+    DESCRIPTION = DESCRIPTION
+    URL = URL
+    COUNTRY = COUNTRY
 
+    TEST_CASES = TEST_CASES
 
-class Source:
-    def __init__(self, street: str):
-        self._street: str = street
-        self._ics_sources: list[Source] = []
+    PARAMS = (street(field="street"),)
 
-    def _get_ics_sources(self):
-        self._ics_sources = get_region_url_by_street(
-            "winterthur",
-            self._street,
-            "https://m.winterthur.ch/api/v1/callmethod/trash/asyncLookupStreet?usid=9749&container=1066394&uri=/index.php?apid=737670",
-            regex=r"(?:Tour \d{1,2} )?(.*?)(?=\s*ganze Stadt|$)",
-        ).fetch()
-        for _source in self._ics_sources:
-            r"(\d{2}\.\d{2}\.\d{4})"
-
-    def fetch(self) -> list[Collection]:
-        fresh_sources = False
-        if not self._ics_sources:
-            fresh_sources = True
-            self._get_ics_sources()
-
-        entries = []
-        for source in self._ics_sources:
-            fresh_sources, e = self._get_dates(source, fresh_sources)
-            entries += e
-        return entries
-
-    def _get_dates(self, source, fresh=False) -> tuple[bool, list[Collection]]:
-        exception = None
-        try:
-            entries = source.fetch()
-        except Exception as e:
-            exception = e
-
-        if exception or not entries:
-            if fresh:
-                if exception:
-                    raise exception
-                return fresh, []
-            self._get_ics_sources()
-            return self._get_dates(source, fresh=True)
-
-        return fresh, entries
+    retrieve = ARegionRetriever(service="winterthur", search_url=SEARCH_URL)
+    parse = ARegionIcsParser(regex=TITLE_REGEX)
+    transform = ICSTransformer(type_value_map=TYPE_VALUE_MAP)

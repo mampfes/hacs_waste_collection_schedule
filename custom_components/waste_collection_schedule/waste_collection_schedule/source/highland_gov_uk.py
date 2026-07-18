@@ -1,97 +1,136 @@
-import datetime
+import re
+from collections.abc import Iterable
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.AchieveForms import init_session, run_lookup
+from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field, uprn
+from waste_collection_schedule.service.AchieveForms import (
+    AchieveFormsDynamicRowsPreprocessor,
+    AchieveFormsRetriever,
+    AchieveFormsRowsParser,
+    LookupStep,
+)
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "Highland"
-DESCRIPTION = "Source for Highland."
-URL = "https://www.highland.gov.uk/"
-TEST_CASES = {
-    "Allangrange Mains Road, Black Isle": {"uprn": 130108578, "predict": True},
-    "Kishorn, Wester Ross": {"uprn": "130066519", "predict": True},
-    "Quarry Lane, Tain": {"uprn": "130007199"},
-    "130143631": {"uprn": 130072429, "predict": True},
-}
-
-
-ICON_MAP = {
-    "refuse": Icons.GENERAL_WASTE,
-    "recycle": Icons.RECYCLING,
-    "garden": Icons.GARDEN,
-    "food": Icons.BIO_KITCHEN,
-    "containers": Icons.PAPER,
-}
-
-BASE_URL = "https://highland-self.achieveservice.com"
-INITIAL_URL = f"{BASE_URL}/en/service/Check_your_household_bin_collection_days"
-AUTH_URL = f"{BASE_URL}/authapi/isauthenticated"
-API_URL = f"{BASE_URL}/apibroker/runLookup"
 HOSTNAME = "highland-self.achieveservice.com"
+INITIAL_URL = f"https://{HOSTNAME}/en/service/Check_your_household_bin_collection_days"
 LOOKUP_ID = "660d44a698632"
 
+# Highland's row carries the SAME bin type twice: `<type>NextDate` plus
+# `<type>NextDateNew`/`<type>NextDateOld` variants of every field. `use_new`
+# (a row-wide switch derived from whether any *New value is populated) picks
+# which variant is authoritative for this property.
+_KEY_PATTERN = re.compile(r"^([a-z]+)NextDate(?:New|Old)?$")
 
-class Source:
-    def __init__(self, uprn: str | int, predict: bool = False):
-        self._uprn: str = str(uprn)
-        self._predict: bool = predict
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        sid = init_session(session, INITIAL_URL, AUTH_URL, HOSTNAME)
+def _use_new(row: dict) -> bool:
+    return any(k.endswith("New") and v for k, v in row.items())
 
-        result = run_lookup(
-            session,
-            API_URL,
-            sid,
-            LOOKUP_ID,
-            {"Your address": {"propertyuprn": {"value": self._uprn}}},
+
+def _variant_filter(key: str, row: dict) -> bool:
+    if key.endswith("New"):
+        return _use_new(row)
+    if key.endswith("Old"):
+        return not _use_new(row)
+    return True
+
+
+_FREQUENCY_RE = re.compile(r"every\s+(\d+)?\s*weeks?", re.IGNORECASE)
+
+
+def _weeks(frequency: str) -> "int | None":
+    """Parse "every week" / "every 2 weeks" into a week count, or None."""
+    match = _FREQUENCY_RE.search(frequency or "")
+    if not match:
+        return None
+    return int(match.group(1)) if match.group(1) else 1
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Highland"
+    DESCRIPTION = "Source for Highland."
+    URL = "https://www.highland.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Allangrange Mains Road, Black Isle": {"uprn": 130108578, "predict": "true"},
+        "Kishorn, Wester Ross": {"uprn": "130066519", "predict": "true"},
+        "Quarry Lane, Tain": {"uprn": "130007199"},
+        "130143631": {"uprn": 130072429, "predict": "true"},
+    }
+
+    PARAMS = (
+        uprn(),
+        text_field(
+            "predict",
+            "Predict future collections",
+            default="false",
+            optional=True,
+        ),
+    )
+
+    retrieve = AchieveFormsRetriever(
+        hostname=HOSTNAME,
+        initial_url=INITIAL_URL,
+        steps=[
+            LookupStep(
+                LOOKUP_ID,
+                section="Your address",
+                form_values=lambda ctx, source: {
+                    "propertyuprn": {"value": source.params["uprn"]}
+                },
+            ),
+        ],
+    )
+    parse = AchieveFormsRowsParser()
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "refuse": GENERAL_WASTE,
+            "recycle": RECYCLABLES,
+            "garden": GARDEN_WASTE,
+            "food": FOOD_WASTE,
+            "containers": RECYCLABLES,
+            "fibres": PAPER,
+        },
+    )
+
+    def __init__(self, uprn: str | int, predict: str | bool = False):
+        super().__init__(
+            uprn=str(uprn),
+            predict=str(predict).strip().lower() in {"true", "yes", "1"},
         )
 
-        rows_data = result["integration"]["transformed"]["rows_data"]["0"]
-        if not isinstance(rows_data, dict):
-            raise ValueError("Invalid data returned from API")
-
-        use_new = any(k.endswith("New") and v for k, v in rows_data.items())
-        next_date_key = "NextDateNew" if use_new else "NextDateOld"
-
-        entries = []
-        for key, value in rows_data.items():
-            if not (key.endswith(("NextDate", next_date_key))):
+    def preprocess(
+        self, rows: Any, source: "BaseSource | None" = None
+    ) -> "Iterable[tuple[Any, str]]":
+        row = rows.get("0", {}) if isinstance(rows, dict) else {}
+        if not isinstance(row, dict):
+            return
+        use_new = _use_new(row)
+        suffix = "New" if use_new else "Old"
+        for collection_date, label in AchieveFormsDynamicRowsPreprocessor(
+            _KEY_PATTERN, key_filter=_variant_filter
+        )(rows, source):
+            yield collection_date, label
+            if not self.params.get("predict"):
                 continue
-
-            bin_type = key.split("NextDate")[0]
-            try:
-                date = datetime.datetime.fromisoformat(value).date()
-            except ValueError:
+            weeks = _weeks(row.get(f"{label}Frequency{suffix}", ""))
+            if not weeks:
                 continue
-            entries.append(
-                Collection(
-                    date=date,
-                    t=bin_type,
-                    icon=ICON_MAP.get(bin_type.lower()),
-                )
-            )
-            freq_key = key.replace("NextDate", "Frequency")
-            if not self._predict or freq_key not in rows_data:
-                continue
-            week_freq = rows_data[freq_key]
-            if not week_freq or not isinstance(week_freq, str):
-                continue
-            week_freq = week_freq.lower().replace("every week", "every 1 weeks")
-            week_freq = week_freq.replace("every ", "").replace(" weeks", "")
-            # if week_freq is integer string
-            if not week_freq.isdigit():
-                continue
-            week_freq_int = int(week_freq)
-
-            # add 10 weeks of entries
-            for i in range(int(10 * (1 / week_freq_int))):
-                entries.append(
-                    Collection(
-                        date=date + datetime.timedelta(weeks=i * week_freq_int),
-                        t=bin_type,
-                        icon=ICON_MAP.get(bin_type.lower()),
-                    )
-                )
-        return entries
+            # 10 further occurrences at the parsed cadence, matching the
+            # legacy source's fixed look-ahead window.
+            for future_date in recurrence.recurring(
+                collection_date, recurrence.WEEKLY * weeks, 10
+            )[1:]:
+                yield future_date, label

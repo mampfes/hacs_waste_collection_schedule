@@ -1,109 +1,98 @@
-import logging
-from html.parser import HTMLParser
+"""Burgenländischer Müllverband (bmv.at).
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+Demonstrates: the Athos "WasteManagementServlet" wizard's Austrian
+(``udb.at``) variant. Same mechanics as the German deployments (initial GET,
+scrape hidden state, a sequence of field-setting POSTs, a final download
+POST) but a different step shape: each field is set one at a time behind a
+``Focus``/``changedEvent`` pair rather than the German
+``CITYCHANGED``/``STREETCHANGED``/``forward`` progression, and the final step
+must drop the address fields (``remove=``) rather than resend them.
+"""
 
-TITLE = "Burgenländischer Müllverband"
-DESCRIPTION = "Source for BMV, Austria"
-URL = "https://www.bmv.at"
-TEST_CASES = {
-    "Allersdorf": {"ort": "ALLERSDORF", "strasse": "HAUSNUMMER", "hausnummer": 9},
-    "Bad Sauerbrunn": {
-        "ort": "BAD SAUERBRUNN",
-        "strasse": "BUCHINGERWEG",
-        "hausnummer": 16,
-    },
-    "Rattersdorf": {
-        "ort": "RATTERSDORF",
-        "strasse": "SIEBENBRÜNDLGASSE",
-        "hausnummer": 30,
-    },
-}
+from typing import ClassVar, final
 
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, house_number, street
+from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+
+_SERVLET = "https://webudb.udb.at/WasteManagementUDB/WasteManagementServlet"
 
 
-# Parser for HTML input (hidden) text
-class HiddenInputParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._args = {}
+@final
+class Source(BaseSource):
+    TITLE = "Burgenländischer Müllverband"
+    DESCRIPTION = "Source for BMV, Austria"
+    URL = "https://www.bmv.at"
+    COUNTRY = "at"
 
-    @property
-    def args(self):
-        return self._args
+    TEST_CASES: ClassVar[dict] = {
+        "Allersdorf": {"ort": "ALLERSDORF", "strasse": "HAUSNUMMER", "hausnummer": 9},
+        "Bad Sauerbrunn": {
+            "ort": "BAD SAUERBRUNN",
+            "strasse": "BUCHINGERWEG",
+            "hausnummer": 16,
+        },
+        "Rattersdorf": {
+            "ort": "RATTERSDORF",
+            "strasse": "SIEBENBRÜNDLGASSE",
+            "hausnummer": 30,
+        },
+    }
 
-    def handle_starttag(self, tag, attrs):
-        if tag == "input":
-            d = dict(attrs)
-            if d["type"] == "HIDDEN":
-                self._args[d["name"]] = d.get("value")
+    PARAMS = (
+        city(field="ort"),
+        street(field="strasse"),
+        house_number(field="hausnummer"),
+    )
 
+    retrieve = AthosWasteManagementRetriever(
+        url=_SERVLET,
+        initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        steps=[
+            {
+                "submit_action": "changedEvent",
+                "fields": lambda ort, **_: {
+                    "Focus": "Ort",
+                    "Ort": ort,
+                    "Strasse": "HAUSNUMMER",
+                    "Hausnummer": 0,
+                },
+            },
+            {
+                "submit_action": "changedEvent",
+                "fields": lambda ort, strasse, **_: {
+                    "Focus": "Strasse",
+                    "Ort": ort,
+                    "Strasse": strasse,
+                    "Hausnummer": 0,
+                },
+            },
+            {
+                "submit_action": "forward",
+                "fields": lambda ort, strasse, hausnummer, **_: {
+                    "Focus": "Hausnummer",
+                    "Ort": ort,
+                    "Strasse": strasse,
+                    "Hausnummer": hausnummer,
+                },
+            },
+            {
+                "submit_action": "filedownload_ICAL",
+                "fields": lambda **_: {
+                    "ApplicationName": "com.athos.kd.udb.AbfuhrTerminModel",
+                    "Focus": None,
+                    "IsLastPage": "true",
+                    "Method": "POST",
+                    "PageName": "Terminliste",
+                },
+                "remove": ("Ort", "Strasse", "Hausnummer"),
+            },
+        ],
+    )
+    parse = parsers.IcsParser()
+    transform = ICSTransformer()
 
-class Source:
-    def __init__(self, ort, strasse, hausnummer):
-        self._ort = ort
-        self._strasse = strasse
-        self._hausnummer = hausnummer
-        self._ics = ICS()
-
-    def fetch(self):
-        session = requests.session()
-
-        r = session.get(
-            "https://webudb.udb.at/WasteManagementUDB/WasteManagementServlet?SubmitAction=wasteDisposalServices&InFrameMode=TRUE"
-        )
-
-        # add all hidden input fields to form data
-        p = HiddenInputParser()
-        p.feed(r.text)
-        args = p.args
-
-        args["Focus"] = "Ort"
-        args["SubmitAction"] = "changedEvent"
-        args["Ort"] = self._ort
-        args["Strasse"] = "HAUSNUMMER"
-        args["Hausnummer"] = 0
-        r = session.post(
-            "https://webudb.udb.at/WasteManagementUDB/WasteManagementServlet", data=args
-        )
-
-        args["Focus"] = "Strasse"
-        args["SubmitAction"] = "changedEvent"
-        args["Ort"] = self._ort
-        args["Strasse"] = self._strasse
-        args["Hausnummer"] = 0
-        r = session.post(
-            "https://webudb.udb.at/WasteManagementUDB/WasteManagementServlet", data=args
-        )
-
-        args["Focus"] = "Hausnummer"
-        args["SubmitAction"] = "forward"
-        args["Ort"] = self._ort
-        args["Strasse"] = self._strasse
-        args["Hausnummer"] = self._hausnummer
-        r = session.post(
-            "https://webudb.udb.at/WasteManagementUDB/WasteManagementServlet", data=args
-        )
-
-        args["ApplicationName"] = "com.athos.kd.udb.AbfuhrTerminModel"
-        args["Focus"] = None
-        args["IsLastPage"] = "true"
-        args["Method"] = "POST"
-        args["PageName"] = "Terminliste"
-        args["SubmitAction"] = "filedownload_ICAL"
-        del args["Ort"]
-        del args["Strasse"]
-        del args["Hausnummer"]
-        r = session.post(
-            "https://webudb.udb.at/WasteManagementUDB/WasteManagementServlet", data=args
-        )
-
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
+    def __init__(self, ort: str, strasse: str, hausnummer: int):
+        super().__init__(ort=ort, strasse=strasse, hausnummer=hausnummer)

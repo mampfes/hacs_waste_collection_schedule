@@ -2,33 +2,33 @@
 
 Support for schedules provided by [Derbyshire Dales District Council](https://www.derbyshiredales.gov.uk/).
 
+Source for derbyshiredales.gov.uk services for Derbyshire Dales, UK.
+
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: derbyshiredales_gov_uk
       args:
-        address_id: <uprn> or <postcode>
+        address_id: ADDRESS_ID
 ```
 
 ### Configuration Variables
 
-**address_id**
+**address_id**  
 *(string) (required)*
-
-Your Unique Property Reference Number (UPRN) or postcode. A UPRN works best.
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: derbyshiredales_gov_uk
       args:
-        address_id: U10070089522
+        address_id: DE4 3GS
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Your property's UPRN, find it at https://www.findmyaddress.co.uk/. You can also use a Postcode.

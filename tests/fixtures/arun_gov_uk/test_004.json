@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-07-10",
+  "interactions": [
+    {
+      "key": "GET https://apps.cloud9technologies.com/arun/citizenmobile/mobileapi/wastecollections/0100062180214 ",
+      "method": "GET",
+      "url": "https://apps.cloud9technologies.com/arun/citizenmobile/mobileapi/wastecollections/0100062180214",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "awselb/2.0",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "1307",
+        "connection": "keep-alive",
+        "keep-alive": "timeout=5",
+        "date": "Fri, 10 Jul 2026 13:54:57 GMT",
+        "etag": "W/\"51b-H3ITFrEpHthVTOmCYzOzPa3QfT4\""
+      },
+      "content_b64": "eyJ3YXN0ZUNvbGxlY3Rpb25EYXRlcyI6eyJ1cHJuIjoiMTAwMDYyMTgwMjE0IiwiY2FjaGVLZXkiOiIwLjEuMzgtMTc4MzY3ODAxNDQzNyIsImNvbnRhaW5lcjFDb2xsZWN0aW9uRGV0YWlscyI6eyJjb250YWluZXJJRCI6MSwiY29udGFpbmVyRGVzY3JpcHRpb24iOiJHZW5lcmFsIFdhc3RlIEJpbnMiLCJvcmRlciI6MSwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTA3LTE0VDAwOjAwOjAwIiwiY29sbGVjdGlvbldlZWsiOm51bGwsImRhdGVDaGFuZ2VkIjpmYWxzZSwiZGF0ZUNoYW5nZVJlYXNvbiI6IiIsImltYWdlIjoiaW1hZ2VzL3dhc3RlLWNvbGxlY3Rpb25zL2NvbnRhaW5lcnMvYXJ1bi9yZWZ1c2UtYmluIiwiaW1hZ2VVUkwiOiJodHRwczovL3N0YXRpYy5jbG91ZDl0ZWNobm9sb2dpZXMuY29tL2Fzc2V0cy9pbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9hcnVuL3JlZnVzZS1iaW5AM3guNjlhZWNiOTM3ZmVkLnBuZyJ9LCJjb250YWluZXIyQ29sbGVjdGlvbkRldGFpbHMiOnsiY29udGFpbmVySUQiOjIsImNvbnRhaW5lckRlc2NyaXB0aW9uIjoiUmVjeWNsaW5nIEJpbnMiLCJvcmRlciI6MiwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTA3LTIxVDAwOjAwOjAwIiwiY29sbGVjdGlvbldlZWsiOm51bGwsImRhdGVDaGFuZ2VkIjpmYWxzZSwiZGF0ZUNoYW5nZVJlYXNvbiI6IiIsImltYWdlIjoiaW1hZ2VzL3dhc3RlLWNvbGxlY3Rpb25zL2NvbnRhaW5lcnMvYXJ1bi9yZWN5Y2xpbmctYmluIiwiaW1hZ2VVUkwiOiJodHRwczovL3N0YXRpYy5jbG91ZDl0ZWNobm9sb2dpZXMuY29tL2Fzc2V0cy9pbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9hcnVuL3JlY3ljbGluZy1iaW5AM3guYzY3MDc0NDMwODVmLnBuZyJ9LCJjb250YWluZXIzQ29sbGVjdGlvbkRldGFpbHMiOm51bGwsImNvbnRhaW5lcjRDb2xsZWN0aW9uRGV0YWlscyI6eyJjb250YWluZXJJRCI6NCwiY29udGFpbmVyRGVzY3JpcHRpb24iOiJGb29kIFdhc3RlIEJpbnMiLCJvcmRlciI6MywiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTA3LTE0VDAwOjAwOjAwIiwiY29sbGVjdGlvbldlZWsiOm51bGwsImRhdGVDaGFuZ2VkIjpmYWxzZSwiZGF0ZUNoYW5nZVJlYXNvbiI6IiIsImltYWdlIjoiaW1hZ2VzL3dhc3RlLWNvbGxlY3Rpb25zL2NvbnRhaW5lcnMvYXJ1bi9mb29kLWNhZGR5IiwiaW1hZ2VVUkwiOiJodHRwczovL3N0YXRpYy5jbG91ZDl0ZWNobm9sb2dpZXMuY29tL2Fzc2V0cy9pbWFnZXMvd2FzdGUtY29sbGVjdGlvbnMvY29udGFpbmVycy9hcnVuL2Zvb2QtY2FkZHlAM3guZTM1ZTBhNDY3NjRmLnBuZyJ9fX0="
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 # NSR - Nordvästra Skånes Renhållnings AB
 
-Support for schedules provided by [NSR](https://nsr.se), serving the municipalities of Bjuv, Båstad, Helsingborg, Höganäs, Åstorp, and Ängelholm in Skåne, Sweden.
+Support for schedules provided by [NSR - Nordvästra Skånes Renhållnings AB](https://nsr.se).
+
+Source for NSR waste collection schedule in northwest Skåne, Sweden.
 
 ## Configuration via configuration.yaml
 
@@ -14,12 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
-
-The street name and house number, e.g. `Signestorpsvägen 1`. Do not include postal code.
-
-If the same street name exists in multiple municipalities, append the city after a comma, e.g. `Storgatan 1, Ekeby`.
 
 ## Example
 
@@ -28,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: nsr_se
       args:
-        address: "Signestorpsvägen 1"
+        address: "Signestorpsv\xE4gen 1"
 ```
 
-## How to find your address
+## How to get the source arguments
 
-Search for your address at the [NSR Tömningskalender](https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/). Enter only the street name and number — not the postal code or city name.
+Enter your street address as shown on the NSR website (e.g. 'Storgatan 1'). Do not include postal code. Search at https://nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender/

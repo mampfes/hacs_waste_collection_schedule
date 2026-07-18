@@ -1,6 +1,8 @@
-# AWR
+# Abfallwirtschaft Rendsburg
 
-Support for schedules provided by [AWR](https://www.awr.de)
+Support for schedules provided by [Abfallwirtschaft Rendsburg](https://www.awr.de).
+
+Source for Abfallwirtschaft Rendsburg
 
 ## Configuration via configuration.yaml
 
@@ -29,5 +31,5 @@ waste_collection_schedule:
     - name: awr_de
       args:
         city: Rendsburg
-        street: Hindenburgstraße
+        street: "Hindenburgstra\xDFe"
 ```

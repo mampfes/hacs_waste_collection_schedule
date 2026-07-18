@@ -1,6 +1,8 @@
 # Community Waste Disposal (CWD)
 
-Support for schedules provided by [Community Waste Disposal (CWD)](https://www.communitywastedisposal.com), serving 39 cities in North Texas, USA.
+Support for schedules provided by [Community Waste Disposal (CWD)](https://www.communitywastedisposal.com).
+
+Source for Community Waste Disposal (CWD) in North Texas
 
 ## Configuration via configuration.yaml
 
@@ -14,10 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
-_(String) (required)_
-
-Street address including city and ZIP code.
+**address**  
+*(string) (required)*
 
 ## Example
 
@@ -26,11 +26,9 @@ waste_collection_schedule:
   sources:
     - name: communitywastedisposal_com
       args:
-        address: "123 Main St, Allen, TX 75002"
+        address: 100 Princeton Cir, Forney, TX 75126
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Visit the [CWD View My Schedule](https://www.communitywastedisposal.com/view-my-schedule/) page and enter your address to verify your service area and collection days.
-
-Supported cities include: Addison, Allen, Anna, Balch Springs, Blue Ridge, Celina, Crandall, Fairview, Farmersville, Fate, Forney, Frisco, Garland, Heath, Josephine, Kaufman, Lavon, Lucas, McKinney, McLendon-Chisholm, Melissa, Murphy, Nevada, Parker, Plano, Princeton, Prosper, Richardson, Rockwall, Rowlett, Royse City, Sachse, Seagoville, Southlake, St. Paul, Talty, Terrell, and Wylie.
+Enter your street address including city and ZIP (e.g. '123 Main St, Allen, TX 75002').

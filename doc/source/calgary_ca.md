@@ -1,10 +1,8 @@
-# City of Calgary
+# Calgary (AB)
 
-Support for schedules provided by [City of Calgary](https://www.calgary.ca/waste/residential/garbage-schedule.html).
+Support for schedules provided by [Calgary (AB)](https://www.calgary.ca).
 
-# Deprecated not all collections are being returned use recollect instead
-
-<https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/recollect.md>
+Source for Calgary waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -19,7 +17,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **street_address**  
-*(string) (required) (all capitals)*
+*(string) (required)*
 
 ## Example
 
@@ -28,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: calgary_ca
       args:
-        street_address: 42 AUBURN WY SE
+        street_address: 42 AUBURN SHORES WY SE
 ```
 
-## How to verify that your address works
+## How to get the source arguments
 
-Visit the [City of Calgary](https://www.calgary.ca/waste/residential/garbage-schedule.html) page and search for your address. Note that the address should be in all capital letters. The street type (crescent, way, landing should be a 2 letter abbreviation only i.e. CR, WY, LD). Do not append the city name or postal code.
+Enter your street address in upper case, including the city quadrant (e.g. `42 AUBURN SHORES WY SE`).

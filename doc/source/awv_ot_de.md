@@ -1,43 +1,40 @@
 # AWV: Abfall Wirtschaftszweckverband Ostthüringen
 
-Support for schedules provided by [AWV: Abfall Wirtschaftszweckverband Ostthüringen](https://www.awv-ot.de/), serving Ostthüringen, Germany.
+Support for schedules provided by [AWV: Abfall Wirtschaftszweckverband Ostthüringen](https://www.awv-ot.de/).
+
+Source for AWV: Abfall Wirtschaftszweckverband Ostthüringen.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: awv_ot_de
       args:
-        city: CITY (Ort)
-        street: STREET (Straße)
-        hnr: HNR (Housenummer)
-        
+        city: CITY
+        street: STREET
+        hnr: HNR
 ```
 
 ### Configuration Variables
 
 **city**  
-*(String) (required)*
+*(string) (required)*
 
 **street**  
-*(String) (required)*
+*(string) (required)*
 
 **hnr**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: awv_ot_de
       args:
         city: Bethenhausen OT Caasen
         street: Caasen
         hnr: 15A
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://www.awv-ot.de/www/awvot/abfuhrtermine/leerungstage/](https://www.awv-ot.de/www/awvot/abfuhrtermine/leerungstage/) and write them exactly like on the web page.

@@ -1,15 +1,17 @@
 # Rugby Borough Council
 
-Support for schedules provided by [Rugby Borough Council](https://www.rugby.gov.uk/), serving Rugby, UK.
+Support for schedules provided by [Rugby Borough Council](https://www.rugby.gov.uk/).
+
+Source for Rugby Borough Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rugby_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -17,17 +19,16 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-## Example using UPRN
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rugby_gov_uk
       args:
-        uprn: "010010521297"
+        uprn: 100070200377
 ```
 
+## How to get the source arguments
 
-#### How to get the source argument
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/ by entering your address details.

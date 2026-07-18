@@ -1,47 +1,45 @@
 # Zweckverband Abfallwirtschaft Kreis Bergstraße
 
-Support for schedules provided by [Zweckverband Abfallwirtschaft Kreis Bergstraße](https://www.zakb.de), serving Kreis Bergstraße, Germany.
+Support for schedules provided by [Zweckverband Abfallwirtschaft Kreis Bergstraße](https://www.zakb.de).
+
+Source for Zweckverband Abfallwirtschaft Kreis Bergstraße.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: zakb_de
       args:
         ort: ORT
-        strasse: STRAßE
-        hnr: HAUSNUMMER
-        hnr_zusatz: HAUSNUMMERZUSATZ
+        strasse: STRASSE
+        hnr: HNR
+        hnr_zusatz: HNR_ZUSATZ
 ```
 
 ### Configuration Variables
 
 **ort**  
-*(String) (required)*
+*(string) (required)*
 
 **strasse**  
-*(String) (required)*
+*(string) (required)*
 
 **hnr**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 **hnr_zusatz**  
-*(String) (optional)*
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: zakb_de
       args:
         ort: Abtsteinach
-        strasse: Am Hofböhl
-        hnr: 1
-        hnr_zusatz: 
+        strasse: "Am Hofb\xF6hl"
+        hnr: '1'
+        hnr_zusatz: ''
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://www.zakb.de/online-service/abfallkalender/](https://www.zakb.de/online-service/abfallkalender/) and write them exactly like on the web page.

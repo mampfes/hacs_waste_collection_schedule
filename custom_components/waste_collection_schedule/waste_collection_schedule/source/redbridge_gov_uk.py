@@ -1,147 +1,126 @@
+"""Redbridge Council, London, UK.
+
+Demonstrates: the plainest text-PDF path. The council generates a per-property
+calendar PDF (keyed by UPRN) whose text layer is a month-by-month grid, so a
+plain ``PdfTextParser`` returns the whole text and a small preprocessor walks
+it into ``(date, service)`` records. ``ICSTransformer`` maps the four service
+names onto canonical WasteTypes. No layout mode, no coordinates: when a text
+PDF reads cleanly, this is all a source needs.
+"""
+
+import datetime
 import re
-from datetime import datetime
-from io import BytesIO
+from collections.abc import Iterable
+from typing import ClassVar, final
 
-import requests
-from pypdf import PdfReader
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import config_params
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.parsers import PdfTextParser
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+)
 
-TITLE = "Redbridge Council"
-DESCRIPTION = "Source for redbridge.gov.uk services for Redbridge Council, UK."
-URL = "https://redbridge.gov.uk"
-TEST_CASES = {
-    "council office recycling only": {"uprn": 10034922090},
-    "refuse and recycling only": {"uprn": 10013585215},
-    "a church vicarage, garden, recycling, refuse": {"uprn": 10034912354},
-}
-ICON_MAP = {
-    "REFUSE": Icons.GENERAL_WASTE,
-    "RECYCLING": Icons.RECYCLING,
-    "GARDEN": Icons.GARDEN,
-    "FOOD": Icons.BIO_KITCHEN,
-}
+_API_URL = "https://my.redbridge.gov.uk/RecycleRefuse/GetFile"
 
-KNOWN_SERVICES = {"REFUSE", "RECYCLING", "GARDEN", "FOOD"}
+# The service names the PDF prints, keyed by their leading word.
+_KNOWN_SERVICES = {"REFUSE", "RECYCLING", "GARDEN", "FOOD"}
 
-
-def _extract_text_from_pdf(pdf_bytes: bytes) -> str:
-    reader = PdfReader(BytesIO(pdf_bytes))
-    text = ""
-    for page in reader.pages:
-        text += page.extract_text() or ""
-    return text
+_MONTH_RE = re.compile(
+    r"^(January|February|March|April|May|June|July|August|September|October|"
+    r"November|December)\s+(\d{4})$",
+    re.IGNORECASE,
+)
+_WEEKDAY_HEADER_RE = re.compile(
+    r"^(Sun\s+Mon\s+Tue\s+Wed\s+Thu\s+Fri\s+Sat)$", re.IGNORECASE
+)
+# A day row: one or more day numbers separated by spaces, e.g. "1 2" or "3 4 5".
+_DAY_ROW_RE = re.compile(r"^(?:\d{1,2})(?:\s+\d{1,2})*$")
 
 
-def _extract_collections_from_text(text: str) -> list[Collection]:
-    # Normalise and split into non‑empty trimmed lines
-    lines = [line.strip() for line in text.splitlines() if line.strip()]
-
-    # Headers and structure
-    month_regex = re.compile(
-        r"^(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})$",
-        re.I,
-    )
-    weekday_header_regex = re.compile(
-        r"^(Sun\s+Mon\s+Tue\s+Wed\s+Thu\s+Fri\s+Sat)$", re.I
+def _is_boundary(line: str) -> bool:
+    """True for a line that ends the service block following a day row."""
+    lower = line.lower()
+    return bool(
+        _MONTH_RE.match(line)
+        or _WEEKDAY_HEADER_RE.match(line)
+        or _DAY_ROW_RE.match(line)
+        or "your collection schedule" in lower
     )
 
-    # A day row contains one or more day numbers separated by spaces, e.g. "1 2" or "3 4 5 6 7"
-    day_group_regex = re.compile(r"^(?:\d{1,2})(?:\s+\d{1,2})*$")
 
-    # PDF lists only the type name per line, e.g. "Refuse", "Food", "Garden", "Recycling"
-    service_regex = re.compile(r"^(.+)$")
+@final
+class Source(BaseSource):
+    TITLE = "Redbridge Council"
+    DESCRIPTION = "Source for redbridge.gov.uk services for Redbridge Council, UK."
+    URL = "https://redbridge.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    current_month_name: str | None = None
-    current_year: int | None = None
+    TEST_CASES: ClassVar[dict] = {
+        "council office recycling only": {"uprn": 10034922090},
+        "refuse and recycling only": {"uprn": 10013585215},
+        "a church vicarage, garden, recycling, refuse": {"uprn": 10034912354},
+    }
 
-    def month_number(name: str) -> int:
-        return datetime.strptime(name, "%B").month
+    PARAMS = (config_params.uprn(),)
 
-    entries: list[Collection] = []
-    i = 0
-    while i < len(lines):
-        line = lines[i]
+    retrieve = HttpGetRetriever(url=_API_URL, params=lambda uprn: {"uprn": uprn})
+    parse = PdfTextParser(min_chars=100)
 
-        # Detect month header, e.g. "March 2026"
-        m = month_regex.match(line)
-        if m:
-            current_month_name = m.group(1)
-            current_year = int(m.group(2))
-            i += 1
-            continue
+    transform = ICSTransformer(
+        type_value_map={
+            "REFUSE": GENERAL_WASTE,
+            "RECYCLING": RECYCLABLES,
+            "GARDEN": GARDEN_WASTE,
+            "FOOD": FOOD_WASTE,
+        }
+    )
 
-        # Skip weekday header rows and other non‑data noise
-        lower = line.lower()
-        if (
-            weekday_header_regex.match(line)
-            or lower.startswith("london borough of redbridge")
-            or "your collection schedule" in lower
-        ):
-            i += 1
-            continue
+    def __init__(self, uprn: "str | int") -> None:
+        super().__init__(uprn=str(uprn))
 
-        # Detect a calendar day ROW (e.g. "1 2" or "3 4 5 6 7") once we know the month/year
-        if current_month_name and current_year and day_group_regex.match(line):
-            # Parse all day numbers on the row
-            days: list[int] = []
-            for token in line.split():
-                try:
-                    d = int(token)
-                    if 1 <= d <= 31:
-                        days.append(d)
-                except ValueError:
-                    pass
+    def preprocess(self, text: str, source=None) -> Iterable[tuple[datetime.date, str]]:
+        """Walk the calendar text, yielding (date, service-key) per collection.
 
-            # Gather following service lines until next structural boundary
+        The grid renders as a month header, a weekday header, then day rows;
+        the services printed after a day row belong to the last (largest) day
+        number on that row.
+        """
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+        month = year = None
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            header = _MONTH_RE.match(line)
+            if header:
+                month = datetime.datetime.strptime(header.group(1), "%B").month
+                year = int(header.group(2))
+                i += 1
+                continue
+            if not (month and year and _DAY_ROW_RE.match(line)):
+                i += 1
+                continue
+
+            days = [int(t) for t in line.split() if 1 <= int(t) <= 31]
             services: list[str] = []
             j = i + 1
-            while j < len(lines):
-                next_line = lines[j]
-                lower_next = next_line.lower()
-
-                if (
-                    month_regex.match(next_line)
-                    or weekday_header_regex.match(next_line)
-                    or day_group_regex.match(next_line)
-                    or "your collection schedule" in lower_next
-                ):
-                    break
-
-                s = service_regex.match(next_line)
-                if s:
-                    wt = s.group(1).strip()
-                    key = wt.split(" ")[0].upper()
-                    if key in KNOWN_SERVICES:
-                        services.append(wt)
+            while j < len(lines) and not _is_boundary(lines[j]):
+                key = lines[j].split(" ")[0].upper()
+                if key in _KNOWN_SERVICES:
+                    services.append(key)
                 j += 1
 
-            # For this layout, all services on the row belong to the last day number
             if days and services:
-                month = month_number(current_month_name)
-                target_day = max(days)
-                date = datetime(current_year, month, target_day).date()
-                for wt in services:
-                    key = wt.split(" ")[0].upper()
-                    entries.append(Collection(date=date, t=wt, icon=ICON_MAP.get(key)))
-
+                try:
+                    collection_date = datetime.date(year, month, max(days))
+                except ValueError:
+                    collection_date = None
+                if collection_date is not None:
+                    for key in services:
+                        yield collection_date, key
             i = j
-            continue
-
-        i += 1
-
-    return entries
-
-
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn)
-
-    def fetch(self):
-        r = requests.get(
-            "https://my.redbridge.gov.uk/RecycleRefuse/GetFile",
-            params={"uprn": self._uprn},
-        )
-        r.raise_for_status()
-
-        pdf_text = _extract_text_from_pdf(r.content)
-        return _extract_collections_from_text(pdf_text)

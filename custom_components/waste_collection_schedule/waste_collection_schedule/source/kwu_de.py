@@ -1,155 +1,120 @@
+"""KWU Entsorgung Landkreis Oder-Spree (kwu-entsorgung.de).
+
+Demonstrates: a four-request HTML-dropdown cascade (city -> street -> object)
+ending in a scraped "ICal herunterladen" download link, whose href sometimes
+points at the provider's internal ``kwu.lokal`` hostname and must be rewritten
+to the public one before it can be fetched. No configured retriever expresses
+"resolve three dropdowns, scrape a link, rewrite its host, then download it",
+hence a source-defined ``retrieve()``.
+"""
+
 from datetime import date
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, house_number, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "KWU Entsorgung Landkreis Oder-Spree"
-DESCRIPTION = "Source for KWU Entsorgung, Germany"
-URL = "https://www.kwu-entsorgung.de/"
-TEST_CASES = {
-    "Erkner": {"city": "Erkner", "street": "Heinrich-Heine-Straße", "number": "11"},
-    "Bad Saarow": {"city": "Bad Saarow", "street": "Ahornallee", "number": 1},
-    "Spreenhagen Feldweg 4": {"city": "Spreenhagen", "street": "Feldweg", "number": 4},
-}
-
-HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
-ICON_MAP = {
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Papiertonne": Icons.PAPER,
-    "Biotonne": Icons.BIO_KITCHEN,
-}
+_HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
+_BASE_URL = "https://kalender.kwu-entsorgung.de"
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-        "number": "Hausnummer",
+def _find_option(options, value: str, field: str) -> str:
+    normalised = value.strip().lower()
+    labels = []
+    for option in options:
+        text = option.text.strip()
+        labels.append(text)
+        if text.lower() == normalised:
+            return option["value"]
+    raise SourceArgumentNotFoundWithSuggestions(field, value, labels)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "KWU Entsorgung Landkreis Oder-Spree"
+    DESCRIPTION = "Source for KWU Entsorgung, Germany"
+    URL = "https://www.kwu-entsorgung.de/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Erkner": {"city": "Erkner", "street": "Heinrich-Heine-Straße", "number": "11"},
+        "Bad Saarow": {"city": "Bad Saarow", "street": "Ahornallee", "number": 1},
+        "Spreenhagen Feldweg 4": {
+            "city": "Spreenhagen",
+            "street": "Feldweg",
+            "number": 4,
+        },
     }
-}
 
+    PARAMS = (
+        city(field="city"),
+        street(field="street"),
+        house_number(field="number"),
+    )
 
-class Source:
-    def __init__(self, city, street, number):
-        self._city = city.strip().lower()
-        self._street = street.strip().lower()
-        self._number = str(number).lower().strip()
-        self._ics = ICS()
+    parse = IcsParser()
+    transform = ICSTransformer()
 
-    def fetch(self):
-        session = requests.Session()
+    def __init__(self, city: str, street: str, number: "str | int"):
+        super().__init__(city=city, street=street, number=number)
 
-        r = requests.get(
-            "https://kalender.kwu-entsorgung.de", headers=HEADERS, verify=True
+    def retrieve(self, source):
+        session = source.session
+        city_value = self.params["city"]
+        street_value = self.params["street"]
+        number_value = str(self.params["number"])
+
+        r = session.get(_BASE_URL, headers=_HEADERS)
+        r.raise_for_status()
+        cities = BeautifulSoup(r.text, "html.parser").find_all("option")
+        ort_value = _find_option(cities, city_value, "city")
+
+        r = session.get(
+            f"{_BASE_URL}/kal_str2ort.php",
+            params={"ort": ort_value},
+            headers=_HEADERS,
         )
+        r.raise_for_status()
+        streets = BeautifulSoup(r.text, "html.parser").find_all("option")
+        strasse_value = _find_option(streets, street_value, "street")
 
-        parsed_html = BeautifulSoup(r.text, "html.parser")
-        Orte = parsed_html.find_all("option")
-
-        OrtValue = None
-        for Ort in Orte:
-            if self._city == Ort.text.strip().lower():
-                OrtValue = Ort["value"]
-                break
-        if OrtValue is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city", self._city, [o.text.strip() for o in Orte]
-            )
-
-        r = requests.get(
-            "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
-            params={"ort": OrtValue},
-            headers=HEADERS,
-            verify=True,
+        r = session.get(
+            f"{_BASE_URL}/kal_str2ort.php",
+            params={"ort": ort_value, "strasse": strasse_value},
+            headers=_HEADERS,
         )
+        r.raise_for_status()
+        objects = BeautifulSoup(r.text, "html.parser").find_all("option")
+        objekt_value = _find_option(objects, number_value, "number")
 
-        parsed_html = BeautifulSoup(r.text, "html.parser")
-        Strassen = parsed_html.find_all("option")
-
-        StrasseValue = None
-        for Strasse in Strassen:
-            if self._street == Strasse.text.strip().lower():
-                StrasseValue = Strasse["value"]
-                break
-        if StrasseValue is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, [s.text.strip() for s in Strassen]
-            )
-
-        r = requests.get(
-            "https://kalender.kwu-entsorgung.de/kal_str2ort.php",
-            params={"ort": OrtValue, "strasse": StrasseValue},
-            headers=HEADERS,
-            verify=True,
-        )
-
-        parsed_html = BeautifulSoup(r.text, "html.parser")
-        objects = parsed_html.find_all("option")
-
-        ObjektValue = None
-        for obj in objects:
-            if self._number == obj.text.lower().strip():
-                ObjektValue = obj["value"]
-                break
-        if ObjektValue is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "number", self._number, [o.text.strip() for o in objects]
-            )
-
-        r = requests.post(
-            "https://kalender.kwu-entsorgung.de/kal_uebersicht-2023.php",
+        r = session.post(
+            f"{_BASE_URL}/kal_uebersicht-2023.php",
             data={
-                "ort": OrtValue,
-                "strasse": StrasseValue,
-                "objekt": ObjektValue,
+                "ort": ort_value,
+                "strasse": strasse_value,
+                "objekt": objekt_value,
                 "jahr": date.today().year,
             },
-            headers=HEADERS,
-            verify=True,
+            headers=_HEADERS,
         )
-
-        parsed_html = BeautifulSoup(r.text, "html.parser")
-        Links = parsed_html.find_all("a")
-
-        for Link in Links:
-            if "ICal herunterladen" in Link.text:
-                ics_url = Link["href"]
-
-        if ics_url is None:
-            raise Exception("ics url not found")
-
-        if "kwu.lokal" in ics_url:
-            ics_url = ics_url.replace(
-                "http://kalender.kwu.lokal", "https://kalender.kwu-entsorgung.de"
-            )
-
-        # get ics file
-        r = session.get(ics_url, headers=HEADERS, verify=True)
         r.raise_for_status()
 
-        # parse ics file
-        dates = self._ics.convert(r.text)
+        ics_url = None
+        for link in BeautifulSoup(r.text, "html.parser").find_all("a"):
+            if "ICal herunterladen" in link.text:
+                ics_url = str(link["href"])
+                break
+        if ics_url is None:
+            raise SourceArgumentNotFoundWithSuggestions("number", number_value, [])
 
-        entries = []
-        # for d in dates:
-        #    entries.append(Collection(d[0], d[1]))
-        # return entries
-        for d in dates:
-            waste_type = d[1].strip()
-            next_pickup_date = d[0]
+        if "kwu.lokal" in ics_url:
+            ics_url = ics_url.replace("http://kalender.kwu.lokal", _BASE_URL)
 
-            entries.append(
-                Collection(
-                    date=next_pickup_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
+        r = session.get(ics_url, headers=_HEADERS)
+        r.raise_for_status()
+        return r

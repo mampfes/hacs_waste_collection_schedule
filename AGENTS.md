@@ -168,11 +168,16 @@ pre-commit install
 - ICS-based: [`source/stadtreinigung_hamburg.py`](custom_components/waste_collection_schedule/waste_collection_schedule/source/stadtreinigung_hamburg.py)
 - JSON/REST API: [`source/toronto_ca.py`](custom_components/waste_collection_schedule/waste_collection_schedule/source/toronto_ca.py)
 
+## Versioning
+
+The project follows strict semantic versioning (Option A; full policy in `doc/versioning.md`). New sources are a minor bump, fixes are a patch, and breaking changes are a major. Converting a legacy source to the BaseSource pipeline is breaking (it changes the waste-type labels), so migrations are batched into a major release; the legacy `fetch()` contract stays supported. Deprecate before removing: keep a shim only when removal would change entity IDs, record it in `DEPRECATIONS.md`, keep it for at least two minor releases, and batch removals into the next major.
+
 ## Pull request checklist
 
 1. Source module passes `test_sources.py -s <name>` against real TEST_CASES.
-2. New `doc/source/<name>.md` exists.
-3. `python -m pytest tests/` passes locally.
-4. Changed files are formatted and linted with `ruff format` and `ruff check --fix`.
-5. PR targets `master` of `mampfes/hacs_waste_collection_schedule`.
-6. Do **not** commit changes to `README.md`, `info.md`, `sources.json`, `source_metadata.json`, `translations/*.json`, or `doc/ics/*.md` — CI regenerates these after merge.
+2. New `doc/source/<name>.md` exists (legacy sources only; pipeline sources are auto-generated).
+3. A recorded fixture/cassette covers the source's TEST_CASES (one per distinct response shape for shared-service sources).
+4. `python -m pytest tests/` passes locally.
+5. Changed files are formatted and linted with `ruff format` and `ruff check --fix`.
+6. PR targets `master` of `mampfes/hacs_waste_collection_schedule`.
+7. Do **not** commit changes to `README.md`, `info.md`, `sources.json`, `source_metadata.json`, `translations/*.json`, or `doc/ics/*.md` (CI regenerates these after merge).

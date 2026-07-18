@@ -1,127 +1,173 @@
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
-)
-from waste_collection_schedule.service.ICS import ICS
+"""Landkreis Helmstedt (landkreis-helmstedt.de).
 
-TITLE = "Landkreis Helmstedt"
-DESCRIPTION = "Source for Landkreis Helmstedt."
-URL = "landkreis-helmstedt.de"
-TEST_CASES = {
-    "Grasleben": {
-        "municipal": "Grasleben und Velpke",
-        "restabfall": 1,
-        "bioabfall": 1,
-        "gelber_sack": 3,
-        "altpapier": 5,
-    },
-    "Paläon": {
-        "municipal": "Schöningen und Heeseberg",
-        "restabfall": 1,
-        "bioabfall": 1,
-        "gelber_sack": 1,
-        "altpapier": 2,
-    },
-    "Rhode": {
-        "municipal": "Nord-Elm und Königslutter Ortsteile",
-        "restabfall": 2,
-        "bioabfall": 2,
-        "gelber_sack": 1,
-        "altpapier": 2,
-    },
-    "Essehof": {
-        "municipal": "Lehre",
-        "restabfall": 1,
-        "bioabfall": 1,
-        "gelber_sack": 2,
-        "altpapier": 1,
-    },
-    "Braunschweiger Str.": {
-        "municipal": "Königslutter Stadtgebiet",
-        "restabfall": 1,
-        "bioabfall": 1,
-        "gelber_sack": 1,
-        "altpapier": 1,
-    },
-    "Barmke": {
-        "municipal": "Helmstedt und Ortsteile",
-        "restabfall": 3,
-        "bioabfall": 3,
-        "gelber_sack": 3,
-        "altpapier": 5,
-    },
-}
+Classic TwoStepRetriever shape: a lookup page lists every municipal ICS
+calendar download link; the matching municipality's href is the schedule
+URL directly. Each municipal calendar covers every collection area at once,
+tagged by a trailing area number ("Restabfall 1", "Altpapier 5", ...); a
+custom ``preprocess`` filters to the user's selected area per waste stream
+and validates every stream was found, mirroring the legacy source's
+per-argument checks.
+"""
+
+from typing import ClassVar, final
+
+from bs4 import BeautifulSoup
+from waste_collection_schedule import retrievers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer
 
 API_URL = "https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html"
-HEADERS = {
-    "user-agent": "Mozilla",
-}
-
-# ### Arguments affecting the configuration GUI ####
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Visit "
-    + API_URL
-    + " and first get the name of the ICS calendar on the website for your municipal, then open the related PDF calendar and find the collection areas.",
-    "de": "Öffne "
-    + API_URL
-    + " und finde den Name des ICS Kalenders deiner Gemeinde heraus. Öffne danach den PDF Kalender und suche die passenden Abholgebiete.",
-}
-
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "municipal": 'Copy the name of the ICS calendar from the website for your municipal. This needs to be without the year at the end. For example: "Stadt Königslutter am Elm – ohne Ortsteile" (without quotes).',
-        "restabfall": "Number for the collection type from the PDF calendar",
-        "altpapier": "Number for the collection type from the PDF calendar",
-        "gelber_sack": "Number for the collection type from the PDF calendar",
-        "bioabfall": "Number for the collection type from the PDF calendar",
-    },
-    "de": {
-        "municipal": 'Kopiere den Namen des ICS Kalenders der Gemeinde von der Website. Der Name darf nicht das Jahr beinhalten. Z.B. "Stadt Königslutter am Elm – ohne Ortsteile" (ohne Anführungszeichen).',
-        "restabfall": "Nummer des Abfuhrgebietes aus dem PDF Kalender.",
-        "altpapier": "Nummer des Abfuhrgebietes aus dem PDF Kalender.",
-        "gelber_sack": "Nummer des Abfuhrgebietes aus dem PDF Kalender.",
-        "bioabfall": "Nummer des Abfuhrgebietes aus dem PDF Kalender.",
-    },
-}
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "municipal": "Municipal",
-        "restabfall": "Domestic",
-        "altpapier": "Paper",
-        "gelber_sack": "Recycling",
-        "bioabfall": "Organic",
-    },
-    "de": {
-        "municipal": "Gemeinde",
-        "restabfall": "Restabfall",
-        "altpapier": "Altpapier",
-        "gelber_sack": "Gelber Sack",
-        "bioabfall": "Bioabfall",
-    },
-}
-
-# ### End of arguments affecting the configuration GUI ####
-
+HEADERS = {"user-agent": "Mozilla"}
 
 COLLECTION_TYPE_RESTABFALL = "Restabfall"
 COLLECTION_TYPE_ALTPAPIER = "Altpapier"
 COLLECTION_TYPE_GELBER_SACK = "Gelber Sack"
 COLLECTION_TYPE_BIOABFALL = "Bioabfall"
 
-
-ICON_MAP = {
-    COLLECTION_TYPE_RESTABFALL: "mdi:trash-can",
-    COLLECTION_TYPE_ALTPAPIER: "mdi:package-variant",
-    COLLECTION_TYPE_GELBER_SACK: "mdi:recycle",
-    COLLECTION_TYPE_BIOABFALL: "mdi:leaf",
+# Maps each waste-stream PARAMS field to its collection-type label.
+_FIELD_TO_TYPE = {
+    "restabfall": COLLECTION_TYPE_RESTABFALL,
+    "altpapier": COLLECTION_TYPE_ALTPAPIER,
+    "gelber_sack": COLLECTION_TYPE_GELBER_SACK,
+    "bioabfall": COLLECTION_TYPE_BIOABFALL,
 }
 
 
-class Source:
+def _pick_calendar_href(lookup, source) -> str:
+    soup = BeautifulSoup(lookup.text, "html.parser")
+    links = soup.select('.abfrage2 .manager_titel [title="herunterladen/öffnen"]')
+    municipal = source.params["municipal"]
+
+    names = []
+    for link in links:
+        href = link.get("href")
+        name = link.get_text()
+        if not isinstance(href, str):
+            continue
+        names.append(name)
+        if name.startswith(municipal):
+            return href
+
+    raise SourceArgumentNotFoundWithSuggestions("municipal", municipal, names)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Landkreis Helmstedt"
+    DESCRIPTION = "Source for Landkreis Helmstedt."
+    URL = "landkreis-helmstedt.de"
+    COUNTRY = "de"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Grasleben": {
+            "municipal": "Grasleben und Velpke",
+            "restabfall": 1,
+            "bioabfall": 1,
+            "gelber_sack": 3,
+            "altpapier": 5,
+        },
+        "Paläon": {
+            "municipal": "Schöningen und Heeseberg",
+            "restabfall": 1,
+            "bioabfall": 1,
+            "gelber_sack": 1,
+            "altpapier": 2,
+        },
+        "Rhode": {
+            "municipal": "Nord-Elm und Königslutter Ortsteile",
+            "restabfall": 2,
+            "bioabfall": 2,
+            "gelber_sack": 1,
+            "altpapier": 2,
+        },
+        "Essehof": {
+            "municipal": "Lehre",
+            "restabfall": 1,
+            "bioabfall": 1,
+            "gelber_sack": 2,
+            "altpapier": 1,
+        },
+        "Braunschweiger Str.": {
+            "municipal": "Königslutter Stadtgebiet",
+            "restabfall": 1,
+            "bioabfall": 1,
+            "gelber_sack": 1,
+            "altpapier": 1,
+        },
+        "Barmke": {
+            "municipal": "Helmstedt und Ortsteile",
+            "restabfall": 3,
+            "bioabfall": 3,
+            "gelber_sack": 3,
+            "altpapier": 5,
+        },
+    }
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            f"Visit {API_URL} and first get the name of the ICS calendar on the "
+            "website for your municipal, then open the related PDF calendar and "
+            "find the collection areas."
+        ),
+    }
+
+    PARAMS = (
+        text_field("municipal", label="Municipal"),
+        text_field("restabfall", label="Domestic (area number)"),
+        text_field("altpapier", label="Paper (area number)"),
+        text_field("gelber_sack", label="Recycling (area number)"),
+        text_field("bioabfall", label="Organic (area number)"),
+    )
+    RAISE_ON_EMPTY = True
+
+    retrieve = retrievers.TwoStepRetriever(
+        lookup_url=API_URL,
+        extract=_pick_calendar_href,
+        schedule_url=lambda href, **_: href,
+        headers=HEADERS,
+    )
+    parse = IcsParser()
+    transform = ICSTransformer()
+
+    def preprocess(self, records, source=None):
+        selection = {
+            field_type: str(self.params[field_name])
+            for field_name, field_type in _FIELD_TO_TYPE.items()
+        }
+        seen = dict.fromkeys(selection, False)
+
+        filtered = []
+        for date_, summary in records:
+            pick_up_type = summary[:-2]
+            pick_up_area = summary[-1:]
+            if pick_up_type in selection and pick_up_area == selection[pick_up_type]:
+                seen[pick_up_type] = True
+                filtered.append((date_, pick_up_type))
+
+        # Same validation order as the legacy source.
+        for pick_up_type in (
+            COLLECTION_TYPE_GELBER_SACK,
+            COLLECTION_TYPE_ALTPAPIER,
+            COLLECTION_TYPE_BIOABFALL,
+            COLLECTION_TYPE_RESTABFALL,
+        ):
+            if not seen[pick_up_type]:
+                field_name = next(
+                    name
+                    for name, type_ in _FIELD_TO_TYPE.items()
+                    if type_ == pick_up_type
+                )
+                raise SourceArgumentNotFoundWithSuggestions(
+                    field_name,
+                    self.params[field_name],
+                    ["check the PDF calendar for valid collection areas"],
+                )
+
+        return filtered
+
     def __init__(
         self,
         municipal: str,
@@ -130,114 +176,10 @@ class Source:
         gelber_sack: int,
         bioabfall: int,
     ):
-        self._municipal: str = municipal
-        self._restabfall: int = restabfall
-        self._altpapier: int = altpapier
-        self._gelber_sack: int = gelber_sack
-        self._bioabfall: int = bioabfall
-        self._ics = ICS()
-
-    def fetch(self):
-        r = requests.get(API_URL, headers=HEADERS)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        icsCalendarsForLandkreisHelmstedt = soup.select(
-            '.abfrage2 .manager_titel [title="herunterladen/öffnen"]'
+        super().__init__(
+            municipal=municipal,
+            restabfall=restabfall,
+            altpapier=altpapier,
+            gelber_sack=gelber_sack,
+            bioabfall=bioabfall,
         )
-        foundMunicipalCalendarICSDownloadURL = ""
-
-        for icsCalendarDownloadLink in icsCalendarsForLandkreisHelmstedt:
-            if not icsCalendarDownloadLink:
-                continue
-            href = icsCalendarDownloadLink.get("href")
-            href_name = icsCalendarDownloadLink.getText()
-            if not isinstance(href, str):
-                continue
-            if href_name.startswith(self._municipal):
-                foundMunicipalCalendarICSDownloadURL = href
-                break
-
-        if not foundMunicipalCalendarICSDownloadURL:
-            raise SourceArgumentException(
-                argument="municipal",
-                message="No Abholgebiet found for "
-                + self._municipal
-                + ". Please check "
-                + API_URL
-                + " for correct ICS calendar name.",
-            )
-
-        r = requests.get(foundMunicipalCalendarICSDownloadURL, headers=HEADERS)
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
-        elements = []
-
-        missingAltpapier = True
-        missingBioabfall = True
-        missingGelberSack = True
-        missingRestabfall = True
-
-        for d in dates:
-            type = d[1]
-            date = d[0]
-            pickUpArea = type[-1:]
-            pickUpType = type[:-2]
-
-            addDate = False
-            if pickUpType == COLLECTION_TYPE_ALTPAPIER:
-                if pickUpArea == str(self._altpapier):
-                    addDate = True
-                    missingAltpapier = False
-            elif pickUpType == COLLECTION_TYPE_BIOABFALL:
-                if pickUpArea == str(self._bioabfall):
-                    addDate = True
-                    missingBioabfall = False
-            elif pickUpType == COLLECTION_TYPE_GELBER_SACK:
-                if pickUpArea == str(self._gelber_sack):
-                    addDate = True
-                    missingGelberSack = False
-            elif pickUpType == COLLECTION_TYPE_RESTABFALL:
-                if pickUpArea == str(self._restabfall):
-                    addDate = True
-                    missingRestabfall = False
-
-            if addDate:
-                elements.append(
-                    Collection(
-                        date=date,  # Collection date
-                        t=pickUpType,  # Collection type
-                        icon=ICON_MAP.get(pickUpType),  # Collection icon
-                    )
-                )
-
-        self.abort_when_missing_collection_types(
-            missingAltpapier, missingBioabfall, missingGelberSack, missingRestabfall
-        )
-
-        return elements
-
-    def abort_when_missing_collection_types(
-        self, missingAltpapier, missingBioabfall, missingGelberSack, missingRestabfall
-    ):
-        if missingGelberSack:
-            raise SourceArgumentException(
-                argument="gelber_sack",
-                message="Check PDF calendar for valid collection areas.",
-            )
-        if missingAltpapier:
-            raise SourceArgumentException(
-                argument="altpapier",
-                message="Check PDF calendar for valid collection areas.",
-            )
-        if missingBioabfall:
-            raise SourceArgumentException(
-                argument="bioabfall",
-                message="Check PDF calendar for valid collection areas.",
-            )
-        if missingRestabfall:
-            raise SourceArgumentException(
-                argument="restabfall",
-                message="Check PDF calendar for valid collection areas.",
-            )

@@ -1,39 +1,35 @@
 # Abfallwirtschaftsbetrieb Kiel (ABK)
 
-Support for schedules provided by [Abfallwirtschaftsbetrieb Kiel (ABK)](https://abki.de/), serving Kiel, Germany.
+Support for schedules provided by [Abfallwirtschaftsbetrieb Kiel (ABK)](https://abki.de/).
+
+Source for Abfallwirtschaftsbetrieb Kiel (ABK).
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: abki_de
       args:
         street: STREET
-        number: "HOUSE NUMBER"
-        
+        number: NUMBER
 ```
 
 ### Configuration Variables
 
 **street**  
-*(String) (required)*
+*(string) (required)*
 
 **number**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: abki_de
       args:
-        street: Achterwehrer Straße
-        number: 1 a
-        
+        street: "auguste-viktoria-stra\xDFe"
+        number: 14
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://abki.de/dienste/entsorgung-und-recycling/behälter/leerungstermine.html](https://abki.de/dienste/entsorgung-und-recycling/behälter/leerungstermine.html) and write them exactly like on the web page.

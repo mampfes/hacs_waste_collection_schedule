@@ -1,6 +1,8 @@
-# Umweltbetrieb Stadt Bielefeld
+# Bielefeld
 
-Support for schedules provided by [Umweltbetrieb Stadt Bielefeld](https://www.bielefeld.de/umweltbetrieb) located in Bielefeld, Germany.
+Support for schedules provided by [Bielefeld](https://bielefeld.de).
+
+Source for Stadt Bielefeld.
 
 ## Configuration via configuration.yaml
 
@@ -10,8 +12,8 @@ waste_collection_schedule:
     - name: bielefeld_de
       args:
         street: STREET
-        house_number: HNR
-        address_suffix: HNR_SUFFIX
+        house_number: HOUSE_NUMBER
+        address_suffix: ADDRESS_SUFFIX
 ```
 
 ### Configuration Variables
@@ -20,10 +22,10 @@ waste_collection_schedule:
 *(string) (required)*
 
 **house_number**  
-*(integer) (required)*
+*(string) (required)*
 
 **address_suffix**  
-*(string) (optional) (default: "")*
+*(string) (optional)*
 
 ## Example
 
@@ -32,11 +34,6 @@ waste_collection_schedule:
   sources:
     - name: bielefeld_de
       args:
-        street: "Eckendorfer Straße"
+        street: "Eckendorfer Stra\xDFe"
         house_number: 57
 ```
-
-## How to get the source arguments
-
-These values are the location you want to query for. Make sure, the writing is exactly as it is on `https://anwendungen.bielefeld.de/WasteManagementBielefeld/WasteManagementServlet?SubmitAction=wasteDisposalServices]`. Typos will result in an parsing error which is printed in the log. As `house_number` expects a numeric input, address suffixes have to be provided via the `address_suffix` argument.
-`address_suffix` could be for example an alphanumeric character "A" or a additional house number like "/1".

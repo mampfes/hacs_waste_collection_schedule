@@ -1,6 +1,8 @@
 # Waipa District Council
 
-Support for schedules provided by [Waipa District Council](https://aucklandcouncil.govt.nz/).
+Support for schedules provided by [Waipa District Council](https://www.waipadc.govt.nz/).
+
+Source for Waipa District Council. Finds both general and glass recycling dates.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: waipa_nz
       args:
-        address: ADDRESS # see 'How to get the source argument below'
+        address: ADDRESS
 ```
 
 ### Configuration Variables
@@ -24,9 +26,5 @@ waste_collection_schedule:
   sources:
     - name: waipa_nz
       args:
-        address: 1 Acacia Avenue
+        address: 10 Queen Street
 ```
-
-## How to get the source argument
-
-Simply enter your street number and name as if you're searching on the online tool. Note that the first result will be selected if there are multiple search results.

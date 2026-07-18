@@ -1,6 +1,8 @@
 # Launceston City Council
 
-Support for schedules provided by [Launceston City Council](https://www.launceston.tas.gov.au/Natural-Environment-and-Waste/Kerbside-Collection).
+Support for schedules provided by [Launceston City Council](https://www.launceston.tas.gov.au).
+
+Source for Launceston City Council waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Launceston Kerbside Collection Pickup Days](https://launceston.maps.arcgis.com/apps/webappviewer/index.html?id=7a89f9862a0846bd9af0a538f5194a55) page and search for your address. Use your full street address including suburb and state (e.g. "40 Southgate Dr, Kings Meadows, TAS").
+Enter your street address, e.g. '40 Southgate Dr, Kings Meadows, TAS'.

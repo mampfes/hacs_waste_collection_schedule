@@ -1,6 +1,8 @@
 # StadtService Brühl
 
-Support for schedules provided by [StadtService Brühl](https://services.stadtservice-bruehl.de/abfallkalender/), Germany.
+Support for schedules provided by [StadtService Brühl](https://stadtservice-bruehl.de).
+
+Source für Abfallkalender StadtService Brühl
 
 ## Configuration via configuration.yaml
 
@@ -10,7 +12,7 @@ waste_collection_schedule:
     - name: stadtservice_bruehl_de
       args:
         strasse: STRASSE
-        hnr: Hausnummer
+        hnr: HNR
 ```
 
 ### Configuration Variables
@@ -28,13 +30,6 @@ waste_collection_schedule:
   sources:
     - name: stadtservice_bruehl_de
       args:
-        strasse: "Badorfer Straße"
-        hnr: "1"
-
+        strasse: "Badorfer Stra\xDFe"
+        hnr: '1'
 ```
-
-## How to get the source arguments
-
-1. Go to your calendar at [StadtService Brühl - Abfallkalender](https://services.stadtservice-bruehl.de/abfallkalender/)
-2. Enter your street and housenumber
-3. Copy the exact values from the textboxes street in the source configuration.

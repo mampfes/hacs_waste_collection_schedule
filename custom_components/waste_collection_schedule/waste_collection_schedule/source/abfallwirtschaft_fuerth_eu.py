@@ -1,51 +1,85 @@
-import requests
-from waste_collection_schedule import Collection, Icons
+"""Abfallwirtschaft Stadt Fürth.
+
+Demonstrates: a static, param-built ICS GET that still needs a custom
+``parse`` override, because the feed needs two things ``parsers.IcsParser``
+does not expose:
+
+* the provider emits non-ASCII UID lines that break the ICS parser unless
+  the umlauts are transliterated first (no hook in the standard parser for
+  pre-processing the raw ICS text), and
+* the summary needs ``split_at="/"`` (one VEVENT covers several bin types
+  separated by "/"), an ``ICS()`` option ``IcsParser`` does not currently
+  forward.
+
+Both are exactly the shared-component gap called out in the service probe
+report: this module works around it locally by calling ``service.ICS.ICS``
+directly (the same class ``IcsParser`` wraps) with the option it needs.
+"""
+
+from typing import ClassVar, final
+
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "Abfallwirtschaft Stadt Fürth"
-DESCRIPTION = "Source for Stadt Fürth"
-URL = "https://abfallwirtschaft.fuerth.eu/"
-COUNTRY = "de"
-TEST_CASES = {
-    "Mühltalstrasse 4": {"id": 96983001},
-    "Carlo-Schmid-Strasse 27": {"id": 96975001},
-}
+_API_URL = "https://abfallwirtschaft.fuerth.eu/termine.php"
 
-API_URL = "https://abfallwirtschaft.fuerth.eu/termine.php"
-
-ICON_MAP = {
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Altpapier": Icons.PAPER,
-}
+_UMLAUT_MAP = (("ä", "ae"), ("ö", "oe"), ("ü", "ue"))
 
 
-class Source:
-    def __init__(self, id):
-        self._id = id
-        self._ics = ICS(split_at="/")
+def _fix_uid_umlauts(ics_text: str) -> str:
+    """Transliterate umlauts on UID lines; the ICS parser chokes otherwise."""
+    lines = []
+    for line in ics_text.splitlines():
+        if line.startswith("UID"):
+            for src, dest in _UMLAUT_MAP:
+                line = line.replace(src, dest)
+        lines.append(line)
+    return "\n".join(lines) + "\n"
 
-    def fetch(self):
-        # fetch the ical
-        r = requests.get(f"{API_URL}?icalexport={self._id}")
-        r.raise_for_status()
 
-        # replace non-ascii character in UID, otherwise ICS converter will fail
-        ics = ""
-        for line in r.text.splitlines():
-            if line.startswith("UID"):
-                line = line.replace("ä", "ae")
-                line = line.replace("ö", "oe")
-                line = line.replace("ü", "ue")
-            ics += line
-            ics += "\n"
+@final
+class Source(BaseSource):
+    TITLE = "Abfallwirtschaft Stadt Fürth"
+    DESCRIPTION = "Source for Stadt Fürth."
+    URL = "https://abfallwirtschaft.fuerth.eu/"
+    COUNTRY = "de"
 
-        dates = self._ics.convert(ics)
+    TEST_CASES: ClassVar[dict] = {
+        "Mühltalstrasse 4": {"id": 96983001},
+        "Carlo-Schmid-Strasse 27": {"id": 96975001},
+    }
 
-        entries = []
+    PARAMS = (text_field("id", "Location ID"),)
 
-        for d in dates:
-            entries.append(Collection(date=d[0], t=d[1], icon=ICON_MAP.get(d[1])))
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Look up your address on https://abfallwirtschaft.fuerth.eu/ and copy "
+            "the numeric id from the calendar export link it offers."
+        ),
+    }
 
-        return entries
+    retrieve = HttpGetRetriever(url=lambda id, **_: f"{_API_URL}?icalexport={id}")
+
+    def parse(self, response, source=None):
+        return ICS(split_at="/").convert(_fix_uid_umlauts(response.text))
+
+    transform = ICSTransformer(
+        type_value_map={
+            "Restabfall": GENERAL_WASTE,
+            "Biotonne": ORGANIC,
+            "Gelber Sack": RECYCLABLES,
+            "Altpapier": PAPER,
+        }
+    )
+
+    def __init__(self, id: int):
+        super().__init__(id=id)

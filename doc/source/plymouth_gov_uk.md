@@ -1,15 +1,17 @@
 # Plymouth City Council
 
-Support for schedules provided by [Plymouth City Council](https://www.plymouth.gov.uk/check-your-bin-day), serving Plymouth, UK.
+Support for schedules provided by [Plymouth City Council](https://www.plymouth.gov.uk/).
+
+Source for waste collection services for Plymouth City Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: plymouth_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -17,19 +19,12 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-This is required to unambiguously identify the property.
-
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
-    - name: plymouth
+  sources:
+    - name: plymouth_gov_uk
       args:
-        uprn: "100040425325"
-
+        uprn: 100040429524
 ```
-
-## How to find your `UPRN`
-
-An easy way to find your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.

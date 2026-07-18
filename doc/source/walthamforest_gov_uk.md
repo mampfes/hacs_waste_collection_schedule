@@ -1,36 +1,30 @@
-# Tunbridge Wells
+# Waltham Forest
 
-Support for schedules provided by [Waltham Forest](https://www.walthamforest.gov.uk//), serving Waltham Forest, UK.
+Support for schedules provided by [Waltham Forest](https://walthamforest.gov.uk/).
+
+Source for Waltham Forest.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: walthamforest_gov_uk
       args:
         uprn: UPRN
-        
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: walthamforest_gov_uk
       args:
-        uprn: 200001421821
-        
+        uprn: '200001421821'
 ```
-
-## How to get the source argument
-
-## Using findmyaddress.co.uk
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.

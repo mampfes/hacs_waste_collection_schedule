@@ -1,6 +1,8 @@
 # Town of Bassendean
 
-Support for schedules provided by [Town of Bassendean](https://www.bassendean.wa.gov.au/environment-waste/recycling-waste).
+Support for schedules provided by [Town of Bassendean](https://www.bassendean.wa.gov.au).
+
+Source for Town of Bassendean waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Town of Bassendean Find My Bin Day](https://bassendean.maps.arcgis.com/apps/instant/lookup/index.html?appid=95c3e8687b9f42b9b4b7757dd43efac3) page and search for your address. The address should match the format used in the lookup, e.g. "16 Kenny St, Bassendean".
+Enter your street address within the Town of Bassendean (e.g. '16 Kenny St, Bassendean').

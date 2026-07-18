@@ -1,66 +1,34 @@
+"""Lobbe App (lobbe.app).
+
+Demonstrates: a three-level cascade (state -> city -> street, each an AJAX
+lookup keyed off the previous id) that then requests an ICS *download URL*
+(one more AJAX call) before finally fetching the calendar itself. That's more
+hops than ``TwoStepRetriever`` models, so ``retrieve`` is a source-defined
+override; it also reproduces the legacy source's December quirk (also fetch
+next year's calendar) and its ids-gone-stale retry for that second fetch.
+"""
+
 from datetime import datetime
-from typing import Literal
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.regions import region
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    ELECTRONICS,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "Lobbe App"
-DESCRIPTION = "Source for Lobbe App."
-URL = "https://lobbe.app/"
-TEST_CASES = {
-    "Hessen Diemelsee Am Breuschelt": {
-        "state": "Hessen",
-        "city": "Diemelsee",
-        "street": "Am Breuschelt",
-    },
-    "Nordrhein-Westfalen Meschede Alte Henne": {
-        "state": "Nordrhein-Westfalen",
-        "city": "Meschede",
-        "street": "Alte Henne",
-    },
-    "Nordrhein-Westfalen Willebadessen Ächternstraße": {
-        "state": "Nordrhein-Westfalen",
-        "city": "Willebadessen",
-        "street": "Ächternstraße",
-    },
-}
+_API_URL = "https://lobbe.app/wp-admin/admin-ajax.php"
+_TYPES = {"gelber", "biobfall", "restabfall", "altpapier", "additional_types"}
 
-
-ICON_MAP = {
-    "restabfall": Icons.GENERAL_WASTE,
-    "Glass": Icons.GLASS,
-    "bioabfall": Icons.BIO_KITCHEN,
-    "altpapier": Icons.PAPER,
-    "gelber": Icons.RECYCLING,
-    "elektroschrott": Icons.ELECTRONICS,
-}
-
-STATES = Literal["Hessen", "Nordrhein-Westfalen"]
-
-
-API_URL = "https://lobbe.app/wp-admin/admin-ajax.php"
-TYPES = {"gelber", "biobfall", "restabfall", "altpapier", "additional_types"}
-
-
-def make_comparable(s: str) -> str:
-    return (
-        s.lower()
-        .replace(" ", "")
-        .replace("-", "")
-        .replace("str.", "straße")
-        .replace("ß", "ss")
-        .replace(".", "")
-        .replace(",", "")
-    )
-
-
-COUNTRY = "de"
-
-PLACES = {
+_PLACES = {
     "Hessen": [
         "Allendorf",
         "Bad Arolsen",
@@ -125,140 +93,151 @@ PLACES = {
 }
 
 
-EXTRA_INFO = [
-    {
-        "title": city,
-        "default_params": {"state": state, "city": city},
+def _make_comparable(s: str) -> str:
+    return (
+        s.lower()
+        .replace(" ", "")
+        .replace("-", "")
+        .replace("str.", "straße")
+        .replace("ß", "ss")
+        .replace(".", "")
+        .replace(",", "")
+    )
+
+
+def _get_id(
+    session, action: str, compare_to: str, param_name: str, params=None
+) -> tuple[int, str]:
+    params = {"action": action, **(params or {})}
+    r = session.get(_API_URL, params=params)
+    r.raise_for_status()
+    data = r.json()
+    original_compare_to = compare_to
+    compare_to = _make_comparable(compare_to)
+    for d in data:
+        if _make_comparable(d["text"]) == compare_to:
+            return d["id"], d["text"]
+
+    raise SourceArgumentNotFoundWithSuggestions(
+        param_name, original_compare_to, [d["text"] for d in data]
+    )
+
+
+def _resolve_ids(
+    session, state: str, city: str, street: str
+) -> tuple[int, str, int, str, int, str]:
+    state_id, state_name = _get_id(session, "state", state, "state")
+    city_id, city_name = _get_id(session, "place", city, "city", {"id": state_id})
+    street_id, street_name = _get_id(
+        session, "street", street, "street", {"id": city_id}
+    )
+    return state_id, state_name, city_id, city_name, street_id, street_name
+
+
+def _fetch_year(session, year: int, ids: tuple[int, str, int, str, int, str]) -> str:
+    state_id, state_name, city_id, city_name, street_id, street_name = ids
+    params = {
+        "year[id]": 1,
+        "year[text]": year,
+        "state[id]": state_id,
+        "state[text]": state_name,
+        "place[id]": city_id,
+        "place[text]": city_name,
+        "street[id]": street_id,
+        "street[text]": street_name,
+        **dict.fromkeys(_TYPES, 1),
+        "hours": 18,
+        "minutes": 0,
+        "action": "create_ical",
     }
-    for state, cities in PLACES.items()
-    for city in cities
-]
+    r = session.get(_API_URL, params=params)
+    r.raise_for_status()
+    ics_url = r.json()["url"]
+
+    r = session.get(ics_url)
+    r.raise_for_status()
+    return r.text
 
 
-class Source:
-    def __init__(self, state: STATES, city: str, street: str):
-        self._state: str = state
-        self._city: str = city
-        self._street: str = street
-        self._ics = ICS()
+def _extra_info():
+    return [
+        region(city, state=state, city=city)
+        for state, cities in _PLACES.items()
+        for city in cities
+    ]
 
-        self._state_id: int | None = None
-        self._state_name: str | None = None
-        self._city_id: int | None = None
-        self._city_name: str | None = None
-        self._street_id: int | None = None
-        self._street_name: str | None = None
 
-    @staticmethod
-    def _get_id(
-        action: str,
-        compare_to: str,
-        param_name: str,
-        params: dict[str, str | int] | None = None,
-    ) -> tuple[int, str]:
-        if params is None:
-            params = {}
-        params = {"action": action, **params}
-        original_compare_to = compare_to
-        compare_to = make_comparable(compare_to)
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-        data = r.json()
-        for d in data:
-            if make_comparable(d["text"]) == compare_to:
-                return d["id"], d["text"]
+@final
+class Source(BaseSource):
+    TITLE = "Lobbe App"
+    DESCRIPTION = "Source for Lobbe App."
+    URL = "https://lobbe.app/"
+    COUNTRY = "de"
 
-        raise SourceArgumentNotFoundWithSuggestions(
-            param_name,
-            original_compare_to,
-            [d["text"] for d in data],
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Hessen Diemelsee Am Breuschelt": {
+            "state": "Hessen",
+            "city": "Diemelsee",
+            "street": "Am Breuschelt",
+        },
+        "Nordrhein-Westfalen Meschede Alte Henne": {
+            "state": "Nordrhein-Westfalen",
+            "city": "Meschede",
+            "street": "Alte Henne",
+        },
+        "Nordrhein-Westfalen Willebadessen Ächternstraße": {
+            "state": "Nordrhein-Westfalen",
+            "city": "Willebadessen",
+            "street": "Ächternstraße",
+        },
+    }
 
-    def _get_ids(self) -> None:
-        self._state_id, self._state_name = self._get_id("state", self._state, "state")
-        self._city_id, self._city_name = self._get_id(
-            "place", self._city, "city", {"id": self._state_id}
-        )
-        self._street_id, self._street_name = self._get_id(
-            "street", self._street, "street", {"id": self._city_id}
-        )
+    PARAMS = (
+        text_field("state", label="State"),
+        text_field("city", label="City"),
+        text_field("street", label="Street"),
+    )
 
-    def fetch(self) -> list[Collection]:
+    REGIONS = _extra_info
+
+    RAISE_ON_EMPTY = True
+
+    def retrieve(self, source):
+        state = source.params["state"]
+        city = source.params["city"]
+        street = source.params["street"]
+        ids = _resolve_ids(source.session, state, city, street)
+
         now = datetime.now()
-        entries = self._fetch_year(now.year)
+        texts = [_fetch_year(source.session, now.year, ids)]
         if now.month != 12:
-            return entries
+            return texts
+
         try:
-            return entries + self._fetch_year(now.year + 1)
+            texts.append(_fetch_year(source.session, now.year + 1, ids))
         except Exception:
-            return entries
+            try:
+                ids = _resolve_ids(source.session, state, city, street)
+                texts.append(_fetch_year(source.session, now.year + 1, ids))
+            except Exception:
+                pass
+        return texts
 
-    def _fetch_year(self, year: int) -> list[Collection]:
-        fresh_id = False
-        if self._street_id is None:
-            self._get_ids()
-            fresh_id = True
-        try:
-            return self._get_collections(year)
-        except Exception:
-            if fresh_id:
-                raise
-            self._get_ids()
-            return self._get_collections(year)
-
-    def _get_collections(self, year: int) -> list[Collection]:
-        params = {
-            "year[id]": 1,
-            "year[text]": year,
-            "state[id]": self._state_id,
-            "state[text]": self._state_name,
-            "place[id]": self._city_id,
-            "place[text]": self._city_name,
-            "street[id]": self._street_id,
-            "street[text]": self._street_name,
-            **dict.fromkeys(TYPES, 1),
-            "hours": 18,
-            "minutes": 00,
-            "action": "create_ical",
-        }
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-
-        ics_url = r.json()["url"]
-
-        r = requests.get(ics_url)
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
+    def parse(self, response, source=None):
         entries = []
-        for d in dates:
-            entries.append(
-                Collection(d[0], d[1], ICON_MAP.get(d[1].split()[0].lower()))
-            )
+        for text in response:
+            entries.extend(ICS().convert(text))
         return entries
 
+    transform = ICSTransformer(
+        type_value_map={
+            "Restabfall": GENERAL_WASTE,
+            "Bioabfall": ORGANIC,
+            "Altpapier": PAPER,
+            "Gelber Sack / Wertstofftonne": RECYCLABLES,
+            "Elektroschrott": ELECTRONICS,
+        }
+    )
 
-def _print_extra_info() -> None:
-    params = {
-        "action": "state",
-    }
-    r = requests.get(API_URL, params=params)
-    r.raise_for_status()
-
-    places: dict[str, list[str]] = {}
-
-    for state in r.json():
-        params = {"action": "place", "id": state["id"]}
-        if state["text"] not in places:
-            places[state["text"]] = []
-
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-        for place in r.json():
-            places[state["text"]].append(place["text"])
-
-    print(places, len(places))
-
-
-if __name__ == "__main__":
-    _print_extra_info()
+    def __init__(self, state: str, city: str, street: str):
+        super().__init__(state=state, city=city, street=street)

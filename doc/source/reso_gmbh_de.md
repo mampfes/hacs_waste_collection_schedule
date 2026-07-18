@@ -1,39 +1,35 @@
 # RESO
 
-Support for schedules provided by [RESO](https://reso-gmbh.de), serving Multiple cities in Germany.
+Support for schedules provided by [RESO](https://reso-gmbh.de).
+
+Source for RESO.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: reso_gmbh_de
       args:
         ort: ORT
         ortsteil: ORTSTEIL
-        
 ```
 
 ### Configuration Variables
 
 **ort**  
-*(String) (required)*
+*(string) (required)*
 
 **ortsteil**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: reso_gmbh_de
       args:
         ort: Reichelsheim
         ortsteil: Kerngemeinde
-        
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://www.reso-gmbh.de/abfuhrplaene/](https://www.reso-gmbh.de/abfuhrplaene/) and write them exactly like on the web page.

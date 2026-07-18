@@ -1,6 +1,8 @@
 # Rohrbach an der Lafnitz
 
-Support for schedules provided by [Rohrbach an der Lafnitz](https://www.rohrbach-lafnitz.at/Buergerservice/Muellkalender), Austria.
+Support for schedules provided by [Rohrbach an der Lafnitz](https://www.rohrbach-lafnitz.at).
+
+Source for Rohrbach an der Lafnitz, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -10,7 +12,9 @@ waste_collection_schedule:
     - name: rohrbach_lafnitz_at
 ```
 
-No configuration parameters required. The source automatically fetches all waste types (Biomüll, Leichtverpackungen, Restmüll, Sperrmüll & Heckenschnitt).
+### Configuration Variables
+
+No configuration arguments are required.
 
 ## Example
 

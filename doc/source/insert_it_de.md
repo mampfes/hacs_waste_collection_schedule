@@ -1,16 +1,32 @@
 # Insert IT Apps
 
-Support Apps provided by [Insert IT](https://insert-it.de/). The official homepage is using the URL [Insert Infotech](https://insert-infotech.de/) instead.
+Support for schedules provided by [Insert IT Apps](https://insert-infotech.de/).
+
+Source for Apps by Insert IT
+
+## Configuration via configuration.yaml
+
+### Using location_id
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: insert_it_de
       args:
-        municipality: Municipality
-        street: Street Name
-        hnr: House Number
-        location_id: Location ID
+        municipality: MUNICIPALITY
+        location_id: LOCATION_ID
+```
+
+### Using street and hnr
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: insert_it_de
+      args:
+        municipality: MUNICIPALITY
+        street: STREET
+        hnr: HNR
 ```
 
 ### Configuration Variables
@@ -18,63 +34,38 @@ waste_collection_schedule:
 **municipality**  
 *(string) (required)*
 
+**location_id**  
+*(string) (alternative)*
+
 **street**  
-*(string) (optional)*
+*(string) (alternative)*
 
 **hnr**  
-*(integer) (optional)*
+*(string) (alternative)*
 
-**location_id**  
-*(integer) (optional)*
-
-
-Either `street` and `hnr` or `location_id` is required. Both could also be set, but `location_id` is prioritized.
-If none is set, it will fail.
-
-
-Currently supported municipalities:
-
-|Region|
-|-|
-| Hattingen |
-| Herne |
-| Kassel |
-| Krefeld |
-| Luebeck |
-| Mannheim |
-| Offenbach |
-
+Provide one of: `location_id` or `street` + `hnr`.
 
 ## Example
 
-Using Location ID
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: insert_it_de
-      args:
-        municipality: Mannheim
-        location_id: 430650
-```
+### Using location_id
 
-Using Street and House Number
 ```yaml
 waste_collection_schedule:
   sources:
     - name: insert_it_de
       args:
         municipality: Offenbach
-        street: Kaiserstraße
-        hnr: 1
+        location_id: 7036
 ```
 
+### Using street and hnr
 
-## How to get the source arguments
-
-Easy way to get the `location_id` source argument is to use a (desktop) browser, eg.g Google Chrome:
-
-1. Open the digital abfallkalender, e.g. for Offenbach [https://www.offenbach.de/stadtwerke/stadtservice/Entsorgung/abfallkalender.php](https://www.offenbach.de/stadtwerke/stadtservice/Entsorgung/abfallkalender.php).
-2. Enter the street name and the number
-3. Right click on the iCalendar link and select "Copy Link Address"
-4. Paste somewhere like a notepad to get the full URL. Eg: https://www.insert-it.de/BmsAbfallkalenderOffenbach/Main/Calender?bmsLocationId=7036&year=2024
-5. The bmsLocationId argument is the location id that you need to use in the configuration as `location_id`.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: insert_it_de
+      args:
+        municipality: Offenbach
+        street: "Kaiserstra\xDFe"
+        hnr: 1
+```

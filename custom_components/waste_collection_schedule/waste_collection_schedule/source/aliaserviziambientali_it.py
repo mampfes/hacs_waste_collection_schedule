@@ -1,15 +1,39 @@
-import json
+from typing import final
 
-import requests
-from waste_collection_schedule.service.junker_app import Junker
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import area_id, municipality
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.service.junker_app import (
+    TYPE_VALUE_MAP,
+    JunkerParser,
+    JunkerRetriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 TITLE = "Alia Servizi Ambientali S.p.A."
 DESCRIPTION = "Source for Alia Servizi Ambientali S.p.A.."
 URL = "https://www.aliaserviziambientali.it"
+COUNTRY = "it"
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit <https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti> and select your municiaplity, if you see an embedded calendar you can just use the municipality name, and leave the area empty. If you see a list of areas, you need to follow the link to the area calendar, there you can fin the area ID in the URL, for example: `https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario` the area ID is `67333`.",
-    "it": "Visita https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti e seleziona il tuo comune. Se vedi un calendario incorporato, puoi semplicemente utilizzare il nome del comune e lasciare vuoto il campo dell'area. Se invece vedi un elenco di aree, devi seguire il link al calendario dell'area; lì puoi trovare l'ID dell'area nell'URL, ad esempio: https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario l'ID dell'area è 67333.",
+HOWTO = {
+    "en": (
+        "Visit <https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti> and "
+        "select your municipality. If you see an embedded calendar you can just "
+        "use the municipality name and leave the area empty. If you see a list "
+        "of areas, follow the link to the area calendar; there you can find the "
+        "area ID in the URL, for example: "
+        "`https://differenziata.junker.app/embed/barberino-tavarnelle/area/67333/calendario` "
+        "the area ID is `67333`."
+    ),
+    "it": (
+        "Visita https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti e "
+        "seleziona il tuo comune. Se vedi un calendario incorporato, puoi "
+        "semplicemente utilizzare il nome del comune e lasciare vuoto il campo "
+        "dell'area. Se invece vedi un elenco di aree, devi seguire il link al "
+        "calendario dell'area; lì puoi trovare l'ID dell'area nell'URL, ad "
+        "esempio: https://differenziata.junker.app/embed/barberino-tavarnelle/"
+        "area/67333/calendario l'ID dell'area è 67333."
+    ),
 }
 
 TEST_CASES = {
@@ -24,12 +48,10 @@ TEST_CASES = {
     },
 }
 
-
-API_URL = "https://differenziata.junker.app/embed/{municipality}/calendario"
-API_URL_WITH_AREA = (
-    "https://differenziata.junker.app/embed/{municipality}/area/{area}/calendario"
-)
-
+# Municipality -> known area ids, for providers where a municipality resolves
+# to more than one collection zone. Also feeds JunkerRetriever's single-area
+# fallback: a municipality listed here with exactly one area is retried with
+# that area when an area-less fetch comes back empty.
 MUNICIPALITIES_WITH_AREA = {
     "Bagno a Ripoli": [12035, 12036],
     "Barberino Tavarnelle": [67333, 67334],
@@ -153,68 +175,29 @@ MUNICIPALITIES_WITHOUT_AREA = [
 ]
 
 MUNICIPALITIES = list(MUNICIPALITIES_WITH_AREA.keys()) + MUNICIPALITIES_WITHOUT_AREA
-EXTRA_INFO = [
-    {"title": mun, "default_params": {"municipality": mun}} for mun in MUNICIPALITIES
-]
 
 
-class Source(Junker):
-    def __init__(self, municipality: str, area: int | None = None):
-        super().__init__(
-            municipality,
-            area,
-            use_embed_url=True,
-            municipalities_with_area=MUNICIPALITIES_WITH_AREA,
-        )
+@final
+class Source(BaseSource):
+    TITLE = TITLE
+    DESCRIPTION = DESCRIPTION
+    URL = URL
+    COUNTRY = COUNTRY
+    HOWTO = HOWTO
 
+    TEST_CASES = TEST_CASES
 
-def print_municipalities() -> None:
-    from bs4 import BeautifulSoup
+    PARAMS = (
+        municipality(field="municipality"),
+        area_id(field="area", optional=True),
+    )
 
-    r = requests.get("https://www.aliaserviziambientali.it/it-it/raccolta-rifiuti")
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
-    mun_options = soup.select_one("script#comuni")
-    if not mun_options:
-        raise ValueError("No municipalities found")
-    muns = json.loads(mun_options.text)
+    REGIONS = tuple(region(mun, municipality=mun) for mun in MUNICIPALITIES)
 
-    municipalites_without_area: list[str] = []
-    municipalities_with_area: dict[str, list[int]] = {}
-
-    for mun in muns:
-        mun_name: str = mun["comune"]
-        mun_url: str = mun["url"]
-        if mun_url.startswith("/"):
-            mun_url = "https://www.aliaserviziambientali.it" + mun_url
-
-        r = requests.get(mun_url)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        iframe = soup.select_one("iframe")
-        if iframe:
-            iframe_url = iframe["src"]
-            if "area" in iframe_url:
-                area = int(iframe_url.split("/")[-2])
-                municipalities_with_area[mun_name] = [area]
-            else:
-                municipalites_without_area.append(mun_name)
-
-        junker_links = soup.select("a[href*='differenziata.junker.app']")
-
-        for link in junker_links:
-            if "area" in link["href"]:
-                area = int(link["href"].split("/")[-2])
-                municipalities_with_area[mun_name] = [
-                    *municipalities_with_area.get(mun_name, []),
-                    area,
-                ]
-            else:
-                municipalites_without_area.append(mun_name)
-
-    print(f"MUNICIPALITIES_WITH_AREA = {municipalities_with_area}")
-    print(f"MUNICIPALITIES_WITHOUT_AREA = {municipalites_without_area}")
-
-
-if __name__ == "__main__":
-    print_municipalities()
+    retrieve = JunkerRetriever(
+        use_embed_url=True,
+        area_is_name=False,
+        municipalities_with_area=MUNICIPALITIES_WITH_AREA,
+    )
+    parse = JunkerParser()
+    transform = RowTransformer(type_value_map=TYPE_VALUE_MAP)

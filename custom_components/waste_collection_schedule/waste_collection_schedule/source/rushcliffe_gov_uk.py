@@ -1,41 +1,24 @@
-import datetime
-import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, text_field
 from waste_collection_schedule.service.FirmstepSelfService import (
-    get_verification_token,
-    lookup_addresses,
+    RushcliffeAddressRetriever,
+    RushcliffePanelParser,
+)
+from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    PAPER,
 )
 
-TITLE = "Rushcliffe Brough Council"
-DESCRIPTION = "Source for Rushcliffe Brough Council."
-URL = "https://www.rushcliffe.gov.uk/"
-TEST_CASES = {
-    "NG12 5FE 2 Church Drive, Keyworth, NOTTINGHAM, NG12 5FE": {
-        "postcode": "NG12 5FE",
-        "address": "2 Church Drive, Keyworth, NOTTINGHAM, NG12 5FE",
-    }
-}
+FORM_URL = "https://selfservice.rushcliffe.gov.uk/renderform.aspx?t=1242&k=86BDCD8DE8D868B9E23D10842A7A4FE0F1023CCA"
+ADDRESS_LOOKUP_URL = "https://selfservice.rushcliffe.gov.uk/core/addresslookup"
+FORM_POST_URL = "https://selfservice.rushcliffe.gov.uk/renderform/Form"
 
-
-ICON_MAP = {
-    "grey": Icons.GENERAL_WASTE,
-    "garden waste": Icons.GARDEN,
-    "blue": Icons.PAPER,
-    "glass": Icons.GLASS,
-}
-
-
-API_URL = "https://selfservice.rushcliffe.gov.uk/renderform.aspx?t=1242&k=86BDCD8DE8D868B9E23D10842A7A4FE0F1023CCA"
-ADDRESS_LOOKUP = "https://selfservice.rushcliffe.gov.uk/core/addresslookup"
-FORM = "https://selfservice.rushcliffe.gov.uk/renderform/Form"
-
-POST_POST_UPRN_KEY = "FF3518"
-
-POST_ARGS = {
+STATIC_FIELDS = {
     "FormGuid": "aaa360e6-240e-46e9-b651-bd7fb8091354",
     "ObjectTemplateID": "1242",
     "Trigger": "submit",
@@ -44,71 +27,39 @@ POST_ARGS = {
 }
 
 
-class Source:
+@final
+class Source(BaseSource):
+    TITLE = "Rushcliffe Brough Council"
+    DESCRIPTION = "Source for Rushcliffe Brough Council."
+    URL = "https://www.rushcliffe.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "NG12 5FE 2 Church Drive, Keyworth, NOTTINGHAM, NG12 5FE": {
+            "postcode": "NG12 5FE",
+            "address": "2 Church Drive, Keyworth, NOTTINGHAM, NG12 5FE",
+        }
+    }
+
+    PARAMS = (postcode(), text_field("address", "Address"))
+
+    retrieve = RushcliffeAddressRetriever(
+        form_url=FORM_URL,
+        address_lookup_url=ADDRESS_LOOKUP_URL,
+        form_post_url=FORM_POST_URL,
+        static_fields=STATIC_FIELDS,
+        uprn_field="FF3518",
+    )
+    parse = RushcliffePanelParser()
+    transform = RowTransformer(
+        type_value_map={
+            "grey": GENERAL_WASTE,
+            "garden waste": GARDEN_WASTE,
+            "blue": PAPER,
+            "glass": GLASS,
+        },
+    )
+
     def __init__(self, postcode: str, address: str):
-        self._postcode: str = postcode
-        self._address: str = address
-
-    def __compare(self, a: str, b: str) -> bool:
-        a = a.strip().replace(" ", "").replace(",", "")
-        b = b.strip().replace(" ", "").replace(",", "")
-        return (
-            a.lower() == b.lower()
-            or a.lower().startswith(b.lower())
-            or b.lower().startswith(a.lower())
-        )
-
-    def fetch(self):
-        s = requests.Session()
-        header = {"User-Agent": "Mozilla/5.0", "Host": "selfservice.rushcliffe.gov.uk"}
-        s.headers.update(header)
-
-        args: dict[str, str] = POST_ARGS.copy()
-        args["__RequestVerificationToken"] = get_verification_token(s, API_URL)
-
-        addresses = lookup_addresses(s, ADDRESS_LOOKUP, self._postcode)
-
-        args[POST_POST_UPRN_KEY] = next(
-            (
-                key
-                for key, value in addresses.items()
-                if self.__compare(value, self._address)
-            ),
-            None,
-        )
-
-        if args[POST_POST_UPRN_KEY] is None:
-            raise SourceArgumentNotFound("address", self._address)
-
-        args[POST_POST_UPRN_KEY + "lbltxt"] = self._address
-        args[POST_POST_UPRN_KEY + "FF3518-text"] = self._postcode
-
-        r = s.post(FORM, data=args)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        panel = soup.find("div", {"class": "ss_confPanel"})
-        if not panel:
-            raise Exception("No data found")
-
-        lines: str = str(panel).replace("<b>", "").replace("</b>", "")
-        entries = []
-
-        for line in lines.split("<br/>"):
-            line = line.strip()
-            if not line.startswith("Your"):
-                continue
-            before_bin = line.split(" bin", 1)[0]
-            before_bin = before_bin.replace("Your next ", "")
-            bin_type = before_bin.split("(", 1)[0].strip()
-            dates = re.findall(r"\d{2}/\d{2}/\d{4}", line)
-            if not dates:
-                continue
-
-            icon = ICON_MAP.get(bin_type)  # Collection icon
-
-            for d in dates:
-                date = datetime.datetime.strptime(d, "%d/%m/%Y").date()
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
-
-        return entries
+        super().__init__(postcode=postcode, address=address)

@@ -1,17 +1,17 @@
 # Cheshire West and Chester Council
 
-Support for schedules provided by [Cheshire West and Chester Council](https://www.cheshirewestandchester.gov.uk/).
+Support for schedules provided by [Cheshire West and Chester Council](https://www.cheshirewestandchester.gov.uk).
 
-If collection data is available for the address provided, it will return rubbish and recycling waste collection dates.
+Source for waste collection services for Cheshire West and Chester Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cheshire_west_and_chester_gov_uk
       args:
-        uprn:     UPRN
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -19,16 +19,12 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cheshire_west_and_chester_gov_uk
       args:
         uprn: 100010030086
 ```
-
-## How to find your UPRN
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providng your address details.

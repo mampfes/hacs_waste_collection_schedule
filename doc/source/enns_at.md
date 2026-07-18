@@ -1,6 +1,8 @@
 # Enns
 
-Support for waste collection schedules provided by [Stadtgemeinde Enns](https://www.enns.at), Austria.
+Support for schedules provided by [Enns](https://www.enns.at).
+
+Waste collection schedule for Enns, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -9,21 +11,17 @@ waste_collection_schedule:
   sources:
     - name: enns_at
       args:
-        strasse: STREET
-        hausnummer: HOUSE_NUMBER
+        strasse: STRASSE
+        hausnummer: HAUSNUMMER
 ```
 
 ### Configuration Variables
 
-**strasse**
+**strasse**  
 *(string) (required)*
 
-Street name as listed in the Enns waste calendar dropdown (case-insensitive).
-
-**hausnummer**
-*(string | integer) (required)*
-
-House number as listed in the Enns waste calendar dropdown.
+**hausnummer**  
+*(string) (required)*
 
 ## Example
 
@@ -32,10 +30,6 @@ waste_collection_schedule:
   sources:
     - name: enns_at
       args:
-        strasse: "Am Damm"
-        hausnummer: "1"
+        strasse: Am Damm
+        hausnummer: '1'
 ```
-
-## How to get the source arguments
-
-Open <https://www.enns.at/system/web/kalender.aspx?sprache=1&menuonr=227945554>, choose your street and house number from the dropdowns, and use the same values for `strasse` and `hausnummer`.

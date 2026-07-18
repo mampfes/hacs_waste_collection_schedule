@@ -1,0 +1,42 @@
+{
+  "recorded_at": "2026-06-21",
+  "interactions": [
+    {
+      "key": "GET https://services.arcgis.com/eKu0BIfy09ymzWZF/arcgis/rest/services/Day_change_TrashCollection/FeatureServer/0/query 7db625829a",
+      "method": "GET",
+      "url": "https://services.arcgis.com/eKu0BIfy09ymzWZF/arcgis/rest/services/Day_change_TrashCollection/FeatureServer/0/query",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sun, 21 Jun 2026 04:32:56 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "319",
+        "Connection": "keep-alive",
+        "Cache-Control": "public, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Fri, 01 Mar 2019 22:45:48 GMT",
+        "ETag": "sd105_-1360071769",
+        "Vary": "X-Esri-Authorization",
+        "Request-Context": "appId=cid-v1:e248b394-6a6d-4763-9fa3-679ca5d46129, appId=cid-v1:6959d3e4-1b50-49aa-a614-ab11f59afd47",
+        "x-arcgis-upstream": "us1h00c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260621T043255Z-1779f75d4dfq56jnhC1PER0v200000000h6g000000000b06",
+        "x-esri-query-request-units": "2",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=2;max=6000",
+        "X-ArcGIS-Correlation-Id": "d9d3eb70c4a7a017",
+        "X-ArcGIS-Instance": "5yk64u4ec00000A",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260621T043255Z-1779f75d4dfq56jnhC1PER0v200000000h6g000000000b06",
+        "x-fd-int-roxy-purgeid": "0",
+        "X-Cache": "TCP_MISS",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEXzEyXzEzIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSURfMTJfMTMiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6IiIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvaW50Iiwic3BhdGlhbFJlZmVyZW5jZSI6eyJ3a2lkIjoyMjUzLCJsYXRlc3RXa2lkIjoyMjUzfSwiZmllbGRzIjpbeyJuYW1lIjoicHJvcHN0cmVldGNvbWJpbmVkIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6InByb3BzdHJlZXRjb21iaW5lZCIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjgwMDAsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJOZXdfRGF5IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6Ik5ld19EYXkiLCJzcWxUeXBlIjoic3FsVHlwZU90aGVyIiwibGVuZ3RoIjo4MDAwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJwcm9wc3RyZWV0Y29tYmluZWQiOiIzOTcxNSA2IE1JTEUgUkQiLCJOZXdfRGF5IjoiVGh1cnNkYXkifX1dfQ=="
+    }
+  ]
+}

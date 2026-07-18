@@ -1,27 +1,34 @@
-import requests
+"""Real Luzern (real-luzern.ch), Switzerland.
+
+Demonstrates: a two-step flow where the lookup page (keyed by municipality +
+optional street id) is scraped for a tour id and its enabled waste-type
+categories, which are then folded into the final ICS-download request via
+``TwoStepRetriever``. The category set varies per municipality, so the
+"key" the extractor returns is the whole download-params dict rather than a
+bare id.
+"""
+
+from typing import ClassVar, final
+from urllib.parse import urlencode
+
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.retrievers import TwoStepRetriever
+from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "Real Luzern"
-DESCRIPTION = "Source script for Real Luzern, Switzerland"
-URL = "https://www.real-luzern.ch"
+_API_URL = "https://www.real-luzern.ch/abfall/sammeldienst/abfallkalender/"
 
-TEST_CASES = {
-    "Luzern - Heimatweg": {"municipality_id": 13, "street_id": 766},
-    "Luzern - Pliatusblick": {"municipality_id": 13, "street_id": 936},
-    "Emmen": {"municipality_id": 6},
-}
-
-ICON_MAP = {
-    "Kehricht": Icons.GENERAL_WASTE,
-    "Grüngut": Icons.ORGANIC,
-    "Papier": Icons.PAPER,
-    "Karton": Icons.PAPER,
-    "Altmetall": Icons.METAL,
-}
-
-OLD_WASTE_NAME = {  # New fetcher uses different names this should prevent breaking changes
+# New fetcher uses different (longer) names; remapped to the original short
+# names before mapping, so existing customisations / TEST_CASES keep working.
+_OLD_WASTE_NAME = {
     "Kehrichtsammlung": "Kehricht",
     "Grüngutsammlung": "Grüngut",
     "Papiersammlung": "Papier",
@@ -29,88 +36,76 @@ OLD_WASTE_NAME = {  # New fetcher uses different names this should prevent break
     "Alteisen/Metallsammlung": "Altmetall",
 }
 
-API_URL = "https://www.real-luzern.ch/abfall/sammeldienst/abfallkalender/"
+
+def _extract_ics_params(lookup, source) -> dict:
+    soup = BeautifulSoup(lookup.text, features="html.parser")
+    data_div = soup.select_one("div.abfk-calendar.abfk-colors")
+    if not data_div:
+        raise ValueError("No data found")
+
+    tour_id = data_div.get("data-tourid")
+    if not tour_id:
+        raise ValueError("No tour id found")
+    categories = data_div.get("data-categories")
+    if not categories:
+        raise ValueError("No categories found")
+
+    return {
+        "abfk_calendar_download": "1",
+        "calendar[tourId]": str(tour_id),
+        "calendar[gemeinde]": "Luzern",
+        "calendar[format]": "ics",
+        **{
+            f"calendar[{category}]": category for category in str(categories).split(",")
+        },
+    }
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "municipality_id": "Orts ID",
-        "street_id": "Strassen ID",
-    },
-}
+def _schedule_url(ics_params: dict, **_) -> str:
+    return f"{_API_URL}?{urlencode(ics_params)}"
 
 
-class Source:
-    def __init__(self, municipality_id: str | int, street_id: str | int | None = None):
-        self._municipality_id = municipality_id
-        self._street_id = street_id
-        self._ics = ICS()
-        self._ics_params: dict[str, str] | None = None
+@final
+class Source(BaseSource):
+    TITLE = "Real Luzern"
+    DESCRIPTION = "Source script for Real Luzern, Switzerland"
+    URL = "https://www.real-luzern.ch"
+    COUNTRY = "ch"
 
-    def fetch_ics_params(self) -> None:
-        uri = f"{API_URL}?gemid={self._municipality_id}&strid={self._street_id}"
-        r = requests.get(uri)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, features="html.parser")
-        data_div = soup.select_one("div.abfk-calendar.abfk-colors")
-        if not data_div:
-            raise ValueError("No data found")
+    TEST_CASES: ClassVar[dict] = {
+        "Luzern - Heimatweg": {"municipality_id": 13, "street_id": 766},
+        "Luzern - Pliatusblick": {"municipality_id": 13, "street_id": 936},
+        "Emmen": {"municipality_id": 6},
+    }
 
-        tour_id = data_div.get("data-tourid", None)
-        if not tour_id:
-            raise ValueError("No tour id found")
-        categories = data_div.get("data-categories", None)
-        if not categories:
-            raise ValueError("No categories found")
+    PARAMS = (
+        text_field("municipality_id", label="Municipality ID"),
+        text_field("street_id", label="Street ID", optional=True),
+    )
 
-        self._ics_params = {
-            "abfk_calendar_download": "1",
-            "calendar[tourId]": str(tour_id),
-            "calendar[gemeinde]": "Luzern",
-            "calendar[format]": "ics",
-            **{
-                f"calendar[{category}]": category
-                for category in str(categories).split(",")
-            },
-        }
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        fresh = False
-        if not self._ics_params:
-            fresh = True
-            self.fetch_ics_params()
+    retrieve = TwoStepRetriever(
+        lookup_url=lambda municipality_id, street_id=None, **_: (
+            f"{_API_URL}?gemid={municipality_id}&strid={street_id}"
+        ),
+        extract=_extract_ics_params,
+        schedule_url=_schedule_url,
+    )
+    parse = parsers.IcsParser()
 
-        try:
-            entries = self.get_collections()
-            if not entries:
-                raise ValueError("No entries found")
-            return entries
-        except Exception as e:
-            if fresh:
-                raise e
-            self.fetch_ics_params()
-            return self.get_collections()
+    transform = ICSTransformer(
+        type_value_map={
+            "Kehricht": GENERAL_WASTE,
+            "Grüngut": ORGANIC,
+            "Papier": PAPER,
+            "Karton": PAPER,
+            "Altmetall": RECYCLABLES,
+        },
+        clean=label_cleaner(remap=_OLD_WASTE_NAME),
+    )
 
-    def get_collections(self) -> list[Collection]:
-        if not self._ics_params:
-            raise ValueError("No ics params found")
-
-        r = requests.get(API_URL, params=self._ics_params)
-        r.raise_for_status()
-        data = self._ics.convert(r.text)
-
-        # extract entries
-        entries = []
-
-        for date, waste_type in data:
-            # New fetcher uses different names this should prevent breaking changes
-            waste_type = OLD_WASTE_NAME.get(waste_type, waste_type)
-            entries.append(
-                Collection(
-                    date=date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        return entries
+    def __init__(
+        self, municipality_id: "str | int", street_id: "str | int | None" = None
+    ):
+        super().__init__(municipality_id=municipality_id, street_id=street_id)

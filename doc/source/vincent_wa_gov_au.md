@@ -1,6 +1,8 @@
 # City of Vincent
 
-Support for schedules provided by [City of Vincent](https://www.vincent.wa.gov.au/your-home/waste-recycling/your-bin-day.aspx).
+Support for schedules provided by [City of Vincent](https://www.vincent.wa.gov.au).
+
+Source for City of Vincent (WA) waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [City of Vincent Bin Day](https://www.vincent.wa.gov.au/your-home/waste-recycling/your-bin-day.aspx) page and search for your address in the map. Use the same address format, e.g. "8 Kadina St, North Perth WA 6006".
+Enter your street address within the City of Vincent (e.g. '8 Kadina St, North Perth WA 6006').

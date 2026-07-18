@@ -4,9 +4,9 @@ import importlib
 import logging
 import traceback
 from collections.abc import Iterable
-from typing import Protocol
+from typing import Protocol, cast
 
-from .collection import Collection
+from .collection import Collection, LegacyCollection
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -103,15 +103,26 @@ class Customize:
         return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}}}"
 
 
+def _get_customize_key(entry: Collection) -> str:
+    """Get the key to look up in the customize dict.
+
+    New-style sources: use waste_type.id (e.g. "general_waste")
+    Legacy sources: use the display string (e.g. "Refuse")
+    """
+    if isinstance(entry, LegacyCollection):
+        return entry.type
+    return entry.waste_type.id
+
+
 def filter_function(entry: Collection, customize: dict[str, Customize]):
-    c = match_customize(customize, entry.type)
+    c = match_customize(customize, _get_customize_key(entry))
     if c is None:
         return True
     return c.show
 
 
 def customize_function(entry: Collection, customize: dict[str, Customize]):
-    c = match_customize(customize, entry.type)
+    c = match_customize(customize, _get_customize_key(entry))
     if c is not None:
         if c.alias is not None:
             entry.set_type(c.alias)
@@ -264,8 +275,11 @@ class SourceShell:
     ) -> "SourceShell | None":
         # load source module
         try:
-            source_module: SourceModule = importlib.import_module(
-                f"waste_collection_schedule.source.{source_name}"
+            source_module: SourceModule = cast(
+                SourceModule,
+                importlib.import_module(
+                    f"waste_collection_schedule.source.{source_name}"
+                ),
             )
         except ImportError as e:
             if str(e).startswith(
@@ -281,13 +295,29 @@ class SourceShell:
         # create source
         source: Fetchable = source_module.Source(**source_args)  # type: ignore
 
+        # read metadata from Source class first, fall back to module level
+        source_cls = source_module.Source
+        title: str = (
+            getattr(source_cls, "TITLE", None)
+            or getattr(source_module, "TITLE", "")
+            or ""
+        )
+        description: str = (
+            getattr(source_cls, "DESCRIPTION", None)
+            or getattr(source_module, "DESCRIPTION", "")
+            or ""
+        )
+        url: str = (
+            getattr(source_cls, "URL", None) or getattr(source_module, "URL", "") or ""
+        )
+
         # create source shell
         g = SourceShell(
             source=source,
             customize=customize,
-            title=source_module.TITLE,
-            description=source_module.DESCRIPTION,
-            url=source_module.URL,
+            title=title,
+            description=description,
+            url=url,
             calendar_title=calendar_title,
             unique_id=calc_unique_source_id(source_name, source_args),
             day_offset=day_offset,

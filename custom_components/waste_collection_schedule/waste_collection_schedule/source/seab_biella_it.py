@@ -1,26 +1,35 @@
+"""SEAB Biella, Italy.
+
+Demonstrates: the coordinate table-parser path. SEAB publishes a per-municipality
+calendar PDF showing six months side-by-side, which plain text extraction
+collapses. ``PdfTableParser`` returns each text run with its coordinates grouped
+into rows; this source detects the month columns from the header row's x-
+positions, bins each row's runs into those columns, and reads the day number and
+waste keyword from each cell. ``ICSTransformer`` maps the Italian labels onto
+canonical WasteTypes. The per-provider part is only "which x range is which
+month"; the fiddly coordinate extraction is the shared component's job.
+"""
+
 import datetime
-import io
 import re
+from collections.abc import Iterable
+from typing import ClassVar, final
 
-import requests
-from pypdf import PdfReader
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.parsers import PdfRow, PdfTableParser
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "SEAB Biella"
-DESCRIPTION = "Source for SEAB Biella (Italy) waste collection."
-URL = "https://www.seab.biella.it"
-COUNTRY = "it"
-
-TEST_CASES = {
-    "Ailoche": {
-        "url": "https://www.seab.biella.it/wp-content/uploads/2026/05/Ailoche-II-semestre.pdf"
-    },
-    "Andorno Micca": {
-        "url": "https://www.seab.biella.it/wp-content/uploads/2026/05/Andorno-Micca-II-semestre.pdf"
-    },
-}
-
-MONTH_NAMES = {
+_MONTHS = {
     "GENNAIO": 1,
     "FEBBRAIO": 2,
     "MARZO": 3,
@@ -34,119 +43,108 @@ MONTH_NAMES = {
     "NOVEMBRE": 11,
     "DICEMBRE": 12,
 }
+_WASTE_LABELS = ("INDIFFERENZIATO", "ORGANICO", "CARTA", "PLASTICA", "VETRO", "SFALCI")
 
-# Mapping of waste types in the PDF to icons
-WASTE_TYPES = {
-    "INDIFFERENZIATO": {"icon": "mdi:trash-can"},
-    "ORGANICO": {"icon": "mdi:leaf"},
-    "CARTA": {"icon": "mdi:package-variant"},
-    "PLASTICA": {"icon": "mdi:recycle"},
-    "VETRO": {"icon": "mdi:glass-fragile"},
-    "SFALCI": {"icon": "mdi:leaf"},
-}
+# A day cell within a column, e.g. "01 gio" / "15 mer".
+_DAY_RE = re.compile(r"(\d{1,2})\s+[a-z]{3}")
+_YEAR_RE = re.compile(r"Raccolta rifiuti (\d{4})")
 
-PARAM_DESCRIPTIONS = {
-    "it": {
-        "url": "URL del file PDF del calendario (es. https://www.seab.biella.it/wp-content/uploads/2026/05/Ailoche-II-semestre.pdf)",
-    },
-    "en": {
-        "url": "URL of the PDF calendar file (e.g., https://www.seab.biella.it/wp-content/uploads/2026/05/Ailoche-II-semestre.pdf)",
-    },
-}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "url": "URL",
+def _month_columns(page_rows: list[PdfRow]) -> "list[tuple[float, int]] | None":
+    """Detect (x0, month) per column from the header row that names the months."""
+    for row in page_rows:
+        found = [
+            (w.x0, _MONTHS[w.text.upper()])
+            for w in row.words
+            if w.text.upper() in _MONTHS
+        ]
+        if len(found) >= 2:
+            return sorted(found)
+    return None
+
+
+@final
+class Source(BaseSource):
+    TITLE = "SEAB Biella"
+    DESCRIPTION = "Source for SEAB Biella (Italy) waste collection."
+    URL = "https://www.seab.biella.it"
+    COUNTRY = "it"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Ailoche": {
+            "url": "https://www.seab.biella.it/wp-content/uploads/2026/05/Ailoche-II-semestre.pdf"
+        },
+        "Andorno Micca": {
+            "url": "https://www.seab.biella.it/wp-content/uploads/2026/05/Andorno-Micca-II-semestre.pdf"
+        },
     }
-}
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "it": "Visita https://www.seab.biella.it/aree-servite, seleziona il tuo comune e copia il link al file PDF del calendario.",
-    "en": "Visit https://www.seab.biella.it/aree-servite, select your municipality and copy the link to the PDF calendar file.",
-}
+    PARAMS = (text_field("url", "Calendar PDF URL"),)
 
+    HOWTO: ClassVar[dict] = {
+        "it": (
+            "Visita https://www.seab.biella.it/aree-servite, seleziona il tuo "
+            "comune e copia il link al file PDF del calendario."
+        ),
+        "en": (
+            "Visit https://www.seab.biella.it/aree-servite, select your "
+            "municipality and copy the link to the PDF calendar file."
+        ),
+    }
 
-class Source:
-    def __init__(self, url):
-        self._url = url
+    retrieve = HttpGetRetriever(url=lambda url: url)
+    parse = PdfTableParser(min_words=50)
 
-    def fetch(self):
-        response = requests.get(self._url, timeout=10)
-        response.raise_for_status()
+    transform = ICSTransformer(
+        type_value_map={
+            "INDIFFERENZIATO": GENERAL_WASTE,
+            "ORGANICO": ORGANIC,
+            "CARTA": PAPER,
+            "PLASTICA": RECYCLABLES,
+            "VETRO": GLASS,
+            "SFALCI": GARDEN_WASTE,
+        }
+    )
 
-        reader = PdfReader(io.BytesIO(response.content))
+    def __init__(self, url: str) -> None:
+        super().__init__(url=url)
 
-        # Extract full text to find the year
-        full_text = ""
-        for page in reader.pages:
-            full_text += page.extract_text()
-
-        year_match = re.search(r"Raccolta rifiuti (\d{4})", full_text)
+    def preprocess(
+        self, rows: list[PdfRow], source=None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        """Bin each row into month columns; yield (date, label) per waste cell."""
+        year_match = _YEAR_RE.search(" ".join(w.text for r in rows for w in r.words))
         year = int(year_match.group(1)) if year_match else datetime.date.today().year
 
-        entries = []
-        for page in reader.pages:
-            page_text = page.extract_text(extraction_mode="layout")
-            lines = page_text.splitlines()
-
-            # Find months on this page and their horizontal positions
-            month_configs = []
-            for line in lines:
-                line_upper = line.upper()
-                for m_name, m_num in MONTH_NAMES.items():
-                    if m_name in line_upper:
-                        for match in re.finditer(re.escape(m_name), line_upper):
-                            month_configs.append(
-                                {"name": m_name, "num": m_num, "pos": match.start()}
-                            )
-                if month_configs:
-                    break
-
-            if not month_configs:
+        for page in sorted({r.page for r in rows}):
+            page_rows = [r for r in rows if r.page == page]
+            columns = _month_columns(page_rows)
+            if not columns:
                 continue
+            xs = [x for x, _ in columns]
+            months = [m for _, m in columns]
+            # Column boundaries are the midpoints between adjacent month headers.
+            mids = [(xs[i] + xs[i + 1]) / 2 for i in range(len(xs) - 1)]
 
-            month_configs.sort(key=lambda x: x["pos"])
+            def column_of(x: float, mids: list[float] = mids) -> int:
+                return sum(1 for mid in mids if x >= mid)
 
-            for line in lines:
-                # Find all potential day entries in the line: "NN aaa" where NN is 1-2 digits and aaa is 3 letters
-                matches = list(re.finditer(r"(\d{1,2})\s+[a-z]{3}", line.lower()))
-                if not matches:
-                    continue
-
-                # The first match gives us the day number for this line
-                day_num = int(matches[0].group(1))
-
-                # Determine which months on this page SHOULD have this day number
-                valid_months = []
-                for m_conf in month_configs:
+            for row in page_rows:
+                cells: dict[int, list[str]] = {}
+                for word in row.words:
+                    cells.setdefault(column_of(word.x0), []).append(word.text)
+                for col, texts in cells.items():
+                    chunk = " ".join(texts).upper()
+                    day_match = _DAY_RE.search(chunk.lower())
+                    if not day_match:
+                        continue
                     try:
-                        datetime.date(year, m_conf["num"], day_num)
-                        valid_months.append(m_conf)
+                        collection_date = datetime.date(
+                            year, months[col], int(day_match.group(1))
+                        )
                     except ValueError:
-                        # Day doesn't exist in this month (e.g., Feb 30)
-                        pass
-
-                # Match each found date entry to a valid month in order
-                for i in range(min(len(matches), len(valid_months))):
-                    m_conf = valid_months[i]
-                    start_pos = matches[i].start()
-                    # Chunk goes until the next match or end of line
-                    end_pos = (
-                        matches[i + 1].start() if i + 1 < len(matches) else len(line)
-                    )
-                    chunk_upper = line[start_pos:end_pos].upper()
-
-                    # Check for waste types in the current cell
-                    for w_type, w_info in WASTE_TYPES.items():
-                        if w_type in chunk_upper:
-                            try:
-                                date = datetime.date(year, m_conf["num"], day_num)
-                                entries.append(
-                                    Collection(
-                                        date, w_type.capitalize(), w_info["icon"]
-                                    )
-                                )
-                            except ValueError:
-                                pass
-
-        return entries
+                        continue
+                    for label in _WASTE_LABELS:
+                        if label in chunk:
+                            yield collection_date, label

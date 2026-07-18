@@ -1,9 +1,8 @@
-# SepanRemondis
+# Koziegłowy/Objezierze/Oborniki
 
-Support for schedules provided by [SepanRemondis](https://sepan.remondis.pl/harmonogram/) for cities:
--Objezierze
--Oborniki
--Koziegłowy
+Support for schedules provided by [Koziegłowy/Objezierze/Oborniki](https://sepan.remondis.pl).
+
+Source for Koziegłowy/Objezierze/Oborniki city garbage collection
 
 ## Configuration via configuration.yaml
 
@@ -12,9 +11,9 @@ waste_collection_schedule:
   sources:
     - name: sepan_remondis_pl
       args:
-        city: Poznań
-        street_name: Święty Marcin
-        street_number: 1
+        city: CITY
+        street_name: STREET_NAME
+        street_number: STREET_NUMBER
 ```
 
 ### Configuration Variables
@@ -22,13 +21,11 @@ waste_collection_schedule:
 **city**  
 *(string) (required)*
 
-**street_address**  
+**street_name**  
 *(string) (required)*
 
 **street_number**  
-*(string)(required)*
-
-All arguments must be provided.
+*(string) (required)*
 
 ## Example
 
@@ -37,12 +34,7 @@ waste_collection_schedule:
   sources:
     - name: sepan_remondis_pl
       args:
-        city: Poznań
-        street_name: Święty Marcin
-        street_number: 1
+        city: "Pozna\u0144"
+        street_name: "\u015AWI\u0118TY MARCIN"
+        street_number: '2'
 ```
-
-## How to get the source arguments
-
-You have to provide city name (Poznań, Objezierze, Oborniki or Koziegłowy) and then your street name and house number (eg 1 or 7/3).
-You can check if your address is covered by SepanRemondis provider at page [SepanRemondis](https://sepan.remondis.pl/harmonogram/)

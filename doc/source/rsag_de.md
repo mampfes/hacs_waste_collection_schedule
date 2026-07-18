@@ -1,12 +1,14 @@
 # RSAG Rhein-Sieg Abfallwirtschaftsgesellschaft
 
-Support for schedules provided by [RSAG](https://www.rsag.de), serving the Rhein-Sieg-Kreis, Germany. Covered municipalities include Alfter, Bad Honnef, Bornheim, Eitorf, Hennef, Königswinter, Lohmar, Meckenheim, Much, Neunkirchen-Seelscheid, Niederkassel, Rheinbach, Ruppichteroth, Sankt Augustin, Siegburg, Swisttal, Troisdorf, Wachtberg and Windeck.
+Support for schedules provided by [RSAG Rhein-Sieg Abfallwirtschaftsgesellschaft](https://www.rsag.de).
+
+Source for RSAG waste collection in the Rhein-Sieg-Kreis, Germany.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rsag_de
       args:
         city: CITY
@@ -15,27 +17,23 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**city**
-*(String) (required)*
+**city**  
+*(string) (required)*
 
-Name of the city/municipality, e.g. `Königswinter`.
-
-**street**
-*(String) (required)*
-
-Name of the street, e.g. `Winzerstraße`.
+**street**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rsag_de
       args:
-        city: Königswinter
-        street: Winzerstraße
+        city: "K\xF6nigswinter"
+        street: "Winzerstra\xDFe"
 ```
 
 ## How to get the source arguments
 
-Visit [https://www.rsag.de/abfallkalender/abfuhrtermine](https://www.rsag.de/abfallkalender/abfuhrtermine) and select your city and street from the dropdown menus. Use the city and street names exactly as shown in the form.
+Visit https://www.rsag.de/abfallkalender/abfuhrtermine and select your city and street. Use the exact city and street names shown in the form.

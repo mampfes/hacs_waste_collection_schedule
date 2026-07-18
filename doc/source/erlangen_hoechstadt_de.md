@@ -1,6 +1,8 @@
-# Erlangen-Höchstadt
+# Landkreis Erlangen-Höchstadt
 
-Support for Landkreis Erlangen-Höchstadt located in Bavaria, Germany.
+Support for schedules provided by [Landkreis Erlangen-Höchstadt](https://www.erlangen-hoechstadt.de/).
+
+Source for Landkreis Erlangen-Höchstadt
 
 ## Configuration via configuration.yaml
 
@@ -21,6 +23,13 @@ waste_collection_schedule:
 **street**  
 *(string) (required)*
 
-### How to get the source arguments
+## Example
 
-Visit [erlangen-hoechstadt.de](https://www.erlangen-hoechstadt.de/aktuelles/abfallkalender/) and search for your area. Use the value from the "Ort" dropdown as `city` argument and the one from "Ortsteil/Straße" as `street`. `street` is case sensitive!
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: erlangen_hoechstadt_de
+      args:
+        city: "H\xF6chstadt"
+        street: "B\xF6hmerwaldstra\xDFe"
+```

@@ -1,6 +1,8 @@
-# BMV.at
+# Burgenländischer Müllverband
 
-Support for schedules provided by [bmv.at](https://www.bmv.at/).
+Support for schedules provided by [Burgenländischer Müllverband](https://www.bmv.at).
+
+Source for BMV, Austria
 
 ## Configuration via configuration.yaml
 
@@ -14,29 +16,25 @@ waste_collection_schedule:
         hausnummer: HAUSNUMMER
 ```
 
-To get the source arguments, open the [website](https://www.bmv.at/service/muellabfuhrtermine.html) and select the right values for your location.
-
-Copy the values for `Ort`, `Straße` and `Hausnummer` into the configuration. Do not change to lower case! Just take the values as they are.
-
 ### Configuration Variables
 
-**ORT**  
+**ort**  
 *(string) (required)*
 
-**STRASSE**  
+**strasse**  
 *(string) (required)*
 
-**HAUSNUMMER**  
-*(string) (required)*  
+**hausnummer**  
+*(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: bmv_at
       args:
-        ort: BAD SAUERBRUNN
-        strasse: BUCHINGERWEG
-        hausnummer: 16
+        ort: ALLERSDORF
+        strasse: HAUSNUMMER
+        hausnummer: 9
 ```

@@ -1,6 +1,8 @@
-# Abfallwirtschaftsbetrieb Stadt Oldenburg (Oldb)
+# AWB Oldenburg
 
-Support for schedules provided by [www.oldenburg.de](https://www.oldenburg.de/startseite/leben-umwelt/awb/abfall-a-z/abfuhrkalender.html).
+Support for schedules provided by [AWB Oldenburg](https://www.oldenburg.de).
+
+Source for 'Abfallwirtschaftsbetrieb Stadt Oldenburg (Oldb)'.
 
 ## Configuration via configuration.yaml
 
@@ -28,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: awb_oldenburg_de
       args:
-        street: 'Friedhofsweg'
-        house_number: '30'
+        street: Friedhofsweg
+        house_number: 30
 ```

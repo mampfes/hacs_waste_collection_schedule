@@ -1,6 +1,8 @@
 # Mühlenkreis Minden-Lübbecke
 
-Support for schedules provided by [Mühlenkreis Minden-Lübbecke](https://www.muehlenkreis.de), Germany.
+Support for schedules provided by [Mühlenkreis Minden-Lübbecke](https://www.muehlenkreis.de).
+
+Source for Mühlenkreis Minden-Lübbecke waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -15,15 +17,11 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**strasse**
+**strasse**  
 *(string) (required)*
 
-Street name (or a unique partial match), as offered by the autocomplete on the Abfallkalender page.
-
-**ort**
+**ort**  
 *(string) (optional)*
-
-Place, used to disambiguate streets that exist in more than one location (the part shown in parentheses, e.g. `Harlinghausen`).
 
 ## Example
 
@@ -32,12 +30,6 @@ waste_collection_schedule:
   sources:
     - name: muehlenkreis_de
       args:
-        strasse: "Hauptstraße"
-        ort: "Harlinghausen"
+        strasse: "Hauptstra\xDFe"
+        ort: Harlinghausen
 ```
-
-## How to get the source arguments
-
-1. Go to [Abfallkalender Mühlenkreis](https://www.muehlenkreis.de/iKISS-Start/Mitteilungen/Abfallkalender-2024.php).
-2. Start typing your street name and pick it from the suggestions.
-3. Use the street name as `strasse`. If the same street exists in several places, add the place shown in parentheses as `ort`.

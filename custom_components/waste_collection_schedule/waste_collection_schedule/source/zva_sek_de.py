@@ -1,162 +1,165 @@
+"""Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis (zva-sek.de).
+
+Demonstrates: resolving a district -> sub-district -> (optional) street
+cascade by scraping a <select> off a yearly calendar page and two
+semicolon-separated JS-assignment endpoints, then POSTing the resolved ids to
+an ICS-generating servlet -- optionally twice, once for next year too, near
+year-end. No configured retriever expresses that scrape-then-resolve chain,
+hence a source-defined retrieve()/parse() pair.
+"""
+
 import re
 from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
+from bs4 import BeautifulSoup, Tag
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, street, text_field
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    HAZARDOUS,
+    RECYCLABLES,
 )
-from waste_collection_schedule.service.ICS import ICS
 
-TITLE = "Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis"
-DESCRIPTION = "Source for ZVA (Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis)."
-URL = "https://www.zva-sek.de"
-TEST_CASES = {
-    "Fritzlar": {
-        "bezirk": "Fritzlar",
-        "ortsteil": "Fritzlar-kernstadt",
-        "strasse": "Ahornweg",
-    },
-    "Ottrau": {
-        "bezirk": "Ottrau",
-        "ortsteil": "immichenhain",
-        "strasse": "",
-    },
-    "Knüllwald": {
-        "bezirk": "Knüllwald",
-        "ortsteil": "Hergetsfeld",
-    },
-    "Felsberg": {
-        "bezirk": "Felsberg",
-        "ortsteil": "Felsberg",
-    },
-    "Guxhagen": {
-        "bezirk": "Guxhagen",
-        "ortsteil": "Guxhagen",
-    },
-}
-SERVLET = "https://www.zva-sek.de/module/abfallkalender/generate_ical.php"
-MAIN_URL = "https://www.zva-sek.de/online-dienste/abfallkalender-{year}/{file}"
-API_URL = "https://www.zva-sek.de/module/abfallkalender/{file}"
+_SERVLET = "https://www.zva-sek.de/module/abfallkalender/generate_ical.php"
+_MAIN_URL = "https://www.zva-sek.de/online-dienste/abfallkalender-{year}/{file}"
+_API_URL = "https://www.zva-sek.de/module/abfallkalender/{file}"
+
+_SUFFIX_RE = re.compile(r"[ ]*am [0-9]+\.[0-9]+\.[0-9]+[ ]*")
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "bezirk": "Abfuhrbezirk",
-        "strasse": "Straße",
-        "ortsteil": "Ortsteil",
-    },
-    "en": {
-        "bezirk": "City district",
-        "strasse": "Street",
-        "ortsteil": "District",
-    },
-}
+def _js_options(text: str) -> list[str]:
+    """Read the option labels out of a "f.x.options[n].text = '...'" reply."""
+    return [
+        part.split(" = ")[1][1:-1]
+        for part in text.split(";")[2:-1]
+        if "length" not in part
+    ]
 
 
-class Source:
-    def __init__(self, bezirk: str, ortsteil: str, strasse: str | None = None):
-        self._bezirk = bezirk
-        self._ortsteil = ortsteil
-        self._street = strasse if strasse != "" else None
-        self._ics = ICS()
+def _resolve_js_id(text: str, value: str) -> "str | None":
+    """Find the id preceding the option whose label matches ``value``.
 
-    def fetch(self):
-        session = requests.session()
+    Each endpoint replies with alternating ``...text = '...'`` / ``...value =
+    '...'`` lines; the id for a given label is the *previous* line's value.
+    """
+    last_id = None
+    for part in text.split(";")[2:-1]:
+        if "length" in part:
+            continue
+        label = part.split(" = ")[1][1:-1]
+        if label.lower() == value.lower():
+            return last_id
+        last_id = label
+    return None
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis"
+    DESCRIPTION = "Source for ZVA (Zweckverband Abfallwirtschaft Schwalm-Eder-Kreis)."
+    URL = "https://www.zva-sek.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Fritzlar": {
+            "bezirk": "Fritzlar",
+            "ortsteil": "Fritzlar-kernstadt",
+            "strasse": "Ahornweg",
+        },
+        "Ottrau": {
+            "bezirk": "Ottrau",
+            "ortsteil": "immichenhain",
+            "strasse": "",
+        },
+        "Knüllwald": {
+            "bezirk": "Knüllwald",
+            "ortsteil": "Hergetsfeld",
+        },
+        "Felsberg": {
+            "bezirk": "Felsberg",
+            "ortsteil": "Felsberg",
+        },
+        "Guxhagen": {
+            "bezirk": "Guxhagen",
+            "ortsteil": "Guxhagen",
+        },
+    }
+
+    PARAMS = (
+        text_field("bezirk", "Collection district"),
+        district(field="ortsteil"),
+        street(field="strasse", optional=True),
+    )
+
+    def retrieve(self, source):
+        session = source.session
+        bezirk = source.params["bezirk"]
+        ortsteil = source.params["ortsteil"]
+        strasse = source.params.get("strasse") or None
         year = datetime.now().year
 
-        bezirk_id = None
-        ortsteil_id = None
-
-        # get bezirke id
-        r = session.get(MAIN_URL.format(year=year, file=f"abfallkalender-{year}.html"))
-        if r.status_code == 404:  # try last year URL if this year is not available
+        r = session.get(_MAIN_URL.format(year=year, file=f"abfallkalender-{year}.html"))
+        if r.status_code == 404:  # try last year's URL if this year isn't up yet
             r = session.get(
-                MAIN_URL.format(year=year, file=f"abfallkalender-{year - 1}.html")
+                _MAIN_URL.format(year=year, file=f"abfallkalender-{year - 1}.html")
             )
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, features="html.parser")
-        for option in soup.find("select", {"name": "ak_bezirk"}).find_all("option"):
-            if option.text.lower() == self._bezirk.lower():
-                # removing solves problem with subsequen calls
-                # self._bezirk = option.get("value")
+        bezirk_select = soup.find("select", {"name": "ak_bezirk"})
+        if not isinstance(bezirk_select, Tag):
+            raise SourceArgumentNotFoundWithSuggestions("bezirk", bezirk, [])
+        bezirk_options = bezirk_select.find_all("option")
+        bezirk_id = None
+        for option in bezirk_options:
+            if option.text.lower() == bezirk.lower():
                 bezirk_id = option.get("value")
                 break
-
         if not bezirk_id:
             raise SourceArgumentNotFoundWithSuggestions(
-                "bezirk",
-                self._bezirk,
-                [
-                    option.text
-                    for option in soup.find("select", {"name": "ak_bezirk"}).find_all(
-                        "option"
-                    )
-                ],
+                "bezirk", bezirk, [option.text for option in bezirk_options]
             )
-        # get ortsteil id
+
         r = session.get(
-            API_URL.format(file="get_ortsteile.php"), params={"bez_id": bezirk_id}
+            _API_URL.format(file="get_ortsteile.php"), params={"bez_id": bezirk_id}
         )
         r.raise_for_status()
-        last_orts_id = None
-        for part in r.text.split(";")[2:-1]:
-            # part is "f.ak_ortsteil.options[5].text = 'Alte Kasseler Straße'" or "ak_ortsteil.options[6].value = '2'"
-            if "length" in part:
-                continue
-            if part.split(" = ")[1][1:-1].lower() == self._ortsteil.lower():
-                ortsteil_id = last_orts_id
-                break
-            last_orts_id = part.split(" = ")[1][1:-1]
-
+        ortsteil_id = _resolve_js_id(r.text, ortsteil)
         if not ortsteil_id:
             raise SourceArgumentNotFoundWithSuggestions(
-                "ortsteil",
-                self._ortsteil,
-                [part.split(" = ")[1][1:-1] for part in r.text.split(";")[2:-1]],
+                "ortsteil", ortsteil, _js_options(r.text)
             )
 
         street_id = None
-
-        # get street id if steet given
-        if self._street is not None:
+        if strasse is not None:
             r = session.get(
-                API_URL.format(file="get_strassen.php"),
+                _API_URL.format(file="get_strassen.php"),
                 params={"ot_id": ortsteil_id.split("-")[0]},
             )
             r.raise_for_status()
-            last_street_id = None
-            for part in r.text.split(";")[2:-1]:
-                # part is "f.ak_strasse.options[5].text = 'Alte Kasseler Straße'" or "ak_strasse.options[6].value = '2'"
-                if "length" in part:
-                    continue
-                if part.split(" = ")[1][1:-1].lower() == self._street.lower():
-                    street_id = last_street_id
-                    break
-                last_street_id = part.split(" = ")[1][1:-1]
-
+            street_id = _resolve_js_id(r.text, strasse)
             if not street_id:
                 raise SourceArgumentNotFoundWithSuggestions(
-                    "street",
-                    self._street,
-                    [part.split(" = ")[1][1:-1] for part in r.text.split(";")[2:-1]],
+                    "strasse", strasse, _js_options(r.text)
                 )
 
-        entries = self.get_calendar_data(
-            year, bezirk_id, ortsteil_id, street_id, session
-        )
+        responses = [self._calendar(session, year, bezirk_id, ortsteil_id, street_id)]
         if datetime.now().month >= 11:
             try:
-                entries += self.get_calendar_data(
-                    year + 1, bezirk_id, ortsteil_id, street_id, session
+                responses.append(
+                    self._calendar(session, year + 1, bezirk_id, ortsteil_id, street_id)
                 )
             except Exception:
                 pass
-        return entries
+        return responses
 
-    def get_calendar_data(self, year, bezirk_id, ortsteil_id, street_id, session):
+    @staticmethod
+    def _calendar(session, year, bezirk_id, ortsteil_id, street_id):
         args = {
             "year": str(year),
             "ak_bezirk": bezirk_id,
@@ -165,20 +168,36 @@ class Source:
             "iCalEnde": 6,
             "iCalBeginn": 17,
         }
-        if self._street is not None:
+        if street_id is not None:
             args["ak_strasse"] = street_id
-
-        r = session.post(
-            SERVLET,
-            data=args,
-        )
-
+        r = session.post(_SERVLET, data=args)
         r.raise_for_status()
-        dates = self._ics.convert(r.text)
+        return r
 
+    def parse(self, raw, source=None):
+        ics_parser = IcsParser()
         entries = []
-        for d in dates:
-            entries.append(
-                Collection(d[0], re.sub("[ ]*am [0-9]+.[0-9]+.[0-9]+[ ]*", "", d[1]))
-            )
+        for response in raw:
+            for date, label in ics_parser(response, source):
+                entries.append((date, _SUFFIX_RE.sub("", label)))
         return entries
+
+    # "Altpapier"/"Biomüll" resolve automatically (they're the canonical German
+    # display names). The frequency/size-suffixed residual-waste variants and
+    # the combined recycling label don't match the shared vocabulary verbatim,
+    # so they're forced here; a genuinely uncategorisable special collection
+    # ("Altreifen ...") is left to preserve verbatim rather than be guessed at.
+    transform = ICSTransformer(
+        type_value_map={
+            "gelbe(r) tonne/sack": RECYCLABLES,
+            "restmüll (3-wöchentlich)": GENERAL_WASTE,
+            "restmüll 1,1 m³ (wöchentlich)": GENERAL_WASTE,
+            "restmüll 1,1 m³ (2-wöchentlich)": GENERAL_WASTE,
+            "restmüll 1,1 m³ (3-wöchentlich)": GENERAL_WASTE,
+            "restmüll 1,1 m³ (4-wöchentlich)": GENERAL_WASTE,
+            "schadstoffsammlung (achtung: nur selbstanlieferung)": HAZARDOUS,
+        }
+    )
+
+    def __init__(self, bezirk: str, ortsteil: str, strasse: "str | None" = None):
+        super().__init__(bezirk=bezirk, ortsteil=ortsteil, strasse=strasse)

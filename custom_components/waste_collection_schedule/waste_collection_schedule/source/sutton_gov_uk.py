@@ -1,52 +1,57 @@
-from time import sleep
+"""Sutton Council, London (sutton.gov.uk).
 
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+Demonstrates: the same "recyclingservices" council-platform shape as
+bexley_gov_uk/bromley_gov_uk (the legacy source polled the property page's
+``hx-get`` attribute directly rather than the ``.ics`` endpoint's body, but
+``PollingIcsRetriever``'s default calendar-endpoint poll reaches the same
+ready state). ``PollingIcsRetriever`` + ``IcsParser`` + ``ICSTransformer`` do
+all the work; this module only supplies the URL template, a " collection"
+suffix strip, and the waste-type map (Sutton icons "mixed" recycling as
+plain Recycling, unlike Bromley's Glass).
+"""
 
-TITLE = "Sutton Council, London"
-DESCRIPTION = "Source for Sutton Council, London."
-URL = "https://sutton.gov.uk"
-TEST_CASES = {"4721996": {"id": 4721996}, "4499298": {"id": "4499298"}}
+from typing import ClassVar, final
+
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.retrievers import PollingIcsRetriever
+from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GENERAL_WASTE,
+    PAPER,
+    RECYCLABLES,
+)
 
 
-ICON_MAP = {
-    "non-recyclable": Icons.GENERAL_WASTE,
-    "paper": Icons.PAPER,
-    "mixed": Icons.RECYCLING,
-    "food": Icons.BIO_KITCHEN,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Sutton Council, London"
+    DESCRIPTION = "Source for Sutton Council, London."
+    URL = "https://sutton.gov.uk"
+    COUNTRY = "uk"
 
+    TEST_CASES: ClassVar[dict] = {
+        "4721996": {"id": 4721996},
+        "4499298": {"id": "4499298"},
+    }
 
-API_URL = "https://waste-services.sutton.gov.uk/waste/{id}"
-ICAL_URL = API_URL + "/calendar.ics"
+    PARAMS = (uprn(field_name="id"),)
 
+    retrieve = PollingIcsRetriever(
+        url=lambda id, **_: f"https://waste-services.sutton.gov.uk/waste/{id}"
+    )
+    parse = parsers.IcsParser()
+    transform = ICSTransformer(
+        type_value_map={
+            "Non-Recyclable Refuse": GENERAL_WASTE,
+            "Food Waste": FOOD_WASTE,
+            "Paper & Card": PAPER,
+            "Mixed Recycling (Cans, Plastics & Glass)": RECYCLABLES,
+        },
+        clean=label_cleaner(strip_suffixes=[" collection"]),
+    )
 
-class Source:
     def __init__(self, id: str | int):
-        self._id: str | int = id
-        self._ics = ICS()
-
-    def fetch(self):
-        s = requests.Session(impersonate="chrome")
-
-        api_url = API_URL.format(id=self._id)
-        ical_url = ICAL_URL.format(id=self._id)
-
-        r = s.get(api_url)
-        while f'hx-get="/waste/{self._id}"' in r.text:
-            sleep(2)
-            r = s.get(api_url)
-        r.raise_for_status()
-
-        r = s.get(ical_url)
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
-        entries = []
-        for d in dates:
-            entries.append(
-                Collection(d[0], d[1], ICON_MAP.get(d[1].split(" ")[0].lower()))
-            )
-
-        return entries
+        super().__init__(id=id)

@@ -1,45 +1,34 @@
 # Stadt Frankenberg (Eder)
 
-Support for schedules provided by [Stadt Frankenberg (Eder)](https://www.frankenberg.de/), serving Stadt Frankenberg (Eder), Germany.
+Support for schedules provided by [Stadt Frankenberg (Eder)](https://www.frankenberg.de/).
+
+Source for Stadt Frankenberg (Eder).
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: frankenberg_de
       args:
-        district: DISTRICT (Stadtteil)
-        street: STREET (Straße)
+        district: DISTRICT
+        street: STREET
 ```
 
 ### Configuration Variables
 
 **district**  
-*(String) (required)*
+*(string) (required)*
 
-**street**
-*(String) (optional): only required if asked for a street on the webpage* 
+**street**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: frankenberg_de
       args:
-        district: Viermünden
+        district: "Vierm\xFCnden"
 ```
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: frankenberg_de
-      args:
-        district: FKB-Kernstadt
-        street: Futterhof
-```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://abfall.frankenberg.de/online-dienste/](https://abfall.frankenberg.de/online-dienste/) and write them exactly like on the web page.

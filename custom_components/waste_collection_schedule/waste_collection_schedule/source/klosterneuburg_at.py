@@ -1,58 +1,63 @@
-from typing import ClassVar
+from typing import ClassVar, final
 
-from waste_collection_schedule import Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.service.RiSKommunalAT import (
+    RiSKommunalParser,
+    RiSKommunalRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import PAPER
 
-TITLE = "Stadtgemeinde Klosterneuburg"
-DESCRIPTION = "Source for Stadtgemeinde Klosterneuburg waste collection."
-URL = "https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/Muellabfuhrkalender"
-COUNTRY = "at"
-
-TEST_CASES = {
-    "Kierlinger Straße 10": {
-        "street": "Kierlinger Straße",
-        "house_number": "10",
-    },
-    "Adalbert Stifter-Gasse 1": {
-        "street": "Adalbert Stifter-Gasse",
-        "house_number": "1",
-    },
-}
-
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Biomüll": Icons.BIO_KITCHEN,
-    "Papiermüll": Icons.PAPER,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Sperrmüll": Icons.BULKY,
-}
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "street": "Straße",
-        "house_number": "Hausnummer",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street": "Street name as shown on the Klosterneuburg website",
-        "house_number": "House number",
-    },
-}
+_BASE_URL = "https://www.klosterneuburg.at"
+_SELECTION_URL = (
+    "https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/"
+    "Muellabfuhrkalender"
+)
 
 
-class Source(RiSKommunalSource):
-    BASE_URL = "https://www.klosterneuburg.at"
-    ICON_MAP = ICON_MAP
-    SELECTION_URL = (
-        "https://www.klosterneuburg.at/Natur_Umwelt/Recycling/Muellabfuhr/"
-        "Muellabfuhrkalender"
-    )
-    QUERY_PARAMS: ClassVar = {
-        "sprache": "1",
-        "menuonr": "226582740",
+@final
+class Source(BaseSource):
+    TITLE = "Stadtgemeinde Klosterneuburg"
+    DESCRIPTION = "Source for Stadtgemeinde Klosterneuburg waste collection."
+    URL = _SELECTION_URL
+    COUNTRY = "at"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Kierlinger Straße 10": {
+            "street": "Kierlinger Straße",
+            "house_number": "10",
+        },
+        "Adalbert Stifter-Gasse 1": {
+            "street": "Adalbert Stifter-Gasse",
+            "house_number": "1",
+        },
     }
 
-    def __init__(self, street, house_number):
-        super().__init__(strasse=street, hausnummer=house_number)
+    PARAMS = (
+        street("street"),
+        house_number("house_number"),
+    )
+
+    retrieve = RiSKommunalRetriever(
+        base_url=_BASE_URL,
+        query_params={
+            "sprache": "1",
+            "menuonr": "226582740",
+        },
+        strasse_param="street",
+        hausnummer_param="house_number",
+        selection_url=_SELECTION_URL,
+    )
+    parse = RiSKommunalParser()
+
+    # "Papiermüll" is not in the shared vocabulary (only "Altpapier"/"Papier"
+    # are); Restmüll, Biomüll, Gelber Sack and Sperrmüll all resolve unmapped.
+    transform = ICSTransformer(
+        type_value_map={
+            "Papiermüll": PAPER,
+        },
+    )
+
+    def __init__(self, street: str, house_number: str):
+        super().__init__(street=street, house_number=house_number)

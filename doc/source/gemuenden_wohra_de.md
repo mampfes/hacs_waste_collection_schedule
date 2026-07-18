@@ -1,8 +1,25 @@
 # Stadt Gemünden (Wohra)
 
-Support for schedules provided by [Stadt Gemünden (Wohra)](https://www.gemuenden-wohra.de), serving Gemünden (Wohra), Germany.
+Support for schedules provided by [Stadt Gemünden (Wohra)](https://www.gemuenden-wohra.de).
+
+Source for Stadt Gemünden (Wohra) waste collection schedule.
 
 ## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: gemuenden_wohra_de
+      args:
+        tour: TOUR
+```
+
+### Configuration Variables
+
+**tour**  
+*(string) (optional)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -12,33 +29,6 @@ waste_collection_schedule:
         tour: 1
 ```
 
-### Configuration Variables
+## How to get the source arguments
 
-**tour**
-*(integer) (required)*
-
-Collection tour number. Determines which pickup route your address belongs to:
-
-- **Tour 1**: Schiffelbach, Ellnrode, Grüsen, Sehlen, Herbelhausen, Lehnhausen and all properties west of the former railway line.
-- **Tour 2**: Rest of Gemünden town centre.
-
-## Example
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: gemuenden_wohra_de
-      args:
-        tour: 2
-```
-
-## Collected waste types
-
-| Code | Type | Description |
-|------|------|-------------|
-| B | Bioabfall | Organic waste |
-| R | Restmüll | Residual waste |
-| G | Gelbe Tonne | Yellow bin (packaging) |
-| P | Altpapier | Paper |
-| AR | Altreifensammlung | Old tyre collection (all tours) |
-| SO | Sonderabfall | Hazardous waste collection (all tours) |
+Tour 1: Schiffelbach, Ellnrode, Grüsen, Sehlen, Herbelhausen, Lehnhausen and areas west of the former railway line. Tour 2: rest of the Gemünden town centre.

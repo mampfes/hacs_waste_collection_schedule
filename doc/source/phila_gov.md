@@ -1,12 +1,14 @@
 # City of Philadelphia, PA
 
-Support for schedules provided by [City of Philadelphia,PA](https://www.phila.gov/), serving City of Philadelphia, PA, USA.
+Support for schedules provided by [City of Philadelphia, PA](https://www.phila.gov/).
+
+City of Philadelphia, PA, USA
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: phila_gov
       args:
         address: ADDRESS
@@ -15,19 +17,18 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
-
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: phila_gov
       args:
-        address: "1830 FITZWATER ST"
+        address: 1830 Fitzwater Street
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Search for your collection schedule at [phila.gov](https://www.phila.gov/services/trash-recycling-city-upkeep/find-your-trash-and-recycling-collection-day), use your address as it is displayed on the search results.
+Use your address as shown on the phila.gov trash/recycling collection-day search results.

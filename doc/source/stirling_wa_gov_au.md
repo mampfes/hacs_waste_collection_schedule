@@ -1,67 +1,68 @@
 # Stirling
 
-Support for schedules provided by [Stirling](https://www.stirling.wa.gov.au/), serving Stirling, Australia.
+Support for schedules provided by [Stirling](https://www.stirling.wa.gov.au).
+
+Source for Stirling.
 
 ## Configuration via configuration.yaml
 
+### Using address
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: stirling_wa_gov_au
       args:
         address: ADDRESS
-        
+```
+
+### Using lat and lon
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: stirling_wa_gov_au
+      args:
+        lat: LAT
+        lon: LON
 ```
 
 ### Configuration Variables
 
 **address**  
-*(String) (optional)*
+*(string) (alternative)*
 
 **lat**  
-*(Float) (optional)*
+*(string) (alternative)*
 
 **lon**  
-*(Float) (optional)*
+*(string) (alternative)*
 
-Either `address` or both `lat` and `lon` must be provided.
+Provide one of: `address` or `lat` + `lon`.
 
-## Examples
+## Example
 
-### Using address (recommended)
+### Using address
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: stirling_wa_gov_au
       args:
-        address: "100 Cedric Street, Stirling, WA, Australia"
-        
+        address: 100 Cedric Street, Stirling, WA, Australia
 ```
 
-### Using coordinates
+### Using lat and lon
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: stirling_wa_gov_au
       args:
         lat: -31.9034183
         lon: 115.8320855
-        
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-### Using your address (recommended)
-
-Enter your full street address including suburb and state (e.g. `100 Cedric Street, Stirling, WA, Australia`). The address will be geocoded automatically.
-
-### Using coordinates
-
-If address lookup does not work for your location, you can provide coordinates instead:
-
-1. Visit <https://www.stirling.wa.gov.au/waste-and-environment/waste-and-recycling/bin-collections> and search for your address.
-2. Open your browser's developer tools (Network tab) and look for the request to `/bincollectioncheck/getresult`.
-3. The `fields` header contains the coordinates as `longitude,latitude`. Note the **inverse order**.
-4. Enter the latitude and longitude values in the configuration file.
+Enter your street address including suburb (e.g. '100 Cedric Street, Stirling, WA, Australia'), or provide latitude and longitude coordinates.

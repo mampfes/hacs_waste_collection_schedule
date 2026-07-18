@@ -1,40 +1,39 @@
 # Cannock Chase Council
 
-Support for schedules provided by [Cannock Chase Council](https://www.cannockchasedc.gov.uk/residents/recycling-waste/waste-collection-check-your-dates), serving Cannock Chase, UK.
+Support for schedules provided by [Cannock Chase Council](https://www.cannockchasedc.gov.uk).
+
+Source for cannockchasedc.gov.uk services for Cannock Chase Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cannock_chase_dc_gov_uk
       args:
-        post_code: POST_CODE
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
+        postcode: POSTCODE
 ```
 
 ### Configuration Variables
 
-**post_code**<br>
+**uprn**  
 *(string) (required)*
 
-**uprn**<br>
+**postcode**  
 *(string) (required)*
 
+## Example
 
-## Example using UPRN
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cannock_chase_dc_gov_uk
       args:
-        post_code: "WS15 1DN"
-        uprn: "100031640287"
+        uprn: '100031640287'
+        postcode: WS15 1DN
 ```
 
+## How to get the source arguments
 
-## How to find your `UPRN`
-
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
-
-
+Find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering your address details, then provide it together with your postcode.

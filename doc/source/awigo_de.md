@@ -1,44 +1,40 @@
 # AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH
 
-Support for schedules provided by [AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH](https://www.awigo.de/), serving Landkreis Osnabrück, Germany.
+Support for schedules provided by [AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH](https://www.awigo.de/).
+
+Source for AWIGO Abfallwirtschaft Landkreis Osnabrück GmbH.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: awigo_de
       args:
-        ort: "ORT"
-        strasse: STRAßE
-        hnr: "HAUSNUMMER"
-        
+        ort: ORT
+        strasse: STRASSE
+        hnr: HNR
 ```
 
 ### Configuration Variables
 
 **ort**  
-*(String) (required)*
+*(string) (required)*
 
 **strasse**  
-*(String) (required)*
+*(string) (required)*
 
 **hnr**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: awigo_de
       args:
         ort: Bippen
         strasse: Am Bad
         hnr: 4
-        
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://www.awigo.de/](https://www.awigo.de/) and write them exactly like on the web page.

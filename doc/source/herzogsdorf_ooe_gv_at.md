@@ -1,6 +1,8 @@
 # Herzogsdorf
 
-Support for waste collection schedules provided by [Gemeinde Herzogsdorf](https://www.herzogsdorf.ooe.gv.at), Upper Austria.
+Support for schedules provided by [Herzogsdorf](https://www.herzogsdorf.ooe.gv.at).
+
+Source for Herzogsdorf, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -12,7 +14,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-No arguments required — the source fetches the municipality-wide calendar automatically.
+No configuration arguments are required.
 
 ## Example
 

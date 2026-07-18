@@ -14,12 +14,24 @@ Typical workflow:
 from __future__ import annotations
 
 import logging
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+
+from waste_collection_schedule import response_shape
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
+from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.retrievers import RetrieverFunc
+
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
 
 # --- Custom Exception Hierarchy ---
 
@@ -258,8 +270,9 @@ class MapsClient:
                 "Could not identify a valid FullText address form template."
             )
 
-        self._address_form_template_id = match["templateId"]
-        return self._address_form_template_id
+        template_id = str(match["templateId"])
+        self._address_form_template_id = template_id
+        return template_id
 
     def search_address(self, address: str, suburb: str | None = None) -> dict[str, Any]:
         """
@@ -491,22 +504,113 @@ class IntegrationClient:
 # --- Helpers ---
 
 
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture)
+#
+# IntraMaps needs a stateful, multi-request handshake (session token -> module ->
+# form template -> search -> select) before any data comes back. The split:
+#
+#     retrieve = IntraMapsRetriever(CONFIG, address="address")
+#     parse    = IntraMapsPanelParser()        # -> [{"column", "value"}, ...]
+#
+# IntraMapsRetriever drives the whole stateful handshake and returns the *raw*
+# infoPanels response. IntraMapsPanelParser turns that raw response into column /
+# value field records (no I/O — it runs against a cached response too). Turning a
+# field's value ("Every Friday", "Friday Next Week") into dates is council
+# specific, so that stays in the source's preprocessor.
+# --------------------------------------------------------------------------- #
+
+
+class IntraMapsRetriever(RetrieverFunc):
+    """Run the IntraMaps session handshake and return the raw infoPanels response.
+
+    Args:
+        config: A fully-populated :class:`MapsClientConfig` for the council.
+        address: ``source.params`` field name holding the address string.
+        suburb: Optional ``source.params`` field name to disambiguate matches.
+    """
+
+    def __init__(
+        self,
+        config: MapsClientConfig,
+        address: str = "address",
+        suburb: str | None = None,
+    ):
+        self.config = config
+        self.address = address
+        self.suburb = suburb
+
+    def __call__(self, source: BaseSource) -> dict[str, Any]:
+        addr = source.params[self.address]
+        suburb = source.params.get(self.suburb) if self.suburb else None
+        try:
+            with MapsClient(self.config) as client:
+                result = client.select_address(addr, suburb)
+        except IntraMapsError as e:
+            raise SourceArgumentNotFound(self.address, addr) from e
+
+        response = result.get("response")
+        return response if isinstance(response, dict) else {}
+
+
+def _panel_fields(response: dict[str, Any], panel_key: str) -> list[dict[str, Any]]:
+    """The raw ``infoPanels > panel > feature > fields`` list (single traversal).
+
+    The one place that knows the IntraMaps response nesting. The pipeline parser
+    and the legacy ``extract_panel_fields`` adapter both build on this so the
+    structure is described once.
+    """
+    return (
+        (response or {})
+        .get("infoPanels", {})
+        .get(panel_key, {})
+        .get("feature", {})
+        .get("fields", [])
+    )
+
+
+class IntraMapsPanelParser(Parser["list[dict[str, str]]"]):
+    """Extract ``{"column", "value"}`` field records from an infoPanels response.
+
+    Keys each field by its ``value.column`` (the stable machine name councils
+    filter on) rather than its display caption.
+    """
+
+    def __init__(self, panel: str = "info1"):
+        self.panel = panel
+
+    def __call__(
+        self, response: dict[str, Any], source: BaseSource | None = None
+    ) -> list[dict[str, str]]:
+        response_shape.expect(
+            isinstance(response, dict) and "infoPanels" in response,
+            source_name=response_shape.source_name(source),
+            detail="IntraMaps response has no 'infoPanels'",
+            raw=response,
+        )
+        records: list[dict[str, str]] = []
+        for field in _panel_fields(response, self.panel):
+            value = field.get("value", {})
+            if isinstance(value, dict):
+                records.append(
+                    {
+                        "column": value.get("column", ""),
+                        "value": value.get("value", ""),
+                    }
+                )
+        return records
+
+
 def extract_panel_fields(
     response: dict[str, Any], panel_key: str = "info1"
 ) -> dict[str, str]:
     """Extract a name→value dict from an IntraMaps infoPanels response.
 
-    Handles the nested structure: infoPanels > panel_key > feature > fields,
-    where each field has a name/caption and a value dict with a 'value' key.
+    Legacy adapter for the ~7 hand-written sources that predate
+    :class:`IntraMapsPanelParser`; both share :func:`_panel_fields`.
     """
-    fields = (
-        response.get("infoPanels", {})
-        .get(panel_key, {})
-        .get("feature", {})
-        .get("fields", [])
-    )
     result: dict[str, str] = {}
-    for field in fields:
+    for field in _panel_fields(response, panel_key):
         name = field.get("name") or field.get("caption", "")
         value = field.get("value", {})
         if isinstance(value, dict):
@@ -514,3 +618,182 @@ def extract_panel_fields(
         elif isinstance(value, str):
             result[name] = value
     return result
+
+
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture) — Integration API
+#
+# A second, unrelated IntraMaps flow: an apikey-authenticated REST API (no
+# session handshake) rather than the stateful MapsClient session. The shape is
+# still a two-step handshake for most councils:
+#
+#     retrieve = IntegrationClientRetriever(CONFIG, search_form=..., details_form=...)
+#     parse    = IntegrationPanelParser()       # -> [{"column", "value"}, ...]
+#
+# Step 1 (search_form) resolves the address (or, via ``geocode``, reprojected
+# coordinates) to a "mapkey,dbkey" pair; step 2 (details_form) fetches the
+# actual collection-day fields keyed by that pair. Some councils skip step 2
+# entirely: their one form both resolves the location AND returns the
+# collection fields directly (melvillecity_com_au.py), so ``details_form`` is
+# optional. IntegrationPanelParser turns the client's flat name→value dict into
+# the same {"column", "value"} record shape IntraMapsPanelParser produces, so a
+# source's _describe() reads identically regardless of which IntraMaps flow
+# it's built on.
+# --------------------------------------------------------------------------- #
+
+
+def nominatim_reproject(
+    address: str,
+    epsg_out: str,
+    *,
+    country_codes: str | None = None,
+    nominatim_url: str = "https://nominatim.openstreetmap.org/search",
+    user_agent: str = "hacs_waste_collection_schedule",
+    timeout_s: int = 30,
+) -> Callable[[BaseSource, IntegrationClient], str]:
+    """Build a ``geocode`` callable: free-text address -> reprojected "x,y".
+
+    A reusable helper for the (rare) Integration API council whose search form
+    expects map coordinates rather than an address string. Geocodes
+    ``source.params[address]`` via Nominatim, then reprojects the result via
+    the Integration API's own ``Reproject`` endpoint into the CRS the search
+    form expects (``epsg_out``, e.g. ``"epsg:7850"`` for a state-plane grid).
+
+    Kept out of :class:`IntegrationClientRetriever` itself: the retriever stays
+    a plain two-step REST client for every council, and only a source that
+    actually needs a geocode step passes one in::
+
+        retrieve = IntegrationClientRetriever(
+            CONFIG,
+            search_form=WASTE_FORM_ID,
+            geocode=nominatim_reproject("address", epsg_out="epsg:7850", country_codes="au"),
+        )
+    """
+
+    def _geocode(source: BaseSource, client: IntegrationClient) -> str:
+        query = source.params[address]
+        params: dict[str, str] = {"q": query, "format": "json", "limit": "1"}
+        if country_codes:
+            params["countrycodes"] = country_codes
+        r = source.session.get(
+            nominatim_url,
+            params=params,
+            headers={"User-Agent": user_agent},
+            timeout=timeout_s,
+        )
+        r.raise_for_status()
+        results = r.json()
+        if not results:
+            raise SourceArgumentNotFound(address, query)
+
+        lat = float(results[0]["lat"])
+        lng = float(results[0]["lon"])
+        proj = client.reproject(lng, lat, "epsg:4326", epsg_out)
+        return f"{proj['x']},{proj['y']}"
+
+    return _geocode
+
+
+def _normalise_address(text: str) -> str:
+    """Loosely normalise an address string for an exact-match comparison."""
+    return text.lower().replace(" ", "").replace(",", "")
+
+
+class IntegrationClientRetriever(RetrieverFunc):
+    """Run the IntraMaps Integration API search -> [select] -> details flow.
+
+    Args:
+        config: A fully-populated :class:`IntegrationClientConfig` for the
+            council.
+        search_form: Form id for the initial search request.
+        address: ``source.params`` field name holding the search string (a
+            street address). Ignored when ``geocode`` is supplied.
+        details_form: Form id for a follow-up request keyed by the
+            ``mapkey``/``dbkey`` the search result returns. Omit it when the
+            search form itself already returns the collection-day fields (no
+            separate details step; see melvillecity_com_au.py).
+        geocode: Optional ``(source, client) -> str`` replacing the plain
+            address string as the search field value, for a council whose
+            search form expects something else (e.g. reprojected
+            coordinates — see :func:`nominatim_reproject`).
+        match_field: Optional result field name (e.g. ``"Address"``) used to
+            disambiguate multiple search candidates. When set, every candidate
+            is fetched (``search_all``) instead of just the first, and the one
+            whose ``match_field`` value normalises to the same address as
+            ``source.params[address]`` is selected; no exact match raises
+            :class:`SourceArgumentNotFoundWithSuggestions` naming the
+            candidate addresses.
+    """
+
+    def __init__(
+        self,
+        config: IntegrationClientConfig,
+        search_form: str,
+        address: str = "address",
+        details_form: str | None = None,
+        geocode: Callable[[BaseSource, IntegrationClient], str] | None = None,
+        match_field: str | None = None,
+    ):
+        self.config = config
+        self.search_form = search_form
+        self.address = address
+        self.details_form = details_form
+        self.geocode = geocode
+        self.match_field = match_field
+
+    def __call__(self, source: BaseSource) -> dict[str, str]:
+        client = IntegrationClient(self.config)
+        addr = str(source.params.get(self.address, ""))
+        search_value: str = self.geocode(source, client) if self.geocode else addr
+
+        try:
+            if self.match_field:
+                candidates = client.search_all(self.search_form, search_value)
+                result = self._select_exact(candidates, addr)
+            else:
+                result = client.search(self.search_form, search_value)
+        except IntraMapsSearchError as e:
+            raise SourceArgumentNotFound(self.address, addr) from e
+
+        if not self.details_form:
+            return result
+
+        mapkey = result.get("mapkey")
+        dbkey = result.get("dbkey")
+        if not mapkey or not dbkey:
+            raise IntraMapsSearchError("Search result missing mapkey/dbkey.")
+        return client.search(self.details_form, f"{mapkey},{dbkey}")
+
+    def _select_exact(
+        self, candidates: list[dict[str, str]], addr: str
+    ) -> dict[str, str]:
+        normalised = _normalise_address(addr)
+        options: list[str] = []
+        for candidate in candidates:
+            value = candidate.get(self.match_field or "", "")
+            options.append(value)
+            if _normalise_address(value) == normalised:
+                return candidate
+        raise SourceArgumentNotFoundWithSuggestions(self.address, addr, options)
+
+
+class IntegrationPanelParser(Parser["list[dict[str, str]]"]):
+    """Turn an Integration API details payload into ``{"column", "value"}`` records.
+
+    The Integration API's own client already collapses each result into a flat
+    name→value dict (see :meth:`IntegrationClient.search`), so there is no
+    infoPanels nesting to walk. This just re-keys that dict into the same
+    record shape :class:`IntraMapsPanelParser` produces, so a source's
+    ``_describe()`` is agnostic to which IntraMaps flow retrieved the data.
+    """
+
+    def __call__(
+        self, response: dict[str, str], source: BaseSource | None = None
+    ) -> list[dict[str, str]]:
+        response_shape.expect(
+            isinstance(response, dict) and bool(response),
+            source_name=response_shape.source_name(source),
+            detail="IntraMaps Integration response is empty",
+            raw=response,
+        )
+        return [{"column": k, "value": v} for k, v in response.items()]

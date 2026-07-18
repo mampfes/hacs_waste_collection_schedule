@@ -1,6 +1,8 @@
 # Fredrikstad kommune
 
-Source for [Fredrikstad kommune](https://www.fredrikstad.kommune.no) waste collection.
+Support for schedules provided by [Fredrikstad kommune](https://www.fredrikstad.kommune.no).
+
+Source for Fredrikstad kommune waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -9,12 +11,20 @@ waste_collection_schedule:
   sources:
     - name: fredrikstad_no
       args:
-        address: "Kanelveien 4"
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
 
-Your street address as it appears on the [Fredrikstad tømmekalender](https://arcgis.fredrikstad.kommune.no/webapps/tommekalender/fredrikstad/) — typically street name and house number, e.g. `Kanelveien 4`.
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: fredrikstad_no
+      args:
+        address: Kanelveien 4
+```

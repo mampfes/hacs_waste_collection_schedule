@@ -1,6 +1,8 @@
 # Micheldorf in Oberösterreich
 
-Support for waste collection schedules provided by [Marktgemeinde Micheldorf in Oberösterreich](https://www.micheldorf.at), Austria.
+Support for schedules provided by [Micheldorf in Oberösterreich](https://www.micheldorf.at).
+
+Source for Micheldorf in Oberösterreich, Austria.
 
 ## Configuration via configuration.yaml
 
@@ -9,21 +11,17 @@ waste_collection_schedule:
   sources:
     - name: micheldorf_at
       args:
-        strasse: STREET
-        hausnummer: HOUSE_NUMBER
+        strasse: STRASSE
+        hausnummer: HAUSNUMMER
 ```
 
 ### Configuration Variables
 
-**strasse**
+**strasse**  
 *(string) (required)*
 
-Street name as listed in the Micheldorf waste calendar dropdown (case-insensitive).
-
-**hausnummer**
-*(string | integer) (required)*
-
-House number as listed in the Micheldorf waste calendar dropdown.
+**hausnummer**  
+*(string) (required)*
 
 ## Example
 
@@ -32,10 +30,6 @@ waste_collection_schedule:
   sources:
     - name: micheldorf_at
       args:
-        strasse: "Adalbert-Stifter-Straße"
-        hausnummer: "1"
+        strasse: "Adalbert-Stifter-Stra\xDFe"
+        hausnummer: '1'
 ```
-
-## How to get the source arguments
-
-Open <https://www.micheldorf.at/system/web/kalender.aspx?sprache=1&menuonr=227975509>, choose your street and house number from the dropdowns, and use the same values for `strasse` and `hausnummer`.

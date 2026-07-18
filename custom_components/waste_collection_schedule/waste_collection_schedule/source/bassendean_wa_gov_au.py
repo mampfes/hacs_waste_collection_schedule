@@ -1,132 +1,108 @@
-from datetime import date, datetime, timedelta
+import datetime
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import (
-    ArcGisError,
-    geocode,
-    query_feature_layer,
+    ArcGisFeatureParser,
+    ArcGisFeatureRetriever,
+)
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    RECYCLABLES,
 )
 
-TITLE = "Town of Bassendean"
-DESCRIPTION = "Source for Town of Bassendean waste collection."
-URL = "https://www.bassendean.wa.gov.au"
-COUNTRY = "au"
-
-TEST_CASES = {
-    "Kenny St": {"address": "16 Kenny St, Bassendean"},
-    "Broadway": {"address": "50 Broadway, Bassendean"},
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "FOGO": Icons.BIO_KITCHEN,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Street address (e.g. '16 Kenny St, Bassendean')",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "address": "Street Address",
-    },
-}
+# ArcGis single spatial query -> one feature carrying a ServiceDay, from which
+# three recurring schedules are projected: FOGO weekly, and General Waste and
+# Recycling fortnightly on opposite weeks. Acquisition + parse are the shared
+# ArcGis components; the only source-specific code is _describe (the council's
+# per-weekday base dates and anchoring logic).
 
 FEATURE_URL = "https://services-ap1.arcgis.com/551UnqKK1GZeDKxQ/arcgis/rest/services/address_lookup_for_bin_days_dissolved/FeatureServer/0"
 
-WEEKDAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
+_TYPE_MAP = {
+    "FOGO": ORGANIC,
+    "General Waste": GENERAL_WASTE,
+    "Recycling": RECYCLABLES,
 }
 
 # Base dates for fortnightly schedules, extracted from the ArcGIS Arcade
 # expressions in the web map config. General Waste and Recycling alternate
 # on opposite fortnights.
-GENERAL_WASTE_BASE: dict[str, date] = {
-    "Monday": date(2025, 3, 31),
-    "Tuesday": date(2025, 4, 1),
-    "Wednesday": date(2025, 4, 2),
-    "Thursday": date(2025, 4, 3),
-    "Friday": date(2025, 4, 4),
+_GENERAL_WASTE_BASE: dict[str, datetime.date] = {
+    "Monday": datetime.date(2025, 3, 31),
+    "Tuesday": datetime.date(2025, 4, 1),
+    "Wednesday": datetime.date(2025, 4, 2),
+    "Thursday": datetime.date(2025, 4, 3),
+    "Friday": datetime.date(2025, 4, 4),
 }
 
-RECYCLING_BASE: dict[str, date] = {
-    "Monday": date(2025, 3, 24),
-    "Tuesday": date(2025, 3, 25),
-    "Wednesday": date(2025, 3, 26),
-    "Thursday": date(2025, 3, 27),
-    "Friday": date(2025, 3, 28),
+_RECYCLING_BASE: dict[str, datetime.date] = {
+    "Monday": datetime.date(2025, 3, 24),
+    "Tuesday": datetime.date(2025, 3, 25),
+    "Wednesday": datetime.date(2025, 3, 26),
+    "Thursday": datetime.date(2025, 3, 27),
+    "Friday": datetime.date(2025, 3, 28),
 }
 
 
-class Source:
+def _describe(attrs, source):
+    day = (attrs.get("ServiceDay") or "").strip()
+    weekday = recurrence.weekday(day)
+    if weekday is None:
+        return
+
+    # FOGO — weekly.
+    yield Schedule("FOGO", recurrence.next_weekday(weekday), recurrence.WEEKLY, 26)
+
+    # General Waste — fortnightly, pinned to a historical base date.
+    general_base = _GENERAL_WASTE_BASE.get(day)
+    if general_base is not None:
+        yield Schedule(
+            "General Waste", general_base, recurrence.FORTNIGHTLY, 13, anchor=True
+        )
+
+    # Recycling — fortnightly, on the opposite week.
+    recycling_base = _RECYCLING_BASE.get(day)
+    if recycling_base is not None:
+        yield Schedule(
+            "Recycling", recycling_base, recurrence.FORTNIGHTLY, 13, anchor=True
+        )
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Town of Bassendean"
+    DESCRIPTION = "Source for Town of Bassendean waste collection."
+    URL = "https://www.bassendean.wa.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Kenny St": {"address": "16 Kenny St, Bassendean"},
+        "Broadway": {"address": "50 Broadway, Bassendean"},
+    }
+
+    PARAMS = (text_field("address", "Street Address"),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address within the Town of Bassendean "
+            "(e.g. '16 Kenny St, Bassendean')."
+        ),
+    }
+
+    retrieve = ArcGisFeatureRetriever(
+        FEATURE_URL, address="address", out_fields="ServiceDay"
+    )
+    parse = ArcGisFeatureParser()
+    preprocess = RecurrenceExpander(_describe)
+
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+
     def __init__(self, address: str):
-        self._address = address.strip()
-
-    def fetch(self) -> list[Collection]:
-        try:
-            location = geocode(self._address)
-            features = query_feature_layer(FEATURE_URL, geometry=location)
-        except ArcGisError as e:
-            raise SourceArgumentNotFound("address", self._address) from e
-
-        attrs = features[0]
-        service_day = attrs.get("ServiceDay", "").strip()
-        if not service_day or service_day not in WEEKDAYS:
-            raise SourceArgumentNotFound("address", self._address)
-
-        entries: list[Collection] = []
-
-        # FOGO — weekly
-        entries.extend(self._weekly_dates(service_day, "FOGO"))
-
-        # General Waste — fortnightly
-        base = GENERAL_WASTE_BASE.get(service_day)
-        if base:
-            entries.extend(self._fortnightly_dates(base, "General Waste"))
-
-        # Recycling — fortnightly
-        base = RECYCLING_BASE.get(service_day)
-        if base:
-            entries.extend(self._fortnightly_dates(base, "Recycling"))
-
-        return entries
-
-    @staticmethod
-    def _weekly_dates(day_name: str, waste_type: str) -> list[Collection]:
-        weekday = WEEKDAYS[day_name]
-        today = datetime.now().date()
-        days_ahead = (weekday - today.weekday()) % 7
-        next_date = today + timedelta(days=days_ahead)
-        icon = ICON_MAP.get(waste_type)
-        return [
-            Collection(
-                date=next_date + timedelta(weeks=i),
-                t=waste_type,
-                icon=icon,
-            )
-            for i in range(26)
-        ]
-
-    @staticmethod
-    def _fortnightly_dates(base_date: date, waste_type: str) -> list[Collection]:
-        today = datetime.now().date()
-        next_date = base_date
-        while next_date < today:
-            next_date += timedelta(days=14)
-        icon = ICON_MAP.get(waste_type)
-        return [
-            Collection(
-                date=next_date + timedelta(days=i * 14),
-                t=waste_type,
-                icon=icon,
-            )
-            for i in range(13)
-        ]
+        super().__init__(address=address)

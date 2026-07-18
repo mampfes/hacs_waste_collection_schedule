@@ -1,90 +1,102 @@
-import logging
+"""Abfallwirtschaft Südholstein (awsh.de).
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-)
-from waste_collection_schedule.service.ICS import ICS
+Not a TwoStepRetriever shape: resolving the final calendar URL takes three
+sequential lookups (city -> id, then street -> id scoped to that city, then
+the city's active waste-type ids), not one lookup + one schedule fetch. A
+source-defined ``retrieve`` covers the whole chain. Same shape as awr_de
+(different provider, same API), kept as separate modules per existing
+convention.
+"""
 
-TITLE = "Abfallwirtschaft Südholstein"
-DESCRIPTION = "Source for Abfallwirtschaft Südholstein"
-URL = "https://www.awsh.de"
-TEST_CASES = {
-    "Reinbek": {"city": "Reinbek", "street": "Ahornweg"},
-}
+import re
+from typing import ClassVar, final
 
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
+BASE_URL = "https://www.awsh.de"
+
+# Event summaries carry a container-size/frequency annotation the legacy
+# source displayed verbatim (e.g. "Restabfall ab 770L(2-wöchentlich)",
+# "Bioabfall(14-täglich)"). Stripping it exposes the plain waste-type name so
+# the shared multilingual vocabulary can resolve it; a label that doesn't fit
+# this shape passes through untouched and is preserved verbatim as before.
+_TRAILING_PARENTHETICAL = re.compile(r"\s*\([^)]*\)\s*$")
+_TRAILING_BIN_SIZE = re.compile(r"\s+ab\s+\d+\s*l\b.*$", re.IGNORECASE)
+
+
+def _clean(label: str) -> str:
+    label = _TRAILING_PARENTHETICAL.sub("", label)
+    label = _TRAILING_BIN_SIZE.sub("", label)
+    return label.strip()
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Abfallwirtschaft Südholstein"
+    DESCRIPTION = "Source for Abfallwirtschaft Südholstein"
+    URL = "https://www.awsh.de"
+    COUNTRY = "de"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Reinbek": {"city": "Reinbek", "street": "Ahornweg"},
     }
-}
 
+    PARAMS = (city(), street())
+    RAISE_ON_EMPTY = True
 
-class Source:
-    def __init__(self, city, street):
-        self._city = city
-        self._street = street
-        self._ics = ICS()
+    parse = IcsParser()
+    transform = ICSTransformer(clean=_clean)
 
-    def fetch(self):
-        # retrieve list of cities
-        r = requests.get("https://www.awsh.de/api_v2/collection_dates/1/orte")
-        r.raise_for_status()
-        cities = r.json()
+    def retrieve(self, source):
+        city_name = source.params["city"]
+        street_name = source.params["street"]
 
-        # create city to id map from retrieved cities
+        cities_response = source.session.get(
+            f"{BASE_URL}/api_v2/collection_dates/1/orte"
+        )
+        cities_response.raise_for_status()
+        cities = cities_response.json()
         city_to_id = {
-            city["ortsbezeichnung"]: city["ortsnummer"] for (city) in cities["orte"]
+            entry["ortsbezeichnung"]: entry["ortsnummer"] for entry in cities["orte"]
         }
-
-        if self._city not in city_to_id:
+        if city_name not in city_to_id:
             raise SourceArgumentNotFoundWithSuggestions(
-                "city", self._city, city_to_id.keys()
+                "city", city_name, city_to_id.keys()
             )
+        city_id = city_to_id[city_name]
 
-        cityId = city_to_id[self._city]
-
-        # retrieve list of streets
-        r = requests.get(
-            f"https://www.awsh.de/api_v2/collection_dates/1/ort/{cityId}/strassen"
+        streets_response = source.session.get(
+            f"{BASE_URL}/api_v2/collection_dates/1/ort/{city_id}/strassen"
         )
-        r.raise_for_status()
-        streets = r.json()
-
-        # create street to id map from retrieved cities
+        streets_response.raise_for_status()
+        streets = streets_response.json()
         street_to_id = {
-            street["strassenbezeichnung"]: street["strassennummer"]
-            for (street) in streets["strassen"]
+            entry["strassenbezeichnung"]: entry["strassennummer"]
+            for entry in streets["strassen"]
         }
-
-        if self._street not in street_to_id:
+        if street_name not in street_to_id:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, street_to_id.keys()
+                "street", street_name, street_to_id.keys()
             )
+        street_id = street_to_id[street_name]
 
-        streetId = street_to_id[self._street]
-
-        # retrieve list of waste types
-        r = requests.get(
-            f"https://www.awsh.de/api_v2/collection_dates/1/ort/{cityId}/abfallarten"
+        waste_types_response = source.session.get(
+            f"{BASE_URL}/api_v2/collection_dates/1/ort/{city_id}/abfallarten"
         )
-        r.raise_for_status()
-        waste_types = r.json()
-        wt = "-".join([t["id"] for t in waste_types["abfallarten"]])
+        waste_types_response.raise_for_status()
+        waste_types = waste_types_response.json()
+        waste_type_ids = "-".join(entry["id"] for entry in waste_types["abfallarten"])
 
-        # get ics file
-        r = requests.get(
-            f"https://www.awsh.de/api_v2/collection_dates/1/ort/{cityId}/strasse/{streetId}/hausnummern/0/abfallarten/{wt}/kalender.ics"
+        response = source.session.get(
+            f"{BASE_URL}/api_v2/collection_dates/1/ort/{city_id}/strasse/"
+            f"{street_id}/hausnummern/0/abfallarten/{waste_type_ids}/kalender.ics"
         )
-        r.raise_for_status()
+        response.raise_for_status()
+        return response
 
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
+    def __init__(self, city: str, street: str):
+        super().__init__(city=city, street=street)

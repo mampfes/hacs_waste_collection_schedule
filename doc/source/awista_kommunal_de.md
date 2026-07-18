@@ -1,8 +1,22 @@
 # AWISTA Kommunal GmbH (Düsseldorf)
 
-Support for waste collection schedules provided by [AWISTA Kommunal GmbH](https://www.awista-kommunal.de/abfallkalender), Düsseldorf, Germany.
+Support for schedules provided by [AWISTA Kommunal GmbH (Düsseldorf)](https://www.awista-kommunal.de/abfallkalender).
+
+Source for AWISTA Kommunal GmbH, Düsseldorf, Germany.
 
 ## Configuration via configuration.yaml
+
+### Using uuid
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: awista_kommunal_de
+      args:
+        uuid: UUID
+```
+
+### Using street and house_number
 
 ```yaml
 waste_collection_schedule:
@@ -13,68 +27,42 @@ waste_collection_schedule:
         house_number: HOUSE_NUMBER
 ```
 
-Alternatively, you can provide a pre-resolved address UUID and skip the address lookup:
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: awista_kommunal_de
-      args:
-        uuid: UUID
-```
-
 ### Configuration Variables
 
-**street**
-*(string) (required if `uuid` is not set)*
+**uuid**  
+*(string) (alternative)*
 
-Street name, e.g. `Merkurstraße`.
+**street**  
+*(string) (alternative)*
 
-**house_number**
-*(string) (required if `uuid` is not set)*
+**house_number**  
+*(string) (alternative)*
 
-House number, e.g. `45`.
-
-**uuid**
-*(string) (optional)*
-
-A pre-resolved address UUID. If set, the address lookup is skipped and `street`/`house_number` are ignored.
-
-## How to find your `uuid`
-
-1. Open [https://www.awista-kommunal.de/abfallkalender](https://www.awista-kommunal.de/abfallkalender).
-2. Search for your address.
-3. After selecting your address, the browser URL bar shows `https://www.awista-kommunal.de/abfallkalender/<uuid>`.
-4. Copy the `<uuid>` part (e.g. `5d1c4832-fd49-4fa7-a4e3-60dbe116cbc0`).
+Provide one of: `uuid` or `street` + `house_number`.
 
 ## Example
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: awista_kommunal_de
-      args:
-        street: "Merkurstraße"
-        house_number: "45"
-```
-
-Example using a UUID:
+### Using uuid
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: awista_kommunal_de
       args:
-        uuid: "5d1c4832-fd49-4fa7-a4e3-60dbe116cbc0"
+        uuid: 5d1c4832-fd49-4fa7-a4e3-60dbe116cbc0
 ```
 
-## Bin types returned
+### Using street and house_number
 
-The service-tier suffix (`(Vollservice)` / `(Teilservice)`) is stripped; only the waste category is returned.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: awista_kommunal_de
+      args:
+        street: "Merkurstra\xDFe"
+        house_number: '45'
+```
 
-| Provider description         | Returned type    | Icon                  |
-| ---------------------------- | ---------------- | --------------------- |
-| Restmüll (Vollservice)       | `Restmüll`       | `Icons.GENERAL_WASTE` |
-| Bioabfall (Teilservice)      | `Bioabfall`      | `Icons.BIO_KITCHEN`   |
-| Papier (Teilservice)         | `Papier`         | `Icons.PAPER`         |
-| Wertstofftonne (Vollservice) | `Wertstofftonne` | `Icons.RECYCLING`     |
+## How to get the source arguments
+
+Provide 'street' and 'house_number' as you would type them into the address search at https://www.awista-kommunal.de/abfallkalender. Alternatively, search for your address on that page and copy the UUID from the browser URL bar (e.g. https://www.awista-kommunal.de/abfallkalender/<uuid>) into 'uuid'; if 'uuid' is given, the address arguments are ignored.

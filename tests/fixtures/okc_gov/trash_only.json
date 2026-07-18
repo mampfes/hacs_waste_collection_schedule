@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-07-11",
+  "interactions": [
+    {
+      "key": "GET https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1/query ac52945b10",
+      "method": "GET",
+      "url": "https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1/query",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json;charset=utf-8",
+        "Content-Length": "392",
+        "Connection": "keep-alive",
+        "Date": "Sat, 11 Jul 2026 07:04:18 GMT",
+        "Server": "ArcGIS Online",
+        "X-Content-Type-Options": "nosniff",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Cache-Control": "max-age=3600",
+        "ETag": "\"57056980\"",
+        "Content-Encoding": "gzip",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Powered-By": "ASP.NET",
+        "Vary": "Origin",
+        "X-Cache": "Hit from cloudfront",
+        "Via": "1.1 4cff365b18730cf2b517032f402a12b2.cloudfront.net (CloudFront)",
+        "X-Amz-Cf-Pop": "PER50-P3",
+        "X-Amz-Cf-Id": "hGguKcwwXfIGw1fWvc_mXyDuKTnqqIaHzHEvWuGkF9v18pqCufLfkQ==",
+        "Age": "324"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwiZ2xvYmFsSWRGaWVsZE5hbWUiOiIiLCJnZW9tZXRyeVR5cGUiOiJlc3JpR2VvbWV0cnlQb2x5Z29uIiwic3BhdGlhbFJlZmVyZW5jZSI6eyJ3a2lkIjoxMDM1MTIsImxhdGVzdFdraWQiOjEwMzUxMiwidmNzV2tpZCI6MTA1NzAzLCJsYXRlc3RWY3NXa2lkIjo2MzYwfSwiZmllbGRzIjpbeyJuYW1lIjoiT0JKRUNUSUQiLCJhbGlhcyI6Ik9CSkVDVElEIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVPSUQifSx7Im5hbWUiOiJST1VURSIsImFsaWFzIjoiUm91dGUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImxlbmd0aCI6MjB9LHsibmFtZSI6IlBJQ0tVUERBWSIsImFsaWFzIjoiUGlja3VwIERheSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwibGVuZ3RoIjoyMH0seyJuYW1lIjoiU0VSVklDRV9QUk9WSURFUiIsImFsaWFzIjoiU2VydmljZSBQcm92aWRlciIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwibGVuZ3RoIjozMH0seyJuYW1lIjoiU2hhcGVfX0FyZWEiLCJhbGlhcyI6IkFyZWEiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZURvdWJsZSJ9LHsibmFtZSI6IlNoYXBlX19MZW5ndGgiLCJhbGlhcyI6Ikxlbmd0aCIsInR5cGUiOiJlc3JpRmllbGRUeXBlRG91YmxlIn1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJPQkpFQ1RJRCI6MiwiUk9VVEUiOiI1NDAiLCJQSUNLVVBEQVkiOiJGcmlkYXkiLCJTRVJWSUNFX1BST1ZJREVSIjoiT2tsYWhvbWEgQ2l0eSIsIlNoYXBlX19BcmVhIjoyMzkwNzk0MC45NTY5MzI0MTEsIlNoYXBlX19MZW5ndGgiOjM2MzA5Ljk2ODc1NDMzOTIxNH19XX0="
+    }
+  ]
+}

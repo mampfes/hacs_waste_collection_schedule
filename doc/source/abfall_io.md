@@ -1,8 +1,8 @@
-# Abfall.IO / AbfallPlus.de
+# Abfall.IO / AbfallPlus
 
-Support for schedules provided by [Abfall.IO](https://abfall.io). The official homepage is using the URL [AbfallPlus.de](https://www.abfallplus.de/) instead.
+Support for schedules provided by [Abfall.IO / AbfallPlus](https://www.abfallplus.de).
 
-This source is designed for the old API of Abfall.IO. If your region/provider uses the new API, you should use the [Abfall ICS version](/doc/ics/abfall_io_ics.md) source instead. Your provider uses the new API if you can see an `ICS` button above your collection dates on the website after selecting your location and waste types.
+Source for AbfallPlus.de waste collection. Service is hosted on abfall.io.
 
 ## Configuration via configuration.yaml
 
@@ -12,35 +12,32 @@ waste_collection_schedule:
     - name: abfall_io
       args:
         key: KEY
-        f_id_kommune: KOMMUNE
-        f_id_bezirk: BEZIRK
-        f_id_strasse: strasse
-        f_id_strasse_hnr: HNR
-        f_abfallarten:
-          - 1
-          - 2
-          - 3
+        f_id_kommune: F_ID_KOMMUNE
+        f_id_bezirk: F_ID_BEZIRK
+        f_id_strasse: F_ID_STRASSE
+        f_id_strasse_hnr: F_ID_STRASSE_HNR
+        f_abfallarten: F_ABFALLARTEN
 ```
 
 ### Configuration Variables
 
 **key**  
-*(hash) (required)*
+*(string) (required)*
 
 **f_id_kommune**  
-*(integer) (required)*
+*(string) (optional)*
 
 **f_id_bezirk**  
-*(integer) (optional)*
+*(string) (optional)*
 
 **f_id_strasse**  
-*(integer) (required)*
+*(string) (optional)*
 
 **f_id_strasse_hnr**  
 *(string) (optional)*
 
 **f_abfallarten**  
-*(list of integer) (optional)*
+*(string) (optional)*
 
 ## Example
 
@@ -49,40 +46,8 @@ waste_collection_schedule:
   sources:
     - name: abfall_io
       args:
-        key: "8215c62763967916979e0e8566b6172e"
-        f_id_kommune: 2999
-        f_id_strasse: 1087
+        key: bd0c2d0177a0849a905cded5cb734a6f
+        f_id_kommune: 2655
+        f_id_bezirk: 2655
+        f_id_strasse: 763
 ```
-
-## Optional LOCATION and DESCRIPTION fields
-
-If the exported ICS data contains `LOCATION` and/or `DESCRIPTION`, those values are forwarded as optional `location` and `description` fields in collection entries.
-
-- In sensor `value_template`, you can use `value.location` and `value.description`.
-- In `details_format: generic`, entries in `upcoming` can include `location` and `description`.
-- Both fields are optional. If a field is missing (or empty), its value is `None`.
-
-## How to get the source arguments
-
-## Simple Variant: Use wizard script
-
-There is a script with an interactive command line interface which generates the required source configuration:
-
-[https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/abfall_io.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/abfall_io.py).
-
-First, install the Python module `inquirer`. Then run this script from a shell and answer the questions.
-
-### Hardcore Variant: Extract arguments from website
-
-Another way to get the source arguments is to use a (desktop) browser with developer tools, e.g. Google Chrome:
-
-1. Open your county's `Abfuhrtermine` homepage, e.g. [https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html](https://www.lrabb.de/start/Service+_+Verwaltung/Abfuhrtermine.html).
-2. Enter your data, but don't click on `Datei exportieren` so far!
-3. Select `Exportieren als`: `ICS`
-4. Open the Developer Tools (Ctrl + Shift + I) and open the `Network` tab.
-5. Now click the `Datei exportieren` button.
-6. You should see one entry in the network recording.
-7. Select the entry on the left hand side and scroll down to `Query String Parameters` on the right hand side.
-8. Here you can find the value for `key`.
-9. Now go down to the next section `Form Data`.
-10. Here you can find the values for `f_id_kommune`, `f_id_bezirk`, `f_id_strasse`, `f_id_strasse_hnr` and `f_abfallarten`. All other entries don't care.

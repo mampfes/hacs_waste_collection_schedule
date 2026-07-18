@@ -1,6 +1,8 @@
-# KWU Entsorgung
+# KWU Entsorgung Landkreis Oder-Spree
 
-Support for schedules provided by [kwu-entsorgung.de](https://www.kwu-entsorgung.de/) located Landkreis Oder-Spree, Germany.
+Support for schedules provided by [KWU Entsorgung Landkreis Oder-Spree](https://www.kwu-entsorgung.de/).
+
+Source for KWU Entsorgung, Germany
 
 ## Configuration via configuration.yaml
 
@@ -9,9 +11,9 @@ waste_collection_schedule:
   sources:
     - name: kwu_de
       args:
-        city: Bad Saarow
-        street: Ahornallee
-        number: 1
+        city: CITY
+        street: STREET
+        number: NUMBER
 ```
 
 ### Configuration Variables
@@ -23,8 +25,16 @@ waste_collection_schedule:
 *(string) (required)*
 
 **number**  
-*(string|Integer) (required)*
+*(string) (required)*
 
-## How to get the source arguments
+## Example
 
-Visit [Entsorgungskalender](https://www.kwu-entsorgung.de/?page_id=337`) and search for your address. The `city`, `street` and `number` argument should exactly match the autocomplete result.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: kwu_de
+      args:
+        city: Erkner
+        street: "Heinrich-Heine-Stra\xDFe"
+        number: '11'
+```

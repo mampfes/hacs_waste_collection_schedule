@@ -1,6 +1,8 @@
-# Städtischer Abfallwirtschaftsbetrieb Magdeburg (SAB)
+# Städtischer Abfallwirtschaftsbetrieb Magdeburg
 
-Support for schedules provided by [SAB Magdeburg](https://www.magdeburg.de), serving the city of Magdeburg, Germany.
+Support for schedules provided by [Städtischer Abfallwirtschaftsbetrieb Magdeburg](https://www.magdeburg.de).
+
+Source for SAB Magdeburg waste collection schedule.
 
 ## Configuration via configuration.yaml
 
@@ -14,10 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (required)*
-
-The street name and house number (e.g. `Halberstädter Chaussee 66`).
 
 ## Example
 
@@ -26,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: magdeburg_de
       args:
-        street: "Halberstädter Chaussee 66"
+        street: "Halberst\xE4dter Chaussee 66"
 ```
 
-## How to find your street
+## How to get the source arguments
 
-Search for your address at the [SAB Magdeburg Abfuhrkalender](https://sab.ssl.metageneric.de/app/sab_i_tp/index.php). Use the street name and house number exactly as shown in the dropdown.
+Enter your street name and house number as shown on the SAB Magdeburg website (e.g. 'Halberstädter Chaussee 66'). Search at https://sab.ssl.metageneric.de/app/sab_i_tp/index.php

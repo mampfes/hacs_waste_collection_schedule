@@ -1,6 +1,8 @@
 # Yarra Ranges Council
 
-Support for schedules provided by [Yarra Ranges Council](https://www.yarraranges.vic.gov.au/Environment/Waste/Find-your-waste-collection-and-burning-off-dates).
+Support for schedules provided by [Yarra Ranges Council](https://www.yarraranges.vic.gov.au).
+
+Source for Yarra Ranges Council rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -24,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: yarra_ranges_vic_gov_au
       args:
-        street_address: 316 Maroondah Hwy, Healesville VIC 3777
+        street_address: 5/447-449 Maroondah Highway Lilydale 3140
 ```
 
 ## How to get the source arguments
 
-Visit the [Yarra Ranges Council](https://www.yarraranges.vic.gov.au/Environment/Waste/Find-your-waste-collection-and-burning-off-dates) page and search for your address. The arguments should exactly match the street address shown in the autocomplete result.
+Enter your full street address as it appears on the council's waste collection lookup page (street, suburb and postcode).

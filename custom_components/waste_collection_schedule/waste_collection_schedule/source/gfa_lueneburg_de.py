@@ -1,145 +1,125 @@
-# Nearly direct copy of source awn_de, awb_emsland_de
+"""GFA Lüneburg (gfa-lueneburg.de).
+
+Demonstrates: the Athos "WasteManagementServlet" wizard's plain German
+``CITYCHANGED``/``STREETCHANGED``/``forward`` progression (see the
+``bmv_at`` docstring), with an explicit ``Zeitraum`` (calendar-year) field
+carried through the address steps and dropped before the final download,
+exactly like the legacy source's own ``del args[...]`` cleanup.
+"""
 
 from datetime import datetime
-from html.parser import HTMLParser
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, house_number, street
+from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "GFA Lüneburg"
-DESCRIPTION = "Source for GFA Lüneburg."
-URL = "https://www.gfa-lueneburg.de/"
-TEST_CASES = {
-    "Dahlem Hauptstr. 7": {
-        "city": "Dahlem",
-        "street": "Hauptstr.",
-        "house_number": 7,
-    },
-    "Wendish Evern Kückenbrook 5 A": {
-        "city": "Wendish Evern",
-        "street": "Kückenbrook",
-        "house_number": "5 A",
-    },
-}
-SERVLET = "https://portal.gfa-lueneburg.de:8443/WasteManagementLueneburg/WasteManagementServlet"
-
-ICON_MAP = {
-    "Restabfallbehaelter": Icons.GENERAL_WASTE,
-    "Restmuell": Icons.GENERAL_WASTE,
-    "Papiertonne": Icons.PAPER,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Gruenabfall": Icons.ORGANIC,
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Sperrmuell Altmetall": Icons.RECYCLING,
-}
+_SERVLET = "https://portal.gfa-lueneburg.de:8443/WasteManagementLueneburg/WasteManagementServlet"
 
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Make sure that the address exactly matches the one auto-completed by the website form: https://www.gfa-lueneburg.de/service/abfuhrkalender.html",
-    "de": "Stellen Sie sicher, dass die Adresse genau der entspricht, die vom Website-Formular automatisch vervollständigt wird: https://www.gfa-lueneburg.de/service/abfuhrkalender.html",
-}
+@final
+class Source(BaseSource):
+    TITLE = "GFA Lüneburg"
+    DESCRIPTION = "Source for GFA Lüneburg."
+    URL = "https://www.gfa-lueneburg.de/"
+    COUNTRY = "de"
 
-
-# Parser for HTML input (hidden) text
-class HiddenInputParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self._args = {}
-
-    @property
-    def args(self):
-        return self._args
-
-    def handle_starttag(self, tag, attrs):
-        if tag == "input":
-            d = dict(attrs)
-            if str(d["type"]).lower() == "hidden":
-                self._args[d["name"]] = d["value"] if "value" in d else ""
-
-
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
-        "house_number": "Hausnummer",
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Make sure the address exactly matches the one auto-completed by "
+            "the website form: "
+            "https://www.gfa-lueneburg.de/service/abfuhrkalender.html"
+        ),
+        "de": (
+            "Stellen Sie sicher, dass die Adresse genau der entspricht, die "
+            "vom Website-Formular automatisch vervollständigt wird: "
+            "https://www.gfa-lueneburg.de/service/abfuhrkalender.html"
+        ),
     }
-}
 
+    TEST_CASES: ClassVar[dict] = {
+        "Dahlem Hauptstr. 7": {
+            "city": "Dahlem",
+            "street": "Hauptstr.",
+            "house_number": 7,
+        },
+        "Wendish Evern Kückenbrook 5 A": {
+            "city": "Wendish Evern",
+            "street": "Kückenbrook",
+            "house_number": "5 A",
+        },
+    }
 
-class Source:
+    PARAMS = (
+        city(),
+        street(),
+        house_number(),
+    )
+
+    retrieve = AthosWasteManagementRetriever(
+        url=_SERVLET,
+        initial_params={
+            "SubmitAction": "wasteDisposalServices",
+            "InFrameMode": "FALSE",
+        },
+        steps=[
+            {
+                "submit_action": "CITYCHANGED",
+                "fields": lambda city, street, house_number, **_: {
+                    "Zeitraum": f"Jahresübersicht {datetime.now().year}",
+                    "Ort": city,
+                    "Strasse": street,
+                    "Hausnummer": str(house_number),
+                    "Method": "POST",
+                    "Focus": "Ort",
+                },
+            },
+            {
+                "submit_action": "STREETCHANGED",
+                "fields": lambda city, street, house_number, **_: {
+                    "Zeitraum": f"Jahresübersicht {datetime.now().year}",
+                    "Ort": city,
+                    "Strasse": street,
+                    "Hausnummer": str(house_number),
+                    "Method": "POST",
+                    "Focus": "Strasse",
+                },
+            },
+            {"submit_action": "forward"},
+            {
+                "submit_action": "filedownload_ICAL",
+                "fields": lambda **_: {
+                    "ApplicationName": "com.athos.kd.lueneburg.AbfuhrTerminModel",
+                    "IsLastPage": "true",
+                    "Method": "POST",
+                    "PageName": "Terminliste",
+                },
+                "remove": ("Zeitraum", "Ort", "Strasse", "Hausnummer"),
+            },
+        ],
+    )
+    parse = parsers.IcsParser()
+    transform = ICSTransformer(
+        type_value_map={
+            "Restabfallbehaelter": GENERAL_WASTE,
+            "Restmuell": GENERAL_WASTE,
+            "Papiertonne": PAPER,
+            "Gelber Sack": RECYCLABLES,
+            "Gruenabfall": GARDEN_WASTE,
+            "Biotonne": ORGANIC,
+            "Sperrmuell Altmetall": BULKY_WASTE,
+        }
+    )
+
     def __init__(self, city: str, street: str, house_number: int | str):
-        self._city = city
-        self._street = street
-        self._hnr = house_number
-        self._ics = ICS()
-
-    def fetch(self):
-        session = requests.session()
-
-        r = session.get(
-            SERVLET,
-            params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "FALSE"},
-        )
-        r.raise_for_status()
-        r.encoding = "utf-8"
-
-        parser = HiddenInputParser()
-        parser.feed(r.text)
-
-        args = parser.args
-        args["Zeitraum"] = f"Jahresübersicht {datetime.now().year}"
-        args["Ort"] = self._city
-        args["Strasse"] = self._street
-        args["Hausnummer"] = str(self._hnr)
-        args["Method"] = "POST"
-        args["SubmitAction"] = "CITYCHANGED"
-        args["Focus"] = "Ort"
-        r = session.post(
-            SERVLET,
-            data=args,
-        )
-        r.raise_for_status()
-
-        args = parser.args
-        args["Zeitraum"] = f"Jahresübersicht {datetime.now().year}"
-        args["Ort"] = self._city
-        args["Strasse"] = self._street
-        args["Hausnummer"] = str(self._hnr)
-        args["Method"] = "POST"
-        args["SubmitAction"] = "STREETCHANGED"
-        args["Focus"] = "Strasse"
-        r = session.post(SERVLET, data=args)
-        r.raise_for_status()
-
-        args["SubmitAction"] = "forward"
-        r = session.post(
-            SERVLET,
-            data=args,
-        )
-        r.raise_for_status()
-
-        args["ApplicationName"] = "com.athos.kd.lueneburg.AbfuhrTerminModel"
-        args["SubmitAction"] = "filedownload_ICAL"
-        args["IsLastPage"] = "true"
-        args["Method"] = "POST"
-        args["PageName"] = "Terminliste"
-        del args["Zeitraum"]
-        del args["Ort"]
-        del args["Strasse"]
-        del args["Hausnummer"]
-        r = session.post(
-            SERVLET,
-            data=args,
-        )
-
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
-
-        entries = []
-        for d in dates:
-            bin_type = d[1].strip()
-            entries.append(Collection(d[0], bin_type, icon=ICON_MAP.get(bin_type)))
-
-        return entries
+        super().__init__(city=city, street=street, house_number=house_number)

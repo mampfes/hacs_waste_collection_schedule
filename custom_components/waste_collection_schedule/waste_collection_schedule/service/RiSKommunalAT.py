@@ -21,17 +21,24 @@ from __future__ import annotations
 
 import ast
 import re
-from datetime import date, datetime
-from typing import ClassVar
+from collections.abc import Iterable, Iterator
+from datetime import date, datetime, timedelta
+from typing import TYPE_CHECKING, ClassVar
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.parsers import IcsParser, Parser
+from waste_collection_schedule.retrievers import RetrieverFunc
 from waste_collection_schedule.service.ICS import ICS  # type: ignore[attr-defined]
+
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
+    from waste_collection_schedule.retrievers import Response
 
 # Assembly-qualified name token required by every RiSKommunal CalendarService.ashx
 # endpoint. It is a platform constant (base64 of
@@ -128,8 +135,6 @@ class RiSKommunalSource:
         return BeautifulSoup(r.text, "html.parser")
 
     def _end_date(self) -> date:
-        from datetime import timedelta
-
         return date.today() + timedelta(days=self.LOOKAHEAD_DAYS or 0)
 
     def _fetch_html(
@@ -240,7 +245,7 @@ class RiSKommunalSource:
         ``<span>`` category is preferred because it matches the ``ICON_MAP`` keys.
         """
         div = soup.find(id=_LIST_DIV_ID)
-        if div is None:
+        if not isinstance(div, Tag):
             return []
 
         out: list[tuple[date, str]] = []
@@ -326,12 +331,12 @@ class RiSKommunalSource:
                 "select",
                 attrs={"id": re.compile(r"boxmuellkalenderstrassedd$")},
             )
-        if select is None:
+        if not isinstance(select, Tag):
             raise ValueError("Could not locate street selector on RiSKommunal page")
 
         result: dict[str, int] = {}
         for opt in select.find_all("option"):
-            value = (opt.get("value") or "").strip()
+            value = str(opt.get("value") or "").strip()
             text = opt.get_text(strip=True)
             if value and text:
                 result[text] = int(value)
@@ -418,3 +423,387 @@ class RiSKommunalSource:
             if key.casefold() in lowered:
                 return value
         return None
+
+
+# --------------------------------------------------------------------------- #
+# Pipeline components (BaseSource architecture)
+#
+# RiSKommunal owns a multi-request, content-driven fetch (paginated HTML, plus an
+# optional address -> typids resolution). The BaseSource pipeline expresses this
+# while keeping retrieval and parsing strictly separate:
+#
+#     retrieve = RiSKommunalRetriever(base_url=..., query_params={...})
+#     parse    = RiSKommunalParser(zone_param="zone")   # zone_param optional
+#
+# RiSKommunalRetriever yields the calendar pages as *raw HTML, lazily* — page
+# N+1 is only fetched if the parser asks for it. RiSKommunalParser pulls pages,
+# extracts (date, label) rows (reusing the extraction above) and decides when to
+# stop (empty page, repeated first row, or — by default — list rendering).
+# "How to fetch a page" lives in the retriever; "when to stop" lives in the
+# parser. The parser also reads ``zone`` from ``source.params``, so
+# config-dependent filtering happens at parse time without coupling it to
+# retrieval.
+#
+# Two optional, backward-compatible extensions cover installs the defaults
+# above don't fit:
+#
+#   retrieve = RiSKommunalRetriever(..., lookahead_days=365)
+#   parse    = RiSKommunalParser(lookahead_days=365)          # same value
+#   parse    = RiSKommunalParser(paginate_list=True)
+#
+# ``lookahead_days`` requests a bounded ``vdatum``/``bdatum`` window (today ..
+# today + N days, recomputed on every fetch) instead of a fixed "show
+# everything" ``bdatum``. Set it on *both* the retriever and the parser: the
+# retriever's copy shapes the request, but not every install honours the
+# query parameter as a hard filter, so the parser's copy also drops rows past
+# the window and stops paginating once a page runs past it — exactly what the
+# legacy ``LOOKAHEAD_DAYS`` sources did client-side. ``paginate_list`` keeps
+# paging through the list-style rendering instead of stopping after page one,
+# for installs that paginate even in list mode (stopping early would silently
+# truncate results). All three default to the prior single behaviour so every
+# existing caller is unaffected.
+# --------------------------------------------------------------------------- #
+
+
+class RiSKommunalRetriever(RetrieverFunc):
+    """Yield RiSKommunal calendar pages as raw HTML (lazily).
+
+    If ``strasse_param`` is set, an address -> ``typids`` lookup runs first
+    (a prerequisite request that turns the user's street/house number into the
+    query parameter the calendar needs). Pages are then produced on demand.
+
+    Args:
+        base_url: Municipality root URL, e.g. ``https://www.koppl.at``.
+        query_params: Fixed query parameters for ``kalender.aspx``.
+        strasse_param / hausnummer_param: ``source.params`` field names holding
+            the street / house number, for address-based municipalities.
+        selection_url: Page carrying the street dropdown (defaults to the
+            calendar page).
+        vdatum_today: Add ``vdatum`` = today to each request.
+        lookahead_days: If set, add ``vdatum`` = today and ``bdatum`` = today +
+            this many days to each request (both recomputed on every fetch),
+            mirroring the legacy ``LOOKAHEAD_DAYS`` sources. This shapes the
+            request only; not every install treats ``bdatum`` as a hard
+            filter, so pass the same value to ``RiSKommunalParser`` too — it
+            drops any rows the server returns past the window regardless.
+            ``None`` (the default) preserves the current behaviour exactly.
+        max_pages: Pagination upper bound.
+        timeout: Request timeout in seconds.
+    """
+
+    def __init__(
+        self,
+        base_url: str,
+        query_params: dict | None = None,
+        strasse_param: str | None = None,
+        hausnummer_param: str | None = None,
+        selection_url: str | None = None,
+        vdatum_today: bool = False,
+        lookahead_days: int | None = None,
+        max_pages: int = 50,
+        timeout: int = 30,
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.query_params = dict(query_params or {})
+        self.strasse_param = strasse_param
+        self.hausnummer_param = hausnummer_param
+        self.selection_url = selection_url
+        self.vdatum_today = vdatum_today
+        self.lookahead_days = lookahead_days
+        self.max_pages = max_pages
+        self.timeout = timeout
+
+    def _calendar_url(self) -> str:
+        return self.base_url + CALENDAR_PATH
+
+    def __call__(self, source: BaseSource) -> Iterator[str]:
+        session = requests.Session()
+        typids = None
+        if self.strasse_param:
+            typids = self._resolve_typids(session, source)
+        return self._pages(session, typids)
+
+    def _pages(self, session: requests.Session, typids: str | None) -> Iterator[str]:
+        for page in range(self.max_pages):
+            params = dict(self.query_params)
+            if self.vdatum_today or self.lookahead_days is not None:
+                params["vdatum"] = date.today().strftime("%d.%m.%Y")
+            if self.lookahead_days is not None:
+                end_date = date.today() + timedelta(days=self.lookahead_days)
+                params["bdatum"] = end_date.strftime("%d.%m.%Y")
+            if typids is not None:
+                params["typids"] = typids
+            params["page"] = page
+
+            r = session.get(
+                self._calendar_url(),
+                params=params,
+                headers=HEADERS,
+                timeout=self.timeout,
+            )
+            r.raise_for_status()
+            r.encoding = r.apparent_encoding or "utf-8"
+            yield r.text
+
+    def _resolve_typids(self, session: requests.Session, source: BaseSource) -> str:
+        strasse = source.params.get(self.strasse_param) if self.strasse_param else None
+        hausnummer = (
+            source.params.get(self.hausnummer_param) if self.hausnummer_param else None
+        )
+        url = self.selection_url or self._calendar_url()
+        r = session.get(url, headers=HEADERS, timeout=self.timeout)
+        r.raise_for_status()
+        r.encoding = r.apparent_encoding or "utf-8"
+        html = r.text
+
+        street_map = RiSKommunalSource._parse_street_dropdown(html)
+        target = str(strasse or "").casefold().replace(" ", "")
+        street_id = next(
+            (
+                sid
+                for name, sid in street_map.items()
+                if name.casefold().replace(" ", "") == target
+            ),
+            None,
+        )
+        if street_id is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                self.strasse_param or "strasse", strasse, sorted(street_map)
+            )
+
+        house = str(hausnummer or "").casefold()
+        labels: list[str] = []
+        for entry in RiSKommunalSource._parse_strassen_arr(html):
+            if entry[0] != street_id:
+                continue
+            for hnr in entry[1]:
+                label = str(hnr[1])
+                labels.append(label)
+                if label.casefold() == house:
+                    return hnr[2]
+            break
+        raise SourceArgumentNotFoundWithSuggestions(
+            self.hausnummer_param or "hausnummer", hausnummer, labels
+        )
+
+
+class RiSKommunalParser(Parser[Iterator["tuple[date, str]"]]):
+    """Extract ``(date, label)`` rows from RiSKommunal calendar pages.
+
+    Consumes the raw-HTML page iterator produced by RiSKommunalRetriever, pulling
+    pages only as far as needed: it stops at the first empty page, a repeated
+    first row (loop guard), or (by default) the single-page list rendering. Row
+    extraction is delegated to the existing :class:`RiSKommunalSource` parsing,
+    configured with ``zone`` read from ``source.params`` when ``zone_param`` is
+    set.
+
+    Args:
+        zone_param: ``source.params`` field name holding an optional zone
+            filter (third table column).
+        paginate_list: If ``True``, keep paging through the list-style
+            (``list_style``) rendering instead of stopping after the first
+            page. Some installs (e.g. Hart bei Graz) paginate even in list
+            mode, so the default single-page stop would silently truncate
+            results. ``False`` (the default) preserves the current
+            behaviour exactly. When set, table detection is skipped and
+            every page is parsed as a list, matching how those installs
+            render every page.
+        lookahead_days: If set, drop rows dated after today + this many days
+            and stop pagination once a page's last row runs past that window
+            (recomputed on every fetch). Pair with the retriever's own
+            ``lookahead_days``: the query parameter narrows what the server
+            returns, but installs that don't honour it as a hard filter still
+            need this client-side cut so results match the legacy
+            ``LOOKAHEAD_DAYS`` sources exactly. ``None`` (the default)
+            preserves the current behaviour exactly.
+    """
+
+    def __init__(
+        self,
+        zone_param: str | None = None,
+        paginate_list: bool = False,
+        lookahead_days: int | None = None,
+    ):
+        self.zone_param = zone_param
+        self.paginate_list = paginate_list
+        self.lookahead_days = lookahead_days
+
+    def __call__(
+        self, pages: Iterable[str], source: BaseSource | None = None
+    ) -> Iterator[tuple[date, str]]:
+        zone = None
+        if source is not None and self.zone_param:
+            zone = source.params.get(self.zone_param)
+        extractor = RiSKommunalSource(zone=zone)
+        end_date = (
+            date.today() + timedelta(days=self.lookahead_days)
+            if self.lookahead_days is not None
+            else None
+        )
+
+        seen: set[tuple[str, str]] = set()
+        seen_first: set[tuple[str, str]] = set()
+        for html in pages:
+            soup = BeautifulSoup(html, "html.parser")
+            if self.paginate_list:
+                rows: list[tuple[date, str]] | None = extractor._parse_list(soup)
+                list_mode = True
+            else:
+                rows = extractor._parse_table(soup)
+                list_mode = rows is None
+                if list_mode:
+                    rows = extractor._parse_list(soup)
+            if not rows:
+                break
+
+            first_key = (rows[0][0].isoformat(), rows[0][1])
+            if first_key in seen_first:
+                break
+            seen_first.add(first_key)
+
+            for collection_date, waste_type in rows:
+                if end_date is not None and collection_date > end_date:
+                    continue
+                key = (collection_date.isoformat(), waste_type)
+                if key in seen:
+                    continue
+                seen.add(key)
+                yield collection_date, waste_type
+
+            if list_mode and not self.paginate_list:
+                break
+            # Stop once the page has run past the requested look-ahead
+            # window (mirrors the legacy per-page early exit).
+            if end_date is not None and rows[-1][0] > end_date:
+                break
+
+
+# --------------------------------------------------------------------------- #
+# Multi-feed ICS pipeline components
+#
+# Some RiSKommunal municipalities don't publish a single combined calendar at
+# all: they instead expose one CalendarService.ashx feed per waste type, or
+# per zone selection. Two converted sources (rohrbach_lafnitz_at, badaussee_at)
+# shared a near-identical hand-rolled retrieve()/parse() pair for this shape
+# before RiSKommunalMultiIcsRetriever/RiSKommunalMultiIcsParser existed:
+#
+#     retrieve = RiSKommunalMultiIcsRetriever(
+#         base_url=..., gnr=..., feeds={label: do, ...},
+#     )
+#     parse = RiSKommunalMultiIcsParser()
+#
+# The retriever fetches every configured feed (via source.session) and pairs
+# each response with an optional fixed label; the parser runs the shared
+# parsers.IcsParser over each pair and yields (date, label) rows, falling
+# back to the feed's own ICS SUMMARY when no fixed label was given. Feed
+# selection covers the three shapes seen so far, any combination of which may
+# be supplied together:
+#
+#   * ``feeds``      -- fixed ``{label: do}``, always fetched, always
+#                        re-tagged with ``label`` (rohrbach_lafnitz_at: every
+#                        feed's own SUMMARY is generic/unhelpful).
+#   * ``do_ids``      -- fixed list of "do" ids, always fetched, feed's own
+#                        SUMMARY kept as the label (badaussee_at's fixed
+#                        Gelber Sack calendar).
+#   * ``zone_feeds``  -- ``{param_name: {zone_value: do}}``; for each entry,
+#                        fetched only if ``source.params[param_name]``
+#                        matches a configured zone value (badaussee_at's
+#                        Restmüll/Biomüll/Altpapier zone calendars). Feed's
+#                        own SUMMARY kept as the label, same as ``do_ids``.
+#
+# Output feeds straight into ICSTransformer (or RowTransformer), same as
+# RiSKommunalParser.
+# --------------------------------------------------------------------------- #
+
+
+class RiSKommunalMultiIcsRetriever(RetrieverFunc):
+    """Fetch several RiSKommunal ICS feeds ("do" ids) via the shared session.
+
+    Covers municipalities that publish one calendar per waste type, or per
+    zone selection, instead of a single combined calendar. Configure with:
+
+    Args:
+        base_url: Municipality root URL, e.g. ``https://www.badaussee.at``.
+        gnr: RiSKommunal ``gnr`` token for this municipality.
+        feeds: Fixed ``{label: do}`` mapping, always fetched. Each response
+            is paired with its label so :class:`RiSKommunalMultiIcsParser`
+            can re-tag the feed's events (for installs whose own ICS
+            ``SUMMARY`` is generic/unhelpful).
+        do_ids: Fixed list of "do" ids, always fetched. Paired with
+            ``label=None`` so the parser keeps each feed's own ``SUMMARY``.
+        zone_feeds: ``{param_name: {zone_value: do}}``. For each entry, if
+            ``source.params[param_name]`` (stringified) matches a key in its
+            map, that "do" id is fetched (paired with ``label=None``); a
+            blank or unrecognised zone value is silently skipped -- matching
+            the legacy per-source behaviour.
+        sprache: ICS feed language token, passed through to every URL.
+        timeout: Request timeout in seconds, passed through to every request.
+    """
+
+    def __init__(
+        self,
+        base_url: str,
+        gnr: str,
+        feeds: dict[str, str] | None = None,
+        do_ids: list[str] | None = None,
+        zone_feeds: dict[str, dict[str, str]] | None = None,
+        sprache: str = "1",
+        timeout: int = 30,
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.gnr = gnr
+        self.feeds = dict(feeds or {})
+        self.do_ids = list(do_ids or [])
+        self.zone_feeds = dict(zone_feeds or {})
+        self.sprache = sprache
+        self.timeout = timeout
+
+    def _ics_url(self, do: str) -> str:
+        params = {"aqn": ICS_AQN, "sprache": self.sprache, "gnr": self.gnr, "do": do}
+        query = "&".join(f"{k}={v}" for k, v in params.items())
+        return self.base_url + ICS_PATH + "?" + query
+
+    def __call__(self, source: BaseSource) -> list[tuple[str | None, Response]]:
+        session = source.session
+        results: list[tuple[str | None, Response]] = []
+
+        for label, do in self.feeds.items():
+            results.append(
+                (label, session.get(self._ics_url(do), timeout=self.timeout))
+            )
+        for do in self.do_ids:
+            results.append((None, session.get(self._ics_url(do), timeout=self.timeout)))
+        for field_name, zone_map in self.zone_feeds.items():
+            zone = str(source.params.get(field_name) or "")
+            if zone in zone_map:
+                results.append(
+                    (
+                        None,
+                        session.get(
+                            self._ics_url(zone_map[zone]), timeout=self.timeout
+                        ),
+                    )
+                )
+
+        return results
+
+
+class RiSKommunalMultiIcsParser(Parser["Iterator[tuple[date, str]]"]):
+    """Parse the feeds produced by :class:`RiSKommunalMultiIcsRetriever`.
+
+    Runs the shared ``parsers.IcsParser`` over each ``(label, response)``
+    pair, yielding ``(date, label)`` rows -- ``label`` is the fixed label when
+    one was supplied, otherwise the feed's own ICS ``SUMMARY``. Feeds straight
+    into ``ICSTransformer`` (or ``RowTransformer``), same as
+    :class:`RiSKommunalParser`.
+    """
+
+    def __call__(
+        self,
+        raw: list[tuple[str | None, Response]],
+        source: BaseSource | None = None,
+    ) -> Iterator[tuple[date, str]]:
+        ics_parser = IcsParser()
+        for label, response in raw:
+            for event_date, summary in ics_parser(response, source):
+                yield event_date, label if label is not None else summary

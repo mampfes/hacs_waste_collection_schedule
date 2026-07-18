@@ -1,6 +1,8 @@
-# Abfallwirtschaft Stuttgart
+# Abfall Stuttgart
 
-Support for schedules provided by [stuttgart.de](https://service.stuttgart.de/lhs-services/aws/).
+Support for schedules provided by [Abfall Stuttgart](https://service.stuttgart.de).
+
+Source for waste collections for the city of Stuttgart, Germany.
 
 ## Configuration via configuration.yaml
 
@@ -9,8 +11,8 @@ waste_collection_schedule:
   sources:
     - name: stuttgart_de
       args:
-        street: ORT_SEL
-        streetnr: STR_SEL
+        street: STREET
+        streetnr: STREETNR
 ```
 
 ### Configuration Variables
@@ -31,11 +33,3 @@ waste_collection_schedule:
         street: Im Steinengarten
         streetnr: 7
 ```
-
-## How to get the source arguments
-
-There is a script with an interactive command line interface which generates the required source configuration:
-
-[https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/stuttgart_de.py](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/custom_components/waste_collection_schedule/waste_collection_schedule/wizard/stuttgart_de.py).
-
-First, install the Python module `inquirer`. Then run this script from a shell and answer the questions.

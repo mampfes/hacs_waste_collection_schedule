@@ -1,53 +1,63 @@
+"""Landkreis Erlangen-Höchstadt.
+
+Demonstrates: the "year-window, single feed per year" shape. The provider's
+ICS endpoint takes the year as a query parameter, so a ``retrieve`` override
+fetches the current year (and, in December, the following year too, since the
+provider publishes it early) and merges the results.
+"""
+
 import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Landkreis Erlangen-Höchstadt"
-DESCRIPTION = "Source for Landkreis Erlangen-Höchstadt"
-URL = "https://www.erlangen-hoechstadt.de/"
-TEST_CASES = {
-    "Höchstadt": {"city": "Höchstadt", "street": "Böhmerwaldstraße"},
-    "Brand": {"city": "Eckental", "street": "Eckenhaid, Amselweg"},
-    "Ortsteile": {"city": "Wachenroth", "street": "Ort inkl. aller Ortsteile"},
-}
+_API_URL = "https://www.erlangen-hoechstadt.de/komx/surface/dfxabfallics/GetAbfallIcs"
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "street": "Straße",
+@final
+class Source(BaseSource):
+    TITLE = "Landkreis Erlangen-Höchstadt"
+    DESCRIPTION = "Source for Landkreis Erlangen-Höchstadt"
+    URL = "https://www.erlangen-hoechstadt.de/"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Höchstadt": {"city": "Höchstadt", "street": "Böhmerwaldstraße"},
+        "Brand": {"city": "Eckental", "street": "Eckenhaid, Amselweg"},
+        "Ortsteile": {"city": "Wachenroth", "street": "Ort inkl. aller Ortsteile"},
     }
-}
 
+    PARAMS = (city(), street())
 
-class Source:
-    def __init__(self, city, street):
-        self._city = city
-        self._street = street
-        self._ics = ICS(split_at=" / ")
-
-    def fetch(self):
+    def retrieve(self, source):
         today = datetime.date.today()
-        dates = self.fetch_year(today.year)
-        if today.month == 12:
-            dates.extend(self.fetch_year(today.year + 1))
+        years = [today.year, today.year + 1] if today.month == 12 else [today.year]
 
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
+        texts: list[str] = []
+        for year in years:
+            payload = {
+                "ort": self.params["city"].upper(),
+                "strasse": self.params["street"],
+                "abfallart": "Alle",
+                "jahr": year,
+            }
+            r = self.session.get(_API_URL, params=payload)
+            r.raise_for_status()
+            r.encoding = "utf-8"
+            texts.append(r.text)
+        return texts
+
+    def parse(self, response, source=None):
+        entries: list = []
+        for text in response:
+            entries.extend(ICS(split_at=" / ").convert(text))
         return entries
 
-    def fetch_year(self, year):
-        city = self._city.upper()
-        street = self._street
+    transform = ICSTransformer()
 
-        payload = {"ort": city, "strasse": street, "abfallart": "Alle", "jahr": year}
-        r = requests.get(
-            "https://www.erlangen-hoechstadt.de/komx/surface/dfxabfallics/GetAbfallIcs",
-            params=payload,
-        )
-        r.raise_for_status()
-        r.encoding = "utf-8"
-        return self._ics.convert(r.text)
+    def __init__(self, city: str, street: str):
+        super().__init__(city=city, street=street)

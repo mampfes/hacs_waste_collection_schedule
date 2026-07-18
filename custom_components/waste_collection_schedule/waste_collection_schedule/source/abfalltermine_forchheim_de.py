@@ -1,37 +1,51 @@
-import urllib
+import urllib.parse
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule import parsers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Abfalltermine Forchheim"
-DESCRIPTION = "Source for Landkreis Forchheim"
-URL = "https://www.abfalltermine-forchheim.de/"
-TEST_CASES = {
-    "Dormitz": {"city": "Dormitz", "area": "Dormitz"},
-    "Rüsselbach": {"city": "Igensdorf", "area": "Oberrüsselbach"},
-    "Kellerstraße": {
-        "city": "Forchheim",
-        "area": "Untere Kellerstraße (ab Adenauerallee bis Piastenbrücke)",
-    },
-}
+# Demonstrates: a plain ICS feed (parsers.IcsParser + ICSTransformer) whose
+# address sits in the URL *path*, not the query string. A configured
+# HttpGetRetriever with a callable url builds the path from the user's city/area;
+# no custom retrieve/parse method and no per-source date or icon handling. The
+# German bin names resolve through the shared multilingual vocabulary, so there
+# is no type_value_map.
+
+_QUERY = "RESTMUELL=true&RESTMUELL_SINGLE=true&BIO=true&YELLOW_SACK=true&PAPER=true"
 
 
-class Source:
-    def __init__(self, city, area):
-        self._city = city
-        self._area = area
-        self._ics = ICS()
+def _ics_url(city: str, area: str, **_: object) -> str:
+    place = urllib.parse.quote(f"{city} - {area}")
+    return f"https://www.abfalltermine-forchheim.de/Forchheim/Landkreis/{place}/ics?{_QUERY}"
 
-    def fetch(self):
-        place = urllib.parse.quote(self._city + " - " + self._area)
-        r = requests.get(
-            f"https://www.abfalltermine-forchheim.de/Forchheim/Landkreis/{place}/ics?RESTMUELL=true&RESTMUELL_SINGLE=true&BIO=true&YELLOW_SACK=true&PAPER=true"
-        )
-        r.encoding = "utf-8"
-        dates = self._ics.convert(r.text)
 
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
+@final
+class Source(BaseSource):
+    TITLE = "Abfalltermine Forchheim"
+    DESCRIPTION = "Source for Landkreis Forchheim."
+    URL = "https://www.abfalltermine-forchheim.de/"
+    COUNTRY = "de"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Dormitz": {"city": "Dormitz", "area": "Dormitz"},
+        "Rüsselbach": {"city": "Igensdorf", "area": "Oberrüsselbach"},
+        "Kellerstraße": {
+            "city": "Forchheim",
+            "area": "Untere Kellerstraße (ab Adenauerallee bis Piastenbrücke)",
+        },
+    }
+
+    PARAMS = (text_field("city", "City"), text_field("area", "Area"))
+
+    retrieve = HttpGetRetriever(url=_ics_url)
+    # min_events=1: a valid place returns a feed with events; an unknown
+    # city/area yields a non-ICS error page (no events), logged and raised as
+    # ResponseShapeError rather than silently returning nothing.
+    parse = parsers.IcsParser(min_events=1)
+    transform = ICSTransformer()
+
+    def __init__(self, city: str, area: str):
+        super().__init__(city=city, area=area)

@@ -1,6 +1,8 @@
 # Landkreis Nordwestmecklenburg
 
-Support for Landkreis Nordwestmecklenburg in Mecklenburg-Vorpommern, Germany.
+Support for schedules provided by [Landkreis Nordwestmecklenburg](https://www.geoport-nwm.de).
+
+Source for Landkreis Nordwestmecklenburg.
 
 ## Configuration via configuration.yaml
 
@@ -17,6 +19,12 @@ waste_collection_schedule:
 **district**  
 *(string) (required)*
 
-### How to get the source arguments
+## Example
 
-Visit [geoport-nwm.de](https://www.geoport-nwm.de/de/abfuhrtermine-geoportal.html) and search for your area. Copy the value from the text input field and use it for the `district` argument. It is case sensitive.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: geoport_nwm_de
+      args:
+        district: "R\xFCting"
+```

@@ -44,11 +44,11 @@ Cross-check the count against `git log --oneline <last-tag>..upstream/master`. I
 
 ## Step 3: decide the version bump (semantic versioning)
 
-The project uses a project-wide semver scheme (option B in discussions/6622), not per-source:
+The project follows **strict semantic versioning** (Option A, agreed in discussions/6622). The full policy is in `doc/versioning.md`; the bump is the highest-severity change in the release:
 
-- **Major (X.0.0):** any removal of a previously deprecated source/config, or a breaking change to the integration as a whole. Removals only ever ship in a major release, and only after the deprecation shipped in an earlier release. Never remove and deprecate the same thing in one release.
-- **Minor (x.Y.0):** new sources or new features (the usual case for this project).
-- **Patch (x.y.Z):** fixes only, no additions, no deprecations.
+- **Major (X.0.0):** a breaking change that needs user action: removing a previously deprecated source/config, a config-schema or entity-ID change, a waste-type label change (so a batch of pipeline **source migrations** is a major), or dropping support for an older Home Assistant version. Removals only ever ship in a major, and only after the deprecation shipped in an earlier release. Never remove and deprecate the same thing in one release.
+- **Minor (x.Y.0):** backward-compatible additions: new sources, new shared platforms, new optional parameters, new countries, and any new deprecation (deprecating leaves the old thing working). This is the usual case.
+- **Patch (x.y.Z):** backward-compatible fixes only, dependency bumps, docs/infra. No additions, no deprecations.
 
 State the chosen bump and the reason in one line, and confirm with the user before writing files.
 

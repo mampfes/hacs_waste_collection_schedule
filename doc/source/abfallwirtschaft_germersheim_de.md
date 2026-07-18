@@ -1,6 +1,8 @@
-# Abfalltermine Landkreis Germersheim
+# Abfallwirtschaft Germersheim
 
-Support for Landkreis Germersheim schedules provided by [abfalltermine-forchheim.de](https://www.abfallwirtschaft-germersheim.de/) located in Rhineland-Palatinate, Germany.
+Support for schedules provided by [Abfallwirtschaft Germersheim](https://www.abfallwirtschaft-germersheim.de).
+
+Source für Abfallkalender Kreis Germersheim
 
 ## Configuration via configuration.yaml
 
@@ -9,8 +11,8 @@ waste_collection_schedule:
   sources:
     - name: abfallwirtschaft_germersheim_de
       args:
-        city: City
-        street: Street
+        city: CITY
+        street: STREET
 ```
 
 ### Configuration Variables
@@ -21,20 +23,13 @@ waste_collection_schedule:
 **street**  
 *(string) (optional)*
 
-### How to get the source arguments
-The arguments can be found on [abfall-termine abfallwirtschaft-germersheim.de](https://www.abfallwirtschaft-germersheim.de/online-service/abfall-termine/abfalltermine-ics-export-bis-240-liter.html).
-select your city and street and use them as the arguments, make sure they are spelled exactly like on the web Page. (If there is no street you can leave it empty)
-
-**Examples**
-Bellheim - Albert-Schweitzer-Str.
+## Example
 
 ```yaml
-city: Bellheim
-street: Albert-Schweitzer-Str.
-```
-
-Dormitz - Dormitz
-
-```yaml
-city: Hatzenbühl
+waste_collection_schedule:
+  sources:
+    - name: abfallwirtschaft_germersheim_de
+      args:
+        city: Bellheim
+        street: Albert-Schweitzer-Str.
 ```

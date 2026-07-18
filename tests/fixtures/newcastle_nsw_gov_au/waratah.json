@@ -1,0 +1,64 @@
+{
+  "recorded_at": "2026-06-21",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates 4155eee1c3",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sun, 21 Jun 2026 04:32:53 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "232",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"474b41a5\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMzAgVHVydG9uIFJvYWQsIFdhcmF0YWgsIE5ld2Nhc3RsZSwgTmV3IFNvdXRoIFdhbGVzLCAyMjk4IiwibG9jYXRpb24iOnsieCI6MTUxLjcyODQxNzY5MTc4MywieSI6LTMyLjkwNDQ3MTkxMDkxOH0sInNjb3JlIjoxMDAsImF0dHJpYnV0ZXMiOnt9LCJleHRlbnQiOnsieG1pbiI6MTUxLjcyNzQxNzY5MTc4MywieW1pbiI6LTMyLjkwNTQ3MTkxMDkxOCwieG1heCI6MTUxLjcyOTQxNzY5MTc4MywieW1heCI6LTMyLjkwMzQ3MTkxMDkxOH19XX0="
+    },
+    {
+      "key": "GET https://services-ap1.arcgis.com/CNeUPE1voVc22gNk/arcgis/rest/services/WasteCollectionDay/FeatureServer/0/query 47c3a0b902",
+      "method": "GET",
+      "url": "https://services-ap1.arcgis.com/CNeUPE1voVc22gNk/arcgis/rest/services/WasteCollectionDay/FeatureServer/0/query",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sun, 21 Jun 2026 04:32:54 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "291",
+        "Connection": "close",
+        "Cache-Control": "private, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Mon, 02 Feb 2026 04:52:25 GMT",
+        "ETag": "sd38_-723443914",
+        "Vary": "X-Esri-Authorization",
+        "Request-Context": "appId=cid-v1:1bba6b68-99a2-4fc8-af9d-affe0c423ee5, appId=cid-v1:4a8d16e5-1b6c-4bd9-9c96-226ef71497e7",
+        "x-arcgis-upstream": "ap1h00c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20260621T043254Z-1779f75d4dfvppv6hC1PERfck000000005wg0000000034nw",
+        "x-esri-query-request-units": "2",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=6;max=6000",
+        "x-esri-query-geometry-field-name": "Shape",
+        "X-ArcGIS-Correlation-Id": "9a6134faa2e78a56",
+        "X-ArcGIS-Instance": "bgoltp7zl000000",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20260621T043254Z-1779f75d4dfvppv6hC1PERfck000000005wg0000000034nw",
+        "X-Cache": "CONFIG_NOCACHE",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6IiIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvbHlnb24iLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjI4MzU2LCJsYXRlc3RXa2lkIjoyODM1Nn0sImZpZWxkcyI6W3sibmFtZSI6IldlZWtObyIsInR5cGUiOiJlc3JpRmllbGRUeXBlSW50ZWdlciIsImFsaWFzIjoiV2Vla05vIiwic3FsVHlwZSI6InNxbFR5cGVPdGhlciIsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJEYXkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRGF5Iiwic3FsVHlwZSI6InNxbFR5cGVPdGhlciIsImxlbmd0aCI6MTAsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IldlZWtObyI6MiwiRGF5IjoiVGh1cnNkYXkifX1dfQ=="
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import datetime
+from typing import TYPE_CHECKING
 
 from bs4 import BeautifulSoup
 from curl_cffi import requests
@@ -7,7 +8,11 @@ from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.retrievers import RetrieverFunc
 from waste_collection_schedule.service.ICS import ICS
+
+if TYPE_CHECKING:
+    from waste_collection_schedule.base_source import BaseSource
 
 
 def _mojibake(term: str) -> str:
@@ -179,7 +184,7 @@ class SiteparkIES:
         return candidates[0][0]
 
     def _query(self, term: str | None, refid: str | None) -> list[list]:
-        """Autocomplete with a fallback for terms the endpoint cannot match.
+        """Autocomplete with fallbacks for terms the endpoint cannot match.
 
         The abto endpoint returns an empty result for some inputs: umlauts
         or "ß" on installations affected by the double-decode bug (see
@@ -204,8 +209,14 @@ class SiteparkIES:
             results = self.autocomplete(short, refid=refid)
         return results
 
-    def fetch_ics(self, pois: str) -> list[tuple[datetime.date, str]]:
-        """Download and parse the ICS calendar for a pois id."""
+    def fetch_ics_response(self, pois: str):
+        """Download the raw ICS calendar response for a pois id.
+
+        Split out from :meth:`fetch_ics` so the retrieve and parse steps stay
+        separate: a pipeline source's ``retrieve`` delegates to this and hands
+        the raw response to the shared ``parsers.IcsParser``. Legacy callers keep
+        using :meth:`fetch_ics`, which parses the same response.
+        """
         params = {"ModID": "48", "call": "ical", "pois": pois}
         params.update(self._download_params)
 
@@ -216,7 +227,11 @@ class SiteparkIES:
             timeout=30,
         )
         r.raise_for_status()
-        return self._ics.convert(r.text)
+        return r
+
+    def fetch_ics(self, pois: str) -> list[tuple[datetime.date, str]]:
+        """Download and parse the ICS calendar for a pois id."""
+        return self._ics.convert(self.fetch_ics_response(pois).text)
 
     def fetch(
         self,
@@ -229,3 +244,48 @@ class SiteparkIES:
         if not pois:
             pois = self.get_pois(strasse=strasse, ort=ort, refid=refid)
         return self.fetch_ics(pois)
+
+
+class SiteparkIESRetriever(RetrieverFunc):
+    """Resolve the address to a pois and return the raw ICS response.
+
+    The pipeline retrieve step for Sitepark IES sources. It runs the shared
+    client's autocomplete/pois lookup (including its typed ``SourceArgument*``
+    exceptions on a bad or ambiguous street) and returns the raw ICS response
+    for ``parsers.IcsParser`` to convert. A source built on this needs no
+    ``retrieve`` override and no hand-rolled request params.
+
+    Args:
+        base_url: The municipality's Sitepark base URL.
+        refid: Optional district/municipality id for the autocomplete endpoint.
+        download_params: Extra query params for the ICS download (e.g. kat/alarm).
+        strasse: The ``source.params`` field holding the street.
+        ort: The ``source.params`` field holding the optional place/Ortsteil.
+    """
+
+    def __init__(
+        self,
+        base_url: str,
+        *,
+        refid: str | None = None,
+        download_params: dict | None = None,
+        strasse: str = "strasse",
+        ort: str = "ort",
+    ):
+        self._base_url = base_url
+        self._refid = refid
+        self._download_params = download_params
+        self._strasse = strasse
+        self._ort = ort
+
+    def __call__(self, source: "BaseSource"):
+        client = SiteparkIES(
+            self._base_url,
+            refid=self._refid,
+            download_params=self._download_params,
+        )
+        pois = client.get_pois(
+            strasse=source.params.get(self._strasse),
+            ort=source.params.get(self._ort),
+        )
+        return client.fetch_ics_response(pois)

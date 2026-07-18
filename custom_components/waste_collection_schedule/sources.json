@@ -792,6 +792,44 @@
       "id": "ipswich_qld_gov_au"
     },
     {
+      "title": "Isaac Regional Council",
+      "module": "isaac_qld_gov_au",
+      "default_params": {},
+      "id": "isaac_qld_gov_au"
+    },
+    {
+      "title": "Isaac Regional Council (Coastal)",
+      "module": "isaac_qld_gov_au",
+      "default_params": {
+        "town": "Coastal"
+      },
+      "id": "isaac_qld_gov_au"
+    },
+    {
+      "title": "Isaac Regional Council (Glenden)",
+      "module": "isaac_qld_gov_au",
+      "default_params": {
+        "town": "Glenden"
+      },
+      "id": "isaac_qld_gov_au"
+    },
+    {
+      "title": "Isaac Regional Council (Middlemount)",
+      "module": "isaac_qld_gov_au",
+      "default_params": {
+        "town": "Middlemount"
+      },
+      "id": "isaac_qld_gov_au"
+    },
+    {
+      "title": "Isaac Regional Council (Nebo)",
+      "module": "isaac_qld_gov_au",
+      "default_params": {
+        "town": "Nebo"
+      },
+      "id": "isaac_qld_gov_au"
+    },
+    {
       "title": "Kangaroo Island Council",
       "module": "frwa_com_au",
       "default_params": {},
@@ -4874,6 +4912,12 @@
       "module": "recycleapp_be",
       "default_params": {},
       "id": "recycleapp_be"
+    },
+    {
+      "title": "Tibi (Charleroi region)",
+      "module": "tibi_be",
+      "default_params": {},
+      "id": "tibi_be"
     }
   ],
   "Canada": [
@@ -7366,6 +7410,12 @@
       "id": "123abfallkalender_de"
     },
     {
+      "title": "A.R.T. Trier (Deprecated)",
+      "module": "art_trier_de",
+      "default_params": {},
+      "id": "art_trier_de"
+    },
+    {
       "title": "Aach",
       "module": "muellmann_app_de",
       "default_params": {
@@ -7474,37 +7524,49 @@
     {
       "title": "Abfallkalender Hattingen",
       "module": "insert_it_de",
-      "default_params": {},
+      "default_params": {
+        "municipality": "Hattingen"
+      },
       "id": "insert_it_de"
     },
     {
       "title": "Abfallkalender Herne",
       "module": "insert_it_de",
-      "default_params": {},
+      "default_params": {
+        "municipality": "Herne"
+      },
       "id": "insert_it_de"
     },
     {
       "title": "Abfallkalender Kassel",
       "module": "insert_it_de",
-      "default_params": {},
+      "default_params": {
+        "municipality": "Kassel"
+      },
       "id": "insert_it_de"
     },
     {
       "title": "Abfallkalender Luebeck",
       "module": "insert_it_de",
-      "default_params": {},
+      "default_params": {
+        "municipality": "Luebeck"
+      },
       "id": "insert_it_de"
     },
     {
       "title": "Abfallkalender Mannheim",
       "module": "insert_it_de",
-      "default_params": {},
+      "default_params": {
+        "municipality": "Mannheim"
+      },
       "id": "insert_it_de"
     },
     {
       "title": "Abfallkalender Offenbach",
       "module": "insert_it_de",
-      "default_params": {},
+      "default_params": {
+        "municipality": "Offenbach"
+      },
       "id": "insert_it_de"
     },
     {
@@ -7984,7 +8046,8 @@
       "title": "ALF Lahn-Fulda",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallhr"
+        "app_id": "de.k4systems.abfallhr",
+        "city": "ALF Lahn-Fulda"
       },
       "id": "app_abfallplus_de"
     },
@@ -8023,7 +8086,8 @@
       "title": "Alsdorf",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Alsdorf"
       },
       "id": "app_abfallplus_de"
     },
@@ -8191,12 +8255,6 @@
       "id": "ics_art_trier_de"
     },
     {
-      "title": "ART Trier (Depreciated)",
-      "module": "art_trier_de",
-      "default_params": {},
-      "id": "art_trier_de"
-    },
-    {
       "title": "Aschaffenburg (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -8252,7 +8310,8 @@
       "title": "ATHOS GmbH",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.athosmobil"
+        "app_id": "de.k4systems.athosmobil",
+        "city": "ATHOS GmbH"
       },
       "id": "app_abfallplus_de"
     },
@@ -8266,7 +8325,8 @@
       "title": "Augsburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.awa"
+        "app_id": "de.k4systems.awa",
+        "city": "Augsburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -8386,7 +8446,8 @@
       "title": "AWG Donau-Wald",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.zawdw"
+        "app_id": "de.k4systems.zawdw",
+        "city": "AWG Donau-Wald"
       },
       "id": "app_abfallplus_de"
     },
@@ -8524,7 +8585,8 @@
       "title": "Bad Kissingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappbk"
+        "app_id": "de.k4systems.abfallappbk",
+        "city": "Bad Kissingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -8532,7 +8594,8 @@
       "title": "Bad M\u00fcnstereifel",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfoapp"
+        "app_id": "de.k4systems.abfallinfoapp",
+        "city": "Bad M\u00fcnstereifel"
       },
       "id": "app_abfallplus_de"
     },
@@ -8588,7 +8651,8 @@
       "title": "Baesweiler",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Baesweiler"
       },
       "id": "app_abfallplus_de"
     },
@@ -8715,7 +8779,8 @@
       "title": "Berlin",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.albagroup.app"
+        "app_id": "de.albagroup.app",
+        "city": "Berlin"
       },
       "id": "app_abfallplus_de"
     },
@@ -8848,7 +8913,8 @@
       "title": "Bonn",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.bonnorange"
+        "app_id": "de.k4systems.bonnorange",
+        "city": "Bonn"
       },
       "id": "app_abfallplus_de"
     },
@@ -8889,7 +8955,8 @@
       "title": "Braunschweig",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.albagroup.app"
+        "app_id": "de.albagroup.app",
+        "city": "Braunschweig"
       },
       "id": "app_abfallplus_de"
     },
@@ -9011,7 +9078,8 @@
       "title": "Burgenland (Landkreis)",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.udb"
+        "app_id": "de.k4systems.udb",
+        "city": "Burgenland (Landkreis)"
       },
       "id": "app_abfallplus_de"
     },
@@ -9135,7 +9203,8 @@
       "title": "Dahlem",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfoapp"
+        "app_id": "de.k4systems.abfallinfoapp",
+        "city": "Dahlem"
       },
       "id": "app_abfallplus_de"
     },
@@ -9292,7 +9361,8 @@
       "title": "Drekopf",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.drekopf.abfallplaner"
+        "app_id": "de.drekopf.abfallplaner",
+        "city": "Drekopf"
       },
       "id": "app_abfallplus_de"
     },
@@ -9314,7 +9384,8 @@
       "title": "Duisburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.idcontor.abfallwbd"
+        "app_id": "de.idcontor.abfallwbd",
+        "city": "Duisburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -9610,7 +9681,8 @@
       "title": "Entsorgung Dortmund GmbH (EDG)",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.edg.abfallapp"
+        "app_id": "de.edg.abfallapp",
+        "city": "Entsorgung Dortmund GmbH (EDG)"
       },
       "id": "app_abfallplus_de"
     },
@@ -9738,7 +9810,8 @@
       "title": "Eschweiler",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Eschweiler"
       },
       "id": "app_abfallplus_de"
     },
@@ -9777,7 +9850,8 @@
       "title": "Essen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.ucom.abfallebe"
+        "app_id": "de.ucom.abfallebe",
+        "city": "Essen"
       },
       "id": "app_abfallplus_de"
     },
@@ -9861,7 +9935,8 @@
       "title": "Frankfurt (Oder)",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.unterallgaeu"
+        "app_id": "de.k4systems.unterallgaeu",
+        "city": "Frankfurt (Oder)"
       },
       "id": "app_abfallplus_de"
     },
@@ -9869,7 +9944,8 @@
       "title": "Frankfurt (Oder)",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.willkommen"
+        "app_id": "de.k4systems.willkommen",
+        "city": "Frankfurt (Oder)"
       },
       "id": "app_abfallplus_de"
     },
@@ -9902,7 +9978,8 @@
       "title": "Freiburg im Breisgau",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.asf"
+        "app_id": "de.k4systems.asf",
+        "city": "Freiburg im Breisgau"
       },
       "id": "app_abfallplus_de"
     },
@@ -10231,7 +10308,9 @@
     {
       "title": "GSAK APP / Krefeld",
       "module": "insert_it_de",
-      "default_params": {},
+      "default_params": {
+        "municipality": "Krefeld"
+      },
       "id": "insert_it_de"
     },
     {
@@ -10278,7 +10357,8 @@
       "title": "Hagen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.hebhagen"
+        "app_id": "de.k4systems.hebhagen",
+        "city": "Hagen"
       },
       "id": "app_abfallplus_de"
     },
@@ -10397,7 +10477,8 @@
       "title": "Havelland",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.albagroup.app"
+        "app_id": "de.albagroup.app",
+        "city": "Havelland"
       },
       "id": "app_abfallplus_de"
     },
@@ -10431,7 +10512,8 @@
       "title": "Heimbach",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Heimbach"
       },
       "id": "app_abfallplus_de"
     },
@@ -10451,7 +10533,8 @@
       "title": "Hellenthal",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfoapp"
+        "app_id": "de.k4systems.abfallinfoapp",
+        "city": "Hellenthal"
       },
       "id": "app_abfallplus_de"
     },
@@ -10482,7 +10565,8 @@
       "title": "Herzogenrath",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Herzogenrath"
       },
       "id": "app_abfallplus_de"
     },
@@ -10573,7 +10657,8 @@
       "title": "Hohenlohekreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.cmcitymedia.hokwaste"
+        "app_id": "de.cmcitymedia.hokwaste",
+        "city": "Hohenlohekreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -10697,7 +10782,8 @@
       "title": "Ilm-Kreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappik"
+        "app_id": "de.k4systems.abfallappik",
+        "city": "Ilm-Kreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -10729,7 +10815,8 @@
       "title": "Inden",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Inden"
       },
       "id": "app_abfallplus_de"
     },
@@ -10805,7 +10892,8 @@
       "title": "Kall",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfoapp"
+        "app_id": "de.k4systems.abfallinfoapp",
+        "city": "Kall"
       },
       "id": "app_abfallplus_de"
     },
@@ -10966,7 +11054,8 @@
       "title": "Kreis Ahrweiler",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.ahrweiler.meinawb"
+        "app_id": "de.ahrweiler.meinawb",
+        "city": "Kreis Ahrweiler"
       },
       "id": "app_abfallplus_de"
     },
@@ -10974,7 +11063,8 @@
       "title": "Kreis Augsburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallapp"
+        "app_id": "de.k4systems.abfallapp",
+        "city": "Kreis Augsburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -10982,7 +11072,8 @@
       "title": "Kreis Bad Kissingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallscout"
+        "app_id": "de.k4systems.abfallscout",
+        "city": "Kreis Bad Kissingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -10990,7 +11081,8 @@
       "title": "Kreis Bautzen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfalllkbz"
+        "app_id": "de.k4systems.abfalllkbz",
+        "city": "Kreis Bautzen"
       },
       "id": "app_abfallplus_de"
     },
@@ -10998,7 +11090,8 @@
       "title": "Kreis Bayreuth",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfalllkbt"
+        "app_id": "de.k4systems.abfalllkbt",
+        "city": "Kreis Bayreuth"
       },
       "id": "app_abfallplus_de"
     },
@@ -11006,7 +11099,8 @@
       "title": "Kreis Bergstra\u00dfe",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.zakb"
+        "app_id": "de.k4systems.zakb",
+        "city": "Kreis Bergstra\u00dfe"
       },
       "id": "app_abfallplus_de"
     },
@@ -11014,7 +11108,8 @@
       "title": "Kreis Biberach",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.biberach.abfallapp"
+        "app_id": "de.biberach.abfallapp",
+        "city": "Kreis Biberach"
       },
       "id": "app_abfallplus_de"
     },
@@ -11022,7 +11117,8 @@
       "title": "Kreis Breisgau-Hochschwarzwald",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappbh"
+        "app_id": "de.k4systems.abfallappbh",
+        "city": "Kreis Breisgau-Hochschwarzwald"
       },
       "id": "app_abfallplus_de"
     },
@@ -11030,7 +11126,8 @@
       "title": "Kreis Calw",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfocw"
+        "app_id": "de.k4systems.abfallinfocw",
+        "city": "Kreis Calw"
       },
       "id": "app_abfallplus_de"
     },
@@ -11038,7 +11135,8 @@
       "title": "Kreis Cloppenburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappclp"
+        "app_id": "de.k4systems.abfallappclp",
+        "city": "Kreis Cloppenburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -11054,7 +11152,8 @@
       "title": "Kreis Cuxhaven",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappcux"
+        "app_id": "de.k4systems.abfallappcux",
+        "city": "Kreis Cuxhaven"
       },
       "id": "app_abfallplus_de"
     },
@@ -11062,7 +11161,8 @@
       "title": "Kreis Diepholz",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.awgbassum"
+        "app_id": "de.k4systems.awgbassum",
+        "city": "Kreis Diepholz"
       },
       "id": "app_abfallplus_de"
     },
@@ -11070,7 +11170,8 @@
       "title": "Kreis Emmendingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.lkemmendingen"
+        "app_id": "de.k4systems.lkemmendingen",
+        "city": "Kreis Emmendingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11078,7 +11179,8 @@
       "title": "Kreis Emsland",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.awbemsland"
+        "app_id": "de.k4systems.awbemsland",
+        "city": "Kreis Emsland"
       },
       "id": "app_abfallplus_de"
     },
@@ -11086,7 +11188,8 @@
       "title": "Kreis Euskirchen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfoapp"
+        "app_id": "de.k4systems.abfallinfoapp",
+        "city": "Kreis Euskirchen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11094,7 +11197,8 @@
       "title": "Kreis Freudenstadt",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappfds"
+        "app_id": "de.k4systems.abfallappfds",
+        "city": "Kreis Freudenstadt"
       },
       "id": "app_abfallplus_de"
     },
@@ -11102,7 +11206,8 @@
       "title": "Kreis F\u00fcrth",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappfuerth"
+        "app_id": "de.k4systems.abfallappfuerth",
+        "city": "Kreis F\u00fcrth"
       },
       "id": "app_abfallplus_de"
     },
@@ -11110,7 +11215,8 @@
       "title": "Kreis Garmisch-Partenkirchen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappgap"
+        "app_id": "de.k4systems.abfallappgap",
+        "city": "Kreis Garmisch-Partenkirchen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11118,7 +11224,8 @@
       "title": "Kreis G\u00f6ppingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.awbgp"
+        "app_id": "de.k4systems.awbgp",
+        "city": "Kreis G\u00f6ppingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11126,7 +11233,8 @@
       "title": "Kreis G\u00f6ttingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.lkgoettingen"
+        "app_id": "de.k4systems.lkgoettingen",
+        "city": "Kreis G\u00f6ttingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11142,7 +11250,8 @@
       "title": "Kreis Heilbronn",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "abfallH.ucom.de"
+        "app_id": "abfallH.ucom.de",
+        "city": "Kreis Heilbronn"
       },
       "id": "app_abfallplus_de"
     },
@@ -11158,7 +11267,8 @@
       "title": "Kreis Karlsruhe",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappka"
+        "app_id": "de.k4systems.abfallappka",
+        "city": "Kreis Karlsruhe"
       },
       "id": "app_abfallplus_de"
     },
@@ -11166,7 +11276,8 @@
       "title": "Kreis Kitzingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallwelt"
+        "app_id": "de.k4systems.abfallwelt",
+        "city": "Kreis Kitzingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11174,7 +11285,8 @@
       "title": "Kreis Landsberg am Lech",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.llabfallapp"
+        "app_id": "de.k4systems.llabfallapp",
+        "city": "Kreis Landsberg am Lech"
       },
       "id": "app_abfallplus_de"
     },
@@ -11182,7 +11294,8 @@
       "title": "Kreis Landshut",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.landshutlk"
+        "app_id": "de.k4systems.landshutlk",
+        "city": "Kreis Landshut"
       },
       "id": "app_abfallplus_de"
     },
@@ -11190,7 +11303,8 @@
       "title": "Kreis Limburg-Weilburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.meinawblm"
+        "app_id": "de.k4systems.meinawblm",
+        "city": "Kreis Limburg-Weilburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -11198,7 +11312,8 @@
       "title": "Kreis Ludwigsburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.avlserviceplus"
+        "app_id": "de.k4systems.avlserviceplus",
+        "city": "Kreis Ludwigsburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -11206,7 +11321,8 @@
       "title": "Kreis L\u00f6rrach",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallapploe"
+        "app_id": "de.k4systems.abfallapploe",
+        "city": "Kreis L\u00f6rrach"
       },
       "id": "app_abfallplus_de"
     },
@@ -11214,7 +11330,8 @@
       "title": "Kreis L\u00fcneburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallplus.gfaabfallinfo"
+        "app_id": "de.abfallplus.gfaabfallinfo",
+        "city": "Kreis L\u00fcneburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -11222,7 +11339,8 @@
       "title": "Kreis Mayen-Koblenz",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappmyk"
+        "app_id": "de.k4systems.abfallappmyk",
+        "city": "Kreis Mayen-Koblenz"
       },
       "id": "app_abfallplus_de"
     },
@@ -11230,7 +11348,8 @@
       "title": "Kreis Miesbach",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappvivo"
+        "app_id": "de.k4systems.abfallappvivo",
+        "city": "Kreis Miesbach"
       },
       "id": "app_abfallplus_de"
     },
@@ -11238,7 +11357,8 @@
       "title": "Kreis Miltenberg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappmil"
+        "app_id": "de.k4systems.abfallappmil",
+        "city": "Kreis Miltenberg"
       },
       "id": "app_abfallplus_de"
     },
@@ -11246,7 +11366,8 @@
       "title": "Kreis M\u00e4rkisch-Oderland",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappmol"
+        "app_id": "de.k4systems.abfallappmol",
+        "city": "Kreis M\u00e4rkisch-Oderland"
       },
       "id": "app_abfallplus_de"
     },
@@ -11254,7 +11375,8 @@
       "title": "Kreis Neustadt/Aisch-Bad Windsheim",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.neustadtaisch"
+        "app_id": "de.k4systems.neustadtaisch",
+        "city": "Kreis Neustadt/Aisch-Bad Windsheim"
       },
       "id": "app_abfallplus_de"
     },
@@ -11262,7 +11384,8 @@
       "title": "Kreis Neuwied",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.gimik.apps.muellwecker_neuwied"
+        "app_id": "de.gimik.apps.muellwecker_neuwied",
+        "city": "Kreis Neuwied"
       },
       "id": "app_abfallplus_de"
     },
@@ -11270,7 +11393,8 @@
       "title": "Kreis Nienburg / Weser",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.bawnapp"
+        "app_id": "de.k4systems.bawnapp",
+        "city": "Kreis Nienburg / Weser"
       },
       "id": "app_abfallplus_de"
     },
@@ -11278,7 +11402,8 @@
       "title": "Kreis Nordfriesland",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappnf"
+        "app_id": "de.k4systems.abfallappnf",
+        "city": "Kreis Nordfriesland"
       },
       "id": "app_abfallplus_de"
     },
@@ -11286,7 +11411,8 @@
       "title": "Kreis Ostallg\u00e4u",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappoal"
+        "app_id": "de.k4systems.abfallappoal",
+        "city": "Kreis Ostallg\u00e4u"
       },
       "id": "app_abfallplus_de"
     },
@@ -11294,7 +11420,8 @@
       "title": "Kreis Osterholz",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.asoapp"
+        "app_id": "de.k4systems.asoapp",
+        "city": "Kreis Osterholz"
       },
       "id": "app_abfallplus_de"
     },
@@ -11310,7 +11437,8 @@
       "title": "Kreis Rastatt",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.awbrastatt"
+        "app_id": "de.k4systems.awbrastatt",
+        "city": "Kreis Rastatt"
       },
       "id": "app_abfallplus_de"
     },
@@ -11318,7 +11446,8 @@
       "title": "Kreis Ravensburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallapprv"
+        "app_id": "de.k4systems.abfallapprv",
+        "city": "Kreis Ravensburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -11326,7 +11455,8 @@
       "title": "Kreis Reutlingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallkreisrt"
+        "app_id": "de.k4systems.abfallkreisrt",
+        "city": "Kreis Reutlingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11334,7 +11464,8 @@
       "title": "Kreis Rotenburg (W\u00fcmme)",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.awrplus"
+        "app_id": "de.k4systems.awrplus",
+        "city": "Kreis Rotenburg (W\u00fcmme)"
       },
       "id": "app_abfallplus_de"
     },
@@ -11342,7 +11473,8 @@
       "title": "Kreis Rottweil",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallplus.abfalllkrw"
+        "app_id": "de.abfallplus.abfalllkrw",
+        "city": "Kreis Rottweil"
       },
       "id": "app_abfallplus_de"
     },
@@ -11350,7 +11482,8 @@
       "title": "Kreis Schaumburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.data_at_work.aws"
+        "app_id": "de.data_at_work.aws",
+        "city": "Kreis Schaumburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -11358,7 +11491,8 @@
       "title": "Kreis Schw\u00e4bisch-Hall",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.cmcitymedia.shawaste"
+        "app_id": "de.cmcitymedia.shawaste",
+        "city": "Kreis Schw\u00e4bisch-Hall"
       },
       "id": "app_abfallplus_de"
     },
@@ -11366,7 +11500,8 @@
       "title": "Kreis Sigmaringen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappsig"
+        "app_id": "de.k4systems.abfallappsig",
+        "city": "Kreis Sigmaringen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11374,7 +11509,8 @@
       "title": "Kreis Starnberg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.awistasta"
+        "app_id": "de.k4systems.awistasta",
+        "city": "Kreis Starnberg"
       },
       "id": "app_abfallplus_de"
     },
@@ -11388,7 +11524,8 @@
       "title": "Kreis Steinfurt",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.egst"
+        "app_id": "de.k4systems.egst",
+        "city": "Kreis Steinfurt"
       },
       "id": "app_abfallplus_de"
     },
@@ -11396,7 +11533,8 @@
       "title": "Kreis S\u00fcdwestpfalz",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfalllkswp"
+        "app_id": "de.k4systems.abfalllkswp",
+        "city": "Kreis S\u00fcdwestpfalz"
       },
       "id": "app_abfallplus_de"
     },
@@ -11404,7 +11542,8 @@
       "title": "Kreis Traunstein",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappts"
+        "app_id": "de.k4systems.abfallappts",
+        "city": "Kreis Traunstein"
       },
       "id": "app_abfallplus_de"
     },
@@ -11412,7 +11551,8 @@
       "title": "Kreis Uelzen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.lkruelzen"
+        "app_id": "de.k4systems.lkruelzen",
+        "city": "Kreis Uelzen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11420,7 +11560,8 @@
       "title": "Kreis Vechta",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.awvapp"
+        "app_id": "de.k4systems.awvapp",
+        "city": "Kreis Vechta"
       },
       "id": "app_abfallplus_de"
     },
@@ -11428,7 +11569,8 @@
       "title": "Kreis Verden",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallplus.abfallappver"
+        "app_id": "de.abfallplus.abfallappver",
+        "city": "Kreis Verden"
       },
       "id": "app_abfallplus_de"
     },
@@ -11444,7 +11586,8 @@
       "title": "Kreis Vorpommern-R\u00fcgen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappvorue"
+        "app_id": "de.k4systems.abfallappvorue",
+        "city": "Kreis Vorpommern-R\u00fcgen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11452,7 +11595,8 @@
       "title": "Kreis Waldshut",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallplus.abfallappwt"
+        "app_id": "de.abfallplus.abfallappwt",
+        "city": "Kreis Waldshut"
       },
       "id": "app_abfallplus_de"
     },
@@ -11460,7 +11604,8 @@
       "title": "Kreis Wei\u00dfenburg-Gunzenhausen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappwug"
+        "app_id": "de.k4systems.abfallappwug",
+        "city": "Kreis Wei\u00dfenburg-Gunzenhausen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11468,7 +11613,8 @@
       "title": "Kreis Wesermarsch",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappgib"
+        "app_id": "de.k4systems.abfallappgib",
+        "city": "Kreis Wesermarsch"
       },
       "id": "app_abfallplus_de"
     },
@@ -11476,7 +11622,8 @@
       "title": "Kreis W\u00fcrzburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.teamorange"
+        "app_id": "de.k4systems.teamorange",
+        "city": "Kreis W\u00fcrzburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -11648,7 +11795,8 @@
       "title": "Landkreis B\u00f6blingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappbb"
+        "app_id": "de.k4systems.abfallappbb",
+        "city": "Landkreis B\u00f6blingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11716,7 +11864,8 @@
       "title": "Landkreis Esslingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappes"
+        "app_id": "de.k4systems.abfallappes",
+        "city": "Landkreis Esslingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -11780,7 +11929,8 @@
       "title": "Landkreis G\u00f6rlitz",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.lkgr"
+        "app_id": "de.k4systems.lkgr",
+        "city": "Landkreis G\u00f6rlitz"
       },
       "id": "app_abfallplus_de"
     },
@@ -11905,7 +12055,8 @@
       "title": "Landkreis Leipzig",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.leipziglk"
+        "app_id": "de.k4systems.leipziglk",
+        "city": "Landkreis Leipzig"
       },
       "id": "app_abfallplus_de"
     },
@@ -11935,7 +12086,8 @@
       "title": "Landkreis Main-Spessart",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallmsp"
+        "app_id": "de.k4systems.abfallmsp",
+        "city": "Landkreis Main-Spessart"
       },
       "id": "app_abfallplus_de"
     },
@@ -12198,18 +12350,11 @@
       "id": "jumomind_de"
     },
     {
-      "title": "Landkreis Wittmund (MyMuell App)",
-      "module": "jumomind_de",
-      "default_params": {
-        "service_id": "mymuell"
-      },
-      "id": "jumomind_de"
-    },
-    {
       "title": "Landkreis Wunsiedel im Fichtelgebirge",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.kufiapp"
+        "app_id": "de.k4systems.kufiapp",
+        "city": "Landkreis Wunsiedel im Fichtelgebirge"
       },
       "id": "app_abfallplus_de"
     },
@@ -12285,7 +12430,8 @@
       "title": "Landshut",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappla"
+        "app_id": "de.k4systems.abfallappla",
+        "city": "Landshut"
       },
       "id": "app_abfallplus_de"
     },
@@ -12315,7 +12461,8 @@
       "title": "Langerwehe",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Langerwehe"
       },
       "id": "app_abfallplus_de"
     },
@@ -12359,7 +12506,8 @@
       "title": "Leverkusen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.avea"
+        "app_id": "de.k4systems.avea",
+        "city": "Leverkusen"
       },
       "id": "app_abfallplus_de"
     },
@@ -12409,7 +12557,8 @@
       "title": "Linnich",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Linnich"
       },
       "id": "app_abfallplus_de"
     },
@@ -12445,7 +12594,8 @@
       "title": "Ludwigshafen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.idcontor.abfalllu"
+        "app_id": "de.idcontor.abfalllu",
+        "city": "Ludwigshafen"
       },
       "id": "app_abfallplus_de"
     },
@@ -12594,7 +12744,8 @@
       "title": "Mechernich",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfoapp"
+        "app_id": "de.k4systems.abfallinfoapp",
+        "city": "Mechernich"
       },
       "id": "app_abfallplus_de"
     },
@@ -12650,7 +12801,8 @@
       "title": "Metzingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappmetz"
+        "app_id": "de.k4systems.abfallappmetz",
+        "city": "Metzingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -12688,7 +12840,8 @@
       "title": "Monschau",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Monschau"
       },
       "id": "app_abfallplus_de"
     },
@@ -12833,7 +12986,8 @@
       "title": "M\u00fcnchen Landkreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.lkmabfallplus"
+        "app_id": "de.k4systems.lkmabfallplus",
+        "city": "M\u00fcnchen Landkreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -12858,7 +13012,8 @@
       "title": "Neckar-Odenwald-Kreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappno"
+        "app_id": "de.k4systems.abfallappno",
+        "city": "Neckar-Odenwald-Kreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -12936,7 +13091,8 @@
       "title": "Nideggen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Nideggen"
       },
       "id": "app_abfallplus_de"
     },
@@ -12944,7 +13100,8 @@
       "title": "Niederzier",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Niederzier"
       },
       "id": "app_abfallplus_de"
     },
@@ -12968,7 +13125,8 @@
       "title": "Nordsachsen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallwecker"
+        "app_id": "de.abfallwecker",
+        "city": "Nordsachsen"
       },
       "id": "app_abfallplus_de"
     },
@@ -13000,7 +13158,8 @@
       "title": "N\u00f6rvenich",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "N\u00f6rvenich"
       },
       "id": "app_abfallplus_de"
     },
@@ -13008,7 +13167,8 @@
       "title": "Oberhavel",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.albagroup.app"
+        "app_id": "de.albagroup.app",
+        "city": "Oberhavel"
       },
       "id": "app_abfallplus_de"
     },
@@ -13077,7 +13237,8 @@
       "title": "Oldenburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappol"
+        "app_id": "de.k4systems.abfallappol",
+        "city": "Oldenburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -13148,7 +13309,8 @@
       "title": "Ortenaukreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappog"
+        "app_id": "de.k4systems.abfallappog",
+        "city": "Ortenaukreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -13172,7 +13334,8 @@
       "title": "Osterode am Harz",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallwecker"
+        "app_id": "de.abfallwecker",
+        "city": "Osterode am Harz"
       },
       "id": "app_abfallplus_de"
     },
@@ -13180,7 +13343,8 @@
       "title": "Ostprignitz-Ruppin",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.albagroup.app"
+        "app_id": "de.albagroup.app",
+        "city": "Ostprignitz-Ruppin"
       },
       "id": "app_abfallplus_de"
     },
@@ -13291,7 +13455,8 @@
       "title": "Prignitz",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallwecker"
+        "app_id": "de.abfallwecker",
+        "city": "Prignitz"
       },
       "id": "app_abfallplus_de"
     },
@@ -13299,7 +13464,8 @@
       "title": "Prignitz",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.unterallgaeu"
+        "app_id": "de.k4systems.unterallgaeu",
+        "city": "Prignitz"
       },
       "id": "app_abfallplus_de"
     },
@@ -13307,7 +13473,8 @@
       "title": "Prignitz",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.willkommen"
+        "app_id": "de.k4systems.willkommen",
+        "city": "Prignitz"
       },
       "id": "app_abfallplus_de"
     },
@@ -13387,7 +13554,8 @@
       "title": "Remondis Rheinland",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.remondis.rheinland"
+        "app_id": "de.remondis.rheinland",
+        "city": "Remondis Rheinland"
       },
       "id": "app_abfallplus_de"
     },
@@ -13409,7 +13577,8 @@
       "title": "Reutlingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallplus.tbrapp"
+        "app_id": "de.abfallplus.tbrapp",
+        "city": "Reutlingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -13428,6 +13597,12 @@
       "id": "rh_entsorgung_de"
     },
     {
+      "title": "Rhein-Hunsr\u00fcck Entsorgung (RHE)",
+      "module": "rh_entsorgung_de",
+      "default_params": {},
+      "id": "rh_entsorgung_de"
+    },
+    {
       "title": "Rhein-Lahn Kreis",
       "module": "ics",
       "default_params": {},
@@ -13437,7 +13612,8 @@
       "title": "Rhein-Neckar-Kreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.ucom.abfallavr"
+        "app_id": "de.ucom.abfallavr",
+        "city": "Rhein-Neckar-Kreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -13487,7 +13663,8 @@
       "title": "Roetgen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Roetgen"
       },
       "id": "app_abfallplus_de"
     },
@@ -13536,7 +13713,8 @@
       "title": "Rottweil",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.unterallgaeu"
+        "app_id": "de.k4systems.unterallgaeu",
+        "city": "Rottweil"
       },
       "id": "app_abfallplus_de"
     },
@@ -13544,7 +13722,8 @@
       "title": "Rottweil",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.willkommen"
+        "app_id": "de.k4systems.willkommen",
+        "city": "Rottweil"
       },
       "id": "app_abfallplus_de"
     },
@@ -13627,7 +13806,8 @@
       "title": "Salzlandkreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallslk"
+        "app_id": "de.k4systems.abfallslk",
+        "city": "Salzlandkreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -13660,7 +13840,8 @@
       "title": "Schleiden",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfoapp"
+        "app_id": "de.k4systems.abfallinfoapp",
+        "city": "Schleiden"
       },
       "id": "app_abfallplus_de"
     },
@@ -13710,7 +13891,8 @@
       "title": "Schwarze Elster",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.aevapp"
+        "app_id": "de.k4systems.aevapp",
+        "city": "Schwarze Elster"
       },
       "id": "app_abfallplus_de"
     },
@@ -13718,7 +13900,8 @@
       "title": "Schwarzwald-Baar-Kreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallsbk"
+        "app_id": "de.k4systems.abfallsbk",
+        "city": "Schwarzwald-Baar-Kreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -13750,7 +13933,8 @@
       "title": "Sch\u00f6nmackers",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.muellalarm"
+        "app_id": "de.k4systems.muellalarm",
+        "city": "Sch\u00f6nmackers"
       },
       "id": "app_abfallplus_de"
     },
@@ -13816,7 +14000,8 @@
       "title": "Simmerath",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Simmerath"
       },
       "id": "app_abfallplus_de"
     },
@@ -14306,7 +14491,8 @@
       "title": "Stolberg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Stolberg"
       },
       "id": "app_abfallplus_de"
     },
@@ -14475,7 +14661,8 @@
       "title": "Tuttlingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.abfallwecker"
+        "app_id": "de.abfallwecker",
+        "city": "Tuttlingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -14483,7 +14670,8 @@
       "title": "Tuttlingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.unterallgaeu"
+        "app_id": "de.k4systems.unterallgaeu",
+        "city": "Tuttlingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -14491,7 +14679,8 @@
       "title": "Tuttlingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.willkommen"
+        "app_id": "de.k4systems.willkommen",
+        "city": "Tuttlingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -14516,7 +14705,8 @@
       "title": "T\u00fcbingen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.albagroup.app"
+        "app_id": "de.albagroup.app",
+        "city": "T\u00fcbingen"
       },
       "id": "app_abfallplus_de"
     },
@@ -14625,7 +14815,8 @@
       "title": "Vettwei\u00df",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "Vettwei\u00df"
       },
       "id": "app_abfallplus_de"
     },
@@ -14740,7 +14931,8 @@
       "title": "Waldshut",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.unterallgaeu"
+        "app_id": "de.k4systems.unterallgaeu",
+        "city": "Waldshut"
       },
       "id": "app_abfallplus_de"
     },
@@ -14748,7 +14940,8 @@
       "title": "Waldshut",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.willkommen"
+        "app_id": "de.k4systems.willkommen",
+        "city": "Waldshut"
       },
       "id": "app_abfallplus_de"
     },
@@ -14810,7 +15003,8 @@
       "title": "Weilerswist",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfoapp"
+        "app_id": "de.k4systems.abfallinfoapp",
+        "city": "Weilerswist"
       },
       "id": "app_abfallplus_de"
     },
@@ -14893,7 +15087,8 @@
       "title": "Westerwaldkreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.wabapp"
+        "app_id": "de.k4systems.wabapp",
+        "city": "Westerwaldkreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -15076,7 +15271,8 @@
       "title": "W\u00fcrselen",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.regioentsorgung"
+        "app_id": "de.k4systems.regioentsorgung",
+        "city": "W\u00fcrselen"
       },
       "id": "app_abfallplus_de"
     },
@@ -15084,7 +15280,8 @@
       "title": "W\u00fcrzburg",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.wuerzburg"
+        "app_id": "de.k4systems.wuerzburg",
+        "city": "W\u00fcrzburg"
       },
       "id": "app_abfallplus_de"
     },
@@ -15100,7 +15297,8 @@
       "title": "ZAK Kempten",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallappzak"
+        "app_id": "de.k4systems.abfallappzak",
+        "city": "ZAK Kempten"
       },
       "id": "app_abfallplus_de"
     },
@@ -15120,7 +15318,8 @@
       "title": "ZAW-SR",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.zawsr"
+        "app_id": "de.zawsr",
+        "city": "ZAW-SR"
       },
       "id": "app_abfallplus_de"
     },
@@ -15160,7 +15359,8 @@
       "title": "Zollernalbkreis",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallzak"
+        "app_id": "de.k4systems.abfallzak",
+        "city": "Zollernalbkreis"
       },
       "id": "app_abfallplus_de"
     },
@@ -15241,7 +15441,8 @@
       "title": "Z\u00fclpich",
       "module": "app_abfallplus_de",
       "default_params": {
-        "app_id": "de.k4systems.abfallinfoapp"
+        "app_id": "de.k4systems.abfallinfoapp",
+        "city": "Z\u00fclpich"
       },
       "id": "app_abfallplus_de"
     },
@@ -15272,6 +15473,12 @@
       "module": "mohu_bp_hu",
       "default_params": {},
       "id": "mohu_bp_hu"
+    },
+    {
+      "title": "STKH Sopron \u00e9s T\u00e9rs\u00e9ge",
+      "module": "stkh_hu",
+      "default_params": {},
+      "id": "stkh_hu"
     },
     {
       "title": "\u00c9TH (\u00c9rd, Di\u00f3sd, R\u00e1ckereszt\u00far, S\u00f3sk\u00fat, T\u00e1rnok)",
@@ -18715,6 +18922,14 @@
       "id": "moje_odpady_pl"
     },
     {
+      "title": "Bia\u0142a Podlaska",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "bialapodlaska"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
       "title": "Bydgoszcz Pronatura",
       "module": "pronatura_bydgoszcz_pl",
       "default_params": {},
@@ -18727,7 +18942,21 @@
       "id": "eko_tom_pl"
     },
     {
+      "title": "Eco-Przysz\u0142o\u015b\u0107",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "eco-przyszlosc"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
       "title": "Ecoharmonogram",
+      "module": "ecoharmonogram_pl",
+      "default_params": {},
+      "id": "ecoharmonogram_pl"
+    },
+    {
+      "title": "Ecoharmonogram.pl (generic)",
       "module": "ecoharmonogram_pl",
       "default_params": {},
       "id": "ecoharmonogram_pl"
@@ -18737,6 +18966,14 @@
       "module": "ecoszczecin_pl",
       "default_params": {},
       "id": "ecoszczecin_pl"
+    },
+    {
+      "title": "Gda\u0144sk",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "gdansk"
+      },
+      "id": "ecoharmonogram_pl"
     },
     {
       "title": "Gda\u0144sk",
@@ -19525,10 +19762,26 @@
       "id": "sims_pl"
     },
     {
+      "title": "Hajn\u00f3wka",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "hajnowka"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
       "title": "Hemar (ichisystem.eu)",
       "module": "ichisystem_eu",
       "default_params": {},
       "id": "ichisystem_eu"
+    },
+    {
+      "title": "I\u0142\u017ca",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "ilza"
+      },
+      "id": "ecoharmonogram_pl"
     },
     {
       "title": "Kiedy Odpady (kiedyodpady.pl)",
@@ -19655,6 +19908,14 @@
       "id": "sims_pl"
     },
     {
+      "title": "Mierz\u0119cice",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "mierzecice"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
       "title": "MPGK Katowice",
       "module": "mpgk_com_pl",
       "default_params": {},
@@ -19665,6 +19926,30 @@
       "module": "mpo_krakow_pl",
       "default_params": {},
       "id": "mpo_krakow_pl"
+    },
+    {
+      "title": "Niemce",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "niemce"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
+      "title": "Ogrodzieniec",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "ogrodzieniec"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
+      "title": "Opole",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "opole"
+      },
+      "id": "ecoharmonogram_pl"
     },
     {
       "title": "Pabianice",
@@ -19697,6 +19982,14 @@
         "owner": "Polkowice"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Popiel\u00f3w",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "popielow"
+      },
+      "id": "ecoharmonogram_pl"
     },
     {
       "title": "Pozna\u0144",
@@ -19761,6 +20054,22 @@
       "id": "smiecioplan_pl"
     },
     {
+      "title": "S\u0142upsk",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "slupsk"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
+      "title": "Trzebownisko",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "trzebownisko"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
       "title": "Warsaw",
       "module": "warszawa19115_pl",
       "default_params": {},
@@ -19787,6 +20096,14 @@
       "id": "ekosystem_wroc_pl"
     },
     {
+      "title": "ZGK Info",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "zgk-info"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
       "title": "ZGPD-7",
       "module": "sims_pl",
       "default_params": {
@@ -19799,9 +20116,31 @@
       "module": "lodz_pl",
       "default_params": {},
       "id": "lodz_pl"
+    },
+    {
+      "title": "\u015awi\u0119toch\u0142owice",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "swietochlowice"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
+      "title": "\u017bory",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "zory"
+      },
+      "id": "ecoharmonogram_pl"
     }
   ],
   "Portugal": [
+    {
+      "title": "Amarsul",
+      "module": "amarsul_pt",
+      "default_params": {},
+      "id": "amarsul_pt"
+    },
     {
       "title": "C\u00e2mara Municipal de Lisboa",
       "module": "cm_lisboa_pt",
@@ -20620,6 +20959,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_hochfelden_ch"
+    },
+    {
+      "title": "Gemeinde Muttenz",
+      "module": "muttenz_ch",
+      "default_params": {},
+      "id": "muttenz_ch"
     },
     {
       "title": "Gemeinde W\u00fcrenlos",
@@ -22253,6 +22598,12 @@
       "id": "apps_imactivate_com"
     },
     {
+      "title": "Leeds City Council",
+      "module": "leeds_gov_uk",
+      "default_params": {},
+      "id": "leeds_gov_uk"
+    },
+    {
       "title": "Leicester City Council",
       "module": "biffaleicester_co_uk",
       "default_params": {},
@@ -23536,6 +23887,12 @@
       "id": "baton_rouge_la_us"
     },
     {
+      "title": "Borough of Ho-Ho-Kus",
+      "module": "hohokus_nj_us",
+      "default_params": {},
+      "id": "hohokus_nj_us"
+    },
+    {
       "title": "Chesapeake, VA",
       "module": "chesapeake_va_us",
       "default_params": {},
@@ -23616,6 +23973,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "City of Lawrence",
+      "module": "lawrence_ma_us",
+      "default_params": {},
+      "id": "lawrence_ma_us"
     },
     {
       "title": "City of Los Angeles, CA",

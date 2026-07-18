@@ -1,93 +1,131 @@
-import datetime
-import json
+"""Wellington City Council (wellington.govt.nz).
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+Demonstrates: a street-name-to-id POST lookup (returning suggestions on a
+mismatch/ambiguity) followed by an ICS GET keyed on that id, then splitting a
+single "&"-joined ICS summary into several same-day entries, each carrying its
+own icon and picture. No configured retriever expresses a POST-based lookup
+with ambiguous-match handling, hence a source-defined retrieve(); classify()
+is used (rather than a plain transformer) only to reuse a shared type
+resolver while attaching the provider's per-type picture URL, which
+ICSTransformer has no field for.
+"""
+
+import datetime
+from typing import ClassVar, final
+
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.config_params import alternatives, location_id, street
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentException,
     SourceArgumentNotFound,
 )
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, GLASS, RECYCLABLES
 
-TITLE = "Wellington City Council"
-DESCRIPTION = "Source for Wellington City Council."
-URL = "https://wellington.govt.nz"
-TEST_CASES = {
-    "Chelsea St": {"streetName": "Cheltenham Terrace"},  # Friday
-    # "Campbell St (ID Only)": {"streetId": "6515"},  # Wednesday
+_BASE_URL = "https://wellington.govt.nz"
+_STREET_LOOKUP_URL = (
+    f"{_BASE_URL}/layouts/wcc/GeneralLayout.aspx/GetRubbishCollectionStreets"
+)
+_CALENDAR_URL = f"{_BASE_URL}/~/ical/"
+
+_HEADERS = {"User-Agent": "Mozilla/5.0 Gecko/20100101 Firefox/136.0"}
+
+_PICTURE_MAP = {
+    "Rubbish Collection": f"{_BASE_URL}/assets/images/rubbish-recycling/rubbish-bag.png",
+    "Glass crate": f"{_BASE_URL}/assets/images/rubbish-recycling/glass-crate.png",
+    "Wheelie bin or recycling bags": f"{_BASE_URL}/assets/images/rubbish-recycling/wheelie-bin.png",
 }
 
-
-ICON_MAP = {
-    "Rubbish Collection": Icons.GENERAL_WASTE,
-    "Glass crate": Icons.GLASS,
-    "Wheelie bin or recycling bags": Icons.RECYCLING,
-}
-
-PICTURE_MAP = {
-    "Rubbish Collection": "https://wellington.govt.nz/assets/images/rubbish-recycling/rubbish-bag.png",
-    "Glass crate": "https://wellington.govt.nz/assets/images/rubbish-recycling/glass-crate.png",
-    "Wheelie bin or recycling bags": "https://wellington.govt.nz/assets/images/rubbish-recycling/wheelie-bin.png",
-}
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 Gecko/20100101 Firefox/136.0",
-}
+# The type resolver only, reused inside classify() so the picture attachment
+# below doesn't have to reimplement label -> WasteType resolution.
+_TYPE_TRANSFORM = ICSTransformer(
+    type_value_map={
+        "rubbish collection": GENERAL_WASTE,
+        "glass crate": GLASS,
+        "wheelie bin or recycling bags": RECYCLABLES,
+    }
+)
 
 
-class Source:
-    def __init__(self, streetId=None, streetName=None):
-        self._streetId = streetId
-        self._streetName = streetName
-        self._ics = ICS()
+@final
+class Source(BaseSource):
+    TITLE = "Wellington City Council"
+    DESCRIPTION = "Source for Wellington City Council."
+    URL = _BASE_URL
+    COUNTRY = "nz"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        # get token
-        if self._streetName:
-            url = "https://wellington.govt.nz/layouts/wcc/GeneralLayout.aspx/GetRubbishCollectionStreets"
-            data = {"partialStreetName": self._streetName}
-            r = requests.post(url, json=data, headers=HEADERS)
-            data = json.loads(r.text)
-            if len(data["d"]) == 0:
-                raise SourceArgumentNotFound("streetName", self._streetName)
-            if len(data["d"]) > 1:
-                print(data["d"])
+    TEST_CASES: ClassVar[dict] = {
+        "Chelsea St": {"streetName": "Cheltenham Terrace"},  # Friday
+        "Campbell St (ID Only)": {"streetId": "6515"},  # Wednesday
+    }
+
+    PARAMS = (
+        alternatives([location_id(field="streetId")], [street(field="streetName")]),
+    )
+
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, GLASS, RECYCLABLES]
+
+    def retrieve(self, source):
+        session = source.session
+        street_id = source.params.get("streetId")
+        street_name = source.params.get("streetName")
+
+        if street_name:
+            r = session.post(
+                _STREET_LOOKUP_URL,
+                json={"partialStreetName": street_name},
+                headers=_HEADERS,
+            )
+            r.raise_for_status()
+            data = r.json()
+            matches = data.get("d") or []
+            if len(matches) == 0:
+                raise SourceArgumentNotFound("streetName", street_name)
+            if len(matches) > 1:
                 raise SourceArgAmbiguousWithSuggestions(
                     "streetName",
-                    self._streetName,
-                    [x["Value"].split(",")[0] for x in data["d"]],
+                    street_name,
+                    [m["Value"].split(",")[0] for m in matches],
                 )
-            self._streetId = data["d"][0].get("Key")
+            street_id = matches[0].get("Key")
 
-        if not self._streetId:
-            raise Exception("No streetId or streetName supplied")
-
-        url = "https://wellington.govt.nz/~/ical/"
-        params = {
-            "type": "recycling",
-            "streetId": self._streetId,
-            "forDate": datetime.date.today(),
-        }
-        r = requests.get(url, params=params, headers=HEADERS)
-
+        r = session.get(
+            _CALENDAR_URL,
+            params={
+                "type": "recycling",
+                "streetId": street_id,
+                "forDate": datetime.date.today(),
+            },
+            headers=_HEADERS,
+        )
         if not r.text.startswith("BEGIN:VCALENDAR"):
             raise SourceArgumentException(
-                "streetId", f"{self._streetId} is not a valid streetID"
+                "streetId", f"{street_id} is not a valid streetID"
             )
+        return r
 
-        dates = self._ics.convert(r.text)
+    parse = IcsParser()
 
-        entries = []
-        for d in dates:
-            for wasteType in d[1].split("&"):
-                wasteType = wasteType.strip()
-                entries.append(
-                    Collection(
-                        d[0],
-                        wasteType,
-                        picture=PICTURE_MAP.get(wasteType),
-                        icon=ICON_MAP.get(wasteType),
-                    )
-                )
-        return entries
+    def preprocess(self, records, source=None):
+        for date, label in records:
+            for part in label.split("&"):
+                part = part.strip()
+                if part:
+                    yield (date, part)
+
+    def classify(self, record):
+        date, label = record
+        collection = _TYPE_TRANSFORM((date, label))
+        if collection is None:
+            return None
+        picture = _PICTURE_MAP.get(label)
+        if picture is not None and isinstance(collection, Collection):
+            collection.set_picture(picture)
+        return collection
+
+    def __init__(self, streetId: "str | None" = None, streetName: "str | None" = None):
+        super().__init__(streetId=streetId, streetName=streetName)

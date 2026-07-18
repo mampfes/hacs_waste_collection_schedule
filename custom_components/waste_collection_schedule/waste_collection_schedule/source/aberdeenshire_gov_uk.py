@@ -1,56 +1,64 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from bs4 import Tag
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import HtmlTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, OTHER, RECYCLABLES
 
-# Include work around for SSL UNSAFE_LEGACY_RENEGOTIATION_DISABLED error
-from waste_collection_schedule.service.SSLError import get_legacy_session
-
-TITLE = "Aberdeenshire Council"
-DESCRIPTION = "Source for Aberdeenshire Council, UK."
-URL = "https://aberdeenshire.gov.uk"
-TEST_CASES = {
-    "Test_001": {"uprn": "000151124612"},
-    "Test_002": {"uprn": "000151004105"},
-    "Test_003": {"uprn": "0151035884"},
-    "Test_004": {"uprn": 151170625},
-}
-ICON_MAP = {
-    "Mixed recycling and food waste": Icons.BIO_KITCHEN,
-    "Refuse and food waste": Icons.BIO_KITCHEN,
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
-    },
-    "de": {
-        "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf https://www.findmyaddress.co.uk/ zu gehen und Ihre Adressdaten einzugeben."
-    },
-}
+# Demonstrates: HtmlTransformer + parsers.HtmlParser(selector) + legacy SSL GET.
+# No custom methods needed — retrieve and parse are declarative class attributes.
+# The UPRN is baked into the URL via a callable resolved against source.params.
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+def _cell_text(el: Tag, selector: str) -> str:
+    """Return the text of the first matching child cell.
 
-    def fetch(self):
-        response = get_legacy_session().get(
-            f"https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes/Route/{self._uprn}"
+    Raises AttributeError if the cell is missing; HtmlTransformer catches that
+    and skips the record, matching the prior behaviour.
+    """
+    cell = el.select_one(selector)
+    if cell is None:
+        raise AttributeError(f"no cell matching {selector!r}")
+    return cell.text
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Aberdeenshire Council"
+    DESCRIPTION = "Source for Aberdeenshire Council, UK."
+    URL = "https://aberdeenshire.gov.uk"
+    COUNTRY = "uk"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "000151124612"},
+        "Test_002": {"uprn": "000151004105"},
+        "Test_003": {"uprn": "0151035884"},
+        "Test_004": {"uprn": 151170625},
+    }
+
+    PARAMS = (uprn(),)
+
+    retrieve = retrievers.LegacySslHttpGetRetriever(
+        url=lambda uprn: (
+            "https://online.aberdeenshire.gov.uk/Apps/Waste-Collections/Routes/Route/"
+            f"{str(uprn).zfill(12)}"
         )
-        soup = BeautifulSoup(response.text, "html.parser")
+    )
+    # `shape` asserts the collection table is present; a redesigned page (no
+    # row cells) logs the response and raises ResponseShapeError.
+    parse = parsers.HtmlParser("tr", skip=1, require=["tr td"])
 
-        entries = []
+    # Explicit WASTE_TYPES: OTHER covers any bin types not in the map below.
+    WASTE_TYPES: ClassVar[list] = [RECYCLABLES, GENERAL_WASTE, OTHER]
 
-        tr = soup.findAll("tr")
-        for item in tr[1:]:  # Ignore table header row
-            td = item.findAll("td")
-            entries.append(
-                Collection(
-                    date=datetime.strptime(td[0].text.split(" ")[0], "%d/%m/%Y").date(),
-                    t=td[1].text,
-                    icon=ICON_MAP.get(td[1].text),
-                )
-            )
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=lambda el: _cell_text(el, "td:nth-child(1)").split(" ")[0],
+        type_getter=lambda el: _cell_text(el, "td:nth-child(2)"),
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map={
+            "Mixed recycling and food waste": RECYCLABLES,
+            "Refuse and food waste": GENERAL_WASTE,
+        },
+    )

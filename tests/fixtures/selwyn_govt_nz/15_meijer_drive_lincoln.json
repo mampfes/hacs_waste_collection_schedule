@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-07-11",
+  "interactions": [
+    {
+      "key": "GET https://gis.selwyn.govt.nz/arcgis/rest/services/SDC_Public/Refuse_address/MapServer/0/query 894085bd9d",
+      "method": "GET",
+      "url": "https://gis.selwyn.govt.nz/arcgis/rest/services/SDC_Public/Refuse_address/MapServer/0/query",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "346",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"1783226563\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 11 Jul 2026 06:48:15 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiQXNzZXNzbWVudF9JRCIsImZpZWxkQWxpYXNlcyI6eyJDaGFyZ2VUeXBlIjoiQ2hhcmdlIFR5cGUiLCJDT0xMRUNUSU9OX1NDSEVEVUxFIjoiQ29sbGVjdGlvbiBzY2hlZHVsZSIsIkNPTExFQ1RJT05fREFZIjoiQ29sbGVjdGlvbiBkYXkiLCJBZGRyZXNzX2Z1bGwiOiJGdWxsIGFkZHJlc3MifSwiZmllbGRzIjpbeyJuYW1lIjoiQ2hhcmdlVHlwZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJDaGFyZ2UgVHlwZSIsImxlbmd0aCI6MjF9LHsibmFtZSI6IkNPTExFQ1RJT05fU0NIRURVTEUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQ29sbGVjdGlvbiBzY2hlZHVsZSIsImxlbmd0aCI6MX0seyJuYW1lIjoiQ09MTEVDVElPTl9EQVkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQ29sbGVjdGlvbiBkYXkiLCJsZW5ndGgiOjEwfSx7Im5hbWUiOiJBZGRyZXNzX2Z1bGwiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRnVsbCBhZGRyZXNzIiwibGVuZ3RoIjoyNTB9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiQ2hhcmdlVHlwZSI6InJlZnVzZSB1bmlmb3JtIGNoYXJnZSIsIkNPTExFQ1RJT05fU0NIRURVTEUiOiIxIiwiQ09MTEVDVElPTl9EQVkiOiJUdWVzZGF5IiwiQWRkcmVzc19mdWxsIjoiMTUgTWVpamVyIERyaXZlIExpbmNvbG4ifX0seyJhdHRyaWJ1dGVzIjp7IkNoYXJnZVR5cGUiOiJydWJiaXNoIDI0MCBsaXRyZSIsIkNPTExFQ1RJT05fU0NIRURVTEUiOiIxIiwiQ09MTEVDVElPTl9EQVkiOiJUdWVzZGF5IiwiQWRkcmVzc19mdWxsIjoiMTUgTWVpamVyIERyaXZlIExpbmNvbG4ifX0seyJhdHRyaWJ1dGVzIjp7IkNoYXJnZVR5cGUiOiJyZWN5Y2xpbmciLCJDT0xMRUNUSU9OX1NDSEVEVUxFIjoiMSIsIkNPTExFQ1RJT05fREFZIjoiVHVlc2RheSIsIkFkZHJlc3NfZnVsbCI6IjE1IE1laWplciBEcml2ZSBMaW5jb2xuIn19LHsiYXR0cmlidXRlcyI6eyJDaGFyZ2VUeXBlIjoib3JnYW5pYyIsIkNPTExFQ1RJT05fU0NIRURVTEUiOiIxIiwiQ09MTEVDVElPTl9EQVkiOiJUdWVzZGF5IiwiQWRkcmVzc19mdWxsIjoiMTUgTWVpamVyIERyaXZlIExpbmNvbG4ifX0seyJhdHRyaWJ1dGVzIjp7IkNoYXJnZVR5cGUiOiJydWJiaXNoIDgwIGxpdHJlIiwiQ09MTEVDVElPTl9TQ0hFRFVMRSI6IjEiLCJDT0xMRUNUSU9OX0RBWSI6IlR1ZXNkYXkiLCJBZGRyZXNzX2Z1bGwiOiIxNSBNZWlqZXIgRHJpdmUgTGluY29sbiJ9fV19"
+    }
+  ]
+}

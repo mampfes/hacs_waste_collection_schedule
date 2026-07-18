@@ -1,6 +1,8 @@
 # Abfalltermine Forchheim
 
-Support for Landkreis Forchheim schedules provided by [abfalltermine-forchheim.de](https://www.abfalltermine-forchheim.de/) located in Bavaria, Germany.
+Support for schedules provided by [Abfalltermine Forchheim](https://www.abfalltermine-forchheim.de/).
+
+Source for Landkreis Forchheim.
 
 ## Configuration via configuration.yaml
 
@@ -21,21 +23,13 @@ waste_collection_schedule:
 **area**  
 *(string) (required)*
 
-### How to get the source arguments
-The arguments can be found on [abfalltermine-forchheim.de](https://www.abfalltermine-forchheim.de/).
-Search for your area. Use the part in front of the dash as `city` argument and the part behind it as `area` argument. Do not insert additional spaces.
-
-**Examples**
-Forchheim - Bamberger Straße (nördlich der Adenauerallee)
+## Example
 
 ```yaml
-city: Forchheim
-area: Bamberger Straße (nördlich der Adenauerallee)
-```
-
-Dormitz - Dormitz
-
-```yaml
-city: Dormitz
-area: Dormitz
+waste_collection_schedule:
+  sources:
+    - name: abfalltermine_forchheim_de
+      args:
+        city: Dormitz
+        area: Dormitz
 ```

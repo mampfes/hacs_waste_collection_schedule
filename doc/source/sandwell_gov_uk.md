@@ -1,17 +1,17 @@
-# Sandwell Metropolitan Borough Council
+# Sandwell Council
 
-Support for schedules provided by [Sandwell Metropolitan Borough Council](https://www.sandwell.gov.uk/binday), serving the borough of Sandwell, UK.
+Support for schedules provided by [Sandwell Council](https://my.sandwell.gov.uk/).
 
-This source retrieves household waste, recycling, food waste, and (where subscribed) garden waste collection dates.
+Source for waste collection services for Sandwell Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sandwell_gov_uk
       args:
-        uprn:     UPRN
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -19,16 +19,12 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sandwell_gov_uk
       args:
-        uprn: 10008535857
+        uprn: '10008535856'
 ```
-
-## How to find your UPRN
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providng your address details.

@@ -1,6 +1,8 @@
 # City of Kalamunda
 
-Support for schedules provided by [City of Kalamunda](https://www.kalamunda.wa.gov.au/kerbside-3-bin-system/collection-days).
+Support for schedules provided by [City of Kalamunda](https://www.kalamunda.wa.gov.au/kerbside-3-bin-system/collection-days/bin-day).
+
+Source for the City of Kalamunda rubbish collection.
 
 ## Configuration via configuration.yaml
 
@@ -16,13 +18,13 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**suburb**
+**suburb**  
 *(string) (required)*
 
-**street_name**
+**street_name**  
 *(string) (required)*
 
-**street_number**
+**street_number**  
 *(string) (required)*
 
 ## Example
@@ -32,9 +34,7 @@ waste_collection_schedule:
   sources:
     - name: kalamunda_wa_gov_au
       args:
-        suburb: High Wycombe
-        street_name: Wem Mews
-        street_number: 27
+        suburb: Kalamunda
+        street_name: Railway Road
+        street_number: '43'
 ```
-
-## How to get the source arguments

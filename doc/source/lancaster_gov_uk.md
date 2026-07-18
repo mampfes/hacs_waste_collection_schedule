@@ -1,7 +1,8 @@
 # Lancaster City Council
 
-Support for schedules provided by [Lancaster City Council](https://www.lancaster.gov.uk/bins-recycling), serving the
-city of Lancaster, UK.
+Support for schedules provided by [Lancaster City Council](https://lancaster.gov.uk).
+
+Source for lancaster.gov.uk services for Lancaster City Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -10,17 +11,17 @@ waste_collection_schedule:
   sources:
     - name: lancaster_gov_uk
       args:
-        house_number: HOUSE NUMBER OR NAME
         postcode: POSTCODE
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
-**house_number**
-*(int or string) (required)*
+**house_number**  
+*(string) (optional)*
 
 ## Example
 
@@ -33,8 +34,6 @@ waste_collection_schedule:
         postcode: LA1 1RS
 ```
 
-## Exported Bins
+## How to get the source arguments
 
-  - Domestic Waste
-  - Garden Waste
-  - Recycling
+Provide your postcode and house name or number as shown on the council's bin-day lookup.

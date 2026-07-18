@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-07-11",
+  "interactions": [
+    {
+      "key": "GET https://services6.arcgis.com/8L5sOwfzTAvcvQur/ArcGIS/rest/services/WasteServices4Bin/FeatureServer/0/query?where=EZI_Address+LIKE+%2710+Gaffney+Street+Coburg+North+3058%25%27&outFields=EZI_Address%2CWaste_Rate_Code%2CRecycling_Rate_Code%2CFOGO_Rate_Code%2CGlass_Rate_Code%2CDay%2CZone%2CGlassWeek&returnGeometry=true&f=json ",
+      "method": "GET",
+      "url": "https://services6.arcgis.com/8L5sOwfzTAvcvQur/ArcGIS/rest/services/WasteServices4Bin/FeatureServer/0/query?where=EZI_Address+LIKE+%2710+Gaffney+Street+Coburg+North+3058%25%27&outFields=EZI_Address%2CWaste_Rate_Code%2CRecycling_Rate_Code%2CFOGO_Rate_Code%2CGlass_Rate_Code%2CDay%2CZone%2CGlassWeek&returnGeometry=true&f=json",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 11 Jul 2026 06:48:06 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "482",
+        "cache-control": "public, max-age=30, s-maxage=30",
+        "content-encoding": "br",
+        "last-modified": "Thu, 09 Jul 2026 21:46:09 GMT",
+        "etag": "sd17695_1976086275",
+        "vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "us1h06c00-services",
+        "strict-transport-security": "max-age=63072000",
+        "x-arcgis-trace-id": "20260711T064805Z-156c8787b557jdsghC1PERrdw40000000skg000000002g4n",
+        "x-esri-query-request-units": "2",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=4;max=6000",
+        "x-esri-query-geometry-field-name": "Shape",
+        "x-arcgis-correlation-id": "3bc665707ac97f98",
+        "x-arcgis-instance": "hkmzlsa5v0008IL",
+        "request-context": "appId=cid-v1:3e91b07b-c431-4e18-b74c-dc5ab3a0cdf7",
+        "access-control-expose-headers": "Request-Context",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "access-control-allow-credentials": "true",
+        "x-azure-ref": "20260711T064805Z-156c8787b557jdsghC1PERrdw40000000skg000000002g4n",
+        "x-fd-int-roxy-purgeid": "0",
+        "x-cache": "TCP_MISS",
+        "accept-ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6IiIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvaW50Iiwic3BhdGlhbFJlZmVyZW5jZSI6eyJ3a2lkIjoxMDIxMDAsImxhdGVzdFdraWQiOjM4NTd9LCJmaWVsZHMiOlt7Im5hbWUiOiJFWklfQWRkcmVzcyIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJFWklfQWRkcmVzcyIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjgwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiV2FzdGVfUmF0ZV9Db2RlIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6Ildhc3RlX1JhdGVfQ29kZSIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjEwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiUmVjeWNsaW5nX1JhdGVfQ29kZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJSZWN5Y2xpbmdfUmF0ZV9Db2RlIiwic3FsVHlwZSI6InNxbFR5cGVPdGhlciIsImxlbmd0aCI6MTAsImRvbWFpbiI6bnVsbCwiZGVmYXVsdFZhbHVlIjpudWxsfSx7Im5hbWUiOiJGT0dPX1JhdGVfQ29kZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJGT0dPX1JhdGVfQ29kZSIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjEwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiR2xhc3NfUmF0ZV9Db2RlIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkdsYXNzX1JhdGVfQ29kZSIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjEwLCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiRGF5IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkRheSIsInNxbFR5cGUiOiJzcWxUeXBlT3RoZXIiLCJsZW5ndGgiOjE1LCJkb21haW4iOm51bGwsImRlZmF1bHRWYWx1ZSI6bnVsbH0seyJuYW1lIjoiWm9uZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJab25lIiwic3FsVHlwZSI6InNxbFR5cGVPdGhlciIsImxlbmd0aCI6MSwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9LHsibmFtZSI6IkdsYXNzV2VlayIsInR5cGUiOiJlc3JpRmllbGRUeXBlU21hbGxJbnRlZ2VyIiwiYWxpYXMiOiJHbGFzc1dlZWsiLCJzcWxUeXBlIjoic3FsVHlwZU90aGVyIiwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiRVpJX0FkZHJlc3MiOiIxMCBHQUZGTkVZIFNUUkVFVCBDT0JVUkcgTk9SVEggMzA1OCIsIldhc3RlX1JhdGVfQ29kZSI6IjEwMSIsIlJlY3ljbGluZ19SYXRlX0NvZGUiOiIxNDIiLCJGT0dPX1JhdGVfQ29kZSI6bnVsbCwiR2xhc3NfUmF0ZV9Db2RlIjoiMTcwIiwiRGF5IjoiVHVlc2RheSIsIlpvbmUiOiJBIiwiR2xhc3NXZWVrIjoyfSwiZ2VvbWV0cnkiOnsieCI6MTYxMzc1MzMuMjU1OTAwMDAzLCJ5IjotNDU0MTg4OS4xNzY3fX1dfQ=="
+    },
+    {
+      "key": "GET https://www.merri-bek.vic.gov.au/api/AddressDetails?xPoint=16137533.255900003&yPoint=-4541889.1767&wasteDay=Tuesday&wasteRateCode=101&recycleRateCode=142&fogoRateCode=None&glassRateCode=170&zone=A&glassWeekNumber=2&address=10+GAFFNEY+STREET+COBURG+NORTH+3058&cpage=86612 ",
+      "method": "GET",
+      "url": "https://www.merri-bek.vic.gov.au/api/AddressDetails?xPoint=16137533.255900003&yPoint=-4541889.1767&wasteDay=Tuesday&wasteRateCode=101&recycleRateCode=142&fogoRateCode=None&glassRateCode=170&zone=A&glassWeekNumber=2&address=10+GAFFNEY+STREET+COBURG+NORTH+3058&cpage=86612",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "EPiStateMarker=true; path=/",
+        "x-powered-by": "ASP.NET",
+        "date": "Sat, 11 Jul 2026 06:48:00 GMT"
+      },
+      "content_b64": "W3sicG9pbnRYIjpudWxsLCJwb2ludFkiOm51bGwsInN0cmVldE5hbWUiOm51bGwsInBvc3Rjb2RlIjpudWxsLCJhZGRyZXNzIjoiMTAgR2FmZm5leSBTdHJlZXQgQ29idXJnIE5vcnRoIDMwNTgiLCJudW1iZXJBbmRTdHJlZXQiOm51bGwsIm51bWJlciI6bnVsbCwicm9hZFR5cGUiOm51bGwsInN1YnVyYiI6bnVsbCwiYWRkcmVzc0xhYmVsIjpudWxsLCJ3YXN0ZURheSI6IldlZWtseSA8c3Ryb25nPlR1ZXNkYXk8L3N0cm9uZz4iLCJncmVlbldhc3RlRGF5TmFtZSI6bnVsbCwid2FzdGVOZXh0IjoiTmV4dCBjb2xsZWN0aW9uIGlzIG9uIDE0IEp1bHkgMjAyNiIsInJlY3ljbGVOZXh0IjoiTmV4dCBjb2xsZWN0aW9uIGlzIG9uIDIxIEp1bHkgMjAyNiIsInJlY3ljbGVEYXkiOiJGb3J0bmlnaHRseSA8c3Ryb25nPlR1ZXNkYXk8L1N0cm9uZz4iLCJnbGFzc05leHQiOiJOZXh0IGNvbGxlY3Rpb24gaXMgb24gMjggSnVseSAyMDI2IiwiZ2xhc3NEYXkiOiJFdmVyeSBmb3VyIHdlZWtzIG9uIDxzdHJvbmc+VHVlc2RheTwvU3Ryb25nPiIsImdyZWVuV2FzdGVab25lIjpudWxsLCJncmVlbldhc3RlRGF5IjpudWxsLCJncmVlbldhc3RlTmV4dCI6bnVsbCwiYWxsQmluRGF5cyI6WyIyNC0xMi0yMDI0IiwiMzEtMTItMjAyNCIsIjctMS0yMDI1IiwiMTQtMS0yMDI1IiwiMjEtMS0yMDI1IiwiMjgtMS0yMDI1IiwiNC0yLTIwMjUiLCIxMS0yLTIwMjUiLCIxOC0yLTIwMjUiLCIyNS0yLTIwMjUiLCI0LTMtMjAyNSIsIjExLTMtMjAyNSIsIjE4LTMtMjAyNSIsIjI1LTMtMjAyNSIsIjEtNC0yMDI1IiwiOC00LTIwMjUiLCIxNS00LTIwMjUiLCIyMi00LTIwMjUiLCIyOS00LTIwMjUiLCI2LTUtMjAyNSIsIjEzLTUtMjAyNSIsIjIwLTUtMjAyNSIsIjI3LTUtMjAyNSIsIjMtNi0yMDI1IiwiMTAtNi0yMDI1IiwiMTctNi0yMDI1IiwiMjQtNi0yMDI1IiwiMS03LTIwMjUiLCI4LTctMjAyNSIsIjE1LTctMjAyNSIsIjIyLTctMjAyNSIsIjI5LTctMjAyNSIsIjUtOC0yMDI1IiwiMTItOC0yMDI1IiwiMTktOC0yMDI1IiwiMjYtOC0yMDI1IiwiMi05LTIwMjUiLCI5LTktMjAyNSIsIjE2LTktMjAyNSIsIjIzLTktMjAyNSIsIjMwLTktMjAyNSIsIjctMTAtMjAyNSIsIjE0LTEwLTIwMjUiLCIyMS0xMC0yMDI1IiwiMjgtMTAtMjAyNSIsIjQtMTEtMjAyNSIsIjExLTExLTIwMjUiLCIxOC0xMS0yMDI1IiwiMjUtMTEtMjAyNSIsIjItMTItMjAyNSIsIjktMTItMjAyNSIsIjE2LTEyLTIwMjUiLCIyMy0xMi0yMDI1IiwiMzAtMTItMjAyNSIsIjYtMS0yMDI2IiwiMTMtMS0yMDI2IiwiMjAtMS0yMDI2IiwiMjctMS0yMDI2IiwiMy0yLTIwMjYiLCIxMC0yLTIwMjYiLCIxNy0yLTIwMjYiLCIyNC0yLTIwMjYiLCIzLTMtMjAyNiIsIjEwLTMtMjAyNiIsIjE3LTMtMjAyNiIsIjI0LTMtMjAyNiIsIjMxLTMtMjAyNiIsIjctNC0yMDI2IiwiMTQtNC0yMDI2IiwiMjEtNC0yMDI2IiwiMjgtNC0yMDI2IiwiNS01LTIwMjYiLCIxMi01LTIwMjYiLCIxOS01LTIwMjYiLCIyNi01LTIwMjYiLCIyLTYtMjAyNiIsIjktNi0yMDI2IiwiMTYtNi0yMDI2IiwiMjMtNi0yMDI2IiwiMzAtNi0yMDI2IiwiNy03LTIwMjYiLCIxNC03LTIwMjYiLCIyMS03LTIwMjYiLCIyOC03LTIwMjYiLCI0LTgtMjAyNiIsIjExLTgtMjAyNiIsIjE4LTgtMjAyNiIsIjI1LTgtMjAyNiIsIjEtOS0yMDI2IiwiOC05LTIwMjYiLCIxNS05LTIwMjYiLCIyMi05LTIwMjYiLCIyOS05LTIwMjYiLCI2LTEwLTIwMjYiLCIxMy0xMC0yMDI2IiwiMjAtMTAtMjAyNiIsIjI3LTEwLTIwMjYiLCIzLTExLTIwMjYiLCIxMC0xMS0yMDI2IiwiMTctMTEtMjAyNiIsIjI0LTExLTIwMjYiLCIxLTEyLTIwMjYiLCI4LTEyLTIwMjYiLCIxNS0xMi0yMDI2IiwiMjItMTItMjAyNiIsIjI5LTEyLTIwMjYiXSwiYWxsUmVjeWNsZURheXMiOlsiMjQtMTItMjAyNCIsIjctMS0yMDI1IiwiMjEtMS0yMDI1IiwiNC0yLTIwMjUiLCIxOC0yLTIwMjUiLCI0LTMtMjAyNSIsIjE4LTMtMjAyNSIsIjEtNC0yMDI1IiwiMTUtNC0yMDI1IiwiMjktNC0yMDI1IiwiMTMtNS0yMDI1IiwiMjctNS0yMDI1IiwiMTAtNi0yMDI1IiwiMjQtNi0yMDI1IiwiOC03LTIwMjUiLCIyMi03LTIwMjUiLCI1LTgtMjAyNSIsIjE5LTgtMjAyNSIsIjItOS0yMDI1IiwiMTYtOS0yMDI1IiwiMzAtOS0yMDI1IiwiMTQtMTAtMjAyNSIsIjI4LTEwLTIwMjUiLCIxMS0xMS0yMDI1IiwiMjUtMTEtMjAyNSIsIjktMTItMjAyNSIsIjIzLTEyLTIwMjUiLCI2LTEtMjAyNiIsIjIwLTEtMjAyNiIsIjMtMi0yMDI2IiwiMTctMi0yMDI2IiwiMy0zLTIwMjYiLCIxNy0zLTIwMjYiLCIzMS0zLTIwMjYiLCIxNC00LTIwMjYiLCIyOC00LTIwMjYiLCIxMi01LTIwMjYiLCIyNi01LTIwMjYiLCI5LTYtMjAyNiIsIjIzLTYtMjAyNiIsIjctNy0yMDI2IiwiMjEtNy0yMDI2IiwiNC04LTIwMjYiLCIxOC04LTIwMjYiLCIxLTktMjAyNiIsIjE1LTktMjAyNiIsIjI5LTktMjAyNiIsIjEzLTEwLTIwMjYiLCIyNy0xMC0yMDI2IiwiMTAtMTEtMjAyNiIsIjI0LTExLTIwMjYiLCI4LTEyLTIwMjYiLCIyMi0xMi0yMDI2Il0sImFsbEdsYXNzRGF5cyI6WyIxNy0xMi0yMDI0IiwiMTQtMS0yMDI1IiwiMTEtMi0yMDI1IiwiMTEtMy0yMDI1IiwiOC00LTIwMjUiLCI2LTUtMjAyNSIsIjMtNi0yMDI1IiwiMS03LTIwMjUiLCIyOS03LTIwMjUiLCIyNi04LTIwMjUiLCIyMy05LTIwMjUiLCIyMS0xMC0yMDI1IiwiMTgtMTEtMjAyNSIsIjE2LTEyLTIwMjUiLCIxMy0xLTIwMjYiLCIxMC0yLTIwMjYiLCIxMC0zLTIwMjYiLCI3LTQtMjAyNiIsIjUtNS0yMDI2IiwiMi02LTIwMjYiLCIzMC02LTIwMjYiLCIyOC03LTIwMjYiLCIyNS04LTIwMjYiLCIyMi05LTIwMjYiLCIyMC0xMC0yMDI2IiwiMTctMTEtMjAyNiIsIjE1LTEyLTIwMjYiXSwicHVibGljSG9saWRheXMiOlsiMS0xLTIwMjUiLCIxOC00LTIwMjUiLCIyNS00LTIwMjUiLCIyNS0xMi0yMDI1IiwiMS0xLTIwMjYiLCIzLTQtMjAyNiIsIjI1LTQtMjAyNiIsIjI1LTEyLTIwMjYiXSwibm9TZXJ2aWNlIjpudWxsLCJmb3J0bmlnaHRseVdhc3RlIjpmYWxzZSwiYWxsRm9nb0RheXMiOlsiMjQtMTItMjAyNCIsIjMxLTEyLTIwMjQiLCI3LTEtMjAyNSIsIjE0LTEtMjAyNSIsIjIxLTEtMjAyNSIsIjI4LTEtMjAyNSIsIjQtMi0yMDI1IiwiMTEtMi0yMDI1IiwiMTgtMi0yMDI1IiwiMjUtMi0yMDI1IiwiNC0zLTIwMjUiLCIxMS0zLTIwMjUiLCIxOC0zLTIwMjUiLCIyNS0zLTIwMjUiLCIxLTQtMjAyNSIsIjgtNC0yMDI1IiwiMTUtNC0yMDI1IiwiMjItNC0yMDI1IiwiMjktNC0yMDI1IiwiNi01LTIwMjUiLCIxMy01LTIwMjUiLCIyMC01LTIwMjUiLCIyNy01LTIwMjUiLCIzLTYtMjAyNSIsIjEwLTYtMjAyNSIsIjE3LTYtMjAyNSIsIjI0LTYtMjAyNSIsIjEtNy0yMDI1IiwiOC03LTIwMjUiLCIxNS03LTIwMjUiLCIyMi03LTIwMjUiLCIyOS03LTIwMjUiLCI1LTgtMjAyNSIsIjEyLTgtMjAyNSIsIjE5LTgtMjAyNSIsIjI2LTgtMjAyNSIsIjItOS0yMDI1IiwiOS05LTIwMjUiLCIxNi05LTIwMjUiLCIyMy05LTIwMjUiLCIzMC05LTIwMjUiLCI3LTEwLTIwMjUiLCIxNC0xMC0yMDI1IiwiMjEtMTAtMjAyNSIsIjI4LTEwLTIwMjUiLCI0LTExLTIwMjUiLCIxMS0xMS0yMDI1IiwiMTgtMTEtMjAyNSIsIjI1LTExLTIwMjUiLCIyLTEyLTIwMjUiLCI5LTEyLTIwMjUiLCIxNi0xMi0yMDI1IiwiMjMtMTItMjAyNSIsIjMwLTEyLTIwMjUiLCI2LTEtMjAyNiIsIjEzLTEtMjAyNiIsIjIwLTEtMjAyNiIsIjI3LTEtMjAyNiIsIjMtMi0yMDI2IiwiMTAtMi0yMDI2IiwiMTctMi0yMDI2IiwiMjQtMi0yMDI2IiwiMy0zLTIwMjYiLCIxMC0zLTIwMjYiLCIxNy0zLTIwMjYiLCIyNC0zLTIwMjYiLCIzMS0zLTIwMjYiLCI3LTQtMjAyNiIsIjE0LTQtMjAyNiIsIjIxLTQtMjAyNiIsIjI4LTQtMjAyNiIsIjUtNS0yMDI2IiwiMTItNS0yMDI2IiwiMTktNS0yMDI2IiwiMjYtNS0yMDI2IiwiMi02LTIwMjYiLCI5LTYtMjAyNiIsIjE2LTYtMjAyNiIsIjIzLTYtMjAyNiIsIjMwLTYtMjAyNiIsIjctNy0yMDI2IiwiMTQtNy0yMDI2IiwiMjEtNy0yMDI2IiwiMjgtNy0yMDI2IiwiNC04LTIwMjYiLCIxMS04LTIwMjYiLCIxOC04LTIwMjYiLCIyNS04LTIwMjYiLCIxLTktMjAyNiIsIjgtOS0yMDI2IiwiMTUtOS0yMDI2IiwiMjItOS0yMDI2IiwiMjktOS0yMDI2IiwiNi0xMC0yMDI2IiwiMTMtMTAtMjAyNiIsIjIwLTEwLTIwMjYiLCIyNy0xMC0yMDI2IiwiMy0xMS0yMDI2IiwiMTAtMTEtMjAyNiIsIjE3LTExLTIwMjYiLCIyNC0xMS0yMDI2IiwiMS0xMi0yMDI2IiwiOC0xMi0yMDI2IiwiMTUtMTItMjAyNiIsIjIyLTEyLTIwMjYiLCIyOS0xMi0yMDI2Il0sImZvZ29EYXkiOiJXZWVrbHkgPHN0cm9uZz5UdWVzZGF5PC9zdHJvbmc+IiwiZm9nb05leHQiOiJOZXh0IGNvbGxlY3Rpb24gaXMgb24gMTQgSnVseSAyMDI2In1d"
+    }
+  ]
+}

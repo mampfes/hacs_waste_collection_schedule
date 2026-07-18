@@ -1,50 +1,45 @@
 # Landkreis Ravensburg
 
-Support for schedules provided by [Landkreis Ravensburg](https://www.rv.de/), serving Landkreis Ravensburg, Germany.
+Support for schedules provided by [Landkreis Ravensburg](https://www.rv.de/).
+
+Source for Landkreis Ravensburg.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rv_de
       args:
         ort: ORT
-        strasse: STRAßE
-        hnr: "HAUSNUMMER"
-        hnr_zusatz: HAUSNUMMERZUSATZ
-        
+        strasse: STRASSE
+        hnr: HNR
+        hnr_zusatz: HNR_ZUSATZ
 ```
 
 ### Configuration Variables
 
 **ort**  
-*(String) (required)*
+*(string) (required)*
 
 **strasse**  
-*(String) (required)*
+*(string) (required)*
 
 **hnr**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 **hnr_zusatz**  
-*(String | Integer) (optional)*
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rv_de
       args:
         ort: Altshausen
         strasse: Altshauser Weg
-        hnr: "1"
-        hnr_zusatz: 
-        
+        hnr: 1
+        hnr_zusatz: ''
 ```
-
-## How to get the source argument
-
-Go to [https://www.rv.de/ihr+anliegen/abfall/abfallkalender+-+abfall+app+rv](https://www.rv.de/ihr+anliegen/abfall/abfallkalender+-+abfall+app+rv) click on the link below Abfallkalender zum Ausdrucken.
-Find the parameter of your address and write them exactly like on the web page.

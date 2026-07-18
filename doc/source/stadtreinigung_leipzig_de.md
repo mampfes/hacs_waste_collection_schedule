@@ -1,6 +1,8 @@
-# HVCGroep
+# Stadtreinigung Leipzig
 
-Support for schedules provided by [stadtreinigung-leipzig.de](https://stadtreinigung-leipzig.de/).
+Support for schedules provided by [Stadtreinigung Leipzig](https://stadtreinigung-leipzig.de).
+
+Source for Stadtreinigung Leipzig.
 
 ## Configuration via configuration.yaml
 

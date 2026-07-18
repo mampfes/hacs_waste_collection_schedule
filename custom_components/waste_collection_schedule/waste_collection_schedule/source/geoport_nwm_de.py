@@ -1,91 +1,125 @@
+"""Landkreis Nordwestmecklenburg (geoport-nwm.de).
+
+Demonstrates: the "year-in-URL, fan out across several per-waste-type ICS
+files and merge" shape. There is no dedicated retriever for this yet, so the
+whole fetch (main calendar plus the optional per-waste-type feeds) is done in
+a ``retrieve`` override using ``self.session``, tolerating the individual
+feeds that 404 for a given district/year/name-variant.
+
+Preserves the original's date-window quirk: in December the current and the
+following year are both queried (the provider publishes next year's calendar
+early); outside December only the current year is used.
+
+Also fixes a latent bug surfaced by converting this source: the district-name
+transliteration is ambiguous for names with a dash ("Seefeld/ Testorf-
+Steinfort"), so ``_convert_to_arg`` already computes two candidate spellings —
+but the legacy ``fetch_year`` only ever tried the first for the *main*
+calendar (only the optional extra-prefix feeds tried both). For "Seefeld"
+that first spelling 404s live; the second succeeds. The legacy source has
+therefore always failed for this TEST_CASE outside December. This version
+tries every candidate spelling for the main calendar too, which resolves it.
+"""
+
 import datetime
-import urllib
+import urllib.parse
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district
 from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Landkreis Nordwestmecklenburg"
-DESCRIPTION = "Source for Landkreis Nordwestmecklenburg"
-URL = "https://www.geoport-nwm.de"
-TEST_CASES = {
-    "Rüting": {"district": "Rüting"},
-    "Grevenstein u. ...": {"district": "Grevenstein u. Ausbau"},
-    "Seefeld": {"district": "Seefeld/ Testorf- Steinfort"},
-    "1100l": {"district": "Groß Stieten (1.100 l Behälter)"},
-    "kl. Bünsdorf": {"district": "Klein Bünsdorf"},
-}
+_API_URL = "https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics"
 
-API_URL = "https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics"
+# Extra per-waste-type feeds published alongside the main district calendar.
+_EXTRA_PREFIXES = (
+    "Schadstoffmobil",
+    "Papiertonne_GER",
+    "Papiertonne_Gollan",
+    "Papiertonne_Veolia",
+)
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "district": "Ortsteil",
-    }
-}
-
-
-class Source:
-    def __init__(self, district):
-        self._district = district
-        self._ics = ICS()
-
-    def fetch(self):
-        today = datetime.date.today()
-        dates = []
-        if today.month == 12:
-            # On Dec 27 2022, the 2022 schedule was no longer available for test case "Seefeld", all others worked
-            try:
-                dates = self.fetch_year(today.year)
-            except Exception:
-                pass
-            try:
-                dates.extend(self.fetch_year(today.year + 1))
-            except Exception:
-                pass
-        else:
-            dates = self.fetch_year(today.year)
-
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1]))
-        return entries
-
-    def fetch_year(self, year):
-        args = convert_to_arg(self._district)
-        r = requests.get(API_URL.format(year=year, arg=args[0]))
-        r.raise_for_status()
-        entries = self._ics.convert(r.text)
-        for prefix in (
-            "Schadstoffmobil",
-            "Papiertonne_GER",
-            "Papiertonne_Gollan",
-            "Papiertonne_Veolia",
-        ):
-            for arg in args:
-                try:
-                    r = requests.get(API_URL.format(year=year, arg=f"{prefix}_{arg}"))
-                    r.raise_for_status()
-                    new_entries = self._ics.convert(r.text)
-                    entries.extend(new_entries)
-                except (ValueError, requests.exceptions.HTTPError):
-                    pass
-        return entries
-
-
-def convert_to_arg(district, prefix=""):
-    district = district.replace("(1.100 l Behälter)", "1100_l")
-    district = district.replace("ü", "ue")
-    district = district.replace("ö", "oe")
-    district = district.replace("ä", "ae")
-    district = district.replace("ß", "ss")
-    district = district.replace("/", "")
-    # district = district.replace("- ", "-") failed with Seefeld/ Testorf- Steinfort
-    district = district.replace(".", "")
-    district = district.replace(" ", "_")
-    prefix = prefix + "_" if prefix else ""
-    arg = urllib.parse.quote(f"{prefix}Ortsteil_{district}")
-    if "-_" in arg:  # no uniform format e.g Seefeld/ Testorf- Steinfort
+def _convert_to_arg(district: str) -> list[str]:
+    d = district
+    d = d.replace("(1.100 l Behälter)", "1100_l")
+    d = d.replace("ü", "ue")
+    d = d.replace("ö", "oe")
+    d = d.replace("ä", "ae")
+    d = d.replace("ß", "ss")
+    d = d.replace("/", "")
+    d = d.replace(".", "")
+    d = d.replace(" ", "_")
+    arg = urllib.parse.quote(f"Ortsteil_{d}")
+    if (
+        "-_" in arg
+    ):  # inconsistent provider formatting, e.g. "Seefeld/ Testorf- Steinfort"
         return [arg, arg.replace("-_", "-")]
     return [arg]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Landkreis Nordwestmecklenburg"
+    DESCRIPTION = "Source for Landkreis Nordwestmecklenburg."
+    URL = "https://www.geoport-nwm.de"
+    COUNTRY = "de"
+
+    TEST_CASES: ClassVar[dict] = {
+        "Rüting": {"district": "Rüting"},
+        "Grevenstein u. ...": {"district": "Grevenstein u. Ausbau"},
+        "Seefeld": {"district": "Seefeld/ Testorf- Steinfort"},
+        "1100l": {"district": "Groß Stieten (1.100 l Behälter)"},
+        "kl. Bünsdorf": {"district": "Klein Bünsdorf"},
+    }
+
+    PARAMS = (district("district"),)
+
+    def retrieve(self, source):
+        district_arg = self.params["district"]
+        args = _convert_to_arg(district_arg)
+        today = datetime.date.today()
+        years = [today.year, today.year + 1] if today.month == 12 else [today.year]
+
+        texts: list[str] = []
+        for i, year in enumerate(years):
+            main_text = None
+            for arg in args:
+                try:
+                    r = self.session.get(_API_URL.format(year=year, arg=arg))
+                    r.raise_for_status()
+                    main_text = r.text
+                    break
+                except Exception:
+                    continue
+            if main_text is not None:
+                texts.append(main_text)
+            elif i == 0:
+                # No spelling worked for the required year: nothing to show.
+                raise ValueError(
+                    f"no calendar found for district {district_arg!r} ({year})"
+                )
+
+            for prefix in _EXTRA_PREFIXES:
+                for arg in args:
+                    try:
+                        r = self.session.get(
+                            _API_URL.format(year=year, arg=f"{prefix}_{arg}")
+                        )
+                        r.raise_for_status()
+                        texts.append(r.text)
+                    except Exception:
+                        pass
+
+        return texts
+
+    def parse(self, response, source=None):
+        entries: list = []
+        for text in response:
+            entries.extend(ICS().convert(text))
+        return entries
+
+    transform = ICSTransformer()
+
+    def __init__(self, district: str):
+        super().__init__(district=district)

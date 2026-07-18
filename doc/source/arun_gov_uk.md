@@ -1,32 +1,59 @@
 # Arun District Council
 
-Support for schedules provided by [Arun District Council](https://www.arun.gov.uk), UK.
+Support for schedules provided by [Arun District Council](https://www.arun.gov.uk).
+
+Source for arun.gov.uk services for Arun District, UK.
 
 ## Configuration via configuration.yaml
 
+### Using uprn
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: arun_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        address: ADDRESS
+        uprn: UPRN
+```
+
+### Using postcode
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: arun_gov_uk
+      args:
+        address: ADDRESS
+        postcode: POSTCODE
 ```
 
 ### Configuration Variables
 
-**uprn**
-*(string) (required)*
+**uprn**  
+*(string) (alternative)*
 
-## Example using UPRN
+**postcode**  
+*(string) (alternative)*
+
+**address**  
+*(string) (optional)*
+
+Provide one of: `uprn` or `postcode`.
+
+## Example
+
+### Using postcode
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: arun_gov_uk
       args:
-        uprn: "010091569392"
+        address: 21A Beach Road, Littlehampton
+        postcode: BN17 5JA
 ```
 
-#### How to get the source argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
+Provide your UPRN, or your postcode plus an address to match. Find your UPRN at https://www.findmyaddress.co.uk/

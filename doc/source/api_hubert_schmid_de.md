@@ -1,62 +1,38 @@
-# Hubert Schmid GmbH (Blaue Tonne) Landkreis Ostallgäu
+# HubertSchmid Recycling und Umweltschutz GmbH
 
-Support for schedules provided by [Hubert Schmid GmbH](https://www.hschmid24.de/BlaueTonne/), serving in Ostallgäu, Bavaria, Germany.
+Support for schedules provided by [HubertSchmid Recycling und Umweltschutz GmbH](https://www.hschmid24.de/BlaueTonne/).
+
+Abfuhrtermine Blaue Tonne
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: api_hubert_schmid_de
       args:
-        city: STADT/KOMMUNE
+        city: CITY
         ortsteil: ORTSTEIL
         strasse: STRASSE
-        
 ```
 
 ### Configuration Variables
 
 **city**  
-*(String) (required)*
-
-**strasse**  
-*(String) (optional)*
+*(string) (required)*
 
 **ortsteil**  
-*(String) (optional)*
+*(string) (optional)*
 
-## Examples
+**strasse**  
+*(string) (optional)*
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: api_hubert_schmid_de
-      args:
-        city: Füssen
-        ortsteil: Eschach
-        strasse: Schorrenmoos
-```
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: api_hubert_schmid_de
       args:
-        city: Emmenhausen(Waal)
-        strasse: Am Hofanger
+        city: Albatsried(Seeg)
 ```
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: api_hubert_schmid_de
-      args:
-        app_id: de.k4systems.abfallappwug
-        city: Bergen
-        strasse: Alle Straßen
-```
-
-## How to get the source arguments
-
-Use the website (https://www.hschmid24.de/BlaueTonne/) to find the exact notation of the city, street and optional district.

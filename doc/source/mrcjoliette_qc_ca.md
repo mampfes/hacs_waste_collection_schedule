@@ -1,6 +1,8 @@
 # MRC Joliette (QC)
 
-Support for schedules provided by [MRC Joliette](https://mrcjoliette.qc.ca), Quebec, Canada.
+Support for schedules provided by [MRC Joliette (QC)](https://mrcjoliette.qc.ca).
+
+Source script for mrcjoliette.qc.ca
 
 ## Configuration via configuration.yaml
 
@@ -14,10 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**city_id**
+**city_id**  
 *(string) (required)*
-
-The name of your city/sector as listed on the MRC Joliette collection map.
 
 ## Example
 
@@ -31,23 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [MRC Joliette collection map](https://mrcjoliette.qc.ca/gmr/carte-des-collectes/) and find your sector. Use the exact sector name from the list below as the `city_id` value:
-
-- Crabtree
-- Crabtree - Domaine
-- Joliette - Mardi
-- Joliette - Mercredi
-- Joliette - Jeudi
-- Joliette - Centre-ville
-- Notre-Dame-de-Lourdes
-- Notre-Dame-de-Lourdes - Domaine
-- Notre-Dame-des-Prairies
-- Notre-Dame-des-Prairies - Domaine
-- Saint-Ambroise-de-Kildare
-- Saint-Charles-Borromée - Mercredi
-- Saint-Charles-Borromée - Jeudi
-- Saint-Charles-Borromée - Domaine
-- Sainte-Mélanie
-- Saint-Paul
-- Saint-Thomas
-- Village Saint-Pierre
+Find your sector on the MRC Joliette collection map at https://mrcjoliette.qc.ca/gmr/carte-des-collectes/ and pick it from the list.

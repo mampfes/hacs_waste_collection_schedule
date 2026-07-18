@@ -1,27 +1,32 @@
-import requests
+"""Landkreis Neumarkt, Germany (abfuhrplan-landkreis-neumarkt.de).
+
+Demonstrates: a city/street URL path that, on a 404, needs a *second* request
+just to work out which argument was wrong -- a bad street 404s the page but a
+valid-city listing to build suggestions from; a bad city means even that
+listing 404s, so the suggestions must instead be the valid *city* list. Once
+the page resolves, its "download the calendar" form is scraped for every
+hidden field, button and select (the request differs slightly from provider
+to provider without documented meaning) and POSTed back for the ICS. No
+configured retriever expresses "GET, and on 404 make a second request to
+decide which of two arguments to blame", hence a source-defined retrieve().
+"""
+
+from typing import ClassVar, final
+
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.service.ICS import ICS
+from waste_collection_schedule.parsers import IcsParser
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
-TITLE = "Landkreis Neumarkt"
-DESCRIPTION = "Source for Landkreis Neumarkt."
-URL = "https://www.abfuhrplan-landkreis-neumarkt.de"
-TEST_CASES = {
-    "dietfurt industriestrasse": {"city": "dietfurt", "street": "industriestrasse"},
-    "Parsberg, Bogenmühle": {"city": "parsberg", "street": "bogenmuehle"},
-}
-
-
-ICON_MAP = {
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Papiertonne": Icons.PAPER,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-}
-
-
-BASE_API_URL = "https://www.abfuhrplan-landkreis-neumarkt.de"
-DATA_ULR = BASE_API_URL + "/{city}/{street}"
+_BASE_URL = "https://www.abfuhrplan-landkreis-neumarkt.de"
 
 
 def _prepare_arg(arg: str) -> str:
@@ -38,89 +43,99 @@ def _prepare_arg(arg: str) -> str:
     )
 
 
-class Source:
-    def __init__(self, city: str, street: str):
-        self._city: str = _prepare_arg(city)
-        self._street: str = _prepare_arg(street)
-        self._ics = ICS()
+def _parse_list_items(html: str) -> "list[str]":
+    soup = BeautifulSoup(html, "html.parser")
+    elements = []
+    for item in soup.select("li.list-group-item"):
+        a = item.select_one("a")
+        if not a:
+            continue
+        href = a.get("href")
+        if not isinstance(href, str):
+            continue
+        href_name = href.split("/")[-1]
+        if href_name == _prepare_arg(item.text.lower().strip()):
+            elements.append(item.text.strip())
+        else:
+            elements.append(href_name)
+    return elements
 
-    @staticmethod
-    def _get_all_elements(url: str) -> list[str]:
-        r = requests.get(url)
-        r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        items = soup.select("li.list-group-item")
-        elements = []
-        for item in items:
-            a = item.select_one("a")
-            if not a:
-                continue
-            href = a.get("href")
-            if not isinstance(href, str):
-                continue
-            href_name = href.split("/")[-1]
-            if href_name == _prepare_arg(item.text.lower().strip()):
-                elements.append(item.text.strip())
-            else:
-                elements.append(href_name)
-        return elements
+def _get_all_streets(session, city_arg: str) -> "list[str]":
+    """Valid streets for a city -- or, if the city itself is unknown, raises
+    with the valid city list instead."""
+    r = session.get(f"{_BASE_URL}/{city_arg}")
+    if r.status_code == 404:
+        cities = _parse_list_items(session.get(_BASE_URL).text)
+        raise SourceArgumentNotFoundWithSuggestions("city", city_arg, cities)
+    r.raise_for_status()
+    return _parse_list_items(r.text)
 
-    @staticmethod
-    def _get_all_cities() -> list[str]:
-        return Source._get_all_elements(BASE_API_URL)
 
-    @staticmethod
-    def _get_all_streets(city: str) -> list[str]:
-        print(f"{BASE_API_URL}/{city}")
-        try:
-            return Source._get_all_elements(f"{BASE_API_URL}/{city}")
-        except requests.exceptions.HTTPError as e:
-            print("failed to get streets")
-            print(e.response.status_code)
-            if e.response.status_code == 404:
-                cities = Source._get_all_elements(BASE_API_URL)
-                raise SourceArgumentNotFoundWithSuggestions("city", city, cities) from e
-            raise e
+def _scrape_getical_form(html: str) -> "dict[str, str | int]":
+    soup = BeautifulSoup(html, "html.parser")
+    form = soup.select_one('form[action="/getical"]')
+    if not form:
+        raise SourceArgumentNotFoundWithSuggestions("street", "", [])
 
-    def fetch(self) -> list[Collection]:
-        url = DATA_ULR.format(city=self._city, street=self._street)
+    data: dict = {}
+    for input_ in form.select("input") + form.select("button"):
+        name = input_.get("name")
+        value = input_.get("value")
+        if not isinstance(name, str) or not isinstance(value, str):
+            continue
+        data[name] = value
+    for select in form.select("select"):
+        name = select.get("name")
+        if not isinstance(name, str):
+            continue
+        data[name] = 0
+    return data
 
-        # get json file
-        r = requests.get(url)
+
+@final
+class Source(BaseSource):
+    TITLE = "Landkreis Neumarkt"
+    DESCRIPTION = "Source for Landkreis Neumarkt."
+    URL = _BASE_URL
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "dietfurt industriestrasse": {"city": "dietfurt", "street": "industriestrasse"},
+        "Parsberg, Bogenmühle": {"city": "parsberg", "street": "bogenmuehle"},
+    }
+
+    PARAMS = (
+        city(field="city"),
+        street(field="street"),
+    )
+
+    def retrieve(self, source):
+        session = source.session
+        city_arg = self.params["city"]
+        street_arg = self.params["street"]
+
+        r = session.get(f"{_BASE_URL}/{city_arg}/{street_arg}")
         if r.status_code == 404:
-            streets = Source._get_all_streets(self._city)
-            raise SourceArgumentNotFoundWithSuggestions("street", self._street, streets)
-
+            streets = _get_all_streets(session, city_arg)
+            raise SourceArgumentNotFoundWithSuggestions("street", street_arg, streets)
         r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")
-        form = soup.select_one('form[action="/getical"]')
-        if not form:
-            raise Exception("Form not found")
-
-        data: dict[str, str | int] = {}
-        for input in form.select("input") + form.select("button"):
-            name = input.get("name")
-            value = input.get("value")
-            if not isinstance(name, str):
-                continue
-            if not isinstance(value, str):
-                continue
-            data[name] = value
-
-        for selects in form.select("select"):
-            name = selects.get("name")
-            if not isinstance(name, str):
-                continue
-            data[name] = 0
-
-        r = requests.post(f"{BASE_API_URL}/getical", data=data)
+        data = _scrape_getical_form(r.text)
+        r = session.post(f"{_BASE_URL}/getical", data=data)
         r.raise_for_status()
+        return r
 
-        entries = []
-        for date, bin_type in self._ics.convert(r.text):
-            icon = ICON_MAP.get(bin_type)  # Collection icon
-            entries.append(Collection(date=date, t=bin_type, icon=icon))
+    parse = IcsParser()
+    transform = ICSTransformer(
+        type_value_map={
+            "Restmüll": GENERAL_WASTE,
+            "Papiertonne": PAPER,
+            "Gelber Sack": RECYCLABLES,
+            "Biotonne": ORGANIC,
+        }
+    )
 
-        return entries
+    def __init__(self, city: str, street: str):
+        super().__init__(city=_prepare_arg(city), street=_prepare_arg(street))

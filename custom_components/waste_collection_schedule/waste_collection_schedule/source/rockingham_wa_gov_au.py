@@ -1,50 +1,39 @@
 import re
-from datetime import date, datetime, timedelta
-from typing import Literal, get_args
+from datetime import date, timedelta
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
-)
+from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown, text_field
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.IntraMaps import (
-    IntraMapsError,
-    IntraMapsSearchError,
-    MapsClient,
+    IntraMapsPanelParser,
+    IntraMapsRetriever,
     MapsClientConfig,
 )
+from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    RECYCLABLES,
+)
 
-TITLE = "City of Rockingham"
-DESCRIPTION = "Source for the City of Rockingham rubbish collection."
-URL = "https://rockingham.wa.gov.au/your-services/waste-and-recycling/bin-collection"
-TEST_CASES = {
-    "IGA Baldivis Quarter": {
-        "suburb": "Baldivis",
-        "street_name": "Makybe Drive",
-        "street_number": "59",
-    },
-    "The Warnbro Tavern": {
-        "suburb": "Warnbro",
-        "street_name": "Hokin Street",
-        "street_number": "7",
-    },
-    "The Shoalwater Tavern": {
-        "suburb": "Shoalwater",
-        "street_name": "Second Avenue",
-        "street_number": "62",
-    },
-}
+# Suburb + street name + street number (the suburb is a fixed dropdown; the
+# combined "street_number street_name SUBURB" string is what IntraMaps expects
+# as a single address search string). Two verge-collection columns are a
+# single explicit date (no recurrence). The three household-bin columns
+# (FOGO, Recycle, Waste) each carry their OWN cadence per record -- the same
+# column is "weekly" in one suburb and "fortnightly" in another, and
+# occasionally neither word appears at all (a single, non-recurring pickup) --
+# so the cadence is read from that record's own text rather than assumed from
+# the column, windowed one year out from today to match the council's own
+# horizon. The only source-specific code is _describe, which tells the
+# columns apart and reads each one's cadence.
 
-WASTE_TYPES = {
-    "Waste (Red Lid)": "mdi:trash-can",
-    "Recycle (Yellow Lid)": "mdi:recycle",
-    "FOGO Bin (FOGO lid)": "mdi:leaf",
-    "Verge Collection Green Waste": "mdi:tree",
-    "Verge Collection General": "mdi:sofa",
-}
-
-SubUrbLiteral = Literal[
+SUBURBS = (
     "BALDIVIS",
     "COOLOONGUP",
     "EAST ROCKINGHAM",
@@ -62,146 +51,147 @@ SubUrbLiteral = Literal[
     "SINGLETON",
     "WAIKIKI",
     "WARNBRO",
-]
+)
 
-SUBURBS = get_args(SubUrbLiteral)
+INTRAMAPS_CONFIG = MapsClientConfig(
+    base_url="https://maps.rockingham.wa.gov.au",
+    project="1917ad36-6a1d-4145-9eeb-736f8fa9646d",
+)
+
+# IntraMaps column name -> canonical waste type.
+_VERGE_GREEN_WASTE = "Verge_Collection_Green_Waste"
+_VERGE_GENERAL = "Verge_Collection_General"
+_FOGO = "FOGO Bin (FOGO lid)"
+_RECYCLE = "Recycle (Yellow Lid)"
+_WASTE = "Waste (Red Lid)"
+
+_TYPE_MAP = {
+    _WASTE: GENERAL_WASTE,
+    _RECYCLE: RECYCLABLES,
+    _FOGO: ORGANIC,
+    _VERGE_GREEN_WASTE: GARDEN_WASTE,
+    _VERGE_GENERAL: BULKY_WASTE,
+}
+
+_VERGE_COLUMNS = {_VERGE_GREEN_WASTE, _VERGE_GENERAL}
+
+_DATE_RE = re.compile(r"(\d{1,2}\s+\w+\s+\d{4})")
+_WEEKDAY_RE = re.compile(
+    r"(monday|tuesday|wednesday|thursday|friday|saturday|sunday)", re.IGNORECASE
+)
+
+# The council's own bin-day tool projects recurring collections one year
+# ahead of today; match that horizon (windowed Schedule) rather than the
+# repo's usual fixed count, so the converted source finds the same range of
+# dates as the legacy fetch().
+_HORIZON = timedelta(days=365)
 
 
-class Source:
-    def __init__(self, suburb: SubUrbLiteral, street_name, street_number):
-        self.suburb = suburb
-        self.street_name = street_name
-        self.street_number = street_number
+def _describe(record, source):
+    column = record.get("column", "")
+    if column not in _TYPE_MAP:
+        return
+    text = record.get("value", "").strip()
+    if not text:
+        return
 
-    def _get_next_weekday(self, day_name):
-        """Calculate the date of the next occurrence of a named day (e.g., 'Wednesday')."""
-        days_of_week = [
-            "monday",
-            "tuesday",
-            "wednesday",
-            "thursday",
-            "friday",
-            "saturday",
-            "sunday",
-        ]
-        target_day = days_of_week.index(day_name.lower())
-        today = date.today()
-
-        days_ahead = target_day - today.weekday()
-        if days_ahead <= 0:  # Target day has already happened this week
-            days_ahead += 7
-
-        return today + timedelta(days_ahead)
-
-    def _parse_date(self, text):
-        """Extract a specific date OR calculates the next occurrence of a weekday."""
-        # 1. Look for a full date: "14 January 2026"
-        match = re.search(r"(\d{1,2}\s+\w+\s+\d{4})", text)
-        if match:
-            try:
-                return datetime.strptime(match.group(1), "%d %B %Y").date()
-            except ValueError:
-                pass
-
-        # 2. Look for a recurring weekday: "on Wednesday"
-        day_match = re.search(
-            r"on\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday)",
-            text,
-            re.IGNORECASE,
-        )
-        if day_match:
-            return self._get_next_weekday(day_match.group(1))
-
-        return None
-
-    def fetch(self):
-
-        config = MapsClientConfig(
-            base_url="https://maps.rockingham.wa.gov.au",
-            project="1917ad36-6a1d-4145-9eeb-736f8fa9646d",
-        )
-
-        self.suburb = self.suburb.upper()
-
-        today = date.today()
-
-        if self.suburb not in SUBURBS:
-            raise SourceArgumentNotFoundWithSuggestions("suburb", self.suburb, SUBURBS)
-
-        if self.street_number is None:
-            raise SourceArgumentRequired(
-                "street_number", "The street number can not be null"
-            )
-
-        if self.street_name is None:
-            raise SourceArgumentRequired(
-                "street_name", "The street name can not be null"
-            )
-
-        # Build the address string
-        address = f"{self.street_number} {self.street_name} {self.suburb}"
-        entries = []
-
+    if column in _VERGE_COLUMNS:
+        # A single explicit date (e.g. "Monday, 23 November 2026"); no
+        # recurrence. Extract just the date rather than parsing the whole
+        # string, in case the provider adds wording dateutil can't handle
+        # unaided.
+        match = _DATE_RE.search(text)
+        if not match:
+            return
         try:
-            with MapsClient(config) as client:
-                data_dict = client.select_address(address)
-                infoPanel = data_dict["response"]
+            event_date = date_parsers.auto(match.group(1))
+        except (ValueError, TypeError):
+            return
+        yield Schedule(column, event_date, count=1)
+        return
 
-                for waste_name, icon in WASTE_TYPES.items():
-                    # Safely navigate the tree; if any key is missing, it returns an empty list []
-                    fields = (
-                        infoPanel.get("infoPanels", {})
-                        .get("info1", {})
-                        .get("feature", {})
-                        .get("fields", [])
-                    )
+    # FOGO / Recycle / Waste: an explicit date if one is given (e.g.
+    # "Collected fortnightly Wednesday 15 July 2026"), else a bare weekday
+    # name (e.g. "Collected weekly on Wednesday").
+    date_match = _DATE_RE.search(text)
+    if date_match:
+        try:
+            start = date_parsers.auto(date_match.group(1))
+        except (ValueError, TypeError):
+            return
+    else:
+        weekday_match = _WEEKDAY_RE.search(text)
+        if not weekday_match:
+            return
+        weekday = recurrence.weekday(weekday_match.group(1))
+        if weekday is None:
+            return
+        start = recurrence.next_weekday(weekday)
 
-                    matches = [
-                        item for item in fields if item.get("name") == waste_name
-                    ]
+    # The cadence word, not the column, decides weekly vs. fortnightly: the
+    # same column is one or the other depending on suburb. Neither word
+    # present (a council data quirk, e.g. "Collected monday Monday ...")
+    # means a single, non-recurring pickup.
+    text_lower = text.lower()
+    if "fortnightly" in text_lower:
+        yield Schedule(
+            column, start, recurrence.FORTNIGHTLY, until=date.today() + _HORIZON
+        )
+    elif "weekly" in text_lower:
+        yield Schedule(column, start, recurrence.WEEKLY, until=date.today() + _HORIZON)
+    else:
+        yield Schedule(column, start, count=1)
 
-                    for _match in matches:
-                        # Get the first result, that's all we need
-                        raw_value = matches[0]["value"]["value"]
-                        if not raw_value:
-                            continue
 
-                        # Get the starting date
-                        start_date = self._parse_date(raw_value)
-                        if not start_date:
-                            continue
+@final
+class Source(BaseSource):
+    TITLE = "City of Rockingham"
+    DESCRIPTION = "Source for the City of Rockingham rubbish collection."
+    URL = (
+        "https://rockingham.wa.gov.au/your-services/waste-and-recycling/bin-collection"
+    )
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-                        # Determine frequency
-                        interval = 0
-                        if "weekly" in raw_value.lower():
-                            interval = 7
-                        elif "fortnightly" in raw_value.lower():
-                            interval = 14
+    TEST_CASES: ClassVar[dict] = {
+        "IGA Baldivis Quarter": {
+            "suburb": "Baldivis",
+            "street_name": "Makybe Drive",
+            "street_number": "59",
+        },
+        "The Warnbro Tavern": {
+            "suburb": "Warnbro",
+            "street_name": "Hokin Street",
+            "street_number": "7",
+        },
+        "The Shoalwater Tavern": {
+            "suburb": "Shoalwater",
+            "street_name": "Second Avenue",
+            "street_number": "62",
+        },
+    }
 
-                        # If recurring, add entries for 1 year (52 weeks)
-                        if interval > 0:
-                            current_date = start_date
-                            # End date is 1 year from today
-                            end_date = today + timedelta(days=365)
+    PARAMS = (
+        dropdown("suburb", list(SUBURBS), label="Suburb"),
+        text_field("street_name", "Street Name"),
+        text_field("street_number", "Street Number"),
+    )
 
-                            while current_date <= end_date:
-                                entries.append(
-                                    Collection(
-                                        date=current_date, t=waste_name, icon=icon
-                                    )
-                                )
-                                current_date += timedelta(days=interval)
-                        else:
-                            # Single event (like Verge collection)
-                            entries.append(
-                                Collection(date=start_date, t=waste_name, icon=icon)
-                            )
+    retrieve = IntraMapsRetriever(INTRAMAPS_CONFIG, address="address")
+    parse = IntraMapsPanelParser()
+    preprocess = RecurrenceExpander(_describe)
 
-        except IntraMapsSearchError as e:
-            raise SourceArgumentNotFound("street_name", self.street_name) from e
-        except IntraMapsError as e:
-            raise Exception(f"IntraMaps Operation Failed: {e}") from e
-        except Exception as e:
-            raise Exception(f"Unexpected System Error: {e}") from e
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
 
-        return entries
+    def __init__(self, suburb: str, street_name: str, street_number: str):
+        suburb_upper = suburb.strip().upper()
+        if suburb_upper not in SUBURBS:
+            raise SourceArgumentNotFoundWithSuggestions("suburb", suburb, list(SUBURBS))
+
+        address = f"{street_number} {street_name} {suburb_upper}"
+        super().__init__(
+            suburb=suburb,
+            street_name=street_name,
+            street_number=street_number,
+            address=address,
+        )

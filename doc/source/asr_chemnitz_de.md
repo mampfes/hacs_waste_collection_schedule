@@ -1,45 +1,39 @@
 # ASR Stadt Chemnitz
 
-Support for schedules provided by [ASR Stadt Chemnitz](https://www.asr-chemnitz.de), serving Chemnitz, Germany.
+Support for schedules provided by [ASR Stadt Chemnitz](https://www.asr-chemnitz.de).
+
+Source for ASR Stadt Chemnitz.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: asr_chemnitz_de
       args:
-        street: STRAßE
-        house_number: "HAUSNUMMER"
-        object_number: "OBJEKT NUMMER"
-        
+        street: STREET
+        house_number: HOUSE_NUMBER
+        object_number: OBJECT_NUMBER
 ```
 
 ### Configuration Variables
 
 **street**  
-*(String) (required)*
+*(string) (required)*
 
 **house_number**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 **object_number**  
-*(String | Integer) (optional)*
-
-only needed if the selector asks after entering the house number for an object number
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: asr_chemnitz_de
       args:
-        street: Hübschmannstr.
-        house_number: "4"
-        
+        street: "H\xFCbschmannstr."
+        house_number: '4'
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using https://www.asr-chemnitz.de/kundenportal/entsorgungskalender and write them exactly like on the web page.

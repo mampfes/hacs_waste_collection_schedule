@@ -7,10 +7,11 @@ Use the Agent tool with:
     Prepare the next release.
 
     Sync master with upstream, gather the PRs merged since the last release, decide the
-    semantic version bump, and draft the new CHANGELOG.md section plus matching GitHub
-    release notes. Order the sections Removed, Deprecated, Added, Fixed, Other (most
-    important to an updating user first). Welcome first-time contributors. Bump the
-    `version` in manifest.json.
+    semantic version bump (strict SemVer, Option A; see doc/versioning.md: a batch of
+    pipeline source migrations is a major, new sources are a minor, fixes are a patch),
+    and draft the new CHANGELOG.md section plus matching GitHub release notes. Order the
+    sections Removed, Deprecated, Added, Fixed, Other (most important to an updating user
+    first). Welcome first-time contributors. Bump the `version` in manifest.json.
 
     Present the full CHANGELOG section, the version number with bump rationale, and the
     release-notes body for approval BEFORE creating any branch, commit, or push. Do not

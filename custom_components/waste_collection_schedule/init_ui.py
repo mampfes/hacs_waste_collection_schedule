@@ -27,6 +27,11 @@ PLATFORMS = ["calendar", "sensor"]
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up component from a config entry, entry contains data from config entry database."""
+    from waste_collection_schedule.waste_types import set_display_language
+
+    # Show canonical waste-type names in the Home Assistant UI language.
+    set_display_language(hass.config.language)
+
     options = entry.options
     _LOGGER.debug(
         "Setting up entry %s, with data %s and options %s",

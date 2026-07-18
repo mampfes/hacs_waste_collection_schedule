@@ -1,6 +1,8 @@
-# AW Harburg
+# Abfallwirtschaft Landkreis Harburg
 
-Support for schedules provided by [AW Landkreis Harburg](https://www.landkreis-harburg.de) located in Lower Saxony, Germany.
+Support for schedules provided by [Abfallwirtschaft Landkreis Harburg](https://www.landkreis-harburg.de).
+
+Abfallwirtschaft Landkreis Harburg
 
 ## Configuration via configuration.yaml
 
@@ -9,21 +11,21 @@ waste_collection_schedule:
   sources:
     - name: aw_harburg_de
       args:
-          level_1: LEVEL_1
-          level_2: LEVEL_2
-          level_3: LEVEL_3
+        level_1: LEVEL_1
+        level_2: LEVEL_2
+        level_3: LEVEL_3
 ```
 
 ### Configuration Variables
 
 **level_1**  
-*(string) (required)*
+*(string) (optional)*
 
 **level_2**  
-*(string) (required)*
+*(string) (optional)*
 
 **level_3**  
-*(string) (optional - depending on level_2)*
+*(string) (optional)*
 
 ## Example
 
@@ -32,37 +34,6 @@ waste_collection_schedule:
   sources:
     - name: aw_harburg_de
       args:
-          level_1: "Hanstedt"
-          level_2: "Evendorf"
+        level_1: Hanstedt
+        level_2: Evendorf
 ```
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: aw_harburg_de
-      args:
-          level_1: "Buchholz"
-          level_2: "Buchholz mit Steinbeck (ohne Reindorf)"
-          level_3: "Seppenser Mühlenweg Haus-Nr. 1 / 2"
-```
-
-## Notes
-
-- The provider currently uses `Gelbe Tonne` as collection type.
-- For backward compatibility with existing sensors filtering `Gelber Sack`, use source customization:
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: aw_harburg_de
-      args:
-        level_1: "Seevetal"
-        level_2: "Maschen (nördlich der Autobahn A 39)"
-      customize:
-        - type: "Gelbe Tonne"
-          alias: "Gelber Sack"
-```
-
-## How to get the source arguments
-
-Check [AW Harburg Abfallkalender](https://www.landkreis-harburg.de/bauen-umwelt/abfallwirtschaft/abfallkalender/) if you need two or three levels of entries in the config. The strings need to be written in the exact same way as in the webinterface e.g. "Bremer Straße Haus-Nr. 93 - 197 / 78 - 158".
