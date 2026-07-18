@@ -18,8 +18,8 @@ waste_collection_schedule:
 
 | Argument | Description |
 |----------|-------------|
-| `suburb` | Suburb name, as normally written (e.g. `Bonnet Bay`) |
-| `street` | Street name, as normally written (e.g. `Cleveland Place`) |
+| `suburb` | Suburb (e.g. `BONNET BAY`) |
+| `street` | Street name spelled out in full (e.g. `Cleveland Place`) |
 | `house_number` | House number (e.g. `5`) |
 
 ### Example
@@ -29,21 +29,27 @@ waste_collection_schedule:
   sources:
     - name: sutherlandshire_nsw_gov_au
       args:
-        suburb: Bonnet Bay
+        suburb: BONNET BAY
         street: Cleveland Place
         house_number: "5"
 ```
 
 ## How to find your arguments
 
-Enter your `suburb`, `street` and `house_number` exactly as they appear in your normal postal address. The source looks up your address automatically using the same online services map the council publishes at [sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/bin-collection](https://www.sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/bin-collection), so there's no dropdown list to match against.
+Use your address as it appears on council correspondence, with the street type
+spelled out in full (`Street`, `Place`, `Avenue`, …). If the house number isn't
+found, the integration suggests the known numbers on your street. You can
+check your address on the council's
+[bin collection page](https://www.sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/bin-collection).
 
 ## Collection types
 
 | Type | Description |
 |------|-------------|
 | Garbage | Red-lid bin, collected weekly |
-| Recycling | Yellow-lid bin, collected fortnightly |
+| Recycling | Yellow-lid bin, collected fortnightly (weekly for some unit blocks) |
 | Garden Waste | Green-lid bin, collected fortnightly (alternating with Recycling) |
 
-The fortnightly recycling/garden waste schedule is determined automatically from your collection zone and collection day, both returned by the council's online services map for your address.
+The schedule comes from the council's public property GIS layer (the same
+data behind the council's own "When is my bin collected?" map), which carries
+each property's collection weekday, zone and recycling frequency.
