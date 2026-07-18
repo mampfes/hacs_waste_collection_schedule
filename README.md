@@ -116,6 +116,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Onkaparinga Council](/doc/source/onkaparingacity_com.md) / onkaparingacity.com
 - [City of Parramatta](/doc/source/cityofparramatta_nsw_gov_au.md) / cityofparramatta.nsw.gov.au
 - [City of Port Adelaide Enfield](/doc/source/app_my_local_services_au.md) / cityofpae.sa.gov.au
+- [City of Port Phillip](/doc/source/portphillip_vic_gov_au.md) / portphillip.vic.gov.au
 - [City of Prospect](/doc/source/app_my_local_services_au.md) / prospect.sa.gov.au
 - [City of Rockingham](/doc/source/rockingham_wa_gov_au.md) / rockingham.wa.gov.au/your-services/waste-and-recycling/bin-collection
 - [City of Ryde (NSW)](/doc/source/ryde_nsw_gov_au.md) / ryde.nsw.gov.au

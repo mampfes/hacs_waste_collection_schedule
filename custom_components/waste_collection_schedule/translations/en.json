@@ -1242,6 +1242,29 @@
           "address": "Full address including suburb (e.g. '126 Church Street Parramatta')"
         }
       },
+      "args_portphillip_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address with suburb (e.g. '9 Spray Street Elwood')"
+        }
+      },
+      "reconfigure_portphillip_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Street address with suburb (e.g. '9 Spray Street Elwood')"
+        }
+      },
       "args_rockingham_wa_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

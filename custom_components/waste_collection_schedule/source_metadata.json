@@ -291,6 +291,13 @@
     },
     "urls": {}
   },
+  "portphillip_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/portphillip_vic_gov_au.md",
+    "howto": {
+      "en": "Enter your street address including suburb (e.g. '9 Spray Street Elwood'). Search at https://www.portphillip.vic.gov.au/council-services/waste-recycling-and-rubbish/bins-and-collection-services"
+    },
+    "urls": {}
+  },
   "rockingham_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rockingham_wa_gov_au.md",
     "howto": {},
