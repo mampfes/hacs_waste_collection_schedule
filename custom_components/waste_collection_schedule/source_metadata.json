@@ -3816,6 +3816,13 @@
     "howto": {},
     "urls": {}
   },
+  "waikato_district_council_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/waikato_district_council_govt_nz.md",
+    "howto": {
+      "en": "Enter your address as it appears on the council's rubbish and recycling collection page, e.g. '18 Example Drive, Huntly'. If the address cannot be found uniquely, the error message will list the closest matches known to the council."
+    },
+    "urls": {}
+  },
   "waipa_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/waipa_nz.md",
     "howto": {},

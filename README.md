@@ -2916,6 +2916,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Selwyn District Council](/doc/source/selwyn_govt_nz.md) / selwyn.govt.nz
 - [Taupō District Council](/doc/source/taupodc_govt_nz.md) / taupodc.govt.nz
 - [Tauranga City Council](/doc/source/tauranga_govt_nz.md) / tauranga.govt.nz
+- [Waikato District Council](/doc/source/waikato_district_council_govt_nz.md) / waikatodistrict.govt.nz
 - [Waipa District Council](/doc/source/waipa_nz.md) / waipadc.govt.nz
 - [Wellington City Council](/doc/source/wellington_govt_nz.md) / wellington.govt.nz
 - [Western Bay of Plenty District Council](/doc/source/western_bay_of_plenty_nz.md) / kerbsidecollective.co.nz

@@ -19222,6 +19222,12 @@
       "id": "tauranga_govt_nz"
     },
     {
+      "title": "Waikato District Council",
+      "module": "waikato_district_council_govt_nz",
+      "default_params": {},
+      "id": "waikato_district_council_govt_nz"
+    },
+    {
       "title": "Waipa District Council",
       "module": "waipa_nz",
       "default_params": {},
