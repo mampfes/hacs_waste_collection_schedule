@@ -10047,6 +10047,12 @@
       "id": "hasselroth_de"
     },
     {
+      "title": "Gemeinde Hille",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_hille_de"
+    },
+    {
       "title": "Gemeinde H\u00fcllhorst",
       "module": "ics",
       "default_params": {},

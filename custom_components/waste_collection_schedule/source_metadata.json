@@ -2588,6 +2588,14 @@
     "howto": {},
     "urls": {}
   },
+  "ics_hille_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/hille_de.md",
+    "howto": {
+      "de": "- Gehen Sie auf <https://www.hille.de/Wirtschaft-Wohnen/Wohnen/Abfallkalender/>.\n- Suchen Sie den `ICS`-Download-Link für Ihren Abfuhrbezirk. Erinnerungen werden für Home Assistant nicht benötigt, daher werden die Dateien \"Ohne Erinnerung\" empfohlen.\n- Klicken Sie mit der rechten Maustaste auf den passenden Link und wählen Sie `Link kopieren`, um die URL zu erhalten.\n- Verwenden Sie diesen Link als `url`-Parameter.\n",
+      "en": "- Go to <https://www.hille.de/Wirtschaft-Wohnen/Wohnen/Abfallkalender/>.\n- Find the `ICS` download link matching your `Abfuhrbezirk` (collection district). Reminders are not needed for Home Assistant, so the `Ohne Erinnerung` (without reminder) files are recommended.\n- Right click the matching link and select `copy link` to get the URL.\n- Use this link as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
   "ics_huellhorst_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/huellhorst_de.md",
     "howto": {
