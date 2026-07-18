@@ -3219,6 +3219,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [A-Region](/doc/source/a_region_ch.md) / a-region.ch
 - [Aadorf](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Aarberg](/doc/source/aarberg_ch.md) / aarberg.ch
 - [Alchenstorf](/doc/source/alchenstorf_ch.md) / alchenstorf.ch
 - [Andwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Appenzell](/doc/source/a_region_ch.md) / a-region.ch

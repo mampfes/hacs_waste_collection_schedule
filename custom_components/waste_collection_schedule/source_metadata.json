@@ -4464,6 +4464,11 @@
     "howto": {},
     "urls": {}
   },
+  "aarberg_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aarberg_ch.md",
+    "howto": {},
+    "urls": {}
+  },
   "alchenstorf_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alchenstorf_ch.md",
     "howto": {},

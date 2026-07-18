@@ -20358,6 +20358,29 @@
         },
         "data_description": {}
       },
+      "args_aarberg_ch": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "zone": "Die Zone innerhalb von Aarberg, z.B. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
+        }
+      },
+      "reconfigure_aarberg_ch": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "zone": "Die Zone innerhalb von Aarberg, z.B. Aarberg, Grafenmoos, Leimern, Mülital, Spins, Zälgli"
+        }
+      },
       "args_alchenstorf_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

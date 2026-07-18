@@ -21115,6 +21115,12 @@
       "id": "zab_ch"
     },
     {
+      "title": "Aarberg",
+      "module": "aarberg_ch",
+      "default_params": {},
+      "id": "aarberg_ch"
+    },
+    {
       "title": "Alchenstorf",
       "module": "alchenstorf_ch",
       "default_params": {},
