@@ -118,6 +118,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Wanneroo](/doc/source/wanneroo_wa_gov_au.md) / wanneroo.wa.gov.au
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
+- [City of Yarra](/doc/source/yarracity_vic_gov_au.md) / yarracity.vic.gov.au
 - [Clare and Gilbert Valleys Council](/doc/source/app_my_local_services_au.md) / claregilbertvalleys.sa.gov.au
 - [Clarence City Council](/doc/source/ccc_tas_gov_au.md) / ccc.tas.gov.au/wp-json/waste-collection
 - [Clarence Valley Council](/doc/source/impactapps_com_au.md) / clarence.nsw.gov.au

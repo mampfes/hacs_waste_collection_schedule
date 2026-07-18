@@ -545,6 +545,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of Yarra",
+      "module": "yarracity_vic_gov_au",
+      "default_params": {},
+      "id": "yarracity_vic_gov_au"
+    },
+    {
       "title": "Clare and Gilbert Valleys Council",
       "module": "app_my_local_services_au",
       "default_params": {},
