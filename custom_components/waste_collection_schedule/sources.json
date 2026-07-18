@@ -1268,6 +1268,12 @@
       "id": "sunshinecoast_qld_gov_au"
     },
     {
+      "title": "Surf Coast Shire",
+      "module": "surf_coast_vic_gov_au",
+      "default_params": {},
+      "id": "surf_coast_vic_gov_au"
+    },
+    {
       "title": "Sutherland Shire Council",
       "module": "sutherlandshire_nsw_gov_au",
       "default_params": {},

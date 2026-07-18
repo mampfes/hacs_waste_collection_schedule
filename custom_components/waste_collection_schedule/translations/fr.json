@@ -2751,6 +2751,32 @@
         },
         "data_description": {}
       },
+      "args_surf_coast_vic_gov_au": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "post_code": "Code postal",
+          "street_name": "Nom de rue",
+          "street_number": "Numéro de rue",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_surf_coast_vic_gov_au": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "post_code": "Code postal",
+          "street_name": "Nom de rue",
+          "street_number": "Numéro de rue",
+          "suburb": "Suburb"
+        },
+        "data_description": {}
+      },
       "args_sutherlandshire_nsw_gov_au": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

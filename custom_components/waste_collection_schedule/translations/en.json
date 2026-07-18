@@ -2927,6 +2927,41 @@
         },
         "data_description": {}
       },
+      "args_surf_coast_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "post_code": "Post code",
+          "street_name": "Street name",
+          "street_number": "Street number",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "post_code": "Postcode (e.g. '3228')",
+          "street_name": "Street name (e.g. 'Bell Street')",
+          "street_number": "Street number (e.g. '20')",
+          "suburb": "Suburb, in Title Case (e.g. 'Torquay')"
+        }
+      },
+      "reconfigure_surf_coast_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "post_code": "Post code",
+          "street_name": "Street name",
+          "street_number": "Street number",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "post_code": "Postcode (e.g. '3228')",
+          "street_name": "Street name (e.g. 'Bell Street')",
+          "street_number": "Street number (e.g. '20')",
+          "suburb": "Suburb, in Title Case (e.g. 'Torquay')"
+        }
+      },
       "args_sutherlandshire_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

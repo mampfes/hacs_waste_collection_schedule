@@ -723,6 +723,13 @@
     "howto": {},
     "urls": {}
   },
+  "surf_coast_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/surf_coast_vic_gov_au.md",
+    "howto": {
+      "en": "Visit the Surf Coast Shire 'Bin collection calendars' page (https://www.surfcoast.vic.gov.au/Property/Waste-and-recycling/Kerbside-bins/Bin-collection-calendars), search for your address, and enter the street number, street name, suburb and postcode exactly as they appear (suburb must be in Title Case, e.g. 'Torquay', not 'TORQUAY')."
+    },
+    "urls": {}
+  },
   "sutherlandshire_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sutherlandshire_nsw_gov_au.md",
     "howto": {
