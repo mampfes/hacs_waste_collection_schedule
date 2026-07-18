@@ -24477,6 +24477,37 @@
         },
         "data_description": {}
       },
+      "args_fermanaghomagh_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "postcode": "Postcode",
+          "property_id": "Property ID"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "The house number (or name) of the property",
+          "postcode": "The postcode of the property, e.g. BT78 1RG",
+          "property_id": "The property ID as found in the URL when looking up your bin collection days"
+        }
+      },
+      "reconfigure_fermanaghomagh_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "postcode": "Postcode",
+          "property_id": "Property ID"
+        },
+        "data_description": {
+          "house_number": "The house number (or name) of the property",
+          "postcode": "The postcode of the property, e.g. BT78 1RG",
+          "property_id": "The property ID as found in the URL when looking up your bin collection days"
+        }
+      },
       "args_fife_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

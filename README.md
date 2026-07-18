@@ -3465,6 +3465,7 @@ If you already have enough information for your municipality/region, you are ver
 - [FCC Environment](/doc/source/fccenvironment_co_uk.md) / fccenvironment.co.uk
 - [Fenland](/doc/source/apps_imactivate_com.md) / fenland.gov.uk
 - [Fenland District Council](/doc/source/fenland_gov_uk.md) / fenland.gov.uk
+- [Fermanagh and Omagh District Council](/doc/source/fermanaghomagh_gov_uk.md) / fermanaghomagh.com
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
 - [Flintshire](/doc/source/flintshire_gov_uk.md) / flintshire.gov.uk
 - [Folkestone and Hythe District Councol](/doc/source/folkestone_hythe_gov_uk.md) / folkestone-hythe.gov.uk

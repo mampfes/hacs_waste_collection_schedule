@@ -23749,6 +23749,37 @@
         },
         "data_description": {}
       },
+      "args_fermanaghomagh_gov_uk": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "postcode": "Postleitzahl",
+          "property_id": "Grundstücks-ID"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Die Hausnummer (oder der Hausname) des Grundstücks",
+          "postcode": "Die Postleitzahl des Grundstücks, z.B. BT78 1RG",
+          "property_id": "Die Grundstücks-ID, die in der URL bei der Suche nach den Abholtagen zu finden ist"
+        }
+      },
+      "reconfigure_fermanaghomagh_gov_uk": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "postcode": "Postleitzahl",
+          "property_id": "Grundstücks-ID"
+        },
+        "data_description": {
+          "house_number": "Die Hausnummer (oder der Hausname) des Grundstücks",
+          "postcode": "Die Postleitzahl des Grundstücks, z.B. BT78 1RG",
+          "property_id": "Die Grundstücks-ID, die in der URL bei der Suche nach den Abholtagen zu finden ist"
+        }
+      },
       "args_fife_gov_uk": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
