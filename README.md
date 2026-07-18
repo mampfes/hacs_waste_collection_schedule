@@ -10,6 +10,18 @@
 
 Waste collection schedules from service provider web sites are updated daily, derived from local ICS/iCal files, or generated from user-specified dates or regularly repeating date patterns. The Home Assistant built-in Calendar is automatically populated with schedules, and there is a high degree of flexibility in how information can be format and displayed in entity cards or pop-ups. The framework can easily be extended to support additional waste collection service providers, or other services which provide schedules.
 
+> ### 📣 Test the new source architecture (3.0.0 pre-release)
+>
+> We are previewing a major rework of how sources are built, and we would value your help testing it. The benefits:
+>
+> - **Less duplicated code, more reuse:** sources are composed from shared, typed building blocks (retrieve, parse, transform) instead of bespoke code, so a fix in one place benefits every provider that reuses it.
+> - **Easier to add and manage sources:** most new sources are now a short, declarative definition with canonical waste types, typed parameters and built-in response validation, rather than a hand-written fetch routine.
+> - **Consistent waste-type labels and icons** across providers, shown in your Home Assistant language.
+>
+> It is available now as an opt-in pre-release, and your existing setup is not affected. To try it, enable "Show beta versions" for this integration in HACS and update to `3.0.0-alpha.1`. Please report anything that looks wrong (especially changed waste-type labels) on the [architecture RFC (#6561)](https://github.com/mampfes/hacs_waste_collection_schedule/issues/6561).
+>
+> Note: for migrated sources this is a breaking change. Canonical waste-type labels differ from the old hand-written strings, so automations or templates that match an exact label may need updating. Catching those cases early is exactly the feedback we need before the stable 3.0.0.
+
 # Supported Service Providers
 
 Waste collection schedules in the following formats and countries are supported. Click on the section heading to view details of individual service providers.
@@ -96,6 +108,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Mitcham](/doc/source/app_my_local_services_au.md) / mitchamcouncil.sa.gov.au
 - [City of Monash](/doc/source/monash_vic_gov_au.md) / monash.vic.gov.au
 - [City of Moonee Valley](/doc/source/moonee_valley_vic_gov_au.md) / mvcc.vic.gov.au
+- [City of Moreton Bay](/doc/source/moretonbay_qld_gov_au.md) / moretonbay.qld.gov.au
 - [City of Mount Gambier](/doc/source/app_my_local_services_au.md) / mountgambier.sa.gov.au
 - [City of Newcastle](/doc/source/newcastle_nsw_gov_au.md) / newcastle.nsw.gov.au
 - [City of Norwood Payneham and St Peters](/doc/source/app_my_local_services_au.md) / npsp.sa.gov.au
@@ -117,6 +130,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Wanneroo](/doc/source/wanneroo_wa_gov_au.md) / wanneroo.wa.gov.au
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
+- [City of Yarra](/doc/source/yarracity_vic_gov_au.md) / yarracity.vic.gov.au
 - [Clare and Gilbert Valleys Council](/doc/source/app_my_local_services_au.md) / claregilbertvalleys.sa.gov.au
 - [Clarence City Council](/doc/source/ccc_tas_gov_au.md) / ccc.tas.gov.au/wp-json/waste-collection
 - [Clarence Valley Council](/doc/source/impactapps_com_au.md) / clarence.nsw.gov.au
@@ -179,6 +193,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mid Murray Council](/doc/source/app_my_local_services_au.md) / mid-murray.sa.gov.au
 - [Mid-Western Regional Council](/doc/source/midwestern_nsw_gov_au.md) / midwestern.nsw.gov.au
 - [MidCoast Council](/doc/source/midcoast_nsw_gov_au.md) / midcoast.nsw.gov.au
+- [Mildura Rural City Council](/doc/source/mildura_vic_gov_au.md) / mildura.vic.gov.au
 - [Mitchell Shire Council](/doc/source/mitchellshire_vic_gov_au.md) / mitchellshire.vic.gov.au
 - [Moira Shire Council](/doc/source/impactapps_com_au.md) / moira.vic.gov.au
 - [Moorabool Shire Council](/doc/source/moorabool_vic_gov_au.md) / moorabool.vic.gov.au
@@ -969,6 +984,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
 - [RenoWeb](/doc/source/renoweb_dk.md) / renoweb.dk
 - [RessourceIndsamling.dk](/doc/source/ressourceindsamling_dk.md) / ressourceindsamling.dk
+- [Revas (Viborg Kommune)](/doc/source/affaldonline_dk.md) / revas.dk
 - [Silkeborg Forsyning](/doc/source/affaldonline_dk.md) / silkeborgforsyning.dk
 - [Vejle Kommune](/doc/source/affaldonline_dk.md) / vejle.dk
 - [Vestforbrænding](/doc/source/vestfor_dk.md) / selvbetjening.vestfor.dk
@@ -1803,6 +1819,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Paderborn (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Landkreis Peine](/doc/source/ab_peine_de.md) / ab-peine.de
 - [Landkreis Ravensburg](/doc/source/rv_de.md) / rv.de
+- [Landkreis Reutlingen](/doc/source/abfall_io_graphql.md) / kreis-reutlingen.de
 - [Landkreis Rhön Grabfeld](/doc/source/landkreis_rhoen_grabfeld.md) / abfallinfo-rhoen-grabfeld.de
 - [Landkreis Rosenheim](/doc/source/awido_de.md) / abfall.landkreis-rosenheim.de
 - [Landkreis Rostock](/doc/source/abfall_lro_de.md) / abfall-lro.de
@@ -2264,6 +2281,8 @@ If you already have enough information for your municipality/region, you are ver
 - [AET Ambiente Energia Territorio S.p.A.](/doc/source/junker_app.md) / junker.app
 - [Agliana](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Agno Chiampo Ambiente](/doc/source/junker_app.md) / junker.app
+- [Agrate Brianza](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Aicurzio](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Alia Servizi Ambientali S.p.A.](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Alife - CZETA Spa](/doc/source/junker_app.md) / junker.app
 - [Altavilla Irpina](/doc/source/junker_app.md) / junker.app
@@ -2278,6 +2297,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Anzola dell'Emilia](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Aprica S.p.A.](/doc/source/apricaspa_it.md) / apricaspa.it
 - [Aprilia - Progetto Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Arcore](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Ardea - DM Technology Srl](/doc/source/junker_app.md) / junker.app
 - [Argelato](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [ARO Figulinas - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
@@ -2300,13 +2320,18 @@ If you already have enough information for your municipality/region, you are ver
 - [Barberino di Mugello](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Barberino Tavarnelle](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Bari - Amiu Puglia](/doc/source/junker_app.md) / junker.app
+- [Basiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Bassano Romano](/doc/source/junker_app.md) / junker.app
 - [Belforte del Chienti](/doc/source/junker_app.md) / junker.app
+- [Bellinzago Lombardo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Bellunum Srl](/doc/source/junker_app.md) / junker.app
+- [Bellusco](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Bernareggio](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Bientina](/doc/source/junker_app.md) / junker.app
 - [Bitti, Luna e Onanì - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Blera](/doc/source/junker_app.md) / junker.app
 - [Borghetto di Borbera](/doc/source/junker_app.md) / junker.app
+- [Borgo San Giovanni](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Borgo San Lorenzo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Borgomaro](/doc/source/junker_app.md) / junker.app
 - [Borgosesia - Seso Srl](/doc/source/junker_app.md) / junker.app
@@ -2314,33 +2339,48 @@ If you already have enough information for your municipality/region, you are ver
 - [Brembate](/doc/source/junker_app.md) / junker.app
 - [Brixen/Bressanone - Stadtwerke Brixen AG/ASM Bressanone SpA](/doc/source/junker_app.md) / junker.app
 - [Broni](/doc/source/junker_app.md) / junker.app
+- [Brugherio](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Bubbiano](/doc/source/junker_app.md) / junker.app
 - [Budoni - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Buggiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Buonvicino](/doc/source/junker_app.md) / junker.app
+- [Burago Di Molgora](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Busnago](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Bussero](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [C.C.S. - Consorzio Campale Stabile](/doc/source/junker_app.md) / junker.app
 - [Cabras](/doc/source/junker_app.md) / junker.app
 - [Calatafimi Segesta](/doc/source/junker_app.md) / junker.app
 - [Calderara di Reno](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Calenzano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Calvi Risorta - Isola Verde Ecologia](/doc/source/junker_app.md) / junker.app
+- [Cambiago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Camerino](/doc/source/junker_app.md) / junker.app
 - [Campagnano di Roma  - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Camparada](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Campi Bisenzio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Campobasso - S.E.A. Servizi e Ambiente SPA](/doc/source/junker_app.md) / junker.app
 - [Campolieto - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
 - [Cancello ed Arnone - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
 - [Canicattini Bagni - Traina Srl](/doc/source/junker_app.md) / junker.app
 - [Cantagallo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Caponago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Capraia e Limite](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Capua - CZETA Spa - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Carini - Senesi SpA](/doc/source/junker_app.md) / junker.app
 - [Carmignano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Carnate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Caronno Pertusella - Econord](/doc/source/junker_app.md) / junker.app
+- [Carpiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Carpignano Salentino](/doc/source/junker_app.md) / junker.app
 - [Carrara - Nausicaa S.p.a](/doc/source/junker_app.md) / junker.app
+- [Carugate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Casale Marittimo](/doc/source/junker_app.md) / junker.app
+- [Casaletto Lodigiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Casalmaiocco](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Casavatore - Ecology Srl](/doc/source/junker_app.md) / junker.app
+- [Caselle Lurani](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Cassano D'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Cassina De' Pecchi](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Castel Gandolfo - Coop 134](/doc/source/junker_app.md) / junker.app
 - [Castel Maggiore](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Castel Volturno - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
@@ -2352,9 +2392,14 @@ If you already have enough information for your municipality/region, you are ver
 - [Castelsardo](/doc/source/junker_app.md) / junker.app
 - [Castelvetrano](/doc/source/junker_app.md) / junker.app
 - [Castiglione in Teverina - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
+- [Cavenago Di Brianza](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [CEM Ambiente](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Cernusco Sul Naviglio](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cerreto Guidi](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Cerro Al Lambro](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cerro Maggiore - Agesp Spa](/doc/source/junker_app.md) / junker.app
 - [Certaldo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Cervignano D'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cesa - DM Technology Srl](/doc/source/junker_app.md) / junker.app
 - [Cesano Boscone - San Germano - Gruppo Iren](/doc/source/junker_app.md) / junker.app
 - [Challand-Saint-Victor](/doc/source/junker_app.md) / junker.app
@@ -2371,7 +2416,10 @@ If you already have enough information for your municipality/region, you are ver
 - [CLARA Ambiente](/doc/source/junker_app.md) / junker.app
 - [Co.S.R.A.B](/doc/source/junker_app.md) / junker.app
 - [Collinas](/doc/source/junker_app.md) / junker.app
+- [Cologno Monzese](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cologno Monzese - CEM Ambiente](/doc/source/junker_app.md) / junker.app
+- [Colturano](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Comazzo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Comune.Digital](/doc/source/comune_digital_it.md) / comune.digital
 - [Comuni della Convenzione di Sesto Calende - Econord](/doc/source/junker_app.md) / junker.app
 - [Comunità della Vallagarina - Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app
@@ -2379,10 +2427,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Comunità Montana Sarcidano e Barbagia di Seulo - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Comunità Valsugana e Tesino](/doc/source/junker_app.md) / junker.app
 - [Conca Casale e Venafro - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
+- [Concorezzo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Consac](/doc/source/junker_app.md) / junker.app
 - [Consorzio Area Vasta Basso Novarese](/doc/source/junker_app.md) / junker.app
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
 - [Cooperativa Trasforma](/doc/source/junker_app.md) / junker.app
+- [Cornate D'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Correzzana](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cosir Srl](/doc/source/junker_app.md) / junker.app
 - [Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
 - [Cosvega](/doc/source/junker_app.md) / junker.app
@@ -2393,6 +2444,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Decimoputzu - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Dresano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Ecoambiente Srl](/doc/source/junker_app.md) / junker.app
 - [EcoInnova Srl](/doc/source/junker_app.md) / junker.app
 - [Ecolan - Lanciano](/doc/ics/ecolan_it.md) / ecolan.it
@@ -2422,13 +2474,16 @@ If you already have enough information for your municipality/region, you are ver
 - [GEA Srl](/doc/source/junker_app.md) / junker.app
 - [Geovest](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [GESENU  Gestione Servizi Nettezza Urbana S.P.A](/doc/source/junker_app.md) / junker.app
+- [Gessate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Gestione Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Giarre - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
 - [Ginosa](/doc/source/junker_app.md) / junker.app
 - [Gioiosa Ionica](/doc/source/junker_app.md) / junker.app
 - [Gioiosa Marea - Pizzo Pippo](/doc/source/junker_app.md) / junker.app
 - [Gonnesa - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
+- [Gorgonzola](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Greve in Chianti](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Grezzago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Gruppo Veritas](/doc/source/gruppoveritas_it.md) / gruppoveritas.it
 - [Guardistallo](/doc/source/junker_app.md) / junker.app
 - [Iglesias](/doc/source/junker_app.md) / junker.app
@@ -2437,11 +2492,40 @@ If you already have enough information for your municipality/region, you are ver
 - [Imperia - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Impruneta](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Inverno e Monteleone](/doc/source/junker_app.md) / junker.app
+- [Inzago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Iren Ambiente](/doc/source/irenambiente_it.md) / servizi.irenambiente.it
 - [Isola del Liri - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
 - [Isole Tremiti - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
+- [Isontina Ambiente](/doc/source/isontinambiente_it.md) / isontinambiente.it
 - [Isontina Ambiente](/doc/source/junker_app.md) / junker.app
-- [isontina ambiente: Ronchi dei legionari](/doc/source/isontinambiente_it.md) / isontinambiente.it
+- [Isontina Ambiente: Capriva del Friuli](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/capriva-del-friuli
+- [Isontina Ambiente: Cormons](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/cormons
+- [Isontina Ambiente: Doberdò del Lago](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/doberdo-del-lago
+- [Isontina Ambiente: Dolegna del Collio](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/dolegna-del-collio
+- [Isontina Ambiente: Duino Aurisina](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/duino-aurisina
+- [Isontina Ambiente: Farra d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/farra-disonzo
+- [Isontina Ambiente: Fogliano Redipuglia](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/fogliano-redipuglia
+- [Isontina Ambiente: Gorizia](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/gorizia
+- [Isontina Ambiente: Gradisca d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/gradisca-disonzo
+- [Isontina Ambiente: Grado](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/grado
+- [Isontina Ambiente: Mariano del Friuli](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/mariano-del-friuli
+- [Isontina Ambiente: Medea](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/medea
+- [Isontina Ambiente: Monfalcone](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/monfalcone
+- [Isontina Ambiente: Monrupino](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/monrupino
+- [Isontina Ambiente: Moraro](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/moraro
+- [Isontina Ambiente: Mossa](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/mossa
+- [Isontina Ambiente: Romans d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/romans-disonzo
+- [Isontina Ambiente: Ronchi dei Legionari](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari
+- [Isontina Ambiente: Sagrado](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/sagrado
+- [Isontina Ambiente: San Canzian d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/san-canzian-disonzo
+- [Isontina Ambiente: San Floriano del Collio](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/san-floriano-del-collio
+- [Isontina Ambiente: San Lorenzo Isontino](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/san-lorenzo-isontino
+- [Isontina Ambiente: San Pier d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/san-pier-disonzo
+- [Isontina Ambiente: Savogna d'Isonzo](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/savogna-disonzo
+- [Isontina Ambiente: Sgonico - Zgonik](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/sgonico-zgonik
+- [Isontina Ambiente: Staranzano](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/staranzano
+- [Isontina Ambiente: Turriaco](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/turriaco
+- [Isontina Ambiente: Villesse](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/villesse
 - [Ispica - Impregico Srl](/doc/source/junker_app.md) / junker.app
 - [Itri - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Junker](/doc/source/junker_app.md) / junker.app
@@ -2456,26 +2540,36 @@ If you already have enough information for your municipality/region, you are ver
 - [Leinì](/doc/source/junker_app.md) / junker.app
 - [Lentate sul Seveso](/doc/source/junker_app.md) / junker.app
 - [Leporano - Impregico Srl](/doc/source/junker_app.md) / junker.app
+- [Lesmo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Letino](/doc/source/junker_app.md) / junker.app
 - [Levate](/doc/source/junker_app.md) / junker.app
 - [Limosano](/doc/source/junker_app.md) / junker.app
+- [Liscate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Lodi](/doc/source/junker_app.md) / junker.app
 - [Lodè - Eco Flap - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Loreto Aprutino - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Lucca - Sistema Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Macerata Campania - DHI](/doc/source/junker_app.md) / junker.app
+- [Macherio](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Mandas - C.A.P.R.I.](/doc/source/junker_app.md) / junker.app
 - [Maracalagonis - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Marcallo con Casone](/doc/source/junker_app.md) / junker.app
 - [Marche Multiservizi Falconara](/doc/source/junker_app.md) / junker.app
 - [Marliana](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Marsala, Trapani e Misiliscemi- Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Masate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Massa e Cozzile](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Massalengo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Massalengo](/doc/source/junker_app.md) / junker.app
 - [Meda](/doc/source/junker_app.md) / junker.app
+- [Mediglia](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Melegnano](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Melzo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Mentana - Paoletti Ecologia](/doc/source/junker_app.md) / junker.app
 - [Merano - ASM](/doc/source/junker_app.md) / junker.app
+- [Merlino](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Messina - Messinaservizi Bene Comune](/doc/source/junker_app.md) / junker.app
+- [Mezzago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Minerva Ambiente](/doc/source/junker_app.md) / junker.app
 - [Minturno](/doc/source/junker_app.md) / junker.app
 - [Miramare Service Srl](/doc/source/junker_app.md) / junker.app
@@ -2507,6 +2601,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Monza - Impresa Sangalli](/doc/source/junker_app.md) / junker.app
 - [Mosciano Sant'Angelo - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Mottola e Laterza - Meridionale Servizi Ambientali Srl](/doc/source/junker_app.md) / junker.app
+- [Mulazzano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Muraca Srl](/doc/source/junker_app.md) / junker.app
 - [NET SpA - Udine](/doc/source/junker_app.md) / junker.app
 - [Nicosia - Leukosia](/doc/source/junker_app.md) / junker.app
@@ -2516,17 +2611,21 @@ If you already have enough information for your municipality/region, you are ver
 - [Nuoro - È-Comune srl](/doc/source/junker_app.md) / junker.app
 - [Orciano Pisano](/doc/source/junker_app.md) / junker.app
 - [Oristano - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Ornago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Orosei - Sceas - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Osimo - Astea](/doc/source/junker_app.md) / junker.app
 - [Ossago Lodigiano](/doc/source/junker_app.md) / junker.app
 - [Palata](/doc/source/junker_app.md) / junker.app
 - [Palombara Sabina](/doc/source/junker_app.md) / junker.app
+- [Pantigliate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Passerano Marmorito](/doc/source/junker_app.md) / junker.app
 - [Patti - Pizzo Pippo](/doc/source/junker_app.md) / junker.app
+- [Paullo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Paullo](/doc/source/junker_app.md) / junker.app
 - [Perdasdefogu - Eco-Sistemi](/doc/source/junker_app.md) / junker.app
 - [Pescia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Pescina - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Pessano Con Bornago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Piazza Brembana](/doc/source/junker_app.md) / junker.app
 - [Pietrabruna](/doc/source/junker_app.md) / junker.app
 - [Pieve a Nievole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -2537,6 +2636,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Ponte Buggianese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Posada - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Potenza - Acta Spa](/doc/source/junker_app.md) / junker.app
+- [Pozzo D'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Pozzuolo Martesana](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Prato](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Pratola Peligna - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Priolo Gargallo -  IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
@@ -2559,11 +2660,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Robecchetto con Induno](/doc/source/junker_app.md) / junker.app
 - [Rocca di Papa - DM Technology Srl](/doc/source/junker_app.md) / junker.app
 - [Roccella Ionica - Jonica Multiservizi Spa](/doc/source/junker_app.md) / junker.app
+- [Rodano](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Roncello](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Ronco Briantino](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Rosora](/doc/source/junker_app.md) / junker.app
 - [Rovellasca](/doc/source/junker_app.md) / junker.app
 - [Sabaudia - Del Prete Srl](/doc/source/junker_app.md) / junker.app
 - [Sala Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Sala Consilina - SuperEco SRL](/doc/source/junker_app.md) / junker.app
+- [Salerano sul Lambro](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Salerno - Salerno Pulita Spa](/doc/source/junker_app.md) / junker.app
 - [Saluggia](/doc/source/junker_app.md) / junker.app
 - [Sambuca Pistoiese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -2572,8 +2677,10 @@ If you already have enough information for your municipality/region, you are ver
 - [San Cipriano Po](/doc/source/junker_app.md) / junker.app
 - [San Giovanni in Persiceto](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [San Marcello Piteglio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [San Zenone Al Lambro](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Sanremo - Amaie Energia e Servizi Srl](/doc/source/junker_app.md) / junker.app
 - [Sant'Agata Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
+- [Sant'Angelo Lodigiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Santa Lucia del Mela](/doc/source/junker_app.md) / junker.app
 - [Santa Maria a Vico](/doc/source/junker_app.md) / junker.app
 - [Santa Maria Capua Vetere - DHI](/doc/source/junker_app.md) / junker.app
@@ -2593,6 +2700,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Serravalle Pistoiese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sesto Fiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sesto San Giovanni - Impresa Sangalli](/doc/source/junker_app.md) / junker.app
+- [Settala](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Sezze - SPL](/doc/source/junker_app.md) / junker.app
 - [Sieco Spa](/doc/source/junker_app.md) / junker.app
 - [Signa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -2601,10 +2709,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Siniscola - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Soleto](/doc/source/junker_app.md) / junker.app
 - [Solza](/doc/source/junker_app.md) / junker.app
+- [Sordio](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Spoltore - Rieco](/doc/source/junker_app.md) / junker.app
 - [Squillace - Sieco Spa](/doc/source/junker_app.md) / junker.app
 - [Stefanaconi](/doc/source/junker_app.md) / junker.app
 - [Stradella](/doc/source/junker_app.md) / junker.app
+- [Sulbiate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Suno](/doc/source/junker_app.md) / junker.app
 - [Taranto (araccolta.it)](/doc/source/araccolta_it.md) / araccolta.it
 - [Termoli - Rieco Sud Scarl](/doc/source/junker_app.md) / junker.app
@@ -2615,11 +2725,16 @@ If you already have enough information for your municipality/region, you are ver
 - [Toro](/doc/source/junker_app.md) / junker.app
 - [Torpè - Eco Flap - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Torre de' Passeri](/doc/source/junker_app.md) / junker.app
+- [Torrevecchia Pia](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Traona](/doc/source/junker_app.md) / junker.app
 - [Trappeto](/doc/source/junker_app.md) / junker.app
+- [Trezzano Rosa](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Trezzo Sull'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Tribiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Tricase](/doc/source/junker_app.md) / junker.app
 - [Triora](/doc/source/junker_app.md) / junker.app
 - [Trivento - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
+- [Truccazzano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Turate - Turcato Snc](/doc/source/junker_app.md) / junker.app
 - [Unione Basso Biferno - Impregico Srl](/doc/source/junker_app.md) / junker.app
 - [Unione Castello di Gerione - Giuliani Environment](/doc/source/junker_app.md) / junker.app
@@ -2630,6 +2745,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Unione dei Comuni del Guilcier - Cosir Srl](/doc/source/junker_app.md) / junker.app
 - [Unione dei Comuni di Valmalenco](/doc/source/junker_app.md) / junker.app
 - [Unione Terra dei Castelli](/doc/source/junker_app.md) / junker.app
+- [Usmate Velate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Ussita](/doc/source/junker_app.md) / junker.app
 - [Uzzano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vaglia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -2637,20 +2753,27 @@ If you already have enough information for your municipality/region, you are ver
 - [Valfornace](/doc/source/junker_app.md) / junker.app
 - [Valle Camonica Servizi Srl](/doc/source/junker_app.md) / junker.app
 - [Valle Umbra Servizi S.p.A.](/doc/source/junker_app.md) / junker.app
+- [Vaprio D'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Vasto - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Vedano Al Lambro](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Vernio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vezzano sul Crostolo](/doc/source/junker_app.md) / junker.app
 - [Viagrande](/doc/source/junker_app.md) / junker.app
 - [Vicchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vicoforte](/doc/source/junker_app.md) / junker.app
 - [Vieste - Impregico Srl](/doc/source/junker_app.md) / junker.app
+- [Vignate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Villanterio](/doc/source/junker_app.md) / junker.app
 - [Villaputzu](/doc/source/junker_app.md) / junker.app
 - [Villaricca - Sieco Spa](/doc/source/junker_app.md) / junker.app
+- [Villasanta](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Villaspeciosa](/doc/source/junker_app.md) / junker.app
+- [Vimercate](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Vimodrone](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Vinci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vitorchiano](/doc/source/junker_app.md) / junker.app
 - [Vitulazio - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Vizzolo Predabissi](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Volsca Ambiente](/doc/source/junker_app.md) / junker.app
 - [Volterra](/doc/source/junker_app.md) / junker.app
 - [Wipptal](/doc/source/junker_app.md) / junker.app
@@ -3067,6 +3190,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Söderköping](/doc/source/avfallsapp_se.md) / soderkoping.se
 - [Teknik i Väst (Arvika/Eda)](/doc/source/avfallsapp_se.md) / teknikivast.se
 - [Telge Återvinning](/doc/source/telge_se.md) / telge.se
+- [Timrå kommun](/doc/source/timra_se.md) / timra.se
 - [Upplands-Bro](/doc/source/avfallsapp_se.md) / upplands-bro.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
@@ -3600,6 +3724,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
 - [Jacksonville, FL](/doc/source/jacksonville_fl_us.md) / myjax.custhelp.com/app/hauler
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
+- [Marysville, WA](/doc/source/marysville_wa_us.md) / marysvillewa.gov/172/Solid-Waste-Recycling
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
 - [New Rochelle (NY)](/doc/source/recyclecoach_com.md) / newrochelleny.gov/791/Collection-Dates
 - [New York City](/doc/source/nyc_gov.md) / nyc.gov
@@ -3609,6 +3734,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Orange County, FL](/doc/source/ocarcims_ocfl_net.md) / ocarcims.ocfl.net
 - [Palm Coast, FL](/doc/source/palmcoast_fl_gov.md) / palmcoast.gov
 - [Plainville (CT)](/doc/source/recyclecoach_com.md) / plainvillect.com
+- [Prince George's County, MD](/doc/source/prince_georges_county_md_us.md) / princegeorgescountymd.gov/departments-offices/environment/waste-recycling/residential-collections
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
 - [Recology San Francisco](/doc/ics/recollect.md) / recology.com/recology-san-francisco
 - [Recycle By City](/doc/ics/recyclebycity_com.md) / recyclebycity.com

@@ -1145,6 +1145,37 @@
         },
         "data_description": {}
       },
+      "args_moretonbay_qld_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street_name": "Street name",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "The house/unit number, e.g. '25'",
+          "street_name": "The street name, e.g. 'Pumicestone' or 'Pumicestone Street'",
+          "suburb": "The suburb, e.g. 'Bellara'"
+        }
+      },
+      "reconfigure_moretonbay_qld_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street_name": "Street name",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "house_number": "The house/unit number, e.g. '25'",
+          "street_name": "The street name, e.g. 'Pumicestone' or 'Pumicestone Street'",
+          "suburb": "The suburb, e.g. 'Bellara'"
+        }
+      },
       "args_newcastle_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -1417,6 +1448,29 @@
           "address": "Address"
         },
         "data_description": {}
+      },
+      "args_yarracity_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full street address within the City of Yarra, including suburb and postcode"
+        }
+      },
+      "reconfigure_yarracity_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Full street address within the City of Yarra, including suburb and postcode"
+        }
       },
       "args_ccc_tas_gov_au": {
         "title": "Configure Source",
@@ -2117,6 +2171,29 @@
           "street_address": "Street Address"
         },
         "data_description": {}
+      },
+      "args_mildura_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Full street address including suburb and postcode, e.g. '1 Stockmans Drive, Irymple VIC 3498'"
+        }
+      },
+      "reconfigure_mildura_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "street_address": "Full street address including suburb and postcode, e.g. '1 Stockmans Drive, Irymple VIC 3498'"
+        }
       },
       "args_mitchellshire_vic_gov_au": {
         "title": "Configure Source",
@@ -2838,9 +2915,9 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "House number, exactly as shown in the dropdown (e.g. 5).",
-          "street": "Street name, exactly as shown in the dropdown (e.g. Cleveland Place).",
-          "suburb": "Suburb in UPPER CASE, exactly as shown in the dropdown (e.g. BONNET BAY)."
+          "house_number": "House number (e.g. 5).",
+          "street": "Street name, as normally written (e.g. Cleveland Place).",
+          "suburb": "Suburb name, as normally written (e.g. Bonnet Bay)."
         }
       },
       "reconfigure_sutherlandshire_nsw_gov_au": {
@@ -2853,9 +2930,9 @@
           "suburb": "Suburb"
         },
         "data_description": {
-          "house_number": "House number, exactly as shown in the dropdown (e.g. 5).",
-          "street": "Street name, exactly as shown in the dropdown (e.g. Cleveland Place).",
-          "suburb": "Suburb in UPPER CASE, exactly as shown in the dropdown (e.g. BONNET BAY)."
+          "house_number": "House number (e.g. 5).",
+          "street": "Street name, as normally written (e.g. Cleveland Place).",
+          "suburb": "Suburb name, as normally written (e.g. Bonnet Bay)."
         }
       },
       "args_hawkesbury_nsw_gov_au": {
@@ -16362,6 +16439,33 @@
         },
         "data_description": {}
       },
+      "args_cem_ambiente_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "The municipality served by CEM Ambiente (e.g. 'Vimodrone').",
+          "street": "The street name as listed by CEM Ambiente for the selected municipality (e.g. 'Via Aldo Moro')."
+        }
+      },
+      "reconfigure_cem_ambiente_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "The municipality served by CEM Ambiente (e.g. 'Vimodrone').",
+          "street": "The street name as listed by CEM Ambiente for the selected municipality (e.g. 'Via Aldo Moro')."
+        }
+      },
       "args_amsa_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -17556,6 +17660,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Postal Code"
         },
         "data_description": {
@@ -17568,6 +17673,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Postal Code"
         },
         "data_description": {}
@@ -20414,6 +20520,29 @@
         },
         "data_description": {
           "address": "Exact address as shown in the Telge autocomplete (uppercase, e.g. BERGSGATAN 22, SÖDERTÄLJE)"
+        }
+      },
+      "args_timra_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Property address as used by Timrå kommun (Belägenhetsadress), e.g. 'Aspen 195'."
+        }
+      },
+      "reconfigure_timra_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Property address as used by Timrå kommun (Belägenhetsadress), e.g. 'Aspen 195'."
         }
       },
       "args_uppsalavatten_se": {
@@ -29437,6 +29566,29 @@
           "address": "Full street address including city and state (e.g. '11743 Heather Grove Ln, Jacksonville, FL')"
         }
       },
+      "args_marysville_wa_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Street address as house number and street name (e.g. '501 Delta Ave' or '6400 88th St NE'). Do not include city or ZIP code."
+        }
+      },
+      "reconfigure_marysville_wa_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "street_address": "Street address as house number and street name (e.g. '501 Delta Ave' or '6400 88th St NE'). Do not include city or ZIP code."
+        }
+      },
       "args_apps_ci_minneapolis_mn_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -29544,6 +29696,29 @@
         },
         "data_description": {
           "street": "Street name (e.g. 'Ripcord Lane')"
+        }
+      },
+      "args_prince_georges_county_md_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Full street address including city and state (e.g. '1301 McCormick Dr, Upper Marlboro, MD')"
+        }
+      },
+      "reconfigure_prince_georges_county_md_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Full street address including city and state (e.g. '1301 McCormick Dr, Upper Marlboro, MD')"
         }
       },
       "args_red_bank_tn_us": {

@@ -11,7 +11,7 @@ waste_collection_schedule:
       args:
         postal_code: POSTAL CODE (postcode)
         house_number: "HOUSE NUMBER (huisnummer)"
-        
+        house_number_extension: "HOUSE NUMBER EXTENSION (toevoeging, optional)"
 ```
 
 ### Configuration Variables
@@ -22,6 +22,10 @@ waste_collection_schedule:
 **house_number**  
 *(String | Integer) (required)*
 
+**house_number_extension**  
+*(String) (optional)*  
+House number extension (toevoeging), e.g. `"A"`, `"B"`, `"bis"`. Only needed if your address has an extension.
+
 ## Example
 
 ```yaml
@@ -31,7 +35,18 @@ waste_collection_schedule:
       args:
         postal_code: 6417 AT
         house_number: "32"
-        
+```
+
+With house number extension:
+
+```yaml
+waste_collection_schedule:
+    sources:
+    - name: rd4_nl
+      args:
+        postal_code: 6417 AT
+        house_number: "32"
+        house_number_extension: "A"
 ```
 
 ## How to get the source argument

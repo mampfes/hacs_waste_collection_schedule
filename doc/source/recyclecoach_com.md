@@ -61,14 +61,14 @@ mentioned above.
 
 Now, to get the `zone_id`, use the following URL:
 
-    https://api-city.recyclecoach.com/zone-setup/address?sku=<project_id>&district=<district_id>&prompt=undefined&term=<specific address>
+    https://api-city.recyclecoach.com/zone-setup/address?sku=<project_id>&district=<district_id>&term=<specific address>
 
 Use the `project_id` and `district_id` from the last step. Replace
 `<specific address>` with your specific address.
 
 For example:
 
-    https://api-city.recyclecoach.com/zone-setup/address?sku=3107&district=OLYMP&prompt=undefined&term=250 Main St
+    https://api-city.recyclecoach.com/zone-setup/address?sku=3107&district=OLYMP&term=250 Main St
 
 This will produce another JSON blob, which contains some potential matches.
 Each result will have a "zones" key. Pick the best match, probably the first on the list.

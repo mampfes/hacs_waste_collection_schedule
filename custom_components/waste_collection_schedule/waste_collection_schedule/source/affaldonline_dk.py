@@ -117,6 +117,12 @@ AFFALDONLINE_MUNICIPALITIES = {
         "parser": "default",
         "values": "Nørregade|69||||7100|Vejle|16285351|16285351|0",
     },
+    "viborg": {
+        "title": "Revas (Viborg Kommune)",
+        "url": "https://www.revas.dk/",
+        "parser": "default",
+        "values": "Hjultorvet|1||||8800|Viborg|8228245|8739|0",
+    },
 }
 
 EXTRA_INFO = [

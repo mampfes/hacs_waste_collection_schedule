@@ -267,6 +267,13 @@
     "howto": {},
     "urls": {}
   },
+  "moretonbay_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moretonbay_qld_gov_au.md",
+    "howto": {
+      "en": "Enter your house number, street name and suburb exactly as they appear on the City of Moreton Bay bin-day lookup at https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days. The street name may be given with or without its street type (e.g. 'Pumicestone' or 'Pumicestone Street')."
+    },
+    "urls": {}
+  },
   "newcastle_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newcastle_nsw_gov_au.md",
     "howto": {},
@@ -333,6 +340,13 @@
   "wanneroo_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wanneroo_wa_gov_au.md",
     "howto": {},
+    "urls": {}
+  },
+  "yarracity_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/yarracity_vic_gov_au.md",
+    "howto": {
+      "en": "Enter your full street address including suburb and postcode, e.g. '333 Bridge Road, Richmond VIC 3121'."
+    },
     "urls": {}
   },
   "ccc_tas_gov_au": {
@@ -509,6 +523,13 @@
   "midcoast_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midcoast_nsw_gov_au.md",
     "howto": {},
+    "urls": {}
+  },
+  "mildura_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mildura_vic_gov_au.md",
+    "howto": {
+      "en": "Go to <https://www.mildura.vic.gov.au/Explore/My-Neighbourhood> and make sure your address matches the auto-complete suggestions."
+    },
     "urls": {}
   },
   "mitchellshire_vic_gov_au": {
@@ -698,7 +719,7 @@
   "sutherlandshire_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sutherlandshire_nsw_gov_au.md",
     "howto": {
-      "en": "Visit https://www.sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/waste-information-booklet and note the exact suburb, street and house number values shown in each dropdown."
+      "en": "Enter your suburb, street name and house number as they normally appear in your address. These are looked up automatically via the Sutherland Shire online services map, so they don't need to match any particular list."
     },
     "urls": {}
   },
@@ -3403,6 +3424,14 @@
     },
     "urls": {}
   },
+  "cem_ambiente_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cem_ambiente_it.md",
+    "howto": {
+      "en": "Enter the municipality (comune) and street (via) exactly as they are known to CEM Ambiente, e.g. as shown on https://www.cemambiente.it/cemfacile/. If the exact spelling isn't found, the error message will list the closest matching street names for your municipality.",
+      "it": "Inserisci il comune e la via esattamente come sono indicati da CEM Ambiente, ad esempio come mostrato su https://www.cemambiente.it/cemfacile/. Se l'ortografia esatta non viene trovata, il messaggio di errore elencherà le vie più simili per il tuo comune."
+    },
+    "urls": {}
+  },
   "amsa_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
     "howto": {
@@ -3485,8 +3514,8 @@
   "isontinambiente_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/isontinambiente_it.md",
     "howto": {
-      "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> and select your address. The address ID is the number at the end of the URL. e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` the address ID is `1172`.",
-      "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari> e seleziona il tuo indirizzo. L'ID dell'indirizzo è il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo è `1172`."
+      "en": "Visit <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/>, pick your municipality from the list, and select your address. The address ID is the number at the end of the URL. e.g. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` the address ID is `1172`.",
+      "it": "Visita <https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/>, scegli il tuo comune dall'elenco e seleziona il tuo indirizzo. L'ID dell'indirizzo è il numero alla fine dell'URL. es. `https://isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/ronchi-dei-legionari/?indirizzo=1172` l'ID dell'indirizzo è `1172`."
     },
     "urls": {}
   },
@@ -4324,6 +4353,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/telge_se.md",
     "howto": {
       "en": "Find your address at https://www.telge.se by searching for your street name in the waste collection schedule (Sopbilsschema). Use the exact address string shown in the autocomplete dropdown, e.g. 'BERGSGATAN 22, SÖDERTÄLJE'."
+    },
+    "urls": {}
+  },
+  "timra_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/timra_se.md",
+    "howto": {
+      "en": "Enter the property address exactly as shown on the Timrå kommun waste collection map (Belägenhetsadress), e.g. 'Aspen 195'. You can look up the address at https://kartor.timra.se/portal/apps/experiencebuilder/experience/?id=186668f9efeb458c926d85a978fe85de"
     },
     "urls": {}
   },
@@ -6775,6 +6811,11 @@
     },
     "urls": {}
   },
+  "marysville_wa_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/marysville_wa_us.md",
+    "howto": {},
+    "urls": {}
+  },
   "apps_ci_minneapolis_mn_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/apps_ci_minneapolis_mn_us.md",
     "howto": {},
@@ -6799,6 +6840,11 @@
   },
   "palmcoast_fl_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/palmcoast_fl_gov.md",
+    "howto": {},
+    "urls": {}
+  },
+  "prince_georges_county_md_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prince_georges_county_md_us.md",
     "howto": {},
     "urls": {}
   },
