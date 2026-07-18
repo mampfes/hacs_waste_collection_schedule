@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.31.1] - 2026-07-18
+
+### Other
+
+- README/info: announce the 3.0.0 architecture pre-release and how to opt in via HACS "show beta versions" (#6561)
+
 ## [2.31.0] - 2026-07-17
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
