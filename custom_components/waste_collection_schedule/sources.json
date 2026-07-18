@@ -14164,6 +14164,12 @@
       "id": "ics_spenge_de"
     },
     {
+      "title": "Stadt Tengen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_tengen_de"
+    },
+    {
       "title": "Stadt Unterschlei\u00dfheim",
       "module": "awido_de",
       "default_params": {

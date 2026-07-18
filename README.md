@@ -2100,6 +2100,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Saarlouis](/doc/ics/mein_abfallkalender_online.md) / saarlouis.de
 - [Stadt Solingen](/doc/source/abfallnavi_de.md) / solingen.de
 - [Stadt Spenge](/doc/ics/spenge_de.md) / spenge.de
+- [Stadt Tengen](/doc/ics/tengen_de.md) / tengen.de
 - [Stadt Unterschleißheim](/doc/source/awido_de.md) / unterschleissheim.de
 - [Stadt Verl](/doc/source/verl_de.md) / verl.de
 - [Stadt Vlotho](/doc/ics/abfall_export_vcal.md) / vlotho.de
