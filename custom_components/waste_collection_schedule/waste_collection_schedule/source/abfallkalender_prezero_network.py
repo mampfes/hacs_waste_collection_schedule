@@ -17,11 +17,6 @@ EXTRA_INFO = [
         "url": "https://abfallkalender.prezero.network/bad-oeynhausen",
         "default_params": {"city": "bad-oeynhausen"},
     },
-    {
-        "title": "Willich",
-        "url": "https://abfallkalender.prezero.network/willich",
-        "default_params": {"city": "willich"},
-    },
 ]
 
 TEST_CASES = {
@@ -32,16 +27,6 @@ TEST_CASES = {
     "Bad Oeynhausen Ackerstraße": {
         "street": "Ackerstraße",
         "house_number": "2",
-    },
-    "Willich Aachener Straße": {
-        "city": "willich",
-        "street": "Aachener Straße",
-        "house_number": "1",
-    },
-    "Willich Ahornweg": {
-        "city": "willich",
-        "street": "Ahornweg",
-        "house_number": "5",
     },
 }
 
@@ -69,20 +54,20 @@ PARAM_TRANSLATIONS = {
 
 PARAM_DESCRIPTIONS = {
     "de": {
-        "city": "Stadt-Kennung (Standard: 'bad-oeynhausen'; unterstützte Werte: 'bad-oeynhausen', 'willich')",
+        "city": "Stadt-Kennung (Standard und einzig unterstützter Wert: 'bad-oeynhausen')",
         "street": "Straßenname (z.B. 'Aalstraße')",
         "house_number": "Hausnummer (z.B. '1')",
     },
     "en": {
-        "city": "City identifier (default: 'bad-oeynhausen'; supported values: 'bad-oeynhausen', 'willich')",
+        "city": "City identifier (default and only supported value: 'bad-oeynhausen')",
         "street": "Street name (e.g. 'Aalstraße')",
         "house_number": "House number (e.g. '1')",
     },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "de": "Geben Sie Ihre Straße und Hausnummer ein. Die Stadt ist standardmäßig auf Bad Oeynhausen eingestellt (unterstützt: Bad Oeynhausen, Willich).",
-    "en": "Enter your street and house number. The city defaults to Bad Oeynhausen (supported: Bad Oeynhausen, Willich).",
+    "de": "Geben Sie Ihre Straße und Hausnummer ein. Diese Quelle unterstützt derzeit nur Bad Oeynhausen.",
+    "en": "Enter your street and house number. This source currently only supports Bad Oeynhausen.",
 }
 
 
