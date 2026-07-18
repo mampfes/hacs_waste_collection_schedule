@@ -12,6 +12,7 @@ from waste_collection_schedule.exceptions import (
 TITLE = "Sutherland Shire Council"
 DESCRIPTION = "Source for Sutherland Shire Council, NSW, Australia."
 URL = "https://www.sutherlandshire.nsw.gov.au"
+COUNTRY = "au"
 TEST_CASES = {
     "5 Cleveland Place, BONNET BAY": {
         "suburb": "BONNET BAY",
@@ -63,8 +64,7 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 # TLS-fingerprints plain library HTTP clients; the GIS endpoint has neither
 # problem.
 _ARCGIS_QUERY_URL = (
-    "https://geoserver.ssc.nsw.gov.au"
-    "/arcgis/rest/services/WebOnline/MapServer/4/query"
+    "https://geoserver.ssc.nsw.gov.au/arcgis/rest/services/WebOnline/MapServer/4/query"
 )
 
 _WEEKDAY_MAP = {
@@ -186,9 +186,7 @@ class Source:
                     self._house_number,
                     sorted({f["situ1"] for f in street_matches}),
                 )
-            raise SourceArgumentNotFound(
-                "street", f"{self._street}, {self._suburb}"
-            )
+            raise SourceArgumentNotFound("street", f"{self._street}, {self._suburb}")
 
         attrs = features[0]
         day_name = str(attrs.get("DAY_OF_WEEK", "")).strip().lower()
