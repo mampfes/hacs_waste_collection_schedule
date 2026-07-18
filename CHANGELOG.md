@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-alpha.1] - 2026-07-18
+
+> ⚠️ **Breaking: waste-type labels have changed.** This pre-release migrates a large set of
+> sources to the new BaseSource pipeline, which replaces each source's hard-coded waste-type
+> strings with canonical, localised `WasteType` labels (the displayed label now follows your
+> Home Assistant UI language). Automations, templates, dashboard cards and customisations that
+> compare the exact waste-type string may need updating.
+>
+> This is an **opt-in pre-release** for HACS "show beta versions" users. Stable installs are
+> unaffected until 3.0.0 ships. The legacy `fetch()` contract stays fully supported, so any
+> individual source can revert if a problem is found. Please report any label change that
+> breaks your setup on #6561.
+
+### Added
+
+- new BaseSource pipeline architecture: sources compose typed `retrieve → parse → preprocess → transform` steps with canonical `WasteType`s, typed `PARAMS`, `REGIONS`, and runtime response-shape validation (#6562, RFC #6561)
+
+### Changed
+
+- migrated 261 source and shared-platform modules to the pipeline, including the ICS, AbfallIO, Jumomind, Müllmax and Abfallnavi/regio iT platforms (which each cover many more provider listings). Their waste-type labels are now canonical and language-aware. Full list in #6562. (#6562)
+
 ## [2.31.0] - 2026-07-17
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
