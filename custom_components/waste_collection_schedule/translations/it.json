@@ -16896,6 +16896,37 @@
         },
         "data_description": {}
       },
+      "args_deafvalapp_nl": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Numero civico",
+          "house_number_addition": "Estensione del numero civico",
+          "postcode": "CAP"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Numero civico del tuo indirizzo, ad es. '9'",
+          "house_number_addition": "Estensione facoltativa del numero civico, ad es. 'A'",
+          "postcode": "CAP olandese del tuo indirizzo, ad es. '5406XP'"
+        }
+      },
+      "reconfigure_deafvalapp_nl": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Numero civico",
+          "house_number_addition": "Estensione del numero civico",
+          "postcode": "CAP"
+        },
+        "data_description": {
+          "house_number": "Numero civico del tuo indirizzo, ad es. '9'",
+          "house_number_addition": "Estensione facoltativa del numero civico, ad es. 'A'",
+          "postcode": "CAP olandese del tuo indirizzo, ad es. '5406XP'"
+        }
+      },
       "args_circulus_nl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

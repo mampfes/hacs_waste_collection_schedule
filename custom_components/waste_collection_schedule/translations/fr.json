@@ -16935,6 +16935,37 @@
         },
         "data_description": {}
       },
+      "args_deafvalapp_nl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro de maison",
+          "house_number_addition": "Complément de numéro",
+          "postcode": "Code postal"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Numéro de maison de votre adresse, par exemple '9'",
+          "house_number_addition": "Complément de numéro facultatif, par exemple 'A'",
+          "postcode": "Code postal néerlandais de votre adresse, par exemple '5406XP'"
+        }
+      },
+      "reconfigure_deafvalapp_nl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro de maison",
+          "house_number_addition": "Complément de numéro",
+          "postcode": "Code postal"
+        },
+        "data_description": {
+          "house_number": "Numéro de maison de votre adresse, par exemple '9'",
+          "house_number_addition": "Complément de numéro facultatif, par exemple 'A'",
+          "postcode": "Code postal néerlandais de votre adresse, par exemple '5406XP'"
+        }
+      },
       "args_circulus_nl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

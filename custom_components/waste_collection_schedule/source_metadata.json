@@ -3694,6 +3694,16 @@
     "howto": {},
     "urls": {}
   },
+  "deafvalapp_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/deafvalapp_nl.md",
+    "howto": {
+      "de": "Geben Sie dieselbe Postleitzahl, Hausnummer und (optional) den Hausnummernzusatz ein, die Sie auch unter https://www.deafvalapp.nl verwenden würden, um Ihren Abfallkalender abzurufen.",
+      "en": "Enter the same postcode, house number and (optional) house number addition that you would use at https://www.deafvalapp.nl to look up your waste collection calendar.",
+      "fr": "Saisissez le même code postal, numéro de maison et (facultatif) complément de numéro que vous utiliseriez sur https://www.deafvalapp.nl pour consulter votre calendrier de collecte des déchets.",
+      "it": "Inserisci lo stesso CAP, numero civico e (facoltativo) estensione del numero civico che utilizzeresti su https://www.deafvalapp.nl per consultare il tuo calendario di raccolta rifiuti."
+    },
+    "urls": {}
+  },
   "circulus_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/circulus_nl.md",
     "howto": {},

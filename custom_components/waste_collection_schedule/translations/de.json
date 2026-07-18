@@ -17187,6 +17187,37 @@
         },
         "data_description": {}
       },
+      "args_deafvalapp_nl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "house_number_addition": "Hausnummernzusatz",
+          "postcode": "Postleitzahl"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Hausnummer Ihrer Adresse, z. B. '9'",
+          "house_number_addition": "Optionaler Hausnummernzusatz, z. B. 'A'",
+          "postcode": "Niederländische Postleitzahl Ihrer Adresse, z. B. '5406XP'"
+        }
+      },
+      "reconfigure_deafvalapp_nl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "house_number_addition": "Hausnummernzusatz",
+          "postcode": "Postleitzahl"
+        },
+        "data_description": {
+          "house_number": "Hausnummer Ihrer Adresse, z. B. '9'",
+          "house_number_addition": "Optionaler Hausnummernzusatz, z. B. 'A'",
+          "postcode": "Niederländische Postleitzahl Ihrer Adresse, z. B. '5406XP'"
+        }
+      },
       "args_circulus_nl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

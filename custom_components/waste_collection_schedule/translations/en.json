@@ -17585,6 +17585,37 @@
         },
         "data_description": {}
       },
+      "args_deafvalapp_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "house_number_addition": "House number addition",
+          "postcode": "Postal code"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "House number of your address, e.g. '9'",
+          "house_number_addition": "Optional house number addition, e.g. 'A'",
+          "postcode": "Dutch postal code of your address, e.g. '5406XP'"
+        }
+      },
+      "reconfigure_deafvalapp_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "house_number_addition": "House number addition",
+          "postcode": "Postal code"
+        },
+        "data_description": {
+          "house_number": "House number of your address, e.g. '9'",
+          "house_number_addition": "Optional house number addition, e.g. 'A'",
+          "postcode": "Dutch postal code of your address, e.g. '5406XP'"
+        }
+      },
       "args_circulus_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

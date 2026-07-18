@@ -18764,6 +18764,12 @@
       "id": "burgerportaal_nl"
     },
     {
+      "title": "Boekel",
+      "module": "deafvalapp_nl",
+      "default_params": {},
+      "id": "deafvalapp_nl"
+    },
+    {
       "title": "BurgerPortaal",
       "module": "burgerportaal_nl",
       "default_params": {},
@@ -18790,6 +18796,12 @@
         "service": "dar"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "De Afvalapp",
+      "module": "deafvalapp_nl",
+      "default_params": {},
+      "id": "deafvalapp_nl"
     },
     {
       "title": "Den Haag",
@@ -18998,12 +19010,30 @@
       "id": "ics_goes_nl"
     },
     {
+      "title": "Helmond",
+      "module": "deafvalapp_nl",
+      "default_params": {},
+      "id": "deafvalapp_nl"
+    },
+    {
       "title": "HVC Groep",
       "module": "hvcgroep_nl",
       "default_params": {
         "service": "hvcgroep"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Land van Cuijk",
+      "module": "deafvalapp_nl",
+      "default_params": {},
+      "id": "deafvalapp_nl"
+    },
+    {
+      "title": "Maashorst",
+      "module": "deafvalapp_nl",
+      "default_params": {},
+      "id": "deafvalapp_nl"
     },
     {
       "title": "Meerlanden",
