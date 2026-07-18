@@ -1,0 +1,12 @@
+---
+title: Stadt Tengen
+url: https://www.tengen.de
+country: de
+howto:
+  en: |
+    - Go to <https://www.tengen.de/service+_+rathaus/buergerservice/abfallentsorgung/abfallkalender>.
+    - Click on `Alle Termine des Abfallkalenders in meinen Kalender (z. B. Outlook) übernehmen (.ics-Datei)` and copy the link.
+    - Use this link as the `url` parameter. This feed already covers the whole municipality (Tengen and Wiechs a.R.) and does not require an address.
+test_cases:
+  Tengen:
+    url: https://www.tengen.de/site/Tengen/zmservice/2266403/ical/vevent.ics
