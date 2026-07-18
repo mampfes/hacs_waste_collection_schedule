@@ -3458,6 +3458,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
 - [Gedling Borough Council (unofficial)](/doc/ics/gedling_gov_uk.md) / gbcbincalendars.co.uk
 - [Glasgow City Council](/doc/source/glasgow_gov_uk.md) / glasgow.gov.uk
+- [Gloucester City Council](/doc/source/gloucester_gov_uk.md) / gloucester.gov.uk
 - [Gosport Borough Council](/doc/source/gosport_gov_uk.md) / gosport.gov.uk
 - [Great Yarmouth Borough Council](/doc/source/great_yarmouth_gov_uk.md) / myaccount.great-yarmouth.gov.uk
 - [Greater Cambridge Waste, UK](/doc/source/greater_cambridge_waste_org.md) / greatercambridgewaste.org

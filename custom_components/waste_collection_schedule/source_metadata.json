@@ -5378,6 +5378,13 @@
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
   },
+  "gloucester_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gloucester_gov_uk.md",
+    "howto": {
+      "en": "Find your UPRN by visiting https://gloucester-self.achieveservice.com/en/service/Bins___Check_your_bin_day and searching for your address. Your UPRN can also be found at https://www.findmyaddress.co.uk/."
+    },
+    "urls": {}
+  },
   "gosport_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosport_gov_uk.md",
     "howto": {
