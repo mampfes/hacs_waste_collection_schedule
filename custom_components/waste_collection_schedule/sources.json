@@ -19282,6 +19282,12 @@
       "id": "fredrikstad_no"
     },
     {
+      "title": "Haugaland Interkommunale Milj\u00f8verk (HIM)",
+      "module": "him_as",
+      "default_params": {},
+      "id": "him_as"
+    },
+    {
       "title": "Innherred Renovasjon",
       "module": "innherredrenovasjon_no",
       "default_params": {},
