@@ -10077,6 +10077,12 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "Gemeinde Neuberg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_neuberg_de"
+    },
+    {
       "title": "Gemeinde Plattenburg (Landkreis Prignitz)",
       "module": "abfall_io",
       "default_params": {
