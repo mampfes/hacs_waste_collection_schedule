@@ -6904,6 +6904,11 @@
     },
     "urls": {}
   },
+  "talgov_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/talgov_com.md",
+    "howto": {},
+    "urls": {}
+  },
   "communitywastedisposal_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/communitywastedisposal_com.md",
     "howto": {},

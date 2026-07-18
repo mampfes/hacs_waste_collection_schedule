@@ -29979,6 +29979,29 @@
           "id": "The unique identifier for your properties collection schedule"
         }
       },
+      "args_talgov_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address as shown in the City of Tallahassee lookup tool (e.g. '400 S Monroe St')"
+        }
+      },
+      "reconfigure_talgov_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Street Address"
+        },
+        "data_description": {
+          "address": "Street address as shown in the City of Tallahassee lookup tool (e.g. '400 S Monroe St')"
+        }
+      },
       "args_communitywastedisposal_com": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
