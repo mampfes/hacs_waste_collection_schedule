@@ -83,8 +83,66 @@ _WEEK_AFTER_NEXT_RE = re.compile(
 _DATE_RE = re.compile(r"(\d{1,2}\s+\w+\s+\d{4})")
 
 
+# The council's register stores abbreviated street types ("23 Bakana LP
+# LANDSDALE"). Users typically spell them out; expand both sides before
+# comparing so "23 Bakana Loop, Landsdale" matches the canonical entry (#6873).
+STREET_TYPE_ABBREVIATIONS = {
+    "ST": "STREET",
+    "RD": "ROAD",
+    "DR": "DRIVE",
+    "DRV": "DRIVE",
+    "AVE": "AVENUE",
+    "AV": "AVENUE",
+    "LP": "LOOP",
+    "PL": "PLACE",
+    "BVD": "BOULEVARD",
+    "BLVD": "BOULEVARD",
+    "CL": "CLOSE",
+    "CT": "COURT",
+    "CRES": "CRESCENT",
+    "CR": "CRESCENT",
+    "CIR": "CIRCLE",
+    "CCT": "CIRCUIT",
+    "GTE": "GATE",
+    "PDE": "PARADE",
+    "TCE": "TERRACE",
+    "HWY": "HIGHWAY",
+    "GRV": "GROVE",
+    "GR": "GROVE",
+    "LN": "LANE",
+    "SQ": "SQUARE",
+    "ESP": "ESPLANADE",
+    "PWY": "PARKWAY",
+    "PKWY": "PARKWAY",
+    "GDNS": "GARDENS",
+}
+
+
 def _normalise_address(address: str) -> str:
-    return address.lower().replace(" ", "").replace(",", "")
+    tokens = address.upper().replace(",", " ").split()
+    return " ".join(STREET_TYPE_ABBREVIATIONS.get(t, t) for t in tokens)
+
+
+def _reduced_queries(address: str) -> list[str]:
+    """Progressively shorter search terms for a strict register search (#6873).
+
+    The register search returns nothing for spelled-out street types or
+    appended suburbs, but happily lists candidates for "23 Bakana" -- which
+    then feed the suggestions flow.
+    """
+    tokens = address.upper().replace(",", " ").split()
+    queries = []
+    for cut in range(len(tokens) - 1, 0, -1):
+        head = tokens[:cut]
+        # Stop shrinking below "<number> <name>".
+        if len(head) < 2:
+            break
+        if head[-1] in STREET_TYPE_ABBREVIATIONS or head[-1] in set(
+            STREET_TYPE_ABBREVIATIONS.values()
+        ):
+            continue
+        queries.append(" ".join(head))
+    return queries[:2]
 
 
 def _header(headers, name: str) -> str | None:
@@ -270,22 +328,34 @@ class Source(BaseSource):
 
         widget = _scrape_widget_config(session)
 
-        r = session.get(
-            widget["api_url"],
-            params={
-                "configId": widget["config_id"],
-                "form": widget["form_id"],
-                "project": widget["project_name"],
-                "fields": address,
-            },
-            headers={
-                "Authorization": f"apikey {widget['api_key']}",
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-        )
-        r.raise_for_status()
-        results = r.json()
+        def _search(fields: str) -> list:
+            r = session.get(
+                widget["api_url"],
+                params={
+                    "configId": widget["config_id"],
+                    "form": widget["form_id"],
+                    "project": widget["project_name"],
+                    "fields": fields,
+                },
+                headers={
+                    "Authorization": f"apikey {widget['api_key']}",
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            )
+            r.raise_for_status()
+            return r.json()
+
+        results = _search(address)
+        if not results:
+            # The register search is strict: spelled-out street types, commas
+            # or an appended suburb return nothing. Retry with a shortened
+            # query ("23 Bakana") whose candidates either match after
+            # normalisation or become suggestions (#6873).
+            for reduced in _reduced_queries(address):
+                results = _search(reduced)
+                if results:
+                    break
         if not results:
             raise SourceArgumentNotFound("address", address)
 

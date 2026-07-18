@@ -297,13 +297,30 @@ class Source(BaseSource):
         ids = onclick.split(")")[0].split("(")[1].split(",")
         return [i.strip() for i in ids if i.strip().isdigit()]
 
+    @staticmethod
+    def _has_result(response_text: str) -> bool:
+        """Whether a search response actually contains a matching entry.
+
+        The API returns a ``<li>`` with an ``onclick`` attribute for a real
+        match, and either an empty ``<ul>`` or a ``<li>Keinen Eintrag
+        gefunden</li>`` (no ``onclick``) when nothing matches. Detecting the
+        onclick ``<li>`` is robust to the exact "not found" wording and markup,
+        which the literal-string checks got wrong (see #6877).
+        """
+        return (
+            BeautifulSoup(response_text, "html.parser").find(
+                "li", attrs={"onclick": True}
+            )
+            is not None
+        )
+
     def _request_all(
         self, session, field: str, url: str, data: dict, params: dict
     ) -> Response:
         r = session.post(
             url, data=_urlencode_form(data), params=params, headers=_FORM_HEADERS
         )
-        if "kein Eintrag gefunden" not in r.text and r.text.strip() != "<ul></ul>":
+        if self._has_result(r.text):
             return r
         r = session.post(
             url,
@@ -311,7 +328,7 @@ class Source(BaseSource):
             params=_replace_special_chars_args(params),
             headers=_FORM_HEADERS,
         )
-        if "kein Eintrag gefunden" not in r.text and r.text.strip() != "<ul></ul>":
+        if self._has_result(r.text):
             return r
         r = session.post(
             url,
@@ -323,7 +340,7 @@ class Source(BaseSource):
             params=_replace_special_chars_args(params),
             headers=_FORM_HEADERS,
         )
-        if "kein Eintrag gefunden" not in r.text and r.text.strip() != "<ul></ul>":
+        if self._has_result(r.text):
             return r
         raise SourceArgumentNotFoundWithSuggestions(field, params.get("input"), [])
 

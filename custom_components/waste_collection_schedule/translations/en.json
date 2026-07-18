@@ -1145,6 +1145,37 @@
         },
         "data_description": {}
       },
+      "args_moretonbay_qld_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street_name": "Street name",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "The house/unit number, e.g. '25'",
+          "street_name": "The street name, e.g. 'Pumicestone' or 'Pumicestone Street'",
+          "suburb": "The suburb, e.g. 'Bellara'"
+        }
+      },
+      "reconfigure_moretonbay_qld_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "street_name": "Street name",
+          "suburb": "Suburb"
+        },
+        "data_description": {
+          "house_number": "The house/unit number, e.g. '25'",
+          "street_name": "The street name, e.g. 'Pumicestone' or 'Pumicestone Street'",
+          "suburb": "The suburb, e.g. 'Bellara'"
+        }
+      },
       "args_newcastle_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -2118,6 +2149,29 @@
         },
         "data_description": {}
       },
+      "args_mildura_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Full street address including suburb and postcode, e.g. '1 Stockmans Drive, Irymple VIC 3498'"
+        }
+      },
+      "reconfigure_mildura_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "street_address": "Full street address including suburb and postcode, e.g. '1 Stockmans Drive, Irymple VIC 3498'"
+        }
+      },
       "args_mitchellshire_vic_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -2838,9 +2892,9 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "House number, exactly as shown in the dropdown (e.g. 5).",
-          "street": "Street name, exactly as shown in the dropdown (e.g. Cleveland Place).",
-          "suburb": "Suburb in UPPER CASE, exactly as shown in the dropdown (e.g. BONNET BAY)."
+          "house_number": "House number (e.g. 5).",
+          "street": "Street name, as normally written (e.g. Cleveland Place).",
+          "suburb": "Suburb name, as normally written (e.g. Bonnet Bay)."
         }
       },
       "reconfigure_sutherlandshire_nsw_gov_au": {
@@ -2853,9 +2907,9 @@
           "suburb": "Suburb"
         },
         "data_description": {
-          "house_number": "House number, exactly as shown in the dropdown (e.g. 5).",
-          "street": "Street name, exactly as shown in the dropdown (e.g. Cleveland Place).",
-          "suburb": "Suburb in UPPER CASE, exactly as shown in the dropdown (e.g. BONNET BAY)."
+          "house_number": "House number (e.g. 5).",
+          "street": "Street name, as normally written (e.g. Cleveland Place).",
+          "suburb": "Suburb name, as normally written (e.g. Bonnet Bay)."
         }
       },
       "args_hawkesbury_nsw_gov_au": {
@@ -7063,6 +7117,37 @@
         },
         "data_description": {
           "commune": "Your commune within the Terres Touloises area: Aingeray, Andilly, Ansauville, Avrainville, Bicqueley, Bois-de-Haye, Boucq, Bouvron, Bruley, Charmes-la-Côte, Chaudeney-sur-Moselle, Choloy-Ménillot, Domèvre-en-Haye, Domgermain, Dommartin-lès-Toul, Écrouves, Fontenoy-sur-Moselle, Foug, Francheville, Gondreville, Grosrouvres, Gye, Jaillon, Lagney, Laneuveville-derrière-Foug, Lay-Saint-Rémy, Lucey, Manoncourt-en-Woëvre, Manonville, Ménil-la-Tour, Minorville, Noviant-aux-Prés, Pagney-derrière-Barine, Pierre-la-Treiche, Royaumeix, Sanzey, Tremblecourt, Trondes, Villey-le-Sec, Villey-Saint-Étienne"
+        }
+      },
+      "args_sudestavenir_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Commune",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "Your commune within the GPSEA territory: Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
+          "house_number": "Your house number",
+          "street": "Your street name"
+        }
+      },
+      "reconfigure_sudestavenir_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Commune",
+          "house_number": "House number",
+          "street": "Street"
+        },
+        "data_description": {
+          "commune": "Your commune within the GPSEA territory: Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
+          "house_number": "Your house number",
+          "street": "Your street name"
         }
       },
       "args_opendata_bordeauxmetropole_fr": {
@@ -17525,6 +17610,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Postal Code"
         },
         "data_description": {
@@ -17537,6 +17623,7 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House Number",
+          "house_number_extension": "House Number Extension",
           "postal_code": "Postal Code"
         },
         "data_description": {}
@@ -29166,16 +29253,18 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
+          "recordID": "Record Id",
           "recycleObjectID": "Recycle Object Id",
           "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
-          "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
-          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
-          "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
+          "bulkyObjectID": "OBJECTID of your bulky waste zone. Go to {url_data_okc_gov_portal_page_viewer_datasetname_bulky_20waste_20zones_view_map} , find your house on the map, then switch to the Table view and filter by map to read your OBJECTID. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recordID": "Record ID for the unofficial okc.schizo.dev source. This single ID covers trash, recycling and bulky waste. Go to {url_okc_schizo_dev} and type in your address to get it. This is the easiest option and is recommended.",
+          "recycleObjectID": "OBJECTID of your recycling zone. Go to {url_af8ffb4a12} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the official data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly. Not needed when using recordID.",
+          "trashObjectID": "OBJECTID of your trash collection zone. Go to {url_7ffdabbb07} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable."
         }
       },
       "reconfigure_okc_gov": {
@@ -29184,15 +29273,17 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bulkyObjectID": "Bulky Object Id",
+          "recordID": "Record Id",
           "recycleObjectID": "Recycle Object Id",
           "recycle_reference_date": "Recycle Reference Date",
           "trashObjectID": "Trash Object Id"
         },
         "data_description": {
-          "bulkyObjectID": "OBJECTID of your bulky waste zone from the OKC Open Data Portal.",
-          "recycleObjectID": "OBJECTID of your recycling zone from the OKC Open Data Portal.",
-          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly.",
-          "trashObjectID": "OBJECTID of your trash collection zone from the OKC Open Data Portal."
+          "bulkyObjectID": "OBJECTID of your bulky waste zone. Go to {url_data_okc_gov_portal_page_viewer_datasetname_bulky_20waste_20zones_view_map} , find your house on the map, then switch to the Table view and filter by map to read your OBJECTID. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recordID": "Record ID for the unofficial okc.schizo.dev source. This single ID covers trash, recycling and bulky waste. Go to {url_okc_schizo_dev} and type in your address to get it. This is the easiest option and is recommended.",
+          "recycleObjectID": "OBJECTID of your recycling zone. Go to {url_af8ffb4a12} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable.",
+          "recycle_reference_date": "Optional ISO date (YYYY-MM-DD) of a known recycling collection. OKC recycling runs every other week, but the official data portal only exposes a weekday; provide one real pickup date so the alternating-week schedule can be calculated correctly. Not needed when using recordID.",
+          "trashObjectID": "OBJECTID of your trash collection zone. Go to {url_7ffdabbb07} , zoom into your house and click your zone — the OBJECTID is shown in the info popup. Used on its own, or as a fallback if the unofficial recordID source is unavailable."
         }
       },
       "args_phila_gov": {
@@ -29400,6 +29491,29 @@
         },
         "data_description": {
           "address": "Full street address including city and state (e.g. '11743 Heather Grove Ln, Jacksonville, FL')"
+        }
+      },
+      "args_marysville_wa_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Street address as house number and street name (e.g. '501 Delta Ave' or '6400 88th St NE'). Do not include city or ZIP code."
+        }
+      },
+      "reconfigure_marysville_wa_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Street Address"
+        },
+        "data_description": {
+          "street_address": "Street address as house number and street name (e.g. '501 Delta Ave' or '6400 88th St NE'). Do not include city or ZIP code."
         }
       },
       "args_apps_ci_minneapolis_mn_us": {

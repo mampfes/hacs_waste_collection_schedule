@@ -18,15 +18,25 @@ from waste_collection_schedule.waste_types import (
     RECYCLABLES,
 )
 
-# City of Oklahoma City Open Data Portal: three independently-optional
-# FeatureServer layers (trash / recycling / bulky), each queried by attribute
-# (``where=OBJECTID=...``) rather than an address geocode+spatial lookup. Each
-# layer publishes its cadence as free text on a PickupDay-like field: a bare
-# weekday (weekly), an "Nth Weekday" ordinal (monthly -- the new
-# recurrence.monthly_nth_weekday()), or an explicit date. Recycling runs
-# fortnightly but the layer only reports a weekday, so an optional
-# recycle_reference_date pins which week via the existing anchor-cadence
-# support (Schedule(..., anchor=True)).
+# City of Oklahoma City. Two independent feeds cover the same three waste types
+# (trash / recycling / bulky):
+#
+# * the unofficial okc.schizo.dev API, keyed by a single ``recordID``, which
+#   returns explicit upcoming dates (no reconstruction needed); and
+# * the official Open Data Portal FeatureServer layers, each queried by
+#   attribute (``where=OBJECTID=...``) and publishing its cadence as free text
+#   on a PickupDay-like field: a bare weekday (weekly), an "Nth Weekday"
+#   ordinal (monthly -- recurrence.monthly_nth_weekday()), or an explicit date.
+#   Recycling runs fortnightly but the layer only reports a weekday, so an
+#   optional recycle_reference_date pins which week via the anchor-cadence
+#   support (Schedule(..., anchor=True)).
+#
+# ``recordID`` is preferred when set and falls back to the official OBJECTIDs
+# automatically if it errors or returns nothing, so a source-defined
+# retrieve()/parse() expresses the two shapes and the fallback between them.
+
+# Unofficial community API (single recordID covers trash, recycling and bulky).
+UNOFFICIAL_URL = "https://okc.schizo.dev/trash"
 
 TRASH_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/45426e5e1b31489db9afea603870f724/rest/services/OpenData/Utilities/FeatureServer/1"
 RECYCLE_ZONES_URL = "https://utility.arcgis.com/usrsvcs/servers/0f286e1243ca4bb39a70e323b1608222/rest/services/OpenData/Utilities/FeatureServer/3"
@@ -77,10 +87,33 @@ def _resolve_pickup_date(pickup_rule: str, today: datetime.date) -> datetime.dat
     raise ValueError(f"Unsupported pickup rule returned by API: '{pickup_rule}'")
 
 
+def _next_from_pickups(pickups, today: datetime.date) -> "datetime.date | None":
+    """First upcoming date from an unofficial-feed list of ``{"date": ...}``."""
+    for pickup in pickups or []:
+        if not isinstance(pickup, dict):
+            continue
+        raw = pickup.get("date")
+        if not raw:
+            continue
+        try:
+            parsed = datetime.datetime.strptime(str(raw), "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if parsed >= today:
+            return parsed
+    return None
+
+
 def _describe(record: tuple, source: Any):
-    waste_type, attrs = record
+    waste_type, payload = record
     today = datetime.date.today()
 
+    # Unofficial feed: an explicit next date, no reconstruction required.
+    if isinstance(payload, datetime.date):
+        yield Schedule(waste_type, payload, count=1)
+        return
+
+    attrs = payload
     if waste_type == "RECYCLE":
         raw_reference = source.params.get("recycle_reference_date")
         if raw_reference:
@@ -103,12 +136,15 @@ def _describe(record: tuple, source: Any):
 @final
 class Source(BaseSource):
     TITLE = "City of Oklahoma City"
-    DESCRIPTION = "Source for the City of Oklahoma City Open Data Portal (ArcGIS) waste collection zones."
+    DESCRIPTION = "Source for the City of Oklahoma City waste collection schedule. Supports the unofficial okc.schizo.dev API (single recordID) and the official OKC Open Data Portal (ArcGIS) waste collection zones."
     URL = "https://www.okc.gov"
     COUNTRY = "us"
     RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {
+        "Unofficial (schizo.dev) recordID": {
+            "recordID": "1781503",
+        },
         "Trash Fri / Recycle Mon / Bulky 4th Mon": {
             "trashObjectID": 1,
             "recycleObjectID": 1215,
@@ -128,6 +164,7 @@ class Source(BaseSource):
     }
 
     PARAMS = (
+        text_field("recordID", "Record ID (okc.schizo.dev)", optional=True),
         text_field("trashObjectID", "Trash Zone OBJECTID", optional=True),
         text_field("recycleObjectID", "Recycling Zone OBJECTID", optional=True),
         text_field("bulkyObjectID", "Bulky Waste Zone OBJECTID", optional=True),
@@ -140,15 +177,21 @@ class Source(BaseSource):
 
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Provide the OBJECTID of one or more of your collection zones from "
-            "the OKC Open Data Portal (trashObjectID, recycleObjectID, "
-            "bulkyObjectID). At least one is required. Open the FeatureServer "
-            "layers linked in the documentation, use the Query page to locate "
-            "the zone that covers your address, and read its OBJECTID. "
-            "Recycling is collected every other week and the portal only "
-            "reports the weekday, so also set recycle_reference_date to one "
-            "date you know recycling was (or will be) collected to pin the "
-            "correct week."
+            "Recommended: go to https://okc.schizo.dev , type in your address, "
+            "and copy the record ID it shows into recordID. That single ID "
+            "covers trash, recycling and bulky waste. If your address isn't "
+            "found, try variations (e.g. drop a leading 'N'/'North'). "
+            "Alternatively, use the official OKC data portals to find one "
+            "OBJECTID per waste type (trashObjectID, recycleObjectID, "
+            "bulkyObjectID): open the FeatureServer layer for the waste type, "
+            "zoom into your house, click your zone and read the OBJECTID from "
+            "the info popup. With the official method, recycling is collected "
+            "every other week and the portal only reports the weekday, so also "
+            "set recycle_reference_date to one date you know recycling was (or "
+            "will be) collected to pin the correct week. If both recordID and "
+            "official OBJECTIDs are provided, the unofficial recordID source is "
+            "used first and falls back to the official OBJECTIDs if it fails or "
+            "returns nothing."
         ),
     }
 
@@ -157,11 +200,13 @@ class Source(BaseSource):
 
     def __init__(
         self,
+        recordID: str | int = "",
         trashObjectID: str | int = "",
         recycleObjectID: str | int = "",
         bulkyObjectID: str | int = "",
         recycle_reference_date: str = "",
     ):
+        record = str(recordID).strip()
         trash = str(trashObjectID).strip()
         recycle = str(recycleObjectID).strip()
         bulky = str(bulkyObjectID).strip()
@@ -177,28 +222,96 @@ class Source(BaseSource):
                     "must be an ISO date (YYYY-MM-DD) of a known recycling pickup.",
                 ) from exc
 
-        if not (trash or recycle or bulky):
+        if not (record or trash or recycle or bulky):
             raise SourceArgumentNotFound(
-                "trashObjectID",
+                "recordID",
                 "",
-                "provide at least one of trashObjectID, recycleObjectID or bulkyObjectID.",
+                "provide recordID (unofficial source) or at least one of "
+                "trashObjectID, recycleObjectID or bulkyObjectID (official source).",
             )
 
         super().__init__(
+            recordID=record,
             trashObjectID=trash,
             recycleObjectID=recycle,
             bulkyObjectID=bulky,
             recycle_reference_date=reference,
         )
 
-    def retrieve(self, source: "Source"):
-        record_ids = {
-            "TRASH": source.params.get("trashObjectID") or "",
-            "RECYCLE": source.params.get("recycleObjectID") or "",
-            "BULKY": source.params.get("bulkyObjectID") or "",
-        }
+    def _retrieve_unofficial(
+        self, source: "Source", record_id: str
+    ) -> "list[tuple[str, datetime.date]]":
+        """Fetch the unofficial okc.schizo.dev feed as ``[(waste_type, date)]``.
+
+        The endpoint returns explicit upcoming dates for trash, recycling and
+        bulky waste keyed by a single recordID, so no weekday/biweekly
+        reconstruction is needed; the reported weekday is used only when a
+        section omits explicit dates.
+        """
+        response = source.session.get(UNOFFICIAL_URL, params={"recordID": record_id})
+        response.raise_for_status()
+
+        try:
+            data = response.json()
+        except ValueError as exc:
+            raise SourceArgumentNotFound(
+                "recordID",
+                record_id,
+                "the unofficial source did not return valid JSON for this recordID.",
+            ) from exc
+
+        if not isinstance(data, dict):
+            raise SourceArgumentNotFound(
+                "recordID",
+                record_id,
+                "no schedule found for this recordID in the unofficial source.",
+            )
+
+        today = datetime.date.today()
+        entries: list[tuple[str, datetime.date]] = []
+
+        # Trash: single "next" pickup, optionally falling back to the weekday.
+        trash = data.get("trash")
+        if isinstance(trash, dict):
+            trash_date: datetime.date | None = None
+            raw_next = (trash.get("next") or {}).get("date")
+            if raw_next:
+                try:
+                    parsed = datetime.datetime.strptime(
+                        str(raw_next), "%Y-%m-%d"
+                    ).date()
+                    if parsed >= today:
+                        trash_date = parsed
+                except ValueError:
+                    trash_date = None
+            if trash_date is None and trash.get("day"):
+                trash_date = _resolve_pickup_date(str(trash["day"]), today)
+            if trash_date is not None:
+                entries.append(("TRASH", trash_date))
+
+        # Recycling: list of upcoming biweekly pickups.
+        recycling = data.get("recycling")
+        if isinstance(recycling, dict):
+            recycle_date = _next_from_pickups(recycling.get("pickups"), today)
+            if recycle_date is None and recycling.get("day"):
+                recycle_date = _resolve_pickup_date(str(recycling["day"]), today)
+            if recycle_date is not None:
+                entries.append(("RECYCLE", recycle_date))
+
+        # Bulky waste: list of upcoming monthly pickups.
+        bulky = data.get("bulkyWaste")
+        if isinstance(bulky, dict):
+            bulky_date = _next_from_pickups(bulky.get("pickups"), today)
+            if bulky_date is None and bulky.get("schedule"):
+                bulky_date = _resolve_pickup_date(str(bulky["schedule"]), today)
+            if bulky_date is not None:
+                entries.append(("BULKY", bulky_date))
+
+        return entries
+
+    def _retrieve_official(self, source: "Source", object_ids: dict) -> dict:
         responses = {}
-        for waste_type, object_id in record_ids.items():
+        for waste_type, object_id in object_ids.items():
             if not object_id:
                 continue
             url, argument = WASTE_LAYERS[waste_type]
@@ -206,9 +319,49 @@ class Source(BaseSource):
             responses[waste_type] = (retriever(source), argument, object_id)
         return responses
 
+    def retrieve(self, source: "Source"):
+        record_id = str(source.params.get("recordID") or "").strip()
+        object_ids = {
+            "TRASH": source.params.get("trashObjectID") or "",
+            "RECYCLE": source.params.get("recycleObjectID") or "",
+            "BULKY": source.params.get("bulkyObjectID") or "",
+        }
+        has_official = any(object_ids.values())
+
+        if record_id:
+            # Prefer the unofficial feed; fall back to the official OBJECTIDs
+            # automatically if it errors or yields nothing and any are set.
+            try:
+                entries = self._retrieve_unofficial(source, record_id)
+            except Exception:
+                if not has_official:
+                    raise
+                entries = None
+            if entries:
+                return {"kind": "unofficial", "entries": entries}
+            if not has_official:
+                return {"kind": "unofficial", "entries": entries or []}
+
+        return {
+            "kind": "official",
+            "responses": self._retrieve_official(source, object_ids),
+        }
+
     def parse(self, raw, source: "Source | None" = None):
+        if raw["kind"] == "unofficial":
+            entries = raw["entries"]
+            if not entries:
+                record_id = str(source.params.get("recordID") if source else "") or ""
+                raise SourceArgumentNotFound(
+                    "recordID",
+                    record_id,
+                    "no upcoming collections found for this recordID in the "
+                    "unofficial source.",
+                )
+            return list(entries)
+
         records = []
-        for waste_type, (response, argument, object_id) in raw.items():
+        for waste_type, (response, argument, object_id) in raw["responses"].items():
             features = ArcGisFeatureParser()(response, source)
             if not features:
                 raise SourceArgumentNotFound(

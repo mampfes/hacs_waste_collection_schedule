@@ -86,13 +86,31 @@ def _is_ics_link(tag) -> bool:
 
 
 def _fallback_entries(soup: BeautifulSoup) -> "list[tuple[date, str]]":
-    """The short HTML "legend" preview, used when the ICS link 404s."""
-    legend_wrappers = soup.find_all("span", {"class": "booking-list--legend-wrapper"})
-    next_collections = soup.find_all("span", {"class": "booking-list--collection-grey"})
-    dates = [item.text.split(", ")[1] for item in next_collections if "-" in item.text]
-    entries = []
-    for idx, item in enumerate(legend_wrappers):
-        entries.append((datetime.strptime(dates[idx], "%d-%b-%Y").date(), item.text))
+    """The short HTML "legend" preview, used when the ICS link 404s.
+
+    Iterates each collection block and pairs its bin name with its own
+    "Next Collection" date, skipping entries with a blank name (a provider
+    quirk that previously crashed the index-based pairing, see #6860).
+    """
+    entries: list[tuple[date, str]] = []
+    for collection in soup.find_all(
+        "div", {"class": "booking-list--collection-details"}
+    ):
+        bin_name_tag = collection.find("span", class_="booking-list--legend-wrapper")
+        if bin_name_tag is None:
+            continue
+        bin_name = bin_name_tag.get_text(strip=True)
+        if not bin_name:
+            continue
+        next_collection = collection.find("span", string="Next Collection")
+        if next_collection is None:
+            continue
+        next_collection = next_collection.find_next_sibling("span").get_text(strip=True)
+        # remove the day of the week
+        collection_date = next_collection.split(", ", 1)[1]
+        entries.append(
+            (datetime.strptime(collection_date, "%d-%b-%Y").date(), bin_name)
+        )
     return entries
 
 
@@ -131,6 +149,9 @@ class Source(BaseSource):
         },
         "GERMAINE AVE, BATEAU BAY, CENTRAL COAST 2261": {
             "address": "12 GERMAINE AVE BATEAU BAY CENTRAL COAST 2261"
+        },
+        "56 EVERGLADES CR, WOY WOY. CENTRAL COAST 2256": {
+            "address": "56 EVERGLADES CR, WOY WOY. CENTRAL COAST 2256"
         },
     }
 

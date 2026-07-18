@@ -267,6 +267,13 @@
     "howto": {},
     "urls": {}
   },
+  "moretonbay_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/moretonbay_qld_gov_au.md",
+    "howto": {
+      "en": "Enter your house number, street name and suburb exactly as they appear on the City of Moreton Bay bin-day lookup at https://www.moretonbay.qld.gov.au/Services/Waste-Recycling/Collections/Bin-Days. The street name may be given with or without its street type (e.g. 'Pumicestone' or 'Pumicestone Street')."
+    },
+    "urls": {}
+  },
   "newcastle_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newcastle_nsw_gov_au.md",
     "howto": {},
@@ -511,6 +518,13 @@
     "howto": {},
     "urls": {}
   },
+  "mildura_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mildura_vic_gov_au.md",
+    "howto": {
+      "en": "Go to <https://www.mildura.vic.gov.au/Explore/My-Neighbourhood> and make sure your address matches the auto-complete suggestions."
+    },
+    "urls": {}
+  },
   "mitchellshire_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mitchellshire_vic_gov_au.md",
     "howto": {},
@@ -698,7 +712,7 @@
   "sutherlandshire_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sutherlandshire_nsw_gov_au.md",
     "howto": {
-      "en": "Visit https://www.sutherlandshire.nsw.gov.au/living-here/waste-and-recycling/waste-information-booklet and note the exact suburb, street and house number values shown in each dropdown."
+      "en": "Enter your suburb, street name and house number as they normally appear in your address. These are looked up automatically via the Sutherland Shire online services map, so they don't need to match any particular list."
     },
     "urls": {}
   },
@@ -1602,6 +1616,11 @@
   },
   "terrestouloises_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/terrestouloises_com.md",
+    "howto": {},
+    "urls": {}
+  },
+  "sudestavenir_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sudestavenir_fr.md",
     "howto": {},
     "urls": {}
   },
@@ -6706,9 +6725,14 @@
   "okc_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okc_gov.md",
     "howto": {
-      "en": "Provide the OBJECTID of one or more of your collection zones from the OKC Open Data Portal (trashObjectID, recycleObjectID, bulkyObjectID). At least one is required. Open the FeatureServer layers linked in the documentation, use the Query page to locate the zone that covers your address, and read its OBJECTID. Recycling is collected every other week and the portal only reports the weekday, so also set recycle_reference_date to one date you know recycling was (or will be) collected to pin the correct week."
+      "en": "Recommended: go to https://okc.schizo.dev , type in your address, and copy the record ID it shows into recordID. That single ID covers trash, recycling and bulky waste. If your address isn't found, try variations (e.g. drop a leading 'N'/'North' so '1234 N Sample St' becomes '1234 Sample St'). Alternatively, use the official OKC data portals to find one OBJECTID per waste type: for trash, open https://open-okc.hub.arcgis.com/datasets/45426e5e1b31489db9afea603870f724_1/explore?location=35.566301%2C-97.260765%2C10 , zoom into your house, click your zone and read the OBJECTID from the info popup. For recycling, do the same at https://open-okc.hub.arcgis.com/datasets/0f286e1243ca4bb39a70e323b1608222_3/explore?location=35.486250%2C-97.582400%2C11 . For bulky waste, open https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map , find your house on the map, then switch to the Table view and filter by map to read your OBJECTID. With the official method, recycling is collected every other week and the portal only reports the weekday, so also set recycle_reference_date to one date you know recycling was (or will be) collected to pin the correct week. If both recordID and official OBJECTIDs are provided, the unofficial recordID source is used first and falls back to the official OBJECTIDs if it fails or returns nothing."
     },
-    "urls": {}
+    "urls": {
+      "url_okc_schizo_dev": "https://okc.schizo.dev",
+      "url_7ffdabbb07": "https://open-okc.hub.arcgis.com/datasets/45426e5e1b31489db9afea603870f724_1/explore?location=35.566301%2C-97.260765%2C10",
+      "url_af8ffb4a12": "https://open-okc.hub.arcgis.com/datasets/0f286e1243ca4bb39a70e323b1608222_3/explore?location=35.486250%2C-97.582400%2C11",
+      "url_data_okc_gov_portal_page_viewer_datasetname_bulky_20waste_20zones_view_map": "https://data.okc.gov/portal/page/viewer?datasetName=Bulky%20Waste%20Zones&view=map"
+    }
   },
   "phila_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/phila_gov.md",
@@ -6763,6 +6787,11 @@
     "howto": {
       "en": "Use the same address you would enter on the MyJax hauler lookup page."
     },
+    "urls": {}
+  },
+  "marysville_wa_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/marysville_wa_us.md",
+    "howto": {},
     "urls": {}
   },
   "apps_ci_minneapolis_mn_us": {

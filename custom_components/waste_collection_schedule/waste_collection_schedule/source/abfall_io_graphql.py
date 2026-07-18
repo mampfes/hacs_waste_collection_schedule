@@ -27,6 +27,11 @@ _PROVIDERS = [
         "service_id": "1c230a689579b6d3ddb9ceb5a56c6072",
         "country": "at",
     },
+    {
+        "title": "Landkreis Reutlingen",
+        "url": "https://www.kreis-reutlingen.de/",
+        "service_id": "15f69fab91c4cae50d9dbb5bcfd383f0",
+    },
 ]
 
 
@@ -53,6 +58,10 @@ class Source(BaseSource):
         "Graz (Rudersdorfer Straße 60)": {
             "key": "1c230a689579b6d3ddb9ceb5a56c6072",
             "idHouseNumber": 31972,
+        },
+        "Landkreis Reutlingen, Wannweil, Bahnhofstraße 5": {
+            "key": "15f69fab91c4cae50d9dbb5bcfd383f0",
+            "idHouseNumber": 58444,
         },
     }
 

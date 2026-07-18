@@ -29,11 +29,4 @@ waste_collection_schedule:
 
 
 #### How to find your `UPRN`
-Your uprn is the collection of numbers at the end of the url when viewing your collection schedule on the Haringey Council web site.
-
-For example:  _wastecollections.haringey.gov.uk/property/`000151650618`_
-
-Alternatively, you can discover what your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details.
-
-
-
+You can find your Unique Property Reference Number (UPRN) by going to https://www.findmyaddress.co.uk/search and entering in your address details.
