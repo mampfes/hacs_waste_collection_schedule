@@ -401,6 +401,11 @@ SERVICE_MAP = [
         "service_id": "ebe",
         "default_params": {"city": "Zorneding"},
     },
+    {
+        "title": "Abfallwirtschaft Altenburger Land",
+        "url": "https://www.awb-altenburg.de/",
+        "service_id": "awb-altenburg",
+    },
 ]
 
 TEST_CASES = {
@@ -408,6 +413,10 @@ TEST_CASES = {
         "customer": "gifhorn",
         "city": "Hankensbüttel",
         "street": "Allersehl",
+    },
+    "Altenburg, Langenleuba-Niederhain": {
+        "customer": "awb-altenburg",
+        "city": "Langenleuba-Niederhain",
     },
     "coburg rödental krötenleite 4": {
         "customer": "coburg",
