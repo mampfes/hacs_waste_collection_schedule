@@ -1236,6 +1236,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Abfalltermine Forchheim](/doc/source/abfalltermine_forchheim_de.md) / abfalltermine-forchheim.de
 - [abfallverband-rheingau](/doc/ics/mein_abfallkalender_online.md) / abfallverband-rheingau.de
 - [Abfallwirtschaft Alb-Donau-Kreis](/doc/source/buergerportal_de.md) / aw-adk.de
+- [Abfallwirtschaft Altenburger Land](/doc/source/awido_de.md) / awb-altenburg.de
 - [Abfallwirtschaft Dithmarschen (AWD)](/doc/ics/awd_online_de.md) / awd-online.de
 - [Abfallwirtschaft Enzkreis](/doc/ics/entsorgung_regional_de.md) / abfallwirtschaft-enzkreis.de
 - [Abfallwirtschaft Freiburg](/doc/ics/abfallwirtschaft_freiburg_de.md) / abfallwirtschaft-freiburg.de
