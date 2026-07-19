@@ -7495,6 +7495,37 @@
           "street_name": "Full street name, e.g. 'Rue Parlier' or 'Avenue de Montpellier'"
         }
       },
+      "args_montri_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "city_name": "City name",
+          "postal_code": "Postal code"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "The street address to search for (house number and street name), e.g. '6 Place Georges Boizot'.",
+          "city_name": "The exact name of your municipality as shown on {url_montri_fr} e.g. 'Dinozé'.",
+          "postal_code": "The postal code of your municipality, e.g. 88000."
+        }
+      },
+      "reconfigure_montri_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "city_name": "City name",
+          "postal_code": "Postal code"
+        },
+        "data_description": {
+          "address": "The street address to search for (house number and street name), e.g. '6 Place Georges Boizot'.",
+          "city_name": "The exact name of your municipality as shown on {url_montri_fr} e.g. 'Dinozé'.",
+          "postal_code": "The postal code of your municipality, e.g. 88000."
+        }
+      },
       "args_memotri_agglo_pau_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

@@ -7107,6 +7107,37 @@
           "street_name": "Nom complet de la rue, ex : 'Rue Parlier' ou 'Avenue de Montpellier'"
         }
       },
+      "args_montri_fr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "city_name": "Nom de la commune",
+          "postal_code": "Code postal"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "L'adresse à rechercher (numéro et nom de rue), par exemple '6 Place Georges Boizot'.",
+          "city_name": "Le nom exact de votre commune tel qu'affiché sur {url_montri_fr} par exemple 'Dinozé'.",
+          "postal_code": "Le code postal de votre commune, par exemple 88000."
+        }
+      },
+      "reconfigure_montri_fr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "city_name": "Nom de la commune",
+          "postal_code": "Code postal"
+        },
+        "data_description": {
+          "address": "L'adresse à rechercher (numéro et nom de rue), par exemple '6 Place Georges Boizot'.",
+          "city_name": "Le nom exact de votre commune tel qu'affiché sur {url_montri_fr} par exemple 'Dinozé'.",
+          "postal_code": "Le code postal de votre commune, par exemple 88000."
+        }
+      },
       "args_memotri_agglo_pau_fr": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

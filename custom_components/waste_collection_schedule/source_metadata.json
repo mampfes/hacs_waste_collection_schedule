@@ -1709,6 +1709,13 @@
     "howto": {},
     "urls": {}
   },
+  "montri_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montri_fr.md",
+    "howto": {},
+    "urls": {
+      "url_montri_fr": "https://montri.fr,"
+    }
+  },
   "memotri_agglo_pau_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/memotri_agglo_pau_fr.md",
     "howto": {

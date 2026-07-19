@@ -6779,6 +6779,12 @@
       "id": "data_montpellier3m_fr"
     },
     {
+      "title": "Montri",
+      "module": "montri_fr",
+      "default_params": {},
+      "id": "montri_fr"
+    },
+    {
       "title": "Morschwiller-le-Bas",
       "module": "mulhouse_alsace_fr",
       "default_params": {
