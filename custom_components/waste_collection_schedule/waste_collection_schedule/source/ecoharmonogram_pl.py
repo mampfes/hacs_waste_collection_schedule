@@ -19,7 +19,6 @@ from waste_collection_schedule.service.EcoHarmonogramPL import (
 )
 from waste_collection_schedule.transformers import RowTransformer
 from waste_collection_schedule.waste_types import (
-    ALL_TYPES,
     BULKY_WASTE,
     GARDEN_WASTE,
     GENERAL_WASTE,
@@ -283,10 +282,18 @@ class Source(BaseSource):
     )
 
     # The transformer resolves a per-provider, frequency-suffixed Polish label
-    # (Polish is not one of waste_types.resolve()'s alias languages), so any
-    # canonical type may appear, plus provider-specific labels preserved
+    # (Polish is not one of waste_types.resolve()'s alias languages) to one of
+    # the canonical types below, plus provider-specific labels preserved
     # verbatim when genuinely unmappable.
-    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = [
+        BULKY_WASTE,
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        GLASS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     retrieve = EcoharmonogramRetriever()
     parse = EcoharmonogramParser()

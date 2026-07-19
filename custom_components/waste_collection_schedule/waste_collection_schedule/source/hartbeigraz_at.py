@@ -8,7 +8,14 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GARDEN_WASTE, RECYCLABLES
+from waste_collection_schedule.waste_types import (
+    BULKY_WASTE,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://www.hartbeigraz.at"
 _MENUONR = "225225009"
@@ -33,6 +40,15 @@ class Source(BaseSource):
     COUNTRY = "at"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        BULKY_WASTE,
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Am Brühlwald 15": {"strasse": "Am Brühlwald", "hausnummer": "15"},

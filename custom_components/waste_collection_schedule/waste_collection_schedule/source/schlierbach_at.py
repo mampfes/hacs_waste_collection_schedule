@@ -8,7 +8,7 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
+from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
 
 _BASE_URL = "https://www.schlierbach.at"
 VALID_ZONES = ["1", "Wohnhausanlagen"]
@@ -21,6 +21,7 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Gemeinde Alle (no zone)": {},

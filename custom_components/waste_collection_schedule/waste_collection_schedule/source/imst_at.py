@@ -8,7 +8,11 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import RECYCLABLES
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://www.imst.gv.at"
 _MENUONR = "222722602"
@@ -36,6 +40,7 @@ class Source(BaseSource):
     COUNTRY = "at"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@bbr111"]
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Auf Arzill 154": {

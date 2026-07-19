@@ -11,7 +11,11 @@ from waste_collection_schedule.service.AchieveForms import (
     LookupStep,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+from waste_collection_schedule.waste_types import (
+    FOOD_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+)
 
 HOSTNAME = "stevenage-self.achieveservice.com"
 BASE_URL = f"https://{HOSTNAME}"
@@ -45,6 +49,7 @@ class Source(BaseSource):
     URL = "https://www.stevenage.gov.uk/"
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [FOOD_WASTE, GENERAL_WASTE, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Chepstow Close": {"uprn": "100080879233"},

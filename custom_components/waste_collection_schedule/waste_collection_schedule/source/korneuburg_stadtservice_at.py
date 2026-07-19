@@ -8,6 +8,12 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSugge
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.service.RiSKommunalAT import RiSKommunalSource
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 # Demonstrates: a RiSKommunal municipality whose calendar is not exposed
 # through the platform's usual kalender.aspx table/list rendering at all.
@@ -147,6 +153,7 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Rathaus": {"street_name": "Hauptplatz", "street_number": 39},  # Teilgebiet 4

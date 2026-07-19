@@ -8,6 +8,7 @@ from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.Pozi import PoziWfsParser, PoziWfsRetriever
 from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, RECYCLABLES
 
 # Demonstrates: a Pozi WFS spatial-query lookup by address (geocoded via the
 # shared ArcGIS World GeocodeServer). Each collection field is an HTML-ish
@@ -82,6 +83,7 @@ class Source(BaseSource):
     URL = "https://www.vincent.wa.gov.au"
     COUNTRY = "au"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "North Perth": {"address": "8 Kadina St, North Perth WA 6006"},

@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality, text_field
@@ -9,6 +9,13 @@ from waste_collection_schedule.service.junker_app import (
     JunkerRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    GLASS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 TITLE = "Junker APP"
 DESCRIPTION = "Source for Junker APP."
@@ -357,6 +364,7 @@ class Source(BaseSource):
     DESCRIPTION = DESCRIPTION
     URL = URL
     COUNTRY = COUNTRY
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, GLASS, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES = TEST_CASES
 

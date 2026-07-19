@@ -8,7 +8,12 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://www.eggelsberg.at"
 VALID_ZONES = ["A", "B"]
@@ -20,6 +25,13 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Marktgemeinde Eggelsberg waste collection."
     URL = _BASE_URL
     COUNTRY = "at"
+
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Zone A": {"zone": "A"},

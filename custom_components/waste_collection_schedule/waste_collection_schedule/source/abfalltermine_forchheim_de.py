@@ -6,6 +6,12 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 # Demonstrates: a plain ICS feed (parsers.IcsParser + ICSTransformer) whose
 # address sits in the URL *path*, not the query string. A configured
@@ -28,6 +34,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Landkreis Forchheim."
     URL = "https://www.abfalltermine-forchheim.de/"
     COUNTRY = "de"
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Dormitz": {"city": "Dormitz", "area": "Dormitz"},

@@ -82,73 +82,18 @@ _FIXTURES = discover_fixtures()
 
 # (a) Sources that return canonical types they never declare: the transformer
 # resolves aliases (or preserves-then-canonicalises labels) beyond its explicit
-# type_value_map, so the auto-derived WASTE_TYPES is missing those ids. Fix by
-# declaring the full produced vocabulary (or completing the map).
-_RETURNS_UNDECLARED_TYPES = {
-    "ab_peine_de",
-    "abki_de",
-    "aliaserviziambientali_it",
-    "asr_chemnitz_de",
-    "aw_harburg_de",
-    "awb_oldenburg_de",
-    "awg_de",
-    "buermoos_at",
-    "eggelsberg_at",
-    "enns_at",
-    "felixdorf_gv_at",
-    "frankenberg_de",
-    "gross_gerau_de",
-    "hartbeigraz_at",
-    "hilchenbach_de",
-    "ilm_kreis_de",
-    "imst_at",
-    "junker_app",
-    "klosterneuburg_at",
-    "kreis_ploen_de",
-    "ks_boerde_de",
-    "kwb_goslar_de",
-    "landkreis_wittmund_de",
-    "lk_mecklenburgische_seenplatte_de",
-    "micheldorf_at",
-    "muehlenkreis_de",
-    "neu_ulm_de",
-    "ostprignitz_ruppin_de",
-    "rsag_de",
-    "saalfelden_at",
-    "schaerding_ooe_gv_at",
-    "schlierbach_at",
-    "stadtreinigung_giessen_de",
-    "stadtservice_bruehl_de",
-    "staedteservice_de",
-    "stevenage_gov_uk",
-    "zva_sek_de",
-}
+# type_value_map, so the auto-derived WASTE_TYPES is missing those ids. Fixed by
+# declaring the full produced vocabulary on each source. Now cleared.
+_RETURNS_UNDECLARED_TYPES: set[str] = set()
 
 # (b) Sources whose WASTE_TYPES == the whole ALL_TYPES catalogue, via the
-# empty-map fallback. "Declaring everything" is no declaration; fix by giving
-# each a real, specific vocabulary (which also lets the fallback be removed).
+# empty-map fallback. "Declaring everything" is no declaration; fixed by giving
+# each a real, specific vocabulary. The two remaining sources emit only unmapped
+# (preserved:) labels, so they cannot declare a canonical vocabulary until their
+# labels are mapped or aliased; tracked separately, hence still allowlisted.
 _DECLARES_ALL_TYPES = {
-    "abfall_io",
-    "abfallnavi_de",
-    "abfalltermine_forchheim_de",
-    "aha_region_de",
-    "badaussee_at",
-    "bendigo_vic_gov_au",
     "bmv_at",
-    "c_trace_de",
-    "ecoharmonogram_pl",
-    "elsbethen_at",
-    "frankston_vic_gov_au",
-    "gemeinde24_at",
-    "geoport_nwm_de",
-    "infeo_at",
-    "korneuburg_stadtservice_at",
-    "kwu_de",
     "muellmax_de",
-    "oberndorf_schwanenstadt_at",
-    "puchbeihallein_gv_at",
-    "steyr_at",
-    "vincent_wa_gov_au",
 }
 
 ALLOWLIST = _RETURNS_UNDECLARED_TYPES | _DECLARES_ALL_TYPES

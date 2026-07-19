@@ -28,7 +28,12 @@ from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import RECYCLABLES
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _STREETS_URL = "https://abki.de/abki-services/strassennamen"
 _NUMBERS_URL = "https://abki.de/abki-services/streetnumber"
@@ -100,6 +105,7 @@ class Source(BaseSource):
     URL = "https://abki.de/"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "auguste-viktoria-straße, 14": {

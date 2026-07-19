@@ -34,6 +34,12 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _API_URL = "https://www.aha-region.de/abholtermine/abfuhrkalender"
 
@@ -53,6 +59,7 @@ class Source(BaseSource):
     URL = "https://www.aha-region.de/"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Neustadt a. Rbge., Am Rotdorn / Nöpke, 1 ": {

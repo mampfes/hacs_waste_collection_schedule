@@ -34,7 +34,7 @@ from waste_collection_schedule.config_params import (
     text_field,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
 _API_URL = (
     "https://wastemanagement.awg.de/WasteManagementDonauwald/WasteManagementServlet"
@@ -71,6 +71,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for ZAW Donau-Wald."
     URL = "https://www.awg.de/"
     COUNTRY = "de"
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER]
 
     TEST_CASES: ClassVar[dict] = {
         "Achslach Aign 1 ": {"city": "Achslach", "street": "Aign", "hnr": "1"},

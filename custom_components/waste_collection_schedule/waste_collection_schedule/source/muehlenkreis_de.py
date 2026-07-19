@@ -17,6 +17,7 @@ from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     BULKY_WASTE,
+    ELECTRONICS,
     GENERAL_WASTE,
     HAZARDOUS,
     ORGANIC,
@@ -33,6 +34,15 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Mühlenkreis Minden-Lübbecke waste collection."
     URL = _BASE_URL
     COUNTRY = "de"
+    WASTE_TYPES: ClassVar[list] = [
+        BULKY_WASTE,
+        ELECTRONICS,
+        GENERAL_WASTE,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Hauptstraße (Harlinghausen)": {

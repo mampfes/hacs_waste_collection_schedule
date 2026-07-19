@@ -1,4 +1,4 @@
-from typing import final
+from typing import ClassVar, final
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import area_id, municipality
@@ -9,6 +9,12 @@ from waste_collection_schedule.service.junker_app import (
     JunkerRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 TITLE = "Alia Servizi Ambientali S.p.A."
 DESCRIPTION = "Source for Alia Servizi Ambientali S.p.A.."
@@ -184,6 +190,7 @@ class Source(BaseSource):
     URL = URL
     COUNTRY = COUNTRY
     HOWTO = HOWTO
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES = TEST_CASES
 

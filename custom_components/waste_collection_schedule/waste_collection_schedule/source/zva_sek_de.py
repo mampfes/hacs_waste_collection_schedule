@@ -21,6 +21,8 @@ from waste_collection_schedule.transformers import ICSTransformer
 from waste_collection_schedule.waste_types import (
     GENERAL_WASTE,
     HAZARDOUS,
+    ORGANIC,
+    PAPER,
     RECYCLABLES,
 )
 
@@ -64,6 +66,13 @@ class Source(BaseSource):
     URL = "https://www.zva-sek.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Fritzlar": {

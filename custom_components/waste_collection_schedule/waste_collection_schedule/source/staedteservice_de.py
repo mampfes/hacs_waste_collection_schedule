@@ -28,7 +28,14 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import RECYCLABLES
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    GLASS,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _API_URL = "https://portal.staedteservice.de/api/ZeigeAbfallkalender"
 _STREETS_URL = "https://portal.staedteservice.de/api/Strassen"
@@ -43,6 +50,14 @@ class Source(BaseSource):
     URL = "https://www.staedteservice.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        GLASS,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Rüsselsheim": {

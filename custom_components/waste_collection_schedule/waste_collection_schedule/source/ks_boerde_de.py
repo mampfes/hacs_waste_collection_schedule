@@ -18,7 +18,13 @@ from waste_collection_schedule.config_params import house_number, municipality, 
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import PAPER
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _DATA_URL = "https://www.ks-boerde.de/_aturis/eko/proxy.php"
 _CALENDAR_URL = "https://boerde.hausmuell.info/ics/ics.php"
@@ -69,6 +75,13 @@ class Source(BaseSource):
     URL = "https://ks-boerde.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Rathaus": {
