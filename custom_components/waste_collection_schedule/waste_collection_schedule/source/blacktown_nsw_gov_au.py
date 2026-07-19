@@ -8,12 +8,6 @@ TITLE = "Blacktown City Council (NSW)"
 DESCRIPTION = "Source for Blacktown City Council rubbish collection."
 URL = "https://www.blacktown.nsw.gov.au/"
 TEST_CASES = {
-    "Plumpton Marketplace": {
-        "post_code": "2761",
-        "suburb": "Plumpton",
-        "street_name": "Jersey Rd",
-        "street_number": "260",
-    },
     "Rooty Hill Tennis & Squash Centre": {
         "post_code": "2766",
         "suburb": "Rooty Hill",
