@@ -77,7 +77,7 @@ class Source:
         self._garden_waste = bool(garden_waste)
 
     def _find_property_url(self, session: requests.Session) -> str:
-        r = session.get(SEARCH_URL, params={"pc": self._postcode})
+        r = session.get(SEARCH_URL, params={"pc": self._postcode}, timeout=30)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
 
@@ -118,7 +118,7 @@ class Source:
     def _find_ics_links(
         self, session: requests.Session, property_url: str
     ) -> list[str]:
-        r = session.get(property_url)
+        r = session.get(property_url, timeout=30)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
 
@@ -155,13 +155,13 @@ class Source:
 
         entries: list[Collection] = []
 
-        r = session.get(ics_links[0])
+        r = session.get(ics_links[0], timeout=30)
         r.raise_for_status()
         for date, title in ICS().convert(r.text):
             entries.append(Collection(date=date, t=title, icon=self._get_icon(title)))
 
         if self._garden_waste and len(ics_links) > 1:
-            r = session.get(ics_links[1])
+            r = session.get(ics_links[1], timeout=30)
             r.raise_for_status()
             for date, title in ICS().convert(r.text):
                 clean_title = _YEAR_SUFFIX_RE.sub("", title).strip()
