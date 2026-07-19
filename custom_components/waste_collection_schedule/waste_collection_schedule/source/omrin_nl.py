@@ -5,6 +5,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentException
 
 TITLE = "Omrin"
 DESCRIPTION = "Source for Omrin waste collection schedules."
@@ -76,12 +77,20 @@ ICON_MAP = {
 }
 DEFAULT_ICON = Icons.GENERAL_WASTE
 SENTINEL_DATE = "0001-01-01T00:00:00"
+REQUEST_TIMEOUT = 30
 
-PARAM_DESCRIPTIONS = {
+PARAM_TRANSLATIONS = {
     "en": {
         "postal_code": "Postcode",
         "house_number": "House number",
-        "suffix": "House number suffix (optional)",
+        "suffix": "House number suffix",
+    }
+}
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "postal_code": "Dutch postcode, for example 3851MA.",
+        "house_number": "Numeric house number.",
+        "suffix": "House number suffix, if applicable.",
     }
 }
 
@@ -89,9 +98,16 @@ PARAM_DESCRIPTIONS = {
 class Source:
     """Fetch Omrin collections using a fresh anonymous app session."""
 
-    def __init__(self, postal_code: str, house_number: str, suffix: str = "") -> None:
+    def __init__(
+        self, postal_code: str, house_number: str | int, suffix: str = ""
+    ) -> None:
         self._postal_code = postal_code
-        self._house_number = house_number
+        try:
+            self._house_number = int(house_number)
+        except (TypeError, ValueError) as exc:
+            raise SourceArgumentException(
+                "house_number", "House number must be numeric."
+            ) from exc
         self._suffix = suffix
 
     def fetch(self) -> list[Collection]:
@@ -111,13 +127,14 @@ class Source:
                 "Email": None,
                 "Password": None,
                 "PostalCode": self._postal_code,
-                "HouseNumber": int(self._house_number),
+                "HouseNumber": self._house_number,
                 "HouseNumberExtension": self._suffix,
                 "DeviceId": device_id,
                 "Platform": "iOS",
                 "AppVersion": "4.0.3.273",
                 "OsVersion": "iPhone15,3 26.2.1",
             },
+            timeout=REQUEST_TIMEOUT,
         )
         login_response.raise_for_status()
 
@@ -149,6 +166,7 @@ class Source:
                 "Authorization": f"Bearer {access_token}",
             },
             json={"query": FETCH_CALENDAR_QUERY},
+            timeout=REQUEST_TIMEOUT,
         )
         calendar_response.raise_for_status()
 
