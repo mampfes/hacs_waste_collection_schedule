@@ -21373,6 +21373,12 @@
       "id": "timra_se"
     },
     {
+      "title": "Uddevalla Energi",
+      "module": "uddevallaenergi_se",
+      "default_params": {},
+      "id": "uddevallaenergi_se"
+    },
+    {
       "title": "Upplands-Bro",
       "module": "avfallsapp_se",
       "default_params": {

@@ -4487,6 +4487,13 @@
     },
     "urls": {}
   },
+  "uddevallaenergi_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/uddevallaenergi_se.md",
+    "howto": {
+      "en": "Search for your address on the Uddevalla Energi waste collection webpage and enter it exactly as shown, including the town."
+    },
+    "urls": {}
+  },
   "uppsalavatten_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/uppsalavatten_se.md",
     "howto": {},

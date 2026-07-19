@@ -3253,6 +3253,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Teknik i Väst (Arvika/Eda)](/doc/source/avfallsapp_se.md) / teknikivast.se
 - [Telge Återvinning](/doc/source/telge_se.md) / telge.se
 - [Timrå kommun](/doc/source/timra_se.md) / timra.se
+- [Uddevalla Energi](/doc/source/uddevallaenergi_se.md) / uddevallaenergi.se/privat/sophamtning.html
 - [Upplands-Bro](/doc/source/avfallsapp_se.md) / upplands-bro.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
