@@ -65,6 +65,10 @@ TEST_CASES = {
         "key": "51be67f3758f1fb57b420efe065c0663",
         "idHouseNumber": 74629,
     },
+    "Wirtschaftsbetriebe Duisburg (WBD), Buchholz, Altenbrucher Damm 8": {
+        "key": "80acad6c77fe9342ebafad29a8c58bf6",
+        "idHouseNumber": 72827,
+    },
 }
 
 
