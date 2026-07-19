@@ -3266,6 +3266,158 @@ class TestSourceShellCustomize:
         customize_function(c, customize)
         assert c.type == "General Bin"
 
+    # --- Regression tests for #6936 -----------------------------------------
+    # The config flow presents, stores and builds sensors from the display
+    # labels a user sees, so every customize key written by the UI for a
+    # pipeline source is a display name, never a WasteType.id. Customisation
+    # keyed by the display name must therefore apply to new-style sources.
+
+    def test_customize_applies_alias_by_display_name_6936(self):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import (
+            Customize,
+            customize_function,
+        )
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        # Keyed by the display label ("General Waste"), not the id.
+        customize = {"General Waste": Customize("General Waste", alias="Bin Day")}
+        customize_function(c, customize)
+        assert c.type == "Bin Day"
+
+    def test_customize_applies_icon_by_display_name_6936(self):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import (
+            Customize,
+            customize_function,
+        )
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        customize = {"General Waste": Customize("General Waste", icon="mdi:custom-bin")}
+        customize_function(c, customize)
+        assert c.icon == "mdi:custom-bin"
+
+    def test_filter_hides_by_display_name_6936(self):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import Customize, filter_function
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        customize = {"General Waste": Customize("General Waste", show=False)}
+        assert filter_function(c, customize) is False
+
+    def test_customize_glob_matches_display_name_6936(self):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import (
+            Customize,
+            customize_function,
+        )
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        # Globs are typed by the user against the labels shown in the UI.
+        customize = {"General *": Customize("General *", alias="Rubbish")}
+        customize_function(c, customize)
+        assert c.type == "Rubbish"
+
+    def test_customize_exact_id_still_wins_over_glob_6936(self):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import (
+            Customize,
+            customize_function,
+        )
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+        # An exact key (the canonical id) must win over a glob on another key.
+        customize = {
+            "*": Customize("*", alias="Catch-all"),
+            "general_waste": Customize("general_waste", alias="Exact"),
+        }
+        customize_function(c, customize)
+        assert c.type == "Exact"
+
+    def test_customize_legacy_ignores_ad_hoc_id_6936(self):
+        from waste_collection_schedule.collection import LegacyCollection
+        from waste_collection_schedule.source_shell import (
+            Customize,
+            customize_function,
+        )
+
+        # Legacy entries must only be matched by their display string, never by
+        # the internal ad-hoc "legacy_..." id.
+        c = LegacyCollection(date=datetime.date(2026, 1, 1), t="Refuse")
+        customize = {"legacy_Refuse": Customize("legacy_Refuse", alias="Wrong")}
+        customize_function(c, customize)
+        assert c.type == "Refuse"  # unchanged
+
+    def test_shell_fetch_applies_display_name_customisation_6936(self):
+        """End-to-end: a pipeline source with customisation stored by display
+        name has its alias applied and its hidden type filtered out."""
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import Customize, SourceShell
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+
+        class _FakeSource:
+            def fetch(self):
+                return [
+                    Collection(
+                        date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE
+                    ),
+                    Collection(date=datetime.date(2026, 1, 2), waste_type=RECYCLABLES),
+                ]
+
+        customize = {
+            "General Waste": Customize("General Waste", alias="Rubbish Bin"),
+            "Recycling": Customize("Recycling", show=False),
+        }
+        shell = SourceShell(
+            source=_FakeSource(),
+            customize=customize,
+            title="Test",
+            description="",
+            url=None,
+            calendar_title=None,
+            unique_id="test",
+            day_offset=0,
+        )
+        shell.fetch()
+        types = [e.type for e in shell._entries]
+        assert types == ["Rubbish Bin"]  # aliased, and Recycling hidden
+
+    def test_shell_fetch_applies_customisation_legacy_6936(self):
+        """The same end-to-end path still works for legacy sources keyed by the
+        display string."""
+        from waste_collection_schedule.collection import LegacyCollection
+        from waste_collection_schedule.source_shell import Customize, SourceShell
+
+        class _FakeLegacySource:
+            def fetch(self):
+                return [
+                    LegacyCollection(date=datetime.date(2026, 1, 1), t="Refuse"),
+                    LegacyCollection(date=datetime.date(2026, 1, 2), t="Recycling"),
+                ]
+
+        customize = {
+            "Refuse": Customize("Refuse", alias="General Bin"),
+            "Recycling": Customize("Recycling", show=False),
+        }
+        shell = SourceShell(
+            source=_FakeLegacySource(),
+            customize=customize,
+            title="Test",
+            description="",
+            url=None,
+            calendar_title=None,
+            unique_id="test",
+            day_offset=0,
+        )
+        shell.fetch()
+        types = [e.type for e in shell._entries]
+        assert types == ["General Bin"]
+
     def test_day_offset(self):
         from waste_collection_schedule.collection import Collection
         from waste_collection_schedule.source_shell import apply_day_offset

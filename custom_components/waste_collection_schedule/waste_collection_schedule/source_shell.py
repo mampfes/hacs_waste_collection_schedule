@@ -18,10 +18,32 @@ def _is_glob(key: str) -> bool:
     return any(ch in key for ch in _GLOB_CHARS)
 
 
+def _match_customize_keys(
+    customize: dict[str, "Customize"], keys: list[str]
+) -> "Customize | None":
+    """Return the Customize entry matching any of ``keys``.
+
+    An exact key match always wins and is tried for every candidate key (in the
+    order given) before any glob is considered, so an exact match on one key can
+    never be shadowed by a glob match on another. If no candidate matches
+    exactly, each candidate is matched against every customize key that contains
+    an fnmatch glob wildcard (``*``, ``?`` or ``[...]``); the first such glob key
+    in definition order wins. Matching is case-sensitive, like the exact lookup.
+    """
+    for key in keys:
+        c = customize.get(key)
+        if c is not None:
+            return c
+    for pattern, candidate in customize.items():
+        if _is_glob(pattern) and any(fnmatch.fnmatchcase(k, pattern) for k in keys):
+            return candidate
+    return None
+
+
 def match_customize(
     customize: dict[str, "Customize"], waste_type: str
 ) -> "Customize | None":
-    """Return the Customize entry for a waste type.
+    """Return the Customize entry for a single waste-type key.
 
     An exact key match always wins. If no exact key exists, the waste type is
     matched against any customize key that contains an fnmatch glob wildcard
@@ -29,13 +51,7 @@ def match_customize(
     glob key (in definition order) is used. Matching is case-sensitive, like
     the exact lookup.
     """
-    c = customize.get(waste_type)
-    if c is not None:
-        return c
-    for key, candidate in customize.items():
-        if _is_glob(key) and fnmatch.fnmatchcase(waste_type, key):
-            return candidate
-    return None
+    return _match_customize_keys(customize, [waste_type])
 
 
 class Fetchable(Protocol):
@@ -104,25 +120,48 @@ class Customize:
 
 
 def _get_customize_key(entry: Collection) -> str:
-    """Get the key to look up in the customize dict.
+    """Primary key used to look an entry up in the customize dict.
 
-    New-style sources: use waste_type.id (e.g. "general_waste")
-    Legacy sources: use the display string (e.g. "Refuse")
+    New-style sources: the canonical ``WasteType.id`` (e.g. "general_waste"),
+    which is stable and locale-independent.
+    Legacy sources: the display string (e.g. "Refuse").
     """
     if isinstance(entry, LegacyCollection):
         return entry.type
     return entry.waste_type.id
 
 
+def _customize_keys(entry: Collection) -> list[str]:
+    """Candidate keys to look an entry up in the customize dict.
+
+    Legacy sources are only ever matched by their display string, exactly as
+    before. New-style (pipeline) sources are matched by their canonical
+    ``WasteType.id`` first, then by the localised display name as a fallback.
+
+    The display-name fallback is what actually fixes per-type customisation for
+    pipeline sources (issue #6936): the config flow presents, stores and builds
+    sensors from the display labels the user sees, so every customize key the UI
+    writes is a display name, never an id. Accepting both keys lets that stored
+    customisation apply while keeping the id as the preferred, locale-independent
+    key (and the one the library's own tests assert). User-typed fnmatch globs,
+    also written against the displayed labels, keep working for the same reason.
+    """
+    if isinstance(entry, LegacyCollection):
+        return [entry.type]
+    # id preferred; de-duplicate in case it equals the display name (e.g. an
+    # English preserved label).
+    return list(dict.fromkeys([entry.waste_type.id, entry.type]))
+
+
 def filter_function(entry: Collection, customize: dict[str, Customize]):
-    c = match_customize(customize, _get_customize_key(entry))
+    c = _match_customize_keys(customize, _customize_keys(entry))
     if c is None:
         return True
     return c.show
 
 
 def customize_function(entry: Collection, customize: dict[str, Customize]):
-    c = match_customize(customize, _get_customize_key(entry))
+    c = _match_customize_keys(customize, _customize_keys(entry))
     if c is not None:
         if c.alias is not None:
             entry.set_type(c.alias)
