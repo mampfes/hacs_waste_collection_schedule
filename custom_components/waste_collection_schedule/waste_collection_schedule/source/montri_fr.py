@@ -161,7 +161,8 @@ class Source:
         session.headers["Authorization"] = f"Bearer {token}"
 
         # 3. Search for the address within the contract
-        r = session.get(f"{API_BASE}/v1/address/search/bycontract/{self._address}")
+        address = requests.utils.quote(self._address, safe="")
+        r = session.get(f"{API_BASE}/v1/address/search/bycontract/{address}")
         r.raise_for_status()
         candidates = r.json()
 
