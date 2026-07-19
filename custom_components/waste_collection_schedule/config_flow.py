@@ -975,8 +975,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
             if len(resp) == 0:
                 errors["base"] = "fetch_empty"
-            self._fetched_types = list({x.type.strip() for x in resp})
-            # For new-style sources with WASTE_TYPES, also offer those
+            # The types actually collected at this address. These, and only
+            # these, seed the sensors auto-created in finish() on the default
+            # path (#6937): a type the source could produce but did not fetch
+            # here would otherwise become a permanently empty sensor.
+            fetched_types = list({x.type.strip() for x in resp})
+            self._auto_sensor_types = list(fetched_types)
+            # The selection dropdowns (customize/sensor config) offer a fuller
+            # set: the fetched types plus every canonical WASTE_TYPES name, so a
+            # user can pre-make a sensor for a type not seen in this fetch.
+            self._fetched_types = list(fetched_types)
             source_cls = module.Source
             waste_type_names = _get_waste_types_for_customize(source_cls)
             if waste_type_names:
@@ -1176,8 +1184,16 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 )
             else:
                 if CONF_ALIAS in user_input:
-                    self._fetched_types.remove(types[self._customize_index])
-                    self._fetched_types.append(user_input[CONF_ALIAS])
+                    original = types[self._customize_index]
+                    alias = user_input[CONF_ALIAS]
+                    self._fetched_types.remove(original)
+                    self._fetched_types.append(alias)
+                    # Mirror the rename onto the auto-sensor set so a default
+                    # finish() still names the sensor after the alias, but only
+                    # when the renamed type was actually fetched (#6937).
+                    if original in self._auto_sensor_types:
+                        self._auto_sensor_types.remove(original)
+                        self._auto_sensor_types.append(alias)
                 self._options[CONF_CUSTOMIZE][types[self._customize_index]] = user_input
                 self._customize_index += 1
                 return await self.async_step_customize()
@@ -1219,7 +1235,13 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         )
 
     async def finish(self) -> ConfigFlowResult:
-        if not self._options.get(CONF_SENSORS) and hasattr(self, "_fetched_types"):
+        # Auto-create one sensor per type actually fetched at this address, not
+        # per type merely offered in the selection UI. The offer (_fetched_types)
+        # is augmented with every canonical WASTE_TYPES name so a user can
+        # pre-make a sensor for an unseen type; seeding the default sensors from
+        # that union created a permanently empty sensor for each uncollected
+        # type (#6937).
+        if not self._options.get(CONF_SENSORS) and hasattr(self, "_auto_sensor_types"):
             self._options[CONF_SENSORS] = [
                 {
                     CONF_NAME: t,
@@ -1227,7 +1249,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     CONF_COLLECTION_TYPES: [t],
                     CONF_VALUE_TEMPLATE: 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
                 }
-                for t in self._fetched_types
+                for t in self._auto_sensor_types
                 if t
             ]
 
