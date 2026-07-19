@@ -1,0 +1,5 @@
+---
+interface:
+  display_name: Review Pull Request
+  short_description: Review a PR and execute approved fixes
+  default_prompt: Use $review-pr to review a pull request and propose fixes.

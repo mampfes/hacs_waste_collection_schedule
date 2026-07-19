@@ -1,0 +1,18 @@
+{
+  "description": "Repository safety checks converted from .claude/settings.json.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/pre_tool_use_policy.py\"",
+            "timeout": 30,
+            "statusMessage": "Checking repository command policy"
+          }
+        ]
+      }
+    ]
+  }
+}

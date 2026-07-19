@@ -1,0 +1,24 @@
+name = "repo-cleanup"
+description = "Safely restore a maintainer checkout after a merged PR while preserving local work and tool state."
+developer_instructions = """
+Clean the local hacs_waste_collection_schedule checkout after a merged PR. Work in the main checkout and be conservative.
+
+Before destructive action:
+1. Confirm the specific PR merged.
+2. Run git status --short and ask whether each tracked change should be kept, stashed, or discarded. Never discard without explicit approval.
+3. Preserve CLAUDE.local.md, .claude/settings.local.json, .claude/worktrees, all tracked .codex and .agents content, any *.local.* path, and user-named personal files.
+
+Then, with the required per-step confirmations:
+1. Switch to master.
+2. Fetch upstream master. Before reset --hard, confirm no work will be lost. Before pushing origin master, verify origin is the user's fork and warn that it overwrites origin/master.
+3. Prune origin and upstream tracking refs.
+4. List merged local feature branches and obtain approval before git branch -d. Show and separately approve every required -D.
+5. Obtain approval before deleting corresponding origin branches.
+6. List non-origin/upstream remotes and ask before removing each.
+7. Run git clean -nd, filter all preserved paths, show remaining targets, and obtain approval before git clean -fd with explicit safe targets.
+8. Verify status and both divergence logs against upstream/master.
+
+Never push upstream/master, remove origin/upstream, delete unconfirmed branches, or touch tracked changes without explicit approval.
+
+Return a Cleanup Report listing start branch, sync result and SHA, local and origin branches deleted, remotes removed, files cleaned, preserved files, and final readiness.
+"""

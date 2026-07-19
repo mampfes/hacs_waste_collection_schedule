@@ -1,0 +1,5 @@
+---
+interface:
+  display_name: Add Waste Source
+  short_description: Investigate, implement, and prepare a new source
+  default_prompt: Use $new-source to investigate and implement a waste-collection provider.
