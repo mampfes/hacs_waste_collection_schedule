@@ -177,9 +177,9 @@ class Source:
         #                       forward one day (a Sunday-start week, on-or-after the holiday)
         def same_week(day_a, day_b):
             # Sunday-start week, matching the site's areDatesInSameWeek
-            return day_a - timedelta(days=(day_a.weekday() + 1) % 7) == day_b - timedelta(
-                days=(day_b.weekday() + 1) % 7
-            )
+            return day_a - timedelta(
+                days=(day_a.weekday() + 1) % 7
+            ) == day_b - timedelta(days=(day_b.weekday() + 1) % 7)
 
         not_running = {
             (h["date"], h["service"]) for h in holidays if h["status"] == "not running"
