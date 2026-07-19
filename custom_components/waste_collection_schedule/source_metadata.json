@@ -2727,6 +2727,14 @@
     },
     "urls": {}
   },
+  "ics_kelkheim_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/kelkheim_de.md",
+    "howto": {
+      "de": "- Gehen Sie auf <https://www.kelkheim.de/mod_abfallkalender/> (Persönlicher Abfallkalender).\n- Geben Sie Ihre Straße und Hausnummer ein. Hausnummern mit Buchstabenzusatz (z. B. `9f`) werden unterstützt.\n- Lassen Sie alle Häkchen bei den Entsorgungsarten gesetzt (oder entfernen Sie nicht benötigte) und klicken Sie auf `Erstellen`.\n- Klicken Sie auf der Ergebnisseite bei `oder im iCal-Format abonnieren` auf `Link in Zwischenablage kopieren`, oder rechtsklicken Sie auf den `abonnieren`-Link und wählen Sie `Link kopieren`.\n- Verwenden Sie diesen Link (beginnend mit `https://`, nicht `webcal://`) als `url`-Parameter.\n",
+      "en": "- Go to <https://www.kelkheim.de/mod_abfallkalender/> (Persönlicher Abfallkalender).\n- Enter your street (`Straße`) and house number (`Hausnummer`). House numbers with a letter suffix (e.g. `9f`) are supported.\n- Leave all `Entsorgungsarten` checkboxes checked (or uncheck the ones you don't need) and click `Erstellen`.\n- On the results page, click `Link in Zwischenablage kopieren` next to `oder im iCal-Format abonnieren` to copy the iCal link, or right-click the `abonnieren` link and select `copy link`.\n- Use this link (starting with `https://`, not `webcal://`) as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
   "ics_knittel_entsorgung_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/knittel_entsorgung_com.md",
     "howto": {

@@ -336,6 +336,7 @@ This source has been successfully tested with the following service providers:
 - [Homburg](/doc/ics/mein_abfallkalender_online.md) / homburg.de
 - [Karben](/doc/ics/mein_abfallkalender_online.md) / karben.de
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
+- [Kelkheim (Taunus)](/doc/ics/kelkheim_de.md) / kelkheim.de/mod_abfallkalender
 - [Kirchhain](/doc/ics/abfall_export_vcal.md) / kirchhain.de
 - [Knittel Entsorgung](/doc/ics/knittel_entsorgung_com.md) / knittel-entsorgung.com
 - [Kreis Steinburg](/doc/ics/steinburg_de.md) / steinburg.de

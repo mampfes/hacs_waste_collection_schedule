@@ -10989,6 +10989,12 @@
       "id": "ics_kecl_de"
     },
     {
+      "title": "Kelkheim (Taunus)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_kelkheim_de"
+    },
+    {
       "title": "KELL Kommunalentsorgung Landkreis Leipzig GmbH",
       "module": "abfall_io_graphql",
       "default_params": {
