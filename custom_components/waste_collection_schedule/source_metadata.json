@@ -1538,6 +1538,14 @@
     "howto": {},
     "urls": {}
   },
+  "popuvky_cz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/popuvky_cz.md",
+    "howto": {
+      "de": "Öffnen Sie die Abfuhrkalender-Seite und notieren Sie, welche Route zu Ihrer Adresse passt: 'Popůvky (Brno-venkov)' für den Ort selbst oder 'Popůvky - chatová oblast' für das Hüttengebiet.",
+      "en": "Open the collection calendar page and note which collection route matches your address: 'Popůvky (Brno-venkov)' for the village itself, or 'Popůvky - chatová oblast' for the cottage/recreational area."
+    },
+    "urls": {}
+  },
   "api_golemio_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/api_golemio_cz.md",
     "howto": {},
@@ -3783,6 +3791,16 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/goes_nl.md",
     "howto": {
       "en": "- Visit <https://afvalkalender.goes.nl/> and select your location.  \n- Right click copy link address on the `Persoonlijke afvalkalender` button.\n- Use this link as the `url` parameter.\n- Replace the current year with `{%Y}` in the link.\n"
+    },
+    "urls": {}
+  },
+  "irado_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irado_nl.md",
+    "howto": {
+      "de": "Geben Sie die Postleitzahl (z. B. 3131VX) und die Hausnummer ein, die Sie auch auf https://www.irado.nl/afvalkalender verwenden würden",
+      "en": "Enter the postcode (e.g. 3131VX) and house number you would use at https://www.irado.nl/afvalkalender",
+      "fr": "Saisissez le code postal (par ex. 3131VX) et le numéro de maison que vous utiliseriez sur https://www.irado.nl/afvalkalender",
+      "it": "Inserisci il CAP (ad es. 3131VX) e il numero civico che utilizzeresti su https://www.irado.nl/afvalkalender"
     },
     "urls": {}
   },

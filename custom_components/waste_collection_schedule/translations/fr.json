@@ -6399,6 +6399,26 @@
         },
         "data_description": {}
       },
+      "args_popuvky_cz": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "place": "Place"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_popuvky_cz": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "place": "Place"
+        },
+        "data_description": {}
+      },
       "args_api_golemio_cz": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -17376,6 +17396,37 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_irado_nl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro de maison",
+          "postcode": "Code postal",
+          "suffix": "Complément de numéro"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Numéro de maison, par ex. 3",
+          "postcode": "Code postal néerlandais, par ex. 3131VX",
+          "suffix": "Complément de numéro de maison facultatif, par ex. A"
+        }
+      },
+      "reconfigure_irado_nl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro de maison",
+          "postcode": "Code postal",
+          "suffix": "Complément de numéro"
+        },
+        "data_description": {
+          "house_number": "Numéro de maison, par ex. 3",
+          "postcode": "Code postal néerlandais, par ex. 3131VX",
+          "suffix": "Complément de numéro de maison facultatif, par ex. A"
+        }
       },
       "args_rd4_nl": {
         "title": "Configurer la Source",

@@ -6488,6 +6488,29 @@
         },
         "data_description": {}
       },
+      "args_popuvky_cz": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "place": "Abfuhrgebiet"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "place": "Abfuhrgebiet/-route, genau wie auf der offiziellen Kalenderseite aufgeführt"
+        }
+      },
+      "reconfigure_popuvky_cz": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "place": "Abfuhrgebiet"
+        },
+        "data_description": {
+          "place": "Abfuhrgebiet/-route, genau wie auf der offiziellen Kalenderseite aufgeführt"
+        }
+      },
       "args_api_golemio_cz": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -17631,6 +17654,37 @@
           "year_field": "Jahresfeld"
         },
         "data_description": {}
+      },
+      "args_irado_nl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "postcode": "Postleitzahl",
+          "suffix": "Hausnummerzusatz"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Hausnummer, z. B. 3",
+          "postcode": "Niederländische Postleitzahl, z. B. 3131VX",
+          "suffix": "Optionaler Hausnummerzusatz, z. B. A"
+        }
+      },
+      "reconfigure_irado_nl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Hausnummer",
+          "postcode": "Postleitzahl",
+          "suffix": "Hausnummerzusatz"
+        },
+        "data_description": {
+          "house_number": "Hausnummer, z. B. 3",
+          "postcode": "Niederländische Postleitzahl, z. B. 3131VX",
+          "suffix": "Optionaler Hausnummerzusatz, z. B. A"
+        }
       },
       "args_rd4_nl": {
         "title": "Quelle konfigurieren",

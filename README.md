@@ -963,6 +963,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Lysá nad Labem](/doc/ics/zhleatherworks_cz.md) / zhleatherworks.cz/waste_calendar
 - [Lázně Bohdaneč](/doc/source/laznebohdanec_cz.md) / lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523
 - [OZO Ostrava](/doc/source/ozoostrava_cz.md) / ozoostrava.cz
+- [Popůvky](/doc/source/popuvky_cz.md) / popuvky.cz/obec/terminy-svozu
 - [Praha](/doc/source/api_golemio_cz.md) / api.golemio.cz/docs/openapi
 - [Předměřice nad Labem](/doc/source/predmerice_nad_labem_cz.md) / predmericenl.cz/odpady
 - [Rudna u Prahy](/doc/source/mestorudna_cz.md) / rudnamesto.cz
@@ -2918,6 +2919,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Helmond](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [Het Hogeland](/doc/source/omrin_nl.md) / omrin.nl
 - [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
+- [Irado](/doc/source/irado_nl.md) / irado.nl
 - [Land van Cuijk](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [Leeuwarden](/doc/source/omrin_nl.md) / omrin.nl
 - [Maashorst](/doc/source/deafvalapp_nl.md) / deafvalapp.nl

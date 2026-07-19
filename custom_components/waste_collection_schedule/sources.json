@@ -5681,6 +5681,12 @@
       "id": "ozoostrava_cz"
     },
     {
+      "title": "Pop\u016fvky",
+      "module": "popuvky_cz",
+      "default_params": {},
+      "id": "popuvky_cz"
+    },
+    {
       "title": "Praha",
       "module": "api_golemio_cz",
       "default_params": {},
@@ -19274,6 +19280,12 @@
         "service": "hvcgroep"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Irado",
+      "module": "irado_nl",
+      "default_params": {},
+      "id": "irado_nl"
     },
     {
       "title": "Land van Cuijk",

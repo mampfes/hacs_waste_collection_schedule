@@ -6760,6 +6760,29 @@
         },
         "data_description": {}
       },
+      "args_popuvky_cz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "place": "Collection area"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "place": "Collection route/area exactly as listed on the official calendar page"
+        }
+      },
+      "reconfigure_popuvky_cz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "place": "Collection area"
+        },
+        "data_description": {
+          "place": "Collection route/area exactly as listed on the official calendar page"
+        }
+      },
       "args_api_golemio_cz": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -18055,6 +18078,37 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_irado_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "postcode": "Postcode",
+          "suffix": "House number suffix"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "House number, e.g. 3",
+          "postcode": "Dutch postcode, e.g. 3131VX",
+          "suffix": "Optional house number suffix/addition, e.g. A"
+        }
+      },
+      "reconfigure_irado_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "postcode": "Postcode",
+          "suffix": "House number suffix"
+        },
+        "data_description": {
+          "house_number": "House number, e.g. 3",
+          "postcode": "Dutch postcode, e.g. 3131VX",
+          "suffix": "Optional house number suffix/addition, e.g. A"
+        }
       },
       "args_rd4_nl": {
         "title": "Configure Source",
