@@ -729,6 +729,25 @@ def test_opencities_client_parses_wasteservices_html_into_collections() -> None:
     ]
 
 
+def test_opencities_client_does_not_double_count_nested_article_in_result_div() -> None:
+    module = _opencities_module()
+    config = module.OpenCitiesConfig(domain="https://example.invalid")
+    client = module.OpenCitiesClient(config)
+    html = (
+        '<div class="waste-services-result"><article><h3>General Waste</h3>'
+        '<div class="next-service">Mon 01/02/2027</div></article></div>'
+    )
+    client._session = _OpenCitiesSession(
+        lambda url, params: _OpenCitiesResponse(
+            json_data={"success": True, "responseContent": html}
+        )
+    )
+
+    entries = client.fetch_by_geolocation_id("abc")
+
+    assert len(entries) == 1
+
+
 def test_opencities_client_resolves_icon_via_keywords() -> None:
     from waste_collection_schedule import Icons
 
@@ -774,6 +793,29 @@ def test_opencities_client_skips_entries_missing_next_service_date() -> None:
     entries = client.fetch_by_geolocation_id("abc")
 
     assert [e.type for e in entries] == ["Recycling"]
+
+
+def test_opencities_client_filters_by_date_precise_class_when_configured() -> None:
+    module = _opencities_module()
+    config = module.OpenCitiesConfig(
+        domain="https://example.invalid", require_date_precise=True
+    )
+    client = module.OpenCitiesClient(config)
+    html = (
+        '<div class="waste-services-result date-precise"><h3>General Waste</h3>'
+        '<div class="next-service">Mon 01/02/2027</div></div>'
+        '<div class="waste-services-result"><h3>Recycling</h3>'
+        '<div class="next-service">Every fortnight</div></div>'
+    )
+    client._session = _OpenCitiesSession(
+        lambda url, params: _OpenCitiesResponse(
+            json_data={"success": True, "responseContent": html}
+        )
+    )
+
+    entries = client.fetch_by_geolocation_id("abc")
+
+    assert [e.type for e in entries] == ["General Waste"]
 
 
 def test_opencities_client_retries_once_on_stale_cached_geolocation_id() -> None:
