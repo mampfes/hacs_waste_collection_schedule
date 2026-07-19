@@ -30,6 +30,12 @@ from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -154,6 +160,7 @@ class Source(BaseSource):
     URL = "https://www.infeo.at/"
     COUNTRY = "at"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     REGIONS = (
         region(

@@ -19,7 +19,13 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.service.SiteparkIES import SiteparkIES
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://www.landkreis-wittmund.de"
 _API_URL = (
@@ -41,6 +47,13 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Landkreis Wittmund waste collection."
     URL = _BASE_URL
     COUNTRY = "de"
+    WASTE_TYPES: ClassVar[list] = [
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "CityWithoutStreet": {"ort": "Werdum"},

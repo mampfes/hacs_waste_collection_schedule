@@ -7,7 +7,12 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://www.micheldorf.at"
 
@@ -19,6 +24,7 @@ class Source(BaseSource):
     URL = _BASE_URL
     COUNTRY = "at"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Adalbert-Stifter-Straße 1": {

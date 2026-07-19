@@ -7,7 +7,7 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import PAPER
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
 _BASE_URL = "https://www.klosterneuburg.at"
 _SELECTION_URL = (
@@ -22,6 +22,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Stadtgemeinde Klosterneuburg waste collection."
     URL = _SELECTION_URL
     COUNTRY = "at"
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER]
 
     TEST_CASES: ClassVar[dict] = {
         "Kierlinger Straße 10": {

@@ -24,7 +24,15 @@ from waste_collection_schedule.config_params import (
 )
 from waste_collection_schedule.service.SiteparkIES import SiteparkIES
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import ELECTRONICS, HAZARDOUS
+from waste_collection_schedule.waste_types import (
+    ELECTRONICS,
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://www.kwb-goslar.de"
 
@@ -35,6 +43,15 @@ class Source(BaseSource):
     DESCRIPTION = "Source for kwb-goslar.de waste collection."
     URL = _BASE_URL
     COUNTRY = "de"
+    WASTE_TYPES: ClassVar[list] = [
+        ELECTRONICS,
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Berliner Straße (Clausthal-Zellerfeld)": {"pois": "2523.602"},

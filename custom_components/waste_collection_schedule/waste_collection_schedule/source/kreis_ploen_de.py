@@ -15,7 +15,12 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://www.kreis-ploen.de"
 
@@ -26,6 +31,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Abfallwirtschaft Kreis Plön waste collection."
     URL = _BASE_URL
     COUNTRY = "de"
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Hauptstraße (Köhn)": {"strasse": "Hauptstraße", "ort": "Köhn"},
