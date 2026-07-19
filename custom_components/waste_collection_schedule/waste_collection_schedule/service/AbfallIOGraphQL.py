@@ -20,4 +20,9 @@ SERVICE_MAP = [
         "url": "https://www.ebe-essen.de/",
         "service_id": "51be67f3758f1fb57b420efe065c0663",
     },
+    {
+        "title": "Wirtschaftsbetriebe Duisburg (WBD)",
+        "url": "https://www.wb-duisburg.de/",
+        "service_id": "80acad6c77fe9342ebafad29a8c58bf6",
+    },
 ]
