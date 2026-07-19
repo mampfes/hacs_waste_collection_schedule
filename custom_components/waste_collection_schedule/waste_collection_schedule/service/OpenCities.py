@@ -67,6 +67,14 @@ class OpenCitiesConfig:
     warm_up_url: str | None = None
     """A page fetched once, lazily, before the first API request (session/cookie priming)."""
 
+    warm_up_before: Literal["search", "wasteservices"] = "search"
+    """
+    When the (one-off) warm-up GET fires: before the address search
+    (default), or after it — right before the wasteservices call, which
+    also covers the direct ``geolocation_id`` bypass path where no search
+    ever happens.
+    """
+
     date_format: str = DEFAULT_DATE_FORMAT
 
     icon_keywords: dict[str, Any] | None = None
@@ -135,12 +143,14 @@ class OpenCitiesClient:
             return self.fetch_by_geolocation_id(self._geolocation_id)
 
     def resolve_geolocation_id(self, address: str) -> str:
-        self._ensure_warmed_up()
+        if self._cfg.warm_up_before == "search":
+            self._ensure_warmed_up()
         items = self._search(address)
         return self._select_address(address, items)
 
     def fetch_by_geolocation_id(self, geolocation_id: str) -> list[Collection]:
-        self._ensure_warmed_up()
+        if self._cfg.warm_up_before == "wasteservices":
+            self._ensure_warmed_up()
         params: dict[str, str] = {
             "geolocationid": geolocation_id,
             "ocsvclang": self._cfg.ocsvclang,
