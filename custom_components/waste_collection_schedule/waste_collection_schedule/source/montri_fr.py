@@ -1,6 +1,7 @@
 import unicodedata
 import uuid
 from datetime import date, datetime
+from urllib.parse import quote
 from zoneinfo import ZoneInfo
 
 import requests
@@ -78,7 +79,7 @@ PARAM_DESCRIPTIONS = {
 
 API_BASE = "https://frontend.montri.fr"
 TIMEZONE = ZoneInfo("Europe/Paris")
-MONTHS_AHEAD = 12
+MONTHS_AHEAD = 6
 
 
 def _normalize(value: str) -> str:
@@ -122,7 +123,7 @@ class Source:
             "userId": str(uuid.uuid4()),
             "userType": "PRIVATE",
         }
-        r = session.post(f"{API_BASE}/v1/auth/signInAnonymously", json=body)
+        r = session.post(f"{API_BASE}/v1/auth/signInAnonymously", json=body, timeout=60)
         r.raise_for_status()
         return str(r.json()["currentAccessToken"])
 
@@ -137,7 +138,7 @@ class Source:
         )
 
         # 1. Resolve postal code + city name -> cityInseeCode / contractId
-        r = session.get(f"{API_BASE}/v1/city/find/{self._postal_code}")
+        r = session.get(f"{API_BASE}/v1/city/find/{self._postal_code}", timeout=100)
         r.raise_for_status()
         cities = r.json()
 
@@ -161,8 +162,10 @@ class Source:
         session.headers["Authorization"] = f"Bearer {token}"
 
         # 3. Search for the address within the contract
-        address = requests.utils.quote(self._address, safe="")
-        r = session.get(f"{API_BASE}/v1/address/search/bycontract/{address}")
+        address = quote(self._address, safe="")
+        r = session.get(
+            f"{API_BASE}/v1/address/search/bycontract/{address}", timeout=100
+        )
         r.raise_for_status()
         candidates = r.json()
 
@@ -186,7 +189,7 @@ class Source:
         session.headers["Authorization"] = f"Bearer {token}"
 
         # 5. Fetch human-readable names for the door-to-door ("pap") waste flows
-        r = session.get(f"{API_BASE}/v1/contract/trashflows")
+        r = session.get(f"{API_BASE}/v1/contract/trashflows", timeout=100)
         r.raise_for_status()
         flow_names = {
             flow["code"]: flow["name"] for flow in r.json() if flow.get("type") == "pap"
@@ -198,7 +201,9 @@ class Source:
         month = today.month
         year = today.year
         for _ in range(MONTHS_AHEAD):
-            r = session.get(f"{API_BASE}/v1/calendar/tablemonth/fixed/{month}/{year}")
+            r = session.get(
+                f"{API_BASE}/v1/calendar/tablemonth/fixed/{month}/{year}", timeout=100
+            )
             r.raise_for_status()
             table = r.json()
 
