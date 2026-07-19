@@ -8,7 +8,13 @@ from waste_collection_schedule.service.AbfallIOGraphQL import (
     AbfallIoGraphQLRetriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import ALL_TYPES
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 # Declarative source on the abfall.io v3 GraphQL components (AbfallIoGraphQL-
 # Retriever + AbfallIoGraphQLParser). The transformer turns each appointment into a
@@ -42,9 +48,15 @@ class Source(BaseSource):
     URL = "https://www.abfallplus.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
-    # The transformer resolves each provider's open-ended German labels through the
-    # shared multilingual vocabulary, so any canonical type may appear.
-    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
+    # Canonical types observed across the registered providers; the transformer
+    # resolves each provider's German labels through the shared vocabulary.
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Altlandsberg": {
