@@ -11,7 +11,14 @@ from waste_collection_schedule.service.AppAbfallplusDe import (
     discover_choices,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import ALL_TYPES
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 # Declarative source over the "Apps by Abfall+" platform. The whole live wizard
 # (token, Bundesland -> Landkreis -> Kommune -> Bezirk -> Straße -> Hausnummer
@@ -38,7 +45,16 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
     # The transformer resolves each app's open-ended German labels through the shared
     # multilingual vocabulary, so any canonical type may appear.
-    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
+    # The platform's provider labels are open-ended; these are the canonical
+    # types the shared vocabulary resolves. Anything else is preserved verbatim.
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+        GARDEN_WASTE,
+        HAZARDOUS,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "de.k4systems.abfallappnf Ahrenviöl alle Straßen": {
