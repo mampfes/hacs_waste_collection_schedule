@@ -5,7 +5,7 @@ import logging
 import types
 from datetime import date, datetime
 from pathlib import Path
-from typing import Any, ClassVar, Literal, TypedDict, Union, cast, get_origin
+from typing import Any, Literal, TypedDict, Union, cast, get_origin
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -524,12 +524,24 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     _country: str | None = None
     _source: str | None = None
 
-    _options: ClassVar[dict] = {}
     # Not a ClassVar: the empty dict is only a per-instance "not yet
     # initialized" sentinel; _async_setup_sources() below rebinds it to the
     # shared _SOURCES cache on first use.
     _sources: dict[str, list[SourceDict]] = {}  # noqa: RUF012
     _error_suggestions: dict[str, list[Any]]
+
+    def __init__(self) -> None:
+        """Give each config-flow run its own mutable state.
+
+        ``_options`` used to be a class-level dict shared by every flow
+        instance. Because the flow only ever mutates it in place (via
+        ``update()`` and item assignment) and never rebinds it at the start
+        of a run, a second "add integration" in the same process inherited
+        the first run's sensors and customisations, and ``finish()`` then
+        passed that shared dict on by reference. Binding it per instance
+        keeps successive runs independent.
+        """
+        self._options: dict[str, Any] = {}
 
     async def _async_setup_sources(self) -> None:
         if len(self._sources) > 0:
