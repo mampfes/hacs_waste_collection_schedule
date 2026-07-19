@@ -88,6 +88,14 @@ class OpenCitiesConfig:
     all, where the first result is the only option.
     """
 
+    require_date_precise: bool = False
+    """
+    If True, only wasteservices blocks additionally carrying a
+    ``date-precise`` CSS class are parsed, skipping vague/recurring entries
+    with no concrete next date (some council deployments, e.g. Shoalhaven,
+    mix both kinds of block in the same response).
+    """
+
 
 class OpenCitiesClient:
     def __init__(self, config: OpenCitiesConfig) -> None:
@@ -225,10 +233,31 @@ class OpenCitiesClient:
             self._cfg.argument_name, address, suggestions
         )
 
+    @staticmethod
+    def _select_top_level(soup: BeautifulSoup, selector: str) -> list[Any]:
+        """soup.select(), but drop matches nested inside another match.
+
+        Some council deployments wrap a matching ``<article>`` inside a
+        matching ``div.waste-services-result`` (or vice versa); selecting
+        both tags would otherwise double-count every entry.
+        """
+        candidates = soup.select(selector)
+        candidate_ids = {id(candidate) for candidate in candidates}
+        return [
+            candidate
+            for candidate in candidates
+            if not any(id(parent) in candidate_ids for parent in candidate.parents)
+        ]
+
     def _parse_wasteservices_html(self, html: str) -> list[Collection]:
         soup = BeautifulSoup(html, "html.parser")
         entries: list[Collection] = []
-        for block in soup.select("article, div.waste-services-result"):
+        selector = (
+            "div.waste-services-result.date-precise"
+            if self._cfg.require_date_precise
+            else "article, div.waste-services-result"
+        )
+        for block in self._select_top_level(soup, selector):
             title = block.select_one("h3")
             next_service = block.select_one(".next-service")
             if title is None or next_service is None:
