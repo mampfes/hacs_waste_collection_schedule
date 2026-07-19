@@ -1255,7 +1255,15 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         schema, module = await self.__get_arg_schema(
             source, config_entry.data["args"], args_input, include_title=False
         )
-        title = module.TITLE
+        # New-style (BaseSource) sources declare TITLE on the Source class rather
+        # than at module level, so resolve it safely instead of reading
+        # module.TITLE directly (which raises AttributeError for those sources).
+        source_cls = getattr(module, "Source", None)
+        title: str = (
+            getattr(source_cls, "TITLE", None)
+            or getattr(module, "TITLE", source)
+            or source
+        )
         errors: dict[str, str] = {}
         description_placeholders: dict[str, str] = self._get_description_placeholders(
             source
