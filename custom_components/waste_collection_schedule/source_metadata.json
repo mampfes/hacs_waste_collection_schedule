@@ -2170,6 +2170,11 @@
     },
     "urls": {}
   },
+  "regioentsorgung_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/regioentsorgung_de.md",
+    "howto": {},
+    "urls": {}
+  },
   "jumomind_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jumomind_de.md",
     "howto": {},
@@ -2988,11 +2993,6 @@
   },
   "potsdam_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/potsdam_de.md",
-    "howto": {},
-    "urls": {}
-  },
-  "regioentsorgung_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/regioentsorgung_de.md",
     "howto": {},
     "urls": {}
   },

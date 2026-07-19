@@ -8068,6 +8068,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Alsdorf",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Alsdorf"
+      },
+      "id": "regioentsorgung_de"
+    },
+    {
       "title": "Altena",
       "module": "lobbe_app",
       "default_params": {
@@ -8631,6 +8639,14 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Baesweiler",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Baesweiler"
+      },
+      "id": "regioentsorgung_de"
     },
     {
       "title": "Baiern",
@@ -9783,6 +9799,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Eschweiler",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Eschweiler"
+      },
+      "id": "regioentsorgung_de"
+    },
+    {
       "title": "Esens (MyMuell App)",
       "module": "jumomind_de",
       "default_params": {
@@ -10494,6 +10518,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Heimbach",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Heimbach"
+      },
+      "id": "regioentsorgung_de"
+    },
+    {
       "title": "Heinz-Entsorgung (Landkreis Freising)",
       "module": "ics",
       "default_params": {},
@@ -10543,6 +10575,14 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Herzogenrath",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Herzogenrath"
+      },
+      "id": "regioentsorgung_de"
     },
     {
       "title": "Heskem",
@@ -10790,6 +10830,14 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Inden",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Inden"
+      },
+      "id": "regioentsorgung_de"
     },
     {
       "title": "Ingelsberg (Zorneding)",
@@ -12378,6 +12426,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Langerwehe",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Langerwehe"
+      },
+      "id": "regioentsorgung_de"
+    },
+    {
       "title": "Lauenberg",
       "module": "nerdbridge_de",
       "default_params": {
@@ -12470,6 +12526,14 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Linnich",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Linnich"
+      },
+      "id": "regioentsorgung_de"
     },
     {
       "title": "Linsengericht",
@@ -12751,6 +12815,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Monschau",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Monschau"
+      },
+      "id": "regioentsorgung_de"
+    },
+    {
       "title": "Moos",
       "module": "muellmann_app_de",
       "default_params": {
@@ -12999,12 +13071,28 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Nideggen",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Nideggen"
+      },
+      "id": "regioentsorgung_de"
+    },
+    {
       "title": "Niederzier",
       "module": "app_abfallplus_de",
       "default_params": {
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Niederzier",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Niederzier"
+      },
+      "id": "regioentsorgung_de"
     },
     {
       "title": "Nienhagen",
@@ -13061,6 +13149,14 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "N\u00f6rvenich",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "N\u00f6rvenich"
+      },
+      "id": "regioentsorgung_de"
     },
     {
       "title": "Oberhavel",
@@ -13550,6 +13646,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Roetgen",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Roetgen"
+      },
+      "id": "regioentsorgung_de"
+    },
+    {
       "title": "Roggenburg",
       "module": "heimat_info_de",
       "default_params": {
@@ -13877,6 +13981,14 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Simmerath",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Simmerath"
+      },
+      "id": "regioentsorgung_de"
     },
     {
       "title": "Singen (Hohentwiel)",
@@ -14381,6 +14493,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Stolberg",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Stolberg"
+      },
+      "id": "regioentsorgung_de"
+    },
+    {
       "title": "Strodthagen",
       "module": "nerdbridge_de",
       "default_params": {
@@ -14698,6 +14818,14 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "Vettwei\u00df",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "Vettwei\u00df"
+      },
+      "id": "regioentsorgung_de"
     },
     {
       "title": "VEVG Vorpommern-Greifswald",
@@ -15141,6 +15269,14 @@
         "app_id": "de.k4systems.regioentsorgung"
       },
       "id": "app_abfallplus_de"
+    },
+    {
+      "title": "W\u00fcrselen",
+      "module": "regioentsorgung_de",
+      "default_params": {
+        "city": "W\u00fcrselen"
+      },
+      "id": "regioentsorgung_de"
     },
     {
       "title": "W\u00fcrzburg",
