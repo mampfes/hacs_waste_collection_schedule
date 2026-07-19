@@ -10095,6 +10095,12 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "Gemeinde Kriftel",
+      "module": "kriftel_de",
+      "default_params": {},
+      "id": "kriftel_de"
+    },
+    {
       "title": "Gemeinde Neuberg",
       "module": "ics",
       "default_params": {},
