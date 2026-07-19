@@ -87,13 +87,21 @@ class OpenCitiesConfig:
 
     timeout: int = 30
 
-    strict_address_matching: bool = True
+    strict_address_matching: bool = False
     """
-    If True (default), multiple search results are disambiguated by exact
-    (case/space-insensitive) match against ``AddressSingleLine``, raising
-    ``SourceArgAmbiguousWithSuggestions`` when that's not conclusive. Set to
-    False only for legacy XML search responses that carry no address text at
-    all, where the first result is the only option.
+    If False (default), the first (highest-ranked) search result is always
+    used, trusting the API's own relevance ranking -- this matches how the
+    vast majority of council deployments behave today. If True, multiple
+    search results are instead disambiguated by exact (case/space-
+    insensitive) match against ``AddressSingleLine``, raising
+    ``SourceArgAmbiguousWithSuggestions`` when that's not conclusive. Only
+    enable this for councils whose original implementation already did its
+    own such disambiguation (e.g. Hobart, Moorabool) -- for most councils
+    it does more harm than good, since a user's address rarely matches the
+    server's canonical ``AddressSingleLine`` formatting byte-for-byte (e.g.
+    missing a state abbreviation or punctuation the server adds), which
+    would otherwise turn a normal, correctly-resolved top hit into a hard
+    "ambiguous" failure.
     """
 
     require_date_precise: bool = False

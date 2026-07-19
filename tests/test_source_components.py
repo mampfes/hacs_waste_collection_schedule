@@ -611,7 +611,9 @@ def test_opencities_client_raises_ambiguous_with_suggestions_on_multiple_matches
     None
 ):
     module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
+    config = module.OpenCitiesConfig(
+        domain="https://example.invalid", strict_address_matching=True
+    )
     client = module.OpenCitiesClient(config)
     client._session = _OpenCitiesSession(
         lambda url, params: _OpenCitiesResponse(
@@ -636,7 +638,9 @@ def test_opencities_client_raises_ambiguous_with_suggestions_on_multiple_matches
 
 def test_opencities_client_selects_exact_match_among_multiple_results() -> None:
     module = _opencities_module()
-    config = module.OpenCitiesConfig(domain="https://example.invalid")
+    config = module.OpenCitiesConfig(
+        domain="https://example.invalid", strict_address_matching=True
+    )
     client = module.OpenCitiesClient(config)
     client._session = _OpenCitiesSession(
         lambda url, params: _OpenCitiesResponse(
@@ -650,6 +654,28 @@ def test_opencities_client_selects_exact_match_among_multiple_results() -> None:
     )
 
     assert client.resolve_geolocation_id("1 main st, northtown") == "b"
+
+
+def test_opencities_client_trusts_top_search_result_by_default() -> None:
+    module = _opencities_module()
+    config = module.OpenCitiesConfig(domain="https://example.invalid")
+    client = module.OpenCitiesClient(config)
+    client._session = _OpenCitiesSession(
+        lambda url, params: _OpenCitiesResponse(
+            json_data={
+                "Items": [
+                    {"Id": "a", "AddressSingleLine": "1 Main St, Northtown"},
+                    {"Id": "b", "AddressSingleLine": "1 Main St, Southtown"},
+                ]
+            }
+        )
+    )
+
+    # With strict_address_matching left at its default (False), the
+    # highest-ranked result is used even though it doesn't textually match
+    # the query -- avoids turning normal fuzzy-search hits (e.g. missing a
+    # state abbreviation) into a hard "ambiguous" failure.
+    assert client.resolve_geolocation_id("1 Main St, Somewhere Else") == "a"
 
 
 def test_opencities_client_raises_not_found_on_empty_search() -> None:

@@ -42,6 +42,7 @@ _CONFIG = OpenCitiesConfig(
     use_curl_cffi=True,
     icon_keywords=ICON_MAP,
     strip_type_suffixes=("collection",),
+    strict_address_matching=True,
 )
 
 
