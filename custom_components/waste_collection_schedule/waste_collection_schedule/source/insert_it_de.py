@@ -16,7 +16,12 @@ from waste_collection_schedule.service.InsertITDe import (
     InsertItRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer, label_cleaner
-from waste_collection_schedule.waste_types import ALL_TYPES
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+)
 
 # Declarative source on the Insert IT components. The per-region configuration
 # travels with each provider entry (the app path, the ICS regex, and an optional
@@ -87,9 +92,15 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Apps by Insert IT"
     URL = "https://insert-infotech.de/"
     COUNTRY = "de"
-    # classify() resolves open-ended German labels via the shared vocabulary,
-    # so any canonical type may appear.
-    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
+    # The transformer resolves open-ended German labels via the shared
+    # vocabulary; the canonical types the providers actually emit (verified by
+    # cassette replay) are declared here. Unrecognised labels stay preserved.
+    WASTE_TYPES: ClassVar[list] = [
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        ORGANIC,
+        PAPER,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Offenbach Address": {

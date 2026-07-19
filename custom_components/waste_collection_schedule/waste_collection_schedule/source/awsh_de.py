@@ -16,6 +16,7 @@ from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
 BASE_URL = "https://www.awsh.de"
 
@@ -40,6 +41,9 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Abfallwirtschaft Südholstein"
     URL = "https://www.awsh.de"
     COUNTRY = "de"
+    # Canonical types observed in the calendar feed; the cleaned German labels
+    # resolve through the shared multilingual vocabulary.
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER]
 
     TEST_CASES: ClassVar[dict] = {
         "Reinbek": {"city": "Reinbek", "street": "Ahornweg"},

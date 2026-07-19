@@ -22,6 +22,7 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, ORGANIC, PAPER
 
 LOOKUP_URL = (
     "https://www.kaev.de/Templates/Content/DetailTourenplanWebsite/ajax.aspx/getAddress"
@@ -38,6 +39,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Kommunaler Abfallverband Niederlausitz waste collection."
     URL = "https://www.kaev.de/"
     COUNTRY = "de"
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER]
 
     TEST_CASES: ClassVar[dict] = {
         "Luckau / OT Zieckau": {"abf_suche": "Luckau / OT Zieckau"},

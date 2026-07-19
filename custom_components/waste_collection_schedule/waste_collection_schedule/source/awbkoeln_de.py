@@ -6,7 +6,16 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.parsers import JsonParser
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import ALL_TYPES
+from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER, RECYCLABLES
+
+# The API labels each record with a bin colour-code ("grey", "blue") or
+# "wertstoff" rather than a German bin name, which the shared vocabulary does not
+# resolve, so map the codes explicitly.
+_TYPE_VALUE_MAP = {
+    "grey": GENERAL_WASTE,
+    "blue": PAPER,
+    "wertstoff": RECYCLABLES,
+}
 
 # Standalone JSON-API source. The calendar endpoint takes the street_code +
 # building_number plus a year/month window, computed live so the request always
@@ -35,7 +44,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Abfallwirtschaftsbetriebe Köln waste collection."
     URL = "https://www.awbkoeln.de"
     COUNTRY = "de"
-    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {"Koeln": {"street_code": 2, "building_number": 50}}
 
@@ -51,6 +60,7 @@ class Source(BaseSource):
             year=r["year"], month=r["month"], day=r["day"]
         ),
         type_key="type",
+        type_value_map=_TYPE_VALUE_MAP,
     )
 
     def __init__(self, street_code, building_number):

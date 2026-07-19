@@ -3,6 +3,12 @@ from typing import ClassVar, final
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.source.jumomind_de import Source as JumomindSource
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 # Rhein-Hunsrück Entsorgung runs on Jumomind (service id "rhe"). This is the
 # same structure as jumomind_de, pinned to the "rhe" service and exposing a
@@ -16,6 +22,10 @@ class Source(JumomindSource):
     DESCRIPTION = "Source for RHE (Rhein Hunsrück Entsorgung)."
     URL = "https://www.rh-entsorgung.de"
     COUNTRY = "de"
+
+    # Canonical types observed from the live Jumomind "rhe" service; overrides the
+    # inherited ALL_TYPES fallback with the specific vocabulary this service emits.
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, RECYCLABLES, ORGANIC, PAPER]
 
     REGIONS = (region("Rhein-Hunsrück Entsorgung (RHE)", url=URL),)
 

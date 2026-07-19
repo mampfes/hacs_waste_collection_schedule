@@ -18,6 +18,12 @@ from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 API_URL = "https://www.landkreis-helmstedt.de/portal/seiten/abfuhrkalender-900000002-34150.html"
 HEADERS = {"user-agent": "Mozilla"}
@@ -60,6 +66,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Landkreis Helmstedt."
     URL = "landkreis-helmstedt.de"
     COUNTRY = "de"
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Grasleben": {

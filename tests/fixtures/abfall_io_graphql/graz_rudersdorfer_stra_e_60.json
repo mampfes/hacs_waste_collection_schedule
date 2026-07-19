@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-07-20",
+  "interactions": [
+    {
+      "key": "GET https://api.abfall.io 3bd52439f2",
+      "method": "GET",
+      "url": "https://api.abfall.io",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "OPTIONS, GET, POST",
+        "access-control-allow-headers": "Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, X-Abfallplus-Client, X-Abfallplus-User, X-Abfallplus-Appid, X-Form-History, X-Debug-History",
+        "expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "cache-control": "no-store, no-cache, must-revalidate",
+        "pragma": "no-cache",
+        "set-cookie": "PHPSESSID=d8956pp2h8ouk21koa07h3hu6j; path=/",
+        "last-modified": "Sun, 19 Jul 2026 22:06:39 GMT",
+        "content-type": "application/json",
+        "date": "Sun, 19 Jul 2026 22:06:39 GMT",
+        "server": "Apache/2.4.58 (Ubuntu)"
+      },
+      "content_b64": "eyJhcGlLZXkiOiIyOWRjZDdkNjU5NmI1OTNlZGRlOTk1NTA4MWQ0NTY4NzFhYmM3YWQ1ZDQ1NzY4ZTUiLCJzZXR0aW5ncyI6eyJQVUJfRVhQT1JUX0hUTUwiOiIxIiwiUFVCX0VYUE9SVF9QREYiOiIxIiwiUFVCX0VYUE9SVF9JQ1MiOiIxIiwiUFVCX0VYUE9SVF9DU1YiOiIwIiwiUFVCX0VYUE9SVF9UWFQiOiIwIiwiUFVCX0FOWkVJR0UiOiJJIiwiUFVCX0pBSFIiOiIzMDAwMSIsIlBVQl9KQUhSX01PTkFURV9NSU5PUiI6IjAiLCJQVUJfVEVNUExBVEUiOiJncmF6IiwiUFVCX1NUQVRVU19BS1RJViI6IjEiLCJQVUJfQUJGQUxMVFlQRU4iOlt7Indhc3RlVHlwZSI6IjExMTQiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjExMTgiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjExMjMiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjExMjYiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjExMjgiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfSx7Indhc3RlVHlwZSI6IjExMjUiLCJjaGVja2VkIjp0cnVlLCJyYWRpb2dyb3VwIjpudWxsfV0sIlBVQl9BQkZBTExBUlRFTl9DSEVDSyI6IjEiLCJQVUJfQUJGQUxMQVJURU5fSElERSI6IjAiLCJQVUJfQ0FQVElPTl9DSVRZIjoiU3RhZHRcL0dlbWVpbmRlIiwiUFVCX0NBUFRJT05fQkVaSVJLIjoiU3RhZHQtXC9PcnRzdGVpbCIsIlBVQl9DQVBUSU9OX1NUUkVFVCI6IlN0cmFcdTAwZGZlIiwiUFVCX0NBUFRJT05fSE5SIjoiSGF1c251bW1lciIsIlBVQl9DQVBUSU9OX1lFQVIiOiJaZWl0cmF1bSIsIlBVQl9DQVBUSU9OX0VYUE9SVElFUkVOX0FMUyI6IkV4cG9ydGllcmVuIGFscyIsIlBVQl9DQVBUSU9OX0tFSU5FX1RFUk1JTkUiOiJFcyBzdGVoZW4ga2VpbmUgVGVybWluZSB6dXIgVmVyZlx1MDBmY2d1bmcuIiwiUFVCX0NBUFRJT05fQUJGQUxMVFlQRU4iOiJCaXR0ZSB3XHUwMGU0aGxlbiBTaWUgZGllIEFiZmFsbGFydGVuIGF1cywgZGllIFNpZSB2ZXJ3ZW5kZW4gbVx1MDBmNmNodGVuLiIsIlBVQl9DQVBUSU9OX0JVVFRPTl9QREYiOiJQREYiLCJQVUJfQ0FQVElPTl9CVVRUT05fSUNTIjoiSUNTIiwiUFVCX0NBUFRJT05fQlVUVE9OX0NTViI6IkNTViIsIlBVQl9DQVBUSU9OX0JVVFRPTl9UWFQiOiJUWFQiLCJQVUJfRVhQT1JUX0hUTUxfVEVSTUlORV9NT0RVUyI6IjEiLCJQVUJfRVhQT1JUX1RYVF9URVJNSU5FX01PRFVTIjoiMCIsIlBVQl9aVVNBVFpfTkFNRSI6ImZfYWJmYWxsdHJlbm5ibGF0dCIsIlBVQl9aVVNBVFpfQ0FQVElPTiI6Imlua2wuIEFiZmFsbHRyZW5uYmxhdHQiLCJQVUJfWlVTQVRaX1NFTEVDVCI6IjE6amFcbjA6bmVpbiIsIlBVQl9FWFBPUlRfRU1BSUwiOiIwIiwiUFVCX0FUVFJJQlVURSI6eyJjaXR5IjoiMzg3OCJ9LCJQVUJfQ0FQVElPTl9CVVRUT05fRU1BSUwiOiJFbWFpbC1FcmlubmVydW5nIiwiQVBQX1NUQU5ET1JUX01JVF9TVEFEVFRFSUxFIjp0cnVlLCJQVUJfWkVJVFJBRVVNRSI6W3sidmFsdWUiOiIyMDI1MDEwMS0yMDI1MTIzMSIsImRpc3BsYXkiOiIyMDI1Iiwic2VsZWN0ZWQiOmZhbHNlfSx7InZhbHVlIjoiMjAyNjAxMDEtMjAyNjEyMzEiLCJkaXNwbGF5IjoiMjAyNiIsInNlbGVjdGVkIjp0cnVlfV0sIlBVQl9ISU5XRUlTX0tFSU5FX1RFUk1JTkUiOiJLZWluZSBUZXJtaW5lIiwiUFVCX0VYUE9SVF9IVE1MX1RFUk1JTkVfTU9EVVNfTUlOIjoiMjAyNjA3MDEiLCJQVUJfWlVTQVRaIjpbeyJuYW1lIjoiZl9hYmZhbGx0cmVubmJsYXR0IiwiY2FwdGlvbiI6Imlua2wuIEFiZmFsbHRyZW5uYmxhdHQiLCJvcHRpb25zIjpbeyJ2YWx1ZSI6IjEiLCJkaXNwbGF5IjoiamEifSx7InZhbHVlIjoiMCIsImRpc3BsYXkiOiJuZWluIn1dfV19LCJjdXN0b21Dc3MiOiIifQ=="
+    },
+    {
+      "key": "POST https://widgets.abfall.io/graphql cc2e05d772",
+      "method": "POST",
+      "url": "https://widgets.abfall.io/graphql",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-origin": "*",
+        "cache-control": "no-store",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sun, 19 Jul 2026 22:06:41 GMT",
+        "etag": "W/\"40b-7e+TNZfDxv0yXnmfrJbM3z91PZs\"",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "x-powered-by": "Express",
+        "content-length": "1035"
+      },
+      "content_b64": "eyJkYXRhIjp7ImFwcG9pbnRtZW50cyI6W3siZGF0ZSI6IjIwMjYtMDgtMDQiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkxlaWNodC0gdW5kIE1ldGFsbHZlcnAuIn19LHsiZGF0ZSI6IjIwMjYtMDgtMTAiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlBhcGllciAifX0seyJkYXRlIjoiMjAyNi0wOC0xNCIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdG3DvGxsIn19LHsiZGF0ZSI6IjIwMjYtMDktMDEiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkxlaWNodC0gdW5kIE1ldGFsbHZlcnAuIn19LHsiZGF0ZSI6IjIwMjYtMDktMDciLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlBhcGllciAifX0seyJkYXRlIjoiMjAyNi0wOS0xMSIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdG3DvGxsIn19LHsiZGF0ZSI6IjIwMjYtMDktMjkiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkxlaWNodC0gdW5kIE1ldGFsbHZlcnAuIn19LHsiZGF0ZSI6IjIwMjYtMTAtMDUiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlBhcGllciAifX0seyJkYXRlIjoiMjAyNi0xMC0wOSIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdG3DvGxsIn19LHsiZGF0ZSI6IjIwMjYtMTAtMjgiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkxlaWNodC0gdW5kIE1ldGFsbHZlcnAuIn19LHsiZGF0ZSI6IjIwMjYtMTEtMDIiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlBhcGllciAifX0seyJkYXRlIjoiMjAyNi0xMS0wNiIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdG3DvGxsIn19LHsiZGF0ZSI6IjIwMjYtMTEtMjQiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkxlaWNodC0gdW5kIE1ldGFsbHZlcnAuIn19LHsiZGF0ZSI6IjIwMjYtMTEtMzAiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlBhcGllciAifX0seyJkYXRlIjoiMjAyNi0xMi0wNCIsIndhc3RlVHlwZSI6eyJuYW1lIjoiUmVzdG3DvGxsIn19LHsiZGF0ZSI6IjIwMjYtMTItMjEiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IkxlaWNodC0gdW5kIE1ldGFsbHZlcnAuIn19LHsiZGF0ZSI6IjIwMjYtMTItMjgiLCJ3YXN0ZVR5cGUiOnsibmFtZSI6IlBhcGllciAifX1dfX0K"
+    }
+  ]
+}
