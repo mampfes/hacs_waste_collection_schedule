@@ -3643,7 +3643,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Rochford District Council](/doc/source/rochford_gov_uk.md) / rochford.gov.uk
 - [Rother District Council](/doc/source/rother_gov_uk.md) / rother.gov.uk
 - [Rotherham](/doc/source/apps_imactivate_com.md) / rotherham.gov.uk
-- [Rotherham Metropolitan Borough Council](/doc/source/rotherham_gov_uk.md) / rotherham.gov.uk
 - [Royal Borough Of Greenwich](/doc/source/royalgreenwich_gov_uk.md) / royalgreenwich.gov.uk
 - [Rugby Borough Council](/doc/source/rugby_gov_uk.md) / rugby.gov.uk
 - [Runnymede Borough Council](/doc/source/runnymede_gov_uk.md) / runnymede.gov.uk
