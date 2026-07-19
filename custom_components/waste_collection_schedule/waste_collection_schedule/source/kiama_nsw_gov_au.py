@@ -9,8 +9,8 @@ DESCRIPTION = "Source script for kiama.nsw.gov.au"
 URL = "https://kiama.nsw.gov.au"
 COUNTRY = "au"
 TEST_CASES = {
-    "TestName1": {"geolocationid": "38da9173-322a-43fd-953b-3b51803dbe94"},
-    "TestName2": {"geolocationid": "f2c04fcf-e3d3-424e-aa90-1d365bbf0130"},
+    "TestName1": {"geolocationid": "3e54d9b4-e0b8-41cf-8518-d48c1cc5407b"},
+    "TestName2": {"geolocationid": "0d96e409-7a81-4ccb-a0d8-d8435e066182"},
 }
 
 ICON_MAP = {
