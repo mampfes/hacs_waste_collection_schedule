@@ -14169,6 +14169,30 @@
         },
         "data_description": {}
       },
+      "args_stadt_kerpen_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "f_abfallarten": "F Abfallarten",
+          "f_id_strasse": "F Id Strasse",
+          "f_id_strasse_hnr": "F Id Strasse Hnr"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_stadt_kerpen_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "f_abfallarten": "F Abfallarten",
+          "f_id_strasse": "F Id Strasse",
+          "f_id_strasse_hnr": "F Id Strasse Hnr"
+        },
+        "data_description": {}
+      },
       "args_ics_koblenz_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

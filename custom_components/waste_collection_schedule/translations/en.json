@@ -14830,6 +14830,37 @@
           "strasse": "Street name or a unique part of it."
         }
       },
+      "args_stadt_kerpen_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "f_abfallarten": "Waste Types",
+          "f_id_strasse": "Street",
+          "f_id_strasse_hnr": "House Number"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "f_abfallarten": "List of waste types (internal IDs). Leave empty to get all.",
+          "f_id_strasse": "The internal ID of your street (use the wizard to get this)",
+          "f_id_strasse_hnr": "The internal ID of your house number (use the wizard to get this)"
+        }
+      },
+      "reconfigure_stadt_kerpen_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "f_abfallarten": "Waste Types",
+          "f_id_strasse": "Street",
+          "f_id_strasse_hnr": "House Number"
+        },
+        "data_description": {
+          "f_abfallarten": "List of waste types (internal IDs). Leave empty to get all.",
+          "f_id_strasse": "The internal ID of your street (use the wizard to get this)",
+          "f_id_strasse_hnr": "The internal ID of your house number (use the wizard to get this)"
+        }
+      },
       "args_ics_koblenz_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

@@ -3111,6 +3111,14 @@
     "howto": {},
     "urls": {}
   },
+  "stadt_kerpen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadt_kerpen_de.md",
+    "howto": {
+      "de": "Sie können die internen IDs für die Straße und Hausnummer über das abfall_io Wizard Skript (`custom_components/waste_collection_schedule/waste_collection_schedule/wizard/abfall_io.py`) oder durch das Analysieren des Netzwerkverkehrs auf der MüllALARM Webseite des Anbieters ermitteln. Die ID der Kommune ist für Kerpen vorkonfiguriert.",
+      "en": "You can get the internal IDs for the street and house number by using the abfall_io wizard script (`custom_components/waste_collection_schedule/waste_collection_schedule/wizard/abfall_io.py`) or by inspecting the network traffic on the provider's MüllALARM website. The commune ID is preconfigured for Kerpen."
+    },
+    "urls": {}
+  },
   "ics_koblenz_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/koblenz_de.md",
     "howto": {

@@ -14068,6 +14068,12 @@
       "id": "awido_de"
     },
     {
+      "title": "Stadt Kerpen",
+      "module": "stadt_kerpen_de",
+      "default_params": {},
+      "id": "stadt_kerpen_de"
+    },
+    {
       "title": "Stadt Koblenz",
       "module": "ics",
       "default_params": {},

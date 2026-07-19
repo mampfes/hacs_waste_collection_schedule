@@ -2088,6 +2088,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Hanau](/doc/source/muellmax_de.md) / hanau.de
 - [Stadt Hilchenbach](/doc/source/hilchenbach_de.md) / hilchenbach.de
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
+- [Stadt Kerpen](/doc/source/stadt_kerpen_de.md) / stadt-kerpen.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Königstein im Taunus](/doc/source/awido_de.md) / koenigstein.de
 - [Stadt Landshut](/doc/source/abfall_io.md) / landshut.de
