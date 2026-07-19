@@ -23649,6 +23649,12 @@
       "id": "pendle_gov_uk"
     },
     {
+      "title": "Perth and Kinross Council",
+      "module": "pkc_gov_uk",
+      "default_params": {},
+      "id": "pkc_gov_uk"
+    },
+    {
       "title": "Peterborough City Council",
       "module": "peterborough_gov_uk",
       "default_params": {},

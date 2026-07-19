@@ -6143,6 +6143,13 @@
     },
     "urls": {}
   },
+  "pkc_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pkc_gov_uk.md",
+    "howto": {
+      "en": "Find your UPRN by visiting https://my.pkc.gov.uk/AchieveForms/?form_uri=sandbox-publish://AF-Process-de9223b1-a7c6-408f-aaa3-aee33fd7f7fa/AF-Stage-9fa33e2e-4c1b-4963-babf-4348ab8154bc/definition.json and searching for your address. Your UPRN can also be found at https://www.findmyaddress.co.uk/."
+    },
+    "urls": {}
+  },
   "peterborough_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/peterborough_gov_uk.md",
     "howto": {},

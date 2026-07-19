@@ -3608,6 +3608,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
 - [Pembrokeshire County Council](/doc/source/pembrokeshire_gov_uk.md) / pembrokeshire.gov.uk
 - [Pendle Borough Council](/doc/source/pendle_gov_uk.md) / pendle.gov.uk/binday
+- [Perth and Kinross Council](/doc/source/pkc_gov_uk.md) / pkc.gov.uk
 - [Peterborough City Council](/doc/source/peterborough_gov_uk.md) / peterborough.gov.uk
 - [Plymouth City Council](/doc/source/plymouth_gov_uk.md) / plymouth.gov.uk
 - [Portsmouth City Council](/doc/source/portsmouth_gov_uk.md) / portsmouth.gov.uk
