@@ -19060,7 +19060,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "additional_sides_matcher": "Additional matcher for collection sides",
+          "additional_sides_matcher": "Additional matcher for collection sides. Also used to pick between single-family ('Zabudowa jednorodzinna') and multi-family ('Zabudowa wielorodzinna') schedules for streets that offer both.",
           "community": "Community",
           "district": "District",
           "g1": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
@@ -19094,7 +19094,7 @@
           "town": "Town"
         },
         "data_description": {
-          "additional_sides_matcher": "Additional matcher for collection sides",
+          "additional_sides_matcher": "Additional matcher for collection sides. Also used to pick between single-family ('Zabudowa jednorodzinna') and multi-family ('Zabudowa wielorodzinna') schedules for streets that offer both.",
           "community": "Community",
           "district": "District",
           "g1": "Select Collection group to limit results to a specific group within a waste type (e.g. 'Papier (1 x miesiąc)' for Paper collected once a month). Leave empty and only fill if it fails, you'll then see a list of available groups.",
