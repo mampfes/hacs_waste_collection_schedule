@@ -135,6 +135,7 @@ class Source:
                 "appointment_housenumber_suffix": self._suffix,
                 "wsa_calendar": "4498794404",
             },
+            timeout=30,
         )
         r.raise_for_status()
 
@@ -146,7 +147,7 @@ class Source:
                 "Please verify it at https://www.irado.nl/afvalkalender",
             )
 
-        r_year = session.get(API_URL, params={"view": "year"})
+        r_year = session.get(API_URL, params={"view": "year"}, timeout=30)
         r_year.raise_for_status()
 
         soup = BeautifulSoup(r_year.text, "html.parser")
@@ -190,9 +191,7 @@ class Source:
                 except ValueError:
                     continue
 
-                for part in pickup.find_all(
-                    "div", class_=lambda c: bool(c) and "pickup-part-" in c
-                ):
+                for part in pickup.find_all("div", class_=re.compile(r"pickup-part-")):
                     waste_type = None
                     for cls in part.get("class", []):
                         if cls.startswith("pickup-part-"):
