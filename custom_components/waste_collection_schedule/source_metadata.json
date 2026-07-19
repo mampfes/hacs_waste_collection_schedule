@@ -482,7 +482,9 @@
   },
   "logan_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/logan_qld_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as used on the Logan City Council MyLogan tool (https://www.logan.qld.gov.au/MyLogan), for example '12 Ashton Street Kingston'."
+    },
     "urls": {}
   },
   "mrsc_vic_gov_au": {

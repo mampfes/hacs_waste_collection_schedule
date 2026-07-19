@@ -1990,10 +1990,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_location": "Property Location"
+          "property_location": "Street Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "property_location": "Your street address, e.g. '12 Ashton Street Kingston'. The closest match from the MyLogan address search is used."
         }
       },
       "reconfigure_logan_qld_gov_au": {
@@ -2001,9 +2002,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "property_location": "Property Location"
+          "property_location": "Street Address"
         },
-        "data_description": {}
+        "data_description": {
+          "property_location": "Your street address, e.g. '12 Ashton Street Kingston'. The closest match from the MyLogan address search is used."
+        }
       },
       "args_mrsc_vic_gov_au": {
         "title": "Configure Source",
