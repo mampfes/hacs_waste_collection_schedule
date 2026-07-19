@@ -1,0 +1,5 @@
+---
+interface:
+  display_name: Prepare Release
+  short_description: Draft and prepare a guarded project release
+  default_prompt: Use $release to prepare the next project release for approval.
