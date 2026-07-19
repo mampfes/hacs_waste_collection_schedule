@@ -101,14 +101,14 @@ class Source:
     def __init__(
         self, postal_code: str, house_number: str | int, suffix: str = ""
     ) -> None:
-        self._postal_code = postal_code
+        self._postal_code = postal_code.replace(" ", "").upper()
         try:
             self._house_number = int(house_number)
         except (TypeError, ValueError) as exc:
             raise SourceArgumentException(
                 "house_number", "House number must be numeric."
             ) from exc
-        self._suffix = suffix
+        self._suffix = suffix.strip()
 
     def fetch(self) -> list[Collection]:
         """Log in anonymously and fetch the collection calendar."""
@@ -143,13 +143,14 @@ class Source:
         except ValueError as exc:
             raise RuntimeError("Omrin login returned malformed JSON") from exc
 
-        if not isinstance(login_payload, dict) or not login_payload.get("success"):
-            errors = (
-                login_payload.get("errors", "unknown error")
-                if isinstance(login_payload, dict)
-                else "malformed response"
+        if not isinstance(login_payload, dict):
+            raise RuntimeError("Omrin login response was malformed")
+
+        if not login_payload.get("success"):
+            errors = login_payload.get("errors", "unknown error")
+            raise SourceArgumentException(
+                "postal_code", f"Omrin could not find this address: {errors}"
             )
-            raise RuntimeError(f"Omrin login failed: {errors}")
 
         login_data = login_payload.get("data")
         access_token = (
