@@ -19,7 +19,7 @@ per-council source files stay a thin ``OpenCitiesConfig`` + ``Source`` shim.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Any, Literal
 
 import requests
@@ -33,6 +33,16 @@ from waste_collection_schedule.exceptions import (
 )
 
 DEFAULT_DATE_FORMAT = "%a %d/%m/%Y"
+
+_WEEKDAY_NAMES = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+]
 
 
 @dataclass(frozen=True)
@@ -110,6 +120,13 @@ class OpenCitiesConfig:
     ``date-precise`` CSS class are parsed, skipping vague/recurring entries
     with no concrete next date (some council deployments, e.g. Shoalhaven,
     mix both kinds of block in the same response).
+    """
+
+    exclude_types: tuple[str, ...] = ()
+    """
+    Waste-type labels (exact match) to always drop, e.g. a council mixing
+    an unrelated "Burning off" permit article into the same wasteservices
+    response.
     """
 
 
@@ -282,6 +299,8 @@ class OpenCitiesClient:
                 continue
 
             waste_type = title.get_text(" ", strip=True)
+            if waste_type in self._cfg.exclude_types:
+                continue
             for suffix in self._cfg.strip_type_suffixes:
                 if waste_type.lower().endswith(suffix.lower()):
                     waste_type = waste_type[: -len(suffix)].strip()
@@ -306,7 +325,21 @@ class OpenCitiesClient:
         try:
             return datetime.strptime(text, self._cfg.date_format).date()
         except ValueError:
-            return None
+            pass
+        # Some deployments describe a recurring service as "Every <Weekday>"
+        # instead of a concrete next date (no explicit next occurrence is
+        # given by the API at all) -- resolve it to the next occurrence of
+        # that weekday from today.
+        parts = text.split()
+        if len(parts) >= 2 and parts[0].lower() == "every":
+            try:
+                target_weekday = _WEEKDAY_NAMES.index(parts[1].capitalize())
+            except ValueError:
+                return None
+            today = datetime.now().date()
+            days_ahead = (target_weekday - today.weekday()) % 7
+            return today + timedelta(days=days_ahead)
+        return None
 
     def _resolve_icon(self, label: str) -> Any | None:
         if not self._cfg.icon_keywords:

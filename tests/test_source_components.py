@@ -844,6 +844,52 @@ def test_opencities_client_filters_by_date_precise_class_when_configured() -> No
     assert [e.type for e in entries] == ["General Waste"]
 
 
+def test_opencities_client_drops_excluded_types() -> None:
+    module = _opencities_module()
+    config = module.OpenCitiesConfig(
+        domain="https://example.invalid", exclude_types=("Burning off",)
+    )
+    client = module.OpenCitiesClient(config)
+    html = (
+        "<article><h3>Burning off</h3>"
+        '<div class="next-service">Mon 01/02/2027</div></article>'
+        "<article><h3>Rubbish Collection</h3>"
+        '<div class="next-service">Tue 02/02/2027</div></article>'
+    )
+    client._session = _OpenCitiesSession(
+        lambda url, params: _OpenCitiesResponse(
+            json_data={"success": True, "responseContent": html}
+        )
+    )
+
+    entries = client.fetch_by_geolocation_id("abc")
+
+    assert [e.type for e in entries] == ["Rubbish Collection"]
+
+
+def test_opencities_client_resolves_every_weekday_recurring_text() -> None:
+    module = _opencities_module()
+    config = module.OpenCitiesConfig(domain="https://example.invalid")
+    client = module.OpenCitiesClient(config)
+    html = (
+        "<article><h3>General Waste</h3>"
+        '<div class="next-service">Every Monday</div></article>'
+    )
+    client._session = _OpenCitiesSession(
+        lambda url, params: _OpenCitiesResponse(
+            json_data={"success": True, "responseContent": html}
+        )
+    )
+
+    entries = client.fetch_by_geolocation_id("abc")
+
+    assert len(entries) == 1
+    assert entries[0].date.weekday() == 0  # Monday
+    from datetime import date as _date
+
+    assert entries[0].date >= _date.today()
+
+
 def test_opencities_client_retries_once_on_stale_cached_geolocation_id() -> None:
     module = _opencities_module()
     config = module.OpenCitiesConfig(domain="https://example.invalid")
