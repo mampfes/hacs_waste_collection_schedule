@@ -4526,6 +4526,13 @@
     "howto": {},
     "urls": {}
   },
+  "alvsbyns_energi_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/alvsbyns_energi_se.md",
+    "howto": {
+      "en": "Enter the street address and house number as shown by the address search at https://www.alvsbynsenergi.se/ (for example, Storgatan 24)."
+    },
+    "urls": {}
+  },
   "okrab_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/okrab_se.md",
     "howto": {},

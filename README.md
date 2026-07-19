@@ -3266,6 +3266,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vänersborg](/doc/source/avfallsapp_se.md) / vanersborg.se
 - [Värmdö Sophämtning](/doc/source/varmdo_se.md) / varmdo.se
 - [Västervik Miljö & Energi](/doc/source/vmeab_se.md) / vmeab.se
+- [Älvsbyns Energi](/doc/source/alvsbyns_energi_se.md) / alvsbynsenergi.se
 - [Ökrab Sophämntning](/doc/source/okrab_se.md) / okrab.se
 - [Örebro kommun](/doc/source/edpevent_se.md) / orebro.se
 - [Östersunds kommun](/doc/source/ostersund_se.md) / ostersund.se

@@ -21461,6 +21461,12 @@
       "id": "vmeab_se"
     },
     {
+      "title": "\u00c4lvsbyns Energi",
+      "module": "alvsbyns_energi_se",
+      "default_params": {},
+      "id": "alvsbyns_energi_se"
+    },
+    {
       "title": "\u00d6krab Soph\u00e4mntning",
       "module": "okrab_se",
       "default_params": {},

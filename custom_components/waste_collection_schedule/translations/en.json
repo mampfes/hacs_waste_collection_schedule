@@ -21235,6 +21235,29 @@
         },
         "data_description": {}
       },
+      "args_alvsbyns_energi_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Street address and house number."
+        }
+      },
+      "reconfigure_alvsbyns_energi_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "Street address and house number."
+        }
+      },
       "args_okrab_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
