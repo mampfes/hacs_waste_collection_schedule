@@ -1,10 +1,8 @@
-import datetime
-import json
-from urllib.parse import quote
-
-from bs4 import BeautifulSoup
-from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "Campbelltown City Council (NSW)"
 DESCRIPTION = "Source for Campbelltown City Council rubbish collection."
@@ -30,16 +28,19 @@ TEST_CASES = {
     },
 }
 
-API_URLS = {
-    "address_search": "https://www.campbelltown.nsw.gov.au/api/v1/myarea/search?keywords={}",
-    "collection": "https://www.campbelltown.nsw.gov.au/ocapi/Public/myarea/wasteservices?geolocationid={}&ocsvclang=en-AU",
-}
-
 ICON_MAP = {
     "General Waste": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
     "Green Waste": Icons.GARDEN,
 }
+
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.campbelltown.nsw.gov.au",
+    argument_name="street_name",
+    search_response_format="json_then_xml",
+    use_curl_cffi=True,
+    icon_keywords=ICON_MAP,
+)
 
 
 class Source:
@@ -50,75 +51,8 @@ class Source:
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
+        self._client = OpenCitiesClient(_CONFIG)
 
-    def fetch(self):
-        locationId = ""
-
+    def fetch(self) -> list[Collection]:
         address = f"{self.street_number} {self.street_name} {self.suburb} NSW {self.post_code}"
-
-        session = requests.Session(impersonate="chrome")
-
-        q = str(API_URLS["address_search"]).format(quote(address))
-        r = session.get(q)
-        r.raise_for_status()
-
-        data = None
-        try:
-            data = json.loads(r.text)
-        except Exception:
-            soup = BeautifulSoup(r.text, "xml")
-            address_results = soup.find_all("PhysicalAddressSearchResult")
-            for result in address_results:
-                id_element = result.find("Id")
-                if id_element:
-                    locationId = id_element.text.strip()
-                    break
-        else:
-            for item in data.get("Items", []):
-                locationId = item.get("Id", "")
-                break
-
-        if not locationId:
-            return []
-
-        q = str(API_URLS["collection"]).format(locationId)
-        r = session.get(q)
-        r.raise_for_status()
-
-        try:
-            data = json.loads(r.text)
-        except Exception:
-            return []
-
-        responseContent = data.get("responseContent", "")
-        if not responseContent:
-            return []
-
-        soup = BeautifulSoup(responseContent, "html.parser")
-        services = soup.find_all("div", attrs={"class": "waste-services-result"})
-
-        entries = []
-
-        for item in services:
-            date_text = item.find("div", attrs={"class": "next-service"})
-            waste_type = item.find("h3")
-            if not date_text or not waste_type:
-                continue
-            date_format = "%a %d/%m/%Y"
-            try:
-                cleaned_date_text = (
-                    date_text.text.replace("\r", "").replace("\n", "").strip()
-                )
-                date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
-                waste_type_text = waste_type.text.strip()
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=waste_type_text,
-                        icon=ICON_MAP.get(waste_type_text, "mdi:trash-can"),
-                    )
-                )
-            except Exception:
-                continue
-
-        return entries
+        return self._client.fetch(address=address)

@@ -1,9 +1,8 @@
-import datetime
-import json
-
-from bs4 import BeautifulSoup
-from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.service.OpenCities import (
+    OpenCitiesClient,
+    OpenCitiesConfig,
+)
 
 TITLE = "City of Ryde (NSW)"
 DESCRIPTION = "Source for City of Ryde rubbish collection."
@@ -29,11 +28,6 @@ TEST_CASES = {
     },
 }
 
-API_URLS = {
-    "address_search": "https://www.ryde.nsw.gov.au/api/v1/myarea/search",
-    "collection": "https://www.ryde.nsw.gov.au/ocapi/Public/myarea/wasteservices",
-}
-
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
     "Accept": "text/plain, */*; q=0.01",
@@ -48,6 +42,14 @@ ICON_MAP = {
     "Garden Organics": Icons.GARDEN,
 }
 
+_CONFIG = OpenCitiesConfig(
+    domain="https://www.ryde.nsw.gov.au",
+    argument_name="street_name",
+    headers=HEADERS,
+    use_curl_cffi=True,
+    icon_keywords=ICON_MAP,
+)
+
 
 class Source:
     def __init__(
@@ -57,76 +59,10 @@ class Source:
         self.suburb = suburb
         self.street_name = street_name
         self.street_number = street_number
+        self._client = OpenCitiesClient(_CONFIG)
 
-    def fetch(self):
-        locationId = 0
-
+    def fetch(self) -> list[Collection]:
         address = (
             f"{self.street_number} {self.street_name} {self.suburb} {self.post_code}"
         )
-
-        session = requests.Session(impersonate="chrome")
-
-        # Retrieve suburbs
-        r = session.get(
-            API_URLS["address_search"], params={"keywords": address}, headers=HEADERS
-        )
-
-        data = json.loads(r.text)
-
-        # Find the ID for our suburb
-        for item in data["Items"]:
-            locationId = item["Id"]
-            break
-
-        if locationId == 0:
-            raise Exception(
-                f"Could not find address: {self.street_number} {self.street_name}, {self.suburb} {self.post_code}"
-            )
-
-        # Retrieve the upcoming collections for our property
-        r = session.get(
-            API_URLS["collection"],
-            params={"geolocationid": locationId, "ocsvclang": "en-AU"},
-            headers=HEADERS,
-        )
-
-        data = json.loads(r.text)
-
-        responseContent = data["responseContent"]
-
-        soup = BeautifulSoup(responseContent, "html.parser")
-        services = soup.find_all("div", attrs={"class": "waste-services-result"})
-
-        entries = []
-
-        for item in services:
-            # test if <div> contains a valid date. If not, is is not a collection item.
-            date_text = item.find("div", attrs={"class": "next-service"})
-
-            # The date format currently used on https://www.ryde.nsw.gov.au/Environment-and-Waste/Waste-and-Recycling
-            date_format = "%a %d/%m/%Y"
-
-            try:
-                # Strip carriage returns and newlines out of the HTML content
-                cleaned_date_text = (
-                    date_text.text.replace("\r", "").replace("\n", "").strip()
-                )
-
-                # Parse the date
-                date = datetime.datetime.strptime(cleaned_date_text, date_format).date()
-
-            except ValueError:
-                continue
-
-            waste_type = item.find("h3").text.strip()
-
-            entries.append(
-                Collection(
-                    date=date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
-                )
-            )
-
-        return entries
+        return self._client.fetch(address=address)

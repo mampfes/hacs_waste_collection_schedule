@@ -181,6 +181,17 @@ class OpenCitiesClient:
         return self._select_address(address, items)
 
     def fetch_by_geolocation_id(self, geolocation_id: str) -> list[Collection]:
+        html = self.get_waste_services_html(geolocation_id)
+        return self._parse_wasteservices_html(html)
+
+    def get_waste_services_html(self, geolocation_id: str) -> str:
+        """Return the raw wasteservices HTML fragment for a geolocation id.
+
+        Exposed alongside :meth:`fetch_by_geolocation_id` for the rare
+        source that needs to parse extra per-block content (e.g. a "note"
+        div with a collection-frequency hint) beyond the waste type and
+        next-service date the shared parser extracts.
+        """
         if self._cfg.warm_up_before == "wasteservices":
             self._ensure_warmed_up()
         params: dict[str, str] = {
@@ -195,7 +206,7 @@ class OpenCitiesClient:
         data = response.json()
         if not data.get("success", True) or not data.get("responseContent"):
             raise SourceArgumentNotFound(self._cfg.argument_name, geolocation_id)
-        return self._parse_wasteservices_html(data["responseContent"])
+        return data["responseContent"]
 
     # ---- internals ------------------------------------------------------
 

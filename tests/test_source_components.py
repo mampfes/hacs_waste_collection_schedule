@@ -731,6 +731,24 @@ def test_opencities_client_includes_page_link_param_when_configured() -> None:
     assert params["pageLink"] == "/some/page"
 
 
+def test_opencities_client_get_waste_services_html_returns_raw_fragment() -> None:
+    module = _opencities_module()
+    config = module.OpenCitiesConfig(domain="https://example.invalid")
+    client = module.OpenCitiesClient(config)
+    html = (
+        "<article><h3>General Waste</h3>"
+        '<div class="note">Collected fortnightly</div>'
+        '<div class="next-service">Mon 01/02/2027</div></article>'
+    )
+    client._session = _OpenCitiesSession(
+        lambda url, params: _OpenCitiesResponse(
+            json_data={"success": True, "responseContent": html}
+        )
+    )
+
+    assert client.get_waste_services_html("abc") == html
+
+
 def test_opencities_client_parses_wasteservices_html_into_collections() -> None:
     module = _opencities_module()
     config = module.OpenCitiesConfig(domain="https://example.invalid")
