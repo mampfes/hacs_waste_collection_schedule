@@ -25,4 +25,9 @@ SERVICE_MAP = [
         "url": "https://kell-gmbh.de/",
         "service_id": "0d7a92192ba3ae914c028ac37d73e222",
     },
+    {
+        "title": "Wirtschaftsbetriebe Duisburg (WBD)",
+        "url": "https://www.wb-duisburg.de/",
+        "service_id": "80acad6c77fe9342ebafad29a8c58bf6",
+    },
 ]
