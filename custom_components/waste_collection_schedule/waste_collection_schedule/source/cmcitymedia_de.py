@@ -9,7 +9,13 @@ from waste_collection_schedule.service.CMCityMedia import (
     CMCityMediaRetriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import ALL_TYPES
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 # Declarative source on the CM City Media components (CMCityMediaRetriever +
 # CMCityMediaParser). The provider registry lives here, in the source that owns
@@ -70,9 +76,16 @@ class Source(BaseSource):
     # A fixed-provider source: an empty schedule is a legitimate "no collections
     # in the window" result, so do not RAISE_ON_EMPTY (matches the legacy source
     # which returned []).
-    # The transformer resolves open-ended German labels via the shared vocabulary,
-    # so any canonical type may appear.
-    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
+    # The transformer resolves open-ended German labels via the shared
+    # vocabulary; the canonical types the enabled providers actually emit
+    # (verified by cassette replay) are declared here.
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     # Both cases exercise the enabled Blankenheim provider (district-based and
     # realmid-override paths); disabled providers serve no data so are not tested.

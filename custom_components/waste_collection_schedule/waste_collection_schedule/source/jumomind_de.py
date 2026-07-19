@@ -16,7 +16,15 @@ from waste_collection_schedule.service.Jumomind import (
     JumomindRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
-from waste_collection_schedule.waste_types import ALL_TYPES
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 # Waste-type names come back as open-ended German labels that vary by provider,
 # so this source declares NO per-source type map: the transformer resolves the
@@ -189,9 +197,18 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Jumomind.de waste collection."
     URL = "https://www.jumomind.de"
     COUNTRY = "de"
-    # The transformer resolves open-ended German labels via the shared vocabulary,
-    # so any canonical type may appear.
-    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
+    # The transformer resolves open-ended German labels via the shared
+    # vocabulary; the canonical types the providers actually emit (verified by
+    # cassette replay) are declared here. Unrecognised labels stay preserved.
+    WASTE_TYPES: ClassVar[list] = [
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        GLASS,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     # One structure (the Jumomind mmapp API) covering many municipalities; the
     # full list is derived from the source's own provider registry at load time.
