@@ -33,6 +33,7 @@ _CONFIG = OpenCitiesConfig(
     domain="https://www.hobartcity.com.au",
     page_link="/$720cfbd8-df7e-4b88-bf92-e218d51ee173$/Residents/Waste-and-recycling/When-is-my-bin-collected",
     icon_keywords=ICON_MAP,
+    strict_address_matching=True,
 )
 
 
