@@ -864,10 +864,14 @@ def test_opencities_client_bypasses_search_when_geolocation_id_given_directly() 
     assert all("myarea/search" not in url for url, _ in session.calls)
 
 
-def test_opencities_client_fires_warm_up_url_once_before_first_request() -> None:
+def test_opencities_client_fires_warm_up_url_once_before_wasteservices_when_configured() -> (
+    None
+):
     module = _opencities_module()
     config = module.OpenCitiesConfig(
-        domain="https://example.invalid", warm_up_url="https://example.invalid/warm"
+        domain="https://example.invalid",
+        warm_up_url="https://example.invalid/warm",
+        warm_up_before="wasteservices",
     )
     client = module.OpenCitiesClient(config)
     session = _OpenCitiesSession(
@@ -882,6 +886,40 @@ def test_opencities_client_fires_warm_up_url_once_before_first_request() -> None
 
     warm_up_calls = [url for url, _ in session.calls if url.endswith("/warm")]
     assert len(warm_up_calls) == 1
+
+
+def test_opencities_client_fires_warm_up_url_before_search_by_default() -> None:
+    module = _opencities_module()
+    config = module.OpenCitiesConfig(
+        domain="https://example.invalid", warm_up_url="https://example.invalid/warm"
+    )
+    client = module.OpenCitiesClient(config)
+    session = _OpenCitiesSession(
+        lambda url, params: _OpenCitiesResponse(json_data={"Items": [{"Id": "abc"}]})
+    )
+    client._session = session
+
+    client.resolve_geolocation_id("1 Main St")
+
+    assert [url for url, _ in session.calls[:1]] == ["https://example.invalid/warm"]
+
+
+def test_opencities_client_does_not_warm_up_before_wasteservices_by_default() -> None:
+    module = _opencities_module()
+    config = module.OpenCitiesConfig(
+        domain="https://example.invalid", warm_up_url="https://example.invalid/warm"
+    )
+    client = module.OpenCitiesClient(config)
+    session = _OpenCitiesSession(
+        lambda url, params: _OpenCitiesResponse(
+            json_data={"success": True, "responseContent": "<p>no services</p>"}
+        )
+    )
+    client._session = session
+
+    client.fetch_by_geolocation_id("abc")
+
+    assert all("/warm" not in url for url, _ in session.calls)
 
 
 def test_opencities_client_falls_back_from_json_to_xml_search_response() -> None:
