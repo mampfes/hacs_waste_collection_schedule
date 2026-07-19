@@ -88,13 +88,9 @@ _RETURNS_UNDECLARED_TYPES: set[str] = set()
 
 # (b) Sources whose WASTE_TYPES == the whole ALL_TYPES catalogue, via the
 # empty-map fallback. "Declaring everything" is no declaration; fixed by giving
-# each a real, specific vocabulary. The two remaining sources emit only unmapped
-# (preserved:) labels, so they cannot declare a canonical vocabulary until their
-# labels are mapped or aliased; tracked separately, hence still allowlisted.
-_DECLARES_ALL_TYPES = {
-    "bmv_at",
-    "muellmax_de",
-}
+# each a real, specific vocabulary. Now cleared: bmv_at and muellmax_de had their
+# provider-specific labels mapped so they resolve to a declared vocabulary.
+_DECLARES_ALL_TYPES: set[str] = set()
 
 ALLOWLIST = _RETURNS_UNDECLARED_TYPES | _DECLARES_ALL_TYPES
 

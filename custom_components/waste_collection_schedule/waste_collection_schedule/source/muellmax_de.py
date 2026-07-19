@@ -11,6 +11,14 @@ from waste_collection_schedule.config_params import (
 from waste_collection_schedule.regions import Region, region
 from waste_collection_schedule.service.MuellmaxDe import MuellmaxRetriever
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 # Demonstrates: a fully declarative source over a stateful platform wizard. The
 # Müllmax multi-step form walk lives in the service module as MuellmaxRetriever,
@@ -97,6 +105,38 @@ _PROVIDERS = [
 ]
 
 
+# Müllmax providers prefix each bin label with a provider code and often a bin
+# colour, e.g. "ASH Restmüll-Tonne" or "USB Abfuhr Grau - Restmüll", which stops
+# the shared vocabulary from matching. Reduce each label to its core German
+# waste term so the map below resolves it; unrecognised labels pass through
+# unchanged (resolved by the vocabulary or preserved verbatim).
+_TYPE_VALUE_MAP = {
+    "restmüll": GENERAL_WASTE,
+    "bioabfall": ORGANIC,
+    "altpapier": PAPER,
+    "wertstoff": RECYCLABLES,
+    "grünabfall": GARDEN_WASTE,
+    "schadstoff": HAZARDOUS,
+}
+
+
+def _clean(label: str) -> str:
+    text = label.lower()
+    if "restmüll" in text or "restabfall" in text:
+        return "restmüll"
+    if "bioabfall" in text or "biotonne" in text:
+        return "bioabfall"
+    if "altpapier" in text or "papier" in text:
+        return "altpapier"
+    if "wertstoff" in text or "gelb" in text or "verpack" in text:
+        return "wertstoff"
+    if "grünab" in text or "grüngut" in text or "grünschnitt" in text:
+        return "grünabfall"
+    if "umweltmobil" in text or "schadstoff" in text or "problemstoff" in text:
+        return "schadstoff"
+    return label
+
+
 @final
 class Source(BaseSource):
     TITLE = "Müllmax"
@@ -126,7 +166,7 @@ class Source(BaseSource):
 
     retrieve = MuellmaxRetriever()
     parse = parsers.IcsParser(min_events=1)
-    transform = ICSTransformer()
+    transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
 
     def __init__(
         self,
