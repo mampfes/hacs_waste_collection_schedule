@@ -5,14 +5,42 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 # Demonstrates: a plain ICS feed (parsers.IcsParser + ICSTransformer) keyed by a
 # property id (hnId) carried in the query string. A configured HttpGetRetriever
 # supplies the static query params plus the user's hnId; no custom retrieve/parse
-# method and no per-source date or icon handling. The German bin names resolve
-# through the shared multilingual vocabulary, so there is no type_value_map.
+# method and no per-source date or icon handling. The feed labels each pickup
+# "Abfuhr <colour> <bin>tonne", which the shared vocabulary does not match, so a
+# small clean reduces the label to its core bin term for the type_value_map.
 # The legacy asId argument was never used for the fetch and is accepted only for
 # back-compat with existing configurations.
+
+
+def _clean(label: str) -> str:
+    text = label.lower()
+    if "biotonne" in text or "bioabfall" in text:
+        return "bioabfall"
+    if "wertstoff" in text:
+        return "wertstoff"
+    if "restmüll" in text or "restabfall" in text:
+        return "restmüll"
+    if "papier" in text:
+        return "papier"
+    return label
+
+
+_TYPE_VALUE_MAP = {
+    "bioabfall": ORGANIC,
+    "wertstoff": RECYCLABLES,
+    "restmüll": GENERAL_WASTE,
+    "papier": PAPER,
+}
 
 API_URL = "https://backend.stadtreinigung.hamburg/kalender/abholtermine.ics"
 
@@ -39,7 +67,7 @@ class Source(BaseSource):
         params=lambda hnId, **_: {"hnIds": hnId, "adresse": "MeineAdresse"},
     )
     parse = parsers.IcsParser()
-    transform = ICSTransformer()
+    transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
 
     def __init__(self, hnId, asId=None):
         super().__init__(hnId=hnId, asId=asId)

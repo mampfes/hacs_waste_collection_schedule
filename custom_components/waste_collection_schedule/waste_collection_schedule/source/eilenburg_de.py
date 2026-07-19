@@ -15,6 +15,29 @@ from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER, RECYCLABLES
+
+# The feed labels each pickup "<service> - EB <zone>", e.g.
+# "Restabfallentsorgung - EB Berg" or "Entsorgung gelber Sack - EB 1", which the
+# shared vocabulary does not match. Reduce the label to its core waste term for
+# the type_value_map.
+_TYPE_VALUE_MAP = {
+    "restabfall": GENERAL_WASTE,
+    "gelber sack": RECYCLABLES,
+    "papier": PAPER,
+}
+
+
+def _clean(label: str) -> str:
+    text = label.lower()
+    if "restabfall" in text or "restmüll" in text:
+        return "restabfall"
+    if "gelber sack" in text or "gelbe" in text or "wertstoff" in text:
+        return "gelber sack"
+    if "papier" in text:
+        return "papier"
+    return label
+
 
 _CALENDAR_PAGE_URL = (
     "https://www.eilenburg.de/portal/seiten/abfallwirtschaft-900000136-27670.html"
@@ -95,7 +118,7 @@ class Source(BaseSource):
             entries.extend(ICS().convert(text))
         return entries
 
-    transform = ICSTransformer()
+    transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
 
     def __init__(self, areas: list[str] | str):
         if isinstance(areas, str):

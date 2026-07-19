@@ -17,11 +17,40 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _STREETS_URL = "https://stadtreinigung-leipzig.de/rest/Navision/Streets"
 _ICS_URL = (
     "https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics"
 )
+
+# The feed labels bins "<bin> (Abholzeit)" (and sometimes a trailing ", "), which
+# the shared vocabulary does not match. Drop the parenthetical and reduce the
+# label to its core bin term for the type_value_map.
+_TYPE_VALUE_MAP = {
+    "biotonne": ORGANIC,
+    "gelbe tonne": RECYCLABLES,
+    "blaue tonne": PAPER,
+    "restabfall": GENERAL_WASTE,
+}
+
+
+def _clean(label: str) -> str:
+    text = label.split("(")[0].strip().rstrip(",").strip().lower()
+    if "biotonne" in text or "bioabfall" in text:
+        return "biotonne"
+    if "gelbe" in text or "wertstoff" in text:
+        return "gelbe tonne"
+    if "blaue" in text or "papier" in text:
+        return "blaue tonne"
+    if "restabfall" in text or "restmüll" in text:
+        return "restabfall"
+    return label
 
 
 @final
@@ -67,7 +96,7 @@ class Source(BaseSource):
         return self.session.get(_ICS_URL, params=ics_params)
 
     parse = parsers.IcsParser()
-    transform = ICSTransformer(clean=lambda s: s.removesuffix(", "))
+    transform = ICSTransformer(clean=_clean, type_value_map=_TYPE_VALUE_MAP)
 
     def __init__(self, street: str, house_number: int):
         super().__init__(street=street, house_number=house_number)

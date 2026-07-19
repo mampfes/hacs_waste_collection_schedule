@@ -9,7 +9,17 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentException,
     SourceArgumentNotFound,
 )
-from waste_collection_schedule.waste_types import ALL_TYPES, preserved, resolve
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+    preserved,
+    resolve,
+)
 
 # Declarative conversion of the NÅRAB source. NÅRAB's calendar lives on a
 # separate service (narabtomningskalender.se) reached in two GET steps: an
@@ -58,6 +68,35 @@ _COLLECTION_LABELS = {
     "FA": "FA",
 }
 
+# Canonical type per collection code. The shared vocabulary does not read
+# Swedish, so map the single-fraction codes directly. The mixed BEDA Kärl 2 /
+# LILLBEDA bins (food + residual + newspapers + coloured glass) and the genuinely
+# ambiguous codes (latrin, sludge, fat) are intentionally left out: they fall
+# through to preserved(), keeping their descriptive label rather than collapsing
+# to one canonical type. A Swedish speaker should sanity-check these.
+_CODE_TYPES = {
+    "KK": GENERAL_WASTE,
+    "HAS": GENERAL_WASTE,
+    "HAO": GENERAL_WASTE,
+    "HAX": GENERAL_WASTE,
+    "MAT": ORGANIC,
+    "ORG": ORGANIC,
+    "WELL": PAPER,
+    "TIDN": PAPER,
+    "PAPP": PAPER,
+    "B1": RECYCLABLES,
+    "PLF": RECYCLABLES,
+    "MET": RECYCLABLES,
+    "MPL": RECYCLABLES,
+    "HPL": RECYCLABLES,
+    "FG": GLASS,
+    "OFG": GLASS,
+    "TRG": GARDEN_WASTE,
+    "BATT": HAZARDOUS,
+    "OLJA": HAZARDOUS,
+    "FA": HAZARDOUS,
+}
+
 # Map Swedish month names to month numbers.
 _SWEDISH_MONTHS = {
     "Januari": 1,
@@ -81,9 +120,17 @@ class Source(BaseSource):
     DESCRIPTION = "Source script for narab.se"
     URL = "https://narab.se"
     COUNTRY = "se"
-    # classify() resolves open-ended Swedish labels via the shared vocabulary,
-    # so any canonical type may appear.
-    WASTE_TYPES: ClassVar[list] = list(ALL_TYPES)
+    # classify() maps each collection code to a canonical type via _CODE_TYPES;
+    # mixed/ambiguous codes stay as preserved: labels (see the map's note).
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+        GLASS,
+        GARDEN_WASTE,
+        HAZARDOUS,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Residential - Villa": {"address": "Helsingborgsvägen 31", "kundNr": 25494},
@@ -237,7 +284,5 @@ class Source(BaseSource):
             return None
 
         date = datetime.date(year=int(year_str), month=month_number, day=record["day"])
-        return Collection(
-            date=date,
-            waste_type=resolve(label) or preserved(label),
-        )
+        waste_type = _CODE_TYPES.get(base_code) or resolve(label) or preserved(label)
+        return Collection(date=date, waste_type=waste_type)
