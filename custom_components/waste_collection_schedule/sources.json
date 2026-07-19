@@ -10983,6 +10983,14 @@
       "id": "ics_kecl_de"
     },
     {
+      "title": "KELL Kommunalentsorgung Landkreis Leipzig GmbH",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "0d7a92192ba3ae914c028ac37d73e222"
+      },
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Kierspe",
       "module": "lobbe_app",
       "default_params": {

@@ -1685,6 +1685,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Katlenburg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [KAW Mainz und Mainz-Bingen AöR](/doc/source/kaw_mainz_bingen_de.md) / lk.kaw-mainz-bingen.de/de/Abfallentsorgung/Abfallkalender
 - [KECL Kommunalentsorgung Chemnitzer Land](/doc/ics/kecl_de.md) / kecl.de
+- [KELL Kommunalentsorgung Landkreis Leipzig GmbH](/doc/source/abfall_io_graphql.md) / kell-gmbh.de
 - [Kierspe](/doc/source/lobbe_app.md) / lobbe.app
 - [Kirchberg](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Kirchdorf (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
