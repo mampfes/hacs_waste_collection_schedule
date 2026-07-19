@@ -152,17 +152,17 @@
     },
     {
       "title": "Brisbane City Council",
+      "module": "brisbane_qld_gov_au",
+      "default_params": {},
+      "id": "brisbane_qld_gov_au"
+    },
+    {
+      "title": "Brisbane City Council",
       "module": "impactapps_com_au",
       "default_params": {
         "service": "Brisbane City Council"
       },
       "id": "impactapps_com_au"
-    },
-    {
-      "title": "Brisbane City Council",
-      "module": "brisbane_qld_gov_au",
-      "default_params": {},
-      "id": "brisbane_qld_gov_au"
     },
     {
       "title": "Bundaberg Regional Council",
@@ -1109,17 +1109,17 @@
     },
     {
       "title": "Port Stephens Council",
-      "module": "portstephens_nsw_gov_au",
-      "default_params": {},
-      "id": "portstephens_nsw_gov_au"
-    },
-    {
-      "title": "Port Stephens Council",
       "module": "impactapps_com_au",
       "default_params": {
         "service": "Port Stephens Council"
       },
       "id": "impactapps_com_au"
+    },
+    {
+      "title": "Port Stephens Council",
+      "module": "portstephens_nsw_gov_au",
+      "default_params": {},
+      "id": "portstephens_nsw_gov_au"
     },
     {
       "title": "Queanbeyan-Palerang Regional Council",

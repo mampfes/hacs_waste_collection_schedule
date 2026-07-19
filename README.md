@@ -66,15 +66,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Blacktown City Council (NSW)](/doc/source/blacktown_nsw_gov_au.md) / blacktown.nsw.gov.au
 - [Blue Mountains City Council](/doc/source/impactapps_com_au.md) / bmcc.nsw.gov.au
 - [Brimbank City Council](/doc/source/brimbank_vic_gov_au.md) / brimbank.vic.gov.au
-- [Brisbane City Council](/doc/source/impactapps_com_au.md) / brisbane.nsw.gov.au
 - [Brisbane City Council](/doc/source/brisbane_qld_gov_au.md) / brisbane.qld.gov.au
+- [Brisbane City Council](/doc/source/impactapps_com_au.md) / brisbane.qld.gov.au
 - [Bundaberg Regional Council](/doc/source/bundaberg_qld_gov_au.md) / bundaberg.qld.gov.au
 - [Burwood City Council](/doc/source/impactapps_com_au.md) / burwood.nsw.gov.au
 - [Byron Shire Council](/doc/source/byron_nsw_gov_au.md) / byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules
 - [Cairns Regional Council](/doc/source/cairns_qld_gov_au.md) / cairns.qld.gov.au
 - [Campbelltown City Council](/doc/source/app_my_local_services_au.md) / campbelltown.sa.gov.au
 - [Campbelltown City Council (NSW)](/doc/source/campbelltown_nsw_gov_au.md) / campbelltown.nsw.gov.au
-- [Campbeltown City Council](/doc/source/impactapps_com_au.md) / campbelltown.vic.gov.au
+- [Campbeltown City Council](/doc/source/impactapps_com_au.md) / campbelltown.nsw.gov.au
 - [Cardinia Shire Council](/doc/source/cardinia_vic_gov_au.md) / cardinia.vic.gov.au
 - [Cassowary Coast Regional Council](/doc/source/cassowarycoast_qld_gov_au.md) / cassowarycoast.qld.gov.au
 - [City of Adelaide](/doc/source/app_my_local_services_au.md) / adelaidecitycouncil.com
@@ -85,7 +85,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Boroondara](/doc/source/boroondara_vic_gov_au.md) / boroondara.vic.gov.au
 - [City of Burnside](/doc/source/app_my_local_services_au.md) / burnside.sa.gov.au
 - [City of Canada Bay Council](/doc/source/canadabay_nsw_gov_au.md) / canadabay.nsw.gov.au
-- [City of Canada Bay Council](/doc/source/impactapps_com_au.md) / canadabay.vic.gov.au
+- [City of Canada Bay Council](/doc/source/impactapps_com_au.md) / canadabay.nsw.gov.au
 - [City of Canning (WA)](/doc/source/canning_wa_gov_au.md) / canning.wa.gov.au
 - [City of Canterbury-Bankstown (NSW)](/doc/source/cbcity_nsw_gov_au.md) / bindayfinder.azurewebsites.net
 - [City of Casey](/doc/source/casey_vic_gov_au.md) / casey.vic.gov.au
@@ -139,7 +139,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Coorong District Council](/doc/source/app_my_local_services_au.md) / coorong.sa.gov.au
 - [Council of Copper Coast](/doc/source/app_my_local_services_au.md) / coppercoast.sa.gov.au
 - [Cowra Council](/doc/source/impactapps_com_au.md) / cowracouncil.com.au
-- [Cumberland City Council](/doc/source/impactapps_com_au.md) / cumberland.vic.gov.au
+- [Cumberland City Council](/doc/source/impactapps_com_au.md) / cumberland.nsw.gov.au
 - [Cumberland Council (NSW)](/doc/source/cumberland_nsw_gov_au.md) / cumberland.nsw.gov.au
 - [District Council of Barunga West](/doc/source/app_my_local_services_au.md) / barungawest.sa.gov.au
 - [District Council of Ceduna](/doc/source/app_my_local_services_au.md) / ceduna.sa.gov.au
@@ -180,7 +180,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Launceston City Council](/doc/source/launceston_tas_gov_au.md) / launceston.tas.gov.au
 - [Light Regional Council](/doc/source/app_my_local_services_au.md) / light.sa.gov.au
 - [Lismore City Council](/doc/source/lismore_city_nsw_gov_au.md) / lismore.nsw.gov.au/Households/Waste-and-recycling/Whats-My-Bin-Day1
-- [Lithgow City Council](/doc/source/impactapps_com_au.md) / lithgow.nsw.gov.au
+- [Lithgow City Council](/doc/source/impactapps_com_au.md) / council.lithgow.com
 - [Liverpool City Council (NSW)](/doc/source/liverpool_nsw_gov_au.md) / liverpool.nsw.gov.au
 - [Livingstone Shire Council](/doc/source/impactapps_com_au.md) / livingstone.qld.gov.au
 - [Logan City Council](/doc/source/logan_qld_gov_au.md) / logan.qld.gov.au
@@ -218,8 +218,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Port Augusta City Council](/doc/source/app_my_local_services_au.md) / portaugusta.sa.gov.au
 - [Port Macquarie Hastings Council](/doc/source/impactapps_com_au.md) / pmhc.nsw.gov.au
 - [Port Pirie Regional Council](/doc/source/app_my_local_services_au.md) / pirie.sa.gov.au
+- [Port Stephens Council](/doc/source/impactapps_com_au.md) / portstephens.nsw.gov.au
 - [Port Stephens Council](/doc/source/portstephens_nsw_gov_au.md) / portstephens.nsw.gov.au
-- [Port Stephens Council](/doc/source/impactapps_com_au.md) / portstephens.vic.gov.au
 - [Queanbeyan-Palerang Regional Council](/doc/source/impactapps_com_au.md) / qprc.nsw.gov.au
 - [RecycleSmart](/doc/source/recyclesmart_com.md) / recyclesmart.com
 - [Redland City Council](/doc/source/impactapps_com_au.md) / redland.qld.gov.au
@@ -262,7 +262,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Willoughby City Council](/doc/source/willoughby_nsw_gov_au.md) / willoughby.nsw.gov.au
 - [Wingecarribee Shire Council](/doc/source/wingecarribee_nsw_gov_au.md) / wsc.nsw.gov.au
 - [Wollondilly Shire Council](/doc/source/wollondilly_nsw_gov_au.md) / wollondilly.nsw.gov.au
-- [Wollongong City Council](/doc/source/impactapps_com_au.md) / wollongong.vic.gov.au
+- [Wollongong City Council](/doc/source/impactapps_com_au.md) / wollongong.nsw.gov.au
 - [Wollongong City Council](/doc/source/wollongongwaste_com_au.md) / wollongongwaste.com
 - [Woollahra Municipal Council (NSW)](/doc/source/woollahra_nsw_gov_au.md) / woollahra.nsw.gov.au
 - [Wyndham City Council, Melbourne](/doc/source/wyndham_vic_gov_au.md) / wyndham.vic.gov.au
