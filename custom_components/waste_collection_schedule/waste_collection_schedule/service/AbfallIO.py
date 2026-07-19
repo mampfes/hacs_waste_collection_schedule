@@ -28,11 +28,6 @@ SERVICE_MAP = [
         "service_id": "690a3ae4906c52b232c1322e2f88550c",
     },
     {
-        "title": "Entsorgungsbetriebe Essen",
-        "url": "https://www.ebe-essen.de/",
-        "service_id": "9b5390f095c779b9128a51db35092c9c",
-    },
-    {
         "title": "Abfallwirtschaft Landkreis Freudenstadt",
         "url": "https://www.awb-fds.de/",
         "service_id": "595f903540a36fe8610ec39aa3a06f6a",

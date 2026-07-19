@@ -61,6 +61,10 @@ TEST_CASES = {
         "key": "15f69fab91c4cae50d9dbb5bcfd383f0",
         "idHouseNumber": 58444,
     },
+    "Entsorgungsbetriebe Essen": {
+        "key": "51be67f3758f1fb57b420efe065c0663",
+        "idHouseNumber": 74629,
+    },
 }
 
 

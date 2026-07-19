@@ -15,4 +15,9 @@ SERVICE_MAP = [
         "url": "https://www.kreis-reutlingen.de/",
         "service_id": "15f69fab91c4cae50d9dbb5bcfd383f0",
     },
+    {
+        "title": "Entsorgungsbetriebe Essen",
+        "url": "https://www.ebe-essen.de/",
+        "service_id": "51be67f3758f1fb57b420efe065c0663",
+    },
 ]
