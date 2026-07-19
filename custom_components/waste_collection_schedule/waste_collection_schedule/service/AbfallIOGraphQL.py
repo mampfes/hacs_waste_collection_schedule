@@ -20,4 +20,9 @@ SERVICE_MAP = [
         "url": "https://www.ebe-essen.de/",
         "service_id": "51be67f3758f1fb57b420efe065c0663",
     },
+    {
+        "title": "KELL Kommunalentsorgung Landkreis Leipzig GmbH",
+        "url": "https://kell-gmbh.de/",
+        "service_id": "0d7a92192ba3ae914c028ac37d73e222",
+    },
 ]
