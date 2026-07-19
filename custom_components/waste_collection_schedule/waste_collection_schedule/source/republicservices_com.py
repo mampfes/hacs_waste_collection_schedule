@@ -32,15 +32,18 @@ TEST_CASES = {
         "street_address": "4420 Oasis Hill Ave, North Las Vegas, NV 89085",
         "method": 2,
     },
-}
-DELAYS = {
-    " one ": 1,
-    " two ": 2,
-    " three ": 3,
-    " four ": 4,
-    " five ": 5,
-    " six ": 6,
-    " seven ": 7,
+    # Friday pickup in a division whose Thanksgiving/Christmas are a one-day delay,
+    # so the holiday adjustment moves the Friday collection to Saturday.
+    "Friday holiday delay": {
+        "street_address": "104 Fizer Dr, Georgetown, KY 40324",
+        "method": 2,
+    },
+    # Division where Independence Day is "Not Running" rather than a delay, exercising
+    # the cancellation branch.
+    "Not Running holiday": {
+        "street_address": "700 E Warm Springs Ave, Boise, ID 83712",
+        "method": 2,
+    },
 }
 
 
@@ -132,48 +135,78 @@ class Source:
                                 }
                             )
 
-        # Compile holidays that impact collections
-        r2 = s.get(
-            "https://www.republicservices.com/api/v3/holidaySchedules/schedules",
-            params={"latitude": latitude, "longitude": longitude},
+        # Compile holidays that impact collections.
+        # The v3 GET endpoint the old code used returns an empty payload ({"data":[null]})
+        # for every address tested, so no adjustment was ever applied. The site itself
+        # uses a v2 POST that takes the lines of business as a body. Request the LOBs
+        # we actually have containers for so commercial/industrial keep working too.
+        lobs = sorted({service.lower() for service in services})
+        r2 = s.post(
+            "https://www.republicservices.com/api/v2/holidaySchedules/schedule",
+            json={"latitude": latitude, "longitude": longitude, "lobs": lobs},
         )
-        r2_data = r2.json().get("data", [])
+        r2.raise_for_status()
+        r2_data = r2.json().get("data") or []
         holidays = []
         for item in r2_data:
             if item and item["serviceImpacted"] is True and item["LOB"] in services:
-                day_offset = 0
-                for delay in DELAYS:
-                    if delay in item["description"]:
-                        day_offset = DELAYS[delay]
                 dt = datetime.strptime(item["date"].split("T")[0], "%Y-%m-%d").date()
                 holidays.append(
                     {
                         "date": dt,
                         "name": item["name"],
-                        "description": item["description"],
-                        "delay": day_offset,
-                        "incorporated": False,
+                        "service": item["LOB"],
+                        "status": (item.get("holidaySchedule") or "").lower(),
+                        "alt_date": item.get("altPickUpDate"),
                     }
                 )
+        # The site applies holidays oldest-first, so a run of holidays in one week can
+        # push a pickup forward day by day. Match that ordering.
+        holidays.sort(key=lambda holiday: holiday["date"])
 
-        # Cycle through schedule and holidays incorporating delays
-        # According to Republic Waste "Holidays typically push our residential pickup
-        # schedules back one day with regular schedules resuming the following week."
-        while True:
-            changes = 0
-            for holiday in holidays:
-                if not holiday["incorporated"]:
-                    h = holiday["date"]
-                    d = holiday["delay"]
-                    for pickup in schedule:
-                        p = pickup["date"]
-                        ns = h + timedelta(days=6 - h.weekday())
-                        if h <= p < ns:
-                            pickup["date"] = p + timedelta(days=d)
-                            holiday["incorporated"] = True
-                            changes += 1
-            if changes == 0:
-                break
+        # A holiday only affects the line of business it belongs to, so match each holiday
+        # to pickups of the same service. The API returns one holiday per line of business,
+        # so ignoring this would shift a pickup once per business line it happens to have.
+        def affects(holiday, pickup):
+            return holiday["service"] == pickup["service"]
+
+        # Reproduce the three behaviours the website applies to an impacted pickup:
+        #   "Not Running"    -> the collection is cancelled with no make-up day
+        #   "Service Moved"  -> the collection jumps to the alternate date the API supplies
+        #   "One Day Delay"  -> the collection and every later same-week collection slide
+        #                       forward one day (a Sunday-start week, on-or-after the holiday)
+        def same_week(day_a, day_b):
+            # Sunday-start week, matching the site's areDatesInSameWeek
+            return day_a - timedelta(days=(day_a.weekday() + 1) % 7) == day_b - timedelta(
+                days=(day_b.weekday() + 1) % 7
+            )
+
+        not_running = {
+            (h["date"], h["service"]) for h in holidays if h["status"] == "not running"
+        }
+        schedule = [
+            pickup
+            for pickup in schedule
+            if (pickup["date"], pickup["service"]) not in not_running
+        ]
+
+        for holiday in holidays:
+            h = holiday["date"]
+            if holiday["status"] == "service moved" and holiday["alt_date"]:
+                alt = datetime.strptime(
+                    holiday["alt_date"].split("T")[0], "%Y-%m-%d"
+                ).date()
+                for pickup in schedule:
+                    if affects(holiday, pickup) and pickup["date"] == h:
+                        pickup["date"] = alt
+            elif holiday["status"] == "one day delay":
+                for pickup in schedule:
+                    if (
+                        affects(holiday, pickup)
+                        and pickup["date"] >= h
+                        and same_week(h, pickup["date"])
+                    ):
+                        pickup["date"] = pickup["date"] + timedelta(days=1)
 
         # Build final schedule
         entries = []
