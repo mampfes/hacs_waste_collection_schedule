@@ -22823,6 +22823,12 @@
       "id": "york_gov_uk"
     },
     {
+      "title": "Clackmannanshire Council",
+      "module": "clackmannanshire_gov_uk",
+      "default_params": {},
+      "id": "clackmannanshire_gov_uk"
+    },
+    {
       "title": "Colchester City Council",
       "module": "colchester_gov_uk",
       "default_params": {},

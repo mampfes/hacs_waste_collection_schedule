@@ -23594,6 +23594,37 @@
           "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
         }
       },
+      "args_clackmannanshire_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "garden_waste": "Garden waste (brown bin) permit",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Address exactly as shown in the search results on the council website, e.g. '16 Crophill, Sauchie'.",
+          "garden_waste": "Set to true if you hold a paid garden waste (brown bin) permit, to include its collection dates (optional, default false).",
+          "postcode": "Postcode of the property, e.g. 'FK10 3EY'."
+        }
+      },
+      "reconfigure_clackmannanshire_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "garden_waste": "Garden waste (brown bin) permit",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "address": "Address exactly as shown in the search results on the council website, e.g. '16 Crophill, Sauchie'.",
+          "garden_waste": "Set to true if you hold a paid garden waste (brown bin) permit, to include its collection dates (optional, default false).",
+          "postcode": "Postcode of the property, e.g. 'FK10 3EY'."
+        }
+      },
       "args_colchester_gov_uk": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
