@@ -68,7 +68,7 @@ MONTHS_TO_FETCH = 13
 PLACE_SELECT_RE = re.compile(
     r'<select name="communal_place"[^>]*>(.*?)</select>', re.DOTALL
 )
-OPTION_RE = re.compile(r'<option value="(\d+)">([^<]*)</option>')
+OPTION_RE = re.compile(r"<option[^>]*value=['\"](\d+)['\"][^>]*>([^<]*)</option>")
 ACTIVE_RE = re.compile(r"active:\s*(\d+)")
 TOOLTIP_RE = re.compile(
     r'<div class="sr-only" id="com-tooltip(\d{4})(\d{2})(\d{2})">\s*<dl>(.*?)</dl>',
@@ -98,7 +98,7 @@ class Source:
 
         place_id = None
         for name, pid in places.items():
-            if name.lower() == self._place.lower():
+            if name.casefold() == self._place.casefold():
                 place_id = pid
                 break
         if place_id is None:
