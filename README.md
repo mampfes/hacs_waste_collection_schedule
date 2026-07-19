@@ -2238,6 +2238,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Willingen](/doc/source/lobbe_app.md) / lobbe.app
 - [Wilnsdorf](/doc/ics/wilnsdorf_de.md) / wilnsdorf.de
 - [Winterberg](/doc/source/lobbe_app.md) / lobbe.app
+- [Wirtschaftsbetriebe Duisburg (WBD)](/doc/source/abfall_io_graphql.md) / wb-duisburg.de
 - [Wittelsberg](/doc/source/123abfallkalender_de.md) / 123abfallkalender.de/abfallkalender/rpecasvg-ebsdorfergrund/13-wittelsberg
 - [Witzenhausen](/doc/ics/mein_abfallkalender_online.md) / witzenhausen.eu
 - [Wolbrechtshausen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de

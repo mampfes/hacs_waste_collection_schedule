@@ -15202,6 +15202,14 @@
       "id": "lobbe_app"
     },
     {
+      "title": "Wirtschaftsbetriebe Duisburg (WBD)",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "80acad6c77fe9342ebafad29a8c58bf6"
+      },
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Wittelsberg",
       "module": "123abfallkalender_de",
       "default_params": {
