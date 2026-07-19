@@ -2334,6 +2334,32 @@ class TestDisplayLanguage:
             # Restore the default so other tests keep seeing English labels.
             w.set_display_language("en")
 
+    def test_waste_type_ui_name_matches_collection_type(self):
+        """The name the config flow offers for a WASTE_TYPE must match the
+        label its Collections carry at runtime.
+
+        The config flow surfaces a source's WASTE_TYPES via
+        ``waste_types.display_name`` (localised). Hardcoding the English name
+        instead (the pre-fix behaviour) meant a non-English instance was offered
+        an English duplicate of a type already fetched under its localised name,
+        which then became an empty extra sensor (v3 beta feedback, #6561).
+        """
+        from waste_collection_schedule import waste_types as w
+        from waste_collection_schedule.collection import Collection
+
+        day = datetime.date(2026, 1, 1)
+        try:
+            w.set_display_language("de")
+            for wt in (w.GENERAL_WASTE, w.RECYCLABLES, w.PAPER):
+                offered = w.display_name(wt)  # what the config flow now offers
+                fetched = Collection(date=day, waste_type=wt).type
+                assert offered == fetched
+                # And it must not be the English name a German instance would
+                # never produce (the phantom-sensor cause).
+                assert offered != wt.names["en"]
+        finally:
+            w.set_display_language("en")
+
 
 class TestConfigParamValidation:
     """Defaults, alternatives, and validate() rules for ConfigParam."""

@@ -295,12 +295,19 @@ def _build_schema_from_params(
 def _get_waste_types_for_customize(source_cls) -> list[str]:
     """Get waste type names from WASTE_TYPES for customization.
 
-    Returns waste_type.id strings for new-style sources.
+    Returns each canonical WasteType's name in the active display language, so
+    the names match the labels ``Collection.type`` produces at fetch time.
+    Returning the English name regardless of the UI language made the config
+    flow offer an English duplicate of every type already fetched under its
+    localised name, which then became an empty extra sensor (v3 beta feedback,
+    #6561).
     """
+    from waste_collection_schedule.waste_types import display_name
+
     waste_types = getattr(source_cls, "WASTE_TYPES", None)
     if not waste_types:
         return []
-    return [wt.names.get("en", wt.id) for wt in waste_types]
+    return [display_name(wt) for wt in waste_types]
 
 
 def get_customize_schema(defaults: dict[str, Any] | None = None):
@@ -939,6 +946,13 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             # During reconfigure the existing entry already owns this unique_id;
             # skipping the check prevents HA from aborting and creating a duplicate.
             self._abort_if_unique_id_configured()
+
+        # Collection labels are localised to the HA UI language at fetch time;
+        # align the display language here so the types offered and auto-created
+        # during setup match what the entry will show once running (#6561).
+        from waste_collection_schedule.waste_types import set_display_language
+
+        set_display_language(self.hass.config.language)
 
         try:
             instance = await self.hass.async_add_executor_job(
