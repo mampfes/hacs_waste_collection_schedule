@@ -21662,6 +21662,12 @@
       "id": "muttenz_ch"
     },
     {
+      "title": "Gemeinde Seuzach",
+      "module": "seuzach_ch",
+      "default_params": {},
+      "id": "seuzach_ch"
+    },
+    {
       "title": "Gemeinde W\u00fcrenlos",
       "module": "ics",
       "default_params": {},

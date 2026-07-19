@@ -4575,6 +4575,11 @@
     },
     "urls": {}
   },
+  "seuzach_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/seuzach_ch.md",
+    "howto": {},
+    "urls": {}
+  },
   "ics_wuerenlos_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerenlos_ch.md",
     "howto": {
