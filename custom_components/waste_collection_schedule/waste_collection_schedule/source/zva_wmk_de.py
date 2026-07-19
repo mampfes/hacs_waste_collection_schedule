@@ -17,6 +17,13 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _YEAR_PATHS = {
     2021: "schnellsuche-2021",
@@ -35,6 +42,16 @@ class Source(BaseSource):
     URL = "https://www.zva-wmk.de/"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+
+    # The ICS transformer resolves the German bin names via the shared vocabulary;
+    # these are the canonical types observed from the live provider.
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        RECYCLABLES,
+        ORGANIC,
+        PAPER,
+        GARDEN_WASTE,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Frankenhain": {"city": "Berkatal - Frankenhain", "street": "Teichhof"},
