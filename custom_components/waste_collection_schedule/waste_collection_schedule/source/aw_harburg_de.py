@@ -25,7 +25,13 @@ from waste_collection_schedule.config_params import cascading_select
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GENERAL_WASTE, PAPER
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _LEVEL_URL = (
     "https://www.landkreis-harburg.de/bauen-umwelt/abfallwirtschaft/abfallkalender/"
@@ -92,6 +98,13 @@ class Source(BaseSource):
     URL = "https://www.landkreis-harburg.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "CityWithTwoLevels": {"level_1": "Hanstedt", "level_2": "Evendorf"},

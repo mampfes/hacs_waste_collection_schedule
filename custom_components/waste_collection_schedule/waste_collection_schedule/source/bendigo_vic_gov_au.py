@@ -11,6 +11,11 @@ from waste_collection_schedule.service.Pozi import (
     PoziGeoJsonRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    RECYCLABLES,
+)
 
 # Demonstrates: a Pozi GeoJSON zone lookup by direct lat/lon (no address
 # geocoding needed). The zone's properties carry a weekday plus a per-type
@@ -72,6 +77,7 @@ class Source(BaseSource):
     URL = "https://www.bendigo.vic.gov.au"
     COUNTRY = "au"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GARDEN_WASTE, GENERAL_WASTE, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Bunnings Epsom": {

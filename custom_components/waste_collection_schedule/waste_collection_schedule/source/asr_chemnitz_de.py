@@ -29,7 +29,13 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GARDEN_WASTE, PAPER, RECYCLABLES
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _PROXY_URL = "https://asc.hausmuell.info/proxy.php"
 _API_URL = "https://asc.hausmuell.info/ics/ics.php"
@@ -46,6 +52,7 @@ class Source(BaseSource):
     URL = "https://www.asr-chemnitz.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Hübschmannstr. 4": {"street": "Hübschmannstr.", "house_number": "4"},
