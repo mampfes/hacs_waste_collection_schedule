@@ -129,6 +129,13 @@ class OpenCitiesConfig:
     response.
     """
 
+    exclude_type_prefixes: tuple[str, ...] = ()
+    """
+    Waste-type label prefixes to always drop, e.g. "Calendar" entries
+    (calendar-download links, not actual collections) some deployments mix
+    into the same wasteservices response.
+    """
+
 
 class OpenCitiesClient:
     def __init__(self, config: OpenCitiesConfig) -> None:
@@ -300,6 +307,8 @@ class OpenCitiesClient:
 
             waste_type = title.get_text(" ", strip=True)
             if waste_type in self._cfg.exclude_types:
+                continue
+            if waste_type.startswith(self._cfg.exclude_type_prefixes):
                 continue
             for suffix in self._cfg.strip_type_suffixes:
                 if waste_type.lower().endswith(suffix.lower()):
