@@ -1,127 +1,159 @@
-import json
-import urllib.parse
-from datetime import date, timedelta
+from datetime import datetime
 
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from bs4 import BeautifulSoup
+from curl_cffi import requests
+from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Logan City Council"
 DESCRIPTION = "Source for Logan City Council rubbish collection."
 URL = "https://www.logan.qld.gov.au"
+COUNTRY = "au"
 TEST_CASES = {
-    "The Family Place": {
-        "property_location": "35 North Road WOODRIDGE  4114 ",
+    "Lee Naki's Takeaway": {"property_location": "12 Ashton Street Kingston"},
+    "LCC Administration Centre": {
+        "property_location": "150 Wembley Road Logan Central"
     },
-    "Lee Naki's Takeaway": {
-        "property_location": "12 Ashton Street KINGSTON  4114",
-    },
-    "LCC ADMINISTRATION CENTRE - Fallback": {
-        "property_location": "LCC ADMINISTRATION CENTRE, 150 Wembley Road, LOGAN CENTRAL QLD 4114",
-    },
-    "The Family Place - Fallback": {
-        "property_location": "35 North Road, WOODRIDGE QLD 4114",
-    },
-    "Lee Naki's Takeaway - Fallback": {
-        "property_location": "2 Ashton Street, KINGSTON QLD 4114",
+    "Rochedale South (with green waste)": {
+        "property_location": "53 Wendron Street Rochedale South"
     },
 }
 
-HEADERS = {"user-agent": "Mozilla/5.0"}
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": (
+        "Enter your street address as used on the Logan City Council MyLogan tool "
+        "(https://www.logan.qld.gov.au/MyLogan), for example "
+        "'12 Ashton Street Kingston'."
+    )
+}
 
-API_URL = "https://services-ap1.arcgis.com/nHQ8JHPrW0Z3aeN4/arcgis/rest/services/Council_Property_view/FeatureServer/0/query"
-FALLBACK_API_URL = "https://services5.arcgis.com/ZUCWDRj8F77Xo351/arcgis/rest/services/Logan_City_Bin_Collection/FeatureServer/0/query"
+PARAM_TRANSLATIONS = {
+    "en": {
+        "property_location": "Street Address",
+    },
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "property_location": (
+            "Your street address, e.g. '12 Ashton Street Kingston'. "
+            "The closest match from the MyLogan address search is used."
+        ),
+    },
+}
+
+SEARCH_URL = "https://www.logan.qld.gov.au/api/v1/myarea/search"
+COLLECTION_URL = "https://www.logan.qld.gov.au/ocapi/Public/myarea/wasteservices"
+
+HEADERS = {
+    "accept": "application/json, text/javascript, */*; q=0.01",
+    "referer": URL + "/MyLogan",
+    "user-agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "x-requested-with": "XMLHttpRequest",
+}
+
+ICON_MAP = {
+    "general waste": Icons.GENERAL_WASTE,
+    "recycling": Icons.RECYCLING,
+    "green waste": Icons.ORGANIC,
+}
 
 
 class Source:
-    def __init__(self, property_location):
-        self.property_location = urllib.parse.quote_plus(property_location.strip())
+    def __init__(self, property_location: str):
+        self._property_location = " ".join(property_location.split())
+        # The property's geolocation id is a stable per-property GUID. Cache it
+        # after the first lookup so subsequent (daily) fetches only need the
+        # single wasteservices call instead of the address search as well.
+        self._geolocation_id: str | None = None
 
-    def fetch(self):
-        # Retrieve collection day and whether there is recycling or green waste bin
-        # Use LIKE as there is extra whitespaces at the end of the address
-        r = requests.get(
-            f"{API_URL}?where=Address%20LIKE%20%27{self.property_location}%25%27&outFields=Rubbish_Collection,Recycling_Collection,Green_Waste_Collection&f=json",
-            headers=HEADERS,
+    def fetch(self) -> list[Collection]:
+        # The council site sits behind Akamai bot protection, so impersonate a
+        # real browser (plain requests get a 403 Access Denied).
+        session = requests.Session(impersonate="chrome")
+        session.headers.update(HEADERS)
+
+        if self._geolocation_id is not None:
+            # Reuse the cached property id and skip the address search.
+            try:
+                return self._fetch_services(session, self._geolocation_id)
+            except SourceArgumentNotFound:
+                # Cached id may have gone stale; fall through to re-resolve.
+                self._geolocation_id = None
+
+        self._geolocation_id = self._get_geolocation_id(session)
+        return self._fetch_services(session, self._geolocation_id)
+
+    def _fetch_services(self, session, geolocation_id: str) -> list[Collection]:
+        response = session.get(
+            COLLECTION_URL,
+            params={"geolocationid": geolocation_id, "ocsvclang": "en-AU"},
+            timeout=30,
         )
-        data = json.loads(r.text)
+        response.raise_for_status()
 
-        if data.get("features"):
-            collection_day = data["features"][0]["attributes"]["Rubbish_Collection"]
-            recycling_week = data["features"][0]["attributes"]["Recycling_Collection"]
-            green_waste_week = data["features"][0]["attributes"][
-                "Green_Waste_Collection"
-            ]
-        else:
-            # Fall back to old API
-            r = requests.get(
-                f"{FALLBACK_API_URL}?where=%20(Formatted_Property_Address%20%3D%20'{self.property_location}')%20&outFields=Collection_Day,Recycling_Week,Green_Waste_Week&outSR=4326&f=json",
-                headers=HEADERS,
-            )
-            data = json.loads(r.text)
+        html_content = response.json().get("responseContent", "")
+        if not html_content:
+            raise SourceArgumentNotFound("property_location", self._property_location)
 
-            if not data.get("features"):
-                raise SourceArgumentNotFound(
-                    "property_location", self.property_location
-                )
+        return self._parse_entries(html_content)
 
-            collection_day = data["features"][0]["attributes"]["Collection_Day"]
-            recycling_week = data["features"][0]["attributes"]["Recycling_Week"]
-            green_waste_week = data["features"][0]["attributes"]["Green_Waste_Week"]
+    def _get_geolocation_id(self, session) -> str:
+        response = session.get(
+            SEARCH_URL,
+            params={"keywords": self._property_location, "maxresults": "1"},
+            timeout=30,
+        )
+        response.raise_for_status()
 
-        today = date.today()
-        entries = []
+        items = response.json().get("Items", [])
+        if not items:
+            raise SourceArgumentNotFound("property_location", self._property_location)
 
-        if collection_day == "MON":
-            weekday = 0
-        elif collection_day == "TUE":
-            weekday = 1
-        elif collection_day == "WED":
-            weekday = 2
-        elif collection_day == "THU":
-            weekday = 3
-        elif collection_day == "FRI":
-            weekday = 4
-        elif collection_day == "SAT":
-            weekday = 5
-        elif collection_day == "SUN":
-            weekday = 6
-        else:
-            return []
+        geolocation_id = items[0].get("Id")
+        if not geolocation_id:
+            raise SourceArgumentNotFound("property_location", self._property_location)
 
-        next_collection_date = today + timedelta((weekday - today.weekday() + 7) % 7)
+        return geolocation_id
 
-        # Add next 52 collection days
-        for x in range(52):
-            collection_date = next_collection_date + timedelta(weeks=x)
-            week = collection_date.isocalendar().week % 2
+    def _parse_entries(self, html: str) -> list[Collection]:
+        soup = BeautifulSoup(html, "html.parser")
+        entries: list[Collection] = []
+
+        for result in soup.select(".waste-services-result"):
+            title = result.find("h3")
+            next_service = result.select_one(".next-service")
+            if title is None or next_service is None:
+                continue
+
+            waste_type = title.get_text(" ", strip=True)
+            date_text = next_service.get_text(" ", strip=True)
+            try:
+                # e.g. "Monday 20 July 2026"
+                collection_date = datetime.strptime(date_text, "%A %d %B %Y").date()
+            except ValueError:
+                continue
 
             entries.append(
-                Collection(date=collection_date, t="Rubbish", icon="mdi:trash-can")
+                Collection(
+                    date=collection_date,
+                    t=waste_type,
+                    icon=self._guess_icon(waste_type),
+                )
             )
 
-            # Check if Recycling Bin Collected
-            if recycling_week != "":
-                # Check if Recycling Week
-                if (recycling_week == "Week 1" and week == 1) or (
-                    recycling_week == "Week 2" and week == 0
-                ):
-                    entries.append(
-                        Collection(
-                            date=collection_date, t="Recycling", icon="mdi:recycle"
-                        )
-                    )
-
-            # Check if Green Waste Bin Collected
-            if green_waste_week is not None:
-                # Check if Green Waste Week
-                if (green_waste_week == "Week 1" and week == 1) or (
-                    green_waste_week == "Week 2" and week == 0
-                ):
-                    entries.append(
-                        Collection(
-                            date=collection_date, t="Green Waste", icon="mdi:leaf"
-                        )
-                    )
+        if not entries:
+            raise SourceArgumentNotFound("property_location", self._property_location)
 
         return entries
+
+    def _guess_icon(self, waste_type: str) -> str | None:
+        lower = waste_type.lower()
+        for key, icon in ICON_MAP.items():
+            if key in lower:
+                return icon
+        return None
