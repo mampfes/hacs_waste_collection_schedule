@@ -7,6 +7,12 @@ from waste_collection_schedule.service.RiSKommunalAT import (
     RiSKommunalRetriever,
 )
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://www.puchbeihallein.gv.at"
 
@@ -19,6 +25,7 @@ class Source(BaseSource):
     COUNTRY = "at"
     SOURCE_CODEOWNERS: ClassVar[list] = ["@nerdoc"]
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [GENERAL_WASTE, ORGANIC, PAPER, RECYCLABLES]
 
     TEST_CASES: ClassVar[dict] = {
         "Ahornstraße 3": {"strasse": "Ahornstraße", "hausnummer": "3"},

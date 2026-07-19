@@ -21,7 +21,13 @@ from waste_collection_schedule.config_params import house_number, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import GARDEN_WASTE
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://stadtreinigung.giessen.de/akal/akal1.php"
 
@@ -100,6 +106,13 @@ class Source(BaseSource):
     URL = "https://stadtreinigung.giessen.de"
     COUNTRY = "de"
     RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Achstattring 1": {
