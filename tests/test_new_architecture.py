@@ -2169,6 +2169,9 @@ class TestConfigParams:
         p = dropdown("region", ["North", "South"])
         assert p.widget == "select"
         assert "region" in p.fields
+        # Options are stored so the config flow can render the dropdown; a
+        # select that dropped them rendered as a free-text field instead.
+        assert p.options == ["North", "South"]
 
     def test_text_field(self):
         from waste_collection_schedule.config_params import text_field
@@ -2333,6 +2336,35 @@ class TestDisplayLanguage:
         finally:
             # Restore the default so other tests keep seeing English labels.
             w.set_display_language("en")
+
+
+class TestAwbEsDeCadence:
+    """awb_es_de keeps only the resident's Restmüll cadence (#6926).
+
+    The Esslingen calendar carries both the 2-weekly and the 4-weekly
+    general-waste series; a household follows one. The optional
+    ``restmuell_cadence`` argument drops the other so the general-waste sensor
+    is not the two cadences merged.
+    """
+
+    def test_helper_drops_only_the_other_cadence(self):
+        from waste_collection_schedule.source.awb_es_de import (
+            _is_unselected_restmuell,
+        )
+
+        assert _is_unselected_restmuell("Restmüll 2-wöchentlich", "4-wöchentlich")
+        assert not _is_unselected_restmuell("Restmüll 4-wöchentlich", "4-wöchentlich")
+        # A plain Restmüll line and every non-Restmüll type are always kept.
+        assert not _is_unselected_restmuell("Restmüll", "4-wöchentlich")
+        assert not _is_unselected_restmuell("Biotonne", "4-wöchentlich")
+
+    def test_cadence_is_an_optional_dropdown(self):
+        from waste_collection_schedule.source.awb_es_de import Source
+
+        cadence = next(p for p in Source.PARAMS if "restmuell_cadence" in p.fields)
+        assert cadence.widget == "select"
+        assert cadence.options == ["2-wöchentlich", "4-wöchentlich"]
+        assert cadence.required is False
 
 
 class TestConfigParamValidation:

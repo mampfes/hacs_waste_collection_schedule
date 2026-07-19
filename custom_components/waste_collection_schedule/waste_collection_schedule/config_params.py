@@ -76,6 +76,12 @@ class ConfigParam:
     # provided rather than every field.
     groups: tuple[tuple[str, ...], ...] = ()
 
+    # For a "select" widget (``dropdown``): the fixed option list the config
+    # flow renders as a dropdown. Empty for other widgets. The selector keeps
+    # custom_value on and ``validate`` does not enforce membership, so a value
+    # outside the list is still accepted.
+    options: list[str] = field(default_factory=list)
+
 
 def _title(field_name: str, label: str | None) -> str:
     """A field's display label: the explicit ``label`` or a Title-Cased name."""
@@ -302,6 +308,7 @@ def dropdown(
             "en": {field_name: display},
         },
         required=not optional,
+        options=list(options),
     )
 
 

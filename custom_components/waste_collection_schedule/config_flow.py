@@ -242,8 +242,18 @@ def _build_schema_from_params(
             elif field_name in pre_filled:
                 description = {"suggested_value": pre_filled[field_name]}
 
-            options = dependent_options.get(field_name) or error_suggestions.get(
-                field_name
+            # A plain "select" (dropdown) carries its own fixed option list;
+            # dependent/cascading selects have theirs fetched into
+            # dependent_options above.
+            select_options = (
+                list(param.options)
+                if param.widget == "select" and param.options
+                else None
+            )
+            options = (
+                dependent_options.get(field_name)
+                or error_suggestions.get(field_name)
+                or select_options
             )
             default = param.defaults.get(field_name)
             optional = param_optional or default is not None
