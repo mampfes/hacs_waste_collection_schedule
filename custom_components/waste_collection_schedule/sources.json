@@ -9694,11 +9694,11 @@
     },
     {
       "title": "Entsorgungsbetriebe Essen",
-      "module": "abfall_io",
+      "module": "abfall_io_graphql",
       "default_params": {
-        "key": "9b5390f095c779b9128a51db35092c9c"
+        "key": "51be67f3758f1fb57b420efe065c0663"
       },
-      "id": "abfall_io"
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Entsorgungsgesellschaft G\u00f6rlitz-L\u00f6bau-Zittau",
