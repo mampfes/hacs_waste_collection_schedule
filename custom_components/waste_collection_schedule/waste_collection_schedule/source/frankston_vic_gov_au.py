@@ -11,6 +11,12 @@ from waste_collection_schedule.service.Pozi import (
     geocode_earth,
 )
 from waste_collection_schedule.transformers import RowTransformer
+from waste_collection_schedule.waste_types import (
+    GARDEN_WASTE,
+    GENERAL_WASTE,
+    GLASS,
+    RECYCLABLES,
+)
 
 # Demonstrates: a Pozi GeoJSON zone lookup by address, geocoded first via
 # geocode.earth (Frankston's Pozi widget has no address lookup of its own).
@@ -82,6 +88,13 @@ class Source(BaseSource):
     URL = "https://frankston.gov.au"
     COUNTRY = "au"
     RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        GLASS,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "45r Wedge Rd": {"address": "45r Wedge Rd, Carrum Downs Vic"},  # Monday

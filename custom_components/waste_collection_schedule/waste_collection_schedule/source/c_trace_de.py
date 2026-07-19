@@ -28,6 +28,13 @@ from waste_collection_schedule.config_params import (
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.regions import region
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import (
+    GENERAL_WASTE,
+    GLASS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 DEFAULT_SUBDOMAIN = "web"
 DEFAULT_ICAL_URL_FILE = "cal"
@@ -145,6 +152,14 @@ class Source(BaseSource):
     DESCRIPTION = "Source for C-Trace.de."
     URL = "https://c-trace.de/"
     COUNTRY = "de"
+
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        GLASS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Bremen": {"ort": "Bremen", "strasse": "Abbentorstraße", "hausnummer": 5},

@@ -15,7 +15,14 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
-from waste_collection_schedule.waste_types import PAPER, RECYCLABLES
+from waste_collection_schedule.waste_types import (
+    ELECTRONICS,
+    GENERAL_WASTE,
+    HAZARDOUS,
+    ORGANIC,
+    PAPER,
+    RECYCLABLES,
+)
 
 _BASE_URL = "https://aik.ilm-kreis.de"
 
@@ -26,6 +33,15 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Abfallwirtschaftsbetrieb Ilm-Kreis waste collection."
     URL = "https://www.ilm-kreis.de"
     COUNTRY = "de"
+
+    WASTE_TYPES: ClassVar[list] = [
+        ELECTRONICS,
+        GENERAL_WASTE,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Gerhart-Hauptmann-Straße (Arnstadt)": {

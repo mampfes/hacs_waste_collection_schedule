@@ -237,6 +237,13 @@ class Source(BaseSource):
     SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
     RAISE_ON_EMPTY = True
 
+    WASTE_TYPES: ClassVar[list] = [
+        GENERAL_WASTE,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    ]
+
     TEST_CASES: ClassVar[dict] = {
         "Gaal": {"gemeinde": "Gaal", "strasse": "Gaal"},
     }

@@ -28,6 +28,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district
 from waste_collection_schedule.service.ICS import ICS
 from waste_collection_schedule.transformers import ICSTransformer
+from waste_collection_schedule.waste_types import HAZARDOUS, ORGANIC, RECYCLABLES
 
 _API_URL = "https://www.geoport-nwm.de/nwm-download/Abfuhrtermine/ICS/{year}/{arg}.ics"
 
@@ -64,6 +65,12 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Landkreis Nordwestmecklenburg."
     URL = "https://www.geoport-nwm.de"
     COUNTRY = "de"
+
+    WASTE_TYPES: ClassVar[list] = [
+        HAZARDOUS,
+        ORGANIC,
+        RECYCLABLES,
+    ]
 
     TEST_CASES: ClassVar[dict] = {
         "Rüting": {"district": "Rüting"},
