@@ -17549,6 +17549,37 @@
         },
         "data_description": {}
       },
+      "args_omrin_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "postal_code": "Postcode",
+          "suffix": "House number suffix"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Numeric house number.",
+          "postal_code": "Dutch postcode, for example 3851MA.",
+          "suffix": "House number suffix, if applicable."
+        }
+      },
+      "reconfigure_omrin_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House number",
+          "postal_code": "Postcode",
+          "suffix": "House number suffix"
+        },
+        "data_description": {
+          "house_number": "Numeric house number.",
+          "postal_code": "Dutch postcode, for example 3851MA.",
+          "suffix": "House number suffix, if applicable."
+        }
+      },
       "args_ximmio_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

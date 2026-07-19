@@ -2842,10 +2842,12 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>Netherlands</summary>
 
+- [Achtkarspelen](/doc/source/omrin_nl.md) / omrin.nl
 - [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
 - [Afval Wijzer](/doc/source/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
 - [Afvalstoffendienst.nl](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
+- [Ameland](/doc/source/omrin_nl.md) / omrin.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
 - [Avalex](/doc/source/ximmio_nl.md) / avalex.nl
 - [Avri](/doc/source/ximmio_nl.md) / avri.nl
@@ -2860,6 +2862,9 @@ If you already have enough information for your municipality/region, you are ver
 - [De Afvalapp](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [Den Haag](/doc/source/hvcgroep_nl.md) / denhaag.nl
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
+- [Eemsdelta](/doc/source/omrin_nl.md) / omrin.nl
+- [Elburg](/doc/source/omrin_nl.md) / omrin.nl
+- [Ermelo](/doc/source/omrin_nl.md) / omrin.nl
 - [GAD](/doc/source/hvcgroep_nl.md) / gad.nl
 - [Gemeente Almere](/doc/source/ximmio_nl.md) / almere.nl
 - [Gemeente Assen](/doc/source/burgerportaal_nl.md) / assen.nl
@@ -2885,13 +2890,24 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeente Waalre](/doc/source/hvcgroep_nl.md) / waalre.nl
 - [Gemeente Westland](/doc/source/ximmio_nl.md) / gemeentewestland.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
+- [Harderwijk](/doc/source/omrin_nl.md) / omrin.nl
+- [Harlingen](/doc/source/omrin_nl.md) / omrin.nl
+- [Heerenveen](/doc/source/omrin_nl.md) / omrin.nl
 - [Helmond](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
+- [Het Hogeland](/doc/source/omrin_nl.md) / omrin.nl
 - [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
 - [Land van Cuijk](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
+- [Leeuwarden](/doc/source/omrin_nl.md) / omrin.nl
 - [Maashorst](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [Meerlanden](/doc/source/ximmio_nl.md) / meerlanden.nl
 - [Mijn Afval Zaken - BUCH](/doc/source/hvcgroep_nl.md) / mijnafvalzaken.nl
 - [Mijn Blink](/doc/source/ximmio_nl.md) / mijnblink.nl
+- [Nunspeet](/doc/source/omrin_nl.md) / omrin.nl
+- [Oldebroek](/doc/source/omrin_nl.md) / omrin.nl
+- [Omrin](/doc/source/omrin_nl.md) / omrin.nl
+- [Ooststellingwerf](/doc/source/omrin_nl.md) / omrin.nl
+- [Opsterland](/doc/source/omrin_nl.md) / omrin.nl
+- [Pekela](/doc/source/omrin_nl.md) / omrin.nl
 - [PreZero](/doc/source/hvcgroep_nl.md) / prezero.nl
 - [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
 - [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
@@ -2900,10 +2916,16 @@ If you already have enough information for your municipality/region, you are ver
 - [Reinis](/doc/source/hvcgroep_nl.md) / reinis.nl
 - [Rova](/doc/source/rova_nl.md) / rova.nl
 - [Saver](/doc/source/saver_nl.md) / saver.nl
+- [Schiermonnikoog](/doc/source/omrin_nl.md) / omrin.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
 - [Straatbeeld Online](/doc/source/straatbeeld_online.md) / afvalkalender.straatbeeld.online
+- [Terschelling](/doc/source/omrin_nl.md) / omrin.nl
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
+- [Tytsjerksteradiel](/doc/source/omrin_nl.md) / omrin.nl
+- [Waadhoeke](/doc/source/omrin_nl.md) / omrin.nl
 - [Waardlanden](/doc/source/ximmio_nl.md) / waardlanden.nl
+- [Westerwolde](/doc/source/omrin_nl.md) / omrin.nl
+- [Weststellingwerf](/doc/source/omrin_nl.md) / omrin.nl
 - [Woerden / Oudewater](/doc/source/ximmio_nl.md) / woerden.nl
 - [Ximmio](/doc/source/ximmio_nl.md) / ximmio.nl
 - [ZRD](/doc/source/hvcgroep_nl.md) / zrd.nl

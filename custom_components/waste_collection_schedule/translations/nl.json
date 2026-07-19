@@ -16743,6 +16743,30 @@
         },
         "data_description": {}
       },
+      "args_omrin_nl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "postal_code": "Postal Code",
+          "suffix": "Suffix"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_omrin_nl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number",
+          "postal_code": "Postal Code",
+          "suffix": "Suffix"
+        },
+        "data_description": {}
+      },
       "args_ximmio_nl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

@@ -18714,6 +18714,12 @@
   ],
   "Netherlands": [
     {
+      "title": "Achtkarspelen",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
       "title": "ACV Group",
       "module": "ximmio_nl",
       "default_params": {
@@ -18740,6 +18746,12 @@
         "service": "alphenaandenrijn"
       },
       "id": "hvcgroep_nl"
+    },
+    {
+      "title": "Ameland",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
     },
     {
       "title": "Area Afval",
@@ -18842,6 +18854,24 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_edam_volendam_nl"
+    },
+    {
+      "title": "Eemsdelta",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Elburg",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Ermelo",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
     },
     {
       "title": "GAD",
@@ -19036,10 +19066,34 @@
       "id": "ics_goes_nl"
     },
     {
+      "title": "Harderwijk",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Harlingen",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Heerenveen",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
       "title": "Helmond",
       "module": "deafvalapp_nl",
       "default_params": {},
       "id": "deafvalapp_nl"
+    },
+    {
+      "title": "Het Hogeland",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
     },
     {
       "title": "HVC Groep",
@@ -19054,6 +19108,12 @@
       "module": "deafvalapp_nl",
       "default_params": {},
       "id": "deafvalapp_nl"
+    },
+    {
+      "title": "Leeuwarden",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
     },
     {
       "title": "Maashorst",
@@ -19084,6 +19144,42 @@
         "company": "mijnblink"
       },
       "id": "ximmio_nl"
+    },
+    {
+      "title": "Nunspeet",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Oldebroek",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Omrin",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Ooststellingwerf",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Opsterland",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Pekela",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
     },
     {
       "title": "PreZero",
@@ -19144,6 +19240,12 @@
       "id": "saver_nl"
     },
     {
+      "title": "Schiermonnikoog",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
       "title": "Spaarnelanden",
       "module": "hvcgroep_nl",
       "default_params": {
@@ -19158,6 +19260,12 @@
       "id": "straatbeeld_online"
     },
     {
+      "title": "Terschelling",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
       "title": "Twente Milieu",
       "module": "ximmio_nl",
       "default_params": {
@@ -19166,12 +19274,36 @@
       "id": "ximmio_nl"
     },
     {
+      "title": "Tytsjerksteradiel",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Waadhoeke",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
       "title": "Waardlanden",
       "module": "ximmio_nl",
       "default_params": {
         "company": "waardlanden"
       },
       "id": "ximmio_nl"
+    },
+    {
+      "title": "Westerwolde",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
+    },
+    {
+      "title": "Weststellingwerf",
+      "module": "omrin_nl",
+      "default_params": {},
+      "id": "omrin_nl"
     },
     {
       "title": "Woerden / Oudewater",
