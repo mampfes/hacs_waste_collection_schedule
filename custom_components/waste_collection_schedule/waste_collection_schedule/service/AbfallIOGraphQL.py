@@ -35,4 +35,9 @@ SERVICE_MAP = [
         "url": "https://www.landkreisgoettingen.de/",
         "service_id": "4b5702d771c82b611c386ebbc7629026",
     },
+    {
+        "title": "Abfallwirtschaft Landkreis Böblingen",
+        "url": "https://www.awb-bb.de/",
+        "service_id": "76bdaac8568082d77e7a90cb41129f9b",
+    },
 ]

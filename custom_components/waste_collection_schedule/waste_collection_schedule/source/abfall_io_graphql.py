@@ -77,6 +77,10 @@ TEST_CASES = {
         "key": "4b5702d771c82b611c386ebbc7629026",
         "idHouseNumber": 641,
     },
+    "Landkreis Böblingen, Böblingen, Dagersheim": {
+        "key": "76bdaac8568082d77e7a90cb41129f9b",
+        "idHouseNumber": 1057,
+    },
 }
 
 
