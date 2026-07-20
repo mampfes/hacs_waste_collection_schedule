@@ -18828,6 +18828,12 @@
       "id": "ekonovus_lt"
     },
     {
+      "title": "Garg\u017ed\u0173 \u0161vara",
+      "module": "gargzdusvara_eu",
+      "default_params": {},
+      "id": "gargzdusvara_eu"
+    },
+    {
       "title": "Kauno \u0161vara",
       "module": "grafikai_svara_lt",
       "default_params": {},

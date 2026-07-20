@@ -3655,6 +3655,13 @@
     "howto": {},
     "urls": {}
   },
+  "gargzdusvara_eu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gargzdusvara_eu.md",
+    "howto": {},
+    "urls": {
+      "url_www_gargzdusvara_eu_atlieku_isvezimo_grafikai": "https://www.gargzdusvara.eu/atlieku-isvezimo-grafikai/"
+    }
+  },
   "grafikai_svara_lt": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grafikai_svara_lt.md",
     "howto": {},

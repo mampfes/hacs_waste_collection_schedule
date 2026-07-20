@@ -17395,6 +17395,29 @@
           "address": "Part of the address as shown in the Ekonovus schedule (e.g. 'Margirio g. 35'). Must be unique enough to match your address."
         }
       },
+      "args_gargzdusvara_eu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location": "Location"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "location": "The exact location/street-group name as shown in the 'Pasirinkite vietovę' (select location) dropdown on {url_www_gargzdusvara_eu_atlieku_isvezimo_grafikai} after picking any waste type first (e.g. 'Klemiškės I k.'). Must match exactly, including Lithuanian diacritics."
+        }
+      },
+      "reconfigure_gargzdusvara_eu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location": "Location"
+        },
+        "data_description": {
+          "location": "The exact location/street-group name as shown in the 'Pasirinkite vietovę' (select location) dropdown on {url_www_gargzdusvara_eu_atlieku_isvezimo_grafikai} after picking any waste type first (e.g. 'Klemiškės I k.'). Must match exactly, including Lithuanian diacritics."
+        }
+      },
       "args_grafikai_svara_lt": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
