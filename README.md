@@ -1331,7 +1331,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Arnsberg](/doc/source/lobbe_app.md) / lobbe.app
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
 - [ART Trier (Depreciated)](/doc/source/art_trier_de.md) / art-trier.de
-- [Aschaffenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Asche](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [ASG Nordsachsen](/doc/source/abfall_io.md) / asg-nordsachsen.de
 - [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
@@ -2142,6 +2141,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadtreinigung Leipzig](/doc/ics/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [Stadtreinigung Leipzig](/doc/source/stadtreinigung_leipzig_de.md) / stadtreinigung-leipzig.de
 - [StadtService Brühl](/doc/source/stadtservice_bruehl_de.md) / stadtservice-bruehl.de
+- [Stadtwerke Aschaffenburg](/doc/ics/gipsprojekt_de.md) / stwab.de/Abfall-Stadtreinigung/Muellabfuhr/Abfuhrtermine-und-Bezirk
 - [Stadtwerke Bergheim](/doc/ics/swbm_de.md) / swbm.de
 - [Stadtwerke Erfurt, SWE](/doc/source/hausmuell_info.md) / stadtwerke-erfurt.de
 - [Stadtwerke Hürth](/doc/ics/stadtwerke_huerth_de.md) / stadtwerke-huerth.de

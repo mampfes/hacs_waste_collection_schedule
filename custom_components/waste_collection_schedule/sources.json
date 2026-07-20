@@ -8281,14 +8281,6 @@
       "id": "art_trier_de"
     },
     {
-      "title": "Aschaffenburg (MyMuell App)",
-      "module": "jumomind_de",
-      "default_params": {
-        "service_id": "mymuell"
-      },
-      "id": "jumomind_de"
-    },
-    {
       "title": "Asche",
       "module": "nerdbridge_de",
       "default_params": {
@@ -14460,6 +14452,12 @@
       "module": "stadtservice_bruehl_de",
       "default_params": {},
       "id": "stadtservice_bruehl_de"
+    },
+    {
+      "title": "Stadtwerke Aschaffenburg",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_gipsprojekt_de"
     },
     {
       "title": "Stadtwerke Bergheim",
