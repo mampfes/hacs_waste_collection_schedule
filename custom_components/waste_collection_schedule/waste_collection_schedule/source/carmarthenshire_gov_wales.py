@@ -4,6 +4,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 
 TITLE = "Carmarthenshire County Council"
 DESCRIPTION = "Source script for carmarthenshire.gov.wales"
@@ -71,7 +72,11 @@ class Source:
         entries = []
         for item in containers:
             dates = item.findAll("p", {"class": "font11 text-center"})
-            if "  " not in dates[0].text:
+            # Some containers (e.g. when the council has no record for the
+            # UPRN, or a service such as garden/nappy waste is not signed up
+            # for) don't include a date paragraph at all. Skip those instead
+            # of crashing with an IndexError.
+            if not dates or "  " not in dates[0].text:
                 continue
             entries.append(
                 Collection(
@@ -81,6 +86,15 @@ class Source:
                     t=REMAP_WASTE.get(item["class"][1].upper()),
                     icon=ICON_MAP.get(item["class"][1].upper()),
                 )
+            )
+
+        if not entries:
+            raise SourceArgumentNotFound(
+                "uprn",
+                self._uprn,
+                "the council has no collection information for this UPRN. "
+                "Please double-check the UPRN or contact Carmarthenshire "
+                "County Council directly.",
             )
 
         return entries
