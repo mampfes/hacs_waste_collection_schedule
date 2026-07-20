@@ -10212,6 +10212,12 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "Gemeinde R\u00f6dinghausen",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_abfall_export_vcal"
+    },
+    {
       "title": "Gemeinde Schutterwald",
       "module": "cmcitymedia_de",
       "default_params": {
