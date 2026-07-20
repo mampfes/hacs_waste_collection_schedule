@@ -1602,6 +1602,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Grafing](/doc/source/awido_de.md) / lra-ebe.de
 - [Greene](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Gremsheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
+- [Gronau](/doc/source/gronau_de.md) / abfallkalender.regioit.de/kalender-wml
 - [Großenrode](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Großkrotzenburg (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Gräfelfing](/doc/ics/mein_abfallkalender_online.md) / graefelfing.de

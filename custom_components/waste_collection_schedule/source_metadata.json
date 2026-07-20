@@ -2690,6 +2690,14 @@
     },
     "urls": {}
   },
+  "gronau_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gronau_de.md",
+    "howto": {
+      "de": "Öffnen Sie https://abfallkalender.regioit.de/kalender-wml/index.jsp?ort=Gronau und wählen Sie Ihre Straße; verwenden Sie die genaue Schreibweise.",
+      "en": "Open https://abfallkalender.regioit.de/kalender-wml/index.jsp?ort=Gronau and pick your street; use the exact spelling shown there."
+    },
+    "urls": {}
+  },
   "ics_hws_halle_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/hws_halle_de.md",
     "howto": {

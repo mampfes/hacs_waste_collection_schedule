@@ -10344,6 +10344,12 @@
       "id": "nerdbridge_de"
     },
     {
+      "title": "Gronau",
+      "module": "gronau_de",
+      "default_params": {},
+      "id": "gronau_de"
+    },
+    {
       "title": "Gro\u00dfenrode",
       "module": "nerdbridge_de",
       "default_params": {
