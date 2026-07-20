@@ -7700,6 +7700,14 @@
       "id": "ics_abfall_io_ics"
     },
     {
+      "title": "Abfallwirtschaft Landkreis B\u00f6blingen",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "76bdaac8568082d77e7a90cb41129f9b"
+      },
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Abfallwirtschaft Landkreis Freudenstadt",
       "module": "abfall_io",
       "default_params": {
