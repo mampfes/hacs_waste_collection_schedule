@@ -7222,6 +7222,14 @@
       "id": "sudestavenir_fr"
     },
     {
+      "title": "Sud Sainte Baume",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1483
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "Talence",
       "module": "opendata_bordeauxmetropole_fr",
       "default_params": {
@@ -18820,6 +18828,12 @@
       "id": "ekonovus_lt"
     },
     {
+      "title": "Garg\u017ed\u0173 \u0161vara",
+      "module": "gargzdusvara_eu",
+      "default_params": {},
+      "id": "gargzdusvara_eu"
+    },
+    {
       "title": "Kauno \u0161vara",
       "module": "grafikai_svara_lt",
       "default_params": {},
@@ -19664,6 +19678,12 @@
       "module": "fredrikstad_no",
       "default_params": {},
       "id": "fredrikstad_no"
+    },
+    {
+      "title": "GL\u00d8R",
+      "module": "glor_no",
+      "default_params": {},
+      "id": "glor_no"
     },
     {
       "title": "Haugaland Interkommunale Milj\u00f8verk (HIM)",
@@ -24926,6 +24946,15 @@
       "module": "palmcoast_fl_gov",
       "default_params": {},
       "id": "palmcoast_fl_gov"
+    },
+    {
+      "title": "Peoria (IL)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "PEORIA",
+        "project_id": "PEORIA"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "Plainville (CT)",

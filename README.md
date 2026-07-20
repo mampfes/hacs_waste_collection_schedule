@@ -1179,6 +1179,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Staffelfelden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Steinbrunn-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Sucy-en-Brie](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
+- [Sud Sainte Baume](/doc/source/publidata_fr.md) / agglo-sudsaintebaume.fr
 - [Talence](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Terres Touloises](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Thiverval-Grignon](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -2839,6 +2840,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [Ecoservice atliekos](/doc/source/ecoapp_ecoservice_lt.md) / ecoservice.lt
 - [Ekonovus](/doc/source/ekonovus_lt.md) / ekonovus.lt
+- [Gargždų švara](/doc/source/gargzdusvara_eu.md) / gargzdusvara.eu
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
 - [Telšių keliai](/doc/source/tkeliai_lt.md) / tkeliai.lt
 </details>
@@ -2988,6 +2990,7 @@ If you already have enough information for your municipality/region, you are ver
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
 - [Fredrikstad kommune](/doc/source/fredrikstad_no.md) / fredrikstad.kommune.no
+- [GLØR](/doc/source/glor_no.md) / glor.no
 - [Haugaland Interkommunale Miljøverk (HIM)](/doc/source/him_as.md) / him.as
 - [Innherred Renovasjon](/doc/source/innherredrenovasjon_no.md) / innherredrenovasjon.no
 - [Iris Salten](/doc/source/iris_salten_no.md) / iris-salten.no
@@ -3807,6 +3810,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [Orange County, FL](/doc/source/ocarcims_ocfl_net.md) / ocarcims.ocfl.net
 - [Palm Coast, FL](/doc/source/palmcoast_fl_gov.md) / palmcoast.gov
+- [Peoria (IL)](/doc/source/recyclecoach_com.md) / peoriagov.org/533/Yes-Peoria-Picks-Up
 - [Plainville (CT)](/doc/source/recyclecoach_com.md) / plainvillect.com
 - [Prince George's County, MD](/doc/source/prince_georges_county_md_us.md) / princegeorgescountymd.gov/departments-offices/environment/waste-recycling/residential-collections
 - [ReCollect](/doc/ics/recollect.md) / recollect.net

@@ -61,6 +61,11 @@ TEST_CASES = {
         "insee_code": "59610",
         "instance_id": 1067,
     },
+    "Sud Sainte Baume, Saint-Cyr-sur-Mer": {
+        "address": "20 Rue Victor Hugo",
+        "insee_code": "83112",
+        "instance_id": 1483,
+    },
     # "Saumur Val de Loire, Allones": {
     # "address": "5 rue du Bellay",
     # "insee_code": "49002",
@@ -136,6 +141,7 @@ ICON_MAP = {
     "verre": Icons.GLASS,
     "bio": Icons.ORGANIC,
     "sapin": Icons.CHRISTMAS_TREE,
+    "jrm": Icons.PAPER,
 }
 
 LABEL_MAP = {
@@ -146,6 +152,7 @@ LABEL_MAP = {
     "verre": "Verres",
     "bio": "Biodéchets",
     "sapin": "Sapin",
+    "jrm": "Papiers / Magazines",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -311,6 +318,11 @@ EXTRA_INFO = [
         "title": "SIAVED (Valenciennes Métropole)",
         "url": "https://www.siaved.fr/votre-calendrier-de-collecte",
         "default_params": {"instance_id": 1067},
+    },
+    {
+        "title": "Sud Sainte Baume",
+        "url": "https://www.agglo-sudsaintebaume.fr/",
+        "default_params": {"instance_id": 1483},
     },
 ]
 
