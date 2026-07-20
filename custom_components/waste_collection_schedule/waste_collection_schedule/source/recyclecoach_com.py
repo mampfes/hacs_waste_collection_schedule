@@ -320,6 +320,12 @@ EXTRA_INFO = [
         "country": "us",
         "default_params": {"project_id": "3015", "district_id": "NEWRO"},
     },
+    {
+        "title": "Peoria (IL)",
+        "url": "https://www.peoriagov.org/533/Yes-Peoria-Picks-Up",
+        "country": "us",
+        "default_params": {"project_id": "PEORIA", "district_id": "PEORIA"},
+    },
 ]
 
 TEST_CASES = {
@@ -429,6 +435,11 @@ TEST_CASES = {
         "district_id": "NEWRO",
         "project_id": 3015,
         "zone_id": "zone-z19582-z19705",
+    },
+    "Peoria, IL, USA": {
+        "street": "10303 N Churchill Dr",
+        "city": "Peoria",
+        "state": "Illinois",
     },
 }
 
