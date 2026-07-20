@@ -1,7 +1,6 @@
-# CI (validate.yaml) runs the test/lint suite on Python 3.10, so that's the
-# real floor - keep this in sync with that workflow, not with the (newer)
-# devcontainer interpreter, so UP/pyupgrade fixes don't introduce syntax that
-# breaks on the version CI actually runs.
+# CI validates both the minimum and current Home Assistant runtimes. Keep the
+# conservative Python 3.10 syntax target until modernization is handled as a
+# separate change; the forward-compatibility lane must not silently raise it.
 target-version = "py310"
 line-length = 88
 
