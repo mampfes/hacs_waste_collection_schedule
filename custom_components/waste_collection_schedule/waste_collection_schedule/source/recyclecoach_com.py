@@ -225,6 +225,15 @@ EXTRA_INFO = [
         },
     },
     {
+        "title": "West Kelowna (BC)",
+        "url": "https://www.rdco.com/",
+        "country": "ca",
+        "default_params": {
+            "project_id": "502",
+            "district_id": "WestKelowna",
+        },
+    },
+    {
         "title": "Plainville (CT)",
         "url": "https://www.plainvillect.com/",
         "country": "us",
@@ -435,6 +444,13 @@ TEST_CASES = {
         "district_id": "NEWRO",
         "project_id": 3015,
         "zone_id": "zone-z19582-z19705",
+    },
+    "West Kelowna, BC, Canada (with district_id & project_id)": {
+        "street": "2760 Cameron Rd",
+        "city": "West Kelowna",
+        "state": "British Columbia",
+        "district_id": "WestKelowna",
+        "project_id": "502",
     },
     "Peoria, IL, USA": {
         "street": "10303 N Churchill Dr",
