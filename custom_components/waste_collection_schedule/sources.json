@@ -14050,6 +14050,14 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Senden (MyMuell App)",
+      "module": "jumomind_de",
+      "default_params": {
+        "service_id": "mymuell"
+      },
+      "id": "jumomind_de"
+    },
+    {
       "title": "Siegen",
       "module": "ics",
       "default_params": {},
