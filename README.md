@@ -3807,6 +3807,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [Orange County, FL](/doc/source/ocarcims_ocfl_net.md) / ocarcims.ocfl.net
 - [Palm Coast, FL](/doc/source/palmcoast_fl_gov.md) / palmcoast.gov
+- [Peoria (IL)](/doc/source/recyclecoach_com.md) / peoriagov.org/533/Yes-Peoria-Picks-Up
 - [Plainville (CT)](/doc/source/recyclecoach_com.md) / plainvillect.com
 - [Prince George's County, MD](/doc/source/prince_georges_county_md_us.md) / princegeorgescountymd.gov/departments-offices/environment/waste-recycling/residential-collections
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
