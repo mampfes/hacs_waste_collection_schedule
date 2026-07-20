@@ -11933,6 +11933,14 @@
       "id": "app_abfallplus_de"
     },
     {
+      "title": "Landkreis G\u00f6ttingen",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "4b5702d771c82b611c386ebbc7629026"
+      },
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Landkreis G\u00fcnzburg",
       "module": "awido_de",
       "default_params": {
