@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from . import CollectionGroup
 from .collection import Collection
 from .source_shell import SourceShell
+from .waste_types import resolve
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -28,6 +29,31 @@ class CollectionAggregator:
     def types(self):
         """Return set() of all collection types."""
         return {e.type for e in self._entries}
+
+    @property
+    def type_options(self) -> dict[str, str]:
+        """Return stable waste-type IDs mapped to their current display labels."""
+        options: dict[str, str] = {}
+        for entry in self._entries:
+            options.setdefault(entry.waste_type.id, entry.type)
+        return options
+
+    @staticmethod
+    def _matches_type_filter(entry: Collection, value: str) -> bool:
+        """Match stable IDs, localized names, and legacy aliases."""
+        normalized = " ".join(str(value).strip().casefold().split())
+        entry_keys = {
+            entry.waste_type.id,
+            entry.type,
+            *entry.waste_type.names.values(),
+        }
+        if normalized in {
+            " ".join(key.strip().casefold().split()) for key in entry_keys
+        }:
+            return True
+
+        canonical = resolve(value)
+        return canonical is not None and canonical.id == entry.waste_type.id
 
     def get_upcoming(
         self,
@@ -98,11 +124,23 @@ class CollectionAggregator:
     ) -> list[Collection]:
         # remove unwanted waste types from include list
         if include_types is not None:
-            entries = list(filter(lambda e: e.type in set(include_types), entries))
+            included = tuple(include_types)
+            entries = [
+                entry
+                for entry in entries
+                if any(self._matches_type_filter(entry, value) for value in included)
+            ]
 
         # remove unwanted waste types from exclude list
         if exclude_types is not None:
-            entries = list(filter(lambda e: e.type not in set(exclude_types), entries))
+            excluded = tuple(exclude_types)
+            entries = [
+                entry
+                for entry in entries
+                if not any(
+                    self._matches_type_filter(entry, value) for value in excluded
+                )
+            ]
 
         # remove expired entries
         now = datetime.now().date()
