@@ -37,7 +37,7 @@ class Source:
             headers={"User-Agent": "Mozilla"},
         )
         soup = BeautifulSoup(response.text, "html.parser")
-        
+
         entries = []
 
         boxes = soup.find_all("div", class_="boxed")
