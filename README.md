@@ -1333,7 +1333,7 @@ If you already have enough information for your municipality/region, you are ver
 - [ART Trier](/doc/ics/art_trier_de.md) / art-trier.de
 - [ART Trier (Depreciated)](/doc/source/art_trier_de.md) / art-trier.de
 - [Asche](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
-- [ASG Nordsachsen](/doc/source/abfall_io.md) / asg-nordsachsen.de
+- [ASG Nordsachsen](/doc/source/abfall_io_graphql.md) / asg-nordsachsen.de
 - [ASG Wesel](/doc/source/hausmuell_info.md) / asg-wesel.de
 - [ASO Abfall-Service Osterholz](/doc/source/abfall_io.md) / aso-ohz.de
 - [ASR Stadt Chemnitz](/doc/source/asr_chemnitz_de.md) / asr-chemnitz.de
