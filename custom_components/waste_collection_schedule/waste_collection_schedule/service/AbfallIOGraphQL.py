@@ -40,4 +40,9 @@ SERVICE_MAP = [
         "url": "https://www.awb-bb.de/",
         "service_id": "76bdaac8568082d77e7a90cb41129f9b",
     },
+    {
+        "title": "ASG Nordsachsen",
+        "url": "https://www.asg-nordsachsen.de/",
+        "service_id": "2085afd95285e645e15ee9623d0c5172",
+    },
 ]
