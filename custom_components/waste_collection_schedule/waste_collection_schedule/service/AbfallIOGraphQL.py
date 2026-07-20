@@ -36,6 +36,11 @@ SERVICE_MAP = [
         "service_id": "4b5702d771c82b611c386ebbc7629026",
     },
     {
+        "title": "Abfallwirtschaft Landkreis Böblingen",
+        "url": "https://www.awb-bb.de/",
+        "service_id": "76bdaac8568082d77e7a90cb41129f9b",
+    },
+    {
         "title": "ASG Nordsachsen",
         "url": "https://www.asg-nordsachsen.de/",
         "service_id": "2085afd95285e645e15ee9623d0c5172",
