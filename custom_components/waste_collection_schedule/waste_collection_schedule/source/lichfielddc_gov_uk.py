@@ -18,7 +18,7 @@ TEST_CASES = {
 ICON_MAP = {
     "Black Bin": Icons.GENERAL_WASTE,
     "Blue Bin": Icons.RECYCLING,
-    "Blue Sack": Icons.RECYCLING,
+    "Blue Bag": Icons.RECYCLING,
     "Purple Bin": Icons.RECYCLING,
     "Garden Bin": Icons.GARDEN,
     "Brown Bin": Icons.GARDEN,
