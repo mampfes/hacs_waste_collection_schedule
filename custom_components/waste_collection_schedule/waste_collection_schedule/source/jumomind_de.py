@@ -135,7 +135,6 @@ SERVICE_MAP = {
         "comment": "MyMuell App",
         "url": "https://www.mymuell.de/",
         "list": [
-            "Aschaffenburg",
             "Bad Arolsen",
             "Beverungen",
             "Darmstadt",
