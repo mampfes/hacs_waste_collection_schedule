@@ -23148,6 +23148,14 @@
       "id": "eppingforestdc_gov_uk"
     },
     {
+      "title": "Epsom and Ewell Borough Council",
+      "module": "iapp_itouchvision_com",
+      "default_params": {
+        "municipality": "EPSOM AND EWELL"
+      },
+      "id": "iapp_itouchvision_com"
+    },
+    {
       "title": "Erewash Borough Council",
       "module": "erewash_gov_uk",
       "default_params": {},
