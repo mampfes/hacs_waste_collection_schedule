@@ -19674,6 +19674,12 @@
       "id": "fredrikstad_no"
     },
     {
+      "title": "GL\u00d8R",
+      "module": "glor_no",
+      "default_params": {},
+      "id": "glor_no"
+    },
+    {
       "title": "Haugaland Interkommunale Milj\u00f8verk (HIM)",
       "module": "him_as",
       "default_params": {},

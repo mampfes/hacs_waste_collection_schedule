@@ -2989,6 +2989,7 @@ If you already have enough information for your municipality/region, you are ver
 - [BIR (Bergensområdets Interkommunale Renovasjonsselskap)](/doc/source/bir_no.md) / bir.no
 - [Fosen Renovasjon](/doc/source/fosenrenovasjon_no.md) / fosenrenovasjon.no
 - [Fredrikstad kommune](/doc/source/fredrikstad_no.md) / fredrikstad.kommune.no
+- [GLØR](/doc/source/glor_no.md) / glor.no
 - [Haugaland Interkommunale Miljøverk (HIM)](/doc/source/him_as.md) / him.as
 - [Innherred Renovasjon](/doc/source/innherredrenovasjon_no.md) / innherredrenovasjon.no
 - [Iris Salten](/doc/source/iris_salten_no.md) / iris-salten.no

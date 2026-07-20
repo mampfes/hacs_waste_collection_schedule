@@ -3963,6 +3963,13 @@
     "howto": {},
     "urls": {}
   },
+  "glor_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/glor_no.md",
+    "howto": {
+      "en": "Search for your address at glor.no/tømmeplan. Use the address exactly as shown in the result list, optionally followed by the municipality name, for example 'Storgata 1, Lillehammer'."
+    },
+    "urls": {}
+  },
   "him_as": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/him_as.md",
     "howto": {
