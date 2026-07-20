@@ -344,16 +344,45 @@ class AbfallnaviDe:
         street_ids = self.get_street_ids(city_id, street)
 
         dates = []
+        not_found_errors = []
         for street_id in street_ids:
             # find house_number_id (which is optional: not all house number do have an id)
-            house_number_id = self.get_house_number_id(street_id, house_number)
-
-            # return dates for specific house number of street if house number
-            # doesn't have an own id
-            if house_number_id is not None:
-                dates += self.get_dates_by_house_number_id(house_number_id)
+            try:
+                house_number_id = self.get_house_number_id(street_id, house_number)
+            except SourceArgumentNotFoundWithSuggestions as e:
+                # Some providers split a single street name into multiple
+                # entries covering different house-number ranges (e.g. by
+                # city district; see Solingen "Katternberger Straße" in
+                # issue #4701, where "Mitte" and "Burg-Höhscheid" share the
+                # same street name but cover disjoint house numbers). If the
+                # requested house number isn't part of this particular
+                # split, skip it and keep trying the other matches instead
+                # of aborting the whole fetch.
+                if len(street_ids) > 1:
+                    not_found_errors.append(e)
+                    continue
+                raise
             else:
-                dates += self.get_dates_by_street_id(street_id)
+                # return dates for specific house number of street if house
+                # number doesn't have an own id
+                if house_number_id is not None:
+                    dates += self.get_dates_by_house_number_id(house_number_id)
+                else:
+                    dates += self.get_dates_by_street_id(street_id)
+
+        if not dates and not_found_errors:
+            # none of the split street entries contained the requested
+            # house number: raise with the combined suggestions from all
+            # of them
+            suggestions: list = []
+            for err in not_found_errors:
+                for s in err.suggestions:
+                    if s not in suggestions:
+                        suggestions.append(s)
+            raise SourceArgumentNotFoundWithSuggestions(
+                "hausnummer", house_number, suggestions
+            )
+
         return dates
 
     def _find_in_inverted_dict(self, mydict, value):
