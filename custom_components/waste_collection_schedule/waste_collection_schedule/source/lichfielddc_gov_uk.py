@@ -39,10 +39,11 @@ class Source:
 
         entries = []
 
-        boxes = soup.find_all("div",class_="boxed")
+        boxes = soup.find_all("div", class_="boxed")
 
         for box in boxes:
-            bdate_els = box.find_all("p",class_=re.compile("bin-collection-tasks__(date|frequency)"))
+            bdate_els = box.find_all("p",
+                class_=re.compile("bin-collection-tasks__(date|frequency)"))
             if bdate_els:
                 bdate_str = bdate_els[0].contents[-1].string
                 bdate = parser.parse(bdate_str).date()
