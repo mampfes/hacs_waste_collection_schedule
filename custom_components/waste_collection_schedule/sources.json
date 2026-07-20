@@ -10176,6 +10176,12 @@
       "id": "abfall_io"
     },
     {
+      "title": "Gemeinde Kirchlengern",
+      "module": "kirchlengern_de",
+      "default_params": {},
+      "id": "kirchlengern_de"
+    },
+    {
       "title": "Gemeinde Kranenburg",
       "module": "abfallnavi_de",
       "default_params": {

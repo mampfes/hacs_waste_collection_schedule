@@ -2653,6 +2653,14 @@
     },
     "urls": {}
   },
+  "kirchlengern_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kirchlengern_de.md",
+    "howto": {
+      "de": "Geben Sie Ihren Straßennamen genau so ein, wie er im Abfallkalender-Tool auf der Webseite der Gemeinde Kirchlengern erscheint (Bürgerservice → Abfallkalender/Abfallberatung). Wird die Straße nicht gefunden, listet die Fehlermeldung alle gültigen Straßennamen auf.",
+      "en": "Enter your street name exactly as it appears in the waste calendar tool on the Kirchlengern website (Bürgerservice → Abfallkalender/Abfallberatung). If the street is not found, the error message lists all valid street names."
+    },
+    "urls": {}
+  },
   "kriftel_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kriftel_de.md",
     "howto": {},
