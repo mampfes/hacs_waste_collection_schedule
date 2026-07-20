@@ -56,6 +56,11 @@ TEST_CASES = {
         "insee_code": "50129",
         "instance_id": 1011,
     },
+    "SIAVED, Verchain-Maugré": {
+        "address": "2 place du 8 mai",
+        "insee_code": "59610",
+        "instance_id": 1067,
+    },
     "Sud Sainte Baume, Saint-Cyr-sur-Mer": {
         "address": "20 Rue Victor Hugo",
         "insee_code": "83112",
@@ -308,6 +313,11 @@ EXTRA_INFO = [
         "title": "Le Cotentin",
         "url": "https://dechets.lecotentin.fr/",
         "default_params": {"instance_id": 1011},
+    },
+    {
+        "title": "SIAVED (Valenciennes Métropole)",
+        "url": "https://www.siaved.fr/votre-calendrier-de-collecte",
+        "default_params": {"instance_id": 1067},
     },
     {
         "title": "Sud Sainte Baume",
