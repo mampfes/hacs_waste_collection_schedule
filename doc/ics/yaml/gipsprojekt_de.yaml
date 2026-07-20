@@ -18,10 +18,16 @@ description: |
   | Region | URL |
   | ------ | --- |
   | Stadtwerke Speyer | <https://www.stadtwerke-speyer.de/muellkalender> |
+  | Stadtwerke Aschaffenburg | <https://www.stwab.de/Abfall-Stadtreinigung/Muellabfuhr/Abfuhrtermine-und-Bezirk/> |
 extra_info:
   - title: Stadtwerke Speyer
     url: https://www.stadtwerke-speyer.de/muellkalender
     country: de
+  - title: Stadtwerke Aschaffenburg
+    url: https://www.stwab.de/Abfall-Stadtreinigung/Muellabfuhr/Abfuhrtermine-und-Bezirk/
+    country: de
 test_cases:
   Speyer, Schnaudigelweg (Abfallgebiet Hellgrün):
     url: https://www.stadtwerke-speyer.de/speyerGips/Gips?SessionMandant=Speyer&Anwendung=Abfuhrkalender&Methode=TermineAnzeigenICS&Mandant=Speyer&Abfuhrkalender=Speyer{%Y}&Bezirk_ID=22&Jahr={%Y}
+  Aschaffenburg, Schillerstraße (bis Hs.Nrn. 108):
+    url: https://www.stwab.de/aschaffenburgGips/Gips?SessionMandant=Aschaffenburg&Anwendung=Abfuhrkalender&Methode=TermineAnzeigenICS&Mandant=Aschaffenburg&Abfuhrkalender=Aschaffenburg&Bezirk_ID=1647&Jahr={%Y}
