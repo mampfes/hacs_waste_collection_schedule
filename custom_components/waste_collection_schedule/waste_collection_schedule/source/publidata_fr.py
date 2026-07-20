@@ -56,6 +56,11 @@ TEST_CASES = {
         "insee_code": "50129",
         "instance_id": 1011,
     },
+    "SIAVED, Verchain-Maugré": {
+        "address": "2 place du 8 mai",
+        "insee_code": "59610",
+        "instance_id": 1067,
+    },
     # "Saumur Val de Loire, Allones": {
     # "address": "5 rue du Bellay",
     # "insee_code": "49002",
@@ -301,6 +306,11 @@ EXTRA_INFO = [
         "title": "Le Cotentin",
         "url": "https://dechets.lecotentin.fr/",
         "default_params": {"instance_id": 1011},
+    },
+    {
+        "title": "SIAVED (Valenciennes Métropole)",
+        "url": "https://www.siaved.fr/votre-calendrier-de-collecte",
+        "default_params": {"instance_id": 1067},
     },
 ]
 
