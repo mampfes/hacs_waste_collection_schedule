@@ -4,7 +4,7 @@ Support for schedules provided by [KVA Thurgau (Kehrichtverwertungsanlage Thurga
 
 The source downloads the current disposal-plan PDF of your community from [kvatg.ch](https://www.kvatg.ch/fuer-private/entsorgungsplaene-1/) and extracts all collections it contains:
 
-- **Kehricht** (household waste): expanded weekly from the collection weekday stated in the plan ("Abfuhrtag: Dienstag"). Holiday shifts ("Verschiebedaten") are *not* applied — check [kvatg.ch](https://www.kvatg.ch) around public holidays.
+- **Kehricht** (household waste): expanded weekly from the collection weekday stated in the plan ("Abfuhrtag: Dienstag"). Holiday shifts ("Verschiebedaten") are applied where the plan lists explicit replacement dates; otherwise the regular weekday is shown for those weeks — check [kvatg.ch](https://www.kvatg.ch) around public holidays.
 - **Papier / Karton**: the printed collection dates, including per-village zones and separate paper/cardboard tours where the plan splits them.
 - **Grüngut** (green waste): printed dates, per-district date grids (e.g. Kreuzlingen), weekly summer collections ("Von Anfang März bis Ende November"), and calendar-week rotations (e.g. Frauenfeld).
 - **Kleinsperrgut**, **Kunststoff**, **Metalle**, **Häckseldienst**, **Christbaum** collections where the plan lists street-collection dates.
