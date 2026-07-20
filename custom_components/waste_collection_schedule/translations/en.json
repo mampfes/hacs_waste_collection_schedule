@@ -19038,6 +19038,29 @@
           "address": "Address as shown in the RfD address search results."
         }
       },
+      "args_rir_no": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "The full address, exactly as suggested by the address search on rir.no/hentekalender."
+        }
+      },
+      "reconfigure_rir_no": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "address": "The full address, exactly as suggested by the address search on rir.no/hentekalender."
+        }
+      },
       "args_sandnes_no": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -19302,6 +19325,41 @@
           "street": "Street"
         },
         "data_description": {}
+      },
+      "args_czystyregion_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gmina": "Commune (gmina)",
+          "miejscowosc": "Town/village (miejscowość)",
+          "rodzaj": "Property type (rodzaj)",
+          "ulica": "Street (for disambiguation)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "gmina": "Name of the commune (gmina) as listed on czystyregion.pl.",
+          "miejscowosc": "Name of the town/village as listed on czystyregion.pl.",
+          "rodzaj": "One of: wielorodzinna (multi-family), jednorodzinna (single-family), firma (business).",
+          "ulica": "Optional street name used to pick the right area when your town has several separate schedules (only needed if the source reports an ambiguous result)."
+        }
+      },
+      "reconfigure_czystyregion_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gmina": "Commune (gmina)",
+          "miejscowosc": "Town/village (miejscowość)",
+          "rodzaj": "Property type (rodzaj)",
+          "ulica": "Street (for disambiguation)"
+        },
+        "data_description": {
+          "gmina": "Name of the commune (gmina) as listed on czystyregion.pl.",
+          "miejscowosc": "Name of the town/village as listed on czystyregion.pl.",
+          "rodzaj": "One of: wielorodzinna (multi-family), jednorodzinna (single-family), firma (business).",
+          "ulica": "Optional street name used to pick the right area when your town has several separate schedules (only needed if the source reports an ambiguous result)."
+        }
       },
       "args_ecoharmonogram_pl": {
         "title": "Configure Source",

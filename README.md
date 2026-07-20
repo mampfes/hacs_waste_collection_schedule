@@ -3004,6 +3004,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Oslo Kommune](/doc/source/oslokommune_no.md) / oslo.kommune.no
 - [ReMidt Orkland muni](/doc/source/remidt_no.md) / remidt.no
 - [Renovasjonsselskapet for Drammensregionen IKS (RfD)](/doc/source/rfd_no.md) / rfd.no
+- [RIR](/doc/source/rir_no.md) / rir.no
 - [ROAF (Romerike Avfallsforedling IKS)](/doc/source/minrenovasjon_no.md) / roaf.no
 - [Sandnes Kommune](/doc/source/sandnes_no.md) / sandnes.kommune.no
 - [Stavanger Kommune](/doc/source/stavanger_no.md) / stavanger.kommune.no
@@ -3019,6 +3020,7 @@ If you already have enough information for your municipality/region, you are ver
 - [App Moje Odpady](/doc/source/moje_odpady_pl.md) / moje-odpady.pl
 - [Bydgoszcz Pronatura](/doc/source/pronatura_bydgoszcz_pl.md) / pronatura.bydgoszcz.pl
 - [Czerwonak, Murowana Goślina, Oborniki](/doc/source/eko_tom_pl.md) / eko-tom.pl
+- [Czysty Region](/doc/source/czystyregion_pl.md) / czystyregion.pl
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [EcoSzczecin](/doc/source/ecoszczecin_pl.md) / ecoszczecin.pl
 - [Gdańsk](/doc/source/smiecioplan_pl.md) / smiecioplan.pl

@@ -4029,6 +4029,13 @@
     },
     "urls": {}
   },
+  "rir_no": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rir_no.md",
+    "howto": {
+      "en": "Visit https://www.rir.no/hentekalender, start typing your address in the search field, and copy the suggested address exactly (including the postal town) into the 'address' argument."
+    },
+    "urls": {}
+  },
   "sandnes_no": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sandnes_no.md",
     "howto": {},
@@ -4076,6 +4083,13 @@
   "eko_tom_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eko_tom_pl.md",
     "howto": {},
+    "urls": {}
+  },
+  "czystyregion_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/czystyregion_pl.md",
+    "howto": {
+      "en": "Open https://www.czystyregion.pl/Harmonogramy and step through the dropdowns (Wybierz gminę -> Wybierz rodzaj -> Wybierz miejscowość) to find the exact spelling of your commune (gmina) and town/village (miejscowość). If the result table lists more than one row for your town (e.g. large towns split into several 'Rejon' street groups), also note a distinctive street name from the 'Rejon' description shown for your area and pass it as 'ulica'."
+    },
     "urls": {}
   },
   "ecoharmonogram_pl": {

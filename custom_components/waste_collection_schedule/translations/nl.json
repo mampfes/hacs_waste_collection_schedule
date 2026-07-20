@@ -18149,6 +18149,26 @@
         },
         "data_description": {}
       },
+      "args_rir_no": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_rir_no": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address"
+        },
+        "data_description": {}
+      },
       "args_sandnes_no": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -18394,6 +18414,32 @@
           "city": "City",
           "nr": "Nr",
           "street": "Street"
+        },
+        "data_description": {}
+      },
+      "args_czystyregion_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gmina": "Gmina",
+          "miejscowosc": "Miejscowosc",
+          "rodzaj": "Rodzaj",
+          "ulica": "Ulica"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_czystyregion_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "gmina": "Gmina",
+          "miejscowosc": "Miejscowosc",
+          "rodzaj": "Rodzaj",
+          "ulica": "Ulica"
         },
         "data_description": {}
       },
