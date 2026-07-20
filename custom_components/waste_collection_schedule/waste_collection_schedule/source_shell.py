@@ -230,8 +230,8 @@ class SourceShell:
     def day_offset(self):
         return self._day_offset
 
-    def fetch(self) -> None:
-        """Fetch data from source."""
+    def fetch(self) -> bool:
+        """Fetch data from source and report whether it succeeded."""
         try:
             # fetch returns a list of Collection's
             entries: Iterable[Collection] = self._source.fetch()
@@ -239,7 +239,7 @@ class SourceShell:
             _LOGGER.error(
                 f"fetch failed for source {self._title}:\n{traceback.format_exc()}"
             )
-            return
+            return False
         self._refreshtime = datetime.datetime.now()
 
         # Strip incidental whitespace from legacy sources' raw type strings.
@@ -283,6 +283,7 @@ class SourceShell:
             result = unique
 
         self._entries = result
+        return True
 
     def get_dedicated_calendar_types(self) -> set[str]:
         """Return set of waste types with a dedicated calendar.

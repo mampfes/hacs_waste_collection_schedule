@@ -11,7 +11,7 @@ from homeassistant.helpers.event import (
     async_call_later,
     async_track_time_change,
 )
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from . import const
 from .waste_collection_schedule import CollectionAggregator, SourceShell
@@ -97,7 +97,10 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
-        await self._fetch_now()
+        if not await self._fetch_now():
+            raise UpdateFailed(
+                f"Unable to fetch waste collection data from {self.shell.title}"
+            )
         return {}
 
     @property
@@ -134,22 +137,24 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     async def _update_sensors_callback(self, *_):
         dispatcher_send(self._hass, const.UPDATE_SENSORS_SIGNAL)
 
-    async def _fetch_now(self, *_):
+    async def _fetch_now(self, *_) -> bool:
         today = datetime.date.today()
         if (
             self._last_fetch_date is not None
             and (today - self._last_fetch_date).days < self._fetch_interval_days
         ):
             await self._update_sensors_callback()
-            return
+            return True
 
         if self.shell:
-            await self._hass.async_add_executor_job(self.shell.fetch)
-            self._last_fetch_date = today
+            fetch_succeeded = await self._hass.async_add_executor_job(self.shell.fetch)
+            if fetch_succeeded:
+                self._last_fetch_date = today
 
-            # Save device keys to storage after fetch
-            device_store = get_device_key_store()
-            if device_store:
-                await device_store.async_save()
+                # Save device keys to storage after fetch
+                device_store = get_device_key_store()
+                if device_store:
+                    await device_store.async_save()
 
         await self._update_sensors_callback()
+        return fetch_succeeded if self.shell else True
