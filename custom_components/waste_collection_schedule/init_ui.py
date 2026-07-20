@@ -10,7 +10,14 @@ import requests
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import device_registry as dr
 
+from .sensor_config_helpers import (
+    build_removed_sensor_options,
+    configured_sensor_ids,
+    ensure_sensor_ids,
+    parse_ui_sensor_device_id,
+)
 from .service import get_fetch_all_service
 from .waste_collection_schedule.service.DeviceKeyStore import (
     initialize_device_key_store,
@@ -22,7 +29,7 @@ from .waste_collection_schedule import SourceShell, Customize  # type: ignore # 
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = ["calendar", "sensor"]
+PLATFORMS = ["button", "calendar", "sensor", "select", "switch", "text"]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -32,7 +39,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Show canonical waste-type names in the Home Assistant UI language.
     set_display_language(hass.config.language)
 
-    options = entry.options
+    options = dict(entry.options)
+    if options.get(const.CONF_DEVICE_SENSOR_CONTROLS, False):
+        sensors_with_ids, sensor_ids_changed = ensure_sensor_ids(
+            options.get(const.CONF_SENSORS, [])
+        )
+        if sensor_ids_changed:
+            options[const.CONF_SENSORS] = sensors_with_ids
+            hass.config_entries.async_update_entry(entry, options=options)
     _LOGGER.debug(
         "Setting up entry %s, with data %s and options %s",
         entry.entry_id,
@@ -123,7 +137,38 @@ async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> bool
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload a config entry."""
-    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    unloaded = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unloaded:
+        coordinator = hass.data.get(const.DOMAIN, {}).pop(entry.entry_id, None)
+        if isinstance(coordinator, WCSCoordinator):
+            coordinator.cancel_scheduled_callbacks()
+    return unloaded
+
+
+async def async_remove_config_entry_device(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    device_entry: dr.DeviceEntry,
+) -> bool:
+    """Remove one configured waste sensor when its device is deleted."""
+    coordinator = hass.data.get(const.DOMAIN, {}).get(entry.entry_id)
+    if not isinstance(coordinator, WCSCoordinator):
+        return False
+
+    sensor_id = parse_ui_sensor_device_id(
+        coordinator.shell.unique_id,
+        device_entry.identifiers,
+    )
+    if sensor_id is None or sensor_id not in configured_sensor_ids(
+        entry.options.get(const.CONF_SENSORS, [])
+    ):
+        return False
+
+    hass.config_entries.async_update_entry(
+        entry,
+        options=build_removed_sensor_options(entry, sensor_id),
+    )
+    return True
 
 
 async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
