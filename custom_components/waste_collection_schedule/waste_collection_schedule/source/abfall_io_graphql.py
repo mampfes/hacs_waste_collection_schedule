@@ -77,6 +77,10 @@ TEST_CASES = {
         "key": "4b5702d771c82b611c386ebbc7629026",
         "idHouseNumber": 641,
     },
+    "ASG Nordsachsen, Delitzsch-Beerendorf": {
+        "key": "2085afd95285e645e15ee9623d0c5172",
+        "idHouseNumber": 360435,
+    },
 }
 
 
