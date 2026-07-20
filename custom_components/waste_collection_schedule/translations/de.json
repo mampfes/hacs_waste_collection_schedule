@@ -3904,6 +3904,33 @@
           "zone": "Abholzone (Rayon 1 oder Rayon 2), oder leer für alle Zonen"
         }
       },
+      "args_mils_tirol_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Mils aufgeführt.",
+          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Mils aufgeführt."
+        }
+      },
+      "reconfigure_mils_tirol_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "hausnummer": "Hausnummer",
+          "strasse": "Straße"
+        },
+        "data_description": {
+          "hausnummer": "Hausnummer wie in der Abfallkalender-Auswahl von Mils aufgeführt.",
+          "strasse": "Straßenname wie in der Abfallkalender-Auswahl von Mils aufgeführt."
+        }
+      },
       "args_ics_passail_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

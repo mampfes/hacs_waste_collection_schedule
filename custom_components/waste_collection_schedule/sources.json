@@ -2216,6 +2216,12 @@
       "id": "felixdorf_gv_at"
     },
     {
+      "title": "Gemeinde Mils",
+      "module": "mils_tirol_at",
+      "default_params": {},
+      "id": "mils_tirol_at"
+    },
+    {
       "title": "Gemeinde Passail",
       "module": "ics",
       "default_params": {},
