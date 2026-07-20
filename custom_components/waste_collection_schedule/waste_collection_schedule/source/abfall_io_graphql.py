@@ -73,6 +73,10 @@ TEST_CASES = {
         "key": "80acad6c77fe9342ebafad29a8c58bf6",
         "idHouseNumber": 72827,
     },
+    "Landkreis Göttingen, Scheden": {
+        "key": "4b5702d771c82b611c386ebbc7629026",
+        "idHouseNumber": 641,
+    },
 }
 
 

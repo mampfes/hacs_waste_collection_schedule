@@ -30,4 +30,9 @@ SERVICE_MAP = [
         "url": "https://www.wb-duisburg.de/",
         "service_id": "80acad6c77fe9342ebafad29a8c58bf6",
     },
+    {
+        "title": "Landkreis Göttingen",
+        "url": "https://www.landkreisgoettingen.de/",
+        "service_id": "4b5702d771c82b611c386ebbc7629026",
+    },
 ]
