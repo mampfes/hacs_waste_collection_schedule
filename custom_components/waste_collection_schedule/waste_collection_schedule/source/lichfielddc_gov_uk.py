@@ -43,7 +43,7 @@ class Source:
 
         for box in boxes:
             bdate_els = box.find_all(
-                "p", class_=re.compile("bin-collection-tasks__(date|frequency)")
+                    "p", class_=re.compile("bin-collection-tasks__(date|frequency)")
             )
             if bdate_els:
                 bdate_str = bdate_els[0].contents[-1].string
