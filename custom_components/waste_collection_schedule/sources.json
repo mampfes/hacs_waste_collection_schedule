@@ -24824,6 +24824,14 @@
       "id": "plano_gov"
     },
     {
+      "title": "City of Raleigh, NC",
+      "module": "ics",
+      "default_params": {
+        "split_at": "\\, (?:and )?|(?: and )"
+      },
+      "id": "ics_recollect"
+    },
+    {
       "title": "City of San Antonio",
       "module": "sanantonio_gov",
       "default_params": {},

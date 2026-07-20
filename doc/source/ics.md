@@ -506,6 +506,7 @@ This source has been successfully tested with the following service providers:
 - [City of Houston, TX](/doc/ics/recollect.md) / houstontx.gov
 - [City of Lowell, MA](/doc/ics/recollect.md) / lowellma.gov
 - [City of McKinney, TX](/doc/ics/recollect.md) / mckinneytexas.org
+- [City of Raleigh, NC](/doc/ics/recollect.md) / raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
 - [ReCollect](/doc/ics/recollect.md) / recollect.net
