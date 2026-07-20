@@ -35,4 +35,9 @@ SERVICE_MAP = [
         "url": "https://www.landkreisgoettingen.de/",
         "service_id": "4b5702d771c82b611c386ebbc7629026",
     },
+    {
+        "title": "ASG Nordsachsen",
+        "url": "https://www.asg-nordsachsen.de/",
+        "service_id": "2085afd95285e645e15ee9623d0c5172",
+    },
 ]
