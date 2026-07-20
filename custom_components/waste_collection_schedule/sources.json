@@ -7166,6 +7166,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "SIAVED (Valenciennes M\u00e9tropole)",
+      "module": "publidata_fr",
+      "default_params": {
+        "instance_id": 1067
+      },
+      "id": "publidata_fr"
+    },
+    {
       "title": "SICTOM de Lons-le-Saunier",
       "module": "sictom_lons_le_saunier_fr",
       "default_params": {},

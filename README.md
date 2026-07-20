@@ -1171,6 +1171,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Saulx-Marchais](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Saumur Val de Loire](/doc/source/publidata_fr.md) / saumurvaldeloire.fr
 - [Sausheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
+- [SIAVED (Valenciennes Métropole)](/doc/source/publidata_fr.md) / siaved.fr/votre-calendrier-de-collecte
 - [SICTOM de Lons-le-Saunier](/doc/source/sictom_lons_le_saunier_fr.md) / sictom-lons-le-saunier.fr
 - [SICTOM du Val de Saône](/doc/source/sictomvds_com.md) / sictomvds.com
 - [SIVOM de la Vallée de l'Yerres et des Sénarts](/doc/source/sivom_com.md) / sivom.com
