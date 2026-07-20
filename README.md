@@ -951,6 +951,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ville de Saguenay](/doc/source/saguenay_ca.md) / ville.saguenay.ca
 - [Ville de Saint-Basile-le-Grand](/doc/source/villesblg_ca.md) / villesblg.ca
 - [Waste Wise APPS](/doc/ics/recollect.md) / edmonton.ca
+- [West Kelowna (BC)](/doc/source/recyclecoach_com.md) / rdco.com
 - [Whitby, ON](/doc/ics/recollect.md) / whitby.ca
 - [Winnipeg (MB)](/doc/source/myutility_winnipeg_ca.md) / myutility.winnipeg.ca
 </details>
