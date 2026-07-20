@@ -2264,6 +2264,14 @@
     "howto": {},
     "urls": {}
   },
+  "awb_bir_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_bir_de.md",
+    "howto": {
+      "de": "Besuchen Sie die Abfuhrkalender-Seite der AWB Birkenfeld und suchen Sie nach Ihrer Straße. Verwenden Sie den Straßennamen (und, falls dieser in mehreren Gemeinden vorkommt, die Ortsgemeinde) genau wie in den Suchergebnissen angezeigt.",
+      "en": "Visit the AWB Birkenfeld waste calendar page and search for your street. Use the exact street name (and, if it occurs in more than one village, the Ortsgemeinde) as shown in the search results."
+    },
+    "urls": {}
+  },
   "awbkoeln_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awbkoeln_de.md",
     "howto": {},

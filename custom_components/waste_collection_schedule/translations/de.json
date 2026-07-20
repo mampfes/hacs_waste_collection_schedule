@@ -9986,6 +9986,33 @@
         },
         "data_description": {}
       },
+      "args_awb_bir_de": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ortsgemeinde",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ortsgemeinde. Nur erforderlich, wenn der Straßenname in mehreren Gemeinden vorkommt.",
+          "street": "Straßenname genau wie im Abfuhrkalender der AWB Birkenfeld angegeben."
+        }
+      },
+      "reconfigure_awb_bir_de": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Ortsgemeinde",
+          "street": "Straße"
+        },
+        "data_description": {
+          "city": "Ortsgemeinde. Nur erforderlich, wenn der Straßenname in mehreren Gemeinden vorkommt.",
+          "street": "Straßenname genau wie im Abfuhrkalender der AWB Birkenfeld angegeben."
+        }
+      },
       "args_awbkoeln_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

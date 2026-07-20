@@ -10331,6 +10331,33 @@
         },
         "data_description": {}
       },
+      "args_awb_bir_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Ortsgemeinde (village/town). Only required if the street name occurs in more than one village.",
+          "street": "Street name exactly as shown on the AWB Birkenfeld waste calendar page."
+        }
+      },
+      "reconfigure_awb_bir_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "Ortsgemeinde (village/town). Only required if the street name occurs in more than one village.",
+          "street": "Street name exactly as shown on the AWB Birkenfeld waste calendar page."
+        }
+      },
       "args_awbkoeln_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

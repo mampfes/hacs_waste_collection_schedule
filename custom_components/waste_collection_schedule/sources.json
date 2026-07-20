@@ -8403,6 +8403,12 @@
       "id": "awb_bad_kreuznach_de"
     },
     {
+      "title": "AWB Birkenfeld",
+      "module": "awb_bir_de",
+      "default_params": {},
+      "id": "awb_bir_de"
+    },
+    {
       "title": "AWB K\u00f6ln",
       "module": "awbkoeln_de",
       "default_params": {},
