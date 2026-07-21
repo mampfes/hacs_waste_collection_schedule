@@ -24935,6 +24935,12 @@
       "id": "sandiego_gov"
     },
     {
+      "title": "City of Stamford, CT",
+      "module": "stamford_ct_us",
+      "default_params": {},
+      "id": "stamford_ct_us"
+    },
+    {
       "title": "City of Tallahassee",
       "module": "talgov_com",
       "default_params": {},

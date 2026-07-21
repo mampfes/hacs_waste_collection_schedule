@@ -3808,6 +3808,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Raleigh, NC](/doc/ics/recollect.md) / raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app
 - [City of San Antonio](/doc/source/sanantonio_gov.md) / sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
+- [City of Stamford, CT](/doc/source/stamford_ct_us.md) / stamfordct.gov/government/operations/recycling-and-sanitation/about/recycling-and-garbage-schedule
 - [City of Tallahassee](/doc/source/talgov_com.md) / talgov.com/you/swslookup
 - [Community Waste Disposal (CWD)](/doc/source/communitywastedisposal_com.md) / communitywastedisposal.com
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com

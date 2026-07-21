@@ -7041,6 +7041,13 @@
     },
     "urls": {}
   },
+  "stamford_ct_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stamford_ct_us.md",
+    "howto": {
+      "en": "Use the City of Stamford Garbage and Recycling Lookup (https://stamfordapps.org/garbagerecycling/default.asp) to find your street. Enter just the street name (e.g. 'Parker' for 'Parker Ave'), leaving out the street suffix (Ave, St, Rd, etc.) and the house number. If your street has multiple pickup-day ranges, also provide your house number; the source will tell you the available ranges if it is required but missing."
+    },
+    "urls": {}
+  },
   "talgov_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/talgov_com.md",
     "howto": {},

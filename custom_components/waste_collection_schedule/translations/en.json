@@ -30495,6 +30495,33 @@
           "id": "The unique identifier for your properties collection schedule"
         }
       },
+      "args_stamford_ct_us": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number (optional)",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Optional house number. Required only if pickup days differ across house-number ranges on this street; the error message will list the available ranges if so.",
+          "street": "Street name only, without the house number or street suffix (e.g. 'Parker' or 'Parker Ave' for '123 Parker Ave')."
+        }
+      },
+      "reconfigure_stamford_ct_us": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "house_number": "House Number (optional)",
+          "street": "Street Name"
+        },
+        "data_description": {
+          "house_number": "Optional house number. Required only if pickup days differ across house-number ranges on this street; the error message will list the available ranges if so.",
+          "street": "Street name only, without the house number or street suffix (e.g. 'Parker' or 'Parker Ave' for '123 Parker Ave')."
+        }
+      },
       "args_talgov_com": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
