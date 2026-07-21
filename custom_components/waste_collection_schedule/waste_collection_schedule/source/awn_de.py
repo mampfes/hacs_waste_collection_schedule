@@ -39,6 +39,10 @@ class Source(BaseSource):
     URL = "https://www.awn-online.de"
     COUNTRY = "de"
 
+    # A wrong street/house number yields an empty Athos schedule; surface it
+    # as an error instead of a silently empty calendar (#6943).
+    RAISE_ON_EMPTY = True
+
     TEST_CASES: ClassVar[dict] = {
         "Adelsheim": {"city": "Adelsheim", "street": "Badstr.", "house_number": 1},
         "Mosbach": {

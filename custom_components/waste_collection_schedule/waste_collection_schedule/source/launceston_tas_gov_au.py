@@ -71,6 +71,10 @@ class Source(BaseSource):
     URL = "https://www.launceston.tas.gov.au"
     COUNTRY = "au"
 
+    # An address ArcGis cannot resolve yields no collections; surface it as
+    # an error instead of a silently empty calendar (#6943).
+    RAISE_ON_EMPTY = True
+
     FEATURE_URL = "https://services.arcgis.com/yeXpdyjk3azbqItW/arcgis/rest/services/Waste/FeatureServer/0"
 
     TEST_CASES: ClassVar[dict] = {
