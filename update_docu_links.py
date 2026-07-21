@@ -6,16 +6,10 @@ import inspect
 import json
 import re
 import site
-import sys
 from functools import cache
 from pathlib import Path
 from types import ModuleType
-from typing import Any, TypedDict, TypeVar
-
-if sys.version_info >= (3, 11):
-    from typing import NotRequired
-else:
-    from typing_extensions import NotRequired
+from typing import Any, NotRequired, TypedDict, TypeVar
 
 import yaml
 

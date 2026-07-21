@@ -21,7 +21,6 @@ from typing import (
     Any,
     NamedTuple,
     Protocol,
-    TypeAlias,
     TypeVar,
 )
 
@@ -36,7 +35,7 @@ if TYPE_CHECKING:
 
     from waste_collection_schedule.base_source import BaseSource
 
-    Response: TypeAlias = "requests.Response | _cffi_requests.Response"
+    type Response = "requests.Response | _cffi_requests.Response"
 else:
     Response = object
 

@@ -1553,7 +1553,7 @@ class TestToolkitParsers:
         from waste_collection_schedule import date_parsers
 
         # Noon UTC so the calendar date is host-timezone independent.
-        moment = datetime.datetime(2026, 6, 24, 12, 0, tzinfo=datetime.timezone.utc)
+        moment = datetime.datetime(2026, 6, 24, 12, 0, tzinfo=datetime.UTC)
         epoch_s = int(moment.timestamp())
         expected = datetime.date(2026, 6, 24)
         assert date_parsers.from_epoch()(epoch_s) == expected
