@@ -1,9 +1,10 @@
 # The runtime floor is Python 3.12 (Home Assistant >= 2024.4; see hacs.json /
-# requirements.txt). The lint target is deliberately kept lower than the floor:
-# raising it to py312 only makes UP/pyupgrade suggest 3.12-only rewrites (PEP 695
-# generics, etc.) that would churn source files for no runtime benefit. py310
-# fixes stay valid on 3.12; a target bump + pyupgrade pass is a separate cleanup.
-target-version = "py310"
+# requirements.txt), so the lint target matches it. UP/pyupgrade therefore
+# modernises the new-architecture code (framework, services, tools) to 3.12
+# idioms. The ~600 legacy provider modules under source/ are exempted from UP
+# only (see per-file-ignores) so the migration is not blocked by mechanically
+# rewriting them; they still get E/F/W/I/B and the rest.
+target-version = "py312"
 line-length = 88
 
 [lint]
@@ -25,7 +26,19 @@ select = ["E", "F", "W", "I", "B", "C4", "PIE", "RUF", "UP", "ISC", "RET"]
 # RET503/RET504 have no automatic fix and would require hand-rewriting return
 # statements across dozens of source/ files for a purely stylistic gain -
 # not worth the manual diff right now.
-ignore = ["E203", "E501", "E721", "RUF001", "RUF002", "RUF003", "RET503", "RET504"]
+# UP046/UP047 (PEP 695 class/function type parameters) are not adopted: the
+# framework API (BaseSource, BaseTransformer, exception hierarchy) reads more
+# clearly with explicit Generic[T]/TypeVar, and the auto-rewrite leaves orphaned
+# TypeVars. Other UP rules (datetime.UTC, `type` aliases, StrEnum, dead version
+# blocks) are applied to the new architecture.
+ignore = ["E203", "E501", "E721", "RUF001", "RUF002", "RUF003", "RET503", "RET504", "UP046", "UP047"]
+
+[lint.per-file-ignores]
+# Legacy provider modules are exempt from pyupgrade (UP) only: modernising 600
+# hand-written sources to 3.12 idioms is churn without runtime benefit and would
+# stall the pipeline migration. New-architecture code is not exempt. All other
+# rules (E/F/W/I/B/C4/PIE/RUF/ISC/RET) still apply to source/.
+"custom_components/waste_collection_schedule/waste_collection_schedule/source/*.py" = ["UP"]
 
 [format]
 quote-style = "double"

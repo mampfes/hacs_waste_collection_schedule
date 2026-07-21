@@ -37,7 +37,7 @@ import datetime
 import re
 import time
 from collections.abc import Callable, Mapping
-from typing import TYPE_CHECKING, Any, Protocol, TypeAlias, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Protocol, TypeVar, cast
 from urllib.parse import urljoin
 
 import requests as _plain_requests
@@ -50,18 +50,18 @@ if TYPE_CHECKING:
 
 T = TypeVar("T")
 
-Response: TypeAlias = "_plain_requests.Response | _cffi_requests.Response"
+type Response = "_plain_requests.Response | _cffi_requests.Response"
 
-HeadersType: TypeAlias = Mapping[str, str | None] | None
-ParamsType: TypeAlias = dict | list | tuple | None
-JsonType: TypeAlias = dict | list | None
+type HeadersType = Mapping[str, str | None] | None
+type ParamsType = dict | list | tuple | None
+type JsonType = dict | list | None
 
-SourceParams: TypeAlias = dict[str, Any]
-UrlArgs: TypeAlias = Callable[..., str] | str
-ParamsArgs: TypeAlias = Callable[..., ParamsType] | ParamsType
-HeadersArgs: TypeAlias = Callable[..., HeadersType] | HeadersType
-AnyArgs: TypeAlias = Callable[..., Any] | Any
-JsonArgs: TypeAlias = Callable[..., JsonType] | JsonType
+type SourceParams = dict[str, Any]
+type UrlArgs = Callable[..., str] | str
+type ParamsArgs = Callable[..., ParamsType] | ParamsType
+type HeadersArgs = Callable[..., HeadersType] | HeadersType
+type AnyArgs = Callable[..., Any] | Any
+type JsonArgs = Callable[..., JsonType] | JsonType
 
 
 class RetrieverFunc(Protocol):
@@ -338,7 +338,7 @@ class PdfLinkRetriever(_BaseRetriever):
 # not, and PEP 655 Required/NotRequired needs a newer typing than this
 # module's pyright target -- a plain dict keeps step access unchecked but
 # simple; see AthosWasteManagementRetriever's docstring for the worked shape.
-AthosStep: TypeAlias = "dict[str, Any]"
+type AthosStep = "dict[str, Any]"
 
 
 def _scrape_hidden_inputs(html: str) -> dict[str, str]:

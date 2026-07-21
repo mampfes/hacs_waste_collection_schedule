@@ -52,7 +52,7 @@ class ICS:
 
     def convert(self, ics_data: str) -> list[tuple[datetime.date, str]]:
         # calculate start- and end-date for recurring events
-        start_date = datetime.datetime.now(datetime.timezone.utc).replace(
+        start_date = datetime.datetime.now(datetime.UTC).replace(
             hour=0, minute=0, second=0, microsecond=0
         )
         if self._offset is not None:
@@ -139,7 +139,7 @@ class ICS:
 
     def convert_events(self, ics_data: str) -> list[IcsEvent]:
         # calculate start- and end-date for recurring events
-        start_date = datetime.datetime.now(datetime.timezone.utc).replace(
+        start_date = datetime.datetime.now(datetime.UTC).replace(
             hour=0, minute=0, second=0, microsecond=0
         )
         if self._offset is not None:

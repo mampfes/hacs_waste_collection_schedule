@@ -40,7 +40,7 @@ import json
 import re
 import time
 from collections.abc import Callable, Hashable
-from typing import TYPE_CHECKING, Any, TypeAlias
+from typing import TYPE_CHECKING, Any
 
 import requests
 
@@ -560,7 +560,7 @@ class LabelField(str):
 # only collected for some properties, (date_field, label, condition_field).
 # ``label`` is either a literal string or a :class:`LabelField` (read the
 # label from another field on the same row).
-FieldMapEntry: TypeAlias = "tuple[str, str] | tuple[str, str, str]"
+type FieldMapEntry = "tuple[str, str] | tuple[str, str, str]"
 
 
 def _looks_true(value: Any) -> bool:
