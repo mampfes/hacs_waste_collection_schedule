@@ -1748,6 +1748,14 @@
     },
     "urls": {}
   },
+  "data_nantesmetropole_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/data_nantesmetropole_fr.md",
+    "howto": {
+      "en": "Enter your full street address including the house number and the city name (e.g. '16 Rue Abbé de l'Epée, Nantes').",
+      "fr": "Entrez votre adresse complète avec le numéro de rue et le nom de la commune (ex : '16 Rue Abbé de l'Epée, Nantes')."
+    },
+    "urls": {}
+  },
   "rueil_malmaison_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rueil_malmaison_fr.md",
     "howto": {},
