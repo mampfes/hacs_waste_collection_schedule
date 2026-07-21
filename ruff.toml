@@ -1,7 +1,8 @@
-# CI (validate.yaml) runs the test/lint suite on Python 3.10, so that's the
-# real floor - keep this in sync with that workflow, not with the (newer)
-# devcontainer interpreter, so UP/pyupgrade fixes don't introduce syntax that
-# breaks on the version CI actually runs.
+# The runtime floor is Python 3.12 (Home Assistant >= 2024.4; see hacs.json /
+# requirements.txt). The lint target is deliberately kept lower than the floor:
+# raising it to py312 only makes UP/pyupgrade suggest 3.12-only rewrites (PEP 695
+# generics, etc.) that would churn source files for no runtime benefit. py310
+# fixes stay valid on 3.12; a target bump + pyupgrade pass is a separate cleanup.
 target-version = "py310"
 line-length = 88
 
