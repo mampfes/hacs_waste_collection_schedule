@@ -3436,6 +3436,90 @@ class TestSourceShellCustomize:
         apply_day_offset(c, -2)
         assert c.date == datetime.date(2026, 1, 8)
 
+    # --- Regression tests for #6942 -----------------------------------------
+    # SourceShell.fetch() used to call Collection.set_type() unconditionally on
+    # every fetched entry (to strip incidental whitespace), which set
+    # Collection._type_override on pipeline-sourced entries too. That made
+    # Collection._identity_key (equality/hashing/dedup) fall back to the
+    # localised display string instead of the locale-independent
+    # WasteType.id, so the same collection compared unequal to itself across
+    # display languages.
+
+    def test_shell_fetch_keeps_identity_locale_independent_6942(self):
+        from waste_collection_schedule import waste_types as w
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import SourceShell
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        class _FakeSource:
+            def fetch(self):
+                return [
+                    Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
+                ]
+
+        def fetch_one():
+            shell = SourceShell(
+                source=_FakeSource(),
+                customize={},
+                title="Test",
+                description="",
+                url=None,
+                calendar_title=None,
+                unique_id="test",
+                day_offset=0,
+            )
+            shell.fetch()
+            return shell._entries[0]
+
+        try:
+            w.set_display_language("en")
+            entry_en = fetch_one()
+            w.set_display_language("de")
+            entry_de = fetch_one()
+
+            # Identity must be the locale-independent WasteType.id, never the
+            # localised display string. Before #6942, SourceShell.fetch() called
+            # set_type() on every entry, freezing _type_override to the display
+            # name at fetch time and so making identity locale-dependent (the
+            # de-fetched entry would key on "Restmüll", the en one on "General
+            # Waste", and the two compared unequal).
+            assert entry_en._identity_key == "general_waste"
+            assert entry_de._identity_key == "general_waste"
+            assert entry_en == entry_de
+            assert hash(entry_en) == hash(entry_de)
+
+            # Display still localises: .type is a live property resolved under
+            # the current display language, not frozen at fetch time.
+            w.set_display_language("en")
+            assert entry_de.type == "General Waste"
+            w.set_display_language("de")
+            assert entry_de.type == "Restmüll"
+        finally:
+            w.set_display_language("en")
+
+    def test_shell_fetch_still_strips_legacy_whitespace_6942(self):
+        """The whitespace-stripping behaviour the loop existed for is kept,
+        scoped to legacy (raw-string) sources only."""
+        from waste_collection_schedule.collection import LegacyCollection
+        from waste_collection_schedule.source_shell import SourceShell
+
+        class _FakeLegacySource:
+            def fetch(self):
+                return [LegacyCollection(date=datetime.date(2026, 1, 1), t=" Refuse ")]
+
+        shell = SourceShell(
+            source=_FakeLegacySource(),
+            customize={},
+            title="Test",
+            description="",
+            url=None,
+            calendar_title=None,
+            unique_id="test",
+            day_offset=0,
+        )
+        shell.fetch()
+        assert shell._entries[0].type == "Refuse"
+
 
 class TestSourceShellDedicatedCalendars:
     """Customize dedicated calendar settings."""

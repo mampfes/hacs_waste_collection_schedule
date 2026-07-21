@@ -242,9 +242,22 @@ class SourceShell:
             return
         self._refreshtime = datetime.datetime.now()
 
-        # strip whitespaces
+        # Strip incidental whitespace from legacy sources' raw type strings.
+        #
+        # Restricted to LegacyCollection (and only when stripping actually
+        # changes something): calling set_type() unconditionally on every
+        # entry would set Collection._type_override on pipeline-sourced
+        # entries too, which makes Collection._identity_key (and therefore
+        # equality/hashing/dedup) fall back to the localised display string
+        # instead of the locale-independent WasteType.id, defeating its
+        # purpose (#6942). Pipeline entries' display names come from the
+        # controlled WASTE_TYPES catalogue and are not expected to carry
+        # incidental whitespace, so they are left untouched here.
         for e in entries:
-            e.set_type(e.type.strip())
+            if isinstance(e, LegacyCollection):
+                stripped = e.type.strip()
+                if stripped != e.type:
+                    e.set_type(stripped)
 
         # filter hidden entries
         entries = filter(lambda x: filter_function(x, self._customize), entries)
