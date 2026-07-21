@@ -17,4 +17,4 @@ Pillow>=10.0.0
 pdfminer.six>=20221105
 Babel>=2.12.0
 holidays>=0.40
-homeassistant
+homeassistant>=2023.12.0
