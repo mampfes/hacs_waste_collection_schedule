@@ -1,79 +1,96 @@
-import datetime
+import datetime, requests, logging
+from io import BytesIO
+from bs4 import BeautifulSoup
+from custom_components.waste_collection_schedule.waste_collection_schedule.exceptions import SourceArgAmbiguousWithSuggestions, SourceArgumentNotFound
 from waste_collection_schedule import Collection, Icons
 
 TITLE = "S.E.S.A."
 DESCRIPTION = "Source script for sesaeste.it"
-URL = "https://sesaeste.it/"
+BASE_URL = "https://sesaeste.it"
+URL = BASE_URL
+API_URL = BASE_URL + "/proc_cerca_comune/"
+
 TEST_CASES = {
-    "TestName1": {"arg1": 100, "arg2": "street"},
-    "TestName2": {"arg1": 200, "arg2": "road"},
-    "TestName3": {"arg1": 300, "arg2": "lane"}
+    "Legnaro": {"user_municipality": "Legnaro"},
+    "Solesino": {"user_municipality": "Solesino"},
+    "TestName3": {"user_municipality": "Polverara"}
 }
 
-API_URL = "https://sesaeste.it/proc_cerca_comune/"
-ICON_MAP = {   # Optional: Dict of waste types mapped to canonical Icons
-    "DOMESTIC": Icons.GENERAL_WASTE,
-    "RECYCLE": Icons.RECYCLING,
-    "ORGANIC": Icons.ORGANIC,
+ICON_MAP = {
+    "PLASTICA E LATTINE": Icons.PLASTIC_PACKAGING, # TODO: add an mdi icon for plastic+metal? Probably useful for other sources too.
+    "UMIDO": Icons.BIO_KITCHEN,
+    "SECCO": Icons.GENERAL_WASTE,
+    "CARTA": Icons.PAPER,
+    "VETRO": Icons.GLASS,
+    "VERDE": Icons.GARDEN,
 }
 
-#### Arguments affecting the configuration GUI ####
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = { # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields.
-    # Only "en", "de", "it", "fr" are valid keys — other codes (e.g. "pl", "nl") will fail the test suite.
-    # You do NOT need to provide all four languages; providing only the language(s) you know is fine.
-    "en": "HOW TO GET ARGUMENTS DESCRIPTION",
-    "de": "WIE MAN DIE ARGUMENTE ERHÄLT",
-    "it": "COME OTTENERE GLI ARGOMENTI",
-    "fr": "COMMENT OBTENIR LES ARGUMENTS",
-}
-
-PARAM_DESCRIPTIONS = { # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
+PARAM_DESCRIPTIONS = {
     "en": {
-        "arg1": "Description of ARG1",
-        "arg2": "Description of ARG2",
-    },
-    "de": {
-        "arg1": "Beschreibung von ARG1",
-        "arg2": "Beschreibung von ARG2",
+        "user_municipality": "Municipality",
     },
     "it": {
-        "arg1": "Descrizione di ARG1",
-        "arg2": "Descrizione di ARG2",
-    },
-    "fr": {
-        "arg1": "Description de ARG1",
-        "arg2": "Description de ARG2",
+        "user_municipality": "Comune",
     },
 }
 
-PARAM_TRANSLATIONS = { # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "arg1": "User Readable Name for ARG1",
-        "arg2": "User Readable Name for ARG2",
-    },
-    "de": {
-        "arg1": "Benutzerfreundlicher Name für ARG1",
-        "arg2": "Benutzerfreundlicher Name für ARG2",
-    },
-    "it": {
-        "arg1": "Nome leggibile dall'utente per ARG1",
-        "arg2": "Nome leggibile dall'utente per ARG2",
-    },
-    "fr": {
-        "arg1": "Nom lisible par l'utilisateur pour ARG1",
-        "arg2": "Nom lisible par l'utilisateur pour ARG2",
-    },
-}
 
 #### End of arguments affecting the configuration GUI ####
 
+logger = logging.getLogger(__name__)
+
 class Source:
-    def __init__(self, arg1:str, arg2:int):  # argX correspond to the args dict in the source configuration
-        self._arg1 = arg1
-        self._arg2 = arg2
+    def __init__(self, user_municipality: str):
+        self.user_municipality = user_municipality
+
+    def _fetch_municipality_id(self) -> str:
+        html_cercacomune = BeautifulSoup(requests.get(API_URL).text)
+        select = html_cercacomune.find(id="RifComune")
+        candidates: list[tuple[str, str]] = []
+
+        if select is None:
+            raise ValueError(f"The S.E.S.A. landing webpage has an unexpected format and the list of municipalities could not be found.")
+    
+        for opt in select.find_all('option'):
+            if opt.string.lower() == self.user_municipality.lower():
+                candidates = [(opt.get('value'), opt.string)]
+                break
+            if self.user_municipality.lower() in opt.string.lower():
+                candidates.append((opt.get('value'), opt.string))
+        
+        if len(candidates) == 0:
+            raise SourceArgumentNotFound("user_municipality", self.user_municipality)
+        if len(candidates) > 1:
+            raise SourceArgAmbiguousWithSuggestions("user_municipality", self.user_municipality, [m for _, m in candidates])
+        
+        return candidates[0][0]
+
+    
+    def _fetch_pdf_calendar(self):
+        mun_id = self._fetch_municipality_id()
+
+        html_calendario = BeautifulSoup(
+            requests.post(API_URL, {
+                'RifComune': mun_id,
+                'showheader': False
+            }).text
+        )
+        
+        a = html_calendario.find('a', title='Scarica il calendario')
+        if a is None:
+            raise ValueError(f"The S.E.S.A. municipality webpage has an unexpected format and the PDF schedule link could not be found.")
+        
+        pdf_url = BASE_URL + a.get('href')
+        req = requests.get(pdf_url, stream=True)
+        req.raise_for_status()
+        pdf_data = BytesIO(req.content)
+
+        return pdf_data
+
 
     def fetch(self) -> list[Collection]:
+        pdf_data = self._fetch_pdf_calendar()
+        logger.info(f"Downloaded {pdf_data} bytes")
 
         #  replace this comment with
         #  api calls or web scraping required
