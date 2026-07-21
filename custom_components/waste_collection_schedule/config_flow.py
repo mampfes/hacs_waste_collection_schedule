@@ -1132,7 +1132,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     CONF_SOURCE_ARGS: args_input,
                 }
                 self._options.update(options)
-                self.async_show_form(step_id="options")
                 return await self.async_step_flow_type()
         return self.async_show_form(
             step_id=f"args_{self._id}",
@@ -1524,10 +1523,12 @@ class WasteCollectionOptionsFlow(OptionsFlow):
     def get_types_of_sensors_and_customizations(self):
         fetched_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
         for c in self._entry.options.get(CONF_SENSORS, []):
-            if CONF_TYPE in c:
-                fetched_types.extend(
-                    c[CONF_TYPE] if isinstance(c[CONF_TYPE], list) else [c[CONF_TYPE]]
-                )
+            # Sensors store their waste types under CONF_COLLECTION_TYPES (see
+            # finish()); CONF_TYPE was never present here, so the edit-sensor
+            # type list was only ever populated from customisation keys (#6944).
+            if CONF_COLLECTION_TYPES in c:
+                types = c[CONF_COLLECTION_TYPES]
+                fetched_types.extend(types if isinstance(types, list) else [types])
         return list(set(fetched_types))
 
     async def async_step_customize(self, user_input: dict[str, Any] | None = None):
