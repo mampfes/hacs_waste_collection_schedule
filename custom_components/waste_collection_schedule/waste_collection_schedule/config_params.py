@@ -82,6 +82,12 @@ class ConfigParam:
     # outside the list is still accepted.
     options: list[str] = field(default_factory=list)
 
+    # For an "alternatives" widget: the flattened member params, each keeping its
+    # own widget/options. The config-flow schema builder renders each member
+    # field with its proper selector (all forced optional) instead of falling
+    # back to free text (#6940). Empty for non-alternatives params.
+    members: tuple["ConfigParam", ...] = field(default_factory=tuple)
+
 
 def _title(field_name: str, label: str | None) -> str:
     """A field's display label: the explicit ``label`` or a Title-Cased name."""
@@ -584,9 +590,11 @@ def alternatives(*groups: list[ConfigParam]) -> ConfigParam:
     descriptions: dict[str, dict[str, str]] = {}
     defaults: dict[str, str] = {}
     group_field_names: list[tuple[str, ...]] = []
+    members: list[ConfigParam] = []
     for group in groups:
         names: list[str] = []
         for param in group:
+            members.append(param)
             fields.update(param.fields)
             names.extend(param.fields)
             for lang, mapping in param.labels.items():
@@ -603,4 +611,5 @@ def alternatives(*groups: list[ConfigParam]) -> ConfigParam:
         required=False,
         defaults=defaults,
         groups=tuple(group_field_names),
+        members=tuple(members),
     )

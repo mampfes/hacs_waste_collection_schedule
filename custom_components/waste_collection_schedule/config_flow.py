@@ -228,13 +228,14 @@ def _build_schema_from_params(
             )
         ] = str
 
-    for param in params:
+    def _add_param_fields(param: ConfigParam, force_optional: bool = False) -> None:
         # A field is optional in the form when its param is required=False, the
         # param declares mutually-exclusive groups (alternatives), or the field
         # has a default. A dependent_select child whose options aren't known yet
         # (parent not chosen) is also shown as optional so the form can submit
-        # the parent first.
-        param_optional = (not param.required) or bool(param.groups)
+        # the parent first. Members of an alternatives() group are forced
+        # optional (validate() enforces exactly one group is provided).
+        param_optional = force_optional or (not param.required) or bool(param.groups)
         for field_name in param.fields:
             description = None
             if args_input is not None and field_name in args_input:
@@ -301,6 +302,15 @@ def _build_schema_from_params(
                 vol_args[key] = ObjectSelector()
             else:
                 vol_args[key] = cv.string
+
+    for param in params:
+        if param.widget == "alternatives" and param.members:
+            # Render each member with its own widget (dropdown, boolean,
+            # postcode, coords, ...) rather than a free-text fallback (#6940).
+            for member in param.members:
+                _add_param_fields(member, force_optional=True)
+        else:
+            _add_param_fields(param)
 
     return vol.Schema(vol_args)
 
