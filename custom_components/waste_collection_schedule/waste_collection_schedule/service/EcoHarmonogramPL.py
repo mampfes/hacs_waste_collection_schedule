@@ -1,4 +1,5 @@
 import datetime
+import json
 import logging
 import re
 from collections.abc import Mapping
@@ -21,6 +22,7 @@ if TYPE_CHECKING:
 _LOGGER = logging.getLogger(__name__)
 
 API_URL = "https://ecoharmonogram.pl/api/api.php"
+JSON_RESPONSE_ATTEMPTS = 2
 
 SUPPORTED_APPS_LITERAL = Literal[
     None,
@@ -204,9 +206,33 @@ class EcoharmonogramClient:
         params["clientId"] = self._client_id
         params["lng"] = self._language
 
-        response = self._session.post(url, headers=self._headers, data=params)
-        response.encoding = "utf-8-sig"
-        return response.json()
+        for attempt in range(1, JSON_RESPONSE_ATTEMPTS + 1):
+            response = self._session.post(url, headers=self._headers, data=params)
+            response.raise_for_status()
+
+            try:
+                # Ecoharmonogram prefixes JSON with a UTF-8 BOM and declares it
+                # as text/html. curl_cffi's Response.json() parses the raw bytes
+                # and rejects that otherwise valid payload, so decode it
+                # explicitly before handing it to the standard JSON parser.
+                return json.loads(response.content.decode("utf-8-sig"))
+            except (UnicodeDecodeError, json.JSONDecodeError) as err:
+                if attempt < JSON_RESPONSE_ATTEMPTS:
+                    _LOGGER.warning(
+                        "Ecoharmonogram returned invalid JSON for %s; retrying once",
+                        action,
+                    )
+                    continue
+
+                content_type = response.headers.get("content-type", "unknown")
+                raise ValueError(
+                    "Ecoharmonogram returned invalid JSON for "
+                    f"{action} after {JSON_RESPONSE_ATTEMPTS} attempts "
+                    f"(status {response.status_code}, content type {content_type}, "
+                    f"{len(response.content)} bytes)"
+                ) from err
+
+        raise AssertionError("unreachable")
 
     def fetch_schedules(self, sp: SchedulePeriod, street_id: str) -> ScheduleResponse:
         return self._do_request(
