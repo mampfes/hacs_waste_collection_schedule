@@ -1,6 +1,21 @@
-from waste_collection_schedule.config_params import integer
+import calendar  # noqa: F401 — must import stdlib calendar FIRST
+import os
+import sys
 
-from custom_components.waste_collection_schedule.config_flow import (
+# Ensure the inner library package is importable.
+# IMPORTANT: stdlib calendar must be imported ABOVE before this path is added,
+# because HA's calendar.py in this path shadows the stdlib calendar module.
+sys.path.insert(
+    0,
+    os.path.join(
+        os.path.dirname(__file__),
+        "../custom_components/waste_collection_schedule",
+    ),
+)
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+from waste_collection_schedule.config_params import integer  # isort:skip
+from custom_components.waste_collection_schedule.config_flow import (  # isort:skip
     _build_schema_from_params,
 )
 
