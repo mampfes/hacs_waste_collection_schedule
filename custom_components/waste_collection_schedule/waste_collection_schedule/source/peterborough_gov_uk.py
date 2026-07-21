@@ -25,6 +25,10 @@ class Source(BaseSource):
     URL = "https://peterborough.gov.uk"
     COUNTRY = "uk"
 
+    # UPRN/property-id lookup: a wrong id yields no collections, so surface
+    # it as an error instead of a silently empty calendar (#6943).
+    RAISE_ON_EMPTY = True
+
     TEST_CASES: ClassVar[dict] = {
         "houseUprn": {"post_code": "PE57AX", "uprn": "100090214774"},
     }

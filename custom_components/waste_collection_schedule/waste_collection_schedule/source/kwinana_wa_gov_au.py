@@ -87,6 +87,10 @@ class Source(BaseSource):
     URL = "https://www.kwinana.wa.gov.au"
     COUNTRY = "au"
 
+    # An address that IntraMaps cannot resolve yields no collections; surface
+    # that as an error instead of a silently empty calendar (#6943).
+    RAISE_ON_EMPTY = True
+
     TEST_CASES: ClassVar[dict] = {
         "Kwinana Town Centre": {"address": "1 Chisham Avenue KWINANA TOWN CENTRE"},
         "Wellard": {"address": "25 Breccia Parade WELLARD"},
