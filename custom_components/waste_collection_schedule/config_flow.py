@@ -286,8 +286,11 @@ def _build_schema_from_params(
                 )
             elif param.widget == "integer":
                 # config_params.integer(): a free-form whole-number field.
-                vol_args[key] = NumberSelector(
-                    NumberSelectorConfig(mode=NumberSelectorMode.BOX, step=1)
+                vol_args[key] = vol.All(
+                    NumberSelector(
+                        NumberSelectorConfig(mode=NumberSelectorMode.BOX, step=1)
+                    ),
+                    vol.Coerce(int),
                 )
             elif param.widget == "boolean":
                 # config_params.boolean(): a true/false toggle.
