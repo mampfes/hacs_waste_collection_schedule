@@ -67,6 +67,11 @@ class Source(BaseSource):
     URL = "https://reading.gov.uk"
     COUNTRY = "uk"
 
+    # The direct-UPRN path skips the postcode/house-number validation, so a
+    # well-formed but wrong UPRN returns no collections. Surface that as an
+    # error instead of a silently empty calendar (#6943).
+    RAISE_ON_EMPTY = True
+
     TEST_CASES: ClassVar[dict] = {
         "known_uprn": {"uprn": "310027679"},
         "known_uprn as number": {"uprn": 310027679},

@@ -32,6 +32,10 @@ class Source(BaseSource):
     URL = "https://sutton.gov.uk"
     COUNTRY = "uk"
 
+    # UPRN/property-id lookup: a wrong id yields no collections, so surface
+    # it as an error instead of a silently empty calendar (#6943).
+    RAISE_ON_EMPTY = True
+
     TEST_CASES: ClassVar[dict] = {
         "4721996": {"id": 4721996},
         "4499298": {"id": "4499298"},

@@ -49,6 +49,10 @@ class Source(BaseSource):
     URL = "https://bielefeld.de"
     COUNTRY = "de"
 
+    # A wrong street/house number yields an empty Athos schedule; surface it
+    # as an error instead of a silently empty calendar (#6943).
+    RAISE_ON_EMPTY = True
+
     TEST_CASES: ClassVar[dict] = {
         "Umweltbetrieb": {"street": "Eckendorfer Straße", "house_number": 57},
     }

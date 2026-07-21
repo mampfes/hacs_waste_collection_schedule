@@ -71,6 +71,10 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Stirling."
     URL = "https://www.stirling.wa.gov.au"
     COUNTRY = "au"
+
+    # A geocode failure already raises; this also surfaces an address that
+    # geocodes but has no schedule (outside the service area) (#6943).
+    RAISE_ON_EMPTY = True
     SOURCE_CODEOWNERS: ClassVar[list] = ["@markvp"]
     API_URL = "https://www.stirling.wa.gov.au/bincollectioncheck/getresult"
 
