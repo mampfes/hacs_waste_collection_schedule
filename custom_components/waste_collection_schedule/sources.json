@@ -3282,6 +3282,12 @@
       "id": "obdach_at"
     },
     {
+      "title": "Marktgemeinde Pernitz",
+      "module": "pernitz_gv_at",
+      "default_params": {},
+      "id": "pernitz_gv_at"
+    },
+    {
       "title": "Marktgemeinde Schlierbach",
       "module": "schlierbach_at",
       "default_params": {},

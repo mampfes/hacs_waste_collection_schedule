@@ -4787,6 +4787,29 @@
         },
         "data_description": {}
       },
+      "args_pernitz_gv_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "rayon": "Rayon (collection zone)"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "rayon": "The general waste (Restmüll) collection zone, 1 or 2, that your street belongs to. See the street list at {url_www_pernitz_gv_at_muellabfuhr} to determine your zone."
+        }
+      },
+      "reconfigure_pernitz_gv_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "rayon": "Rayon (collection zone)"
+        },
+        "data_description": {
+          "rayon": "The general waste (Restmüll) collection zone, 1 or 2, that your street belongs to. See the street list at {url_www_pernitz_gv_at_muellabfuhr} to determine your zone."
+        }
+      },
       "args_schlierbach_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
