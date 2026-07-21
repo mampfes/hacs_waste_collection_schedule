@@ -409,10 +409,19 @@ def preserved(label: str) -> WasteType:
     Used as the no-loss fallback when ``resolve`` finds nothing: the original
     text is shown in every locale (we can't translate it), the id is prefixed
     ``preserved:`` so it's distinguishable, and it borrows OTHER's icon/colour.
+
+    The id and the display name are derived from the **same** whitespace-
+    normalised text (trim + collapse internal runs), preserving the original
+    case. Previously the id was fully normalised (``_norm``: also lower-cased)
+    while the name kept the raw casing/spacing, so two variants of one label
+    collapsed to a single id but with an arbitrary surviving label (#7024).
+    Deriving both from one value makes the label deterministic: variants that
+    differ only in incidental whitespace merge to one type shown verbatim,
+    while case-distinct labels stay distinct (and are still shown as-is).
     """
-    text = str(label).strip()
+    text = " ".join(str(label).strip().split())
     return WasteType(
-        id=f"preserved:{_norm(label)}",
+        id=f"preserved:{text}",
         icon=OTHER.icon,
         color=OTHER.color,
         names=dict.fromkeys(SUPPORTED_LANGUAGES, text),

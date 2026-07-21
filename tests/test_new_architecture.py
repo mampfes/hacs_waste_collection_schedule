@@ -122,9 +122,28 @@ class TestWasteTypeResolution:
         from waste_collection_schedule import waste_types as wt
 
         p = wt.preserved("Frobnitz-Tonne")
-        assert p.id == "preserved:frobnitz-tonne"
+        # The id preserves the original case (#7024); only incidental
+        # whitespace is normalised.
+        assert p.id == "preserved:Frobnitz-Tonne"
         assert p.names["en"] == p.names["de"] == "Frobnitz-Tonne"
         assert p.icon == wt.OTHER.icon  # borrows OTHER's icon/colour
+
+    def test_preserved_label_is_deterministic_7024(self):
+        from waste_collection_schedule import waste_types as wt
+
+        # Variants differing only in incidental whitespace collapse to one
+        # type, shown verbatim with a deterministic label (id and name derive
+        # from the same normalised text) — previously the id merged them but
+        # the surviving display label was arbitrary.
+        a = wt.preserved("Frobnitz  Tonne")
+        b = wt.preserved(" Frobnitz Tonne ")
+        assert a.id == b.id == "preserved:Frobnitz Tonne"
+        assert a.names["en"] == b.names["en"] == "Frobnitz Tonne"
+
+        # Case-distinct labels stay distinct and each shown as-is.
+        lower = wt.preserved("frobnitz tonne")
+        assert lower.id != a.id
+        assert lower.names["en"] == "frobnitz tonne"
 
     def test_other_is_not_resolvable(self):
         # OTHER is an explicit sink, not part of the recognised vocabulary.
